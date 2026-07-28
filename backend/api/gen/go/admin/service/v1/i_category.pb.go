@@ -28,15 +28,15 @@ var File_admin_service_v1_i_category_proto protoreflect.FileDescriptor
 
 const file_admin_service_v1_i_category_proto_rawDesc = "" +
 	"\n" +
-	"!admin/service/v1/i_category.proto\x12\x10admin.service.v1\x1a\x1cgoogle/api/annotations.proto\x1a\x1bgoogle/protobuf/empty.proto\x1a\x1epagination/v1/pagination.proto\x1a ledger/service/v1/category.proto2\xbd\x06\n" +
+	"!admin/service/v1/i_category.proto\x12\x10admin.service.v1\x1a\x1cgoogle/api/annotations.proto\x1a\x1bgoogle/protobuf/empty.proto\x1a\x1epagination/v1/pagination.proto\x1a ledger/service/v1/category.proto2\xc0\x06\n" +
 	"\x0fCategoryService\x12h\n" +
 	"\x04List\x12\x19.pagination.PagingRequest\x1a'.ledger.service.v1.ListCategoryResponse\"\x1c\x82\xd3\xe4\x93\x02\x16\x12\x14/admin/v1/categories\x12\x7f\n" +
 	"\aListAll\x12).ledger.service.v1.ListAllCategoryRequest\x1a'.ledger.service.v1.ListCategoryResponse\" \x82\xd3\xe4\x93\x02\x1a\x12\x18/admin/v1/categories/all\x12l\n" +
 	"\x03Get\x12%.ledger.service.v1.GetCategoryRequest\x1a\x1b.ledger.service.v1.Category\"!\x82\xd3\xe4\x93\x02\x1b\x12\x19/admin/v1/categories/{id}\x12p\n" +
 	"\x06Create\x12(.ledger.service.v1.CreateCategoryRequest\x1a\x1b.ledger.service.v1.Category\"\x1f\x82\xd3\xe4\x93\x02\x19:\x01*\"\x14/admin/v1/categories\x12u\n" +
 	"\x06Update\x12(.ledger.service.v1.UpdateCategoryRequest\x1a\x1b.ledger.service.v1.Category\"$\x82\xd3\xe4\x93\x02\x1e:\x01*\x1a\x19/admin/v1/categories/{id}\x12m\n" +
-	"\x06Delete\x12(.ledger.service.v1.DeleteCategoryRequest\x1a\x16.google.protobuf.Empty\"!\x82\xd3\xe4\x93\x02\x1b*\x19/admin/v1/categories/{id}\x12y\n" +
-	"\x06Toggle\x12(.ledger.service.v1.ToggleCategoryRequest\x1a\x1b.ledger.service.v1.Category\"(\x82\xd3\xe4\x93\x02\"2 /admin/v1/categories/{id}/toggleB\xb9\x01\n" +
+	"\x06Delete\x12(.ledger.service.v1.DeleteCategoryRequest\x1a\x16.google.protobuf.Empty\"!\x82\xd3\xe4\x93\x02\x1b*\x19/admin/v1/categories/{id}\x12|\n" +
+	"\x06Toggle\x12(.ledger.service.v1.ToggleCategoryRequest\x1a\x1b.ledger.service.v1.Category\"+\x82\xd3\xe4\x93\x02%:\x01*2 /admin/v1/categories/{id}/toggleB\xb9\x01\n" +
 	"\x14com.admin.service.v1B\x0eICategoryProtoP\x01Z/go-wind-cms/api/gen/go/admin/service/v1;adminpb\xa2\x02\x03ASX\xaa\x02\x10Admin.Service.V1\xca\x02\x10Admin\\Service\\V1\xe2\x02\x1cAdmin\\Service\\V1\\GPBMetadata\xea\x02\x12Admin::Service::V1b\x06proto3"
 
 var file_admin_service_v1_i_category_proto_goTypes = []any{

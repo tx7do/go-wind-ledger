@@ -51,6 +51,7 @@ service AccountService {
   rpc Toggle (ledger.service.v1.ToggleAccountRequest) returns (ledger.service.v1.Account) {
     option (google.api.http) = {
       patch: "/admin/v1/accounts/{id}/toggle"
+      body: "*"
     };
   }
 

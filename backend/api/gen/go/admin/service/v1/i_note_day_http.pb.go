@@ -164,6 +164,9 @@ func _NoteDayService_Delete17_HTTP_Handler(srv NoteDayServiceHTTPServer) func(ct
 func _NoteDayService_Run0_HTTP_Handler(srv NoteDayServiceHTTPServer) func(ctx http.Context) error {
 	return func(ctx http.Context) error {
 		var in v11.RunNoteDayRequest
+		if err := ctx.Bind(&in); err != nil {
+			return err
+		}
 		if err := ctx.BindQuery(&in); err != nil {
 			return err
 		}
@@ -186,6 +189,9 @@ func _NoteDayService_Run0_HTTP_Handler(srv NoteDayServiceHTTPServer) func(ctx ht
 func _NoteDayService_Recall0_HTTP_Handler(srv NoteDayServiceHTTPServer) func(ctx http.Context) error {
 	return func(ctx http.Context) error {
 		var in v11.RecallNoteDayRequest
+		if err := ctx.Bind(&in); err != nil {
+			return err
+		}
 		if err := ctx.BindQuery(&in); err != nil {
 			return err
 		}
@@ -278,10 +284,10 @@ func (c *NoteDayServiceHTTPClientImpl) List(ctx context.Context, in *v1.PagingRe
 func (c *NoteDayServiceHTTPClientImpl) Recall(ctx context.Context, in *v11.RecallNoteDayRequest, opts ...http.CallOption) (*v11.NoteDay, error) {
 	var out v11.NoteDay
 	pattern := "/admin/v1/note-days/{id}/recall"
-	path := binding.EncodeURL(pattern, in, true)
+	path := binding.EncodeURL(pattern, in, false)
 	opts = append(opts, http.Operation(OperationNoteDayServiceRecall))
 	opts = append(opts, http.PathTemplate(pattern))
-	err := c.cc.Invoke(ctx, "PATCH", path, nil, &out, opts...)
+	err := c.cc.Invoke(ctx, "PATCH", path, in, &out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -291,10 +297,10 @@ func (c *NoteDayServiceHTTPClientImpl) Recall(ctx context.Context, in *v11.Recal
 func (c *NoteDayServiceHTTPClientImpl) Run(ctx context.Context, in *v11.RunNoteDayRequest, opts ...http.CallOption) (*v11.NoteDay, error) {
 	var out v11.NoteDay
 	pattern := "/admin/v1/note-days/{id}/run"
-	path := binding.EncodeURL(pattern, in, true)
+	path := binding.EncodeURL(pattern, in, false)
 	opts = append(opts, http.Operation(OperationNoteDayServiceRun))
 	opts = append(opts, http.PathTemplate(pattern))
-	err := c.cc.Invoke(ctx, "PATCH", path, nil, &out, opts...)
+	err := c.cc.Invoke(ctx, "PATCH", path, in, &out, opts...)
 	if err != nil {
 		return nil, err
 	}

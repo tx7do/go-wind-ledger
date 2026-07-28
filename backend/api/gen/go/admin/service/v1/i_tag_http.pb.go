@@ -183,6 +183,9 @@ func _TagService_Delete29_HTTP_Handler(srv TagServiceHTTPServer) func(ctx http.C
 func _TagService_Toggle4_HTTP_Handler(srv TagServiceHTTPServer) func(ctx http.Context) error {
 	return func(ctx http.Context) error {
 		var in v11.ToggleTagRequest
+		if err := ctx.Bind(&in); err != nil {
+			return err
+		}
 		if err := ctx.BindQuery(&in); err != nil {
 			return err
 		}
@@ -288,10 +291,10 @@ func (c *TagServiceHTTPClientImpl) ListAll(ctx context.Context, in *v11.ListAllT
 func (c *TagServiceHTTPClientImpl) Toggle(ctx context.Context, in *v11.ToggleTagRequest, opts ...http.CallOption) (*v11.Tag, error) {
 	var out v11.Tag
 	pattern := "/admin/v1/tags/{id}/toggle"
-	path := binding.EncodeURL(pattern, in, true)
+	path := binding.EncodeURL(pattern, in, false)
 	opts = append(opts, http.Operation(OperationTagServiceToggle))
 	opts = append(opts, http.PathTemplate(pattern))
-	err := c.cc.Invoke(ctx, "PATCH", path, nil, &out, opts...)
+	err := c.cc.Invoke(ctx, "PATCH", path, in, &out, opts...)
 	if err != nil {
 		return nil, err
 	}

@@ -186,6 +186,9 @@ func _AccountService_Delete0_HTTP_Handler(srv AccountServiceHTTPServer) func(ctx
 func _AccountService_Toggle0_HTTP_Handler(srv AccountServiceHTTPServer) func(ctx http.Context) error {
 	return func(ctx http.Context) error {
 		var in v11.ToggleAccountRequest
+		if err := ctx.Bind(&in); err != nil {
+			return err
+		}
 		if err := ctx.BindQuery(&in); err != nil {
 			return err
 		}
@@ -330,10 +333,10 @@ func (c *AccountServiceHTTPClientImpl) ListAll(ctx context.Context, in *v11.List
 func (c *AccountServiceHTTPClientImpl) Toggle(ctx context.Context, in *v11.ToggleAccountRequest, opts ...http.CallOption) (*v11.Account, error) {
 	var out v11.Account
 	pattern := "/admin/v1/accounts/{id}/toggle"
-	path := binding.EncodeURL(pattern, in, true)
+	path := binding.EncodeURL(pattern, in, false)
 	opts = append(opts, http.Operation(OperationAccountServiceToggle))
 	opts = append(opts, http.PathTemplate(pattern))
-	err := c.cc.Invoke(ctx, "PATCH", path, nil, &out, opts...)
+	err := c.cc.Invoke(ctx, "PATCH", path, in, &out, opts...)
 	if err != nil {
 		return nil, err
 	}

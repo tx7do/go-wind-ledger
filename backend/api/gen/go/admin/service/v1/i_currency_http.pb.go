@@ -82,6 +82,9 @@ func _CurrencyService_List7_HTTP_Handler(srv CurrencyServiceHTTPServer) func(ctx
 func _CurrencyService_Refresh0_HTTP_Handler(srv CurrencyServiceHTTPServer) func(ctx http.Context) error {
 	return func(ctx http.Context) error {
 		var in v1.RefreshCurrencyRequest
+		if err := ctx.Bind(&in); err != nil {
+			return err
+		}
 		if err := ctx.BindQuery(&in); err != nil {
 			return err
 		}
@@ -174,10 +177,10 @@ func (c *CurrencyServiceHTTPClientImpl) ListAll(ctx context.Context, in *v1.List
 func (c *CurrencyServiceHTTPClientImpl) Refresh(ctx context.Context, in *v1.RefreshCurrencyRequest, opts ...http.CallOption) (*v1.ListCurrencyResponse, error) {
 	var out v1.ListCurrencyResponse
 	pattern := "/admin/v1/currencies/refresh"
-	path := binding.EncodeURL(pattern, in, true)
+	path := binding.EncodeURL(pattern, in, false)
 	opts = append(opts, http.Operation(OperationCurrencyServiceRefresh))
 	opts = append(opts, http.PathTemplate(pattern))
-	err := c.cc.Invoke(ctx, "POST", path, nil, &out, opts...)
+	err := c.cc.Invoke(ctx, "POST", path, in, &out, opts...)
 	if err != nil {
 		return nil, err
 	}

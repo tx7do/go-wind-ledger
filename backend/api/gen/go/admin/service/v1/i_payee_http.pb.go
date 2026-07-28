@@ -183,6 +183,9 @@ func _PayeeService_Delete20_HTTP_Handler(srv PayeeServiceHTTPServer) func(ctx ht
 func _PayeeService_Toggle3_HTTP_Handler(srv PayeeServiceHTTPServer) func(ctx http.Context) error {
 	return func(ctx http.Context) error {
 		var in v11.TogglePayeeRequest
+		if err := ctx.Bind(&in); err != nil {
+			return err
+		}
 		if err := ctx.BindQuery(&in); err != nil {
 			return err
 		}
@@ -288,10 +291,10 @@ func (c *PayeeServiceHTTPClientImpl) ListAll(ctx context.Context, in *v11.ListAl
 func (c *PayeeServiceHTTPClientImpl) Toggle(ctx context.Context, in *v11.TogglePayeeRequest, opts ...http.CallOption) (*v11.Payee, error) {
 	var out v11.Payee
 	pattern := "/admin/v1/payees/{id}/toggle"
-	path := binding.EncodeURL(pattern, in, true)
+	path := binding.EncodeURL(pattern, in, false)
 	opts = append(opts, http.Operation(OperationPayeeServiceToggle))
 	opts = append(opts, http.PathTemplate(pattern))
-	err := c.cc.Invoke(ctx, "PATCH", path, nil, &out, opts...)
+	err := c.cc.Invoke(ctx, "PATCH", path, in, &out, opts...)
 	if err != nil {
 		return nil, err
 	}

@@ -28,15 +28,15 @@ var File_admin_service_v1_i_account_proto protoreflect.FileDescriptor
 
 const file_admin_service_v1_i_account_proto_rawDesc = "" +
 	"\n" +
-	" admin/service/v1/i_account.proto\x12\x10admin.service.v1\x1a\x1cgoogle/api/annotations.proto\x1a\x1bgoogle/protobuf/empty.proto\x1a\x1epagination/v1/pagination.proto\x1a\x1fledger/service/v1/account.proto2\xa3\a\n" +
+	" admin/service/v1/i_account.proto\x12\x10admin.service.v1\x1a\x1cgoogle/api/annotations.proto\x1a\x1bgoogle/protobuf/empty.proto\x1a\x1epagination/v1/pagination.proto\x1a\x1fledger/service/v1/account.proto2\xa6\a\n" +
 	"\x0eAccountService\x12e\n" +
 	"\x04List\x12\x19.pagination.PagingRequest\x1a&.ledger.service.v1.ListAccountResponse\"\x1a\x82\xd3\xe4\x93\x02\x14\x12\x12/admin/v1/accounts\x12{\n" +
 	"\aListAll\x12(.ledger.service.v1.ListAllAccountRequest\x1a&.ledger.service.v1.ListAccountResponse\"\x1e\x82\xd3\xe4\x93\x02\x18\x12\x16/admin/v1/accounts/all\x12h\n" +
 	"\x03Get\x12$.ledger.service.v1.GetAccountRequest\x1a\x1a.ledger.service.v1.Account\"\x1f\x82\xd3\xe4\x93\x02\x19\x12\x17/admin/v1/accounts/{id}\x12l\n" +
 	"\x06Create\x12'.ledger.service.v1.CreateAccountRequest\x1a\x1a.ledger.service.v1.Account\"\x1d\x82\xd3\xe4\x93\x02\x17:\x01*\"\x12/admin/v1/accounts\x12q\n" +
 	"\x06Update\x12'.ledger.service.v1.UpdateAccountRequest\x1a\x1a.ledger.service.v1.Account\"\"\x82\xd3\xe4\x93\x02\x1c:\x01*\x1a\x17/admin/v1/accounts/{id}\x12j\n" +
-	"\x06Delete\x12'.ledger.service.v1.DeleteAccountRequest\x1a\x16.google.protobuf.Empty\"\x1f\x82\xd3\xe4\x93\x02\x19*\x17/admin/v1/accounts/{id}\x12u\n" +
-	"\x06Toggle\x12'.ledger.service.v1.ToggleAccountRequest\x1a\x1a.ledger.service.v1.Account\"&\x82\xd3\xe4\x93\x02 2\x1e/admin/v1/accounts/{id}/toggle\x12\x7f\n" +
+	"\x06Delete\x12'.ledger.service.v1.DeleteAccountRequest\x1a\x16.google.protobuf.Empty\"\x1f\x82\xd3\xe4\x93\x02\x19*\x17/admin/v1/accounts/{id}\x12x\n" +
+	"\x06Toggle\x12'.ledger.service.v1.ToggleAccountRequest\x1a\x1a.ledger.service.v1.Account\")\x82\xd3\xe4\x93\x02#:\x01*2\x1e/admin/v1/accounts/{id}/toggle\x12\x7f\n" +
 	"\rAdjustBalance\x12'.ledger.service.v1.AdjustBalanceRequest\x1a\x1a.ledger.service.v1.Account\")\x82\xd3\xe4\x93\x02#:\x01*\"\x1e/admin/v1/accounts/{id}/adjustB\xb8\x01\n" +
 	"\x14com.admin.service.v1B\rIAccountProtoP\x01Z/go-wind-cms/api/gen/go/admin/service/v1;adminpb\xa2\x02\x03ASX\xaa\x02\x10Admin.Service.V1\xca\x02\x10Admin\\Service\\V1\xe2\x02\x1cAdmin\\Service\\V1\\GPBMetadata\xea\x02\x12Admin::Service::V1b\x06proto3"
 

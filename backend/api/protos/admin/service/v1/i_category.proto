@@ -51,6 +51,7 @@ service CategoryService {
   rpc Toggle (ledger.service.v1.ToggleCategoryRequest) returns (ledger.service.v1.Category) {
     option (google.api.http) = {
       patch: "/admin/v1/categories/{id}/toggle"
+      body: "*"
     };
   }
 }

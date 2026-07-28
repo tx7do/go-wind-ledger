@@ -183,6 +183,9 @@ func _CategoryService_Delete4_HTTP_Handler(srv CategoryServiceHTTPServer) func(c
 func _CategoryService_Toggle2_HTTP_Handler(srv CategoryServiceHTTPServer) func(ctx http.Context) error {
 	return func(ctx http.Context) error {
 		var in v11.ToggleCategoryRequest
+		if err := ctx.Bind(&in); err != nil {
+			return err
+		}
 		if err := ctx.BindQuery(&in); err != nil {
 			return err
 		}
@@ -288,10 +291,10 @@ func (c *CategoryServiceHTTPClientImpl) ListAll(ctx context.Context, in *v11.Lis
 func (c *CategoryServiceHTTPClientImpl) Toggle(ctx context.Context, in *v11.ToggleCategoryRequest, opts ...http.CallOption) (*v11.Category, error) {
 	var out v11.Category
 	pattern := "/admin/v1/categories/{id}/toggle"
-	path := binding.EncodeURL(pattern, in, true)
+	path := binding.EncodeURL(pattern, in, false)
 	opts = append(opts, http.Operation(OperationCategoryServiceToggle))
 	opts = append(opts, http.PathTemplate(pattern))
-	err := c.cc.Invoke(ctx, "PATCH", path, nil, &out, opts...)
+	err := c.cc.Invoke(ctx, "PATCH", path, in, &out, opts...)
 	if err != nil {
 		return nil, err
 	}

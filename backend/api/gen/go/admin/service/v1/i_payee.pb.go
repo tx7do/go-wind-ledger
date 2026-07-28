@@ -28,15 +28,15 @@ var File_admin_service_v1_i_payee_proto protoreflect.FileDescriptor
 
 const file_admin_service_v1_i_payee_proto_rawDesc = "" +
 	"\n" +
-	"\x1eadmin/service/v1/i_payee.proto\x12\x10admin.service.v1\x1a\x1cgoogle/api/annotations.proto\x1a\x1bgoogle/protobuf/empty.proto\x1a\x1epagination/v1/pagination.proto\x1a\x1dledger/service/v1/payee.proto2\xfa\x05\n" +
+	"\x1eadmin/service/v1/i_payee.proto\x12\x10admin.service.v1\x1a\x1cgoogle/api/annotations.proto\x1a\x1bgoogle/protobuf/empty.proto\x1a\x1epagination/v1/pagination.proto\x1a\x1dledger/service/v1/payee.proto2\xfd\x05\n" +
 	"\fPayeeService\x12a\n" +
 	"\x04List\x12\x19.pagination.PagingRequest\x1a$.ledger.service.v1.ListPayeeResponse\"\x18\x82\xd3\xe4\x93\x02\x12\x12\x10/admin/v1/payees\x12u\n" +
 	"\aListAll\x12&.ledger.service.v1.ListAllPayeeRequest\x1a$.ledger.service.v1.ListPayeeResponse\"\x1c\x82\xd3\xe4\x93\x02\x16\x12\x14/admin/v1/payees/all\x12b\n" +
 	"\x03Get\x12\".ledger.service.v1.GetPayeeRequest\x1a\x18.ledger.service.v1.Payee\"\x1d\x82\xd3\xe4\x93\x02\x17\x12\x15/admin/v1/payees/{id}\x12f\n" +
 	"\x06Create\x12%.ledger.service.v1.CreatePayeeRequest\x1a\x18.ledger.service.v1.Payee\"\x1b\x82\xd3\xe4\x93\x02\x15:\x01*\"\x10/admin/v1/payees\x12k\n" +
 	"\x06Update\x12%.ledger.service.v1.UpdatePayeeRequest\x1a\x18.ledger.service.v1.Payee\" \x82\xd3\xe4\x93\x02\x1a:\x01*\x1a\x15/admin/v1/payees/{id}\x12f\n" +
-	"\x06Delete\x12%.ledger.service.v1.DeletePayeeRequest\x1a\x16.google.protobuf.Empty\"\x1d\x82\xd3\xe4\x93\x02\x17*\x15/admin/v1/payees/{id}\x12o\n" +
-	"\x06Toggle\x12%.ledger.service.v1.TogglePayeeRequest\x1a\x18.ledger.service.v1.Payee\"$\x82\xd3\xe4\x93\x02\x1e2\x1c/admin/v1/payees/{id}/toggleB\xb6\x01\n" +
+	"\x06Delete\x12%.ledger.service.v1.DeletePayeeRequest\x1a\x16.google.protobuf.Empty\"\x1d\x82\xd3\xe4\x93\x02\x17*\x15/admin/v1/payees/{id}\x12r\n" +
+	"\x06Toggle\x12%.ledger.service.v1.TogglePayeeRequest\x1a\x18.ledger.service.v1.Payee\"'\x82\xd3\xe4\x93\x02!:\x01*2\x1c/admin/v1/payees/{id}/toggleB\xb6\x01\n" +
 	"\x14com.admin.service.v1B\vIPayeeProtoP\x01Z/go-wind-cms/api/gen/go/admin/service/v1;adminpb\xa2\x02\x03ASX\xaa\x02\x10Admin.Service.V1\xca\x02\x10Admin\\Service\\V1\xe2\x02\x1cAdmin\\Service\\V1\\GPBMetadata\xea\x02\x12Admin::Service::V1b\x06proto3"
 
 var file_admin_service_v1_i_payee_proto_goTypes = []any{

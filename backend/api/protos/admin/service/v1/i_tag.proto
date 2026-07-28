@@ -51,6 +51,7 @@ service TagService {
   rpc Toggle (ledger.service.v1.ToggleTagRequest) returns (ledger.service.v1.Tag) {
     option (google.api.http) = {
       patch: "/admin/v1/tags/{id}/toggle"
+      body: "*"
     };
   }
 }

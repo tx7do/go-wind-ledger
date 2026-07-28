@@ -164,6 +164,9 @@ func _BalanceFlowService_Delete2_HTTP_Handler(srv BalanceFlowServiceHTTPServer) 
 func _BalanceFlowService_Confirm0_HTTP_Handler(srv BalanceFlowServiceHTTPServer) func(ctx http.Context) error {
 	return func(ctx http.Context) error {
 		var in v11.ConfirmBalanceFlowRequest
+		if err := ctx.Bind(&in); err != nil {
+			return err
+		}
 		if err := ctx.BindQuery(&in); err != nil {
 			return err
 		}
@@ -223,10 +226,10 @@ func NewBalanceFlowServiceHTTPClient(client *http.Client) BalanceFlowServiceHTTP
 func (c *BalanceFlowServiceHTTPClientImpl) Confirm(ctx context.Context, in *v11.ConfirmBalanceFlowRequest, opts ...http.CallOption) (*v11.BalanceFlow, error) {
 	var out v11.BalanceFlow
 	pattern := "/admin/v1/balance-flows/{id}/confirm"
-	path := binding.EncodeURL(pattern, in, true)
+	path := binding.EncodeURL(pattern, in, false)
 	opts = append(opts, http.Operation(OperationBalanceFlowServiceConfirm))
 	opts = append(opts, http.PathTemplate(pattern))
-	err := c.cc.Invoke(ctx, "PATCH", path, nil, &out, opts...)
+	err := c.cc.Invoke(ctx, "PATCH", path, in, &out, opts...)
 	if err != nil {
 		return nil, err
 	}

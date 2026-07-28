@@ -225,6 +225,12 @@ paths:
                   schema:
                     type: integer
                     format: uint32
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/ledger.service.v1.ToggleAccountRequest'
+                required: true
             responses:
                 "200":
                     description: OK
@@ -763,6 +769,12 @@ paths:
                   schema:
                     type: integer
                     format: uint32
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/ledger.service.v1.ConfirmBalanceFlowRequest'
+                required: true
             responses:
                 "200":
                     description: OK
@@ -956,6 +968,12 @@ paths:
                   schema:
                     type: integer
                     format: uint32
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/ledger.service.v1.ToggleBookRequest'
+                required: true
             responses:
                 "200":
                     description: OK
@@ -1159,6 +1177,12 @@ paths:
                   schema:
                     type: integer
                     format: uint32
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/ledger.service.v1.ToggleCategoryRequest'
+                required: true
             responses:
                 "200":
                     description: OK
@@ -1447,6 +1471,12 @@ paths:
             tags:
                 - CurrencyService
             operationId: CurrencyService_Refresh
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/ledger.service.v1.RefreshCurrencyRequest'
+                required: true
             responses:
                 "200":
                     description: OK
@@ -4057,6 +4087,12 @@ paths:
                   schema:
                     type: integer
                     format: uint32
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/ledger.service.v1.RecallNoteDayRequest'
+                required: true
             responses:
                 "200":
                     description: OK
@@ -4076,6 +4112,12 @@ paths:
                   schema:
                     type: integer
                     format: uint32
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/ledger.service.v1.RunNoteDayRequest'
+                required: true
             responses:
                 "200":
                     description: OK
@@ -4699,6 +4741,12 @@ paths:
                   schema:
                     type: integer
                     format: uint32
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/ledger.service.v1.TogglePayeeRequest'
+                required: true
             responses:
                 "200":
                     description: OK
@@ -6859,6 +6907,12 @@ paths:
                   schema:
                     type: integer
                     format: uint32
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/ledger.service.v1.ToggleTagRequest'
+                required: true
             responses:
                 "200":
                     description: OK
@@ -11152,6 +11206,13 @@ components:
                     type: string
                     description: 占比(%)
             description: 图表数据点
+        ledger.service.v1.ConfirmBalanceFlowRequest:
+            type: object
+            properties:
+                id:
+                    type: integer
+                    format: uint32
+            description: 请求 - 确认流水（更新账户余额）
         ledger.service.v1.ConvertCurrencyResponse:
             type: object
             properties:
@@ -11421,6 +11482,16 @@ components:
                 deletedAt:
                     type: string
                     format: date-time
+        ledger.service.v1.RecallNoteDayRequest:
+            type: object
+            properties:
+                id:
+                    type: integer
+                    format: uint32
+        ledger.service.v1.RefreshCurrencyRequest:
+            type: object
+            properties: {}
+            description: 请求 - 刷新汇率
         ledger.service.v1.ReportResponse:
             type: object
             properties:
@@ -11429,6 +11500,12 @@ components:
                     items:
                         $ref: '#/components/schemas/ledger.service.v1.ChartPoint'
             description: 报表回应
+        ledger.service.v1.RunNoteDayRequest:
+            type: object
+            properties:
+                id:
+                    type: integer
+                    format: uint32
         ledger.service.v1.StatisticsResponse:
             type: object
             properties:
@@ -11515,6 +11592,40 @@ components:
                 convertedAmount:
                     type: string
             description: 标签关系
+        ledger.service.v1.ToggleAccountRequest:
+            type: object
+            properties:
+                id:
+                    type: integer
+                    format: uint32
+            description: 请求 - 切换启用/禁用
+        ledger.service.v1.ToggleBookRequest:
+            type: object
+            properties:
+                id:
+                    type: integer
+                    description: 账本ID
+                    format: uint32
+            description: 请求 - 切换启用/禁用
+        ledger.service.v1.ToggleCategoryRequest:
+            type: object
+            properties:
+                id:
+                    type: integer
+                    format: uint32
+            description: 请求 - 切换启用/禁用
+        ledger.service.v1.TogglePayeeRequest:
+            type: object
+            properties:
+                id:
+                    type: integer
+                    format: uint32
+        ledger.service.v1.ToggleTagRequest:
+            type: object
+            properties:
+                id:
+                    type: integer
+                    format: uint32
         ledger.service.v1.UpdateAccountRequest:
             type: object
             properties:

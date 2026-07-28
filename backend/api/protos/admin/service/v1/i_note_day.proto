@@ -45,12 +45,14 @@ service NoteDayService {
   rpc Run (ledger.service.v1.RunNoteDayRequest) returns (ledger.service.v1.NoteDay) {
     option (google.api.http) = {
       patch: "/admin/v1/note-days/{id}/run"
+      body: "*"
     };
   }
 
   rpc Recall (ledger.service.v1.RecallNoteDayRequest) returns (ledger.service.v1.NoteDay) {
     option (google.api.http) = {
       patch: "/admin/v1/note-days/{id}/recall"
+      body: "*"
     };
   }
 }

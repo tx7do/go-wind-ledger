@@ -24,6 +24,7 @@ service CurrencyService {
   rpc Refresh (ledger.service.v1.RefreshCurrencyRequest) returns (ledger.service.v1.ListCurrencyResponse) {
     option (google.api.http) = {
       post: "/admin/v1/currencies/refresh"
+      body: "*"
     };
   }
 

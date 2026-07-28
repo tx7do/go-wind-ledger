@@ -183,6 +183,9 @@ func _BookService_Delete3_HTTP_Handler(srv BookServiceHTTPServer) func(ctx http.
 func _BookService_Toggle1_HTTP_Handler(srv BookServiceHTTPServer) func(ctx http.Context) error {
 	return func(ctx http.Context) error {
 		var in v11.ToggleBookRequest
+		if err := ctx.Bind(&in); err != nil {
+			return err
+		}
 		if err := ctx.BindQuery(&in); err != nil {
 			return err
 		}
@@ -288,10 +291,10 @@ func (c *BookServiceHTTPClientImpl) ListAll(ctx context.Context, in *v11.ListAll
 func (c *BookServiceHTTPClientImpl) Toggle(ctx context.Context, in *v11.ToggleBookRequest, opts ...http.CallOption) (*v11.Book, error) {
 	var out v11.Book
 	pattern := "/admin/v1/books/{id}/toggle"
-	path := binding.EncodeURL(pattern, in, true)
+	path := binding.EncodeURL(pattern, in, false)
 	opts = append(opts, http.Operation(OperationBookServiceToggle))
 	opts = append(opts, http.PathTemplate(pattern))
-	err := c.cc.Invoke(ctx, "PATCH", path, nil, &out, opts...)
+	err := c.cc.Invoke(ctx, "PATCH", path, in, &out, opts...)
 	if err != nil {
 		return nil, err
 	}
