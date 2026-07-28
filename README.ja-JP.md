@@ -1,0 +1,199 @@
+<div align="center">
+
+# GoWind Ledger
+
+### 風行家計簿 · すぐに使える個人・家庭向けフルスタック家計管理プラットフォーム
+
+[![License](https://img.shields.io/badge/License-MIT-blue.svg)](./LICENSE)
+[![Go Version](https://img.shields.io/badge/Go-1.25+-00ADD8?logo=go&logoColor=white)](https://go.dev/)
+[![Vue](https://img.shields.io/badge/Vue-3.x-4FC08D?logo=vue.js&logoColor=white)](https://vuejs.org/)
+[![Flutter](https://img.shields.io/badge/Flutter-3.x-02569B?logo=flutter&logoColor=white)](https://flutter.dev/)
+[![Kratos](https://img.shields.io/badge/Kratos-2.9-00ADD8?logo=go&logoColor=white)](https://go-kratos.dev/)
+[![Ent](https://img.shields.io/badge/Ent-0.14-00ADD8?logo=go&logoColor=white)](https://entgo.io/)
+
+**[English](./README.en-US.md)** · **[中文](./README.md)** · **日本語**
+
+</div>
+
+---
+
+風行家計簿（GoWind Ledger）は、Go マイクロサービスアーキテクチャに基づくフルスタックの個人・家庭向け家計管理プラットフォームです。収支管理、マルチアカウント管理、階層カテゴリ/タグシステム、多通貨為替レート、統計レポート、定期リマインダー機能を提供し、Admin 管理コンソールと Flutter クロスプラットフォームモバイルアプリの両方をサポートします。
+
+**主な特徴：**
+
+- **家計簿エンジン** — 支出/収入/振替/残高調整の 4 種類の取引タイプ、単式簿記エンジン、カテゴリ/タグ金額分割
+- **マルチアカウント** — 当座/クレジット/資産/負債の 4 種類のアカウント、残高自動更新、クロス通貨振替対応
+- **階層カテゴリ** — 支出/収入カテゴリは 4 階層のツリー構造をサポート、タグは機能フラグ（支出/収入/振替可）をサポート
+- **多通貨** — 10 種類の通貨為替レートキャッシュ内蔵、リアルタイムレート更新と通貨換算計算をサポート
+- **統計レポート** — カテゴリ/タグ/受取人別の集計分析、資産負債概览、ECharts 可視化
+- **定期リマインダー** — 毎日/毎月/毎年の繰り返しリマインダー、実行と取り消し操作をサポート
+- **マイクロサービス** — go-kratos ベース、Admin BFF + App BFF + Core の 3 サービスアーキテクチャ
+- **API ファースト** — Protobuf コントラクト駆動、RESTful + gRPC デュアルプロトコル、OpenAPI ドキュメント自動生成
+
+## システムアーキテクチャ
+
+```
+┌─────────────────────────────────────────────────────────┐
+│                    クライアント層                          │
+│  ┌─────────────┐  ┌─────────────┐  ┌─────────────┐    │
+│  │  Admin コンソール│  │  Flutter App │  │   Swagger    │    │
+│  │  Vue3+AntDV  │  │  BLoC+Dio    │  │   /docs/     │    │
+│  └──────┬──────┘  └──────┬──────┘  └──────┬──────┘    │
+└─────────┼────────────────┼────────────────┼────────────┘
+          │ REST :6600     │ REST :6700     │
+          ▼                ▼                ▼
+┌─────────────────────────────────────────────────────────┐
+│                  BFF ゲートウェイ層                        │
+│  ┌─────────────┐         ┌─────────────┐               │
+│  │ Admin BFF   │         │  App BFF    │               │
+│  │ /admin/v1/* │         │  /app/v1/*  │               │
+│  └──────┬──────┘         └──────┬──────┘               │
+└─────────┼───────────────────────┼──────────────────────┘
+          │ gRPC                  │ gRPC
+          ▼                       ▼
+┌─────────────────────────────────────────────────────────┐
+│                  Core コアサービス                        │
+│  ┌───────┐ ┌───────┐ ┌───────┐ ┌───────┐ ┌───────┐   │
+│  │ Book  │ │Account│ │ Flow  │ │Report │ │Currency│  │
+│  └───────┘ └───────┘ └───────┘ └───────┘ └───────┘   │
+│  ┌───────┐ ┌───────┐ ┌───────┐ ┌───────┐ ┌───────┐   │
+│  │Category│ │  Tag  │ │Payee  │ │NoteDay│ │FlowFile│  │
+│  └───────┘ └───────┘ └───────┘ └───────┘ └───────┘   │
+│         │ Ent ORM → PostgreSQL                          │
+│         │ Redis · MinIO · etcd                          │
+└─────────┴──────────────────────────────────────────────┘
+```
+
+## 技術スタック
+
+### バックエンド
+
+| レイヤー  | 技術                                                                 | 説明                     |
+|:-------|:-------------------------------------------------------------------|:------------------------|
+| 言語     | [Go 1.25+](https://go.dev/)                                        | 高性能コンパイル言語             |
+| フレームワーク | [go-kratos](https://go-kratos.dev/)                                | Bilibili オープンソースマイクロサービス |
+| DI     | [Wire](https://github.com/google/wire)                             | コンパイル時依存性注入            |
+| ORM    | [Ent](https://entgo.io/)                                           | Go エンティティフレームワーク       |
+| データベース | [PostgreSQL](https://www.postgresql.org/) / [MySQL](https://www.mysql.com/) | リレーショナルデータベース |
+| キャッシュ  | [Redis](https://redis.io/)                                         | インメモリデータベース           |
+| オブジェクトストレージ | [MinIO](https://min.io/)                                       | S3 互換オブジェクトストレージ      |
+| サービス探索 | [Etcd](https://etcd.io/)                                           | サービスディスカバリと設定        |
+| 分散トレーシング | [Jaeger](https://www.jaegertracing.io/) + [OpenTelemetry](https://opentelemetry.io/) | 分散可観測性 |
+| API 定義 | [Protobuf](https://protobuf.dev/) + [buf.build](https://buf.build/) | コントラクトファースト API      |
+| 認可エンジン | [Casbin](https://casbin.org/) / [OPA](https://www.openpolicyagent.org/) | ポリシー駆動認可      |
+
+### Admin 管理コンソール
+
+| 技術                                            | 説明               |
+|:----------------------------------------------|:-----------------|
+| [Vue 3](https://vuejs.org/)                   | プログレッシブ JS フレームワーク |
+| [TypeScript](https://www.typescriptlang.org/) | 型安全性             |
+| [Ant Design Vue](https://antdv.com/)          | エンタープライズ UI コンポーネント |
+| [Vben Admin](https://doc.vben.pro/)           | 管理画面フレームワーク      |
+| [Vxe Table](https://vxetable.cn/)            | 高性能テーブルコンポーネント   |
+| [ECharts](https://echarts.apache.org/)        | データ可視化           |
+
+### モバイルアプリ
+
+| 技術                                            | 説明               |
+|:----------------------------------------------|:-----------------|
+| [Flutter](https://flutter.dev/)               | クロスプラットフォームフレームワーク |
+| [BLoC](https://bloclibrary.dev/)              | 状態管理            |
+| [go_router](https://pub.dev/packages/go_router) | 宣言型ルーティング      |
+| [Dio](https://pub.dev/packages/dio)           | HTTP クライアント      |
+| [cached_query](https://pub.dev/packages/cached_query) | データキャッシュとクエリ |
+
+## コア機能
+
+### 家計簿エンジン
+
+| 機能        | 説明                                                         |
+|:----------|:-----------------------------------------------------------|
+| 取引管理      | 支出/収入/振替/残高調整の 4 種類、カテゴリ金額分割、タグ関連付け、添付ファイル管理            |
+| 残高確認      | 取引確認後にアカウント残高を自動更新、削除時に自動ロールバック、資金の一貫性を保証             |
+| 統計分析      | カテゴリ/タグ/受取人別の集計分析、支出/収入/純額統計、資産負債概览                 |
+| クロス通貨振替   | 振替時に換算金額を自動計算、多通貨アカウント間の資金移動をサポート                   |
+
+### アカウントと帳簿
+
+| 機能        | 説明                                                         |
+|:----------|:-----------------------------------------------------------|
+| 帳簿管理      | マルチテナント帳簿、デフォルトアカウント/カテゴリ設定、有効/無効切り替え               |
+| アカウント管理   | 当座/クレジット/資産/負債の 4 種類、機能フラグ（支出/収入/振替出/振替入可）、残高調整    |
+| 残高調整      | 残高調整時に ADJUST 取引レコードを自動作成、調整監査証跡を保持                 |
+| 通貨管理      | 10 種類の通貨為替レートキャッシュ内蔵、レート更新と通貨換算計算をサポート             |
+
+### カテゴリシステム
+
+| 機能        | 説明                                                         |
+|:----------|:-----------------------------------------------------------|
+| 階層カテゴリ    | 支出/収入カテゴリは 4 階層のツリー構造をサポート、帳簿別に分離                   |
+| 階層タグ      | タグはツリー構造をサポート、機能フラグ（支出/収入/振替可）                    |
+| 受取人管理     | 帳簿別に分離された受取人/支払人管理、機能フラグ制御                        |
+| 定期リマインダー  | 毎日/毎月/毎年の繰り返しリマインダー、実行と取り消し操作をサポート                |
+
+### セキュリティ
+
+| 機能        | 説明                                                         |
+|:----------|:-----------------------------------------------------------|
+| マルチテナント分離 | すべての家計データはテナント別に分離、ent TenantID mixin に基づく          |
+| JWT 認証    | HS256 JWT トークン、Admin/App デュアル認証設定                    |
+| RBAC 認可   | Casbin/OPA ポリシーエンジン、メニュー/API/データの 3 レベル権限管理       |
+| 監査ログ      | API/ログイン/操作/データアクセス/権限監査ログ                        |
+
+## クイックスタート
+
+### 前提条件
+
+- Go 1.25+
+- Node.js 20+ / pnpm 9+
+- Flutter 3.12+ / Dart 3.12+
+- Docker & Docker Compose
+- PostgreSQL 15+ / Redis 7+ / MinIO / etcd
+
+### 1. インフラストラクチャの起動
+
+```bash
+cd backend
+docker-compose up -d postgres redis minio etcd
+```
+
+### 2. バックエンドサービスの起動
+
+```bash
+cd backend
+make compose-up-libs    # インフラ起動
+make run                # 全サービス実行
+```
+
+### 3. Admin コンソールの起動
+
+```bash
+cd frontend/admin
+pnpm install
+pnpm dev
+```
+
+### 4. Flutter アプリの起動
+
+```bash
+cd frontend/app/flutter_app
+flutter pub get
+flutter run
+```
+
+## 開発コマンド
+
+| コマンド              | 説明                                 |
+|:------------------|:-----------------------------------|
+| `make gen`        | 全コード生成（ent + wire + api + openapi）   |
+| `make api`        | Proto → Go コード生成                  |
+| `make ent`        | Ent ORM コード生成                    |
+| `make wire`       | Wire DI コード生成                    |
+| `make build`      | 全サービスコンパイル                       |
+| `make run`        | 全サービス実行                         |
+| `make compose-up` | Docker Compose 全起動                |
+
+## ライセンス
+
+[MIT License](./LICENSE)
