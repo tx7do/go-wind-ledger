@@ -73,6 +73,8 @@ func NewGrpcServer(
 	currencyService      *service.CurrencyService,
 	reportService        *service.ReportService,
 	flowFileService      *service.FlowFileService,
+	membershipService    *service.MembershipService,
+	budgetService        *service.BudgetService,
 ) (*grpc.Server, error) {
 	cfg := ctx.GetConfig()
 
@@ -105,6 +107,7 @@ func NewGrpcServer(
 	identityV1.RegisterOrgUnitServiceServer(srv, orgUnitService)
 	identityV1.RegisterPositionServiceServer(srv, positionService)
 	identityV1.RegisterTenantServiceServer(srv, tenantService)
+	identityV1.RegisterTenantMemberServiceServer(srv, membershipService)
 
 	auditV1.RegisterLoginAuditLogServiceServer(srv, loginAuditLogService)
 	auditV1.RegisterApiAuditLogServiceServer(srv, apiAuditLogService)
@@ -125,6 +128,7 @@ func NewGrpcServer(
 	ledgerV1.RegisterCurrencyServiceServer(srv, currencyService)
 	ledgerV1.RegisterReportServiceServer(srv, reportService)
 	ledgerV1.RegisterFlowFileServiceServer(srv, flowFileService)
+	ledgerV1.RegisterBudgetServiceServer(srv, budgetService)
 
 	return srv, nil
 }

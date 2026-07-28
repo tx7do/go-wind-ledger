@@ -119,6 +119,10 @@ func NewRestServer(
 	noteDayService     *service.NoteDayService,
 	currencyService    *service.CurrencyService,
 	reportService      *service.ReportService,
+	budgetService      *service.BudgetService,
+
+	// === 成员管理 Admin BFF Services ===
+	tenantMemberService *service.TenantMemberService,
 ) *http.Server {
 	cfg := ctx.GetConfig()
 
@@ -173,6 +177,10 @@ func NewRestServer(
 		adminV1.RegisterNoteDayServiceHTTPServer(srv, noteDayService)
 		adminV1.RegisterCurrencyServiceHTTPServer(srv, currencyService)
 		adminV1.RegisterReportServiceHTTPServer(srv, reportService)
+		adminV1.RegisterBudgetServiceHTTPServer(srv, budgetService)
+
+		// === 成员管理 Admin REST API ===
+		adminV1.RegisterTenantMemberServiceHTTPServer(srv, tenantMemberService)
 
 	if cfg.GetServer().GetRest().GetEnableSwagger() {
 		swaggerUI.RegisterSwaggerUIServerWithOption(

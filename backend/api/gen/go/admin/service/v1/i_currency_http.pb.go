@@ -35,13 +35,13 @@ type CurrencyServiceHTTPServer interface {
 
 func RegisterCurrencyServiceHTTPServer(s *http.Server, srv CurrencyServiceHTTPServer) {
 	r := s.Route("/")
-	r.GET("/admin/v1/currencies/all", _CurrencyService_ListAll3_HTTP_Handler(srv))
-	r.GET("/admin/v1/currencies", _CurrencyService_List7_HTTP_Handler(srv))
+	r.GET("/admin/v1/currencies/all", _CurrencyService_ListAll4_HTTP_Handler(srv))
+	r.GET("/admin/v1/currencies", _CurrencyService_List8_HTTP_Handler(srv))
 	r.POST("/admin/v1/currencies/refresh", _CurrencyService_Refresh0_HTTP_Handler(srv))
 	r.GET("/admin/v1/currencies/calc", _CurrencyService_Convert0_HTTP_Handler(srv))
 }
 
-func _CurrencyService_ListAll3_HTTP_Handler(srv CurrencyServiceHTTPServer) func(ctx http.Context) error {
+func _CurrencyService_ListAll4_HTTP_Handler(srv CurrencyServiceHTTPServer) func(ctx http.Context) error {
 	return func(ctx http.Context) error {
 		var in v1.ListAllCurrencyRequest
 		if err := ctx.BindQuery(&in); err != nil {
@@ -60,7 +60,7 @@ func _CurrencyService_ListAll3_HTTP_Handler(srv CurrencyServiceHTTPServer) func(
 	}
 }
 
-func _CurrencyService_List7_HTTP_Handler(srv CurrencyServiceHTTPServer) func(ctx http.Context) error {
+func _CurrencyService_List8_HTTP_Handler(srv CurrencyServiceHTTPServer) func(ctx http.Context) error {
 	return func(ctx http.Context) error {
 		var in v11.PagingRequest
 		if err := ctx.BindQuery(&in); err != nil {

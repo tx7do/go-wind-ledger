@@ -134,6 +134,20 @@ func (_c *MembershipCreate) SetNillableUserID(v *uint32) *MembershipCreate {
 	return _c
 }
 
+// SetIsPrimary sets the "is_primary" field.
+func (_c *MembershipCreate) SetIsPrimary(v bool) *MembershipCreate {
+	_c.mutation.SetIsPrimary(v)
+	return _c
+}
+
+// SetNillableIsPrimary sets the "is_primary" field if the given value is not nil.
+func (_c *MembershipCreate) SetNillableIsPrimary(v *bool) *MembershipCreate {
+	if v != nil {
+		_c.SetIsPrimary(*v)
+	}
+	return _c
+}
+
 // SetStatus sets the "status" field.
 func (_c *MembershipCreate) SetStatus(v membership.Status) *MembershipCreate {
 	_c.mutation.SetStatus(v)
@@ -144,6 +158,34 @@ func (_c *MembershipCreate) SetStatus(v membership.Status) *MembershipCreate {
 func (_c *MembershipCreate) SetNillableStatus(v *membership.Status) *MembershipCreate {
 	if v != nil {
 		_c.SetStatus(*v)
+	}
+	return _c
+}
+
+// SetRoleID sets the "role_id" field.
+func (_c *MembershipCreate) SetRoleID(v uint32) *MembershipCreate {
+	_c.mutation.SetRoleID(v)
+	return _c
+}
+
+// SetNillableRoleID sets the "role_id" field if the given value is not nil.
+func (_c *MembershipCreate) SetNillableRoleID(v *uint32) *MembershipCreate {
+	if v != nil {
+		_c.SetRoleID(*v)
+	}
+	return _c
+}
+
+// SetJoinedAt sets the "joined_at" field.
+func (_c *MembershipCreate) SetJoinedAt(v time.Time) *MembershipCreate {
+	_c.mutation.SetJoinedAt(v)
+	return _c
+}
+
+// SetNillableJoinedAt sets the "joined_at" field if the given value is not nil.
+func (_c *MembershipCreate) SetNillableJoinedAt(v *time.Time) *MembershipCreate {
+	if v != nil {
+		_c.SetJoinedAt(*v)
 	}
 	return _c
 }
@@ -222,6 +264,10 @@ func (_c *MembershipCreate) defaults() error {
 	if _, ok := _c.mutation.TenantID(); !ok {
 		v := membership.DefaultTenantID
 		_c.mutation.SetTenantID(v)
+	}
+	if _, ok := _c.mutation.IsPrimary(); !ok {
+		v := membership.DefaultIsPrimary
+		_c.mutation.SetIsPrimary(v)
 	}
 	if _, ok := _c.mutation.Status(); !ok {
 		v := membership.DefaultStatus
@@ -307,9 +353,21 @@ func (_c *MembershipCreate) createSpec() (*Membership, *sqlgraph.CreateSpec) {
 		_spec.SetField(membership.FieldUserID, field.TypeUint32, value)
 		_node.UserID = &value
 	}
+	if value, ok := _c.mutation.IsPrimary(); ok {
+		_spec.SetField(membership.FieldIsPrimary, field.TypeBool, value)
+		_node.IsPrimary = &value
+	}
 	if value, ok := _c.mutation.Status(); ok {
 		_spec.SetField(membership.FieldStatus, field.TypeEnum, value)
 		_node.Status = &value
+	}
+	if value, ok := _c.mutation.RoleID(); ok {
+		_spec.SetField(membership.FieldRoleID, field.TypeUint32, value)
+		_node.RoleID = &value
+	}
+	if value, ok := _c.mutation.JoinedAt(); ok {
+		_spec.SetField(membership.FieldJoinedAt, field.TypeTime, value)
+		_node.JoinedAt = &value
 	}
 	if value, ok := _c.mutation.StartAt(); ok {
 		_spec.SetField(membership.FieldStartAt, field.TypeTime, value)
@@ -503,6 +561,24 @@ func (u *MembershipUpsert) ClearUserID() *MembershipUpsert {
 	return u
 }
 
+// SetIsPrimary sets the "is_primary" field.
+func (u *MembershipUpsert) SetIsPrimary(v bool) *MembershipUpsert {
+	u.Set(membership.FieldIsPrimary, v)
+	return u
+}
+
+// UpdateIsPrimary sets the "is_primary" field to the value that was provided on create.
+func (u *MembershipUpsert) UpdateIsPrimary() *MembershipUpsert {
+	u.SetExcluded(membership.FieldIsPrimary)
+	return u
+}
+
+// ClearIsPrimary clears the value of the "is_primary" field.
+func (u *MembershipUpsert) ClearIsPrimary() *MembershipUpsert {
+	u.SetNull(membership.FieldIsPrimary)
+	return u
+}
+
 // SetStatus sets the "status" field.
 func (u *MembershipUpsert) SetStatus(v membership.Status) *MembershipUpsert {
 	u.Set(membership.FieldStatus, v)
@@ -518,6 +594,48 @@ func (u *MembershipUpsert) UpdateStatus() *MembershipUpsert {
 // ClearStatus clears the value of the "status" field.
 func (u *MembershipUpsert) ClearStatus() *MembershipUpsert {
 	u.SetNull(membership.FieldStatus)
+	return u
+}
+
+// SetRoleID sets the "role_id" field.
+func (u *MembershipUpsert) SetRoleID(v uint32) *MembershipUpsert {
+	u.Set(membership.FieldRoleID, v)
+	return u
+}
+
+// UpdateRoleID sets the "role_id" field to the value that was provided on create.
+func (u *MembershipUpsert) UpdateRoleID() *MembershipUpsert {
+	u.SetExcluded(membership.FieldRoleID)
+	return u
+}
+
+// AddRoleID adds v to the "role_id" field.
+func (u *MembershipUpsert) AddRoleID(v uint32) *MembershipUpsert {
+	u.Add(membership.FieldRoleID, v)
+	return u
+}
+
+// ClearRoleID clears the value of the "role_id" field.
+func (u *MembershipUpsert) ClearRoleID() *MembershipUpsert {
+	u.SetNull(membership.FieldRoleID)
+	return u
+}
+
+// SetJoinedAt sets the "joined_at" field.
+func (u *MembershipUpsert) SetJoinedAt(v time.Time) *MembershipUpsert {
+	u.Set(membership.FieldJoinedAt, v)
+	return u
+}
+
+// UpdateJoinedAt sets the "joined_at" field to the value that was provided on create.
+func (u *MembershipUpsert) UpdateJoinedAt() *MembershipUpsert {
+	u.SetExcluded(membership.FieldJoinedAt)
+	return u
+}
+
+// ClearJoinedAt clears the value of the "joined_at" field.
+func (u *MembershipUpsert) ClearJoinedAt() *MembershipUpsert {
+	u.SetNull(membership.FieldJoinedAt)
 	return u
 }
 
@@ -765,6 +883,27 @@ func (u *MembershipUpsertOne) ClearUserID() *MembershipUpsertOne {
 	})
 }
 
+// SetIsPrimary sets the "is_primary" field.
+func (u *MembershipUpsertOne) SetIsPrimary(v bool) *MembershipUpsertOne {
+	return u.Update(func(s *MembershipUpsert) {
+		s.SetIsPrimary(v)
+	})
+}
+
+// UpdateIsPrimary sets the "is_primary" field to the value that was provided on create.
+func (u *MembershipUpsertOne) UpdateIsPrimary() *MembershipUpsertOne {
+	return u.Update(func(s *MembershipUpsert) {
+		s.UpdateIsPrimary()
+	})
+}
+
+// ClearIsPrimary clears the value of the "is_primary" field.
+func (u *MembershipUpsertOne) ClearIsPrimary() *MembershipUpsertOne {
+	return u.Update(func(s *MembershipUpsert) {
+		s.ClearIsPrimary()
+	})
+}
+
 // SetStatus sets the "status" field.
 func (u *MembershipUpsertOne) SetStatus(v membership.Status) *MembershipUpsertOne {
 	return u.Update(func(s *MembershipUpsert) {
@@ -783,6 +922,55 @@ func (u *MembershipUpsertOne) UpdateStatus() *MembershipUpsertOne {
 func (u *MembershipUpsertOne) ClearStatus() *MembershipUpsertOne {
 	return u.Update(func(s *MembershipUpsert) {
 		s.ClearStatus()
+	})
+}
+
+// SetRoleID sets the "role_id" field.
+func (u *MembershipUpsertOne) SetRoleID(v uint32) *MembershipUpsertOne {
+	return u.Update(func(s *MembershipUpsert) {
+		s.SetRoleID(v)
+	})
+}
+
+// AddRoleID adds v to the "role_id" field.
+func (u *MembershipUpsertOne) AddRoleID(v uint32) *MembershipUpsertOne {
+	return u.Update(func(s *MembershipUpsert) {
+		s.AddRoleID(v)
+	})
+}
+
+// UpdateRoleID sets the "role_id" field to the value that was provided on create.
+func (u *MembershipUpsertOne) UpdateRoleID() *MembershipUpsertOne {
+	return u.Update(func(s *MembershipUpsert) {
+		s.UpdateRoleID()
+	})
+}
+
+// ClearRoleID clears the value of the "role_id" field.
+func (u *MembershipUpsertOne) ClearRoleID() *MembershipUpsertOne {
+	return u.Update(func(s *MembershipUpsert) {
+		s.ClearRoleID()
+	})
+}
+
+// SetJoinedAt sets the "joined_at" field.
+func (u *MembershipUpsertOne) SetJoinedAt(v time.Time) *MembershipUpsertOne {
+	return u.Update(func(s *MembershipUpsert) {
+		s.SetJoinedAt(v)
+	})
+}
+
+// UpdateJoinedAt sets the "joined_at" field to the value that was provided on create.
+func (u *MembershipUpsertOne) UpdateJoinedAt() *MembershipUpsertOne {
+	return u.Update(func(s *MembershipUpsert) {
+		s.UpdateJoinedAt()
+	})
+}
+
+// ClearJoinedAt clears the value of the "joined_at" field.
+func (u *MembershipUpsertOne) ClearJoinedAt() *MembershipUpsertOne {
+	return u.Update(func(s *MembershipUpsert) {
+		s.ClearJoinedAt()
 	})
 }
 
@@ -1202,6 +1390,27 @@ func (u *MembershipUpsertBulk) ClearUserID() *MembershipUpsertBulk {
 	})
 }
 
+// SetIsPrimary sets the "is_primary" field.
+func (u *MembershipUpsertBulk) SetIsPrimary(v bool) *MembershipUpsertBulk {
+	return u.Update(func(s *MembershipUpsert) {
+		s.SetIsPrimary(v)
+	})
+}
+
+// UpdateIsPrimary sets the "is_primary" field to the value that was provided on create.
+func (u *MembershipUpsertBulk) UpdateIsPrimary() *MembershipUpsertBulk {
+	return u.Update(func(s *MembershipUpsert) {
+		s.UpdateIsPrimary()
+	})
+}
+
+// ClearIsPrimary clears the value of the "is_primary" field.
+func (u *MembershipUpsertBulk) ClearIsPrimary() *MembershipUpsertBulk {
+	return u.Update(func(s *MembershipUpsert) {
+		s.ClearIsPrimary()
+	})
+}
+
 // SetStatus sets the "status" field.
 func (u *MembershipUpsertBulk) SetStatus(v membership.Status) *MembershipUpsertBulk {
 	return u.Update(func(s *MembershipUpsert) {
@@ -1220,6 +1429,55 @@ func (u *MembershipUpsertBulk) UpdateStatus() *MembershipUpsertBulk {
 func (u *MembershipUpsertBulk) ClearStatus() *MembershipUpsertBulk {
 	return u.Update(func(s *MembershipUpsert) {
 		s.ClearStatus()
+	})
+}
+
+// SetRoleID sets the "role_id" field.
+func (u *MembershipUpsertBulk) SetRoleID(v uint32) *MembershipUpsertBulk {
+	return u.Update(func(s *MembershipUpsert) {
+		s.SetRoleID(v)
+	})
+}
+
+// AddRoleID adds v to the "role_id" field.
+func (u *MembershipUpsertBulk) AddRoleID(v uint32) *MembershipUpsertBulk {
+	return u.Update(func(s *MembershipUpsert) {
+		s.AddRoleID(v)
+	})
+}
+
+// UpdateRoleID sets the "role_id" field to the value that was provided on create.
+func (u *MembershipUpsertBulk) UpdateRoleID() *MembershipUpsertBulk {
+	return u.Update(func(s *MembershipUpsert) {
+		s.UpdateRoleID()
+	})
+}
+
+// ClearRoleID clears the value of the "role_id" field.
+func (u *MembershipUpsertBulk) ClearRoleID() *MembershipUpsertBulk {
+	return u.Update(func(s *MembershipUpsert) {
+		s.ClearRoleID()
+	})
+}
+
+// SetJoinedAt sets the "joined_at" field.
+func (u *MembershipUpsertBulk) SetJoinedAt(v time.Time) *MembershipUpsertBulk {
+	return u.Update(func(s *MembershipUpsert) {
+		s.SetJoinedAt(v)
+	})
+}
+
+// UpdateJoinedAt sets the "joined_at" field to the value that was provided on create.
+func (u *MembershipUpsertBulk) UpdateJoinedAt() *MembershipUpsertBulk {
+	return u.Update(func(s *MembershipUpsert) {
+		s.UpdateJoinedAt()
+	})
+}
+
+// ClearJoinedAt clears the value of the "joined_at" field.
+func (u *MembershipUpsertBulk) ClearJoinedAt() *MembershipUpsertBulk {
+	return u.Update(func(s *MembershipUpsert) {
+		s.ClearJoinedAt()
 	})
 }
 

@@ -231,6 +231,30 @@ func (f BookMutationRuleFunc) EvalMutation(ctx context.Context, m ent.Mutation) 
 	return Denyf("ent/privacy: unexpected mutation type %T, expect *ent.BookMutation", m)
 }
 
+// The BudgetQueryRuleFunc type is an adapter to allow the use of ordinary
+// functions as a query rule.
+type BudgetQueryRuleFunc func(context.Context, *ent.BudgetQuery) error
+
+// EvalQuery return f(ctx, q).
+func (f BudgetQueryRuleFunc) EvalQuery(ctx context.Context, q ent.Query) error {
+	if q, ok := q.(*ent.BudgetQuery); ok {
+		return f(ctx, q)
+	}
+	return Denyf("ent/privacy: unexpected query type %T, expect *ent.BudgetQuery", q)
+}
+
+// The BudgetMutationRuleFunc type is an adapter to allow the use of ordinary
+// functions as a mutation rule.
+type BudgetMutationRuleFunc func(context.Context, *ent.BudgetMutation) error
+
+// EvalMutation calls f(ctx, m).
+func (f BudgetMutationRuleFunc) EvalMutation(ctx context.Context, m ent.Mutation) error {
+	if m, ok := m.(*ent.BudgetMutation); ok {
+		return f(ctx, m)
+	}
+	return Denyf("ent/privacy: unexpected mutation type %T, expect *ent.BudgetMutation", m)
+}
+
 // The CategoryQueryRuleFunc type is an adapter to allow the use of ordinary
 // functions as a query rule.
 type CategoryQueryRuleFunc func(context.Context, *ent.CategoryQuery) error
@@ -517,78 +541,6 @@ func (f MembershipMutationRuleFunc) EvalMutation(ctx context.Context, m ent.Muta
 		return f(ctx, m)
 	}
 	return Denyf("ent/privacy: unexpected mutation type %T, expect *ent.MembershipMutation", m)
-}
-
-// The MembershipOrgUnitQueryRuleFunc type is an adapter to allow the use of ordinary
-// functions as a query rule.
-type MembershipOrgUnitQueryRuleFunc func(context.Context, *ent.MembershipOrgUnitQuery) error
-
-// EvalQuery return f(ctx, q).
-func (f MembershipOrgUnitQueryRuleFunc) EvalQuery(ctx context.Context, q ent.Query) error {
-	if q, ok := q.(*ent.MembershipOrgUnitQuery); ok {
-		return f(ctx, q)
-	}
-	return Denyf("ent/privacy: unexpected query type %T, expect *ent.MembershipOrgUnitQuery", q)
-}
-
-// The MembershipOrgUnitMutationRuleFunc type is an adapter to allow the use of ordinary
-// functions as a mutation rule.
-type MembershipOrgUnitMutationRuleFunc func(context.Context, *ent.MembershipOrgUnitMutation) error
-
-// EvalMutation calls f(ctx, m).
-func (f MembershipOrgUnitMutationRuleFunc) EvalMutation(ctx context.Context, m ent.Mutation) error {
-	if m, ok := m.(*ent.MembershipOrgUnitMutation); ok {
-		return f(ctx, m)
-	}
-	return Denyf("ent/privacy: unexpected mutation type %T, expect *ent.MembershipOrgUnitMutation", m)
-}
-
-// The MembershipPositionQueryRuleFunc type is an adapter to allow the use of ordinary
-// functions as a query rule.
-type MembershipPositionQueryRuleFunc func(context.Context, *ent.MembershipPositionQuery) error
-
-// EvalQuery return f(ctx, q).
-func (f MembershipPositionQueryRuleFunc) EvalQuery(ctx context.Context, q ent.Query) error {
-	if q, ok := q.(*ent.MembershipPositionQuery); ok {
-		return f(ctx, q)
-	}
-	return Denyf("ent/privacy: unexpected query type %T, expect *ent.MembershipPositionQuery", q)
-}
-
-// The MembershipPositionMutationRuleFunc type is an adapter to allow the use of ordinary
-// functions as a mutation rule.
-type MembershipPositionMutationRuleFunc func(context.Context, *ent.MembershipPositionMutation) error
-
-// EvalMutation calls f(ctx, m).
-func (f MembershipPositionMutationRuleFunc) EvalMutation(ctx context.Context, m ent.Mutation) error {
-	if m, ok := m.(*ent.MembershipPositionMutation); ok {
-		return f(ctx, m)
-	}
-	return Denyf("ent/privacy: unexpected mutation type %T, expect *ent.MembershipPositionMutation", m)
-}
-
-// The MembershipRoleQueryRuleFunc type is an adapter to allow the use of ordinary
-// functions as a query rule.
-type MembershipRoleQueryRuleFunc func(context.Context, *ent.MembershipRoleQuery) error
-
-// EvalQuery return f(ctx, q).
-func (f MembershipRoleQueryRuleFunc) EvalQuery(ctx context.Context, q ent.Query) error {
-	if q, ok := q.(*ent.MembershipRoleQuery); ok {
-		return f(ctx, q)
-	}
-	return Denyf("ent/privacy: unexpected query type %T, expect *ent.MembershipRoleQuery", q)
-}
-
-// The MembershipRoleMutationRuleFunc type is an adapter to allow the use of ordinary
-// functions as a mutation rule.
-type MembershipRoleMutationRuleFunc func(context.Context, *ent.MembershipRoleMutation) error
-
-// EvalMutation calls f(ctx, m).
-func (f MembershipRoleMutationRuleFunc) EvalMutation(ctx context.Context, m ent.Mutation) error {
-	if m, ok := m.(*ent.MembershipRoleMutation); ok {
-		return f(ctx, m)
-	}
-	return Denyf("ent/privacy: unexpected mutation type %T, expect *ent.MembershipRoleMutation", m)
 }
 
 // The MenuQueryRuleFunc type is an adapter to allow the use of ordinary
@@ -1236,6 +1188,8 @@ func queryFilter(q ent.Query) (Filter, error) {
 		return q.Filter(), nil
 	case *ent.BookQuery:
 		return q.Filter(), nil
+	case *ent.BudgetQuery:
+		return q.Filter(), nil
 	case *ent.CategoryQuery:
 		return q.Filter(), nil
 	case *ent.CategoryRelationQuery:
@@ -1259,12 +1213,6 @@ func queryFilter(q ent.Query) (Filter, error) {
 	case *ent.LoginPolicyQuery:
 		return q.Filter(), nil
 	case *ent.MembershipQuery:
-		return q.Filter(), nil
-	case *ent.MembershipOrgUnitQuery:
-		return q.Filter(), nil
-	case *ent.MembershipPositionQuery:
-		return q.Filter(), nil
-	case *ent.MembershipRoleQuery:
 		return q.Filter(), nil
 	case *ent.MenuQuery:
 		return q.Filter(), nil
@@ -1333,6 +1281,8 @@ func mutationFilter(m ent.Mutation) (Filter, error) {
 		return m.Filter(), nil
 	case *ent.BookMutation:
 		return m.Filter(), nil
+	case *ent.BudgetMutation:
+		return m.Filter(), nil
 	case *ent.CategoryMutation:
 		return m.Filter(), nil
 	case *ent.CategoryRelationMutation:
@@ -1356,12 +1306,6 @@ func mutationFilter(m ent.Mutation) (Filter, error) {
 	case *ent.LoginPolicyMutation:
 		return m.Filter(), nil
 	case *ent.MembershipMutation:
-		return m.Filter(), nil
-	case *ent.MembershipOrgUnitMutation:
-		return m.Filter(), nil
-	case *ent.MembershipPositionMutation:
-		return m.Filter(), nil
-	case *ent.MembershipRoleMutation:
 		return m.Filter(), nil
 	case *ent.MenuMutation:
 		return m.Filter(), nil

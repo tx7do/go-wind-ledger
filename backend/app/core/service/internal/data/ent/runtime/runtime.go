@@ -9,6 +9,7 @@ import (
 	"go-wind-cms/app/core/service/internal/data/ent/apiauditlog"
 	"go-wind-cms/app/core/service/internal/data/ent/balanceflow"
 	"go-wind-cms/app/core/service/internal/data/ent/book"
+	"go-wind-cms/app/core/service/internal/data/ent/budget"
 	"go-wind-cms/app/core/service/internal/data/ent/category"
 	"go-wind-cms/app/core/service/internal/data/ent/categoryrelation"
 	"go-wind-cms/app/core/service/internal/data/ent/dataaccessauditlog"
@@ -21,9 +22,6 @@ import (
 	"go-wind-cms/app/core/service/internal/data/ent/loginauditlog"
 	"go-wind-cms/app/core/service/internal/data/ent/loginpolicy"
 	"go-wind-cms/app/core/service/internal/data/ent/membership"
-	"go-wind-cms/app/core/service/internal/data/ent/membershiporgunit"
-	"go-wind-cms/app/core/service/internal/data/ent/membershipposition"
-	"go-wind-cms/app/core/service/internal/data/ent/membershiprole"
 	"go-wind-cms/app/core/service/internal/data/ent/menu"
 	"go-wind-cms/app/core/service/internal/data/ent/noteday"
 	"go-wind-cms/app/core/service/internal/data/ent/operationauditlog"
@@ -371,6 +369,54 @@ func init() {
 	bookDescID := bookMixinFields0[0].Descriptor()
 	// book.IDValidator is a validator for the "id" field. It is called by the builders before save.
 	book.IDValidator = bookDescID.Validators[0].(func(uint32) error)
+	budgetMixin := schema.Budget{}.Mixin()
+	budget.Policy = privacy.NewPolicies(budgetMixin[1], schema.Budget{})
+	budget.Hooks[0] = func(next ent.Mutator) ent.Mutator {
+		return ent.MutateFunc(func(ctx context.Context, m ent.Mutation) (ent.Value, error) {
+			if err := budget.Policy.EvalMutation(ctx, m); err != nil {
+				return nil, err
+			}
+			return next.Mutate(ctx, m)
+		})
+	}
+	budgetMixinFields0 := budgetMixin[0].Fields()
+	_ = budgetMixinFields0
+	budgetMixinFields1 := budgetMixin[1].Fields()
+	_ = budgetMixinFields1
+	budgetFields := schema.Budget{}.Fields()
+	_ = budgetFields
+	// budgetDescTenantID is the schema descriptor for tenant_id field.
+	budgetDescTenantID := budgetMixinFields1[0].Descriptor()
+	// budget.DefaultTenantID holds the default value on creation for the tenant_id field.
+	budget.DefaultTenantID = budgetDescTenantID.Default.(uint32)
+	// budgetDescName is the schema descriptor for name field.
+	budgetDescName := budgetFields[1].Descriptor()
+	// budget.NameValidator is a validator for the "name" field. It is called by the builders before save.
+	budget.NameValidator = budgetDescName.Validators[0].(func(string) error)
+	// budgetDescAmount is the schema descriptor for amount field.
+	budgetDescAmount := budgetFields[3].Descriptor()
+	// budget.DefaultAmount holds the default value on creation for the amount field.
+	budget.DefaultAmount = budgetDescAmount.Default.(float64)
+	// budgetDescUsedAmount is the schema descriptor for used_amount field.
+	budgetDescUsedAmount := budgetFields[4].Descriptor()
+	// budget.DefaultUsedAmount holds the default value on creation for the used_amount field.
+	budget.DefaultUsedAmount = budgetDescUsedAmount.Default.(float64)
+	// budgetDescEnable is the schema descriptor for enable field.
+	budgetDescEnable := budgetFields[9].Descriptor()
+	// budget.DefaultEnable holds the default value on creation for the enable field.
+	budget.DefaultEnable = budgetDescEnable.Default.(bool)
+	// budgetDescNotify is the schema descriptor for notify field.
+	budgetDescNotify := budgetFields[10].Descriptor()
+	// budget.DefaultNotify holds the default value on creation for the notify field.
+	budget.DefaultNotify = budgetDescNotify.Default.(bool)
+	// budgetDescNotes is the schema descriptor for notes field.
+	budgetDescNotes := budgetFields[11].Descriptor()
+	// budget.NotesValidator is a validator for the "notes" field. It is called by the builders before save.
+	budget.NotesValidator = budgetDescNotes.Validators[0].(func(string) error)
+	// budgetDescID is the schema descriptor for id field.
+	budgetDescID := budgetMixinFields0[0].Descriptor()
+	// budget.IDValidator is a validator for the "id" field. It is called by the builders before save.
+	budget.IDValidator = budgetDescID.Validators[0].(func(uint32) error)
 	categoryMixin := schema.Category{}.Mixin()
 	category.Policy = privacy.NewPolicies(categoryMixin[1], schema.Category{})
 	category.Hooks[0] = func(next ent.Mutator) ent.Mutator {
@@ -759,37 +805,14 @@ func init() {
 	membershipDescTenantID := membershipMixinFields3[0].Descriptor()
 	// membership.DefaultTenantID holds the default value on creation for the tenant_id field.
 	membership.DefaultTenantID = membershipDescTenantID.Default.(uint32)
+	// membershipDescIsPrimary is the schema descriptor for is_primary field.
+	membershipDescIsPrimary := membershipFields[1].Descriptor()
+	// membership.DefaultIsPrimary holds the default value on creation for the is_primary field.
+	membership.DefaultIsPrimary = membershipDescIsPrimary.Default.(bool)
 	// membershipDescID is the schema descriptor for id field.
 	membershipDescID := membershipMixinFields0[0].Descriptor()
 	// membership.IDValidator is a validator for the "id" field. It is called by the builders before save.
 	membership.IDValidator = membershipDescID.Validators[0].(func(uint32) error)
-	membershiporgunitMixin := schema.MembershipOrgUnit{}.Mixin()
-	membershiporgunitMixinFields0 := membershiporgunitMixin[0].Fields()
-	_ = membershiporgunitMixinFields0
-	membershiporgunitFields := schema.MembershipOrgUnit{}.Fields()
-	_ = membershiporgunitFields
-	// membershiporgunitDescID is the schema descriptor for id field.
-	membershiporgunitDescID := membershiporgunitMixinFields0[0].Descriptor()
-	// membershiporgunit.IDValidator is a validator for the "id" field. It is called by the builders before save.
-	membershiporgunit.IDValidator = membershiporgunitDescID.Validators[0].(func(uint32) error)
-	membershippositionMixin := schema.MembershipPosition{}.Mixin()
-	membershippositionMixinFields0 := membershippositionMixin[0].Fields()
-	_ = membershippositionMixinFields0
-	membershippositionFields := schema.MembershipPosition{}.Fields()
-	_ = membershippositionFields
-	// membershippositionDescID is the schema descriptor for id field.
-	membershippositionDescID := membershippositionMixinFields0[0].Descriptor()
-	// membershipposition.IDValidator is a validator for the "id" field. It is called by the builders before save.
-	membershipposition.IDValidator = membershippositionDescID.Validators[0].(func(uint32) error)
-	membershiproleMixin := schema.MembershipRole{}.Mixin()
-	membershiproleMixinFields0 := membershiproleMixin[0].Fields()
-	_ = membershiproleMixinFields0
-	membershiproleFields := schema.MembershipRole{}.Fields()
-	_ = membershiproleFields
-	// membershiproleDescID is the schema descriptor for id field.
-	membershiproleDescID := membershiproleMixinFields0[0].Descriptor()
-	// membershiprole.IDValidator is a validator for the "id" field. It is called by the builders before save.
-	membershiprole.IDValidator = membershiproleDescID.Validators[0].(func(uint32) error)
 	menuMixin := schema.Menu{}.Mixin()
 	menuMixinFields0 := menuMixin[0].Fields()
 	_ = menuMixinFields0

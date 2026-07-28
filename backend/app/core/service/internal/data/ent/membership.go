@@ -32,13 +32,19 @@ type Membership struct {
 	DeletedBy *uint32 `json:"deleted_by,omitempty"`
 	// 租户ID
 	TenantID *uint32 `json:"tenant_id,omitempty"`
-	// UserID holds the value of the "user_id" field.
+	// 用户ID
 	UserID *uint32 `json:"user_id,omitempty"`
-	// Status holds the value of the "status" field.
+	// 是否主身份
+	IsPrimary *bool `json:"is_primary,omitempty"`
+	// 成员状态
 	Status *membership.Status `json:"status,omitempty"`
-	// StartAt holds the value of the "start_at" field.
+	// 角色ID
+	RoleID *uint32 `json:"role_id,omitempty"`
+	// 加入时间
+	JoinedAt *time.Time `json:"joined_at,omitempty"`
+	// 生效时间
 	StartAt *time.Time `json:"start_at,omitempty"`
-	// EndAt holds the value of the "end_at" field.
+	// 失效时间
 	EndAt        *time.Time `json:"end_at,omitempty"`
 	selectValues sql.SelectValues
 }
@@ -48,11 +54,13 @@ func (*Membership) scanValues(columns []string) ([]any, error) {
 	values := make([]any, len(columns))
 	for i := range columns {
 		switch columns[i] {
-		case membership.FieldID, membership.FieldCreatedBy, membership.FieldUpdatedBy, membership.FieldDeletedBy, membership.FieldTenantID, membership.FieldUserID:
+		case membership.FieldIsPrimary:
+			values[i] = new(sql.NullBool)
+		case membership.FieldID, membership.FieldCreatedBy, membership.FieldUpdatedBy, membership.FieldDeletedBy, membership.FieldTenantID, membership.FieldUserID, membership.FieldRoleID:
 			values[i] = new(sql.NullInt64)
 		case membership.FieldStatus:
 			values[i] = new(sql.NullString)
-		case membership.FieldCreatedAt, membership.FieldUpdatedAt, membership.FieldDeletedAt, membership.FieldStartAt, membership.FieldEndAt:
+		case membership.FieldCreatedAt, membership.FieldUpdatedAt, membership.FieldDeletedAt, membership.FieldJoinedAt, membership.FieldStartAt, membership.FieldEndAt:
 			values[i] = new(sql.NullTime)
 		default:
 			values[i] = new(sql.UnknownType)
@@ -131,12 +139,33 @@ func (_m *Membership) assignValues(columns []string, values []any) error {
 				_m.UserID = new(uint32)
 				*_m.UserID = uint32(value.Int64)
 			}
+		case membership.FieldIsPrimary:
+			if value, ok := values[i].(*sql.NullBool); !ok {
+				return fmt.Errorf("unexpected type %T for field is_primary", values[i])
+			} else if value.Valid {
+				_m.IsPrimary = new(bool)
+				*_m.IsPrimary = value.Bool
+			}
 		case membership.FieldStatus:
 			if value, ok := values[i].(*sql.NullString); !ok {
 				return fmt.Errorf("unexpected type %T for field status", values[i])
 			} else if value.Valid {
 				_m.Status = new(membership.Status)
 				*_m.Status = membership.Status(value.String)
+			}
+		case membership.FieldRoleID:
+			if value, ok := values[i].(*sql.NullInt64); !ok {
+				return fmt.Errorf("unexpected type %T for field role_id", values[i])
+			} else if value.Valid {
+				_m.RoleID = new(uint32)
+				*_m.RoleID = uint32(value.Int64)
+			}
+		case membership.FieldJoinedAt:
+			if value, ok := values[i].(*sql.NullTime); !ok {
+				return fmt.Errorf("unexpected type %T for field joined_at", values[i])
+			} else if value.Valid {
+				_m.JoinedAt = new(time.Time)
+				*_m.JoinedAt = value.Time
 			}
 		case membership.FieldStartAt:
 			if value, ok := values[i].(*sql.NullTime); !ok {
@@ -228,9 +257,24 @@ func (_m *Membership) String() string {
 		builder.WriteString(fmt.Sprintf("%v", *v))
 	}
 	builder.WriteString(", ")
+	if v := _m.IsPrimary; v != nil {
+		builder.WriteString("is_primary=")
+		builder.WriteString(fmt.Sprintf("%v", *v))
+	}
+	builder.WriteString(", ")
 	if v := _m.Status; v != nil {
 		builder.WriteString("status=")
 		builder.WriteString(fmt.Sprintf("%v", *v))
+	}
+	builder.WriteString(", ")
+	if v := _m.RoleID; v != nil {
+		builder.WriteString("role_id=")
+		builder.WriteString(fmt.Sprintf("%v", *v))
+	}
+	builder.WriteString(", ")
+	if v := _m.JoinedAt; v != nil {
+		builder.WriteString("joined_at=")
+		builder.WriteString(v.Format(time.ANSIC))
 	}
 	builder.WriteString(", ")
 	if v := _m.StartAt; v != nil {

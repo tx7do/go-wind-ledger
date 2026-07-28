@@ -61,6 +61,10 @@ var ProviderSet = wire.NewSet(
 	service.NewNoteDayService,
 	service.NewCurrencyService,
 	service.NewReportService,
+	service.NewBudgetService,
+
+	// === 成员管理 Admin BFF Services ===
+	service.NewTenantMemberService,
 
 	service.NewTranslatorService,
 )

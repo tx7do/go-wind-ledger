@@ -395,3 +395,21 @@ func NewReportServiceClient(ctx *bootstrap.Context, r registry.Discovery) ledger
 	}
 	return ledgerV1.NewReportServiceClient(cli)
 }
+
+func NewBudgetServiceClient(ctx *bootstrap.Context, r registry.Discovery) ledgerV1.BudgetServiceClient {
+	cli, err := rpc.CreateGrpcClient(ctx.Context(), r, serviceid.NewDiscoveryName(serviceid.CoreService), ctx.GetConfig())
+	if err != nil {
+		return nil
+	}
+	return ledgerV1.NewBudgetServiceClient(cli)
+}
+
+// === 成员管理 gRPC Clients ===
+
+func NewTenantMemberServiceClient(ctx *bootstrap.Context, r registry.Discovery) identityV1.TenantMemberServiceClient {
+	cli, err := rpc.CreateGrpcClient(ctx.Context(), r, serviceid.NewDiscoveryName(serviceid.CoreService), ctx.GetConfig())
+	if err != nil {
+		return nil
+	}
+	return identityV1.NewTenantMemberServiceClient(cli)
+}

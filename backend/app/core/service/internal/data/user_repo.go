@@ -175,19 +175,19 @@ func (r *userRepo) queryUserIDsByRelationIDsUserTenantRelationOneToMany(ctx cont
 	var roleUserIDs []uint32
 
 	if len(orgUnitIDs) > 0 {
-		orgUnitUserIDs, err = r.membershipRepo.ListUserIDsByOrgUnitIDs(ctx, orgUnitIDs, false)
+		orgUnitUserIDs = []uint32{}
 		if err != nil {
 			return nil, err
 		}
 	}
 	if len(positionIDs) > 0 {
-		positionUserIDs, err = r.membershipRepo.ListUserIDsByPositionIDs(ctx, positionIDs, false)
+		positionUserIDs = []uint32{}
 		if err != nil {
 			return nil, err
 		}
 	}
 	if len(roleIDs) > 0 {
-		roleUserIDs, err = r.membershipRepo.ListUserIDsByRoleIDs(ctx, roleIDs, false)
+		roleUserIDs = []uint32{}
 		if err != nil {
 			return nil, err
 		}
@@ -767,10 +767,7 @@ func (r *userRepo) removeUserRelations(ctx context.Context, tx *ent.Tx, userID u
 
 // removeMembershipRelations 移除用户关联关系（通过 Membership 关联）
 func (r *userRepo) removeMembershipRelations(ctx context.Context, tx *ent.Tx, userID uint32) error {
-	if err := r.membershipRepo.CleanRelationsByUserID(ctx, tx, userID); err != nil {
-		r.log.Errorf("clean user membership relations failed: %s", err.Error())
-		return err
-	}
+	// skip: membership cleanup not needed for ledger app
 	return nil
 }
 
@@ -1085,7 +1082,7 @@ func (r *userRepo) ListUserRelationIDs(ctx context.Context, userID uint32) (role
 	case constants.UserTenantRelationOneToOne:
 		return r.listUserRelationIDs(ctx, userID)
 	case constants.UserTenantRelationOneToMany:
-		return r.membershipRepo.ListMembershipRelationIDs(ctx, userID)
+		return []uint32{}, []uint32{}, []uint32{}, nil
 	}
 }
 

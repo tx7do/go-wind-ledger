@@ -68,6 +68,18 @@ func (f BookFunc) Mutate(ctx context.Context, m ent.Mutation) (ent.Value, error)
 	return nil, fmt.Errorf("unexpected mutation type %T. expect *ent.BookMutation", m)
 }
 
+// The BudgetFunc type is an adapter to allow the use of ordinary
+// function as Budget mutator.
+type BudgetFunc func(context.Context, *ent.BudgetMutation) (ent.Value, error)
+
+// Mutate calls f(ctx, m).
+func (f BudgetFunc) Mutate(ctx context.Context, m ent.Mutation) (ent.Value, error) {
+	if mv, ok := m.(*ent.BudgetMutation); ok {
+		return f(ctx, mv)
+	}
+	return nil, fmt.Errorf("unexpected mutation type %T. expect *ent.BudgetMutation", m)
+}
+
 // The CategoryFunc type is an adapter to allow the use of ordinary
 // function as Category mutator.
 type CategoryFunc func(context.Context, *ent.CategoryMutation) (ent.Value, error)
@@ -210,42 +222,6 @@ func (f MembershipFunc) Mutate(ctx context.Context, m ent.Mutation) (ent.Value, 
 		return f(ctx, mv)
 	}
 	return nil, fmt.Errorf("unexpected mutation type %T. expect *ent.MembershipMutation", m)
-}
-
-// The MembershipOrgUnitFunc type is an adapter to allow the use of ordinary
-// function as MembershipOrgUnit mutator.
-type MembershipOrgUnitFunc func(context.Context, *ent.MembershipOrgUnitMutation) (ent.Value, error)
-
-// Mutate calls f(ctx, m).
-func (f MembershipOrgUnitFunc) Mutate(ctx context.Context, m ent.Mutation) (ent.Value, error) {
-	if mv, ok := m.(*ent.MembershipOrgUnitMutation); ok {
-		return f(ctx, mv)
-	}
-	return nil, fmt.Errorf("unexpected mutation type %T. expect *ent.MembershipOrgUnitMutation", m)
-}
-
-// The MembershipPositionFunc type is an adapter to allow the use of ordinary
-// function as MembershipPosition mutator.
-type MembershipPositionFunc func(context.Context, *ent.MembershipPositionMutation) (ent.Value, error)
-
-// Mutate calls f(ctx, m).
-func (f MembershipPositionFunc) Mutate(ctx context.Context, m ent.Mutation) (ent.Value, error) {
-	if mv, ok := m.(*ent.MembershipPositionMutation); ok {
-		return f(ctx, mv)
-	}
-	return nil, fmt.Errorf("unexpected mutation type %T. expect *ent.MembershipPositionMutation", m)
-}
-
-// The MembershipRoleFunc type is an adapter to allow the use of ordinary
-// function as MembershipRole mutator.
-type MembershipRoleFunc func(context.Context, *ent.MembershipRoleMutation) (ent.Value, error)
-
-// Mutate calls f(ctx, m).
-func (f MembershipRoleFunc) Mutate(ctx context.Context, m ent.Mutation) (ent.Value, error) {
-	if mv, ok := m.(*ent.MembershipRoleMutation); ok {
-		return f(ctx, mv)
-	}
-	return nil, fmt.Errorf("unexpected mutation type %T. expect *ent.MembershipRoleMutation", m)
 }
 
 // The MenuFunc type is an adapter to allow the use of ordinary

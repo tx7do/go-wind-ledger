@@ -33,11 +33,11 @@ type FlowFileServiceHTTPServer interface {
 
 func RegisterFlowFileServiceHTTPServer(s *http.Server, srv FlowFileServiceHTTPServer) {
 	r := s.Route("/")
-	r.GET("/admin/v1/flow-files", _FlowFileService_List12_HTTP_Handler(srv))
-	r.DELETE("/admin/v1/flow-files/{id}", _FlowFileService_Delete9_HTTP_Handler(srv))
+	r.GET("/admin/v1/flow-files", _FlowFileService_List13_HTTP_Handler(srv))
+	r.DELETE("/admin/v1/flow-files/{id}", _FlowFileService_Delete10_HTTP_Handler(srv))
 }
 
-func _FlowFileService_List12_HTTP_Handler(srv FlowFileServiceHTTPServer) func(ctx http.Context) error {
+func _FlowFileService_List13_HTTP_Handler(srv FlowFileServiceHTTPServer) func(ctx http.Context) error {
 	return func(ctx http.Context) error {
 		var in v1.ListFlowFileRequest
 		if err := ctx.BindQuery(&in); err != nil {
@@ -56,7 +56,7 @@ func _FlowFileService_List12_HTTP_Handler(srv FlowFileServiceHTTPServer) func(ct
 	}
 }
 
-func _FlowFileService_Delete9_HTTP_Handler(srv FlowFileServiceHTTPServer) func(ctx http.Context) error {
+func _FlowFileService_Delete10_HTTP_Handler(srv FlowFileServiceHTTPServer) func(ctx http.Context) error {
 	return func(ctx http.Context) error {
 		var in v1.DeleteFlowFileRequest
 		if err := ctx.BindQuery(&in); err != nil {

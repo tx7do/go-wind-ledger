@@ -95,6 +95,8 @@
     "noteDay": "Reminders",
     "currency": "Currencies",
     "report": "Reports",
-    "flowFile": "Flow Files"
+    "flowFile": "Flow Files",
+    "member": "Members",
+    "budget": "Budgets"
   }
 }

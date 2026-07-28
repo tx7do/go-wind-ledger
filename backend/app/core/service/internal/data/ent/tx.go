@@ -22,6 +22,8 @@ type Tx struct {
 	BalanceFlow *BalanceFlowClient
 	// Book is the client for interacting with the Book builders.
 	Book *BookClient
+	// Budget is the client for interacting with the Budget builders.
+	Budget *BudgetClient
 	// Category is the client for interacting with the Category builders.
 	Category *CategoryClient
 	// CategoryRelation is the client for interacting with the CategoryRelation builders.
@@ -46,12 +48,6 @@ type Tx struct {
 	LoginPolicy *LoginPolicyClient
 	// Membership is the client for interacting with the Membership builders.
 	Membership *MembershipClient
-	// MembershipOrgUnit is the client for interacting with the MembershipOrgUnit builders.
-	MembershipOrgUnit *MembershipOrgUnitClient
-	// MembershipPosition is the client for interacting with the MembershipPosition builders.
-	MembershipPosition *MembershipPositionClient
-	// MembershipRole is the client for interacting with the MembershipRole builders.
-	MembershipRole *MembershipRoleClient
 	// Menu is the client for interacting with the Menu builders.
 	Menu *MenuClient
 	// NoteDay is the client for interacting with the NoteDay builders.
@@ -238,6 +234,7 @@ func (tx *Tx) init() {
 	tx.ApiAuditLog = NewApiAuditLogClient(tx.config)
 	tx.BalanceFlow = NewBalanceFlowClient(tx.config)
 	tx.Book = NewBookClient(tx.config)
+	tx.Budget = NewBudgetClient(tx.config)
 	tx.Category = NewCategoryClient(tx.config)
 	tx.CategoryRelation = NewCategoryRelationClient(tx.config)
 	tx.DataAccessAuditLog = NewDataAccessAuditLogClient(tx.config)
@@ -250,9 +247,6 @@ func (tx *Tx) init() {
 	tx.LoginAuditLog = NewLoginAuditLogClient(tx.config)
 	tx.LoginPolicy = NewLoginPolicyClient(tx.config)
 	tx.Membership = NewMembershipClient(tx.config)
-	tx.MembershipOrgUnit = NewMembershipOrgUnitClient(tx.config)
-	tx.MembershipPosition = NewMembershipPositionClient(tx.config)
-	tx.MembershipRole = NewMembershipRoleClient(tx.config)
 	tx.Menu = NewMenuClient(tx.config)
 	tx.NoteDay = NewNoteDayClient(tx.config)
 	tx.OperationAuditLog = NewOperationAuditLogClient(tx.config)

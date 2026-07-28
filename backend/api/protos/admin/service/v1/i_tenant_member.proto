@@ -1,0 +1,45 @@
+syntax = "proto3";
+
+package admin.service.v1;
+
+import "google/api/annotations.proto";
+import "google/protobuf/empty.proto";
+import "pagination/v1/pagination.proto";
+
+import "identity/service/v1/membership.proto";
+import "identity/service/v1/tenant_member_service.proto";
+
+// 成员管理服务（Admin BFF）
+service TenantMemberService {
+  rpc ListMembers (identity.service.v1.ListMembersRequest) returns (identity.service.v1.ListMembersResponse) {
+    option (google.api.http) = { get: "/admin/v1/memberships" };
+  }
+
+  rpc InviteMember (identity.service.v1.InviteMemberRequest) returns (identity.service.v1.Membership) {
+    option (google.api.http) = { post: "/admin/v1/memberships/invite" body: "*" };
+  }
+
+  rpc AcceptInvite (identity.service.v1.AcceptInviteRequest) returns (identity.service.v1.Membership) {
+    option (google.api.http) = { patch: "/admin/v1/memberships/{id}/accept" body: "*" };
+  }
+
+  rpc RejectInvite (identity.service.v1.RejectInviteRequest) returns (google.protobuf.Empty) {
+    option (google.api.http) = { patch: "/admin/v1/memberships/{id}/reject" body: "*" };
+  }
+
+  rpc RemoveMember (identity.service.v1.RemoveMemberRequest) returns (google.protobuf.Empty) {
+    option (google.api.http) = { delete: "/admin/v1/memberships/remove" };
+  }
+
+  rpc ListMyTenants (identity.service.v1.ListMyTenantsRequest) returns (identity.service.v1.ListMyTenantsResponse) {
+    option (google.api.http) = { get: "/admin/v1/memberships/my-tenants" };
+  }
+
+  rpc GetMembership (identity.service.v1.GetMembershipRequest) returns (identity.service.v1.Membership) {
+    option (google.api.http) = { get: "/admin/v1/memberships/{id}" };
+  }
+
+  rpc UpdateMembership (identity.service.v1.UpdateMembershipRequest) returns (identity.service.v1.Membership) {
+    option (google.api.http) = { put: "/admin/v1/memberships/{id}" body: "*" };
+  }
+}

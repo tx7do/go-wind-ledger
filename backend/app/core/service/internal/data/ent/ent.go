@@ -11,6 +11,7 @@ import (
 	"go-wind-cms/app/core/service/internal/data/ent/apiauditlog"
 	"go-wind-cms/app/core/service/internal/data/ent/balanceflow"
 	"go-wind-cms/app/core/service/internal/data/ent/book"
+	"go-wind-cms/app/core/service/internal/data/ent/budget"
 	"go-wind-cms/app/core/service/internal/data/ent/category"
 	"go-wind-cms/app/core/service/internal/data/ent/categoryrelation"
 	"go-wind-cms/app/core/service/internal/data/ent/dataaccessauditlog"
@@ -23,9 +24,6 @@ import (
 	"go-wind-cms/app/core/service/internal/data/ent/loginauditlog"
 	"go-wind-cms/app/core/service/internal/data/ent/loginpolicy"
 	"go-wind-cms/app/core/service/internal/data/ent/membership"
-	"go-wind-cms/app/core/service/internal/data/ent/membershiporgunit"
-	"go-wind-cms/app/core/service/internal/data/ent/membershipposition"
-	"go-wind-cms/app/core/service/internal/data/ent/membershiprole"
 	"go-wind-cms/app/core/service/internal/data/ent/menu"
 	"go-wind-cms/app/core/service/internal/data/ent/noteday"
 	"go-wind-cms/app/core/service/internal/data/ent/operationauditlog"
@@ -122,6 +120,7 @@ func checkColumn(t, c string) error {
 			apiauditlog.Table:         apiauditlog.ValidColumn,
 			balanceflow.Table:         balanceflow.ValidColumn,
 			book.Table:                book.ValidColumn,
+			budget.Table:              budget.ValidColumn,
 			category.Table:            category.ValidColumn,
 			categoryrelation.Table:    categoryrelation.ValidColumn,
 			dataaccessauditlog.Table:  dataaccessauditlog.ValidColumn,
@@ -134,9 +133,6 @@ func checkColumn(t, c string) error {
 			loginauditlog.Table:       loginauditlog.ValidColumn,
 			loginpolicy.Table:         loginpolicy.ValidColumn,
 			membership.Table:          membership.ValidColumn,
-			membershiporgunit.Table:   membershiporgunit.ValidColumn,
-			membershipposition.Table:  membershipposition.ValidColumn,
-			membershiprole.Table:      membershiprole.ValidColumn,
 			menu.Table:                menu.ValidColumn,
 			noteday.Table:             noteday.ValidColumn,
 			operationauditlog.Table:   operationauditlog.ValidColumn,

@@ -54,9 +54,6 @@ var ProviderSet = wire.NewSet(
 	data.NewRolePermissionRepo,
 
 	data.NewMembershipRepo,
-	data.NewMembershipOrgUnitRepo,
-	data.NewMembershipPositionRepo,
-	data.NewMembershipRoleRepo,
 
 	data.NewApiRepo,
 	data.NewMenuRepo,
@@ -84,4 +81,5 @@ var ProviderSet = wire.NewSet(
 	data.NewBalanceFlowRepo,
 	data.NewNoteDayRepo,
 	data.NewFlowFileRepo,
+	data.NewBudgetRepo,
 )

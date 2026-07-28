@@ -94,7 +94,11 @@ func initApp(context *bootstrap.Context) (*kratos.App, func(), error) {
 	currencyService := service.NewCurrencyService(context, currencyServiceClient)
 	reportServiceClient := data.NewReportServiceClient(context, discovery)
 	reportService := service.NewReportService(context, reportServiceClient)
-	httpServer := server.NewRestServer(context, v, userService, userProfileService, roleService, tenantService, orgUnitService, positionService, menuService, apiService, permissionGroupService, permissionService, adminPortalService, taskService, authenticationService, loginPolicyService, languageService, fileService, translatorService, apiAuditLogService, dataAccessAuditLogService, loginAuditLogService, policyEvaluationLogService, operationAuditLogService, permissionAuditLogService, bookService, accountService, categoryService, tagService, payeeService, balanceFlowService, flowFileService, noteDayService, currencyService, reportService)
+	budgetServiceClient := data.NewBudgetServiceClient(context, discovery)
+	budgetService := service.NewBudgetService(context, budgetServiceClient)
+	tenantMemberServiceClient := data.NewTenantMemberServiceClient(context, discovery)
+	tenantMemberService := service.NewTenantMemberService(context, tenantMemberServiceClient)
+	httpServer := server.NewRestServer(context, v, userService, userProfileService, roleService, tenantService, orgUnitService, positionService, menuService, apiService, permissionGroupService, permissionService, adminPortalService, taskService, authenticationService, loginPolicyService, languageService, fileService, translatorService, apiAuditLogService, dataAccessAuditLogService, loginAuditLogService, policyEvaluationLogService, operationAuditLogService, permissionAuditLogService, bookService, accountService, categoryService, tagService, payeeService, balanceFlowService, flowFileService, noteDayService, currencyService, reportService, budgetService, tenantMemberService)
 	grpcMiddlewares := server.NewGrpcMiddleware(context)
 	grpcServer, err := server.NewGrpcServer(context, grpcMiddlewares)
 	if err != nil {

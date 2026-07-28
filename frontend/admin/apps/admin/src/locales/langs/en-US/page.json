@@ -935,6 +935,38 @@
       "contentType": "File Type",
       "size": "File Size",
       "createTime": "Upload Time"
+    },
+    "member": {
+      "moduleName": "Members",
+      "username": "Username",
+      "nickname": "Nickname",
+      "role": "Role",
+      "status": "Status",
+      "isPrimary": "Primary",
+      "joinedAt": "Joined At",
+      "tenant": "Tenant",
+      "button": {
+        "create": "Invite Member"
+      }
+    },
+    "budget": {
+      "moduleName": "Budgets",
+      "name": "Budget Name",
+      "book": "Book",
+      "period": "Period",
+      "amount": "Amount",
+      "usedAmount": "Used Amount",
+      "category": "Category",
+      "account": "Account",
+      "startDate": "Start Date",
+      "endDate": "End Date",
+      "enable": "Enabled",
+      "notify": "Notify",
+      "notes": "Notes",
+      "usage": "Usage",
+      "button": {
+        "create": "New Budget"
+      }
     }
   }
 }

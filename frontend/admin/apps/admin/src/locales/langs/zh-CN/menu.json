@@ -102,6 +102,8 @@
     "noteDay": "定期提醒",
     "currency": "币种管理",
     "report": "统计报表",
-    "flowFile": "流水附件"
+    "flowFile": "流水附件",
+    "member": "成员管理",
+    "budget": "预算管理"
   }
 }

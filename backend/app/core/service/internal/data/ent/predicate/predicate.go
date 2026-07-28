@@ -21,6 +21,9 @@ type BalanceFlow func(*sql.Selector)
 // Book is the predicate function for book builders.
 type Book func(*sql.Selector)
 
+// Budget is the predicate function for budget builders.
+type Budget func(*sql.Selector)
+
 // Category is the predicate function for category builders.
 type Category func(*sql.Selector)
 
@@ -56,15 +59,6 @@ type LoginPolicy func(*sql.Selector)
 
 // Membership is the predicate function for membership builders.
 type Membership func(*sql.Selector)
-
-// MembershipOrgUnit is the predicate function for membershiporgunit builders.
-type MembershipOrgUnit func(*sql.Selector)
-
-// MembershipPosition is the predicate function for membershipposition builders.
-type MembershipPosition func(*sql.Selector)
-
-// MembershipRole is the predicate function for membershiprole builders.
-type MembershipRole func(*sql.Selector)
 
 // Menu is the predicate function for menu builders.
 type Menu func(*sql.Selector)

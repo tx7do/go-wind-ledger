@@ -16,6 +16,7 @@ import (
 	"go-wind-cms/app/core/service/internal/data/ent/apiauditlog"
 	"go-wind-cms/app/core/service/internal/data/ent/balanceflow"
 	"go-wind-cms/app/core/service/internal/data/ent/book"
+	"go-wind-cms/app/core/service/internal/data/ent/budget"
 	"go-wind-cms/app/core/service/internal/data/ent/category"
 	"go-wind-cms/app/core/service/internal/data/ent/categoryrelation"
 	"go-wind-cms/app/core/service/internal/data/ent/dataaccessauditlog"
@@ -28,9 +29,6 @@ import (
 	"go-wind-cms/app/core/service/internal/data/ent/loginauditlog"
 	"go-wind-cms/app/core/service/internal/data/ent/loginpolicy"
 	"go-wind-cms/app/core/service/internal/data/ent/membership"
-	"go-wind-cms/app/core/service/internal/data/ent/membershiporgunit"
-	"go-wind-cms/app/core/service/internal/data/ent/membershipposition"
-	"go-wind-cms/app/core/service/internal/data/ent/membershiprole"
 	"go-wind-cms/app/core/service/internal/data/ent/menu"
 	"go-wind-cms/app/core/service/internal/data/ent/noteday"
 	"go-wind-cms/app/core/service/internal/data/ent/operationauditlog"
@@ -78,6 +76,8 @@ type Client struct {
 	BalanceFlow *BalanceFlowClient
 	// Book is the client for interacting with the Book builders.
 	Book *BookClient
+	// Budget is the client for interacting with the Budget builders.
+	Budget *BudgetClient
 	// Category is the client for interacting with the Category builders.
 	Category *CategoryClient
 	// CategoryRelation is the client for interacting with the CategoryRelation builders.
@@ -102,12 +102,6 @@ type Client struct {
 	LoginPolicy *LoginPolicyClient
 	// Membership is the client for interacting with the Membership builders.
 	Membership *MembershipClient
-	// MembershipOrgUnit is the client for interacting with the MembershipOrgUnit builders.
-	MembershipOrgUnit *MembershipOrgUnitClient
-	// MembershipPosition is the client for interacting with the MembershipPosition builders.
-	MembershipPosition *MembershipPositionClient
-	// MembershipRole is the client for interacting with the MembershipRole builders.
-	MembershipRole *MembershipRoleClient
 	// Menu is the client for interacting with the Menu builders.
 	Menu *MenuClient
 	// NoteDay is the client for interacting with the NoteDay builders.
@@ -174,6 +168,7 @@ func (c *Client) init() {
 	c.ApiAuditLog = NewApiAuditLogClient(c.config)
 	c.BalanceFlow = NewBalanceFlowClient(c.config)
 	c.Book = NewBookClient(c.config)
+	c.Budget = NewBudgetClient(c.config)
 	c.Category = NewCategoryClient(c.config)
 	c.CategoryRelation = NewCategoryRelationClient(c.config)
 	c.DataAccessAuditLog = NewDataAccessAuditLogClient(c.config)
@@ -186,9 +181,6 @@ func (c *Client) init() {
 	c.LoginAuditLog = NewLoginAuditLogClient(c.config)
 	c.LoginPolicy = NewLoginPolicyClient(c.config)
 	c.Membership = NewMembershipClient(c.config)
-	c.MembershipOrgUnit = NewMembershipOrgUnitClient(c.config)
-	c.MembershipPosition = NewMembershipPositionClient(c.config)
-	c.MembershipRole = NewMembershipRoleClient(c.config)
 	c.Menu = NewMenuClient(c.config)
 	c.NoteDay = NewNoteDayClient(c.config)
 	c.OperationAuditLog = NewOperationAuditLogClient(c.config)
@@ -311,6 +303,7 @@ func (c *Client) Tx(ctx context.Context) (*Tx, error) {
 		ApiAuditLog:         NewApiAuditLogClient(cfg),
 		BalanceFlow:         NewBalanceFlowClient(cfg),
 		Book:                NewBookClient(cfg),
+		Budget:              NewBudgetClient(cfg),
 		Category:            NewCategoryClient(cfg),
 		CategoryRelation:    NewCategoryRelationClient(cfg),
 		DataAccessAuditLog:  NewDataAccessAuditLogClient(cfg),
@@ -323,9 +316,6 @@ func (c *Client) Tx(ctx context.Context) (*Tx, error) {
 		LoginAuditLog:       NewLoginAuditLogClient(cfg),
 		LoginPolicy:         NewLoginPolicyClient(cfg),
 		Membership:          NewMembershipClient(cfg),
-		MembershipOrgUnit:   NewMembershipOrgUnitClient(cfg),
-		MembershipPosition:  NewMembershipPositionClient(cfg),
-		MembershipRole:      NewMembershipRoleClient(cfg),
 		Menu:                NewMenuClient(cfg),
 		NoteDay:             NewNoteDayClient(cfg),
 		OperationAuditLog:   NewOperationAuditLogClient(cfg),
@@ -375,6 +365,7 @@ func (c *Client) BeginTx(ctx context.Context, opts *sql.TxOptions) (*Tx, error) 
 		ApiAuditLog:         NewApiAuditLogClient(cfg),
 		BalanceFlow:         NewBalanceFlowClient(cfg),
 		Book:                NewBookClient(cfg),
+		Budget:              NewBudgetClient(cfg),
 		Category:            NewCategoryClient(cfg),
 		CategoryRelation:    NewCategoryRelationClient(cfg),
 		DataAccessAuditLog:  NewDataAccessAuditLogClient(cfg),
@@ -387,9 +378,6 @@ func (c *Client) BeginTx(ctx context.Context, opts *sql.TxOptions) (*Tx, error) 
 		LoginAuditLog:       NewLoginAuditLogClient(cfg),
 		LoginPolicy:         NewLoginPolicyClient(cfg),
 		Membership:          NewMembershipClient(cfg),
-		MembershipOrgUnit:   NewMembershipOrgUnitClient(cfg),
-		MembershipPosition:  NewMembershipPositionClient(cfg),
-		MembershipRole:      NewMembershipRoleClient(cfg),
 		Menu:                NewMenuClient(cfg),
 		NoteDay:             NewNoteDayClient(cfg),
 		OperationAuditLog:   NewOperationAuditLogClient(cfg),
@@ -444,15 +432,14 @@ func (c *Client) Close() error {
 // In order to add hooks to a specific client, call: `client.Node.Use(...)`.
 func (c *Client) Use(hooks ...Hook) {
 	for _, n := range []interface{ Use(...Hook) }{
-		c.Account, c.Api, c.ApiAuditLog, c.BalanceFlow, c.Book, c.Category,
+		c.Account, c.Api, c.ApiAuditLog, c.BalanceFlow, c.Book, c.Budget, c.Category,
 		c.CategoryRelation, c.DataAccessAuditLog, c.DictEntry, c.DictEntryI18n,
 		c.DictType, c.File, c.FlowFile, c.Language, c.LoginAuditLog, c.LoginPolicy,
-		c.Membership, c.MembershipOrgUnit, c.MembershipPosition, c.MembershipRole,
-		c.Menu, c.NoteDay, c.OperationAuditLog, c.OrgUnit, c.Payee, c.Permission,
-		c.PermissionApi, c.PermissionAuditLog, c.PermissionGroup, c.PermissionMenu,
-		c.PermissionPolicy, c.PolicyEvaluationLog, c.Position, c.Role, c.RoleMetadata,
-		c.RolePermission, c.Tag, c.TagRelation, c.Task, c.Tenant, c.User,
-		c.UserCredential, c.UserOrgUnit, c.UserPosition, c.UserRole,
+		c.Membership, c.Menu, c.NoteDay, c.OperationAuditLog, c.OrgUnit, c.Payee,
+		c.Permission, c.PermissionApi, c.PermissionAuditLog, c.PermissionGroup,
+		c.PermissionMenu, c.PermissionPolicy, c.PolicyEvaluationLog, c.Position,
+		c.Role, c.RoleMetadata, c.RolePermission, c.Tag, c.TagRelation, c.Task,
+		c.Tenant, c.User, c.UserCredential, c.UserOrgUnit, c.UserPosition, c.UserRole,
 	} {
 		n.Use(hooks...)
 	}
@@ -462,15 +449,14 @@ func (c *Client) Use(hooks ...Hook) {
 // In order to add interceptors to a specific client, call: `client.Node.Intercept(...)`.
 func (c *Client) Intercept(interceptors ...Interceptor) {
 	for _, n := range []interface{ Intercept(...Interceptor) }{
-		c.Account, c.Api, c.ApiAuditLog, c.BalanceFlow, c.Book, c.Category,
+		c.Account, c.Api, c.ApiAuditLog, c.BalanceFlow, c.Book, c.Budget, c.Category,
 		c.CategoryRelation, c.DataAccessAuditLog, c.DictEntry, c.DictEntryI18n,
 		c.DictType, c.File, c.FlowFile, c.Language, c.LoginAuditLog, c.LoginPolicy,
-		c.Membership, c.MembershipOrgUnit, c.MembershipPosition, c.MembershipRole,
-		c.Menu, c.NoteDay, c.OperationAuditLog, c.OrgUnit, c.Payee, c.Permission,
-		c.PermissionApi, c.PermissionAuditLog, c.PermissionGroup, c.PermissionMenu,
-		c.PermissionPolicy, c.PolicyEvaluationLog, c.Position, c.Role, c.RoleMetadata,
-		c.RolePermission, c.Tag, c.TagRelation, c.Task, c.Tenant, c.User,
-		c.UserCredential, c.UserOrgUnit, c.UserPosition, c.UserRole,
+		c.Membership, c.Menu, c.NoteDay, c.OperationAuditLog, c.OrgUnit, c.Payee,
+		c.Permission, c.PermissionApi, c.PermissionAuditLog, c.PermissionGroup,
+		c.PermissionMenu, c.PermissionPolicy, c.PolicyEvaluationLog, c.Position,
+		c.Role, c.RoleMetadata, c.RolePermission, c.Tag, c.TagRelation, c.Task,
+		c.Tenant, c.User, c.UserCredential, c.UserOrgUnit, c.UserPosition, c.UserRole,
 	} {
 		n.Intercept(interceptors...)
 	}
@@ -489,6 +475,8 @@ func (c *Client) Mutate(ctx context.Context, m Mutation) (Value, error) {
 		return c.BalanceFlow.mutate(ctx, m)
 	case *BookMutation:
 		return c.Book.mutate(ctx, m)
+	case *BudgetMutation:
+		return c.Budget.mutate(ctx, m)
 	case *CategoryMutation:
 		return c.Category.mutate(ctx, m)
 	case *CategoryRelationMutation:
@@ -513,12 +501,6 @@ func (c *Client) Mutate(ctx context.Context, m Mutation) (Value, error) {
 		return c.LoginPolicy.mutate(ctx, m)
 	case *MembershipMutation:
 		return c.Membership.mutate(ctx, m)
-	case *MembershipOrgUnitMutation:
-		return c.MembershipOrgUnit.mutate(ctx, m)
-	case *MembershipPositionMutation:
-		return c.MembershipPosition.mutate(ctx, m)
-	case *MembershipRoleMutation:
-		return c.MembershipRole.mutate(ctx, m)
 	case *MenuMutation:
 		return c.Menu.mutate(ctx, m)
 	case *NoteDayMutation:
@@ -1241,6 +1223,140 @@ func (c *BookClient) mutate(ctx context.Context, m *BookMutation) (Value, error)
 		return (&BookDelete{config: c.config, hooks: c.Hooks(), mutation: m}).Exec(ctx)
 	default:
 		return nil, fmt.Errorf("ent: unknown Book mutation op: %q", m.Op())
+	}
+}
+
+// BudgetClient is a client for the Budget schema.
+type BudgetClient struct {
+	config
+}
+
+// NewBudgetClient returns a client for the Budget from the given config.
+func NewBudgetClient(c config) *BudgetClient {
+	return &BudgetClient{config: c}
+}
+
+// Use adds a list of mutation hooks to the hooks stack.
+// A call to `Use(f, g, h)` equals to `budget.Hooks(f(g(h())))`.
+func (c *BudgetClient) Use(hooks ...Hook) {
+	c.hooks.Budget = append(c.hooks.Budget, hooks...)
+}
+
+// Intercept adds a list of query interceptors to the interceptors stack.
+// A call to `Intercept(f, g, h)` equals to `budget.Intercept(f(g(h())))`.
+func (c *BudgetClient) Intercept(interceptors ...Interceptor) {
+	c.inters.Budget = append(c.inters.Budget, interceptors...)
+}
+
+// Create returns a builder for creating a Budget entity.
+func (c *BudgetClient) Create() *BudgetCreate {
+	mutation := newBudgetMutation(c.config, OpCreate)
+	return &BudgetCreate{config: c.config, hooks: c.Hooks(), mutation: mutation}
+}
+
+// CreateBulk returns a builder for creating a bulk of Budget entities.
+func (c *BudgetClient) CreateBulk(builders ...*BudgetCreate) *BudgetCreateBulk {
+	return &BudgetCreateBulk{config: c.config, builders: builders}
+}
+
+// MapCreateBulk creates a bulk creation builder from the given slice. For each item in the slice, the function creates
+// a builder and applies setFunc on it.
+func (c *BudgetClient) MapCreateBulk(slice any, setFunc func(*BudgetCreate, int)) *BudgetCreateBulk {
+	rv := reflect.ValueOf(slice)
+	if rv.Kind() != reflect.Slice {
+		return &BudgetCreateBulk{err: fmt.Errorf("calling to BudgetClient.MapCreateBulk with wrong type %T, need slice", slice)}
+	}
+	builders := make([]*BudgetCreate, rv.Len())
+	for i := 0; i < rv.Len(); i++ {
+		builders[i] = c.Create()
+		setFunc(builders[i], i)
+	}
+	return &BudgetCreateBulk{config: c.config, builders: builders}
+}
+
+// Update returns an update builder for Budget.
+func (c *BudgetClient) Update() *BudgetUpdate {
+	mutation := newBudgetMutation(c.config, OpUpdate)
+	return &BudgetUpdate{config: c.config, hooks: c.Hooks(), mutation: mutation}
+}
+
+// UpdateOne returns an update builder for the given entity.
+func (c *BudgetClient) UpdateOne(_m *Budget) *BudgetUpdateOne {
+	mutation := newBudgetMutation(c.config, OpUpdateOne, withBudget(_m))
+	return &BudgetUpdateOne{config: c.config, hooks: c.Hooks(), mutation: mutation}
+}
+
+// UpdateOneID returns an update builder for the given id.
+func (c *BudgetClient) UpdateOneID(id uint32) *BudgetUpdateOne {
+	mutation := newBudgetMutation(c.config, OpUpdateOne, withBudgetID(id))
+	return &BudgetUpdateOne{config: c.config, hooks: c.Hooks(), mutation: mutation}
+}
+
+// Delete returns a delete builder for Budget.
+func (c *BudgetClient) Delete() *BudgetDelete {
+	mutation := newBudgetMutation(c.config, OpDelete)
+	return &BudgetDelete{config: c.config, hooks: c.Hooks(), mutation: mutation}
+}
+
+// DeleteOne returns a builder for deleting the given entity.
+func (c *BudgetClient) DeleteOne(_m *Budget) *BudgetDeleteOne {
+	return c.DeleteOneID(_m.ID)
+}
+
+// DeleteOneID returns a builder for deleting the given entity by its id.
+func (c *BudgetClient) DeleteOneID(id uint32) *BudgetDeleteOne {
+	builder := c.Delete().Where(budget.ID(id))
+	builder.mutation.id = &id
+	builder.mutation.op = OpDeleteOne
+	return &BudgetDeleteOne{builder}
+}
+
+// Query returns a query builder for Budget.
+func (c *BudgetClient) Query() *BudgetQuery {
+	return &BudgetQuery{
+		config: c.config,
+		ctx:    &QueryContext{Type: TypeBudget},
+		inters: c.Interceptors(),
+	}
+}
+
+// Get returns a Budget entity by its id.
+func (c *BudgetClient) Get(ctx context.Context, id uint32) (*Budget, error) {
+	return c.Query().Where(budget.ID(id)).Only(ctx)
+}
+
+// GetX is like Get, but panics if an error occurs.
+func (c *BudgetClient) GetX(ctx context.Context, id uint32) *Budget {
+	obj, err := c.Get(ctx, id)
+	if err != nil {
+		panic(err)
+	}
+	return obj
+}
+
+// Hooks returns the client hooks.
+func (c *BudgetClient) Hooks() []Hook {
+	hooks := c.hooks.Budget
+	return append(hooks[:len(hooks):len(hooks)], budget.Hooks[:]...)
+}
+
+// Interceptors returns the client interceptors.
+func (c *BudgetClient) Interceptors() []Interceptor {
+	return c.inters.Budget
+}
+
+func (c *BudgetClient) mutate(ctx context.Context, m *BudgetMutation) (Value, error) {
+	switch m.Op() {
+	case OpCreate:
+		return (&BudgetCreate{config: c.config, hooks: c.Hooks(), mutation: m}).Save(ctx)
+	case OpUpdate:
+		return (&BudgetUpdate{config: c.config, hooks: c.Hooks(), mutation: m}).Save(ctx)
+	case OpUpdateOne:
+		return (&BudgetUpdateOne{config: c.config, hooks: c.Hooks(), mutation: m}).Save(ctx)
+	case OpDelete, OpDeleteOne:
+		return (&BudgetDelete{config: c.config, hooks: c.Hooks(), mutation: m}).Exec(ctx)
+	default:
+		return nil, fmt.Errorf("ent: unknown Budget mutation op: %q", m.Op())
 	}
 }
 
@@ -2877,405 +2993,6 @@ func (c *MembershipClient) mutate(ctx context.Context, m *MembershipMutation) (V
 		return (&MembershipDelete{config: c.config, hooks: c.Hooks(), mutation: m}).Exec(ctx)
 	default:
 		return nil, fmt.Errorf("ent: unknown Membership mutation op: %q", m.Op())
-	}
-}
-
-// MembershipOrgUnitClient is a client for the MembershipOrgUnit schema.
-type MembershipOrgUnitClient struct {
-	config
-}
-
-// NewMembershipOrgUnitClient returns a client for the MembershipOrgUnit from the given config.
-func NewMembershipOrgUnitClient(c config) *MembershipOrgUnitClient {
-	return &MembershipOrgUnitClient{config: c}
-}
-
-// Use adds a list of mutation hooks to the hooks stack.
-// A call to `Use(f, g, h)` equals to `membershiporgunit.Hooks(f(g(h())))`.
-func (c *MembershipOrgUnitClient) Use(hooks ...Hook) {
-	c.hooks.MembershipOrgUnit = append(c.hooks.MembershipOrgUnit, hooks...)
-}
-
-// Intercept adds a list of query interceptors to the interceptors stack.
-// A call to `Intercept(f, g, h)` equals to `membershiporgunit.Intercept(f(g(h())))`.
-func (c *MembershipOrgUnitClient) Intercept(interceptors ...Interceptor) {
-	c.inters.MembershipOrgUnit = append(c.inters.MembershipOrgUnit, interceptors...)
-}
-
-// Create returns a builder for creating a MembershipOrgUnit entity.
-func (c *MembershipOrgUnitClient) Create() *MembershipOrgUnitCreate {
-	mutation := newMembershipOrgUnitMutation(c.config, OpCreate)
-	return &MembershipOrgUnitCreate{config: c.config, hooks: c.Hooks(), mutation: mutation}
-}
-
-// CreateBulk returns a builder for creating a bulk of MembershipOrgUnit entities.
-func (c *MembershipOrgUnitClient) CreateBulk(builders ...*MembershipOrgUnitCreate) *MembershipOrgUnitCreateBulk {
-	return &MembershipOrgUnitCreateBulk{config: c.config, builders: builders}
-}
-
-// MapCreateBulk creates a bulk creation builder from the given slice. For each item in the slice, the function creates
-// a builder and applies setFunc on it.
-func (c *MembershipOrgUnitClient) MapCreateBulk(slice any, setFunc func(*MembershipOrgUnitCreate, int)) *MembershipOrgUnitCreateBulk {
-	rv := reflect.ValueOf(slice)
-	if rv.Kind() != reflect.Slice {
-		return &MembershipOrgUnitCreateBulk{err: fmt.Errorf("calling to MembershipOrgUnitClient.MapCreateBulk with wrong type %T, need slice", slice)}
-	}
-	builders := make([]*MembershipOrgUnitCreate, rv.Len())
-	for i := 0; i < rv.Len(); i++ {
-		builders[i] = c.Create()
-		setFunc(builders[i], i)
-	}
-	return &MembershipOrgUnitCreateBulk{config: c.config, builders: builders}
-}
-
-// Update returns an update builder for MembershipOrgUnit.
-func (c *MembershipOrgUnitClient) Update() *MembershipOrgUnitUpdate {
-	mutation := newMembershipOrgUnitMutation(c.config, OpUpdate)
-	return &MembershipOrgUnitUpdate{config: c.config, hooks: c.Hooks(), mutation: mutation}
-}
-
-// UpdateOne returns an update builder for the given entity.
-func (c *MembershipOrgUnitClient) UpdateOne(_m *MembershipOrgUnit) *MembershipOrgUnitUpdateOne {
-	mutation := newMembershipOrgUnitMutation(c.config, OpUpdateOne, withMembershipOrgUnit(_m))
-	return &MembershipOrgUnitUpdateOne{config: c.config, hooks: c.Hooks(), mutation: mutation}
-}
-
-// UpdateOneID returns an update builder for the given id.
-func (c *MembershipOrgUnitClient) UpdateOneID(id uint32) *MembershipOrgUnitUpdateOne {
-	mutation := newMembershipOrgUnitMutation(c.config, OpUpdateOne, withMembershipOrgUnitID(id))
-	return &MembershipOrgUnitUpdateOne{config: c.config, hooks: c.Hooks(), mutation: mutation}
-}
-
-// Delete returns a delete builder for MembershipOrgUnit.
-func (c *MembershipOrgUnitClient) Delete() *MembershipOrgUnitDelete {
-	mutation := newMembershipOrgUnitMutation(c.config, OpDelete)
-	return &MembershipOrgUnitDelete{config: c.config, hooks: c.Hooks(), mutation: mutation}
-}
-
-// DeleteOne returns a builder for deleting the given entity.
-func (c *MembershipOrgUnitClient) DeleteOne(_m *MembershipOrgUnit) *MembershipOrgUnitDeleteOne {
-	return c.DeleteOneID(_m.ID)
-}
-
-// DeleteOneID returns a builder for deleting the given entity by its id.
-func (c *MembershipOrgUnitClient) DeleteOneID(id uint32) *MembershipOrgUnitDeleteOne {
-	builder := c.Delete().Where(membershiporgunit.ID(id))
-	builder.mutation.id = &id
-	builder.mutation.op = OpDeleteOne
-	return &MembershipOrgUnitDeleteOne{builder}
-}
-
-// Query returns a query builder for MembershipOrgUnit.
-func (c *MembershipOrgUnitClient) Query() *MembershipOrgUnitQuery {
-	return &MembershipOrgUnitQuery{
-		config: c.config,
-		ctx:    &QueryContext{Type: TypeMembershipOrgUnit},
-		inters: c.Interceptors(),
-	}
-}
-
-// Get returns a MembershipOrgUnit entity by its id.
-func (c *MembershipOrgUnitClient) Get(ctx context.Context, id uint32) (*MembershipOrgUnit, error) {
-	return c.Query().Where(membershiporgunit.ID(id)).Only(ctx)
-}
-
-// GetX is like Get, but panics if an error occurs.
-func (c *MembershipOrgUnitClient) GetX(ctx context.Context, id uint32) *MembershipOrgUnit {
-	obj, err := c.Get(ctx, id)
-	if err != nil {
-		panic(err)
-	}
-	return obj
-}
-
-// Hooks returns the client hooks.
-func (c *MembershipOrgUnitClient) Hooks() []Hook {
-	return c.hooks.MembershipOrgUnit
-}
-
-// Interceptors returns the client interceptors.
-func (c *MembershipOrgUnitClient) Interceptors() []Interceptor {
-	return c.inters.MembershipOrgUnit
-}
-
-func (c *MembershipOrgUnitClient) mutate(ctx context.Context, m *MembershipOrgUnitMutation) (Value, error) {
-	switch m.Op() {
-	case OpCreate:
-		return (&MembershipOrgUnitCreate{config: c.config, hooks: c.Hooks(), mutation: m}).Save(ctx)
-	case OpUpdate:
-		return (&MembershipOrgUnitUpdate{config: c.config, hooks: c.Hooks(), mutation: m}).Save(ctx)
-	case OpUpdateOne:
-		return (&MembershipOrgUnitUpdateOne{config: c.config, hooks: c.Hooks(), mutation: m}).Save(ctx)
-	case OpDelete, OpDeleteOne:
-		return (&MembershipOrgUnitDelete{config: c.config, hooks: c.Hooks(), mutation: m}).Exec(ctx)
-	default:
-		return nil, fmt.Errorf("ent: unknown MembershipOrgUnit mutation op: %q", m.Op())
-	}
-}
-
-// MembershipPositionClient is a client for the MembershipPosition schema.
-type MembershipPositionClient struct {
-	config
-}
-
-// NewMembershipPositionClient returns a client for the MembershipPosition from the given config.
-func NewMembershipPositionClient(c config) *MembershipPositionClient {
-	return &MembershipPositionClient{config: c}
-}
-
-// Use adds a list of mutation hooks to the hooks stack.
-// A call to `Use(f, g, h)` equals to `membershipposition.Hooks(f(g(h())))`.
-func (c *MembershipPositionClient) Use(hooks ...Hook) {
-	c.hooks.MembershipPosition = append(c.hooks.MembershipPosition, hooks...)
-}
-
-// Intercept adds a list of query interceptors to the interceptors stack.
-// A call to `Intercept(f, g, h)` equals to `membershipposition.Intercept(f(g(h())))`.
-func (c *MembershipPositionClient) Intercept(interceptors ...Interceptor) {
-	c.inters.MembershipPosition = append(c.inters.MembershipPosition, interceptors...)
-}
-
-// Create returns a builder for creating a MembershipPosition entity.
-func (c *MembershipPositionClient) Create() *MembershipPositionCreate {
-	mutation := newMembershipPositionMutation(c.config, OpCreate)
-	return &MembershipPositionCreate{config: c.config, hooks: c.Hooks(), mutation: mutation}
-}
-
-// CreateBulk returns a builder for creating a bulk of MembershipPosition entities.
-func (c *MembershipPositionClient) CreateBulk(builders ...*MembershipPositionCreate) *MembershipPositionCreateBulk {
-	return &MembershipPositionCreateBulk{config: c.config, builders: builders}
-}
-
-// MapCreateBulk creates a bulk creation builder from the given slice. For each item in the slice, the function creates
-// a builder and applies setFunc on it.
-func (c *MembershipPositionClient) MapCreateBulk(slice any, setFunc func(*MembershipPositionCreate, int)) *MembershipPositionCreateBulk {
-	rv := reflect.ValueOf(slice)
-	if rv.Kind() != reflect.Slice {
-		return &MembershipPositionCreateBulk{err: fmt.Errorf("calling to MembershipPositionClient.MapCreateBulk with wrong type %T, need slice", slice)}
-	}
-	builders := make([]*MembershipPositionCreate, rv.Len())
-	for i := 0; i < rv.Len(); i++ {
-		builders[i] = c.Create()
-		setFunc(builders[i], i)
-	}
-	return &MembershipPositionCreateBulk{config: c.config, builders: builders}
-}
-
-// Update returns an update builder for MembershipPosition.
-func (c *MembershipPositionClient) Update() *MembershipPositionUpdate {
-	mutation := newMembershipPositionMutation(c.config, OpUpdate)
-	return &MembershipPositionUpdate{config: c.config, hooks: c.Hooks(), mutation: mutation}
-}
-
-// UpdateOne returns an update builder for the given entity.
-func (c *MembershipPositionClient) UpdateOne(_m *MembershipPosition) *MembershipPositionUpdateOne {
-	mutation := newMembershipPositionMutation(c.config, OpUpdateOne, withMembershipPosition(_m))
-	return &MembershipPositionUpdateOne{config: c.config, hooks: c.Hooks(), mutation: mutation}
-}
-
-// UpdateOneID returns an update builder for the given id.
-func (c *MembershipPositionClient) UpdateOneID(id uint32) *MembershipPositionUpdateOne {
-	mutation := newMembershipPositionMutation(c.config, OpUpdateOne, withMembershipPositionID(id))
-	return &MembershipPositionUpdateOne{config: c.config, hooks: c.Hooks(), mutation: mutation}
-}
-
-// Delete returns a delete builder for MembershipPosition.
-func (c *MembershipPositionClient) Delete() *MembershipPositionDelete {
-	mutation := newMembershipPositionMutation(c.config, OpDelete)
-	return &MembershipPositionDelete{config: c.config, hooks: c.Hooks(), mutation: mutation}
-}
-
-// DeleteOne returns a builder for deleting the given entity.
-func (c *MembershipPositionClient) DeleteOne(_m *MembershipPosition) *MembershipPositionDeleteOne {
-	return c.DeleteOneID(_m.ID)
-}
-
-// DeleteOneID returns a builder for deleting the given entity by its id.
-func (c *MembershipPositionClient) DeleteOneID(id uint32) *MembershipPositionDeleteOne {
-	builder := c.Delete().Where(membershipposition.ID(id))
-	builder.mutation.id = &id
-	builder.mutation.op = OpDeleteOne
-	return &MembershipPositionDeleteOne{builder}
-}
-
-// Query returns a query builder for MembershipPosition.
-func (c *MembershipPositionClient) Query() *MembershipPositionQuery {
-	return &MembershipPositionQuery{
-		config: c.config,
-		ctx:    &QueryContext{Type: TypeMembershipPosition},
-		inters: c.Interceptors(),
-	}
-}
-
-// Get returns a MembershipPosition entity by its id.
-func (c *MembershipPositionClient) Get(ctx context.Context, id uint32) (*MembershipPosition, error) {
-	return c.Query().Where(membershipposition.ID(id)).Only(ctx)
-}
-
-// GetX is like Get, but panics if an error occurs.
-func (c *MembershipPositionClient) GetX(ctx context.Context, id uint32) *MembershipPosition {
-	obj, err := c.Get(ctx, id)
-	if err != nil {
-		panic(err)
-	}
-	return obj
-}
-
-// Hooks returns the client hooks.
-func (c *MembershipPositionClient) Hooks() []Hook {
-	return c.hooks.MembershipPosition
-}
-
-// Interceptors returns the client interceptors.
-func (c *MembershipPositionClient) Interceptors() []Interceptor {
-	return c.inters.MembershipPosition
-}
-
-func (c *MembershipPositionClient) mutate(ctx context.Context, m *MembershipPositionMutation) (Value, error) {
-	switch m.Op() {
-	case OpCreate:
-		return (&MembershipPositionCreate{config: c.config, hooks: c.Hooks(), mutation: m}).Save(ctx)
-	case OpUpdate:
-		return (&MembershipPositionUpdate{config: c.config, hooks: c.Hooks(), mutation: m}).Save(ctx)
-	case OpUpdateOne:
-		return (&MembershipPositionUpdateOne{config: c.config, hooks: c.Hooks(), mutation: m}).Save(ctx)
-	case OpDelete, OpDeleteOne:
-		return (&MembershipPositionDelete{config: c.config, hooks: c.Hooks(), mutation: m}).Exec(ctx)
-	default:
-		return nil, fmt.Errorf("ent: unknown MembershipPosition mutation op: %q", m.Op())
-	}
-}
-
-// MembershipRoleClient is a client for the MembershipRole schema.
-type MembershipRoleClient struct {
-	config
-}
-
-// NewMembershipRoleClient returns a client for the MembershipRole from the given config.
-func NewMembershipRoleClient(c config) *MembershipRoleClient {
-	return &MembershipRoleClient{config: c}
-}
-
-// Use adds a list of mutation hooks to the hooks stack.
-// A call to `Use(f, g, h)` equals to `membershiprole.Hooks(f(g(h())))`.
-func (c *MembershipRoleClient) Use(hooks ...Hook) {
-	c.hooks.MembershipRole = append(c.hooks.MembershipRole, hooks...)
-}
-
-// Intercept adds a list of query interceptors to the interceptors stack.
-// A call to `Intercept(f, g, h)` equals to `membershiprole.Intercept(f(g(h())))`.
-func (c *MembershipRoleClient) Intercept(interceptors ...Interceptor) {
-	c.inters.MembershipRole = append(c.inters.MembershipRole, interceptors...)
-}
-
-// Create returns a builder for creating a MembershipRole entity.
-func (c *MembershipRoleClient) Create() *MembershipRoleCreate {
-	mutation := newMembershipRoleMutation(c.config, OpCreate)
-	return &MembershipRoleCreate{config: c.config, hooks: c.Hooks(), mutation: mutation}
-}
-
-// CreateBulk returns a builder for creating a bulk of MembershipRole entities.
-func (c *MembershipRoleClient) CreateBulk(builders ...*MembershipRoleCreate) *MembershipRoleCreateBulk {
-	return &MembershipRoleCreateBulk{config: c.config, builders: builders}
-}
-
-// MapCreateBulk creates a bulk creation builder from the given slice. For each item in the slice, the function creates
-// a builder and applies setFunc on it.
-func (c *MembershipRoleClient) MapCreateBulk(slice any, setFunc func(*MembershipRoleCreate, int)) *MembershipRoleCreateBulk {
-	rv := reflect.ValueOf(slice)
-	if rv.Kind() != reflect.Slice {
-		return &MembershipRoleCreateBulk{err: fmt.Errorf("calling to MembershipRoleClient.MapCreateBulk with wrong type %T, need slice", slice)}
-	}
-	builders := make([]*MembershipRoleCreate, rv.Len())
-	for i := 0; i < rv.Len(); i++ {
-		builders[i] = c.Create()
-		setFunc(builders[i], i)
-	}
-	return &MembershipRoleCreateBulk{config: c.config, builders: builders}
-}
-
-// Update returns an update builder for MembershipRole.
-func (c *MembershipRoleClient) Update() *MembershipRoleUpdate {
-	mutation := newMembershipRoleMutation(c.config, OpUpdate)
-	return &MembershipRoleUpdate{config: c.config, hooks: c.Hooks(), mutation: mutation}
-}
-
-// UpdateOne returns an update builder for the given entity.
-func (c *MembershipRoleClient) UpdateOne(_m *MembershipRole) *MembershipRoleUpdateOne {
-	mutation := newMembershipRoleMutation(c.config, OpUpdateOne, withMembershipRole(_m))
-	return &MembershipRoleUpdateOne{config: c.config, hooks: c.Hooks(), mutation: mutation}
-}
-
-// UpdateOneID returns an update builder for the given id.
-func (c *MembershipRoleClient) UpdateOneID(id uint32) *MembershipRoleUpdateOne {
-	mutation := newMembershipRoleMutation(c.config, OpUpdateOne, withMembershipRoleID(id))
-	return &MembershipRoleUpdateOne{config: c.config, hooks: c.Hooks(), mutation: mutation}
-}
-
-// Delete returns a delete builder for MembershipRole.
-func (c *MembershipRoleClient) Delete() *MembershipRoleDelete {
-	mutation := newMembershipRoleMutation(c.config, OpDelete)
-	return &MembershipRoleDelete{config: c.config, hooks: c.Hooks(), mutation: mutation}
-}
-
-// DeleteOne returns a builder for deleting the given entity.
-func (c *MembershipRoleClient) DeleteOne(_m *MembershipRole) *MembershipRoleDeleteOne {
-	return c.DeleteOneID(_m.ID)
-}
-
-// DeleteOneID returns a builder for deleting the given entity by its id.
-func (c *MembershipRoleClient) DeleteOneID(id uint32) *MembershipRoleDeleteOne {
-	builder := c.Delete().Where(membershiprole.ID(id))
-	builder.mutation.id = &id
-	builder.mutation.op = OpDeleteOne
-	return &MembershipRoleDeleteOne{builder}
-}
-
-// Query returns a query builder for MembershipRole.
-func (c *MembershipRoleClient) Query() *MembershipRoleQuery {
-	return &MembershipRoleQuery{
-		config: c.config,
-		ctx:    &QueryContext{Type: TypeMembershipRole},
-		inters: c.Interceptors(),
-	}
-}
-
-// Get returns a MembershipRole entity by its id.
-func (c *MembershipRoleClient) Get(ctx context.Context, id uint32) (*MembershipRole, error) {
-	return c.Query().Where(membershiprole.ID(id)).Only(ctx)
-}
-
-// GetX is like Get, but panics if an error occurs.
-func (c *MembershipRoleClient) GetX(ctx context.Context, id uint32) *MembershipRole {
-	obj, err := c.Get(ctx, id)
-	if err != nil {
-		panic(err)
-	}
-	return obj
-}
-
-// Hooks returns the client hooks.
-func (c *MembershipRoleClient) Hooks() []Hook {
-	return c.hooks.MembershipRole
-}
-
-// Interceptors returns the client interceptors.
-func (c *MembershipRoleClient) Interceptors() []Interceptor {
-	return c.inters.MembershipRole
-}
-
-func (c *MembershipRoleClient) mutate(ctx context.Context, m *MembershipRoleMutation) (Value, error) {
-	switch m.Op() {
-	case OpCreate:
-		return (&MembershipRoleCreate{config: c.config, hooks: c.Hooks(), mutation: m}).Save(ctx)
-	case OpUpdate:
-		return (&MembershipRoleUpdate{config: c.config, hooks: c.Hooks(), mutation: m}).Save(ctx)
-	case OpUpdateOne:
-		return (&MembershipRoleUpdateOne{config: c.config, hooks: c.Hooks(), mutation: m}).Save(ctx)
-	case OpDelete, OpDeleteOne:
-		return (&MembershipRoleDelete{config: c.config, hooks: c.Hooks(), mutation: m}).Exec(ctx)
-	default:
-		return nil, fmt.Errorf("ent: unknown MembershipRole mutation op: %q", m.Op())
 	}
 }
 
@@ -6721,23 +6438,23 @@ func (c *UserRoleClient) mutate(ctx context.Context, m *UserRoleMutation) (Value
 // hooks and interceptors per client, for fast access.
 type (
 	hooks struct {
-		Account, Api, ApiAuditLog, BalanceFlow, Book, Category, CategoryRelation,
-		DataAccessAuditLog, DictEntry, DictEntryI18n, DictType, File, FlowFile,
-		Language, LoginAuditLog, LoginPolicy, Membership, MembershipOrgUnit,
-		MembershipPosition, MembershipRole, Menu, NoteDay, OperationAuditLog, OrgUnit,
-		Payee, Permission, PermissionApi, PermissionAuditLog, PermissionGroup,
-		PermissionMenu, PermissionPolicy, PolicyEvaluationLog, Position, Role,
-		RoleMetadata, RolePermission, Tag, TagRelation, Task, Tenant, User,
-		UserCredential, UserOrgUnit, UserPosition, UserRole []ent.Hook
+		Account, Api, ApiAuditLog, BalanceFlow, Book, Budget, Category,
+		CategoryRelation, DataAccessAuditLog, DictEntry, DictEntryI18n, DictType, File,
+		FlowFile, Language, LoginAuditLog, LoginPolicy, Membership, Menu, NoteDay,
+		OperationAuditLog, OrgUnit, Payee, Permission, PermissionApi,
+		PermissionAuditLog, PermissionGroup, PermissionMenu, PermissionPolicy,
+		PolicyEvaluationLog, Position, Role, RoleMetadata, RolePermission, Tag,
+		TagRelation, Task, Tenant, User, UserCredential, UserOrgUnit, UserPosition,
+		UserRole []ent.Hook
 	}
 	inters struct {
-		Account, Api, ApiAuditLog, BalanceFlow, Book, Category, CategoryRelation,
-		DataAccessAuditLog, DictEntry, DictEntryI18n, DictType, File, FlowFile,
-		Language, LoginAuditLog, LoginPolicy, Membership, MembershipOrgUnit,
-		MembershipPosition, MembershipRole, Menu, NoteDay, OperationAuditLog, OrgUnit,
-		Payee, Permission, PermissionApi, PermissionAuditLog, PermissionGroup,
-		PermissionMenu, PermissionPolicy, PolicyEvaluationLog, Position, Role,
-		RoleMetadata, RolePermission, Tag, TagRelation, Task, Tenant, User,
-		UserCredential, UserOrgUnit, UserPosition, UserRole []ent.Interceptor
+		Account, Api, ApiAuditLog, BalanceFlow, Book, Budget, Category,
+		CategoryRelation, DataAccessAuditLog, DictEntry, DictEntryI18n, DictType, File,
+		FlowFile, Language, LoginAuditLog, LoginPolicy, Membership, Menu, NoteDay,
+		OperationAuditLog, OrgUnit, Payee, Permission, PermissionApi,
+		PermissionAuditLog, PermissionGroup, PermissionMenu, PermissionPolicy,
+		PolicyEvaluationLog, Position, Role, RoleMetadata, RolePermission, Tag,
+		TagRelation, Task, Tenant, User, UserCredential, UserOrgUnit, UserPosition,
+		UserRole []ent.Interceptor
 	}
 )

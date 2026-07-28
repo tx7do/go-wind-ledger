@@ -412,6 +412,23 @@
     "confirm": {
       "yes": "是",
       "no": "否"
+    },
+    "budgetPeriod": {
+      "BUDGET_PERIOD_UNSPECIFIED": "未指定",
+      "BUDGET_PERIOD_MONTHLY": "月度",
+      "BUDGET_PERIOD_QUARTERLY": "季度",
+      "BUDGET_PERIOD_YEARLY": "年度",
+      "BUDGET_PERIOD_WEEKLY": "周"
+    }
+  },
+  "membership": {
+    "status": {
+      "DISABLED": "已停用",
+      "ACTIVE": "生效中",
+      "PENDING": "待审核",
+      "INVITED": "待接受",
+      "EXPIRED": "已过期",
+      "REJECTED": "已拒绝"
     }
   }
 }

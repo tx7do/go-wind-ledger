@@ -1,0 +1,123 @@
+syntax = "proto3";
+
+package identity.service.v1;
+
+import "gnostic/openapi/v3/annotations.proto";
+import "google/protobuf/empty.proto";
+import "google/protobuf/timestamp.proto";
+import "google/protobuf/field_mask.proto";
+
+import "pagination/v1/pagination.proto";
+
+import "identity/service/v1/membership.proto";
+
+// 成员管理服务（邀请/接受/拒绝/列出/移除）
+service TenantMemberService {
+  // 列出租户成员
+  rpc ListMembers (ListMembersRequest) returns (ListMembersResponse) {}
+
+  // 邀请用户加入租户
+  rpc InviteMember (InviteMemberRequest) returns (Membership) {}
+
+  // 接受邀请
+  rpc AcceptInvite (AcceptInviteRequest) returns (Membership) {}
+
+  // 拒绝邀请
+  rpc RejectInvite (RejectInviteRequest) returns (google.protobuf.Empty) {}
+
+  // 移除成员
+  rpc RemoveMember (RemoveMemberRequest) returns (google.protobuf.Empty) {}
+
+  // 列出当前用户所属的租户
+  rpc ListMyTenants (ListMyTenantsRequest) returns (ListMyTenantsResponse) {}
+
+  // 获取成员详情
+  rpc GetMembership (GetMembershipRequest) returns (Membership) {}
+
+  // 更新成员（修改角色等）
+  rpc UpdateMembership (UpdateMembershipRequest) returns (Membership) {}
+}
+
+// 请求 - 列出租户成员
+message ListMembersRequest {
+  uint32 tenant_id = 1 [json_name = "tenantId"];
+  optional identity.service.v1.Membership.Status status = 2 [json_name = "status"];
+}
+
+// 回应 - 成员列表
+message ListMembersResponse {
+  repeated MemberInfo items = 1 [json_name = "items"];
+  uint64 total = 2 [json_name = "total"];
+}
+
+// 成员信息（含用户名/昵称）
+message MemberInfo {
+  optional uint32 id = 1 [json_name = "id"];
+  optional uint32 user_id = 2 [json_name = "userId"];
+  optional string username = 3 [json_name = "username"];
+  optional string nickname = 4 [json_name = "nickname"];
+  optional uint32 tenant_id = 5 [json_name = "tenantId"];
+  optional uint32 role_id = 6 [json_name = "roleId"];
+  optional string role_name = 7 [json_name = "roleName"];
+  optional identity.service.v1.Membership.Status status = 8 [json_name = "status"];
+  optional bool is_primary = 9 [json_name = "isPrimary"];
+  optional google.protobuf.Timestamp joined_at = 10 [json_name = "joinedAt"];
+}
+
+// 请求 - 邀请用户
+message InviteMemberRequest {
+  uint32 tenant_id = 1 [json_name = "tenantId"];
+  string username = 2 [json_name = "username"];
+  optional uint32 role_id = 3 [json_name = "roleId"];
+}
+
+// 请求 - 接受邀请
+message AcceptInviteRequest {
+  uint32 id = 1 [json_name = "id"];
+}
+
+// 请求 - 拒绝邀请
+message RejectInviteRequest {
+  uint32 id = 1 [json_name = "id"];
+}
+
+// 请求 - 移除成员
+message RemoveMemberRequest {
+  uint32 tenant_id = 1 [json_name = "tenantId"];
+  uint32 user_id = 2 [json_name = "userId"];
+}
+
+// 请求 - 列出我的租户
+message ListMyTenantsRequest {
+  optional uint32 user_id = 1 [json_name = "userId"];
+}
+
+// 租户信息（含成员角色）
+message TenantMembershipInfo {
+  optional uint32 tenant_id = 1 [json_name = "tenantId"];
+  optional string tenant_name = 2 [json_name = "tenantName"];
+  optional uint32 membership_id = 3 [json_name = "membershipId"];
+  optional uint32 role_id = 4 [json_name = "roleId"];
+  optional string role_name = 5 [json_name = "roleName"];
+  optional identity.service.v1.Membership.Status status = 6 [json_name = "status"];
+  optional bool is_primary = 7 [json_name = "isPrimary"];
+}
+
+// 回应 - 我的租户列表
+message ListMyTenantsResponse {
+  repeated TenantMembershipInfo items = 1 [json_name = "items"];
+  uint64 total = 2 [json_name = "total"];
+}
+
+// 请求 - 获取成员详情
+message GetMembershipRequest {
+  uint32 id = 1 [json_name = "id"];
+}
+
+// 请求 - 更新成员
+message UpdateMembershipRequest {
+  uint32 id = 1 [json_name = "id"];
+  Membership data = 2 [json_name = "data"];
+  google.protobuf.FieldMask update_mask = 3 [json_name = "updateMask"];
+  optional bool allow_missing = 4 [json_name = "allowMissing"];
+}

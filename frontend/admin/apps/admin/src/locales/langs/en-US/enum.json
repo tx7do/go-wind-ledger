@@ -416,6 +416,23 @@
     "confirm": {
       "yes": "Yes",
       "no": "No"
+    },
+    "budgetPeriod": {
+      "BUDGET_PERIOD_UNSPECIFIED": "Unspecified",
+      "BUDGET_PERIOD_MONTHLY": "Monthly",
+      "BUDGET_PERIOD_QUARTERLY": "Quarterly",
+      "BUDGET_PERIOD_YEARLY": "Yearly",
+      "BUDGET_PERIOD_WEEKLY": "Weekly"
+    }
+  },
+  "membership": {
+    "status": {
+      "DISABLED": "Disabled",
+      "ACTIVE": "Active",
+      "PENDING": "Pending",
+      "INVITED": "Invited",
+      "EXPIRED": "Expired",
+      "REJECTED": "Rejected"
     }
   }
 }

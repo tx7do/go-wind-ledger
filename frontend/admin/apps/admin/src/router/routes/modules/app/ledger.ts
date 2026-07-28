@@ -117,6 +117,26 @@ const ledger: RouteRecordRaw[] = [
         },
         component: () => import('#/views/app/ledger/flow-file/index.vue'),
       },
+      {
+        path: 'members',
+        name: 'MemberManagement',
+        meta: {
+          order: 10,
+          icon: 'lucide:users',
+          title: $t('menu.ledger.member'),
+        },
+        component: () => import('#/views/app/ledger/member/index.vue'),
+      },
+      {
+        path: 'budgets',
+        name: 'BudgetManagement',
+        meta: {
+          order: 11,
+          icon: 'lucide:piggy-bank',
+          title: $t('menu.ledger.budget'),
+        },
+        component: () => import('#/views/app/ledger/budget/index.vue'),
+      },
     ],
   },
 ];

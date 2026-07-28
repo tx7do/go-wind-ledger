@@ -30,8 +30,14 @@ const (
 	FieldTenantID = "tenant_id"
 	// FieldUserID holds the string denoting the user_id field in the database.
 	FieldUserID = "user_id"
+	// FieldIsPrimary holds the string denoting the is_primary field in the database.
+	FieldIsPrimary = "is_primary"
 	// FieldStatus holds the string denoting the status field in the database.
 	FieldStatus = "status"
+	// FieldRoleID holds the string denoting the role_id field in the database.
+	FieldRoleID = "role_id"
+	// FieldJoinedAt holds the string denoting the joined_at field in the database.
+	FieldJoinedAt = "joined_at"
 	// FieldStartAt holds the string denoting the start_at field in the database.
 	FieldStartAt = "start_at"
 	// FieldEndAt holds the string denoting the end_at field in the database.
@@ -51,7 +57,10 @@ var Columns = []string{
 	FieldDeletedBy,
 	FieldTenantID,
 	FieldUserID,
+	FieldIsPrimary,
 	FieldStatus,
+	FieldRoleID,
+	FieldJoinedAt,
 	FieldStartAt,
 	FieldEndAt,
 }
@@ -76,6 +85,8 @@ var (
 	Policy ent.Policy
 	// DefaultTenantID holds the default value on creation for the "tenant_id" field.
 	DefaultTenantID uint32
+	// DefaultIsPrimary holds the default value on creation for the "is_primary" field.
+	DefaultIsPrimary bool
 	// IDValidator is a validator for the "id" field. It is called by the builders before save.
 	IDValidator func(uint32) error
 )
@@ -88,9 +99,12 @@ const DefaultStatus = StatusMembershipStatusActive
 
 // Status values.
 const (
-	StatusMembershipStatusActive    Status = "MEMBERSHIP_STATUS_ACTIVE"
-	StatusMembershipStatusSuspended Status = "MEMBERSHIP_STATUS_SUSPENDED"
-	StatusMembershipStatusExpired   Status = "MEMBERSHIP_STATUS_EXPIRED"
+	StatusMembershipStatusDisabled Status = "MEMBERSHIP_STATUS_DISABLED"
+	StatusMembershipStatusActive   Status = "MEMBERSHIP_STATUS_ACTIVE"
+	StatusMembershipStatusPending  Status = "MEMBERSHIP_STATUS_PENDING"
+	StatusMembershipStatusInvited  Status = "MEMBERSHIP_STATUS_INVITED"
+	StatusMembershipStatusExpired  Status = "MEMBERSHIP_STATUS_EXPIRED"
+	StatusMembershipStatusRejected Status = "MEMBERSHIP_STATUS_REJECTED"
 )
 
 func (s Status) String() string {
@@ -100,7 +114,7 @@ func (s Status) String() string {
 // StatusValidator is a validator for the "status" field enum values. It is called by the builders before save.
 func StatusValidator(s Status) error {
 	switch s {
-	case StatusMembershipStatusActive, StatusMembershipStatusSuspended, StatusMembershipStatusExpired:
+	case StatusMembershipStatusDisabled, StatusMembershipStatusActive, StatusMembershipStatusPending, StatusMembershipStatusInvited, StatusMembershipStatusExpired, StatusMembershipStatusRejected:
 		return nil
 	default:
 		return fmt.Errorf("membership: invalid enum value for status field: %q", s)
@@ -155,9 +169,24 @@ func ByUserID(opts ...sql.OrderTermOption) OrderOption {
 	return sql.OrderByField(FieldUserID, opts...).ToFunc()
 }
 
+// ByIsPrimary orders the results by the is_primary field.
+func ByIsPrimary(opts ...sql.OrderTermOption) OrderOption {
+	return sql.OrderByField(FieldIsPrimary, opts...).ToFunc()
+}
+
 // ByStatus orders the results by the status field.
 func ByStatus(opts ...sql.OrderTermOption) OrderOption {
 	return sql.OrderByField(FieldStatus, opts...).ToFunc()
+}
+
+// ByRoleID orders the results by the role_id field.
+func ByRoleID(opts ...sql.OrderTermOption) OrderOption {
+	return sql.OrderByField(FieldRoleID, opts...).ToFunc()
+}
+
+// ByJoinedAt orders the results by the joined_at field.
+func ByJoinedAt(opts ...sql.OrderTermOption) OrderOption {
+	return sql.OrderByField(FieldJoinedAt, opts...).ToFunc()
 }
 
 // ByStartAt orders the results by the start_at field.

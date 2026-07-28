@@ -256,6 +256,63 @@ var (
 			},
 		},
 	}
+	// BudgetsColumns holds the columns for the "budgets" table.
+	BudgetsColumns = []*schema.Column{
+		{Name: "id", Type: field.TypeUint32, Increment: true, Comment: "id"},
+		{Name: "tenant_id", Type: field.TypeUint32, Nullable: true, Comment: "租户ID", Default: 0},
+		{Name: "created_at", Type: field.TypeTime, Nullable: true, Comment: "创建时间"},
+		{Name: "updated_at", Type: field.TypeTime, Nullable: true, Comment: "更新时间"},
+		{Name: "deleted_at", Type: field.TypeTime, Nullable: true, Comment: "删除时间"},
+		{Name: "created_by", Type: field.TypeUint32, Nullable: true, Comment: "创建者ID"},
+		{Name: "updated_by", Type: field.TypeUint32, Nullable: true, Comment: "更新者ID"},
+		{Name: "deleted_by", Type: field.TypeUint32, Nullable: true, Comment: "删除者ID"},
+		{Name: "book_id", Type: field.TypeUint32, Nullable: true, Comment: "所属账本ID"},
+		{Name: "name", Type: field.TypeString, Nullable: true, Size: 64, Comment: "预算名称"},
+		{Name: "period", Type: field.TypeEnum, Nullable: true, Comment: "预算周期", Enums: []string{"BUDGET_PERIOD_MONTHLY", "BUDGET_PERIOD_YEARLY", "BUDGET_PERIOD_QUARTERLY", "BUDGET_PERIOD_WEEKLY"}},
+		{Name: "amount", Type: field.TypeFloat64, Nullable: true, Comment: "预算金额", Default: 0, SchemaType: map[string]string{"mysql": "decimal(20,2)", "postgres": "numeric(20,2)"}},
+		{Name: "used_amount", Type: field.TypeFloat64, Nullable: true, Comment: "已用金额（缓存值，定期从流水汇总更新）", Default: 0, SchemaType: map[string]string{"mysql": "decimal(20,2)", "postgres": "numeric(20,2)"}},
+		{Name: "category_id", Type: field.TypeUint32, Nullable: true, Comment: "关联分类ID（可选，按分类预算）"},
+		{Name: "account_id", Type: field.TypeUint32, Nullable: true, Comment: "关联账户ID（可选，按账户预算）"},
+		{Name: "start_date", Type: field.TypeInt64, Nullable: true, Comment: "预算周期开始时间（epoch 毫秒）"},
+		{Name: "end_date", Type: field.TypeInt64, Nullable: true, Comment: "预算周期结束时间（epoch 毫秒）"},
+		{Name: "enable", Type: field.TypeBool, Nullable: true, Comment: "是否启用", Default: true},
+		{Name: "notify", Type: field.TypeBool, Nullable: true, Comment: "超额通知", Default: true},
+		{Name: "notes", Type: field.TypeString, Nullable: true, Size: 1024, Comment: "备注"},
+	}
+	// BudgetsTable holds the schema information for the "budgets" table.
+	BudgetsTable = &schema.Table{
+		Name:       "budgets",
+		Comment:    "预算表",
+		Columns:    BudgetsColumns,
+		PrimaryKey: []*schema.Column{BudgetsColumns[0]},
+		Indexes: []*schema.Index{
+			{
+				Name:    "budget_tenant_id",
+				Unique:  false,
+				Columns: []*schema.Column{BudgetsColumns[1]},
+			},
+			{
+				Name:    "budget_book_id",
+				Unique:  false,
+				Columns: []*schema.Column{BudgetsColumns[8]},
+			},
+			{
+				Name:    "budget_category_id",
+				Unique:  false,
+				Columns: []*schema.Column{BudgetsColumns[13]},
+			},
+			{
+				Name:    "budget_period",
+				Unique:  false,
+				Columns: []*schema.Column{BudgetsColumns[10]},
+			},
+			{
+				Name:    "idx_budget_book_cat",
+				Unique:  false,
+				Columns: []*schema.Column{BudgetsColumns[8], BudgetsColumns[13]},
+			},
+		},
+	}
 	// CategoriesColumns holds the columns for the "categories" table.
 	CategoriesColumns = []*schema.Column{
 		{Name: "id", Type: field.TypeUint32, Increment: true, Comment: "id"},
@@ -656,10 +713,13 @@ var (
 		{Name: "updated_by", Type: field.TypeUint32, Nullable: true, Comment: "更新者ID"},
 		{Name: "deleted_by", Type: field.TypeUint32, Nullable: true, Comment: "删除者ID"},
 		{Name: "tenant_id", Type: field.TypeUint32, Nullable: true, Comment: "租户ID", Default: 0},
-		{Name: "user_id", Type: field.TypeUint32, Nullable: true},
-		{Name: "status", Type: field.TypeEnum, Nullable: true, Enums: []string{"MEMBERSHIP_STATUS_ACTIVE", "MEMBERSHIP_STATUS_SUSPENDED", "MEMBERSHIP_STATUS_EXPIRED"}, Default: "MEMBERSHIP_STATUS_ACTIVE"},
-		{Name: "start_at", Type: field.TypeTime, Nullable: true},
-		{Name: "end_at", Type: field.TypeTime, Nullable: true},
+		{Name: "user_id", Type: field.TypeUint32, Nullable: true, Comment: "用户ID"},
+		{Name: "is_primary", Type: field.TypeBool, Nullable: true, Comment: "是否主身份", Default: false},
+		{Name: "status", Type: field.TypeEnum, Nullable: true, Comment: "成员状态", Enums: []string{"MEMBERSHIP_STATUS_DISABLED", "MEMBERSHIP_STATUS_ACTIVE", "MEMBERSHIP_STATUS_PENDING", "MEMBERSHIP_STATUS_INVITED", "MEMBERSHIP_STATUS_EXPIRED", "MEMBERSHIP_STATUS_REJECTED"}, Default: "MEMBERSHIP_STATUS_ACTIVE"},
+		{Name: "role_id", Type: field.TypeUint32, Nullable: true, Comment: "角色ID"},
+		{Name: "joined_at", Type: field.TypeTime, Nullable: true, Comment: "加入时间"},
+		{Name: "start_at", Type: field.TypeTime, Nullable: true, Comment: "生效时间"},
+		{Name: "end_at", Type: field.TypeTime, Nullable: true, Comment: "失效时间"},
 	}
 	// SysMembershipsTable holds the schema information for the "sys_memberships" table.
 	SysMembershipsTable = &schema.Table{
@@ -679,117 +739,14 @@ var (
 				Columns: []*schema.Column{SysMembershipsColumns[8]},
 			},
 			{
+				Name:    "membership_status",
+				Unique:  false,
+				Columns: []*schema.Column{SysMembershipsColumns[10]},
+			},
+			{
 				Name:    "idx_membership_tenant_user",
 				Unique:  true,
 				Columns: []*schema.Column{SysMembershipsColumns[7], SysMembershipsColumns[8]},
-			},
-		},
-	}
-	// SysMembershipOrgUnitsColumns holds the columns for the "sys_membership_org_units" table.
-	SysMembershipOrgUnitsColumns = []*schema.Column{
-		{Name: "id", Type: field.TypeUint32, Increment: true, Comment: "id"},
-		{Name: "created_at", Type: field.TypeTime, Nullable: true, Comment: "创建时间"},
-		{Name: "updated_at", Type: field.TypeTime, Nullable: true, Comment: "更新时间"},
-		{Name: "deleted_at", Type: field.TypeTime, Nullable: true, Comment: "删除时间"},
-		{Name: "created_by", Type: field.TypeUint32, Nullable: true, Comment: "创建者ID"},
-		{Name: "updated_by", Type: field.TypeUint32, Nullable: true, Comment: "更新者ID"},
-		{Name: "deleted_by", Type: field.TypeUint32, Nullable: true, Comment: "删除者ID"},
-		{Name: "membership_id", Type: field.TypeUint32, Nullable: true},
-		{Name: "org_unit_id", Type: field.TypeUint32, Nullable: true},
-	}
-	// SysMembershipOrgUnitsTable holds the schema information for the "sys_membership_org_units" table.
-	SysMembershipOrgUnitsTable = &schema.Table{
-		Name:       "sys_membership_org_units",
-		Comment:    "成员组织关联表",
-		Columns:    SysMembershipOrgUnitsColumns,
-		PrimaryKey: []*schema.Column{SysMembershipOrgUnitsColumns[0]},
-		Indexes: []*schema.Index{
-			{
-				Name:    "membershiporgunit_membership_id",
-				Unique:  false,
-				Columns: []*schema.Column{SysMembershipOrgUnitsColumns[7]},
-			},
-			{
-				Name:    "membershiporgunit_org_unit_id",
-				Unique:  false,
-				Columns: []*schema.Column{SysMembershipOrgUnitsColumns[8]},
-			},
-			{
-				Name:    "membershiporgunit_membership_id_org_unit_id",
-				Unique:  true,
-				Columns: []*schema.Column{SysMembershipOrgUnitsColumns[7], SysMembershipOrgUnitsColumns[8]},
-			},
-		},
-	}
-	// SysMembershipPositionsColumns holds the columns for the "sys_membership_positions" table.
-	SysMembershipPositionsColumns = []*schema.Column{
-		{Name: "id", Type: field.TypeUint32, Increment: true, Comment: "id"},
-		{Name: "created_at", Type: field.TypeTime, Nullable: true, Comment: "创建时间"},
-		{Name: "updated_at", Type: field.TypeTime, Nullable: true, Comment: "更新时间"},
-		{Name: "deleted_at", Type: field.TypeTime, Nullable: true, Comment: "删除时间"},
-		{Name: "created_by", Type: field.TypeUint32, Nullable: true, Comment: "创建者ID"},
-		{Name: "updated_by", Type: field.TypeUint32, Nullable: true, Comment: "更新者ID"},
-		{Name: "deleted_by", Type: field.TypeUint32, Nullable: true, Comment: "删除者ID"},
-		{Name: "membership_id", Type: field.TypeUint32, Nullable: true},
-		{Name: "position_id", Type: field.TypeUint32, Nullable: true},
-	}
-	// SysMembershipPositionsTable holds the schema information for the "sys_membership_positions" table.
-	SysMembershipPositionsTable = &schema.Table{
-		Name:       "sys_membership_positions",
-		Comment:    "成员岗位关联表",
-		Columns:    SysMembershipPositionsColumns,
-		PrimaryKey: []*schema.Column{SysMembershipPositionsColumns[0]},
-		Indexes: []*schema.Index{
-			{
-				Name:    "membershipposition_membership_id",
-				Unique:  false,
-				Columns: []*schema.Column{SysMembershipPositionsColumns[7]},
-			},
-			{
-				Name:    "membershipposition_position_id",
-				Unique:  false,
-				Columns: []*schema.Column{SysMembershipPositionsColumns[8]},
-			},
-			{
-				Name:    "membershipposition_membership_id_position_id",
-				Unique:  true,
-				Columns: []*schema.Column{SysMembershipPositionsColumns[7], SysMembershipPositionsColumns[8]},
-			},
-		},
-	}
-	// SysMembershipRolesColumns holds the columns for the "sys_membership_roles" table.
-	SysMembershipRolesColumns = []*schema.Column{
-		{Name: "id", Type: field.TypeUint32, Increment: true, Comment: "id"},
-		{Name: "created_at", Type: field.TypeTime, Nullable: true, Comment: "创建时间"},
-		{Name: "updated_at", Type: field.TypeTime, Nullable: true, Comment: "更新时间"},
-		{Name: "deleted_at", Type: field.TypeTime, Nullable: true, Comment: "删除时间"},
-		{Name: "created_by", Type: field.TypeUint32, Nullable: true, Comment: "创建者ID"},
-		{Name: "updated_by", Type: field.TypeUint32, Nullable: true, Comment: "更新者ID"},
-		{Name: "deleted_by", Type: field.TypeUint32, Nullable: true, Comment: "删除者ID"},
-		{Name: "membership_id", Type: field.TypeUint32, Nullable: true},
-		{Name: "role_id", Type: field.TypeUint32, Nullable: true},
-	}
-	// SysMembershipRolesTable holds the schema information for the "sys_membership_roles" table.
-	SysMembershipRolesTable = &schema.Table{
-		Name:       "sys_membership_roles",
-		Comment:    "成员角色关联表",
-		Columns:    SysMembershipRolesColumns,
-		PrimaryKey: []*schema.Column{SysMembershipRolesColumns[0]},
-		Indexes: []*schema.Index{
-			{
-				Name:    "membershiprole_membership_id",
-				Unique:  false,
-				Columns: []*schema.Column{SysMembershipRolesColumns[7]},
-			},
-			{
-				Name:    "membershiprole_role_id",
-				Unique:  false,
-				Columns: []*schema.Column{SysMembershipRolesColumns[8]},
-			},
-			{
-				Name:    "membershiprole_membership_id_role_id",
-				Unique:  true,
-				Columns: []*schema.Column{SysMembershipRolesColumns[7], SysMembershipRolesColumns[8]},
 			},
 		},
 	}
@@ -1805,6 +1762,7 @@ var (
 		APIAuditLogsTable,
 		BalanceFlowsTable,
 		BooksTable,
+		BudgetsTable,
 		CategoriesTable,
 		CategoryRelationsTable,
 		DataAccessAuditLogsTable,
@@ -1817,9 +1775,6 @@ var (
 		LoginAuditLogsTable,
 		SysLoginPoliciesTable,
 		SysMembershipsTable,
-		SysMembershipOrgUnitsTable,
-		SysMembershipPositionsTable,
-		SysMembershipRolesTable,
 		SysMenusTable,
 		NoteDaysTable,
 		OperationAuditLogsTable,
@@ -1871,6 +1826,11 @@ func init() {
 	}
 	BooksTable.Annotation = &entsql.Annotation{
 		Table:     "books",
+		Charset:   "utf8mb4",
+		Collation: "utf8mb4_bin",
+	}
+	BudgetsTable.Annotation = &entsql.Annotation{
+		Table:     "budgets",
 		Charset:   "utf8mb4",
 		Collation: "utf8mb4_bin",
 	}
@@ -1932,21 +1892,6 @@ func init() {
 	}
 	SysMembershipsTable.Annotation = &entsql.Annotation{
 		Table:     "sys_memberships",
-		Charset:   "utf8mb4",
-		Collation: "utf8mb4_bin",
-	}
-	SysMembershipOrgUnitsTable.Annotation = &entsql.Annotation{
-		Table:     "sys_membership_org_units",
-		Charset:   "utf8mb4",
-		Collation: "utf8mb4_bin",
-	}
-	SysMembershipPositionsTable.Annotation = &entsql.Annotation{
-		Table:     "sys_membership_positions",
-		Charset:   "utf8mb4",
-		Collation: "utf8mb4_bin",
-	}
-	SysMembershipRolesTable.Annotation = &entsql.Annotation{
-		Table:     "sys_membership_roles",
 		Charset:   "utf8mb4",
 		Collation: "utf8mb4_bin",
 	}

@@ -1,0 +1,119 @@
+syntax = "proto3";
+
+package ledger.service.v1;
+
+import "gnostic/openapi/v3/annotations.proto";
+import "google/protobuf/empty.proto";
+import "google/protobuf/timestamp.proto";
+import "google/protobuf/field_mask.proto";
+import "pagination/v1/pagination.proto";
+
+// 预算服务
+service BudgetService {
+  // 获取预算列表
+  rpc List (pagination.PagingRequest) returns (ListBudgetResponse) {}
+
+  // 获取所有预算（不分页）
+  rpc ListAll (ListAllBudgetRequest) returns (ListBudgetResponse) {}
+
+  // 获取预算数据
+  rpc Get (GetBudgetRequest) returns (Budget) {}
+
+  // 创建预算
+  rpc Create (CreateBudgetRequest) returns (Budget) {}
+
+  // 更新预算
+  rpc Update (UpdateBudgetRequest) returns (Budget) {}
+
+  // 删除预算
+  rpc Delete (DeleteBudgetRequest) returns (google.protobuf.Empty) {}
+
+  // 获取预算进度（已用金额/预算金额）
+  rpc GetProgress (GetBudgetProgressRequest) returns (BudgetProgress) {}
+}
+
+// 预算周期类型
+enum BudgetPeriod {
+  BUDGET_PERIOD_UNSPECIFIED = 0;
+  BUDGET_PERIOD_MONTHLY = 100;   // 月度预算
+  BUDGET_PERIOD_YEARLY = 200;    // 年度预算
+  BUDGET_PERIOD_QUARTERLY = 300; // 季度预算
+  BUDGET_PERIOD_WEEKLY = 400;    // 周预算
+}
+
+// 预算
+message Budget {
+  optional uint32 id = 1 [json_name = "id"];
+  optional uint32 tenant_id = 2 [json_name = "tenantId"];
+  optional uint32 book_id = 3 [json_name = "bookId"];
+
+  optional string name = 10 [json_name = "name"];
+  optional BudgetPeriod period = 11 [json_name = "period"];
+  optional string amount = 12 [json_name = "amount"];
+  optional string used_amount = 13 [json_name = "usedAmount"];
+  optional uint32 category_id = 14 [json_name = "categoryId"];
+  optional uint32 account_id = 15 [json_name = "accountId"];
+  optional int64 start_date = 16 [json_name = "startDate"];
+  optional int64 end_date = 17 [json_name = "endDate"];
+  optional bool enable = 18 [json_name = "enable"];
+  optional bool notify = 19 [json_name = "notify"];
+  optional string notes = 20 [json_name = "notes"];
+
+  optional uint32 created_by = 100 [json_name = "createdBy"];
+  optional uint32 updated_by = 101 [json_name = "updatedBy"];
+
+  optional google.protobuf.Timestamp created_at = 200 [json_name = "createdAt"];
+  optional google.protobuf.Timestamp updated_at = 201 [json_name = "updatedAt"];
+}
+
+// 预算进度
+message BudgetProgress {
+  optional uint32 budget_id = 1 [json_name = "budgetId"];
+  optional string budget_name = 2 [json_name = "budgetName"];
+  optional string amount = 3 [json_name = "amount"];
+  optional string used_amount = 4 [json_name = "usedAmount"];
+  optional string remaining = 5 [json_name = "remaining"];
+  optional string usage_percent = 6 [json_name = "usagePercent"];
+  optional bool exceeded = 7 [json_name = "exceeded"];
+  optional int64 period_start = 8 [json_name = "periodStart"];
+  optional int64 period_end = 9 [json_name = "periodEnd"];
+}
+
+// 回应 - 预算列表
+message ListBudgetResponse {
+  repeated Budget items = 1 [json_name = "items"];
+  uint64 total = 2 [json_name = "total"];
+}
+
+// 请求 - 获取所有预算
+message ListAllBudgetRequest {
+  optional uint32 book_id = 1 [json_name = "bookId"];
+}
+
+// 请求 - 预算数据
+message GetBudgetRequest {
+  uint32 id = 1 [json_name = "id"];
+}
+
+// 请求 - 创建预算
+message CreateBudgetRequest {
+  Budget data = 1 [json_name = "data"];
+}
+
+// 请求 - 更新预算
+message UpdateBudgetRequest {
+  uint32 id = 1 [json_name = "id"];
+  Budget data = 2 [json_name = "data"];
+  google.protobuf.FieldMask update_mask = 3 [json_name = "updateMask"];
+  optional bool allow_missing = 4 [json_name = "allowMissing"];
+}
+
+// 请求 - 删除预算
+message DeleteBudgetRequest {
+  uint32 id = 1 [json_name = "id"];
+}
+
+// 请求 - 预算进度
+message GetBudgetProgressRequest {
+  uint32 id = 1 [json_name = "id"];
+}

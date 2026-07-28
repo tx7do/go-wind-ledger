@@ -2086,6 +2086,303 @@ export type ledgerservicev1_ToggleBookRequest = {
   id: number | undefined;
 };
 
+// 预算服务（Admin BFF）
+export interface BudgetService {
+  List(
+    request: pagination_PagingRequest,
+  ): Promise<ledgerservicev1_ListBudgetResponse>;
+  ListAll(
+    request: ledgerservicev1_ListAllBudgetRequest,
+  ): Promise<ledgerservicev1_ListBudgetResponse>;
+  Get(
+    request: ledgerservicev1_GetBudgetRequest,
+  ): Promise<ledgerservicev1_Budget>;
+  Create(
+    request: ledgerservicev1_CreateBudgetRequest,
+  ): Promise<ledgerservicev1_Budget>;
+  Update(
+    request: ledgerservicev1_UpdateBudgetRequest,
+  ): Promise<ledgerservicev1_Budget>;
+  Delete(
+    request: ledgerservicev1_DeleteBudgetRequest,
+  ): Promise<wellKnownEmpty>;
+  GetProgress(
+    request: ledgerservicev1_GetBudgetProgressRequest,
+  ): Promise<ledgerservicev1_BudgetProgress>;
+}
+
+export function createBudgetServiceClient(
+  transport: ClientTransport,
+): BudgetService {
+  return {
+    List(request) {
+      const path = `admin/v1/budgets`;
+      const body = null;
+      const queryParams: string[] = [];
+      if (request.page) {
+        queryParams.push(
+          `page=${encodeURIComponent(request.page.toString())}`,
+        );
+      }
+      if (request.pageSize) {
+        queryParams.push(
+          `pageSize=${encodeURIComponent(request.pageSize.toString())}`,
+        );
+      }
+      if (request.offset) {
+        queryParams.push(
+          `offset=${encodeURIComponent(request.offset.toString())}`,
+        );
+      }
+      if (request.limit) {
+        queryParams.push(
+          `limit=${encodeURIComponent(request.limit.toString())}`,
+        );
+      }
+      if (request.token) {
+        queryParams.push(
+          `token=${encodeURIComponent(request.token.toString())}`,
+        );
+      }
+      if (request.noPaging) {
+        queryParams.push(
+          `noPaging=${encodeURIComponent(request.noPaging.toString())}`,
+        );
+      }
+      if (request.query) {
+        queryParams.push(
+          `query=${encodeURIComponent(request.query.toString())}`,
+        );
+      }
+      if (request.filter) {
+        queryParams.push(
+          `filter=${encodeURIComponent(request.filter.toString())}`,
+        );
+      }
+      if (request.filterExpr?.type) {
+        queryParams.push(
+          `filterExpr.type=${encodeURIComponent(request.filterExpr.type.toString())}`,
+        );
+      }
+      if (request.filterExpr?.conditions?.field) {
+        queryParams.push(
+          `filterExpr.conditions.field=${encodeURIComponent(request.filterExpr.conditions.field.toString())}`,
+        );
+      }
+      if (request.filterExpr?.conditions?.op) {
+        queryParams.push(
+          `filterExpr.conditions.op=${encodeURIComponent(request.filterExpr.conditions.op.toString())}`,
+        );
+      }
+      if (request.filterExpr?.conditions?.value) {
+        queryParams.push(
+          `filterExpr.conditions.value=${encodeURIComponent(request.filterExpr.conditions.value.toString())}`,
+        );
+      }
+      if (request.filterExpr?.conditions?.jsonValue) {
+        queryParams.push(
+          `filterExpr.conditions.jsonValue=${encodeURIComponent(request.filterExpr.conditions.jsonValue.toString())}`,
+        );
+      }
+      if (request.filterExpr?.conditions?.values) {
+        request.filterExpr.conditions.values.forEach((x) => {
+          queryParams.push(
+            `filterExpr.conditions.values=${encodeURIComponent(x.toString())}`,
+          );
+        });
+      }
+      if (request.filterExpr?.conditions?.datePart) {
+        queryParams.push(
+          `filterExpr.conditions.datePart=${encodeURIComponent(request.filterExpr.conditions.datePart.toString())}`,
+        );
+      }
+      if (request.filterExpr?.conditions?.jsonPath) {
+        queryParams.push(
+          `filterExpr.conditions.jsonPath=${encodeURIComponent(request.filterExpr.conditions.jsonPath.toString())}`,
+        );
+      }
+      if (request.orderBy) {
+        queryParams.push(
+          `orderBy=${encodeURIComponent(request.orderBy.toString())}`,
+        );
+      }
+      if (request.sorting?.field) {
+        queryParams.push(
+          `sorting.field=${encodeURIComponent(request.sorting.field.toString())}`,
+        );
+      }
+      if (request.sorting?.direction) {
+        queryParams.push(
+          `sorting.direction=${encodeURIComponent(request.sorting.direction.toString())}`,
+        );
+      }
+      if (request.fieldMask) {
+        queryParams.push(
+          `fieldMask=${encodeURIComponent(request.fieldMask.toString())}`,
+        );
+      }
+      let uri = path;
+      if (queryParams.length > 0) {
+        uri += `?${queryParams.join('&')}`;
+      }
+      return transport.unary(uri, 'GET', body, {
+        service: 'BudgetService',
+        method: 'List',
+      }) as Promise<ledgerservicev1_ListBudgetResponse>;
+    },
+    ListAll(request) {
+      const path = `admin/v1/budgets/all`;
+      const body = null;
+      const queryParams: string[] = [];
+      if (request.bookId) {
+        queryParams.push(
+          `bookId=${encodeURIComponent(request.bookId.toString())}`,
+        );
+      }
+      let uri = path;
+      if (queryParams.length > 0) {
+        uri += `?${queryParams.join('&')}`;
+      }
+      return transport.unary(uri, 'GET', body, {
+        service: 'BudgetService',
+        method: 'ListAll',
+      }) as Promise<ledgerservicev1_ListBudgetResponse>;
+    },
+    Get(request) {
+      if (request.id === undefined || request.id === null) {
+        throw new Error('missing required field request.id');
+      }
+      const path = `admin/v1/budgets/${request.id}`;
+      const body = null;
+      return transport.unary(path, 'GET', body, {
+        service: 'BudgetService',
+        method: 'Get',
+      }) as Promise<ledgerservicev1_Budget>;
+    },
+    Create(request) {
+      const path = `admin/v1/budgets`;
+      const body = JSON.stringify(request);
+      return transport.unary(path, 'POST', body, {
+        service: 'BudgetService',
+        method: 'Create',
+      }) as Promise<ledgerservicev1_Budget>;
+    },
+    Update(request) {
+      if (request.id === undefined || request.id === null) {
+        throw new Error('missing required field request.id');
+      }
+      const path = `admin/v1/budgets/${request.id}`;
+      const body = JSON.stringify(request);
+      return transport.unary(path, 'PUT', body, {
+        service: 'BudgetService',
+        method: 'Update',
+      }) as Promise<ledgerservicev1_Budget>;
+    },
+    Delete(request) {
+      if (request.id === undefined || request.id === null) {
+        throw new Error('missing required field request.id');
+      }
+      const path = `admin/v1/budgets/${request.id}`;
+      const body = null;
+      return transport.unary(path, 'DELETE', body, {
+        service: 'BudgetService',
+        method: 'Delete',
+      }) as Promise<wellKnownEmpty>;
+    },
+    GetProgress(request) {
+      if (request.id === undefined || request.id === null) {
+        throw new Error('missing required field request.id');
+      }
+      const path = `admin/v1/budgets/${request.id}/progress`;
+      const body = null;
+      return transport.unary(path, 'GET', body, {
+        service: 'BudgetService',
+        method: 'GetProgress',
+      }) as Promise<ledgerservicev1_BudgetProgress>;
+    },
+  };
+}
+// 回应 - 预算列表
+export type ledgerservicev1_ListBudgetResponse = {
+  items: ledgerservicev1_Budget[] | undefined;
+  total: number | undefined;
+};
+
+// 预算
+export type ledgerservicev1_Budget = {
+  accountId?: number;
+  amount?: string;
+  bookId?: number;
+  categoryId?: number;
+  createdAt?: wellKnownTimestamp;
+  createdBy?: number;
+  enable?: boolean;
+  endDate?: number;
+  id?: number;
+  name?: string;
+  notes?: string;
+  notify?: boolean;
+  period?: ledgerservicev1_BudgetPeriod;
+  startDate?: number;
+  tenantId?: number;
+  updatedAt?: wellKnownTimestamp;
+  updatedBy?: number;
+  usedAmount?: string;
+};
+
+// 预算周期类型
+export type ledgerservicev1_BudgetPeriod =
+  | 'BUDGET_PERIOD_MONTHLY'
+  | 'BUDGET_PERIOD_QUARTERLY'
+  | 'BUDGET_PERIOD_UNSPECIFIED'
+  | 'BUDGET_PERIOD_WEEKLY'
+  | 'BUDGET_PERIOD_YEARLY';
+// 请求 - 获取所有预算
+export type ledgerservicev1_ListAllBudgetRequest = {
+  bookId?: number;
+};
+
+// 请求 - 预算数据
+export type ledgerservicev1_GetBudgetRequest = {
+  id: number | undefined;
+};
+
+// 请求 - 创建预算
+export type ledgerservicev1_CreateBudgetRequest = {
+  data: ledgerservicev1_Budget | undefined;
+};
+
+// 请求 - 更新预算
+export type ledgerservicev1_UpdateBudgetRequest = {
+  allowMissing?: boolean;
+  data: ledgerservicev1_Budget | undefined;
+  id: number | undefined;
+  updateMask: undefined | wellKnownFieldMask;
+};
+
+// 请求 - 删除预算
+export type ledgerservicev1_DeleteBudgetRequest = {
+  id: number | undefined;
+};
+
+// 请求 - 预算进度
+export type ledgerservicev1_GetBudgetProgressRequest = {
+  id: number | undefined;
+};
+
+// 预算进度
+export type ledgerservicev1_BudgetProgress = {
+  amount?: string;
+  budgetId?: number;
+  budgetName?: string;
+  exceeded?: boolean;
+  periodEnd?: number;
+  periodStart?: number;
+  remaining?: string;
+  usagePercent?: string;
+  usedAmount?: string;
+};
+
 // 分类服务（Admin BFF）
 export interface CategoryService {
   List(
@@ -12190,6 +12487,274 @@ export type identityservicev1_TenantExistsResponse = {
   exist: boolean | undefined;
 };
 
+// 成员管理服务（Admin BFF）
+export interface TenantMemberService {
+  ListMembers(
+    request: identityservicev1_ListMembersRequest,
+  ): Promise<identityservicev1_ListMembersResponse>;
+  InviteMember(
+    request: identityservicev1_InviteMemberRequest,
+  ): Promise<identityservicev1_Membership>;
+  AcceptInvite(
+    request: identityservicev1_AcceptInviteRequest,
+  ): Promise<identityservicev1_Membership>;
+  RejectInvite(
+    request: identityservicev1_RejectInviteRequest,
+  ): Promise<wellKnownEmpty>;
+  RemoveMember(
+    request: identityservicev1_RemoveMemberRequest,
+  ): Promise<wellKnownEmpty>;
+  ListMyTenants(
+    request: identityservicev1_ListMyTenantsRequest,
+  ): Promise<identityservicev1_ListMyTenantsResponse>;
+  GetMembership(
+    request: identityservicev1_GetMembershipRequest,
+  ): Promise<identityservicev1_Membership>;
+  UpdateMembership(
+    request: identityservicev1_UpdateMembershipRequest,
+  ): Promise<identityservicev1_Membership>;
+}
+
+export function createTenantMemberServiceClient(
+  transport: ClientTransport,
+): TenantMemberService {
+  return {
+    ListMembers(request) {
+      const path = `admin/v1/memberships`;
+      const body = null;
+      const queryParams: string[] = [];
+      if (request.tenantId) {
+        queryParams.push(
+          `tenantId=${encodeURIComponent(request.tenantId.toString())}`,
+        );
+      }
+      if (request.status) {
+        queryParams.push(
+          `status=${encodeURIComponent(request.status.toString())}`,
+        );
+      }
+      let uri = path;
+      if (queryParams.length > 0) {
+        uri += `?${queryParams.join('&')}`;
+      }
+      return transport.unary(uri, 'GET', body, {
+        service: 'TenantMemberService',
+        method: 'ListMembers',
+      }) as Promise<identityservicev1_ListMembersResponse>;
+    },
+    InviteMember(request) {
+      const path = `admin/v1/memberships/invite`;
+      const body = JSON.stringify(request);
+      return transport.unary(path, 'POST', body, {
+        service: 'TenantMemberService',
+        method: 'InviteMember',
+      }) as Promise<identityservicev1_Membership>;
+    },
+    AcceptInvite(request) {
+      if (request.id === undefined || request.id === null) {
+        throw new Error('missing required field request.id');
+      }
+      const path = `admin/v1/memberships/${request.id}/accept`;
+      const body = JSON.stringify(request);
+      return transport.unary(path, 'PATCH', body, {
+        service: 'TenantMemberService',
+        method: 'AcceptInvite',
+      }) as Promise<identityservicev1_Membership>;
+    },
+    RejectInvite(request) {
+      if (request.id === undefined || request.id === null) {
+        throw new Error('missing required field request.id');
+      }
+      const path = `admin/v1/memberships/${request.id}/reject`;
+      const body = JSON.stringify(request);
+      return transport.unary(path, 'PATCH', body, {
+        service: 'TenantMemberService',
+        method: 'RejectInvite',
+      }) as Promise<wellKnownEmpty>;
+    },
+    RemoveMember(request) {
+      const path = `admin/v1/memberships/remove`;
+      const body = null;
+      const queryParams: string[] = [];
+      if (request.tenantId) {
+        queryParams.push(
+          `tenantId=${encodeURIComponent(request.tenantId.toString())}`,
+        );
+      }
+      if (request.userId) {
+        queryParams.push(
+          `userId=${encodeURIComponent(request.userId.toString())}`,
+        );
+      }
+      let uri = path;
+      if (queryParams.length > 0) {
+        uri += `?${queryParams.join('&')}`;
+      }
+      return transport.unary(uri, 'DELETE', body, {
+        service: 'TenantMemberService',
+        method: 'RemoveMember',
+      }) as Promise<wellKnownEmpty>;
+    },
+    ListMyTenants(request) {
+      const path = `admin/v1/memberships/my-tenants`;
+      const body = null;
+      const queryParams: string[] = [];
+      if (request.userId) {
+        queryParams.push(
+          `userId=${encodeURIComponent(request.userId.toString())}`,
+        );
+      }
+      let uri = path;
+      if (queryParams.length > 0) {
+        uri += `?${queryParams.join('&')}`;
+      }
+      return transport.unary(uri, 'GET', body, {
+        service: 'TenantMemberService',
+        method: 'ListMyTenants',
+      }) as Promise<identityservicev1_ListMyTenantsResponse>;
+    },
+    GetMembership(request) {
+      if (request.id === undefined || request.id === null) {
+        throw new Error('missing required field request.id');
+      }
+      const path = `admin/v1/memberships/${request.id}`;
+      const body = null;
+      return transport.unary(path, 'GET', body, {
+        service: 'TenantMemberService',
+        method: 'GetMembership',
+      }) as Promise<identityservicev1_Membership>;
+    },
+    UpdateMembership(request) {
+      if (request.id === undefined || request.id === null) {
+        throw new Error('missing required field request.id');
+      }
+      const path = `admin/v1/memberships/${request.id}`;
+      const body = JSON.stringify(request);
+      return transport.unary(path, 'PUT', body, {
+        service: 'TenantMemberService',
+        method: 'UpdateMembership',
+      }) as Promise<identityservicev1_Membership>;
+    },
+  };
+}
+// 请求 - 列出租户成员
+export type identityservicev1_ListMembersRequest = {
+  status?: identityservicev1_Membership_Status;
+  tenantId: number | undefined;
+};
+
+// 成员状态
+export type identityservicev1_Membership_Status =
+  | 'ACTIVE'
+  | 'DISABLED'
+  | 'EXPIRED'
+  | 'INVITED'
+  | 'PENDING'
+  | 'REJECTED';
+// 回应 - 成员列表
+export type identityservicev1_ListMembersResponse = {
+  items: identityservicev1_MemberInfo[] | undefined;
+  total: number | undefined;
+};
+
+// 成员信息（含用户名/昵称）
+export type identityservicev1_MemberInfo = {
+  id?: number;
+  isPrimary?: boolean;
+  joinedAt?: wellKnownTimestamp;
+  nickname?: string;
+  roleId?: number;
+  roleName?: string;
+  status?: identityservicev1_Membership_Status;
+  tenantId?: number;
+  userId?: number;
+  username?: string;
+};
+
+// 请求 - 邀请用户
+export type identityservicev1_InviteMemberRequest = {
+  roleId?: number;
+  tenantId: number | undefined;
+  username: string | undefined;
+};
+
+// 成员关联
+export type identityservicev1_Membership = {
+  assignedAt?: wellKnownTimestamp;
+  assignedBy?: number;
+  createdAt?: wellKnownTimestamp;
+  createdBy?: number;
+  deletedAt?: wellKnownTimestamp;
+  deletedBy?: number;
+  endAt?: wellKnownTimestamp;
+  id?: number;
+  isPrimary?: boolean;
+  joinedAt?: wellKnownTimestamp;
+  orgUnitId?: number;
+  orgUnitIds: number[] | undefined;
+  positionId?: number;
+  positionIds: number[] | undefined;
+  roleId?: number;
+  roleIds: number[] | undefined;
+  startAt?: wellKnownTimestamp;
+  status?: identityservicev1_Membership_Status;
+  tenantId?: number;
+  updatedAt?: wellKnownTimestamp;
+  updatedBy?: number;
+  userId?: number;
+};
+
+// 请求 - 接受邀请
+export type identityservicev1_AcceptInviteRequest = {
+  id: number | undefined;
+};
+
+// 请求 - 拒绝邀请
+export type identityservicev1_RejectInviteRequest = {
+  id: number | undefined;
+};
+
+// 请求 - 移除成员
+export type identityservicev1_RemoveMemberRequest = {
+  tenantId: number | undefined;
+  userId: number | undefined;
+};
+
+// 请求 - 列出我的租户
+export type identityservicev1_ListMyTenantsRequest = {
+  userId?: number;
+};
+
+// 回应 - 我的租户列表
+export type identityservicev1_ListMyTenantsResponse = {
+  items: identityservicev1_TenantMembershipInfo[] | undefined;
+  total: number | undefined;
+};
+
+// 租户信息（含成员角色）
+export type identityservicev1_TenantMembershipInfo = {
+  isPrimary?: boolean;
+  membershipId?: number;
+  roleId?: number;
+  roleName?: string;
+  status?: identityservicev1_Membership_Status;
+  tenantId?: number;
+  tenantName?: string;
+};
+
+// 请求 - 获取成员详情
+export type identityservicev1_GetMembershipRequest = {
+  id: number | undefined;
+};
+
+// 请求 - 更新成员
+export type identityservicev1_UpdateMembershipRequest = {
+  allowMissing?: boolean;
+  data: identityservicev1_Membership | undefined;
+  id: number | undefined;
+  updateMask: undefined | wellKnownFieldMask;
+};
+
 // 翻译服务
 export interface TranslatorService {
   // 翻译文本
@@ -12690,6 +13255,7 @@ export class ApiClient {
   private _authenticationService?: AuthenticationService;
   private _balanceFlowService?: BalanceFlowService;
   private _bookService?: BookService;
+  private _budgetService?: BudgetService;
   private _categoryService?: CategoryService;
   private _commentService?: CommentService;
   private _currencyService?: CurrencyService;
@@ -12727,6 +13293,7 @@ export class ApiClient {
   private _siteSettingService?: SiteSettingService;
   private _tagService?: TagService;
   private _taskService?: TaskService;
+  private _tenantMemberService?: TenantMemberService;
   private _tenantService?: TenantService;
   private _translatorService?: TranslatorService;
   private readonly _transport: ClientTransport;
@@ -12763,6 +13330,10 @@ export class ApiClient {
 
   get bookService(): BookService {
     return this._bookService ??= createBookServiceClient(this._transport);
+  }
+
+  get budgetService(): BudgetService {
+    return this._budgetService ??= createBudgetServiceClient(this._transport);
   }
 
   get categoryService(): CategoryService {
@@ -12911,6 +13482,10 @@ export class ApiClient {
 
   get taskService(): TaskService {
     return this._taskService ??= createTaskServiceClient(this._transport);
+  }
+
+  get tenantMemberService(): TenantMemberService {
+    return this._tenantMemberService ??= createTenantMemberServiceClient(this._transport);
   }
 
   get tenantService(): TenantService {
