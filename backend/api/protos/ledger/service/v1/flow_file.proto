@@ -1,0 +1,43 @@
+syntax = "proto3";
+
+package ledger.service.v1;
+
+import "gnostic/openapi/v3/annotations.proto";
+import "google/protobuf/empty.proto";
+import "google/protobuf/timestamp.proto";
+
+// 流水附件服务
+service FlowFileService {
+  rpc List (ListFlowFileRequest) returns (ListFlowFileResponse) {}
+  rpc Delete (DeleteFlowFileRequest) returns (google.protobuf.Empty) {}
+}
+
+// 流水附件
+message FlowFile {
+  optional uint32 id = 1 [json_name = "id"];
+  optional uint32 flow_id = 2 [
+    json_name = "flowId",
+    (gnostic.openapi.v3.property) = {description: "关联的流水ID"}
+  ];
+  optional uint32 creator_id = 3 [json_name = "creatorId"];
+
+  optional int64 create_time = 10 [json_name = "createTime"];
+  optional string content_type = 11 [json_name = "contentType"];
+  optional int64 size = 12 [json_name = "size"];
+  optional string original_name = 13 [json_name = "originalName"];
+}
+
+// 回应 - 附件列表
+message ListFlowFileResponse {
+  repeated FlowFile items = 1;
+}
+
+// 请求 - 附件列表
+message ListFlowFileRequest {
+  uint32 flow_id = 1 [json_name = "flowId"];
+}
+
+// 请求 - 删除附件
+message DeleteFlowFileRequest {
+  uint32 id = 1 [json_name = "id"];
+}

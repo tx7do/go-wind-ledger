@@ -1,0 +1,72 @@
+syntax = "proto3";
+
+package ledger.service.v1;
+
+import "gnostic/openapi/v3/annotations.proto";
+import "pagination/v1/pagination.proto";
+
+// 币种服务
+service CurrencyService {
+  // 获取所有币种
+  rpc ListAll (ListAllCurrencyRequest) returns (ListCurrencyResponse) {}
+
+  // 获取币种列表（分页）
+  rpc List (pagination.PagingRequest) returns (ListCurrencyResponse) {}
+
+  // 刷新汇率（从外部API获取实时汇率）
+  rpc Refresh (RefreshCurrencyRequest) returns (ListCurrencyResponse) {}
+
+  // 币种转换计算
+  rpc Convert (ConvertCurrencyRequest) returns (ConvertCurrencyResponse) {}
+}
+
+// 币种
+message Currency {
+  optional uint32 id = 1 [json_name = "id"];
+  optional string code = 2 [
+    json_name = "code",
+    (gnostic.openapi.v3.property) = {description: "币种代码"}
+  ];
+  optional string name = 3 [
+    json_name = "name",
+    (gnostic.openapi.v3.property) = {description: "币种名称"}
+  ];
+  optional string rate = 4 [
+    json_name = "rate",
+    (gnostic.openapi.v3.property) = {description: "对美元汇率"}
+  ];
+}
+
+// 回应 - 币种列表
+message ListCurrencyResponse {
+  repeated Currency items = 1;
+  uint64 total = 2;
+}
+
+// 请求 - 获取所有币种
+message ListAllCurrencyRequest {}
+
+// 请求 - 刷新汇率
+message RefreshCurrencyRequest {}
+
+// 请求 - 币种转换
+message ConvertCurrencyRequest {
+  string amount = 1 [
+    json_name = "amount",
+    (gnostic.openapi.v3.property) = {description: "金额"}
+  ];
+  string from = 2 [
+    json_name = "from",
+    (gnostic.openapi.v3.property) = {description: "源币种代码"}
+  ];
+  string to = 3 [
+    json_name = "to",
+    (gnostic.openapi.v3.property) = {description: "目标币种代码"}
+  ];
+}
+
+// 回应 - 币种转换
+message ConvertCurrencyResponse {
+  string amount = 1 [json_name = "amount"];
+  string rate = 2 [json_name = "rate"];
+}

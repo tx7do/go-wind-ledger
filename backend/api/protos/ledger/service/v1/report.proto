@@ -1,0 +1,89 @@
+syntax = "proto3";
+
+package ledger.service.v1;
+
+import "gnostic/openapi/v3/annotations.proto";
+
+import "ledger/service/v1/types.proto";
+
+// 报表服务
+service ReportService {
+  // 支出按分类汇总
+  rpc ExpenseCategory (ReportQueryRequest) returns (ReportResponse) {}
+
+  // 收入按分类汇总
+  rpc IncomeCategory (ReportQueryRequest) returns (ReportResponse) {}
+
+  // 支出按标签汇总
+  rpc ExpenseTag (ReportQueryRequest) returns (ReportResponse) {}
+
+  // 收入按标签汇总
+  rpc IncomeTag (ReportQueryRequest) returns (ReportResponse) {}
+
+  // 支出按收款人汇总
+  rpc ExpensePayee (ReportQueryRequest) returns (ReportResponse) {}
+
+  // 收入按收款人汇总
+  rpc IncomePayee (ReportQueryRequest) returns (ReportResponse) {}
+
+  // 资产负债概览
+  rpc Balance (BalanceReportRequest) returns (BalanceReportResponse) {}
+}
+
+// 报表查询请求
+message ReportQueryRequest {
+  uint32 book_id = 1 [
+    json_name = "bookId",
+    (gnostic.openapi.v3.property) = {description: "账本ID"}
+  ];
+
+  optional int64 min_time = 2 [json_name = "minTime"];
+  optional int64 max_time = 3 [json_name = "maxTime"];
+  optional string title = 4 [json_name = "title"];
+  repeated uint32 category_ids = 5 [json_name = "categoryIds"];
+  repeated uint32 tag_ids = 6 [json_name = "tagIds"];
+  repeated uint32 payee_ids = 7 [json_name = "payeeIds"];
+  optional uint32 account_id = 8 [json_name = "accountId"];
+}
+
+// 图表数据点
+message ChartPoint {
+  string x = 1 [
+    json_name = "x",
+    (gnostic.openapi.v3.property) = {description: "标签（分类/标签/收款人名称）"}
+  ];
+  string y = 2 [
+    json_name = "y",
+    (gnostic.openapi.v3.property) = {description: "金额"}
+  ];
+  string percent = 3 [
+    json_name = "percent",
+    (gnostic.openapi.v3.property) = {description: "占比(%)"}
+  ];
+}
+
+// 报表回应
+message ReportResponse {
+  repeated ChartPoint items = 1;
+}
+
+// 资产负债报表请求
+message BalanceReportRequest {
+  uint32 book_id = 1 [json_name = "bookId"];
+}
+
+// 资产负债报表回应
+message BalanceReportResponse {
+  repeated ChartPoint assets = 1 [
+    json_name = "assets",
+    (gnostic.openapi.v3.property) = {description: "资产明细"}
+  ];
+  repeated ChartPoint debts = 2 [
+    json_name = "debts",
+    (gnostic.openapi.v3.property) = {description: "负债明细"}
+  ];
+  string net_worth = 3 [
+    json_name = "netWorth",
+    (gnostic.openapi.v3.property) = {description: "净资（资产-负债）"}
+  ];
+}

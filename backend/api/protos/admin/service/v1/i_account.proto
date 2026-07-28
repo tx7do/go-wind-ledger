@@ -1,0 +1,63 @@
+syntax = "proto3";
+
+package admin.service.v1;
+
+import "google/api/annotations.proto";
+import "google/protobuf/empty.proto";
+import "pagination/v1/pagination.proto";
+
+import "ledger/service/v1/account.proto";
+
+// 账户服务（Admin BFF）
+service AccountService {
+  rpc List (pagination.PagingRequest) returns (ledger.service.v1.ListAccountResponse) {
+    option (google.api.http) = {
+      get: "/admin/v1/accounts"
+    };
+  }
+
+  rpc ListAll (ledger.service.v1.ListAllAccountRequest) returns (ledger.service.v1.ListAccountResponse) {
+    option (google.api.http) = {
+      get: "/admin/v1/accounts/all"
+    };
+  }
+
+  rpc Get (ledger.service.v1.GetAccountRequest) returns (ledger.service.v1.Account) {
+    option (google.api.http) = {
+      get: "/admin/v1/accounts/{id}"
+    };
+  }
+
+  rpc Create (ledger.service.v1.CreateAccountRequest) returns (ledger.service.v1.Account) {
+    option (google.api.http) = {
+      post: "/admin/v1/accounts"
+      body: "*"
+    };
+  }
+
+  rpc Update (ledger.service.v1.UpdateAccountRequest) returns (ledger.service.v1.Account) {
+    option (google.api.http) = {
+      put: "/admin/v1/accounts/{id}"
+      body: "*"
+    };
+  }
+
+  rpc Delete (ledger.service.v1.DeleteAccountRequest) returns (google.protobuf.Empty) {
+    option (google.api.http) = {
+      delete: "/admin/v1/accounts/{id}"
+    };
+  }
+
+  rpc Toggle (ledger.service.v1.ToggleAccountRequest) returns (ledger.service.v1.Account) {
+    option (google.api.http) = {
+      patch: "/admin/v1/accounts/{id}/toggle"
+    };
+  }
+
+  rpc AdjustBalance (ledger.service.v1.AdjustBalanceRequest) returns (ledger.service.v1.Account) {
+    option (google.api.http) = {
+      post: "/admin/v1/accounts/{id}/adjust"
+      body: "*"
+    };
+  }
+}

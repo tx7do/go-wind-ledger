@@ -1,0 +1,56 @@
+syntax = "proto3";
+
+package admin.service.v1;
+
+import "google/api/annotations.proto";
+import "google/protobuf/empty.proto";
+import "pagination/v1/pagination.proto";
+
+import "ledger/service/v1/payee.proto";
+
+// 收款人服务（Admin BFF）
+service PayeeService {
+  rpc List (pagination.PagingRequest) returns (ledger.service.v1.ListPayeeResponse) {
+    option (google.api.http) = {
+      get: "/admin/v1/payees"
+    };
+  }
+
+  rpc ListAll (ledger.service.v1.ListAllPayeeRequest) returns (ledger.service.v1.ListPayeeResponse) {
+    option (google.api.http) = {
+      get: "/admin/v1/payees/all"
+    };
+  }
+
+  rpc Get (ledger.service.v1.GetPayeeRequest) returns (ledger.service.v1.Payee) {
+    option (google.api.http) = {
+      get: "/admin/v1/payees/{id}"
+    };
+  }
+
+  rpc Create (ledger.service.v1.CreatePayeeRequest) returns (ledger.service.v1.Payee) {
+    option (google.api.http) = {
+      post: "/admin/v1/payees"
+      body: "*"
+    };
+  }
+
+  rpc Update (ledger.service.v1.UpdatePayeeRequest) returns (ledger.service.v1.Payee) {
+    option (google.api.http) = {
+      put: "/admin/v1/payees/{id}"
+      body: "*"
+    };
+  }
+
+  rpc Delete (ledger.service.v1.DeletePayeeRequest) returns (google.protobuf.Empty) {
+    option (google.api.http) = {
+      delete: "/admin/v1/payees/{id}"
+    };
+  }
+
+  rpc Toggle (ledger.service.v1.TogglePayeeRequest) returns (ledger.service.v1.Payee) {
+    option (google.api.http) = {
+      patch: "/admin/v1/payees/{id}/toggle"
+    };
+  }
+}

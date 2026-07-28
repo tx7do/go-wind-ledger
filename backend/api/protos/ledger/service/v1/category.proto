@@ -1,0 +1,126 @@
+syntax = "proto3";
+
+package ledger.service.v1;
+
+import "gnostic/openapi/v3/annotations.proto";
+import "google/protobuf/empty.proto";
+import "google/protobuf/timestamp.proto";
+import "google/protobuf/field_mask.proto";
+import "pagination/v1/pagination.proto";
+
+import "ledger/service/v1/types.proto";
+
+// 分类服务
+service CategoryService {
+  // 获取分类列表（平铺或树形）
+  rpc List (pagination.PagingRequest) returns (ListCategoryResponse) {}
+
+  // 获取所有分类
+  rpc ListAll (ListAllCategoryRequest) returns (ListCategoryResponse) {}
+
+  // 获取分类数据
+  rpc Get (GetCategoryRequest) returns (Category) {}
+
+  // 创建分类
+  rpc Create (CreateCategoryRequest) returns (Category) {}
+
+  // 更新分类
+  rpc Update (UpdateCategoryRequest) returns (Category) {}
+
+  // 删除分类
+  rpc Delete (DeleteCategoryRequest) returns (google.protobuf.Empty) {}
+
+  // 切换启用/禁用
+  rpc Toggle (ToggleCategoryRequest) returns (Category) {}
+}
+
+// 分类
+message Category {
+  optional uint32 id = 1 [json_name = "id"];
+  optional uint32 tenant_id = 2 [json_name = "tenantId"];
+  optional uint32 book_id = 3 [
+    json_name = "bookId",
+    (gnostic.openapi.v3.property) = {description: "所属账本ID"}
+  ];
+
+  optional string name = 10 [
+    json_name = "name",
+    (gnostic.openapi.v3.property) = {description: "分类名称"}
+  ];
+
+  optional CategoryType type = 11 [
+    json_name = "type",
+    (gnostic.openapi.v3.property) = {description: "分类类型（支出/收入）"}
+  ];
+
+  optional string notes = 12 [json_name = "notes"];
+  optional bool enable = 13 [json_name = "enable"];
+  optional int32 sort_order = 14 [json_name = "sortOrder"];
+
+  // 树形字段
+  optional uint32 parent_id = 60 [
+    json_name = "parentId",
+    (gnostic.openapi.v3.property) = {description: "父分类ID"}
+  ];
+  repeated Category children = 61 [
+    json_name = "children",
+    (gnostic.openapi.v3.property) = {description: "子分类列表"}
+  ];
+  optional int32 depth = 62 [
+    json_name = "depth",
+    (gnostic.openapi.v3.property) = {description: "层级深度（0=顶级）"}
+  ];
+  optional string path = 63 [
+    json_name = "path",
+    (gnostic.openapi.v3.property) = {description: "物化路径"}
+  ];
+
+  optional uint32 created_by = 100 [json_name = "createdBy"];
+  optional uint32 updated_by = 101 [json_name = "updatedBy"];
+  optional uint32 deleted_by = 102 [json_name = "deletedBy"];
+
+  optional google.protobuf.Timestamp created_at = 200 [json_name = "createdAt"];
+  optional google.protobuf.Timestamp updated_at = 201 [json_name = "updatedAt"];
+  optional google.protobuf.Timestamp deleted_at = 202 [json_name = "deletedAt"];
+}
+
+// 回应 - 分类列表
+message ListCategoryResponse {
+  repeated Category items = 1;
+  uint64 total = 2;
+}
+
+// 请求 - 获取所有分类
+message ListAllCategoryRequest {
+  optional uint32 book_id = 1 [json_name = "bookId"];
+  optional CategoryType type = 2 [json_name = "type"];
+}
+
+// 请求 - 分类数据
+message GetCategoryRequest {
+  uint32 id = 1 [json_name = "id"];
+  optional google.protobuf.FieldMask view_mask = 100 [json_name = "viewMask"];
+}
+
+// 请求 - 创建分类
+message CreateCategoryRequest {
+  Category data = 1;
+}
+
+// 请求 - 更新分类
+message UpdateCategoryRequest {
+  uint32 id = 1;
+  Category data = 2;
+  google.protobuf.FieldMask update_mask = 3 [json_name = "updateMask"];
+  optional bool allow_missing = 4 [json_name = "allowMissing"];
+}
+
+// 请求 - 删除分类
+message DeleteCategoryRequest {
+  uint32 id = 1 [json_name = "id"];
+}
+
+// 请求 - 切换启用/禁用
+message ToggleCategoryRequest {
+  uint32 id = 1 [json_name = "id"];
+}

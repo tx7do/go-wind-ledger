@@ -1,0 +1,38 @@
+syntax = "proto3";
+
+package ledger.service.v1;
+
+// 流水类型 — 对应 Java FlowType
+enum FlowType {
+  FLOW_TYPE_UNSPECIFIED = 0;
+  FLOW_TYPE_EXPENSE = 100;   // 支出
+  FLOW_TYPE_INCOME = 200;    // 收入
+  FLOW_TYPE_TRANSFER = 300;  // 转账
+  FLOW_TYPE_ADJUST = 400;    // 余额调整
+}
+
+// 账户类型 — 对应 Java AccountType
+enum AccountType {
+  ACCOUNT_TYPE_UNSPECIFIED = 0;
+  ACCOUNT_TYPE_CHECKING = 100; // 活期
+  ACCOUNT_TYPE_CREDIT = 200;   // 信用
+  ACCOUNT_TYPE_ASSET = 300;    // 资产
+  ACCOUNT_TYPE_DEBT = 400;     // 贷款
+}
+
+// 分类类型 — 对应 Java CategoryType
+enum CategoryType {
+  CATEGORY_TYPE_UNSPECIFIED = 0;
+  CATEGORY_TYPE_EXPENSE = 100; // 支出分类
+  CATEGORY_TYPE_INCOME = 200;  // 收入分类
+  // TRANSFER = 300 仅用于账单查询的兼容，此处不暴露
+}
+
+// 定期提醒重复类型 — 对应 Java NoteDay repeatType
+enum RepeatType {
+  REPEAT_TYPE_UNSPECIFIED = 0;   // 未指定
+  REPEAT_TYPE_ONCE = 100;        // 单次 (Java repeatType=0)
+  REPEAT_TYPE_DAILY = 200;       // 每天 (Java repeatType=1)
+  REPEAT_TYPE_MONTHLY = 300;     // 每月 (Java repeatType=2)
+  REPEAT_TYPE_YEARLY = 400;      // 每年 (Java repeatType=3)
+}

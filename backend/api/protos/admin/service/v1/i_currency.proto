@@ -1,0 +1,35 @@
+syntax = "proto3";
+
+package admin.service.v1;
+
+import "google/api/annotations.proto";
+import "pagination/v1/pagination.proto";
+
+import "ledger/service/v1/currency.proto";
+
+// 币种服务（Admin BFF）
+service CurrencyService {
+  rpc ListAll (ledger.service.v1.ListAllCurrencyRequest) returns (ledger.service.v1.ListCurrencyResponse) {
+    option (google.api.http) = {
+      get: "/admin/v1/currencies/all"
+    };
+  }
+
+  rpc List (pagination.PagingRequest) returns (ledger.service.v1.ListCurrencyResponse) {
+    option (google.api.http) = {
+      get: "/admin/v1/currencies"
+    };
+  }
+
+  rpc Refresh (ledger.service.v1.RefreshCurrencyRequest) returns (ledger.service.v1.ListCurrencyResponse) {
+    option (google.api.http) = {
+      post: "/admin/v1/currencies/refresh"
+    };
+  }
+
+  rpc Convert (ledger.service.v1.ConvertCurrencyRequest) returns (ledger.service.v1.ConvertCurrencyResponse) {
+    option (google.api.http) = {
+      get: "/admin/v1/currencies/calc"
+    };
+  }
+}

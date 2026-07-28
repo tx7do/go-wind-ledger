@@ -1,0 +1,173 @@
+syntax = "proto3";
+
+package ledger.service.v1;
+
+import "gnostic/openapi/v3/annotations.proto";
+import "google/protobuf/empty.proto";
+import "google/protobuf/timestamp.proto";
+import "google/protobuf/field_mask.proto";
+import "pagination/v1/pagination.proto";
+
+// 账本服务
+service BookService {
+  // 获取账本列表
+  rpc List (pagination.PagingRequest) returns (ListBookResponse) {}
+
+  // 获取所有账本（不分页）
+  rpc ListAll (ListAllBookRequest) returns (ListBookResponse) {}
+
+  // 获取账本数据
+  rpc Get (GetBookRequest) returns (Book) {}
+
+  // 创建账本
+  rpc Create (CreateBookRequest) returns (Book) {}
+
+  // 更新账本
+  rpc Update (UpdateBookRequest) returns (Book) {}
+
+  // 删除账本
+  rpc Delete (DeleteBookRequest) returns (google.protobuf.Empty) {}
+
+  // 切换启用/禁用
+  rpc Toggle (ToggleBookRequest) returns (Book) {}
+}
+
+// 账本
+message Book {
+  optional uint32 id = 1 [
+    json_name = "id",
+    (gnostic.openapi.v3.property) = {description: "账本ID"}
+  ];
+
+  optional uint32 tenant_id = 2 [
+    json_name = "tenantId",
+    (gnostic.openapi.v3.property) = {description: "租户（群组）ID"}
+  ];
+
+  optional string name = 10 [
+    json_name = "name",
+    (gnostic.openapi.v3.property) = {description: "账本名称"}
+  ];
+
+  optional string default_currency_code = 11 [
+    json_name = "defaultCurrencyCode",
+    (gnostic.openapi.v3.property) = {description: "默认币种代码"}
+  ];
+
+  optional string notes = 12 [
+    json_name = "notes",
+    (gnostic.openapi.v3.property) = {description: "备注"}
+  ];
+
+  optional bool enable = 13 [
+    json_name = "enable",
+    (gnostic.openapi.v3.property) = {description: "是否启用"}
+  ];
+
+  optional int32 sort_order = 14 [
+    json_name = "sortOrder",
+    (gnostic.openapi.v3.property) = {description: "排序"}
+  ];
+
+  optional int64 export_at = 15 [
+    json_name = "exportAt",
+    (gnostic.openapi.v3.property) = {description: "上次导出时间"}
+  ];
+
+  // 默认账户引用
+  optional uint32 default_expense_account_id = 20 [
+    json_name = "defaultExpenseAccountId",
+    (gnostic.openapi.v3.property) = {description: "默认支出账户ID"}
+  ];
+  optional uint32 default_income_account_id = 21 [
+    json_name = "defaultIncomeAccountId",
+    (gnostic.openapi.v3.property) = {description: "默认收入账户ID"}
+  ];
+  optional uint32 default_transfer_from_account_id = 22 [
+    json_name = "defaultTransferFromAccountId",
+    (gnostic.openapi.v3.property) = {description: "默认转出账户ID"}
+  ];
+  optional uint32 default_transfer_to_account_id = 23 [
+    json_name = "defaultTransferToAccountId",
+    (gnostic.openapi.v3.property) = {description: "默认转入账户ID"}
+  ];
+
+  // 默认分类引用
+  optional uint32 default_expense_category_id = 30 [
+    json_name = "defaultExpenseCategoryId",
+    (gnostic.openapi.v3.property) = {description: "默认支出分类ID"}
+  ];
+  optional uint32 default_income_category_id = 31 [
+    json_name = "defaultIncomeCategoryId",
+    (gnostic.openapi.v3.property) = {description: "默认收入分类ID"}
+  ];
+
+  optional uint32 created_by = 100 [json_name = "createdBy", (gnostic.openapi.v3.property) = {description: "创建者用户ID"}];
+  optional uint32 updated_by = 101 [json_name = "updatedBy", (gnostic.openapi.v3.property) = {description: "更新者用户ID"}];
+  optional uint32 deleted_by = 102 [json_name = "deletedBy", (gnostic.openapi.v3.property) = {description: "删除者用户ID"}];
+
+  optional google.protobuf.Timestamp created_at = 200 [json_name = "createdAt"];
+  optional google.protobuf.Timestamp updated_at = 201 [json_name = "updatedAt"];
+  optional google.protobuf.Timestamp deleted_at = 202 [json_name = "deletedAt"];
+}
+
+// 回应 - 账本列表
+message ListBookResponse {
+  repeated Book items = 1;
+  uint64 total = 2;
+}
+
+// 请求 - 获取所有账本
+message ListAllBookRequest {
+  optional bool include_disabled = 1 [json_name = "includeDisabled"];
+}
+
+// 请求 - 账本数据
+message GetBookRequest {
+  uint32 id = 1 [
+    (gnostic.openapi.v3.property) = {description: "账本ID"},
+    json_name = "id"
+  ];
+
+  optional google.protobuf.FieldMask view_mask = 100 [
+    json_name = "viewMask",
+    (gnostic.openapi.v3.property) = {description: "视图字段过滤器"}
+  ];
+}
+
+// 请求 - 创建账本
+message CreateBookRequest {
+  Book data = 1;
+}
+
+// 请求 - 更新账本
+message UpdateBookRequest {
+  uint32 id = 1;
+  Book data = 2;
+
+  google.protobuf.FieldMask update_mask = 3 [
+    (gnostic.openapi.v3.property) = {description: "要更新的字段列表"},
+    json_name = "updateMask"
+  ];
+
+  optional bool allow_missing = 4 [
+    (gnostic.openapi.v3.property) = {description: "如果设置为true的时候，资源不存在则会新增(插入)"},
+    json_name = "allowMissing"
+  ];
+}
+
+// 请求 - 删除账本
+message DeleteBookRequest {
+  uint32 id = 1 [
+    (gnostic.openapi.v3.property) = {description: "账本ID"},
+    json_name = "id"
+  ];
+}
+
+// 请求 - 切换启用/禁用
+message ToggleBookRequest {
+  uint32 id = 1 [
+    (gnostic.openapi.v3.property) = {description: "账本ID"},
+    json_name = "id"
+  ];
+}

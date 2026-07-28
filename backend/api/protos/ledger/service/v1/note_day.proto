@@ -1,0 +1,100 @@
+syntax = "proto3";
+
+package ledger.service.v1;
+
+import "gnostic/openapi/v3/annotations.proto";
+import "google/protobuf/empty.proto";
+import "google/protobuf/timestamp.proto";
+import "google/protobuf/field_mask.proto";
+import "pagination/v1/pagination.proto";
+
+import "ledger/service/v1/types.proto";
+
+// 定期提醒服务
+service NoteDayService {
+  rpc List (pagination.PagingRequest) returns (ListNoteDayResponse) {}
+  rpc Get (GetNoteDayRequest) returns (NoteDay) {}
+  rpc Create (CreateNoteDayRequest) returns (NoteDay) {}
+  rpc Update (UpdateNoteDayRequest) returns (NoteDay) {}
+  rpc Delete (DeleteNoteDayRequest) returns (google.protobuf.Empty) {}
+  rpc Run (RunNoteDayRequest) returns (NoteDay) {}
+  rpc Recall (RecallNoteDayRequest) returns (NoteDay) {}
+}
+
+// 定期提醒
+message NoteDay {
+  optional uint32 id = 1 [json_name = "id"];
+  optional uint32 user_id = 2 [
+    json_name = "userId",
+    (gnostic.openapi.v3.property) = {description: "所属用户ID"}
+  ];
+
+  optional string title = 10 [json_name = "title"];
+  optional string notes = 11 [json_name = "notes"];
+
+  optional int64 start_date = 12 [
+    json_name = "startDate",
+    (gnostic.openapi.v3.property) = {description: "开始日期（epoch 毫秒）"}
+  ];
+  optional int64 end_date = 13 [
+    json_name = "endDate",
+    (gnostic.openapi.v3.property) = {description: "结束日期（epoch 毫秒）"}
+  ];
+  optional int64 next_date = 14 [
+    json_name = "nextDate",
+    (gnostic.openapi.v3.property) = {description: "下次执行日期（epoch 毫秒）"}
+  ];
+
+  optional int32 repeat_type = 15 [
+    json_name = "repeatType",
+    (gnostic.openapi.v3.property) = {description: "重复类型：0=单次 1=每天 2=每月 3=每年"}
+  ];
+
+  optional int32 interval = 16 [
+    json_name = "interval",
+    (gnostic.openapi.v3.property) = {description: "间隔"}
+  ];
+
+  optional int32 total_count = 17 [json_name = "totalCount"];
+  optional int32 run_count = 18 [json_name = "runCount"];
+
+  optional uint32 created_by = 100 [json_name = "createdBy"];
+  optional uint32 updated_by = 101 [json_name = "updatedBy"];
+  optional uint32 deleted_by = 102 [json_name = "deletedBy"];
+
+  optional google.protobuf.Timestamp created_at = 200 [json_name = "createdAt"];
+  optional google.protobuf.Timestamp updated_at = 201 [json_name = "updatedAt"];
+  optional google.protobuf.Timestamp deleted_at = 202 [json_name = "deletedAt"];
+}
+
+message ListNoteDayResponse {
+  repeated NoteDay items = 1;
+  uint64 total = 2;
+}
+
+message GetNoteDayRequest {
+  uint32 id = 1 [json_name = "id"];
+}
+
+message CreateNoteDayRequest {
+  NoteDay data = 1;
+}
+
+message UpdateNoteDayRequest {
+  uint32 id = 1;
+  NoteDay data = 2;
+  google.protobuf.FieldMask update_mask = 3 [json_name = "updateMask"];
+  optional bool allow_missing = 4 [json_name = "allowMissing"];
+}
+
+message DeleteNoteDayRequest {
+  uint32 id = 1 [json_name = "id"];
+}
+
+message RunNoteDayRequest {
+  uint32 id = 1 [json_name = "id"];
+}
+
+message RecallNoteDayRequest {
+  uint32 id = 1 [json_name = "id"];
+}

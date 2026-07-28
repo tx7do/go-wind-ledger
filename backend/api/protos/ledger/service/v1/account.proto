@@ -1,0 +1,213 @@
+syntax = "proto3";
+
+package ledger.service.v1;
+
+import "gnostic/openapi/v3/annotations.proto";
+import "google/protobuf/empty.proto";
+import "google/protobuf/timestamp.proto";
+import "google/protobuf/field_mask.proto";
+import "pagination/v1/pagination.proto";
+
+import "ledger/service/v1/types.proto";
+
+// 账户服务
+service AccountService {
+  // 获取账户列表
+  rpc List (pagination.PagingRequest) returns (ListAccountResponse) {}
+
+  // 获取所有账户（不分页）
+  rpc ListAll (ListAllAccountRequest) returns (ListAccountResponse) {}
+
+  // 获取账户数据
+  rpc Get (GetAccountRequest) returns (Account) {}
+
+  // 创建账户
+  rpc Create (CreateAccountRequest) returns (Account) {}
+
+  // 更新账户
+  rpc Update (UpdateAccountRequest) returns (Account) {}
+
+  // 删除账户
+  rpc Delete (DeleteAccountRequest) returns (google.protobuf.Empty) {}
+
+  // 切换启用/禁用
+  rpc Toggle (ToggleAccountRequest) returns (Account) {}
+
+  // 余额调整
+  rpc AdjustBalance (AdjustBalanceRequest) returns (Account) {}
+}
+
+// 账户
+message Account {
+  optional uint32 id = 1 [
+    json_name = "id",
+    (gnostic.openapi.v3.property) = {description: "账户ID"}
+  ];
+
+  optional uint32 tenant_id = 2 [
+    json_name = "tenantId",
+    (gnostic.openapi.v3.property) = {description: "租户（群组）ID"}
+  ];
+
+  optional string name = 10 [
+    json_name = "name",
+    (gnostic.openapi.v3.property) = {description: "账户名称"}
+  ];
+
+  optional AccountType type = 11 [
+    json_name = "type",
+    (gnostic.openapi.v3.property) = {description: "账户类型"}
+  ];
+
+  optional string balance = 12 [
+    json_name = "balance",
+    (gnostic.openapi.v3.property) = {description: "当前余额（字符串格式，避免浮点精度问题）"}
+  ];
+
+  optional string initial_balance = 13 [
+    json_name = "initialBalance",
+    (gnostic.openapi.v3.property) = {description: "期初余额"}
+  ];
+
+  optional string credit_limit = 14 [
+    json_name = "creditLimit",
+    (gnostic.openapi.v3.property) = {description: "信用额度"}
+  ];
+
+  optional int32 bill_day = 15 [
+    json_name = "billDay",
+    (gnostic.openapi.v3.property) = {description: "账单日"}
+  ];
+
+  optional string apr = 16 [
+    json_name = "apr",
+    (gnostic.openapi.v3.property) = {description: "年化利率(%)"}
+  ];
+
+  optional string currency_code = 17 [
+    json_name = "currencyCode",
+    (gnostic.openapi.v3.property) = {description: "币种代码"}
+  ];
+
+  optional string no = 18 [
+    json_name = "no",
+    (gnostic.openapi.v3.property) = {description: "账号"}
+  ];
+
+  optional bool include = 19 [
+    json_name = "include",
+    (gnostic.openapi.v3.property) = {description: "是否纳入统计"}
+  ];
+
+  optional bool can_expense = 20 [
+    json_name = "canExpense",
+    (gnostic.openapi.v3.property) = {description: "是否可用于支出"}
+  ];
+
+  optional bool can_income = 21 [
+    json_name = "canIncome",
+    (gnostic.openapi.v3.property) = {description: "是否可用于收入"}
+  ];
+
+  optional bool can_transfer_from = 22 [
+    json_name = "canTransferFrom",
+    (gnostic.openapi.v3.property) = {description: "是否可用于转出"}
+  ];
+
+  optional bool can_transfer_to = 23 [
+    json_name = "canTransferTo",
+    (gnostic.openapi.v3.property) = {description: "是否可用于转入"}
+  ];
+
+  optional string notes = 24 [
+    json_name = "notes",
+    (gnostic.openapi.v3.property) = {description: "备注"}
+  ];
+
+  optional bool enable = 25 [
+    json_name = "enable",
+    (gnostic.openapi.v3.property) = {description: "是否启用"}
+  ];
+
+  optional int32 sort_order = 26 [
+    json_name = "sortOrder",
+    (gnostic.openapi.v3.property) = {description: "排序"}
+  ];
+
+  optional uint32 created_by = 100 [json_name = "createdBy"];
+  optional uint32 updated_by = 101 [json_name = "updatedBy"];
+  optional uint32 deleted_by = 102 [json_name = "deletedBy"];
+
+  optional google.protobuf.Timestamp created_at = 200 [json_name = "createdAt"];
+  optional google.protobuf.Timestamp updated_at = 201 [json_name = "updatedAt"];
+  optional google.protobuf.Timestamp deleted_at = 202 [json_name = "deletedAt"];
+}
+
+// 回应 - 账户列表
+message ListAccountResponse {
+  repeated Account items = 1;
+  uint64 total = 2;
+}
+
+// 请求 - 获取所有账户
+message ListAllAccountRequest {
+  optional bool include_disabled = 1 [json_name = "includeDisabled"];
+}
+
+// 请求 - 账户数据
+message GetAccountRequest {
+  uint32 id = 1 [
+    (gnostic.openapi.v3.property) = {description: "账户ID"},
+    json_name = "id"
+  ];
+
+  optional google.protobuf.FieldMask view_mask = 100 [json_name = "viewMask"];
+}
+
+// 请求 - 创建账户
+message CreateAccountRequest {
+  Account data = 1;
+}
+
+// 请求 - 更新账户
+message UpdateAccountRequest {
+  uint32 id = 1;
+  Account data = 2;
+
+  google.protobuf.FieldMask update_mask = 3 [
+    json_name = "updateMask"
+  ];
+
+  optional bool allow_missing = 4 [json_name = "allowMissing"];
+}
+
+// 请求 - 删除账户
+message DeleteAccountRequest {
+  uint32 id = 1 [json_name = "id"];
+}
+
+// 请求 - 切换启用/禁用
+message ToggleAccountRequest {
+  uint32 id = 1 [json_name = "id"];
+}
+
+// 请求 - 余额调整
+message AdjustBalanceRequest {
+  uint32 id = 1 [json_name = "id"];
+
+  // 调整后的目标余额
+  string balance = 10 [
+    json_name = "balance",
+    (gnostic.openapi.v3.property) = {description: "调整后的目标余额"}
+  ];
+
+  // 关联的账本（用于创建ADJUST流水记录）
+  uint32 book_id = 11 [
+    json_name = "bookId",
+    (gnostic.openapi.v3.property) = {description: "关联的账本ID"}
+  ];
+
+  optional string title = 12 [json_name = "title"];
+  optional string notes = 13 [json_name = "notes"];
+  optional int64 create_time = 14 [json_name = "createTime"];
+}

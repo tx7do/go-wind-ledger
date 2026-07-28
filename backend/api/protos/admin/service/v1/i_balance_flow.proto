@@ -1,0 +1,56 @@
+syntax = "proto3";
+
+package admin.service.v1;
+
+import "google/api/annotations.proto";
+import "google/protobuf/empty.proto";
+import "pagination/v1/pagination.proto";
+
+import "ledger/service/v1/balance_flow.proto";
+
+// 余额流水服务（Admin BFF）
+service BalanceFlowService {
+  rpc List (pagination.PagingRequest) returns (ledger.service.v1.ListBalanceFlowResponse) {
+    option (google.api.http) = {
+      get: "/admin/v1/balance-flows"
+    };
+  }
+
+  rpc Get (ledger.service.v1.GetBalanceFlowRequest) returns (ledger.service.v1.BalanceFlow) {
+    option (google.api.http) = {
+      get: "/admin/v1/balance-flows/{id}"
+    };
+  }
+
+  rpc Create (ledger.service.v1.CreateBalanceFlowRequest) returns (ledger.service.v1.BalanceFlow) {
+    option (google.api.http) = {
+      post: "/admin/v1/balance-flows"
+      body: "*"
+    };
+  }
+
+  rpc Update (ledger.service.v1.UpdateBalanceFlowRequest) returns (ledger.service.v1.BalanceFlow) {
+    option (google.api.http) = {
+      put: "/admin/v1/balance-flows/{id}"
+      body: "*"
+    };
+  }
+
+  rpc Delete (ledger.service.v1.DeleteBalanceFlowRequest) returns (google.protobuf.Empty) {
+    option (google.api.http) = {
+      delete: "/admin/v1/balance-flows/{id}"
+    };
+  }
+
+  rpc Confirm (ledger.service.v1.ConfirmBalanceFlowRequest) returns (ledger.service.v1.BalanceFlow) {
+    option (google.api.http) = {
+      patch: "/admin/v1/balance-flows/{id}/confirm"
+    };
+  }
+
+  rpc Statistics (ledger.service.v1.StatisticsRequest) returns (ledger.service.v1.StatisticsResponse) {
+    option (google.api.http) = {
+      get: "/admin/v1/balance-flows/statistics"
+    };
+  }
+}

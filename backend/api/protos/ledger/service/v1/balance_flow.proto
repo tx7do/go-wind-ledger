@@ -1,0 +1,186 @@
+syntax = "proto3";
+
+package ledger.service.v1;
+
+import "gnostic/openapi/v3/annotations.proto";
+import "google/protobuf/empty.proto";
+import "google/protobuf/timestamp.proto";
+import "google/protobuf/field_mask.proto";
+import "pagination/v1/pagination.proto";
+
+import "ledger/service/v1/types.proto";
+
+// 余额流水服务（核心记账）
+service BalanceFlowService {
+  rpc List (pagination.PagingRequest) returns (ListBalanceFlowResponse) {}
+  rpc Get (GetBalanceFlowRequest) returns (BalanceFlow) {}
+  rpc Create (CreateBalanceFlowRequest) returns (BalanceFlow) {}
+  rpc Update (UpdateBalanceFlowRequest) returns (BalanceFlow) {}
+  rpc Delete (DeleteBalanceFlowRequest) returns (google.protobuf.Empty) {}
+  rpc Confirm (ConfirmBalanceFlowRequest) returns (BalanceFlow) {}
+  rpc Statistics (StatisticsRequest) returns (StatisticsResponse) {}
+}
+
+// 余额流水
+message BalanceFlow {
+  optional uint32 id = 1 [json_name = "id"];
+  optional uint32 tenant_id = 2 [json_name = "tenantId"];
+  optional uint32 book_id = 3 [json_name = "bookId"];
+
+  optional FlowType type = 10 [
+    json_name = "type",
+    (gnostic.openapi.v3.property) = {description: "流水类型"}
+  ];
+
+  optional string amount = 11 [
+    json_name = "amount",
+    (gnostic.openapi.v3.property) = {description: "金额"}
+  ];
+
+  optional string converted_amount = 12 [
+    json_name = "convertedAmount",
+    (gnostic.openapi.v3.property) = {description: "换算后的金额"}
+  ];
+
+  optional uint32 account_id = 13 [
+    json_name = "accountId",
+    (gnostic.openapi.v3.property) = {description: "来源账户ID"}
+  ];
+
+  optional uint32 to_account_id = 14 [
+    json_name = "toAccountId",
+    (gnostic.openapi.v3.property) = {description: "目标账户ID（转账）"}
+  ];
+
+  optional uint32 payee_id = 15 [
+    json_name = "payeeId",
+    (gnostic.openapi.v3.property) = {description: "收款人/付款人ID"}
+  ];
+
+  optional uint32 creator_id = 16 [json_name = "creatorId"];
+
+  optional int64 create_time = 17 [
+    json_name = "createTime",
+    (gnostic.openapi.v3.property) = {description: "交易时间（epoch 毫秒）"}
+  ];
+
+  optional string title = 18 [json_name = "title"];
+  optional string notes = 19 [json_name = "notes"];
+
+  optional bool confirm = 20 [
+    json_name = "confirm",
+    (gnostic.openapi.v3.property) = {description: "是否已确认（余额已变更）"}
+  ];
+
+  optional bool include = 21 [
+    json_name = "include",
+    (gnostic.openapi.v3.property) = {description: "是否包含在统计中"}
+  ];
+
+  optional int64 insert_at = 22 [json_name = "insertAt"];
+
+  // 关联的类别拆分
+  repeated CategoryRelation categories = 30 [json_name = "categories"];
+
+  // 关联的标签拆分
+  repeated TagRelation tags = 31 [json_name = "tags"];
+
+  optional uint32 created_by = 100 [json_name = "createdBy"];
+  optional uint32 updated_by = 101 [json_name = "updatedBy"];
+  optional uint32 deleted_by = 102 [json_name = "deletedBy"];
+
+  optional google.protobuf.Timestamp created_at = 200 [json_name = "createdAt"];
+  optional google.protobuf.Timestamp updated_at = 201 [json_name = "updatedAt"];
+  optional google.protobuf.Timestamp deleted_at = 202 [json_name = "deletedAt"];
+}
+
+// 类别关系（一条流水可拆分到多个类别）
+message CategoryRelation {
+  optional uint32 id = 1 [json_name = "id"];
+
+  uint32 category_id = 2 [
+    json_name = "categoryId",
+    (gnostic.openapi.v3.property) = {description: "类别ID"}
+  ];
+
+  string amount = 3 [
+    json_name = "amount",
+    (gnostic.openapi.v3.property) = {description: "金额"}
+  ];
+
+  optional string converted_amount = 4 [
+    json_name = "convertedAmount",
+    (gnostic.openapi.v3.property) = {description: "换算后的金额"}
+  ];
+}
+
+// 标签关系
+message TagRelation {
+  optional uint32 id = 1 [json_name = "id"];
+
+  uint32 tag_id = 2 [
+    json_name = "tagId",
+    (gnostic.openapi.v3.property) = {description: "标签ID"}
+  ];
+
+  string amount = 3 [json_name = "amount"];
+  optional string converted_amount = 4 [json_name = "convertedAmount"];
+}
+
+// 回应 - 流水列表
+message ListBalanceFlowResponse {
+  repeated BalanceFlow items = 1;
+  uint64 total = 2;
+}
+
+// 请求 - 流水数据
+message GetBalanceFlowRequest {
+  uint32 id = 1 [json_name = "id"];
+  optional google.protobuf.FieldMask view_mask = 100 [json_name = "viewMask"];
+}
+
+// 请求 - 创建流水
+message CreateBalanceFlowRequest {
+  BalanceFlow data = 1;
+}
+
+// 请求 - 更新流水
+message UpdateBalanceFlowRequest {
+  uint32 id = 1;
+  BalanceFlow data = 2;
+  google.protobuf.FieldMask update_mask = 3 [json_name = "updateMask"];
+  optional bool allow_missing = 4 [json_name = "allowMissing"];
+}
+
+// 请求 - 删除流水
+message DeleteBalanceFlowRequest {
+  uint32 id = 1 [json_name = "id"];
+}
+
+// 请求 - 确认流水（更新账户余额）
+message ConfirmBalanceFlowRequest {
+  uint32 id = 1 [json_name = "id"];
+}
+
+// 请求 - 统计
+message StatisticsRequest {
+  optional uint32 book_id = 1 [json_name = "bookId"];
+  optional FlowType type = 2 [json_name = "type"];
+  optional string title = 3 [json_name = "title"];
+  optional string min_amount = 4 [json_name = "minAmount"];
+  optional string max_amount = 5 [json_name = "maxAmount"];
+  optional int64 min_time = 6 [json_name = "minTime"];
+  optional int64 max_time = 7 [json_name = "maxTime"];
+  optional uint32 account_id = 8 [json_name = "accountId"];
+  repeated uint32 category_ids = 9 [json_name = "categoryIds"];
+  repeated uint32 tag_ids = 10 [json_name = "tagIds"];
+  optional bool confirm = 11 [json_name = "confirm"];
+  optional bool include = 12 [json_name = "include"];
+}
+
+// 回应 - 统计
+message StatisticsResponse {
+  string expense = 1 [json_name = "expense"]; // 支出合计
+  string income = 2 [json_name = "income"];   // 收入合计
+  string net = 3 [json_name = "net"];         // 净收入（收入-支出）
+}

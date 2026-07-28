@@ -1,0 +1,25 @@
+syntax = "proto3";
+
+package admin.service.v1;
+
+import "google/api/annotations.proto";
+import "google/protobuf/empty.proto";
+
+import "ledger/service/v1/flow_file.proto";
+
+// 流水附件服务（Admin BFF）
+service FlowFileService {
+  // 按流水ID查询附件列表
+  rpc List (ledger.service.v1.ListFlowFileRequest) returns (ledger.service.v1.ListFlowFileResponse) {
+    option (google.api.http) = {
+      get: "/admin/v1/flow-files"
+    };
+  }
+
+  // 删除附件
+  rpc Delete (ledger.service.v1.DeleteFlowFileRequest) returns (google.protobuf.Empty) {
+    option (google.api.http) = {
+      delete: "/admin/v1/flow-files/{id}"
+    };
+  }
+}
