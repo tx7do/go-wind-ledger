@@ -218,6 +218,15 @@ class _BalanceFlowFormPageState extends State<BalanceFlowFormPage> {
       payeeId: _payeeId,
       createTime: _selectedDate.millisecondsSinceEpoch ~/ 1000,
       confirm: true,
+      categories: _categoryId != null
+          ? [
+              LedgerServiceV1CategoryRelation(
+                categoryId: _categoryId!,
+                amount: amount.toStringAsFixed(2),
+                convertedAmount: amount.toStringAsFixed(2),
+              ),
+            ]
+          : null,
     );
 
     final result = widget.editId == null
