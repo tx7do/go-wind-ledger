@@ -49,7 +49,7 @@ const formOptions: VbenFormProps = {
     {
       component: 'Input',
       fieldName: 'title',
-      label: $t('page.noteDay.title'),
+      label: $t('page.ledger.noteDay.title'),
       componentProps: {
         placeholder: $t('ui.placeholder.input'),
         allowClear: true,
@@ -91,31 +91,31 @@ const gridOptions: VxeGridProps = {
   columns: [
     { type: 'seq', width: 50 },
     {
-      title: $t('page.noteDay.title'),
+      title: $t('page.ledger.noteDay.title'),
       field: 'title',
       minWidth: 180,
     },
     {
-      title: $t('page.noteDay.repeatType'),
+      title: $t('page.ledger.noteDay.repeatType'),
       field: 'repeatType',
       slots: { default: 'repeatType' },
       width: 110,
     },
     {
-      title: $t('page.noteDay.nextDate'),
+      title: $t('page.ledger.noteDay.nextDate'),
       field: 'nextDate',
       formatter: 'formatDateTime',
       width: 160,
     },
     {
-      title: $t('page.noteDay.runCount'),
+      title: $t('page.ledger.noteDay.runCount'),
       field: 'runCount',
       width: 110,
       align: 'right',
       headerAlign: 'right',
     },
     {
-      title: $t('page.noteDay.totalCount'),
+      title: $t('page.ledger.noteDay.totalCount'),
       field: 'totalCount',
       width: 110,
       align: 'right',
@@ -162,7 +162,7 @@ function handleDelete(row: any) {
       notification.success({ message: $t('ui.notification.delete_success') });
       await gridApi.reload();
     } catch {
-      notification.error({ message: $t('ui.notification.delete_failed') });
+      notification.error({ message: $t('ui.notification.update_failed') });
     }
   })();
 }
@@ -176,7 +176,7 @@ function handleRun(row: any) {
       });
       await gridApi.reload();
     } catch {
-      notification.error({ message: $t('ui.notification.delete_failed') });
+      notification.error({ message: $t('ui.notification.update_failed') });
     }
   })();
 }
@@ -201,7 +201,7 @@ function handleRecall(row: any) {
     <Grid :table-title="$t('menu.ledger.noteDay')">
       <template #toolbar-tools>
         <a-button class="mr-2" type="primary" @click="handleCreate">
-          {{ $t('page.noteDay.button.create') }}
+          {{ $t('page.ledger.noteDay.button.create') }}
         </a-button>
       </template>
       <template #repeatType="{ row }">
@@ -216,17 +216,17 @@ function handleRecall(row: any) {
           @click.stop="handleEdit(row)"
         />
         <a-button type="link" @click.stop="handleRun(row)">
-          {{ $t('page.noteDay.button.run') }}
+          {{ $t('page.ledger.noteDay.button.run') }}
         </a-button>
         <a-button type="link" @click.stop="handleRecall(row)">
-          {{ $t('page.noteDay.button.recall') }}
+          {{ $t('page.ledger.noteDay.button.recall') }}
         </a-button>
         <a-popconfirm
           :cancel-text="$t('ui.button.cancel')"
           :ok-text="$t('ui.button.ok')"
           :title="
             $t('ui.text.do_you_want_delete', {
-              moduleName: $t('page.noteDay.moduleName'),
+              moduleName: $t('page.ledger.noteDay.moduleName'),
             })
           "
           @confirm="handleDelete(row)"

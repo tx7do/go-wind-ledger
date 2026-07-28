@@ -7,7 +7,13 @@ import { $t } from '@vben/locales';
 import { notification } from 'ant-design-vue';
 
 import { useVbenForm } from '#/adapter/form';
-import { apiClient, makeUpdateMask } from '#/api';
+import {
+  apiClient,
+  fetchListAllAccounts,
+  fetchListAllBooks,
+  fetchListAllPayees,
+  makeUpdateMask,
+} from '#/api';
 
 // 流水类型选项
 const flowTypeOptions = [
@@ -33,8 +39,12 @@ const data = ref<Record<string, any>>();
 
 const getTitle = computed(() =>
   data.value?.create
-    ? $t('ui.modal.create', { moduleName: $t('page.balanceFlow.moduleName') })
-    : $t('ui.modal.update', { moduleName: $t('page.balanceFlow.moduleName') }),
+    ? $t('ui.modal.create', {
+        moduleName: $t('page.ledger.balanceFlow.moduleName'),
+      })
+    : $t('ui.modal.update', {
+        moduleName: $t('page.ledger.balanceFlow.moduleName'),
+      }),
 );
 
 const [BaseForm, baseFormApi] = useVbenForm({
@@ -46,19 +56,23 @@ const [BaseForm, baseFormApi] = useVbenForm({
   },
   schema: [
     {
-      component: 'InputNumber',
+      component: 'Select',
       fieldName: 'bookId',
-      label: $t('page.balanceFlow.bookId'),
+      label: $t('page.ledger.balanceFlow.bookId'),
+      rules: 'selectRequired',
       componentProps: {
-        placeholder: $t('ui.placeholder.input'),
-        class: 'w-full',
+        placeholder: $t('ui.placeholder.select'),
+        allowClear: true,
+        showSearch: true,
+        filterOption: (input: string, option: any) =>
+          option.label.toLowerCase().includes(input.toLowerCase()),
+        options: [],
       },
-      rules: 'required',
     },
     {
       component: 'Select',
       fieldName: 'type',
-      label: $t('page.balanceFlow.type'),
+      label: $t('page.ledger.balanceFlow.type'),
       rules: 'selectRequired',
       componentProps: {
         options: flowTypeOptions,
@@ -72,7 +86,7 @@ const [BaseForm, baseFormApi] = useVbenForm({
     {
       component: 'Input',
       fieldName: 'title',
-      label: $t('page.balanceFlow.title'),
+      label: $t('page.ledger.balanceFlow.title'),
       componentProps: {
         placeholder: $t('ui.placeholder.input'),
         allowClear: true,
@@ -81,46 +95,60 @@ const [BaseForm, baseFormApi] = useVbenForm({
     {
       component: 'Textarea',
       fieldName: 'notes',
-      label: $t('page.balanceFlow.notes'),
+      label: $t('page.ledger.balanceFlow.notes'),
       componentProps: {
         placeholder: $t('ui.placeholder.input'),
         allowClear: true,
       },
     },
     {
-      component: 'Input',
+      component: 'InputNumber',
       fieldName: 'amount',
-      label: $t('page.balanceFlow.amount'),
+      label: $t('page.ledger.balanceFlow.amount'),
       componentProps: {
         placeholder: $t('ui.placeholder.input'),
         allowClear: true,
+        precision: 2,
+        step: 0.01,
+        class: 'w-full',
       },
     },
     {
-      component: 'Input',
+      component: 'InputNumber',
       fieldName: 'convertedAmount',
-      label: $t('page.balanceFlow.convertedAmount'),
+      label: $t('page.ledger.balanceFlow.convertedAmount'),
       componentProps: {
         placeholder: $t('ui.placeholder.input'),
         allowClear: true,
+        precision: 2,
+        step: 0.01,
+        class: 'w-full',
       },
     },
     {
-      component: 'InputNumber',
+      component: 'Select',
       fieldName: 'accountId',
-      label: $t('page.balanceFlow.accountId'),
+      label: $t('page.ledger.balanceFlow.accountId'),
       componentProps: {
-        placeholder: $t('ui.placeholder.input'),
-        class: 'w-full',
+        placeholder: $t('ui.placeholder.select'),
+        allowClear: true,
+        showSearch: true,
+        filterOption: (input: string, option: any) =>
+          option.label.toLowerCase().includes(input.toLowerCase()),
+        options: [],
       },
     },
     {
-      component: 'InputNumber',
+      component: 'Select',
       fieldName: 'toAccountId',
-      label: $t('page.balanceFlow.toAccountId'),
+      label: $t('page.ledger.balanceFlow.toAccountId'),
       componentProps: {
-        placeholder: $t('ui.placeholder.input'),
-        class: 'w-full',
+        placeholder: $t('ui.placeholder.select'),
+        allowClear: true,
+        showSearch: true,
+        filterOption: (input: string, option: any) =>
+          option.label.toLowerCase().includes(input.toLowerCase()),
+        options: [],
       },
       dependencies: {
         show: (values) => values.type === 'FLOW_TYPE_TRANSFER',
@@ -128,18 +156,22 @@ const [BaseForm, baseFormApi] = useVbenForm({
       },
     },
     {
-      component: 'InputNumber',
+      component: 'Select',
       fieldName: 'payeeId',
-      label: $t('page.balanceFlow.payeeId'),
+      label: $t('page.ledger.balanceFlow.payeeId'),
       componentProps: {
-        placeholder: $t('ui.placeholder.input'),
-        class: 'w-full',
+        placeholder: $t('ui.placeholder.select'),
+        allowClear: true,
+        showSearch: true,
+        filterOption: (input: string, option: any) =>
+          option.label.toLowerCase().includes(input.toLowerCase()),
+        options: [],
       },
     },
     {
       component: 'Switch',
       fieldName: 'confirm',
-      label: $t('page.balanceFlow.confirm'),
+      label: $t('page.ledger.balanceFlow.confirm'),
       defaultValue: false,
       componentProps: {
         class: 'w-auto',
@@ -148,7 +180,7 @@ const [BaseForm, baseFormApi] = useVbenForm({
     {
       component: 'Switch',
       fieldName: 'include',
-      label: $t('page.balanceFlow.include'),
+      label: $t('page.ledger.balanceFlow.include'),
       defaultValue: true,
       componentProps: {
         class: 'w-auto',
@@ -157,7 +189,7 @@ const [BaseForm, baseFormApi] = useVbenForm({
     {
       component: 'InputNumber',
       fieldName: 'createTime',
-      label: $t('page.balanceFlow.createTime'),
+      label: $t('page.ledger.balanceFlow.createTime'),
       componentProps: {
         placeholder: $t('ui.placeholder.input'),
         class: 'w-full',
@@ -166,18 +198,18 @@ const [BaseForm, baseFormApi] = useVbenForm({
     {
       component: 'Textarea',
       fieldName: 'categories',
-      label: $t('page.balanceFlow.categories'),
+      label: $t('page.ledger.balanceFlow.categories'),
       componentProps: {
-        placeholder: $t('page.balanceFlow.categoriesPlaceholder'),
+        placeholder: $t('page.ledger.balanceFlow.categoriesPlaceholder'),
         allowClear: true,
       },
     },
     {
       component: 'Textarea',
       fieldName: 'tags',
-      label: $t('page.balanceFlow.tags'),
+      label: $t('page.ledger.balanceFlow.tags'),
       componentProps: {
-        placeholder: $t('page.balanceFlow.tagsPlaceholder'),
+        placeholder: $t('page.ledger.balanceFlow.tagsPlaceholder'),
         allowClear: true,
       },
     },
@@ -202,20 +234,18 @@ const [Drawer, drawerApi] = useVbenDrawer({
     // 将 JSON 文本字段解析回数组结构
     const payload: Record<string, any> = { ...values };
     try {
-      if (typeof payload.categories === 'string' && payload.categories.trim()) {
-        payload.categories = JSON.parse(payload.categories);
-      } else {
-        payload.categories = undefined;
-      }
+      payload.categories =
+        typeof payload.categories === 'string' && payload.categories.trim()
+          ? JSON.parse(payload.categories)
+          : undefined;
     } catch {
       payload.categories = undefined;
     }
     try {
-      if (typeof payload.tags === 'string' && payload.tags.trim()) {
-        payload.tags = JSON.parse(payload.tags);
-      } else {
-        payload.tags = undefined;
-      }
+      payload.tags =
+        typeof payload.tags === 'string' && payload.tags.trim()
+          ? JSON.parse(payload.tags)
+          : undefined;
     } catch {
       payload.tags = undefined;
     }
@@ -248,7 +278,7 @@ const [Drawer, drawerApi] = useVbenDrawer({
     }
   },
 
-  onOpenChange(isOpen) {
+  async onOpenChange(isOpen) {
     if (isOpen) {
       data.value = drawerApi.getData<Record<string, any>>();
 
@@ -262,6 +292,43 @@ const [Drawer, drawerApi] = useVbenDrawer({
           row.tags = JSON.stringify(row.tags ?? [], null, 2);
         }
         baseFormApi.setValues(row);
+      }
+
+      // 异步加载下拉选项（账本/账户/收款人）
+      try {
+        const [bookData, accountData, payeeData] = await Promise.all([
+          fetchListAllBooks(true),
+          fetchListAllAccounts(true),
+          fetchListAllPayees(),
+        ]);
+
+        const bookOptions = (bookData.items ?? []).map((b: any) => ({
+          value: b.id,
+          label: b.name,
+        }));
+        const accountOptions = (accountData.items ?? []).map((a: any) => ({
+          value: a.id,
+          label: a.name,
+        }));
+        const payeeOptions = (payeeData.items ?? []).map((p: any) => ({
+          value: p.id,
+          label: p.name,
+        }));
+
+        await baseFormApi.updateSchema([
+          { fieldName: 'bookId', componentProps: { options: bookOptions } },
+          {
+            fieldName: 'accountId',
+            componentProps: { options: accountOptions },
+          },
+          {
+            fieldName: 'toAccountId',
+            componentProps: { options: accountOptions },
+          },
+          { fieldName: 'payeeId', componentProps: { options: payeeOptions } },
+        ]);
+      } catch {
+        // 加载选项失败时忽略，保持空选项
       }
 
       setLoading(false);

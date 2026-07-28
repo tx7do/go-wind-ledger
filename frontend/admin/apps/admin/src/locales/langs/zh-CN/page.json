@@ -956,6 +956,10 @@
       "moduleName": "统计报表",
       "expenseCategory": "支出按分类",
       "incomeCategory": "收入按分类",
+      "expenseTag": "支出按标签",
+      "incomeTag": "收入按标签",
+      "expensePayee": "支出按收款人",
+      "incomePayee": "收入按收款人",
       "balance": "资产负债概览",
       "netWorth": "净资产",
       "assets": "资产",
@@ -963,6 +967,13 @@
       "selectBook": "选择账本",
       "selectBookFirst": "请先选择账本",
       "query": "查询"
+    },
+    "flowFile": {
+      "moduleName": "流水附件",
+      "originalName": "文件名",
+      "contentType": "文件类型",
+      "size": "文件大小",
+      "createTime": "上传时间"
     }
   }
 }

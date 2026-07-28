@@ -21,8 +21,16 @@ const selectedBookId = ref<number>();
 // 图表引用
 const expenseChartRef = ref<EchartsUIType>();
 const incomeChartRef = ref<EchartsUIType>();
+const expenseTagChartRef = ref<EchartsUIType>();
+const incomeTagChartRef = ref<EchartsUIType>();
+const expensePayeeChartRef = ref<EchartsUIType>();
+const incomePayeeChartRef = ref<EchartsUIType>();
 const { renderEcharts: renderExpenseChart } = useEcharts(expenseChartRef);
 const { renderEcharts: renderIncomeChart } = useEcharts(incomeChartRef);
+const { renderEcharts: renderExpenseTagChart } = useEcharts(expenseTagChartRef);
+const { renderEcharts: renderIncomeTagChart } = useEcharts(incomeTagChartRef);
+const { renderEcharts: renderExpensePayeeChart } = useEcharts(expensePayeeChartRef);
+const { renderEcharts: renderIncomePayeeChart } = useEcharts(incomePayeeChartRef);
 
 // 资产负债概览
 const balance = ref<{ assets: number; debts: number; netWorth: number }>({
@@ -116,7 +124,7 @@ async function loadBooks() {
       selectedBookId.value = books.value[0]?.id;
     }
   } catch {
-    notification.error({ message: $t('ui.notification.delete_failed') });
+    notification.error({ message: $t('ui.notification.update_failed') });
   }
 }
 
@@ -128,7 +136,15 @@ async function loadReports() {
   const bookId = selectedBookId.value;
 
   try {
-    const [expenseResp, incomeResp, balanceResp] = await Promise.all([
+    const [
+      expenseResp,
+      incomeResp,
+      balanceResp,
+      expenseTagResp,
+      incomeTagResp,
+      expensePayeeResp,
+      incomePayeeResp,
+    ] = await Promise.all([
       apiClient.reportService.ExpenseCategory({
         bookId,
         categoryIds: undefined,
@@ -142,18 +158,46 @@ async function loadReports() {
         tagIds: undefined,
       }),
       apiClient.reportService.Balance({ bookId }),
+      apiClient.reportService.ExpenseTag({ bookId }),
+      apiClient.reportService.IncomeTag({ bookId }),
+      apiClient.reportService.ExpensePayee({ bookId }),
+      apiClient.reportService.IncomePayee({ bookId }),
     ]);
 
     renderExpenseChart(
       buildPieOption(
         toPieData(expenseResp.items),
-        $t('page.report.expenseCategory'),
+        $t('page.ledger.report.expenseCategory'),
       ) as any,
     );
     renderIncomeChart(
       buildPieOption(
         toPieData(incomeResp.items),
-        $t('page.report.incomeCategory'),
+        $t('page.ledger.report.incomeCategory'),
+      ) as any,
+    );
+    renderExpenseTagChart(
+      buildPieOption(
+        toPieData(expenseTagResp.items),
+        $t('page.ledger.report.expenseTag'),
+      ) as any,
+    );
+    renderIncomeTagChart(
+      buildPieOption(
+        toPieData(incomeTagResp.items),
+        $t('page.ledger.report.incomeTag'),
+      ) as any,
+    );
+    renderExpensePayeeChart(
+      buildPieOption(
+        toPieData(expensePayeeResp.items),
+        $t('page.ledger.report.expensePayee'),
+      ) as any,
+    );
+    renderIncomePayeeChart(
+      buildPieOption(
+        toPieData(incomePayeeResp.items),
+        $t('page.ledger.report.incomePayee'),
       ) as any,
     );
 
@@ -165,7 +209,7 @@ async function loadReports() {
       netWorth: Number.parseFloat(balanceResp.netWorth ?? '0') || 0,
     };
   } catch {
-    notification.error({ message: $t('ui.notification.delete_failed') });
+    notification.error({ message: $t('ui.notification.update_failed') });
   }
 }
 
@@ -179,7 +223,7 @@ function sumPoints(items?: Array<{ y?: string }>): number {
 
 function handleQuery() {
   if (selectedBookId.value === undefined) {
-    message.warning($t('page.report.selectBookFirst'));
+    message.warning($t('page.ledger.report.selectBookFirst'));
     return;
   }
   loadReports();
@@ -202,11 +246,11 @@ onMounted(() => {
   <Page auto-content-height>
     <a-card class="mb-3" :bordered="false">
       <a-space>
-        <span>{{ $t('page.report.selectBook') }}</span>
+        <span>{{ $t('page.ledger.report.selectBook') }}</span>
         <a-select
           v-model:value="selectedBookId"
           style="width: 260px"
-          :placeholder="$t('page.report.selectBook')"
+          :placeholder="$t('page.ledger.report.selectBook')"
           :options="
             books.map((book) => ({
               value: book.id,
@@ -221,7 +265,7 @@ onMounted(() => {
           "
         />
         <a-button type="primary" @click="handleQuery">
-          {{ $t('page.report.query') }}
+          {{ $t('page.ledger.report.query') }}
         </a-button>
       </a-space>
     </a-card>
@@ -239,28 +283,54 @@ onMounted(() => {
       </a-col>
     </a-row>
 
+    <a-row :gutter="16" class="mb-3">
+      <a-col :span="12">
+        <a-card :bordered="false">
+          <EchartsUI ref="expenseTagChartRef" height="360px" />
+        </a-card>
+      </a-col>
+      <a-col :span="12">
+        <a-card :bordered="false">
+          <EchartsUI ref="incomeTagChartRef" height="360px" />
+        </a-card>
+      </a-col>
+    </a-row>
+
+    <a-row :gutter="16" class="mb-3">
+      <a-col :span="12">
+        <a-card :bordered="false">
+          <EchartsUI ref="expensePayeeChartRef" height="360px" />
+        </a-card>
+      </a-col>
+      <a-col :span="12">
+        <a-card :bordered="false">
+          <EchartsUI ref="incomePayeeChartRef" height="360px" />
+        </a-card>
+      </a-col>
+    </a-row>
+
     <a-card :bordered="false">
       <template #title>
-        {{ $t('page.report.balance') }}
+        {{ $t('page.ledger.report.balance') }}
       </template>
       <a-row :gutter="16">
         <a-col :span="8">
           <a-statistic
-            :title="$t('page.report.assets')"
+            :title="$t('page.ledger.report.assets')"
             :value="balance.assets"
             :value-style="{ color: '#22c55e' }"
           />
         </a-col>
         <a-col :span="8">
           <a-statistic
-            :title="$t('page.report.debts')"
+            :title="$t('page.ledger.report.debts')"
             :value="balance.debts"
             :value-style="{ color: '#ef4444' }"
           />
         </a-col>
         <a-col :span="8">
           <a-statistic
-            :title="$t('page.report.netWorth')"
+            :title="$t('page.ledger.report.netWorth')"
             :value="balance.netWorth"
             :value-style="{ color: '#3b82f6' }"
           />

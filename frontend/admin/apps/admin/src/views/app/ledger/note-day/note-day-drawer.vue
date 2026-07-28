@@ -21,8 +21,12 @@ const data = ref<Record<string, any>>();
 
 const getTitle = computed(() =>
   data.value?.create
-    ? $t('ui.modal.create', { moduleName: $t('page.noteDay.moduleName') })
-    : $t('ui.modal.update', { moduleName: $t('page.noteDay.moduleName') }),
+    ? $t('ui.modal.create', {
+        moduleName: $t('page.ledger.noteDay.moduleName'),
+      })
+    : $t('ui.modal.update', {
+        moduleName: $t('page.ledger.noteDay.moduleName'),
+      }),
 );
 
 const [BaseForm, baseFormApi] = useVbenForm({
@@ -36,7 +40,7 @@ const [BaseForm, baseFormApi] = useVbenForm({
     {
       component: 'Input',
       fieldName: 'title',
-      label: $t('page.noteDay.title'),
+      label: $t('page.ledger.noteDay.title'),
       componentProps: {
         placeholder: $t('ui.placeholder.input'),
         allowClear: true,
@@ -46,35 +50,41 @@ const [BaseForm, baseFormApi] = useVbenForm({
     {
       component: 'Textarea',
       fieldName: 'notes',
-      label: $t('page.noteDay.notes'),
+      label: $t('page.ledger.noteDay.notes'),
       componentProps: {
         placeholder: $t('ui.placeholder.input'),
         allowClear: true,
       },
     },
     {
-      component: 'InputNumber',
+      component: 'DatePicker',
       fieldName: 'startDate',
-      label: $t('page.noteDay.startDate'),
+      label: $t('page.ledger.noteDay.startDate'),
       componentProps: {
-        placeholder: $t('ui.placeholder.input'),
+        placeholder: $t('ui.placeholder.select'),
+        allowClear: true,
+        showTime: true,
+        valueFormat: 'x',
         class: 'w-full',
       },
       rules: 'required',
     },
     {
-      component: 'InputNumber',
+      component: 'DatePicker',
       fieldName: 'endDate',
-      label: $t('page.noteDay.endDate'),
+      label: $t('page.ledger.noteDay.endDate'),
       componentProps: {
-        placeholder: $t('ui.placeholder.input'),
+        placeholder: $t('ui.placeholder.select'),
+        allowClear: true,
+        showTime: true,
+        valueFormat: 'x',
         class: 'w-full',
       },
     },
     {
       component: 'Select',
       fieldName: 'repeatType',
-      label: $t('page.noteDay.repeatType'),
+      label: $t('page.ledger.noteDay.repeatType'),
       defaultValue: 0,
       rules: 'selectRequired',
       componentProps: {
@@ -86,7 +96,7 @@ const [BaseForm, baseFormApi] = useVbenForm({
     {
       component: 'InputNumber',
       fieldName: 'interval',
-      label: $t('page.noteDay.interval'),
+      label: $t('page.ledger.noteDay.interval'),
       defaultValue: 1,
       componentProps: {
         placeholder: $t('ui.placeholder.input'),

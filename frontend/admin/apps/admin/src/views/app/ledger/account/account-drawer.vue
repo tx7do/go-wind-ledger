@@ -25,12 +25,12 @@ const getTitle = computed(() =>
 );
 
 // 账户类型选项
-const accountTypeList = [
-  { value: 'ACCOUNT_TYPE_ASSET', label: 'Asset' },
-  { value: 'ACCOUNT_TYPE_CHECKING', label: 'Checking' },
-  { value: 'ACCOUNT_TYPE_CREDIT', label: 'Credit' },
-  { value: 'ACCOUNT_TYPE_DEBT', label: 'Debt' },
-];
+const accountTypeList = computed(() => [
+  { value: 'ACCOUNT_TYPE_ASSET', label: $t('enum.ledger.accountType.ACCOUNT_TYPE_ASSET') },
+  { value: 'ACCOUNT_TYPE_CHECKING', label: $t('enum.ledger.accountType.ACCOUNT_TYPE_CHECKING') },
+  { value: 'ACCOUNT_TYPE_CREDIT', label: $t('enum.ledger.accountType.ACCOUNT_TYPE_CREDIT') },
+  { value: 'ACCOUNT_TYPE_DEBT', label: $t('enum.ledger.accountType.ACCOUNT_TYPE_DEBT') },
+]);
 
 const [BaseForm, baseFormApi] = useVbenForm({
   showDefaultActions: false,

@@ -917,6 +917,10 @@
       "moduleName": "Reports",
       "expenseCategory": "Expense by Category",
       "incomeCategory": "Income by Category",
+      "expenseTag": "Expense by Tag",
+      "incomeTag": "Income by Tag",
+      "expensePayee": "Expense by Payee",
+      "incomePayee": "Income by Payee",
       "balance": "Balance Overview",
       "netWorth": "Net Worth",
       "assets": "Assets",
@@ -924,6 +928,13 @@
       "selectBook": "Select Book",
       "selectBookFirst": "Please select a book first",
       "query": "Query"
+    },
+    "flowFile": {
+      "moduleName": "Flow Files",
+      "originalName": "File Name",
+      "contentType": "File Type",
+      "size": "File Size",
+      "createTime": "Upload Time"
     }
   }
 }

@@ -94,6 +94,7 @@
     "payee": "Payees",
     "noteDay": "Reminders",
     "currency": "Currencies",
-    "report": "Reports"
+    "report": "Reports",
+    "flowFile": "Flow Files"
   }
 }

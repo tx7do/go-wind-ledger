@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import type { VxeGridProps } from '#/adapter/vxe-table';
 
-import { h } from 'vue';
+import { computed, h } from 'vue';
 
 import { Page, useVbenDrawer, useVbenModal, type VbenFormProps } from '@vben/common-ui';
 import { LucideFilePenLine, LucideTrash2 } from '@vben/icons';
@@ -25,12 +25,12 @@ import AccountDrawer from './account-drawer.vue';
 import AdjustBalanceModal from './adjust-balance-modal.vue';
 
 // 账户类型选项
-const accountTypeList = [
-  { value: 'ACCOUNT_TYPE_ASSET', label: 'Asset' },
-  { value: 'ACCOUNT_TYPE_CHECKING', label: 'Checking' },
-  { value: 'ACCOUNT_TYPE_CREDIT', label: 'Credit' },
-  { value: 'ACCOUNT_TYPE_DEBT', label: 'Debt' },
-];
+const accountTypeList = computed(() => [
+  { value: 'ACCOUNT_TYPE_ASSET', label: $t('enum.ledger.accountType.ACCOUNT_TYPE_ASSET') },
+  { value: 'ACCOUNT_TYPE_CHECKING', label: $t('enum.ledger.accountType.ACCOUNT_TYPE_CHECKING') },
+  { value: 'ACCOUNT_TYPE_CREDIT', label: $t('enum.ledger.accountType.ACCOUNT_TYPE_CREDIT') },
+  { value: 'ACCOUNT_TYPE_DEBT', label: $t('enum.ledger.accountType.ACCOUNT_TYPE_DEBT') },
+]);
 
 // 账户类型对应的 Tag 颜色
 const accountTypeColorMap: Record<string, string> = {
@@ -42,8 +42,8 @@ const accountTypeColorMap: Record<string, string> = {
 };
 
 function accountTypeToName(type: AccountType | undefined) {
-  const matched = accountTypeList.find((item) => item.value === type);
-  return matched ? matched.label : 'Unspecified';
+  const matched = accountTypeList.value.find((item) => item.value === type);
+  return matched ? matched.label : $t('enum.ledger.accountType.ACCOUNT_TYPE_UNSPECIFIED');
 }
 
 function accountTypeToColor(type: AccountType | undefined) {

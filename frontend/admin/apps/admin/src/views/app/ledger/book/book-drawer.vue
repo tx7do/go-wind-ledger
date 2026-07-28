@@ -8,6 +8,8 @@ import { notification } from 'ant-design-vue';
 import { useVbenForm } from '#/adapter/form';
 import {
   apiClient,
+  fetchListAllAccounts,
+  fetchListAllLedgerCategories,
   makeUpdateMask,
 } from '#/api';
 import { $t } from '#/locales';
@@ -64,6 +66,84 @@ const [BaseForm, baseFormApi] = useVbenForm({
       fieldName: 'enable',
       label: $t('page.ledger.book.enable'),
       defaultValue: true,
+    },
+    {
+      component: 'Select',
+      fieldName: 'defaultExpenseAccountId',
+      label: $t('page.ledger.book.defaultExpenseAccount'),
+      componentProps: {
+        placeholder: $t('ui.placeholder.select'),
+        allowClear: true,
+        showSearch: true,
+        filterOption: (input: string, option: any) =>
+          option.label.toLowerCase().includes(input.toLowerCase()),
+        options: [],
+      },
+    },
+    {
+      component: 'Select',
+      fieldName: 'defaultIncomeAccountId',
+      label: $t('page.ledger.book.defaultIncomeAccount'),
+      componentProps: {
+        placeholder: $t('ui.placeholder.select'),
+        allowClear: true,
+        showSearch: true,
+        filterOption: (input: string, option: any) =>
+          option.label.toLowerCase().includes(input.toLowerCase()),
+        options: [],
+      },
+    },
+    {
+      component: 'Select',
+      fieldName: 'defaultTransferFromAccountId',
+      label: $t('page.ledger.book.defaultTransferFromAccount'),
+      componentProps: {
+        placeholder: $t('ui.placeholder.select'),
+        allowClear: true,
+        showSearch: true,
+        filterOption: (input: string, option: any) =>
+          option.label.toLowerCase().includes(input.toLowerCase()),
+        options: [],
+      },
+    },
+    {
+      component: 'Select',
+      fieldName: 'defaultTransferToAccountId',
+      label: $t('page.ledger.book.defaultTransferToAccount'),
+      componentProps: {
+        placeholder: $t('ui.placeholder.select'),
+        allowClear: true,
+        showSearch: true,
+        filterOption: (input: string, option: any) =>
+          option.label.toLowerCase().includes(input.toLowerCase()),
+        options: [],
+      },
+    },
+    {
+      component: 'Select',
+      fieldName: 'defaultExpenseCategoryId',
+      label: $t('page.ledger.book.defaultExpenseCategory'),
+      componentProps: {
+        placeholder: $t('ui.placeholder.select'),
+        allowClear: true,
+        showSearch: true,
+        filterOption: (input: string, option: any) =>
+          option.label.toLowerCase().includes(input.toLowerCase()),
+        options: [],
+      },
+    },
+    {
+      component: 'Select',
+      fieldName: 'defaultIncomeCategoryId',
+      label: $t('page.ledger.book.defaultIncomeCategory'),
+      componentProps: {
+        placeholder: $t('ui.placeholder.select'),
+        allowClear: true,
+        showSearch: true,
+        filterOption: (input: string, option: any) =>
+          option.label.toLowerCase().includes(input.toLowerCase()),
+        options: [],
+      },
     },
     {
       component: 'InputNumber',
@@ -123,13 +203,63 @@ const [Drawer, drawerApi] = useVbenDrawer({
     }
   },
 
-  onOpenChange(isOpen) {
+  async onOpenChange(isOpen) {
     if (isOpen) {
       // 获取传入的数据
       data.value = drawerApi.getData<Record<string, any>>();
 
       // 为表单赋值
       baseFormApi.setValues(data.value?.row);
+
+      // 异步加载默认账户/分类下拉选项
+      try {
+        const [accountData, expenseCategoryData, incomeCategoryData] =
+          await Promise.all([
+            fetchListAllAccounts(true),
+            fetchListAllLedgerCategories(undefined, 'CATEGORY_TYPE_EXPENSE'),
+            fetchListAllLedgerCategories(undefined, 'CATEGORY_TYPE_INCOME'),
+          ]);
+
+        const accountOptions = (accountData.items ?? []).map((a: any) => ({
+          value: a.id,
+          label: a.name,
+        }));
+        const expenseCategoryOptions = (expenseCategoryData.items ?? []).map(
+          (c: any) => ({ value: c.id, label: c.name }),
+        );
+        const incomeCategoryOptions = (incomeCategoryData.items ?? []).map(
+          (c: any) => ({ value: c.id, label: c.name }),
+        );
+
+        await baseFormApi.updateSchema([
+          {
+            fieldName: 'defaultExpenseAccountId',
+            componentProps: { options: accountOptions },
+          },
+          {
+            fieldName: 'defaultIncomeAccountId',
+            componentProps: { options: accountOptions },
+          },
+          {
+            fieldName: 'defaultTransferFromAccountId',
+            componentProps: { options: accountOptions },
+          },
+          {
+            fieldName: 'defaultTransferToAccountId',
+            componentProps: { options: accountOptions },
+          },
+          {
+            fieldName: 'defaultExpenseCategoryId',
+            componentProps: { options: expenseCategoryOptions },
+          },
+          {
+            fieldName: 'defaultIncomeCategoryId',
+            componentProps: { options: incomeCategoryOptions },
+          },
+        ]);
+      } catch {
+        // 加载选项失败时忽略，保持空选项
+      }
 
       setLoading(false);
     }

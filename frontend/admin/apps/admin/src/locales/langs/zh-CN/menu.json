@@ -101,6 +101,7 @@
     "payee": "收款人管理",
     "noteDay": "定期提醒",
     "currency": "币种管理",
-    "report": "统计报表"
+    "report": "统计报表",
+    "flowFile": "流水附件"
   }
 }

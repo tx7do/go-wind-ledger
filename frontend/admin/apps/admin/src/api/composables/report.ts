@@ -42,3 +42,47 @@ export function useBalanceReport(
     ...options,
   });
 }
+
+export function useExpenseTagReport(
+  req: { bookId: number },
+  options?: UseQueryOptions<ledgerservicev1_ReportResponse, Error>,
+) {
+  return useQuery({
+    queryKey: ['reportExpenseTag', req],
+    queryFn: () => apiClient.reportService.ExpenseTag(req),
+    ...options,
+  });
+}
+
+export function useIncomeTagReport(
+  req: { bookId: number },
+  options?: UseQueryOptions<ledgerservicev1_ReportResponse, Error>,
+) {
+  return useQuery({
+    queryKey: ['reportIncomeTag', req],
+    queryFn: () => apiClient.reportService.IncomeTag(req),
+    ...options,
+  });
+}
+
+export function useExpensePayeeReport(
+  req: { bookId: number },
+  options?: UseQueryOptions<ledgerservicev1_ReportResponse, Error>,
+) {
+  return useQuery({
+    queryKey: ['reportExpensePayee', req],
+    queryFn: () => apiClient.reportService.ExpensePayee(req),
+    ...options,
+  });
+}
+
+export function useIncomePayeeReport(
+  req: { bookId: number },
+  options?: UseQueryOptions<ledgerservicev1_ReportResponse, Error>,
+) {
+  return useQuery({
+    queryKey: ['reportIncomePayee', req],
+    queryFn: () => apiClient.reportService.IncomePayee(req),
+    ...options,
+  });
+}

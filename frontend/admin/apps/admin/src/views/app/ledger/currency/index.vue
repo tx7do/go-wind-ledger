@@ -40,17 +40,17 @@ const gridOptions: VxeGridProps = {
   columns: [
     { type: 'seq', width: 50 },
     {
-      title: $t('page.currency.code'),
+      title: $t('page.ledger.currency.code'),
       field: 'code',
       minWidth: 120,
     },
     {
-      title: $t('page.currency.name'),
+      title: $t('page.ledger.currency.name'),
       field: 'name',
       minWidth: 180,
     },
     {
-      title: $t('page.currency.rate'),
+      title: $t('page.ledger.currency.rate'),
       field: 'rate',
       width: 140,
       align: 'right',
@@ -70,7 +70,7 @@ async function handleRefresh() {
     });
     await gridApi.reload();
   } catch {
-    notification.error({ message: $t('ui.notification.delete_failed') });
+    notification.error({ message: $t('ui.notification.update_failed') });
   } finally {
     refreshing.value = false;
   }
@@ -88,7 +88,7 @@ async function handleRefresh() {
           :icon="h(LucideRefreshCw)"
           @click="handleRefresh"
         >
-          {{ $t('page.currency.button.refresh') }}
+          {{ $t('page.ledger.currency.button.refresh') }}
         </a-button>
       </template>
     </Grid>

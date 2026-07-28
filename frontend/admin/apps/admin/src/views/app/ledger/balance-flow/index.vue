@@ -50,12 +50,9 @@ const flowTypeToColor = (type?: string) => {
 };
 
 const confirmToName = (confirm?: boolean) =>
-  confirm
-    ? $t('enum.ledger.confirm.yes')
-    : $t('enum.ledger.confirm.no');
+  confirm ? $t('enum.ledger.confirm.yes') : $t('enum.ledger.confirm.no');
 
-const confirmToColor = (confirm?: boolean) =>
-  confirm ? '#22c55e' : '#94a3b8';
+const confirmToColor = (confirm?: boolean) => (confirm ? '#22c55e' : '#94a3b8');
 
 // 统计数据
 const stats = ref({ expense: '0', income: '0', net: '0' });
@@ -86,7 +83,7 @@ const formOptions: VbenFormProps = {
     {
       component: 'Input',
       fieldName: 'title',
-      label: $t('page.balanceFlow.title'),
+      label: $t('page.ledger.balanceFlow.title'),
       componentProps: {
         placeholder: $t('ui.placeholder.input'),
         allowClear: true,
@@ -95,7 +92,7 @@ const formOptions: VbenFormProps = {
     {
       component: 'Select',
       fieldName: 'type',
-      label: $t('page.balanceFlow.type'),
+      label: $t('page.ledger.balanceFlow.type'),
       componentProps: {
         options: flowTypeOptions,
         placeholder: $t('ui.placeholder.select'),
@@ -143,32 +140,32 @@ const gridOptions: VxeGridProps = {
   columns: [
     { type: 'seq', width: 50 },
     {
-      title: $t('page.balanceFlow.type'),
+      title: $t('page.ledger.balanceFlow.type'),
       field: 'type',
       slots: { default: 'type' },
       width: 110,
     },
     {
-      title: $t('page.balanceFlow.title'),
+      title: $t('page.ledger.balanceFlow.title'),
       field: 'title',
       minWidth: 160,
     },
     {
-      title: $t('page.balanceFlow.amount'),
+      title: $t('page.ledger.balanceFlow.amount'),
       field: 'amount',
       width: 120,
       align: 'right',
       headerAlign: 'right',
     },
     {
-      title: $t('page.balanceFlow.convertedAmount'),
+      title: $t('page.ledger.balanceFlow.convertedAmount'),
       field: 'convertedAmount',
       width: 140,
       align: 'right',
       headerAlign: 'right',
     },
     {
-      title: $t('page.balanceFlow.confirm'),
+      title: $t('page.ledger.balanceFlow.confirm'),
       field: 'confirm',
       slots: { default: 'confirm' },
       width: 100,
@@ -222,7 +219,7 @@ function handleDelete(row: any) {
       await gridApi.reload();
       await loadStatistics();
     } catch {
-      notification.error({ message: $t('ui.notification.delete_failed') });
+      notification.error({ message: $t('ui.notification.update_failed') });
     }
   })();
 }
@@ -237,7 +234,7 @@ function handleConfirm(row: any) {
       await gridApi.reload();
       await loadStatistics();
     } catch {
-      notification.error({ message: $t('ui.notification.delete_failed') });
+      notification.error({ message: $t('ui.notification.update_failed') });
     }
   })();
 }
@@ -252,21 +249,21 @@ onMounted(() => {
     <div class="mb-3 flex gap-3">
       <a-card class="flex-1" :bordered="false">
         <a-statistic
-          :title="$t('page.balanceFlow.statistics.expense')"
+          :title="$t('page.ledger.balanceFlow.statistics.expense')"
           :value="stats.expense"
           :value-style="{ color: '#ef4444' }"
         />
       </a-card>
       <a-card class="flex-1" :bordered="false">
         <a-statistic
-          :title="$t('page.balanceFlow.statistics.income')"
+          :title="$t('page.ledger.balanceFlow.statistics.income')"
           :value="stats.income"
           :value-style="{ color: '#22c55e' }"
         />
       </a-card>
       <a-card class="flex-1" :bordered="false">
         <a-statistic
-          :title="$t('page.balanceFlow.statistics.net')"
+          :title="$t('page.ledger.balanceFlow.statistics.net')"
           :value="stats.net"
           :value-style="{ color: '#3b82f6' }"
         />
@@ -276,7 +273,7 @@ onMounted(() => {
     <Grid :table-title="$t('menu.ledger.balanceFlow')">
       <template #toolbar-tools>
         <a-button class="mr-2" type="primary" @click="handleCreate">
-          {{ $t('page.balanceFlow.button.create') }}
+          {{ $t('page.ledger.balanceFlow.button.create') }}
         </a-button>
       </template>
       <template #type="{ row }">
@@ -300,14 +297,14 @@ onMounted(() => {
           type="link"
           @click.stop="handleConfirm(row)"
         >
-          {{ $t('page.balanceFlow.button.confirm') }}
+          {{ $t('page.ledger.balanceFlow.button.confirm') }}
         </a-button>
         <a-popconfirm
           :cancel-text="$t('ui.button.cancel')"
           :ok-text="$t('ui.button.ok')"
           :title="
             $t('ui.text.do_you_want_delete', {
-              moduleName: $t('page.balanceFlow.moduleName'),
+              moduleName: $t('page.ledger.balanceFlow.moduleName'),
             })
           "
           @confirm="handleDelete(row)"
