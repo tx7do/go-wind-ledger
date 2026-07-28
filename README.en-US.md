@@ -26,6 +26,8 @@ FengXing Ledger (GoWind Ledger) is a full-stack personal/family bookkeeping plat
 - **Hierarchical Categories** — Expense/income categories with 4-level tree structure, tags with capability flags (can expense/income/transfer)
 - **Multi-Currency** — Built-in 10 currency exchange rate cache, real-time rate refresh and currency conversion
 - **Reports & Analytics** — Aggregation by category/tag/payee dimensions, asset/liability overview, ECharts visualization
+- **Budget Management** — Monthly/quarterly/yearly/weekly budgets with real-time progress tracking and overspend alerts
+- **Group Member Management** — Invite/accept/reject workflow, multi-role permissions (owner/operator/guest), tenant member management
 - **Recurring Reminders** — Daily/monthly/yearly recurring reminders with run/recall operations
 - **Microservices** — Built on go-kratos with Admin BFF + App BFF + Core three-service architecture
 - **API First** — Protobuf contract-driven, RESTful + gRPC dual protocol, auto-generated OpenAPI docs
@@ -130,6 +132,23 @@ FengXing Ledger (GoWind Ledger) is a full-stack personal/family bookkeeping plat
 | Tags            | Tree structure with capability flags (can expense/income/transfer)   |
 | Payees          | Book-scoped payee management with capability flags                   |
 | Reminders       | Daily/monthly/yearly recurring reminders with run/recall             |
+
+### Budget Management
+
+| Feature         | Description                                                          |
+|:----------------|:---------------------------------------------------------------------|
+| Budget Setup    | Monthly/quarterly/yearly/weekly budgets, scoped by category or account |
+| Progress Track  | Real-time spending aggregation, remaining amount and usage percentage |
+| Overspend Alert | Auto-flag when budget exceeded, configurable notification toggle      |
+
+### Group Member Management
+
+| Feature         | Description                                                          |
+|:----------------|:---------------------------------------------------------------------|
+| Invite Workflow | Invite users by username, invitees can accept or reject              |
+| Role Permissions| Owner/operator/guest roles, owners manage members and settings       |
+| Member Management| List tenant members, remove members (owner protected), view roles   |
+| Multi-Tenant    | Users can belong to multiple tenants, switch active tenant/book      |
 
 ### Security
 
