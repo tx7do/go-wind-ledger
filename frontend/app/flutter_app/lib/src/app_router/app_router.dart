@@ -8,6 +8,8 @@ import 'package:flutter_app/src/core/constants/index.dart' as constants;
 import 'package:flutter_app/src/core/widgets/not_found_page.dart';
 import 'package:flutter_app/src/core/widgets/web_shell_layout.dart';
 import 'package:flutter_app/src/app_router/route_names.dart';
+import 'package:flutter_app/src/features/ledger/widgets/ledger_bottom_nav.dart'
+    show LedgerTab;
 import 'package:flutter_app/src/features/cms/pages/home/home_page.dart';
 import 'package:flutter_app/src/features/cms/pages/post_detail/post_detail_page.dart';
 import 'package:flutter_app/src/features/cms/pages/post_list/post_list_page.dart';
@@ -17,6 +19,24 @@ import 'package:flutter_app/src/features/cms/pages/category_list/category_list_p
 import 'package:flutter_app/src/features/cms/pages/search/search_page.dart';
 import 'package:flutter_app/src/features/auth/pages/login_page.dart';
 import 'package:flutter_app/src/core/utils/responsive_utils.dart';
+
+import 'package:flutter_app/src/features/ledger/pages/ledger_home_page.dart';
+import 'package:flutter_app/src/features/ledger/pages/balance_flow_list_page.dart';
+import 'package:flutter_app/src/features/ledger/pages/balance_flow_form_page.dart';
+import 'package:flutter_app/src/features/ledger/pages/account_list_page.dart';
+import 'package:flutter_app/src/features/ledger/pages/account_form_page.dart';
+import 'package:flutter_app/src/features/ledger/pages/book_list_page.dart';
+import 'package/flutter_app/src/features/ledger/pages/book_form_page.dart';
+import 'package:flutter_app/src/features/ledger/pages/category_list_page.dart';
+import 'package:flutter_app/src/features/ledger/pages/category_form_page.dart';
+import 'package/flutter_app/src/features/ledger/pages/tag_list_page.dart';
+import 'package/flutter_app/src/features/ledger/pages/tag_form_page.dart';
+import 'package/flutter_app/src/features/ledger/pages/payee_list_page.dart';
+import 'package/flutter_app/src/features/ledger/pages/payee_form_page.dart';
+import 'package/flutter_app/src/features/ledger/pages/note_day_list_page.dart';
+import 'package/flutter_app/src/features/ledger/pages/note_day_form_page.dart';
+import 'package/flutter_app/src/features/ledger/pages/currency_list_page.dart';
+import 'package:flutter_app/src/features/ledger/pages/report_page.dart';
 import 'package:flutter_app/src/features/cms/pages/explore/explore_page.dart';
 import 'package:flutter_app/src/features/cms/pages/profile/profile_page.dart';
 import 'package:flutter_app/src/features/cms/pages/settings/settings_page.dart';
@@ -201,6 +221,119 @@ class AppRouter {
           ),
         ],
       ),
+      // ─── 记账模块路由（不在 Shell 内） ───────────────────
+      GoRoute(
+        path: '/ledger',
+        builder: (context, state) {
+          final tab = _parseLedgerTab(state.uri.queryParameters['tab']);
+          return LedgerHomePage(initialTab: tab);
+        },
+      ),
+      GoRoute(
+        path: '/ledger/flows',
+        builder: (context, state) {
+          return const BalanceFlowListPage();
+        },
+      ),
+      GoRoute(
+        path: '/ledger/flows/create',
+        builder: (context, state) {
+          final id = int.tryParse(state.uri.queryParameters['id'] ?? '');
+          return BalanceFlowFormPage(editId: id);
+        },
+      ),
+      GoRoute(
+        path: '/ledger/accounts',
+        builder: (context, state) {
+          return const AccountListPage();
+        },
+      ),
+      GoRoute(
+        path: '/ledger/accounts/create',
+        builder: (context, state) {
+          final id = int.tryParse(state.uri.queryParameters['id'] ?? '');
+          return AccountFormPage(editId: id);
+        },
+      ),
+      GoRoute(
+        path: '/ledger/books',
+        builder: (context, state) {
+          return const BookListPage();
+        },
+      ),
+      GoRoute(
+        path: '/ledger/books/create',
+        builder: (context, state) {
+          final id = int.tryParse(state.uri.queryParameters['id'] ?? '');
+          return BookFormPage(editId: id);
+        },
+      ),
+      GoRoute(
+        path: '/ledger/categories',
+        builder: (context, state) {
+          return const CategoryListPage();
+        },
+      ),
+      GoRoute(
+        path: '/ledger/categories/create',
+        builder: (context, state) {
+          final id = int.tryParse(state.uri.queryParameters['id'] ?? '');
+          final parentId =
+              int.tryParse(state.uri.queryParameters['parentId'] ?? '');
+          return CategoryFormPage(editId: id, parentId: parentId);
+        },
+      ),
+      GoRoute(
+        path: '/ledger/tags',
+        builder: (context, state) {
+          return const TagListPage();
+        },
+      ),
+      GoRoute(
+        path: '/ledger/tags/create',
+        builder: (context, state) {
+          final id = int.tryParse(state.uri.queryParameters['id'] ?? '');
+          return TagFormPage(editId: id);
+        },
+      ),
+      GoRoute(
+        path: '/ledger/payees',
+        builder: (context, state) {
+          return const PayeeListPage();
+        },
+      ),
+      GoRoute(
+        path: '/ledger/payees/create',
+        builder: (context, state) {
+          final id = int.tryParse(state.uri.queryParameters['id'] ?? '');
+          return PayeeFormPage(editId: id);
+        },
+      ),
+      GoRoute(
+        path: '/ledger/note-days',
+        builder: (context, state) {
+          return const NoteDayListPage();
+        },
+      ),
+      GoRoute(
+        path: '/ledger/note-days/create',
+        builder: (context, state) {
+          final id = int.tryParse(state.uri.queryParameters['id'] ?? '');
+          return NoteDayFormPage(editId: id);
+        },
+      ),
+      GoRoute(
+        path: '/ledger/currencies',
+        builder: (context, state) {
+          return const CurrencyListPage();
+        },
+      ),
+      GoRoute(
+        path: '/ledger/reports',
+        builder: (context, state) {
+          return const ReportPage();
+        },
+      ),
       // 登录页（不在 Shell 内）
       GoRoute(
         name: RouteNames.login,
@@ -211,6 +344,20 @@ class AppRouter {
       ),
     ],
   );
+
+  /// 解析 ledger 主框架初始 Tab。
+  static LedgerTab _parseLedgerTab(String? value) {
+    switch (value) {
+      case 'statistics':
+        return LedgerTab.statistics;
+      case 'accounts':
+        return LedgerTab.accounts;
+      case 'mine':
+        return LedgerTab.mine;
+      default:
+        return LedgerTab.flows;
+    }
+  }
 
   static FutureOr<String?> _guard(BuildContext context, GoRouterState state) {
     // CMS 内容展示端暂时不需要登录验证，直接放行

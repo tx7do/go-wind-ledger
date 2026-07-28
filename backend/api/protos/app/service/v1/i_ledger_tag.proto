@@ -1,0 +1,30 @@
+syntax = "proto3";
+package app.service.v1;
+import "google/api/annotations.proto";
+import "google/protobuf/empty.proto";
+import "pagination/v1/pagination.proto";
+import "ledger/service/v1/tag.proto";
+
+service LedgerTagService {
+  rpc List (pagination.PagingRequest) returns (ledger.service.v1.ListTagResponse) {
+    option (google.api.http) = { get: "/app/v1/ledger-tags" };
+  }
+  rpc ListAll (ledger.service.v1.ListAllTagRequest) returns (ledger.service.v1.ListTagResponse) {
+    option (google.api.http) = { get: "/app/v1/ledger-tags/all" };
+  }
+  rpc Get (ledger.service.v1.GetTagRequest) returns (ledger.service.v1.Tag) {
+    option (google.api.http) = { get: "/app/v1/ledger-tags/{id}" };
+  }
+  rpc Create (ledger.service.v1.CreateTagRequest) returns (ledger.service.v1.Tag) {
+    option (google.api.http) = { post: "/app/v1/ledger-tags" body: "*" };
+  }
+  rpc Update (ledger.service.v1.UpdateTagRequest) returns (ledger.service.v1.Tag) {
+    option (google.api.http) = { put: "/app/v1/ledger-tags/{id}" body: "*" };
+  }
+  rpc Delete (ledger.service.v1.DeleteTagRequest) returns (google.protobuf.Empty) {
+    option (google.api.http) = { delete: "/app/v1/ledger-tags/{id}" };
+  }
+  rpc Toggle (ledger.service.v1.ToggleTagRequest) returns (ledger.service.v1.Tag) {
+    option (google.api.http) = { patch: "/app/v1/ledger-tags/{id}/toggle" body: "*" };
+  }
+}

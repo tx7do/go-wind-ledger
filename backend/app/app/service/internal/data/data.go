@@ -21,6 +21,7 @@ import (
 	commentV1 "go-wind-cms/api/gen/go/comment/service/v1"
 	contentV1 "go-wind-cms/api/gen/go/content/service/v1"
 	identityV1 "go-wind-cms/api/gen/go/identity/service/v1"
+	ledgerV1 "go-wind-cms/api/gen/go/ledger/service/v1"
 	mediaV1 "go-wind-cms/api/gen/go/media/service/v1"
 	permissionV1 "go-wind-cms/api/gen/go/permission/service/v1"
 	siteV1 "go-wind-cms/api/gen/go/site/service/v1"
@@ -238,4 +239,94 @@ func NewMediaAssetServiceClient(ctx *bootstrap.Context, r registry.Discovery) me
 	}
 
 	return mediaV1.NewMediaAssetServiceClient(cli)
+}
+
+func NewBookServiceClient(ctx *bootstrap.Context, r registry.Discovery) ledgerV1.BookServiceClient {
+	cli, err := rpc.CreateGrpcClient(ctx.Context(), r, serviceid.NewDiscoveryName(serviceid.CoreService), ctx.GetConfig())
+	if err != nil {
+		return nil
+	}
+
+	return ledgerV1.NewBookServiceClient(cli)
+}
+
+func NewAccountServiceClient(ctx *bootstrap.Context, r registry.Discovery) ledgerV1.AccountServiceClient {
+	cli, err := rpc.CreateGrpcClient(ctx.Context(), r, serviceid.NewDiscoveryName(serviceid.CoreService), ctx.GetConfig())
+	if err != nil {
+		return nil
+	}
+
+	return ledgerV1.NewAccountServiceClient(cli)
+}
+
+func NewBalanceFlowServiceClient(ctx *bootstrap.Context, r registry.Discovery) ledgerV1.BalanceFlowServiceClient {
+	cli, err := rpc.CreateGrpcClient(ctx.Context(), r, serviceid.NewDiscoveryName(serviceid.CoreService), ctx.GetConfig())
+	if err != nil {
+		return nil
+	}
+
+	return ledgerV1.NewBalanceFlowServiceClient(cli)
+}
+
+func NewLedgerCategoryServiceClient(ctx *bootstrap.Context, r registry.Discovery) ledgerV1.CategoryServiceClient {
+	cli, err := rpc.CreateGrpcClient(ctx.Context(), r, serviceid.NewDiscoveryName(serviceid.CoreService), ctx.GetConfig())
+	if err != nil {
+		return nil
+	}
+
+	return ledgerV1.NewCategoryServiceClient(cli)
+}
+
+func NewLedgerTagServiceClient(ctx *bootstrap.Context, r registry.Discovery) ledgerV1.TagServiceClient {
+	cli, err := rpc.CreateGrpcClient(ctx.Context(), r, serviceid.NewDiscoveryName(serviceid.CoreService), ctx.GetConfig())
+	if err != nil {
+		return nil
+	}
+
+	return ledgerV1.NewTagServiceClient(cli)
+}
+
+func NewPayeeServiceClient(ctx *bootstrap.Context, r registry.Discovery) ledgerV1.PayeeServiceClient {
+	cli, err := rpc.CreateGrpcClient(ctx.Context(), r, serviceid.NewDiscoveryName(serviceid.CoreService), ctx.GetConfig())
+	if err != nil {
+		return nil
+	}
+
+	return ledgerV1.NewPayeeServiceClient(cli)
+}
+
+func NewNoteDayServiceClient(ctx *bootstrap.Context, r registry.Discovery) ledgerV1.NoteDayServiceClient {
+	cli, err := rpc.CreateGrpcClient(ctx.Context(), r, serviceid.NewDiscoveryName(serviceid.CoreService), ctx.GetConfig())
+	if err != nil {
+		return nil
+	}
+
+	return ledgerV1.NewNoteDayServiceClient(cli)
+}
+
+func NewCurrencyServiceClient(ctx *bootstrap.Context, r registry.Discovery) ledgerV1.CurrencyServiceClient {
+	cli, err := rpc.CreateGrpcClient(ctx.Context(), r, serviceid.NewDiscoveryName(serviceid.CoreService), ctx.GetConfig())
+	if err != nil {
+		return nil
+	}
+
+	return ledgerV1.NewCurrencyServiceClient(cli)
+}
+
+func NewReportServiceClient(ctx *bootstrap.Context, r registry.Discovery) ledgerV1.ReportServiceClient {
+	cli, err := rpc.CreateGrpcClient(ctx.Context(), r, serviceid.NewDiscoveryName(serviceid.CoreService), ctx.GetConfig())
+	if err != nil {
+		return nil
+	}
+
+	return ledgerV1.NewReportServiceClient(cli)
+}
+
+func NewFlowFileServiceClient(ctx *bootstrap.Context, r registry.Discovery) ledgerV1.FlowFileServiceClient {
+	cli, err := rpc.CreateGrpcClient(ctx.Context(), r, serviceid.NewDiscoveryName(serviceid.CoreService), ctx.GetConfig())
+	if err != nil {
+		return nil
+	}
+
+	return ledgerV1.NewFlowFileServiceClient(cli)
 }

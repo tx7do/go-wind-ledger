@@ -1,0 +1,22 @@
+syntax = "proto3";
+
+package app.service.v1;
+
+import "google/api/annotations.proto";
+import "google/protobuf/empty.proto";
+
+import "ledger/service/v1/flow_file.proto";
+
+service FlowFileService {
+  rpc List (ledger.service.v1.ListFlowFileRequest) returns (ledger.service.v1.ListFlowFileResponse) {
+    option (google.api.http) = {
+      get: "/app/v1/flow-files"
+    };
+  }
+
+  rpc Delete (ledger.service.v1.DeleteFlowFileRequest) returns (google.protobuf.Empty) {
+    option (google.api.http) = {
+      delete: "/app/v1/flow-files/{id}"
+    };
+  }
+}

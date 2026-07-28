@@ -1,0 +1,57 @@
+syntax = "proto3";
+
+package app.service.v1;
+
+import "google/api/annotations.proto";
+import "google/protobuf/empty.proto";
+import "pagination/v1/pagination.proto";
+
+import "ledger/service/v1/note_day.proto";
+
+service NoteDayService {
+  rpc List (pagination.PagingRequest) returns (ledger.service.v1.ListNoteDayResponse) {
+    option (google.api.http) = {
+      get: "/app/v1/note-days"
+    };
+  }
+
+  rpc Get (ledger.service.v1.GetNoteDayRequest) returns (ledger.service.v1.NoteDay) {
+    option (google.api.http) = {
+      get: "/app/v1/note-days/{id}"
+    };
+  }
+
+  rpc Create (ledger.service.v1.CreateNoteDayRequest) returns (ledger.service.v1.NoteDay) {
+    option (google.api.http) = {
+      post: "/app/v1/note-days"
+      body: "*"
+    };
+  }
+
+  rpc Update (ledger.service.v1.UpdateNoteDayRequest) returns (ledger.service.v1.NoteDay) {
+    option (google.api.http) = {
+      put: "/app/v1/note-days/{id}"
+      body: "*"
+    };
+  }
+
+  rpc Delete (ledger.service.v1.DeleteNoteDayRequest) returns (google.protobuf.Empty) {
+    option (google.api.http) = {
+      delete: "/app/v1/note-days/{id}"
+    };
+  }
+
+  rpc Run (ledger.service.v1.RunNoteDayRequest) returns (ledger.service.v1.NoteDay) {
+    option (google.api.http) = {
+      patch: "/app/v1/note-days/{id}/run"
+      body: "*"
+    };
+  }
+
+  rpc Recall (ledger.service.v1.RecallNoteDayRequest) returns (ledger.service.v1.NoteDay) {
+    option (google.api.http) = {
+      patch: "/app/v1/note-days/{id}/recall"
+      body: "*"
+    };
+  }
+}

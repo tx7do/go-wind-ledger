@@ -94,6 +94,17 @@ func NewRestServer(
 	pageService *service.PageService,
 	sectionService *service.SectionService,
 	navigationService *service.NavigationService,
+
+	bookService *service.BookService,
+	accountService *service.AccountService,
+	balanceFlowService *service.BalanceFlowService,
+	ledgerCategoryService *service.LedgerCategoryService,
+	ledgerTagService *service.LedgerTagService,
+	payeeService *service.PayeeService,
+	noteDayService *service.NoteDayService,
+	currencyService *service.CurrencyService,
+	reportService *service.ReportService,
+	flowFileService *service.FlowFileService,
 ) *http.Server {
 	cfg := ctx.GetConfig()
 
@@ -119,6 +130,17 @@ func NewRestServer(
 	appV1.RegisterSectionServiceHTTPServer(srv, sectionService)
 
 	appV1.RegisterCommentServiceHTTPServer(srv, commentService)
+
+	appV1.RegisterBookServiceHTTPServer(srv, bookService)
+	appV1.RegisterAccountServiceHTTPServer(srv, accountService)
+	appV1.RegisterBalanceFlowServiceHTTPServer(srv, balanceFlowService)
+	appV1.RegisterLedgerCategoryServiceHTTPServer(srv, ledgerCategoryService)
+	appV1.RegisterLedgerTagServiceHTTPServer(srv, ledgerTagService)
+	appV1.RegisterPayeeServiceHTTPServer(srv, payeeService)
+	appV1.RegisterNoteDayServiceHTTPServer(srv, noteDayService)
+	appV1.RegisterCurrencyServiceHTTPServer(srv, currencyService)
+	appV1.RegisterReportServiceHTTPServer(srv, reportService)
+	appV1.RegisterFlowFileServiceHTTPServer(srv, flowFileService)
 
 	if cfg.GetServer().GetRest().GetEnableSwagger() {
 		swaggerUI.RegisterSwaggerUIServerWithOption(

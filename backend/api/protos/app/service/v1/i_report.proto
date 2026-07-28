@@ -1,0 +1,51 @@
+syntax = "proto3";
+
+package app.service.v1;
+
+import "google/api/annotations.proto";
+
+import "ledger/service/v1/report.proto";
+
+service ReportService {
+  rpc ExpenseCategory (ledger.service.v1.ReportQueryRequest) returns (ledger.service.v1.ReportResponse) {
+    option (google.api.http) = {
+      get: "/app/v1/reports/expense-category"
+    };
+  }
+
+  rpc IncomeCategory (ledger.service.v1.ReportQueryRequest) returns (ledger.service.v1.ReportResponse) {
+    option (google.api.http) = {
+      get: "/app/v1/reports/income-category"
+    };
+  }
+
+  rpc ExpenseTag (ledger.service.v1.ReportQueryRequest) returns (ledger.service.v1.ReportResponse) {
+    option (google.api.http) = {
+      get: "/app/v1/reports/expense-tag"
+    };
+  }
+
+  rpc IncomeTag (ledger.service.v1.ReportQueryRequest) returns (ledger.service.v1.ReportResponse) {
+    option (google.api.http) = {
+      get: "/app/v1/reports/income-tag"
+    };
+  }
+
+  rpc ExpensePayee (ledger.service.v1.ReportQueryRequest) returns (ledger.service.v1.ReportResponse) {
+    option (google.api.http) = {
+      get: "/app/v1/reports/expense-payee"
+    };
+  }
+
+  rpc IncomePayee (ledger.service.v1.ReportQueryRequest) returns (ledger.service.v1.ReportResponse) {
+    option (google.api.http) = {
+      get: "/app/v1/reports/income-payee"
+    };
+  }
+
+  rpc Balance (ledger.service.v1.BalanceReportRequest) returns (ledger.service.v1.BalanceReportResponse) {
+    option (google.api.http) = {
+      get: "/app/v1/reports/balance"
+    };
+  }
+}

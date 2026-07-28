@@ -125,6 +125,504 @@ export type AppErrorReason =
   | 'USER_NOT_FOUND'
   // 506
   | 'VARIANT_ALSO_NEGOTIATES';
+export interface AccountService {
+  List(
+    request: pagination_PagingRequest,
+  ): Promise<ledgerservicev1_ListAccountResponse>;
+  ListAll(
+    request: ledgerservicev1_ListAllAccountRequest,
+  ): Promise<ledgerservicev1_ListAccountResponse>;
+  Get(
+    request: ledgerservicev1_GetAccountRequest,
+  ): Promise<ledgerservicev1_Account>;
+  Create(
+    request: ledgerservicev1_CreateAccountRequest,
+  ): Promise<ledgerservicev1_Account>;
+  Update(
+    request: ledgerservicev1_UpdateAccountRequest,
+  ): Promise<ledgerservicev1_Account>;
+  Delete(
+    request: ledgerservicev1_DeleteAccountRequest,
+  ): Promise<wellKnownEmpty>;
+  Toggle(
+    request: ledgerservicev1_ToggleAccountRequest,
+  ): Promise<ledgerservicev1_Account>;
+  AdjustBalance(
+    request: ledgerservicev1_AdjustBalanceRequest,
+  ): Promise<ledgerservicev1_Account>;
+}
+
+export function createAccountServiceClient(
+  transport: ClientTransport,
+): AccountService {
+  return {
+    List(request) {
+      const path = `app/v1/accounts`;
+      const body = null;
+      const queryParams: string[] = [];
+      if (request.page) {
+        queryParams.push(
+          `page=${encodeURIComponent(request.page.toString())}`,
+        );
+      }
+      if (request.pageSize) {
+        queryParams.push(
+          `pageSize=${encodeURIComponent(request.pageSize.toString())}`,
+        );
+      }
+      if (request.offset) {
+        queryParams.push(
+          `offset=${encodeURIComponent(request.offset.toString())}`,
+        );
+      }
+      if (request.limit) {
+        queryParams.push(
+          `limit=${encodeURIComponent(request.limit.toString())}`,
+        );
+      }
+      if (request.token) {
+        queryParams.push(
+          `token=${encodeURIComponent(request.token.toString())}`,
+        );
+      }
+      if (request.noPaging) {
+        queryParams.push(
+          `noPaging=${encodeURIComponent(request.noPaging.toString())}`,
+        );
+      }
+      if (request.query) {
+        queryParams.push(
+          `query=${encodeURIComponent(request.query.toString())}`,
+        );
+      }
+      if (request.filter) {
+        queryParams.push(
+          `filter=${encodeURIComponent(request.filter.toString())}`,
+        );
+      }
+      if (request.filterExpr?.type) {
+        queryParams.push(
+          `filterExpr.type=${encodeURIComponent(request.filterExpr.type.toString())}`,
+        );
+      }
+      if (request.filterExpr?.conditions?.field) {
+        queryParams.push(
+          `filterExpr.conditions.field=${encodeURIComponent(request.filterExpr.conditions.field.toString())}`,
+        );
+      }
+      if (request.filterExpr?.conditions?.op) {
+        queryParams.push(
+          `filterExpr.conditions.op=${encodeURIComponent(request.filterExpr.conditions.op.toString())}`,
+        );
+      }
+      if (request.filterExpr?.conditions?.value) {
+        queryParams.push(
+          `filterExpr.conditions.value=${encodeURIComponent(request.filterExpr.conditions.value.toString())}`,
+        );
+      }
+      if (request.filterExpr?.conditions?.jsonValue) {
+        queryParams.push(
+          `filterExpr.conditions.jsonValue=${encodeURIComponent(request.filterExpr.conditions.jsonValue.toString())}`,
+        );
+      }
+      if (request.filterExpr?.conditions?.values) {
+        request.filterExpr.conditions.values.forEach((x) => {
+          queryParams.push(
+            `filterExpr.conditions.values=${encodeURIComponent(x.toString())}`,
+          );
+        });
+      }
+      if (request.filterExpr?.conditions?.datePart) {
+        queryParams.push(
+          `filterExpr.conditions.datePart=${encodeURIComponent(request.filterExpr.conditions.datePart.toString())}`,
+        );
+      }
+      if (request.filterExpr?.conditions?.jsonPath) {
+        queryParams.push(
+          `filterExpr.conditions.jsonPath=${encodeURIComponent(request.filterExpr.conditions.jsonPath.toString())}`,
+        );
+      }
+      if (request.orderBy) {
+        queryParams.push(
+          `orderBy=${encodeURIComponent(request.orderBy.toString())}`,
+        );
+      }
+      if (request.sorting?.field) {
+        queryParams.push(
+          `sorting.field=${encodeURIComponent(request.sorting.field.toString())}`,
+        );
+      }
+      if (request.sorting?.direction) {
+        queryParams.push(
+          `sorting.direction=${encodeURIComponent(request.sorting.direction.toString())}`,
+        );
+      }
+      if (request.fieldMask) {
+        queryParams.push(
+          `fieldMask=${encodeURIComponent(request.fieldMask.toString())}`,
+        );
+      }
+      let uri = path;
+      if (queryParams.length > 0) {
+        uri += `?${queryParams.join('&')}`;
+      }
+      return transport.unary(uri, 'GET', body, {
+        service: 'AccountService',
+        method: 'List',
+      }) as Promise<ledgerservicev1_ListAccountResponse>;
+    },
+    ListAll(request) {
+      const path = `app/v1/accounts/all`;
+      const body = null;
+      const queryParams: string[] = [];
+      if (request.includeDisabled) {
+        queryParams.push(
+          `includeDisabled=${encodeURIComponent(request.includeDisabled.toString())}`,
+        );
+      }
+      let uri = path;
+      if (queryParams.length > 0) {
+        uri += `?${queryParams.join('&')}`;
+      }
+      return transport.unary(uri, 'GET', body, {
+        service: 'AccountService',
+        method: 'ListAll',
+      }) as Promise<ledgerservicev1_ListAccountResponse>;
+    },
+    Get(request) {
+      if (request.id === undefined || request.id === null) {
+        throw new Error('missing required field request.id');
+      }
+      const path = `app/v1/accounts/${request.id}`;
+      const body = null;
+      const queryParams: string[] = [];
+      if (request.viewMask) {
+        queryParams.push(
+          `viewMask=${encodeURIComponent(request.viewMask.toString())}`,
+        );
+      }
+      let uri = path;
+      if (queryParams.length > 0) {
+        uri += `?${queryParams.join('&')}`;
+      }
+      return transport.unary(uri, 'GET', body, {
+        service: 'AccountService',
+        method: 'Get',
+      }) as Promise<ledgerservicev1_Account>;
+    },
+    Create(request) {
+      const path = `app/v1/accounts`;
+      const body = JSON.stringify(request);
+      return transport.unary(path, 'POST', body, {
+        service: 'AccountService',
+        method: 'Create',
+      }) as Promise<ledgerservicev1_Account>;
+    },
+    Update(request) {
+      if (request.id === undefined || request.id === null) {
+        throw new Error('missing required field request.id');
+      }
+      const path = `app/v1/accounts/${request.id}`;
+      const body = JSON.stringify(request);
+      return transport.unary(path, 'PUT', body, {
+        service: 'AccountService',
+        method: 'Update',
+      }) as Promise<ledgerservicev1_Account>;
+    },
+    Delete(request) {
+      if (request.id === undefined || request.id === null) {
+        throw new Error('missing required field request.id');
+      }
+      const path = `app/v1/accounts/${request.id}`;
+      const body = null;
+      return transport.unary(path, 'DELETE', body, {
+        service: 'AccountService',
+        method: 'Delete',
+      }) as Promise<wellKnownEmpty>;
+    },
+    Toggle(request) {
+      if (request.id === undefined || request.id === null) {
+        throw new Error('missing required field request.id');
+      }
+      const path = `app/v1/accounts/${request.id}/toggle`;
+      const body = JSON.stringify(request);
+      return transport.unary(path, 'PATCH', body, {
+        service: 'AccountService',
+        method: 'Toggle',
+      }) as Promise<ledgerservicev1_Account>;
+    },
+    AdjustBalance(request) {
+      if (request.id === undefined || request.id === null) {
+        throw new Error('missing required field request.id');
+      }
+      const path = `app/v1/accounts/${request.id}/adjust`;
+      const body = JSON.stringify(request);
+      return transport.unary(path, 'POST', body, {
+        service: 'AccountService',
+        method: 'AdjustBalance',
+      }) as Promise<ledgerservicev1_Account>;
+    },
+  };
+}
+// ------------------------------
+// 分页通用请求
+// ------------------------------
+export type pagination_PagingRequest = {
+  // 字段掩码，其作用为SELECT中的字段，其语法为使用逗号分隔字段名，例如：id,realName,userName。如果为空则选中所有字段，即SELECT *。
+  fieldMask?: wellKnownFieldMask;
+  // Google AIP规范字符串过滤条件
+  filter?: string;
+  // 复杂过滤表达式（优先使用）
+  filterExpr?: pagination_FilterExpr;
+  // 最多返回的记录数（默认10，建议设置上限如100）
+  limit?: number;
+  // 是否不分页，如果为true，则page和pageSize参数无效。
+  noPaging?: boolean;
+  // 跳过的记录数（从0开始，默认0）
+  offset?: number;
+  // 排序条件
+  orderBy?: string;
+  // 当前页码（从1开始，默认1）
+  page?: number;
+  // 每页条数（默认10，建议设置上限如100）
+  pageSize?: number;
+  // JSON字符串过滤条件，基础语法：{"field1":"val1", "field2___icontains":"val2"}，具体请参见：https://github.com/tx7do/go-crud/tree/main/pagination/filter/README.md
+  query?: string;
+  // 排序规则
+  sorting: pagination_Sorting[] | undefined;
+  // 上一页最后一条记录的游标（如ID/时间戳+ID，首次请求为空）
+  token?: string;
+};
+
+// 过滤表达式
+export type pagination_FilterExpr = {
+  // 条件列表
+  conditions: pagination_FilterCondition[] | undefined;
+  // 子表达式列表
+  groups: pagination_FilterExpr[] | undefined;
+  // 过滤表达式类型
+  type: pagination_ExprType | undefined;
+};
+
+// 过滤表达式类型
+export type pagination_ExprType =
+  | 'AND'
+  | 'EXPR_TYPE_UNSPECIFIED'
+  | 'OR';
+// 过滤条件
+export type pagination_FilterCondition = {
+  // 日期时间部分（可选，仅在字段为日期时间类型时使用）
+  datePart?: pagination_DatePart;
+  // 过滤字段名
+  field: string | undefined;
+  // 当字段为 JSON/JSONB 类型时，可指定要抽取的子路径（例如: "meta.user.name" 或 JSONPath）
+  // 服务端应把此路径用于 JSON_EXTRACT / -> 操作，再对抽取结果应用 op。
+  jsonPath?: string;
+  // 当需要使用非字符串类型的比较值（对象/数组/数字/布尔）时使用此字段，
+  // 使用 google.protobuf.Value 能表达任意 JSON 值。
+  jsonValue?: wellKnownValue;
+  // 过滤操作符
+  op: pagination_Operator | undefined;
+  // 过滤值（单值）
+  value?: string;
+  // 过滤值（多值，如IN操作符）
+  values: string[] | undefined;
+};
+
+// 操作符枚举
+export type pagination_Operator =
+  | 'ARRAY_CONTAINS'
+  // 范围与正则
+  | 'BETWEEN'
+  // 语义化的字符串操作
+  | 'CONTAINS'
+  | 'ENDS_WITH'
+  // 基本比较
+  | 'EQ'
+  | 'EXACT'
+  | 'EXISTS'
+  | 'GT'
+  | 'GTE'
+  | 'ICONTAINS'
+  | 'IENDS_WITH'
+  | 'IEXACT'
+  | 'ILIKE'
+  // 集合操作
+  | 'IN'
+  | 'IREGEXP'
+  | 'IS_NOT_NULL'
+  // 空值判断
+  | 'IS_NULL'
+  | 'ISTARTS_WITH'
+  // JSON / 数组 / 集合相关（按需在服务端映射为具体 DB 运算）
+  | 'JSON_CONTAINS'
+  // 模糊 / 大小写不敏感模糊 / 非模糊
+  | 'LIKE'
+  | 'LT'
+  | 'LTE'
+  | 'NEQ'
+  | 'NIN'
+  | 'NOT_LIKE'
+  // 未指定
+  | 'OPERATOR_UNSPECIFIED'
+  | 'REGEXP'
+  | 'SEARCH'
+  | 'STARTS_WITH';
+type wellKnownValue = unknown;
+
+// 日期时间部分枚举
+export type pagination_DatePart =
+  | 'DATE'
+  | 'DATE_PART_UNSPECIFIED'
+  | 'DAY'
+  | 'HOUR'
+  | 'ISO_WEEK_DAY'
+  | 'ISO_YEAR'
+  | 'MICROSECOND'
+  | 'MINUTE'
+  | 'MONTH'
+  | 'QUARTER'
+  | 'SECOND'
+  | 'TIME'
+  | 'WEEK'
+  | 'WEEK_DAY'
+  | 'YEAR';
+// 排序规则（分页场景通常需配合排序保证结果稳定）
+export type pagination_Sorting = {
+  // 排序方向
+  direction: pagination_Sorting_Direction | undefined;
+  // 排序字段（如"id"、"create_time"）
+  field: string | undefined;
+};
+
+// 排序方向（ASC/DESC，默认ASC）
+export type pagination_Sorting_Direction =
+  | 'ASC'
+  | 'DESC';
+// In JSON, a field mask is encoded as a single string where paths are
+// separated by a comma. Fields name in each path are converted
+// to/from lower-camel naming conventions.
+// As an example, consider the following message declarations:
+//
+//     message Profile {
+//       User user = 1;
+//       Photo photo = 2;
+//     }
+//     message User {
+//       string display_name = 1;
+//       string address = 2;
+//     }
+//
+// In proto a field mask for `Profile` may look as such:
+//
+//     mask {
+//       paths: "user.display_name"
+//       paths: "photo"
+//     }
+//
+// In JSON, the same mask is represented as below:
+//
+//     {
+//       mask: "user.displayName,photo"
+//     }
+type wellKnownFieldMask = string;
+
+// 回应 - 账户列表
+export type ledgerservicev1_ListAccountResponse = {
+  items: ledgerservicev1_Account[] | undefined;
+  total: number | undefined;
+};
+
+// 账户
+export type ledgerservicev1_Account = {
+  apr?: string;
+  balance?: string;
+  billDay?: number;
+  canExpense?: boolean;
+  canIncome?: boolean;
+  canTransferFrom?: boolean;
+  canTransferTo?: boolean;
+  createdAt?: wellKnownTimestamp;
+  createdBy?: number;
+  creditLimit?: string;
+  currencyCode?: string;
+  deletedAt?: wellKnownTimestamp;
+  deletedBy?: number;
+  enable?: boolean;
+  id?: number;
+  include?: boolean;
+  initialBalance?: string;
+  name?: string;
+  no?: string;
+  notes?: string;
+  sortOrder?: number;
+  tenantId?: number;
+  type?: ledgerservicev1_AccountType;
+  updatedAt?: wellKnownTimestamp;
+  updatedBy?: number;
+};
+
+// 账户类型 — 对应 Java AccountType
+export type ledgerservicev1_AccountType =
+  | 'ACCOUNT_TYPE_ASSET'
+  | 'ACCOUNT_TYPE_CHECKING'
+  | 'ACCOUNT_TYPE_CREDIT'
+  | 'ACCOUNT_TYPE_DEBT'
+  | 'ACCOUNT_TYPE_UNSPECIFIED';
+// Encoded using RFC 3339, where generated output will always be Z-normalized
+// and uses 0, 3, 6 or 9 fractional digits.
+// Offsets other than "Z" are also accepted.
+type wellKnownTimestamp = string;
+
+// 请求 - 获取所有账户
+export type ledgerservicev1_ListAllAccountRequest = {
+  includeDisabled?: boolean;
+};
+
+// 请求 - 账户数据
+export type ledgerservicev1_GetAccountRequest = {
+  id: number | undefined;
+  viewMask?: wellKnownFieldMask;
+};
+
+// 请求 - 创建账户
+export type ledgerservicev1_CreateAccountRequest = {
+  data: ledgerservicev1_Account | undefined;
+};
+
+// 请求 - 更新账户
+export type ledgerservicev1_UpdateAccountRequest = {
+  allowMissing?: boolean;
+  data: ledgerservicev1_Account | undefined;
+  id: number | undefined;
+  updateMask: undefined | wellKnownFieldMask;
+};
+
+// 请求 - 删除账户
+export type ledgerservicev1_DeleteAccountRequest = {
+  id: number | undefined;
+};
+
+// An empty JSON object
+type wellKnownEmpty = Record<never, never>;
+
+// 请求 - 切换启用/禁用
+export type ledgerservicev1_ToggleAccountRequest = {
+  id: number | undefined;
+};
+
+// 请求 - 余额调整
+export type ledgerservicev1_AdjustBalanceRequest = {
+  // 调整后的目标余额
+  balance: string | undefined;
+  // 关联的账本（用于创建ADJUST流水记录）
+  bookId: number | undefined;
+  createTime?: number;
+  id: number | undefined;
+  notes?: string;
+  title?: string;
+};
+
 // 用户前台登录认证服务
 export interface AuthenticationService {
   // 登录
@@ -218,8 +716,691 @@ export type authenticationservicev1_LoginResponse = {
 export type authenticationservicev1_TokenType =
   | 'bearer'
   | 'mac';
-// An empty JSON object
-type wellKnownEmpty = Record<never, never>;
+export interface BalanceFlowService {
+  List(
+    request: pagination_PagingRequest,
+  ): Promise<ledgerservicev1_ListBalanceFlowResponse>;
+  Get(
+    request: ledgerservicev1_GetBalanceFlowRequest,
+  ): Promise<ledgerservicev1_BalanceFlow>;
+  Create(
+    request: ledgerservicev1_CreateBalanceFlowRequest,
+  ): Promise<ledgerservicev1_BalanceFlow>;
+  Update(
+    request: ledgerservicev1_UpdateBalanceFlowRequest,
+  ): Promise<ledgerservicev1_BalanceFlow>;
+  Delete(
+    request: ledgerservicev1_DeleteBalanceFlowRequest,
+  ): Promise<wellKnownEmpty>;
+  Confirm(
+    request: ledgerservicev1_ConfirmBalanceFlowRequest,
+  ): Promise<ledgerservicev1_BalanceFlow>;
+  Statistics(
+    request: ledgerservicev1_StatisticsRequest,
+  ): Promise<ledgerservicev1_StatisticsResponse>;
+}
+
+export function createBalanceFlowServiceClient(
+  transport: ClientTransport,
+): BalanceFlowService {
+  return {
+    List(request) {
+      const path = `app/v1/balance-flows`;
+      const body = null;
+      const queryParams: string[] = [];
+      if (request.page) {
+        queryParams.push(
+          `page=${encodeURIComponent(request.page.toString())}`,
+        );
+      }
+      if (request.pageSize) {
+        queryParams.push(
+          `pageSize=${encodeURIComponent(request.pageSize.toString())}`,
+        );
+      }
+      if (request.offset) {
+        queryParams.push(
+          `offset=${encodeURIComponent(request.offset.toString())}`,
+        );
+      }
+      if (request.limit) {
+        queryParams.push(
+          `limit=${encodeURIComponent(request.limit.toString())}`,
+        );
+      }
+      if (request.token) {
+        queryParams.push(
+          `token=${encodeURIComponent(request.token.toString())}`,
+        );
+      }
+      if (request.noPaging) {
+        queryParams.push(
+          `noPaging=${encodeURIComponent(request.noPaging.toString())}`,
+        );
+      }
+      if (request.query) {
+        queryParams.push(
+          `query=${encodeURIComponent(request.query.toString())}`,
+        );
+      }
+      if (request.filter) {
+        queryParams.push(
+          `filter=${encodeURIComponent(request.filter.toString())}`,
+        );
+      }
+      if (request.filterExpr?.type) {
+        queryParams.push(
+          `filterExpr.type=${encodeURIComponent(request.filterExpr.type.toString())}`,
+        );
+      }
+      if (request.filterExpr?.conditions?.field) {
+        queryParams.push(
+          `filterExpr.conditions.field=${encodeURIComponent(request.filterExpr.conditions.field.toString())}`,
+        );
+      }
+      if (request.filterExpr?.conditions?.op) {
+        queryParams.push(
+          `filterExpr.conditions.op=${encodeURIComponent(request.filterExpr.conditions.op.toString())}`,
+        );
+      }
+      if (request.filterExpr?.conditions?.value) {
+        queryParams.push(
+          `filterExpr.conditions.value=${encodeURIComponent(request.filterExpr.conditions.value.toString())}`,
+        );
+      }
+      if (request.filterExpr?.conditions?.jsonValue) {
+        queryParams.push(
+          `filterExpr.conditions.jsonValue=${encodeURIComponent(request.filterExpr.conditions.jsonValue.toString())}`,
+        );
+      }
+      if (request.filterExpr?.conditions?.values) {
+        request.filterExpr.conditions.values.forEach((x) => {
+          queryParams.push(
+            `filterExpr.conditions.values=${encodeURIComponent(x.toString())}`,
+          );
+        });
+      }
+      if (request.filterExpr?.conditions?.datePart) {
+        queryParams.push(
+          `filterExpr.conditions.datePart=${encodeURIComponent(request.filterExpr.conditions.datePart.toString())}`,
+        );
+      }
+      if (request.filterExpr?.conditions?.jsonPath) {
+        queryParams.push(
+          `filterExpr.conditions.jsonPath=${encodeURIComponent(request.filterExpr.conditions.jsonPath.toString())}`,
+        );
+      }
+      if (request.orderBy) {
+        queryParams.push(
+          `orderBy=${encodeURIComponent(request.orderBy.toString())}`,
+        );
+      }
+      if (request.sorting?.field) {
+        queryParams.push(
+          `sorting.field=${encodeURIComponent(request.sorting.field.toString())}`,
+        );
+      }
+      if (request.sorting?.direction) {
+        queryParams.push(
+          `sorting.direction=${encodeURIComponent(request.sorting.direction.toString())}`,
+        );
+      }
+      if (request.fieldMask) {
+        queryParams.push(
+          `fieldMask=${encodeURIComponent(request.fieldMask.toString())}`,
+        );
+      }
+      let uri = path;
+      if (queryParams.length > 0) {
+        uri += `?${queryParams.join('&')}`;
+      }
+      return transport.unary(uri, 'GET', body, {
+        service: 'BalanceFlowService',
+        method: 'List',
+      }) as Promise<ledgerservicev1_ListBalanceFlowResponse>;
+    },
+    Get(request) {
+      if (request.id === undefined || request.id === null) {
+        throw new Error('missing required field request.id');
+      }
+      const path = `app/v1/balance-flows/${request.id}`;
+      const body = null;
+      const queryParams: string[] = [];
+      if (request.viewMask) {
+        queryParams.push(
+          `viewMask=${encodeURIComponent(request.viewMask.toString())}`,
+        );
+      }
+      let uri = path;
+      if (queryParams.length > 0) {
+        uri += `?${queryParams.join('&')}`;
+      }
+      return transport.unary(uri, 'GET', body, {
+        service: 'BalanceFlowService',
+        method: 'Get',
+      }) as Promise<ledgerservicev1_BalanceFlow>;
+    },
+    Create(request) {
+      const path = `app/v1/balance-flows`;
+      const body = JSON.stringify(request);
+      return transport.unary(path, 'POST', body, {
+        service: 'BalanceFlowService',
+        method: 'Create',
+      }) as Promise<ledgerservicev1_BalanceFlow>;
+    },
+    Update(request) {
+      if (request.id === undefined || request.id === null) {
+        throw new Error('missing required field request.id');
+      }
+      const path = `app/v1/balance-flows/${request.id}`;
+      const body = JSON.stringify(request);
+      return transport.unary(path, 'PUT', body, {
+        service: 'BalanceFlowService',
+        method: 'Update',
+      }) as Promise<ledgerservicev1_BalanceFlow>;
+    },
+    Delete(request) {
+      if (request.id === undefined || request.id === null) {
+        throw new Error('missing required field request.id');
+      }
+      const path = `app/v1/balance-flows/${request.id}`;
+      const body = null;
+      return transport.unary(path, 'DELETE', body, {
+        service: 'BalanceFlowService',
+        method: 'Delete',
+      }) as Promise<wellKnownEmpty>;
+    },
+    Confirm(request) {
+      if (request.id === undefined || request.id === null) {
+        throw new Error('missing required field request.id');
+      }
+      const path = `app/v1/balance-flows/${request.id}/confirm`;
+      const body = JSON.stringify(request);
+      return transport.unary(path, 'PATCH', body, {
+        service: 'BalanceFlowService',
+        method: 'Confirm',
+      }) as Promise<ledgerservicev1_BalanceFlow>;
+    },
+    Statistics(request) {
+      const path = `app/v1/balance-flows/statistics`;
+      const body = null;
+      const queryParams: string[] = [];
+      if (request.bookId) {
+        queryParams.push(
+          `bookId=${encodeURIComponent(request.bookId.toString())}`,
+        );
+      }
+      if (request.type) {
+        queryParams.push(
+          `type=${encodeURIComponent(request.type.toString())}`,
+        );
+      }
+      if (request.title) {
+        queryParams.push(
+          `title=${encodeURIComponent(request.title.toString())}`,
+        );
+      }
+      if (request.minAmount) {
+        queryParams.push(
+          `minAmount=${encodeURIComponent(request.minAmount.toString())}`,
+        );
+      }
+      if (request.maxAmount) {
+        queryParams.push(
+          `maxAmount=${encodeURIComponent(request.maxAmount.toString())}`,
+        );
+      }
+      if (request.minTime) {
+        queryParams.push(
+          `minTime=${encodeURIComponent(request.minTime.toString())}`,
+        );
+      }
+      if (request.maxTime) {
+        queryParams.push(
+          `maxTime=${encodeURIComponent(request.maxTime.toString())}`,
+        );
+      }
+      if (request.accountId) {
+        queryParams.push(
+          `accountId=${encodeURIComponent(request.accountId.toString())}`,
+        );
+      }
+      if (request.categoryIds) {
+        request.categoryIds.forEach((x) => {
+          queryParams.push(
+            `categoryIds=${encodeURIComponent(x.toString())}`,
+          );
+        });
+      }
+      if (request.tagIds) {
+        request.tagIds.forEach((x) => {
+          queryParams.push(
+            `tagIds=${encodeURIComponent(x.toString())}`,
+          );
+        });
+      }
+      if (request.confirm) {
+        queryParams.push(
+          `confirm=${encodeURIComponent(request.confirm.toString())}`,
+        );
+      }
+      if (request.include) {
+        queryParams.push(
+          `include=${encodeURIComponent(request.include.toString())}`,
+        );
+      }
+      let uri = path;
+      if (queryParams.length > 0) {
+        uri += `?${queryParams.join('&')}`;
+      }
+      return transport.unary(uri, 'GET', body, {
+        service: 'BalanceFlowService',
+        method: 'Statistics',
+      }) as Promise<ledgerservicev1_StatisticsResponse>;
+    },
+  };
+}
+// 回应 - 流水列表
+export type ledgerservicev1_ListBalanceFlowResponse = {
+  items: ledgerservicev1_BalanceFlow[] | undefined;
+  total: number | undefined;
+};
+
+// 余额流水
+export type ledgerservicev1_BalanceFlow = {
+  accountId?: number;
+  amount?: string;
+  bookId?: number;
+  // 关联的类别拆分
+  categories: ledgerservicev1_CategoryRelation[] | undefined;
+  confirm?: boolean;
+  convertedAmount?: string;
+  createTime?: number;
+  createdAt?: wellKnownTimestamp;
+  createdBy?: number;
+  creatorId?: number;
+  deletedAt?: wellKnownTimestamp;
+  deletedBy?: number;
+  id?: number;
+  include?: boolean;
+  insertAt?: number;
+  notes?: string;
+  payeeId?: number;
+  // 关联的标签拆分
+  tags: ledgerservicev1_TagRelation[] | undefined;
+  tenantId?: number;
+  title?: string;
+  toAccountId?: number;
+  type?: ledgerservicev1_FlowType;
+  updatedAt?: wellKnownTimestamp;
+  updatedBy?: number;
+};
+
+// 流水类型 — 对应 Java FlowType
+export type ledgerservicev1_FlowType =
+  | 'FLOW_TYPE_ADJUST'
+  | 'FLOW_TYPE_EXPENSE'
+  | 'FLOW_TYPE_INCOME'
+  | 'FLOW_TYPE_TRANSFER'
+  | 'FLOW_TYPE_UNSPECIFIED';
+// 类别关系（一条流水可拆分到多个类别）
+export type ledgerservicev1_CategoryRelation = {
+  amount: string | undefined;
+  categoryId: number | undefined;
+  convertedAmount?: string;
+  id?: number;
+};
+
+// 标签关系
+export type ledgerservicev1_TagRelation = {
+  amount: string | undefined;
+  convertedAmount?: string;
+  id?: number;
+  tagId: number | undefined;
+};
+
+// 请求 - 流水数据
+export type ledgerservicev1_GetBalanceFlowRequest = {
+  id: number | undefined;
+  viewMask?: wellKnownFieldMask;
+};
+
+// 请求 - 创建流水
+export type ledgerservicev1_CreateBalanceFlowRequest = {
+  data: ledgerservicev1_BalanceFlow | undefined;
+};
+
+// 请求 - 更新流水
+export type ledgerservicev1_UpdateBalanceFlowRequest = {
+  allowMissing?: boolean;
+  data: ledgerservicev1_BalanceFlow | undefined;
+  id: number | undefined;
+  updateMask: undefined | wellKnownFieldMask;
+};
+
+// 请求 - 删除流水
+export type ledgerservicev1_DeleteBalanceFlowRequest = {
+  id: number | undefined;
+};
+
+// 请求 - 确认流水（更新账户余额）
+export type ledgerservicev1_ConfirmBalanceFlowRequest = {
+  id: number | undefined;
+};
+
+// 请求 - 统计
+export type ledgerservicev1_StatisticsRequest = {
+  accountId?: number;
+  bookId?: number;
+  categoryIds: number[] | undefined;
+  confirm?: boolean;
+  include?: boolean;
+  maxAmount?: string;
+  maxTime?: number;
+  minAmount?: string;
+  minTime?: number;
+  tagIds: number[] | undefined;
+  title?: string;
+  type?: ledgerservicev1_FlowType;
+};
+
+// 回应 - 统计
+export type ledgerservicev1_StatisticsResponse = {
+  expense: string | undefined;
+  income: string | undefined;
+  net: string | undefined;
+};
+
+export interface BookService {
+  List(
+    request: pagination_PagingRequest,
+  ): Promise<ledgerservicev1_ListBookResponse>;
+  ListAll(
+    request: ledgerservicev1_ListAllBookRequest,
+  ): Promise<ledgerservicev1_ListBookResponse>;
+  Get(
+    request: ledgerservicev1_GetBookRequest,
+  ): Promise<ledgerservicev1_Book>;
+  Create(
+    request: ledgerservicev1_CreateBookRequest,
+  ): Promise<ledgerservicev1_Book>;
+  Update(
+    request: ledgerservicev1_UpdateBookRequest,
+  ): Promise<ledgerservicev1_Book>;
+  Delete(
+    request: ledgerservicev1_DeleteBookRequest,
+  ): Promise<wellKnownEmpty>;
+  Toggle(
+    request: ledgerservicev1_ToggleBookRequest,
+  ): Promise<ledgerservicev1_Book>;
+}
+
+export function createBookServiceClient(
+  transport: ClientTransport,
+): BookService {
+  return {
+    List(request) {
+      const path = `app/v1/books`;
+      const body = null;
+      const queryParams: string[] = [];
+      if (request.page) {
+        queryParams.push(
+          `page=${encodeURIComponent(request.page.toString())}`,
+        );
+      }
+      if (request.pageSize) {
+        queryParams.push(
+          `pageSize=${encodeURIComponent(request.pageSize.toString())}`,
+        );
+      }
+      if (request.offset) {
+        queryParams.push(
+          `offset=${encodeURIComponent(request.offset.toString())}`,
+        );
+      }
+      if (request.limit) {
+        queryParams.push(
+          `limit=${encodeURIComponent(request.limit.toString())}`,
+        );
+      }
+      if (request.token) {
+        queryParams.push(
+          `token=${encodeURIComponent(request.token.toString())}`,
+        );
+      }
+      if (request.noPaging) {
+        queryParams.push(
+          `noPaging=${encodeURIComponent(request.noPaging.toString())}`,
+        );
+      }
+      if (request.query) {
+        queryParams.push(
+          `query=${encodeURIComponent(request.query.toString())}`,
+        );
+      }
+      if (request.filter) {
+        queryParams.push(
+          `filter=${encodeURIComponent(request.filter.toString())}`,
+        );
+      }
+      if (request.filterExpr?.type) {
+        queryParams.push(
+          `filterExpr.type=${encodeURIComponent(request.filterExpr.type.toString())}`,
+        );
+      }
+      if (request.filterExpr?.conditions?.field) {
+        queryParams.push(
+          `filterExpr.conditions.field=${encodeURIComponent(request.filterExpr.conditions.field.toString())}`,
+        );
+      }
+      if (request.filterExpr?.conditions?.op) {
+        queryParams.push(
+          `filterExpr.conditions.op=${encodeURIComponent(request.filterExpr.conditions.op.toString())}`,
+        );
+      }
+      if (request.filterExpr?.conditions?.value) {
+        queryParams.push(
+          `filterExpr.conditions.value=${encodeURIComponent(request.filterExpr.conditions.value.toString())}`,
+        );
+      }
+      if (request.filterExpr?.conditions?.jsonValue) {
+        queryParams.push(
+          `filterExpr.conditions.jsonValue=${encodeURIComponent(request.filterExpr.conditions.jsonValue.toString())}`,
+        );
+      }
+      if (request.filterExpr?.conditions?.values) {
+        request.filterExpr.conditions.values.forEach((x) => {
+          queryParams.push(
+            `filterExpr.conditions.values=${encodeURIComponent(x.toString())}`,
+          );
+        });
+      }
+      if (request.filterExpr?.conditions?.datePart) {
+        queryParams.push(
+          `filterExpr.conditions.datePart=${encodeURIComponent(request.filterExpr.conditions.datePart.toString())}`,
+        );
+      }
+      if (request.filterExpr?.conditions?.jsonPath) {
+        queryParams.push(
+          `filterExpr.conditions.jsonPath=${encodeURIComponent(request.filterExpr.conditions.jsonPath.toString())}`,
+        );
+      }
+      if (request.orderBy) {
+        queryParams.push(
+          `orderBy=${encodeURIComponent(request.orderBy.toString())}`,
+        );
+      }
+      if (request.sorting?.field) {
+        queryParams.push(
+          `sorting.field=${encodeURIComponent(request.sorting.field.toString())}`,
+        );
+      }
+      if (request.sorting?.direction) {
+        queryParams.push(
+          `sorting.direction=${encodeURIComponent(request.sorting.direction.toString())}`,
+        );
+      }
+      if (request.fieldMask) {
+        queryParams.push(
+          `fieldMask=${encodeURIComponent(request.fieldMask.toString())}`,
+        );
+      }
+      let uri = path;
+      if (queryParams.length > 0) {
+        uri += `?${queryParams.join('&')}`;
+      }
+      return transport.unary(uri, 'GET', body, {
+        service: 'BookService',
+        method: 'List',
+      }) as Promise<ledgerservicev1_ListBookResponse>;
+    },
+    ListAll(request) {
+      const path = `app/v1/books/all`;
+      const body = null;
+      const queryParams: string[] = [];
+      if (request.includeDisabled) {
+        queryParams.push(
+          `includeDisabled=${encodeURIComponent(request.includeDisabled.toString())}`,
+        );
+      }
+      let uri = path;
+      if (queryParams.length > 0) {
+        uri += `?${queryParams.join('&')}`;
+      }
+      return transport.unary(uri, 'GET', body, {
+        service: 'BookService',
+        method: 'ListAll',
+      }) as Promise<ledgerservicev1_ListBookResponse>;
+    },
+    Get(request) {
+      if (request.id === undefined || request.id === null) {
+        throw new Error('missing required field request.id');
+      }
+      const path = `app/v1/books/${request.id}`;
+      const body = null;
+      const queryParams: string[] = [];
+      if (request.viewMask) {
+        queryParams.push(
+          `viewMask=${encodeURIComponent(request.viewMask.toString())}`,
+        );
+      }
+      let uri = path;
+      if (queryParams.length > 0) {
+        uri += `?${queryParams.join('&')}`;
+      }
+      return transport.unary(uri, 'GET', body, {
+        service: 'BookService',
+        method: 'Get',
+      }) as Promise<ledgerservicev1_Book>;
+    },
+    Create(request) {
+      const path = `app/v1/books`;
+      const body = JSON.stringify(request);
+      return transport.unary(path, 'POST', body, {
+        service: 'BookService',
+        method: 'Create',
+      }) as Promise<ledgerservicev1_Book>;
+    },
+    Update(request) {
+      if (request.id === undefined || request.id === null) {
+        throw new Error('missing required field request.id');
+      }
+      const path = `app/v1/books/${request.id}`;
+      const body = JSON.stringify(request);
+      return transport.unary(path, 'PUT', body, {
+        service: 'BookService',
+        method: 'Update',
+      }) as Promise<ledgerservicev1_Book>;
+    },
+    Delete(request) {
+      if (request.id === undefined || request.id === null) {
+        throw new Error('missing required field request.id');
+      }
+      const path = `app/v1/books/${request.id}`;
+      const body = null;
+      return transport.unary(path, 'DELETE', body, {
+        service: 'BookService',
+        method: 'Delete',
+      }) as Promise<wellKnownEmpty>;
+    },
+    Toggle(request) {
+      if (request.id === undefined || request.id === null) {
+        throw new Error('missing required field request.id');
+      }
+      const path = `app/v1/books/${request.id}/toggle`;
+      const body = JSON.stringify(request);
+      return transport.unary(path, 'PATCH', body, {
+        service: 'BookService',
+        method: 'Toggle',
+      }) as Promise<ledgerservicev1_Book>;
+    },
+  };
+}
+// 回应 - 账本列表
+export type ledgerservicev1_ListBookResponse = {
+  items: ledgerservicev1_Book[] | undefined;
+  total: number | undefined;
+};
+
+// 账本
+export type ledgerservicev1_Book = {
+  createdAt?: wellKnownTimestamp;
+  createdBy?: number;
+  defaultCurrencyCode?: string;
+  // 默认账户引用
+  defaultExpenseAccountId?: number;
+  // 默认分类引用
+  defaultExpenseCategoryId?: number;
+  defaultIncomeAccountId?: number;
+  defaultIncomeCategoryId?: number;
+  defaultTransferFromAccountId?: number;
+  defaultTransferToAccountId?: number;
+  deletedAt?: wellKnownTimestamp;
+  deletedBy?: number;
+  enable?: boolean;
+  exportAt?: number;
+  id?: number;
+  name?: string;
+  notes?: string;
+  sortOrder?: number;
+  tenantId?: number;
+  updatedAt?: wellKnownTimestamp;
+  updatedBy?: number;
+};
+
+// 请求 - 获取所有账本
+export type ledgerservicev1_ListAllBookRequest = {
+  includeDisabled?: boolean;
+};
+
+// 请求 - 账本数据
+export type ledgerservicev1_GetBookRequest = {
+  id: number | undefined;
+  viewMask?: wellKnownFieldMask;
+};
+
+// 请求 - 创建账本
+export type ledgerservicev1_CreateBookRequest = {
+  data: ledgerservicev1_Book | undefined;
+};
+
+// 请求 - 更新账本
+export type ledgerservicev1_UpdateBookRequest = {
+  allowMissing?: boolean;
+  data: ledgerservicev1_Book | undefined;
+  id: number | undefined;
+  updateMask: undefined | wellKnownFieldMask;
+};
+
+// 请求 - 删除账本
+export type ledgerservicev1_DeleteBookRequest = {
+  id: number | undefined;
+};
+
+// 请求 - 切换启用/禁用
+export type ledgerservicev1_ToggleBookRequest = {
+  id: number | undefined;
+};
 
 // 类别服务
 export interface CategoryService {
@@ -462,169 +1643,6 @@ export function createCategoryServiceClient(
     },
   };
 }
-// ------------------------------
-// 分页通用请求
-// ------------------------------
-export type pagination_PagingRequest = {
-  // 字段掩码，其作用为SELECT中的字段，其语法为使用逗号分隔字段名，例如：id,realName,userName。如果为空则选中所有字段，即SELECT *。
-  fieldMask?: wellKnownFieldMask;
-  // Google AIP规范字符串过滤条件
-  filter?: string;
-  // 复杂过滤表达式（优先使用）
-  filterExpr?: pagination_FilterExpr;
-  // 最多返回的记录数（默认10，建议设置上限如100）
-  limit?: number;
-  // 是否不分页，如果为true，则page和pageSize参数无效。
-  noPaging?: boolean;
-  // 跳过的记录数（从0开始，默认0）
-  offset?: number;
-  // 排序条件
-  orderBy?: string;
-  // 当前页码（从1开始，默认1）
-  page?: number;
-  // 每页条数（默认10，建议设置上限如100）
-  pageSize?: number;
-  // JSON字符串过滤条件，基础语法：{"field1":"val1", "field2___icontains":"val2"}，具体请参见：https://github.com/tx7do/go-crud/tree/main/pagination/filter/README.md
-  query?: string;
-  // 排序规则
-  sorting: pagination_Sorting[] | undefined;
-  // 上一页最后一条记录的游标（如ID/时间戳+ID，首次请求为空）
-  token?: string;
-};
-
-// 过滤表达式
-export type pagination_FilterExpr = {
-  // 条件列表
-  conditions: pagination_FilterCondition[] | undefined;
-  // 子表达式列表
-  groups: pagination_FilterExpr[] | undefined;
-  // 过滤表达式类型
-  type: pagination_ExprType | undefined;
-};
-
-// 过滤表达式类型
-export type pagination_ExprType =
-  | 'AND'
-  | 'EXPR_TYPE_UNSPECIFIED'
-  | 'OR';
-// 过滤条件
-export type pagination_FilterCondition = {
-  // 日期时间部分（可选，仅在字段为日期时间类型时使用）
-  datePart?: pagination_DatePart;
-  // 过滤字段名
-  field: string | undefined;
-  // 当字段为 JSON/JSONB 类型时，可指定要抽取的子路径（例如: "meta.user.name" 或 JSONPath）
-  // 服务端应把此路径用于 JSON_EXTRACT / -> 操作，再对抽取结果应用 op。
-  jsonPath?: string;
-  // 当需要使用非字符串类型的比较值（对象/数组/数字/布尔）时使用此字段，
-  // 使用 google.protobuf.Value 能表达任意 JSON 值。
-  jsonValue?: wellKnownValue;
-  // 过滤操作符
-  op: pagination_Operator | undefined;
-  // 过滤值（单值）
-  value?: string;
-  // 过滤值（多值，如IN操作符）
-  values: string[] | undefined;
-};
-
-// 操作符枚举
-export type pagination_Operator =
-  | 'ARRAY_CONTAINS'
-  // 范围与正则
-  | 'BETWEEN'
-  // 语义化的字符串操作
-  | 'CONTAINS'
-  | 'ENDS_WITH'
-  // 基本比较
-  | 'EQ'
-  | 'EXACT'
-  | 'EXISTS'
-  | 'GT'
-  | 'GTE'
-  | 'ICONTAINS'
-  | 'IENDS_WITH'
-  | 'IEXACT'
-  | 'ILIKE'
-  // 集合操作
-  | 'IN'
-  | 'IREGEXP'
-  | 'IS_NOT_NULL'
-  // 空值判断
-  | 'IS_NULL'
-  | 'ISTARTS_WITH'
-  // JSON / 数组 / 集合相关（按需在服务端映射为具体 DB 运算）
-  | 'JSON_CONTAINS'
-  // 模糊 / 大小写不敏感模糊 / 非模糊
-  | 'LIKE'
-  | 'LT'
-  | 'LTE'
-  | 'NEQ'
-  | 'NIN'
-  | 'NOT_LIKE'
-  // 未指定
-  | 'OPERATOR_UNSPECIFIED'
-  | 'REGEXP'
-  | 'SEARCH'
-  | 'STARTS_WITH';
-type wellKnownValue = unknown;
-
-// 日期时间部分枚举
-export type pagination_DatePart =
-  | 'DATE'
-  | 'DATE_PART_UNSPECIFIED'
-  | 'DAY'
-  | 'HOUR'
-  | 'ISO_WEEK_DAY'
-  | 'ISO_YEAR'
-  | 'MICROSECOND'
-  | 'MINUTE'
-  | 'MONTH'
-  | 'QUARTER'
-  | 'SECOND'
-  | 'TIME'
-  | 'WEEK'
-  | 'WEEK_DAY'
-  | 'YEAR';
-// 排序规则（分页场景通常需配合排序保证结果稳定）
-export type pagination_Sorting = {
-  // 排序方向
-  direction: pagination_Sorting_Direction | undefined;
-  // 排序字段（如"id"、"create_time"）
-  field: string | undefined;
-};
-
-// 排序方向（ASC/DESC，默认ASC）
-export type pagination_Sorting_Direction =
-  | 'ASC'
-  | 'DESC';
-// In JSON, a field mask is encoded as a single string where paths are
-// separated by a comma. Fields name in each path are converted
-// to/from lower-camel naming conventions.
-// As an example, consider the following message declarations:
-//
-//     message Profile {
-//       User user = 1;
-//       Photo photo = 2;
-//     }
-//     message User {
-//       string display_name = 1;
-//       string address = 2;
-//     }
-//
-// In proto a field mask for `Profile` may look as such:
-//
-//     mask {
-//       paths: "user.display_name"
-//       paths: "photo"
-//     }
-//
-// In JSON, the same mask is represented as below:
-//
-//     {
-//       mask: "user.displayName,photo"
-//     }
-type wellKnownFieldMask = string;
-
 // 回应 - 类别列表
 export type contentservicev1_ListCategoryResponse = {
   items: contentservicev1_Category[] | undefined;
@@ -692,11 +1710,6 @@ export type contentservicev1_SeoMeta = {
   ogTitle?: string;
   seoTitle?: string;
 };
-
-// Encoded using RFC 3339, where generated output will always be Z-normalized
-// and uses 0, 3, 6 or 9 fractional digits.
-// Offsets other than "Z" are also accepted.
-type wellKnownTimestamp = string;
 
 // 请求 - 类别数据
 export type contentservicev1_GetCategoryRequest = {
@@ -1002,6 +2015,221 @@ export type commentservicev1_DeleteCommentRequest = {
   id?: number;
 };
 
+export interface CurrencyService {
+  ListAll(
+    request: ledgerservicev1_ListAllCurrencyRequest,
+  ): Promise<ledgerservicev1_ListCurrencyResponse>;
+  List(
+    request: pagination_PagingRequest,
+  ): Promise<ledgerservicev1_ListCurrencyResponse>;
+  Refresh(
+    request: ledgerservicev1_RefreshCurrencyRequest,
+  ): Promise<ledgerservicev1_ListCurrencyResponse>;
+  Convert(
+    request: ledgerservicev1_ConvertCurrencyRequest,
+  ): Promise<ledgerservicev1_ConvertCurrencyResponse>;
+}
+
+export function createCurrencyServiceClient(
+  transport: ClientTransport,
+): CurrencyService {
+  return {
+    ListAll(_request) {
+      const path = `app/v1/currencies/all`;
+      const body = null;
+      return transport.unary(path, 'GET', body, {
+        service: 'CurrencyService',
+        method: 'ListAll',
+      }) as Promise<ledgerservicev1_ListCurrencyResponse>;
+    },
+    List(request) {
+      const path = `app/v1/currencies`;
+      const body = null;
+      const queryParams: string[] = [];
+      if (request.page) {
+        queryParams.push(
+          `page=${encodeURIComponent(request.page.toString())}`,
+        );
+      }
+      if (request.pageSize) {
+        queryParams.push(
+          `pageSize=${encodeURIComponent(request.pageSize.toString())}`,
+        );
+      }
+      if (request.offset) {
+        queryParams.push(
+          `offset=${encodeURIComponent(request.offset.toString())}`,
+        );
+      }
+      if (request.limit) {
+        queryParams.push(
+          `limit=${encodeURIComponent(request.limit.toString())}`,
+        );
+      }
+      if (request.token) {
+        queryParams.push(
+          `token=${encodeURIComponent(request.token.toString())}`,
+        );
+      }
+      if (request.noPaging) {
+        queryParams.push(
+          `noPaging=${encodeURIComponent(request.noPaging.toString())}`,
+        );
+      }
+      if (request.query) {
+        queryParams.push(
+          `query=${encodeURIComponent(request.query.toString())}`,
+        );
+      }
+      if (request.filter) {
+        queryParams.push(
+          `filter=${encodeURIComponent(request.filter.toString())}`,
+        );
+      }
+      if (request.filterExpr?.type) {
+        queryParams.push(
+          `filterExpr.type=${encodeURIComponent(request.filterExpr.type.toString())}`,
+        );
+      }
+      if (request.filterExpr?.conditions?.field) {
+        queryParams.push(
+          `filterExpr.conditions.field=${encodeURIComponent(request.filterExpr.conditions.field.toString())}`,
+        );
+      }
+      if (request.filterExpr?.conditions?.op) {
+        queryParams.push(
+          `filterExpr.conditions.op=${encodeURIComponent(request.filterExpr.conditions.op.toString())}`,
+        );
+      }
+      if (request.filterExpr?.conditions?.value) {
+        queryParams.push(
+          `filterExpr.conditions.value=${encodeURIComponent(request.filterExpr.conditions.value.toString())}`,
+        );
+      }
+      if (request.filterExpr?.conditions?.jsonValue) {
+        queryParams.push(
+          `filterExpr.conditions.jsonValue=${encodeURIComponent(request.filterExpr.conditions.jsonValue.toString())}`,
+        );
+      }
+      if (request.filterExpr?.conditions?.values) {
+        request.filterExpr.conditions.values.forEach((x) => {
+          queryParams.push(
+            `filterExpr.conditions.values=${encodeURIComponent(x.toString())}`,
+          );
+        });
+      }
+      if (request.filterExpr?.conditions?.datePart) {
+        queryParams.push(
+          `filterExpr.conditions.datePart=${encodeURIComponent(request.filterExpr.conditions.datePart.toString())}`,
+        );
+      }
+      if (request.filterExpr?.conditions?.jsonPath) {
+        queryParams.push(
+          `filterExpr.conditions.jsonPath=${encodeURIComponent(request.filterExpr.conditions.jsonPath.toString())}`,
+        );
+      }
+      if (request.orderBy) {
+        queryParams.push(
+          `orderBy=${encodeURIComponent(request.orderBy.toString())}`,
+        );
+      }
+      if (request.sorting?.field) {
+        queryParams.push(
+          `sorting.field=${encodeURIComponent(request.sorting.field.toString())}`,
+        );
+      }
+      if (request.sorting?.direction) {
+        queryParams.push(
+          `sorting.direction=${encodeURIComponent(request.sorting.direction.toString())}`,
+        );
+      }
+      if (request.fieldMask) {
+        queryParams.push(
+          `fieldMask=${encodeURIComponent(request.fieldMask.toString())}`,
+        );
+      }
+      let uri = path;
+      if (queryParams.length > 0) {
+        uri += `?${queryParams.join('&')}`;
+      }
+      return transport.unary(uri, 'GET', body, {
+        service: 'CurrencyService',
+        method: 'List',
+      }) as Promise<ledgerservicev1_ListCurrencyResponse>;
+    },
+    Refresh(request) {
+      const path = `app/v1/currencies/refresh`;
+      const body = JSON.stringify(request);
+      return transport.unary(path, 'POST', body, {
+        service: 'CurrencyService',
+        method: 'Refresh',
+      }) as Promise<ledgerservicev1_ListCurrencyResponse>;
+    },
+    Convert(request) {
+      const path = `app/v1/currencies/calc`;
+      const body = null;
+      const queryParams: string[] = [];
+      if (request.amount) {
+        queryParams.push(
+          `amount=${encodeURIComponent(request.amount.toString())}`,
+        );
+      }
+      if (request.from) {
+        queryParams.push(
+          `from=${encodeURIComponent(request.from.toString())}`,
+        );
+      }
+      if (request.to) {
+        queryParams.push(
+          `to=${encodeURIComponent(request.to.toString())}`,
+        );
+      }
+      let uri = path;
+      if (queryParams.length > 0) {
+        uri += `?${queryParams.join('&')}`;
+      }
+      return transport.unary(uri, 'GET', body, {
+        service: 'CurrencyService',
+        method: 'Convert',
+      }) as Promise<ledgerservicev1_ConvertCurrencyResponse>;
+    },
+  };
+}
+// 请求 - 获取所有币种
+export type ledgerservicev1_ListAllCurrencyRequest = {
+};
+
+// 回应 - 币种列表
+export type ledgerservicev1_ListCurrencyResponse = {
+  items: ledgerservicev1_Currency[] | undefined;
+  total: number | undefined;
+};
+
+// 币种
+export type ledgerservicev1_Currency = {
+  code?: string;
+  id?: number;
+  name?: string;
+  rate?: string;
+};
+
+// 请求 - 刷新汇率
+export type ledgerservicev1_RefreshCurrencyRequest = {
+};
+
+// 请求 - 币种转换
+export type ledgerservicev1_ConvertCurrencyRequest = {
+  amount: string | undefined;
+  from: string | undefined;
+  to: string | undefined;
+};
+
+// 回应 - 币种转换
+export type ledgerservicev1_ConvertCurrencyResponse = {
+  amount: string | undefined;
+  rate: string | undefined;
+};
+
 // 文件传输服务
 export interface FileTransferService {
   // 下载文件
@@ -1162,6 +2390,657 @@ export type storageservicev1_PresignOption = {
 export type storageservicev1_UploadFileResponse = {
   objectName?: string;
   presignedUrl?: string;
+};
+
+export interface FlowFileService {
+  List(
+    request: ledgerservicev1_ListFlowFileRequest,
+  ): Promise<ledgerservicev1_ListFlowFileResponse>;
+  Delete(
+    request: ledgerservicev1_DeleteFlowFileRequest,
+  ): Promise<wellKnownEmpty>;
+}
+
+export function createFlowFileServiceClient(
+  transport: ClientTransport,
+): FlowFileService {
+  return {
+    List(request) {
+      const path = `app/v1/flow-files`;
+      const body = null;
+      const queryParams: string[] = [];
+      if (request.flowId) {
+        queryParams.push(
+          `flowId=${encodeURIComponent(request.flowId.toString())}`,
+        );
+      }
+      let uri = path;
+      if (queryParams.length > 0) {
+        uri += `?${queryParams.join('&')}`;
+      }
+      return transport.unary(uri, 'GET', body, {
+        service: 'FlowFileService',
+        method: 'List',
+      }) as Promise<ledgerservicev1_ListFlowFileResponse>;
+    },
+    Delete(request) {
+      if (request.id === undefined || request.id === null) {
+        throw new Error('missing required field request.id');
+      }
+      const path = `app/v1/flow-files/${request.id}`;
+      const body = null;
+      return transport.unary(path, 'DELETE', body, {
+        service: 'FlowFileService',
+        method: 'Delete',
+      }) as Promise<wellKnownEmpty>;
+    },
+  };
+}
+// 请求 - 附件列表
+export type ledgerservicev1_ListFlowFileRequest = {
+  flowId: number | undefined;
+};
+
+// 回应 - 附件列表
+export type ledgerservicev1_ListFlowFileResponse = {
+  items: ledgerservicev1_FlowFile[] | undefined;
+};
+
+// 流水附件
+export type ledgerservicev1_FlowFile = {
+  contentType?: string;
+  createTime?: number;
+  creatorId?: number;
+  flowId?: number;
+  id?: number;
+  originalName?: string;
+  size?: number;
+};
+
+// 请求 - 删除附件
+export type ledgerservicev1_DeleteFlowFileRequest = {
+  id: number | undefined;
+};
+
+export interface LedgerCategoryService {
+  List(
+    request: pagination_PagingRequest,
+  ): Promise<ledgerservicev1_ListCategoryResponse>;
+  ListAll(
+    request: ledgerservicev1_ListAllCategoryRequest,
+  ): Promise<ledgerservicev1_ListCategoryResponse>;
+  Get(
+    request: ledgerservicev1_GetCategoryRequest,
+  ): Promise<ledgerservicev1_Category>;
+  Create(
+    request: ledgerservicev1_CreateCategoryRequest,
+  ): Promise<ledgerservicev1_Category>;
+  Update(
+    request: ledgerservicev1_UpdateCategoryRequest,
+  ): Promise<ledgerservicev1_Category>;
+  Delete(
+    request: ledgerservicev1_DeleteCategoryRequest,
+  ): Promise<wellKnownEmpty>;
+  Toggle(
+    request: ledgerservicev1_ToggleCategoryRequest,
+  ): Promise<ledgerservicev1_Category>;
+}
+
+export function createLedgerCategoryServiceClient(
+  transport: ClientTransport,
+): LedgerCategoryService {
+  return {
+    List(request) {
+      const path = `app/v1/ledger-categories`;
+      const body = null;
+      const queryParams: string[] = [];
+      if (request.page) {
+        queryParams.push(
+          `page=${encodeURIComponent(request.page.toString())}`,
+        );
+      }
+      if (request.pageSize) {
+        queryParams.push(
+          `pageSize=${encodeURIComponent(request.pageSize.toString())}`,
+        );
+      }
+      if (request.offset) {
+        queryParams.push(
+          `offset=${encodeURIComponent(request.offset.toString())}`,
+        );
+      }
+      if (request.limit) {
+        queryParams.push(
+          `limit=${encodeURIComponent(request.limit.toString())}`,
+        );
+      }
+      if (request.token) {
+        queryParams.push(
+          `token=${encodeURIComponent(request.token.toString())}`,
+        );
+      }
+      if (request.noPaging) {
+        queryParams.push(
+          `noPaging=${encodeURIComponent(request.noPaging.toString())}`,
+        );
+      }
+      if (request.query) {
+        queryParams.push(
+          `query=${encodeURIComponent(request.query.toString())}`,
+        );
+      }
+      if (request.filter) {
+        queryParams.push(
+          `filter=${encodeURIComponent(request.filter.toString())}`,
+        );
+      }
+      if (request.filterExpr?.type) {
+        queryParams.push(
+          `filterExpr.type=${encodeURIComponent(request.filterExpr.type.toString())}`,
+        );
+      }
+      if (request.filterExpr?.conditions?.field) {
+        queryParams.push(
+          `filterExpr.conditions.field=${encodeURIComponent(request.filterExpr.conditions.field.toString())}`,
+        );
+      }
+      if (request.filterExpr?.conditions?.op) {
+        queryParams.push(
+          `filterExpr.conditions.op=${encodeURIComponent(request.filterExpr.conditions.op.toString())}`,
+        );
+      }
+      if (request.filterExpr?.conditions?.value) {
+        queryParams.push(
+          `filterExpr.conditions.value=${encodeURIComponent(request.filterExpr.conditions.value.toString())}`,
+        );
+      }
+      if (request.filterExpr?.conditions?.jsonValue) {
+        queryParams.push(
+          `filterExpr.conditions.jsonValue=${encodeURIComponent(request.filterExpr.conditions.jsonValue.toString())}`,
+        );
+      }
+      if (request.filterExpr?.conditions?.values) {
+        request.filterExpr.conditions.values.forEach((x) => {
+          queryParams.push(
+            `filterExpr.conditions.values=${encodeURIComponent(x.toString())}`,
+          );
+        });
+      }
+      if (request.filterExpr?.conditions?.datePart) {
+        queryParams.push(
+          `filterExpr.conditions.datePart=${encodeURIComponent(request.filterExpr.conditions.datePart.toString())}`,
+        );
+      }
+      if (request.filterExpr?.conditions?.jsonPath) {
+        queryParams.push(
+          `filterExpr.conditions.jsonPath=${encodeURIComponent(request.filterExpr.conditions.jsonPath.toString())}`,
+        );
+      }
+      if (request.orderBy) {
+        queryParams.push(
+          `orderBy=${encodeURIComponent(request.orderBy.toString())}`,
+        );
+      }
+      if (request.sorting?.field) {
+        queryParams.push(
+          `sorting.field=${encodeURIComponent(request.sorting.field.toString())}`,
+        );
+      }
+      if (request.sorting?.direction) {
+        queryParams.push(
+          `sorting.direction=${encodeURIComponent(request.sorting.direction.toString())}`,
+        );
+      }
+      if (request.fieldMask) {
+        queryParams.push(
+          `fieldMask=${encodeURIComponent(request.fieldMask.toString())}`,
+        );
+      }
+      let uri = path;
+      if (queryParams.length > 0) {
+        uri += `?${queryParams.join('&')}`;
+      }
+      return transport.unary(uri, 'GET', body, {
+        service: 'LedgerCategoryService',
+        method: 'List',
+      }) as Promise<ledgerservicev1_ListCategoryResponse>;
+    },
+    ListAll(request) {
+      const path = `app/v1/ledger-categories/all`;
+      const body = null;
+      const queryParams: string[] = [];
+      if (request.bookId) {
+        queryParams.push(
+          `bookId=${encodeURIComponent(request.bookId.toString())}`,
+        );
+      }
+      if (request.type) {
+        queryParams.push(
+          `type=${encodeURIComponent(request.type.toString())}`,
+        );
+      }
+      let uri = path;
+      if (queryParams.length > 0) {
+        uri += `?${queryParams.join('&')}`;
+      }
+      return transport.unary(uri, 'GET', body, {
+        service: 'LedgerCategoryService',
+        method: 'ListAll',
+      }) as Promise<ledgerservicev1_ListCategoryResponse>;
+    },
+    Get(request) {
+      if (request.id === undefined || request.id === null) {
+        throw new Error('missing required field request.id');
+      }
+      const path = `app/v1/ledger-categories/${request.id}`;
+      const body = null;
+      const queryParams: string[] = [];
+      if (request.viewMask) {
+        queryParams.push(
+          `viewMask=${encodeURIComponent(request.viewMask.toString())}`,
+        );
+      }
+      let uri = path;
+      if (queryParams.length > 0) {
+        uri += `?${queryParams.join('&')}`;
+      }
+      return transport.unary(uri, 'GET', body, {
+        service: 'LedgerCategoryService',
+        method: 'Get',
+      }) as Promise<ledgerservicev1_Category>;
+    },
+    Create(request) {
+      const path = `app/v1/ledger-categories`;
+      const body = JSON.stringify(request);
+      return transport.unary(path, 'POST', body, {
+        service: 'LedgerCategoryService',
+        method: 'Create',
+      }) as Promise<ledgerservicev1_Category>;
+    },
+    Update(request) {
+      if (request.id === undefined || request.id === null) {
+        throw new Error('missing required field request.id');
+      }
+      const path = `app/v1/ledger-categories/${request.id}`;
+      const body = JSON.stringify(request);
+      return transport.unary(path, 'PUT', body, {
+        service: 'LedgerCategoryService',
+        method: 'Update',
+      }) as Promise<ledgerservicev1_Category>;
+    },
+    Delete(request) {
+      if (request.id === undefined || request.id === null) {
+        throw new Error('missing required field request.id');
+      }
+      const path = `app/v1/ledger-categories/${request.id}`;
+      const body = null;
+      return transport.unary(path, 'DELETE', body, {
+        service: 'LedgerCategoryService',
+        method: 'Delete',
+      }) as Promise<wellKnownEmpty>;
+    },
+    Toggle(request) {
+      if (request.id === undefined || request.id === null) {
+        throw new Error('missing required field request.id');
+      }
+      const path = `app/v1/ledger-categories/${request.id}/toggle`;
+      const body = JSON.stringify(request);
+      return transport.unary(path, 'PATCH', body, {
+        service: 'LedgerCategoryService',
+        method: 'Toggle',
+      }) as Promise<ledgerservicev1_Category>;
+    },
+  };
+}
+// 回应 - 分类列表
+export type ledgerservicev1_ListCategoryResponse = {
+  items: ledgerservicev1_Category[] | undefined;
+  total: number | undefined;
+};
+
+// 分类
+export type ledgerservicev1_Category = {
+  bookId?: number;
+  children: ledgerservicev1_Category[] | undefined;
+  createdAt?: wellKnownTimestamp;
+  createdBy?: number;
+  deletedAt?: wellKnownTimestamp;
+  deletedBy?: number;
+  depth?: number;
+  enable?: boolean;
+  id?: number;
+  name?: string;
+  notes?: string;
+  // 树形字段
+  parentId?: number;
+  path?: string;
+  sortOrder?: number;
+  tenantId?: number;
+  type?: ledgerservicev1_CategoryType;
+  updatedAt?: wellKnownTimestamp;
+  updatedBy?: number;
+};
+
+// 分类类型 — 对应 Java CategoryType
+export type ledgerservicev1_CategoryType =
+  | 'CATEGORY_TYPE_EXPENSE'
+  | 'CATEGORY_TYPE_INCOME'
+  | 'CATEGORY_TYPE_UNSPECIFIED';
+// 请求 - 获取所有分类
+export type ledgerservicev1_ListAllCategoryRequest = {
+  bookId?: number;
+  type?: ledgerservicev1_CategoryType;
+};
+
+// 请求 - 分类数据
+export type ledgerservicev1_GetCategoryRequest = {
+  id: number | undefined;
+  viewMask?: wellKnownFieldMask;
+};
+
+// 请求 - 创建分类
+export type ledgerservicev1_CreateCategoryRequest = {
+  data: ledgerservicev1_Category | undefined;
+};
+
+// 请求 - 更新分类
+export type ledgerservicev1_UpdateCategoryRequest = {
+  allowMissing?: boolean;
+  data: ledgerservicev1_Category | undefined;
+  id: number | undefined;
+  updateMask: undefined | wellKnownFieldMask;
+};
+
+// 请求 - 删除分类
+export type ledgerservicev1_DeleteCategoryRequest = {
+  id: number | undefined;
+};
+
+// 请求 - 切换启用/禁用
+export type ledgerservicev1_ToggleCategoryRequest = {
+  id: number | undefined;
+};
+
+export interface LedgerTagService {
+  List(
+    request: pagination_PagingRequest,
+  ): Promise<ledgerservicev1_ListTagResponse>;
+  ListAll(
+    request: ledgerservicev1_ListAllTagRequest,
+  ): Promise<ledgerservicev1_ListTagResponse>;
+  Get(
+    request: ledgerservicev1_GetTagRequest,
+  ): Promise<ledgerservicev1_Tag>;
+  Create(
+    request: ledgerservicev1_CreateTagRequest,
+  ): Promise<ledgerservicev1_Tag>;
+  Update(
+    request: ledgerservicev1_UpdateTagRequest,
+  ): Promise<ledgerservicev1_Tag>;
+  Delete(
+    request: ledgerservicev1_DeleteTagRequest,
+  ): Promise<wellKnownEmpty>;
+  Toggle(
+    request: ledgerservicev1_ToggleTagRequest,
+  ): Promise<ledgerservicev1_Tag>;
+}
+
+export function createLedgerTagServiceClient(
+  transport: ClientTransport,
+): LedgerTagService {
+  return {
+    List(request) {
+      const path = `app/v1/ledger-tags`;
+      const body = null;
+      const queryParams: string[] = [];
+      if (request.page) {
+        queryParams.push(
+          `page=${encodeURIComponent(request.page.toString())}`,
+        );
+      }
+      if (request.pageSize) {
+        queryParams.push(
+          `pageSize=${encodeURIComponent(request.pageSize.toString())}`,
+        );
+      }
+      if (request.offset) {
+        queryParams.push(
+          `offset=${encodeURIComponent(request.offset.toString())}`,
+        );
+      }
+      if (request.limit) {
+        queryParams.push(
+          `limit=${encodeURIComponent(request.limit.toString())}`,
+        );
+      }
+      if (request.token) {
+        queryParams.push(
+          `token=${encodeURIComponent(request.token.toString())}`,
+        );
+      }
+      if (request.noPaging) {
+        queryParams.push(
+          `noPaging=${encodeURIComponent(request.noPaging.toString())}`,
+        );
+      }
+      if (request.query) {
+        queryParams.push(
+          `query=${encodeURIComponent(request.query.toString())}`,
+        );
+      }
+      if (request.filter) {
+        queryParams.push(
+          `filter=${encodeURIComponent(request.filter.toString())}`,
+        );
+      }
+      if (request.filterExpr?.type) {
+        queryParams.push(
+          `filterExpr.type=${encodeURIComponent(request.filterExpr.type.toString())}`,
+        );
+      }
+      if (request.filterExpr?.conditions?.field) {
+        queryParams.push(
+          `filterExpr.conditions.field=${encodeURIComponent(request.filterExpr.conditions.field.toString())}`,
+        );
+      }
+      if (request.filterExpr?.conditions?.op) {
+        queryParams.push(
+          `filterExpr.conditions.op=${encodeURIComponent(request.filterExpr.conditions.op.toString())}`,
+        );
+      }
+      if (request.filterExpr?.conditions?.value) {
+        queryParams.push(
+          `filterExpr.conditions.value=${encodeURIComponent(request.filterExpr.conditions.value.toString())}`,
+        );
+      }
+      if (request.filterExpr?.conditions?.jsonValue) {
+        queryParams.push(
+          `filterExpr.conditions.jsonValue=${encodeURIComponent(request.filterExpr.conditions.jsonValue.toString())}`,
+        );
+      }
+      if (request.filterExpr?.conditions?.values) {
+        request.filterExpr.conditions.values.forEach((x) => {
+          queryParams.push(
+            `filterExpr.conditions.values=${encodeURIComponent(x.toString())}`,
+          );
+        });
+      }
+      if (request.filterExpr?.conditions?.datePart) {
+        queryParams.push(
+          `filterExpr.conditions.datePart=${encodeURIComponent(request.filterExpr.conditions.datePart.toString())}`,
+        );
+      }
+      if (request.filterExpr?.conditions?.jsonPath) {
+        queryParams.push(
+          `filterExpr.conditions.jsonPath=${encodeURIComponent(request.filterExpr.conditions.jsonPath.toString())}`,
+        );
+      }
+      if (request.orderBy) {
+        queryParams.push(
+          `orderBy=${encodeURIComponent(request.orderBy.toString())}`,
+        );
+      }
+      if (request.sorting?.field) {
+        queryParams.push(
+          `sorting.field=${encodeURIComponent(request.sorting.field.toString())}`,
+        );
+      }
+      if (request.sorting?.direction) {
+        queryParams.push(
+          `sorting.direction=${encodeURIComponent(request.sorting.direction.toString())}`,
+        );
+      }
+      if (request.fieldMask) {
+        queryParams.push(
+          `fieldMask=${encodeURIComponent(request.fieldMask.toString())}`,
+        );
+      }
+      let uri = path;
+      if (queryParams.length > 0) {
+        uri += `?${queryParams.join('&')}`;
+      }
+      return transport.unary(uri, 'GET', body, {
+        service: 'LedgerTagService',
+        method: 'List',
+      }) as Promise<ledgerservicev1_ListTagResponse>;
+    },
+    ListAll(request) {
+      const path = `app/v1/ledger-tags/all`;
+      const body = null;
+      const queryParams: string[] = [];
+      if (request.bookId) {
+        queryParams.push(
+          `bookId=${encodeURIComponent(request.bookId.toString())}`,
+        );
+      }
+      let uri = path;
+      if (queryParams.length > 0) {
+        uri += `?${queryParams.join('&')}`;
+      }
+      return transport.unary(uri, 'GET', body, {
+        service: 'LedgerTagService',
+        method: 'ListAll',
+      }) as Promise<ledgerservicev1_ListTagResponse>;
+    },
+    Get(request) {
+      if (request.id === undefined || request.id === null) {
+        throw new Error('missing required field request.id');
+      }
+      const path = `app/v1/ledger-tags/${request.id}`;
+      const body = null;
+      const queryParams: string[] = [];
+      if (request.viewMask) {
+        queryParams.push(
+          `viewMask=${encodeURIComponent(request.viewMask.toString())}`,
+        );
+      }
+      let uri = path;
+      if (queryParams.length > 0) {
+        uri += `?${queryParams.join('&')}`;
+      }
+      return transport.unary(uri, 'GET', body, {
+        service: 'LedgerTagService',
+        method: 'Get',
+      }) as Promise<ledgerservicev1_Tag>;
+    },
+    Create(request) {
+      const path = `app/v1/ledger-tags`;
+      const body = JSON.stringify(request);
+      return transport.unary(path, 'POST', body, {
+        service: 'LedgerTagService',
+        method: 'Create',
+      }) as Promise<ledgerservicev1_Tag>;
+    },
+    Update(request) {
+      if (request.id === undefined || request.id === null) {
+        throw new Error('missing required field request.id');
+      }
+      const path = `app/v1/ledger-tags/${request.id}`;
+      const body = JSON.stringify(request);
+      return transport.unary(path, 'PUT', body, {
+        service: 'LedgerTagService',
+        method: 'Update',
+      }) as Promise<ledgerservicev1_Tag>;
+    },
+    Delete(request) {
+      if (request.id === undefined || request.id === null) {
+        throw new Error('missing required field request.id');
+      }
+      const path = `app/v1/ledger-tags/${request.id}`;
+      const body = null;
+      return transport.unary(path, 'DELETE', body, {
+        service: 'LedgerTagService',
+        method: 'Delete',
+      }) as Promise<wellKnownEmpty>;
+    },
+    Toggle(request) {
+      if (request.id === undefined || request.id === null) {
+        throw new Error('missing required field request.id');
+      }
+      const path = `app/v1/ledger-tags/${request.id}/toggle`;
+      const body = JSON.stringify(request);
+      return transport.unary(path, 'PATCH', body, {
+        service: 'LedgerTagService',
+        method: 'Toggle',
+      }) as Promise<ledgerservicev1_Tag>;
+    },
+  };
+}
+export type ledgerservicev1_ListTagResponse = {
+  items: ledgerservicev1_Tag[] | undefined;
+  total: number | undefined;
+};
+
+export type ledgerservicev1_Tag = {
+  bookId?: number;
+  canExpense?: boolean;
+  canIncome?: boolean;
+  canTransfer?: boolean;
+  children: ledgerservicev1_Tag[] | undefined;
+  createdAt?: wellKnownTimestamp;
+  createdBy?: number;
+  deletedAt?: wellKnownTimestamp;
+  deletedBy?: number;
+  depth?: number;
+  enable?: boolean;
+  id?: number;
+  name?: string;
+  notes?: string;
+  // 树形字段
+  parentId?: number;
+  path?: string;
+  sortOrder?: number;
+  tenantId?: number;
+  updatedAt?: wellKnownTimestamp;
+  updatedBy?: number;
+};
+
+export type ledgerservicev1_ListAllTagRequest = {
+  bookId?: number;
+};
+
+export type ledgerservicev1_GetTagRequest = {
+  id: number | undefined;
+  viewMask?: wellKnownFieldMask;
+};
+
+export type ledgerservicev1_CreateTagRequest = {
+  data: ledgerservicev1_Tag | undefined;
+};
+
+export type ledgerservicev1_UpdateTagRequest = {
+  allowMissing?: boolean;
+  data: ledgerservicev1_Tag | undefined;
+  id: number | undefined;
+  updateMask: undefined | wellKnownFieldMask;
+};
+
+export type ledgerservicev1_DeleteTagRequest = {
+  id: number | undefined;
+};
+
+export type ledgerservicev1_ToggleTagRequest = {
+  id: number | undefined;
 };
 
 // 导航服务
@@ -1453,6 +3332,267 @@ export type siteservicev1_UpdateNavigationRequest = {
 // 请求 - 删除导航
 export type siteservicev1_DeleteNavigationRequest = {
   id?: number;
+};
+
+export interface NoteDayService {
+  List(
+    request: pagination_PagingRequest,
+  ): Promise<ledgerservicev1_ListNoteDayResponse>;
+  Get(
+    request: ledgerservicev1_GetNoteDayRequest,
+  ): Promise<ledgerservicev1_NoteDay>;
+  Create(
+    request: ledgerservicev1_CreateNoteDayRequest,
+  ): Promise<ledgerservicev1_NoteDay>;
+  Update(
+    request: ledgerservicev1_UpdateNoteDayRequest,
+  ): Promise<ledgerservicev1_NoteDay>;
+  Delete(
+    request: ledgerservicev1_DeleteNoteDayRequest,
+  ): Promise<wellKnownEmpty>;
+  Run(
+    request: ledgerservicev1_RunNoteDayRequest,
+  ): Promise<ledgerservicev1_NoteDay>;
+  Recall(
+    request: ledgerservicev1_RecallNoteDayRequest,
+  ): Promise<ledgerservicev1_NoteDay>;
+}
+
+export function createNoteDayServiceClient(
+  transport: ClientTransport,
+): NoteDayService {
+  return {
+    List(request) {
+      const path = `app/v1/note-days`;
+      const body = null;
+      const queryParams: string[] = [];
+      if (request.page) {
+        queryParams.push(
+          `page=${encodeURIComponent(request.page.toString())}`,
+        );
+      }
+      if (request.pageSize) {
+        queryParams.push(
+          `pageSize=${encodeURIComponent(request.pageSize.toString())}`,
+        );
+      }
+      if (request.offset) {
+        queryParams.push(
+          `offset=${encodeURIComponent(request.offset.toString())}`,
+        );
+      }
+      if (request.limit) {
+        queryParams.push(
+          `limit=${encodeURIComponent(request.limit.toString())}`,
+        );
+      }
+      if (request.token) {
+        queryParams.push(
+          `token=${encodeURIComponent(request.token.toString())}`,
+        );
+      }
+      if (request.noPaging) {
+        queryParams.push(
+          `noPaging=${encodeURIComponent(request.noPaging.toString())}`,
+        );
+      }
+      if (request.query) {
+        queryParams.push(
+          `query=${encodeURIComponent(request.query.toString())}`,
+        );
+      }
+      if (request.filter) {
+        queryParams.push(
+          `filter=${encodeURIComponent(request.filter.toString())}`,
+        );
+      }
+      if (request.filterExpr?.type) {
+        queryParams.push(
+          `filterExpr.type=${encodeURIComponent(request.filterExpr.type.toString())}`,
+        );
+      }
+      if (request.filterExpr?.conditions?.field) {
+        queryParams.push(
+          `filterExpr.conditions.field=${encodeURIComponent(request.filterExpr.conditions.field.toString())}`,
+        );
+      }
+      if (request.filterExpr?.conditions?.op) {
+        queryParams.push(
+          `filterExpr.conditions.op=${encodeURIComponent(request.filterExpr.conditions.op.toString())}`,
+        );
+      }
+      if (request.filterExpr?.conditions?.value) {
+        queryParams.push(
+          `filterExpr.conditions.value=${encodeURIComponent(request.filterExpr.conditions.value.toString())}`,
+        );
+      }
+      if (request.filterExpr?.conditions?.jsonValue) {
+        queryParams.push(
+          `filterExpr.conditions.jsonValue=${encodeURIComponent(request.filterExpr.conditions.jsonValue.toString())}`,
+        );
+      }
+      if (request.filterExpr?.conditions?.values) {
+        request.filterExpr.conditions.values.forEach((x) => {
+          queryParams.push(
+            `filterExpr.conditions.values=${encodeURIComponent(x.toString())}`,
+          );
+        });
+      }
+      if (request.filterExpr?.conditions?.datePart) {
+        queryParams.push(
+          `filterExpr.conditions.datePart=${encodeURIComponent(request.filterExpr.conditions.datePart.toString())}`,
+        );
+      }
+      if (request.filterExpr?.conditions?.jsonPath) {
+        queryParams.push(
+          `filterExpr.conditions.jsonPath=${encodeURIComponent(request.filterExpr.conditions.jsonPath.toString())}`,
+        );
+      }
+      if (request.orderBy) {
+        queryParams.push(
+          `orderBy=${encodeURIComponent(request.orderBy.toString())}`,
+        );
+      }
+      if (request.sorting?.field) {
+        queryParams.push(
+          `sorting.field=${encodeURIComponent(request.sorting.field.toString())}`,
+        );
+      }
+      if (request.sorting?.direction) {
+        queryParams.push(
+          `sorting.direction=${encodeURIComponent(request.sorting.direction.toString())}`,
+        );
+      }
+      if (request.fieldMask) {
+        queryParams.push(
+          `fieldMask=${encodeURIComponent(request.fieldMask.toString())}`,
+        );
+      }
+      let uri = path;
+      if (queryParams.length > 0) {
+        uri += `?${queryParams.join('&')}`;
+      }
+      return transport.unary(uri, 'GET', body, {
+        service: 'NoteDayService',
+        method: 'List',
+      }) as Promise<ledgerservicev1_ListNoteDayResponse>;
+    },
+    Get(request) {
+      if (request.id === undefined || request.id === null) {
+        throw new Error('missing required field request.id');
+      }
+      const path = `app/v1/note-days/${request.id}`;
+      const body = null;
+      return transport.unary(path, 'GET', body, {
+        service: 'NoteDayService',
+        method: 'Get',
+      }) as Promise<ledgerservicev1_NoteDay>;
+    },
+    Create(request) {
+      const path = `app/v1/note-days`;
+      const body = JSON.stringify(request);
+      return transport.unary(path, 'POST', body, {
+        service: 'NoteDayService',
+        method: 'Create',
+      }) as Promise<ledgerservicev1_NoteDay>;
+    },
+    Update(request) {
+      if (request.id === undefined || request.id === null) {
+        throw new Error('missing required field request.id');
+      }
+      const path = `app/v1/note-days/${request.id}`;
+      const body = JSON.stringify(request);
+      return transport.unary(path, 'PUT', body, {
+        service: 'NoteDayService',
+        method: 'Update',
+      }) as Promise<ledgerservicev1_NoteDay>;
+    },
+    Delete(request) {
+      if (request.id === undefined || request.id === null) {
+        throw new Error('missing required field request.id');
+      }
+      const path = `app/v1/note-days/${request.id}`;
+      const body = null;
+      return transport.unary(path, 'DELETE', body, {
+        service: 'NoteDayService',
+        method: 'Delete',
+      }) as Promise<wellKnownEmpty>;
+    },
+    Run(request) {
+      if (request.id === undefined || request.id === null) {
+        throw new Error('missing required field request.id');
+      }
+      const path = `app/v1/note-days/${request.id}/run`;
+      const body = JSON.stringify(request);
+      return transport.unary(path, 'PATCH', body, {
+        service: 'NoteDayService',
+        method: 'Run',
+      }) as Promise<ledgerservicev1_NoteDay>;
+    },
+    Recall(request) {
+      if (request.id === undefined || request.id === null) {
+        throw new Error('missing required field request.id');
+      }
+      const path = `app/v1/note-days/${request.id}/recall`;
+      const body = JSON.stringify(request);
+      return transport.unary(path, 'PATCH', body, {
+        service: 'NoteDayService',
+        method: 'Recall',
+      }) as Promise<ledgerservicev1_NoteDay>;
+    },
+  };
+}
+export type ledgerservicev1_ListNoteDayResponse = {
+  items: ledgerservicev1_NoteDay[] | undefined;
+  total: number | undefined;
+};
+
+// 定期提醒
+export type ledgerservicev1_NoteDay = {
+  createdAt?: wellKnownTimestamp;
+  createdBy?: number;
+  deletedAt?: wellKnownTimestamp;
+  deletedBy?: number;
+  endDate?: number;
+  id?: number;
+  interval?: number;
+  nextDate?: number;
+  notes?: string;
+  repeatType?: number;
+  runCount?: number;
+  startDate?: number;
+  title?: string;
+  totalCount?: number;
+  updatedAt?: wellKnownTimestamp;
+  updatedBy?: number;
+  userId?: number;
+};
+
+export type ledgerservicev1_GetNoteDayRequest = {
+  id: number | undefined;
+};
+
+export type ledgerservicev1_CreateNoteDayRequest = {
+  data: ledgerservicev1_NoteDay | undefined;
+};
+
+export type ledgerservicev1_UpdateNoteDayRequest = {
+  allowMissing?: boolean;
+  data: ledgerservicev1_NoteDay | undefined;
+  id: number | undefined;
+  updateMask: undefined | wellKnownFieldMask;
+};
+
+export type ledgerservicev1_DeleteNoteDayRequest = {
+  id: number | undefined;
+};
+
+export type ledgerservicev1_RunNoteDayRequest = {
+  id: number | undefined;
+};
+
+export type ledgerservicev1_RecallNoteDayRequest = {
+  id: number | undefined;
 };
 
 // 页面服务
@@ -1802,6 +3942,282 @@ export type contentservicev1_DeletePageRequest = {
   id?: number;
 };
 
+export interface PayeeService {
+  List(
+    request: pagination_PagingRequest,
+  ): Promise<ledgerservicev1_ListPayeeResponse>;
+  ListAll(
+    request: ledgerservicev1_ListAllPayeeRequest,
+  ): Promise<ledgerservicev1_ListPayeeResponse>;
+  Get(
+    request: ledgerservicev1_GetPayeeRequest,
+  ): Promise<ledgerservicev1_Payee>;
+  Create(
+    request: ledgerservicev1_CreatePayeeRequest,
+  ): Promise<ledgerservicev1_Payee>;
+  Update(
+    request: ledgerservicev1_UpdatePayeeRequest,
+  ): Promise<ledgerservicev1_Payee>;
+  Delete(
+    request: ledgerservicev1_DeletePayeeRequest,
+  ): Promise<wellKnownEmpty>;
+  Toggle(
+    request: ledgerservicev1_TogglePayeeRequest,
+  ): Promise<ledgerservicev1_Payee>;
+}
+
+export function createPayeeServiceClient(
+  transport: ClientTransport,
+): PayeeService {
+  return {
+    List(request) {
+      const path = `app/v1/payees`;
+      const body = null;
+      const queryParams: string[] = [];
+      if (request.page) {
+        queryParams.push(
+          `page=${encodeURIComponent(request.page.toString())}`,
+        );
+      }
+      if (request.pageSize) {
+        queryParams.push(
+          `pageSize=${encodeURIComponent(request.pageSize.toString())}`,
+        );
+      }
+      if (request.offset) {
+        queryParams.push(
+          `offset=${encodeURIComponent(request.offset.toString())}`,
+        );
+      }
+      if (request.limit) {
+        queryParams.push(
+          `limit=${encodeURIComponent(request.limit.toString())}`,
+        );
+      }
+      if (request.token) {
+        queryParams.push(
+          `token=${encodeURIComponent(request.token.toString())}`,
+        );
+      }
+      if (request.noPaging) {
+        queryParams.push(
+          `noPaging=${encodeURIComponent(request.noPaging.toString())}`,
+        );
+      }
+      if (request.query) {
+        queryParams.push(
+          `query=${encodeURIComponent(request.query.toString())}`,
+        );
+      }
+      if (request.filter) {
+        queryParams.push(
+          `filter=${encodeURIComponent(request.filter.toString())}`,
+        );
+      }
+      if (request.filterExpr?.type) {
+        queryParams.push(
+          `filterExpr.type=${encodeURIComponent(request.filterExpr.type.toString())}`,
+        );
+      }
+      if (request.filterExpr?.conditions?.field) {
+        queryParams.push(
+          `filterExpr.conditions.field=${encodeURIComponent(request.filterExpr.conditions.field.toString())}`,
+        );
+      }
+      if (request.filterExpr?.conditions?.op) {
+        queryParams.push(
+          `filterExpr.conditions.op=${encodeURIComponent(request.filterExpr.conditions.op.toString())}`,
+        );
+      }
+      if (request.filterExpr?.conditions?.value) {
+        queryParams.push(
+          `filterExpr.conditions.value=${encodeURIComponent(request.filterExpr.conditions.value.toString())}`,
+        );
+      }
+      if (request.filterExpr?.conditions?.jsonValue) {
+        queryParams.push(
+          `filterExpr.conditions.jsonValue=${encodeURIComponent(request.filterExpr.conditions.jsonValue.toString())}`,
+        );
+      }
+      if (request.filterExpr?.conditions?.values) {
+        request.filterExpr.conditions.values.forEach((x) => {
+          queryParams.push(
+            `filterExpr.conditions.values=${encodeURIComponent(x.toString())}`,
+          );
+        });
+      }
+      if (request.filterExpr?.conditions?.datePart) {
+        queryParams.push(
+          `filterExpr.conditions.datePart=${encodeURIComponent(request.filterExpr.conditions.datePart.toString())}`,
+        );
+      }
+      if (request.filterExpr?.conditions?.jsonPath) {
+        queryParams.push(
+          `filterExpr.conditions.jsonPath=${encodeURIComponent(request.filterExpr.conditions.jsonPath.toString())}`,
+        );
+      }
+      if (request.orderBy) {
+        queryParams.push(
+          `orderBy=${encodeURIComponent(request.orderBy.toString())}`,
+        );
+      }
+      if (request.sorting?.field) {
+        queryParams.push(
+          `sorting.field=${encodeURIComponent(request.sorting.field.toString())}`,
+        );
+      }
+      if (request.sorting?.direction) {
+        queryParams.push(
+          `sorting.direction=${encodeURIComponent(request.sorting.direction.toString())}`,
+        );
+      }
+      if (request.fieldMask) {
+        queryParams.push(
+          `fieldMask=${encodeURIComponent(request.fieldMask.toString())}`,
+        );
+      }
+      let uri = path;
+      if (queryParams.length > 0) {
+        uri += `?${queryParams.join('&')}`;
+      }
+      return transport.unary(uri, 'GET', body, {
+        service: 'PayeeService',
+        method: 'List',
+      }) as Promise<ledgerservicev1_ListPayeeResponse>;
+    },
+    ListAll(request) {
+      const path = `app/v1/payees/all`;
+      const body = null;
+      const queryParams: string[] = [];
+      if (request.bookId) {
+        queryParams.push(
+          `bookId=${encodeURIComponent(request.bookId.toString())}`,
+        );
+      }
+      let uri = path;
+      if (queryParams.length > 0) {
+        uri += `?${queryParams.join('&')}`;
+      }
+      return transport.unary(uri, 'GET', body, {
+        service: 'PayeeService',
+        method: 'ListAll',
+      }) as Promise<ledgerservicev1_ListPayeeResponse>;
+    },
+    Get(request) {
+      if (request.id === undefined || request.id === null) {
+        throw new Error('missing required field request.id');
+      }
+      const path = `app/v1/payees/${request.id}`;
+      const body = null;
+      const queryParams: string[] = [];
+      if (request.viewMask) {
+        queryParams.push(
+          `viewMask=${encodeURIComponent(request.viewMask.toString())}`,
+        );
+      }
+      let uri = path;
+      if (queryParams.length > 0) {
+        uri += `?${queryParams.join('&')}`;
+      }
+      return transport.unary(uri, 'GET', body, {
+        service: 'PayeeService',
+        method: 'Get',
+      }) as Promise<ledgerservicev1_Payee>;
+    },
+    Create(request) {
+      const path = `app/v1/payees`;
+      const body = JSON.stringify(request);
+      return transport.unary(path, 'POST', body, {
+        service: 'PayeeService',
+        method: 'Create',
+      }) as Promise<ledgerservicev1_Payee>;
+    },
+    Update(request) {
+      if (request.id === undefined || request.id === null) {
+        throw new Error('missing required field request.id');
+      }
+      const path = `app/v1/payees/${request.id}`;
+      const body = JSON.stringify(request);
+      return transport.unary(path, 'PUT', body, {
+        service: 'PayeeService',
+        method: 'Update',
+      }) as Promise<ledgerservicev1_Payee>;
+    },
+    Delete(request) {
+      if (request.id === undefined || request.id === null) {
+        throw new Error('missing required field request.id');
+      }
+      const path = `app/v1/payees/${request.id}`;
+      const body = null;
+      return transport.unary(path, 'DELETE', body, {
+        service: 'PayeeService',
+        method: 'Delete',
+      }) as Promise<wellKnownEmpty>;
+    },
+    Toggle(request) {
+      if (request.id === undefined || request.id === null) {
+        throw new Error('missing required field request.id');
+      }
+      const path = `app/v1/payees/${request.id}/toggle`;
+      const body = JSON.stringify(request);
+      return transport.unary(path, 'PATCH', body, {
+        service: 'PayeeService',
+        method: 'Toggle',
+      }) as Promise<ledgerservicev1_Payee>;
+    },
+  };
+}
+export type ledgerservicev1_ListPayeeResponse = {
+  items: ledgerservicev1_Payee[] | undefined;
+  total: number | undefined;
+};
+
+export type ledgerservicev1_Payee = {
+  bookId?: number;
+  canExpense?: boolean;
+  canIncome?: boolean;
+  createdAt?: wellKnownTimestamp;
+  createdBy?: number;
+  deletedAt?: wellKnownTimestamp;
+  deletedBy?: number;
+  enable?: boolean;
+  id?: number;
+  name?: string;
+  notes?: string;
+  sortOrder?: number;
+  tenantId?: number;
+  updatedAt?: wellKnownTimestamp;
+  updatedBy?: number;
+};
+
+export type ledgerservicev1_ListAllPayeeRequest = {
+  bookId?: number;
+};
+
+export type ledgerservicev1_GetPayeeRequest = {
+  id: number | undefined;
+  viewMask?: wellKnownFieldMask;
+};
+
+export type ledgerservicev1_CreatePayeeRequest = {
+  data: ledgerservicev1_Payee | undefined;
+};
+
+export type ledgerservicev1_UpdatePayeeRequest = {
+  allowMissing?: boolean;
+  data: ledgerservicev1_Payee | undefined;
+  id: number | undefined;
+  updateMask: undefined | wellKnownFieldMask;
+};
+
+export type ledgerservicev1_DeletePayeeRequest = {
+  id: number | undefined;
+};
+
+export type ledgerservicev1_TogglePayeeRequest = {
+  id: number | undefined;
+};
+
 // 帖子服务
 export interface PostService {
   // 获取帖子列表
@@ -2133,6 +4549,444 @@ export type contentservicev1_UpdatePostRequest = {
 // 请求 - 删除帖子
 export type contentservicev1_DeletePostRequest = {
   id?: number;
+};
+
+export interface ReportService {
+  ExpenseCategory(
+    request: ledgerservicev1_ReportQueryRequest,
+  ): Promise<ledgerservicev1_ReportResponse>;
+  IncomeCategory(
+    request: ledgerservicev1_ReportQueryRequest,
+  ): Promise<ledgerservicev1_ReportResponse>;
+  ExpenseTag(
+    request: ledgerservicev1_ReportQueryRequest,
+  ): Promise<ledgerservicev1_ReportResponse>;
+  IncomeTag(
+    request: ledgerservicev1_ReportQueryRequest,
+  ): Promise<ledgerservicev1_ReportResponse>;
+  ExpensePayee(
+    request: ledgerservicev1_ReportQueryRequest,
+  ): Promise<ledgerservicev1_ReportResponse>;
+  IncomePayee(
+    request: ledgerservicev1_ReportQueryRequest,
+  ): Promise<ledgerservicev1_ReportResponse>;
+  Balance(
+    request: ledgerservicev1_BalanceReportRequest,
+  ): Promise<ledgerservicev1_BalanceReportResponse>;
+}
+
+export function createReportServiceClient(
+  transport: ClientTransport,
+): ReportService {
+  return {
+    ExpenseCategory(request) {
+      const path = `app/v1/reports/expense-category`;
+      const body = null;
+      const queryParams: string[] = [];
+      if (request.bookId) {
+        queryParams.push(
+          `bookId=${encodeURIComponent(request.bookId.toString())}`,
+        );
+      }
+      if (request.minTime) {
+        queryParams.push(
+          `minTime=${encodeURIComponent(request.minTime.toString())}`,
+        );
+      }
+      if (request.maxTime) {
+        queryParams.push(
+          `maxTime=${encodeURIComponent(request.maxTime.toString())}`,
+        );
+      }
+      if (request.title) {
+        queryParams.push(
+          `title=${encodeURIComponent(request.title.toString())}`,
+        );
+      }
+      if (request.categoryIds) {
+        request.categoryIds.forEach((x) => {
+          queryParams.push(
+            `categoryIds=${encodeURIComponent(x.toString())}`,
+          );
+        });
+      }
+      if (request.tagIds) {
+        request.tagIds.forEach((x) => {
+          queryParams.push(
+            `tagIds=${encodeURIComponent(x.toString())}`,
+          );
+        });
+      }
+      if (request.payeeIds) {
+        request.payeeIds.forEach((x) => {
+          queryParams.push(
+            `payeeIds=${encodeURIComponent(x.toString())}`,
+          );
+        });
+      }
+      if (request.accountId) {
+        queryParams.push(
+          `accountId=${encodeURIComponent(request.accountId.toString())}`,
+        );
+      }
+      let uri = path;
+      if (queryParams.length > 0) {
+        uri += `?${queryParams.join('&')}`;
+      }
+      return transport.unary(uri, 'GET', body, {
+        service: 'ReportService',
+        method: 'ExpenseCategory',
+      }) as Promise<ledgerservicev1_ReportResponse>;
+    },
+    IncomeCategory(request) {
+      const path = `app/v1/reports/income-category`;
+      const body = null;
+      const queryParams: string[] = [];
+      if (request.bookId) {
+        queryParams.push(
+          `bookId=${encodeURIComponent(request.bookId.toString())}`,
+        );
+      }
+      if (request.minTime) {
+        queryParams.push(
+          `minTime=${encodeURIComponent(request.minTime.toString())}`,
+        );
+      }
+      if (request.maxTime) {
+        queryParams.push(
+          `maxTime=${encodeURIComponent(request.maxTime.toString())}`,
+        );
+      }
+      if (request.title) {
+        queryParams.push(
+          `title=${encodeURIComponent(request.title.toString())}`,
+        );
+      }
+      if (request.categoryIds) {
+        request.categoryIds.forEach((x) => {
+          queryParams.push(
+            `categoryIds=${encodeURIComponent(x.toString())}`,
+          );
+        });
+      }
+      if (request.tagIds) {
+        request.tagIds.forEach((x) => {
+          queryParams.push(
+            `tagIds=${encodeURIComponent(x.toString())}`,
+          );
+        });
+      }
+      if (request.payeeIds) {
+        request.payeeIds.forEach((x) => {
+          queryParams.push(
+            `payeeIds=${encodeURIComponent(x.toString())}`,
+          );
+        });
+      }
+      if (request.accountId) {
+        queryParams.push(
+          `accountId=${encodeURIComponent(request.accountId.toString())}`,
+        );
+      }
+      let uri = path;
+      if (queryParams.length > 0) {
+        uri += `?${queryParams.join('&')}`;
+      }
+      return transport.unary(uri, 'GET', body, {
+        service: 'ReportService',
+        method: 'IncomeCategory',
+      }) as Promise<ledgerservicev1_ReportResponse>;
+    },
+    ExpenseTag(request) {
+      const path = `app/v1/reports/expense-tag`;
+      const body = null;
+      const queryParams: string[] = [];
+      if (request.bookId) {
+        queryParams.push(
+          `bookId=${encodeURIComponent(request.bookId.toString())}`,
+        );
+      }
+      if (request.minTime) {
+        queryParams.push(
+          `minTime=${encodeURIComponent(request.minTime.toString())}`,
+        );
+      }
+      if (request.maxTime) {
+        queryParams.push(
+          `maxTime=${encodeURIComponent(request.maxTime.toString())}`,
+        );
+      }
+      if (request.title) {
+        queryParams.push(
+          `title=${encodeURIComponent(request.title.toString())}`,
+        );
+      }
+      if (request.categoryIds) {
+        request.categoryIds.forEach((x) => {
+          queryParams.push(
+            `categoryIds=${encodeURIComponent(x.toString())}`,
+          );
+        });
+      }
+      if (request.tagIds) {
+        request.tagIds.forEach((x) => {
+          queryParams.push(
+            `tagIds=${encodeURIComponent(x.toString())}`,
+          );
+        });
+      }
+      if (request.payeeIds) {
+        request.payeeIds.forEach((x) => {
+          queryParams.push(
+            `payeeIds=${encodeURIComponent(x.toString())}`,
+          );
+        });
+      }
+      if (request.accountId) {
+        queryParams.push(
+          `accountId=${encodeURIComponent(request.accountId.toString())}`,
+        );
+      }
+      let uri = path;
+      if (queryParams.length > 0) {
+        uri += `?${queryParams.join('&')}`;
+      }
+      return transport.unary(uri, 'GET', body, {
+        service: 'ReportService',
+        method: 'ExpenseTag',
+      }) as Promise<ledgerservicev1_ReportResponse>;
+    },
+    IncomeTag(request) {
+      const path = `app/v1/reports/income-tag`;
+      const body = null;
+      const queryParams: string[] = [];
+      if (request.bookId) {
+        queryParams.push(
+          `bookId=${encodeURIComponent(request.bookId.toString())}`,
+        );
+      }
+      if (request.minTime) {
+        queryParams.push(
+          `minTime=${encodeURIComponent(request.minTime.toString())}`,
+        );
+      }
+      if (request.maxTime) {
+        queryParams.push(
+          `maxTime=${encodeURIComponent(request.maxTime.toString())}`,
+        );
+      }
+      if (request.title) {
+        queryParams.push(
+          `title=${encodeURIComponent(request.title.toString())}`,
+        );
+      }
+      if (request.categoryIds) {
+        request.categoryIds.forEach((x) => {
+          queryParams.push(
+            `categoryIds=${encodeURIComponent(x.toString())}`,
+          );
+        });
+      }
+      if (request.tagIds) {
+        request.tagIds.forEach((x) => {
+          queryParams.push(
+            `tagIds=${encodeURIComponent(x.toString())}`,
+          );
+        });
+      }
+      if (request.payeeIds) {
+        request.payeeIds.forEach((x) => {
+          queryParams.push(
+            `payeeIds=${encodeURIComponent(x.toString())}`,
+          );
+        });
+      }
+      if (request.accountId) {
+        queryParams.push(
+          `accountId=${encodeURIComponent(request.accountId.toString())}`,
+        );
+      }
+      let uri = path;
+      if (queryParams.length > 0) {
+        uri += `?${queryParams.join('&')}`;
+      }
+      return transport.unary(uri, 'GET', body, {
+        service: 'ReportService',
+        method: 'IncomeTag',
+      }) as Promise<ledgerservicev1_ReportResponse>;
+    },
+    ExpensePayee(request) {
+      const path = `app/v1/reports/expense-payee`;
+      const body = null;
+      const queryParams: string[] = [];
+      if (request.bookId) {
+        queryParams.push(
+          `bookId=${encodeURIComponent(request.bookId.toString())}`,
+        );
+      }
+      if (request.minTime) {
+        queryParams.push(
+          `minTime=${encodeURIComponent(request.minTime.toString())}`,
+        );
+      }
+      if (request.maxTime) {
+        queryParams.push(
+          `maxTime=${encodeURIComponent(request.maxTime.toString())}`,
+        );
+      }
+      if (request.title) {
+        queryParams.push(
+          `title=${encodeURIComponent(request.title.toString())}`,
+        );
+      }
+      if (request.categoryIds) {
+        request.categoryIds.forEach((x) => {
+          queryParams.push(
+            `categoryIds=${encodeURIComponent(x.toString())}`,
+          );
+        });
+      }
+      if (request.tagIds) {
+        request.tagIds.forEach((x) => {
+          queryParams.push(
+            `tagIds=${encodeURIComponent(x.toString())}`,
+          );
+        });
+      }
+      if (request.payeeIds) {
+        request.payeeIds.forEach((x) => {
+          queryParams.push(
+            `payeeIds=${encodeURIComponent(x.toString())}`,
+          );
+        });
+      }
+      if (request.accountId) {
+        queryParams.push(
+          `accountId=${encodeURIComponent(request.accountId.toString())}`,
+        );
+      }
+      let uri = path;
+      if (queryParams.length > 0) {
+        uri += `?${queryParams.join('&')}`;
+      }
+      return transport.unary(uri, 'GET', body, {
+        service: 'ReportService',
+        method: 'ExpensePayee',
+      }) as Promise<ledgerservicev1_ReportResponse>;
+    },
+    IncomePayee(request) {
+      const path = `app/v1/reports/income-payee`;
+      const body = null;
+      const queryParams: string[] = [];
+      if (request.bookId) {
+        queryParams.push(
+          `bookId=${encodeURIComponent(request.bookId.toString())}`,
+        );
+      }
+      if (request.minTime) {
+        queryParams.push(
+          `minTime=${encodeURIComponent(request.minTime.toString())}`,
+        );
+      }
+      if (request.maxTime) {
+        queryParams.push(
+          `maxTime=${encodeURIComponent(request.maxTime.toString())}`,
+        );
+      }
+      if (request.title) {
+        queryParams.push(
+          `title=${encodeURIComponent(request.title.toString())}`,
+        );
+      }
+      if (request.categoryIds) {
+        request.categoryIds.forEach((x) => {
+          queryParams.push(
+            `categoryIds=${encodeURIComponent(x.toString())}`,
+          );
+        });
+      }
+      if (request.tagIds) {
+        request.tagIds.forEach((x) => {
+          queryParams.push(
+            `tagIds=${encodeURIComponent(x.toString())}`,
+          );
+        });
+      }
+      if (request.payeeIds) {
+        request.payeeIds.forEach((x) => {
+          queryParams.push(
+            `payeeIds=${encodeURIComponent(x.toString())}`,
+          );
+        });
+      }
+      if (request.accountId) {
+        queryParams.push(
+          `accountId=${encodeURIComponent(request.accountId.toString())}`,
+        );
+      }
+      let uri = path;
+      if (queryParams.length > 0) {
+        uri += `?${queryParams.join('&')}`;
+      }
+      return transport.unary(uri, 'GET', body, {
+        service: 'ReportService',
+        method: 'IncomePayee',
+      }) as Promise<ledgerservicev1_ReportResponse>;
+    },
+    Balance(request) {
+      const path = `app/v1/reports/balance`;
+      const body = null;
+      const queryParams: string[] = [];
+      if (request.bookId) {
+        queryParams.push(
+          `bookId=${encodeURIComponent(request.bookId.toString())}`,
+        );
+      }
+      let uri = path;
+      if (queryParams.length > 0) {
+        uri += `?${queryParams.join('&')}`;
+      }
+      return transport.unary(uri, 'GET', body, {
+        service: 'ReportService',
+        method: 'Balance',
+      }) as Promise<ledgerservicev1_BalanceReportResponse>;
+    },
+  };
+}
+// 报表查询请求
+export type ledgerservicev1_ReportQueryRequest = {
+  accountId?: number;
+  bookId: number | undefined;
+  categoryIds: number[] | undefined;
+  maxTime?: number;
+  minTime?: number;
+  payeeIds: number[] | undefined;
+  tagIds: number[] | undefined;
+  title?: string;
+};
+
+// 报表回应
+export type ledgerservicev1_ReportResponse = {
+  items: ledgerservicev1_ChartPoint[] | undefined;
+};
+
+// 图表数据点
+export type ledgerservicev1_ChartPoint = {
+  percent: string | undefined;
+  x: string | undefined;
+  y: string | undefined;
+};
+
+// 资产负债报表请求
+export type ledgerservicev1_BalanceReportRequest = {
+  bookId: number | undefined;
+};
+
+// 资产负债报表回应
+export type ledgerservicev1_BalanceReportResponse = {
+  assets: ledgerservicev1_ChartPoint[] | undefined;
+  debts: ledgerservicev1_ChartPoint[] | undefined;
+  netWorth: string | undefined;
 };
 
 // 页面区块服务
@@ -2983,13 +5837,23 @@ export type identityservicev1_EmailVerification = {
 };
 
 export class ApiClient {
+  private _accountService?: AccountService;
   private _authenticationService?: AuthenticationService;
+  private _balanceFlowService?: BalanceFlowService;
+  private _bookService?: BookService;
   private _categoryService?: CategoryService;
   private _commentService?: CommentService;
+  private _currencyService?: CurrencyService;
   private _fileTransferService?: FileTransferService;
+  private _flowFileService?: FlowFileService;
+  private _ledgerCategoryService?: LedgerCategoryService;
+  private _ledgerTagService?: LedgerTagService;
   private _navigationService?: NavigationService;
+  private _noteDayService?: NoteDayService;
   private _pageService?: PageService;
+  private _payeeService?: PayeeService;
   private _postService?: PostService;
+  private _reportService?: ReportService;
   private _sectionService?: SectionService;
   private _tagService?: TagService;
   private readonly _transport: ClientTransport;
@@ -2999,8 +5863,20 @@ export class ApiClient {
     this._transport = transport;
   }
 
+  get accountService(): AccountService {
+    return this._accountService ??= createAccountServiceClient(this._transport);
+  }
+
   get authenticationService(): AuthenticationService {
     return this._authenticationService ??= createAuthenticationServiceClient(this._transport);
+  }
+
+  get balanceFlowService(): BalanceFlowService {
+    return this._balanceFlowService ??= createBalanceFlowServiceClient(this._transport);
+  }
+
+  get bookService(): BookService {
+    return this._bookService ??= createBookServiceClient(this._transport);
   }
 
   get categoryService(): CategoryService {
@@ -3011,20 +5887,48 @@ export class ApiClient {
     return this._commentService ??= createCommentServiceClient(this._transport);
   }
 
+  get currencyService(): CurrencyService {
+    return this._currencyService ??= createCurrencyServiceClient(this._transport);
+  }
+
   get fileTransferService(): FileTransferService {
     return this._fileTransferService ??= createFileTransferServiceClient(this._transport);
+  }
+
+  get flowFileService(): FlowFileService {
+    return this._flowFileService ??= createFlowFileServiceClient(this._transport);
+  }
+
+  get ledgerCategoryService(): LedgerCategoryService {
+    return this._ledgerCategoryService ??= createLedgerCategoryServiceClient(this._transport);
+  }
+
+  get ledgerTagService(): LedgerTagService {
+    return this._ledgerTagService ??= createLedgerTagServiceClient(this._transport);
   }
 
   get navigationService(): NavigationService {
     return this._navigationService ??= createNavigationServiceClient(this._transport);
   }
 
+  get noteDayService(): NoteDayService {
+    return this._noteDayService ??= createNoteDayServiceClient(this._transport);
+  }
+
   get pageService(): PageService {
     return this._pageService ??= createPageServiceClient(this._transport);
   }
 
+  get payeeService(): PayeeService {
+    return this._payeeService ??= createPayeeServiceClient(this._transport);
+  }
+
   get postService(): PostService {
     return this._postService ??= createPostServiceClient(this._transport);
+  }
+
+  get reportService(): ReportService {
+    return this._reportService ??= createReportServiceClient(this._transport);
   }
 
   get sectionService(): SectionService {

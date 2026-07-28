@@ -1,0 +1,30 @@
+syntax = "proto3";
+package app.service.v1;
+import "google/api/annotations.proto";
+import "google/protobuf/empty.proto";
+import "pagination/v1/pagination.proto";
+import "ledger/service/v1/category.proto";
+
+service LedgerCategoryService {
+  rpc List (pagination.PagingRequest) returns (ledger.service.v1.ListCategoryResponse) {
+    option (google.api.http) = { get: "/app/v1/ledger-categories" };
+  }
+  rpc ListAll (ledger.service.v1.ListAllCategoryRequest) returns (ledger.service.v1.ListCategoryResponse) {
+    option (google.api.http) = { get: "/app/v1/ledger-categories/all" };
+  }
+  rpc Get (ledger.service.v1.GetCategoryRequest) returns (ledger.service.v1.Category) {
+    option (google.api.http) = { get: "/app/v1/ledger-categories/{id}" };
+  }
+  rpc Create (ledger.service.v1.CreateCategoryRequest) returns (ledger.service.v1.Category) {
+    option (google.api.http) = { post: "/app/v1/ledger-categories" body: "*" };
+  }
+  rpc Update (ledger.service.v1.UpdateCategoryRequest) returns (ledger.service.v1.Category) {
+    option (google.api.http) = { put: "/app/v1/ledger-categories/{id}" body: "*" };
+  }
+  rpc Delete (ledger.service.v1.DeleteCategoryRequest) returns (google.protobuf.Empty) {
+    option (google.api.http) = { delete: "/app/v1/ledger-categories/{id}" };
+  }
+  rpc Toggle (ledger.service.v1.ToggleCategoryRequest) returns (ledger.service.v1.Category) {
+    option (google.api.http) = { patch: "/app/v1/ledger-categories/{id}/toggle" body: "*" };
+  }
+}

@@ -14,6 +14,687 @@ info:
         url: https://github.com/tx7do/go-wind-cms/blob/master/LICENSE
     version: "1.0"
 paths:
+    /app/v1/accounts:
+        get:
+            tags:
+                - AccountService
+            operationId: AccountService_List
+            parameters:
+                - name: page
+                  in: query
+                  description: 当前页码（从1开始，默认1）
+                  schema:
+                    type: integer
+                    format: uint32
+                - name: pageSize
+                  in: query
+                  description: 每页条数（默认10，建议设置上限如100）
+                  schema:
+                    type: integer
+                    format: uint32
+                - name: offset
+                  in: query
+                  description: 跳过的记录数（从0开始，默认0）
+                  schema:
+                    type: string
+                - name: limit
+                  in: query
+                  description: 最多返回的记录数（默认10，建议设置上限如100）
+                  schema:
+                    type: integer
+                    format: uint32
+                - name: token
+                  in: query
+                  description: 上一页最后一条记录的游标（如ID/时间戳+ID，首次请求为空）
+                  schema:
+                    type: string
+                - name: noPaging
+                  in: query
+                  description: 是否不分页，如果为true，则page和pageSize参数无效。
+                  schema:
+                    type: boolean
+                - name: query
+                  in: query
+                  description: JSON字符串过滤条件，基础语法：{"field1":"val1", "field2___icontains":"val2"}，具体请参见：https://github.com/tx7do/go-crud/tree/main/pagination/filter/README.md
+                  schema:
+                    type: string
+                - name: filter
+                  in: query
+                  description: Google AIP规范字符串过滤条件
+                  schema:
+                    type: string
+                - name: filterExpr.type
+                  in: query
+                  description: 过滤表达式类型
+                  schema:
+                    enum:
+                        - EXPR_TYPE_UNSPECIFIED
+                        - AND
+                        - OR
+                    type: string
+                    format: enum
+                - name: orderBy
+                  in: query
+                  description: 排序条件
+                  schema:
+                    type: string
+                - name: fieldMask
+                  in: query
+                  description: 字段掩码，其作用为SELECT中的字段，其语法为使用逗号分隔字段名，例如：id,realName,userName。如果为空则选中所有字段，即SELECT *。
+                  schema:
+                    type: string
+                    format: field-mask
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/ledger.service.v1.ListAccountResponse'
+        post:
+            tags:
+                - AccountService
+            operationId: AccountService_Create
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/ledger.service.v1.CreateAccountRequest'
+                required: true
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/ledger.service.v1.Account'
+    /app/v1/accounts/all:
+        get:
+            tags:
+                - AccountService
+            operationId: AccountService_ListAll
+            parameters:
+                - name: includeDisabled
+                  in: query
+                  schema:
+                    type: boolean
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/ledger.service.v1.ListAccountResponse'
+    /app/v1/accounts/{id}:
+        get:
+            tags:
+                - AccountService
+            operationId: AccountService_Get
+            parameters:
+                - name: id
+                  in: path
+                  required: true
+                  schema:
+                    type: integer
+                    format: uint32
+                - name: viewMask
+                  in: query
+                  schema:
+                    type: string
+                    format: field-mask
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/ledger.service.v1.Account'
+        put:
+            tags:
+                - AccountService
+            operationId: AccountService_Update
+            parameters:
+                - name: id
+                  in: path
+                  required: true
+                  schema:
+                    type: integer
+                    format: uint32
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/ledger.service.v1.UpdateAccountRequest'
+                required: true
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/ledger.service.v1.Account'
+        delete:
+            tags:
+                - AccountService
+            operationId: AccountService_Delete
+            parameters:
+                - name: id
+                  in: path
+                  required: true
+                  schema:
+                    type: integer
+                    format: uint32
+            responses:
+                "200":
+                    description: OK
+                    content: {}
+    /app/v1/accounts/{id}/adjust:
+        post:
+            tags:
+                - AccountService
+            operationId: AccountService_AdjustBalance
+            parameters:
+                - name: id
+                  in: path
+                  required: true
+                  schema:
+                    type: integer
+                    format: uint32
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/ledger.service.v1.AdjustBalanceRequest'
+                required: true
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/ledger.service.v1.Account'
+    /app/v1/accounts/{id}/toggle:
+        patch:
+            tags:
+                - AccountService
+            operationId: AccountService_Toggle
+            parameters:
+                - name: id
+                  in: path
+                  required: true
+                  schema:
+                    type: integer
+                    format: uint32
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/ledger.service.v1.ToggleAccountRequest'
+                required: true
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/ledger.service.v1.Account'
+    /app/v1/balance-flows:
+        get:
+            tags:
+                - BalanceFlowService
+            operationId: BalanceFlowService_List
+            parameters:
+                - name: page
+                  in: query
+                  description: 当前页码（从1开始，默认1）
+                  schema:
+                    type: integer
+                    format: uint32
+                - name: pageSize
+                  in: query
+                  description: 每页条数（默认10，建议设置上限如100）
+                  schema:
+                    type: integer
+                    format: uint32
+                - name: offset
+                  in: query
+                  description: 跳过的记录数（从0开始，默认0）
+                  schema:
+                    type: string
+                - name: limit
+                  in: query
+                  description: 最多返回的记录数（默认10，建议设置上限如100）
+                  schema:
+                    type: integer
+                    format: uint32
+                - name: token
+                  in: query
+                  description: 上一页最后一条记录的游标（如ID/时间戳+ID，首次请求为空）
+                  schema:
+                    type: string
+                - name: noPaging
+                  in: query
+                  description: 是否不分页，如果为true，则page和pageSize参数无效。
+                  schema:
+                    type: boolean
+                - name: query
+                  in: query
+                  description: JSON字符串过滤条件，基础语法：{"field1":"val1", "field2___icontains":"val2"}，具体请参见：https://github.com/tx7do/go-crud/tree/main/pagination/filter/README.md
+                  schema:
+                    type: string
+                - name: filter
+                  in: query
+                  description: Google AIP规范字符串过滤条件
+                  schema:
+                    type: string
+                - name: filterExpr.type
+                  in: query
+                  description: 过滤表达式类型
+                  schema:
+                    enum:
+                        - EXPR_TYPE_UNSPECIFIED
+                        - AND
+                        - OR
+                    type: string
+                    format: enum
+                - name: orderBy
+                  in: query
+                  description: 排序条件
+                  schema:
+                    type: string
+                - name: fieldMask
+                  in: query
+                  description: 字段掩码，其作用为SELECT中的字段，其语法为使用逗号分隔字段名，例如：id,realName,userName。如果为空则选中所有字段，即SELECT *。
+                  schema:
+                    type: string
+                    format: field-mask
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/ledger.service.v1.ListBalanceFlowResponse'
+        post:
+            tags:
+                - BalanceFlowService
+            operationId: BalanceFlowService_Create
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/ledger.service.v1.CreateBalanceFlowRequest'
+                required: true
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/ledger.service.v1.BalanceFlow'
+    /app/v1/balance-flows/statistics:
+        get:
+            tags:
+                - BalanceFlowService
+            operationId: BalanceFlowService_Statistics
+            parameters:
+                - name: bookId
+                  in: query
+                  schema:
+                    type: integer
+                    format: uint32
+                - name: type
+                  in: query
+                  schema:
+                    enum:
+                        - FLOW_TYPE_UNSPECIFIED
+                        - FLOW_TYPE_EXPENSE
+                        - FLOW_TYPE_INCOME
+                        - FLOW_TYPE_TRANSFER
+                        - FLOW_TYPE_ADJUST
+                    type: string
+                    format: enum
+                - name: title
+                  in: query
+                  schema:
+                    type: string
+                - name: minAmount
+                  in: query
+                  schema:
+                    type: string
+                - name: maxAmount
+                  in: query
+                  schema:
+                    type: string
+                - name: minTime
+                  in: query
+                  schema:
+                    type: string
+                - name: maxTime
+                  in: query
+                  schema:
+                    type: string
+                - name: accountId
+                  in: query
+                  schema:
+                    type: integer
+                    format: uint32
+                - name: categoryIds
+                  in: query
+                  schema:
+                    type: array
+                    items:
+                        type: integer
+                        format: uint32
+                - name: tagIds
+                  in: query
+                  schema:
+                    type: array
+                    items:
+                        type: integer
+                        format: uint32
+                - name: confirm
+                  in: query
+                  schema:
+                    type: boolean
+                - name: include
+                  in: query
+                  schema:
+                    type: boolean
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/ledger.service.v1.StatisticsResponse'
+    /app/v1/balance-flows/{id}:
+        get:
+            tags:
+                - BalanceFlowService
+            operationId: BalanceFlowService_Get
+            parameters:
+                - name: id
+                  in: path
+                  required: true
+                  schema:
+                    type: integer
+                    format: uint32
+                - name: viewMask
+                  in: query
+                  schema:
+                    type: string
+                    format: field-mask
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/ledger.service.v1.BalanceFlow'
+        put:
+            tags:
+                - BalanceFlowService
+            operationId: BalanceFlowService_Update
+            parameters:
+                - name: id
+                  in: path
+                  required: true
+                  schema:
+                    type: integer
+                    format: uint32
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/ledger.service.v1.UpdateBalanceFlowRequest'
+                required: true
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/ledger.service.v1.BalanceFlow'
+        delete:
+            tags:
+                - BalanceFlowService
+            operationId: BalanceFlowService_Delete
+            parameters:
+                - name: id
+                  in: path
+                  required: true
+                  schema:
+                    type: integer
+                    format: uint32
+            responses:
+                "200":
+                    description: OK
+                    content: {}
+    /app/v1/balance-flows/{id}/confirm:
+        patch:
+            tags:
+                - BalanceFlowService
+            operationId: BalanceFlowService_Confirm
+            parameters:
+                - name: id
+                  in: path
+                  required: true
+                  schema:
+                    type: integer
+                    format: uint32
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/ledger.service.v1.ConfirmBalanceFlowRequest'
+                required: true
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/ledger.service.v1.BalanceFlow'
+    /app/v1/books:
+        get:
+            tags:
+                - BookService
+            operationId: BookService_List
+            parameters:
+                - name: page
+                  in: query
+                  description: 当前页码（从1开始，默认1）
+                  schema:
+                    type: integer
+                    format: uint32
+                - name: pageSize
+                  in: query
+                  description: 每页条数（默认10，建议设置上限如100）
+                  schema:
+                    type: integer
+                    format: uint32
+                - name: offset
+                  in: query
+                  description: 跳过的记录数（从0开始，默认0）
+                  schema:
+                    type: string
+                - name: limit
+                  in: query
+                  description: 最多返回的记录数（默认10，建议设置上限如100）
+                  schema:
+                    type: integer
+                    format: uint32
+                - name: token
+                  in: query
+                  description: 上一页最后一条记录的游标（如ID/时间戳+ID，首次请求为空）
+                  schema:
+                    type: string
+                - name: noPaging
+                  in: query
+                  description: 是否不分页，如果为true，则page和pageSize参数无效。
+                  schema:
+                    type: boolean
+                - name: query
+                  in: query
+                  description: JSON字符串过滤条件，基础语法：{"field1":"val1", "field2___icontains":"val2"}，具体请参见：https://github.com/tx7do/go-crud/tree/main/pagination/filter/README.md
+                  schema:
+                    type: string
+                - name: filter
+                  in: query
+                  description: Google AIP规范字符串过滤条件
+                  schema:
+                    type: string
+                - name: filterExpr.type
+                  in: query
+                  description: 过滤表达式类型
+                  schema:
+                    enum:
+                        - EXPR_TYPE_UNSPECIFIED
+                        - AND
+                        - OR
+                    type: string
+                    format: enum
+                - name: orderBy
+                  in: query
+                  description: 排序条件
+                  schema:
+                    type: string
+                - name: fieldMask
+                  in: query
+                  description: 字段掩码，其作用为SELECT中的字段，其语法为使用逗号分隔字段名，例如：id,realName,userName。如果为空则选中所有字段，即SELECT *。
+                  schema:
+                    type: string
+                    format: field-mask
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/ledger.service.v1.ListBookResponse'
+        post:
+            tags:
+                - BookService
+            operationId: BookService_Create
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/ledger.service.v1.CreateBookRequest'
+                required: true
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/ledger.service.v1.Book'
+    /app/v1/books/all:
+        get:
+            tags:
+                - BookService
+            operationId: BookService_ListAll
+            parameters:
+                - name: includeDisabled
+                  in: query
+                  schema:
+                    type: boolean
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/ledger.service.v1.ListBookResponse'
+    /app/v1/books/{id}:
+        get:
+            tags:
+                - BookService
+            operationId: BookService_Get
+            parameters:
+                - name: id
+                  in: path
+                  required: true
+                  schema:
+                    type: integer
+                    format: uint32
+                - name: viewMask
+                  in: query
+                  schema:
+                    type: string
+                    format: field-mask
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/ledger.service.v1.Book'
+        put:
+            tags:
+                - BookService
+            operationId: BookService_Update
+            parameters:
+                - name: id
+                  in: path
+                  required: true
+                  schema:
+                    type: integer
+                    format: uint32
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/ledger.service.v1.UpdateBookRequest'
+                required: true
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/ledger.service.v1.Book'
+        delete:
+            tags:
+                - BookService
+            operationId: BookService_Delete
+            parameters:
+                - name: id
+                  in: path
+                  required: true
+                  schema:
+                    type: integer
+                    format: uint32
+            responses:
+                "200":
+                    description: OK
+                    content: {}
+    /app/v1/books/{id}/toggle:
+        patch:
+            tags:
+                - BookService
+            operationId: BookService_Toggle
+            parameters:
+                - name: id
+                  in: path
+                  required: true
+                  schema:
+                    type: integer
+                    format: uint32
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/ledger.service.v1.ToggleBookRequest'
+                required: true
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/ledger.service.v1.Book'
     /app/v1/categories:
         get:
             tags:
@@ -379,6 +1060,138 @@ paths:
                 "200":
                     description: OK
                     content: {}
+    /app/v1/currencies:
+        get:
+            tags:
+                - CurrencyService
+            operationId: CurrencyService_List
+            parameters:
+                - name: page
+                  in: query
+                  description: 当前页码（从1开始，默认1）
+                  schema:
+                    type: integer
+                    format: uint32
+                - name: pageSize
+                  in: query
+                  description: 每页条数（默认10，建议设置上限如100）
+                  schema:
+                    type: integer
+                    format: uint32
+                - name: offset
+                  in: query
+                  description: 跳过的记录数（从0开始，默认0）
+                  schema:
+                    type: string
+                - name: limit
+                  in: query
+                  description: 最多返回的记录数（默认10，建议设置上限如100）
+                  schema:
+                    type: integer
+                    format: uint32
+                - name: token
+                  in: query
+                  description: 上一页最后一条记录的游标（如ID/时间戳+ID，首次请求为空）
+                  schema:
+                    type: string
+                - name: noPaging
+                  in: query
+                  description: 是否不分页，如果为true，则page和pageSize参数无效。
+                  schema:
+                    type: boolean
+                - name: query
+                  in: query
+                  description: JSON字符串过滤条件，基础语法：{"field1":"val1", "field2___icontains":"val2"}，具体请参见：https://github.com/tx7do/go-crud/tree/main/pagination/filter/README.md
+                  schema:
+                    type: string
+                - name: filter
+                  in: query
+                  description: Google AIP规范字符串过滤条件
+                  schema:
+                    type: string
+                - name: filterExpr.type
+                  in: query
+                  description: 过滤表达式类型
+                  schema:
+                    enum:
+                        - EXPR_TYPE_UNSPECIFIED
+                        - AND
+                        - OR
+                    type: string
+                    format: enum
+                - name: orderBy
+                  in: query
+                  description: 排序条件
+                  schema:
+                    type: string
+                - name: fieldMask
+                  in: query
+                  description: 字段掩码，其作用为SELECT中的字段，其语法为使用逗号分隔字段名，例如：id,realName,userName。如果为空则选中所有字段，即SELECT *。
+                  schema:
+                    type: string
+                    format: field-mask
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/ledger.service.v1.ListCurrencyResponse'
+    /app/v1/currencies/all:
+        get:
+            tags:
+                - CurrencyService
+            operationId: CurrencyService_ListAll
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/ledger.service.v1.ListCurrencyResponse'
+    /app/v1/currencies/calc:
+        get:
+            tags:
+                - CurrencyService
+            operationId: CurrencyService_Convert
+            parameters:
+                - name: amount
+                  in: query
+                  schema:
+                    type: string
+                - name: from
+                  in: query
+                  schema:
+                    type: string
+                - name: to
+                  in: query
+                  schema:
+                    type: string
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/ledger.service.v1.ConvertCurrencyResponse'
+    /app/v1/currencies/refresh:
+        post:
+            tags:
+                - CurrencyService
+            operationId: CurrencyService_Refresh
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/ledger.service.v1.RefreshCurrencyRequest'
+                required: true
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/ledger.service.v1.ListCurrencyResponse'
     /app/v1/file/download:
         get:
             tags:
@@ -477,6 +1290,449 @@ paths:
                         application/json:
                             schema:
                                 $ref: '#/components/schemas/storage.service.v1.UploadFileResponse'
+    /app/v1/flow-files:
+        get:
+            tags:
+                - FlowFileService
+            operationId: FlowFileService_List
+            parameters:
+                - name: flowId
+                  in: query
+                  schema:
+                    type: integer
+                    format: uint32
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/ledger.service.v1.ListFlowFileResponse'
+    /app/v1/flow-files/{id}:
+        delete:
+            tags:
+                - FlowFileService
+            operationId: FlowFileService_Delete
+            parameters:
+                - name: id
+                  in: path
+                  required: true
+                  schema:
+                    type: integer
+                    format: uint32
+            responses:
+                "200":
+                    description: OK
+                    content: {}
+    /app/v1/ledger-categories:
+        get:
+            tags:
+                - LedgerCategoryService
+            operationId: LedgerCategoryService_List
+            parameters:
+                - name: page
+                  in: query
+                  description: 当前页码（从1开始，默认1）
+                  schema:
+                    type: integer
+                    format: uint32
+                - name: pageSize
+                  in: query
+                  description: 每页条数（默认10，建议设置上限如100）
+                  schema:
+                    type: integer
+                    format: uint32
+                - name: offset
+                  in: query
+                  description: 跳过的记录数（从0开始，默认0）
+                  schema:
+                    type: string
+                - name: limit
+                  in: query
+                  description: 最多返回的记录数（默认10，建议设置上限如100）
+                  schema:
+                    type: integer
+                    format: uint32
+                - name: token
+                  in: query
+                  description: 上一页最后一条记录的游标（如ID/时间戳+ID，首次请求为空）
+                  schema:
+                    type: string
+                - name: noPaging
+                  in: query
+                  description: 是否不分页，如果为true，则page和pageSize参数无效。
+                  schema:
+                    type: boolean
+                - name: query
+                  in: query
+                  description: JSON字符串过滤条件，基础语法：{"field1":"val1", "field2___icontains":"val2"}，具体请参见：https://github.com/tx7do/go-crud/tree/main/pagination/filter/README.md
+                  schema:
+                    type: string
+                - name: filter
+                  in: query
+                  description: Google AIP规范字符串过滤条件
+                  schema:
+                    type: string
+                - name: filterExpr.type
+                  in: query
+                  description: 过滤表达式类型
+                  schema:
+                    enum:
+                        - EXPR_TYPE_UNSPECIFIED
+                        - AND
+                        - OR
+                    type: string
+                    format: enum
+                - name: orderBy
+                  in: query
+                  description: 排序条件
+                  schema:
+                    type: string
+                - name: fieldMask
+                  in: query
+                  description: 字段掩码，其作用为SELECT中的字段，其语法为使用逗号分隔字段名，例如：id,realName,userName。如果为空则选中所有字段，即SELECT *。
+                  schema:
+                    type: string
+                    format: field-mask
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/ledger.service.v1.ListCategoryResponse'
+        post:
+            tags:
+                - LedgerCategoryService
+            operationId: LedgerCategoryService_Create
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/ledger.service.v1.CreateCategoryRequest'
+                required: true
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/ledger.service.v1.Category'
+    /app/v1/ledger-categories/all:
+        get:
+            tags:
+                - LedgerCategoryService
+            operationId: LedgerCategoryService_ListAll
+            parameters:
+                - name: bookId
+                  in: query
+                  schema:
+                    type: integer
+                    format: uint32
+                - name: type
+                  in: query
+                  schema:
+                    enum:
+                        - CATEGORY_TYPE_UNSPECIFIED
+                        - CATEGORY_TYPE_EXPENSE
+                        - CATEGORY_TYPE_INCOME
+                    type: string
+                    format: enum
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/ledger.service.v1.ListCategoryResponse'
+    /app/v1/ledger-categories/{id}:
+        get:
+            tags:
+                - LedgerCategoryService
+            operationId: LedgerCategoryService_Get
+            parameters:
+                - name: id
+                  in: path
+                  required: true
+                  schema:
+                    type: integer
+                    format: uint32
+                - name: viewMask
+                  in: query
+                  schema:
+                    type: string
+                    format: field-mask
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/ledger.service.v1.Category'
+        put:
+            tags:
+                - LedgerCategoryService
+            operationId: LedgerCategoryService_Update
+            parameters:
+                - name: id
+                  in: path
+                  required: true
+                  schema:
+                    type: integer
+                    format: uint32
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/ledger.service.v1.UpdateCategoryRequest'
+                required: true
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/ledger.service.v1.Category'
+        delete:
+            tags:
+                - LedgerCategoryService
+            operationId: LedgerCategoryService_Delete
+            parameters:
+                - name: id
+                  in: path
+                  required: true
+                  schema:
+                    type: integer
+                    format: uint32
+            responses:
+                "200":
+                    description: OK
+                    content: {}
+    /app/v1/ledger-categories/{id}/toggle:
+        patch:
+            tags:
+                - LedgerCategoryService
+            operationId: LedgerCategoryService_Toggle
+            parameters:
+                - name: id
+                  in: path
+                  required: true
+                  schema:
+                    type: integer
+                    format: uint32
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/ledger.service.v1.ToggleCategoryRequest'
+                required: true
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/ledger.service.v1.Category'
+    /app/v1/ledger-tags:
+        get:
+            tags:
+                - LedgerTagService
+            operationId: LedgerTagService_List
+            parameters:
+                - name: page
+                  in: query
+                  description: 当前页码（从1开始，默认1）
+                  schema:
+                    type: integer
+                    format: uint32
+                - name: pageSize
+                  in: query
+                  description: 每页条数（默认10，建议设置上限如100）
+                  schema:
+                    type: integer
+                    format: uint32
+                - name: offset
+                  in: query
+                  description: 跳过的记录数（从0开始，默认0）
+                  schema:
+                    type: string
+                - name: limit
+                  in: query
+                  description: 最多返回的记录数（默认10，建议设置上限如100）
+                  schema:
+                    type: integer
+                    format: uint32
+                - name: token
+                  in: query
+                  description: 上一页最后一条记录的游标（如ID/时间戳+ID，首次请求为空）
+                  schema:
+                    type: string
+                - name: noPaging
+                  in: query
+                  description: 是否不分页，如果为true，则page和pageSize参数无效。
+                  schema:
+                    type: boolean
+                - name: query
+                  in: query
+                  description: JSON字符串过滤条件，基础语法：{"field1":"val1", "field2___icontains":"val2"}，具体请参见：https://github.com/tx7do/go-crud/tree/main/pagination/filter/README.md
+                  schema:
+                    type: string
+                - name: filter
+                  in: query
+                  description: Google AIP规范字符串过滤条件
+                  schema:
+                    type: string
+                - name: filterExpr.type
+                  in: query
+                  description: 过滤表达式类型
+                  schema:
+                    enum:
+                        - EXPR_TYPE_UNSPECIFIED
+                        - AND
+                        - OR
+                    type: string
+                    format: enum
+                - name: orderBy
+                  in: query
+                  description: 排序条件
+                  schema:
+                    type: string
+                - name: fieldMask
+                  in: query
+                  description: 字段掩码，其作用为SELECT中的字段，其语法为使用逗号分隔字段名，例如：id,realName,userName。如果为空则选中所有字段，即SELECT *。
+                  schema:
+                    type: string
+                    format: field-mask
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/ledger.service.v1.ListTagResponse'
+        post:
+            tags:
+                - LedgerTagService
+            operationId: LedgerTagService_Create
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/ledger.service.v1.CreateTagRequest'
+                required: true
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/ledger.service.v1.Tag'
+    /app/v1/ledger-tags/all:
+        get:
+            tags:
+                - LedgerTagService
+            operationId: LedgerTagService_ListAll
+            parameters:
+                - name: bookId
+                  in: query
+                  schema:
+                    type: integer
+                    format: uint32
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/ledger.service.v1.ListTagResponse'
+    /app/v1/ledger-tags/{id}:
+        get:
+            tags:
+                - LedgerTagService
+            operationId: LedgerTagService_Get
+            parameters:
+                - name: id
+                  in: path
+                  required: true
+                  schema:
+                    type: integer
+                    format: uint32
+                - name: viewMask
+                  in: query
+                  schema:
+                    type: string
+                    format: field-mask
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/ledger.service.v1.Tag'
+        put:
+            tags:
+                - LedgerTagService
+            operationId: LedgerTagService_Update
+            parameters:
+                - name: id
+                  in: path
+                  required: true
+                  schema:
+                    type: integer
+                    format: uint32
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/ledger.service.v1.UpdateTagRequest'
+                required: true
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/ledger.service.v1.Tag'
+        delete:
+            tags:
+                - LedgerTagService
+            operationId: LedgerTagService_Delete
+            parameters:
+                - name: id
+                  in: path
+                  required: true
+                  schema:
+                    type: integer
+                    format: uint32
+            responses:
+                "200":
+                    description: OK
+                    content: {}
+    /app/v1/ledger-tags/{id}/toggle:
+        patch:
+            tags:
+                - LedgerTagService
+            operationId: LedgerTagService_Toggle
+            parameters:
+                - name: id
+                  in: path
+                  required: true
+                  schema:
+                    type: integer
+                    format: uint32
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/ledger.service.v1.ToggleTagRequest'
+                required: true
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/ledger.service.v1.Tag'
     /app/v1/login:
         post:
             tags:
@@ -782,6 +2038,208 @@ paths:
                 "200":
                     description: OK
                     content: {}
+    /app/v1/note-days:
+        get:
+            tags:
+                - NoteDayService
+            operationId: NoteDayService_List
+            parameters:
+                - name: page
+                  in: query
+                  description: 当前页码（从1开始，默认1）
+                  schema:
+                    type: integer
+                    format: uint32
+                - name: pageSize
+                  in: query
+                  description: 每页条数（默认10，建议设置上限如100）
+                  schema:
+                    type: integer
+                    format: uint32
+                - name: offset
+                  in: query
+                  description: 跳过的记录数（从0开始，默认0）
+                  schema:
+                    type: string
+                - name: limit
+                  in: query
+                  description: 最多返回的记录数（默认10，建议设置上限如100）
+                  schema:
+                    type: integer
+                    format: uint32
+                - name: token
+                  in: query
+                  description: 上一页最后一条记录的游标（如ID/时间戳+ID，首次请求为空）
+                  schema:
+                    type: string
+                - name: noPaging
+                  in: query
+                  description: 是否不分页，如果为true，则page和pageSize参数无效。
+                  schema:
+                    type: boolean
+                - name: query
+                  in: query
+                  description: JSON字符串过滤条件，基础语法：{"field1":"val1", "field2___icontains":"val2"}，具体请参见：https://github.com/tx7do/go-crud/tree/main/pagination/filter/README.md
+                  schema:
+                    type: string
+                - name: filter
+                  in: query
+                  description: Google AIP规范字符串过滤条件
+                  schema:
+                    type: string
+                - name: filterExpr.type
+                  in: query
+                  description: 过滤表达式类型
+                  schema:
+                    enum:
+                        - EXPR_TYPE_UNSPECIFIED
+                        - AND
+                        - OR
+                    type: string
+                    format: enum
+                - name: orderBy
+                  in: query
+                  description: 排序条件
+                  schema:
+                    type: string
+                - name: fieldMask
+                  in: query
+                  description: 字段掩码，其作用为SELECT中的字段，其语法为使用逗号分隔字段名，例如：id,realName,userName。如果为空则选中所有字段，即SELECT *。
+                  schema:
+                    type: string
+                    format: field-mask
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/ledger.service.v1.ListNoteDayResponse'
+        post:
+            tags:
+                - NoteDayService
+            operationId: NoteDayService_Create
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/ledger.service.v1.CreateNoteDayRequest'
+                required: true
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/ledger.service.v1.NoteDay'
+    /app/v1/note-days/{id}:
+        get:
+            tags:
+                - NoteDayService
+            operationId: NoteDayService_Get
+            parameters:
+                - name: id
+                  in: path
+                  required: true
+                  schema:
+                    type: integer
+                    format: uint32
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/ledger.service.v1.NoteDay'
+        put:
+            tags:
+                - NoteDayService
+            operationId: NoteDayService_Update
+            parameters:
+                - name: id
+                  in: path
+                  required: true
+                  schema:
+                    type: integer
+                    format: uint32
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/ledger.service.v1.UpdateNoteDayRequest'
+                required: true
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/ledger.service.v1.NoteDay'
+        delete:
+            tags:
+                - NoteDayService
+            operationId: NoteDayService_Delete
+            parameters:
+                - name: id
+                  in: path
+                  required: true
+                  schema:
+                    type: integer
+                    format: uint32
+            responses:
+                "200":
+                    description: OK
+                    content: {}
+    /app/v1/note-days/{id}/recall:
+        patch:
+            tags:
+                - NoteDayService
+            operationId: NoteDayService_Recall
+            parameters:
+                - name: id
+                  in: path
+                  required: true
+                  schema:
+                    type: integer
+                    format: uint32
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/ledger.service.v1.RecallNoteDayRequest'
+                required: true
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/ledger.service.v1.NoteDay'
+    /app/v1/note-days/{id}/run:
+        patch:
+            tags:
+                - NoteDayService
+            operationId: NoteDayService_Run
+            parameters:
+                - name: id
+                  in: path
+                  required: true
+                  schema:
+                    type: integer
+                    format: uint32
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/ledger.service.v1.RunNoteDayRequest'
+                required: true
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/ledger.service.v1.NoteDay'
     /app/v1/pages:
         get:
             tags:
@@ -985,6 +2443,206 @@ paths:
                         application/json:
                             schema:
                                 $ref: '#/components/schemas/content.service.v1.PageTranslation'
+    /app/v1/payees:
+        get:
+            tags:
+                - PayeeService
+            operationId: PayeeService_List
+            parameters:
+                - name: page
+                  in: query
+                  description: 当前页码（从1开始，默认1）
+                  schema:
+                    type: integer
+                    format: uint32
+                - name: pageSize
+                  in: query
+                  description: 每页条数（默认10，建议设置上限如100）
+                  schema:
+                    type: integer
+                    format: uint32
+                - name: offset
+                  in: query
+                  description: 跳过的记录数（从0开始，默认0）
+                  schema:
+                    type: string
+                - name: limit
+                  in: query
+                  description: 最多返回的记录数（默认10，建议设置上限如100）
+                  schema:
+                    type: integer
+                    format: uint32
+                - name: token
+                  in: query
+                  description: 上一页最后一条记录的游标（如ID/时间戳+ID，首次请求为空）
+                  schema:
+                    type: string
+                - name: noPaging
+                  in: query
+                  description: 是否不分页，如果为true，则page和pageSize参数无效。
+                  schema:
+                    type: boolean
+                - name: query
+                  in: query
+                  description: JSON字符串过滤条件，基础语法：{"field1":"val1", "field2___icontains":"val2"}，具体请参见：https://github.com/tx7do/go-crud/tree/main/pagination/filter/README.md
+                  schema:
+                    type: string
+                - name: filter
+                  in: query
+                  description: Google AIP规范字符串过滤条件
+                  schema:
+                    type: string
+                - name: filterExpr.type
+                  in: query
+                  description: 过滤表达式类型
+                  schema:
+                    enum:
+                        - EXPR_TYPE_UNSPECIFIED
+                        - AND
+                        - OR
+                    type: string
+                    format: enum
+                - name: orderBy
+                  in: query
+                  description: 排序条件
+                  schema:
+                    type: string
+                - name: fieldMask
+                  in: query
+                  description: 字段掩码，其作用为SELECT中的字段，其语法为使用逗号分隔字段名，例如：id,realName,userName。如果为空则选中所有字段，即SELECT *。
+                  schema:
+                    type: string
+                    format: field-mask
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/ledger.service.v1.ListPayeeResponse'
+        post:
+            tags:
+                - PayeeService
+            operationId: PayeeService_Create
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/ledger.service.v1.CreatePayeeRequest'
+                required: true
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/ledger.service.v1.Payee'
+    /app/v1/payees/all:
+        get:
+            tags:
+                - PayeeService
+            operationId: PayeeService_ListAll
+            parameters:
+                - name: bookId
+                  in: query
+                  schema:
+                    type: integer
+                    format: uint32
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/ledger.service.v1.ListPayeeResponse'
+    /app/v1/payees/{id}:
+        get:
+            tags:
+                - PayeeService
+            operationId: PayeeService_Get
+            parameters:
+                - name: id
+                  in: path
+                  required: true
+                  schema:
+                    type: integer
+                    format: uint32
+                - name: viewMask
+                  in: query
+                  schema:
+                    type: string
+                    format: field-mask
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/ledger.service.v1.Payee'
+        put:
+            tags:
+                - PayeeService
+            operationId: PayeeService_Update
+            parameters:
+                - name: id
+                  in: path
+                  required: true
+                  schema:
+                    type: integer
+                    format: uint32
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/ledger.service.v1.UpdatePayeeRequest'
+                required: true
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/ledger.service.v1.Payee'
+        delete:
+            tags:
+                - PayeeService
+            operationId: PayeeService_Delete
+            parameters:
+                - name: id
+                  in: path
+                  required: true
+                  schema:
+                    type: integer
+                    format: uint32
+            responses:
+                "200":
+                    description: OK
+                    content: {}
+    /app/v1/payees/{id}/toggle:
+        patch:
+            tags:
+                - PayeeService
+            operationId: PayeeService_Toggle
+            parameters:
+                - name: id
+                  in: path
+                  required: true
+                  schema:
+                    type: integer
+                    format: uint32
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/ledger.service.v1.TogglePayeeRequest'
+                required: true
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/ledger.service.v1.Payee'
     /app/v1/posts:
         get:
             tags:
@@ -1207,6 +2865,360 @@ paths:
                         application/json:
                             schema:
                                 $ref: '#/components/schemas/authentication.service.v1.LoginResponse'
+    /app/v1/reports/balance:
+        get:
+            tags:
+                - ReportService
+            operationId: ReportService_Balance
+            parameters:
+                - name: bookId
+                  in: query
+                  schema:
+                    type: integer
+                    format: uint32
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/ledger.service.v1.BalanceReportResponse'
+    /app/v1/reports/expense-category:
+        get:
+            tags:
+                - ReportService
+            operationId: ReportService_ExpenseCategory
+            parameters:
+                - name: bookId
+                  in: query
+                  schema:
+                    type: integer
+                    format: uint32
+                - name: minTime
+                  in: query
+                  schema:
+                    type: string
+                - name: maxTime
+                  in: query
+                  schema:
+                    type: string
+                - name: title
+                  in: query
+                  schema:
+                    type: string
+                - name: categoryIds
+                  in: query
+                  schema:
+                    type: array
+                    items:
+                        type: integer
+                        format: uint32
+                - name: tagIds
+                  in: query
+                  schema:
+                    type: array
+                    items:
+                        type: integer
+                        format: uint32
+                - name: payeeIds
+                  in: query
+                  schema:
+                    type: array
+                    items:
+                        type: integer
+                        format: uint32
+                - name: accountId
+                  in: query
+                  schema:
+                    type: integer
+                    format: uint32
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/ledger.service.v1.ReportResponse'
+    /app/v1/reports/expense-payee:
+        get:
+            tags:
+                - ReportService
+            operationId: ReportService_ExpensePayee
+            parameters:
+                - name: bookId
+                  in: query
+                  schema:
+                    type: integer
+                    format: uint32
+                - name: minTime
+                  in: query
+                  schema:
+                    type: string
+                - name: maxTime
+                  in: query
+                  schema:
+                    type: string
+                - name: title
+                  in: query
+                  schema:
+                    type: string
+                - name: categoryIds
+                  in: query
+                  schema:
+                    type: array
+                    items:
+                        type: integer
+                        format: uint32
+                - name: tagIds
+                  in: query
+                  schema:
+                    type: array
+                    items:
+                        type: integer
+                        format: uint32
+                - name: payeeIds
+                  in: query
+                  schema:
+                    type: array
+                    items:
+                        type: integer
+                        format: uint32
+                - name: accountId
+                  in: query
+                  schema:
+                    type: integer
+                    format: uint32
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/ledger.service.v1.ReportResponse'
+    /app/v1/reports/expense-tag:
+        get:
+            tags:
+                - ReportService
+            operationId: ReportService_ExpenseTag
+            parameters:
+                - name: bookId
+                  in: query
+                  schema:
+                    type: integer
+                    format: uint32
+                - name: minTime
+                  in: query
+                  schema:
+                    type: string
+                - name: maxTime
+                  in: query
+                  schema:
+                    type: string
+                - name: title
+                  in: query
+                  schema:
+                    type: string
+                - name: categoryIds
+                  in: query
+                  schema:
+                    type: array
+                    items:
+                        type: integer
+                        format: uint32
+                - name: tagIds
+                  in: query
+                  schema:
+                    type: array
+                    items:
+                        type: integer
+                        format: uint32
+                - name: payeeIds
+                  in: query
+                  schema:
+                    type: array
+                    items:
+                        type: integer
+                        format: uint32
+                - name: accountId
+                  in: query
+                  schema:
+                    type: integer
+                    format: uint32
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/ledger.service.v1.ReportResponse'
+    /app/v1/reports/income-category:
+        get:
+            tags:
+                - ReportService
+            operationId: ReportService_IncomeCategory
+            parameters:
+                - name: bookId
+                  in: query
+                  schema:
+                    type: integer
+                    format: uint32
+                - name: minTime
+                  in: query
+                  schema:
+                    type: string
+                - name: maxTime
+                  in: query
+                  schema:
+                    type: string
+                - name: title
+                  in: query
+                  schema:
+                    type: string
+                - name: categoryIds
+                  in: query
+                  schema:
+                    type: array
+                    items:
+                        type: integer
+                        format: uint32
+                - name: tagIds
+                  in: query
+                  schema:
+                    type: array
+                    items:
+                        type: integer
+                        format: uint32
+                - name: payeeIds
+                  in: query
+                  schema:
+                    type: array
+                    items:
+                        type: integer
+                        format: uint32
+                - name: accountId
+                  in: query
+                  schema:
+                    type: integer
+                    format: uint32
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/ledger.service.v1.ReportResponse'
+    /app/v1/reports/income-payee:
+        get:
+            tags:
+                - ReportService
+            operationId: ReportService_IncomePayee
+            parameters:
+                - name: bookId
+                  in: query
+                  schema:
+                    type: integer
+                    format: uint32
+                - name: minTime
+                  in: query
+                  schema:
+                    type: string
+                - name: maxTime
+                  in: query
+                  schema:
+                    type: string
+                - name: title
+                  in: query
+                  schema:
+                    type: string
+                - name: categoryIds
+                  in: query
+                  schema:
+                    type: array
+                    items:
+                        type: integer
+                        format: uint32
+                - name: tagIds
+                  in: query
+                  schema:
+                    type: array
+                    items:
+                        type: integer
+                        format: uint32
+                - name: payeeIds
+                  in: query
+                  schema:
+                    type: array
+                    items:
+                        type: integer
+                        format: uint32
+                - name: accountId
+                  in: query
+                  schema:
+                    type: integer
+                    format: uint32
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/ledger.service.v1.ReportResponse'
+    /app/v1/reports/income-tag:
+        get:
+            tags:
+                - ReportService
+            operationId: ReportService_IncomeTag
+            parameters:
+                - name: bookId
+                  in: query
+                  schema:
+                    type: integer
+                    format: uint32
+                - name: minTime
+                  in: query
+                  schema:
+                    type: string
+                - name: maxTime
+                  in: query
+                  schema:
+                    type: string
+                - name: title
+                  in: query
+                  schema:
+                    type: string
+                - name: categoryIds
+                  in: query
+                  schema:
+                    type: array
+                    items:
+                        type: integer
+                        format: uint32
+                - name: tagIds
+                  in: query
+                  schema:
+                    type: array
+                    items:
+                        type: integer
+                        format: uint32
+                - name: payeeIds
+                  in: query
+                  schema:
+                    type: array
+                    items:
+                        type: integer
+                        format: uint32
+                - name: accountId
+                  in: query
+                  schema:
+                    type: integer
+                    format: uint32
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/ledger.service.v1.ReportResponse'
     /app/v1/sections:
         get:
             tags:
@@ -3129,6 +5141,909 @@ components:
                 verificationId:
                     type: string
                     description: 服务端生成的验证码会话ID（可选）
+        ledger.service.v1.Account:
+            type: object
+            properties:
+                id:
+                    type: integer
+                    description: 账户ID
+                    format: uint32
+                tenantId:
+                    type: integer
+                    description: 租户（群组）ID
+                    format: uint32
+                name:
+                    type: string
+                    description: 账户名称
+                type:
+                    enum:
+                        - ACCOUNT_TYPE_UNSPECIFIED
+                        - ACCOUNT_TYPE_CHECKING
+                        - ACCOUNT_TYPE_CREDIT
+                        - ACCOUNT_TYPE_ASSET
+                        - ACCOUNT_TYPE_DEBT
+                    type: string
+                    description: 账户类型
+                    format: enum
+                balance:
+                    type: string
+                    description: 当前余额（字符串格式，避免浮点精度问题）
+                initialBalance:
+                    type: string
+                    description: 期初余额
+                creditLimit:
+                    type: string
+                    description: 信用额度
+                billDay:
+                    type: integer
+                    description: 账单日
+                    format: int32
+                apr:
+                    type: string
+                    description: 年化利率(%)
+                currencyCode:
+                    type: string
+                    description: 币种代码
+                no:
+                    type: string
+                    description: 账号
+                include:
+                    type: boolean
+                    description: 是否纳入统计
+                canExpense:
+                    type: boolean
+                    description: 是否可用于支出
+                canIncome:
+                    type: boolean
+                    description: 是否可用于收入
+                canTransferFrom:
+                    type: boolean
+                    description: 是否可用于转出
+                canTransferTo:
+                    type: boolean
+                    description: 是否可用于转入
+                notes:
+                    type: string
+                    description: 备注
+                enable:
+                    type: boolean
+                    description: 是否启用
+                sortOrder:
+                    type: integer
+                    description: 排序
+                    format: int32
+                createdBy:
+                    type: integer
+                    format: uint32
+                updatedBy:
+                    type: integer
+                    format: uint32
+                deletedBy:
+                    type: integer
+                    format: uint32
+                createdAt:
+                    type: string
+                    format: date-time
+                updatedAt:
+                    type: string
+                    format: date-time
+                deletedAt:
+                    type: string
+                    format: date-time
+            description: 账户
+        ledger.service.v1.AdjustBalanceRequest:
+            type: object
+            properties:
+                id:
+                    type: integer
+                    format: uint32
+                balance:
+                    type: string
+                    description: 调整后的目标余额
+                bookId:
+                    type: integer
+                    description: 关联的账本ID
+                    format: uint32
+                title:
+                    type: string
+                notes:
+                    type: string
+                createTime:
+                    type: string
+            description: 请求 - 余额调整
+        ledger.service.v1.BalanceFlow:
+            type: object
+            properties:
+                id:
+                    type: integer
+                    format: uint32
+                tenantId:
+                    type: integer
+                    format: uint32
+                bookId:
+                    type: integer
+                    format: uint32
+                type:
+                    enum:
+                        - FLOW_TYPE_UNSPECIFIED
+                        - FLOW_TYPE_EXPENSE
+                        - FLOW_TYPE_INCOME
+                        - FLOW_TYPE_TRANSFER
+                        - FLOW_TYPE_ADJUST
+                    type: string
+                    description: 流水类型
+                    format: enum
+                amount:
+                    type: string
+                    description: 金额
+                convertedAmount:
+                    type: string
+                    description: 换算后的金额
+                accountId:
+                    type: integer
+                    description: 来源账户ID
+                    format: uint32
+                toAccountId:
+                    type: integer
+                    description: 目标账户ID（转账）
+                    format: uint32
+                payeeId:
+                    type: integer
+                    description: 收款人/付款人ID
+                    format: uint32
+                creatorId:
+                    type: integer
+                    format: uint32
+                createTime:
+                    type: string
+                    description: 交易时间（epoch 毫秒）
+                title:
+                    type: string
+                notes:
+                    type: string
+                confirm:
+                    type: boolean
+                    description: 是否已确认（余额已变更）
+                include:
+                    type: boolean
+                    description: 是否包含在统计中
+                insertAt:
+                    type: string
+                categories:
+                    type: array
+                    items:
+                        $ref: '#/components/schemas/ledger.service.v1.CategoryRelation'
+                    description: 关联的类别拆分
+                tags:
+                    type: array
+                    items:
+                        $ref: '#/components/schemas/ledger.service.v1.TagRelation'
+                    description: 关联的标签拆分
+                createdBy:
+                    type: integer
+                    format: uint32
+                updatedBy:
+                    type: integer
+                    format: uint32
+                deletedBy:
+                    type: integer
+                    format: uint32
+                createdAt:
+                    type: string
+                    format: date-time
+                updatedAt:
+                    type: string
+                    format: date-time
+                deletedAt:
+                    type: string
+                    format: date-time
+            description: 余额流水
+        ledger.service.v1.BalanceReportResponse:
+            type: object
+            properties:
+                assets:
+                    type: array
+                    items:
+                        $ref: '#/components/schemas/ledger.service.v1.ChartPoint'
+                    description: 资产明细
+                debts:
+                    type: array
+                    items:
+                        $ref: '#/components/schemas/ledger.service.v1.ChartPoint'
+                    description: 负债明细
+                netWorth:
+                    type: string
+                    description: 净资（资产-负债）
+            description: 资产负债报表回应
+        ledger.service.v1.Book:
+            type: object
+            properties:
+                id:
+                    type: integer
+                    description: 账本ID
+                    format: uint32
+                tenantId:
+                    type: integer
+                    description: 租户（群组）ID
+                    format: uint32
+                name:
+                    type: string
+                    description: 账本名称
+                defaultCurrencyCode:
+                    type: string
+                    description: 默认币种代码
+                notes:
+                    type: string
+                    description: 备注
+                enable:
+                    type: boolean
+                    description: 是否启用
+                sortOrder:
+                    type: integer
+                    description: 排序
+                    format: int32
+                exportAt:
+                    type: string
+                    description: 上次导出时间
+                defaultExpenseAccountId:
+                    type: integer
+                    description: 默认支出账户ID
+                    format: uint32
+                defaultIncomeAccountId:
+                    type: integer
+                    description: 默认收入账户ID
+                    format: uint32
+                defaultTransferFromAccountId:
+                    type: integer
+                    description: 默认转出账户ID
+                    format: uint32
+                defaultTransferToAccountId:
+                    type: integer
+                    description: 默认转入账户ID
+                    format: uint32
+                defaultExpenseCategoryId:
+                    type: integer
+                    description: 默认支出分类ID
+                    format: uint32
+                defaultIncomeCategoryId:
+                    type: integer
+                    description: 默认收入分类ID
+                    format: uint32
+                createdBy:
+                    type: integer
+                    description: 创建者用户ID
+                    format: uint32
+                updatedBy:
+                    type: integer
+                    description: 更新者用户ID
+                    format: uint32
+                deletedBy:
+                    type: integer
+                    description: 删除者用户ID
+                    format: uint32
+                createdAt:
+                    type: string
+                    format: date-time
+                updatedAt:
+                    type: string
+                    format: date-time
+                deletedAt:
+                    type: string
+                    format: date-time
+            description: 账本
+        ledger.service.v1.Category:
+            type: object
+            properties:
+                id:
+                    type: integer
+                    format: uint32
+                tenantId:
+                    type: integer
+                    format: uint32
+                bookId:
+                    type: integer
+                    description: 所属账本ID
+                    format: uint32
+                name:
+                    type: string
+                    description: 分类名称
+                type:
+                    enum:
+                        - CATEGORY_TYPE_UNSPECIFIED
+                        - CATEGORY_TYPE_EXPENSE
+                        - CATEGORY_TYPE_INCOME
+                    type: string
+                    description: 分类类型（支出/收入）
+                    format: enum
+                notes:
+                    type: string
+                enable:
+                    type: boolean
+                sortOrder:
+                    type: integer
+                    format: int32
+                parentId:
+                    type: integer
+                    description: 父分类ID
+                    format: uint32
+                children:
+                    type: array
+                    items:
+                        $ref: '#/components/schemas/ledger.service.v1.Category'
+                    description: 子分类列表
+                depth:
+                    type: integer
+                    description: 层级深度（0=顶级）
+                    format: int32
+                path:
+                    type: string
+                    description: 物化路径
+                createdBy:
+                    type: integer
+                    format: uint32
+                updatedBy:
+                    type: integer
+                    format: uint32
+                deletedBy:
+                    type: integer
+                    format: uint32
+                createdAt:
+                    type: string
+                    format: date-time
+                updatedAt:
+                    type: string
+                    format: date-time
+                deletedAt:
+                    type: string
+                    format: date-time
+            description: 分类
+        ledger.service.v1.CategoryRelation:
+            type: object
+            properties:
+                id:
+                    type: integer
+                    format: uint32
+                categoryId:
+                    type: integer
+                    description: 类别ID
+                    format: uint32
+                amount:
+                    type: string
+                    description: 金额
+                convertedAmount:
+                    type: string
+                    description: 换算后的金额
+            description: 类别关系（一条流水可拆分到多个类别）
+        ledger.service.v1.ChartPoint:
+            type: object
+            properties:
+                x:
+                    type: string
+                    description: 标签（分类/标签/收款人名称）
+                y:
+                    type: string
+                    description: 金额
+                percent:
+                    type: string
+                    description: 占比(%)
+            description: 图表数据点
+        ledger.service.v1.ConfirmBalanceFlowRequest:
+            type: object
+            properties:
+                id:
+                    type: integer
+                    format: uint32
+            description: 请求 - 确认流水（更新账户余额）
+        ledger.service.v1.ConvertCurrencyResponse:
+            type: object
+            properties:
+                amount:
+                    type: string
+                rate:
+                    type: string
+            description: 回应 - 币种转换
+        ledger.service.v1.CreateAccountRequest:
+            type: object
+            properties:
+                data:
+                    $ref: '#/components/schemas/ledger.service.v1.Account'
+            description: 请求 - 创建账户
+        ledger.service.v1.CreateBalanceFlowRequest:
+            type: object
+            properties:
+                data:
+                    $ref: '#/components/schemas/ledger.service.v1.BalanceFlow'
+            description: 请求 - 创建流水
+        ledger.service.v1.CreateBookRequest:
+            type: object
+            properties:
+                data:
+                    $ref: '#/components/schemas/ledger.service.v1.Book'
+            description: 请求 - 创建账本
+        ledger.service.v1.CreateCategoryRequest:
+            type: object
+            properties:
+                data:
+                    $ref: '#/components/schemas/ledger.service.v1.Category'
+            description: 请求 - 创建分类
+        ledger.service.v1.CreateNoteDayRequest:
+            type: object
+            properties:
+                data:
+                    $ref: '#/components/schemas/ledger.service.v1.NoteDay'
+        ledger.service.v1.CreatePayeeRequest:
+            type: object
+            properties:
+                data:
+                    $ref: '#/components/schemas/ledger.service.v1.Payee'
+        ledger.service.v1.CreateTagRequest:
+            type: object
+            properties:
+                data:
+                    $ref: '#/components/schemas/ledger.service.v1.Tag'
+        ledger.service.v1.Currency:
+            type: object
+            properties:
+                id:
+                    type: integer
+                    format: uint32
+                code:
+                    type: string
+                    description: 币种代码
+                name:
+                    type: string
+                    description: 币种名称
+                rate:
+                    type: string
+                    description: 对美元汇率
+            description: 币种
+        ledger.service.v1.FlowFile:
+            type: object
+            properties:
+                id:
+                    type: integer
+                    format: uint32
+                flowId:
+                    type: integer
+                    description: 关联的流水ID
+                    format: uint32
+                creatorId:
+                    type: integer
+                    format: uint32
+                createTime:
+                    type: string
+                contentType:
+                    type: string
+                size:
+                    type: string
+                originalName:
+                    type: string
+            description: 流水附件
+        ledger.service.v1.ListAccountResponse:
+            type: object
+            properties:
+                items:
+                    type: array
+                    items:
+                        $ref: '#/components/schemas/ledger.service.v1.Account'
+                total:
+                    type: string
+            description: 回应 - 账户列表
+        ledger.service.v1.ListBalanceFlowResponse:
+            type: object
+            properties:
+                items:
+                    type: array
+                    items:
+                        $ref: '#/components/schemas/ledger.service.v1.BalanceFlow'
+                total:
+                    type: string
+            description: 回应 - 流水列表
+        ledger.service.v1.ListBookResponse:
+            type: object
+            properties:
+                items:
+                    type: array
+                    items:
+                        $ref: '#/components/schemas/ledger.service.v1.Book'
+                total:
+                    type: string
+            description: 回应 - 账本列表
+        ledger.service.v1.ListCategoryResponse:
+            type: object
+            properties:
+                items:
+                    type: array
+                    items:
+                        $ref: '#/components/schemas/ledger.service.v1.Category'
+                total:
+                    type: string
+            description: 回应 - 分类列表
+        ledger.service.v1.ListCurrencyResponse:
+            type: object
+            properties:
+                items:
+                    type: array
+                    items:
+                        $ref: '#/components/schemas/ledger.service.v1.Currency'
+                total:
+                    type: string
+            description: 回应 - 币种列表
+        ledger.service.v1.ListFlowFileResponse:
+            type: object
+            properties:
+                items:
+                    type: array
+                    items:
+                        $ref: '#/components/schemas/ledger.service.v1.FlowFile'
+            description: 回应 - 附件列表
+        ledger.service.v1.ListNoteDayResponse:
+            type: object
+            properties:
+                items:
+                    type: array
+                    items:
+                        $ref: '#/components/schemas/ledger.service.v1.NoteDay'
+                total:
+                    type: string
+        ledger.service.v1.ListPayeeResponse:
+            type: object
+            properties:
+                items:
+                    type: array
+                    items:
+                        $ref: '#/components/schemas/ledger.service.v1.Payee'
+                total:
+                    type: string
+        ledger.service.v1.ListTagResponse:
+            type: object
+            properties:
+                items:
+                    type: array
+                    items:
+                        $ref: '#/components/schemas/ledger.service.v1.Tag'
+                total:
+                    type: string
+        ledger.service.v1.NoteDay:
+            type: object
+            properties:
+                id:
+                    type: integer
+                    format: uint32
+                userId:
+                    type: integer
+                    description: 所属用户ID
+                    format: uint32
+                title:
+                    type: string
+                notes:
+                    type: string
+                startDate:
+                    type: string
+                    description: 开始日期（epoch 毫秒）
+                endDate:
+                    type: string
+                    description: 结束日期（epoch 毫秒）
+                nextDate:
+                    type: string
+                    description: 下次执行日期（epoch 毫秒）
+                repeatType:
+                    type: integer
+                    description: 重复类型：0=单次 1=每天 2=每月 3=每年
+                    format: int32
+                interval:
+                    type: integer
+                    description: 间隔
+                    format: int32
+                totalCount:
+                    type: integer
+                    format: int32
+                runCount:
+                    type: integer
+                    format: int32
+                createdBy:
+                    type: integer
+                    format: uint32
+                updatedBy:
+                    type: integer
+                    format: uint32
+                deletedBy:
+                    type: integer
+                    format: uint32
+                createdAt:
+                    type: string
+                    format: date-time
+                updatedAt:
+                    type: string
+                    format: date-time
+                deletedAt:
+                    type: string
+                    format: date-time
+            description: 定期提醒
+        ledger.service.v1.Payee:
+            type: object
+            properties:
+                id:
+                    type: integer
+                    format: uint32
+                tenantId:
+                    type: integer
+                    format: uint32
+                bookId:
+                    type: integer
+                    format: uint32
+                name:
+                    type: string
+                notes:
+                    type: string
+                enable:
+                    type: boolean
+                canExpense:
+                    type: boolean
+                canIncome:
+                    type: boolean
+                sortOrder:
+                    type: integer
+                    format: int32
+                createdBy:
+                    type: integer
+                    format: uint32
+                updatedBy:
+                    type: integer
+                    format: uint32
+                deletedBy:
+                    type: integer
+                    format: uint32
+                createdAt:
+                    type: string
+                    format: date-time
+                updatedAt:
+                    type: string
+                    format: date-time
+                deletedAt:
+                    type: string
+                    format: date-time
+        ledger.service.v1.RecallNoteDayRequest:
+            type: object
+            properties:
+                id:
+                    type: integer
+                    format: uint32
+        ledger.service.v1.RefreshCurrencyRequest:
+            type: object
+            properties: {}
+            description: 请求 - 刷新汇率
+        ledger.service.v1.ReportResponse:
+            type: object
+            properties:
+                items:
+                    type: array
+                    items:
+                        $ref: '#/components/schemas/ledger.service.v1.ChartPoint'
+            description: 报表回应
+        ledger.service.v1.RunNoteDayRequest:
+            type: object
+            properties:
+                id:
+                    type: integer
+                    format: uint32
+        ledger.service.v1.StatisticsResponse:
+            type: object
+            properties:
+                expense:
+                    type: string
+                income:
+                    type: string
+                net:
+                    type: string
+            description: 回应 - 统计
+        ledger.service.v1.Tag:
+            type: object
+            properties:
+                id:
+                    type: integer
+                    format: uint32
+                tenantId:
+                    type: integer
+                    format: uint32
+                bookId:
+                    type: integer
+                    format: uint32
+                name:
+                    type: string
+                notes:
+                    type: string
+                enable:
+                    type: boolean
+                canExpense:
+                    type: boolean
+                    description: 是否可用于支出
+                canIncome:
+                    type: boolean
+                    description: 是否可用于收入
+                canTransfer:
+                    type: boolean
+                    description: 是否可用于转账
+                sortOrder:
+                    type: integer
+                    format: int32
+                parentId:
+                    type: integer
+                    description: 树形字段
+                    format: uint32
+                children:
+                    type: array
+                    items:
+                        $ref: '#/components/schemas/ledger.service.v1.Tag'
+                depth:
+                    type: integer
+                    format: int32
+                path:
+                    type: string
+                createdBy:
+                    type: integer
+                    format: uint32
+                updatedBy:
+                    type: integer
+                    format: uint32
+                deletedBy:
+                    type: integer
+                    format: uint32
+                createdAt:
+                    type: string
+                    format: date-time
+                updatedAt:
+                    type: string
+                    format: date-time
+                deletedAt:
+                    type: string
+                    format: date-time
+        ledger.service.v1.TagRelation:
+            type: object
+            properties:
+                id:
+                    type: integer
+                    format: uint32
+                tagId:
+                    type: integer
+                    description: 标签ID
+                    format: uint32
+                amount:
+                    type: string
+                convertedAmount:
+                    type: string
+            description: 标签关系
+        ledger.service.v1.ToggleAccountRequest:
+            type: object
+            properties:
+                id:
+                    type: integer
+                    format: uint32
+            description: 请求 - 切换启用/禁用
+        ledger.service.v1.ToggleBookRequest:
+            type: object
+            properties:
+                id:
+                    type: integer
+                    description: 账本ID
+                    format: uint32
+            description: 请求 - 切换启用/禁用
+        ledger.service.v1.ToggleCategoryRequest:
+            type: object
+            properties:
+                id:
+                    type: integer
+                    format: uint32
+            description: 请求 - 切换启用/禁用
+        ledger.service.v1.TogglePayeeRequest:
+            type: object
+            properties:
+                id:
+                    type: integer
+                    format: uint32
+        ledger.service.v1.ToggleTagRequest:
+            type: object
+            properties:
+                id:
+                    type: integer
+                    format: uint32
+        ledger.service.v1.UpdateAccountRequest:
+            type: object
+            properties:
+                id:
+                    type: integer
+                    format: uint32
+                data:
+                    $ref: '#/components/schemas/ledger.service.v1.Account'
+                updateMask:
+                    type: string
+                    format: field-mask
+                allowMissing:
+                    type: boolean
+            description: 请求 - 更新账户
+        ledger.service.v1.UpdateBalanceFlowRequest:
+            type: object
+            properties:
+                id:
+                    type: integer
+                    format: uint32
+                data:
+                    $ref: '#/components/schemas/ledger.service.v1.BalanceFlow'
+                updateMask:
+                    type: string
+                    format: field-mask
+                allowMissing:
+                    type: boolean
+            description: 请求 - 更新流水
+        ledger.service.v1.UpdateBookRequest:
+            type: object
+            properties:
+                id:
+                    type: integer
+                    format: uint32
+                data:
+                    $ref: '#/components/schemas/ledger.service.v1.Book'
+                updateMask:
+                    type: string
+                    description: 要更新的字段列表
+                    format: field-mask
+                allowMissing:
+                    type: boolean
+                    description: 如果设置为true的时候，资源不存在则会新增(插入)
+            description: 请求 - 更新账本
+        ledger.service.v1.UpdateCategoryRequest:
+            type: object
+            properties:
+                id:
+                    type: integer
+                    format: uint32
+                data:
+                    $ref: '#/components/schemas/ledger.service.v1.Category'
+                updateMask:
+                    type: string
+                    format: field-mask
+                allowMissing:
+                    type: boolean
+            description: 请求 - 更新分类
+        ledger.service.v1.UpdateNoteDayRequest:
+            type: object
+            properties:
+                id:
+                    type: integer
+                    format: uint32
+                data:
+                    $ref: '#/components/schemas/ledger.service.v1.NoteDay'
+                updateMask:
+                    type: string
+                    format: field-mask
+                allowMissing:
+                    type: boolean
+        ledger.service.v1.UpdatePayeeRequest:
+            type: object
+            properties:
+                id:
+                    type: integer
+                    format: uint32
+                data:
+                    $ref: '#/components/schemas/ledger.service.v1.Payee'
+                updateMask:
+                    type: string
+                    format: field-mask
+                allowMissing:
+                    type: boolean
+        ledger.service.v1.UpdateTagRequest:
+            type: object
+            properties:
+                id:
+                    type: integer
+                    format: uint32
+                data:
+                    $ref: '#/components/schemas/ledger.service.v1.Tag'
+                updateMask:
+                    type: string
+                    format: field-mask
+                allowMissing:
+                    type: boolean
         site.service.v1.CreateNavigationRequest:
             type: object
             properties:
@@ -3419,20 +6334,30 @@ components:
 security:
     - OAuth2PasswordBearer: []
 tags:
+    - name: AccountService
     - name: AuthenticationService
       description: 用户前台登录认证服务
+    - name: BalanceFlowService
+    - name: BookService
     - name: CategoryService
       description: 类别服务
     - name: CommentService
       description: 评论服务
+    - name: CurrencyService
     - name: FileTransferService
       description: 文件传输服务
+    - name: FlowFileService
+    - name: LedgerCategoryService
+    - name: LedgerTagService
     - name: NavigationService
       description: 导航服务
+    - name: NoteDayService
     - name: PageService
       description: 页面服务
+    - name: PayeeService
     - name: PostService
       description: 帖子服务
+    - name: ReportService
     - name: SectionService
       description: 页面区块服务
     - name: TagService

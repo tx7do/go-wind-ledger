@@ -52,4 +52,15 @@ var ProviderSet = wire.NewSet(
 	data.NewSiteSettingServiceClient,
 
 	data.NewMediaAssetServiceClient,
+
+	data.NewBookServiceClient,
+	data.NewAccountServiceClient,
+	data.NewBalanceFlowServiceClient,
+	data.NewLedgerCategoryServiceClient,
+	data.NewLedgerTagServiceClient,
+	data.NewPayeeServiceClient,
+	data.NewNoteDayServiceClient,
+	data.NewCurrencyServiceClient,
+	data.NewReportServiceClient,
+	data.NewFlowFileServiceClient,
 )

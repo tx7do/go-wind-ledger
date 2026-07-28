@@ -1,0 +1,35 @@
+syntax = "proto3";
+
+package app.service.v1;
+
+import "google/api/annotations.proto";
+import "pagination/v1/pagination.proto";
+
+import "ledger/service/v1/currency.proto";
+
+service CurrencyService {
+  rpc ListAll (ledger.service.v1.ListAllCurrencyRequest) returns (ledger.service.v1.ListCurrencyResponse) {
+    option (google.api.http) = {
+      get: "/app/v1/currencies/all"
+    };
+  }
+
+  rpc List (pagination.PagingRequest) returns (ledger.service.v1.ListCurrencyResponse) {
+    option (google.api.http) = {
+      get: "/app/v1/currencies"
+    };
+  }
+
+  rpc Refresh (ledger.service.v1.RefreshCurrencyRequest) returns (ledger.service.v1.ListCurrencyResponse) {
+    option (google.api.http) = {
+      post: "/app/v1/currencies/refresh"
+      body: "*"
+    };
+  }
+
+  rpc Convert (ledger.service.v1.ConvertCurrencyRequest) returns (ledger.service.v1.ConvertCurrencyResponse) {
+    option (google.api.http) = {
+      get: "/app/v1/currencies/calc"
+    };
+  }
+}

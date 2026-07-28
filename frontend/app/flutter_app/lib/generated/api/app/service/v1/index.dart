@@ -71,360 +71,13 @@ enum AppErrorReason {
   String toString() => value;
 }
 
-/// 用户前台登录认证服务
-class AuthenticationServiceClient {
+class AccountServiceClient {
   final ClientTransport _transport;
 
-  AuthenticationServiceClient(this._transport);
+  AccountServiceClient(this._transport);
 
-  /// 登录
-  Future<AuthenticationServiceV1LoginResponse> login(AuthenticationServiceV1LoginRequest request, {Map<String, String>? headers}) async {
-    final path = '/app/v1/login';
-    final body = jsonEncode(request.toJson());
-    final result = await _transport.unary(path, 'POST', body, TransportMeta(
-      service: 'AuthenticationService',
-      method: 'Login',
-    ), headers: headers);
-    return AuthenticationServiceV1LoginResponse.fromJson(result as Map<String, dynamic>);
-  }
-
-  /// 登出
-  Future<Map<String, dynamic>> logout(Map<String, dynamic> request, {Map<String, String>? headers}) async {
-    final path = '/app/v1/logout';
-    final body = jsonEncode(request ?? {});
-    final result = await _transport.unary(path, 'POST', body, TransportMeta(
-      service: 'AuthenticationService',
-      method: 'Logout',
-    ), headers: headers);
-    return result as Map<String, dynamic>;
-  }
-
-  /// 刷新认证令牌
-  Future<AuthenticationServiceV1LoginResponse> refreshToken(AuthenticationServiceV1LoginRequest request, {Map<String, String>? headers}) async {
-    final path = '/app/v1/refresh-token';
-    final body = jsonEncode(request.toJson());
-    final result = await _transport.unary(path, 'POST', body, TransportMeta(
-      service: 'AuthenticationService',
-      method: 'RefreshToken',
-    ), headers: headers);
-    return AuthenticationServiceV1LoginResponse.fromJson(result as Map<String, dynamic>);
-  }
-}
-
-/// 用户登录 - 请求
-class AuthenticationServiceV1LoginRequest {
-  String? client_id;
-  String? client_secret;
-  AuthenticationServiceV1ClientType? client_type;
-  String? code;
-  String? device_id;
-  String? email;
-  ///
-  /// Behaviors: REQUIRED
-  AuthenticationServiceV1GrantType? grant_type;
-  String? jti;
-  String? mobile;
-  String? password;
-  String? redirect_uri;
-  String? refresh_token;
-  String? scope;
-  int? user_id;
-  String? username;
-
-  AuthenticationServiceV1LoginRequest({
-    this.client_id,
-    this.client_secret,
-    this.client_type,
-    this.code,
-    this.device_id,
-    this.email,
-    this.grant_type,
-    this.jti,
-    this.mobile,
-    this.password,
-    this.redirect_uri,
-    this.refresh_token,
-    this.scope,
-    this.user_id,
-    this.username,
-  });
-
-  factory AuthenticationServiceV1LoginRequest.fromJson(Map<String, dynamic> json) {
-    return AuthenticationServiceV1LoginRequest(
-      client_id: json['client_id'] as String?,
-      client_secret: json['client_secret'] as String?,
-      client_type: json['client_type'] != null ? AuthenticationServiceV1ClientType.fromString(json['client_type'] as String) : null,
-      code: json['code'] as String?,
-      device_id: json['device_id'] as String?,
-      email: json['email'] as String?,
-      grant_type: json['grant_type'] != null ? AuthenticationServiceV1GrantType.fromString(json['grant_type'] as String) : null,
-      jti: json['jti'] as String?,
-      mobile: json['mobile'] as String?,
-      password: json['password'] as String?,
-      redirect_uri: json['redirect_uri'] as String?,
-      refresh_token: json['refresh_token'] as String?,
-      scope: json['scope'] as String?,
-      user_id: json['user_id'] as int?,
-      username: json['username'] as String?,
-    );
-  }
-
-  Map<String, dynamic> toJson() {
-    final json = <String, dynamic>{};
-    if (client_id != null) json['client_id'] = client_id;
-    if (client_secret != null) json['client_secret'] = client_secret;
-    if (client_type != null) json['client_type'] = client_type!.value;
-    if (code != null) json['code'] = code;
-    if (device_id != null) json['device_id'] = device_id;
-    if (email != null) json['email'] = email;
-    if (grant_type != null) json['grant_type'] = grant_type!.value;
-    if (jti != null) json['jti'] = jti;
-    if (mobile != null) json['mobile'] = mobile;
-    if (password != null) json['password'] = password;
-    if (redirect_uri != null) json['redirect_uri'] = redirect_uri;
-    if (refresh_token != null) json['refresh_token'] = refresh_token;
-    if (scope != null) json['scope'] = scope;
-    if (user_id != null) json['user_id'] = user_id;
-    if (username != null) json['username'] = username;
-    return json;
-  }
-
-  @override
-  String toString() {
-    return 'AuthenticationServiceV1LoginRequest(client_id: $client_id, client_secret: $client_secret, client_type: $client_type, code: $code, device_id: $device_id, email: $email, grant_type: $grant_type, jti: $jti, mobile: $mobile, password: $password, redirect_uri: $redirect_uri, refresh_token: $refresh_token, scope: $scope, user_id: $user_id, username: $username)';
-  }
-
-  @override
-  bool operator ==(Object other) =>
-    identical(this, other) ||
-    other is AuthenticationServiceV1LoginRequest &&
-      runtimeType == other.runtimeType
-      && client_id == other.client_id
-      && client_secret == other.client_secret
-      && client_type == other.client_type
-      && code == other.code
-      && device_id == other.device_id
-      && email == other.email
-      && grant_type == other.grant_type
-      && jti == other.jti
-      && mobile == other.mobile
-      && password == other.password
-      && redirect_uri == other.redirect_uri
-      && refresh_token == other.refresh_token
-      && scope == other.scope
-      && user_id == other.user_id
-      && username == other.username
-    ;
-
-  @override
-  int get hashCode => Object.hashAll([
-    client_id,
-    client_secret,
-    client_type,
-    code,
-    device_id,
-    email,
-    grant_type,
-    jti,
-    mobile,
-    password,
-    redirect_uri,
-    refresh_token,
-    scope,
-    user_id,
-    username,
-  ]);
-
-  AuthenticationServiceV1LoginRequest copyWith({
-    String? client_id,
-    String? client_secret,
-    AuthenticationServiceV1ClientType? client_type,
-    String? code,
-    String? device_id,
-    String? email,
-    AuthenticationServiceV1GrantType? grant_type,
-    String? jti,
-    String? mobile,
-    String? password,
-    String? redirect_uri,
-    String? refresh_token,
-    String? scope,
-    int? user_id,
-    String? username,
-  }) {
-    return AuthenticationServiceV1LoginRequest(
-      client_id: client_id ?? this.client_id,
-      client_secret: client_secret ?? this.client_secret,
-      client_type: client_type ?? this.client_type,
-      code: code ?? this.code,
-      device_id: device_id ?? this.device_id,
-      email: email ?? this.email,
-      grant_type: grant_type ?? this.grant_type,
-      jti: jti ?? this.jti,
-      mobile: mobile ?? this.mobile,
-      password: password ?? this.password,
-      redirect_uri: redirect_uri ?? this.redirect_uri,
-      refresh_token: refresh_token ?? this.refresh_token,
-      scope: scope ?? this.scope,
-      user_id: user_id ?? this.user_id,
-      username: username ?? this.username,
-    );
-  }
-}
-
-/// 授权类型
-enum AuthenticationServiceV1GrantType {
-  authorizationCode('authorization_code'),
-  clientCredentials('client_credentials'),
-  implicit('implicit'),
-  password('password'),
-  refreshToken('refresh_token');
-
-  final String value;
-  const AuthenticationServiceV1GrantType(this.value);
-
-  static AuthenticationServiceV1GrantType fromString(String v) =>
-    values.firstWhere((e) => e.value == v, orElse: () => throw ArgumentError('Unknown AuthenticationServiceV1GrantType value: ' + v));
-  @override
-  String toString() => value;
-}
-
-/// 客户端类型
-enum AuthenticationServiceV1ClientType {
-  admin('admin'),
-  app('app');
-
-  final String value;
-  const AuthenticationServiceV1ClientType(this.value);
-
-  static AuthenticationServiceV1ClientType fromString(String v) =>
-    values.firstWhere((e) => e.value == v, orElse: () => throw ArgumentError('Unknown AuthenticationServiceV1ClientType value: ' + v));
-  @override
-  String toString() => value;
-}
-
-/// 用户登录 - 回应
-class AuthenticationServiceV1LoginResponse {
-  String? access_token;
-  int? expires_in;
-  String? id_token;
-  int? refresh_expires_in;
-  String? refresh_token;
-  String? scope;
-  AuthenticationServiceV1TokenType? token_type;
-
-  AuthenticationServiceV1LoginResponse({
-    this.access_token,
-    this.expires_in,
-    this.id_token,
-    this.refresh_expires_in,
-    this.refresh_token,
-    this.scope,
-    this.token_type,
-  });
-
-  factory AuthenticationServiceV1LoginResponse.fromJson(Map<String, dynamic> json) {
-    return AuthenticationServiceV1LoginResponse(
-      access_token: json['access_token'] as String?,
-      expires_in: json['expires_in'] != null ? int.parse(json['expires_in'].toString()) : null,
-      id_token: json['id_token'] as String?,
-      refresh_expires_in: json['refresh_expires_in'] != null ? int.parse(json['refresh_expires_in'].toString()) : null,
-      refresh_token: json['refresh_token'] as String?,
-      scope: json['scope'] as String?,
-      token_type: json['token_type'] != null ? AuthenticationServiceV1TokenType.fromString(json['token_type'] as String) : null,
-    );
-  }
-
-  Map<String, dynamic> toJson() {
-    final json = <String, dynamic>{};
-    if (access_token != null) json['access_token'] = access_token;
-    if (expires_in != null) json['expires_in'] = expires_in.toString();
-    if (id_token != null) json['id_token'] = id_token;
-    if (refresh_expires_in != null) json['refresh_expires_in'] = refresh_expires_in.toString();
-    if (refresh_token != null) json['refresh_token'] = refresh_token;
-    if (scope != null) json['scope'] = scope;
-    if (token_type != null) json['token_type'] = token_type!.value;
-    return json;
-  }
-
-  @override
-  String toString() {
-    return 'AuthenticationServiceV1LoginResponse(access_token: $access_token, expires_in: $expires_in, id_token: $id_token, refresh_expires_in: $refresh_expires_in, refresh_token: $refresh_token, scope: $scope, token_type: $token_type)';
-  }
-
-  @override
-  bool operator ==(Object other) =>
-    identical(this, other) ||
-    other is AuthenticationServiceV1LoginResponse &&
-      runtimeType == other.runtimeType
-      && access_token == other.access_token
-      && expires_in == other.expires_in
-      && id_token == other.id_token
-      && refresh_expires_in == other.refresh_expires_in
-      && refresh_token == other.refresh_token
-      && scope == other.scope
-      && token_type == other.token_type
-    ;
-
-  @override
-  int get hashCode => Object.hashAll([
-    access_token,
-    expires_in,
-    id_token,
-    refresh_expires_in,
-    refresh_token,
-    scope,
-    token_type,
-  ]);
-
-  AuthenticationServiceV1LoginResponse copyWith({
-    String? access_token,
-    int? expires_in,
-    String? id_token,
-    int? refresh_expires_in,
-    String? refresh_token,
-    String? scope,
-    AuthenticationServiceV1TokenType? token_type,
-  }) {
-    return AuthenticationServiceV1LoginResponse(
-      access_token: access_token ?? this.access_token,
-      expires_in: expires_in ?? this.expires_in,
-      id_token: id_token ?? this.id_token,
-      refresh_expires_in: refresh_expires_in ?? this.refresh_expires_in,
-      refresh_token: refresh_token ?? this.refresh_token,
-      scope: scope ?? this.scope,
-      token_type: token_type ?? this.token_type,
-    );
-  }
-}
-
-/// 令牌类型
-enum AuthenticationServiceV1TokenType {
-  bearer('bearer'),
-  mac('mac');
-
-  final String value;
-  const AuthenticationServiceV1TokenType(this.value);
-
-  static AuthenticationServiceV1TokenType fromString(String v) =>
-    values.firstWhere((e) => e.value == v, orElse: () => throw ArgumentError('Unknown AuthenticationServiceV1TokenType value: ' + v));
-  @override
-  String toString() => value;
-}
-
-/// Well-known type: Empty
-///
-/// Maps to Dart: `Map<String, dynamic>`.
-
-/// 类别服务
-class CategoryServiceClient {
-  final ClientTransport _transport;
-
-  CategoryServiceClient(this._transport);
-
-  /// 获取类别列表
-  Future<ContentServiceV1ListCategoryResponse> list(PaginationPagingRequest request, {Map<String, String>? headers}) async {
-    final path = '/app/v1/categories';
+  Future<LedgerServiceV1ListAccountResponse> list(PaginationPagingRequest request, {Map<String, String>? headers}) async {
+    final path = '/app/v1/accounts';
     final queryParams = <String>[];
     if (request.page != null) {
       queryParams.add('page=${Uri.encodeComponent(request.page!.toString())}');
@@ -464,25 +117,35 @@ class CategoryServiceClient {
       uri += '?${queryParams.join("&")}';
     }
     final result = await _transport.unary(uri, 'GET', null, TransportMeta(
-      service: 'CategoryService',
+      service: 'AccountService',
       method: 'List',
     ), headers: headers);
-    return ContentServiceV1ListCategoryResponse.fromJson(result as Map<String, dynamic>);
+    return LedgerServiceV1ListAccountResponse.fromJson(result as Map<String, dynamic>);
   }
 
-  /// 获取类别数据
-  Future<ContentServiceV1Category> get(ContentServiceV1GetCategoryRequest request, {Map<String, String>? headers}) async {
+  Future<LedgerServiceV1ListAccountResponse> listAll(LedgerServiceV1ListAllAccountRequest request, {Map<String, String>? headers}) async {
+    final path = '/app/v1/accounts/all';
+    final queryParams = <String>[];
+    if (request.includeDisabled != null) {
+      queryParams.add('includeDisabled=${Uri.encodeComponent(request.includeDisabled!.toString())}');
+    }
+    var uri = path;
+    if (queryParams.isNotEmpty) {
+      uri += '?${queryParams.join("&")}';
+    }
+    final result = await _transport.unary(uri, 'GET', null, TransportMeta(
+      service: 'AccountService',
+      method: 'ListAll',
+    ), headers: headers);
+    return LedgerServiceV1ListAccountResponse.fromJson(result as Map<String, dynamic>);
+  }
+
+  Future<LedgerServiceV1Account> get(LedgerServiceV1GetAccountRequest request, {Map<String, String>? headers}) async {
     if (request.id == null) {
       throw ArgumentError('missing required field request.id');
     }
-    final path = '/app/v1/categories/${request.id}';
+    final path = '/app/v1/accounts/${request.id}';
     final queryParams = <String>[];
-    if (request.code != null) {
-      queryParams.add('code=${Uri.encodeComponent(request.code!.toString())}');
-    }
-    if (request.locale != null) {
-      queryParams.add('locale=${Uri.encodeComponent(request.locale!.toString())}');
-    }
     if (request.viewMask != null) {
       queryParams.add('viewMask=${Uri.encodeComponent(request.viewMask!.toString())}');
     }
@@ -491,75 +154,71 @@ class CategoryServiceClient {
       uri += '?${queryParams.join("&")}';
     }
     final result = await _transport.unary(uri, 'GET', null, TransportMeta(
-      service: 'CategoryService',
+      service: 'AccountService',
       method: 'Get',
     ), headers: headers);
-    return ContentServiceV1Category.fromJson(result as Map<String, dynamic>);
+    return LedgerServiceV1Account.fromJson(result as Map<String, dynamic>);
   }
 
-  /// 创建类别
-  Future<ContentServiceV1Category> create(ContentServiceV1CreateCategoryRequest request, {Map<String, String>? headers}) async {
-    final path = '/app/v1/categories';
+  Future<LedgerServiceV1Account> create(LedgerServiceV1CreateAccountRequest request, {Map<String, String>? headers}) async {
+    final path = '/app/v1/accounts';
     final body = jsonEncode(request.toJson());
     final result = await _transport.unary(path, 'POST', body, TransportMeta(
-      service: 'CategoryService',
+      service: 'AccountService',
       method: 'Create',
     ), headers: headers);
-    return ContentServiceV1Category.fromJson(result as Map<String, dynamic>);
+    return LedgerServiceV1Account.fromJson(result as Map<String, dynamic>);
   }
 
-  /// 更新类别
-  Future<ContentServiceV1Category> update(ContentServiceV1UpdateCategoryRequest request, {Map<String, String>? headers}) async {
+  Future<LedgerServiceV1Account> update(LedgerServiceV1UpdateAccountRequest request, {Map<String, String>? headers}) async {
     if (request.id == null) {
       throw ArgumentError('missing required field request.id');
     }
-    final path = '/app/v1/categories/${request.id}';
+    final path = '/app/v1/accounts/${request.id}';
     final body = jsonEncode(request.toJson());
     final result = await _transport.unary(path, 'PUT', body, TransportMeta(
-      service: 'CategoryService',
+      service: 'AccountService',
       method: 'Update',
     ), headers: headers);
-    return ContentServiceV1Category.fromJson(result as Map<String, dynamic>);
+    return LedgerServiceV1Account.fromJson(result as Map<String, dynamic>);
   }
 
-  /// 删除类别
-  Future<Map<String, dynamic>> delete(ContentServiceV1DeleteCategoryRequest request, {Map<String, String>? headers}) async {
+  Future<Map<String, dynamic>> delete(LedgerServiceV1DeleteAccountRequest request, {Map<String, String>? headers}) async {
     if (request.id == null) {
       throw ArgumentError('missing required field request.id');
     }
-    final path = '/app/v1/categories/${request.id}';
+    final path = '/app/v1/accounts/${request.id}';
     final result = await _transport.unary(path, 'DELETE', null, TransportMeta(
-      service: 'CategoryService',
+      service: 'AccountService',
       method: 'Delete',
     ), headers: headers);
     return result as Map<String, dynamic>;
   }
 
-  /// 获取翻译数据
-  Future<ContentServiceV1CategoryTranslation> getTranslation(ContentServiceV1GetCategoryRequest request, {Map<String, String>? headers}) async {
+  Future<LedgerServiceV1Account> toggle(LedgerServiceV1ToggleAccountRequest request, {Map<String, String>? headers}) async {
     if (request.id == null) {
       throw ArgumentError('missing required field request.id');
     }
-    final path = '/app/v1/categories/${request.id}/translation';
-    final queryParams = <String>[];
-    if (request.code != null) {
-      queryParams.add('code=${Uri.encodeComponent(request.code!.toString())}');
-    }
-    if (request.locale != null) {
-      queryParams.add('locale=${Uri.encodeComponent(request.locale!.toString())}');
-    }
-    if (request.viewMask != null) {
-      queryParams.add('viewMask=${Uri.encodeComponent(request.viewMask!.toString())}');
-    }
-    var uri = path;
-    if (queryParams.isNotEmpty) {
-      uri += '?${queryParams.join("&")}';
-    }
-    final result = await _transport.unary(uri, 'GET', null, TransportMeta(
-      service: 'CategoryService',
-      method: 'GetTranslation',
+    final path = '/app/v1/accounts/${request.id}/toggle';
+    final body = jsonEncode(request.toJson());
+    final result = await _transport.unary(path, 'PATCH', body, TransportMeta(
+      service: 'AccountService',
+      method: 'Toggle',
     ), headers: headers);
-    return ContentServiceV1CategoryTranslation.fromJson(result as Map<String, dynamic>);
+    return LedgerServiceV1Account.fromJson(result as Map<String, dynamic>);
+  }
+
+  Future<LedgerServiceV1Account> adjustBalance(LedgerServiceV1AdjustBalanceRequest request, {Map<String, String>? headers}) async {
+    if (request.id == null) {
+      throw ArgumentError('missing required field request.id');
+    }
+    final path = '/app/v1/accounts/${request.id}/adjust';
+    final body = jsonEncode(request.toJson());
+    final result = await _transport.unary(path, 'POST', body, TransportMeta(
+      service: 'AccountService',
+      method: 'AdjustBalance',
+    ), headers: headers);
+    return LedgerServiceV1Account.fromJson(result as Map<String, dynamic>);
   }
 }
 
@@ -1043,6 +702,3011 @@ enum PaginationSorting$Direction {
 /// Well-known type: FieldMask
 ///
 /// Maps to Dart: `String` (comma-separated camelCase paths).
+
+/// 回应 - 账户列表
+class LedgerServiceV1ListAccountResponse {
+  List<LedgerServiceV1Account>? items;
+  int? total;
+
+  LedgerServiceV1ListAccountResponse({
+    this.items,
+    this.total,
+  });
+
+  factory LedgerServiceV1ListAccountResponse.fromJson(Map<String, dynamic> json) {
+    return LedgerServiceV1ListAccountResponse(
+      items: (json['items'] as List<dynamic>?)?.map((e) => LedgerServiceV1Account.fromJson(e as Map<String, dynamic>)).toList(),
+      total: json['total'] != null ? int.parse(json['total'].toString()) : null,
+    );
+  }
+
+  Map<String, dynamic> toJson() {
+    final json = <String, dynamic>{};
+    if (items != null) json['items'] = items!.map((e) => e.toJson()).toList();
+    if (total != null) json['total'] = total.toString();
+    return json;
+  }
+
+  @override
+  String toString() {
+    return 'LedgerServiceV1ListAccountResponse(items: $items, total: $total)';
+  }
+
+  @override
+  bool operator ==(Object other) =>
+    identical(this, other) ||
+    other is LedgerServiceV1ListAccountResponse &&
+      runtimeType == other.runtimeType
+      && items == other.items
+      && total == other.total
+    ;
+
+  @override
+  int get hashCode => Object.hashAll([
+    items,
+    total,
+  ]);
+
+  LedgerServiceV1ListAccountResponse copyWith({
+    List<LedgerServiceV1Account>? items,
+    int? total,
+  }) {
+    return LedgerServiceV1ListAccountResponse(
+      items: items ?? this.items,
+      total: total ?? this.total,
+    );
+  }
+}
+
+/// 账户
+class LedgerServiceV1Account {
+  String? apr;
+  String? balance;
+  int? billDay;
+  bool? canExpense;
+  bool? canIncome;
+  bool? canTransferFrom;
+  bool? canTransferTo;
+  String? createdAt;
+  int? createdBy;
+  String? creditLimit;
+  String? currencyCode;
+  String? deletedAt;
+  int? deletedBy;
+  bool? enable;
+  int? id;
+  bool? include;
+  String? initialBalance;
+  String? name;
+  String? no;
+  String? notes;
+  int? sortOrder;
+  int? tenantId;
+  LedgerServiceV1AccountType? type;
+  String? updatedAt;
+  int? updatedBy;
+
+  LedgerServiceV1Account({
+    this.apr,
+    this.balance,
+    this.billDay,
+    this.canExpense,
+    this.canIncome,
+    this.canTransferFrom,
+    this.canTransferTo,
+    this.createdAt,
+    this.createdBy,
+    this.creditLimit,
+    this.currencyCode,
+    this.deletedAt,
+    this.deletedBy,
+    this.enable,
+    this.id,
+    this.include,
+    this.initialBalance,
+    this.name,
+    this.no,
+    this.notes,
+    this.sortOrder,
+    this.tenantId,
+    this.type,
+    this.updatedAt,
+    this.updatedBy,
+  });
+
+  factory LedgerServiceV1Account.fromJson(Map<String, dynamic> json) {
+    return LedgerServiceV1Account(
+      apr: json['apr'] as String?,
+      balance: json['balance'] as String?,
+      billDay: json['billDay'] as int?,
+      canExpense: json['canExpense'] as bool?,
+      canIncome: json['canIncome'] as bool?,
+      canTransferFrom: json['canTransferFrom'] as bool?,
+      canTransferTo: json['canTransferTo'] as bool?,
+      createdAt: json['createdAt'] as String?,
+      createdBy: json['createdBy'] as int?,
+      creditLimit: json['creditLimit'] as String?,
+      currencyCode: json['currencyCode'] as String?,
+      deletedAt: json['deletedAt'] as String?,
+      deletedBy: json['deletedBy'] as int?,
+      enable: json['enable'] as bool?,
+      id: json['id'] as int?,
+      include: json['include'] as bool?,
+      initialBalance: json['initialBalance'] as String?,
+      name: json['name'] as String?,
+      no: json['no'] as String?,
+      notes: json['notes'] as String?,
+      sortOrder: json['sortOrder'] as int?,
+      tenantId: json['tenantId'] as int?,
+      type: json['type'] != null ? LedgerServiceV1AccountType.fromString(json['type'] as String) : null,
+      updatedAt: json['updatedAt'] as String?,
+      updatedBy: json['updatedBy'] as int?,
+    );
+  }
+
+  Map<String, dynamic> toJson() {
+    final json = <String, dynamic>{};
+    if (apr != null) json['apr'] = apr;
+    if (balance != null) json['balance'] = balance;
+    if (billDay != null) json['billDay'] = billDay;
+    if (canExpense != null) json['canExpense'] = canExpense;
+    if (canIncome != null) json['canIncome'] = canIncome;
+    if (canTransferFrom != null) json['canTransferFrom'] = canTransferFrom;
+    if (canTransferTo != null) json['canTransferTo'] = canTransferTo;
+    if (createdAt != null) json['createdAt'] = createdAt;
+    if (createdBy != null) json['createdBy'] = createdBy;
+    if (creditLimit != null) json['creditLimit'] = creditLimit;
+    if (currencyCode != null) json['currencyCode'] = currencyCode;
+    if (deletedAt != null) json['deletedAt'] = deletedAt;
+    if (deletedBy != null) json['deletedBy'] = deletedBy;
+    if (enable != null) json['enable'] = enable;
+    if (id != null) json['id'] = id;
+    if (include != null) json['include'] = include;
+    if (initialBalance != null) json['initialBalance'] = initialBalance;
+    if (name != null) json['name'] = name;
+    if (no != null) json['no'] = no;
+    if (notes != null) json['notes'] = notes;
+    if (sortOrder != null) json['sortOrder'] = sortOrder;
+    if (tenantId != null) json['tenantId'] = tenantId;
+    if (type != null) json['type'] = type!.value;
+    if (updatedAt != null) json['updatedAt'] = updatedAt;
+    if (updatedBy != null) json['updatedBy'] = updatedBy;
+    return json;
+  }
+
+  @override
+  String toString() {
+    return 'LedgerServiceV1Account(apr: $apr, balance: $balance, billDay: $billDay, canExpense: $canExpense, canIncome: $canIncome, canTransferFrom: $canTransferFrom, canTransferTo: $canTransferTo, createdAt: $createdAt, createdBy: $createdBy, creditLimit: $creditLimit, currencyCode: $currencyCode, deletedAt: $deletedAt, deletedBy: $deletedBy, enable: $enable, id: $id, include: $include, initialBalance: $initialBalance, name: $name, no: $no, notes: $notes, sortOrder: $sortOrder, tenantId: $tenantId, type: $type, updatedAt: $updatedAt, updatedBy: $updatedBy)';
+  }
+
+  @override
+  bool operator ==(Object other) =>
+    identical(this, other) ||
+    other is LedgerServiceV1Account &&
+      runtimeType == other.runtimeType
+      && apr == other.apr
+      && balance == other.balance
+      && billDay == other.billDay
+      && canExpense == other.canExpense
+      && canIncome == other.canIncome
+      && canTransferFrom == other.canTransferFrom
+      && canTransferTo == other.canTransferTo
+      && createdAt == other.createdAt
+      && createdBy == other.createdBy
+      && creditLimit == other.creditLimit
+      && currencyCode == other.currencyCode
+      && deletedAt == other.deletedAt
+      && deletedBy == other.deletedBy
+      && enable == other.enable
+      && id == other.id
+      && include == other.include
+      && initialBalance == other.initialBalance
+      && name == other.name
+      && no == other.no
+      && notes == other.notes
+      && sortOrder == other.sortOrder
+      && tenantId == other.tenantId
+      && type == other.type
+      && updatedAt == other.updatedAt
+      && updatedBy == other.updatedBy
+    ;
+
+  @override
+  int get hashCode => Object.hashAll([
+    apr,
+    balance,
+    billDay,
+    canExpense,
+    canIncome,
+    canTransferFrom,
+    canTransferTo,
+    createdAt,
+    createdBy,
+    creditLimit,
+    currencyCode,
+    deletedAt,
+    deletedBy,
+    enable,
+    id,
+    include,
+    initialBalance,
+    name,
+    no,
+    notes,
+    sortOrder,
+    tenantId,
+    type,
+    updatedAt,
+    updatedBy,
+  ]);
+
+  LedgerServiceV1Account copyWith({
+    String? apr,
+    String? balance,
+    int? billDay,
+    bool? canExpense,
+    bool? canIncome,
+    bool? canTransferFrom,
+    bool? canTransferTo,
+    String? createdAt,
+    int? createdBy,
+    String? creditLimit,
+    String? currencyCode,
+    String? deletedAt,
+    int? deletedBy,
+    bool? enable,
+    int? id,
+    bool? include,
+    String? initialBalance,
+    String? name,
+    String? no,
+    String? notes,
+    int? sortOrder,
+    int? tenantId,
+    LedgerServiceV1AccountType? type,
+    String? updatedAt,
+    int? updatedBy,
+  }) {
+    return LedgerServiceV1Account(
+      apr: apr ?? this.apr,
+      balance: balance ?? this.balance,
+      billDay: billDay ?? this.billDay,
+      canExpense: canExpense ?? this.canExpense,
+      canIncome: canIncome ?? this.canIncome,
+      canTransferFrom: canTransferFrom ?? this.canTransferFrom,
+      canTransferTo: canTransferTo ?? this.canTransferTo,
+      createdAt: createdAt ?? this.createdAt,
+      createdBy: createdBy ?? this.createdBy,
+      creditLimit: creditLimit ?? this.creditLimit,
+      currencyCode: currencyCode ?? this.currencyCode,
+      deletedAt: deletedAt ?? this.deletedAt,
+      deletedBy: deletedBy ?? this.deletedBy,
+      enable: enable ?? this.enable,
+      id: id ?? this.id,
+      include: include ?? this.include,
+      initialBalance: initialBalance ?? this.initialBalance,
+      name: name ?? this.name,
+      no: no ?? this.no,
+      notes: notes ?? this.notes,
+      sortOrder: sortOrder ?? this.sortOrder,
+      tenantId: tenantId ?? this.tenantId,
+      type: type ?? this.type,
+      updatedAt: updatedAt ?? this.updatedAt,
+      updatedBy: updatedBy ?? this.updatedBy,
+    );
+  }
+}
+
+/// 账户类型 — 对应 Java AccountType
+enum LedgerServiceV1AccountType {
+  accountTypeAsset('ACCOUNT_TYPE_ASSET'),
+  accountTypeChecking('ACCOUNT_TYPE_CHECKING'),
+  accountTypeCredit('ACCOUNT_TYPE_CREDIT'),
+  accountTypeDebt('ACCOUNT_TYPE_DEBT'),
+  accountTypeUnspecified('ACCOUNT_TYPE_UNSPECIFIED');
+
+  final String value;
+  const LedgerServiceV1AccountType(this.value);
+
+  static LedgerServiceV1AccountType fromString(String v) =>
+    values.firstWhere((e) => e.value == v, orElse: () => throw ArgumentError('Unknown LedgerServiceV1AccountType value: ' + v));
+  @override
+  String toString() => value;
+}
+
+/// Well-known type: Timestamp
+///
+/// Maps to Dart: `String` (RFC 3339, e.g. `"2021-01-01T00:00:00Z"`).
+
+/// 请求 - 获取所有账户
+class LedgerServiceV1ListAllAccountRequest {
+  bool? includeDisabled;
+
+  LedgerServiceV1ListAllAccountRequest({
+    this.includeDisabled,
+  });
+
+  factory LedgerServiceV1ListAllAccountRequest.fromJson(Map<String, dynamic> json) {
+    return LedgerServiceV1ListAllAccountRequest(
+      includeDisabled: json['includeDisabled'] as bool?,
+    );
+  }
+
+  Map<String, dynamic> toJson() {
+    final json = <String, dynamic>{};
+    if (includeDisabled != null) json['includeDisabled'] = includeDisabled;
+    return json;
+  }
+
+  @override
+  String toString() {
+    return 'LedgerServiceV1ListAllAccountRequest(includeDisabled: $includeDisabled)';
+  }
+
+  @override
+  bool operator ==(Object other) =>
+    identical(this, other) ||
+    other is LedgerServiceV1ListAllAccountRequest &&
+      runtimeType == other.runtimeType
+      && includeDisabled == other.includeDisabled
+    ;
+
+  @override
+  int get hashCode => Object.hashAll([
+    includeDisabled,
+  ]);
+
+  LedgerServiceV1ListAllAccountRequest copyWith({
+    bool? includeDisabled,
+  }) {
+    return LedgerServiceV1ListAllAccountRequest(
+      includeDisabled: includeDisabled ?? this.includeDisabled,
+    );
+  }
+}
+
+/// 请求 - 账户数据
+class LedgerServiceV1GetAccountRequest {
+  int? id;
+  String? viewMask;
+
+  LedgerServiceV1GetAccountRequest({
+    this.id,
+    this.viewMask,
+  });
+
+  factory LedgerServiceV1GetAccountRequest.fromJson(Map<String, dynamic> json) {
+    return LedgerServiceV1GetAccountRequest(
+      id: json['id'] as int?,
+      viewMask: json['viewMask'] as String?,
+    );
+  }
+
+  Map<String, dynamic> toJson() {
+    final json = <String, dynamic>{};
+    if (id != null) json['id'] = id;
+    if (viewMask != null) json['viewMask'] = viewMask;
+    return json;
+  }
+
+  @override
+  String toString() {
+    return 'LedgerServiceV1GetAccountRequest(id: $id, viewMask: $viewMask)';
+  }
+
+  @override
+  bool operator ==(Object other) =>
+    identical(this, other) ||
+    other is LedgerServiceV1GetAccountRequest &&
+      runtimeType == other.runtimeType
+      && id == other.id
+      && viewMask == other.viewMask
+    ;
+
+  @override
+  int get hashCode => Object.hashAll([
+    id,
+    viewMask,
+  ]);
+
+  LedgerServiceV1GetAccountRequest copyWith({
+    int? id,
+    String? viewMask,
+  }) {
+    return LedgerServiceV1GetAccountRequest(
+      id: id ?? this.id,
+      viewMask: viewMask ?? this.viewMask,
+    );
+  }
+}
+
+/// 请求 - 创建账户
+class LedgerServiceV1CreateAccountRequest {
+  LedgerServiceV1Account? data;
+
+  LedgerServiceV1CreateAccountRequest({
+    this.data,
+  });
+
+  factory LedgerServiceV1CreateAccountRequest.fromJson(Map<String, dynamic> json) {
+    return LedgerServiceV1CreateAccountRequest(
+      data: json['data'] != null ? LedgerServiceV1Account.fromJson(json['data'] as Map<String, dynamic>) : null,
+    );
+  }
+
+  Map<String, dynamic> toJson() {
+    final json = <String, dynamic>{};
+    if (data != null) json['data'] = data!.toJson();
+    return json;
+  }
+
+  @override
+  String toString() {
+    return 'LedgerServiceV1CreateAccountRequest(data: $data)';
+  }
+
+  @override
+  bool operator ==(Object other) =>
+    identical(this, other) ||
+    other is LedgerServiceV1CreateAccountRequest &&
+      runtimeType == other.runtimeType
+      && data == other.data
+    ;
+
+  @override
+  int get hashCode => Object.hashAll([
+    data,
+  ]);
+
+  LedgerServiceV1CreateAccountRequest copyWith({
+    LedgerServiceV1Account? data,
+  }) {
+    return LedgerServiceV1CreateAccountRequest(
+      data: data ?? this.data,
+    );
+  }
+}
+
+/// 请求 - 更新账户
+class LedgerServiceV1UpdateAccountRequest {
+  bool? allowMissing;
+  LedgerServiceV1Account? data;
+  int? id;
+  String? updateMask;
+
+  LedgerServiceV1UpdateAccountRequest({
+    this.allowMissing,
+    this.data,
+    this.id,
+    this.updateMask,
+  });
+
+  factory LedgerServiceV1UpdateAccountRequest.fromJson(Map<String, dynamic> json) {
+    return LedgerServiceV1UpdateAccountRequest(
+      allowMissing: json['allowMissing'] as bool?,
+      data: json['data'] != null ? LedgerServiceV1Account.fromJson(json['data'] as Map<String, dynamic>) : null,
+      id: json['id'] as int?,
+      updateMask: json['updateMask'] as String?,
+    );
+  }
+
+  Map<String, dynamic> toJson() {
+    final json = <String, dynamic>{};
+    if (allowMissing != null) json['allowMissing'] = allowMissing;
+    if (data != null) json['data'] = data!.toJson();
+    if (id != null) json['id'] = id;
+    if (updateMask != null) json['updateMask'] = updateMask;
+    return json;
+  }
+
+  @override
+  String toString() {
+    return 'LedgerServiceV1UpdateAccountRequest(allowMissing: $allowMissing, data: $data, id: $id, updateMask: $updateMask)';
+  }
+
+  @override
+  bool operator ==(Object other) =>
+    identical(this, other) ||
+    other is LedgerServiceV1UpdateAccountRequest &&
+      runtimeType == other.runtimeType
+      && allowMissing == other.allowMissing
+      && data == other.data
+      && id == other.id
+      && updateMask == other.updateMask
+    ;
+
+  @override
+  int get hashCode => Object.hashAll([
+    allowMissing,
+    data,
+    id,
+    updateMask,
+  ]);
+
+  LedgerServiceV1UpdateAccountRequest copyWith({
+    bool? allowMissing,
+    LedgerServiceV1Account? data,
+    int? id,
+    String? updateMask,
+  }) {
+    return LedgerServiceV1UpdateAccountRequest(
+      allowMissing: allowMissing ?? this.allowMissing,
+      data: data ?? this.data,
+      id: id ?? this.id,
+      updateMask: updateMask ?? this.updateMask,
+    );
+  }
+}
+
+/// 请求 - 删除账户
+class LedgerServiceV1DeleteAccountRequest {
+  int? id;
+
+  LedgerServiceV1DeleteAccountRequest({
+    this.id,
+  });
+
+  factory LedgerServiceV1DeleteAccountRequest.fromJson(Map<String, dynamic> json) {
+    return LedgerServiceV1DeleteAccountRequest(
+      id: json['id'] as int?,
+    );
+  }
+
+  Map<String, dynamic> toJson() {
+    final json = <String, dynamic>{};
+    if (id != null) json['id'] = id;
+    return json;
+  }
+
+  @override
+  String toString() {
+    return 'LedgerServiceV1DeleteAccountRequest(id: $id)';
+  }
+
+  @override
+  bool operator ==(Object other) =>
+    identical(this, other) ||
+    other is LedgerServiceV1DeleteAccountRequest &&
+      runtimeType == other.runtimeType
+      && id == other.id
+    ;
+
+  @override
+  int get hashCode => Object.hashAll([
+    id,
+  ]);
+
+  LedgerServiceV1DeleteAccountRequest copyWith({
+    int? id,
+  }) {
+    return LedgerServiceV1DeleteAccountRequest(
+      id: id ?? this.id,
+    );
+  }
+}
+
+/// Well-known type: Empty
+///
+/// Maps to Dart: `Map<String, dynamic>`.
+
+/// 请求 - 切换启用/禁用
+class LedgerServiceV1ToggleAccountRequest {
+  int? id;
+
+  LedgerServiceV1ToggleAccountRequest({
+    this.id,
+  });
+
+  factory LedgerServiceV1ToggleAccountRequest.fromJson(Map<String, dynamic> json) {
+    return LedgerServiceV1ToggleAccountRequest(
+      id: json['id'] as int?,
+    );
+  }
+
+  Map<String, dynamic> toJson() {
+    final json = <String, dynamic>{};
+    if (id != null) json['id'] = id;
+    return json;
+  }
+
+  @override
+  String toString() {
+    return 'LedgerServiceV1ToggleAccountRequest(id: $id)';
+  }
+
+  @override
+  bool operator ==(Object other) =>
+    identical(this, other) ||
+    other is LedgerServiceV1ToggleAccountRequest &&
+      runtimeType == other.runtimeType
+      && id == other.id
+    ;
+
+  @override
+  int get hashCode => Object.hashAll([
+    id,
+  ]);
+
+  LedgerServiceV1ToggleAccountRequest copyWith({
+    int? id,
+  }) {
+    return LedgerServiceV1ToggleAccountRequest(
+      id: id ?? this.id,
+    );
+  }
+}
+
+/// 请求 - 余额调整
+class LedgerServiceV1AdjustBalanceRequest {
+  /// 调整后的目标余额
+  String? balance;
+  /// 关联的账本（用于创建ADJUST流水记录）
+  int? bookId;
+  int? createTime;
+  int? id;
+  String? notes;
+  String? title;
+
+  LedgerServiceV1AdjustBalanceRequest({
+    this.balance,
+    this.bookId,
+    this.createTime,
+    this.id,
+    this.notes,
+    this.title,
+  });
+
+  factory LedgerServiceV1AdjustBalanceRequest.fromJson(Map<String, dynamic> json) {
+    return LedgerServiceV1AdjustBalanceRequest(
+      balance: json['balance'] as String?,
+      bookId: json['bookId'] as int?,
+      createTime: json['createTime'] != null ? int.parse(json['createTime'].toString()) : null,
+      id: json['id'] as int?,
+      notes: json['notes'] as String?,
+      title: json['title'] as String?,
+    );
+  }
+
+  Map<String, dynamic> toJson() {
+    final json = <String, dynamic>{};
+    if (balance != null) json['balance'] = balance;
+    if (bookId != null) json['bookId'] = bookId;
+    if (createTime != null) json['createTime'] = createTime.toString();
+    if (id != null) json['id'] = id;
+    if (notes != null) json['notes'] = notes;
+    if (title != null) json['title'] = title;
+    return json;
+  }
+
+  @override
+  String toString() {
+    return 'LedgerServiceV1AdjustBalanceRequest(balance: $balance, bookId: $bookId, createTime: $createTime, id: $id, notes: $notes, title: $title)';
+  }
+
+  @override
+  bool operator ==(Object other) =>
+    identical(this, other) ||
+    other is LedgerServiceV1AdjustBalanceRequest &&
+      runtimeType == other.runtimeType
+      && balance == other.balance
+      && bookId == other.bookId
+      && createTime == other.createTime
+      && id == other.id
+      && notes == other.notes
+      && title == other.title
+    ;
+
+  @override
+  int get hashCode => Object.hashAll([
+    balance,
+    bookId,
+    createTime,
+    id,
+    notes,
+    title,
+  ]);
+
+  LedgerServiceV1AdjustBalanceRequest copyWith({
+    String? balance,
+    int? bookId,
+    int? createTime,
+    int? id,
+    String? notes,
+    String? title,
+  }) {
+    return LedgerServiceV1AdjustBalanceRequest(
+      balance: balance ?? this.balance,
+      bookId: bookId ?? this.bookId,
+      createTime: createTime ?? this.createTime,
+      id: id ?? this.id,
+      notes: notes ?? this.notes,
+      title: title ?? this.title,
+    );
+  }
+}
+
+/// 用户前台登录认证服务
+class AuthenticationServiceClient {
+  final ClientTransport _transport;
+
+  AuthenticationServiceClient(this._transport);
+
+  /// 登录
+  Future<AuthenticationServiceV1LoginResponse> login(AuthenticationServiceV1LoginRequest request, {Map<String, String>? headers}) async {
+    final path = '/app/v1/login';
+    final body = jsonEncode(request.toJson());
+    final result = await _transport.unary(path, 'POST', body, TransportMeta(
+      service: 'AuthenticationService',
+      method: 'Login',
+    ), headers: headers);
+    return AuthenticationServiceV1LoginResponse.fromJson(result as Map<String, dynamic>);
+  }
+
+  /// 登出
+  Future<Map<String, dynamic>> logout(Map<String, dynamic> request, {Map<String, String>? headers}) async {
+    final path = '/app/v1/logout';
+    final body = jsonEncode(request ?? {});
+    final result = await _transport.unary(path, 'POST', body, TransportMeta(
+      service: 'AuthenticationService',
+      method: 'Logout',
+    ), headers: headers);
+    return result as Map<String, dynamic>;
+  }
+
+  /// 刷新认证令牌
+  Future<AuthenticationServiceV1LoginResponse> refreshToken(AuthenticationServiceV1LoginRequest request, {Map<String, String>? headers}) async {
+    final path = '/app/v1/refresh-token';
+    final body = jsonEncode(request.toJson());
+    final result = await _transport.unary(path, 'POST', body, TransportMeta(
+      service: 'AuthenticationService',
+      method: 'RefreshToken',
+    ), headers: headers);
+    return AuthenticationServiceV1LoginResponse.fromJson(result as Map<String, dynamic>);
+  }
+}
+
+/// 用户登录 - 请求
+class AuthenticationServiceV1LoginRequest {
+  String? client_id;
+  String? client_secret;
+  AuthenticationServiceV1ClientType? client_type;
+  String? code;
+  String? device_id;
+  String? email;
+  ///
+  /// Behaviors: REQUIRED
+  AuthenticationServiceV1GrantType? grant_type;
+  String? jti;
+  String? mobile;
+  String? password;
+  String? redirect_uri;
+  String? refresh_token;
+  String? scope;
+  int? user_id;
+  String? username;
+
+  AuthenticationServiceV1LoginRequest({
+    this.client_id,
+    this.client_secret,
+    this.client_type,
+    this.code,
+    this.device_id,
+    this.email,
+    this.grant_type,
+    this.jti,
+    this.mobile,
+    this.password,
+    this.redirect_uri,
+    this.refresh_token,
+    this.scope,
+    this.user_id,
+    this.username,
+  });
+
+  factory AuthenticationServiceV1LoginRequest.fromJson(Map<String, dynamic> json) {
+    return AuthenticationServiceV1LoginRequest(
+      client_id: json['client_id'] as String?,
+      client_secret: json['client_secret'] as String?,
+      client_type: json['client_type'] != null ? AuthenticationServiceV1ClientType.fromString(json['client_type'] as String) : null,
+      code: json['code'] as String?,
+      device_id: json['device_id'] as String?,
+      email: json['email'] as String?,
+      grant_type: json['grant_type'] != null ? AuthenticationServiceV1GrantType.fromString(json['grant_type'] as String) : null,
+      jti: json['jti'] as String?,
+      mobile: json['mobile'] as String?,
+      password: json['password'] as String?,
+      redirect_uri: json['redirect_uri'] as String?,
+      refresh_token: json['refresh_token'] as String?,
+      scope: json['scope'] as String?,
+      user_id: json['user_id'] as int?,
+      username: json['username'] as String?,
+    );
+  }
+
+  Map<String, dynamic> toJson() {
+    final json = <String, dynamic>{};
+    if (client_id != null) json['client_id'] = client_id;
+    if (client_secret != null) json['client_secret'] = client_secret;
+    if (client_type != null) json['client_type'] = client_type!.value;
+    if (code != null) json['code'] = code;
+    if (device_id != null) json['device_id'] = device_id;
+    if (email != null) json['email'] = email;
+    if (grant_type != null) json['grant_type'] = grant_type!.value;
+    if (jti != null) json['jti'] = jti;
+    if (mobile != null) json['mobile'] = mobile;
+    if (password != null) json['password'] = password;
+    if (redirect_uri != null) json['redirect_uri'] = redirect_uri;
+    if (refresh_token != null) json['refresh_token'] = refresh_token;
+    if (scope != null) json['scope'] = scope;
+    if (user_id != null) json['user_id'] = user_id;
+    if (username != null) json['username'] = username;
+    return json;
+  }
+
+  @override
+  String toString() {
+    return 'AuthenticationServiceV1LoginRequest(client_id: $client_id, client_secret: $client_secret, client_type: $client_type, code: $code, device_id: $device_id, email: $email, grant_type: $grant_type, jti: $jti, mobile: $mobile, password: $password, redirect_uri: $redirect_uri, refresh_token: $refresh_token, scope: $scope, user_id: $user_id, username: $username)';
+  }
+
+  @override
+  bool operator ==(Object other) =>
+    identical(this, other) ||
+    other is AuthenticationServiceV1LoginRequest &&
+      runtimeType == other.runtimeType
+      && client_id == other.client_id
+      && client_secret == other.client_secret
+      && client_type == other.client_type
+      && code == other.code
+      && device_id == other.device_id
+      && email == other.email
+      && grant_type == other.grant_type
+      && jti == other.jti
+      && mobile == other.mobile
+      && password == other.password
+      && redirect_uri == other.redirect_uri
+      && refresh_token == other.refresh_token
+      && scope == other.scope
+      && user_id == other.user_id
+      && username == other.username
+    ;
+
+  @override
+  int get hashCode => Object.hashAll([
+    client_id,
+    client_secret,
+    client_type,
+    code,
+    device_id,
+    email,
+    grant_type,
+    jti,
+    mobile,
+    password,
+    redirect_uri,
+    refresh_token,
+    scope,
+    user_id,
+    username,
+  ]);
+
+  AuthenticationServiceV1LoginRequest copyWith({
+    String? client_id,
+    String? client_secret,
+    AuthenticationServiceV1ClientType? client_type,
+    String? code,
+    String? device_id,
+    String? email,
+    AuthenticationServiceV1GrantType? grant_type,
+    String? jti,
+    String? mobile,
+    String? password,
+    String? redirect_uri,
+    String? refresh_token,
+    String? scope,
+    int? user_id,
+    String? username,
+  }) {
+    return AuthenticationServiceV1LoginRequest(
+      client_id: client_id ?? this.client_id,
+      client_secret: client_secret ?? this.client_secret,
+      client_type: client_type ?? this.client_type,
+      code: code ?? this.code,
+      device_id: device_id ?? this.device_id,
+      email: email ?? this.email,
+      grant_type: grant_type ?? this.grant_type,
+      jti: jti ?? this.jti,
+      mobile: mobile ?? this.mobile,
+      password: password ?? this.password,
+      redirect_uri: redirect_uri ?? this.redirect_uri,
+      refresh_token: refresh_token ?? this.refresh_token,
+      scope: scope ?? this.scope,
+      user_id: user_id ?? this.user_id,
+      username: username ?? this.username,
+    );
+  }
+}
+
+/// 授权类型
+enum AuthenticationServiceV1GrantType {
+  authorizationCode('authorization_code'),
+  clientCredentials('client_credentials'),
+  implicit('implicit'),
+  password('password'),
+  refreshToken('refresh_token');
+
+  final String value;
+  const AuthenticationServiceV1GrantType(this.value);
+
+  static AuthenticationServiceV1GrantType fromString(String v) =>
+    values.firstWhere((e) => e.value == v, orElse: () => throw ArgumentError('Unknown AuthenticationServiceV1GrantType value: ' + v));
+  @override
+  String toString() => value;
+}
+
+/// 客户端类型
+enum AuthenticationServiceV1ClientType {
+  admin('admin'),
+  app('app');
+
+  final String value;
+  const AuthenticationServiceV1ClientType(this.value);
+
+  static AuthenticationServiceV1ClientType fromString(String v) =>
+    values.firstWhere((e) => e.value == v, orElse: () => throw ArgumentError('Unknown AuthenticationServiceV1ClientType value: ' + v));
+  @override
+  String toString() => value;
+}
+
+/// 用户登录 - 回应
+class AuthenticationServiceV1LoginResponse {
+  String? access_token;
+  int? expires_in;
+  String? id_token;
+  int? refresh_expires_in;
+  String? refresh_token;
+  String? scope;
+  AuthenticationServiceV1TokenType? token_type;
+
+  AuthenticationServiceV1LoginResponse({
+    this.access_token,
+    this.expires_in,
+    this.id_token,
+    this.refresh_expires_in,
+    this.refresh_token,
+    this.scope,
+    this.token_type,
+  });
+
+  factory AuthenticationServiceV1LoginResponse.fromJson(Map<String, dynamic> json) {
+    return AuthenticationServiceV1LoginResponse(
+      access_token: json['access_token'] as String?,
+      expires_in: json['expires_in'] != null ? int.parse(json['expires_in'].toString()) : null,
+      id_token: json['id_token'] as String?,
+      refresh_expires_in: json['refresh_expires_in'] != null ? int.parse(json['refresh_expires_in'].toString()) : null,
+      refresh_token: json['refresh_token'] as String?,
+      scope: json['scope'] as String?,
+      token_type: json['token_type'] != null ? AuthenticationServiceV1TokenType.fromString(json['token_type'] as String) : null,
+    );
+  }
+
+  Map<String, dynamic> toJson() {
+    final json = <String, dynamic>{};
+    if (access_token != null) json['access_token'] = access_token;
+    if (expires_in != null) json['expires_in'] = expires_in.toString();
+    if (id_token != null) json['id_token'] = id_token;
+    if (refresh_expires_in != null) json['refresh_expires_in'] = refresh_expires_in.toString();
+    if (refresh_token != null) json['refresh_token'] = refresh_token;
+    if (scope != null) json['scope'] = scope;
+    if (token_type != null) json['token_type'] = token_type!.value;
+    return json;
+  }
+
+  @override
+  String toString() {
+    return 'AuthenticationServiceV1LoginResponse(access_token: $access_token, expires_in: $expires_in, id_token: $id_token, refresh_expires_in: $refresh_expires_in, refresh_token: $refresh_token, scope: $scope, token_type: $token_type)';
+  }
+
+  @override
+  bool operator ==(Object other) =>
+    identical(this, other) ||
+    other is AuthenticationServiceV1LoginResponse &&
+      runtimeType == other.runtimeType
+      && access_token == other.access_token
+      && expires_in == other.expires_in
+      && id_token == other.id_token
+      && refresh_expires_in == other.refresh_expires_in
+      && refresh_token == other.refresh_token
+      && scope == other.scope
+      && token_type == other.token_type
+    ;
+
+  @override
+  int get hashCode => Object.hashAll([
+    access_token,
+    expires_in,
+    id_token,
+    refresh_expires_in,
+    refresh_token,
+    scope,
+    token_type,
+  ]);
+
+  AuthenticationServiceV1LoginResponse copyWith({
+    String? access_token,
+    int? expires_in,
+    String? id_token,
+    int? refresh_expires_in,
+    String? refresh_token,
+    String? scope,
+    AuthenticationServiceV1TokenType? token_type,
+  }) {
+    return AuthenticationServiceV1LoginResponse(
+      access_token: access_token ?? this.access_token,
+      expires_in: expires_in ?? this.expires_in,
+      id_token: id_token ?? this.id_token,
+      refresh_expires_in: refresh_expires_in ?? this.refresh_expires_in,
+      refresh_token: refresh_token ?? this.refresh_token,
+      scope: scope ?? this.scope,
+      token_type: token_type ?? this.token_type,
+    );
+  }
+}
+
+/// 令牌类型
+enum AuthenticationServiceV1TokenType {
+  bearer('bearer'),
+  mac('mac');
+
+  final String value;
+  const AuthenticationServiceV1TokenType(this.value);
+
+  static AuthenticationServiceV1TokenType fromString(String v) =>
+    values.firstWhere((e) => e.value == v, orElse: () => throw ArgumentError('Unknown AuthenticationServiceV1TokenType value: ' + v));
+  @override
+  String toString() => value;
+}
+
+class BalanceFlowServiceClient {
+  final ClientTransport _transport;
+
+  BalanceFlowServiceClient(this._transport);
+
+  Future<LedgerServiceV1ListBalanceFlowResponse> list(PaginationPagingRequest request, {Map<String, String>? headers}) async {
+    final path = '/app/v1/balance-flows';
+    final queryParams = <String>[];
+    if (request.page != null) {
+      queryParams.add('page=${Uri.encodeComponent(request.page!.toString())}');
+    }
+    if (request.pageSize != null) {
+      queryParams.add('pageSize=${Uri.encodeComponent(request.pageSize!.toString())}');
+    }
+    if (request.offset != null) {
+      queryParams.add('offset=${Uri.encodeComponent(request.offset!.toString())}');
+    }
+    if (request.limit != null) {
+      queryParams.add('limit=${Uri.encodeComponent(request.limit!.toString())}');
+    }
+    if (request.token != null) {
+      queryParams.add('token=${Uri.encodeComponent(request.token!.toString())}');
+    }
+    if (request.noPaging != null) {
+      queryParams.add('noPaging=${Uri.encodeComponent(request.noPaging!.toString())}');
+    }
+    if (request.query != null) {
+      queryParams.add('query=${Uri.encodeComponent(request.query!.toString())}');
+    }
+    if (request.filter != null) {
+      queryParams.add('filter=${Uri.encodeComponent(request.filter!.toString())}');
+    }
+    if (request.filterExpr?.type != null) {
+      queryParams.add('filterExpr.type=${Uri.encodeComponent(request.filterExpr!.type!.toString())}');
+    }
+    if (request.orderBy != null) {
+      queryParams.add('orderBy=${Uri.encodeComponent(request.orderBy!.toString())}');
+    }
+    if (request.fieldMask != null) {
+      queryParams.add('fieldMask=${Uri.encodeComponent(request.fieldMask!.toString())}');
+    }
+    var uri = path;
+    if (queryParams.isNotEmpty) {
+      uri += '?${queryParams.join("&")}';
+    }
+    final result = await _transport.unary(uri, 'GET', null, TransportMeta(
+      service: 'BalanceFlowService',
+      method: 'List',
+    ), headers: headers);
+    return LedgerServiceV1ListBalanceFlowResponse.fromJson(result as Map<String, dynamic>);
+  }
+
+  Future<LedgerServiceV1BalanceFlow> get(LedgerServiceV1GetBalanceFlowRequest request, {Map<String, String>? headers}) async {
+    if (request.id == null) {
+      throw ArgumentError('missing required field request.id');
+    }
+    final path = '/app/v1/balance-flows/${request.id}';
+    final queryParams = <String>[];
+    if (request.viewMask != null) {
+      queryParams.add('viewMask=${Uri.encodeComponent(request.viewMask!.toString())}');
+    }
+    var uri = path;
+    if (queryParams.isNotEmpty) {
+      uri += '?${queryParams.join("&")}';
+    }
+    final result = await _transport.unary(uri, 'GET', null, TransportMeta(
+      service: 'BalanceFlowService',
+      method: 'Get',
+    ), headers: headers);
+    return LedgerServiceV1BalanceFlow.fromJson(result as Map<String, dynamic>);
+  }
+
+  Future<LedgerServiceV1BalanceFlow> create(LedgerServiceV1CreateBalanceFlowRequest request, {Map<String, String>? headers}) async {
+    final path = '/app/v1/balance-flows';
+    final body = jsonEncode(request.toJson());
+    final result = await _transport.unary(path, 'POST', body, TransportMeta(
+      service: 'BalanceFlowService',
+      method: 'Create',
+    ), headers: headers);
+    return LedgerServiceV1BalanceFlow.fromJson(result as Map<String, dynamic>);
+  }
+
+  Future<LedgerServiceV1BalanceFlow> update(LedgerServiceV1UpdateBalanceFlowRequest request, {Map<String, String>? headers}) async {
+    if (request.id == null) {
+      throw ArgumentError('missing required field request.id');
+    }
+    final path = '/app/v1/balance-flows/${request.id}';
+    final body = jsonEncode(request.toJson());
+    final result = await _transport.unary(path, 'PUT', body, TransportMeta(
+      service: 'BalanceFlowService',
+      method: 'Update',
+    ), headers: headers);
+    return LedgerServiceV1BalanceFlow.fromJson(result as Map<String, dynamic>);
+  }
+
+  Future<Map<String, dynamic>> delete(LedgerServiceV1DeleteBalanceFlowRequest request, {Map<String, String>? headers}) async {
+    if (request.id == null) {
+      throw ArgumentError('missing required field request.id');
+    }
+    final path = '/app/v1/balance-flows/${request.id}';
+    final result = await _transport.unary(path, 'DELETE', null, TransportMeta(
+      service: 'BalanceFlowService',
+      method: 'Delete',
+    ), headers: headers);
+    return result as Map<String, dynamic>;
+  }
+
+  Future<LedgerServiceV1BalanceFlow> confirm(LedgerServiceV1ConfirmBalanceFlowRequest request, {Map<String, String>? headers}) async {
+    if (request.id == null) {
+      throw ArgumentError('missing required field request.id');
+    }
+    final path = '/app/v1/balance-flows/${request.id}/confirm';
+    final body = jsonEncode(request.toJson());
+    final result = await _transport.unary(path, 'PATCH', body, TransportMeta(
+      service: 'BalanceFlowService',
+      method: 'Confirm',
+    ), headers: headers);
+    return LedgerServiceV1BalanceFlow.fromJson(result as Map<String, dynamic>);
+  }
+
+  Future<LedgerServiceV1StatisticsResponse> statistics(LedgerServiceV1StatisticsRequest request, {Map<String, String>? headers}) async {
+    final path = '/app/v1/balance-flows/statistics';
+    final queryParams = <String>[];
+    if (request.bookId != null) {
+      queryParams.add('bookId=${Uri.encodeComponent(request.bookId!.toString())}');
+    }
+    if (request.type != null) {
+      queryParams.add('type=${Uri.encodeComponent(request.type!.toString())}');
+    }
+    if (request.title != null) {
+      queryParams.add('title=${Uri.encodeComponent(request.title!.toString())}');
+    }
+    if (request.minAmount != null) {
+      queryParams.add('minAmount=${Uri.encodeComponent(request.minAmount!.toString())}');
+    }
+    if (request.maxAmount != null) {
+      queryParams.add('maxAmount=${Uri.encodeComponent(request.maxAmount!.toString())}');
+    }
+    if (request.minTime != null) {
+      queryParams.add('minTime=${Uri.encodeComponent(request.minTime!.toString())}');
+    }
+    if (request.maxTime != null) {
+      queryParams.add('maxTime=${Uri.encodeComponent(request.maxTime!.toString())}');
+    }
+    if (request.accountId != null) {
+      queryParams.add('accountId=${Uri.encodeComponent(request.accountId!.toString())}');
+    }
+    if (request.categoryIds != null) {
+      request.categoryIds!.forEach((x) {
+        queryParams.add('categoryIds=${Uri.encodeComponent(x.toString())}');
+      });
+    }
+    if (request.tagIds != null) {
+      request.tagIds!.forEach((x) {
+        queryParams.add('tagIds=${Uri.encodeComponent(x.toString())}');
+      });
+    }
+    if (request.confirm != null) {
+      queryParams.add('confirm=${Uri.encodeComponent(request.confirm!.toString())}');
+    }
+    if (request.include != null) {
+      queryParams.add('include=${Uri.encodeComponent(request.include!.toString())}');
+    }
+    var uri = path;
+    if (queryParams.isNotEmpty) {
+      uri += '?${queryParams.join("&")}';
+    }
+    final result = await _transport.unary(uri, 'GET', null, TransportMeta(
+      service: 'BalanceFlowService',
+      method: 'Statistics',
+    ), headers: headers);
+    return LedgerServiceV1StatisticsResponse.fromJson(result as Map<String, dynamic>);
+  }
+}
+
+/// 回应 - 流水列表
+class LedgerServiceV1ListBalanceFlowResponse {
+  List<LedgerServiceV1BalanceFlow>? items;
+  int? total;
+
+  LedgerServiceV1ListBalanceFlowResponse({
+    this.items,
+    this.total,
+  });
+
+  factory LedgerServiceV1ListBalanceFlowResponse.fromJson(Map<String, dynamic> json) {
+    return LedgerServiceV1ListBalanceFlowResponse(
+      items: (json['items'] as List<dynamic>?)?.map((e) => LedgerServiceV1BalanceFlow.fromJson(e as Map<String, dynamic>)).toList(),
+      total: json['total'] != null ? int.parse(json['total'].toString()) : null,
+    );
+  }
+
+  Map<String, dynamic> toJson() {
+    final json = <String, dynamic>{};
+    if (items != null) json['items'] = items!.map((e) => e.toJson()).toList();
+    if (total != null) json['total'] = total.toString();
+    return json;
+  }
+
+  @override
+  String toString() {
+    return 'LedgerServiceV1ListBalanceFlowResponse(items: $items, total: $total)';
+  }
+
+  @override
+  bool operator ==(Object other) =>
+    identical(this, other) ||
+    other is LedgerServiceV1ListBalanceFlowResponse &&
+      runtimeType == other.runtimeType
+      && items == other.items
+      && total == other.total
+    ;
+
+  @override
+  int get hashCode => Object.hashAll([
+    items,
+    total,
+  ]);
+
+  LedgerServiceV1ListBalanceFlowResponse copyWith({
+    List<LedgerServiceV1BalanceFlow>? items,
+    int? total,
+  }) {
+    return LedgerServiceV1ListBalanceFlowResponse(
+      items: items ?? this.items,
+      total: total ?? this.total,
+    );
+  }
+}
+
+/// 余额流水
+class LedgerServiceV1BalanceFlow {
+  int? accountId;
+  String? amount;
+  int? bookId;
+  /// 关联的类别拆分
+  List<LedgerServiceV1CategoryRelation>? categories;
+  bool? confirm;
+  String? convertedAmount;
+  String? createdAt;
+  int? createdBy;
+  int? createTime;
+  int? creatorId;
+  String? deletedAt;
+  int? deletedBy;
+  int? id;
+  bool? include;
+  int? insertAt;
+  String? notes;
+  int? payeeId;
+  /// 关联的标签拆分
+  List<LedgerServiceV1TagRelation>? tags;
+  int? tenantId;
+  String? title;
+  int? toAccountId;
+  LedgerServiceV1FlowType? type;
+  String? updatedAt;
+  int? updatedBy;
+
+  LedgerServiceV1BalanceFlow({
+    this.accountId,
+    this.amount,
+    this.bookId,
+    this.categories,
+    this.confirm,
+    this.convertedAmount,
+    this.createdAt,
+    this.createdBy,
+    this.createTime,
+    this.creatorId,
+    this.deletedAt,
+    this.deletedBy,
+    this.id,
+    this.include,
+    this.insertAt,
+    this.notes,
+    this.payeeId,
+    this.tags,
+    this.tenantId,
+    this.title,
+    this.toAccountId,
+    this.type,
+    this.updatedAt,
+    this.updatedBy,
+  });
+
+  factory LedgerServiceV1BalanceFlow.fromJson(Map<String, dynamic> json) {
+    return LedgerServiceV1BalanceFlow(
+      accountId: json['accountId'] as int?,
+      amount: json['amount'] as String?,
+      bookId: json['bookId'] as int?,
+      categories: (json['categories'] as List<dynamic>?)?.map((e) => LedgerServiceV1CategoryRelation.fromJson(e as Map<String, dynamic>)).toList(),
+      confirm: json['confirm'] as bool?,
+      convertedAmount: json['convertedAmount'] as String?,
+      createdAt: json['createdAt'] as String?,
+      createdBy: json['createdBy'] as int?,
+      createTime: json['createTime'] != null ? int.parse(json['createTime'].toString()) : null,
+      creatorId: json['creatorId'] as int?,
+      deletedAt: json['deletedAt'] as String?,
+      deletedBy: json['deletedBy'] as int?,
+      id: json['id'] as int?,
+      include: json['include'] as bool?,
+      insertAt: json['insertAt'] != null ? int.parse(json['insertAt'].toString()) : null,
+      notes: json['notes'] as String?,
+      payeeId: json['payeeId'] as int?,
+      tags: (json['tags'] as List<dynamic>?)?.map((e) => LedgerServiceV1TagRelation.fromJson(e as Map<String, dynamic>)).toList(),
+      tenantId: json['tenantId'] as int?,
+      title: json['title'] as String?,
+      toAccountId: json['toAccountId'] as int?,
+      type: json['type'] != null ? LedgerServiceV1FlowType.fromString(json['type'] as String) : null,
+      updatedAt: json['updatedAt'] as String?,
+      updatedBy: json['updatedBy'] as int?,
+    );
+  }
+
+  Map<String, dynamic> toJson() {
+    final json = <String, dynamic>{};
+    if (accountId != null) json['accountId'] = accountId;
+    if (amount != null) json['amount'] = amount;
+    if (bookId != null) json['bookId'] = bookId;
+    if (categories != null) json['categories'] = categories!.map((e) => e.toJson()).toList();
+    if (confirm != null) json['confirm'] = confirm;
+    if (convertedAmount != null) json['convertedAmount'] = convertedAmount;
+    if (createdAt != null) json['createdAt'] = createdAt;
+    if (createdBy != null) json['createdBy'] = createdBy;
+    if (createTime != null) json['createTime'] = createTime.toString();
+    if (creatorId != null) json['creatorId'] = creatorId;
+    if (deletedAt != null) json['deletedAt'] = deletedAt;
+    if (deletedBy != null) json['deletedBy'] = deletedBy;
+    if (id != null) json['id'] = id;
+    if (include != null) json['include'] = include;
+    if (insertAt != null) json['insertAt'] = insertAt.toString();
+    if (notes != null) json['notes'] = notes;
+    if (payeeId != null) json['payeeId'] = payeeId;
+    if (tags != null) json['tags'] = tags!.map((e) => e.toJson()).toList();
+    if (tenantId != null) json['tenantId'] = tenantId;
+    if (title != null) json['title'] = title;
+    if (toAccountId != null) json['toAccountId'] = toAccountId;
+    if (type != null) json['type'] = type!.value;
+    if (updatedAt != null) json['updatedAt'] = updatedAt;
+    if (updatedBy != null) json['updatedBy'] = updatedBy;
+    return json;
+  }
+
+  @override
+  String toString() {
+    return 'LedgerServiceV1BalanceFlow(accountId: $accountId, amount: $amount, bookId: $bookId, categories: $categories, confirm: $confirm, convertedAmount: $convertedAmount, createdAt: $createdAt, createdBy: $createdBy, createTime: $createTime, creatorId: $creatorId, deletedAt: $deletedAt, deletedBy: $deletedBy, id: $id, include: $include, insertAt: $insertAt, notes: $notes, payeeId: $payeeId, tags: $tags, tenantId: $tenantId, title: $title, toAccountId: $toAccountId, type: $type, updatedAt: $updatedAt, updatedBy: $updatedBy)';
+  }
+
+  @override
+  bool operator ==(Object other) =>
+    identical(this, other) ||
+    other is LedgerServiceV1BalanceFlow &&
+      runtimeType == other.runtimeType
+      && accountId == other.accountId
+      && amount == other.amount
+      && bookId == other.bookId
+      && categories == other.categories
+      && confirm == other.confirm
+      && convertedAmount == other.convertedAmount
+      && createdAt == other.createdAt
+      && createdBy == other.createdBy
+      && createTime == other.createTime
+      && creatorId == other.creatorId
+      && deletedAt == other.deletedAt
+      && deletedBy == other.deletedBy
+      && id == other.id
+      && include == other.include
+      && insertAt == other.insertAt
+      && notes == other.notes
+      && payeeId == other.payeeId
+      && tags == other.tags
+      && tenantId == other.tenantId
+      && title == other.title
+      && toAccountId == other.toAccountId
+      && type == other.type
+      && updatedAt == other.updatedAt
+      && updatedBy == other.updatedBy
+    ;
+
+  @override
+  int get hashCode => Object.hashAll([
+    accountId,
+    amount,
+    bookId,
+    categories,
+    confirm,
+    convertedAmount,
+    createdAt,
+    createdBy,
+    createTime,
+    creatorId,
+    deletedAt,
+    deletedBy,
+    id,
+    include,
+    insertAt,
+    notes,
+    payeeId,
+    tags,
+    tenantId,
+    title,
+    toAccountId,
+    type,
+    updatedAt,
+    updatedBy,
+  ]);
+
+  LedgerServiceV1BalanceFlow copyWith({
+    int? accountId,
+    String? amount,
+    int? bookId,
+    List<LedgerServiceV1CategoryRelation>? categories,
+    bool? confirm,
+    String? convertedAmount,
+    String? createdAt,
+    int? createdBy,
+    int? createTime,
+    int? creatorId,
+    String? deletedAt,
+    int? deletedBy,
+    int? id,
+    bool? include,
+    int? insertAt,
+    String? notes,
+    int? payeeId,
+    List<LedgerServiceV1TagRelation>? tags,
+    int? tenantId,
+    String? title,
+    int? toAccountId,
+    LedgerServiceV1FlowType? type,
+    String? updatedAt,
+    int? updatedBy,
+  }) {
+    return LedgerServiceV1BalanceFlow(
+      accountId: accountId ?? this.accountId,
+      amount: amount ?? this.amount,
+      bookId: bookId ?? this.bookId,
+      categories: categories ?? this.categories,
+      confirm: confirm ?? this.confirm,
+      convertedAmount: convertedAmount ?? this.convertedAmount,
+      createdAt: createdAt ?? this.createdAt,
+      createdBy: createdBy ?? this.createdBy,
+      createTime: createTime ?? this.createTime,
+      creatorId: creatorId ?? this.creatorId,
+      deletedAt: deletedAt ?? this.deletedAt,
+      deletedBy: deletedBy ?? this.deletedBy,
+      id: id ?? this.id,
+      include: include ?? this.include,
+      insertAt: insertAt ?? this.insertAt,
+      notes: notes ?? this.notes,
+      payeeId: payeeId ?? this.payeeId,
+      tags: tags ?? this.tags,
+      tenantId: tenantId ?? this.tenantId,
+      title: title ?? this.title,
+      toAccountId: toAccountId ?? this.toAccountId,
+      type: type ?? this.type,
+      updatedAt: updatedAt ?? this.updatedAt,
+      updatedBy: updatedBy ?? this.updatedBy,
+    );
+  }
+}
+
+/// 流水类型 — 对应 Java FlowType
+enum LedgerServiceV1FlowType {
+  flowTypeAdjust('FLOW_TYPE_ADJUST'),
+  flowTypeExpense('FLOW_TYPE_EXPENSE'),
+  flowTypeIncome('FLOW_TYPE_INCOME'),
+  flowTypeTransfer('FLOW_TYPE_TRANSFER'),
+  flowTypeUnspecified('FLOW_TYPE_UNSPECIFIED');
+
+  final String value;
+  const LedgerServiceV1FlowType(this.value);
+
+  static LedgerServiceV1FlowType fromString(String v) =>
+    values.firstWhere((e) => e.value == v, orElse: () => throw ArgumentError('Unknown LedgerServiceV1FlowType value: ' + v));
+  @override
+  String toString() => value;
+}
+
+/// 类别关系（一条流水可拆分到多个类别）
+class LedgerServiceV1CategoryRelation {
+  String? amount;
+  int? categoryId;
+  String? convertedAmount;
+  int? id;
+
+  LedgerServiceV1CategoryRelation({
+    this.amount,
+    this.categoryId,
+    this.convertedAmount,
+    this.id,
+  });
+
+  factory LedgerServiceV1CategoryRelation.fromJson(Map<String, dynamic> json) {
+    return LedgerServiceV1CategoryRelation(
+      amount: json['amount'] as String?,
+      categoryId: json['categoryId'] as int?,
+      convertedAmount: json['convertedAmount'] as String?,
+      id: json['id'] as int?,
+    );
+  }
+
+  Map<String, dynamic> toJson() {
+    final json = <String, dynamic>{};
+    if (amount != null) json['amount'] = amount;
+    if (categoryId != null) json['categoryId'] = categoryId;
+    if (convertedAmount != null) json['convertedAmount'] = convertedAmount;
+    if (id != null) json['id'] = id;
+    return json;
+  }
+
+  @override
+  String toString() {
+    return 'LedgerServiceV1CategoryRelation(amount: $amount, categoryId: $categoryId, convertedAmount: $convertedAmount, id: $id)';
+  }
+
+  @override
+  bool operator ==(Object other) =>
+    identical(this, other) ||
+    other is LedgerServiceV1CategoryRelation &&
+      runtimeType == other.runtimeType
+      && amount == other.amount
+      && categoryId == other.categoryId
+      && convertedAmount == other.convertedAmount
+      && id == other.id
+    ;
+
+  @override
+  int get hashCode => Object.hashAll([
+    amount,
+    categoryId,
+    convertedAmount,
+    id,
+  ]);
+
+  LedgerServiceV1CategoryRelation copyWith({
+    String? amount,
+    int? categoryId,
+    String? convertedAmount,
+    int? id,
+  }) {
+    return LedgerServiceV1CategoryRelation(
+      amount: amount ?? this.amount,
+      categoryId: categoryId ?? this.categoryId,
+      convertedAmount: convertedAmount ?? this.convertedAmount,
+      id: id ?? this.id,
+    );
+  }
+}
+
+/// 标签关系
+class LedgerServiceV1TagRelation {
+  String? amount;
+  String? convertedAmount;
+  int? id;
+  int? tagId;
+
+  LedgerServiceV1TagRelation({
+    this.amount,
+    this.convertedAmount,
+    this.id,
+    this.tagId,
+  });
+
+  factory LedgerServiceV1TagRelation.fromJson(Map<String, dynamic> json) {
+    return LedgerServiceV1TagRelation(
+      amount: json['amount'] as String?,
+      convertedAmount: json['convertedAmount'] as String?,
+      id: json['id'] as int?,
+      tagId: json['tagId'] as int?,
+    );
+  }
+
+  Map<String, dynamic> toJson() {
+    final json = <String, dynamic>{};
+    if (amount != null) json['amount'] = amount;
+    if (convertedAmount != null) json['convertedAmount'] = convertedAmount;
+    if (id != null) json['id'] = id;
+    if (tagId != null) json['tagId'] = tagId;
+    return json;
+  }
+
+  @override
+  String toString() {
+    return 'LedgerServiceV1TagRelation(amount: $amount, convertedAmount: $convertedAmount, id: $id, tagId: $tagId)';
+  }
+
+  @override
+  bool operator ==(Object other) =>
+    identical(this, other) ||
+    other is LedgerServiceV1TagRelation &&
+      runtimeType == other.runtimeType
+      && amount == other.amount
+      && convertedAmount == other.convertedAmount
+      && id == other.id
+      && tagId == other.tagId
+    ;
+
+  @override
+  int get hashCode => Object.hashAll([
+    amount,
+    convertedAmount,
+    id,
+    tagId,
+  ]);
+
+  LedgerServiceV1TagRelation copyWith({
+    String? amount,
+    String? convertedAmount,
+    int? id,
+    int? tagId,
+  }) {
+    return LedgerServiceV1TagRelation(
+      amount: amount ?? this.amount,
+      convertedAmount: convertedAmount ?? this.convertedAmount,
+      id: id ?? this.id,
+      tagId: tagId ?? this.tagId,
+    );
+  }
+}
+
+/// 请求 - 流水数据
+class LedgerServiceV1GetBalanceFlowRequest {
+  int? id;
+  String? viewMask;
+
+  LedgerServiceV1GetBalanceFlowRequest({
+    this.id,
+    this.viewMask,
+  });
+
+  factory LedgerServiceV1GetBalanceFlowRequest.fromJson(Map<String, dynamic> json) {
+    return LedgerServiceV1GetBalanceFlowRequest(
+      id: json['id'] as int?,
+      viewMask: json['viewMask'] as String?,
+    );
+  }
+
+  Map<String, dynamic> toJson() {
+    final json = <String, dynamic>{};
+    if (id != null) json['id'] = id;
+    if (viewMask != null) json['viewMask'] = viewMask;
+    return json;
+  }
+
+  @override
+  String toString() {
+    return 'LedgerServiceV1GetBalanceFlowRequest(id: $id, viewMask: $viewMask)';
+  }
+
+  @override
+  bool operator ==(Object other) =>
+    identical(this, other) ||
+    other is LedgerServiceV1GetBalanceFlowRequest &&
+      runtimeType == other.runtimeType
+      && id == other.id
+      && viewMask == other.viewMask
+    ;
+
+  @override
+  int get hashCode => Object.hashAll([
+    id,
+    viewMask,
+  ]);
+
+  LedgerServiceV1GetBalanceFlowRequest copyWith({
+    int? id,
+    String? viewMask,
+  }) {
+    return LedgerServiceV1GetBalanceFlowRequest(
+      id: id ?? this.id,
+      viewMask: viewMask ?? this.viewMask,
+    );
+  }
+}
+
+/// 请求 - 创建流水
+class LedgerServiceV1CreateBalanceFlowRequest {
+  LedgerServiceV1BalanceFlow? data;
+
+  LedgerServiceV1CreateBalanceFlowRequest({
+    this.data,
+  });
+
+  factory LedgerServiceV1CreateBalanceFlowRequest.fromJson(Map<String, dynamic> json) {
+    return LedgerServiceV1CreateBalanceFlowRequest(
+      data: json['data'] != null ? LedgerServiceV1BalanceFlow.fromJson(json['data'] as Map<String, dynamic>) : null,
+    );
+  }
+
+  Map<String, dynamic> toJson() {
+    final json = <String, dynamic>{};
+    if (data != null) json['data'] = data!.toJson();
+    return json;
+  }
+
+  @override
+  String toString() {
+    return 'LedgerServiceV1CreateBalanceFlowRequest(data: $data)';
+  }
+
+  @override
+  bool operator ==(Object other) =>
+    identical(this, other) ||
+    other is LedgerServiceV1CreateBalanceFlowRequest &&
+      runtimeType == other.runtimeType
+      && data == other.data
+    ;
+
+  @override
+  int get hashCode => Object.hashAll([
+    data,
+  ]);
+
+  LedgerServiceV1CreateBalanceFlowRequest copyWith({
+    LedgerServiceV1BalanceFlow? data,
+  }) {
+    return LedgerServiceV1CreateBalanceFlowRequest(
+      data: data ?? this.data,
+    );
+  }
+}
+
+/// 请求 - 更新流水
+class LedgerServiceV1UpdateBalanceFlowRequest {
+  bool? allowMissing;
+  LedgerServiceV1BalanceFlow? data;
+  int? id;
+  String? updateMask;
+
+  LedgerServiceV1UpdateBalanceFlowRequest({
+    this.allowMissing,
+    this.data,
+    this.id,
+    this.updateMask,
+  });
+
+  factory LedgerServiceV1UpdateBalanceFlowRequest.fromJson(Map<String, dynamic> json) {
+    return LedgerServiceV1UpdateBalanceFlowRequest(
+      allowMissing: json['allowMissing'] as bool?,
+      data: json['data'] != null ? LedgerServiceV1BalanceFlow.fromJson(json['data'] as Map<String, dynamic>) : null,
+      id: json['id'] as int?,
+      updateMask: json['updateMask'] as String?,
+    );
+  }
+
+  Map<String, dynamic> toJson() {
+    final json = <String, dynamic>{};
+    if (allowMissing != null) json['allowMissing'] = allowMissing;
+    if (data != null) json['data'] = data!.toJson();
+    if (id != null) json['id'] = id;
+    if (updateMask != null) json['updateMask'] = updateMask;
+    return json;
+  }
+
+  @override
+  String toString() {
+    return 'LedgerServiceV1UpdateBalanceFlowRequest(allowMissing: $allowMissing, data: $data, id: $id, updateMask: $updateMask)';
+  }
+
+  @override
+  bool operator ==(Object other) =>
+    identical(this, other) ||
+    other is LedgerServiceV1UpdateBalanceFlowRequest &&
+      runtimeType == other.runtimeType
+      && allowMissing == other.allowMissing
+      && data == other.data
+      && id == other.id
+      && updateMask == other.updateMask
+    ;
+
+  @override
+  int get hashCode => Object.hashAll([
+    allowMissing,
+    data,
+    id,
+    updateMask,
+  ]);
+
+  LedgerServiceV1UpdateBalanceFlowRequest copyWith({
+    bool? allowMissing,
+    LedgerServiceV1BalanceFlow? data,
+    int? id,
+    String? updateMask,
+  }) {
+    return LedgerServiceV1UpdateBalanceFlowRequest(
+      allowMissing: allowMissing ?? this.allowMissing,
+      data: data ?? this.data,
+      id: id ?? this.id,
+      updateMask: updateMask ?? this.updateMask,
+    );
+  }
+}
+
+/// 请求 - 删除流水
+class LedgerServiceV1DeleteBalanceFlowRequest {
+  int? id;
+
+  LedgerServiceV1DeleteBalanceFlowRequest({
+    this.id,
+  });
+
+  factory LedgerServiceV1DeleteBalanceFlowRequest.fromJson(Map<String, dynamic> json) {
+    return LedgerServiceV1DeleteBalanceFlowRequest(
+      id: json['id'] as int?,
+    );
+  }
+
+  Map<String, dynamic> toJson() {
+    final json = <String, dynamic>{};
+    if (id != null) json['id'] = id;
+    return json;
+  }
+
+  @override
+  String toString() {
+    return 'LedgerServiceV1DeleteBalanceFlowRequest(id: $id)';
+  }
+
+  @override
+  bool operator ==(Object other) =>
+    identical(this, other) ||
+    other is LedgerServiceV1DeleteBalanceFlowRequest &&
+      runtimeType == other.runtimeType
+      && id == other.id
+    ;
+
+  @override
+  int get hashCode => Object.hashAll([
+    id,
+  ]);
+
+  LedgerServiceV1DeleteBalanceFlowRequest copyWith({
+    int? id,
+  }) {
+    return LedgerServiceV1DeleteBalanceFlowRequest(
+      id: id ?? this.id,
+    );
+  }
+}
+
+/// 请求 - 确认流水（更新账户余额）
+class LedgerServiceV1ConfirmBalanceFlowRequest {
+  int? id;
+
+  LedgerServiceV1ConfirmBalanceFlowRequest({
+    this.id,
+  });
+
+  factory LedgerServiceV1ConfirmBalanceFlowRequest.fromJson(Map<String, dynamic> json) {
+    return LedgerServiceV1ConfirmBalanceFlowRequest(
+      id: json['id'] as int?,
+    );
+  }
+
+  Map<String, dynamic> toJson() {
+    final json = <String, dynamic>{};
+    if (id != null) json['id'] = id;
+    return json;
+  }
+
+  @override
+  String toString() {
+    return 'LedgerServiceV1ConfirmBalanceFlowRequest(id: $id)';
+  }
+
+  @override
+  bool operator ==(Object other) =>
+    identical(this, other) ||
+    other is LedgerServiceV1ConfirmBalanceFlowRequest &&
+      runtimeType == other.runtimeType
+      && id == other.id
+    ;
+
+  @override
+  int get hashCode => Object.hashAll([
+    id,
+  ]);
+
+  LedgerServiceV1ConfirmBalanceFlowRequest copyWith({
+    int? id,
+  }) {
+    return LedgerServiceV1ConfirmBalanceFlowRequest(
+      id: id ?? this.id,
+    );
+  }
+}
+
+/// 请求 - 统计
+class LedgerServiceV1StatisticsRequest {
+  int? accountId;
+  int? bookId;
+  List<int>? categoryIds;
+  bool? confirm;
+  bool? include;
+  String? maxAmount;
+  int? maxTime;
+  String? minAmount;
+  int? minTime;
+  List<int>? tagIds;
+  String? title;
+  LedgerServiceV1FlowType? type;
+
+  LedgerServiceV1StatisticsRequest({
+    this.accountId,
+    this.bookId,
+    this.categoryIds,
+    this.confirm,
+    this.include,
+    this.maxAmount,
+    this.maxTime,
+    this.minAmount,
+    this.minTime,
+    this.tagIds,
+    this.title,
+    this.type,
+  });
+
+  factory LedgerServiceV1StatisticsRequest.fromJson(Map<String, dynamic> json) {
+    return LedgerServiceV1StatisticsRequest(
+      accountId: json['accountId'] as int?,
+      bookId: json['bookId'] as int?,
+      categoryIds: (json['categoryIds'] as List<dynamic>?)?.map((e) => e as int).toList(),
+      confirm: json['confirm'] as bool?,
+      include: json['include'] as bool?,
+      maxAmount: json['maxAmount'] as String?,
+      maxTime: json['maxTime'] != null ? int.parse(json['maxTime'].toString()) : null,
+      minAmount: json['minAmount'] as String?,
+      minTime: json['minTime'] != null ? int.parse(json['minTime'].toString()) : null,
+      tagIds: (json['tagIds'] as List<dynamic>?)?.map((e) => e as int).toList(),
+      title: json['title'] as String?,
+      type: json['type'] != null ? LedgerServiceV1FlowType.fromString(json['type'] as String) : null,
+    );
+  }
+
+  Map<String, dynamic> toJson() {
+    final json = <String, dynamic>{};
+    if (accountId != null) json['accountId'] = accountId;
+    if (bookId != null) json['bookId'] = bookId;
+    if (categoryIds != null) json['categoryIds'] = categoryIds;
+    if (confirm != null) json['confirm'] = confirm;
+    if (include != null) json['include'] = include;
+    if (maxAmount != null) json['maxAmount'] = maxAmount;
+    if (maxTime != null) json['maxTime'] = maxTime.toString();
+    if (minAmount != null) json['minAmount'] = minAmount;
+    if (minTime != null) json['minTime'] = minTime.toString();
+    if (tagIds != null) json['tagIds'] = tagIds;
+    if (title != null) json['title'] = title;
+    if (type != null) json['type'] = type!.value;
+    return json;
+  }
+
+  @override
+  String toString() {
+    return 'LedgerServiceV1StatisticsRequest(accountId: $accountId, bookId: $bookId, categoryIds: $categoryIds, confirm: $confirm, include: $include, maxAmount: $maxAmount, maxTime: $maxTime, minAmount: $minAmount, minTime: $minTime, tagIds: $tagIds, title: $title, type: $type)';
+  }
+
+  @override
+  bool operator ==(Object other) =>
+    identical(this, other) ||
+    other is LedgerServiceV1StatisticsRequest &&
+      runtimeType == other.runtimeType
+      && accountId == other.accountId
+      && bookId == other.bookId
+      && categoryIds == other.categoryIds
+      && confirm == other.confirm
+      && include == other.include
+      && maxAmount == other.maxAmount
+      && maxTime == other.maxTime
+      && minAmount == other.minAmount
+      && minTime == other.minTime
+      && tagIds == other.tagIds
+      && title == other.title
+      && type == other.type
+    ;
+
+  @override
+  int get hashCode => Object.hashAll([
+    accountId,
+    bookId,
+    categoryIds,
+    confirm,
+    include,
+    maxAmount,
+    maxTime,
+    minAmount,
+    minTime,
+    tagIds,
+    title,
+    type,
+  ]);
+
+  LedgerServiceV1StatisticsRequest copyWith({
+    int? accountId,
+    int? bookId,
+    List<int>? categoryIds,
+    bool? confirm,
+    bool? include,
+    String? maxAmount,
+    int? maxTime,
+    String? minAmount,
+    int? minTime,
+    List<int>? tagIds,
+    String? title,
+    LedgerServiceV1FlowType? type,
+  }) {
+    return LedgerServiceV1StatisticsRequest(
+      accountId: accountId ?? this.accountId,
+      bookId: bookId ?? this.bookId,
+      categoryIds: categoryIds ?? this.categoryIds,
+      confirm: confirm ?? this.confirm,
+      include: include ?? this.include,
+      maxAmount: maxAmount ?? this.maxAmount,
+      maxTime: maxTime ?? this.maxTime,
+      minAmount: minAmount ?? this.minAmount,
+      minTime: minTime ?? this.minTime,
+      tagIds: tagIds ?? this.tagIds,
+      title: title ?? this.title,
+      type: type ?? this.type,
+    );
+  }
+}
+
+/// 回应 - 统计
+class LedgerServiceV1StatisticsResponse {
+  String? expense;
+  String? income;
+  String? net;
+
+  LedgerServiceV1StatisticsResponse({
+    this.expense,
+    this.income,
+    this.net,
+  });
+
+  factory LedgerServiceV1StatisticsResponse.fromJson(Map<String, dynamic> json) {
+    return LedgerServiceV1StatisticsResponse(
+      expense: json['expense'] as String?,
+      income: json['income'] as String?,
+      net: json['net'] as String?,
+    );
+  }
+
+  Map<String, dynamic> toJson() {
+    final json = <String, dynamic>{};
+    if (expense != null) json['expense'] = expense;
+    if (income != null) json['income'] = income;
+    if (net != null) json['net'] = net;
+    return json;
+  }
+
+  @override
+  String toString() {
+    return 'LedgerServiceV1StatisticsResponse(expense: $expense, income: $income, net: $net)';
+  }
+
+  @override
+  bool operator ==(Object other) =>
+    identical(this, other) ||
+    other is LedgerServiceV1StatisticsResponse &&
+      runtimeType == other.runtimeType
+      && expense == other.expense
+      && income == other.income
+      && net == other.net
+    ;
+
+  @override
+  int get hashCode => Object.hashAll([
+    expense,
+    income,
+    net,
+  ]);
+
+  LedgerServiceV1StatisticsResponse copyWith({
+    String? expense,
+    String? income,
+    String? net,
+  }) {
+    return LedgerServiceV1StatisticsResponse(
+      expense: expense ?? this.expense,
+      income: income ?? this.income,
+      net: net ?? this.net,
+    );
+  }
+}
+
+class BookServiceClient {
+  final ClientTransport _transport;
+
+  BookServiceClient(this._transport);
+
+  Future<LedgerServiceV1ListBookResponse> list(PaginationPagingRequest request, {Map<String, String>? headers}) async {
+    final path = '/app/v1/books';
+    final queryParams = <String>[];
+    if (request.page != null) {
+      queryParams.add('page=${Uri.encodeComponent(request.page!.toString())}');
+    }
+    if (request.pageSize != null) {
+      queryParams.add('pageSize=${Uri.encodeComponent(request.pageSize!.toString())}');
+    }
+    if (request.offset != null) {
+      queryParams.add('offset=${Uri.encodeComponent(request.offset!.toString())}');
+    }
+    if (request.limit != null) {
+      queryParams.add('limit=${Uri.encodeComponent(request.limit!.toString())}');
+    }
+    if (request.token != null) {
+      queryParams.add('token=${Uri.encodeComponent(request.token!.toString())}');
+    }
+    if (request.noPaging != null) {
+      queryParams.add('noPaging=${Uri.encodeComponent(request.noPaging!.toString())}');
+    }
+    if (request.query != null) {
+      queryParams.add('query=${Uri.encodeComponent(request.query!.toString())}');
+    }
+    if (request.filter != null) {
+      queryParams.add('filter=${Uri.encodeComponent(request.filter!.toString())}');
+    }
+    if (request.filterExpr?.type != null) {
+      queryParams.add('filterExpr.type=${Uri.encodeComponent(request.filterExpr!.type!.toString())}');
+    }
+    if (request.orderBy != null) {
+      queryParams.add('orderBy=${Uri.encodeComponent(request.orderBy!.toString())}');
+    }
+    if (request.fieldMask != null) {
+      queryParams.add('fieldMask=${Uri.encodeComponent(request.fieldMask!.toString())}');
+    }
+    var uri = path;
+    if (queryParams.isNotEmpty) {
+      uri += '?${queryParams.join("&")}';
+    }
+    final result = await _transport.unary(uri, 'GET', null, TransportMeta(
+      service: 'BookService',
+      method: 'List',
+    ), headers: headers);
+    return LedgerServiceV1ListBookResponse.fromJson(result as Map<String, dynamic>);
+  }
+
+  Future<LedgerServiceV1ListBookResponse> listAll(LedgerServiceV1ListAllBookRequest request, {Map<String, String>? headers}) async {
+    final path = '/app/v1/books/all';
+    final queryParams = <String>[];
+    if (request.includeDisabled != null) {
+      queryParams.add('includeDisabled=${Uri.encodeComponent(request.includeDisabled!.toString())}');
+    }
+    var uri = path;
+    if (queryParams.isNotEmpty) {
+      uri += '?${queryParams.join("&")}';
+    }
+    final result = await _transport.unary(uri, 'GET', null, TransportMeta(
+      service: 'BookService',
+      method: 'ListAll',
+    ), headers: headers);
+    return LedgerServiceV1ListBookResponse.fromJson(result as Map<String, dynamic>);
+  }
+
+  Future<LedgerServiceV1Book> get(LedgerServiceV1GetBookRequest request, {Map<String, String>? headers}) async {
+    if (request.id == null) {
+      throw ArgumentError('missing required field request.id');
+    }
+    final path = '/app/v1/books/${request.id}';
+    final queryParams = <String>[];
+    if (request.viewMask != null) {
+      queryParams.add('viewMask=${Uri.encodeComponent(request.viewMask!.toString())}');
+    }
+    var uri = path;
+    if (queryParams.isNotEmpty) {
+      uri += '?${queryParams.join("&")}';
+    }
+    final result = await _transport.unary(uri, 'GET', null, TransportMeta(
+      service: 'BookService',
+      method: 'Get',
+    ), headers: headers);
+    return LedgerServiceV1Book.fromJson(result as Map<String, dynamic>);
+  }
+
+  Future<LedgerServiceV1Book> create(LedgerServiceV1CreateBookRequest request, {Map<String, String>? headers}) async {
+    final path = '/app/v1/books';
+    final body = jsonEncode(request.toJson());
+    final result = await _transport.unary(path, 'POST', body, TransportMeta(
+      service: 'BookService',
+      method: 'Create',
+    ), headers: headers);
+    return LedgerServiceV1Book.fromJson(result as Map<String, dynamic>);
+  }
+
+  Future<LedgerServiceV1Book> update(LedgerServiceV1UpdateBookRequest request, {Map<String, String>? headers}) async {
+    if (request.id == null) {
+      throw ArgumentError('missing required field request.id');
+    }
+    final path = '/app/v1/books/${request.id}';
+    final body = jsonEncode(request.toJson());
+    final result = await _transport.unary(path, 'PUT', body, TransportMeta(
+      service: 'BookService',
+      method: 'Update',
+    ), headers: headers);
+    return LedgerServiceV1Book.fromJson(result as Map<String, dynamic>);
+  }
+
+  Future<Map<String, dynamic>> delete(LedgerServiceV1DeleteBookRequest request, {Map<String, String>? headers}) async {
+    if (request.id == null) {
+      throw ArgumentError('missing required field request.id');
+    }
+    final path = '/app/v1/books/${request.id}';
+    final result = await _transport.unary(path, 'DELETE', null, TransportMeta(
+      service: 'BookService',
+      method: 'Delete',
+    ), headers: headers);
+    return result as Map<String, dynamic>;
+  }
+
+  Future<LedgerServiceV1Book> toggle(LedgerServiceV1ToggleBookRequest request, {Map<String, String>? headers}) async {
+    if (request.id == null) {
+      throw ArgumentError('missing required field request.id');
+    }
+    final path = '/app/v1/books/${request.id}/toggle';
+    final body = jsonEncode(request.toJson());
+    final result = await _transport.unary(path, 'PATCH', body, TransportMeta(
+      service: 'BookService',
+      method: 'Toggle',
+    ), headers: headers);
+    return LedgerServiceV1Book.fromJson(result as Map<String, dynamic>);
+  }
+}
+
+/// 回应 - 账本列表
+class LedgerServiceV1ListBookResponse {
+  List<LedgerServiceV1Book>? items;
+  int? total;
+
+  LedgerServiceV1ListBookResponse({
+    this.items,
+    this.total,
+  });
+
+  factory LedgerServiceV1ListBookResponse.fromJson(Map<String, dynamic> json) {
+    return LedgerServiceV1ListBookResponse(
+      items: (json['items'] as List<dynamic>?)?.map((e) => LedgerServiceV1Book.fromJson(e as Map<String, dynamic>)).toList(),
+      total: json['total'] != null ? int.parse(json['total'].toString()) : null,
+    );
+  }
+
+  Map<String, dynamic> toJson() {
+    final json = <String, dynamic>{};
+    if (items != null) json['items'] = items!.map((e) => e.toJson()).toList();
+    if (total != null) json['total'] = total.toString();
+    return json;
+  }
+
+  @override
+  String toString() {
+    return 'LedgerServiceV1ListBookResponse(items: $items, total: $total)';
+  }
+
+  @override
+  bool operator ==(Object other) =>
+    identical(this, other) ||
+    other is LedgerServiceV1ListBookResponse &&
+      runtimeType == other.runtimeType
+      && items == other.items
+      && total == other.total
+    ;
+
+  @override
+  int get hashCode => Object.hashAll([
+    items,
+    total,
+  ]);
+
+  LedgerServiceV1ListBookResponse copyWith({
+    List<LedgerServiceV1Book>? items,
+    int? total,
+  }) {
+    return LedgerServiceV1ListBookResponse(
+      items: items ?? this.items,
+      total: total ?? this.total,
+    );
+  }
+}
+
+/// 账本
+class LedgerServiceV1Book {
+  String? createdAt;
+  int? createdBy;
+  String? defaultCurrencyCode;
+  /// 默认账户引用
+  int? defaultExpenseAccountId;
+  /// 默认分类引用
+  int? defaultExpenseCategoryId;
+  int? defaultIncomeAccountId;
+  int? defaultIncomeCategoryId;
+  int? defaultTransferFromAccountId;
+  int? defaultTransferToAccountId;
+  String? deletedAt;
+  int? deletedBy;
+  bool? enable;
+  int? exportAt;
+  int? id;
+  String? name;
+  String? notes;
+  int? sortOrder;
+  int? tenantId;
+  String? updatedAt;
+  int? updatedBy;
+
+  LedgerServiceV1Book({
+    this.createdAt,
+    this.createdBy,
+    this.defaultCurrencyCode,
+    this.defaultExpenseAccountId,
+    this.defaultExpenseCategoryId,
+    this.defaultIncomeAccountId,
+    this.defaultIncomeCategoryId,
+    this.defaultTransferFromAccountId,
+    this.defaultTransferToAccountId,
+    this.deletedAt,
+    this.deletedBy,
+    this.enable,
+    this.exportAt,
+    this.id,
+    this.name,
+    this.notes,
+    this.sortOrder,
+    this.tenantId,
+    this.updatedAt,
+    this.updatedBy,
+  });
+
+  factory LedgerServiceV1Book.fromJson(Map<String, dynamic> json) {
+    return LedgerServiceV1Book(
+      createdAt: json['createdAt'] as String?,
+      createdBy: json['createdBy'] as int?,
+      defaultCurrencyCode: json['defaultCurrencyCode'] as String?,
+      defaultExpenseAccountId: json['defaultExpenseAccountId'] as int?,
+      defaultExpenseCategoryId: json['defaultExpenseCategoryId'] as int?,
+      defaultIncomeAccountId: json['defaultIncomeAccountId'] as int?,
+      defaultIncomeCategoryId: json['defaultIncomeCategoryId'] as int?,
+      defaultTransferFromAccountId: json['defaultTransferFromAccountId'] as int?,
+      defaultTransferToAccountId: json['defaultTransferToAccountId'] as int?,
+      deletedAt: json['deletedAt'] as String?,
+      deletedBy: json['deletedBy'] as int?,
+      enable: json['enable'] as bool?,
+      exportAt: json['exportAt'] != null ? int.parse(json['exportAt'].toString()) : null,
+      id: json['id'] as int?,
+      name: json['name'] as String?,
+      notes: json['notes'] as String?,
+      sortOrder: json['sortOrder'] as int?,
+      tenantId: json['tenantId'] as int?,
+      updatedAt: json['updatedAt'] as String?,
+      updatedBy: json['updatedBy'] as int?,
+    );
+  }
+
+  Map<String, dynamic> toJson() {
+    final json = <String, dynamic>{};
+    if (createdAt != null) json['createdAt'] = createdAt;
+    if (createdBy != null) json['createdBy'] = createdBy;
+    if (defaultCurrencyCode != null) json['defaultCurrencyCode'] = defaultCurrencyCode;
+    if (defaultExpenseAccountId != null) json['defaultExpenseAccountId'] = defaultExpenseAccountId;
+    if (defaultExpenseCategoryId != null) json['defaultExpenseCategoryId'] = defaultExpenseCategoryId;
+    if (defaultIncomeAccountId != null) json['defaultIncomeAccountId'] = defaultIncomeAccountId;
+    if (defaultIncomeCategoryId != null) json['defaultIncomeCategoryId'] = defaultIncomeCategoryId;
+    if (defaultTransferFromAccountId != null) json['defaultTransferFromAccountId'] = defaultTransferFromAccountId;
+    if (defaultTransferToAccountId != null) json['defaultTransferToAccountId'] = defaultTransferToAccountId;
+    if (deletedAt != null) json['deletedAt'] = deletedAt;
+    if (deletedBy != null) json['deletedBy'] = deletedBy;
+    if (enable != null) json['enable'] = enable;
+    if (exportAt != null) json['exportAt'] = exportAt.toString();
+    if (id != null) json['id'] = id;
+    if (name != null) json['name'] = name;
+    if (notes != null) json['notes'] = notes;
+    if (sortOrder != null) json['sortOrder'] = sortOrder;
+    if (tenantId != null) json['tenantId'] = tenantId;
+    if (updatedAt != null) json['updatedAt'] = updatedAt;
+    if (updatedBy != null) json['updatedBy'] = updatedBy;
+    return json;
+  }
+
+  @override
+  String toString() {
+    return 'LedgerServiceV1Book(createdAt: $createdAt, createdBy: $createdBy, defaultCurrencyCode: $defaultCurrencyCode, defaultExpenseAccountId: $defaultExpenseAccountId, defaultExpenseCategoryId: $defaultExpenseCategoryId, defaultIncomeAccountId: $defaultIncomeAccountId, defaultIncomeCategoryId: $defaultIncomeCategoryId, defaultTransferFromAccountId: $defaultTransferFromAccountId, defaultTransferToAccountId: $defaultTransferToAccountId, deletedAt: $deletedAt, deletedBy: $deletedBy, enable: $enable, exportAt: $exportAt, id: $id, name: $name, notes: $notes, sortOrder: $sortOrder, tenantId: $tenantId, updatedAt: $updatedAt, updatedBy: $updatedBy)';
+  }
+
+  @override
+  bool operator ==(Object other) =>
+    identical(this, other) ||
+    other is LedgerServiceV1Book &&
+      runtimeType == other.runtimeType
+      && createdAt == other.createdAt
+      && createdBy == other.createdBy
+      && defaultCurrencyCode == other.defaultCurrencyCode
+      && defaultExpenseAccountId == other.defaultExpenseAccountId
+      && defaultExpenseCategoryId == other.defaultExpenseCategoryId
+      && defaultIncomeAccountId == other.defaultIncomeAccountId
+      && defaultIncomeCategoryId == other.defaultIncomeCategoryId
+      && defaultTransferFromAccountId == other.defaultTransferFromAccountId
+      && defaultTransferToAccountId == other.defaultTransferToAccountId
+      && deletedAt == other.deletedAt
+      && deletedBy == other.deletedBy
+      && enable == other.enable
+      && exportAt == other.exportAt
+      && id == other.id
+      && name == other.name
+      && notes == other.notes
+      && sortOrder == other.sortOrder
+      && tenantId == other.tenantId
+      && updatedAt == other.updatedAt
+      && updatedBy == other.updatedBy
+    ;
+
+  @override
+  int get hashCode => Object.hashAll([
+    createdAt,
+    createdBy,
+    defaultCurrencyCode,
+    defaultExpenseAccountId,
+    defaultExpenseCategoryId,
+    defaultIncomeAccountId,
+    defaultIncomeCategoryId,
+    defaultTransferFromAccountId,
+    defaultTransferToAccountId,
+    deletedAt,
+    deletedBy,
+    enable,
+    exportAt,
+    id,
+    name,
+    notes,
+    sortOrder,
+    tenantId,
+    updatedAt,
+    updatedBy,
+  ]);
+
+  LedgerServiceV1Book copyWith({
+    String? createdAt,
+    int? createdBy,
+    String? defaultCurrencyCode,
+    int? defaultExpenseAccountId,
+    int? defaultExpenseCategoryId,
+    int? defaultIncomeAccountId,
+    int? defaultIncomeCategoryId,
+    int? defaultTransferFromAccountId,
+    int? defaultTransferToAccountId,
+    String? deletedAt,
+    int? deletedBy,
+    bool? enable,
+    int? exportAt,
+    int? id,
+    String? name,
+    String? notes,
+    int? sortOrder,
+    int? tenantId,
+    String? updatedAt,
+    int? updatedBy,
+  }) {
+    return LedgerServiceV1Book(
+      createdAt: createdAt ?? this.createdAt,
+      createdBy: createdBy ?? this.createdBy,
+      defaultCurrencyCode: defaultCurrencyCode ?? this.defaultCurrencyCode,
+      defaultExpenseAccountId: defaultExpenseAccountId ?? this.defaultExpenseAccountId,
+      defaultExpenseCategoryId: defaultExpenseCategoryId ?? this.defaultExpenseCategoryId,
+      defaultIncomeAccountId: defaultIncomeAccountId ?? this.defaultIncomeAccountId,
+      defaultIncomeCategoryId: defaultIncomeCategoryId ?? this.defaultIncomeCategoryId,
+      defaultTransferFromAccountId: defaultTransferFromAccountId ?? this.defaultTransferFromAccountId,
+      defaultTransferToAccountId: defaultTransferToAccountId ?? this.defaultTransferToAccountId,
+      deletedAt: deletedAt ?? this.deletedAt,
+      deletedBy: deletedBy ?? this.deletedBy,
+      enable: enable ?? this.enable,
+      exportAt: exportAt ?? this.exportAt,
+      id: id ?? this.id,
+      name: name ?? this.name,
+      notes: notes ?? this.notes,
+      sortOrder: sortOrder ?? this.sortOrder,
+      tenantId: tenantId ?? this.tenantId,
+      updatedAt: updatedAt ?? this.updatedAt,
+      updatedBy: updatedBy ?? this.updatedBy,
+    );
+  }
+}
+
+/// 请求 - 获取所有账本
+class LedgerServiceV1ListAllBookRequest {
+  bool? includeDisabled;
+
+  LedgerServiceV1ListAllBookRequest({
+    this.includeDisabled,
+  });
+
+  factory LedgerServiceV1ListAllBookRequest.fromJson(Map<String, dynamic> json) {
+    return LedgerServiceV1ListAllBookRequest(
+      includeDisabled: json['includeDisabled'] as bool?,
+    );
+  }
+
+  Map<String, dynamic> toJson() {
+    final json = <String, dynamic>{};
+    if (includeDisabled != null) json['includeDisabled'] = includeDisabled;
+    return json;
+  }
+
+  @override
+  String toString() {
+    return 'LedgerServiceV1ListAllBookRequest(includeDisabled: $includeDisabled)';
+  }
+
+  @override
+  bool operator ==(Object other) =>
+    identical(this, other) ||
+    other is LedgerServiceV1ListAllBookRequest &&
+      runtimeType == other.runtimeType
+      && includeDisabled == other.includeDisabled
+    ;
+
+  @override
+  int get hashCode => Object.hashAll([
+    includeDisabled,
+  ]);
+
+  LedgerServiceV1ListAllBookRequest copyWith({
+    bool? includeDisabled,
+  }) {
+    return LedgerServiceV1ListAllBookRequest(
+      includeDisabled: includeDisabled ?? this.includeDisabled,
+    );
+  }
+}
+
+/// 请求 - 账本数据
+class LedgerServiceV1GetBookRequest {
+  int? id;
+  String? viewMask;
+
+  LedgerServiceV1GetBookRequest({
+    this.id,
+    this.viewMask,
+  });
+
+  factory LedgerServiceV1GetBookRequest.fromJson(Map<String, dynamic> json) {
+    return LedgerServiceV1GetBookRequest(
+      id: json['id'] as int?,
+      viewMask: json['viewMask'] as String?,
+    );
+  }
+
+  Map<String, dynamic> toJson() {
+    final json = <String, dynamic>{};
+    if (id != null) json['id'] = id;
+    if (viewMask != null) json['viewMask'] = viewMask;
+    return json;
+  }
+
+  @override
+  String toString() {
+    return 'LedgerServiceV1GetBookRequest(id: $id, viewMask: $viewMask)';
+  }
+
+  @override
+  bool operator ==(Object other) =>
+    identical(this, other) ||
+    other is LedgerServiceV1GetBookRequest &&
+      runtimeType == other.runtimeType
+      && id == other.id
+      && viewMask == other.viewMask
+    ;
+
+  @override
+  int get hashCode => Object.hashAll([
+    id,
+    viewMask,
+  ]);
+
+  LedgerServiceV1GetBookRequest copyWith({
+    int? id,
+    String? viewMask,
+  }) {
+    return LedgerServiceV1GetBookRequest(
+      id: id ?? this.id,
+      viewMask: viewMask ?? this.viewMask,
+    );
+  }
+}
+
+/// 请求 - 创建账本
+class LedgerServiceV1CreateBookRequest {
+  LedgerServiceV1Book? data;
+
+  LedgerServiceV1CreateBookRequest({
+    this.data,
+  });
+
+  factory LedgerServiceV1CreateBookRequest.fromJson(Map<String, dynamic> json) {
+    return LedgerServiceV1CreateBookRequest(
+      data: json['data'] != null ? LedgerServiceV1Book.fromJson(json['data'] as Map<String, dynamic>) : null,
+    );
+  }
+
+  Map<String, dynamic> toJson() {
+    final json = <String, dynamic>{};
+    if (data != null) json['data'] = data!.toJson();
+    return json;
+  }
+
+  @override
+  String toString() {
+    return 'LedgerServiceV1CreateBookRequest(data: $data)';
+  }
+
+  @override
+  bool operator ==(Object other) =>
+    identical(this, other) ||
+    other is LedgerServiceV1CreateBookRequest &&
+      runtimeType == other.runtimeType
+      && data == other.data
+    ;
+
+  @override
+  int get hashCode => Object.hashAll([
+    data,
+  ]);
+
+  LedgerServiceV1CreateBookRequest copyWith({
+    LedgerServiceV1Book? data,
+  }) {
+    return LedgerServiceV1CreateBookRequest(
+      data: data ?? this.data,
+    );
+  }
+}
+
+/// 请求 - 更新账本
+class LedgerServiceV1UpdateBookRequest {
+  bool? allowMissing;
+  LedgerServiceV1Book? data;
+  int? id;
+  String? updateMask;
+
+  LedgerServiceV1UpdateBookRequest({
+    this.allowMissing,
+    this.data,
+    this.id,
+    this.updateMask,
+  });
+
+  factory LedgerServiceV1UpdateBookRequest.fromJson(Map<String, dynamic> json) {
+    return LedgerServiceV1UpdateBookRequest(
+      allowMissing: json['allowMissing'] as bool?,
+      data: json['data'] != null ? LedgerServiceV1Book.fromJson(json['data'] as Map<String, dynamic>) : null,
+      id: json['id'] as int?,
+      updateMask: json['updateMask'] as String?,
+    );
+  }
+
+  Map<String, dynamic> toJson() {
+    final json = <String, dynamic>{};
+    if (allowMissing != null) json['allowMissing'] = allowMissing;
+    if (data != null) json['data'] = data!.toJson();
+    if (id != null) json['id'] = id;
+    if (updateMask != null) json['updateMask'] = updateMask;
+    return json;
+  }
+
+  @override
+  String toString() {
+    return 'LedgerServiceV1UpdateBookRequest(allowMissing: $allowMissing, data: $data, id: $id, updateMask: $updateMask)';
+  }
+
+  @override
+  bool operator ==(Object other) =>
+    identical(this, other) ||
+    other is LedgerServiceV1UpdateBookRequest &&
+      runtimeType == other.runtimeType
+      && allowMissing == other.allowMissing
+      && data == other.data
+      && id == other.id
+      && updateMask == other.updateMask
+    ;
+
+  @override
+  int get hashCode => Object.hashAll([
+    allowMissing,
+    data,
+    id,
+    updateMask,
+  ]);
+
+  LedgerServiceV1UpdateBookRequest copyWith({
+    bool? allowMissing,
+    LedgerServiceV1Book? data,
+    int? id,
+    String? updateMask,
+  }) {
+    return LedgerServiceV1UpdateBookRequest(
+      allowMissing: allowMissing ?? this.allowMissing,
+      data: data ?? this.data,
+      id: id ?? this.id,
+      updateMask: updateMask ?? this.updateMask,
+    );
+  }
+}
+
+/// 请求 - 删除账本
+class LedgerServiceV1DeleteBookRequest {
+  int? id;
+
+  LedgerServiceV1DeleteBookRequest({
+    this.id,
+  });
+
+  factory LedgerServiceV1DeleteBookRequest.fromJson(Map<String, dynamic> json) {
+    return LedgerServiceV1DeleteBookRequest(
+      id: json['id'] as int?,
+    );
+  }
+
+  Map<String, dynamic> toJson() {
+    final json = <String, dynamic>{};
+    if (id != null) json['id'] = id;
+    return json;
+  }
+
+  @override
+  String toString() {
+    return 'LedgerServiceV1DeleteBookRequest(id: $id)';
+  }
+
+  @override
+  bool operator ==(Object other) =>
+    identical(this, other) ||
+    other is LedgerServiceV1DeleteBookRequest &&
+      runtimeType == other.runtimeType
+      && id == other.id
+    ;
+
+  @override
+  int get hashCode => Object.hashAll([
+    id,
+  ]);
+
+  LedgerServiceV1DeleteBookRequest copyWith({
+    int? id,
+  }) {
+    return LedgerServiceV1DeleteBookRequest(
+      id: id ?? this.id,
+    );
+  }
+}
+
+/// 请求 - 切换启用/禁用
+class LedgerServiceV1ToggleBookRequest {
+  int? id;
+
+  LedgerServiceV1ToggleBookRequest({
+    this.id,
+  });
+
+  factory LedgerServiceV1ToggleBookRequest.fromJson(Map<String, dynamic> json) {
+    return LedgerServiceV1ToggleBookRequest(
+      id: json['id'] as int?,
+    );
+  }
+
+  Map<String, dynamic> toJson() {
+    final json = <String, dynamic>{};
+    if (id != null) json['id'] = id;
+    return json;
+  }
+
+  @override
+  String toString() {
+    return 'LedgerServiceV1ToggleBookRequest(id: $id)';
+  }
+
+  @override
+  bool operator ==(Object other) =>
+    identical(this, other) ||
+    other is LedgerServiceV1ToggleBookRequest &&
+      runtimeType == other.runtimeType
+      && id == other.id
+    ;
+
+  @override
+  int get hashCode => Object.hashAll([
+    id,
+  ]);
+
+  LedgerServiceV1ToggleBookRequest copyWith({
+    int? id,
+  }) {
+    return LedgerServiceV1ToggleBookRequest(
+      id: id ?? this.id,
+    );
+  }
+}
+
+/// 类别服务
+class CategoryServiceClient {
+  final ClientTransport _transport;
+
+  CategoryServiceClient(this._transport);
+
+  /// 获取类别列表
+  Future<ContentServiceV1ListCategoryResponse> list(PaginationPagingRequest request, {Map<String, String>? headers}) async {
+    final path = '/app/v1/categories';
+    final queryParams = <String>[];
+    if (request.page != null) {
+      queryParams.add('page=${Uri.encodeComponent(request.page!.toString())}');
+    }
+    if (request.pageSize != null) {
+      queryParams.add('pageSize=${Uri.encodeComponent(request.pageSize!.toString())}');
+    }
+    if (request.offset != null) {
+      queryParams.add('offset=${Uri.encodeComponent(request.offset!.toString())}');
+    }
+    if (request.limit != null) {
+      queryParams.add('limit=${Uri.encodeComponent(request.limit!.toString())}');
+    }
+    if (request.token != null) {
+      queryParams.add('token=${Uri.encodeComponent(request.token!.toString())}');
+    }
+    if (request.noPaging != null) {
+      queryParams.add('noPaging=${Uri.encodeComponent(request.noPaging!.toString())}');
+    }
+    if (request.query != null) {
+      queryParams.add('query=${Uri.encodeComponent(request.query!.toString())}');
+    }
+    if (request.filter != null) {
+      queryParams.add('filter=${Uri.encodeComponent(request.filter!.toString())}');
+    }
+    if (request.filterExpr?.type != null) {
+      queryParams.add('filterExpr.type=${Uri.encodeComponent(request.filterExpr!.type!.toString())}');
+    }
+    if (request.orderBy != null) {
+      queryParams.add('orderBy=${Uri.encodeComponent(request.orderBy!.toString())}');
+    }
+    if (request.fieldMask != null) {
+      queryParams.add('fieldMask=${Uri.encodeComponent(request.fieldMask!.toString())}');
+    }
+    var uri = path;
+    if (queryParams.isNotEmpty) {
+      uri += '?${queryParams.join("&")}';
+    }
+    final result = await _transport.unary(uri, 'GET', null, TransportMeta(
+      service: 'CategoryService',
+      method: 'List',
+    ), headers: headers);
+    return ContentServiceV1ListCategoryResponse.fromJson(result as Map<String, dynamic>);
+  }
+
+  /// 获取类别数据
+  Future<ContentServiceV1Category> get(ContentServiceV1GetCategoryRequest request, {Map<String, String>? headers}) async {
+    if (request.id == null) {
+      throw ArgumentError('missing required field request.id');
+    }
+    final path = '/app/v1/categories/${request.id}';
+    final queryParams = <String>[];
+    if (request.code != null) {
+      queryParams.add('code=${Uri.encodeComponent(request.code!.toString())}');
+    }
+    if (request.locale != null) {
+      queryParams.add('locale=${Uri.encodeComponent(request.locale!.toString())}');
+    }
+    if (request.viewMask != null) {
+      queryParams.add('viewMask=${Uri.encodeComponent(request.viewMask!.toString())}');
+    }
+    var uri = path;
+    if (queryParams.isNotEmpty) {
+      uri += '?${queryParams.join("&")}';
+    }
+    final result = await _transport.unary(uri, 'GET', null, TransportMeta(
+      service: 'CategoryService',
+      method: 'Get',
+    ), headers: headers);
+    return ContentServiceV1Category.fromJson(result as Map<String, dynamic>);
+  }
+
+  /// 创建类别
+  Future<ContentServiceV1Category> create(ContentServiceV1CreateCategoryRequest request, {Map<String, String>? headers}) async {
+    final path = '/app/v1/categories';
+    final body = jsonEncode(request.toJson());
+    final result = await _transport.unary(path, 'POST', body, TransportMeta(
+      service: 'CategoryService',
+      method: 'Create',
+    ), headers: headers);
+    return ContentServiceV1Category.fromJson(result as Map<String, dynamic>);
+  }
+
+  /// 更新类别
+  Future<ContentServiceV1Category> update(ContentServiceV1UpdateCategoryRequest request, {Map<String, String>? headers}) async {
+    if (request.id == null) {
+      throw ArgumentError('missing required field request.id');
+    }
+    final path = '/app/v1/categories/${request.id}';
+    final body = jsonEncode(request.toJson());
+    final result = await _transport.unary(path, 'PUT', body, TransportMeta(
+      service: 'CategoryService',
+      method: 'Update',
+    ), headers: headers);
+    return ContentServiceV1Category.fromJson(result as Map<String, dynamic>);
+  }
+
+  /// 删除类别
+  Future<Map<String, dynamic>> delete(ContentServiceV1DeleteCategoryRequest request, {Map<String, String>? headers}) async {
+    if (request.id == null) {
+      throw ArgumentError('missing required field request.id');
+    }
+    final path = '/app/v1/categories/${request.id}';
+    final result = await _transport.unary(path, 'DELETE', null, TransportMeta(
+      service: 'CategoryService',
+      method: 'Delete',
+    ), headers: headers);
+    return result as Map<String, dynamic>;
+  }
+
+  /// 获取翻译数据
+  Future<ContentServiceV1CategoryTranslation> getTranslation(ContentServiceV1GetCategoryRequest request, {Map<String, String>? headers}) async {
+    if (request.id == null) {
+      throw ArgumentError('missing required field request.id');
+    }
+    final path = '/app/v1/categories/${request.id}/translation';
+    final queryParams = <String>[];
+    if (request.code != null) {
+      queryParams.add('code=${Uri.encodeComponent(request.code!.toString())}');
+    }
+    if (request.locale != null) {
+      queryParams.add('locale=${Uri.encodeComponent(request.locale!.toString())}');
+    }
+    if (request.viewMask != null) {
+      queryParams.add('viewMask=${Uri.encodeComponent(request.viewMask!.toString())}');
+    }
+    var uri = path;
+    if (queryParams.isNotEmpty) {
+      uri += '?${queryParams.join("&")}';
+    }
+    final result = await _transport.unary(uri, 'GET', null, TransportMeta(
+      service: 'CategoryService',
+      method: 'GetTranslation',
+    ), headers: headers);
+    return ContentServiceV1CategoryTranslation.fromJson(result as Map<String, dynamic>);
+  }
+}
 
 /// 回应 - 类别列表
 class ContentServiceV1ListCategoryResponse {
@@ -1583,10 +4247,6 @@ class ContentServiceV1SeoMeta {
     );
   }
 }
-
-/// Well-known type: Timestamp
-///
-/// Maps to Dart: `String` (RFC 3339, e.g. `"2021-01-01T00:00:00Z"`).
 
 /// 请求 - 类别数据
 class ContentServiceV1GetCategoryRequest {
@@ -2526,6 +5186,423 @@ class CommentServiceV1DeleteCommentRequest {
   }
 }
 
+class CurrencyServiceClient {
+  final ClientTransport _transport;
+
+  CurrencyServiceClient(this._transport);
+
+  Future<LedgerServiceV1ListCurrencyResponse> listAll(LedgerServiceV1ListAllCurrencyRequest _request, {Map<String, String>? headers}) async {
+    final path = '/app/v1/currencies/all';
+    final result = await _transport.unary(path, 'GET', null, TransportMeta(
+      service: 'CurrencyService',
+      method: 'ListAll',
+    ), headers: headers);
+    return LedgerServiceV1ListCurrencyResponse.fromJson(result as Map<String, dynamic>);
+  }
+
+  Future<LedgerServiceV1ListCurrencyResponse> list(PaginationPagingRequest request, {Map<String, String>? headers}) async {
+    final path = '/app/v1/currencies';
+    final queryParams = <String>[];
+    if (request.page != null) {
+      queryParams.add('page=${Uri.encodeComponent(request.page!.toString())}');
+    }
+    if (request.pageSize != null) {
+      queryParams.add('pageSize=${Uri.encodeComponent(request.pageSize!.toString())}');
+    }
+    if (request.offset != null) {
+      queryParams.add('offset=${Uri.encodeComponent(request.offset!.toString())}');
+    }
+    if (request.limit != null) {
+      queryParams.add('limit=${Uri.encodeComponent(request.limit!.toString())}');
+    }
+    if (request.token != null) {
+      queryParams.add('token=${Uri.encodeComponent(request.token!.toString())}');
+    }
+    if (request.noPaging != null) {
+      queryParams.add('noPaging=${Uri.encodeComponent(request.noPaging!.toString())}');
+    }
+    if (request.query != null) {
+      queryParams.add('query=${Uri.encodeComponent(request.query!.toString())}');
+    }
+    if (request.filter != null) {
+      queryParams.add('filter=${Uri.encodeComponent(request.filter!.toString())}');
+    }
+    if (request.filterExpr?.type != null) {
+      queryParams.add('filterExpr.type=${Uri.encodeComponent(request.filterExpr!.type!.toString())}');
+    }
+    if (request.orderBy != null) {
+      queryParams.add('orderBy=${Uri.encodeComponent(request.orderBy!.toString())}');
+    }
+    if (request.fieldMask != null) {
+      queryParams.add('fieldMask=${Uri.encodeComponent(request.fieldMask!.toString())}');
+    }
+    var uri = path;
+    if (queryParams.isNotEmpty) {
+      uri += '?${queryParams.join("&")}';
+    }
+    final result = await _transport.unary(uri, 'GET', null, TransportMeta(
+      service: 'CurrencyService',
+      method: 'List',
+    ), headers: headers);
+    return LedgerServiceV1ListCurrencyResponse.fromJson(result as Map<String, dynamic>);
+  }
+
+  Future<LedgerServiceV1ListCurrencyResponse> refresh(LedgerServiceV1RefreshCurrencyRequest request, {Map<String, String>? headers}) async {
+    final path = '/app/v1/currencies/refresh';
+    final body = jsonEncode(request.toJson());
+    final result = await _transport.unary(path, 'POST', body, TransportMeta(
+      service: 'CurrencyService',
+      method: 'Refresh',
+    ), headers: headers);
+    return LedgerServiceV1ListCurrencyResponse.fromJson(result as Map<String, dynamic>);
+  }
+
+  Future<LedgerServiceV1ConvertCurrencyResponse> convert(LedgerServiceV1ConvertCurrencyRequest request, {Map<String, String>? headers}) async {
+    final path = '/app/v1/currencies/calc';
+    final queryParams = <String>[];
+    if (request.amount != null) {
+      queryParams.add('amount=${Uri.encodeComponent(request.amount!.toString())}');
+    }
+    if (request.from != null) {
+      queryParams.add('from=${Uri.encodeComponent(request.from!.toString())}');
+    }
+    if (request.to != null) {
+      queryParams.add('to=${Uri.encodeComponent(request.to!.toString())}');
+    }
+    var uri = path;
+    if (queryParams.isNotEmpty) {
+      uri += '?${queryParams.join("&")}';
+    }
+    final result = await _transport.unary(uri, 'GET', null, TransportMeta(
+      service: 'CurrencyService',
+      method: 'Convert',
+    ), headers: headers);
+    return LedgerServiceV1ConvertCurrencyResponse.fromJson(result as Map<String, dynamic>);
+  }
+}
+
+/// 请求 - 获取所有币种
+class LedgerServiceV1ListAllCurrencyRequest {
+
+  LedgerServiceV1ListAllCurrencyRequest({
+  });
+
+  factory LedgerServiceV1ListAllCurrencyRequest.fromJson(Map<String, dynamic> json) {
+    return LedgerServiceV1ListAllCurrencyRequest(
+    );
+  }
+
+  Map<String, dynamic> toJson() {
+    final json = <String, dynamic>{};
+    return json;
+  }
+
+  @override
+  String toString() {
+    return 'LedgerServiceV1ListAllCurrencyRequest()';
+  }
+
+  @override
+  bool operator ==(Object other) =>
+    identical(this, other) ||
+    other is LedgerServiceV1ListAllCurrencyRequest &&
+      runtimeType == other.runtimeType
+    ;
+
+  @override
+  int get hashCode => Object.hashAll([
+  ]);
+
+  LedgerServiceV1ListAllCurrencyRequest copyWith({
+  }) {
+    return LedgerServiceV1ListAllCurrencyRequest(
+    );
+  }
+}
+
+/// 回应 - 币种列表
+class LedgerServiceV1ListCurrencyResponse {
+  List<LedgerServiceV1Currency>? items;
+  int? total;
+
+  LedgerServiceV1ListCurrencyResponse({
+    this.items,
+    this.total,
+  });
+
+  factory LedgerServiceV1ListCurrencyResponse.fromJson(Map<String, dynamic> json) {
+    return LedgerServiceV1ListCurrencyResponse(
+      items: (json['items'] as List<dynamic>?)?.map((e) => LedgerServiceV1Currency.fromJson(e as Map<String, dynamic>)).toList(),
+      total: json['total'] != null ? int.parse(json['total'].toString()) : null,
+    );
+  }
+
+  Map<String, dynamic> toJson() {
+    final json = <String, dynamic>{};
+    if (items != null) json['items'] = items!.map((e) => e.toJson()).toList();
+    if (total != null) json['total'] = total.toString();
+    return json;
+  }
+
+  @override
+  String toString() {
+    return 'LedgerServiceV1ListCurrencyResponse(items: $items, total: $total)';
+  }
+
+  @override
+  bool operator ==(Object other) =>
+    identical(this, other) ||
+    other is LedgerServiceV1ListCurrencyResponse &&
+      runtimeType == other.runtimeType
+      && items == other.items
+      && total == other.total
+    ;
+
+  @override
+  int get hashCode => Object.hashAll([
+    items,
+    total,
+  ]);
+
+  LedgerServiceV1ListCurrencyResponse copyWith({
+    List<LedgerServiceV1Currency>? items,
+    int? total,
+  }) {
+    return LedgerServiceV1ListCurrencyResponse(
+      items: items ?? this.items,
+      total: total ?? this.total,
+    );
+  }
+}
+
+/// 币种
+class LedgerServiceV1Currency {
+  String? code;
+  int? id;
+  String? name;
+  String? rate;
+
+  LedgerServiceV1Currency({
+    this.code,
+    this.id,
+    this.name,
+    this.rate,
+  });
+
+  factory LedgerServiceV1Currency.fromJson(Map<String, dynamic> json) {
+    return LedgerServiceV1Currency(
+      code: json['code'] as String?,
+      id: json['id'] as int?,
+      name: json['name'] as String?,
+      rate: json['rate'] as String?,
+    );
+  }
+
+  Map<String, dynamic> toJson() {
+    final json = <String, dynamic>{};
+    if (code != null) json['code'] = code;
+    if (id != null) json['id'] = id;
+    if (name != null) json['name'] = name;
+    if (rate != null) json['rate'] = rate;
+    return json;
+  }
+
+  @override
+  String toString() {
+    return 'LedgerServiceV1Currency(code: $code, id: $id, name: $name, rate: $rate)';
+  }
+
+  @override
+  bool operator ==(Object other) =>
+    identical(this, other) ||
+    other is LedgerServiceV1Currency &&
+      runtimeType == other.runtimeType
+      && code == other.code
+      && id == other.id
+      && name == other.name
+      && rate == other.rate
+    ;
+
+  @override
+  int get hashCode => Object.hashAll([
+    code,
+    id,
+    name,
+    rate,
+  ]);
+
+  LedgerServiceV1Currency copyWith({
+    String? code,
+    int? id,
+    String? name,
+    String? rate,
+  }) {
+    return LedgerServiceV1Currency(
+      code: code ?? this.code,
+      id: id ?? this.id,
+      name: name ?? this.name,
+      rate: rate ?? this.rate,
+    );
+  }
+}
+
+/// 请求 - 刷新汇率
+class LedgerServiceV1RefreshCurrencyRequest {
+
+  LedgerServiceV1RefreshCurrencyRequest({
+  });
+
+  factory LedgerServiceV1RefreshCurrencyRequest.fromJson(Map<String, dynamic> json) {
+    return LedgerServiceV1RefreshCurrencyRequest(
+    );
+  }
+
+  Map<String, dynamic> toJson() {
+    final json = <String, dynamic>{};
+    return json;
+  }
+
+  @override
+  String toString() {
+    return 'LedgerServiceV1RefreshCurrencyRequest()';
+  }
+
+  @override
+  bool operator ==(Object other) =>
+    identical(this, other) ||
+    other is LedgerServiceV1RefreshCurrencyRequest &&
+      runtimeType == other.runtimeType
+    ;
+
+  @override
+  int get hashCode => Object.hashAll([
+  ]);
+
+  LedgerServiceV1RefreshCurrencyRequest copyWith({
+  }) {
+    return LedgerServiceV1RefreshCurrencyRequest(
+    );
+  }
+}
+
+/// 请求 - 币种转换
+class LedgerServiceV1ConvertCurrencyRequest {
+  String? amount;
+  String? from;
+  String? to;
+
+  LedgerServiceV1ConvertCurrencyRequest({
+    this.amount,
+    this.from,
+    this.to,
+  });
+
+  factory LedgerServiceV1ConvertCurrencyRequest.fromJson(Map<String, dynamic> json) {
+    return LedgerServiceV1ConvertCurrencyRequest(
+      amount: json['amount'] as String?,
+      from: json['from'] as String?,
+      to: json['to'] as String?,
+    );
+  }
+
+  Map<String, dynamic> toJson() {
+    final json = <String, dynamic>{};
+    if (amount != null) json['amount'] = amount;
+    if (from != null) json['from'] = from;
+    if (to != null) json['to'] = to;
+    return json;
+  }
+
+  @override
+  String toString() {
+    return 'LedgerServiceV1ConvertCurrencyRequest(amount: $amount, from: $from, to: $to)';
+  }
+
+  @override
+  bool operator ==(Object other) =>
+    identical(this, other) ||
+    other is LedgerServiceV1ConvertCurrencyRequest &&
+      runtimeType == other.runtimeType
+      && amount == other.amount
+      && from == other.from
+      && to == other.to
+    ;
+
+  @override
+  int get hashCode => Object.hashAll([
+    amount,
+    from,
+    to,
+  ]);
+
+  LedgerServiceV1ConvertCurrencyRequest copyWith({
+    String? amount,
+    String? from,
+    String? to,
+  }) {
+    return LedgerServiceV1ConvertCurrencyRequest(
+      amount: amount ?? this.amount,
+      from: from ?? this.from,
+      to: to ?? this.to,
+    );
+  }
+}
+
+/// 回应 - 币种转换
+class LedgerServiceV1ConvertCurrencyResponse {
+  String? amount;
+  String? rate;
+
+  LedgerServiceV1ConvertCurrencyResponse({
+    this.amount,
+    this.rate,
+  });
+
+  factory LedgerServiceV1ConvertCurrencyResponse.fromJson(Map<String, dynamic> json) {
+    return LedgerServiceV1ConvertCurrencyResponse(
+      amount: json['amount'] as String?,
+      rate: json['rate'] as String?,
+    );
+  }
+
+  Map<String, dynamic> toJson() {
+    final json = <String, dynamic>{};
+    if (amount != null) json['amount'] = amount;
+    if (rate != null) json['rate'] = rate;
+    return json;
+  }
+
+  @override
+  String toString() {
+    return 'LedgerServiceV1ConvertCurrencyResponse(amount: $amount, rate: $rate)';
+  }
+
+  @override
+  bool operator ==(Object other) =>
+    identical(this, other) ||
+    other is LedgerServiceV1ConvertCurrencyResponse &&
+      runtimeType == other.runtimeType
+      && amount == other.amount
+      && rate == other.rate
+    ;
+
+  @override
+  int get hashCode => Object.hashAll([
+    amount,
+    rate,
+  ]);
+
+  LedgerServiceV1ConvertCurrencyResponse copyWith({
+    String? amount,
+    String? rate,
+  }) {
+    return LedgerServiceV1ConvertCurrencyResponse(
+      amount: amount ?? this.amount,
+      rate: rate ?? this.rate,
+    );
+  }
+}
+
 /// 文件传输服务
 class FileTransferServiceClient {
   final ClientTransport _transport;
@@ -3096,6 +6173,1693 @@ class StorageServiceV1UploadFileResponse {
     return StorageServiceV1UploadFileResponse(
       objectName: objectName ?? this.objectName,
       presignedUrl: presignedUrl ?? this.presignedUrl,
+    );
+  }
+}
+
+class FlowFileServiceClient {
+  final ClientTransport _transport;
+
+  FlowFileServiceClient(this._transport);
+
+  Future<LedgerServiceV1ListFlowFileResponse> list(LedgerServiceV1ListFlowFileRequest request, {Map<String, String>? headers}) async {
+    final path = '/app/v1/flow-files';
+    final queryParams = <String>[];
+    if (request.flowId != null) {
+      queryParams.add('flowId=${Uri.encodeComponent(request.flowId!.toString())}');
+    }
+    var uri = path;
+    if (queryParams.isNotEmpty) {
+      uri += '?${queryParams.join("&")}';
+    }
+    final result = await _transport.unary(uri, 'GET', null, TransportMeta(
+      service: 'FlowFileService',
+      method: 'List',
+    ), headers: headers);
+    return LedgerServiceV1ListFlowFileResponse.fromJson(result as Map<String, dynamic>);
+  }
+
+  Future<Map<String, dynamic>> delete(LedgerServiceV1DeleteFlowFileRequest request, {Map<String, String>? headers}) async {
+    if (request.id == null) {
+      throw ArgumentError('missing required field request.id');
+    }
+    final path = '/app/v1/flow-files/${request.id}';
+    final result = await _transport.unary(path, 'DELETE', null, TransportMeta(
+      service: 'FlowFileService',
+      method: 'Delete',
+    ), headers: headers);
+    return result as Map<String, dynamic>;
+  }
+}
+
+/// 请求 - 附件列表
+class LedgerServiceV1ListFlowFileRequest {
+  int? flowId;
+
+  LedgerServiceV1ListFlowFileRequest({
+    this.flowId,
+  });
+
+  factory LedgerServiceV1ListFlowFileRequest.fromJson(Map<String, dynamic> json) {
+    return LedgerServiceV1ListFlowFileRequest(
+      flowId: json['flowId'] as int?,
+    );
+  }
+
+  Map<String, dynamic> toJson() {
+    final json = <String, dynamic>{};
+    if (flowId != null) json['flowId'] = flowId;
+    return json;
+  }
+
+  @override
+  String toString() {
+    return 'LedgerServiceV1ListFlowFileRequest(flowId: $flowId)';
+  }
+
+  @override
+  bool operator ==(Object other) =>
+    identical(this, other) ||
+    other is LedgerServiceV1ListFlowFileRequest &&
+      runtimeType == other.runtimeType
+      && flowId == other.flowId
+    ;
+
+  @override
+  int get hashCode => Object.hashAll([
+    flowId,
+  ]);
+
+  LedgerServiceV1ListFlowFileRequest copyWith({
+    int? flowId,
+  }) {
+    return LedgerServiceV1ListFlowFileRequest(
+      flowId: flowId ?? this.flowId,
+    );
+  }
+}
+
+/// 回应 - 附件列表
+class LedgerServiceV1ListFlowFileResponse {
+  List<LedgerServiceV1FlowFile>? items;
+
+  LedgerServiceV1ListFlowFileResponse({
+    this.items,
+  });
+
+  factory LedgerServiceV1ListFlowFileResponse.fromJson(Map<String, dynamic> json) {
+    return LedgerServiceV1ListFlowFileResponse(
+      items: (json['items'] as List<dynamic>?)?.map((e) => LedgerServiceV1FlowFile.fromJson(e as Map<String, dynamic>)).toList(),
+    );
+  }
+
+  Map<String, dynamic> toJson() {
+    final json = <String, dynamic>{};
+    if (items != null) json['items'] = items!.map((e) => e.toJson()).toList();
+    return json;
+  }
+
+  @override
+  String toString() {
+    return 'LedgerServiceV1ListFlowFileResponse(items: $items)';
+  }
+
+  @override
+  bool operator ==(Object other) =>
+    identical(this, other) ||
+    other is LedgerServiceV1ListFlowFileResponse &&
+      runtimeType == other.runtimeType
+      && items == other.items
+    ;
+
+  @override
+  int get hashCode => Object.hashAll([
+    items,
+  ]);
+
+  LedgerServiceV1ListFlowFileResponse copyWith({
+    List<LedgerServiceV1FlowFile>? items,
+  }) {
+    return LedgerServiceV1ListFlowFileResponse(
+      items: items ?? this.items,
+    );
+  }
+}
+
+/// 流水附件
+class LedgerServiceV1FlowFile {
+  String? contentType;
+  int? createTime;
+  int? creatorId;
+  int? flowId;
+  int? id;
+  String? originalName;
+  int? size;
+
+  LedgerServiceV1FlowFile({
+    this.contentType,
+    this.createTime,
+    this.creatorId,
+    this.flowId,
+    this.id,
+    this.originalName,
+    this.size,
+  });
+
+  factory LedgerServiceV1FlowFile.fromJson(Map<String, dynamic> json) {
+    return LedgerServiceV1FlowFile(
+      contentType: json['contentType'] as String?,
+      createTime: json['createTime'] != null ? int.parse(json['createTime'].toString()) : null,
+      creatorId: json['creatorId'] as int?,
+      flowId: json['flowId'] as int?,
+      id: json['id'] as int?,
+      originalName: json['originalName'] as String?,
+      size: json['size'] != null ? int.parse(json['size'].toString()) : null,
+    );
+  }
+
+  Map<String, dynamic> toJson() {
+    final json = <String, dynamic>{};
+    if (contentType != null) json['contentType'] = contentType;
+    if (createTime != null) json['createTime'] = createTime.toString();
+    if (creatorId != null) json['creatorId'] = creatorId;
+    if (flowId != null) json['flowId'] = flowId;
+    if (id != null) json['id'] = id;
+    if (originalName != null) json['originalName'] = originalName;
+    if (size != null) json['size'] = size.toString();
+    return json;
+  }
+
+  @override
+  String toString() {
+    return 'LedgerServiceV1FlowFile(contentType: $contentType, createTime: $createTime, creatorId: $creatorId, flowId: $flowId, id: $id, originalName: $originalName, size: $size)';
+  }
+
+  @override
+  bool operator ==(Object other) =>
+    identical(this, other) ||
+    other is LedgerServiceV1FlowFile &&
+      runtimeType == other.runtimeType
+      && contentType == other.contentType
+      && createTime == other.createTime
+      && creatorId == other.creatorId
+      && flowId == other.flowId
+      && id == other.id
+      && originalName == other.originalName
+      && size == other.size
+    ;
+
+  @override
+  int get hashCode => Object.hashAll([
+    contentType,
+    createTime,
+    creatorId,
+    flowId,
+    id,
+    originalName,
+    size,
+  ]);
+
+  LedgerServiceV1FlowFile copyWith({
+    String? contentType,
+    int? createTime,
+    int? creatorId,
+    int? flowId,
+    int? id,
+    String? originalName,
+    int? size,
+  }) {
+    return LedgerServiceV1FlowFile(
+      contentType: contentType ?? this.contentType,
+      createTime: createTime ?? this.createTime,
+      creatorId: creatorId ?? this.creatorId,
+      flowId: flowId ?? this.flowId,
+      id: id ?? this.id,
+      originalName: originalName ?? this.originalName,
+      size: size ?? this.size,
+    );
+  }
+}
+
+/// 请求 - 删除附件
+class LedgerServiceV1DeleteFlowFileRequest {
+  int? id;
+
+  LedgerServiceV1DeleteFlowFileRequest({
+    this.id,
+  });
+
+  factory LedgerServiceV1DeleteFlowFileRequest.fromJson(Map<String, dynamic> json) {
+    return LedgerServiceV1DeleteFlowFileRequest(
+      id: json['id'] as int?,
+    );
+  }
+
+  Map<String, dynamic> toJson() {
+    final json = <String, dynamic>{};
+    if (id != null) json['id'] = id;
+    return json;
+  }
+
+  @override
+  String toString() {
+    return 'LedgerServiceV1DeleteFlowFileRequest(id: $id)';
+  }
+
+  @override
+  bool operator ==(Object other) =>
+    identical(this, other) ||
+    other is LedgerServiceV1DeleteFlowFileRequest &&
+      runtimeType == other.runtimeType
+      && id == other.id
+    ;
+
+  @override
+  int get hashCode => Object.hashAll([
+    id,
+  ]);
+
+  LedgerServiceV1DeleteFlowFileRequest copyWith({
+    int? id,
+  }) {
+    return LedgerServiceV1DeleteFlowFileRequest(
+      id: id ?? this.id,
+    );
+  }
+}
+
+class LedgerCategoryServiceClient {
+  final ClientTransport _transport;
+
+  LedgerCategoryServiceClient(this._transport);
+
+  Future<LedgerServiceV1ListCategoryResponse> list(PaginationPagingRequest request, {Map<String, String>? headers}) async {
+    final path = '/app/v1/ledger-categories';
+    final queryParams = <String>[];
+    if (request.page != null) {
+      queryParams.add('page=${Uri.encodeComponent(request.page!.toString())}');
+    }
+    if (request.pageSize != null) {
+      queryParams.add('pageSize=${Uri.encodeComponent(request.pageSize!.toString())}');
+    }
+    if (request.offset != null) {
+      queryParams.add('offset=${Uri.encodeComponent(request.offset!.toString())}');
+    }
+    if (request.limit != null) {
+      queryParams.add('limit=${Uri.encodeComponent(request.limit!.toString())}');
+    }
+    if (request.token != null) {
+      queryParams.add('token=${Uri.encodeComponent(request.token!.toString())}');
+    }
+    if (request.noPaging != null) {
+      queryParams.add('noPaging=${Uri.encodeComponent(request.noPaging!.toString())}');
+    }
+    if (request.query != null) {
+      queryParams.add('query=${Uri.encodeComponent(request.query!.toString())}');
+    }
+    if (request.filter != null) {
+      queryParams.add('filter=${Uri.encodeComponent(request.filter!.toString())}');
+    }
+    if (request.filterExpr?.type != null) {
+      queryParams.add('filterExpr.type=${Uri.encodeComponent(request.filterExpr!.type!.toString())}');
+    }
+    if (request.orderBy != null) {
+      queryParams.add('orderBy=${Uri.encodeComponent(request.orderBy!.toString())}');
+    }
+    if (request.fieldMask != null) {
+      queryParams.add('fieldMask=${Uri.encodeComponent(request.fieldMask!.toString())}');
+    }
+    var uri = path;
+    if (queryParams.isNotEmpty) {
+      uri += '?${queryParams.join("&")}';
+    }
+    final result = await _transport.unary(uri, 'GET', null, TransportMeta(
+      service: 'LedgerCategoryService',
+      method: 'List',
+    ), headers: headers);
+    return LedgerServiceV1ListCategoryResponse.fromJson(result as Map<String, dynamic>);
+  }
+
+  Future<LedgerServiceV1ListCategoryResponse> listAll(LedgerServiceV1ListAllCategoryRequest request, {Map<String, String>? headers}) async {
+    final path = '/app/v1/ledger-categories/all';
+    final queryParams = <String>[];
+    if (request.bookId != null) {
+      queryParams.add('bookId=${Uri.encodeComponent(request.bookId!.toString())}');
+    }
+    if (request.type != null) {
+      queryParams.add('type=${Uri.encodeComponent(request.type!.toString())}');
+    }
+    var uri = path;
+    if (queryParams.isNotEmpty) {
+      uri += '?${queryParams.join("&")}';
+    }
+    final result = await _transport.unary(uri, 'GET', null, TransportMeta(
+      service: 'LedgerCategoryService',
+      method: 'ListAll',
+    ), headers: headers);
+    return LedgerServiceV1ListCategoryResponse.fromJson(result as Map<String, dynamic>);
+  }
+
+  Future<LedgerServiceV1Category> get(LedgerServiceV1GetCategoryRequest request, {Map<String, String>? headers}) async {
+    if (request.id == null) {
+      throw ArgumentError('missing required field request.id');
+    }
+    final path = '/app/v1/ledger-categories/${request.id}';
+    final queryParams = <String>[];
+    if (request.viewMask != null) {
+      queryParams.add('viewMask=${Uri.encodeComponent(request.viewMask!.toString())}');
+    }
+    var uri = path;
+    if (queryParams.isNotEmpty) {
+      uri += '?${queryParams.join("&")}';
+    }
+    final result = await _transport.unary(uri, 'GET', null, TransportMeta(
+      service: 'LedgerCategoryService',
+      method: 'Get',
+    ), headers: headers);
+    return LedgerServiceV1Category.fromJson(result as Map<String, dynamic>);
+  }
+
+  Future<LedgerServiceV1Category> create(LedgerServiceV1CreateCategoryRequest request, {Map<String, String>? headers}) async {
+    final path = '/app/v1/ledger-categories';
+    final body = jsonEncode(request.toJson());
+    final result = await _transport.unary(path, 'POST', body, TransportMeta(
+      service: 'LedgerCategoryService',
+      method: 'Create',
+    ), headers: headers);
+    return LedgerServiceV1Category.fromJson(result as Map<String, dynamic>);
+  }
+
+  Future<LedgerServiceV1Category> update(LedgerServiceV1UpdateCategoryRequest request, {Map<String, String>? headers}) async {
+    if (request.id == null) {
+      throw ArgumentError('missing required field request.id');
+    }
+    final path = '/app/v1/ledger-categories/${request.id}';
+    final body = jsonEncode(request.toJson());
+    final result = await _transport.unary(path, 'PUT', body, TransportMeta(
+      service: 'LedgerCategoryService',
+      method: 'Update',
+    ), headers: headers);
+    return LedgerServiceV1Category.fromJson(result as Map<String, dynamic>);
+  }
+
+  Future<Map<String, dynamic>> delete(LedgerServiceV1DeleteCategoryRequest request, {Map<String, String>? headers}) async {
+    if (request.id == null) {
+      throw ArgumentError('missing required field request.id');
+    }
+    final path = '/app/v1/ledger-categories/${request.id}';
+    final result = await _transport.unary(path, 'DELETE', null, TransportMeta(
+      service: 'LedgerCategoryService',
+      method: 'Delete',
+    ), headers: headers);
+    return result as Map<String, dynamic>;
+  }
+
+  Future<LedgerServiceV1Category> toggle(LedgerServiceV1ToggleCategoryRequest request, {Map<String, String>? headers}) async {
+    if (request.id == null) {
+      throw ArgumentError('missing required field request.id');
+    }
+    final path = '/app/v1/ledger-categories/${request.id}/toggle';
+    final body = jsonEncode(request.toJson());
+    final result = await _transport.unary(path, 'PATCH', body, TransportMeta(
+      service: 'LedgerCategoryService',
+      method: 'Toggle',
+    ), headers: headers);
+    return LedgerServiceV1Category.fromJson(result as Map<String, dynamic>);
+  }
+}
+
+/// 回应 - 分类列表
+class LedgerServiceV1ListCategoryResponse {
+  List<LedgerServiceV1Category>? items;
+  int? total;
+
+  LedgerServiceV1ListCategoryResponse({
+    this.items,
+    this.total,
+  });
+
+  factory LedgerServiceV1ListCategoryResponse.fromJson(Map<String, dynamic> json) {
+    return LedgerServiceV1ListCategoryResponse(
+      items: (json['items'] as List<dynamic>?)?.map((e) => LedgerServiceV1Category.fromJson(e as Map<String, dynamic>)).toList(),
+      total: json['total'] != null ? int.parse(json['total'].toString()) : null,
+    );
+  }
+
+  Map<String, dynamic> toJson() {
+    final json = <String, dynamic>{};
+    if (items != null) json['items'] = items!.map((e) => e.toJson()).toList();
+    if (total != null) json['total'] = total.toString();
+    return json;
+  }
+
+  @override
+  String toString() {
+    return 'LedgerServiceV1ListCategoryResponse(items: $items, total: $total)';
+  }
+
+  @override
+  bool operator ==(Object other) =>
+    identical(this, other) ||
+    other is LedgerServiceV1ListCategoryResponse &&
+      runtimeType == other.runtimeType
+      && items == other.items
+      && total == other.total
+    ;
+
+  @override
+  int get hashCode => Object.hashAll([
+    items,
+    total,
+  ]);
+
+  LedgerServiceV1ListCategoryResponse copyWith({
+    List<LedgerServiceV1Category>? items,
+    int? total,
+  }) {
+    return LedgerServiceV1ListCategoryResponse(
+      items: items ?? this.items,
+      total: total ?? this.total,
+    );
+  }
+}
+
+/// 分类
+class LedgerServiceV1Category {
+  int? bookId;
+  List<LedgerServiceV1Category>? children;
+  String? createdAt;
+  int? createdBy;
+  String? deletedAt;
+  int? deletedBy;
+  int? depth;
+  bool? enable;
+  int? id;
+  String? name;
+  String? notes;
+  /// 树形字段
+  int? parentId;
+  String? path;
+  int? sortOrder;
+  int? tenantId;
+  LedgerServiceV1CategoryType? type;
+  String? updatedAt;
+  int? updatedBy;
+
+  LedgerServiceV1Category({
+    this.bookId,
+    this.children,
+    this.createdAt,
+    this.createdBy,
+    this.deletedAt,
+    this.deletedBy,
+    this.depth,
+    this.enable,
+    this.id,
+    this.name,
+    this.notes,
+    this.parentId,
+    this.path,
+    this.sortOrder,
+    this.tenantId,
+    this.type,
+    this.updatedAt,
+    this.updatedBy,
+  });
+
+  factory LedgerServiceV1Category.fromJson(Map<String, dynamic> json) {
+    return LedgerServiceV1Category(
+      bookId: json['bookId'] as int?,
+      children: (json['children'] as List<dynamic>?)?.map((e) => LedgerServiceV1Category.fromJson(e as Map<String, dynamic>)).toList(),
+      createdAt: json['createdAt'] as String?,
+      createdBy: json['createdBy'] as int?,
+      deletedAt: json['deletedAt'] as String?,
+      deletedBy: json['deletedBy'] as int?,
+      depth: json['depth'] as int?,
+      enable: json['enable'] as bool?,
+      id: json['id'] as int?,
+      name: json['name'] as String?,
+      notes: json['notes'] as String?,
+      parentId: json['parentId'] as int?,
+      path: json['path'] as String?,
+      sortOrder: json['sortOrder'] as int?,
+      tenantId: json['tenantId'] as int?,
+      type: json['type'] != null ? LedgerServiceV1CategoryType.fromString(json['type'] as String) : null,
+      updatedAt: json['updatedAt'] as String?,
+      updatedBy: json['updatedBy'] as int?,
+    );
+  }
+
+  Map<String, dynamic> toJson() {
+    final json = <String, dynamic>{};
+    if (bookId != null) json['bookId'] = bookId;
+    if (children != null) json['children'] = children!.map((e) => e.toJson()).toList();
+    if (createdAt != null) json['createdAt'] = createdAt;
+    if (createdBy != null) json['createdBy'] = createdBy;
+    if (deletedAt != null) json['deletedAt'] = deletedAt;
+    if (deletedBy != null) json['deletedBy'] = deletedBy;
+    if (depth != null) json['depth'] = depth;
+    if (enable != null) json['enable'] = enable;
+    if (id != null) json['id'] = id;
+    if (name != null) json['name'] = name;
+    if (notes != null) json['notes'] = notes;
+    if (parentId != null) json['parentId'] = parentId;
+    if (path != null) json['path'] = path;
+    if (sortOrder != null) json['sortOrder'] = sortOrder;
+    if (tenantId != null) json['tenantId'] = tenantId;
+    if (type != null) json['type'] = type!.value;
+    if (updatedAt != null) json['updatedAt'] = updatedAt;
+    if (updatedBy != null) json['updatedBy'] = updatedBy;
+    return json;
+  }
+
+  @override
+  String toString() {
+    return 'LedgerServiceV1Category(bookId: $bookId, children: $children, createdAt: $createdAt, createdBy: $createdBy, deletedAt: $deletedAt, deletedBy: $deletedBy, depth: $depth, enable: $enable, id: $id, name: $name, notes: $notes, parentId: $parentId, path: $path, sortOrder: $sortOrder, tenantId: $tenantId, type: $type, updatedAt: $updatedAt, updatedBy: $updatedBy)';
+  }
+
+  @override
+  bool operator ==(Object other) =>
+    identical(this, other) ||
+    other is LedgerServiceV1Category &&
+      runtimeType == other.runtimeType
+      && bookId == other.bookId
+      && children == other.children
+      && createdAt == other.createdAt
+      && createdBy == other.createdBy
+      && deletedAt == other.deletedAt
+      && deletedBy == other.deletedBy
+      && depth == other.depth
+      && enable == other.enable
+      && id == other.id
+      && name == other.name
+      && notes == other.notes
+      && parentId == other.parentId
+      && path == other.path
+      && sortOrder == other.sortOrder
+      && tenantId == other.tenantId
+      && type == other.type
+      && updatedAt == other.updatedAt
+      && updatedBy == other.updatedBy
+    ;
+
+  @override
+  int get hashCode => Object.hashAll([
+    bookId,
+    children,
+    createdAt,
+    createdBy,
+    deletedAt,
+    deletedBy,
+    depth,
+    enable,
+    id,
+    name,
+    notes,
+    parentId,
+    path,
+    sortOrder,
+    tenantId,
+    type,
+    updatedAt,
+    updatedBy,
+  ]);
+
+  LedgerServiceV1Category copyWith({
+    int? bookId,
+    List<LedgerServiceV1Category>? children,
+    String? createdAt,
+    int? createdBy,
+    String? deletedAt,
+    int? deletedBy,
+    int? depth,
+    bool? enable,
+    int? id,
+    String? name,
+    String? notes,
+    int? parentId,
+    String? path,
+    int? sortOrder,
+    int? tenantId,
+    LedgerServiceV1CategoryType? type,
+    String? updatedAt,
+    int? updatedBy,
+  }) {
+    return LedgerServiceV1Category(
+      bookId: bookId ?? this.bookId,
+      children: children ?? this.children,
+      createdAt: createdAt ?? this.createdAt,
+      createdBy: createdBy ?? this.createdBy,
+      deletedAt: deletedAt ?? this.deletedAt,
+      deletedBy: deletedBy ?? this.deletedBy,
+      depth: depth ?? this.depth,
+      enable: enable ?? this.enable,
+      id: id ?? this.id,
+      name: name ?? this.name,
+      notes: notes ?? this.notes,
+      parentId: parentId ?? this.parentId,
+      path: path ?? this.path,
+      sortOrder: sortOrder ?? this.sortOrder,
+      tenantId: tenantId ?? this.tenantId,
+      type: type ?? this.type,
+      updatedAt: updatedAt ?? this.updatedAt,
+      updatedBy: updatedBy ?? this.updatedBy,
+    );
+  }
+}
+
+/// 分类类型 — 对应 Java CategoryType
+enum LedgerServiceV1CategoryType {
+  categoryTypeExpense('CATEGORY_TYPE_EXPENSE'),
+  categoryTypeIncome('CATEGORY_TYPE_INCOME'),
+  categoryTypeUnspecified('CATEGORY_TYPE_UNSPECIFIED');
+
+  final String value;
+  const LedgerServiceV1CategoryType(this.value);
+
+  static LedgerServiceV1CategoryType fromString(String v) =>
+    values.firstWhere((e) => e.value == v, orElse: () => throw ArgumentError('Unknown LedgerServiceV1CategoryType value: ' + v));
+  @override
+  String toString() => value;
+}
+
+/// 请求 - 获取所有分类
+class LedgerServiceV1ListAllCategoryRequest {
+  int? bookId;
+  LedgerServiceV1CategoryType? type;
+
+  LedgerServiceV1ListAllCategoryRequest({
+    this.bookId,
+    this.type,
+  });
+
+  factory LedgerServiceV1ListAllCategoryRequest.fromJson(Map<String, dynamic> json) {
+    return LedgerServiceV1ListAllCategoryRequest(
+      bookId: json['bookId'] as int?,
+      type: json['type'] != null ? LedgerServiceV1CategoryType.fromString(json['type'] as String) : null,
+    );
+  }
+
+  Map<String, dynamic> toJson() {
+    final json = <String, dynamic>{};
+    if (bookId != null) json['bookId'] = bookId;
+    if (type != null) json['type'] = type!.value;
+    return json;
+  }
+
+  @override
+  String toString() {
+    return 'LedgerServiceV1ListAllCategoryRequest(bookId: $bookId, type: $type)';
+  }
+
+  @override
+  bool operator ==(Object other) =>
+    identical(this, other) ||
+    other is LedgerServiceV1ListAllCategoryRequest &&
+      runtimeType == other.runtimeType
+      && bookId == other.bookId
+      && type == other.type
+    ;
+
+  @override
+  int get hashCode => Object.hashAll([
+    bookId,
+    type,
+  ]);
+
+  LedgerServiceV1ListAllCategoryRequest copyWith({
+    int? bookId,
+    LedgerServiceV1CategoryType? type,
+  }) {
+    return LedgerServiceV1ListAllCategoryRequest(
+      bookId: bookId ?? this.bookId,
+      type: type ?? this.type,
+    );
+  }
+}
+
+/// 请求 - 分类数据
+class LedgerServiceV1GetCategoryRequest {
+  int? id;
+  String? viewMask;
+
+  LedgerServiceV1GetCategoryRequest({
+    this.id,
+    this.viewMask,
+  });
+
+  factory LedgerServiceV1GetCategoryRequest.fromJson(Map<String, dynamic> json) {
+    return LedgerServiceV1GetCategoryRequest(
+      id: json['id'] as int?,
+      viewMask: json['viewMask'] as String?,
+    );
+  }
+
+  Map<String, dynamic> toJson() {
+    final json = <String, dynamic>{};
+    if (id != null) json['id'] = id;
+    if (viewMask != null) json['viewMask'] = viewMask;
+    return json;
+  }
+
+  @override
+  String toString() {
+    return 'LedgerServiceV1GetCategoryRequest(id: $id, viewMask: $viewMask)';
+  }
+
+  @override
+  bool operator ==(Object other) =>
+    identical(this, other) ||
+    other is LedgerServiceV1GetCategoryRequest &&
+      runtimeType == other.runtimeType
+      && id == other.id
+      && viewMask == other.viewMask
+    ;
+
+  @override
+  int get hashCode => Object.hashAll([
+    id,
+    viewMask,
+  ]);
+
+  LedgerServiceV1GetCategoryRequest copyWith({
+    int? id,
+    String? viewMask,
+  }) {
+    return LedgerServiceV1GetCategoryRequest(
+      id: id ?? this.id,
+      viewMask: viewMask ?? this.viewMask,
+    );
+  }
+}
+
+/// 请求 - 创建分类
+class LedgerServiceV1CreateCategoryRequest {
+  LedgerServiceV1Category? data;
+
+  LedgerServiceV1CreateCategoryRequest({
+    this.data,
+  });
+
+  factory LedgerServiceV1CreateCategoryRequest.fromJson(Map<String, dynamic> json) {
+    return LedgerServiceV1CreateCategoryRequest(
+      data: json['data'] != null ? LedgerServiceV1Category.fromJson(json['data'] as Map<String, dynamic>) : null,
+    );
+  }
+
+  Map<String, dynamic> toJson() {
+    final json = <String, dynamic>{};
+    if (data != null) json['data'] = data!.toJson();
+    return json;
+  }
+
+  @override
+  String toString() {
+    return 'LedgerServiceV1CreateCategoryRequest(data: $data)';
+  }
+
+  @override
+  bool operator ==(Object other) =>
+    identical(this, other) ||
+    other is LedgerServiceV1CreateCategoryRequest &&
+      runtimeType == other.runtimeType
+      && data == other.data
+    ;
+
+  @override
+  int get hashCode => Object.hashAll([
+    data,
+  ]);
+
+  LedgerServiceV1CreateCategoryRequest copyWith({
+    LedgerServiceV1Category? data,
+  }) {
+    return LedgerServiceV1CreateCategoryRequest(
+      data: data ?? this.data,
+    );
+  }
+}
+
+/// 请求 - 更新分类
+class LedgerServiceV1UpdateCategoryRequest {
+  bool? allowMissing;
+  LedgerServiceV1Category? data;
+  int? id;
+  String? updateMask;
+
+  LedgerServiceV1UpdateCategoryRequest({
+    this.allowMissing,
+    this.data,
+    this.id,
+    this.updateMask,
+  });
+
+  factory LedgerServiceV1UpdateCategoryRequest.fromJson(Map<String, dynamic> json) {
+    return LedgerServiceV1UpdateCategoryRequest(
+      allowMissing: json['allowMissing'] as bool?,
+      data: json['data'] != null ? LedgerServiceV1Category.fromJson(json['data'] as Map<String, dynamic>) : null,
+      id: json['id'] as int?,
+      updateMask: json['updateMask'] as String?,
+    );
+  }
+
+  Map<String, dynamic> toJson() {
+    final json = <String, dynamic>{};
+    if (allowMissing != null) json['allowMissing'] = allowMissing;
+    if (data != null) json['data'] = data!.toJson();
+    if (id != null) json['id'] = id;
+    if (updateMask != null) json['updateMask'] = updateMask;
+    return json;
+  }
+
+  @override
+  String toString() {
+    return 'LedgerServiceV1UpdateCategoryRequest(allowMissing: $allowMissing, data: $data, id: $id, updateMask: $updateMask)';
+  }
+
+  @override
+  bool operator ==(Object other) =>
+    identical(this, other) ||
+    other is LedgerServiceV1UpdateCategoryRequest &&
+      runtimeType == other.runtimeType
+      && allowMissing == other.allowMissing
+      && data == other.data
+      && id == other.id
+      && updateMask == other.updateMask
+    ;
+
+  @override
+  int get hashCode => Object.hashAll([
+    allowMissing,
+    data,
+    id,
+    updateMask,
+  ]);
+
+  LedgerServiceV1UpdateCategoryRequest copyWith({
+    bool? allowMissing,
+    LedgerServiceV1Category? data,
+    int? id,
+    String? updateMask,
+  }) {
+    return LedgerServiceV1UpdateCategoryRequest(
+      allowMissing: allowMissing ?? this.allowMissing,
+      data: data ?? this.data,
+      id: id ?? this.id,
+      updateMask: updateMask ?? this.updateMask,
+    );
+  }
+}
+
+/// 请求 - 删除分类
+class LedgerServiceV1DeleteCategoryRequest {
+  int? id;
+
+  LedgerServiceV1DeleteCategoryRequest({
+    this.id,
+  });
+
+  factory LedgerServiceV1DeleteCategoryRequest.fromJson(Map<String, dynamic> json) {
+    return LedgerServiceV1DeleteCategoryRequest(
+      id: json['id'] as int?,
+    );
+  }
+
+  Map<String, dynamic> toJson() {
+    final json = <String, dynamic>{};
+    if (id != null) json['id'] = id;
+    return json;
+  }
+
+  @override
+  String toString() {
+    return 'LedgerServiceV1DeleteCategoryRequest(id: $id)';
+  }
+
+  @override
+  bool operator ==(Object other) =>
+    identical(this, other) ||
+    other is LedgerServiceV1DeleteCategoryRequest &&
+      runtimeType == other.runtimeType
+      && id == other.id
+    ;
+
+  @override
+  int get hashCode => Object.hashAll([
+    id,
+  ]);
+
+  LedgerServiceV1DeleteCategoryRequest copyWith({
+    int? id,
+  }) {
+    return LedgerServiceV1DeleteCategoryRequest(
+      id: id ?? this.id,
+    );
+  }
+}
+
+/// 请求 - 切换启用/禁用
+class LedgerServiceV1ToggleCategoryRequest {
+  int? id;
+
+  LedgerServiceV1ToggleCategoryRequest({
+    this.id,
+  });
+
+  factory LedgerServiceV1ToggleCategoryRequest.fromJson(Map<String, dynamic> json) {
+    return LedgerServiceV1ToggleCategoryRequest(
+      id: json['id'] as int?,
+    );
+  }
+
+  Map<String, dynamic> toJson() {
+    final json = <String, dynamic>{};
+    if (id != null) json['id'] = id;
+    return json;
+  }
+
+  @override
+  String toString() {
+    return 'LedgerServiceV1ToggleCategoryRequest(id: $id)';
+  }
+
+  @override
+  bool operator ==(Object other) =>
+    identical(this, other) ||
+    other is LedgerServiceV1ToggleCategoryRequest &&
+      runtimeType == other.runtimeType
+      && id == other.id
+    ;
+
+  @override
+  int get hashCode => Object.hashAll([
+    id,
+  ]);
+
+  LedgerServiceV1ToggleCategoryRequest copyWith({
+    int? id,
+  }) {
+    return LedgerServiceV1ToggleCategoryRequest(
+      id: id ?? this.id,
+    );
+  }
+}
+
+class LedgerTagServiceClient {
+  final ClientTransport _transport;
+
+  LedgerTagServiceClient(this._transport);
+
+  Future<LedgerServiceV1ListTagResponse> list(PaginationPagingRequest request, {Map<String, String>? headers}) async {
+    final path = '/app/v1/ledger-tags';
+    final queryParams = <String>[];
+    if (request.page != null) {
+      queryParams.add('page=${Uri.encodeComponent(request.page!.toString())}');
+    }
+    if (request.pageSize != null) {
+      queryParams.add('pageSize=${Uri.encodeComponent(request.pageSize!.toString())}');
+    }
+    if (request.offset != null) {
+      queryParams.add('offset=${Uri.encodeComponent(request.offset!.toString())}');
+    }
+    if (request.limit != null) {
+      queryParams.add('limit=${Uri.encodeComponent(request.limit!.toString())}');
+    }
+    if (request.token != null) {
+      queryParams.add('token=${Uri.encodeComponent(request.token!.toString())}');
+    }
+    if (request.noPaging != null) {
+      queryParams.add('noPaging=${Uri.encodeComponent(request.noPaging!.toString())}');
+    }
+    if (request.query != null) {
+      queryParams.add('query=${Uri.encodeComponent(request.query!.toString())}');
+    }
+    if (request.filter != null) {
+      queryParams.add('filter=${Uri.encodeComponent(request.filter!.toString())}');
+    }
+    if (request.filterExpr?.type != null) {
+      queryParams.add('filterExpr.type=${Uri.encodeComponent(request.filterExpr!.type!.toString())}');
+    }
+    if (request.orderBy != null) {
+      queryParams.add('orderBy=${Uri.encodeComponent(request.orderBy!.toString())}');
+    }
+    if (request.fieldMask != null) {
+      queryParams.add('fieldMask=${Uri.encodeComponent(request.fieldMask!.toString())}');
+    }
+    var uri = path;
+    if (queryParams.isNotEmpty) {
+      uri += '?${queryParams.join("&")}';
+    }
+    final result = await _transport.unary(uri, 'GET', null, TransportMeta(
+      service: 'LedgerTagService',
+      method: 'List',
+    ), headers: headers);
+    return LedgerServiceV1ListTagResponse.fromJson(result as Map<String, dynamic>);
+  }
+
+  Future<LedgerServiceV1ListTagResponse> listAll(LedgerServiceV1ListAllTagRequest request, {Map<String, String>? headers}) async {
+    final path = '/app/v1/ledger-tags/all';
+    final queryParams = <String>[];
+    if (request.bookId != null) {
+      queryParams.add('bookId=${Uri.encodeComponent(request.bookId!.toString())}');
+    }
+    var uri = path;
+    if (queryParams.isNotEmpty) {
+      uri += '?${queryParams.join("&")}';
+    }
+    final result = await _transport.unary(uri, 'GET', null, TransportMeta(
+      service: 'LedgerTagService',
+      method: 'ListAll',
+    ), headers: headers);
+    return LedgerServiceV1ListTagResponse.fromJson(result as Map<String, dynamic>);
+  }
+
+  Future<LedgerServiceV1Tag> get(LedgerServiceV1GetTagRequest request, {Map<String, String>? headers}) async {
+    if (request.id == null) {
+      throw ArgumentError('missing required field request.id');
+    }
+    final path = '/app/v1/ledger-tags/${request.id}';
+    final queryParams = <String>[];
+    if (request.viewMask != null) {
+      queryParams.add('viewMask=${Uri.encodeComponent(request.viewMask!.toString())}');
+    }
+    var uri = path;
+    if (queryParams.isNotEmpty) {
+      uri += '?${queryParams.join("&")}';
+    }
+    final result = await _transport.unary(uri, 'GET', null, TransportMeta(
+      service: 'LedgerTagService',
+      method: 'Get',
+    ), headers: headers);
+    return LedgerServiceV1Tag.fromJson(result as Map<String, dynamic>);
+  }
+
+  Future<LedgerServiceV1Tag> create(LedgerServiceV1CreateTagRequest request, {Map<String, String>? headers}) async {
+    final path = '/app/v1/ledger-tags';
+    final body = jsonEncode(request.toJson());
+    final result = await _transport.unary(path, 'POST', body, TransportMeta(
+      service: 'LedgerTagService',
+      method: 'Create',
+    ), headers: headers);
+    return LedgerServiceV1Tag.fromJson(result as Map<String, dynamic>);
+  }
+
+  Future<LedgerServiceV1Tag> update(LedgerServiceV1UpdateTagRequest request, {Map<String, String>? headers}) async {
+    if (request.id == null) {
+      throw ArgumentError('missing required field request.id');
+    }
+    final path = '/app/v1/ledger-tags/${request.id}';
+    final body = jsonEncode(request.toJson());
+    final result = await _transport.unary(path, 'PUT', body, TransportMeta(
+      service: 'LedgerTagService',
+      method: 'Update',
+    ), headers: headers);
+    return LedgerServiceV1Tag.fromJson(result as Map<String, dynamic>);
+  }
+
+  Future<Map<String, dynamic>> delete(LedgerServiceV1DeleteTagRequest request, {Map<String, String>? headers}) async {
+    if (request.id == null) {
+      throw ArgumentError('missing required field request.id');
+    }
+    final path = '/app/v1/ledger-tags/${request.id}';
+    final result = await _transport.unary(path, 'DELETE', null, TransportMeta(
+      service: 'LedgerTagService',
+      method: 'Delete',
+    ), headers: headers);
+    return result as Map<String, dynamic>;
+  }
+
+  Future<LedgerServiceV1Tag> toggle(LedgerServiceV1ToggleTagRequest request, {Map<String, String>? headers}) async {
+    if (request.id == null) {
+      throw ArgumentError('missing required field request.id');
+    }
+    final path = '/app/v1/ledger-tags/${request.id}/toggle';
+    final body = jsonEncode(request.toJson());
+    final result = await _transport.unary(path, 'PATCH', body, TransportMeta(
+      service: 'LedgerTagService',
+      method: 'Toggle',
+    ), headers: headers);
+    return LedgerServiceV1Tag.fromJson(result as Map<String, dynamic>);
+  }
+}
+
+class LedgerServiceV1ListTagResponse {
+  List<LedgerServiceV1Tag>? items;
+  int? total;
+
+  LedgerServiceV1ListTagResponse({
+    this.items,
+    this.total,
+  });
+
+  factory LedgerServiceV1ListTagResponse.fromJson(Map<String, dynamic> json) {
+    return LedgerServiceV1ListTagResponse(
+      items: (json['items'] as List<dynamic>?)?.map((e) => LedgerServiceV1Tag.fromJson(e as Map<String, dynamic>)).toList(),
+      total: json['total'] != null ? int.parse(json['total'].toString()) : null,
+    );
+  }
+
+  Map<String, dynamic> toJson() {
+    final json = <String, dynamic>{};
+    if (items != null) json['items'] = items!.map((e) => e.toJson()).toList();
+    if (total != null) json['total'] = total.toString();
+    return json;
+  }
+
+  @override
+  String toString() {
+    return 'LedgerServiceV1ListTagResponse(items: $items, total: $total)';
+  }
+
+  @override
+  bool operator ==(Object other) =>
+    identical(this, other) ||
+    other is LedgerServiceV1ListTagResponse &&
+      runtimeType == other.runtimeType
+      && items == other.items
+      && total == other.total
+    ;
+
+  @override
+  int get hashCode => Object.hashAll([
+    items,
+    total,
+  ]);
+
+  LedgerServiceV1ListTagResponse copyWith({
+    List<LedgerServiceV1Tag>? items,
+    int? total,
+  }) {
+    return LedgerServiceV1ListTagResponse(
+      items: items ?? this.items,
+      total: total ?? this.total,
+    );
+  }
+}
+
+class LedgerServiceV1Tag {
+  int? bookId;
+  bool? canExpense;
+  bool? canIncome;
+  bool? canTransfer;
+  List<LedgerServiceV1Tag>? children;
+  String? createdAt;
+  int? createdBy;
+  String? deletedAt;
+  int? deletedBy;
+  int? depth;
+  bool? enable;
+  int? id;
+  String? name;
+  String? notes;
+  /// 树形字段
+  int? parentId;
+  String? path;
+  int? sortOrder;
+  int? tenantId;
+  String? updatedAt;
+  int? updatedBy;
+
+  LedgerServiceV1Tag({
+    this.bookId,
+    this.canExpense,
+    this.canIncome,
+    this.canTransfer,
+    this.children,
+    this.createdAt,
+    this.createdBy,
+    this.deletedAt,
+    this.deletedBy,
+    this.depth,
+    this.enable,
+    this.id,
+    this.name,
+    this.notes,
+    this.parentId,
+    this.path,
+    this.sortOrder,
+    this.tenantId,
+    this.updatedAt,
+    this.updatedBy,
+  });
+
+  factory LedgerServiceV1Tag.fromJson(Map<String, dynamic> json) {
+    return LedgerServiceV1Tag(
+      bookId: json['bookId'] as int?,
+      canExpense: json['canExpense'] as bool?,
+      canIncome: json['canIncome'] as bool?,
+      canTransfer: json['canTransfer'] as bool?,
+      children: (json['children'] as List<dynamic>?)?.map((e) => LedgerServiceV1Tag.fromJson(e as Map<String, dynamic>)).toList(),
+      createdAt: json['createdAt'] as String?,
+      createdBy: json['createdBy'] as int?,
+      deletedAt: json['deletedAt'] as String?,
+      deletedBy: json['deletedBy'] as int?,
+      depth: json['depth'] as int?,
+      enable: json['enable'] as bool?,
+      id: json['id'] as int?,
+      name: json['name'] as String?,
+      notes: json['notes'] as String?,
+      parentId: json['parentId'] as int?,
+      path: json['path'] as String?,
+      sortOrder: json['sortOrder'] as int?,
+      tenantId: json['tenantId'] as int?,
+      updatedAt: json['updatedAt'] as String?,
+      updatedBy: json['updatedBy'] as int?,
+    );
+  }
+
+  Map<String, dynamic> toJson() {
+    final json = <String, dynamic>{};
+    if (bookId != null) json['bookId'] = bookId;
+    if (canExpense != null) json['canExpense'] = canExpense;
+    if (canIncome != null) json['canIncome'] = canIncome;
+    if (canTransfer != null) json['canTransfer'] = canTransfer;
+    if (children != null) json['children'] = children!.map((e) => e.toJson()).toList();
+    if (createdAt != null) json['createdAt'] = createdAt;
+    if (createdBy != null) json['createdBy'] = createdBy;
+    if (deletedAt != null) json['deletedAt'] = deletedAt;
+    if (deletedBy != null) json['deletedBy'] = deletedBy;
+    if (depth != null) json['depth'] = depth;
+    if (enable != null) json['enable'] = enable;
+    if (id != null) json['id'] = id;
+    if (name != null) json['name'] = name;
+    if (notes != null) json['notes'] = notes;
+    if (parentId != null) json['parentId'] = parentId;
+    if (path != null) json['path'] = path;
+    if (sortOrder != null) json['sortOrder'] = sortOrder;
+    if (tenantId != null) json['tenantId'] = tenantId;
+    if (updatedAt != null) json['updatedAt'] = updatedAt;
+    if (updatedBy != null) json['updatedBy'] = updatedBy;
+    return json;
+  }
+
+  @override
+  String toString() {
+    return 'LedgerServiceV1Tag(bookId: $bookId, canExpense: $canExpense, canIncome: $canIncome, canTransfer: $canTransfer, children: $children, createdAt: $createdAt, createdBy: $createdBy, deletedAt: $deletedAt, deletedBy: $deletedBy, depth: $depth, enable: $enable, id: $id, name: $name, notes: $notes, parentId: $parentId, path: $path, sortOrder: $sortOrder, tenantId: $tenantId, updatedAt: $updatedAt, updatedBy: $updatedBy)';
+  }
+
+  @override
+  bool operator ==(Object other) =>
+    identical(this, other) ||
+    other is LedgerServiceV1Tag &&
+      runtimeType == other.runtimeType
+      && bookId == other.bookId
+      && canExpense == other.canExpense
+      && canIncome == other.canIncome
+      && canTransfer == other.canTransfer
+      && children == other.children
+      && createdAt == other.createdAt
+      && createdBy == other.createdBy
+      && deletedAt == other.deletedAt
+      && deletedBy == other.deletedBy
+      && depth == other.depth
+      && enable == other.enable
+      && id == other.id
+      && name == other.name
+      && notes == other.notes
+      && parentId == other.parentId
+      && path == other.path
+      && sortOrder == other.sortOrder
+      && tenantId == other.tenantId
+      && updatedAt == other.updatedAt
+      && updatedBy == other.updatedBy
+    ;
+
+  @override
+  int get hashCode => Object.hashAll([
+    bookId,
+    canExpense,
+    canIncome,
+    canTransfer,
+    children,
+    createdAt,
+    createdBy,
+    deletedAt,
+    deletedBy,
+    depth,
+    enable,
+    id,
+    name,
+    notes,
+    parentId,
+    path,
+    sortOrder,
+    tenantId,
+    updatedAt,
+    updatedBy,
+  ]);
+
+  LedgerServiceV1Tag copyWith({
+    int? bookId,
+    bool? canExpense,
+    bool? canIncome,
+    bool? canTransfer,
+    List<LedgerServiceV1Tag>? children,
+    String? createdAt,
+    int? createdBy,
+    String? deletedAt,
+    int? deletedBy,
+    int? depth,
+    bool? enable,
+    int? id,
+    String? name,
+    String? notes,
+    int? parentId,
+    String? path,
+    int? sortOrder,
+    int? tenantId,
+    String? updatedAt,
+    int? updatedBy,
+  }) {
+    return LedgerServiceV1Tag(
+      bookId: bookId ?? this.bookId,
+      canExpense: canExpense ?? this.canExpense,
+      canIncome: canIncome ?? this.canIncome,
+      canTransfer: canTransfer ?? this.canTransfer,
+      children: children ?? this.children,
+      createdAt: createdAt ?? this.createdAt,
+      createdBy: createdBy ?? this.createdBy,
+      deletedAt: deletedAt ?? this.deletedAt,
+      deletedBy: deletedBy ?? this.deletedBy,
+      depth: depth ?? this.depth,
+      enable: enable ?? this.enable,
+      id: id ?? this.id,
+      name: name ?? this.name,
+      notes: notes ?? this.notes,
+      parentId: parentId ?? this.parentId,
+      path: path ?? this.path,
+      sortOrder: sortOrder ?? this.sortOrder,
+      tenantId: tenantId ?? this.tenantId,
+      updatedAt: updatedAt ?? this.updatedAt,
+      updatedBy: updatedBy ?? this.updatedBy,
+    );
+  }
+}
+
+class LedgerServiceV1ListAllTagRequest {
+  int? bookId;
+
+  LedgerServiceV1ListAllTagRequest({
+    this.bookId,
+  });
+
+  factory LedgerServiceV1ListAllTagRequest.fromJson(Map<String, dynamic> json) {
+    return LedgerServiceV1ListAllTagRequest(
+      bookId: json['bookId'] as int?,
+    );
+  }
+
+  Map<String, dynamic> toJson() {
+    final json = <String, dynamic>{};
+    if (bookId != null) json['bookId'] = bookId;
+    return json;
+  }
+
+  @override
+  String toString() {
+    return 'LedgerServiceV1ListAllTagRequest(bookId: $bookId)';
+  }
+
+  @override
+  bool operator ==(Object other) =>
+    identical(this, other) ||
+    other is LedgerServiceV1ListAllTagRequest &&
+      runtimeType == other.runtimeType
+      && bookId == other.bookId
+    ;
+
+  @override
+  int get hashCode => Object.hashAll([
+    bookId,
+  ]);
+
+  LedgerServiceV1ListAllTagRequest copyWith({
+    int? bookId,
+  }) {
+    return LedgerServiceV1ListAllTagRequest(
+      bookId: bookId ?? this.bookId,
+    );
+  }
+}
+
+class LedgerServiceV1GetTagRequest {
+  int? id;
+  String? viewMask;
+
+  LedgerServiceV1GetTagRequest({
+    this.id,
+    this.viewMask,
+  });
+
+  factory LedgerServiceV1GetTagRequest.fromJson(Map<String, dynamic> json) {
+    return LedgerServiceV1GetTagRequest(
+      id: json['id'] as int?,
+      viewMask: json['viewMask'] as String?,
+    );
+  }
+
+  Map<String, dynamic> toJson() {
+    final json = <String, dynamic>{};
+    if (id != null) json['id'] = id;
+    if (viewMask != null) json['viewMask'] = viewMask;
+    return json;
+  }
+
+  @override
+  String toString() {
+    return 'LedgerServiceV1GetTagRequest(id: $id, viewMask: $viewMask)';
+  }
+
+  @override
+  bool operator ==(Object other) =>
+    identical(this, other) ||
+    other is LedgerServiceV1GetTagRequest &&
+      runtimeType == other.runtimeType
+      && id == other.id
+      && viewMask == other.viewMask
+    ;
+
+  @override
+  int get hashCode => Object.hashAll([
+    id,
+    viewMask,
+  ]);
+
+  LedgerServiceV1GetTagRequest copyWith({
+    int? id,
+    String? viewMask,
+  }) {
+    return LedgerServiceV1GetTagRequest(
+      id: id ?? this.id,
+      viewMask: viewMask ?? this.viewMask,
+    );
+  }
+}
+
+class LedgerServiceV1CreateTagRequest {
+  LedgerServiceV1Tag? data;
+
+  LedgerServiceV1CreateTagRequest({
+    this.data,
+  });
+
+  factory LedgerServiceV1CreateTagRequest.fromJson(Map<String, dynamic> json) {
+    return LedgerServiceV1CreateTagRequest(
+      data: json['data'] != null ? LedgerServiceV1Tag.fromJson(json['data'] as Map<String, dynamic>) : null,
+    );
+  }
+
+  Map<String, dynamic> toJson() {
+    final json = <String, dynamic>{};
+    if (data != null) json['data'] = data!.toJson();
+    return json;
+  }
+
+  @override
+  String toString() {
+    return 'LedgerServiceV1CreateTagRequest(data: $data)';
+  }
+
+  @override
+  bool operator ==(Object other) =>
+    identical(this, other) ||
+    other is LedgerServiceV1CreateTagRequest &&
+      runtimeType == other.runtimeType
+      && data == other.data
+    ;
+
+  @override
+  int get hashCode => Object.hashAll([
+    data,
+  ]);
+
+  LedgerServiceV1CreateTagRequest copyWith({
+    LedgerServiceV1Tag? data,
+  }) {
+    return LedgerServiceV1CreateTagRequest(
+      data: data ?? this.data,
+    );
+  }
+}
+
+class LedgerServiceV1UpdateTagRequest {
+  bool? allowMissing;
+  LedgerServiceV1Tag? data;
+  int? id;
+  String? updateMask;
+
+  LedgerServiceV1UpdateTagRequest({
+    this.allowMissing,
+    this.data,
+    this.id,
+    this.updateMask,
+  });
+
+  factory LedgerServiceV1UpdateTagRequest.fromJson(Map<String, dynamic> json) {
+    return LedgerServiceV1UpdateTagRequest(
+      allowMissing: json['allowMissing'] as bool?,
+      data: json['data'] != null ? LedgerServiceV1Tag.fromJson(json['data'] as Map<String, dynamic>) : null,
+      id: json['id'] as int?,
+      updateMask: json['updateMask'] as String?,
+    );
+  }
+
+  Map<String, dynamic> toJson() {
+    final json = <String, dynamic>{};
+    if (allowMissing != null) json['allowMissing'] = allowMissing;
+    if (data != null) json['data'] = data!.toJson();
+    if (id != null) json['id'] = id;
+    if (updateMask != null) json['updateMask'] = updateMask;
+    return json;
+  }
+
+  @override
+  String toString() {
+    return 'LedgerServiceV1UpdateTagRequest(allowMissing: $allowMissing, data: $data, id: $id, updateMask: $updateMask)';
+  }
+
+  @override
+  bool operator ==(Object other) =>
+    identical(this, other) ||
+    other is LedgerServiceV1UpdateTagRequest &&
+      runtimeType == other.runtimeType
+      && allowMissing == other.allowMissing
+      && data == other.data
+      && id == other.id
+      && updateMask == other.updateMask
+    ;
+
+  @override
+  int get hashCode => Object.hashAll([
+    allowMissing,
+    data,
+    id,
+    updateMask,
+  ]);
+
+  LedgerServiceV1UpdateTagRequest copyWith({
+    bool? allowMissing,
+    LedgerServiceV1Tag? data,
+    int? id,
+    String? updateMask,
+  }) {
+    return LedgerServiceV1UpdateTagRequest(
+      allowMissing: allowMissing ?? this.allowMissing,
+      data: data ?? this.data,
+      id: id ?? this.id,
+      updateMask: updateMask ?? this.updateMask,
+    );
+  }
+}
+
+class LedgerServiceV1DeleteTagRequest {
+  int? id;
+
+  LedgerServiceV1DeleteTagRequest({
+    this.id,
+  });
+
+  factory LedgerServiceV1DeleteTagRequest.fromJson(Map<String, dynamic> json) {
+    return LedgerServiceV1DeleteTagRequest(
+      id: json['id'] as int?,
+    );
+  }
+
+  Map<String, dynamic> toJson() {
+    final json = <String, dynamic>{};
+    if (id != null) json['id'] = id;
+    return json;
+  }
+
+  @override
+  String toString() {
+    return 'LedgerServiceV1DeleteTagRequest(id: $id)';
+  }
+
+  @override
+  bool operator ==(Object other) =>
+    identical(this, other) ||
+    other is LedgerServiceV1DeleteTagRequest &&
+      runtimeType == other.runtimeType
+      && id == other.id
+    ;
+
+  @override
+  int get hashCode => Object.hashAll([
+    id,
+  ]);
+
+  LedgerServiceV1DeleteTagRequest copyWith({
+    int? id,
+  }) {
+    return LedgerServiceV1DeleteTagRequest(
+      id: id ?? this.id,
+    );
+  }
+}
+
+class LedgerServiceV1ToggleTagRequest {
+  int? id;
+
+  LedgerServiceV1ToggleTagRequest({
+    this.id,
+  });
+
+  factory LedgerServiceV1ToggleTagRequest.fromJson(Map<String, dynamic> json) {
+    return LedgerServiceV1ToggleTagRequest(
+      id: json['id'] as int?,
+    );
+  }
+
+  Map<String, dynamic> toJson() {
+    final json = <String, dynamic>{};
+    if (id != null) json['id'] = id;
+    return json;
+  }
+
+  @override
+  String toString() {
+    return 'LedgerServiceV1ToggleTagRequest(id: $id)';
+  }
+
+  @override
+  bool operator ==(Object other) =>
+    identical(this, other) ||
+    other is LedgerServiceV1ToggleTagRequest &&
+      runtimeType == other.runtimeType
+      && id == other.id
+    ;
+
+  @override
+  int get hashCode => Object.hashAll([
+    id,
+  ]);
+
+  LedgerServiceV1ToggleTagRequest copyWith({
+    int? id,
+  }) {
+    return LedgerServiceV1ToggleTagRequest(
+      id: id ?? this.id,
     );
   }
 }
@@ -3866,6 +8630,661 @@ class SiteServiceV1DeleteNavigationRequest {
     int? id,
   }) {
     return SiteServiceV1DeleteNavigationRequest(
+      id: id ?? this.id,
+    );
+  }
+}
+
+class NoteDayServiceClient {
+  final ClientTransport _transport;
+
+  NoteDayServiceClient(this._transport);
+
+  Future<LedgerServiceV1ListNoteDayResponse> list(PaginationPagingRequest request, {Map<String, String>? headers}) async {
+    final path = '/app/v1/note-days';
+    final queryParams = <String>[];
+    if (request.page != null) {
+      queryParams.add('page=${Uri.encodeComponent(request.page!.toString())}');
+    }
+    if (request.pageSize != null) {
+      queryParams.add('pageSize=${Uri.encodeComponent(request.pageSize!.toString())}');
+    }
+    if (request.offset != null) {
+      queryParams.add('offset=${Uri.encodeComponent(request.offset!.toString())}');
+    }
+    if (request.limit != null) {
+      queryParams.add('limit=${Uri.encodeComponent(request.limit!.toString())}');
+    }
+    if (request.token != null) {
+      queryParams.add('token=${Uri.encodeComponent(request.token!.toString())}');
+    }
+    if (request.noPaging != null) {
+      queryParams.add('noPaging=${Uri.encodeComponent(request.noPaging!.toString())}');
+    }
+    if (request.query != null) {
+      queryParams.add('query=${Uri.encodeComponent(request.query!.toString())}');
+    }
+    if (request.filter != null) {
+      queryParams.add('filter=${Uri.encodeComponent(request.filter!.toString())}');
+    }
+    if (request.filterExpr?.type != null) {
+      queryParams.add('filterExpr.type=${Uri.encodeComponent(request.filterExpr!.type!.toString())}');
+    }
+    if (request.orderBy != null) {
+      queryParams.add('orderBy=${Uri.encodeComponent(request.orderBy!.toString())}');
+    }
+    if (request.fieldMask != null) {
+      queryParams.add('fieldMask=${Uri.encodeComponent(request.fieldMask!.toString())}');
+    }
+    var uri = path;
+    if (queryParams.isNotEmpty) {
+      uri += '?${queryParams.join("&")}';
+    }
+    final result = await _transport.unary(uri, 'GET', null, TransportMeta(
+      service: 'NoteDayService',
+      method: 'List',
+    ), headers: headers);
+    return LedgerServiceV1ListNoteDayResponse.fromJson(result as Map<String, dynamic>);
+  }
+
+  Future<LedgerServiceV1NoteDay> get(LedgerServiceV1GetNoteDayRequest request, {Map<String, String>? headers}) async {
+    if (request.id == null) {
+      throw ArgumentError('missing required field request.id');
+    }
+    final path = '/app/v1/note-days/${request.id}';
+    final result = await _transport.unary(path, 'GET', null, TransportMeta(
+      service: 'NoteDayService',
+      method: 'Get',
+    ), headers: headers);
+    return LedgerServiceV1NoteDay.fromJson(result as Map<String, dynamic>);
+  }
+
+  Future<LedgerServiceV1NoteDay> create(LedgerServiceV1CreateNoteDayRequest request, {Map<String, String>? headers}) async {
+    final path = '/app/v1/note-days';
+    final body = jsonEncode(request.toJson());
+    final result = await _transport.unary(path, 'POST', body, TransportMeta(
+      service: 'NoteDayService',
+      method: 'Create',
+    ), headers: headers);
+    return LedgerServiceV1NoteDay.fromJson(result as Map<String, dynamic>);
+  }
+
+  Future<LedgerServiceV1NoteDay> update(LedgerServiceV1UpdateNoteDayRequest request, {Map<String, String>? headers}) async {
+    if (request.id == null) {
+      throw ArgumentError('missing required field request.id');
+    }
+    final path = '/app/v1/note-days/${request.id}';
+    final body = jsonEncode(request.toJson());
+    final result = await _transport.unary(path, 'PUT', body, TransportMeta(
+      service: 'NoteDayService',
+      method: 'Update',
+    ), headers: headers);
+    return LedgerServiceV1NoteDay.fromJson(result as Map<String, dynamic>);
+  }
+
+  Future<Map<String, dynamic>> delete(LedgerServiceV1DeleteNoteDayRequest request, {Map<String, String>? headers}) async {
+    if (request.id == null) {
+      throw ArgumentError('missing required field request.id');
+    }
+    final path = '/app/v1/note-days/${request.id}';
+    final result = await _transport.unary(path, 'DELETE', null, TransportMeta(
+      service: 'NoteDayService',
+      method: 'Delete',
+    ), headers: headers);
+    return result as Map<String, dynamic>;
+  }
+
+  Future<LedgerServiceV1NoteDay> run(LedgerServiceV1RunNoteDayRequest request, {Map<String, String>? headers}) async {
+    if (request.id == null) {
+      throw ArgumentError('missing required field request.id');
+    }
+    final path = '/app/v1/note-days/${request.id}/run';
+    final body = jsonEncode(request.toJson());
+    final result = await _transport.unary(path, 'PATCH', body, TransportMeta(
+      service: 'NoteDayService',
+      method: 'Run',
+    ), headers: headers);
+    return LedgerServiceV1NoteDay.fromJson(result as Map<String, dynamic>);
+  }
+
+  Future<LedgerServiceV1NoteDay> recall(LedgerServiceV1RecallNoteDayRequest request, {Map<String, String>? headers}) async {
+    if (request.id == null) {
+      throw ArgumentError('missing required field request.id');
+    }
+    final path = '/app/v1/note-days/${request.id}/recall';
+    final body = jsonEncode(request.toJson());
+    final result = await _transport.unary(path, 'PATCH', body, TransportMeta(
+      service: 'NoteDayService',
+      method: 'Recall',
+    ), headers: headers);
+    return LedgerServiceV1NoteDay.fromJson(result as Map<String, dynamic>);
+  }
+}
+
+class LedgerServiceV1ListNoteDayResponse {
+  List<LedgerServiceV1NoteDay>? items;
+  int? total;
+
+  LedgerServiceV1ListNoteDayResponse({
+    this.items,
+    this.total,
+  });
+
+  factory LedgerServiceV1ListNoteDayResponse.fromJson(Map<String, dynamic> json) {
+    return LedgerServiceV1ListNoteDayResponse(
+      items: (json['items'] as List<dynamic>?)?.map((e) => LedgerServiceV1NoteDay.fromJson(e as Map<String, dynamic>)).toList(),
+      total: json['total'] != null ? int.parse(json['total'].toString()) : null,
+    );
+  }
+
+  Map<String, dynamic> toJson() {
+    final json = <String, dynamic>{};
+    if (items != null) json['items'] = items!.map((e) => e.toJson()).toList();
+    if (total != null) json['total'] = total.toString();
+    return json;
+  }
+
+  @override
+  String toString() {
+    return 'LedgerServiceV1ListNoteDayResponse(items: $items, total: $total)';
+  }
+
+  @override
+  bool operator ==(Object other) =>
+    identical(this, other) ||
+    other is LedgerServiceV1ListNoteDayResponse &&
+      runtimeType == other.runtimeType
+      && items == other.items
+      && total == other.total
+    ;
+
+  @override
+  int get hashCode => Object.hashAll([
+    items,
+    total,
+  ]);
+
+  LedgerServiceV1ListNoteDayResponse copyWith({
+    List<LedgerServiceV1NoteDay>? items,
+    int? total,
+  }) {
+    return LedgerServiceV1ListNoteDayResponse(
+      items: items ?? this.items,
+      total: total ?? this.total,
+    );
+  }
+}
+
+/// 定期提醒
+class LedgerServiceV1NoteDay {
+  String? createdAt;
+  int? createdBy;
+  String? deletedAt;
+  int? deletedBy;
+  int? endDate;
+  int? id;
+  int? interval;
+  int? nextDate;
+  String? notes;
+  int? repeatType;
+  int? runCount;
+  int? startDate;
+  String? title;
+  int? totalCount;
+  String? updatedAt;
+  int? updatedBy;
+  int? userId;
+
+  LedgerServiceV1NoteDay({
+    this.createdAt,
+    this.createdBy,
+    this.deletedAt,
+    this.deletedBy,
+    this.endDate,
+    this.id,
+    this.interval,
+    this.nextDate,
+    this.notes,
+    this.repeatType,
+    this.runCount,
+    this.startDate,
+    this.title,
+    this.totalCount,
+    this.updatedAt,
+    this.updatedBy,
+    this.userId,
+  });
+
+  factory LedgerServiceV1NoteDay.fromJson(Map<String, dynamic> json) {
+    return LedgerServiceV1NoteDay(
+      createdAt: json['createdAt'] as String?,
+      createdBy: json['createdBy'] as int?,
+      deletedAt: json['deletedAt'] as String?,
+      deletedBy: json['deletedBy'] as int?,
+      endDate: json['endDate'] != null ? int.parse(json['endDate'].toString()) : null,
+      id: json['id'] as int?,
+      interval: json['interval'] as int?,
+      nextDate: json['nextDate'] != null ? int.parse(json['nextDate'].toString()) : null,
+      notes: json['notes'] as String?,
+      repeatType: json['repeatType'] as int?,
+      runCount: json['runCount'] as int?,
+      startDate: json['startDate'] != null ? int.parse(json['startDate'].toString()) : null,
+      title: json['title'] as String?,
+      totalCount: json['totalCount'] as int?,
+      updatedAt: json['updatedAt'] as String?,
+      updatedBy: json['updatedBy'] as int?,
+      userId: json['userId'] as int?,
+    );
+  }
+
+  Map<String, dynamic> toJson() {
+    final json = <String, dynamic>{};
+    if (createdAt != null) json['createdAt'] = createdAt;
+    if (createdBy != null) json['createdBy'] = createdBy;
+    if (deletedAt != null) json['deletedAt'] = deletedAt;
+    if (deletedBy != null) json['deletedBy'] = deletedBy;
+    if (endDate != null) json['endDate'] = endDate.toString();
+    if (id != null) json['id'] = id;
+    if (interval != null) json['interval'] = interval;
+    if (nextDate != null) json['nextDate'] = nextDate.toString();
+    if (notes != null) json['notes'] = notes;
+    if (repeatType != null) json['repeatType'] = repeatType;
+    if (runCount != null) json['runCount'] = runCount;
+    if (startDate != null) json['startDate'] = startDate.toString();
+    if (title != null) json['title'] = title;
+    if (totalCount != null) json['totalCount'] = totalCount;
+    if (updatedAt != null) json['updatedAt'] = updatedAt;
+    if (updatedBy != null) json['updatedBy'] = updatedBy;
+    if (userId != null) json['userId'] = userId;
+    return json;
+  }
+
+  @override
+  String toString() {
+    return 'LedgerServiceV1NoteDay(createdAt: $createdAt, createdBy: $createdBy, deletedAt: $deletedAt, deletedBy: $deletedBy, endDate: $endDate, id: $id, interval: $interval, nextDate: $nextDate, notes: $notes, repeatType: $repeatType, runCount: $runCount, startDate: $startDate, title: $title, totalCount: $totalCount, updatedAt: $updatedAt, updatedBy: $updatedBy, userId: $userId)';
+  }
+
+  @override
+  bool operator ==(Object other) =>
+    identical(this, other) ||
+    other is LedgerServiceV1NoteDay &&
+      runtimeType == other.runtimeType
+      && createdAt == other.createdAt
+      && createdBy == other.createdBy
+      && deletedAt == other.deletedAt
+      && deletedBy == other.deletedBy
+      && endDate == other.endDate
+      && id == other.id
+      && interval == other.interval
+      && nextDate == other.nextDate
+      && notes == other.notes
+      && repeatType == other.repeatType
+      && runCount == other.runCount
+      && startDate == other.startDate
+      && title == other.title
+      && totalCount == other.totalCount
+      && updatedAt == other.updatedAt
+      && updatedBy == other.updatedBy
+      && userId == other.userId
+    ;
+
+  @override
+  int get hashCode => Object.hashAll([
+    createdAt,
+    createdBy,
+    deletedAt,
+    deletedBy,
+    endDate,
+    id,
+    interval,
+    nextDate,
+    notes,
+    repeatType,
+    runCount,
+    startDate,
+    title,
+    totalCount,
+    updatedAt,
+    updatedBy,
+    userId,
+  ]);
+
+  LedgerServiceV1NoteDay copyWith({
+    String? createdAt,
+    int? createdBy,
+    String? deletedAt,
+    int? deletedBy,
+    int? endDate,
+    int? id,
+    int? interval,
+    int? nextDate,
+    String? notes,
+    int? repeatType,
+    int? runCount,
+    int? startDate,
+    String? title,
+    int? totalCount,
+    String? updatedAt,
+    int? updatedBy,
+    int? userId,
+  }) {
+    return LedgerServiceV1NoteDay(
+      createdAt: createdAt ?? this.createdAt,
+      createdBy: createdBy ?? this.createdBy,
+      deletedAt: deletedAt ?? this.deletedAt,
+      deletedBy: deletedBy ?? this.deletedBy,
+      endDate: endDate ?? this.endDate,
+      id: id ?? this.id,
+      interval: interval ?? this.interval,
+      nextDate: nextDate ?? this.nextDate,
+      notes: notes ?? this.notes,
+      repeatType: repeatType ?? this.repeatType,
+      runCount: runCount ?? this.runCount,
+      startDate: startDate ?? this.startDate,
+      title: title ?? this.title,
+      totalCount: totalCount ?? this.totalCount,
+      updatedAt: updatedAt ?? this.updatedAt,
+      updatedBy: updatedBy ?? this.updatedBy,
+      userId: userId ?? this.userId,
+    );
+  }
+}
+
+class LedgerServiceV1GetNoteDayRequest {
+  int? id;
+
+  LedgerServiceV1GetNoteDayRequest({
+    this.id,
+  });
+
+  factory LedgerServiceV1GetNoteDayRequest.fromJson(Map<String, dynamic> json) {
+    return LedgerServiceV1GetNoteDayRequest(
+      id: json['id'] as int?,
+    );
+  }
+
+  Map<String, dynamic> toJson() {
+    final json = <String, dynamic>{};
+    if (id != null) json['id'] = id;
+    return json;
+  }
+
+  @override
+  String toString() {
+    return 'LedgerServiceV1GetNoteDayRequest(id: $id)';
+  }
+
+  @override
+  bool operator ==(Object other) =>
+    identical(this, other) ||
+    other is LedgerServiceV1GetNoteDayRequest &&
+      runtimeType == other.runtimeType
+      && id == other.id
+    ;
+
+  @override
+  int get hashCode => Object.hashAll([
+    id,
+  ]);
+
+  LedgerServiceV1GetNoteDayRequest copyWith({
+    int? id,
+  }) {
+    return LedgerServiceV1GetNoteDayRequest(
+      id: id ?? this.id,
+    );
+  }
+}
+
+class LedgerServiceV1CreateNoteDayRequest {
+  LedgerServiceV1NoteDay? data;
+
+  LedgerServiceV1CreateNoteDayRequest({
+    this.data,
+  });
+
+  factory LedgerServiceV1CreateNoteDayRequest.fromJson(Map<String, dynamic> json) {
+    return LedgerServiceV1CreateNoteDayRequest(
+      data: json['data'] != null ? LedgerServiceV1NoteDay.fromJson(json['data'] as Map<String, dynamic>) : null,
+    );
+  }
+
+  Map<String, dynamic> toJson() {
+    final json = <String, dynamic>{};
+    if (data != null) json['data'] = data!.toJson();
+    return json;
+  }
+
+  @override
+  String toString() {
+    return 'LedgerServiceV1CreateNoteDayRequest(data: $data)';
+  }
+
+  @override
+  bool operator ==(Object other) =>
+    identical(this, other) ||
+    other is LedgerServiceV1CreateNoteDayRequest &&
+      runtimeType == other.runtimeType
+      && data == other.data
+    ;
+
+  @override
+  int get hashCode => Object.hashAll([
+    data,
+  ]);
+
+  LedgerServiceV1CreateNoteDayRequest copyWith({
+    LedgerServiceV1NoteDay? data,
+  }) {
+    return LedgerServiceV1CreateNoteDayRequest(
+      data: data ?? this.data,
+    );
+  }
+}
+
+class LedgerServiceV1UpdateNoteDayRequest {
+  bool? allowMissing;
+  LedgerServiceV1NoteDay? data;
+  int? id;
+  String? updateMask;
+
+  LedgerServiceV1UpdateNoteDayRequest({
+    this.allowMissing,
+    this.data,
+    this.id,
+    this.updateMask,
+  });
+
+  factory LedgerServiceV1UpdateNoteDayRequest.fromJson(Map<String, dynamic> json) {
+    return LedgerServiceV1UpdateNoteDayRequest(
+      allowMissing: json['allowMissing'] as bool?,
+      data: json['data'] != null ? LedgerServiceV1NoteDay.fromJson(json['data'] as Map<String, dynamic>) : null,
+      id: json['id'] as int?,
+      updateMask: json['updateMask'] as String?,
+    );
+  }
+
+  Map<String, dynamic> toJson() {
+    final json = <String, dynamic>{};
+    if (allowMissing != null) json['allowMissing'] = allowMissing;
+    if (data != null) json['data'] = data!.toJson();
+    if (id != null) json['id'] = id;
+    if (updateMask != null) json['updateMask'] = updateMask;
+    return json;
+  }
+
+  @override
+  String toString() {
+    return 'LedgerServiceV1UpdateNoteDayRequest(allowMissing: $allowMissing, data: $data, id: $id, updateMask: $updateMask)';
+  }
+
+  @override
+  bool operator ==(Object other) =>
+    identical(this, other) ||
+    other is LedgerServiceV1UpdateNoteDayRequest &&
+      runtimeType == other.runtimeType
+      && allowMissing == other.allowMissing
+      && data == other.data
+      && id == other.id
+      && updateMask == other.updateMask
+    ;
+
+  @override
+  int get hashCode => Object.hashAll([
+    allowMissing,
+    data,
+    id,
+    updateMask,
+  ]);
+
+  LedgerServiceV1UpdateNoteDayRequest copyWith({
+    bool? allowMissing,
+    LedgerServiceV1NoteDay? data,
+    int? id,
+    String? updateMask,
+  }) {
+    return LedgerServiceV1UpdateNoteDayRequest(
+      allowMissing: allowMissing ?? this.allowMissing,
+      data: data ?? this.data,
+      id: id ?? this.id,
+      updateMask: updateMask ?? this.updateMask,
+    );
+  }
+}
+
+class LedgerServiceV1DeleteNoteDayRequest {
+  int? id;
+
+  LedgerServiceV1DeleteNoteDayRequest({
+    this.id,
+  });
+
+  factory LedgerServiceV1DeleteNoteDayRequest.fromJson(Map<String, dynamic> json) {
+    return LedgerServiceV1DeleteNoteDayRequest(
+      id: json['id'] as int?,
+    );
+  }
+
+  Map<String, dynamic> toJson() {
+    final json = <String, dynamic>{};
+    if (id != null) json['id'] = id;
+    return json;
+  }
+
+  @override
+  String toString() {
+    return 'LedgerServiceV1DeleteNoteDayRequest(id: $id)';
+  }
+
+  @override
+  bool operator ==(Object other) =>
+    identical(this, other) ||
+    other is LedgerServiceV1DeleteNoteDayRequest &&
+      runtimeType == other.runtimeType
+      && id == other.id
+    ;
+
+  @override
+  int get hashCode => Object.hashAll([
+    id,
+  ]);
+
+  LedgerServiceV1DeleteNoteDayRequest copyWith({
+    int? id,
+  }) {
+    return LedgerServiceV1DeleteNoteDayRequest(
+      id: id ?? this.id,
+    );
+  }
+}
+
+class LedgerServiceV1RunNoteDayRequest {
+  int? id;
+
+  LedgerServiceV1RunNoteDayRequest({
+    this.id,
+  });
+
+  factory LedgerServiceV1RunNoteDayRequest.fromJson(Map<String, dynamic> json) {
+    return LedgerServiceV1RunNoteDayRequest(
+      id: json['id'] as int?,
+    );
+  }
+
+  Map<String, dynamic> toJson() {
+    final json = <String, dynamic>{};
+    if (id != null) json['id'] = id;
+    return json;
+  }
+
+  @override
+  String toString() {
+    return 'LedgerServiceV1RunNoteDayRequest(id: $id)';
+  }
+
+  @override
+  bool operator ==(Object other) =>
+    identical(this, other) ||
+    other is LedgerServiceV1RunNoteDayRequest &&
+      runtimeType == other.runtimeType
+      && id == other.id
+    ;
+
+  @override
+  int get hashCode => Object.hashAll([
+    id,
+  ]);
+
+  LedgerServiceV1RunNoteDayRequest copyWith({
+    int? id,
+  }) {
+    return LedgerServiceV1RunNoteDayRequest(
+      id: id ?? this.id,
+    );
+  }
+}
+
+class LedgerServiceV1RecallNoteDayRequest {
+  int? id;
+
+  LedgerServiceV1RecallNoteDayRequest({
+    this.id,
+  });
+
+  factory LedgerServiceV1RecallNoteDayRequest.fromJson(Map<String, dynamic> json) {
+    return LedgerServiceV1RecallNoteDayRequest(
+      id: json['id'] as int?,
+    );
+  }
+
+  Map<String, dynamic> toJson() {
+    final json = <String, dynamic>{};
+    if (id != null) json['id'] = id;
+    return json;
+  }
+
+  @override
+  String toString() {
+    return 'LedgerServiceV1RecallNoteDayRequest(id: $id)';
+  }
+
+  @override
+  bool operator ==(Object other) =>
+    identical(this, other) ||
+    other is LedgerServiceV1RecallNoteDayRequest &&
+      runtimeType == other.runtimeType
+      && id == other.id
+    ;
+
+  @override
+  int get hashCode => Object.hashAll([
+    id,
+  ]);
+
+  LedgerServiceV1RecallNoteDayRequest copyWith({
+    int? id,
+  }) {
+    return LedgerServiceV1RecallNoteDayRequest(
       id: id ?? this.id,
     );
   }
@@ -4776,6 +10195,664 @@ class ContentServiceV1DeletePageRequest {
   }
 }
 
+class PayeeServiceClient {
+  final ClientTransport _transport;
+
+  PayeeServiceClient(this._transport);
+
+  Future<LedgerServiceV1ListPayeeResponse> list(PaginationPagingRequest request, {Map<String, String>? headers}) async {
+    final path = '/app/v1/payees';
+    final queryParams = <String>[];
+    if (request.page != null) {
+      queryParams.add('page=${Uri.encodeComponent(request.page!.toString())}');
+    }
+    if (request.pageSize != null) {
+      queryParams.add('pageSize=${Uri.encodeComponent(request.pageSize!.toString())}');
+    }
+    if (request.offset != null) {
+      queryParams.add('offset=${Uri.encodeComponent(request.offset!.toString())}');
+    }
+    if (request.limit != null) {
+      queryParams.add('limit=${Uri.encodeComponent(request.limit!.toString())}');
+    }
+    if (request.token != null) {
+      queryParams.add('token=${Uri.encodeComponent(request.token!.toString())}');
+    }
+    if (request.noPaging != null) {
+      queryParams.add('noPaging=${Uri.encodeComponent(request.noPaging!.toString())}');
+    }
+    if (request.query != null) {
+      queryParams.add('query=${Uri.encodeComponent(request.query!.toString())}');
+    }
+    if (request.filter != null) {
+      queryParams.add('filter=${Uri.encodeComponent(request.filter!.toString())}');
+    }
+    if (request.filterExpr?.type != null) {
+      queryParams.add('filterExpr.type=${Uri.encodeComponent(request.filterExpr!.type!.toString())}');
+    }
+    if (request.orderBy != null) {
+      queryParams.add('orderBy=${Uri.encodeComponent(request.orderBy!.toString())}');
+    }
+    if (request.fieldMask != null) {
+      queryParams.add('fieldMask=${Uri.encodeComponent(request.fieldMask!.toString())}');
+    }
+    var uri = path;
+    if (queryParams.isNotEmpty) {
+      uri += '?${queryParams.join("&")}';
+    }
+    final result = await _transport.unary(uri, 'GET', null, TransportMeta(
+      service: 'PayeeService',
+      method: 'List',
+    ), headers: headers);
+    return LedgerServiceV1ListPayeeResponse.fromJson(result as Map<String, dynamic>);
+  }
+
+  Future<LedgerServiceV1ListPayeeResponse> listAll(LedgerServiceV1ListAllPayeeRequest request, {Map<String, String>? headers}) async {
+    final path = '/app/v1/payees/all';
+    final queryParams = <String>[];
+    if (request.bookId != null) {
+      queryParams.add('bookId=${Uri.encodeComponent(request.bookId!.toString())}');
+    }
+    var uri = path;
+    if (queryParams.isNotEmpty) {
+      uri += '?${queryParams.join("&")}';
+    }
+    final result = await _transport.unary(uri, 'GET', null, TransportMeta(
+      service: 'PayeeService',
+      method: 'ListAll',
+    ), headers: headers);
+    return LedgerServiceV1ListPayeeResponse.fromJson(result as Map<String, dynamic>);
+  }
+
+  Future<LedgerServiceV1Payee> get(LedgerServiceV1GetPayeeRequest request, {Map<String, String>? headers}) async {
+    if (request.id == null) {
+      throw ArgumentError('missing required field request.id');
+    }
+    final path = '/app/v1/payees/${request.id}';
+    final queryParams = <String>[];
+    if (request.viewMask != null) {
+      queryParams.add('viewMask=${Uri.encodeComponent(request.viewMask!.toString())}');
+    }
+    var uri = path;
+    if (queryParams.isNotEmpty) {
+      uri += '?${queryParams.join("&")}';
+    }
+    final result = await _transport.unary(uri, 'GET', null, TransportMeta(
+      service: 'PayeeService',
+      method: 'Get',
+    ), headers: headers);
+    return LedgerServiceV1Payee.fromJson(result as Map<String, dynamic>);
+  }
+
+  Future<LedgerServiceV1Payee> create(LedgerServiceV1CreatePayeeRequest request, {Map<String, String>? headers}) async {
+    final path = '/app/v1/payees';
+    final body = jsonEncode(request.toJson());
+    final result = await _transport.unary(path, 'POST', body, TransportMeta(
+      service: 'PayeeService',
+      method: 'Create',
+    ), headers: headers);
+    return LedgerServiceV1Payee.fromJson(result as Map<String, dynamic>);
+  }
+
+  Future<LedgerServiceV1Payee> update(LedgerServiceV1UpdatePayeeRequest request, {Map<String, String>? headers}) async {
+    if (request.id == null) {
+      throw ArgumentError('missing required field request.id');
+    }
+    final path = '/app/v1/payees/${request.id}';
+    final body = jsonEncode(request.toJson());
+    final result = await _transport.unary(path, 'PUT', body, TransportMeta(
+      service: 'PayeeService',
+      method: 'Update',
+    ), headers: headers);
+    return LedgerServiceV1Payee.fromJson(result as Map<String, dynamic>);
+  }
+
+  Future<Map<String, dynamic>> delete(LedgerServiceV1DeletePayeeRequest request, {Map<String, String>? headers}) async {
+    if (request.id == null) {
+      throw ArgumentError('missing required field request.id');
+    }
+    final path = '/app/v1/payees/${request.id}';
+    final result = await _transport.unary(path, 'DELETE', null, TransportMeta(
+      service: 'PayeeService',
+      method: 'Delete',
+    ), headers: headers);
+    return result as Map<String, dynamic>;
+  }
+
+  Future<LedgerServiceV1Payee> toggle(LedgerServiceV1TogglePayeeRequest request, {Map<String, String>? headers}) async {
+    if (request.id == null) {
+      throw ArgumentError('missing required field request.id');
+    }
+    final path = '/app/v1/payees/${request.id}/toggle';
+    final body = jsonEncode(request.toJson());
+    final result = await _transport.unary(path, 'PATCH', body, TransportMeta(
+      service: 'PayeeService',
+      method: 'Toggle',
+    ), headers: headers);
+    return LedgerServiceV1Payee.fromJson(result as Map<String, dynamic>);
+  }
+}
+
+class LedgerServiceV1ListPayeeResponse {
+  List<LedgerServiceV1Payee>? items;
+  int? total;
+
+  LedgerServiceV1ListPayeeResponse({
+    this.items,
+    this.total,
+  });
+
+  factory LedgerServiceV1ListPayeeResponse.fromJson(Map<String, dynamic> json) {
+    return LedgerServiceV1ListPayeeResponse(
+      items: (json['items'] as List<dynamic>?)?.map((e) => LedgerServiceV1Payee.fromJson(e as Map<String, dynamic>)).toList(),
+      total: json['total'] != null ? int.parse(json['total'].toString()) : null,
+    );
+  }
+
+  Map<String, dynamic> toJson() {
+    final json = <String, dynamic>{};
+    if (items != null) json['items'] = items!.map((e) => e.toJson()).toList();
+    if (total != null) json['total'] = total.toString();
+    return json;
+  }
+
+  @override
+  String toString() {
+    return 'LedgerServiceV1ListPayeeResponse(items: $items, total: $total)';
+  }
+
+  @override
+  bool operator ==(Object other) =>
+    identical(this, other) ||
+    other is LedgerServiceV1ListPayeeResponse &&
+      runtimeType == other.runtimeType
+      && items == other.items
+      && total == other.total
+    ;
+
+  @override
+  int get hashCode => Object.hashAll([
+    items,
+    total,
+  ]);
+
+  LedgerServiceV1ListPayeeResponse copyWith({
+    List<LedgerServiceV1Payee>? items,
+    int? total,
+  }) {
+    return LedgerServiceV1ListPayeeResponse(
+      items: items ?? this.items,
+      total: total ?? this.total,
+    );
+  }
+}
+
+class LedgerServiceV1Payee {
+  int? bookId;
+  bool? canExpense;
+  bool? canIncome;
+  String? createdAt;
+  int? createdBy;
+  String? deletedAt;
+  int? deletedBy;
+  bool? enable;
+  int? id;
+  String? name;
+  String? notes;
+  int? sortOrder;
+  int? tenantId;
+  String? updatedAt;
+  int? updatedBy;
+
+  LedgerServiceV1Payee({
+    this.bookId,
+    this.canExpense,
+    this.canIncome,
+    this.createdAt,
+    this.createdBy,
+    this.deletedAt,
+    this.deletedBy,
+    this.enable,
+    this.id,
+    this.name,
+    this.notes,
+    this.sortOrder,
+    this.tenantId,
+    this.updatedAt,
+    this.updatedBy,
+  });
+
+  factory LedgerServiceV1Payee.fromJson(Map<String, dynamic> json) {
+    return LedgerServiceV1Payee(
+      bookId: json['bookId'] as int?,
+      canExpense: json['canExpense'] as bool?,
+      canIncome: json['canIncome'] as bool?,
+      createdAt: json['createdAt'] as String?,
+      createdBy: json['createdBy'] as int?,
+      deletedAt: json['deletedAt'] as String?,
+      deletedBy: json['deletedBy'] as int?,
+      enable: json['enable'] as bool?,
+      id: json['id'] as int?,
+      name: json['name'] as String?,
+      notes: json['notes'] as String?,
+      sortOrder: json['sortOrder'] as int?,
+      tenantId: json['tenantId'] as int?,
+      updatedAt: json['updatedAt'] as String?,
+      updatedBy: json['updatedBy'] as int?,
+    );
+  }
+
+  Map<String, dynamic> toJson() {
+    final json = <String, dynamic>{};
+    if (bookId != null) json['bookId'] = bookId;
+    if (canExpense != null) json['canExpense'] = canExpense;
+    if (canIncome != null) json['canIncome'] = canIncome;
+    if (createdAt != null) json['createdAt'] = createdAt;
+    if (createdBy != null) json['createdBy'] = createdBy;
+    if (deletedAt != null) json['deletedAt'] = deletedAt;
+    if (deletedBy != null) json['deletedBy'] = deletedBy;
+    if (enable != null) json['enable'] = enable;
+    if (id != null) json['id'] = id;
+    if (name != null) json['name'] = name;
+    if (notes != null) json['notes'] = notes;
+    if (sortOrder != null) json['sortOrder'] = sortOrder;
+    if (tenantId != null) json['tenantId'] = tenantId;
+    if (updatedAt != null) json['updatedAt'] = updatedAt;
+    if (updatedBy != null) json['updatedBy'] = updatedBy;
+    return json;
+  }
+
+  @override
+  String toString() {
+    return 'LedgerServiceV1Payee(bookId: $bookId, canExpense: $canExpense, canIncome: $canIncome, createdAt: $createdAt, createdBy: $createdBy, deletedAt: $deletedAt, deletedBy: $deletedBy, enable: $enable, id: $id, name: $name, notes: $notes, sortOrder: $sortOrder, tenantId: $tenantId, updatedAt: $updatedAt, updatedBy: $updatedBy)';
+  }
+
+  @override
+  bool operator ==(Object other) =>
+    identical(this, other) ||
+    other is LedgerServiceV1Payee &&
+      runtimeType == other.runtimeType
+      && bookId == other.bookId
+      && canExpense == other.canExpense
+      && canIncome == other.canIncome
+      && createdAt == other.createdAt
+      && createdBy == other.createdBy
+      && deletedAt == other.deletedAt
+      && deletedBy == other.deletedBy
+      && enable == other.enable
+      && id == other.id
+      && name == other.name
+      && notes == other.notes
+      && sortOrder == other.sortOrder
+      && tenantId == other.tenantId
+      && updatedAt == other.updatedAt
+      && updatedBy == other.updatedBy
+    ;
+
+  @override
+  int get hashCode => Object.hashAll([
+    bookId,
+    canExpense,
+    canIncome,
+    createdAt,
+    createdBy,
+    deletedAt,
+    deletedBy,
+    enable,
+    id,
+    name,
+    notes,
+    sortOrder,
+    tenantId,
+    updatedAt,
+    updatedBy,
+  ]);
+
+  LedgerServiceV1Payee copyWith({
+    int? bookId,
+    bool? canExpense,
+    bool? canIncome,
+    String? createdAt,
+    int? createdBy,
+    String? deletedAt,
+    int? deletedBy,
+    bool? enable,
+    int? id,
+    String? name,
+    String? notes,
+    int? sortOrder,
+    int? tenantId,
+    String? updatedAt,
+    int? updatedBy,
+  }) {
+    return LedgerServiceV1Payee(
+      bookId: bookId ?? this.bookId,
+      canExpense: canExpense ?? this.canExpense,
+      canIncome: canIncome ?? this.canIncome,
+      createdAt: createdAt ?? this.createdAt,
+      createdBy: createdBy ?? this.createdBy,
+      deletedAt: deletedAt ?? this.deletedAt,
+      deletedBy: deletedBy ?? this.deletedBy,
+      enable: enable ?? this.enable,
+      id: id ?? this.id,
+      name: name ?? this.name,
+      notes: notes ?? this.notes,
+      sortOrder: sortOrder ?? this.sortOrder,
+      tenantId: tenantId ?? this.tenantId,
+      updatedAt: updatedAt ?? this.updatedAt,
+      updatedBy: updatedBy ?? this.updatedBy,
+    );
+  }
+}
+
+class LedgerServiceV1ListAllPayeeRequest {
+  int? bookId;
+
+  LedgerServiceV1ListAllPayeeRequest({
+    this.bookId,
+  });
+
+  factory LedgerServiceV1ListAllPayeeRequest.fromJson(Map<String, dynamic> json) {
+    return LedgerServiceV1ListAllPayeeRequest(
+      bookId: json['bookId'] as int?,
+    );
+  }
+
+  Map<String, dynamic> toJson() {
+    final json = <String, dynamic>{};
+    if (bookId != null) json['bookId'] = bookId;
+    return json;
+  }
+
+  @override
+  String toString() {
+    return 'LedgerServiceV1ListAllPayeeRequest(bookId: $bookId)';
+  }
+
+  @override
+  bool operator ==(Object other) =>
+    identical(this, other) ||
+    other is LedgerServiceV1ListAllPayeeRequest &&
+      runtimeType == other.runtimeType
+      && bookId == other.bookId
+    ;
+
+  @override
+  int get hashCode => Object.hashAll([
+    bookId,
+  ]);
+
+  LedgerServiceV1ListAllPayeeRequest copyWith({
+    int? bookId,
+  }) {
+    return LedgerServiceV1ListAllPayeeRequest(
+      bookId: bookId ?? this.bookId,
+    );
+  }
+}
+
+class LedgerServiceV1GetPayeeRequest {
+  int? id;
+  String? viewMask;
+
+  LedgerServiceV1GetPayeeRequest({
+    this.id,
+    this.viewMask,
+  });
+
+  factory LedgerServiceV1GetPayeeRequest.fromJson(Map<String, dynamic> json) {
+    return LedgerServiceV1GetPayeeRequest(
+      id: json['id'] as int?,
+      viewMask: json['viewMask'] as String?,
+    );
+  }
+
+  Map<String, dynamic> toJson() {
+    final json = <String, dynamic>{};
+    if (id != null) json['id'] = id;
+    if (viewMask != null) json['viewMask'] = viewMask;
+    return json;
+  }
+
+  @override
+  String toString() {
+    return 'LedgerServiceV1GetPayeeRequest(id: $id, viewMask: $viewMask)';
+  }
+
+  @override
+  bool operator ==(Object other) =>
+    identical(this, other) ||
+    other is LedgerServiceV1GetPayeeRequest &&
+      runtimeType == other.runtimeType
+      && id == other.id
+      && viewMask == other.viewMask
+    ;
+
+  @override
+  int get hashCode => Object.hashAll([
+    id,
+    viewMask,
+  ]);
+
+  LedgerServiceV1GetPayeeRequest copyWith({
+    int? id,
+    String? viewMask,
+  }) {
+    return LedgerServiceV1GetPayeeRequest(
+      id: id ?? this.id,
+      viewMask: viewMask ?? this.viewMask,
+    );
+  }
+}
+
+class LedgerServiceV1CreatePayeeRequest {
+  LedgerServiceV1Payee? data;
+
+  LedgerServiceV1CreatePayeeRequest({
+    this.data,
+  });
+
+  factory LedgerServiceV1CreatePayeeRequest.fromJson(Map<String, dynamic> json) {
+    return LedgerServiceV1CreatePayeeRequest(
+      data: json['data'] != null ? LedgerServiceV1Payee.fromJson(json['data'] as Map<String, dynamic>) : null,
+    );
+  }
+
+  Map<String, dynamic> toJson() {
+    final json = <String, dynamic>{};
+    if (data != null) json['data'] = data!.toJson();
+    return json;
+  }
+
+  @override
+  String toString() {
+    return 'LedgerServiceV1CreatePayeeRequest(data: $data)';
+  }
+
+  @override
+  bool operator ==(Object other) =>
+    identical(this, other) ||
+    other is LedgerServiceV1CreatePayeeRequest &&
+      runtimeType == other.runtimeType
+      && data == other.data
+    ;
+
+  @override
+  int get hashCode => Object.hashAll([
+    data,
+  ]);
+
+  LedgerServiceV1CreatePayeeRequest copyWith({
+    LedgerServiceV1Payee? data,
+  }) {
+    return LedgerServiceV1CreatePayeeRequest(
+      data: data ?? this.data,
+    );
+  }
+}
+
+class LedgerServiceV1UpdatePayeeRequest {
+  bool? allowMissing;
+  LedgerServiceV1Payee? data;
+  int? id;
+  String? updateMask;
+
+  LedgerServiceV1UpdatePayeeRequest({
+    this.allowMissing,
+    this.data,
+    this.id,
+    this.updateMask,
+  });
+
+  factory LedgerServiceV1UpdatePayeeRequest.fromJson(Map<String, dynamic> json) {
+    return LedgerServiceV1UpdatePayeeRequest(
+      allowMissing: json['allowMissing'] as bool?,
+      data: json['data'] != null ? LedgerServiceV1Payee.fromJson(json['data'] as Map<String, dynamic>) : null,
+      id: json['id'] as int?,
+      updateMask: json['updateMask'] as String?,
+    );
+  }
+
+  Map<String, dynamic> toJson() {
+    final json = <String, dynamic>{};
+    if (allowMissing != null) json['allowMissing'] = allowMissing;
+    if (data != null) json['data'] = data!.toJson();
+    if (id != null) json['id'] = id;
+    if (updateMask != null) json['updateMask'] = updateMask;
+    return json;
+  }
+
+  @override
+  String toString() {
+    return 'LedgerServiceV1UpdatePayeeRequest(allowMissing: $allowMissing, data: $data, id: $id, updateMask: $updateMask)';
+  }
+
+  @override
+  bool operator ==(Object other) =>
+    identical(this, other) ||
+    other is LedgerServiceV1UpdatePayeeRequest &&
+      runtimeType == other.runtimeType
+      && allowMissing == other.allowMissing
+      && data == other.data
+      && id == other.id
+      && updateMask == other.updateMask
+    ;
+
+  @override
+  int get hashCode => Object.hashAll([
+    allowMissing,
+    data,
+    id,
+    updateMask,
+  ]);
+
+  LedgerServiceV1UpdatePayeeRequest copyWith({
+    bool? allowMissing,
+    LedgerServiceV1Payee? data,
+    int? id,
+    String? updateMask,
+  }) {
+    return LedgerServiceV1UpdatePayeeRequest(
+      allowMissing: allowMissing ?? this.allowMissing,
+      data: data ?? this.data,
+      id: id ?? this.id,
+      updateMask: updateMask ?? this.updateMask,
+    );
+  }
+}
+
+class LedgerServiceV1DeletePayeeRequest {
+  int? id;
+
+  LedgerServiceV1DeletePayeeRequest({
+    this.id,
+  });
+
+  factory LedgerServiceV1DeletePayeeRequest.fromJson(Map<String, dynamic> json) {
+    return LedgerServiceV1DeletePayeeRequest(
+      id: json['id'] as int?,
+    );
+  }
+
+  Map<String, dynamic> toJson() {
+    final json = <String, dynamic>{};
+    if (id != null) json['id'] = id;
+    return json;
+  }
+
+  @override
+  String toString() {
+    return 'LedgerServiceV1DeletePayeeRequest(id: $id)';
+  }
+
+  @override
+  bool operator ==(Object other) =>
+    identical(this, other) ||
+    other is LedgerServiceV1DeletePayeeRequest &&
+      runtimeType == other.runtimeType
+      && id == other.id
+    ;
+
+  @override
+  int get hashCode => Object.hashAll([
+    id,
+  ]);
+
+  LedgerServiceV1DeletePayeeRequest copyWith({
+    int? id,
+  }) {
+    return LedgerServiceV1DeletePayeeRequest(
+      id: id ?? this.id,
+    );
+  }
+}
+
+class LedgerServiceV1TogglePayeeRequest {
+  int? id;
+
+  LedgerServiceV1TogglePayeeRequest({
+    this.id,
+  });
+
+  factory LedgerServiceV1TogglePayeeRequest.fromJson(Map<String, dynamic> json) {
+    return LedgerServiceV1TogglePayeeRequest(
+      id: json['id'] as int?,
+    );
+  }
+
+  Map<String, dynamic> toJson() {
+    final json = <String, dynamic>{};
+    if (id != null) json['id'] = id;
+    return json;
+  }
+
+  @override
+  String toString() {
+    return 'LedgerServiceV1TogglePayeeRequest(id: $id)';
+  }
+
+  @override
+  bool operator ==(Object other) =>
+    identical(this, other) ||
+    other is LedgerServiceV1TogglePayeeRequest &&
+      runtimeType == other.runtimeType
+      && id == other.id
+    ;
+
+  @override
+  int get hashCode => Object.hashAll([
+    id,
+  ]);
+
+  LedgerServiceV1TogglePayeeRequest copyWith({
+    int? id,
+  }) {
+    return LedgerServiceV1TogglePayeeRequest(
+      id: id ?? this.id,
+    );
+  }
+}
+
 /// 帖子服务
 class PostServiceClient {
   final ClientTransport _transport;
@@ -5665,6 +11742,616 @@ class ContentServiceV1DeletePostRequest {
   }) {
     return ContentServiceV1DeletePostRequest(
       id: id ?? this.id,
+    );
+  }
+}
+
+class ReportServiceClient {
+  final ClientTransport _transport;
+
+  ReportServiceClient(this._transport);
+
+  Future<LedgerServiceV1ReportResponse> expenseCategory(LedgerServiceV1ReportQueryRequest request, {Map<String, String>? headers}) async {
+    final path = '/app/v1/reports/expense-category';
+    final queryParams = <String>[];
+    if (request.bookId != null) {
+      queryParams.add('bookId=${Uri.encodeComponent(request.bookId!.toString())}');
+    }
+    if (request.minTime != null) {
+      queryParams.add('minTime=${Uri.encodeComponent(request.minTime!.toString())}');
+    }
+    if (request.maxTime != null) {
+      queryParams.add('maxTime=${Uri.encodeComponent(request.maxTime!.toString())}');
+    }
+    if (request.title != null) {
+      queryParams.add('title=${Uri.encodeComponent(request.title!.toString())}');
+    }
+    if (request.categoryIds != null) {
+      request.categoryIds!.forEach((x) {
+        queryParams.add('categoryIds=${Uri.encodeComponent(x.toString())}');
+      });
+    }
+    if (request.tagIds != null) {
+      request.tagIds!.forEach((x) {
+        queryParams.add('tagIds=${Uri.encodeComponent(x.toString())}');
+      });
+    }
+    if (request.payeeIds != null) {
+      request.payeeIds!.forEach((x) {
+        queryParams.add('payeeIds=${Uri.encodeComponent(x.toString())}');
+      });
+    }
+    if (request.accountId != null) {
+      queryParams.add('accountId=${Uri.encodeComponent(request.accountId!.toString())}');
+    }
+    var uri = path;
+    if (queryParams.isNotEmpty) {
+      uri += '?${queryParams.join("&")}';
+    }
+    final result = await _transport.unary(uri, 'GET', null, TransportMeta(
+      service: 'ReportService',
+      method: 'ExpenseCategory',
+    ), headers: headers);
+    return LedgerServiceV1ReportResponse.fromJson(result as Map<String, dynamic>);
+  }
+
+  Future<LedgerServiceV1ReportResponse> incomeCategory(LedgerServiceV1ReportQueryRequest request, {Map<String, String>? headers}) async {
+    final path = '/app/v1/reports/income-category';
+    final queryParams = <String>[];
+    if (request.bookId != null) {
+      queryParams.add('bookId=${Uri.encodeComponent(request.bookId!.toString())}');
+    }
+    if (request.minTime != null) {
+      queryParams.add('minTime=${Uri.encodeComponent(request.minTime!.toString())}');
+    }
+    if (request.maxTime != null) {
+      queryParams.add('maxTime=${Uri.encodeComponent(request.maxTime!.toString())}');
+    }
+    if (request.title != null) {
+      queryParams.add('title=${Uri.encodeComponent(request.title!.toString())}');
+    }
+    if (request.categoryIds != null) {
+      request.categoryIds!.forEach((x) {
+        queryParams.add('categoryIds=${Uri.encodeComponent(x.toString())}');
+      });
+    }
+    if (request.tagIds != null) {
+      request.tagIds!.forEach((x) {
+        queryParams.add('tagIds=${Uri.encodeComponent(x.toString())}');
+      });
+    }
+    if (request.payeeIds != null) {
+      request.payeeIds!.forEach((x) {
+        queryParams.add('payeeIds=${Uri.encodeComponent(x.toString())}');
+      });
+    }
+    if (request.accountId != null) {
+      queryParams.add('accountId=${Uri.encodeComponent(request.accountId!.toString())}');
+    }
+    var uri = path;
+    if (queryParams.isNotEmpty) {
+      uri += '?${queryParams.join("&")}';
+    }
+    final result = await _transport.unary(uri, 'GET', null, TransportMeta(
+      service: 'ReportService',
+      method: 'IncomeCategory',
+    ), headers: headers);
+    return LedgerServiceV1ReportResponse.fromJson(result as Map<String, dynamic>);
+  }
+
+  Future<LedgerServiceV1ReportResponse> expenseTag(LedgerServiceV1ReportQueryRequest request, {Map<String, String>? headers}) async {
+    final path = '/app/v1/reports/expense-tag';
+    final queryParams = <String>[];
+    if (request.bookId != null) {
+      queryParams.add('bookId=${Uri.encodeComponent(request.bookId!.toString())}');
+    }
+    if (request.minTime != null) {
+      queryParams.add('minTime=${Uri.encodeComponent(request.minTime!.toString())}');
+    }
+    if (request.maxTime != null) {
+      queryParams.add('maxTime=${Uri.encodeComponent(request.maxTime!.toString())}');
+    }
+    if (request.title != null) {
+      queryParams.add('title=${Uri.encodeComponent(request.title!.toString())}');
+    }
+    if (request.categoryIds != null) {
+      request.categoryIds!.forEach((x) {
+        queryParams.add('categoryIds=${Uri.encodeComponent(x.toString())}');
+      });
+    }
+    if (request.tagIds != null) {
+      request.tagIds!.forEach((x) {
+        queryParams.add('tagIds=${Uri.encodeComponent(x.toString())}');
+      });
+    }
+    if (request.payeeIds != null) {
+      request.payeeIds!.forEach((x) {
+        queryParams.add('payeeIds=${Uri.encodeComponent(x.toString())}');
+      });
+    }
+    if (request.accountId != null) {
+      queryParams.add('accountId=${Uri.encodeComponent(request.accountId!.toString())}');
+    }
+    var uri = path;
+    if (queryParams.isNotEmpty) {
+      uri += '?${queryParams.join("&")}';
+    }
+    final result = await _transport.unary(uri, 'GET', null, TransportMeta(
+      service: 'ReportService',
+      method: 'ExpenseTag',
+    ), headers: headers);
+    return LedgerServiceV1ReportResponse.fromJson(result as Map<String, dynamic>);
+  }
+
+  Future<LedgerServiceV1ReportResponse> incomeTag(LedgerServiceV1ReportQueryRequest request, {Map<String, String>? headers}) async {
+    final path = '/app/v1/reports/income-tag';
+    final queryParams = <String>[];
+    if (request.bookId != null) {
+      queryParams.add('bookId=${Uri.encodeComponent(request.bookId!.toString())}');
+    }
+    if (request.minTime != null) {
+      queryParams.add('minTime=${Uri.encodeComponent(request.minTime!.toString())}');
+    }
+    if (request.maxTime != null) {
+      queryParams.add('maxTime=${Uri.encodeComponent(request.maxTime!.toString())}');
+    }
+    if (request.title != null) {
+      queryParams.add('title=${Uri.encodeComponent(request.title!.toString())}');
+    }
+    if (request.categoryIds != null) {
+      request.categoryIds!.forEach((x) {
+        queryParams.add('categoryIds=${Uri.encodeComponent(x.toString())}');
+      });
+    }
+    if (request.tagIds != null) {
+      request.tagIds!.forEach((x) {
+        queryParams.add('tagIds=${Uri.encodeComponent(x.toString())}');
+      });
+    }
+    if (request.payeeIds != null) {
+      request.payeeIds!.forEach((x) {
+        queryParams.add('payeeIds=${Uri.encodeComponent(x.toString())}');
+      });
+    }
+    if (request.accountId != null) {
+      queryParams.add('accountId=${Uri.encodeComponent(request.accountId!.toString())}');
+    }
+    var uri = path;
+    if (queryParams.isNotEmpty) {
+      uri += '?${queryParams.join("&")}';
+    }
+    final result = await _transport.unary(uri, 'GET', null, TransportMeta(
+      service: 'ReportService',
+      method: 'IncomeTag',
+    ), headers: headers);
+    return LedgerServiceV1ReportResponse.fromJson(result as Map<String, dynamic>);
+  }
+
+  Future<LedgerServiceV1ReportResponse> expensePayee(LedgerServiceV1ReportQueryRequest request, {Map<String, String>? headers}) async {
+    final path = '/app/v1/reports/expense-payee';
+    final queryParams = <String>[];
+    if (request.bookId != null) {
+      queryParams.add('bookId=${Uri.encodeComponent(request.bookId!.toString())}');
+    }
+    if (request.minTime != null) {
+      queryParams.add('minTime=${Uri.encodeComponent(request.minTime!.toString())}');
+    }
+    if (request.maxTime != null) {
+      queryParams.add('maxTime=${Uri.encodeComponent(request.maxTime!.toString())}');
+    }
+    if (request.title != null) {
+      queryParams.add('title=${Uri.encodeComponent(request.title!.toString())}');
+    }
+    if (request.categoryIds != null) {
+      request.categoryIds!.forEach((x) {
+        queryParams.add('categoryIds=${Uri.encodeComponent(x.toString())}');
+      });
+    }
+    if (request.tagIds != null) {
+      request.tagIds!.forEach((x) {
+        queryParams.add('tagIds=${Uri.encodeComponent(x.toString())}');
+      });
+    }
+    if (request.payeeIds != null) {
+      request.payeeIds!.forEach((x) {
+        queryParams.add('payeeIds=${Uri.encodeComponent(x.toString())}');
+      });
+    }
+    if (request.accountId != null) {
+      queryParams.add('accountId=${Uri.encodeComponent(request.accountId!.toString())}');
+    }
+    var uri = path;
+    if (queryParams.isNotEmpty) {
+      uri += '?${queryParams.join("&")}';
+    }
+    final result = await _transport.unary(uri, 'GET', null, TransportMeta(
+      service: 'ReportService',
+      method: 'ExpensePayee',
+    ), headers: headers);
+    return LedgerServiceV1ReportResponse.fromJson(result as Map<String, dynamic>);
+  }
+
+  Future<LedgerServiceV1ReportResponse> incomePayee(LedgerServiceV1ReportQueryRequest request, {Map<String, String>? headers}) async {
+    final path = '/app/v1/reports/income-payee';
+    final queryParams = <String>[];
+    if (request.bookId != null) {
+      queryParams.add('bookId=${Uri.encodeComponent(request.bookId!.toString())}');
+    }
+    if (request.minTime != null) {
+      queryParams.add('minTime=${Uri.encodeComponent(request.minTime!.toString())}');
+    }
+    if (request.maxTime != null) {
+      queryParams.add('maxTime=${Uri.encodeComponent(request.maxTime!.toString())}');
+    }
+    if (request.title != null) {
+      queryParams.add('title=${Uri.encodeComponent(request.title!.toString())}');
+    }
+    if (request.categoryIds != null) {
+      request.categoryIds!.forEach((x) {
+        queryParams.add('categoryIds=${Uri.encodeComponent(x.toString())}');
+      });
+    }
+    if (request.tagIds != null) {
+      request.tagIds!.forEach((x) {
+        queryParams.add('tagIds=${Uri.encodeComponent(x.toString())}');
+      });
+    }
+    if (request.payeeIds != null) {
+      request.payeeIds!.forEach((x) {
+        queryParams.add('payeeIds=${Uri.encodeComponent(x.toString())}');
+      });
+    }
+    if (request.accountId != null) {
+      queryParams.add('accountId=${Uri.encodeComponent(request.accountId!.toString())}');
+    }
+    var uri = path;
+    if (queryParams.isNotEmpty) {
+      uri += '?${queryParams.join("&")}';
+    }
+    final result = await _transport.unary(uri, 'GET', null, TransportMeta(
+      service: 'ReportService',
+      method: 'IncomePayee',
+    ), headers: headers);
+    return LedgerServiceV1ReportResponse.fromJson(result as Map<String, dynamic>);
+  }
+
+  Future<LedgerServiceV1BalanceReportResponse> balance(LedgerServiceV1BalanceReportRequest request, {Map<String, String>? headers}) async {
+    final path = '/app/v1/reports/balance';
+    final queryParams = <String>[];
+    if (request.bookId != null) {
+      queryParams.add('bookId=${Uri.encodeComponent(request.bookId!.toString())}');
+    }
+    var uri = path;
+    if (queryParams.isNotEmpty) {
+      uri += '?${queryParams.join("&")}';
+    }
+    final result = await _transport.unary(uri, 'GET', null, TransportMeta(
+      service: 'ReportService',
+      method: 'Balance',
+    ), headers: headers);
+    return LedgerServiceV1BalanceReportResponse.fromJson(result as Map<String, dynamic>);
+  }
+}
+
+/// 报表查询请求
+class LedgerServiceV1ReportQueryRequest {
+  int? accountId;
+  int? bookId;
+  List<int>? categoryIds;
+  int? maxTime;
+  int? minTime;
+  List<int>? payeeIds;
+  List<int>? tagIds;
+  String? title;
+
+  LedgerServiceV1ReportQueryRequest({
+    this.accountId,
+    this.bookId,
+    this.categoryIds,
+    this.maxTime,
+    this.minTime,
+    this.payeeIds,
+    this.tagIds,
+    this.title,
+  });
+
+  factory LedgerServiceV1ReportQueryRequest.fromJson(Map<String, dynamic> json) {
+    return LedgerServiceV1ReportQueryRequest(
+      accountId: json['accountId'] as int?,
+      bookId: json['bookId'] as int?,
+      categoryIds: (json['categoryIds'] as List<dynamic>?)?.map((e) => e as int).toList(),
+      maxTime: json['maxTime'] != null ? int.parse(json['maxTime'].toString()) : null,
+      minTime: json['minTime'] != null ? int.parse(json['minTime'].toString()) : null,
+      payeeIds: (json['payeeIds'] as List<dynamic>?)?.map((e) => e as int).toList(),
+      tagIds: (json['tagIds'] as List<dynamic>?)?.map((e) => e as int).toList(),
+      title: json['title'] as String?,
+    );
+  }
+
+  Map<String, dynamic> toJson() {
+    final json = <String, dynamic>{};
+    if (accountId != null) json['accountId'] = accountId;
+    if (bookId != null) json['bookId'] = bookId;
+    if (categoryIds != null) json['categoryIds'] = categoryIds;
+    if (maxTime != null) json['maxTime'] = maxTime.toString();
+    if (minTime != null) json['minTime'] = minTime.toString();
+    if (payeeIds != null) json['payeeIds'] = payeeIds;
+    if (tagIds != null) json['tagIds'] = tagIds;
+    if (title != null) json['title'] = title;
+    return json;
+  }
+
+  @override
+  String toString() {
+    return 'LedgerServiceV1ReportQueryRequest(accountId: $accountId, bookId: $bookId, categoryIds: $categoryIds, maxTime: $maxTime, minTime: $minTime, payeeIds: $payeeIds, tagIds: $tagIds, title: $title)';
+  }
+
+  @override
+  bool operator ==(Object other) =>
+    identical(this, other) ||
+    other is LedgerServiceV1ReportQueryRequest &&
+      runtimeType == other.runtimeType
+      && accountId == other.accountId
+      && bookId == other.bookId
+      && categoryIds == other.categoryIds
+      && maxTime == other.maxTime
+      && minTime == other.minTime
+      && payeeIds == other.payeeIds
+      && tagIds == other.tagIds
+      && title == other.title
+    ;
+
+  @override
+  int get hashCode => Object.hashAll([
+    accountId,
+    bookId,
+    categoryIds,
+    maxTime,
+    minTime,
+    payeeIds,
+    tagIds,
+    title,
+  ]);
+
+  LedgerServiceV1ReportQueryRequest copyWith({
+    int? accountId,
+    int? bookId,
+    List<int>? categoryIds,
+    int? maxTime,
+    int? minTime,
+    List<int>? payeeIds,
+    List<int>? tagIds,
+    String? title,
+  }) {
+    return LedgerServiceV1ReportQueryRequest(
+      accountId: accountId ?? this.accountId,
+      bookId: bookId ?? this.bookId,
+      categoryIds: categoryIds ?? this.categoryIds,
+      maxTime: maxTime ?? this.maxTime,
+      minTime: minTime ?? this.minTime,
+      payeeIds: payeeIds ?? this.payeeIds,
+      tagIds: tagIds ?? this.tagIds,
+      title: title ?? this.title,
+    );
+  }
+}
+
+/// 报表回应
+class LedgerServiceV1ReportResponse {
+  List<LedgerServiceV1ChartPoint>? items;
+
+  LedgerServiceV1ReportResponse({
+    this.items,
+  });
+
+  factory LedgerServiceV1ReportResponse.fromJson(Map<String, dynamic> json) {
+    return LedgerServiceV1ReportResponse(
+      items: (json['items'] as List<dynamic>?)?.map((e) => LedgerServiceV1ChartPoint.fromJson(e as Map<String, dynamic>)).toList(),
+    );
+  }
+
+  Map<String, dynamic> toJson() {
+    final json = <String, dynamic>{};
+    if (items != null) json['items'] = items!.map((e) => e.toJson()).toList();
+    return json;
+  }
+
+  @override
+  String toString() {
+    return 'LedgerServiceV1ReportResponse(items: $items)';
+  }
+
+  @override
+  bool operator ==(Object other) =>
+    identical(this, other) ||
+    other is LedgerServiceV1ReportResponse &&
+      runtimeType == other.runtimeType
+      && items == other.items
+    ;
+
+  @override
+  int get hashCode => Object.hashAll([
+    items,
+  ]);
+
+  LedgerServiceV1ReportResponse copyWith({
+    List<LedgerServiceV1ChartPoint>? items,
+  }) {
+    return LedgerServiceV1ReportResponse(
+      items: items ?? this.items,
+    );
+  }
+}
+
+/// 图表数据点
+class LedgerServiceV1ChartPoint {
+  String? percent;
+  String? x;
+  String? y;
+
+  LedgerServiceV1ChartPoint({
+    this.percent,
+    this.x,
+    this.y,
+  });
+
+  factory LedgerServiceV1ChartPoint.fromJson(Map<String, dynamic> json) {
+    return LedgerServiceV1ChartPoint(
+      percent: json['percent'] as String?,
+      x: json['x'] as String?,
+      y: json['y'] as String?,
+    );
+  }
+
+  Map<String, dynamic> toJson() {
+    final json = <String, dynamic>{};
+    if (percent != null) json['percent'] = percent;
+    if (x != null) json['x'] = x;
+    if (y != null) json['y'] = y;
+    return json;
+  }
+
+  @override
+  String toString() {
+    return 'LedgerServiceV1ChartPoint(percent: $percent, x: $x, y: $y)';
+  }
+
+  @override
+  bool operator ==(Object other) =>
+    identical(this, other) ||
+    other is LedgerServiceV1ChartPoint &&
+      runtimeType == other.runtimeType
+      && percent == other.percent
+      && x == other.x
+      && y == other.y
+    ;
+
+  @override
+  int get hashCode => Object.hashAll([
+    percent,
+    x,
+    y,
+  ]);
+
+  LedgerServiceV1ChartPoint copyWith({
+    String? percent,
+    String? x,
+    String? y,
+  }) {
+    return LedgerServiceV1ChartPoint(
+      percent: percent ?? this.percent,
+      x: x ?? this.x,
+      y: y ?? this.y,
+    );
+  }
+}
+
+/// 资产负债报表请求
+class LedgerServiceV1BalanceReportRequest {
+  int? bookId;
+
+  LedgerServiceV1BalanceReportRequest({
+    this.bookId,
+  });
+
+  factory LedgerServiceV1BalanceReportRequest.fromJson(Map<String, dynamic> json) {
+    return LedgerServiceV1BalanceReportRequest(
+      bookId: json['bookId'] as int?,
+    );
+  }
+
+  Map<String, dynamic> toJson() {
+    final json = <String, dynamic>{};
+    if (bookId != null) json['bookId'] = bookId;
+    return json;
+  }
+
+  @override
+  String toString() {
+    return 'LedgerServiceV1BalanceReportRequest(bookId: $bookId)';
+  }
+
+  @override
+  bool operator ==(Object other) =>
+    identical(this, other) ||
+    other is LedgerServiceV1BalanceReportRequest &&
+      runtimeType == other.runtimeType
+      && bookId == other.bookId
+    ;
+
+  @override
+  int get hashCode => Object.hashAll([
+    bookId,
+  ]);
+
+  LedgerServiceV1BalanceReportRequest copyWith({
+    int? bookId,
+  }) {
+    return LedgerServiceV1BalanceReportRequest(
+      bookId: bookId ?? this.bookId,
+    );
+  }
+}
+
+/// 资产负债报表回应
+class LedgerServiceV1BalanceReportResponse {
+  List<LedgerServiceV1ChartPoint>? assets;
+  List<LedgerServiceV1ChartPoint>? debts;
+  String? netWorth;
+
+  LedgerServiceV1BalanceReportResponse({
+    this.assets,
+    this.debts,
+    this.netWorth,
+  });
+
+  factory LedgerServiceV1BalanceReportResponse.fromJson(Map<String, dynamic> json) {
+    return LedgerServiceV1BalanceReportResponse(
+      assets: (json['assets'] as List<dynamic>?)?.map((e) => LedgerServiceV1ChartPoint.fromJson(e as Map<String, dynamic>)).toList(),
+      debts: (json['debts'] as List<dynamic>?)?.map((e) => LedgerServiceV1ChartPoint.fromJson(e as Map<String, dynamic>)).toList(),
+      netWorth: json['netWorth'] as String?,
+    );
+  }
+
+  Map<String, dynamic> toJson() {
+    final json = <String, dynamic>{};
+    if (assets != null) json['assets'] = assets!.map((e) => e.toJson()).toList();
+    if (debts != null) json['debts'] = debts!.map((e) => e.toJson()).toList();
+    if (netWorth != null) json['netWorth'] = netWorth;
+    return json;
+  }
+
+  @override
+  String toString() {
+    return 'LedgerServiceV1BalanceReportResponse(assets: $assets, debts: $debts, netWorth: $netWorth)';
+  }
+
+  @override
+  bool operator ==(Object other) =>
+    identical(this, other) ||
+    other is LedgerServiceV1BalanceReportResponse &&
+      runtimeType == other.runtimeType
+      && assets == other.assets
+      && debts == other.debts
+      && netWorth == other.netWorth
+    ;
+
+  @override
+  int get hashCode => Object.hashAll([
+    assets,
+    debts,
+    netWorth,
+  ]);
+
+  LedgerServiceV1BalanceReportResponse copyWith({
+    List<LedgerServiceV1ChartPoint>? assets,
+    List<LedgerServiceV1ChartPoint>? debts,
+    String? netWorth,
+  }) {
+    return LedgerServiceV1BalanceReportResponse(
+      assets: assets ?? this.assets,
+      debts: debts ?? this.debts,
+      netWorth: netWorth ?? this.netWorth,
     );
   }
 }
@@ -8246,22 +14933,47 @@ class IdentityServiceV1EmailVerification {
 class ApiClient {
   final ClientTransport _transport;
 
+  AccountServiceClient? _accountService;
   AuthenticationServiceClient? _authenticationService;
+  BalanceFlowServiceClient? _balanceFlowService;
+  BookServiceClient? _bookService;
   CategoryServiceClient? _categoryService;
   CommentServiceClient? _commentService;
+  CurrencyServiceClient? _currencyService;
   FileTransferServiceClient? _fileTransferService;
+  FlowFileServiceClient? _flowFileService;
+  LedgerCategoryServiceClient? _ledgerCategoryService;
+  LedgerTagServiceClient? _ledgerTagService;
   NavigationServiceClient? _navigationService;
+  NoteDayServiceClient? _noteDayService;
   PageServiceClient? _pageService;
+  PayeeServiceClient? _payeeService;
   PostServiceClient? _postService;
+  ReportServiceClient? _reportService;
   SectionServiceClient? _sectionService;
   TagServiceClient? _tagService;
   UserProfileServiceClient? _userProfileService;
 
   ApiClient(this._transport);
 
+  AccountServiceClient get accountService {
+    _accountService ??= AccountServiceClient(_transport);
+    return _accountService!;
+  }
+
   AuthenticationServiceClient get authenticationService {
     _authenticationService ??= AuthenticationServiceClient(_transport);
     return _authenticationService!;
+  }
+
+  BalanceFlowServiceClient get balanceFlowService {
+    _balanceFlowService ??= BalanceFlowServiceClient(_transport);
+    return _balanceFlowService!;
+  }
+
+  BookServiceClient get bookService {
+    _bookService ??= BookServiceClient(_transport);
+    return _bookService!;
   }
 
   CategoryServiceClient get categoryService {
@@ -8274,9 +14986,29 @@ class ApiClient {
     return _commentService!;
   }
 
+  CurrencyServiceClient get currencyService {
+    _currencyService ??= CurrencyServiceClient(_transport);
+    return _currencyService!;
+  }
+
   FileTransferServiceClient get fileTransferService {
     _fileTransferService ??= FileTransferServiceClient(_transport);
     return _fileTransferService!;
+  }
+
+  FlowFileServiceClient get flowFileService {
+    _flowFileService ??= FlowFileServiceClient(_transport);
+    return _flowFileService!;
+  }
+
+  LedgerCategoryServiceClient get ledgerCategoryService {
+    _ledgerCategoryService ??= LedgerCategoryServiceClient(_transport);
+    return _ledgerCategoryService!;
+  }
+
+  LedgerTagServiceClient get ledgerTagService {
+    _ledgerTagService ??= LedgerTagServiceClient(_transport);
+    return _ledgerTagService!;
   }
 
   NavigationServiceClient get navigationService {
@@ -8284,14 +15016,29 @@ class ApiClient {
     return _navigationService!;
   }
 
+  NoteDayServiceClient get noteDayService {
+    _noteDayService ??= NoteDayServiceClient(_transport);
+    return _noteDayService!;
+  }
+
   PageServiceClient get pageService {
     _pageService ??= PageServiceClient(_transport);
     return _pageService!;
   }
 
+  PayeeServiceClient get payeeService {
+    _payeeService ??= PayeeServiceClient(_transport);
+    return _payeeService!;
+  }
+
   PostServiceClient get postService {
     _postService ??= PostServiceClient(_transport);
     return _postService!;
+  }
+
+  ReportServiceClient get reportService {
+    _reportService ??= ReportServiceClient(_transport);
+    return _reportService!;
   }
 
   SectionServiceClient get sectionService {
@@ -8311,13 +15058,23 @@ class ApiClient {
 
   /// Closes all service clients and releases resources.
   void dispose() {
+    _accountService = null;
     _authenticationService = null;
+    _balanceFlowService = null;
+    _bookService = null;
     _categoryService = null;
     _commentService = null;
+    _currencyService = null;
     _fileTransferService = null;
+    _flowFileService = null;
+    _ledgerCategoryService = null;
+    _ledgerTagService = null;
     _navigationService = null;
+    _noteDayService = null;
     _pageService = null;
+    _payeeService = null;
     _postService = null;
+    _reportService = null;
     _sectionService = null;
     _tagService = null;
     _userProfileService = null;

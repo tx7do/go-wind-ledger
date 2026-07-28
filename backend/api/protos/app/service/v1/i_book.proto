@@ -1,0 +1,30 @@
+syntax = "proto3";
+package app.service.v1;
+import "google/api/annotations.proto";
+import "google/protobuf/empty.proto";
+import "pagination/v1/pagination.proto";
+import "ledger/service/v1/book.proto";
+
+service BookService {
+  rpc List (pagination.PagingRequest) returns (ledger.service.v1.ListBookResponse) {
+    option (google.api.http) = { get: "/app/v1/books" };
+  }
+  rpc ListAll (ledger.service.v1.ListAllBookRequest) returns (ledger.service.v1.ListBookResponse) {
+    option (google.api.http) = { get: "/app/v1/books/all" };
+  }
+  rpc Get (ledger.service.v1.GetBookRequest) returns (ledger.service.v1.Book) {
+    option (google.api.http) = { get: "/app/v1/books/{id}" };
+  }
+  rpc Create (ledger.service.v1.CreateBookRequest) returns (ledger.service.v1.Book) {
+    option (google.api.http) = { post: "/app/v1/books" body: "*" };
+  }
+  rpc Update (ledger.service.v1.UpdateBookRequest) returns (ledger.service.v1.Book) {
+    option (google.api.http) = { put: "/app/v1/books/{id}" body: "*" };
+  }
+  rpc Delete (ledger.service.v1.DeleteBookRequest) returns (google.protobuf.Empty) {
+    option (google.api.http) = { delete: "/app/v1/books/{id}" };
+  }
+  rpc Toggle (ledger.service.v1.ToggleBookRequest) returns (ledger.service.v1.Book) {
+    option (google.api.http) = { patch: "/app/v1/books/{id}/toggle" body: "*" };
+  }
+}
