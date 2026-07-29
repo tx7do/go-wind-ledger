@@ -1,9 +1,12 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:get_it/get_it.dart' show GetIt;
 import 'package:go_router/go_router.dart';
 
 import 'package:flutter_app/src/core/constants/index.dart' as constants;
+import 'package:flutter_app/src/core/repositories/user_auth_cache.dart'
+    show UserAuthCache;
 
 import 'package:flutter_app/src/core/widgets/not_found_page.dart';
 import 'package:flutter_app/src/app_router/route_names.dart';
@@ -200,7 +203,8 @@ class AppRouter {
         name: RouteNames.login,
         path: constants.AppRoutePath.login,
         builder: (context, state) {
-          return const LoginPage();
+          final redirectTo = state.uri.queryParameters['redirect'];
+          return LoginPage(redirectTo: redirectTo);
         },
       ),
       // 注册页
@@ -229,7 +233,27 @@ class AppRouter {
   }
 
   static FutureOr<String?> _guard(BuildContext context, GoRouterState state) {
-    // 暂时不需要登录验证，直接放行
+    final cache = GetIt.instance<UserAuthCache>();
+    final isLoggedIn = cache.hasLogin;
+    final currentPath = state.uri.path;
+
+    // 公开路由：登录、注册（无需认证）
+    final isAuthRoute = currentPath == constants.AppRoutePath.login ||
+        currentPath == constants.AppRoutePath.register;
+
+    // 未登录 → 跳转登录页，附带来源路径用于登录后回跳
+    if (!isLoggedIn && !isAuthRoute) {
+      final querySuffix =
+          state.uri.query.isNotEmpty ? '?${state.uri.query}' : '';
+      final redirect = Uri.encodeComponent(state.uri.path + querySuffix);
+      return '${constants.AppRoutePath.login}?redirect=$redirect';
+    }
+
+    // 已登录 → 访问登录/注册页时重定向到首页
+    if (isLoggedIn && isAuthRoute) {
+      return constants.AppRoutePath.initial;
+    }
+
     return null;
   }
 }

@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'package:go_router/go_router.dart';
 
 import 'package:flutter_app/generated/api/app/service/v1/index.dart'
     show InitStateResponse, LedgerServiceV1Book, IdentityServiceV1Tenant;
 
 import 'package:flutter_app/src/core/transport/http/status.dart';
 import 'package:flutter_app/src/features/ledger/services/ledger_auth_service.dart';
+import 'package:flutter_app/src/features/auth/cubit/auth_cubit.dart';
 
 /// 记账设置页。
 ///
@@ -126,6 +129,7 @@ class _SettingsPageState extends State<SettingsPage> {
                   ),
                   _buildTenantSwitcher(theme),
                   _buildBookSwitcher(theme),
+                  _buildLogoutSection(theme),
                 ],
               ),
             ),
@@ -245,6 +249,53 @@ class _SettingsPageState extends State<SettingsPage> {
                     ))
                 .toList(),
             onChanged: _switchBook,
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildLogoutSection(ThemeData theme) {
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(16, 8, 16, 32),
+      child: SizedBox(
+        width: double.infinity,
+        height: 48,
+        child: OutlinedButton.icon(
+          onPressed: () => _handleLogout(),
+          icon: const Icon(Icons.logout, size: 20),
+          label: const Text('退出登录'),
+          style: OutlinedButton.styleFrom(
+            foregroundColor: theme.colorScheme.error,
+            side: BorderSide(color: theme.colorScheme.error.withAlpha(100)),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(12),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  void _handleLogout() {
+    showDialog(
+      context: context,
+      builder: (ctx) => AlertDialog(
+        title: const Text('确认退出'),
+        content: const Text('退出登录后需要重新登录才能使用。'),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.of(ctx).pop(),
+            child: const Text('取消'),
+          ),
+          FilledButton(
+            onPressed: () async {
+              Navigator.of(ctx).pop();
+              await context.read<AuthCubit>().logout();
+              if (!mounted) return;
+              context.go('/login');
+            },
+            child: const Text('退出'),
           ),
         ],
       ),

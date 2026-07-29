@@ -12,6 +12,8 @@ import 'package:flutter_app/src/core/transport/http/index.dart'
     show DioClientTransport;
 import 'package:flutter_app/src/core/transport/init.dart' as transport;
 import 'package:flutter_app/src/core/widgets/error_page.dart';
+import 'package:flutter_app/src/features/auth/services/authentication_service.dart';
+import 'package:flutter_app/src/core/transport/http/interceptors/authentication_interceptor.dart';
 import 'package:get_it/get_it.dart' show GetIt;
 
 import 'init_thirdparty_plugins.dart';
@@ -27,6 +29,8 @@ Future<void> init() async {
   _initTransport();
 
   await repos.init();
+
+  _initAuthInterceptor();
 
   _initErrorWidget();
 }
@@ -52,6 +56,22 @@ void _initErrorWidget() {
 
     return CustomErrorWidget(errorMessage: details.exceptionAsString());
   };
+}
+
+/// 注册认证拦截器
+///
+/// 必须在 [repos.init]（注册 UserAuthCache）之后调用。
+void _initAuthInterceptor() {
+  final getIt = GetIt.instance;
+  getIt.registerLazySingleton<AuthenticationService>(
+      () => AuthenticationService());
+
+  final authInterceptor = AuthenticationInterceptor(
+    authService: getIt<AuthenticationService>(),
+    autoRefreshToken: true,
+  );
+  final dio = GetIt.instance<Dio>();
+  dio.interceptors.add(authInterceptor);
 }
 
 /// 清理

@@ -167,7 +167,7 @@ class AuthenticationService extends AuthService {
   /// 认证失败处理
   doAuthenticationFailed() {
     GetIt.instance<UserAuthCache>().clearTokens();
-    AppRouter.router.goNamed('home');
+    AppRouter.router.go('/login');
   }
 }
 

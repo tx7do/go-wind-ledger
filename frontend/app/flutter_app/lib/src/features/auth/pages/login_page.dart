@@ -11,7 +11,10 @@ import 'package:flutter_app/generated/api/app/service/v1/index.dart'
 
 /// 登录页面
 class LoginPage extends StatefulWidget {
-  const LoginPage({super.key});
+  /// 登录成功后重定向到的路径（由路由守卫传入）
+  final String? redirectTo;
+
+  const LoginPage({super.key, this.redirectTo});
 
   @override
   State<LoginPage> createState() => _LoginPageState();
@@ -53,7 +56,12 @@ class _LoginPageState extends State<LoginPage> {
             backgroundColor: Colors.green,
           ),
         );
-        context.go('/');
+        // 登录后回跳到来源页面（或默认首页）
+        final redirect = (widget.redirectTo != null &&
+                widget.redirectTo!.isNotEmpty)
+            ? widget.redirectTo!
+            : '/';
+        context.go(redirect);
       } else {
         _showLoginFailed();
       }
