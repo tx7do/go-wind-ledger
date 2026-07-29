@@ -19,6 +19,11 @@ paths:
             tags:
                 - AccountService
             operationId: AccountService_Overview
+            parameters:
+                - name: currencyCode
+                  in: query
+                  schema:
+                    type: string
             responses:
                 "200":
                     description: OK
@@ -1176,6 +1181,11 @@ paths:
             tags:
                 - CurrencyService
             operationId: CurrencyService_ListAll
+            parameters:
+                - name: include_inactive
+                  in: query
+                  schema:
+                    type: boolean
             responses:
                 "200":
                     description: OK
@@ -4605,7 +4615,10 @@ components:
                     format: uint32
         ledger.service.v1.RefreshCurrencyRequest:
             type: object
-            properties: {}
+            properties:
+                force:
+                    type: boolean
+                    description: 是否强制刷新汇率
             description: 请求 - 刷新汇率
         ledger.service.v1.ReportResponse:
             type: object

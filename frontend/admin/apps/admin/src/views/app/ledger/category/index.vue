@@ -146,7 +146,7 @@ function handleEdit(row: any) {
 /* 删除 */
 async function handleDelete(row: any) {
   try {
-    await apiClient.categoryService.Delete({ id: row.id });
+    await apiClient.ledgerCategoryService.Delete({ id: row.id });
 
     notification.success({
       message: $t('ui.notification.delete_success'),

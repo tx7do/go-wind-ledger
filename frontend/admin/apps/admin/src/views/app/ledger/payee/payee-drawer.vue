@@ -64,18 +64,27 @@ const [BaseForm, baseFormApi] = useVbenForm({
       fieldName: 'enable',
       label: $t('page.ledger.payee.enable'),
       defaultValue: true,
+      componentProps: {
+        class: 'w-auto',
+      },
     },
     {
       component: 'Switch',
       fieldName: 'canExpense',
       label: $t('page.ledger.payee.canExpense'),
       defaultValue: true,
+      componentProps: {
+        class: 'w-auto',
+      },
     },
     {
       component: 'Switch',
       fieldName: 'canIncome',
       label: $t('page.ledger.payee.canIncome'),
       defaultValue: true,
+      componentProps: {
+        class: 'w-auto',
+      },
     },
     {
       component: 'InputNumber',

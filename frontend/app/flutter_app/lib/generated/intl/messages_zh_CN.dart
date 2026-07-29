@@ -63,7 +63,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "aboutTechStack": MessageLookupByLibrary.simpleMessage("技术栈"),
     "allLoaded": MessageLookupByLibrary.simpleMessage("— 已加载全部 —"),
     "allPosts": MessageLookupByLibrary.simpleMessage("全部文章"),
-    "appName": MessageLookupByLibrary.simpleMessage("GoWind CMS"),
+    "appName": MessageLookupByLibrary.simpleMessage("GoWind Ledger"),
     "appearance": MessageLookupByLibrary.simpleMessage("外观设置"),
     "backToHome": MessageLookupByLibrary.simpleMessage("返回首页"),
     "bookmarkHint": MessageLookupByLibrary.simpleMessage("浏览文章时点击收藏按钮即可保存"),
@@ -110,7 +110,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "featureNotAvailable": MessageLookupByLibrary.simpleMessage("该功能即将上线，敬请期待"),
     "followSystem": MessageLookupByLibrary.simpleMessage("跟随系统"),
     "footerText": MessageLookupByLibrary.simpleMessage(
-      "© 2026 GoWind CMS  ·  Powered by Flutter",
+      "© 2026 GoWind Ledger  ·  Powered by Flutter",
     ),
     "guestUser": MessageLookupByLibrary.simpleMessage("访客用户"),
     "home": MessageLookupByLibrary.simpleMessage("首页"),

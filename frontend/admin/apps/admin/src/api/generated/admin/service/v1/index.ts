@@ -133,6 +133,14 @@ export interface AccountService {
   ListAll(
     request: ledgerservicev1_ListAllAccountRequest,
   ): Promise<ledgerservicev1_ListAccountResponse>;
+  // Overview and Statistics use different path prefix to avoid
+  // being matched by the {id} path parameter in Get/Update/Delete.
+  Overview(
+    request: ledgerservicev1_OverviewRequest,
+  ): Promise<ledgerservicev1_OverviewResponse>;
+  Statistics(
+    request: ledgerservicev1_AccountStatisticsRequest,
+  ): Promise<ledgerservicev1_AccountStatisticsResponse>;
   Get(
     request: ledgerservicev1_GetAccountRequest,
   ): Promise<ledgerservicev1_Account>;
@@ -166,12 +174,6 @@ export interface AccountService {
   AdjustBalance(
     request: ledgerservicev1_AdjustBalanceRequest,
   ): Promise<ledgerservicev1_Account>;
-  Overview(
-    request: ledgerservicev1_OverviewRequest,
-  ): Promise<ledgerservicev1_OverviewResponse>;
-  Statistics(
-    request: ledgerservicev1_AccountStatisticsRequest,
-  ): Promise<ledgerservicev1_AccountStatisticsResponse>;
 }
 
 export function createAccountServiceClient(
@@ -311,6 +313,42 @@ export function createAccountServiceClient(
         method: 'ListAll',
       }) as Promise<ledgerservicev1_ListAccountResponse>;
     },
+    Overview(request) {
+      const path = `admin/v1/account-overview`;
+      const body = null;
+      const queryParams: string[] = [];
+      if (request.currencyCode) {
+        queryParams.push(
+          `currencyCode=${encodeURIComponent(request.currencyCode.toString())}`,
+        );
+      }
+      let uri = path;
+      if (queryParams.length > 0) {
+        uri += `?${queryParams.join('&')}`;
+      }
+      return transport.unary(uri, 'GET', body, {
+        service: 'AccountService',
+        method: 'Overview',
+      }) as Promise<ledgerservicev1_OverviewResponse>;
+    },
+    Statistics(request) {
+      const path = `admin/v1/account-statistics`;
+      const body = null;
+      const queryParams: string[] = [];
+      if (request.currencyCode) {
+        queryParams.push(
+          `currencyCode=${encodeURIComponent(request.currencyCode.toString())}`,
+        );
+      }
+      let uri = path;
+      if (queryParams.length > 0) {
+        uri += `?${queryParams.join('&')}`;
+      }
+      return transport.unary(uri, 'GET', body, {
+        service: 'AccountService',
+        method: 'Statistics',
+      }) as Promise<ledgerservicev1_AccountStatisticsResponse>;
+    },
     Get(request) {
       if (request.id === undefined || request.id === null) {
         throw new Error('missing required field request.id');
@@ -438,32 +476,6 @@ export function createAccountServiceClient(
         service: 'AccountService',
         method: 'AdjustBalance',
       }) as Promise<ledgerservicev1_Account>;
-    },
-    Overview(_request) {
-      const path = `admin/v1/accounts/overview`;
-      const body = null;
-      return transport.unary(path, 'GET', body, {
-        service: 'AccountService',
-        method: 'Overview',
-      }) as Promise<ledgerservicev1_OverviewResponse>;
-    },
-    Statistics(request) {
-      const path = `admin/v1/accounts/statistics`;
-      const body = null;
-      const queryParams: string[] = [];
-      if (request.currencyCode) {
-        queryParams.push(
-          `currencyCode=${encodeURIComponent(request.currencyCode.toString())}`,
-        );
-      }
-      let uri = path;
-      if (queryParams.length > 0) {
-        uri += `?${queryParams.join('&')}`;
-      }
-      return transport.unary(uri, 'GET', body, {
-        service: 'AccountService',
-        method: 'Statistics',
-      }) as Promise<ledgerservicev1_AccountStatisticsResponse>;
     },
   };
 }
@@ -682,6 +694,40 @@ export type ledgerservicev1_ListAllAccountRequest = {
   includeDisabled?: boolean;
 };
 
+// 请求 - 账户概览
+export type ledgerservicev1_OverviewRequest = {
+  currencyCode?: string;
+};
+
+// 回应 - 账户概览
+export type ledgerservicev1_OverviewResponse = {
+  assets: ledgerservicev1_AccountAsset[] | undefined;
+  debts: ledgerservicev1_AccountAsset[] | undefined;
+  netWorth: string | undefined;
+  totalAssets: string | undefined;
+  totalDebts: string | undefined;
+};
+
+// 账户资产/负债明细
+export type ledgerservicev1_AccountAsset = {
+  balance: string | undefined;
+  currencyCode: string | undefined;
+  name: string | undefined;
+  type: string | undefined;
+};
+
+// 请求 - 账户统计
+export type ledgerservicev1_AccountStatisticsRequest = {
+  currencyCode?: string;
+};
+
+// 回应 - 账户统计
+export type ledgerservicev1_AccountStatisticsResponse = {
+  totalAvailable: string | undefined;
+  totalBalance: string | undefined;
+  totalCreditLimit: string | undefined;
+};
+
 // 请求 - 账户数据
 export type ledgerservicev1_GetAccountRequest = {
   id: number | undefined;
@@ -724,39 +770,6 @@ export type ledgerservicev1_AdjustBalanceRequest = {
   id: number | undefined;
   notes?: string;
   title?: string;
-};
-
-// 请求 - 账户概览
-export type ledgerservicev1_OverviewRequest = {
-};
-
-// 回应 - 账户概览
-export type ledgerservicev1_OverviewResponse = {
-  assets: ledgerservicev1_AccountAsset[] | undefined;
-  debts: ledgerservicev1_AccountAsset[] | undefined;
-  netWorth: string | undefined;
-  totalAssets: string | undefined;
-  totalDebts: string | undefined;
-};
-
-// 账户资产/负债明细
-export type ledgerservicev1_AccountAsset = {
-  balance: string | undefined;
-  currencyCode: string | undefined;
-  name: string | undefined;
-  type: string | undefined;
-};
-
-// 请求 - 账户统计
-export type ledgerservicev1_AccountStatisticsRequest = {
-  currencyCode?: string;
-};
-
-// 回应 - 账户统计
-export type ledgerservicev1_AccountStatisticsResponse = {
-  totalAvailable: string | undefined;
-  totalBalance: string | undefined;
-  totalCreditLimit: string | undefined;
 };
 
 // 查询路由列表 - 回应
@@ -1740,7 +1753,7 @@ export function createBalanceFlowServiceClient(
       }) as Promise<ledgerservicev1_BalanceFlow>;
     },
     Statistics(request) {
-      const path = `admin/v1/balance-flows/statistics`;
+      const path = `admin/v1/balance-flow-statistics`;
       const body = null;
       const queryParams: string[] = [];
       if (request.bookId) {
@@ -2086,7 +2099,7 @@ export function createBookServiceClient(
       }) as Promise<ledgerservicev1_ListBookResponse>;
     },
     ListAll(request) {
-      const path = `admin/v1/books/all`;
+      const path = `admin/v1/books-all`;
       const body = null;
       const queryParams: string[] = [];
       if (request.includeDisabled) {
@@ -2166,7 +2179,7 @@ export function createBookServiceClient(
       }) as Promise<ledgerservicev1_Book>;
     },
     CreateByTemplate(request) {
-      const path = `admin/v1/books/template`;
+      const path = `admin/v1/books-from-template`;
       const body = JSON.stringify(request);
       return transport.unary(path, 'POST', body, {
         service: 'BookService',
@@ -2174,7 +2187,7 @@ export function createBookServiceClient(
       }) as Promise<ledgerservicev1_Book>;
     },
     Copy(request) {
-      const path = `admin/v1/books/copy`;
+      const path = `admin/v1/books-copy`;
       const body = JSON.stringify(request);
       return transport.unary(path, 'POST', body, {
         service: 'BookService',
@@ -2203,7 +2216,7 @@ export function createBookServiceClient(
       }) as Promise<ledgerservicev1_ExportBookResponse>;
     },
     ListAllBooks(_request) {
-      const path = `admin/v1/books/select-all`;
+      const path = `admin/v1/books-select-all`;
       const body = null;
       return transport.unary(path, 'GET', body, {
         service: 'BookService',
@@ -2321,7 +2334,7 @@ export function createBookTemplateServiceClient(
 ): BookTemplateService {
   return {
     ListAll(_request) {
-      const path = `admin/v1/book-templates/all`;
+      const path = `admin/v1/book-templates-all`;
       const body = null;
       return transport.unary(path, 'GET', body, {
         service: 'BookTemplateService',
@@ -2524,7 +2537,7 @@ export function createBudgetServiceClient(
       }) as Promise<ledgerservicev1_ListBudgetResponse>;
     },
     ListAll(request) {
-      const path = `admin/v1/budgets/all`;
+      const path = `admin/v1/budgets-all`;
       const body = null;
       const queryParams: string[] = [];
       if (request.bookId) {
@@ -2699,10 +2712,20 @@ export function createCurrencyServiceClient(
   transport: ClientTransport,
 ): CurrencyService {
   return {
-    ListAll(_request) {
+    ListAll(request) {
       const path = `admin/v1/currencies/all`;
       const body = null;
-      return transport.unary(path, 'GET', body, {
+      const queryParams: string[] = [];
+      if (request.include_inactive) {
+        queryParams.push(
+          `include_inactive=${encodeURIComponent(request.include_inactive.toString())}`,
+        );
+      }
+      let uri = path;
+      if (queryParams.length > 0) {
+        uri += `?${queryParams.join('&')}`;
+      }
+      return transport.unary(uri, 'GET', body, {
         service: 'CurrencyService',
         method: 'ListAll',
       }) as Promise<ledgerservicev1_ListCurrencyResponse>;
@@ -2873,6 +2896,7 @@ export function createCurrencyServiceClient(
 }
 // 请求 - 获取所有币种
 export type ledgerservicev1_ListAllCurrencyRequest = {
+  include_inactive?: boolean;
 };
 
 // 回应 - 币种列表
@@ -2891,6 +2915,7 @@ export type ledgerservicev1_Currency = {
 
 // 请求 - 刷新汇率
 export type ledgerservicev1_RefreshCurrencyRequest = {
+  force?: boolean;
 };
 
 // 请求 - 币种转换
@@ -4154,7 +4179,7 @@ export function createFlowFileServiceClient(
       }) as Promise<wellKnownEmpty>;
     },
     UploadFile(request) {
-      const path = `admin/v1/flow-files/upload`;
+      const path = `admin/v1/flow-files-upload`;
       const body = JSON.stringify(request);
       return transport.unary(path, 'POST', body, {
         service: 'FlowFileService',
@@ -4162,7 +4187,7 @@ export function createFlowFileServiceClient(
       }) as Promise<ledgerservicev1_FlowFile>;
     },
     ViewFile(request) {
-      const path = `admin/v1/flow-files/view`;
+      const path = `admin/v1/flow-files-view`;
       const body = null;
       const queryParams: string[] = [];
       if (request.id) {
@@ -5233,6 +5258,631 @@ export type dictservicev1_DeleteLanguageRequest = {
 
 export type dictservicev1_BatchCreateLanguagesRequest = {
   items: dictservicev1_Language[] | undefined;
+};
+
+// 记账分类服务（Admin BFF）
+export interface LedgerCategoryService {
+  List(
+    request: pagination_PagingRequest,
+  ): Promise<ledgerservicev1_ListCategoryResponse>;
+  ListAll(
+    request: ledgerservicev1_ListAllCategoryRequest,
+  ): Promise<ledgerservicev1_ListCategoryResponse>;
+  Get(
+    request: ledgerservicev1_GetCategoryRequest,
+  ): Promise<ledgerservicev1_Category>;
+  Create(
+    request: ledgerservicev1_CreateCategoryRequest,
+  ): Promise<ledgerservicev1_Category>;
+  Update(
+    request: ledgerservicev1_UpdateCategoryRequest,
+  ): Promise<ledgerservicev1_Category>;
+  Delete(
+    request: ledgerservicev1_DeleteCategoryRequest,
+  ): Promise<wellKnownEmpty>;
+  Toggle(
+    request: ledgerservicev1_ToggleCategoryRequest,
+  ): Promise<ledgerservicev1_Category>;
+}
+
+export function createLedgerCategoryServiceClient(
+  transport: ClientTransport,
+): LedgerCategoryService {
+  return {
+    List(request) {
+      const path = `admin/v1/ledger-categories`;
+      const body = null;
+      const queryParams: string[] = [];
+      if (request.page) {
+        queryParams.push(
+          `page=${encodeURIComponent(request.page.toString())}`,
+        );
+      }
+      if (request.pageSize) {
+        queryParams.push(
+          `pageSize=${encodeURIComponent(request.pageSize.toString())}`,
+        );
+      }
+      if (request.offset) {
+        queryParams.push(
+          `offset=${encodeURIComponent(request.offset.toString())}`,
+        );
+      }
+      if (request.limit) {
+        queryParams.push(
+          `limit=${encodeURIComponent(request.limit.toString())}`,
+        );
+      }
+      if (request.token) {
+        queryParams.push(
+          `token=${encodeURIComponent(request.token.toString())}`,
+        );
+      }
+      if (request.noPaging) {
+        queryParams.push(
+          `noPaging=${encodeURIComponent(request.noPaging.toString())}`,
+        );
+      }
+      if (request.query) {
+        queryParams.push(
+          `query=${encodeURIComponent(request.query.toString())}`,
+        );
+      }
+      if (request.filter) {
+        queryParams.push(
+          `filter=${encodeURIComponent(request.filter.toString())}`,
+        );
+      }
+      if (request.filterExpr?.type) {
+        queryParams.push(
+          `filterExpr.type=${encodeURIComponent(request.filterExpr.type.toString())}`,
+        );
+      }
+      if (request.filterExpr?.conditions?.field) {
+        queryParams.push(
+          `filterExpr.conditions.field=${encodeURIComponent(request.filterExpr.conditions.field.toString())}`,
+        );
+      }
+      if (request.filterExpr?.conditions?.op) {
+        queryParams.push(
+          `filterExpr.conditions.op=${encodeURIComponent(request.filterExpr.conditions.op.toString())}`,
+        );
+      }
+      if (request.filterExpr?.conditions?.value) {
+        queryParams.push(
+          `filterExpr.conditions.value=${encodeURIComponent(request.filterExpr.conditions.value.toString())}`,
+        );
+      }
+      if (request.filterExpr?.conditions?.jsonValue) {
+        queryParams.push(
+          `filterExpr.conditions.jsonValue=${encodeURIComponent(request.filterExpr.conditions.jsonValue.toString())}`,
+        );
+      }
+      if (request.filterExpr?.conditions?.values) {
+        request.filterExpr.conditions.values.forEach((x) => {
+          queryParams.push(
+            `filterExpr.conditions.values=${encodeURIComponent(x.toString())}`,
+          );
+        });
+      }
+      if (request.filterExpr?.conditions?.datePart) {
+        queryParams.push(
+          `filterExpr.conditions.datePart=${encodeURIComponent(request.filterExpr.conditions.datePart.toString())}`,
+        );
+      }
+      if (request.filterExpr?.conditions?.jsonPath) {
+        queryParams.push(
+          `filterExpr.conditions.jsonPath=${encodeURIComponent(request.filterExpr.conditions.jsonPath.toString())}`,
+        );
+      }
+      if (request.orderBy) {
+        queryParams.push(
+          `orderBy=${encodeURIComponent(request.orderBy.toString())}`,
+        );
+      }
+      if (request.sorting?.field) {
+        queryParams.push(
+          `sorting.field=${encodeURIComponent(request.sorting.field.toString())}`,
+        );
+      }
+      if (request.sorting?.direction) {
+        queryParams.push(
+          `sorting.direction=${encodeURIComponent(request.sorting.direction.toString())}`,
+        );
+      }
+      if (request.fieldMask) {
+        queryParams.push(
+          `fieldMask=${encodeURIComponent(request.fieldMask.toString())}`,
+        );
+      }
+      let uri = path;
+      if (queryParams.length > 0) {
+        uri += `?${queryParams.join('&')}`;
+      }
+      return transport.unary(uri, 'GET', body, {
+        service: 'LedgerCategoryService',
+        method: 'List',
+      }) as Promise<ledgerservicev1_ListCategoryResponse>;
+    },
+    ListAll(request) {
+      const path = `admin/v1/ledger-categories-all`;
+      const body = null;
+      const queryParams: string[] = [];
+      if (request.bookId) {
+        queryParams.push(
+          `bookId=${encodeURIComponent(request.bookId.toString())}`,
+        );
+      }
+      if (request.type) {
+        queryParams.push(
+          `type=${encodeURIComponent(request.type.toString())}`,
+        );
+      }
+      let uri = path;
+      if (queryParams.length > 0) {
+        uri += `?${queryParams.join('&')}`;
+      }
+      return transport.unary(uri, 'GET', body, {
+        service: 'LedgerCategoryService',
+        method: 'ListAll',
+      }) as Promise<ledgerservicev1_ListCategoryResponse>;
+    },
+    Get(request) {
+      if (request.id === undefined || request.id === null) {
+        throw new Error('missing required field request.id');
+      }
+      const path = `admin/v1/ledger-categories/${request.id}`;
+      const body = null;
+      const queryParams: string[] = [];
+      if (request.viewMask) {
+        queryParams.push(
+          `viewMask=${encodeURIComponent(request.viewMask.toString())}`,
+        );
+      }
+      let uri = path;
+      if (queryParams.length > 0) {
+        uri += `?${queryParams.join('&')}`;
+      }
+      return transport.unary(uri, 'GET', body, {
+        service: 'LedgerCategoryService',
+        method: 'Get',
+      }) as Promise<ledgerservicev1_Category>;
+    },
+    Create(request) {
+      const path = `admin/v1/ledger-categories`;
+      const body = JSON.stringify(request);
+      return transport.unary(path, 'POST', body, {
+        service: 'LedgerCategoryService',
+        method: 'Create',
+      }) as Promise<ledgerservicev1_Category>;
+    },
+    Update(request) {
+      if (request.id === undefined || request.id === null) {
+        throw new Error('missing required field request.id');
+      }
+      const path = `admin/v1/ledger-categories/${request.id}`;
+      const body = JSON.stringify(request);
+      return transport.unary(path, 'PUT', body, {
+        service: 'LedgerCategoryService',
+        method: 'Update',
+      }) as Promise<ledgerservicev1_Category>;
+    },
+    Delete(request) {
+      if (request.id === undefined || request.id === null) {
+        throw new Error('missing required field request.id');
+      }
+      const path = `admin/v1/ledger-categories/${request.id}`;
+      const body = null;
+      return transport.unary(path, 'DELETE', body, {
+        service: 'LedgerCategoryService',
+        method: 'Delete',
+      }) as Promise<wellKnownEmpty>;
+    },
+    Toggle(request) {
+      if (request.id === undefined || request.id === null) {
+        throw new Error('missing required field request.id');
+      }
+      const path = `admin/v1/ledger-categories/${request.id}/toggle`;
+      const body = JSON.stringify(request);
+      return transport.unary(path, 'PATCH', body, {
+        service: 'LedgerCategoryService',
+        method: 'Toggle',
+      }) as Promise<ledgerservicev1_Category>;
+    },
+  };
+}
+// 回应 - 分类列表
+export type ledgerservicev1_ListCategoryResponse = {
+  items: ledgerservicev1_Category[] | undefined;
+  total: number | undefined;
+};
+
+// 分类
+export type ledgerservicev1_Category = {
+  bookId?: number;
+  children: ledgerservicev1_Category[] | undefined;
+  createdAt?: wellKnownTimestamp;
+  createdBy?: number;
+  deletedAt?: wellKnownTimestamp;
+  deletedBy?: number;
+  depth?: number;
+  enable?: boolean;
+  id?: number;
+  name?: string;
+  notes?: string;
+  // 树形字段
+  parentId?: number;
+  path?: string;
+  sortOrder?: number;
+  tenantId?: number;
+  type?: ledgerservicev1_CategoryType;
+  updatedAt?: wellKnownTimestamp;
+  updatedBy?: number;
+};
+
+// 分类类型 — 对应 Java CategoryType
+export type ledgerservicev1_CategoryType =
+  | 'CATEGORY_TYPE_EXPENSE'
+  | 'CATEGORY_TYPE_INCOME'
+  | 'CATEGORY_TYPE_UNSPECIFIED';
+// 请求 - 获取所有分类
+export type ledgerservicev1_ListAllCategoryRequest = {
+  bookId?: number;
+  type?: ledgerservicev1_CategoryType;
+};
+
+// 请求 - 分类数据
+export type ledgerservicev1_GetCategoryRequest = {
+  id: number | undefined;
+  viewMask?: wellKnownFieldMask;
+};
+
+// 请求 - 创建分类
+export type ledgerservicev1_CreateCategoryRequest = {
+  data: ledgerservicev1_Category | undefined;
+};
+
+// 请求 - 更新分类
+export type ledgerservicev1_UpdateCategoryRequest = {
+  allowMissing?: boolean;
+  data: ledgerservicev1_Category | undefined;
+  id: number | undefined;
+  updateMask: undefined | wellKnownFieldMask;
+};
+
+// 请求 - 删除分类
+export type ledgerservicev1_DeleteCategoryRequest = {
+  id: number | undefined;
+};
+
+// 请求 - 切换启用/禁用
+export type ledgerservicev1_ToggleCategoryRequest = {
+  id: number | undefined;
+};
+
+// 记账标签服务（Admin BFF）
+export interface LedgerTagService {
+  List(
+    request: pagination_PagingRequest,
+  ): Promise<ledgerservicev1_ListTagResponse>;
+  ListAll(
+    request: ledgerservicev1_ListAllTagRequest,
+  ): Promise<ledgerservicev1_ListTagResponse>;
+  Get(
+    request: ledgerservicev1_GetTagRequest,
+  ): Promise<ledgerservicev1_Tag>;
+  Create(
+    request: ledgerservicev1_CreateTagRequest,
+  ): Promise<ledgerservicev1_Tag>;
+  Update(
+    request: ledgerservicev1_UpdateTagRequest,
+  ): Promise<ledgerservicev1_Tag>;
+  Delete(
+    request: ledgerservicev1_DeleteTagRequest,
+  ): Promise<wellKnownEmpty>;
+  Toggle(
+    request: ledgerservicev1_ToggleTagRequest,
+  ): Promise<ledgerservicev1_Tag>;
+  ToggleCanExpense(
+    request: ledgerservicev1_ToggleTagRequest,
+  ): Promise<ledgerservicev1_Tag>;
+  ToggleCanIncome(
+    request: ledgerservicev1_ToggleTagRequest,
+  ): Promise<ledgerservicev1_Tag>;
+  ToggleCanTransfer(
+    request: ledgerservicev1_ToggleTagRequest,
+  ): Promise<ledgerservicev1_Tag>;
+}
+
+export function createLedgerTagServiceClient(
+  transport: ClientTransport,
+): LedgerTagService {
+  return {
+    List(request) {
+      const path = `admin/v1/ledger-tags`;
+      const body = null;
+      const queryParams: string[] = [];
+      if (request.page) {
+        queryParams.push(
+          `page=${encodeURIComponent(request.page.toString())}`,
+        );
+      }
+      if (request.pageSize) {
+        queryParams.push(
+          `pageSize=${encodeURIComponent(request.pageSize.toString())}`,
+        );
+      }
+      if (request.offset) {
+        queryParams.push(
+          `offset=${encodeURIComponent(request.offset.toString())}`,
+        );
+      }
+      if (request.limit) {
+        queryParams.push(
+          `limit=${encodeURIComponent(request.limit.toString())}`,
+        );
+      }
+      if (request.token) {
+        queryParams.push(
+          `token=${encodeURIComponent(request.token.toString())}`,
+        );
+      }
+      if (request.noPaging) {
+        queryParams.push(
+          `noPaging=${encodeURIComponent(request.noPaging.toString())}`,
+        );
+      }
+      if (request.query) {
+        queryParams.push(
+          `query=${encodeURIComponent(request.query.toString())}`,
+        );
+      }
+      if (request.filter) {
+        queryParams.push(
+          `filter=${encodeURIComponent(request.filter.toString())}`,
+        );
+      }
+      if (request.filterExpr?.type) {
+        queryParams.push(
+          `filterExpr.type=${encodeURIComponent(request.filterExpr.type.toString())}`,
+        );
+      }
+      if (request.filterExpr?.conditions?.field) {
+        queryParams.push(
+          `filterExpr.conditions.field=${encodeURIComponent(request.filterExpr.conditions.field.toString())}`,
+        );
+      }
+      if (request.filterExpr?.conditions?.op) {
+        queryParams.push(
+          `filterExpr.conditions.op=${encodeURIComponent(request.filterExpr.conditions.op.toString())}`,
+        );
+      }
+      if (request.filterExpr?.conditions?.value) {
+        queryParams.push(
+          `filterExpr.conditions.value=${encodeURIComponent(request.filterExpr.conditions.value.toString())}`,
+        );
+      }
+      if (request.filterExpr?.conditions?.jsonValue) {
+        queryParams.push(
+          `filterExpr.conditions.jsonValue=${encodeURIComponent(request.filterExpr.conditions.jsonValue.toString())}`,
+        );
+      }
+      if (request.filterExpr?.conditions?.values) {
+        request.filterExpr.conditions.values.forEach((x) => {
+          queryParams.push(
+            `filterExpr.conditions.values=${encodeURIComponent(x.toString())}`,
+          );
+        });
+      }
+      if (request.filterExpr?.conditions?.datePart) {
+        queryParams.push(
+          `filterExpr.conditions.datePart=${encodeURIComponent(request.filterExpr.conditions.datePart.toString())}`,
+        );
+      }
+      if (request.filterExpr?.conditions?.jsonPath) {
+        queryParams.push(
+          `filterExpr.conditions.jsonPath=${encodeURIComponent(request.filterExpr.conditions.jsonPath.toString())}`,
+        );
+      }
+      if (request.orderBy) {
+        queryParams.push(
+          `orderBy=${encodeURIComponent(request.orderBy.toString())}`,
+        );
+      }
+      if (request.sorting?.field) {
+        queryParams.push(
+          `sorting.field=${encodeURIComponent(request.sorting.field.toString())}`,
+        );
+      }
+      if (request.sorting?.direction) {
+        queryParams.push(
+          `sorting.direction=${encodeURIComponent(request.sorting.direction.toString())}`,
+        );
+      }
+      if (request.fieldMask) {
+        queryParams.push(
+          `fieldMask=${encodeURIComponent(request.fieldMask.toString())}`,
+        );
+      }
+      let uri = path;
+      if (queryParams.length > 0) {
+        uri += `?${queryParams.join('&')}`;
+      }
+      return transport.unary(uri, 'GET', body, {
+        service: 'LedgerTagService',
+        method: 'List',
+      }) as Promise<ledgerservicev1_ListTagResponse>;
+    },
+    ListAll(request) {
+      const path = `admin/v1/ledger-tags-all`;
+      const body = null;
+      const queryParams: string[] = [];
+      if (request.bookId) {
+        queryParams.push(
+          `bookId=${encodeURIComponent(request.bookId.toString())}`,
+        );
+      }
+      let uri = path;
+      if (queryParams.length > 0) {
+        uri += `?${queryParams.join('&')}`;
+      }
+      return transport.unary(uri, 'GET', body, {
+        service: 'LedgerTagService',
+        method: 'ListAll',
+      }) as Promise<ledgerservicev1_ListTagResponse>;
+    },
+    Get(request) {
+      if (request.id === undefined || request.id === null) {
+        throw new Error('missing required field request.id');
+      }
+      const path = `admin/v1/ledger-tags/${request.id}`;
+      const body = null;
+      const queryParams: string[] = [];
+      if (request.viewMask) {
+        queryParams.push(
+          `viewMask=${encodeURIComponent(request.viewMask.toString())}`,
+        );
+      }
+      let uri = path;
+      if (queryParams.length > 0) {
+        uri += `?${queryParams.join('&')}`;
+      }
+      return transport.unary(uri, 'GET', body, {
+        service: 'LedgerTagService',
+        method: 'Get',
+      }) as Promise<ledgerservicev1_Tag>;
+    },
+    Create(request) {
+      const path = `admin/v1/ledger-tags`;
+      const body = JSON.stringify(request);
+      return transport.unary(path, 'POST', body, {
+        service: 'LedgerTagService',
+        method: 'Create',
+      }) as Promise<ledgerservicev1_Tag>;
+    },
+    Update(request) {
+      if (request.id === undefined || request.id === null) {
+        throw new Error('missing required field request.id');
+      }
+      const path = `admin/v1/ledger-tags/${request.id}`;
+      const body = JSON.stringify(request);
+      return transport.unary(path, 'PUT', body, {
+        service: 'LedgerTagService',
+        method: 'Update',
+      }) as Promise<ledgerservicev1_Tag>;
+    },
+    Delete(request) {
+      if (request.id === undefined || request.id === null) {
+        throw new Error('missing required field request.id');
+      }
+      const path = `admin/v1/ledger-tags/${request.id}`;
+      const body = null;
+      return transport.unary(path, 'DELETE', body, {
+        service: 'LedgerTagService',
+        method: 'Delete',
+      }) as Promise<wellKnownEmpty>;
+    },
+    Toggle(request) {
+      if (request.id === undefined || request.id === null) {
+        throw new Error('missing required field request.id');
+      }
+      const path = `admin/v1/ledger-tags/${request.id}/toggle`;
+      const body = JSON.stringify(request);
+      return transport.unary(path, 'PATCH', body, {
+        service: 'LedgerTagService',
+        method: 'Toggle',
+      }) as Promise<ledgerservicev1_Tag>;
+    },
+    ToggleCanExpense(request) {
+      if (request.id === undefined || request.id === null) {
+        throw new Error('missing required field request.id');
+      }
+      const path = `admin/v1/ledger-tags/${request.id}/toggle-can-expense`;
+      const body = JSON.stringify(request);
+      return transport.unary(path, 'PATCH', body, {
+        service: 'LedgerTagService',
+        method: 'ToggleCanExpense',
+      }) as Promise<ledgerservicev1_Tag>;
+    },
+    ToggleCanIncome(request) {
+      if (request.id === undefined || request.id === null) {
+        throw new Error('missing required field request.id');
+      }
+      const path = `admin/v1/ledger-tags/${request.id}/toggle-can-income`;
+      const body = JSON.stringify(request);
+      return transport.unary(path, 'PATCH', body, {
+        service: 'LedgerTagService',
+        method: 'ToggleCanIncome',
+      }) as Promise<ledgerservicev1_Tag>;
+    },
+    ToggleCanTransfer(request) {
+      if (request.id === undefined || request.id === null) {
+        throw new Error('missing required field request.id');
+      }
+      const path = `admin/v1/ledger-tags/${request.id}/toggle-can-transfer`;
+      const body = JSON.stringify(request);
+      return transport.unary(path, 'PATCH', body, {
+        service: 'LedgerTagService',
+        method: 'ToggleCanTransfer',
+      }) as Promise<ledgerservicev1_Tag>;
+    },
+  };
+}
+export type ledgerservicev1_ListTagResponse = {
+  items: ledgerservicev1_Tag[] | undefined;
+  total: number | undefined;
+};
+
+export type ledgerservicev1_Tag = {
+  bookId?: number;
+  canExpense?: boolean;
+  canIncome?: boolean;
+  canTransfer?: boolean;
+  children: ledgerservicev1_Tag[] | undefined;
+  createdAt?: wellKnownTimestamp;
+  createdBy?: number;
+  deletedAt?: wellKnownTimestamp;
+  deletedBy?: number;
+  depth?: number;
+  enable?: boolean;
+  id?: number;
+  name?: string;
+  notes?: string;
+  // 树形字段
+  parentId?: number;
+  path?: string;
+  sortOrder?: number;
+  tenantId?: number;
+  updatedAt?: wellKnownTimestamp;
+  updatedBy?: number;
+};
+
+export type ledgerservicev1_ListAllTagRequest = {
+  bookId?: number;
+};
+
+export type ledgerservicev1_GetTagRequest = {
+  id: number | undefined;
+  viewMask?: wellKnownFieldMask;
+};
+
+export type ledgerservicev1_CreateTagRequest = {
+  data: ledgerservicev1_Tag | undefined;
+};
+
+export type ledgerservicev1_UpdateTagRequest = {
+  allowMissing?: boolean;
+  data: ledgerservicev1_Tag | undefined;
+  id: number | undefined;
+  updateMask: undefined | wellKnownFieldMask;
+};
+
+export type ledgerservicev1_DeleteTagRequest = {
+  id: number | undefined;
+};
+
+export type ledgerservicev1_ToggleTagRequest = {
+  id: number | undefined;
 };
 
 // 登录审计日志管理服务
@@ -6900,7 +7550,7 @@ export function createPayeeServiceClient(
       }) as Promise<ledgerservicev1_ListPayeeResponse>;
     },
     ListAll(request) {
-      const path = `admin/v1/payees/all`;
+      const path = `admin/v1/payees-all`;
       const body = null;
       const queryParams: string[] = [];
       if (request.bookId) {
@@ -10534,6 +11184,8 @@ export class ApiClient {
   private _internalMessageRecipientService?: InternalMessageRecipientService;
   private _internalMessageService?: InternalMessageService;
   private _languageService?: LanguageService;
+  private _ledgerCategoryService?: LedgerCategoryService;
+  private _ledgerTagService?: LedgerTagService;
   private _loginAuditLogService?: LoginAuditLogService;
   private _loginPolicyService?: LoginPolicyService;
   private _menuService?: MenuService;
@@ -10637,6 +11289,14 @@ export class ApiClient {
 
   get languageService(): LanguageService {
     return this._languageService ??= createLanguageServiceClient(this._transport);
+  }
+
+  get ledgerCategoryService(): LedgerCategoryService {
+    return this._ledgerCategoryService ??= createLedgerCategoryServiceClient(this._transport);
+  }
+
+  get ledgerTagService(): LedgerTagService {
+    return this._ledgerTagService ??= createLedgerTagServiceClient(this._transport);
   }
 
   get loginAuditLogService(): LoginAuditLogService {

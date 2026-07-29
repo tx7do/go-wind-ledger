@@ -73,24 +73,36 @@ const [BaseForm, baseFormApi] = useVbenForm({
       fieldName: 'enable',
       label: $t('page.ledger.tag.enable'),
       defaultValue: true,
+      componentProps: {
+        class: 'w-auto',
+      },
     },
     {
       component: 'Switch',
       fieldName: 'canExpense',
       label: $t('page.ledger.tag.canExpense'),
       defaultValue: true,
+      componentProps: {
+        class: 'w-auto',
+      },
     },
     {
       component: 'Switch',
       fieldName: 'canIncome',
       label: $t('page.ledger.tag.canIncome'),
       defaultValue: true,
+      componentProps: {
+        class: 'w-auto',
+      },
     },
     {
       component: 'Switch',
       fieldName: 'canTransfer',
       label: $t('page.ledger.tag.canTransfer'),
       defaultValue: true,
+      componentProps: {
+        class: 'w-auto',
+      },
     },
     {
       component: 'InputNumber',
@@ -124,8 +136,8 @@ const [Drawer, drawerApi] = useVbenDrawer({
 
     try {
       await (data.value?.create
-        ? apiClient.tagService.Create({ data: { ...values } as any })
-        : apiClient.tagService.Update({
+        ? apiClient.ledgerTagService.Create({ data: { ...values } as any })
+        : apiClient.ledgerTagService.Update({
             id: data.value.row.id,
             data: { ...values } as any,
             updateMask: makeUpdateMask(Object.keys(values)),

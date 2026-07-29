@@ -190,7 +190,7 @@ function handleEdit(row: any) {
 /* 删除 */
 async function handleDelete(row: any) {
   try {
-    await apiClient.tagService.Delete({ id: row.id });
+    await apiClient.ledgerTagService.Delete({ id: row.id });
 
     notification.success({
       message: $t('ui.notification.delete_success'),

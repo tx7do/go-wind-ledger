@@ -96,6 +96,9 @@ const [BaseForm, baseFormApi] = useVbenForm({
       fieldName: 'enable',
       label: $t('page.ledger.category.enable'),
       defaultValue: true,
+      componentProps: {
+        class: 'w-auto',
+      },
     },
     {
       component: 'InputNumber',
@@ -129,8 +132,8 @@ const [Drawer, drawerApi] = useVbenDrawer({
 
     try {
       await (data.value?.create
-        ? apiClient.categoryService.Create({ data: { ...values } as any })
-        : apiClient.categoryService.Update({
+        ? apiClient.ledgerCategoryService.Create({ data: { ...values } as any })
+        : apiClient.ledgerCategoryService.Update({
             id: data.value.row.id,
             data: { ...values } as any,
             updateMask: makeUpdateMask(Object.keys(values)),

@@ -58,7 +58,7 @@ class _CategoryListPageState extends State<CategoryListPage> {
     final roots = <LedgerServiceV1Category>[];
     for (final c in all) {
       if (c.parentId == null || !byId.containsKey(c.parentId)) {
-        roots.add(byId[c.id!]);
+        roots.add(byId[c.id!]!);
       } else {
         final parent = byId[c.parentId!]!;
         parent.children!.add(byId[c.id!]!);

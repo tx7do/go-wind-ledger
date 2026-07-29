@@ -1,5 +1,6 @@
 import type {
   ledgerservicev1_Category,
+  ledgerservicev1_CategoryType,
   ledgerservicev1_ListCategoryResponse,
 } from '#/api/generated/admin/service/v1';
 
@@ -20,7 +21,7 @@ export function useListLedgerCategories(
 ) {
   return useQuery({
     queryKey: ['listLedgerCategories', query],
-    queryFn: () => apiClient.categoryService.List(query.toRawParams()),
+    queryFn: () => apiClient.ledgerCategoryService.List(query.toRawParams()),
     ...options,
   });
 }
@@ -28,7 +29,7 @@ export function useListLedgerCategories(
 export async function fetchListLedgerCategories(params: PaginationQuery) {
   return queryClient.fetchQuery({
     queryKey: ['listLedgerCategories', params],
-    queryFn: () => apiClient.categoryService.List(params.toRawParams()),
+    queryFn: () => apiClient.ledgerCategoryService.List(params.toRawParams()),
     staleTime: 0,
     retry: 0,
   });
@@ -37,7 +38,7 @@ export async function fetchListLedgerCategories(params: PaginationQuery) {
 export async function fetchListAllLedgerCategories(bookId?: number, type?: string) {
   return queryClient.fetchQuery({
     queryKey: ['listAllLedgerCategories', bookId, type],
-    queryFn: () => apiClient.categoryService.ListAll({ bookId, type }),
+    queryFn: () => apiClient.ledgerCategoryService.ListAll({ bookId, type: type as ledgerservicev1_CategoryType | undefined }),
     staleTime: 0,
     retry: 0,
   });
@@ -48,7 +49,7 @@ export function useCreateLedgerCategory(
 ) {
   return useMutation({
     mutationFn: (values) =>
-      apiClient.categoryService.Create({
+      apiClient.ledgerCategoryService.Create({
         data: { ...values } as ledgerservicev1_Category,
       }),
     ...options,
@@ -60,7 +61,7 @@ export function useUpdateLedgerCategory(
 ) {
   return useMutation({
     mutationFn: ({ id, values }) =>
-      apiClient.categoryService.Update({
+      apiClient.ledgerCategoryService.Update({
         id,
         data: { ...values } as any,
         updateMask: makeUpdateMask(Object.keys(values ?? {})),
@@ -73,7 +74,7 @@ export function useDeleteLedgerCategory(
   options?: UseMutationOptions<object, Error, { id: number }>,
 ) {
   return useMutation({
-    mutationFn: (req) => apiClient.categoryService.Delete(req),
+    mutationFn: (req) => apiClient.ledgerCategoryService.Delete(req),
     ...options,
   });
 }
@@ -82,7 +83,7 @@ export function useToggleLedgerCategory(
   options?: UseMutationOptions<object, Error, { id: number }>,
 ) {
   return useMutation({
-    mutationFn: (req) => apiClient.categoryService.Toggle(req),
+    mutationFn: (req) => apiClient.ledgerCategoryService.Toggle(req),
     ...options,
   });
 }

@@ -1348,6 +1348,10 @@ func (m *OverviewRequest) validate(all bool) error {
 
 	var errors []error
 
+	if m.CurrencyCode != nil {
+		// no validation rules for CurrencyCode
+	}
+
 	if len(errors) > 0 {
 		return OverviewRequestMultiError(errors)
 	}

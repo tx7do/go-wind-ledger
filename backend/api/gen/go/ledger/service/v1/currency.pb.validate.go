@@ -310,6 +310,10 @@ func (m *ListAllCurrencyRequest) validate(all bool) error {
 
 	var errors []error
 
+	if m.IncludeInactive != nil {
+		// no validation rules for IncludeInactive
+	}
+
 	if len(errors) > 0 {
 		return ListAllCurrencyRequestMultiError(errors)
 	}
@@ -411,6 +415,10 @@ func (m *RefreshCurrencyRequest) validate(all bool) error {
 	}
 
 	var errors []error
+
+	if m.Force != nil {
+		// no validation rules for Force
+	}
 
 	if len(errors) > 0 {
 		return RefreshCurrencyRequestMultiError(errors)

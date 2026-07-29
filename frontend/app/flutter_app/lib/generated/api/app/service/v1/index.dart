@@ -124,7 +124,7 @@ class AccountServiceClient {
   }
 
   Future<LedgerServiceV1ListAccountResponse> listAll(LedgerServiceV1ListAllAccountRequest request, {Map<String, String>? headers}) async {
-    final path = '/app/v1/accounts/all';
+    final path = '/app/v1/accounts-all';
     final queryParams = <String>[];
     if (request.includeDisabled != null) {
       queryParams.add('includeDisabled=${Uri.encodeComponent(request.includeDisabled!.toString())}');
@@ -221,9 +221,17 @@ class AccountServiceClient {
     return LedgerServiceV1Account.fromJson(result as Map<String, dynamic>);
   }
 
-  Future<LedgerServiceV1OverviewResponse> overview(LedgerServiceV1OverviewRequest _request, {Map<String, String>? headers}) async {
-    final path = '/app/v1/accounts/overview';
-    final result = await _transport.unary(path, 'GET', null, TransportMeta(
+  Future<LedgerServiceV1OverviewResponse> overview(LedgerServiceV1OverviewRequest request, {Map<String, String>? headers}) async {
+    final path = '/app/v1/account-overview';
+    final queryParams = <String>[];
+    if (request.currencyCode != null) {
+      queryParams.add('currencyCode=${Uri.encodeComponent(request.currencyCode!.toString())}');
+    }
+    var uri = path;
+    if (queryParams.isNotEmpty) {
+      uri += '?${queryParams.join("&")}';
+    }
+    final result = await _transport.unary(uri, 'GET', null, TransportMeta(
       service: 'AccountService',
       method: 'Overview',
     ), headers: headers);
@@ -231,7 +239,7 @@ class AccountServiceClient {
   }
 
   Future<LedgerServiceV1AccountStatisticsResponse> statistics(LedgerServiceV1AccountStatisticsRequest request, {Map<String, String>? headers}) async {
-    final path = '/app/v1/accounts/statistics';
+    final path = '/app/v1/account-statistics';
     final queryParams = <String>[];
     if (request.currencyCode != null) {
       queryParams.add('currencyCode=${Uri.encodeComponent(request.currencyCode!.toString())}');
@@ -1453,23 +1461,27 @@ class LedgerServiceV1AdjustBalanceRequest {
 
 /// 请求 - 账户概览
 class LedgerServiceV1OverviewRequest {
+  String? currencyCode;
 
   LedgerServiceV1OverviewRequest({
+    this.currencyCode,
   });
 
   factory LedgerServiceV1OverviewRequest.fromJson(Map<String, dynamic> json) {
     return LedgerServiceV1OverviewRequest(
+      currencyCode: json['currencyCode'] as String?,
     );
   }
 
   Map<String, dynamic> toJson() {
     final json = <String, dynamic>{};
+    if (currencyCode != null) json['currencyCode'] = currencyCode;
     return json;
   }
 
   @override
   String toString() {
-    return 'LedgerServiceV1OverviewRequest()';
+    return 'LedgerServiceV1OverviewRequest(currencyCode: $currencyCode)';
   }
 
   @override
@@ -1477,15 +1489,19 @@ class LedgerServiceV1OverviewRequest {
     identical(this, other) ||
     other is LedgerServiceV1OverviewRequest &&
       runtimeType == other.runtimeType
+      && currencyCode == other.currencyCode
     ;
 
   @override
   int get hashCode => Object.hashAll([
+    currencyCode,
   ]);
 
   LedgerServiceV1OverviewRequest copyWith({
+    String? currencyCode,
   }) {
     return LedgerServiceV1OverviewRequest(
+      currencyCode: currencyCode ?? this.currencyCode,
     );
   }
 }
@@ -2212,7 +2228,7 @@ class BalanceFlowServiceClient {
   }
 
   Future<LedgerServiceV1StatisticsResponse> statistics(LedgerServiceV1StatisticsRequest request, {Map<String, String>? headers}) async {
-    final path = '/app/v1/balance-flows/statistics';
+    final path = '/app/v1/balance-flow-statistics';
     final queryParams = <String>[];
     if (request.bookId != null) {
       queryParams.add('bookId=${Uri.encodeComponent(request.bookId!.toString())}');
@@ -3231,7 +3247,7 @@ class BookServiceClient {
   }
 
   Future<LedgerServiceV1ListBookResponse> listAll(LedgerServiceV1ListAllBookRequest request, {Map<String, String>? headers}) async {
-    final path = '/app/v1/books/all';
+    final path = '/app/v1/books-all';
     final queryParams = <String>[];
     if (request.includeDisabled != null) {
       queryParams.add('includeDisabled=${Uri.encodeComponent(request.includeDisabled!.toString())}');
@@ -3316,7 +3332,7 @@ class BookServiceClient {
   }
 
   Future<LedgerServiceV1Book> createByTemplate(LedgerServiceV1CreateBookByTemplateRequest request, {Map<String, String>? headers}) async {
-    final path = '/app/v1/books/template';
+    final path = '/app/v1/books-from-template';
     final body = jsonEncode(request.toJson());
     final result = await _transport.unary(path, 'POST', body, TransportMeta(
       service: 'BookService',
@@ -3326,7 +3342,7 @@ class BookServiceClient {
   }
 
   Future<LedgerServiceV1Book> copy(LedgerServiceV1CopyBookRequest request, {Map<String, String>? headers}) async {
-    final path = '/app/v1/books/copy';
+    final path = '/app/v1/books-copy';
     final body = jsonEncode(request.toJson());
     final result = await _transport.unary(path, 'POST', body, TransportMeta(
       service: 'BookService',
@@ -3356,7 +3372,7 @@ class BookServiceClient {
   }
 
   Future<LedgerServiceV1ListBookResponse> listAllBooks(Map<String, dynamic> _request, {Map<String, String>? headers}) async {
-    final path = '/app/v1/books/select-all';
+    final path = '/app/v1/books-select-all';
     final result = await _transport.unary(path, 'GET', null, TransportMeta(
       service: 'BookService',
       method: 'ListAllBooks',
@@ -4194,7 +4210,7 @@ class BookTemplateServiceClient {
   BookTemplateServiceClient(this._transport);
 
   Future<LedgerServiceV1ListBookTemplateResponse> listAll(Map<String, dynamic> _request, {Map<String, String>? headers}) async {
-    final path = '/app/v1/book-templates/all';
+    final path = '/app/v1/book-templates-all';
     final result = await _transport.unary(path, 'GET', null, TransportMeta(
       service: 'BookTemplateService',
       method: 'ListAll',
@@ -4615,7 +4631,7 @@ class BudgetServiceClient {
   }
 
   Future<LedgerServiceV1ListBudgetResponse> listAll(LedgerServiceV1ListAllBudgetRequest request, {Map<String, String>? headers}) async {
-    final path = '/app/v1/budgets/all';
+    final path = '/app/v1/budgets-all';
     final queryParams = <String>[];
     if (request.bookId != null) {
       queryParams.add('bookId=${Uri.encodeComponent(request.bookId!.toString())}');
@@ -5368,9 +5384,17 @@ class CurrencyServiceClient {
 
   CurrencyServiceClient(this._transport);
 
-  Future<LedgerServiceV1ListCurrencyResponse> listAll(LedgerServiceV1ListAllCurrencyRequest _request, {Map<String, String>? headers}) async {
+  Future<LedgerServiceV1ListCurrencyResponse> listAll(LedgerServiceV1ListAllCurrencyRequest request, {Map<String, String>? headers}) async {
     final path = '/app/v1/currencies/all';
-    final result = await _transport.unary(path, 'GET', null, TransportMeta(
+    final queryParams = <String>[];
+    if (request.include_inactive != null) {
+      queryParams.add('include_inactive=${Uri.encodeComponent(request.include_inactive!.toString())}');
+    }
+    var uri = path;
+    if (queryParams.isNotEmpty) {
+      uri += '?${queryParams.join("&")}';
+    }
+    final result = await _transport.unary(uri, 'GET', null, TransportMeta(
       service: 'CurrencyService',
       method: 'ListAll',
     ), headers: headers);
@@ -5473,23 +5497,27 @@ class CurrencyServiceClient {
 
 /// 请求 - 获取所有币种
 class LedgerServiceV1ListAllCurrencyRequest {
+  bool? include_inactive;
 
   LedgerServiceV1ListAllCurrencyRequest({
+    this.include_inactive,
   });
 
   factory LedgerServiceV1ListAllCurrencyRequest.fromJson(Map<String, dynamic> json) {
     return LedgerServiceV1ListAllCurrencyRequest(
+      include_inactive: json['include_inactive'] as bool?,
     );
   }
 
   Map<String, dynamic> toJson() {
     final json = <String, dynamic>{};
+    if (include_inactive != null) json['include_inactive'] = include_inactive;
     return json;
   }
 
   @override
   String toString() {
-    return 'LedgerServiceV1ListAllCurrencyRequest()';
+    return 'LedgerServiceV1ListAllCurrencyRequest(include_inactive: $include_inactive)';
   }
 
   @override
@@ -5497,15 +5525,19 @@ class LedgerServiceV1ListAllCurrencyRequest {
     identical(this, other) ||
     other is LedgerServiceV1ListAllCurrencyRequest &&
       runtimeType == other.runtimeType
+      && include_inactive == other.include_inactive
     ;
 
   @override
   int get hashCode => Object.hashAll([
+    include_inactive,
   ]);
 
   LedgerServiceV1ListAllCurrencyRequest copyWith({
+    bool? include_inactive,
   }) {
     return LedgerServiceV1ListAllCurrencyRequest(
+      include_inactive: include_inactive ?? this.include_inactive,
     );
   }
 }
@@ -5638,23 +5670,27 @@ class LedgerServiceV1Currency {
 
 /// 请求 - 刷新汇率
 class LedgerServiceV1RefreshCurrencyRequest {
+  bool? force;
 
   LedgerServiceV1RefreshCurrencyRequest({
+    this.force,
   });
 
   factory LedgerServiceV1RefreshCurrencyRequest.fromJson(Map<String, dynamic> json) {
     return LedgerServiceV1RefreshCurrencyRequest(
+      force: json['force'] as bool?,
     );
   }
 
   Map<String, dynamic> toJson() {
     final json = <String, dynamic>{};
+    if (force != null) json['force'] = force;
     return json;
   }
 
   @override
   String toString() {
-    return 'LedgerServiceV1RefreshCurrencyRequest()';
+    return 'LedgerServiceV1RefreshCurrencyRequest(force: $force)';
   }
 
   @override
@@ -5662,15 +5698,19 @@ class LedgerServiceV1RefreshCurrencyRequest {
     identical(this, other) ||
     other is LedgerServiceV1RefreshCurrencyRequest &&
       runtimeType == other.runtimeType
+      && force == other.force
     ;
 
   @override
   int get hashCode => Object.hashAll([
+    force,
   ]);
 
   LedgerServiceV1RefreshCurrencyRequest copyWith({
+    bool? force,
   }) {
     return LedgerServiceV1RefreshCurrencyRequest(
+      force: force ?? this.force,
     );
   }
 }
@@ -6457,7 +6497,7 @@ class FlowFileServiceClient {
   }
 
   Future<LedgerServiceV1FlowFile> uploadFile(LedgerServiceV1UploadFlowFileRequest request, {Map<String, String>? headers}) async {
-    final path = '/app/v1/flow-files/upload';
+    final path = '/app/v1/flow-files-upload';
     final body = jsonEncode(request.toJson());
     final result = await _transport.unary(path, 'POST', body, TransportMeta(
       service: 'FlowFileService',
@@ -6467,7 +6507,7 @@ class FlowFileServiceClient {
   }
 
   Future<LedgerServiceV1ViewFlowFileResponse> viewFile(LedgerServiceV1ViewFlowFileRequest request, {Map<String, String>? headers}) async {
-    final path = '/app/v1/flow-files/view';
+    final path = '/app/v1/flow-files-view';
     final queryParams = <String>[];
     if (request.id != null) {
       queryParams.add('id=${Uri.encodeComponent(request.id!.toString())}');
@@ -8017,7 +8057,7 @@ class LedgerCategoryServiceClient {
   }
 
   Future<LedgerServiceV1ListCategoryResponse> listAll(LedgerServiceV1ListAllCategoryRequest request, {Map<String, String>? headers}) async {
-    final path = '/app/v1/ledger-categories/all';
+    final path = '/app/v1/ledger-categories-all';
     final queryParams = <String>[];
     if (request.bookId != null) {
       queryParams.add('bookId=${Uri.encodeComponent(request.bookId!.toString())}');
@@ -8734,7 +8774,7 @@ class LedgerTagServiceClient {
   }
 
   Future<LedgerServiceV1ListTagResponse> listAll(LedgerServiceV1ListAllTagRequest request, {Map<String, String>? headers}) async {
-    final path = '/app/v1/ledger-tags/all';
+    final path = '/app/v1/ledger-tags-all';
     final queryParams = <String>[];
     if (request.bookId != null) {
       queryParams.add('bookId=${Uri.encodeComponent(request.bookId!.toString())}');
@@ -10088,7 +10128,7 @@ class PayeeServiceClient {
   }
 
   Future<LedgerServiceV1ListPayeeResponse> listAll(LedgerServiceV1ListAllPayeeRequest request, {Map<String, String>? headers}) async {
-    final path = '/app/v1/payees/all';
+    final path = '/app/v1/payees-all';
     final queryParams = <String>[];
     if (request.bookId != null) {
       queryParams.add('bookId=${Uri.encodeComponent(request.bookId!.toString())}');

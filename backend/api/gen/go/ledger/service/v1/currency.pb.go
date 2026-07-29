@@ -147,9 +147,10 @@ func (x *ListCurrencyResponse) GetTotal() uint64 {
 
 // 请求 - 获取所有币种
 type ListAllCurrencyRequest struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
+	state           protoimpl.MessageState `protogen:"open.v1"`
+	IncludeInactive *bool                  `protobuf:"varint,1,opt,name=include_inactive,proto3,oneof" json:"include_inactive,omitempty"`
+	unknownFields   protoimpl.UnknownFields
+	sizeCache       protoimpl.SizeCache
 }
 
 func (x *ListAllCurrencyRequest) Reset() {
@@ -182,9 +183,17 @@ func (*ListAllCurrencyRequest) Descriptor() ([]byte, []int) {
 	return file_ledger_service_v1_currency_proto_rawDescGZIP(), []int{2}
 }
 
+func (x *ListAllCurrencyRequest) GetIncludeInactive() bool {
+	if x != nil && x.IncludeInactive != nil {
+		return *x.IncludeInactive
+	}
+	return false
+}
+
 // 请求 - 刷新汇率
 type RefreshCurrencyRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
+	Force         *bool                  `protobuf:"varint,1,opt,name=force,proto3,oneof" json:"force,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -217,6 +226,13 @@ func (x *RefreshCurrencyRequest) ProtoReflect() protoreflect.Message {
 // Deprecated: Use RefreshCurrencyRequest.ProtoReflect.Descriptor instead.
 func (*RefreshCurrencyRequest) Descriptor() ([]byte, []int) {
 	return file_ledger_service_v1_currency_proto_rawDescGZIP(), []int{3}
+}
+
+func (x *RefreshCurrencyRequest) GetForce() bool {
+	if x != nil && x.Force != nil {
+		return *x.Force
+	}
+	return false
 }
 
 // 请求 - 币种转换
@@ -402,9 +418,13 @@ const file_ledger_service_v1_currency_proto_rawDesc = "" +
 	"\x05_rate\"_\n" +
 	"\x14ListCurrencyResponse\x121\n" +
 	"\x05items\x18\x01 \x03(\v2\x1b.ledger.service.v1.CurrencyR\x05items\x12\x14\n" +
-	"\x05total\x18\x02 \x01(\x04R\x05total\"\x18\n" +
-	"\x16ListAllCurrencyRequest\"\x18\n" +
-	"\x16RefreshCurrencyRequest\"\x93\x01\n" +
+	"\x05total\x18\x02 \x01(\x04R\x05total\"\x81\x01\n" +
+	"\x16ListAllCurrencyRequest\x12R\n" +
+	"\x10include_inactive\x18\x01 \x01(\bB!\xbaG\x1e\x92\x02\x1b是否包含非活跃币种H\x00R\x10include_inactive\x88\x01\x01B\x13\n" +
+	"\x11_include_inactive\"]\n" +
+	"\x16RefreshCurrencyRequest\x129\n" +
+	"\x05force\x18\x01 \x01(\bB\x1e\xbaG\x1b\x92\x02\x18是否强制刷新汇率H\x00R\x05force\x88\x01\x01B\b\n" +
+	"\x06_force\"\x93\x01\n" +
 	"\x16ConvertCurrencyRequest\x12$\n" +
 	"\x06amount\x18\x01 \x01(\tB\f\xbaG\t\x92\x02\x06金额R\x06amount\x12)\n" +
 	"\x04from\x18\x02 \x01(\tB\x15\xbaG\x12\x92\x02\x0f源币种代码R\x04from\x12(\n" +
@@ -472,6 +492,8 @@ func file_ledger_service_v1_currency_proto_init() {
 		return
 	}
 	file_ledger_service_v1_currency_proto_msgTypes[0].OneofWrappers = []any{}
+	file_ledger_service_v1_currency_proto_msgTypes[2].OneofWrappers = []any{}
+	file_ledger_service_v1_currency_proto_msgTypes[3].OneofWrappers = []any{}
 	type x struct{}
 	out := protoimpl.TypeBuilder{
 		File: protoimpl.DescBuilder{

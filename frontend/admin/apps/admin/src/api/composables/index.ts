@@ -11,9 +11,6 @@ export * from './api-audit-log';
 
 export * from './auth';
 
-export * from './category';
-
-
 export * from './data-access-audit-log';
 
 export * from './dict';
@@ -58,13 +55,9 @@ export * from './shared';
 
 
 
-export * from './tag';
-
 export * from './task';
 
 export * from './tenant';
-
-export * from './translator';
 
 export * from './user';
 

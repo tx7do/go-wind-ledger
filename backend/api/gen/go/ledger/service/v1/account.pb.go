@@ -708,6 +708,7 @@ func (x *AdjustBalanceRequest) GetCreateTime() int64 {
 // 请求 - 账户概览
 type OverviewRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
+	CurrencyCode  *string                `protobuf:"bytes,1,opt,name=currency_code,json=currencyCode,proto3,oneof" json:"currency_code,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -740,6 +741,13 @@ func (x *OverviewRequest) ProtoReflect() protoreflect.Message {
 // Deprecated: Use OverviewRequest.ProtoReflect.Descriptor instead.
 func (*OverviewRequest) Descriptor() ([]byte, []int) {
 	return file_ledger_service_v1_account_proto_rawDescGZIP(), []int{9}
+}
+
+func (x *OverviewRequest) GetCurrencyCode() string {
+	if x != nil && x.CurrencyCode != nil {
+		return *x.CurrencyCode
+	}
+	return ""
 }
 
 // 回应 - 账户概览
@@ -1099,8 +1107,10 @@ const file_ledger_service_v1_account_proto_rawDesc = "" +
 	"createTime\x88\x01\x01B\b\n" +
 	"\x06_titleB\b\n" +
 	"\x06_notesB\x0e\n" +
-	"\f_create_time\"\x11\n" +
-	"\x0fOverviewRequest\"\xe3\x01\n" +
+	"\f_create_time\"M\n" +
+	"\x0fOverviewRequest\x12(\n" +
+	"\rcurrency_code\x18\x01 \x01(\tH\x00R\fcurrencyCode\x88\x01\x01B\x10\n" +
+	"\x0e_currency_code\"\xe3\x01\n" +
 	"\x10OverviewResponse\x12!\n" +
 	"\ftotal_assets\x18\x01 \x01(\tR\vtotalAssets\x12\x1f\n" +
 	"\vtotal_debts\x18\x02 \x01(\tR\n" +
@@ -1234,6 +1244,7 @@ func file_ledger_service_v1_account_proto_init() {
 	file_ledger_service_v1_account_proto_msgTypes[3].OneofWrappers = []any{}
 	file_ledger_service_v1_account_proto_msgTypes[5].OneofWrappers = []any{}
 	file_ledger_service_v1_account_proto_msgTypes[8].OneofWrappers = []any{}
+	file_ledger_service_v1_account_proto_msgTypes[9].OneofWrappers = []any{}
 	file_ledger_service_v1_account_proto_msgTypes[12].OneofWrappers = []any{}
 	type x struct{}
 	out := protoimpl.TypeBuilder{

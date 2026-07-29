@@ -47,10 +47,20 @@ message ListCurrencyResponse {
 }
 
 // 请求 - 获取所有币种
-message ListAllCurrencyRequest {}
+message ListAllCurrencyRequest {
+  optional bool include_inactive = 1 [
+    json_name = "include_inactive",
+    (gnostic.openapi.v3.property) = {description: "是否包含非活跃币种"}
+  ];
+}
 
 // 请求 - 刷新汇率
-message RefreshCurrencyRequest {}
+message RefreshCurrencyRequest {
+  optional bool force = 1 [
+    json_name = "force",
+    (gnostic.openapi.v3.property) = {description: "是否强制刷新汇率"}
+  ];
+}
 
 // 请求 - 币种转换
 message ConvertCurrencyRequest {

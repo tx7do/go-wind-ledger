@@ -85,6 +85,9 @@ const [BaseForm, baseFormApi] = useVbenForm({
       fieldName: 'enable',
       label: $t('page.ledger.book.enable'),
       defaultValue: true,
+      componentProps: {
+        class: 'w-auto',
+      },
     },
     {
       component: 'Select',

@@ -149,30 +149,45 @@ const [BaseForm, baseFormApi] = useVbenForm({
       fieldName: 'include',
       label: $t('page.ledger.account.include'),
       defaultValue: true,
+      componentProps: {
+        class: 'w-auto',
+      },
     },
     {
       component: 'Switch',
       fieldName: 'canExpense',
       label: $t('page.ledger.account.canExpense'),
       defaultValue: true,
+      componentProps: {
+        class: 'w-auto',
+      },
     },
     {
       component: 'Switch',
       fieldName: 'canIncome',
       label: $t('page.ledger.account.canIncome'),
       defaultValue: true,
+      componentProps: {
+        class: 'w-auto',
+      },
     },
     {
       component: 'Switch',
       fieldName: 'canTransferFrom',
       label: $t('page.ledger.account.canTransferFrom'),
       defaultValue: true,
+      componentProps: {
+        class: 'w-auto',
+      },
     },
     {
       component: 'Switch',
       fieldName: 'canTransferTo',
       label: $t('page.ledger.account.canTransferTo'),
       defaultValue: true,
+      componentProps: {
+        class: 'w-auto',
+      },
     },
     {
       component: 'Textarea',
@@ -188,6 +203,9 @@ const [BaseForm, baseFormApi] = useVbenForm({
       fieldName: 'enable',
       label: $t('page.ledger.account.enable'),
       defaultValue: true,
+      componentProps: {
+        class: 'w-auto',
+      },
     },
     {
       component: 'InputNumber',

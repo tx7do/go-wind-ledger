@@ -225,7 +225,9 @@ message AdjustBalanceRequest {
 }
 
 // 请求 - 账户概览
-message OverviewRequest {}
+message OverviewRequest {
+  optional string currency_code = 1 [json_name = "currencyCode"];
+}
 
 // 回应 - 账户概览
 message OverviewResponse {

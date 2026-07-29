@@ -113,7 +113,7 @@ class _NoteDayFormPageState extends State<NoteDayFormPage> {
       totalCount: int.tryParse(_totalCountCtrl.text.trim()),
       repeatType: _repeatType,
       startDate: _startDate.millisecondsSinceEpoch ~/ 1000,
-      endDate: _endDate?.millisecondsSinceEpoch ~/ 1000,
+      endDate: _endDate != null ? _endDate!.millisecondsSinceEpoch ~/ 1000 : null,
     );
 
     final result = widget.editId == null

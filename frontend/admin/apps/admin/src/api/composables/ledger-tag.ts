@@ -20,7 +20,7 @@ export function useListLedgerTags(
 ) {
   return useQuery({
     queryKey: ['listLedgerTags', query],
-    queryFn: () => apiClient.tagService.List(query.toRawParams()),
+    queryFn: () => apiClient.ledgerTagService.List(query.toRawParams()),
     ...options,
   });
 }
@@ -28,7 +28,7 @@ export function useListLedgerTags(
 export async function fetchListLedgerTags(params: PaginationQuery) {
   return queryClient.fetchQuery({
     queryKey: ['listLedgerTags', params],
-    queryFn: () => apiClient.tagService.List(params.toRawParams()),
+    queryFn: () => apiClient.ledgerTagService.List(params.toRawParams()),
     staleTime: 0,
     retry: 0,
   });
@@ -37,7 +37,7 @@ export async function fetchListLedgerTags(params: PaginationQuery) {
 export async function fetchListAllLedgerTags(bookId?: number) {
   return queryClient.fetchQuery({
     queryKey: ['listAllLedgerTags', bookId],
-    queryFn: () => apiClient.tagService.ListAll({ bookId }),
+    queryFn: () => apiClient.ledgerTagService.ListAll({ bookId }),
     staleTime: 0,
     retry: 0,
   });
@@ -48,7 +48,7 @@ export function useCreateLedgerTag(
 ) {
   return useMutation({
     mutationFn: (values) =>
-      apiClient.tagService.Create({
+      apiClient.ledgerTagService.Create({
         data: { ...values } as ledgerservicev1_Tag,
       }),
     ...options,
@@ -60,7 +60,7 @@ export function useUpdateLedgerTag(
 ) {
   return useMutation({
     mutationFn: ({ id, values }) =>
-      apiClient.tagService.Update({
+      apiClient.ledgerTagService.Update({
         id,
         data: { ...values } as any,
         updateMask: makeUpdateMask(Object.keys(values ?? {})),
@@ -73,7 +73,7 @@ export function useDeleteLedgerTag(
   options?: UseMutationOptions<object, Error, { id: number }>,
 ) {
   return useMutation({
-    mutationFn: (req) => apiClient.tagService.Delete(req),
+    mutationFn: (req) => apiClient.ledgerTagService.Delete(req),
     ...options,
   });
 }
@@ -82,7 +82,7 @@ export function useToggleLedgerTag(
   options?: UseMutationOptions<object, Error, { id: number }>,
 ) {
   return useMutation({
-    mutationFn: (req) => apiClient.tagService.Toggle(req),
+    mutationFn: (req) => apiClient.ledgerTagService.Toggle(req),
     ...options,
   });
 }
@@ -91,7 +91,7 @@ export function useToggleTagCanExpense(
   options?: UseMutationOptions<object, Error, { id: number }>,
 ) {
   return useMutation({
-    mutationFn: (req) => apiClient.tagService.ToggleCanExpense(req),
+    mutationFn: (req) => apiClient.ledgerTagService.ToggleCanExpense(req),
     ...options,
   });
 }
@@ -100,7 +100,7 @@ export function useToggleTagCanIncome(
   options?: UseMutationOptions<object, Error, { id: number }>,
 ) {
   return useMutation({
-    mutationFn: (req) => apiClient.tagService.ToggleCanIncome(req),
+    mutationFn: (req) => apiClient.ledgerTagService.ToggleCanIncome(req),
     ...options,
   });
 }
@@ -109,7 +109,7 @@ export function useToggleTagCanTransfer(
   options?: UseMutationOptions<object, Error, { id: number }>,
 ) {
   return useMutation({
-    mutationFn: (req) => apiClient.tagService.ToggleCanTransfer(req),
+    mutationFn: (req) => apiClient.ledgerTagService.ToggleCanTransfer(req),
     ...options,
   });
 }

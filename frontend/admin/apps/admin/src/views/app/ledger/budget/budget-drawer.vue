@@ -138,12 +138,18 @@ const [BaseForm, baseFormApi] = useVbenForm({
       fieldName: 'enable',
       label: $t('page.ledger.budget.enable'),
       defaultValue: true,
+      componentProps: {
+        class: 'w-auto',
+      },
     },
     {
       component: 'Switch',
       fieldName: 'notify',
       label: $t('page.ledger.budget.notify'),
       defaultValue: false,
+      componentProps: {
+        class: 'w-auto',
+      },
     },
     {
       component: 'Textarea',
