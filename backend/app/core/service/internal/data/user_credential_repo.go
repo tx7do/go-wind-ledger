@@ -413,7 +413,11 @@ func (r *UserCredentialRepo) verifyCredential(credentialType *string, plainCrede
 
 func (r *UserCredentialRepo) prepareCredential(credentialType *string, plainCredential string) (string, error) {
 	var newCredential string
-	switch *credentialType {
+	ct := ""
+	if credentialType != nil {
+		ct = *credentialType
+	}
+	switch ct {
 	case "PASSWORD_HASH":
 		var err error
 		// 加密明文密码
