@@ -45,6 +45,8 @@ func NewGrpcServer(
 	fileService *service.FileService,
 
 	languageService *service.LanguageService,
+	dictTypeService *service.DictTypeService,
+	dictEntryService *service.DictEntryService,
 
 	tenantService *service.TenantService,
 	userService *service.UserService,
@@ -100,6 +102,8 @@ func NewGrpcServer(
 	authenticationV1.RegisterUserCredentialServiceServer(srv, userCredentialService)
 
 	dictV1.RegisterLanguageServiceServer(srv, languageService)
+	dictV1.RegisterDictTypeServiceServer(srv, dictTypeService)
+	dictV1.RegisterDictEntryServiceServer(srv, dictEntryService)
 
 	permissionV1.RegisterApiServiceServer(srv, apiService)
 	permissionV1.RegisterMenuServiceServer(srv, menuService)

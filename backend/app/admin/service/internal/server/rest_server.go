@@ -98,6 +98,8 @@ func NewRestServer(
 	loginPolicyService *service.LoginPolicyService,
 
 	languageService *service.LanguageService,
+	dictTypeService *service.DictTypeService,
+	dictEntryService *service.DictEntryService,
 
 	fileSvc *service.FileService,
 
@@ -148,6 +150,8 @@ func NewRestServer(
 	adminV1.RegisterTaskServiceHTTPServer(srv, taskService)
 
 	adminV1.RegisterLanguageServiceHTTPServer(srv, languageService)
+	adminV1.RegisterDictTypeServiceHTTPServer(srv, dictTypeService)
+	adminV1.RegisterDictEntryServiceHTTPServer(srv, dictEntryService)
 
 	adminV1.RegisterApiServiceHTTPServer(srv, apiService)
 	adminV1.RegisterMenuServiceHTTPServer(srv, menuSvc)
