@@ -19,6 +19,8 @@ import (
 	storageV1 "go-wind-cms/api/gen/go/storage/service/v1"
 	taskV1 "go-wind-cms/api/gen/go/task/service/v1"
 
+	appV1 "go-wind-cms/api/gen/go/app/service/v1"
+
 	"go-wind-cms/pkg/middleware/ent"
 )
 
@@ -73,9 +75,12 @@ func NewGrpcServer(
 	currencyService      *service.CurrencyService,
 	reportService        *service.ReportService,
 	flowFileService      *service.FlowFileService,
-	membershipService    *service.MembershipService,
-	budgetService        *service.BudgetService,
-) (*grpc.Server, error) {
+		membershipService    *service.MembershipService,
+		budgetService        *service.BudgetService,
+
+		// === 记账认证服务 ===
+		ledgerAuthService *service.LedgerAuthService,
+	) (*grpc.Server, error) {
 	cfg := ctx.GetConfig()
 
 	if cfg == nil || cfg.Server == nil || cfg.Server.Grpc == nil {
@@ -129,6 +134,9 @@ func NewGrpcServer(
 	ledgerV1.RegisterReportServiceServer(srv, reportService)
 	ledgerV1.RegisterFlowFileServiceServer(srv, flowFileService)
 	ledgerV1.RegisterBudgetServiceServer(srv, budgetService)
+
+	// === 记账认证服务 gRPC 注册 ===
+	appV1.RegisterLedgerAuthServiceServer(srv, ledgerAuthService)
 
 	return srv, nil
 }

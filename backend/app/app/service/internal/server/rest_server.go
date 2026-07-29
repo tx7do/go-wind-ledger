@@ -39,6 +39,9 @@ func NewRestMiddleware(
 	rpc.AddWhiteList(
 		appV1.OperationAuthenticationServiceLogin,
 
+		// 记账注册端点免认证
+		appV1.OperationLedgerAuthServiceRegister,
+
 		appV1.OperationNavigationServiceList,
 		appV1.OperationPageServiceList,
 		appV1.OperationPostServiceList,
@@ -105,6 +108,9 @@ func NewRestServer(
 	currencyService *service.CurrencyService,
 	reportService *service.ReportService,
 	flowFileService *service.FlowFileService,
+
+	// === 记账认证服务 ===
+	ledgerAuthService *service.LedgerAuthService,
 ) *http.Server {
 	cfg := ctx.GetConfig()
 
@@ -141,6 +147,9 @@ func NewRestServer(
 	appV1.RegisterCurrencyServiceHTTPServer(srv, currencyService)
 	appV1.RegisterReportServiceHTTPServer(srv, reportService)
 	appV1.RegisterFlowFileServiceHTTPServer(srv, flowFileService)
+
+	// === 记账认证服务 HTTP 注册 ===
+	appV1.RegisterLedgerAuthServiceHTTPServer(srv, ledgerAuthService)
 
 	if cfg.GetServer().GetRest().GetEnableSwagger() {
 		swaggerUI.RegisterSwaggerUIServerWithOption(

@@ -27,6 +27,8 @@ import (
 	siteV1 "go-wind-cms/api/gen/go/site/service/v1"
 	storageV1 "go-wind-cms/api/gen/go/storage/service/v1"
 
+	appV1 "go-wind-cms/api/gen/go/app/service/v1"
+
 	"go-wind-cms/pkg/oss"
 	"go-wind-cms/pkg/serviceid"
 )
@@ -329,4 +331,14 @@ func NewFlowFileServiceClient(ctx *bootstrap.Context, r registry.Discovery) ledg
 	}
 
 	return ledgerV1.NewFlowFileServiceClient(cli)
+}
+
+// NewLedgerAuthServiceClient 创建记账认证服务 gRPC 客户端
+func NewLedgerAuthServiceClient(ctx *bootstrap.Context, r registry.Discovery) appV1.LedgerAuthServiceClient {
+	cli, err := rpc.CreateGrpcClient(ctx.Context(), r, serviceid.NewDiscoveryName(serviceid.CoreService), ctx.GetConfig())
+	if err != nil {
+		return nil
+	}
+
+	return appV1.NewLedgerAuthServiceClient(cli)
 }

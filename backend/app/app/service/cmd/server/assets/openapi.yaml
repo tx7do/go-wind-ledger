@@ -238,6 +238,84 @@ paths:
                         application/json:
                             schema:
                                 $ref: '#/components/schemas/ledger.service.v1.Account'
+    /app/v1/auth/init-state:
+        get:
+            tags:
+                - LedgerAuthService
+            description: 初始化状态（返回用户/租户/账本聚合信息）
+            operationId: LedgerAuthService_InitState
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/app.service.v1.InitStateResponse'
+    /app/v1/auth/register:
+        post:
+            tags:
+                - LedgerAuthService
+            description: 用户注册（自动创建默认租户和账本）
+            operationId: LedgerAuthService_Register
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/app.service.v1.LedgerRegisterRequest'
+                required: true
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/app.service.v1.LedgerAuthResponse'
+    /app/v1/auth/set-default-book/{bookId}:
+        patch:
+            tags:
+                - LedgerAuthService
+            description: 设置默认账本
+            operationId: LedgerAuthService_SetDefaultBook
+            parameters:
+                - name: bookId
+                  in: path
+                  required: true
+                  schema:
+                    type: integer
+                    format: uint32
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/app.service.v1.SetDefaultBookRequest'
+                required: true
+            responses:
+                "200":
+                    description: OK
+                    content: {}
+    /app/v1/auth/set-default-tenant/{tenantId}:
+        patch:
+            tags:
+                - LedgerAuthService
+            description: 设置默认租户
+            operationId: LedgerAuthService_SetDefaultTenant
+            parameters:
+                - name: tenantId
+                  in: path
+                  required: true
+                  schema:
+                    type: integer
+                    format: uint32
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/app.service.v1.SetDefaultTenantRequest'
+                required: true
+            responses:
+                "200":
+                    description: OK
+                    content: {}
     /app/v1/balance-flows:
         get:
             tags:
@@ -3636,6 +3714,60 @@ components:
                     type: object
                     description: 元数据
             description: Kratos错误返回
+        app.service.v1.InitStateResponse:
+            type: object
+            properties:
+                user:
+                    $ref: '#/components/schemas/identity.service.v1.User'
+                tenant:
+                    $ref: '#/components/schemas/identity.service.v1.Tenant'
+                book:
+                    $ref: '#/components/schemas/ledger.service.v1.Book'
+                availableBooks:
+                    type: array
+                    items:
+                        $ref: '#/components/schemas/ledger.service.v1.Book'
+                availableTenants:
+                    type: array
+                    items:
+                        $ref: '#/components/schemas/identity.service.v1.Tenant'
+            description: 初始化状态响应
+        app.service.v1.LedgerAuthResponse:
+            type: object
+            properties:
+                accessToken:
+                    type: string
+                refreshToken:
+                    type: string
+                username:
+                    type: string
+            description: 认证响应
+        app.service.v1.LedgerRegisterRequest:
+            type: object
+            properties:
+                username:
+                    type: string
+                password:
+                    type: string
+                inviteCode:
+                    type: string
+                nickName:
+                    type: string
+            description: 注册请求
+        app.service.v1.SetDefaultBookRequest:
+            type: object
+            properties:
+                bookId:
+                    type: integer
+                    format: uint32
+            description: 设置默认账本请求
+        app.service.v1.SetDefaultTenantRequest:
+            type: object
+            properties:
+                tenantId:
+                    type: integer
+                    format: uint32
+            description: 设置默认租户请求
         authentication.service.v1.LoginRequest:
             required:
                 - grant_type
@@ -4921,6 +5053,111 @@ components:
                     type: string
                     description: 短信验证码
             description: 手机验证
+        identity.service.v1.Tenant:
+            type: object
+            properties:
+                id:
+                    type: integer
+                    description: 租户ID
+                    format: uint32
+                name:
+                    type: string
+                    description: 租户名称
+                code:
+                    type: string
+                    description: 租户编码
+                domain:
+                    type: string
+                    description: 租户专属域名
+                logoUrl:
+                    type: string
+                    description: 租户logo地址
+                industry:
+                    type: string
+                    description: 所属行业（如“互联网”“金融”“制造”）
+                type:
+                    enum:
+                        - TENANT_TYPE_UNSPECIFIED
+                        - TRIAL
+                        - PAID
+                        - INTERNAL
+                        - PARTNER
+                        - CUSTOM
+                    type: string
+                    description: 租户类型
+                    format: enum
+                remark:
+                    type: string
+                    description: 备注
+                adminUserId:
+                    type: integer
+                    description: 管理员用户ID
+                    format: uint32
+                adminUserName:
+                    type: string
+                    description: 管理员用户名
+                subscriptionAt:
+                    type: string
+                    description: 订阅时间（首次订阅/续费时间，NULL表示未订阅）
+                    format: date-time
+                unsubscribeAt:
+                    type: string
+                    description: 取消订阅时间
+                    format: date-time
+                expiredAt:
+                    type: string
+                    description: 租户有效期（NULL表示永久，过期后状态自动改为“过期”）
+                    format: date-time
+                subscriptionPlan:
+                    type: string
+                    description: 订阅套餐（如“企业版1年”“基础版3个月”）
+                memberCount:
+                    type: integer
+                    description: 成员数量
+                    format: int32
+                status:
+                    enum:
+                        - OFF
+                        - ON
+                        - EXPIRED
+                        - FREEZE
+                    type: string
+                    description: 租户状态
+                    format: enum
+                auditStatus:
+                    enum:
+                        - TENANT_AUDIT_STATUS_UNSPECIFIED
+                        - PENDING
+                        - APPROVED
+                        - REJECTED
+                    type: string
+                    description: 审核状态
+                    format: enum
+                createdBy:
+                    type: integer
+                    description: 创建者用户ID
+                    format: uint32
+                updatedBy:
+                    type: integer
+                    description: 更新者用户ID
+                    format: uint32
+                deletedBy:
+                    type: integer
+                    description: 删除者用户ID
+                    format: uint32
+                createdAt:
+                    type: string
+                    description: 创建时间
+                    format: date-time
+                updatedAt:
+                    type: string
+                    description: 更新时间
+                    format: date-time
+                deletedAt:
+                    type: string
+                    description: 删除时间
+                    format: date-time
+            description: 租户
         identity.service.v1.UpdateUserRequest:
             required:
                 - data
@@ -6347,6 +6584,8 @@ tags:
     - name: FileTransferService
       description: 文件传输服务
     - name: FlowFileService
+    - name: LedgerAuthService
+      description: 记账认证服务（App BFF）— 扩展注册/初始化/切换
     - name: LedgerCategoryService
     - name: LedgerTagService
     - name: NavigationService

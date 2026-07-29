@@ -1,0 +1,79 @@
+syntax = "proto3";
+
+package app.service.v1;
+
+import "google/api/annotations.proto";
+import "google/protobuf/empty.proto";
+
+import "authentication/service/v1/authentication.proto";
+import "identity/service/v1/user.proto";
+import "identity/service/v1/tenant.proto";
+import "ledger/service/v1/book.proto";
+
+// 记账认证服务（App BFF）— 扩展注册/初始化/切换
+service LedgerAuthService {
+  // 用户注册（自动创建默认租户和账本）
+  rpc Register (LedgerRegisterRequest) returns (LedgerAuthResponse) {
+    option (google.api.http) = {
+      post: "/app/v1/auth/register"
+      body: "*"
+    };
+  }
+
+  // 初始化状态（返回用户/租户/账本聚合信息）
+  rpc InitState (google.protobuf.Empty) returns (InitStateResponse) {
+    option (google.api.http) = {
+      get: "/app/v1/auth/init-state"
+    };
+  }
+
+  // 设置默认账本
+  rpc SetDefaultBook (SetDefaultBookRequest) returns (google.protobuf.Empty) {
+    option (google.api.http) = {
+      patch: "/app/v1/auth/set-default-book/{book_id}"
+      body: "*"
+    };
+  }
+
+  // 设置默认租户
+  rpc SetDefaultTenant (SetDefaultTenantRequest) returns (google.protobuf.Empty) {
+    option (google.api.http) = {
+      patch: "/app/v1/auth/set-default-tenant/{tenant_id}"
+      body: "*"
+    };
+  }
+}
+
+// 注册请求
+message LedgerRegisterRequest {
+  string username = 1 [json_name = "username"];
+  string password = 2 [json_name = "password"];
+  optional string invite_code = 3 [json_name = "inviteCode"];
+  optional string nick_name = 4 [json_name = "nickName"];
+}
+
+// 认证响应
+message LedgerAuthResponse {
+  string access_token = 1 [json_name = "accessToken"];
+  optional string refresh_token = 2 [json_name = "refreshToken"];
+  optional string username = 3 [json_name = "username"];
+}
+
+// 初始化状态响应
+message InitStateResponse {
+  optional identity.service.v1.User user = 1 [json_name = "user"];
+  optional identity.service.v1.Tenant tenant = 2 [json_name = "tenant"];
+  optional ledger.service.v1.Book book = 3 [json_name = "book"];
+  repeated ledger.service.v1.Book available_books = 4 [json_name = "availableBooks"];
+  repeated identity.service.v1.Tenant available_tenants = 5 [json_name = "availableTenants"];
+}
+
+// 设置默认账本请求
+message SetDefaultBookRequest {
+  uint32 book_id = 1 [json_name = "bookId"];
+}
+
+// 设置默认租户请求
+message SetDefaultTenantRequest {
+  uint32 tenant_id = 1 [json_name = "tenantId"];
+}

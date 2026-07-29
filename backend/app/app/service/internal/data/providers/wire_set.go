@@ -63,4 +63,6 @@ var ProviderSet = wire.NewSet(
 	data.NewCurrencyServiceClient,
 	data.NewReportServiceClient,
 	data.NewFlowFileServiceClient,
+
+	data.NewLedgerAuthServiceClient,
 )

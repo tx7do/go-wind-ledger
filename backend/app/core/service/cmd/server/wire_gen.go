@@ -103,7 +103,8 @@ func initApp(context *bootstrap.Context) (*kratos.App, func(), error) {
 	membershipService := service.NewMembershipService(context, membershipRepo, userRepo, tenantRepo, roleRepo)
 	budgetRepo := data.NewBudgetRepo(context, entClient)
 	budgetService := service.NewBudgetService(context, budgetRepo, balanceFlowRepo)
-	grpcServer, err := server.NewGrpcServer(context, v, authenticationService, loginPolicyService, userCredentialService, taskService, fileService, languageService, tenantService, userService, roleService, positionService, orgUnitService, menuService, apiService, permissionService, permissionGroupService, permissionAuditLogService, policyEvaluationLogService, loginAuditLogService, apiAuditLogService, operationAuditLogService, dataAccessAuditLogService, bookService, accountService, categoryService, tagService, payeeService, balanceFlowService, noteDayService, currencyService, reportService, flowFileService, membershipService, budgetService)
+	ledgerAuthService := service.NewLedgerAuthService(context, entClient, authenticator, userRepo, tenantRepo, bookRepo, membershipRepo)
+	grpcServer, err := server.NewGrpcServer(context, v, authenticationService, loginPolicyService, userCredentialService, taskService, fileService, languageService, tenantService, userService, roleService, positionService, orgUnitService, menuService, apiService, permissionService, permissionGroupService, permissionAuditLogService, policyEvaluationLogService, loginAuditLogService, apiAuditLogService, operationAuditLogService, dataAccessAuditLogService, bookService, accountService, categoryService, tagService, payeeService, balanceFlowService, noteDayService, currencyService, reportService, flowFileService, membershipService, budgetService, ledgerAuthService)
 	if err != nil {
 		cleanup2()
 		cleanup()

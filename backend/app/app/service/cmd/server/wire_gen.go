@@ -75,7 +75,9 @@ func initApp(context *bootstrap.Context) (*kratos.App, func(), error) {
 	reportService := service.NewReportService(context, reportServiceClient)
 	flowFileServiceClient := data.NewFlowFileServiceClient(context, discovery)
 	flowFileService := service.NewFlowFileService(context, flowFileServiceClient)
-	httpServer := server.NewRestServer(context, v, authenticationService, fileTransferService, userProfileService, postService, categoryService, commentService, tagService, pageService, sectionService, navigationService, bookService, accountService, balanceFlowService, ledgerCategoryService, ledgerTagService, payeeService, noteDayService, currencyService, reportService, flowFileService)
+	ledgerAuthServiceClient := data.NewLedgerAuthServiceClient(context, discovery)
+	ledgerAuthService := service.NewLedgerAuthService(context, ledgerAuthServiceClient)
+	httpServer := server.NewRestServer(context, v, authenticationService, fileTransferService, userProfileService, postService, categoryService, commentService, tagService, pageService, sectionService, navigationService, bookService, accountService, balanceFlowService, ledgerCategoryService, ledgerTagService, payeeService, noteDayService, currencyService, reportService, flowFileService, ledgerAuthService)
 	grpcMiddlewares := server.NewGrpcMiddleware(context)
 	grpcServer, err := server.NewGrpcServer(context, grpcMiddlewares)
 	if err != nil {
