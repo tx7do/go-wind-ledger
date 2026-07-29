@@ -53,6 +53,12 @@ func (s *TenantMemberService) RemoveMember(ctx context.Context, req *identityV1.
 }
 
 func (s *TenantMemberService) ListMyTenants(ctx context.Context, req *identityV1.ListMyTenantsRequest) (*identityV1.ListMyTenantsResponse, error) {
+	// Inject current user ID from auth context
+	operator, err := auth.FromContext(ctx)
+	if err != nil {
+		return nil, err
+	}
+	req.UserId = trans.Ptr(operator.GetUserId())
 	return s.client.ListMyTenants(ctx, req)
 }
 
