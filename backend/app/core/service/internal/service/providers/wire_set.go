@@ -42,6 +42,9 @@ var ProviderSet = wire.NewSet(
 	service.NewDataAccessAuditLogService,
 	service.NewOperationAuditLogService,
 	service.NewFileTransferService,
+	service.NewInternalMessageService,
+	service.NewInternalMessageCategoryService,
+	service.NewInternalMessageRecipientService,
 
 	// === 记账系统 Core Services ===
 	service.NewBookService,

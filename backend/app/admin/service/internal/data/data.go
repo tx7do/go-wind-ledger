@@ -19,6 +19,7 @@ import (
 	identityV1 "go-wind-ledger/api/gen/go/identity/service/v1"
 	ledgerV1 "go-wind-ledger/api/gen/go/ledger/service/v1"
 	permissionV1 "go-wind-ledger/api/gen/go/permission/service/v1"
+	internalMessageV1 "go-wind-ledger/api/gen/go/internal_message/service/v1"
 	storageV1 "go-wind-ledger/api/gen/go/storage/service/v1"
 	taskV1 "go-wind-ledger/api/gen/go/task/service/v1"
 
@@ -410,4 +411,28 @@ func NewTenantMemberServiceClient(ctx *bootstrap.Context, r registry.Discovery) 
 		return nil
 	}
 	return identityV1.NewTenantMemberServiceClient(cli)
+}
+
+func NewInternalMessageServiceClient(ctx *bootstrap.Context, r registry.Discovery) internalMessageV1.InternalMessageServiceClient {
+	cli, err := rpc.CreateGrpcClient(ctx.Context(), r, serviceid.NewDiscoveryName(serviceid.CoreService), ctx.GetConfig())
+	if err != nil {
+		return nil
+	}
+	return internalMessageV1.NewInternalMessageServiceClient(cli)
+}
+
+func NewInternalMessageCategoryServiceClient(ctx *bootstrap.Context, r registry.Discovery) internalMessageV1.InternalMessageCategoryServiceClient {
+	cli, err := rpc.CreateGrpcClient(ctx.Context(), r, serviceid.NewDiscoveryName(serviceid.CoreService), ctx.GetConfig())
+	if err != nil {
+		return nil
+	}
+	return internalMessageV1.NewInternalMessageCategoryServiceClient(cli)
+}
+
+func NewInternalMessageRecipientServiceClient(ctx *bootstrap.Context, r registry.Discovery) internalMessageV1.InternalMessageRecipientServiceClient {
+	cli, err := rpc.CreateGrpcClient(ctx.Context(), r, serviceid.NewDiscoveryName(serviceid.CoreService), ctx.GetConfig())
+	if err != nil {
+		return nil
+	}
+	return internalMessageV1.NewInternalMessageRecipientServiceClient(cli)
 }

@@ -17,6 +17,7 @@ import (
 	ledgerV1 "go-wind-ledger/api/gen/go/ledger/service/v1"
 	permissionV1 "go-wind-ledger/api/gen/go/permission/service/v1"
 	storageV1 "go-wind-ledger/api/gen/go/storage/service/v1"
+	internalMessageV1 "go-wind-ledger/api/gen/go/internal_message/service/v1"
 	taskV1 "go-wind-ledger/api/gen/go/task/service/v1"
 
 	appV1 "go-wind-ledger/api/gen/go/app/service/v1"
@@ -43,6 +44,9 @@ func NewGrpcServer(
 	taskService *service.TaskService,
 
 	fileService *service.FileService,
+	internalMessageService *service.InternalMessageService,
+	internalMessageCategoryService *service.InternalMessageCategoryService,
+	internalMessageRecipientService *service.InternalMessageRecipientService,
 
 	languageService *service.LanguageService,
 	dictTypeService *service.DictTypeService,
@@ -126,6 +130,9 @@ func NewGrpcServer(
 	auditV1.RegisterPermissionAuditLogServiceServer(srv, permissionAuditLogService)
 
 	storageV1.RegisterFileServiceServer(srv, fileService)
+	internalMessageV1.RegisterInternalMessageServiceServer(srv, internalMessageService)
+	internalMessageV1.RegisterInternalMessageCategoryServiceServer(srv, internalMessageCategoryService)
+	internalMessageV1.RegisterInternalMessageRecipientServiceServer(srv, internalMessageRecipientService)
 
 	// === 记账系统 gRPC 注册 ===
 	ledgerV1.RegisterBookServiceServer(srv, bookService)

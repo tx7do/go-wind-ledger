@@ -74,6 +74,9 @@ var ProviderSet = wire.NewSet(
 	data.NewDataAccessAuditLogRepo,
 
 	data.NewFileRepo,
+	data.NewInternalMessageRepo,
+	data.NewInternalMessageCategoryRepo,
+	data.NewInternalMessageRecipientRepo,
 
 	// === 记账系统 Repos ===
 	data.NewBookRepo,

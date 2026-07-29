@@ -471,6 +471,78 @@ func (f FlowFileMutationRuleFunc) EvalMutation(ctx context.Context, m ent.Mutati
 	return Denyf("ent/privacy: unexpected mutation type %T, expect *ent.FlowFileMutation", m)
 }
 
+// The InternalMessageQueryRuleFunc type is an adapter to allow the use of ordinary
+// functions as a query rule.
+type InternalMessageQueryRuleFunc func(context.Context, *ent.InternalMessageQuery) error
+
+// EvalQuery return f(ctx, q).
+func (f InternalMessageQueryRuleFunc) EvalQuery(ctx context.Context, q ent.Query) error {
+	if q, ok := q.(*ent.InternalMessageQuery); ok {
+		return f(ctx, q)
+	}
+	return Denyf("ent/privacy: unexpected query type %T, expect *ent.InternalMessageQuery", q)
+}
+
+// The InternalMessageMutationRuleFunc type is an adapter to allow the use of ordinary
+// functions as a mutation rule.
+type InternalMessageMutationRuleFunc func(context.Context, *ent.InternalMessageMutation) error
+
+// EvalMutation calls f(ctx, m).
+func (f InternalMessageMutationRuleFunc) EvalMutation(ctx context.Context, m ent.Mutation) error {
+	if m, ok := m.(*ent.InternalMessageMutation); ok {
+		return f(ctx, m)
+	}
+	return Denyf("ent/privacy: unexpected mutation type %T, expect *ent.InternalMessageMutation", m)
+}
+
+// The InternalMessageCategoryQueryRuleFunc type is an adapter to allow the use of ordinary
+// functions as a query rule.
+type InternalMessageCategoryQueryRuleFunc func(context.Context, *ent.InternalMessageCategoryQuery) error
+
+// EvalQuery return f(ctx, q).
+func (f InternalMessageCategoryQueryRuleFunc) EvalQuery(ctx context.Context, q ent.Query) error {
+	if q, ok := q.(*ent.InternalMessageCategoryQuery); ok {
+		return f(ctx, q)
+	}
+	return Denyf("ent/privacy: unexpected query type %T, expect *ent.InternalMessageCategoryQuery", q)
+}
+
+// The InternalMessageCategoryMutationRuleFunc type is an adapter to allow the use of ordinary
+// functions as a mutation rule.
+type InternalMessageCategoryMutationRuleFunc func(context.Context, *ent.InternalMessageCategoryMutation) error
+
+// EvalMutation calls f(ctx, m).
+func (f InternalMessageCategoryMutationRuleFunc) EvalMutation(ctx context.Context, m ent.Mutation) error {
+	if m, ok := m.(*ent.InternalMessageCategoryMutation); ok {
+		return f(ctx, m)
+	}
+	return Denyf("ent/privacy: unexpected mutation type %T, expect *ent.InternalMessageCategoryMutation", m)
+}
+
+// The InternalMessageRecipientQueryRuleFunc type is an adapter to allow the use of ordinary
+// functions as a query rule.
+type InternalMessageRecipientQueryRuleFunc func(context.Context, *ent.InternalMessageRecipientQuery) error
+
+// EvalQuery return f(ctx, q).
+func (f InternalMessageRecipientQueryRuleFunc) EvalQuery(ctx context.Context, q ent.Query) error {
+	if q, ok := q.(*ent.InternalMessageRecipientQuery); ok {
+		return f(ctx, q)
+	}
+	return Denyf("ent/privacy: unexpected query type %T, expect *ent.InternalMessageRecipientQuery", q)
+}
+
+// The InternalMessageRecipientMutationRuleFunc type is an adapter to allow the use of ordinary
+// functions as a mutation rule.
+type InternalMessageRecipientMutationRuleFunc func(context.Context, *ent.InternalMessageRecipientMutation) error
+
+// EvalMutation calls f(ctx, m).
+func (f InternalMessageRecipientMutationRuleFunc) EvalMutation(ctx context.Context, m ent.Mutation) error {
+	if m, ok := m.(*ent.InternalMessageRecipientMutation); ok {
+		return f(ctx, m)
+	}
+	return Denyf("ent/privacy: unexpected mutation type %T, expect *ent.InternalMessageRecipientMutation", m)
+}
+
 // The LanguageQueryRuleFunc type is an adapter to allow the use of ordinary
 // functions as a query rule.
 type LanguageQueryRuleFunc func(context.Context, *ent.LanguageQuery) error
@@ -565,6 +637,78 @@ func (f MembershipMutationRuleFunc) EvalMutation(ctx context.Context, m ent.Muta
 		return f(ctx, m)
 	}
 	return Denyf("ent/privacy: unexpected mutation type %T, expect *ent.MembershipMutation", m)
+}
+
+// The MembershipOrgUnitQueryRuleFunc type is an adapter to allow the use of ordinary
+// functions as a query rule.
+type MembershipOrgUnitQueryRuleFunc func(context.Context, *ent.MembershipOrgUnitQuery) error
+
+// EvalQuery return f(ctx, q).
+func (f MembershipOrgUnitQueryRuleFunc) EvalQuery(ctx context.Context, q ent.Query) error {
+	if q, ok := q.(*ent.MembershipOrgUnitQuery); ok {
+		return f(ctx, q)
+	}
+	return Denyf("ent/privacy: unexpected query type %T, expect *ent.MembershipOrgUnitQuery", q)
+}
+
+// The MembershipOrgUnitMutationRuleFunc type is an adapter to allow the use of ordinary
+// functions as a mutation rule.
+type MembershipOrgUnitMutationRuleFunc func(context.Context, *ent.MembershipOrgUnitMutation) error
+
+// EvalMutation calls f(ctx, m).
+func (f MembershipOrgUnitMutationRuleFunc) EvalMutation(ctx context.Context, m ent.Mutation) error {
+	if m, ok := m.(*ent.MembershipOrgUnitMutation); ok {
+		return f(ctx, m)
+	}
+	return Denyf("ent/privacy: unexpected mutation type %T, expect *ent.MembershipOrgUnitMutation", m)
+}
+
+// The MembershipPositionQueryRuleFunc type is an adapter to allow the use of ordinary
+// functions as a query rule.
+type MembershipPositionQueryRuleFunc func(context.Context, *ent.MembershipPositionQuery) error
+
+// EvalQuery return f(ctx, q).
+func (f MembershipPositionQueryRuleFunc) EvalQuery(ctx context.Context, q ent.Query) error {
+	if q, ok := q.(*ent.MembershipPositionQuery); ok {
+		return f(ctx, q)
+	}
+	return Denyf("ent/privacy: unexpected query type %T, expect *ent.MembershipPositionQuery", q)
+}
+
+// The MembershipPositionMutationRuleFunc type is an adapter to allow the use of ordinary
+// functions as a mutation rule.
+type MembershipPositionMutationRuleFunc func(context.Context, *ent.MembershipPositionMutation) error
+
+// EvalMutation calls f(ctx, m).
+func (f MembershipPositionMutationRuleFunc) EvalMutation(ctx context.Context, m ent.Mutation) error {
+	if m, ok := m.(*ent.MembershipPositionMutation); ok {
+		return f(ctx, m)
+	}
+	return Denyf("ent/privacy: unexpected mutation type %T, expect *ent.MembershipPositionMutation", m)
+}
+
+// The MembershipRoleQueryRuleFunc type is an adapter to allow the use of ordinary
+// functions as a query rule.
+type MembershipRoleQueryRuleFunc func(context.Context, *ent.MembershipRoleQuery) error
+
+// EvalQuery return f(ctx, q).
+func (f MembershipRoleQueryRuleFunc) EvalQuery(ctx context.Context, q ent.Query) error {
+	if q, ok := q.(*ent.MembershipRoleQuery); ok {
+		return f(ctx, q)
+	}
+	return Denyf("ent/privacy: unexpected query type %T, expect *ent.MembershipRoleQuery", q)
+}
+
+// The MembershipRoleMutationRuleFunc type is an adapter to allow the use of ordinary
+// functions as a mutation rule.
+type MembershipRoleMutationRuleFunc func(context.Context, *ent.MembershipRoleMutation) error
+
+// EvalMutation calls f(ctx, m).
+func (f MembershipRoleMutationRuleFunc) EvalMutation(ctx context.Context, m ent.Mutation) error {
+	if m, ok := m.(*ent.MembershipRoleMutation); ok {
+		return f(ctx, m)
+	}
+	return Denyf("ent/privacy: unexpected mutation type %T, expect *ent.MembershipRoleMutation", m)
 }
 
 // The MenuQueryRuleFunc type is an adapter to allow the use of ordinary
@@ -1232,6 +1376,12 @@ func queryFilter(q ent.Query) (Filter, error) {
 		return q.Filter(), nil
 	case *ent.FlowFileQuery:
 		return q.Filter(), nil
+	case *ent.InternalMessageQuery:
+		return q.Filter(), nil
+	case *ent.InternalMessageCategoryQuery:
+		return q.Filter(), nil
+	case *ent.InternalMessageRecipientQuery:
+		return q.Filter(), nil
 	case *ent.LanguageQuery:
 		return q.Filter(), nil
 	case *ent.LoginAuditLogQuery:
@@ -1239,6 +1389,12 @@ func queryFilter(q ent.Query) (Filter, error) {
 	case *ent.LoginPolicyQuery:
 		return q.Filter(), nil
 	case *ent.MembershipQuery:
+		return q.Filter(), nil
+	case *ent.MembershipOrgUnitQuery:
+		return q.Filter(), nil
+	case *ent.MembershipPositionQuery:
+		return q.Filter(), nil
+	case *ent.MembershipRoleQuery:
 		return q.Filter(), nil
 	case *ent.MenuQuery:
 		return q.Filter(), nil
@@ -1327,6 +1483,12 @@ func mutationFilter(m ent.Mutation) (Filter, error) {
 		return m.Filter(), nil
 	case *ent.FlowFileMutation:
 		return m.Filter(), nil
+	case *ent.InternalMessageMutation:
+		return m.Filter(), nil
+	case *ent.InternalMessageCategoryMutation:
+		return m.Filter(), nil
+	case *ent.InternalMessageRecipientMutation:
+		return m.Filter(), nil
 	case *ent.LanguageMutation:
 		return m.Filter(), nil
 	case *ent.LoginAuditLogMutation:
@@ -1334,6 +1496,12 @@ func mutationFilter(m ent.Mutation) (Filter, error) {
 	case *ent.LoginPolicyMutation:
 		return m.Filter(), nil
 	case *ent.MembershipMutation:
+		return m.Filter(), nil
+	case *ent.MembershipOrgUnitMutation:
+		return m.Filter(), nil
+	case *ent.MembershipPositionMutation:
+		return m.Filter(), nil
+	case *ent.MembershipRoleMutation:
 		return m.Filter(), nil
 	case *ent.MenuMutation:
 		return m.Filter(), nil

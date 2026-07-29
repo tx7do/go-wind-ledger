@@ -51,6 +51,15 @@ type File func(*sql.Selector)
 // FlowFile is the predicate function for flowfile builders.
 type FlowFile func(*sql.Selector)
 
+// InternalMessage is the predicate function for internalmessage builders.
+type InternalMessage func(*sql.Selector)
+
+// InternalMessageCategory is the predicate function for internalmessagecategory builders.
+type InternalMessageCategory func(*sql.Selector)
+
+// InternalMessageRecipient is the predicate function for internalmessagerecipient builders.
+type InternalMessageRecipient func(*sql.Selector)
+
 // Language is the predicate function for language builders.
 type Language func(*sql.Selector)
 
@@ -62,6 +71,15 @@ type LoginPolicy func(*sql.Selector)
 
 // Membership is the predicate function for membership builders.
 type Membership func(*sql.Selector)
+
+// MembershipOrgUnit is the predicate function for membershiporgunit builders.
+type MembershipOrgUnit func(*sql.Selector)
+
+// MembershipPosition is the predicate function for membershipposition builders.
+type MembershipPosition func(*sql.Selector)
+
+// MembershipRole is the predicate function for membershiprole builders.
+type MembershipRole func(*sql.Selector)
 
 // Menu is the predicate function for menu builders.
 type Menu func(*sql.Selector)

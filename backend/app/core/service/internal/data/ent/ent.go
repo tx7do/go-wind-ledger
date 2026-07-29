@@ -21,10 +21,16 @@ import (
 	"go-wind-ledger/app/core/service/internal/data/ent/dicttype"
 	"go-wind-ledger/app/core/service/internal/data/ent/file"
 	"go-wind-ledger/app/core/service/internal/data/ent/flowfile"
+	"go-wind-ledger/app/core/service/internal/data/ent/internalmessage"
+	"go-wind-ledger/app/core/service/internal/data/ent/internalmessagecategory"
+	"go-wind-ledger/app/core/service/internal/data/ent/internalmessagerecipient"
 	"go-wind-ledger/app/core/service/internal/data/ent/language"
 	"go-wind-ledger/app/core/service/internal/data/ent/loginauditlog"
 	"go-wind-ledger/app/core/service/internal/data/ent/loginpolicy"
 	"go-wind-ledger/app/core/service/internal/data/ent/membership"
+	"go-wind-ledger/app/core/service/internal/data/ent/membershiporgunit"
+	"go-wind-ledger/app/core/service/internal/data/ent/membershipposition"
+	"go-wind-ledger/app/core/service/internal/data/ent/membershiprole"
 	"go-wind-ledger/app/core/service/internal/data/ent/menu"
 	"go-wind-ledger/app/core/service/internal/data/ent/noteday"
 	"go-wind-ledger/app/core/service/internal/data/ent/operationauditlog"
@@ -116,50 +122,56 @@ var (
 func checkColumn(t, c string) error {
 	initCheck.Do(func() {
 		columnCheck = sql.NewColumnCheck(map[string]func(string) bool{
-			account.Table:             account.ValidColumn,
-			api.Table:                 api.ValidColumn,
-			apiauditlog.Table:         apiauditlog.ValidColumn,
-			balanceflow.Table:         balanceflow.ValidColumn,
-			book.Table:                book.ValidColumn,
-			booktemplate.Table:        booktemplate.ValidColumn,
-			budget.Table:              budget.ValidColumn,
-			category.Table:            category.ValidColumn,
-			categoryrelation.Table:    categoryrelation.ValidColumn,
-			dataaccessauditlog.Table:  dataaccessauditlog.ValidColumn,
-			dictentry.Table:           dictentry.ValidColumn,
-			dictentryi18n.Table:       dictentryi18n.ValidColumn,
-			dicttype.Table:            dicttype.ValidColumn,
-			file.Table:                file.ValidColumn,
-			flowfile.Table:            flowfile.ValidColumn,
-			language.Table:            language.ValidColumn,
-			loginauditlog.Table:       loginauditlog.ValidColumn,
-			loginpolicy.Table:         loginpolicy.ValidColumn,
-			membership.Table:          membership.ValidColumn,
-			menu.Table:                menu.ValidColumn,
-			noteday.Table:             noteday.ValidColumn,
-			operationauditlog.Table:   operationauditlog.ValidColumn,
-			orgunit.Table:             orgunit.ValidColumn,
-			payee.Table:               payee.ValidColumn,
-			permission.Table:          permission.ValidColumn,
-			permissionapi.Table:       permissionapi.ValidColumn,
-			permissionauditlog.Table:  permissionauditlog.ValidColumn,
-			permissiongroup.Table:     permissiongroup.ValidColumn,
-			permissionmenu.Table:      permissionmenu.ValidColumn,
-			permissionpolicy.Table:    permissionpolicy.ValidColumn,
-			policyevaluationlog.Table: policyevaluationlog.ValidColumn,
-			position.Table:            position.ValidColumn,
-			role.Table:                role.ValidColumn,
-			rolemetadata.Table:        rolemetadata.ValidColumn,
-			rolepermission.Table:      rolepermission.ValidColumn,
-			tag.Table:                 tag.ValidColumn,
-			tagrelation.Table:         tagrelation.ValidColumn,
-			task.Table:                task.ValidColumn,
-			tenant.Table:              tenant.ValidColumn,
-			user.Table:                user.ValidColumn,
-			usercredential.Table:      usercredential.ValidColumn,
-			userorgunit.Table:         userorgunit.ValidColumn,
-			userposition.Table:        userposition.ValidColumn,
-			userrole.Table:            userrole.ValidColumn,
+			account.Table:                  account.ValidColumn,
+			api.Table:                      api.ValidColumn,
+			apiauditlog.Table:              apiauditlog.ValidColumn,
+			balanceflow.Table:              balanceflow.ValidColumn,
+			book.Table:                     book.ValidColumn,
+			booktemplate.Table:             booktemplate.ValidColumn,
+			budget.Table:                   budget.ValidColumn,
+			category.Table:                 category.ValidColumn,
+			categoryrelation.Table:         categoryrelation.ValidColumn,
+			dataaccessauditlog.Table:       dataaccessauditlog.ValidColumn,
+			dictentry.Table:                dictentry.ValidColumn,
+			dictentryi18n.Table:            dictentryi18n.ValidColumn,
+			dicttype.Table:                 dicttype.ValidColumn,
+			file.Table:                     file.ValidColumn,
+			flowfile.Table:                 flowfile.ValidColumn,
+			internalmessage.Table:          internalmessage.ValidColumn,
+			internalmessagecategory.Table:  internalmessagecategory.ValidColumn,
+			internalmessagerecipient.Table: internalmessagerecipient.ValidColumn,
+			language.Table:                 language.ValidColumn,
+			loginauditlog.Table:            loginauditlog.ValidColumn,
+			loginpolicy.Table:              loginpolicy.ValidColumn,
+			membership.Table:               membership.ValidColumn,
+			membershiporgunit.Table:        membershiporgunit.ValidColumn,
+			membershipposition.Table:       membershipposition.ValidColumn,
+			membershiprole.Table:           membershiprole.ValidColumn,
+			menu.Table:                     menu.ValidColumn,
+			noteday.Table:                  noteday.ValidColumn,
+			operationauditlog.Table:        operationauditlog.ValidColumn,
+			orgunit.Table:                  orgunit.ValidColumn,
+			payee.Table:                    payee.ValidColumn,
+			permission.Table:               permission.ValidColumn,
+			permissionapi.Table:            permissionapi.ValidColumn,
+			permissionauditlog.Table:       permissionauditlog.ValidColumn,
+			permissiongroup.Table:          permissiongroup.ValidColumn,
+			permissionmenu.Table:           permissionmenu.ValidColumn,
+			permissionpolicy.Table:         permissionpolicy.ValidColumn,
+			policyevaluationlog.Table:      policyevaluationlog.ValidColumn,
+			position.Table:                 position.ValidColumn,
+			role.Table:                     role.ValidColumn,
+			rolemetadata.Table:             rolemetadata.ValidColumn,
+			rolepermission.Table:           rolepermission.ValidColumn,
+			tag.Table:                      tag.ValidColumn,
+			tagrelation.Table:              tagrelation.ValidColumn,
+			task.Table:                     task.ValidColumn,
+			tenant.Table:                   tenant.ValidColumn,
+			user.Table:                     user.ValidColumn,
+			usercredential.Table:           usercredential.ValidColumn,
+			userorgunit.Table:              userorgunit.ValidColumn,
+			userposition.Table:             userposition.ValidColumn,
+			userrole.Table:                 userrole.ValidColumn,
 		})
 	})
 	return columnCheck(t, c)

@@ -42,6 +42,12 @@ type Tx struct {
 	File *FileClient
 	// FlowFile is the client for interacting with the FlowFile builders.
 	FlowFile *FlowFileClient
+	// InternalMessage is the client for interacting with the InternalMessage builders.
+	InternalMessage *InternalMessageClient
+	// InternalMessageCategory is the client for interacting with the InternalMessageCategory builders.
+	InternalMessageCategory *InternalMessageCategoryClient
+	// InternalMessageRecipient is the client for interacting with the InternalMessageRecipient builders.
+	InternalMessageRecipient *InternalMessageRecipientClient
 	// Language is the client for interacting with the Language builders.
 	Language *LanguageClient
 	// LoginAuditLog is the client for interacting with the LoginAuditLog builders.
@@ -50,6 +56,12 @@ type Tx struct {
 	LoginPolicy *LoginPolicyClient
 	// Membership is the client for interacting with the Membership builders.
 	Membership *MembershipClient
+	// MembershipOrgUnit is the client for interacting with the MembershipOrgUnit builders.
+	MembershipOrgUnit *MembershipOrgUnitClient
+	// MembershipPosition is the client for interacting with the MembershipPosition builders.
+	MembershipPosition *MembershipPositionClient
+	// MembershipRole is the client for interacting with the MembershipRole builders.
+	MembershipRole *MembershipRoleClient
 	// Menu is the client for interacting with the Menu builders.
 	Menu *MenuClient
 	// NoteDay is the client for interacting with the NoteDay builders.
@@ -246,10 +258,16 @@ func (tx *Tx) init() {
 	tx.DictType = NewDictTypeClient(tx.config)
 	tx.File = NewFileClient(tx.config)
 	tx.FlowFile = NewFlowFileClient(tx.config)
+	tx.InternalMessage = NewInternalMessageClient(tx.config)
+	tx.InternalMessageCategory = NewInternalMessageCategoryClient(tx.config)
+	tx.InternalMessageRecipient = NewInternalMessageRecipientClient(tx.config)
 	tx.Language = NewLanguageClient(tx.config)
 	tx.LoginAuditLog = NewLoginAuditLogClient(tx.config)
 	tx.LoginPolicy = NewLoginPolicyClient(tx.config)
 	tx.Membership = NewMembershipClient(tx.config)
+	tx.MembershipOrgUnit = NewMembershipOrgUnitClient(tx.config)
+	tx.MembershipPosition = NewMembershipPositionClient(tx.config)
+	tx.MembershipRole = NewMembershipRoleClient(tx.config)
 	tx.Menu = NewMenuClient(tx.config)
 	tx.NoteDay = NewNoteDayClient(tx.config)
 	tx.OperationAuditLog = NewOperationAuditLogClient(tx.config)
