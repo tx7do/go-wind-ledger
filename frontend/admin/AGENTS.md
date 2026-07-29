@@ -2,11 +2,26 @@
 
 > 本文件是前端 admin 子项目的 AI 编码规范单一事实源，适用于所有支持 AGENTS.md 的 AI 编码工具（ZCode、GitHub Copilot、Cursor、Codex、Gemini CLI 等）。Claude Code 通过 `CLAUDE.md` 中的 `@AGENTS.md` 引用加载。
 
+## 目录
+
+- [项目概览](#项目概览)
+- [Vben 框架核心机制](#vben-框架核心机制)
+- [目录结构](#目录结构)
+- [关键约定（必须遵守）](#关键约定必须遵守)
+- [导入路径约定](#导入路径约定)
+- [新建业务模块 Checklist](#新建业务模块-checklist)
+- [API 两层架构](#api-两层架构)
+- [视图/页面开发](#视图页面开发)
+- [Vben 框架 API 速查](#vben-框架-api-速查)
+- [快速参考索引](#快速参考索引)
+- [常见错误与纠正](#常见错误与纠正)
+- [FAQ](#faq)
+
 ## 项目概览
 
-基于 Vue 3 + Vite + TypeScript 的中后台管理系统脚手架（Vben Admin 配置型框架），面向二开场景。
+基于 Vue 3 + Vite + TypeScript 的中后台管理系统（Vben Admin 配置型框架），面向记账管理二开场景。
 
-**核心技术栈**: Vue 3.5, Ant Design Vue 4.2, Tailwind CSS, Shadcn-ui, Pinia, Vue Router, Vue Query, VxeTable, i18n, Axios
+**核心技术栈**: Vue 3.5, Ant Design Vue 4.2, Tailwind CSS, Pinia, Vue Router, Vue Query (@tanstack/vue-query), VxeTable, i18n (vue-i18n), Axios
 
 **应用入口**: `apps/admin/src/`
 
@@ -56,11 +71,11 @@ apps/admin/src/
 ├── api/                  # API 层（两层架构）
 │   ├── generated/        # ← protobuf 自动生成，禁止手动编辑
 │   ├── client.ts         # ← ApiClient 单例（ClientTransport 适配器）
-│   └── composables/      # ← Vue Query hooks 层：use*/fetch*/枚举工具
+│   └── composables/      # ← Vue Query hooks 层（38 个模块）：use*/fetch*/枚举工具
 ├── adapter/              # VbenForm + VxeTable 适配器配置
-├── router/routes/modules/# ← 路由模块（按功能拆分）
+├── router/routes/modules/# ← 路由模块（按功能拆分，7 个模块文件）
 ├── stores/               # Pinia 状态管理
-├── views/app/            # 业务页面（按功能模块组织）
+├── views/app/            # 业务页面（按功能模块组织，7 个顶级模块）
 ├── locales/langs/        # i18n 国际化文件（zh-CN/en-US: enum.json, menu.json, page.json, ui.json）
 └── transport/rest/       # HTTP 传输层（PaginationQuery, requestApi）
 ```
@@ -223,7 +238,7 @@ const transport: ClientTransport = {
 export const apiClient = createApiClient(transport);
 ```
 
-**ApiClient 提供的全部 Service Client getter**：
+**ApiClient 提供的全部 Service Client getter**（28 个服务）：
 
 ```typescript
 apiClient.adminPortalService              // 管理门户
@@ -248,6 +263,20 @@ apiClient.taskService                     // 异步任务
 apiClient.tenantService                   // 租户管理
 apiClient.userProfileService              // 用户资料
 apiClient.userService                     // 用户管理
+// Ledger Services
+apiClient.accountService                  // 账户
+apiClient.balanceFlowService              // 流水
+apiClient.bookService                     // 账本
+apiClient.budgetService                   // 预算
+apiClient.categoryService                 // 分类
+apiClient.currencyService                 // 币种
+apiClient.flowFileService                 // 流水附件
+apiClient.noteDayService                  // 提醒
+apiClient.payeeService                    // 收款人
+apiClient.reportService                   // 报表
+apiClient.tagService                      // 标签
+apiClient.membershipService               // 成员
+// Audit Services
 apiClient.apiAuditLogService              // API 审计日志
 apiClient.dataAccessAuditLogService       // 数据访问审计日志
 apiClient.loginAuditLogService            // 登录审计日志
@@ -1091,6 +1120,55 @@ notification.error({ message: $t('ui.notification.delete_failed') });
 
 > **禁止**使用 `alert()`、`console.log` 向用户展示操作结果，必须使用 `notification`。项目已预定义通用 i18n key：`ui.notification.create_success`、`update_success`、`delete_success` 及对应 `_failed` 版本。
 
+## 快速参考索引
+
+### 组件注册名速查
+
+| 注册名 | 对应组件 | 常用场景 |
+|---|---|---|
+| `Input` | `a-input` | 文本搜索、表单输入 |
+| `InputNumber` | `a-input-number` | 数值输入 |
+| `Select` | `a-select` | 下拉选择（本地选项） |
+| `ApiSelect` | 自定义 | 下拉选择（远程 API） |
+| `ApiTreeSelect` | 自定义 | 树形选择（组织/分类） |
+| `RadioGroup` | `a-radio-group` | 状态切换（ON/OFF） |
+| `RangePicker` | `a-range-picker` | 时间范围筛选 |
+| `DatePicker` | `a-date-picker` | 单日期选择 |
+| `Switch` | `a-switch` | 布尔值切换 |
+| `Textarea` | `a-textarea` | 多行文本 |
+
+### 表单校验规则速查
+
+| rule | 适用组件 | 效果 |
+|---|---|---|
+| `'required'` | Input, Textarea, InputNumber | 必填校验 |
+| `'selectRequired'` | Select, RadioGroup, ApiSelect | 必选校验 |
+
+### 常用 i18n Key 速查
+
+| Key | 值 (zh-CN) |
+|---|---|
+| `ui.table.status` | 状态 |
+| `ui.table.createdAt` | 创建时间 |
+| `ui.table.action` | 操作 |
+| `ui.placeholder.input` | 请输入 |
+| `ui.placeholder.select` | 请选择 |
+| `ui.button.cancel` | 取消 |
+| `ui.button.ok` | 确定 |
+| `ui.notification.create_success` | 创建成功 |
+| `ui.notification.update_success` | 更新成功 |
+| `ui.notification.delete_success` | 删除成功 |
+
+### 视图模块速查
+
+| 目录 | 子模块数 | 包含模块 |
+|---|---|---|
+| `views/app/ledger/` | 12 | account, balance-flow, book, budget, category, currency, flow-file, member, note-day, payee, report, tag |
+| `views/app/opm/` | 3 | org_unit, position, user |
+| `views/app/permission/` | 4 | api, menu, permission, role |
+| `views/app/system/` | 5 | dict, file, language, login_policy, task |
+| `views/app/log/` | 5 | api_audit_log, data_access_audit_log, login_audit_log, operation_audit_log, permission_audit_log |
+
 ## 常见错误与纠正
 
 | 错误做法 | 正确做法 |
@@ -1110,3 +1188,78 @@ notification.error({ message: $t('ui.notification.delete_failed') });
 | 手动 watch 搜索条件重新请求 | 搜索表单与 Grid 自动关联，通过 `proxyConfig.ajax.query` 的 `formValues` 获取 |
 | `:icon="LucideTrash2"` 直接传组件 | `:icon="h(LucideTrash2)"` 用 h() 包裹 |
 | `ref` + `watch` 管理列表数据 | `proxyConfig.ajax.query` + `PaginationQuery`，由框架自动管理 |
+
+## FAQ
+
+<details>
+<summary><b>ApiSelect 数据不显示？</b></summary>
+
+1. 检查 `api` 函数是否正确返回数据（务必 `async/await`）
+2. 确认 `afterFetch` 将数据转为 `{ label, value }[]` 格式
+3. 如果数据为空数组，ApiSelect 不会报错，检查 API 是否真的返回了数据
+4. 确认 `immediate` 和 `alwaysLoad` prop 是否设置正确
+</details>
+
+<details>
+<summary><b>Drawer 提交后列表不刷新？</b></summary>
+
+在 `useVbenDrawer` 的 `onOpenChange` 回调中调用 `gridApi.reload()`：
+
+```typescript
+const [Drawer, drawerApi] = useVbenDrawer({
+  connectedComponent: XxxDrawer,
+  onOpenChange(isOpen: boolean) {
+    if (!isOpen) gridApi.reload(); // ★ 关闭时刷新
+  },
+});
+```
+</details>
+
+<details>
+<summary><b>i18n key 在哪里添加？</b></summary>
+
+按文本类型添加到对应的 locale JSON 文件：
+- 菜单名 → `menu.json`
+- 页面文本（按钮、列名、标签等） → `page.json`
+- 枚举值 → `enum.json`
+- 通用 UI 文本 → `ui.json`
+
+**中英文必须同步添加！** 文件路径：
+- 中文：`apps/admin/src/locales/langs/zh-CN/`
+- 英文：`apps/admin/src/locales/langs/en-US/`
+</details>
+
+<details>
+<summary><b>RangePicker 的值怎么传到 API？</b></summary>
+
+RangePicker 的值是 `[dayjs, dayjs]` 数组，需要在 `proxyConfig.ajax.query` 中手动拆分：
+
+```typescript
+query: async ({ page }, formValues) => {
+  const params = { ...formValues };
+  if (params.createdAt && params.createdAt.length === 2) {
+    params.created_at__gte = params.createdAt[0].toISOString();
+    params.created_at__lte = params.createdAt[1].toISOString();
+    delete params.createdAt;
+  }
+  return await fetchListXxxs(new PaginationQuery({ paging, formValues: params }));
+}
+```
+</details>
+
+<details>
+<summary><b>树形表格怎么用？</b></summary>
+
+1. `pagerConfig: { enabled: false }` — 关分页
+2. 配置 `treeConfig` — `parentField` 或 `childrenField`
+3. 至少一列标记 `treeNode: true`
+4. 如用 `parentField` 模式，数据是平铺列表；用 `childrenField` 模式，数据已嵌套
+</details>
+
+<details>
+<summary><b>创建 composable 后编译报"模块未找到"？</b></summary>
+
+1. 确认已在 `src/api/composables/index.ts` 中 `export * from './xxx'`
+2. 确认文件名和导出路径正确
+3. 如果使用 `#/api` 导入，确认 `src/api/index.ts` 也导出了
+</details>

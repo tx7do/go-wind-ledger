@@ -17,6 +17,22 @@
 
 ---
 
+## Table of Contents
+
+- [Overview](#overview)
+- [Quick Start by Role](#quick-start-by-role)
+- [System Architecture](#system-architecture)
+- [Tech Stack](#tech-stack)
+- [Core Features](#core-features)
+- [Project Structure](#project-structure)
+- [Prerequisites & Launch](#prerequisites--launch)
+- [Development Commands](#development-commands)
+- [FAQ](#faq)
+- [Contributing](#contributing)
+- [License](#license)
+
+## Overview
+
 FengXing Ledger (GoWind Ledger) is a full-stack personal/family bookkeeping platform built on Go microservices architecture. It provides complete income/expense management, multi-account management, hierarchical category/tag system, multi-currency exchange rates, statistical reports, and recurring reminders. It supports both an Admin management console and a Flutter cross-platform mobile application.
 
 **Key Highlights:**
@@ -24,7 +40,7 @@ FengXing Ledger (GoWind Ledger) is a full-stack personal/family bookkeeping plat
 - **Bookkeeping Engine** — Four flow types: expense/income/transfer/balance adjustment, single-entry bookkeeping, category/tag amount splitting
 - **Multi-Account** — Checking/credit/asset/debt account types, automatic balance updates, cross-currency transfers
 - **Hierarchical Categories** — Expense/income categories with 4-level tree structure, tags with capability flags (can expense/income/transfer)
-- **Multi-Currency** — Built-in 10 currency exchange rate cache, real-time rate refresh and currency conversion
+- **Multi-Currency** — Built-in currency exchange rate cache, real-time rate refresh and currency conversion
 - **Reports & Analytics** — Aggregation by category/tag/payee dimensions, asset/liability overview, ECharts visualization
 - **Budget Management** — Monthly/quarterly/yearly/weekly budgets with real-time progress tracking and overspend alerts
 - **Group Member Management** — Invite/accept/reject workflow, multi-role permissions (owner/operator/guest), tenant member management
@@ -32,39 +48,55 @@ FengXing Ledger (GoWind Ledger) is a full-stack personal/family bookkeeping plat
 - **Microservices** — Built on go-kratos with Admin BFF + App BFF + Core three-service architecture
 - **API First** — Protobuf contract-driven, RESTful + gRPC dual protocol, auto-generated OpenAPI docs
 
+## Quick Start by Role
+
+| Role | Recommended Reading |
+|:---|:---|
+| 🖥️ **Backend Developer** | [Architecture](#system-architecture) → [Tech Stack·Backend](#backend) → [Prerequisites](#prerequisites--launch) → [Commands](#development-commands) → [backend/AGENTS.md](./backend/AGENTS.md) |
+| 🎨 **Frontend Developer** | [Tech Stack·Admin](#admin-console) → [Prerequisites](#prerequisites--launch) → [frontend/admin/AGENTS.md](./frontend/admin/AGENTS.md) |
+| 📱 **Mobile Developer** | [Tech Stack·Mobile](#mobile-app) → [Prerequisites](#prerequisites--launch) → [frontend/app/flutter_app/AGENTS.md](./frontend/app/flutter_app/AGENTS.md) |
+| 🔧 **DevOps / Full-Stack** | [Architecture](#system-architecture) → [Prerequisites](#prerequisites--launch) → [backend/AGENTS.md](./backend/AGENTS.md) |
+
 ## System Architecture
 
 ```
-┌─────────────────────────────────────────────────────────┐
-│                    Client Layer                          │
-│  ┌─────────────┐  ┌─────────────┐  ┌─────────────┐    │
-│  │  Admin Console│ │  Flutter App │  │   Swagger    │    │
-│  │  Vue3+AntDV  │  │  BLoC+Dio    │  │   /docs/     │    │
-│  └──────┬──────┘  └──────┬──────┘  └──────┬──────┘    │
-└─────────┼────────────────┼────────────────┼────────────┘
-          │ REST :6600     │ REST :6700     │
-          ▼                ▼                ▼
-┌─────────────────────────────────────────────────────────┐
-│                  BFF Gateway Layer                       │
-│  ┌─────────────┐         ┌─────────────┐               │
-│  │ Admin BFF   │         │  App BFF    │               │
-│  │ /admin/v1/* │         │  /app/v1/*  │               │
-│  └──────┬──────┘         └──────┬──────┘               │
-└─────────┼───────────────────────┼──────────────────────┘
-          │ gRPC                  │ gRPC
-          ▼                       ▼
-┌─────────────────────────────────────────────────────────┐
-│                  Core Service Layer                      │
-│  ┌───────┐ ┌───────┐ ┌───────┐ ┌───────┐ ┌───────┐   │
-│  │ Book  │ │Account│ │ Flow  │ │Report │ │Currency│  │
-│  └───────┘ └───────┘ └───────┘ └───────┘ └───────┘   │
-│  ┌───────┐ ┌───────┐ ┌───────┐ ┌───────┐ ┌───────┐   │
-│  │Category│ │  Tag  │ │Payee  │ │NoteDay│ │FlowFile│  │
-│  └───────┘ └───────┘ └───────┘ └───────┘ └───────┘   │
-│         │ Ent ORM → PostgreSQL                          │
-│         │ Redis · MinIO · etcd                          │
-└─────────┴──────────────────────────────────────────────┘
+┌──────────────────────────────────────────────────────────────────┐
+│                        Client Layer                               │
+│  ┌──────────────────┐  ┌──────────────────┐  ┌───────────────┐ │
+│  │  Admin Console   │  │   Flutter App    │  │  Swagger UI   │ │
+│  │  Vue3 + AntDV    │  │   BLoC + Dio     │  │  /docs/       │ │
+│  └────────┬─────────┘  └────────┬─────────┘  └───────┬───────┘ │
+└───────────┼─────────────────────┼─────────────────────┼─────────┘
+            │ REST :6600          │ REST :6700          │
+            ▼                     ▼                     ▼
+┌──────────────────────────────────────────────────────────────────┐
+│                     BFF Gateway Layer                             │
+│  ┌──────────────────────┐    ┌──────────────────────┐           │
+│  │     Admin BFF        │    │      App BFF         │           │
+│  │  /admin/v1/* (REST)  │    │  /app/v1/* (REST)    │           │
+│  │  Validate + gRPC fwd │    │  Validate + gRPC fwd │           │
+│  └──────────┬───────────┘    └──────────┬───────────┘           │
+└─────────────┼──────────────────────────┼────────────────────────┘
+              │ gRPC                     │ gRPC
+              ▼                          ▼
+┌──────────────────────────────────────────────────────────────────┐
+│                    Core Service (gRPC)                            │
+│  ┌────────┐ ┌────────┐ ┌────────┐ ┌────────┐ ┌──────────┐     │
+│  │  Book  │ │Account │ │  Flow  │ │ Report │ │ Currency │     │
+│  └────────┘ └────────┘ └────────┘ └────────┘ └──────────┘     │
+│  ┌────────┐ ┌────────┐ ┌────────┐ ┌────────┐ ┌──────────┐     │
+│  │Category│ │  Tag   │ │ Payee  │ │NoteDay │ │ FlowFile │     │
+│  └────────┘ └────────┘ └────────┘ └────────┘ └──────────┘     │
+│         │                                                        │
+│         │ Ent ORM → PostgreSQL                                   │
+│         │ Redis · MinIO · ElasticSearch · etcd                  │
+└─────────┴────────────────────────────────────────────────────────┘
 ```
+
+**Architecture Notes:**
+- **Admin BFF** (`:6600`) and **App BFF** (`:6700`) are thin gateways — they do **not** access the database directly
+- All data operations are handled by the **Core Service** (gRPC)
+- Swagger UI is embedded in each BFF service: Admin `/docs/`, App `/docs/`
 
 ## Tech Stack
 
@@ -122,7 +154,7 @@ FengXing Ledger (GoWind Ledger) is a full-stack personal/family bookkeeping plat
 |:----------------|:---------------------------------------------------------------------|
 | Book Management | Multi-tenant books, default account/category config, enable/disable  |
 | Account Types   | Checking/credit/asset/debt, capability flags, balance adjustment    |
-| Currency        | 10 built-in currency rates, refresh and conversion                   |
+| Currency        | Built-in currency rates, refresh and conversion                      |
 
 ### Category System
 
@@ -159,7 +191,41 @@ FengXing Ledger (GoWind Ledger) is a full-stack personal/family bookkeeping plat
 | RBAC            | Casbin/OPA policy engine, menu/API/data three-level permissions     |
 | Audit Logs      | API/login/operation/data-access/permission audit logging             |
 
-## Quick Start
+## Project Structure
+
+```
+go-wind-ledger/
+├── backend/                     # Backend microservices
+│   ├── api/                     # Proto contracts + generated code
+│   │   ├── protos/              # Proto source files (11 domains, 134 files)
+│   │   │   ├── ledger/          # Ledger domain models
+│   │   │   ├── admin/           # Admin BFF interfaces
+│   │   │   ├── app/             # App BFF interfaces
+│   │   │   └── identity/        # Identity/tenant/org models
+│   │   └── gen/go/              # Generated Go code (do not edit)
+│   ├── app/                     # Microservice apps (3 independent services)
+│   │   ├── admin/service/       # Admin BFF gateway (REST :6600)
+│   │   ├── app/service/         # App BFF gateway (REST :6700)
+│   │   └── core/service/        # Core service (gRPC, 50 ent schemas)
+│   ├── pkg/                     # Shared libraries (16 packages)
+│   ├── sql/                     # Database seed/demo data
+│   └── scripts/                 # Deployment & environment scripts
+├── frontend/                    # Frontend apps
+│   ├── admin/                   # Admin console (Vue3 + Vben Admin)
+│   │   └── apps/admin/src/
+│   │       ├── api/composables/ # 38 Vue Query composables
+│   │       ├── views/app/ledger/# 12 ledger module pages
+│   │       └── router/          # Auto-loading routes (7 modules)
+│   └── app/
+│       └── flutter_app/         # Flutter mobile app
+│           └── lib/src/features/ledger/
+│               ├── services/    # 13 ledger services
+│               ├── pages/       # 22 ledger pages
+│               └── widgets/     # 4 shared widgets
+└── docker-compose.yaml          # Infrastructure orchestration
+```
+
+## Prerequisites & Launch
 
 ### Prerequisites
 
@@ -183,6 +249,12 @@ cd backend
 make compose-up-libs    # Start infrastructure
 make run                # Run all services
 ```
+
+After startup:
+- Admin API: `http://localhost:6600/`
+- App API: `http://localhost:6700/`
+- Admin Swagger: `http://localhost:6600/docs/`
+- App Swagger: `http://localhost:6700/docs/`
 
 ### 3. Start Admin Console
 
@@ -211,6 +283,62 @@ flutter run
 | `make build`     | Build all services                      |
 | `make run`       | Run all services                        |
 | `make compose-up`| Docker Compose start all                |
+
+## FAQ
+
+<details>
+<summary><b>Port conflict: 6600 / 6700 already in use?</b></summary>
+
+Modify the `server.http.addr` field in the corresponding service's `configs/server.yaml`.
+</details>
+
+<details>
+<summary><b>Proto generation fails?</b></summary>
+
+1. Confirm `buf` is installed: `buf --version`
+2. Verify proto syntax, especially import paths
+3. Run `make api` to regenerate
+4. If still failing, check `api/buf.gen.yaml` configuration
+</details>
+
+<details>
+<summary><b>Ent generation causes compilation errors?</b></summary>
+
+1. Ensure ent schemas are in `app/core/service/internal/data/ent/schema/`
+2. Run `make ent` to regenerate
+3. If using custom templates, check `entc.go` configuration
+</details>
+
+<details>
+<summary><b>Can admin/app services access the database directly?</b></summary>
+
+**No.** Admin and App services are thin gateways — they only validate parameters and forward gRPC calls. All database operations must occur in the Core service. See [backend/AGENTS.md](./backend/AGENTS.md).
+</details>
+
+<details>
+<summary><b>How to add a new ledger domain entity?</b></summary>
+
+Full workflow in [backend/AGENTS.md · New Module Checklist](./backend/AGENTS.md#新增业务模块-checklist以-user-模块为模板). Summary: proto → make api → ent schema → make ent → repo → service → wire → gateway forwarding.
+</details>
+
+<details>
+<summary><b>Where are the frontend API types defined?</b></summary>
+
+Types are auto-generated from protobuf in `frontend/admin/apps/admin/src/api/generated/`. **Do not edit manually.** Import through the `#/api` barrel entry.
+</details>
+
+## Contributing
+
+This project follows a **Protobuf-first (contract-first)** development model. All interface changes must be defined in proto files first. Each sub-project has its own AI coding guidelines:
+
+| Document | Description |
+|:---|:---|
+| [backend/AGENTS.md](./backend/AGENTS.md) | Backend coding guidelines (Go + Kratos + Ent) |
+| [frontend/admin/AGENTS.md](./frontend/admin/AGENTS.md) | Admin frontend coding guidelines (Vue3 + Vben) |
+| [frontend/app/flutter_app/AGENTS.md](./frontend/app/flutter_app/AGENTS.md) | Flutter mobile coding guidelines |
+| [backend/SKILL.md](./backend/SKILL.md) | Backend module development skills |
+| [frontend/admin/SKILL.md](./frontend/admin/SKILL.md) | Admin frontend development skills |
+| [frontend/app/flutter_app/SKILL.md](./frontend/app/flutter_app/SKILL.md) | Flutter mobile development skills |
 
 ## License
 

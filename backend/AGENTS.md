@@ -2,9 +2,33 @@
 
 > 本文件是 backend 子项目的 AI 编码规范单一事实源，适用于所有支持 AGENTS.md 的 AI 编码工具（ZCode、GitHub Copilot、Cursor、Codex、Gemini CLI 等）。Claude Code 通过同级 `CLAUDE.md` 中的 `@AGENTS.md` 引用加载。
 
+## 目录
+
+- [项目概览](#项目概览)
+- [三服务架构（关键心智模型）](#三服务架构关键心智模型)
+- [目录结构](#目录结构)
+- [api 层组织（proto-first）](#api-层组织proto-first)
+- [关键约定（必须遵守）](#关键约定必须遵守)
+- [错误处理详解](#错误处理详解)
+- [分层架构模板](#分层架构模板)
+- [依赖注入（google/wire）](#依赖注入googlewire)
+- [日志](#日志)
+- [配置管理](#配置管理)
+- [数据库迁移](#数据库迁移)
+- [请求校验（双轨制）](#请求校验双轨制)
+- [中间件](#中间件)
+- [国际化（i18n）](#国际化i18n)
+- [构建与开发命令](#构建与开发命令)
+- [Swagger / API 文档](#swagger--api-文档)
+- [新增业务模块 Checklist](#新增业务模块-checklist以-user-模块为模板)
+- [快速参考索引](#快速参考索引)
+- [常见错误与纠正](#常见错误与纠正)
+- [FAQ](#faq)
+- [关键文件索引](#关键文件索引)
+
 ## 项目概览
 
-基于 [go-kratos v2](https://github.com/go-kratos/kratos) 微服务框架的多租户 Headless 内容中台，采用 **Protobuf-first（契约驱动）** 工作流。
+基于 [go-kratos v2](https://github.com/go-kratos/kratos) 微服务框架的多租户记账与内容管理平台，采用 **Protobuf-first（契约驱动）** 工作流。
 
 **核心技术栈**：
 - **框架**: go-kratos v2.9.2（HTTP + gRPC + SSE）
@@ -50,7 +74,7 @@ core-service (gRPC，真正干活)
 ```
 backend/
 ├── api/                          # 接口契约层（proto 源 + 生成代码，无业务逻辑）
-│   ├── protos/                   # ★ proto 源文件（人工维护，128 个）
+│   ├── protos/                   # ★ proto 源文件（人工维护，11 个领域）
 │   │   └── <domain>/service/v1/  # 按领域组织：admin/app/identity/permission/content/audit/...
 │   └── gen/go/                   # ← protoc 生成（禁止手改）
 ├── app/                          # 应用实现层（3 个独立微服务）
@@ -65,11 +89,11 @@ backend/
 │           ├── service/          # 业务逻辑层（实现 proto 接口）
 │           │   └── providers/wire_set.go
 │           └── data/             # 数据访问层（仅 core 服务有 DB）
-│               ├── ent/schema/   # ★ ent 实体定义（人工维护）
+│               ├── ent/schema/   # ★ ent 实体定义（人工维护，50 个 schema）
 │               ├── ent/          # ← ent generate 生成（禁止手改）
 │               ├── *_repo.go     # 仓储实现
 │               └── providers/wire_set.go
-├── pkg/                          # 跨服务公共库（中间件/加密/工具/领域包）
+├── pkg/                          # 跨服务公共库（中间件/加密/工具/领域包，16 个包）
 ├── sql/                          # 数据库种子/演示数据脚本
 ├── scripts/                      # 部署与环境脚本（env/docker/deploy）
 ├── Makefile / app.mk             # 构建编排
@@ -82,7 +106,7 @@ backend/
 
 ```
 api/
-├── protos/                       # ★ 人工维护的 proto 源
+├── protos/                       # ★ 人工维护的 proto 源（11 个领域）
 │   └── admin/service/v1/i_user.proto       # BFF 对外接口（带 google.api.http 注解）
 │   └── identity/service/v1/user.proto      # 核心服务接口（gRPC + message 定义）
 │   └── identity/service/v1/user_error.proto# 错误码定义
@@ -322,7 +346,7 @@ func (r *userRepo) Get(ctx context.Context, req *identityV1.GetUserRequest) (*id
 
 ### model / entity 层（ent schema）
 
-实体定义在 `app/core/service/internal/data/ent/schema/`（**唯一人工维护的 ent 目录**）：
+实体定义在 `app/core/service/internal/data/ent/schema/`（**唯一人工维护的 ent 目录**，共 50 个 schema）：
 
 ```go
 type User struct{ ent.Schema }
@@ -527,6 +551,47 @@ OpenAPI v3 由 proto 自动生成（`make openapi`），Swagger UI 内嵌运行�
 - [ ] Step 13: make build → make run 验证
 ```
 
+## 快速参考索引
+
+### 常用命令速查
+
+| 操作 | 命令 |
+|------|------|
+| 新增 proto 后 | `make api` |
+| 新增 ent schema 后 | `make ent` |
+| 新增构造函数后 | `make wire` |
+| 全量生成 | `make gen` |
+| 编译 | `make build` |
+| 运行 | `make run` |
+| 仅启中间件 | `make compose-up-libs` |
+| 全栈 Docker | `make compose-up` |
+
+### 领域 proto 速查
+
+| 领域 | proto 文件数 | 用途 |
+|------|:---:|------|
+| `admin` | 43 | Admin BFF 后台管理接口 |
+| `app` | 19 | App BFF 用户端接口 |
+| `ledger` | 14 | 核心记账领域（账户/账本/流水/分类/标签/预算等） |
+| `identity` | 13 | 身份认证/租户/用户/组织 |
+| `permission` | 13 | RBAC 权限/角色/菜单/策略 |
+| `audit` | 9 | 5 类审计日志 |
+| `authentication` | 9 | 登录/令牌/MFA/登录策略 |
+| `dict` | 4 | 字典/语言 |
+| `internal_message` | 4 | 站内消息 |
+| `storage` | 4 | 文件存储/OSS |
+| `task` | 2 | 异步任务 |
+
+### 错误码速查
+
+| 错误助手 | HTTP 状态码 | 使用场景 |
+|----------|:---:|----------|
+| `ErrorBadRequest` | 400 | 参数无效 |
+| `ErrorUnauthorized` | 401 | 未认证 |
+| `ErrorNotFound` | 404 | 资源不存在 |
+| `ErrorInternalServerError` | 500 | 内部错误 |
+| `ErrorForbidden` | 403 | 无权限 |
+
 ## 常见错误与纠正
 
 | 错误做法 | 正确做法 |
@@ -541,6 +606,60 @@ OpenAPI v3 由 proto 自动生成（`make openapi`），Swagger UI 内嵌运行�
 | 接口与实现同名（都叫 `UserRepo`） | 接口 `UserRepo`，实现 `userRepo`，`NewUserRepo` 返回接口类型 |
 | repo 里直接 Commit/Rollback 散落 | 用统一的 `defer { rollback/commit }` 闭包模式 |
 | 手写 SQL 迁移脚本 | ent schema 即迁移源，`migrate: true` 自动建表 |
+
+## FAQ
+
+<details>
+<summary><b>Proto 生成后编译报错："undefined: xxxV1.Xxx"？</b></summary>
+
+1. 确认 proto 文件中的 `package` 和 `go_package` 是否正确
+2. 检查 `make api` 是否成功执行
+3. 确认 import 路径与 go.mod 的 module 路径一致
+4. 如果新增了 import 其他 proto，确认被 import 的 proto 也已生成
+</details>
+
+<details>
+<summary><b>Ent schema 怎么加新字段？</b></summary>
+
+1. 编辑 `app/core/service/internal/data/ent/schema/{entity}.go` 的 `Fields()` 方法
+2. 执行 `make ent` 重新生成 ent 代码
+3. 如果字段需要暴露给 API，同步更新 proto message 定义
+4. 更新 repo 层的 DTO 转换逻辑（`mapper.CopierMapper`）
+</details>
+
+<details>
+<summary><b>Wire 注入链路怎么看？</b></summary>
+
+1. 看 `cmd/server/wire_gen.go`（生成产物），它包含完整的注入拓扑
+2. 追 `ProviderSet` 的组合：`cmd/server/wire.go` → `data/providers/wire_set.go` → `service/providers/wire_set.go` → `server/providers/wire_set.go`
+3. `wire_gen.go` 报错通常是某层 ProviderSet 缺少构造函数注册
+</details>
+
+<details>
+<summary><b>怎么区分 admin/app service 和 core service 的职责？</b></summary>
+
+- **admin/app service**: 只做参数校验 + gRPC 转发到 core，**不访问数据库**
+- **core service**: 实现真正的业务逻辑 + 数据持久化
+- 如果发现自己在 admin/app 的 service 里 import 了 ent 或 repo，那就是放错地方了
+</details>
+
+<details>
+<summary><b>事务应该写在哪一层？</b></summary>
+
+事务只能在 **core service 的 repo 层**。使用标准化的 `defer { rollback/commit }` 闭包模式（见上文 repo 模板）。不要在其他层开启事务。
+</details>
+
+<details>
+<summary><b>新增 BFF 接口的完整流程？</b></summary>
+
+1. 在 `api/protos/admin/service/v1/` 或 `app/service/v1/` 创建 `i_xxx.proto`
+2. 复用 core domain 的 message（import 方式）
+3. 添加 `google.api.http` 注解定义 REST 路由
+4. `make api` 生成代码
+5. 在 admin/app 的 service 层实现薄转发
+6. 在 `rest_server.go` 注册 HTTP 路由
+7. `make wire` → `make build` → `make run`
+</details>
 
 ## 关键文件索引
 

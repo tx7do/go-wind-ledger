@@ -17,14 +17,30 @@
 
 ---
 
+## 目录
+
+- [项目简介](#项目简介)
+- [按角色快速开始](#按角色快速开始)
+- [系统架构](#系统架构)
+- [技术栈](#技术栈)
+- [核心功能](#核心功能)
+- [项目结构](#项目结构)
+- [环境要求与启动](#环境要求与启动)
+- [开发命令](#开发命令)
+- [常见问题 (FAQ)](#常见问题-faq)
+- [贡献指南](#贡献指南)
+- [开源协议](#开源协议)
+
+## 项目简介
+
 风行记账（GoWind Ledger）是一款基于 Go 微服务架构的全栈个人/家庭记账平台，提供完整的收支管理、多账户管理、分类标签体系、多币种汇率、统计报表与定期提醒功能，支持 Admin 管理后台和 Flutter 跨平台移动应用。
 
 **核心亮点：**
 
-- **记账核心** — 支出/收入/转账/余额调整四种流水类型，单式记账引擎，分类/标签金额拆分
+- **记账引擎** — 支出/收入/转账/余额调整四种流水类型，单式记账引擎，分类/标签金额拆分
 - **多账户管理** — 活期/信用/资产/贷款四类账户，余额自动更新，支持跨币种转账
 - **层级分类** — 支出/收入分类支持 4 层树形结构，标签支持能力标志（可支出/收入/转账）
-- **多币种** — 内置 10 种币种汇率缓存，支持实时汇率刷新与货币转换计算
+- **多币种** — 内置多种币种汇率缓存，支持实时汇率刷新与货币转换计算
 - **统计报表** — 按分类/标签/收款人维度聚合分析，资产负债概览，ECharts 可视化
 - **预算管理** — 按月度/季度/年度/周设置预算，实时进度跟踪，超额预警通知
 - **组成员管理** — 邀请/接受/拒绝工作流，多角色权限（所有者/操作员/访客），租户成员管理
@@ -32,39 +48,55 @@
 - **微服务架构** — 基于 go-kratos，Admin BFF + App BFF + Core 三服务架构
 - **API 优先** — Protobuf 合约驱动，RESTful + gRPC 双协议，OpenAPI 文档自动生成
 
+## 按角色快速开始
+
+| 角色 | 推荐阅读章节 |
+|:---|:---|
+| 🖥️ **后端开发者** | [系统架构](#系统架构) → [技术栈·后端](#后端) → [环境要求与启动](#环境要求与启动) → [开发命令](#开发命令) → [backend/AGENTS.md](./backend/AGENTS.md) |
+| 🎨 **前端开发者** | [技术栈·Admin](#admin-管理后台) → [环境要求与启动](#环境要求与启动) → [frontend/admin/AGENTS.md](./frontend/admin/AGENTS.md) |
+| 📱 **移动端开发者** | [技术栈·移动端](#移动端应用) → [环境要求与启动](#环境要求与启动) → [frontend/app/flutter_app/AGENTS.md](./frontend/app/flutter_app/AGENTS.md) |
+| 🔧 **全栈/DevOps** | [系统架构](#系统架构) → [环境要求与启动](#环境要求与启动) → [backend/AGENTS.md](./backend/AGENTS.md) |
+
 ## 系统架构
 
 ```
-┌─────────────────────────────────────────────────────────┐
-│                    客户端层                               │
-│  ┌─────────────┐  ┌─────────────┐  ┌─────────────┐    │
-│  │  Admin 后台  │  │  Flutter App │  │   Swagger    │    │
-│  │  Vue3+AntDV  │  │  BLoC+Dio    │  │   /docs/     │    │
-│  └──────┬──────┘  └──────┬──────┘  └──────┬──────┘    │
-└─────────┼────────────────┼────────────────┼────────────┘
-          │ REST :6600     │ REST :6700     │
-          ▼                ▼                ▼
-┌─────────────────────────────────────────────────────────┐
-│                  BFF 网关层                               │
-│  ┌─────────────┐         ┌─────────────┐               │
-│  │ Admin BFF   │         │  App BFF    │               │
-│  │ /admin/v1/* │         │  /app/v1/*  │               │
-│  └──────┬──────┘         └──────┬──────┘               │
-└─────────┼───────────────────────┼──────────────────────┘
-          │ gRPC                  │ gRPC
-          ▼                       ▼
-┌─────────────────────────────────────────────────────────┐
-│                  Core 核心服务                             │
-│  ┌───────┐ ┌───────┐ ┌───────┐ ┌───────┐ ┌───────┐   │
-│  │ Book  │ │Account│ │ Flow  │ │Report │ │Currency│  │
-│  └───────┘ └───────┘ └───────┘ └───────┘ └───────┘   │
-│  ┌───────┐ ┌───────┐ ┌───────┐ ┌───────┐ ┌───────┐   │
-│  │Category│ │  Tag  │ │Payee  │ │NoteDay│ │FlowFile│  │
-│  └───────┘ └───────┘ └───────┘ └───────┘ └───────┘   │
-│         │ Ent ORM → PostgreSQL                          │
-│         │ Redis · MinIO · etcd                          │
-└─────────┴──────────────────────────────────────────────┘
+┌──────────────────────────────────────────────────────────────────┐
+│                        客户端层 (Clients)                         │
+│  ┌──────────────────┐  ┌──────────────────┐  ┌───────────────┐ │
+│  │  Admin 管理后台   │  │   Flutter App    │  │  Swagger UI   │ │
+│  │  Vue3 + AntDV     │  │   BLoC + Dio     │  │  /docs/       │ │
+│  └────────┬─────────┘  └────────┬─────────┘  └───────┬───────┘ │
+└───────────┼─────────────────────┼─────────────────────┼─────────┘
+            │ REST :6600          │ REST :6700          │
+            ▼                     ▼                     ▼
+┌──────────────────────────────────────────────────────────────────┐
+│                       BFF 网关层 (Gateways)                       │
+│  ┌──────────────────────┐    ┌──────────────────────┐           │
+│  │     Admin BFF        │    │      App BFF         │           │
+│  │  /admin/v1/* (REST)  │    │  /app/v1/* (REST)    │           │
+│  │  参数校验 + gRPC 转发 │    │  参数校验 + gRPC 转发 │           │
+│  └──────────┬───────────┘    └──────────┬───────────┘           │
+└─────────────┼──────────────────────────┼────────────────────────┘
+              │ gRPC                     │ gRPC
+              ▼                          ▼
+┌──────────────────────────────────────────────────────────────────┐
+│                    Core 核心服务 (gRPC)                            │
+│  ┌────────┐ ┌────────┐ ┌────────┐ ┌────────┐ ┌──────────┐     │
+│  │  Book  │ │Account │ │  Flow  │ │ Report │ │ Currency │     │
+│  └────────┘ └────────┘ └────────┘ └────────┘ └──────────┘     │
+│  ┌────────┐ ┌────────┐ ┌────────┐ ┌────────┐ ┌──────────┐     │
+│  │Category│ │  Tag   │ │ Payee  │ │NoteDay │ │ FlowFile │     │
+│  └────────┘ └────────┘ └────────┘ └────────┘ └──────────┘     │
+│         │                                                        │
+│         │ Ent ORM → PostgreSQL                                   │
+│         │ Redis · MinIO · ElasticSearch · etcd                  │
+└─────────┴────────────────────────────────────────────────────────┘
 ```
+
+**架构要点：**
+- **Admin BFF** (`:6600`) 和 **App BFF** (`:6700`) 是"瘦"网关，**不直接访问数据库**
+- 所有数据操作由 **Core 服务**（gRPC）统一处理
+- Swagger UI 内嵌在 BFF 服务中：Admin `/docs/`、App `/docs/`
 
 ## 技术栈
 
@@ -123,7 +155,7 @@
 | 账本管理   | 多租户账本，默认账户/分类配置，启用/禁用切换                              |
 | 账户管理   | 活期/信用/资产/贷款四类账户，能力标志（可支出/收入/转出/转入），余额调整            |
 | 余额调整   | 余额调整时自动创建 ADJUST 流水记录，保留调整审计轨迹                      |
-| 币种管理   | 内置 10 种币种汇率缓存，支持刷新汇率与货币转换计算                          |
+| 币种管理   | 内置多种币种汇率缓存，支持刷新汇率与货币转换计算                          |
 
 ### 分类体系
 
@@ -166,33 +198,35 @@
 go-wind-ledger/
 ├── backend/                     # 后端微服务
 │   ├── api/                     # Proto 合约 + 生成代码
-│   │   ├── protos/              # Proto 源文件
-│   │   │   ├── ledger/          # 记账领域模型（10 个 proto）
-│   │   │   ├── admin/           # Admin BFF 接口（i_ 前缀）
-│   │   │   └── app/             # App BFF 接口（i_ 前缀）
-│   │   └── gen/go/              # 生成的 Go 代码
-│   ├── app/                     # 微服务应用
+│   │   ├── protos/              # Proto 源文件（11 个领域，134 个文件）
+│   │   │   ├── ledger/          # 记账领域模型
+│   │   │   ├── admin/           # Admin BFF 接口
+│   │   │   ├── app/             # App BFF 接口
+│   │   │   └── identity/        # 身份/租户/组织模型
+│   │   └── gen/go/              # 生成的 Go 代码（禁止手改）
+│   ├── app/                     # 微服务应用（3 个独立服务）
 │   │   ├── admin/service/       # Admin BFF 网关（REST :6600）
 │   │   ├── app/service/         # App BFF 网关（REST :6700）
-│   │   └── core/service/        # Core 核心服务（gRPC）
-│   ├── pkg/                     # 跨服务共享库
-│   └── sql/                     # 数据库种子数据
+│   │   └── core/service/        # Core 核心服务（gRPC, 50 ent schemas）
+│   ├── pkg/                     # 跨服务共享库（16 个包）
+│   ├── sql/                     # 数据库种子/演示数据
+│   └── scripts/                 # 部署与环境脚本
 ├── frontend/                    # 前端应用
 │   ├── admin/                   # Admin 管理后台（Vue3 + Vben Admin）
 │   │   └── apps/admin/src/
-│   │       ├── api/composables/ # 10 个记账 composables
-│   │       ├── views/app/ledger/ # 9 个记账模块页面
-│   │       └── router/          # 自动加载路由
+│   │       ├── api/composables/ # 38 个 Vue Query composables
+│   │       ├── views/app/ledger/# 12 个记账模块页面
+│   │       └── router/          # 自动加载路由（7 个模块）
 │   └── app/
 │       └── flutter_app/         # Flutter 移动端
 │           └── lib/src/features/ledger/
-│               ├── services/    # 9 个记账服务
-│               ├── pages/       # 17 个记账页面
+│               ├── services/    # 13 个记账服务
+│               ├── pages/       # 22 个记账页面
 │               └── widgets/     # 4 个通用组件
 └── docker-compose.yaml          # 基础设施编排
 ```
 
-## 快速开始
+## 环境要求与启动
 
 ### 环境要求
 
@@ -216,6 +250,12 @@ cd backend
 make compose-up-libs    # 启动基础设施
 make run                # 运行所有服务
 ```
+
+服务启动后：
+- Admin API: `http://localhost:6600/`
+- App API: `http://localhost:6700/`
+- Admin Swagger: `http://localhost:6600/docs/`
+- App Swagger: `http://localhost:6700/docs/`
 
 ### 3. 启动 Admin 管理后台
 
@@ -244,6 +284,62 @@ flutter run
 | `make build`      | 编译所有服务                     |
 | `make run`        | 运行所有服务                     |
 | `make compose-up` | Docker Compose 启动全部         |
+
+## 常见问题 (FAQ)
+
+<details>
+<summary><b>端口冲突：6600 / 6700 已被占用？</b></summary>
+
+修改对应服务的 `configs/server.yaml` 中 `server.http.addr` 字段即可。
+</details>
+
+<details>
+<summary><b>Proto 生成报错？</b></summary>
+
+1. 确认 `buf` 工具已安装：`buf --version`
+2. 确认 proto 文件语法正确，特别是 import 路径
+3. 执行 `make api` 重新生成
+4. 如仍报错，检查 `api/buf.gen.yaml` 配置
+</details>
+
+<details>
+<summary><b>Ent 生成后编译不通过？</b></summary>
+
+1. 确认 ent schema 定义在 `app/core/service/internal/data/ent/schema/` 下
+2. 执行 `make ent` 重新生成
+3. 如有自定义模板，检查 `entc.go` 配置
+</details>
+
+<details>
+<summary><b>admin/app 服务能直接操作数据库吗？</b></summary>
+
+**不能**。admin 和 app 服务是"瘦"网关，只做参数校验和 gRPC 转发。所有数据库操作必须在 core 服务中进行。详见 [backend/AGENTS.md](./backend/AGENTS.md)。
+</details>
+
+<details>
+<summary><b>如何新增一个记账领域实体？</b></summary>
+
+完整流程见 [backend/AGENTS.md · 新增业务模块 Checklist](./backend/AGENTS.md#新增业务模块-checklist以-user-模块为模板)。概要：proto → make api → ent schema → make ent → repo → service → wire → 网关转发。
+</details>
+
+<details>
+<summary><b>前端的 API 类型在哪里定义？</b></summary>
+
+类型由 protobuf 自动生成在 `frontend/admin/apps/admin/src/api/generated/` 目录下，**禁止手动修改**。通过 `#/api` 统一入口导入。
+</details>
+
+## 贡献指南
+
+本项目采用 **Protobuf-first（契约优先）** 开发模式，所有接口变更必须先在 proto 文件中定义。各子项目有独立的 AI 编码规范：
+
+| 文档 | 说明 |
+|:---|:---|
+| [backend/AGENTS.md](./backend/AGENTS.md) | 后端 AI 编码规范（Go + Kratos + Ent） |
+| [frontend/admin/AGENTS.md](./frontend/admin/AGENTS.md) | Admin 前端 AI 编码规范（Vue3 + Vben Admin） |
+| [frontend/app/flutter_app/AGENTS.md](./frontend/app/flutter_app/AGENTS.md) | Flutter 移动端 AI 编码规范 |
+| [backend/SKILL.md](./backend/SKILL.md) | 后端模块开发技能指南 |
+| [frontend/admin/SKILL.md](./frontend/admin/SKILL.md) | Admin 前端开发技能指南 |
+| [frontend/app/flutter_app/SKILL.md](./frontend/app/flutter_app/SKILL.md) | Flutter 移动端开发技能指南 |
 
 ## 开源协议
 
