@@ -56,7 +56,10 @@ func Server() middleware.Middleware {
 
 func metaDataToUserViewerContext(md *authenticationV1.OperatorMetadata, traceID string) viewer.Context {
 	if md == nil {
-		return nil
+		// When no operator metadata is present (e.g. system/init calls
+		// via gRPC from Admin BFF init()), fall back to SystemViewer
+		// to allow ent queries to proceed without tenant filtering.
+		return appViewer.NewSystemViewer()
 	}
 
 	userViewer := appViewer.NewUserViewer(
