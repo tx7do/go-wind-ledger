@@ -2,79 +2,212 @@ package data
 
 import (
 	"context"
+	"time"
 
 	"github.com/go-kratos/kratos/v2/log"
+	entCrud "github.com/tx7do/go-crud/entgo"
 	"github.com/tx7do/kratos-bootstrap/bootstrap"
 
-	paginationV1 "github.com/tx7do/go-crud/api/gen/go/pagination/v1"
-	entCrud "github.com/tx7do/go-crud/entgo"
-	"github.com/tx7do/go-utils/mapper"
-
 	"go-wind-ledger/app/core/service/internal/data/ent"
+	"go-wind-ledger/app/core/service/internal/data/ent/permissionapi"
 
 	permissionV1 "go-wind-ledger/api/gen/go/permission/service/v1"
 )
 
 type PermissionApiRepo struct {
-	entClient *entCrud.EntClient[*ent.Client]
 	log       *log.Helper
-	mapper    *mapper.CopierMapper[permissionV1.Permission, ent.PermissionApi]
+	entClient *entCrud.EntClient[*ent.Client]
 }
 
 func NewPermissionApiRepo(ctx *bootstrap.Context, entClient *entCrud.EntClient[*ent.Client]) *PermissionApiRepo {
 	return &PermissionApiRepo{
 		log:       ctx.NewLoggerHelper("permission-api/repo/core-service"),
 		entClient: entClient,
-		mapper:    mapper.NewCopierMapper[permissionV1.Permission, ent.PermissionApi](),
 	}
 }
 
-func (r *PermissionApiRepo) List(ctx context.Context, req *paginationV1.PagingRequest) (*permissionV1.ListPermissionResponse, error) {
-	q := r.entClient.Client().PermissionApi.Query()
-	total, _ := q.Count(ctx)
-	entities, err := q.All(ctx)
+// CleanApis 清理权限的所有API资源
+func (r *PermissionApiRepo) CleanApis(
+	ctx context.Context,
+	tx *ent.Tx,
+	permissionIDs []uint32,
+) error {
+	if _, err := tx.PermissionApi.Delete().
+		Where(
+			permissionapi.PermissionIDIn(permissionIDs...),
+		).
+		Exec(ctx); err != nil {
+		r.log.Errorf("delete old permission apis failed: %s", err.Error())
+		return permissionV1.ErrorInternalServerError("delete old permission apis failed")
+	}
+	return nil
+}
+
+// CleanNotExistApis 清理权限中不存在的API资源
+func (r *PermissionApiRepo) CleanNotExistApis(
+	ctx context.Context,
+	tx *ent.Tx,
+	permissionID uint32,
+	apiIDs []uint32,
+) error {
+	if _, err := tx.PermissionApi.Delete().
+		Where(
+			permissionapi.APIIDNotIn(apiIDs...),
+			permissionapi.PermissionIDEQ(permissionID),
+		).
+		Exec(ctx); err != nil {
+		r.log.Errorf("clean not exists permission apis failed: %s", err.Error())
+		return permissionV1.ErrorInternalServerError("clean not exists permission apis failed")
+	}
+	return nil
+}
+
+// AssignApis 给权限分配API资源
+func (r *PermissionApiRepo) AssignApis(
+	ctx context.Context,
+	permissionID uint32,
+	apiIDs []uint32,
+) (err error) {
+	var tx *ent.Tx
+	tx, err = r.entClient.Client().Tx(ctx)
 	if err != nil {
-		return nil, permissionV1.ErrorInternalServerError("query failed")
+		r.log.Errorf("start transaction failed: %s", err.Error())
+		return permissionV1.ErrorInternalServerError("start transaction failed")
 	}
-	items := make([]*permissionV1.Permission, 0, len(entities))
-	for _, e := range entities {
-		items = append(items, r.mapper.ToDTO(e))
+	defer func() {
+		if err != nil {
+			if rollbackErr := tx.Rollback(); rollbackErr != nil {
+				r.log.Errorf("transaction rollback failed: %s", rollbackErr.Error())
+			}
+			return
+		}
+		if commitErr := tx.Commit(); commitErr != nil {
+			r.log.Errorf("transaction commit failed: %s", commitErr.Error())
+			err = permissionV1.ErrorInternalServerError("transaction commit failed")
+		}
+	}()
+
+	if err = r.CleanNotExistApis(ctx, tx, permissionID, apiIDs); err != nil {
+
 	}
-	return &permissionV1.ListPermissionResponse{Items: items, Total: uint64(total)}, nil
+
+	return r.AssignApisWithTx(ctx, tx, permissionID, apiIDs)
 }
 
-func (r *PermissionApiRepo) Delete(ctx context.Context, id uint32) error {
-	return r.entClient.Client().PermissionApi.DeleteOneID(id).Exec(ctx)
+// AssignApisWithTx 给权限分配API资源
+func (r *PermissionApiRepo) AssignApisWithTx(
+	ctx context.Context,
+	tx *ent.Tx,
+	permissionID uint32,
+	apis []uint32,
+) error {
+	if len(apis) == 0 {
+		return nil
+	}
+
+	now := time.Now()
+
+	for _, apiID := range apis {
+		pm := tx.PermissionApi.
+			Create().
+			SetPermissionID(permissionID).
+			SetAPIID(apiID).
+			SetCreatedAt(now).
+			OnConflictColumns(
+				permissionapi.FieldPermissionID,
+				permissionapi.FieldAPIID,
+			).
+			UpdateNewValues().
+			SetUpdatedAt(now)
+		if err := pm.Exec(ctx); err != nil {
+			r.log.Errorf("assign permission apis failed: %s", err.Error())
+			return permissionV1.ErrorInternalServerError("assign permission apis failed")
+		}
+	}
+
+	return nil
 }
 
+// ListApiIDs 列出权限关联的API资源ID列表
 func (r *PermissionApiRepo) ListApiIDs(ctx context.Context, permissionIDs []uint32) ([]uint32, error) {
-	entities, err := r.entClient.Client().PermissionApi.Query().All(ctx)
+	q := r.entClient.Client().PermissionApi.
+		Query().
+		Where(
+			permissionapi.PermissionIDIn(permissionIDs...),
+		)
+
+	intIDs, err := q.
+		Select(permissionapi.FieldAPIID).
+		Ints(ctx)
 	if err != nil {
-		return nil, err
+		r.log.Errorf("list permission apis by permission id failed: %s", err.Error())
+		return nil, permissionV1.ErrorInternalServerError("list permission apis by permission id failed")
 	}
-	ids := make([]uint32, 0, len(entities))
-	for _, e := range entities {
-		ids = append(ids, e.ID)
+
+	ids := make([]uint32, len(intIDs))
+	for i, v := range intIDs {
+		ids[i] = uint32(v)
 	}
 	return ids, nil
 }
 
-func (r *PermissionApiRepo) AssignApis(ctx context.Context, permissionID uint32, apiIDs []uint32) error {
-	for range apiIDs {
-		_, err := r.entClient.Client().PermissionApi.Create().SetPermissionID(permissionID).Save(ctx)
-		if err != nil {
-			return err
-		}
+// Truncate 清空表数据
+func (r *PermissionApiRepo) Truncate(ctx context.Context) error {
+	builder := r.entClient.Client().PermissionApi.Delete().
+		Where(
+			permissionapi.PermissionIDNotIn(1, 2, 3),
+		)
+
+	if _, err := builder.Exec(ctx); err != nil {
+		r.log.Errorf("failed to truncate permission api table: %s", err.Error())
+		return permissionV1.ErrorInternalServerError("truncate failed")
+	}
+
+	return nil
+}
+
+// Delete 删除权限关联的API资源
+func (r *PermissionApiRepo) Delete(ctx context.Context, permissionID uint32) error {
+	if _, err := r.entClient.Client().PermissionApi.Delete().
+		Where(
+			permissionapi.PermissionIDEQ(permissionID),
+		).
+		Exec(ctx); err != nil {
+		r.log.Errorf("delete permission apis by permission id failed: %s", err.Error())
+		return permissionV1.ErrorInternalServerError("delete permission apis by permission id failed")
 	}
 	return nil
 }
 
 func (r *PermissionApiRepo) DeleteByPermissionIDs(ctx context.Context, permissionIDs []uint32) error {
-	_, err := r.entClient.Client().PermissionApi.Delete().Exec(ctx)
-	return err
+	if _, err := r.entClient.Client().PermissionApi.Delete().
+		Where(
+			permissionapi.PermissionIDIn(permissionIDs...),
+		).
+		Exec(ctx); err != nil {
+		r.log.Errorf("delete permission apis by permission ids failed: %s", err.Error())
+		return permissionV1.ErrorInternalServerError("delete permission apis by permission ids failed")
+	}
+	return nil
 }
 
-func (r *PermissionApiRepo) Truncate(ctx context.Context, permissionID ...uint32) error {
-	_, err := r.entClient.Client().PermissionApi.Delete().Exec(ctx)
-	return err
+// AssignApi 给权限分配API资源
+func (r *PermissionApiRepo) AssignApi(ctx context.Context, permissionID uint32, apiID uint32) error {
+	now := time.Now()
+	pm := r.entClient.Client().PermissionApi.
+		Create().
+		SetPermissionID(permissionID).
+		SetAPIID(apiID).
+		SetCreatedAt(now).
+		OnConflictColumns(
+			permissionapi.FieldPermissionID,
+			permissionapi.FieldAPIID,
+		).
+		UpdateNewValues().
+		SetUpdatedAt(now)
+	if err := pm.Exec(ctx); err != nil {
+		return permissionV1.ErrorInternalServerError("assign permission api failed")
+	}
+
+	return nil
 }
