@@ -42,16 +42,16 @@ type LedgerTagServiceHTTPServer interface {
 
 func RegisterLedgerTagServiceHTTPServer(s *http.Server, srv LedgerTagServiceHTTPServer) {
 	r := s.Route("/")
-	r.GET("/app/v1/ledger-tags", _LedgerTagService_List8_HTTP_Handler(srv))
-	r.GET("/app/v1/ledger-tags/all", _LedgerTagService_ListAll5_HTTP_Handler(srv))
-	r.GET("/app/v1/ledger-tags/{id}", _LedgerTagService_Get7_HTTP_Handler(srv))
-	r.POST("/app/v1/ledger-tags", _LedgerTagService_Create6_HTTP_Handler(srv))
-	r.PUT("/app/v1/ledger-tags/{id}", _LedgerTagService_Update6_HTTP_Handler(srv))
-	r.DELETE("/app/v1/ledger-tags/{id}", _LedgerTagService_Delete7_HTTP_Handler(srv))
+	r.GET("/app/v1/ledger-tags", _LedgerTagService_List9_HTTP_Handler(srv))
+	r.GET("/app/v1/ledger-tags/all", _LedgerTagService_ListAll6_HTTP_Handler(srv))
+	r.GET("/app/v1/ledger-tags/{id}", _LedgerTagService_Get8_HTTP_Handler(srv))
+	r.POST("/app/v1/ledger-tags", _LedgerTagService_Create7_HTTP_Handler(srv))
+	r.PUT("/app/v1/ledger-tags/{id}", _LedgerTagService_Update7_HTTP_Handler(srv))
+	r.DELETE("/app/v1/ledger-tags/{id}", _LedgerTagService_Delete8_HTTP_Handler(srv))
 	r.PATCH("/app/v1/ledger-tags/{id}/toggle", _LedgerTagService_Toggle3_HTTP_Handler(srv))
 }
 
-func _LedgerTagService_List8_HTTP_Handler(srv LedgerTagServiceHTTPServer) func(ctx http.Context) error {
+func _LedgerTagService_List9_HTTP_Handler(srv LedgerTagServiceHTTPServer) func(ctx http.Context) error {
 	return func(ctx http.Context) error {
 		var in v1.PagingRequest
 		if err := ctx.BindQuery(&in); err != nil {
@@ -70,7 +70,7 @@ func _LedgerTagService_List8_HTTP_Handler(srv LedgerTagServiceHTTPServer) func(c
 	}
 }
 
-func _LedgerTagService_ListAll5_HTTP_Handler(srv LedgerTagServiceHTTPServer) func(ctx http.Context) error {
+func _LedgerTagService_ListAll6_HTTP_Handler(srv LedgerTagServiceHTTPServer) func(ctx http.Context) error {
 	return func(ctx http.Context) error {
 		var in v11.ListAllTagRequest
 		if err := ctx.BindQuery(&in); err != nil {
@@ -89,7 +89,7 @@ func _LedgerTagService_ListAll5_HTTP_Handler(srv LedgerTagServiceHTTPServer) fun
 	}
 }
 
-func _LedgerTagService_Get7_HTTP_Handler(srv LedgerTagServiceHTTPServer) func(ctx http.Context) error {
+func _LedgerTagService_Get8_HTTP_Handler(srv LedgerTagServiceHTTPServer) func(ctx http.Context) error {
 	return func(ctx http.Context) error {
 		var in v11.GetTagRequest
 		if err := ctx.BindQuery(&in); err != nil {
@@ -111,7 +111,7 @@ func _LedgerTagService_Get7_HTTP_Handler(srv LedgerTagServiceHTTPServer) func(ct
 	}
 }
 
-func _LedgerTagService_Create6_HTTP_Handler(srv LedgerTagServiceHTTPServer) func(ctx http.Context) error {
+func _LedgerTagService_Create7_HTTP_Handler(srv LedgerTagServiceHTTPServer) func(ctx http.Context) error {
 	return func(ctx http.Context) error {
 		var in v11.CreateTagRequest
 		if err := ctx.Bind(&in); err != nil {
@@ -133,7 +133,7 @@ func _LedgerTagService_Create6_HTTP_Handler(srv LedgerTagServiceHTTPServer) func
 	}
 }
 
-func _LedgerTagService_Update6_HTTP_Handler(srv LedgerTagServiceHTTPServer) func(ctx http.Context) error {
+func _LedgerTagService_Update7_HTTP_Handler(srv LedgerTagServiceHTTPServer) func(ctx http.Context) error {
 	return func(ctx http.Context) error {
 		var in v11.UpdateTagRequest
 		if err := ctx.Bind(&in); err != nil {
@@ -158,7 +158,7 @@ func _LedgerTagService_Update6_HTTP_Handler(srv LedgerTagServiceHTTPServer) func
 	}
 }
 
-func _LedgerTagService_Delete7_HTTP_Handler(srv LedgerTagServiceHTTPServer) func(ctx http.Context) error {
+func _LedgerTagService_Delete8_HTTP_Handler(srv LedgerTagServiceHTTPServer) func(ctx http.Context) error {
 	return func(ctx http.Context) error {
 		var in v11.DeleteTagRequest
 		if err := ctx.BindQuery(&in); err != nil {

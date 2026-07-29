@@ -905,6 +905,195 @@ paths:
                         application/json:
                             schema:
                                 $ref: '#/components/schemas/ledger.service.v1.Book'
+    /app/v1/budgets:
+        get:
+            tags:
+                - BudgetService
+            operationId: BudgetService_List
+            parameters:
+                - name: page
+                  in: query
+                  description: 当前页码（从1开始，默认1）
+                  schema:
+                    type: integer
+                    format: uint32
+                - name: pageSize
+                  in: query
+                  description: 每页条数（默认10，建议设置上限如100）
+                  schema:
+                    type: integer
+                    format: uint32
+                - name: offset
+                  in: query
+                  description: 跳过的记录数（从0开始，默认0）
+                  schema:
+                    type: string
+                - name: limit
+                  in: query
+                  description: 最多返回的记录数（默认10，建议设置上限如100）
+                  schema:
+                    type: integer
+                    format: uint32
+                - name: token
+                  in: query
+                  description: 上一页最后一条记录的游标（如ID/时间戳+ID，首次请求为空）
+                  schema:
+                    type: string
+                - name: noPaging
+                  in: query
+                  description: 是否不分页，如果为true，则page和pageSize参数无效。
+                  schema:
+                    type: boolean
+                - name: query
+                  in: query
+                  description: JSON字符串过滤条件，基础语法：{"field1":"val1", "field2___icontains":"val2"}，具体请参见：https://github.com/tx7do/go-crud/tree/main/pagination/filter/README.md
+                  schema:
+                    type: string
+                - name: filter
+                  in: query
+                  description: Google AIP规范字符串过滤条件
+                  schema:
+                    type: string
+                - name: filterExpr.type
+                  in: query
+                  description: 过滤表达式类型
+                  schema:
+                    enum:
+                        - EXPR_TYPE_UNSPECIFIED
+                        - AND
+                        - OR
+                    type: string
+                    format: enum
+                - name: orderBy
+                  in: query
+                  description: 排序条件
+                  schema:
+                    type: string
+                - name: fieldMask
+                  in: query
+                  description: 字段掩码，其作用为SELECT中的字段，其语法为使用逗号分隔字段名，例如：id,realName,userName。如果为空则选中所有字段，即SELECT *。
+                  schema:
+                    type: string
+                    format: field-mask
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/ledger.service.v1.ListBudgetResponse'
+        post:
+            tags:
+                - BudgetService
+            operationId: BudgetService_Create
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/ledger.service.v1.CreateBudgetRequest'
+                required: true
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/ledger.service.v1.Budget'
+    /app/v1/budgets/all:
+        get:
+            tags:
+                - BudgetService
+            operationId: BudgetService_ListAll
+            parameters:
+                - name: bookId
+                  in: query
+                  schema:
+                    type: integer
+                    format: uint32
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/ledger.service.v1.ListBudgetResponse'
+    /app/v1/budgets/{id}:
+        get:
+            tags:
+                - BudgetService
+            operationId: BudgetService_Get
+            parameters:
+                - name: id
+                  in: path
+                  required: true
+                  schema:
+                    type: integer
+                    format: uint32
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/ledger.service.v1.Budget'
+        put:
+            tags:
+                - BudgetService
+            operationId: BudgetService_Update
+            parameters:
+                - name: id
+                  in: path
+                  required: true
+                  schema:
+                    type: integer
+                    format: uint32
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/ledger.service.v1.UpdateBudgetRequest'
+                required: true
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/ledger.service.v1.Budget'
+        delete:
+            tags:
+                - BudgetService
+            operationId: BudgetService_Delete
+            parameters:
+                - name: id
+                  in: path
+                  required: true
+                  schema:
+                    type: integer
+                    format: uint32
+            responses:
+                "200":
+                    description: OK
+                    content: {}
+    /app/v1/budgets/{id}/progress:
+        get:
+            tags:
+                - BudgetService
+            operationId: BudgetService_GetProgress
+            parameters:
+                - name: id
+                  in: path
+                  required: true
+                  schema:
+                    type: integer
+                    format: uint32
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/ledger.service.v1.BudgetProgress'
     /app/v1/categories:
         get:
             tags:
@@ -1543,6 +1732,46 @@ paths:
                         application/json:
                             schema:
                                 $ref: '#/components/schemas/ledger.service.v1.ListFlowFileResponse'
+    /app/v1/flow-files/upload:
+        post:
+            tags:
+                - FlowFileService
+            operationId: FlowFileService_UploadFile
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/ledger.service.v1.UploadFlowFileRequest'
+                required: true
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/ledger.service.v1.FlowFile'
+    /app/v1/flow-files/view:
+        get:
+            tags:
+                - FlowFileService
+            operationId: FlowFileService_ViewFile
+            parameters:
+                - name: id
+                  in: query
+                  schema:
+                    type: integer
+                    format: uint32
+                - name: createTime
+                  in: query
+                  schema:
+                    type: string
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/ledger.service.v1.ViewFlowFileResponse'
     /app/v1/flow-files/{id}:
         delete:
             tags:
@@ -3852,6 +4081,182 @@ paths:
                         application/json:
                             schema:
                                 $ref: '#/components/schemas/content.service.v1.TagTranslation'
+    /app/v1/tenant-members:
+        get:
+            tags:
+                - TenantMemberService
+            operationId: TenantMemberService_ListMembers
+            parameters:
+                - name: tenantId
+                  in: query
+                  schema:
+                    type: integer
+                    format: uint32
+                - name: status
+                  in: query
+                  schema:
+                    enum:
+                        - DISABLED
+                        - ACTIVE
+                        - PENDING
+                        - INVITED
+                        - EXPIRED
+                        - REJECTED
+                    type: string
+                    format: enum
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/identity.service.v1.ListMembersResponse'
+    /app/v1/tenant-members/invite:
+        post:
+            tags:
+                - TenantMemberService
+            operationId: TenantMemberService_InviteMember
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/identity.service.v1.InviteMemberRequest'
+                required: true
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/identity.service.v1.Membership'
+    /app/v1/tenant-members/my-tenants:
+        get:
+            tags:
+                - TenantMemberService
+            operationId: TenantMemberService_ListMyTenants
+            parameters:
+                - name: userId
+                  in: query
+                  schema:
+                    type: integer
+                    format: uint32
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/identity.service.v1.ListMyTenantsResponse'
+    /app/v1/tenant-members/remove:
+        delete:
+            tags:
+                - TenantMemberService
+            operationId: TenantMemberService_RemoveMember
+            parameters:
+                - name: tenantId
+                  in: query
+                  schema:
+                    type: integer
+                    format: uint32
+                - name: userId
+                  in: query
+                  schema:
+                    type: integer
+                    format: uint32
+            responses:
+                "200":
+                    description: OK
+                    content: {}
+    /app/v1/tenant-members/{id}:
+        get:
+            tags:
+                - TenantMemberService
+            operationId: TenantMemberService_GetMembership
+            parameters:
+                - name: id
+                  in: path
+                  required: true
+                  schema:
+                    type: integer
+                    format: uint32
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/identity.service.v1.Membership'
+        put:
+            tags:
+                - TenantMemberService
+            operationId: TenantMemberService_UpdateMembership
+            parameters:
+                - name: id
+                  in: path
+                  required: true
+                  schema:
+                    type: integer
+                    format: uint32
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/identity.service.v1.UpdateMembershipRequest'
+                required: true
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/identity.service.v1.Membership'
+    /app/v1/tenant-members/{id}/accept:
+        patch:
+            tags:
+                - TenantMemberService
+            operationId: TenantMemberService_AcceptInvite
+            parameters:
+                - name: id
+                  in: path
+                  required: true
+                  schema:
+                    type: integer
+                    format: uint32
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/identity.service.v1.AcceptInviteRequest'
+                required: true
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/identity.service.v1.Membership'
+    /app/v1/tenant-members/{id}/reject:
+        patch:
+            tags:
+                - TenantMemberService
+            operationId: TenantMemberService_RejectInvite
+            parameters:
+                - name: id
+                  in: path
+                  required: true
+                  schema:
+                    type: integer
+                    format: uint32
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/identity.service.v1.RejectInviteRequest'
+                required: true
+            responses:
+                "200":
+                    description: OK
+                    content: {}
 components:
     schemas:
         KratosStatus:
@@ -5151,6 +5556,13 @@ components:
                     type: boolean
                     description: 如果设置为true的时候，资源不存在则会新增(插入)，并且在这种情况下`updateMask`字段将会被忽略。
             description: 请求 - 更新标签
+        identity.service.v1.AcceptInviteRequest:
+            type: object
+            properties:
+                id:
+                    type: integer
+                    format: uint32
+            description: 请求 - 接受邀请
         identity.service.v1.BindContactRequest:
             type: object
             properties:
@@ -5198,6 +5610,179 @@ components:
                     type: string
                     description: 邮箱验证码
             description: 邮箱验证
+        identity.service.v1.InviteMemberRequest:
+            type: object
+            properties:
+                tenantId:
+                    type: integer
+                    format: uint32
+                username:
+                    type: string
+                roleId:
+                    type: integer
+                    format: uint32
+            description: 请求 - 邀请用户
+        identity.service.v1.ListMembersResponse:
+            type: object
+            properties:
+                items:
+                    type: array
+                    items:
+                        $ref: '#/components/schemas/identity.service.v1.MemberInfo'
+                total:
+                    type: string
+            description: 回应 - 成员列表
+        identity.service.v1.ListMyTenantsResponse:
+            type: object
+            properties:
+                items:
+                    type: array
+                    items:
+                        $ref: '#/components/schemas/identity.service.v1.TenantMembershipInfo'
+                total:
+                    type: string
+            description: 回应 - 我的租户列表
+        identity.service.v1.MemberInfo:
+            type: object
+            properties:
+                id:
+                    type: integer
+                    format: uint32
+                userId:
+                    type: integer
+                    format: uint32
+                username:
+                    type: string
+                nickname:
+                    type: string
+                tenantId:
+                    type: integer
+                    format: uint32
+                roleId:
+                    type: integer
+                    format: uint32
+                roleName:
+                    type: string
+                status:
+                    enum:
+                        - DISABLED
+                        - ACTIVE
+                        - PENDING
+                        - INVITED
+                        - EXPIRED
+                        - REJECTED
+                    type: string
+                    format: enum
+                isPrimary:
+                    type: boolean
+                joinedAt:
+                    type: string
+                    format: date-time
+            description: 成员信息（含用户名/昵称）
+        identity.service.v1.Membership:
+            type: object
+            properties:
+                id:
+                    type: integer
+                    description: ID
+                    format: uint32
+                userId:
+                    type: integer
+                    description: 用户ID
+                    format: uint32
+                tenantId:
+                    type: integer
+                    description: 租户ID
+                    format: uint32
+                isPrimary:
+                    type: boolean
+                    description: 是否主身份
+                status:
+                    enum:
+                        - DISABLED
+                        - ACTIVE
+                        - PENDING
+                        - INVITED
+                        - EXPIRED
+                        - REJECTED
+                    type: string
+                    description: 状态
+                    format: enum
+                assignedAt:
+                    type: string
+                    description: 分配时间（UTC）
+                    format: date-time
+                assignedBy:
+                    type: integer
+                    description: 分配者用户 ID
+                    format: uint32
+                joinedAt:
+                    type: string
+                    description: 加入时间（UTC）
+                    format: date-time
+                startAt:
+                    type: string
+                    description: 生效时间
+                    format: date-time
+                endAt:
+                    type: string
+                    description: 失效时间
+                    format: date-time
+                roleId:
+                    type: integer
+                    description: 角色ID
+                    format: uint32
+                roleIds:
+                    type: array
+                    items:
+                        type: integer
+                        format: uint32
+                    description: 角色ID
+                positionId:
+                    type: integer
+                    description: 岗位ID
+                    format: uint32
+                positionIds:
+                    type: array
+                    items:
+                        type: integer
+                        format: uint32
+                    description: 岗位ID
+                orgUnitId:
+                    type: integer
+                    description: 组织ID
+                    format: uint32
+                orgUnitIds:
+                    type: array
+                    items:
+                        type: integer
+                        format: uint32
+                    description: 组织ID
+                createdBy:
+                    type: integer
+                    description: 创建者用户ID
+                    format: uint32
+                updatedBy:
+                    type: integer
+                    description: 更新者用户ID
+                    format: uint32
+                deletedBy:
+                    type: integer
+                    description: 删除者用户ID
+                    format: uint32
+                createdAt:
+                    type: string
+                    description: 创建时间
+                    format: date-time
+                updatedAt:
+                    type: string
+                    description: 更新时间
+                    format: date-time
+                deletedAt:
+                    type: string
+                    description: 删除时间
+                    format: date-time
+            description: 成员关联
         identity.service.v1.PhoneVerification:
             required:
                 - code
@@ -5210,6 +5795,13 @@ components:
                     type: string
                     description: 短信验证码
             description: 手机验证
+        identity.service.v1.RejectInviteRequest:
+            type: object
+            properties:
+                id:
+                    type: integer
+                    format: uint32
+            description: 请求 - 拒绝邀请
         identity.service.v1.Tenant:
             type: object
             properties:
@@ -5315,6 +5907,49 @@ components:
                     description: 删除时间
                     format: date-time
             description: 租户
+        identity.service.v1.TenantMembershipInfo:
+            type: object
+            properties:
+                tenantId:
+                    type: integer
+                    format: uint32
+                tenantName:
+                    type: string
+                membershipId:
+                    type: integer
+                    format: uint32
+                roleId:
+                    type: integer
+                    format: uint32
+                roleName:
+                    type: string
+                status:
+                    enum:
+                        - DISABLED
+                        - ACTIVE
+                        - PENDING
+                        - INVITED
+                        - EXPIRED
+                        - REJECTED
+                    type: string
+                    format: enum
+                isPrimary:
+                    type: boolean
+            description: 租户信息（含成员角色）
+        identity.service.v1.UpdateMembershipRequest:
+            type: object
+            properties:
+                id:
+                    type: integer
+                    format: uint32
+                data:
+                    $ref: '#/components/schemas/identity.service.v1.Membership'
+                updateMask:
+                    type: string
+                    format: field-mask
+                allowMissing:
+                    type: boolean
+            description: 请求 - 更新成员
         identity.service.v1.UpdateUserRequest:
             required:
                 - data
@@ -5875,6 +6510,85 @@ components:
                     items:
                         $ref: '#/components/schemas/ledger.service.v1.PayeeTemplate'
             description: 账本模板
+        ledger.service.v1.Budget:
+            type: object
+            properties:
+                id:
+                    type: integer
+                    format: uint32
+                tenantId:
+                    type: integer
+                    format: uint32
+                bookId:
+                    type: integer
+                    format: uint32
+                name:
+                    type: string
+                period:
+                    enum:
+                        - BUDGET_PERIOD_UNSPECIFIED
+                        - BUDGET_PERIOD_MONTHLY
+                        - BUDGET_PERIOD_YEARLY
+                        - BUDGET_PERIOD_QUARTERLY
+                        - BUDGET_PERIOD_WEEKLY
+                    type: string
+                    format: enum
+                amount:
+                    type: string
+                usedAmount:
+                    type: string
+                categoryId:
+                    type: integer
+                    format: uint32
+                accountId:
+                    type: integer
+                    format: uint32
+                startDate:
+                    type: string
+                endDate:
+                    type: string
+                enable:
+                    type: boolean
+                notify:
+                    type: boolean
+                notes:
+                    type: string
+                createdBy:
+                    type: integer
+                    format: uint32
+                updatedBy:
+                    type: integer
+                    format: uint32
+                createdAt:
+                    type: string
+                    format: date-time
+                updatedAt:
+                    type: string
+                    format: date-time
+            description: 预算
+        ledger.service.v1.BudgetProgress:
+            type: object
+            properties:
+                budgetId:
+                    type: integer
+                    format: uint32
+                budgetName:
+                    type: string
+                amount:
+                    type: string
+                usedAmount:
+                    type: string
+                remaining:
+                    type: string
+                usagePercent:
+                    type: string
+                exceeded:
+                    type: boolean
+                periodStart:
+                    type: string
+                periodEnd:
+                    type: string
+            description: 预算进度
         ledger.service.v1.Category:
             type: object
             properties:
@@ -6048,6 +6762,12 @@ components:
                 data:
                     $ref: '#/components/schemas/ledger.service.v1.Book'
             description: 请求 - 创建账本
+        ledger.service.v1.CreateBudgetRequest:
+            type: object
+            properties:
+                data:
+                    $ref: '#/components/schemas/ledger.service.v1.Budget'
+            description: 请求 - 创建预算
         ledger.service.v1.CreateCategoryRequest:
             type: object
             properties:
@@ -6156,6 +6876,16 @@ components:
                     items:
                         $ref: '#/components/schemas/ledger.service.v1.BookTemplate'
             description: 回应 - 账本模板列表
+        ledger.service.v1.ListBudgetResponse:
+            type: object
+            properties:
+                items:
+                    type: array
+                    items:
+                        $ref: '#/components/schemas/ledger.service.v1.Budget'
+                total:
+                    type: string
+            description: 回应 - 预算列表
         ledger.service.v1.ListCategoryResponse:
             type: object
             properties:
@@ -6528,6 +7258,20 @@ components:
                     type: boolean
                     description: 如果设置为true的时候，资源不存在则会新增(插入)
             description: 请求 - 更新账本
+        ledger.service.v1.UpdateBudgetRequest:
+            type: object
+            properties:
+                id:
+                    type: integer
+                    format: uint32
+                data:
+                    $ref: '#/components/schemas/ledger.service.v1.Budget'
+                updateMask:
+                    type: string
+                    format: field-mask
+                allowMissing:
+                    type: boolean
+            description: 请求 - 更新预算
         ledger.service.v1.UpdateCategoryRequest:
             type: object
             properties:
@@ -6581,6 +7325,33 @@ components:
                     format: field-mask
                 allowMissing:
                     type: boolean
+        ledger.service.v1.UploadFlowFileRequest:
+            type: object
+            properties:
+                flowId:
+                    type: integer
+                    format: uint32
+                fileName:
+                    type: string
+                contentType:
+                    type: string
+                size:
+                    type: string
+                data:
+                    type: string
+                    format: bytes
+            description: 请求 - 上传附件
+        ledger.service.v1.ViewFlowFileResponse:
+            type: object
+            properties:
+                contentType:
+                    type: string
+                originalName:
+                    type: string
+                data:
+                    type: string
+                    format: bytes
+            description: 回应 - 查看附件（返回文件内容）
         site.service.v1.CreateNavigationRequest:
             type: object
             properties:
@@ -6878,6 +7649,8 @@ tags:
     - name: BookService
     - name: BookTemplateService
       description: 账本模板服务（App BFF）
+    - name: BudgetService
+      description: 预算服务（App BFF）
     - name: CategoryService
       description: 类别服务
     - name: CommentService
@@ -6903,5 +7676,7 @@ tags:
       description: 页面区块服务
     - name: TagService
       description: 标签服务
+    - name: TenantMemberService
+      description: 成员管理服务（App BFF）
     - name: UserProfileService
       description: 用户个人资料服务

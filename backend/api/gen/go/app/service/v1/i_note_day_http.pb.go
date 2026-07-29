@@ -42,16 +42,16 @@ type NoteDayServiceHTTPServer interface {
 
 func RegisterNoteDayServiceHTTPServer(s *http.Server, srv NoteDayServiceHTTPServer) {
 	r := s.Route("/")
-	r.GET("/app/v1/note-days", _NoteDayService_List10_HTTP_Handler(srv))
-	r.GET("/app/v1/note-days/{id}", _NoteDayService_Get9_HTTP_Handler(srv))
-	r.POST("/app/v1/note-days", _NoteDayService_Create8_HTTP_Handler(srv))
-	r.PUT("/app/v1/note-days/{id}", _NoteDayService_Update8_HTTP_Handler(srv))
-	r.DELETE("/app/v1/note-days/{id}", _NoteDayService_Delete9_HTTP_Handler(srv))
+	r.GET("/app/v1/note-days", _NoteDayService_List11_HTTP_Handler(srv))
+	r.GET("/app/v1/note-days/{id}", _NoteDayService_Get10_HTTP_Handler(srv))
+	r.POST("/app/v1/note-days", _NoteDayService_Create9_HTTP_Handler(srv))
+	r.PUT("/app/v1/note-days/{id}", _NoteDayService_Update9_HTTP_Handler(srv))
+	r.DELETE("/app/v1/note-days/{id}", _NoteDayService_Delete10_HTTP_Handler(srv))
 	r.PATCH("/app/v1/note-days/{id}/run", _NoteDayService_Run0_HTTP_Handler(srv))
 	r.PATCH("/app/v1/note-days/{id}/recall", _NoteDayService_Recall0_HTTP_Handler(srv))
 }
 
-func _NoteDayService_List10_HTTP_Handler(srv NoteDayServiceHTTPServer) func(ctx http.Context) error {
+func _NoteDayService_List11_HTTP_Handler(srv NoteDayServiceHTTPServer) func(ctx http.Context) error {
 	return func(ctx http.Context) error {
 		var in v1.PagingRequest
 		if err := ctx.BindQuery(&in); err != nil {
@@ -70,7 +70,7 @@ func _NoteDayService_List10_HTTP_Handler(srv NoteDayServiceHTTPServer) func(ctx 
 	}
 }
 
-func _NoteDayService_Get9_HTTP_Handler(srv NoteDayServiceHTTPServer) func(ctx http.Context) error {
+func _NoteDayService_Get10_HTTP_Handler(srv NoteDayServiceHTTPServer) func(ctx http.Context) error {
 	return func(ctx http.Context) error {
 		var in v11.GetNoteDayRequest
 		if err := ctx.BindQuery(&in); err != nil {
@@ -92,7 +92,7 @@ func _NoteDayService_Get9_HTTP_Handler(srv NoteDayServiceHTTPServer) func(ctx ht
 	}
 }
 
-func _NoteDayService_Create8_HTTP_Handler(srv NoteDayServiceHTTPServer) func(ctx http.Context) error {
+func _NoteDayService_Create9_HTTP_Handler(srv NoteDayServiceHTTPServer) func(ctx http.Context) error {
 	return func(ctx http.Context) error {
 		var in v11.CreateNoteDayRequest
 		if err := ctx.Bind(&in); err != nil {
@@ -114,7 +114,7 @@ func _NoteDayService_Create8_HTTP_Handler(srv NoteDayServiceHTTPServer) func(ctx
 	}
 }
 
-func _NoteDayService_Update8_HTTP_Handler(srv NoteDayServiceHTTPServer) func(ctx http.Context) error {
+func _NoteDayService_Update9_HTTP_Handler(srv NoteDayServiceHTTPServer) func(ctx http.Context) error {
 	return func(ctx http.Context) error {
 		var in v11.UpdateNoteDayRequest
 		if err := ctx.Bind(&in); err != nil {
@@ -139,7 +139,7 @@ func _NoteDayService_Update8_HTTP_Handler(srv NoteDayServiceHTTPServer) func(ctx
 	}
 }
 
-func _NoteDayService_Delete9_HTTP_Handler(srv NoteDayServiceHTTPServer) func(ctx http.Context) error {
+func _NoteDayService_Delete10_HTTP_Handler(srv NoteDayServiceHTTPServer) func(ctx http.Context) error {
 	return func(ctx http.Context) error {
 		var in v11.DeleteNoteDayRequest
 		if err := ctx.BindQuery(&in); err != nil {

@@ -46,15 +46,15 @@ type PostServiceHTTPServer interface {
 
 func RegisterPostServiceHTTPServer(s *http.Server, srv PostServiceHTTPServer) {
 	r := s.Route("/")
-	r.GET("/app/v1/posts", _PostService_List13_HTTP_Handler(srv))
-	r.GET("/app/v1/posts/{id}", _PostService_Get12_HTTP_Handler(srv))
-	r.POST("/app/v1/posts", _PostService_Create11_HTTP_Handler(srv))
-	r.PUT("/app/v1/posts/{id}", _PostService_Update11_HTTP_Handler(srv))
-	r.DELETE("/app/v1/posts/{id}", _PostService_Delete12_HTTP_Handler(srv))
+	r.GET("/app/v1/posts", _PostService_List14_HTTP_Handler(srv))
+	r.GET("/app/v1/posts/{id}", _PostService_Get13_HTTP_Handler(srv))
+	r.POST("/app/v1/posts", _PostService_Create12_HTTP_Handler(srv))
+	r.PUT("/app/v1/posts/{id}", _PostService_Update12_HTTP_Handler(srv))
+	r.DELETE("/app/v1/posts/{id}", _PostService_Delete13_HTTP_Handler(srv))
 	r.GET("/app/v1/posts/{id}/translation", _PostService_GetTranslation2_HTTP_Handler(srv))
 }
 
-func _PostService_List13_HTTP_Handler(srv PostServiceHTTPServer) func(ctx http.Context) error {
+func _PostService_List14_HTTP_Handler(srv PostServiceHTTPServer) func(ctx http.Context) error {
 	return func(ctx http.Context) error {
 		var in v1.PagingRequest
 		if err := ctx.BindQuery(&in); err != nil {
@@ -73,7 +73,7 @@ func _PostService_List13_HTTP_Handler(srv PostServiceHTTPServer) func(ctx http.C
 	}
 }
 
-func _PostService_Get12_HTTP_Handler(srv PostServiceHTTPServer) func(ctx http.Context) error {
+func _PostService_Get13_HTTP_Handler(srv PostServiceHTTPServer) func(ctx http.Context) error {
 	return func(ctx http.Context) error {
 		var in v11.GetPostRequest
 		if err := ctx.BindQuery(&in); err != nil {
@@ -95,7 +95,7 @@ func _PostService_Get12_HTTP_Handler(srv PostServiceHTTPServer) func(ctx http.Co
 	}
 }
 
-func _PostService_Create11_HTTP_Handler(srv PostServiceHTTPServer) func(ctx http.Context) error {
+func _PostService_Create12_HTTP_Handler(srv PostServiceHTTPServer) func(ctx http.Context) error {
 	return func(ctx http.Context) error {
 		var in v11.CreatePostRequest
 		if err := ctx.Bind(&in); err != nil {
@@ -117,7 +117,7 @@ func _PostService_Create11_HTTP_Handler(srv PostServiceHTTPServer) func(ctx http
 	}
 }
 
-func _PostService_Update11_HTTP_Handler(srv PostServiceHTTPServer) func(ctx http.Context) error {
+func _PostService_Update12_HTTP_Handler(srv PostServiceHTTPServer) func(ctx http.Context) error {
 	return func(ctx http.Context) error {
 		var in v11.UpdatePostRequest
 		if err := ctx.Bind(&in); err != nil {
@@ -142,7 +142,7 @@ func _PostService_Update11_HTTP_Handler(srv PostServiceHTTPServer) func(ctx http
 	}
 }
 
-func _PostService_Delete12_HTTP_Handler(srv PostServiceHTTPServer) func(ctx http.Context) error {
+func _PostService_Delete13_HTTP_Handler(srv PostServiceHTTPServer) func(ctx http.Context) error {
 	return func(ctx http.Context) error {
 		var in v11.DeletePostRequest
 		if err := ctx.BindQuery(&in); err != nil {

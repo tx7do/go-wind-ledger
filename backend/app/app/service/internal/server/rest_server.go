@@ -109,6 +109,8 @@ func NewRestServer(
 	currencyService *service.CurrencyService,
 	reportService *service.ReportService,
 	flowFileService *service.FlowFileService,
+	budgetService *service.BudgetService,
+	tenantMemberService *service.TenantMemberService,
 
 	// === 记账认证服务 ===
 	ledgerAuthService *service.LedgerAuthService,
@@ -149,6 +151,8 @@ func NewRestServer(
 	appV1.RegisterCurrencyServiceHTTPServer(srv, currencyService)
 	appV1.RegisterReportServiceHTTPServer(srv, reportService)
 	appV1.RegisterFlowFileServiceHTTPServer(srv, flowFileService)
+	appV1.RegisterBudgetServiceHTTPServer(srv, budgetService)
+	appV1.RegisterTenantMemberServiceHTTPServer(srv, tenantMemberService)
 
 	// === 记账认证服务 HTTP 注册 ===
 	appV1.RegisterLedgerAuthServiceHTTPServer(srv, ledgerAuthService)

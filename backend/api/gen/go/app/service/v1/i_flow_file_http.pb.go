@@ -23,19 +23,25 @@ const _ = http.SupportPackageIsVersion1
 
 const OperationFlowFileServiceDelete = "/app.service.v1.FlowFileService/Delete"
 const OperationFlowFileServiceList = "/app.service.v1.FlowFileService/List"
+const OperationFlowFileServiceUploadFile = "/app.service.v1.FlowFileService/UploadFile"
+const OperationFlowFileServiceViewFile = "/app.service.v1.FlowFileService/ViewFile"
 
 type FlowFileServiceHTTPServer interface {
 	Delete(context.Context, *v1.DeleteFlowFileRequest) (*emptypb.Empty, error)
 	List(context.Context, *v1.ListFlowFileRequest) (*v1.ListFlowFileResponse, error)
+	UploadFile(context.Context, *v1.UploadFlowFileRequest) (*v1.FlowFile, error)
+	ViewFile(context.Context, *v1.ViewFlowFileRequest) (*v1.ViewFlowFileResponse, error)
 }
 
 func RegisterFlowFileServiceHTTPServer(s *http.Server, srv FlowFileServiceHTTPServer) {
 	r := s.Route("/")
-	r.GET("/app/v1/flow-files", _FlowFileService_List6_HTTP_Handler(srv))
-	r.DELETE("/app/v1/flow-files/{id}", _FlowFileService_Delete5_HTTP_Handler(srv))
+	r.GET("/app/v1/flow-files", _FlowFileService_List7_HTTP_Handler(srv))
+	r.DELETE("/app/v1/flow-files/{id}", _FlowFileService_Delete6_HTTP_Handler(srv))
+	r.POST("/app/v1/flow-files/upload", _FlowFileService_UploadFile0_HTTP_Handler(srv))
+	r.GET("/app/v1/flow-files/view", _FlowFileService_ViewFile0_HTTP_Handler(srv))
 }
 
-func _FlowFileService_List6_HTTP_Handler(srv FlowFileServiceHTTPServer) func(ctx http.Context) error {
+func _FlowFileService_List7_HTTP_Handler(srv FlowFileServiceHTTPServer) func(ctx http.Context) error {
 	return func(ctx http.Context) error {
 		var in v1.ListFlowFileRequest
 		if err := ctx.BindQuery(&in); err != nil {
@@ -54,7 +60,7 @@ func _FlowFileService_List6_HTTP_Handler(srv FlowFileServiceHTTPServer) func(ctx
 	}
 }
 
-func _FlowFileService_Delete5_HTTP_Handler(srv FlowFileServiceHTTPServer) func(ctx http.Context) error {
+func _FlowFileService_Delete6_HTTP_Handler(srv FlowFileServiceHTTPServer) func(ctx http.Context) error {
 	return func(ctx http.Context) error {
 		var in v1.DeleteFlowFileRequest
 		if err := ctx.BindQuery(&in); err != nil {
@@ -76,9 +82,52 @@ func _FlowFileService_Delete5_HTTP_Handler(srv FlowFileServiceHTTPServer) func(c
 	}
 }
 
+func _FlowFileService_UploadFile0_HTTP_Handler(srv FlowFileServiceHTTPServer) func(ctx http.Context) error {
+	return func(ctx http.Context) error {
+		var in v1.UploadFlowFileRequest
+		if err := ctx.Bind(&in); err != nil {
+			return err
+		}
+		if err := ctx.BindQuery(&in); err != nil {
+			return err
+		}
+		http.SetOperation(ctx, OperationFlowFileServiceUploadFile)
+		h := ctx.Middleware(func(ctx context.Context, req interface{}) (interface{}, error) {
+			return srv.UploadFile(ctx, req.(*v1.UploadFlowFileRequest))
+		})
+		out, err := h(ctx, &in)
+		if err != nil {
+			return err
+		}
+		reply := out.(*v1.FlowFile)
+		return ctx.Result(200, reply)
+	}
+}
+
+func _FlowFileService_ViewFile0_HTTP_Handler(srv FlowFileServiceHTTPServer) func(ctx http.Context) error {
+	return func(ctx http.Context) error {
+		var in v1.ViewFlowFileRequest
+		if err := ctx.BindQuery(&in); err != nil {
+			return err
+		}
+		http.SetOperation(ctx, OperationFlowFileServiceViewFile)
+		h := ctx.Middleware(func(ctx context.Context, req interface{}) (interface{}, error) {
+			return srv.ViewFile(ctx, req.(*v1.ViewFlowFileRequest))
+		})
+		out, err := h(ctx, &in)
+		if err != nil {
+			return err
+		}
+		reply := out.(*v1.ViewFlowFileResponse)
+		return ctx.Result(200, reply)
+	}
+}
+
 type FlowFileServiceHTTPClient interface {
 	Delete(ctx context.Context, req *v1.DeleteFlowFileRequest, opts ...http.CallOption) (rsp *emptypb.Empty, err error)
 	List(ctx context.Context, req *v1.ListFlowFileRequest, opts ...http.CallOption) (rsp *v1.ListFlowFileResponse, err error)
+	UploadFile(ctx context.Context, req *v1.UploadFlowFileRequest, opts ...http.CallOption) (rsp *v1.FlowFile, err error)
+	ViewFile(ctx context.Context, req *v1.ViewFlowFileRequest, opts ...http.CallOption) (rsp *v1.ViewFlowFileResponse, err error)
 }
 
 type FlowFileServiceHTTPClientImpl struct {
@@ -107,6 +156,32 @@ func (c *FlowFileServiceHTTPClientImpl) List(ctx context.Context, in *v1.ListFlo
 	pattern := "/app/v1/flow-files"
 	path := binding.EncodeURL(pattern, in, true)
 	opts = append(opts, http.Operation(OperationFlowFileServiceList))
+	opts = append(opts, http.PathTemplate(pattern))
+	err := c.cc.Invoke(ctx, "GET", path, nil, &out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return &out, nil
+}
+
+func (c *FlowFileServiceHTTPClientImpl) UploadFile(ctx context.Context, in *v1.UploadFlowFileRequest, opts ...http.CallOption) (*v1.FlowFile, error) {
+	var out v1.FlowFile
+	pattern := "/app/v1/flow-files/upload"
+	path := binding.EncodeURL(pattern, in, false)
+	opts = append(opts, http.Operation(OperationFlowFileServiceUploadFile))
+	opts = append(opts, http.PathTemplate(pattern))
+	err := c.cc.Invoke(ctx, "POST", path, in, &out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return &out, nil
+}
+
+func (c *FlowFileServiceHTTPClientImpl) ViewFile(ctx context.Context, in *v1.ViewFlowFileRequest, opts ...http.CallOption) (*v1.ViewFlowFileResponse, error) {
+	var out v1.ViewFlowFileResponse
+	pattern := "/app/v1/flow-files/view"
+	path := binding.EncodeURL(pattern, in, true)
+	opts = append(opts, http.Operation(OperationFlowFileServiceViewFile))
 	opts = append(opts, http.PathTemplate(pattern))
 	err := c.cc.Invoke(ctx, "GET", path, nil, &out, opts...)
 	if err != nil {

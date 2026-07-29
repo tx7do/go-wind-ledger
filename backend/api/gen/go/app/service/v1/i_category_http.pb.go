@@ -46,15 +46,15 @@ type CategoryServiceHTTPServer interface {
 
 func RegisterCategoryServiceHTTPServer(s *http.Server, srv CategoryServiceHTTPServer) {
 	r := s.Route("/")
-	r.GET("/app/v1/categories", _CategoryService_List3_HTTP_Handler(srv))
-	r.GET("/app/v1/categories/{id}", _CategoryService_Get4_HTTP_Handler(srv))
-	r.POST("/app/v1/categories", _CategoryService_Create3_HTTP_Handler(srv))
-	r.PUT("/app/v1/categories/{id}", _CategoryService_Update3_HTTP_Handler(srv))
-	r.DELETE("/app/v1/categories/{id}", _CategoryService_Delete3_HTTP_Handler(srv))
+	r.GET("/app/v1/categories", _CategoryService_List4_HTTP_Handler(srv))
+	r.GET("/app/v1/categories/{id}", _CategoryService_Get5_HTTP_Handler(srv))
+	r.POST("/app/v1/categories", _CategoryService_Create4_HTTP_Handler(srv))
+	r.PUT("/app/v1/categories/{id}", _CategoryService_Update4_HTTP_Handler(srv))
+	r.DELETE("/app/v1/categories/{id}", _CategoryService_Delete4_HTTP_Handler(srv))
 	r.GET("/app/v1/categories/{id}/translation", _CategoryService_GetTranslation0_HTTP_Handler(srv))
 }
 
-func _CategoryService_List3_HTTP_Handler(srv CategoryServiceHTTPServer) func(ctx http.Context) error {
+func _CategoryService_List4_HTTP_Handler(srv CategoryServiceHTTPServer) func(ctx http.Context) error {
 	return func(ctx http.Context) error {
 		var in v1.PagingRequest
 		if err := ctx.BindQuery(&in); err != nil {
@@ -73,7 +73,7 @@ func _CategoryService_List3_HTTP_Handler(srv CategoryServiceHTTPServer) func(ctx
 	}
 }
 
-func _CategoryService_Get4_HTTP_Handler(srv CategoryServiceHTTPServer) func(ctx http.Context) error {
+func _CategoryService_Get5_HTTP_Handler(srv CategoryServiceHTTPServer) func(ctx http.Context) error {
 	return func(ctx http.Context) error {
 		var in v11.GetCategoryRequest
 		if err := ctx.BindQuery(&in); err != nil {
@@ -95,7 +95,7 @@ func _CategoryService_Get4_HTTP_Handler(srv CategoryServiceHTTPServer) func(ctx 
 	}
 }
 
-func _CategoryService_Create3_HTTP_Handler(srv CategoryServiceHTTPServer) func(ctx http.Context) error {
+func _CategoryService_Create4_HTTP_Handler(srv CategoryServiceHTTPServer) func(ctx http.Context) error {
 	return func(ctx http.Context) error {
 		var in v11.CreateCategoryRequest
 		if err := ctx.Bind(&in); err != nil {
@@ -117,7 +117,7 @@ func _CategoryService_Create3_HTTP_Handler(srv CategoryServiceHTTPServer) func(c
 	}
 }
 
-func _CategoryService_Update3_HTTP_Handler(srv CategoryServiceHTTPServer) func(ctx http.Context) error {
+func _CategoryService_Update4_HTTP_Handler(srv CategoryServiceHTTPServer) func(ctx http.Context) error {
 	return func(ctx http.Context) error {
 		var in v11.UpdateCategoryRequest
 		if err := ctx.Bind(&in); err != nil {
@@ -142,7 +142,7 @@ func _CategoryService_Update3_HTTP_Handler(srv CategoryServiceHTTPServer) func(c
 	}
 }
 
-func _CategoryService_Delete3_HTTP_Handler(srv CategoryServiceHTTPServer) func(ctx http.Context) error {
+func _CategoryService_Delete4_HTTP_Handler(srv CategoryServiceHTTPServer) func(ctx http.Context) error {
 	return func(ctx http.Context) error {
 		var in v11.DeleteCategoryRequest
 		if err := ctx.BindQuery(&in); err != nil {

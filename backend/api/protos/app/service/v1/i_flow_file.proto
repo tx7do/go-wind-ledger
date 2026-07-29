@@ -19,4 +19,17 @@ service FlowFileService {
       delete: "/app/v1/flow-files/{id}"
     };
   }
+
+  rpc UploadFile (ledger.service.v1.UploadFlowFileRequest) returns (ledger.service.v1.FlowFile) {
+    option (google.api.http) = {
+      post: "/app/v1/flow-files/upload"
+      body: "*"
+    };
+  }
+
+  rpc ViewFile (ledger.service.v1.ViewFlowFileRequest) returns (ledger.service.v1.ViewFlowFileResponse) {
+    option (google.api.http) = {
+      get: "/app/v1/flow-files/view"
+    };
+  }
 }

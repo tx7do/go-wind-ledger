@@ -1,0 +1,56 @@
+syntax = "proto3";
+
+package app.service.v1;
+
+import "google/api/annotations.proto";
+import "google/protobuf/empty.proto";
+import "pagination/v1/pagination.proto";
+
+import "ledger/service/v1/budget.proto";
+
+// 预算服务（App BFF）
+service BudgetService {
+  rpc List (pagination.PagingRequest) returns (ledger.service.v1.ListBudgetResponse) {
+    option (google.api.http) = {
+      get: "/app/v1/budgets"
+    };
+  }
+
+  rpc ListAll (ledger.service.v1.ListAllBudgetRequest) returns (ledger.service.v1.ListBudgetResponse) {
+    option (google.api.http) = {
+      get: "/app/v1/budgets/all"
+    };
+  }
+
+  rpc Get (ledger.service.v1.GetBudgetRequest) returns (ledger.service.v1.Budget) {
+    option (google.api.http) = {
+      get: "/app/v1/budgets/{id}"
+    };
+  }
+
+  rpc Create (ledger.service.v1.CreateBudgetRequest) returns (ledger.service.v1.Budget) {
+    option (google.api.http) = {
+      post: "/app/v1/budgets"
+      body: "*"
+    };
+  }
+
+  rpc Update (ledger.service.v1.UpdateBudgetRequest) returns (ledger.service.v1.Budget) {
+    option (google.api.http) = {
+      put: "/app/v1/budgets/{id}"
+      body: "*"
+    };
+  }
+
+  rpc Delete (ledger.service.v1.DeleteBudgetRequest) returns (google.protobuf.Empty) {
+    option (google.api.http) = {
+      delete: "/app/v1/budgets/{id}"
+    };
+  }
+
+  rpc GetProgress (ledger.service.v1.GetBudgetProgressRequest) returns (ledger.service.v1.BudgetProgress) {
+    option (google.api.http) = {
+      get: "/app/v1/budgets/{id}/progress"
+    };
+  }
+}

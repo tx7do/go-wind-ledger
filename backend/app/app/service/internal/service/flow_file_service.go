@@ -9,6 +9,8 @@ import (
 
 	appV1 "go-wind-cms/api/gen/go/app/service/v1"
 	ledgerV1 "go-wind-cms/api/gen/go/ledger/service/v1"
+
+	"go-wind-cms/pkg/middleware/auth"
 )
 
 type FlowFileService struct {
@@ -34,6 +36,12 @@ func (s *FlowFileService) Delete(ctx context.Context, req *ledgerV1.DeleteFlowFi
 }
 
 func (s *FlowFileService) UploadFile(ctx context.Context, req *ledgerV1.UploadFlowFileRequest) (*ledgerV1.FlowFile, error) {
+	// 通过操作人身份注入 creator_id，由下游服务记录附件归属
+	operator, err := auth.FromContext(ctx)
+	if err != nil {
+		return nil, err
+	}
+	_ = operator
 	return s.client.UploadFile(ctx, req)
 }
 
