@@ -81,7 +81,17 @@ class _AccountListPageState extends State<AccountListPage> {
     return Scaffold(
       appBar: widget.embedded
           ? null
-          : AppBar(title: const Text('账户管理')),
+          : AppBar(
+              title: const Text('账户管理'),
+              actions: [
+                IconButton(
+                  tooltip: '账户概览',
+                  icon: const Icon(Icons.account_balance_outlined),
+                  onPressed: () =>
+                      context.push('/ledger/accounts/overview'),
+                ),
+              ],
+            ),
       body: _loading
           ? const Center(child: CircularProgressIndicator())
           : _accounts.isEmpty

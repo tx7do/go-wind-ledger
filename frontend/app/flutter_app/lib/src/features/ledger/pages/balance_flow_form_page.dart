@@ -8,11 +8,14 @@ import 'package:flutter_app/generated/api/app/service/v1/index.dart'
         LedgerServiceV1Book,
         LedgerServiceV1Account,
         LedgerServiceV1Category,
+        LedgerServiceV1CategoryRelation,
         LedgerServiceV1Payee,
+        LedgerServiceV1FlowFile,
         LedgerServiceV1ListBookResponse,
         LedgerServiceV1ListAccountResponse,
         LedgerServiceV1ListCategoryResponse,
         LedgerServiceV1ListPayeeResponse,
+        LedgerServiceV1ListFlowFileResponse,
         LedgerServiceV1FlowType,
         LedgerServiceV1CategoryType;
 
@@ -22,6 +25,7 @@ import 'package:flutter_app/src/features/ledger/services/account_service.dart';
 import 'package:flutter_app/src/features/ledger/services/category_service.dart';
 import 'package:flutter_app/src/features/ledger/services/payee_service.dart';
 import 'package:flutter_app/src/features/ledger/services/balance_flow_service.dart';
+import 'package:flutter_app/src/features/ledger/services/flow_file_service.dart';
 import 'package:flutter_app/src/features/ledger/widgets/flow_type_selector.dart';
 
 /// 记账表单页（支出/收入/转账）。
@@ -43,6 +47,7 @@ class _BalanceFlowFormPageState extends State<BalanceFlowFormPage> {
   final CategoryService _categoryService = CategoryService();
   final PayeeService _payeeService = PayeeService();
   final BalanceFlowService _flowService = BalanceFlowService();
+  final FlowFileService _flowFileService = FlowFileService();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   LedgerServiceV1FlowType _type = LedgerServiceV1FlowType.flowTypeExpense;
@@ -55,6 +60,7 @@ class _BalanceFlowFormPageState extends State<BalanceFlowFormPage> {
   List<LedgerServiceV1Account> _accounts = [];
   List<LedgerServiceV1Category> _categories = [];
   List<LedgerServiceV1Payee> _payees = [];
+  List<LedgerServiceV1FlowFile> _attachments = [];
 
   int? _bookId;
   int? _accountId;
@@ -88,9 +94,54 @@ class _BalanceFlowFormPageState extends State<BalanceFlowFormPage> {
       _loadCategories(),
       _loadPayees(),
       if (widget.editId != null) _loadEditTarget(),
+      if (widget.editId != null) _loadAttachments(),
     ]);
     if (!mounted) return;
     setState(() => _loading = false);
+  }
+
+  Future<void> _loadAttachments() async {
+    final id = widget.editId;
+    if (id == null) return;
+    final result = await _flowFileService.list(id);
+    if (!mounted) return;
+    if (result is LedgerServiceV1ListFlowFileResponse) {
+      setState(() => _attachments = result.items ?? []);
+    }
+  }
+
+  Future<void> _deleteAttachment(LedgerServiceV1FlowFile file) async {
+    final id = file.id;
+    if (id == null) return;
+    final ok = await showDialog<bool>(
+      context: context,
+      builder: (ctx) => AlertDialog(
+        title: const Text('删除附件'),
+        content: Text('确定删除附件「${file.originalName ?? ''}」？'),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(ctx, false),
+            child: const Text('取消'),
+          ),
+          TextButton(
+            onPressed: () => Navigator.pop(ctx, true),
+            child: const Text('删除'),
+          ),
+        ],
+      ),
+    );
+    if (ok != true) return;
+    EasyLoading.show(status: '删除中...');
+    final result = await _flowFileService.delete(id);
+    EasyLoading.dismiss();
+    if (!mounted) return;
+    if (result == null) {
+      EasyLoading.showSuccess('已删除');
+      _loadAttachments();
+    } else if (result is Status) {
+      EasyLoading.showError(
+          result.getMessage.isEmpty ? '删除失败' : result.getMessage);
+    }
   }
 
   Future<void> _loadBooks() async {
@@ -357,6 +408,10 @@ class _BalanceFlowFormPageState extends State<BalanceFlowFormPage> {
                     _buildDateField(theme),
                     const SizedBox(height: 12),
                     _buildNotesField(theme),
+                    if (widget.editId != null) ...[
+                      const SizedBox(height: 16),
+                      _buildAttachmentsSection(theme),
+                    ],
                     const SizedBox(height: 24),
                     FilledButton(
                       onPressed: _saving ? null : _submit,
@@ -414,6 +469,93 @@ class _BalanceFlowFormPageState extends State<BalanceFlowFormPage> {
         border: OutlineInputBorder(),
       ),
     );
+  }
+
+  Widget _buildAttachmentsSection(ThemeData theme) {
+    return Card(
+      margin: EdgeInsets.zero,
+      child: Padding(
+        padding: const EdgeInsets.all(12),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              children: [
+                Icon(Icons.attach_file_outlined,
+                    size: 20, color: theme.colorScheme.primary),
+                const SizedBox(width: 8),
+                Text('附件',
+                    style: theme.textTheme.titleSmall
+                        ?.copyWith(fontWeight: FontWeight.w600)),
+                const Spacer(),
+                OutlinedButton.icon(
+                  // 上传能力待 app BFF 补齐 flow-file 上传路由后接入，
+                  // 当前预留按钮，点击给出提示。
+                  onPressed: () => EasyLoading.showInfo('附件上传即将上线'),
+                  icon: const Icon(Icons.upload_outlined, size: 18),
+                  label: const Text('上传'),
+                ),
+              ],
+            ),
+            const SizedBox(height: 8),
+            if (_attachments.isEmpty)
+              Padding(
+                padding: const EdgeInsets.symmetric(vertical: 8),
+                child: Text('暂无附件',
+                    style: theme.textTheme.bodySmall
+                        ?.copyWith(color: theme.colorScheme.outline)),
+              )
+            else
+              ..._attachments.map((f) => _buildAttachmentTile(theme, f)),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildAttachmentTile(
+    ThemeData theme,
+    LedgerServiceV1FlowFile file,
+  ) {
+    final size = file.size ?? 0;
+    final sizeText = size > 1024 * 1024
+        ? '${(size / 1024 / 1024).toStringAsFixed(1)} MB'
+        : size > 1024
+            ? '${(size / 1024).toStringAsFixed(1)} KB'
+            : '$size B';
+    return ListTile(
+      dense: true,
+      contentPadding: EdgeInsets.zero,
+      leading: Icon(_iconForType(file.contentType),
+          color: theme.colorScheme.primary, size: 22),
+      title: Text(
+        file.originalName ?? '未命名附件',
+        maxLines: 1,
+        overflow: TextOverflow.ellipsis,
+      ),
+      subtitle: Text(
+        [
+          sizeText,
+          if ((file.contentType ?? '').isNotEmpty) file.contentType!,
+        ].join(' · '),
+        style: theme.textTheme.bodySmall,
+      ),
+      trailing: IconButton(
+        tooltip: '删除附件',
+        icon: const Icon(Icons.delete_outline, size: 20),
+        onPressed: () => _deleteAttachment(file),
+      ),
+    );
+  }
+
+  IconData _iconForType(String? contentType) {
+    final ct = contentType ?? '';
+    if (ct.startsWith('image/')) return Icons.image_outlined;
+    if (ct.contains('pdf')) return Icons.picture_as_pdf_outlined;
+    if (ct.contains('zip') || ct.contains('compressed')) {
+      return Icons.folder_zip_outlined;
+    }
+    return Icons.insert_drive_file_outlined;
   }
 
   Widget _buildDateField(ThemeData theme) {

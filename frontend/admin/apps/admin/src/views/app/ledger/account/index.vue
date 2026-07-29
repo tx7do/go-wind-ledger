@@ -1,12 +1,13 @@
 <script lang="ts" setup>
 import type { VxeGridProps } from '#/adapter/vxe-table';
 
-import { computed, h } from 'vue';
+import { computed, h, reactive } from 'vue';
 
 import { Page, useVbenDrawer, useVbenModal, type VbenFormProps } from '@vben/common-ui';
-import { LucideFilePenLine, LucideTrash2 } from '@vben/icons';
+import { LucideFilePenLine, LucideSettings, LucideTrash2 } from '@vben/icons';
 
 import { notification } from 'ant-design-vue';
+import { useRouter } from 'vue-router';
 
 import { useVbenVxeGrid } from '#/adapter/vxe-table';
 import {
@@ -16,6 +17,11 @@ import {
   enableBoolToName,
   fetchListAccounts,
   PaginationQuery,
+  useToggleCanExpense,
+  useToggleCanIncome,
+  useToggleCanTransferFrom,
+  useToggleCanTransferTo,
+  useToggleInclude,
   type ledgerservicev1_Account as Account,
   type ledgerservicev1_AccountType as AccountType,
 } from '#/api';
@@ -158,12 +164,17 @@ const gridOptions: VxeGridProps<Account> = {
       field: 'action',
       fixed: 'right',
       slots: { default: 'action' },
-      width: 130,
+      width: 190,
     },
   ],
 };
 
 const [Grid, gridApi] = useVbenVxeGrid({ gridOptions, formOptions });
+
+const router = useRouter();
+function goToOverview() {
+  router.push({ name: 'AccountOverview' });
+}
 
 const [Drawer, drawerApi] = useVbenDrawer({
   // 连接抽离的组件
@@ -201,6 +212,56 @@ function openBalanceModal(row: any) {
   balanceModalApi.open();
 }
 
+// ==============================
+// 账户能力开关
+// ==============================
+const toggleInclude = useToggleInclude();
+const toggleCanExpense = useToggleCanExpense();
+const toggleCanIncome = useToggleCanIncome();
+const toggleCanTransferFrom = useToggleCanTransferFrom();
+const toggleCanTransferTo = useToggleCanTransferTo();
+
+// 每行对应的能力切换 loading 状态
+const capabilityLoading = reactive<Record<number, boolean>>({});
+
+function makeCapabilityHandler(
+  field: 'include' | 'canExpense' | 'canIncome' | 'canTransferFrom' | 'canTransferTo',
+) {
+  const mutationMap = {
+    include: toggleInclude,
+    canExpense: toggleCanExpense,
+    canIncome: toggleCanIncome,
+    canTransferFrom: toggleCanTransferFrom,
+    canTransferTo: toggleCanTransferTo,
+  } as const;
+
+  return async (row: any, checked: boolean) => {
+    capabilityLoading[row.id] = true;
+    // 乐观更新：先切换本地状态，失败时回滚
+    const previous = row[field];
+    row[field] = checked;
+    try {
+      await mutationMap[field].mutateAsync({ id: row.id });
+      notification.success({
+        message: $t('ui.notification.update_status_success'),
+      });
+    } catch {
+      row[field] = previous;
+      notification.error({
+        message: $t('ui.notification.update_status_failed'),
+      });
+    } finally {
+      capabilityLoading[row.id] = false;
+    }
+  };
+}
+
+const handleToggleInclude = makeCapabilityHandler('include');
+const handleToggleCanExpense = makeCapabilityHandler('canExpense');
+const handleToggleCanIncome = makeCapabilityHandler('canIncome');
+const handleToggleCanTransferFrom = makeCapabilityHandler('canTransferFrom');
+const handleToggleCanTransferTo = makeCapabilityHandler('canTransferTo');
+
 /* 创建 */
 function handleCreate() {
   openDrawer(true);
@@ -233,6 +294,9 @@ async function handleDelete(row: any) {
   <Page auto-content-height>
     <Grid :table-title="$t('menu.ledger.account')">
       <template #toolbar-tools>
+        <a-button class="mr-2" @click="goToOverview">
+          {{ $t('page.ledger.account.button.overview') }}
+        </a-button>
         <a-button class="mr-2" type="primary" @click="handleCreate">
           {{ $t('page.ledger.account.button.create') }}
         </a-button>
@@ -259,6 +323,71 @@ async function handleDelete(row: any) {
         >
           {{ $t('page.ledger.account.adjustBalance') }}
         </a-button>
+        <a-popover
+          :title="$t('page.ledger.account.capabilitySettings')"
+          trigger="click"
+          placement="left"
+        >
+          <a-button
+            type="link"
+            :icon="h(LucideSettings)"
+            @click.stop
+          />
+          <template #content>
+            <div class="flex flex-col gap-3 py-1" style="width: 220px;">
+              <div class="flex items-center justify-between">
+                <span>{{ $t('page.ledger.account.include') }}</span>
+                <a-switch
+                  :checked="row.include === true"
+                  :loading="capabilityLoading[row.id]"
+                  :checked-children="$t('ui.switch.on')"
+                  :un-checked-children="$t('ui.switch.off')"
+                  @change="(checked: any) => handleToggleInclude(row, checked as boolean)"
+                />
+              </div>
+              <div class="flex items-center justify-between">
+                <span>{{ $t('page.ledger.account.canExpense') }}</span>
+                <a-switch
+                  :checked="row.canExpense === true"
+                  :loading="capabilityLoading[row.id]"
+                  :checked-children="$t('ui.switch.on')"
+                  :un-checked-children="$t('ui.switch.off')"
+                  @change="(checked: any) => handleToggleCanExpense(row, checked as boolean)"
+                />
+              </div>
+              <div class="flex items-center justify-between">
+                <span>{{ $t('page.ledger.account.canIncome') }}</span>
+                <a-switch
+                  :checked="row.canIncome === true"
+                  :loading="capabilityLoading[row.id]"
+                  :checked-children="$t('ui.switch.on')"
+                  :un-checked-children="$t('ui.switch.off')"
+                  @change="(checked: any) => handleToggleCanIncome(row, checked as boolean)"
+                />
+              </div>
+              <div class="flex items-center justify-between">
+                <span>{{ $t('page.ledger.account.canTransferFrom') }}</span>
+                <a-switch
+                  :checked="row.canTransferFrom === true"
+                  :loading="capabilityLoading[row.id]"
+                  :checked-children="$t('ui.switch.on')"
+                  :un-checked-children="$t('ui.switch.off')"
+                  @change="(checked: any) => handleToggleCanTransferFrom(row, checked as boolean)"
+                />
+              </div>
+              <div class="flex items-center justify-between">
+                <span>{{ $t('page.ledger.account.canTransferTo') }}</span>
+                <a-switch
+                  :checked="row.canTransferTo === true"
+                  :loading="capabilityLoading[row.id]"
+                  :checked-children="$t('ui.switch.on')"
+                  :un-checked-children="$t('ui.switch.off')"
+                  @change="(checked: any) => handleToggleCanTransferTo(row, checked as boolean)"
+                />
+              </div>
+            </div>
+          </template>
+        </a-popover>
         <a-popconfirm
           :cancel-text="$t('ui.button.cancel')"
           :ok-text="$t('ui.button.ok')"

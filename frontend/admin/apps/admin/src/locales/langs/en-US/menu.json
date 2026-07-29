@@ -97,6 +97,7 @@
     "report": "Reports",
     "flowFile": "Flow Files",
     "member": "Members",
-    "budget": "Budgets"
+    "budget": "Budgets",
+    "accountOverview": "Account Overview"
   }
 }

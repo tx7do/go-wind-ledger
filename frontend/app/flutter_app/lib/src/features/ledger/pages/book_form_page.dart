@@ -5,8 +5,10 @@ import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_app/generated/api/app/service/v1/index.dart'
     show
         LedgerServiceV1Book,
+        LedgerServiceV1BookTemplate,
         LedgerServiceV1Currency,
-        LedgerServiceV1ListCurrencyResponse;
+        LedgerServiceV1ListCurrencyResponse,
+        LedgerServiceV1ListBookTemplateResponse;
 
 import 'package:flutter_app/src/core/transport/http/status.dart';
 import 'package:flutter_app/src/features/ledger/services/book_service.dart';
@@ -33,6 +35,8 @@ class _BookFormPageState extends State<BookFormPage> {
 
   String _defaultCurrencyCode = 'CNY';
   List<LedgerServiceV1Currency> _currencies = [];
+  List<LedgerServiceV1BookTemplate> _templates = [];
+  int? _templateId;
   bool _loading = true;
   bool _saving = false;
 
@@ -51,12 +55,20 @@ class _BookFormPageState extends State<BookFormPage> {
 
   Future<void> _loadInitial() async {
     setState(() => _loading = true);
-    await _loadCurrencies();
-    if (widget.editId != null) {
-      await _loadEditTarget();
-    }
+    await Future.wait([
+      _loadCurrencies(),
+      _loadTemplates(),
+      if (widget.editId != null) _loadEditTarget(),
+    ]);
     if (!mounted) return;
     setState(() => _loading = false);
+  }
+
+  Future<void> _loadTemplates() async {
+    final result = await _service.listTemplates();
+    if (result is LedgerServiceV1ListBookTemplateResponse && mounted) {
+      setState(() => _templates = result.items ?? []);
+    }
   }
 
   Future<void> _loadCurrencies() async {
@@ -89,15 +101,37 @@ class _BookFormPageState extends State<BookFormPage> {
     setState(() => _saving = true);
     EasyLoading.show(status: '保存中...');
 
-    final data = LedgerServiceV1Book(
-      name: _nameCtrl.text.trim(),
-      notes: _notesCtrl.text.trim().isEmpty ? null : _notesCtrl.text.trim(),
-      defaultCurrencyCode: _defaultCurrencyCode,
-    );
+    final name = _nameCtrl.text.trim();
+    final notes = _notesCtrl.text.trim().isEmpty
+        ? null
+        : _notesCtrl.text.trim();
 
-    final result = widget.editId == null
-        ? await _service.create(data)
-        : await _service.update(widget.editId!, data);
+    dynamic result;
+    if (widget.editId == null) {
+      if (_templateId != null) {
+        // 从模板创建账本（会一并创建模板中的分类/标签/收款人）
+        result = await _service.createByTemplate(
+          templateId: _templateId!,
+          name: name,
+          defaultCurrencyCode: _defaultCurrencyCode,
+          notes: notes,
+        );
+      } else {
+        final data = LedgerServiceV1Book(
+          name: name,
+          notes: notes,
+          defaultCurrencyCode: _defaultCurrencyCode,
+        );
+        result = await _service.create(data);
+      }
+    } else {
+      final data = LedgerServiceV1Book(
+        name: name,
+        notes: notes,
+        defaultCurrencyCode: _defaultCurrencyCode,
+      );
+      result = await _service.update(widget.editId!, data);
+    }
 
     EasyLoading.dismiss();
     if (!mounted) return;
@@ -160,6 +194,29 @@ class _BookFormPageState extends State<BookFormPage> {
                         }
                       },
                     ),
+                    if (widget.editId == null && _templates.isNotEmpty) ...[
+                      const SizedBox(height: 12),
+                      DropdownButtonFormField<int?>(
+                        value: _templateId,
+                        decoration: const InputDecoration(
+                          labelText: '从模板创建（可选）',
+                          prefixIcon: Icon(Icons.dashboard_customize_outlined),
+                          border: OutlineInputBorder(),
+                          helperText: '选择模板将一并创建其中的分类/标签/收款人',
+                        ),
+                        items: [
+                          const DropdownMenuItem<int?>(
+                            value: null,
+                            child: Text('不使用模板'),
+                          ),
+                          ..._templates.map((t) => DropdownMenuItem<int?>(
+                                value: t.id,
+                                child: Text(t.name ?? '未命名模板'),
+                              )),
+                        ],
+                        onChanged: (v) => setState(() => _templateId = v),
+                      ),
+                    ],
                     const SizedBox(height: 12),
                     TextFormField(
                       controller: _notesCtrl,

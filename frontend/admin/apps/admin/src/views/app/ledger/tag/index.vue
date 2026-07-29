@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import type { VxeGridProps } from '#/adapter/vxe-table';
 
-import { h } from 'vue';
+import { h, reactive } from 'vue';
 
 import { Page, useVbenDrawer, type VbenFormProps } from '@vben/common-ui';
 import { LucideFilePenLine, LucideTrash2 } from '@vben/icons';
@@ -12,8 +12,11 @@ import { useVbenVxeGrid } from '#/adapter/vxe-table';
 import {
   apiClient,
   fetchListLedgerTags,
-  type ledgerservicev1_Tag as Tag,
   PaginationQuery,
+  useToggleTagCanExpense,
+  useToggleTagCanIncome,
+  useToggleTagCanTransfer,
+  type ledgerservicev1_Tag as Tag,
 } from '#/api';
 import { $t } from '#/locales';
 
@@ -109,6 +112,49 @@ const gridOptions: VxeGridProps<Tag> = {
 
 const [Grid, gridApi] = useVbenVxeGrid({ gridOptions, formOptions });
 
+// ==============================
+// 标签能力开关
+// ==============================
+const toggleCanExpense = useToggleTagCanExpense();
+const toggleCanIncome = useToggleTagCanIncome();
+const toggleCanTransfer = useToggleTagCanTransfer();
+
+// 每行对应的能力切换 loading 状态
+const capabilityLoading = reactive<Record<number, boolean>>({});
+
+function makeCapabilityHandler(
+  field: 'canExpense' | 'canIncome' | 'canTransfer',
+) {
+  const mutationMap = {
+    canExpense: toggleCanExpense,
+    canIncome: toggleCanIncome,
+    canTransfer: toggleCanTransfer,
+  } as const;
+
+  return async (row: any, checked: boolean) => {
+    capabilityLoading[row.id] = true;
+    const previous = row[field];
+    row[field] = checked;
+    try {
+      await mutationMap[field].mutateAsync({ id: row.id });
+      notification.success({
+        message: $t('ui.notification.update_status_success'),
+      });
+    } catch {
+      row[field] = previous;
+      notification.error({
+        message: $t('ui.notification.update_status_failed'),
+      });
+    } finally {
+      capabilityLoading[row.id] = false;
+    }
+  };
+}
+
+const handleToggleCanExpense = makeCapabilityHandler('canExpense');
+const handleToggleCanIncome = makeCapabilityHandler('canIncome');
+const handleToggleCanTransfer = makeCapabilityHandler('canTransfer');
+
 const [Drawer, drawerApi] = useVbenDrawer({
   // 连接抽离的组件
   connectedComponent: TagDrawer,
@@ -168,19 +214,31 @@ async function handleDelete(row: any) {
         </a-button>
       </template>
       <template #canExpense="{ row }">
-        <a-tag :color="row.canExpense ? '#52C41A' : '#8C8C8C'">
-          {{ row.canExpense ? $t('ui.button.yes') : $t('ui.button.no') }}
-        </a-tag>
+        <a-switch
+          :checked="row.canExpense === true"
+          :loading="capabilityLoading[row.id]"
+          :checked-children="$t('ui.switch.on')"
+          :un-checked-children="$t('ui.switch.off')"
+          @change="(checked: any) => handleToggleCanExpense(row, checked as boolean)"
+        />
       </template>
       <template #canIncome="{ row }">
-        <a-tag :color="row.canIncome ? '#52C41A' : '#8C8C8C'">
-          {{ row.canIncome ? $t('ui.button.yes') : $t('ui.button.no') }}
-        </a-tag>
+        <a-switch
+          :checked="row.canIncome === true"
+          :loading="capabilityLoading[row.id]"
+          :checked-children="$t('ui.switch.on')"
+          :un-checked-children="$t('ui.switch.off')"
+          @change="(checked: any) => handleToggleCanIncome(row, checked as boolean)"
+        />
       </template>
       <template #canTransfer="{ row }">
-        <a-tag :color="row.canTransfer ? '#52C41A' : '#8C8C8C'">
-          {{ row.canTransfer ? $t('ui.button.yes') : $t('ui.button.no') }}
-        </a-tag>
+        <a-switch
+          :checked="row.canTransfer === true"
+          :loading="capabilityLoading[row.id]"
+          :checked-children="$t('ui.switch.on')"
+          :un-checked-children="$t('ui.switch.off')"
+          @change="(checked: any) => handleToggleCanTransfer(row, checked as boolean)"
+        />
       </template>
       <template #enable="{ row }">
         <a-tag :color="row.enable ? '#52C41A' : '#8C8C8C'">

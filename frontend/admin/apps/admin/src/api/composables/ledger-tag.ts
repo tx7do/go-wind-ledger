@@ -86,3 +86,30 @@ export function useToggleLedgerTag(
     ...options,
   });
 }
+
+export function useToggleTagCanExpense(
+  options?: UseMutationOptions<object, Error, { id: number }>,
+) {
+  return useMutation({
+    mutationFn: (req) => apiClient.tagService.ToggleCanExpense(req),
+    ...options,
+  });
+}
+
+export function useToggleTagCanIncome(
+  options?: UseMutationOptions<object, Error, { id: number }>,
+) {
+  return useMutation({
+    mutationFn: (req) => apiClient.tagService.ToggleCanIncome(req),
+    ...options,
+  });
+}
+
+export function useToggleTagCanTransfer(
+  options?: UseMutationOptions<object, Error, { id: number }>,
+) {
+  return useMutation({
+    mutationFn: (req) => apiClient.tagService.ToggleCanTransfer(req),
+    ...options,
+  });
+}

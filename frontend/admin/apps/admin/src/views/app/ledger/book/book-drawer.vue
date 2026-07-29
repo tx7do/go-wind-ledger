@@ -16,6 +16,9 @@ import { $t } from '#/locales';
 
 const data = ref();
 
+// 账本模板列表（仅创建账本时可选）
+const templateOptions = ref<Array<{ value: number; label: string }>>([]);
+
 const getTitle = computed(() =>
   data.value?.create
     ? $t('ui.modal.create', { moduleName: $t('page.ledger.book.moduleName') })
@@ -32,6 +35,20 @@ const [BaseForm, baseFormApi] = useVbenForm({
     },
   },
   schema: [
+    {
+      component: 'Select',
+      fieldName: 'templateId',
+      label: $t('page.ledger.book.template'),
+      componentProps: {
+        placeholder: $t('page.ledger.book.templatePlaceholder'),
+        allowClear: true,
+        showSearch: true,
+        filterOption: (input: string, option: any) =>
+          option.label.toLowerCase().includes(input.toLowerCase()),
+        options: [],
+      },
+      help: $t('page.ledger.book.templateDescription'),
+    },
     {
       component: 'Input',
       fieldName: 'name',
@@ -177,14 +194,27 @@ const [Drawer, drawerApi] = useVbenDrawer({
     const values = await baseFormApi.getValues();
     const finalValues = { ...values };
 
+    // 创建模式下：若选择了模板，则走从模板创建接口；否则走普通创建
+    const templateId = finalValues.templateId;
+    delete finalValues.templateId;
+
     try {
-      await (data.value?.create
-        ? apiClient.bookService.Create({ data: { ...finalValues } as any })
-        : apiClient.bookService.Update({
-            id: data.value.row.id,
-            data: { ...finalValues } as any,
-            updateMask: makeUpdateMask(Object.keys(finalValues)),
-          }));
+      if (data.value?.create && templateId !== undefined && templateId !== null) {
+        await apiClient.bookService.CreateByTemplate({
+          templateId: Number(templateId),
+          name: finalValues.name,
+          defaultCurrencyCode: finalValues.defaultCurrencyCode,
+          notes: finalValues.notes,
+        });
+      } else {
+        await (data.value?.create
+          ? apiClient.bookService.Create({ data: { ...finalValues } as any })
+          : apiClient.bookService.Update({
+              id: data.value.row.id,
+              data: { ...finalValues } as any,
+              updateMask: makeUpdateMask(Object.keys(finalValues)),
+            }));
+      }
 
       notification.success({
         message: data.value?.create
@@ -208,8 +238,30 @@ const [Drawer, drawerApi] = useVbenDrawer({
       // 获取传入的数据
       data.value = drawerApi.getData<Record<string, any>>();
 
-      // 为表单赋值
-      baseFormApi.setValues(data.value?.row);
+      const isCreate = data.value?.create === true;
+
+      // 为表单赋值（编辑模式回填，创建模式清空）
+      if (!isCreate) {
+        baseFormApi.setValues(data.value?.row);
+      } else {
+        baseFormApi.resetForm();
+      }
+
+      // 创建模式：加载账本模板列表并显示模板字段；
+      // 编辑模式：隐藏模板字段（账本不支持从模板编辑）
+      let templateOptionsList: Array<{ value: number; label: string }> = [];
+      if (isCreate) {
+        try {
+          const templateData = await apiClient.bookTemplateService.ListAll({});
+          templateOptions.value = (templateData.items ?? []).map((t: any) => ({
+            value: t.id as number,
+            label: t.name ?? `#${t.id}`,
+          }));
+          templateOptionsList = templateOptions.value;
+        } catch {
+          templateOptions.value = [];
+        }
+      }
 
       // 异步加载默认账户/分类下拉选项
       try {
@@ -232,6 +284,15 @@ const [Drawer, drawerApi] = useVbenDrawer({
         );
 
         await baseFormApi.updateSchema([
+          {
+            fieldName: 'templateId',
+            componentProps: { options: templateOptionsList },
+            // 仅在创建模式下渲染模板选择字段
+            dependencies: {
+              if: isCreate,
+              triggerFields: ['name'],
+            },
+          },
           {
             fieldName: 'defaultExpenseAccountId',
             componentProps: { options: accountOptions },

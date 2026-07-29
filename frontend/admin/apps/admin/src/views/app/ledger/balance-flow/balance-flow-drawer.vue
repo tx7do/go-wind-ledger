@@ -1,10 +1,11 @@
 <script lang="ts" setup>
-import { computed, ref } from 'vue';
+import { computed, h, ref } from 'vue';
 
 import { useVbenDrawer } from '@vben/common-ui';
 import { $t } from '@vben/locales';
+import { LucideTrash2, LucideUpload } from '@vben/icons';
 
-import { notification } from 'ant-design-vue';
+import { message, notification } from 'ant-design-vue';
 
 import { useVbenForm } from '#/adapter/form';
 import {
@@ -12,8 +13,11 @@ import {
   fetchListAllAccounts,
   fetchListAllBooks,
   fetchListAllPayees,
+  fetchListFlowFiles,
   makeUpdateMask,
+  useUploadFlowFile,
 } from '#/api';
+import type { ledgerservicev1_FlowFile } from '#/api/generated/admin/service/v1';
 
 // 流水类型选项
 const flowTypeOptions = [
@@ -46,6 +50,100 @@ const getTitle = computed(() =>
         moduleName: $t('page.ledger.balanceFlow.moduleName'),
       }),
 );
+
+// ==============================
+// 流水附件管理（仅编辑模式可用）
+// ==============================
+const attachments = ref<ledgerservicev1_FlowFile[]>([]);
+const attachmentsLoading = ref(false);
+const uploading = ref(false);
+const uploadFlowFile = useUploadFlowFile();
+
+/** 格式化文件大小 */
+function formatSize(bytes?: number): string {
+  if (!bytes || bytes <= 0) {
+    return '-';
+  }
+  const kb = 1024;
+  const mb = kb * 1024;
+  if (bytes >= mb) {
+    return `${(bytes / mb).toFixed(2)} MB`;
+  }
+  if (bytes >= kb) {
+    return `${(bytes / kb).toFixed(2)} KB`;
+  }
+  return `${bytes} B`;
+}
+
+/** 加载当前流水的附件列表 */
+async function loadAttachments(flowId: number) {
+  attachmentsLoading.value = true;
+  try {
+    const resp = await fetchListFlowFiles(flowId);
+    attachments.value = resp.items ?? [];
+  } catch {
+    attachments.value = [];
+  } finally {
+    attachmentsLoading.value = false;
+  }
+}
+
+/** 上传附件（a-upload customRequest） */
+async function handleUpload(options: any) {
+  const { file, onSuccess, onError } = options;
+  const flowId = data.value?.row?.id;
+  if (!flowId) {
+    onError?.(new Error('missing flowId'));
+    return;
+  }
+  uploading.value = true;
+  try {
+    await uploadFlowFile.mutateAsync({ flowId, file: file as File });
+    onSuccess?.({}, file);
+    notification.success({
+      message: $t('ui.notification.upload_success'),
+    });
+    await loadAttachments(flowId);
+  } catch (err) {
+    onError?.(err);
+    notification.error({
+      message: $t('ui.notification.upload_failed'),
+    });
+  } finally {
+    uploading.value = false;
+  }
+}
+
+/** 上传前校验（限制单文件大小 20MB） */
+function beforeUpload(file: File): boolean {
+  const maxSize = 20 * 1024 * 1024;
+  if (file.size > maxSize) {
+    message.error($t('ui.notification.upload_failed'));
+    return false;
+  }
+  return true;
+}
+
+/** 删除附件 */
+async function handleDeleteAttachment(item: ledgerservicev1_FlowFile) {
+  const flowId = data.value?.row?.id;
+  try {
+    await apiClient.flowFileService.Delete({ id: item.id });
+    notification.success({
+      message: $t('ui.notification.delete_success'),
+    });
+    if (flowId) {
+      await loadAttachments(flowId);
+    }
+  } catch {
+    notification.error({
+      message: $t('ui.notification.delete_failed'),
+    });
+  }
+}
+
+/** 禁用上传按钮（创建模式无 flowId） */
+const canManageAttachments = computed(() => !data.value?.create);
 
 const [BaseForm, baseFormApi] = useVbenForm({
   showDefaultActions: false,
@@ -292,6 +390,15 @@ const [Drawer, drawerApi] = useVbenDrawer({
           row.tags = JSON.stringify(row.tags ?? [], null, 2);
         }
         baseFormApi.setValues(row);
+
+        // 编辑模式：加载当前流水的附件列表
+        if (row.id !== undefined) {
+          await loadAttachments(Number(row.id));
+        } else {
+          attachments.value = [];
+        }
+      } else {
+        attachments.value = [];
       }
 
       // 异步加载下拉选项（账本/账户/收款人）
@@ -344,5 +451,64 @@ function setLoading(loading: boolean) {
 <template>
   <Drawer :title="getTitle">
     <BaseForm />
+
+    <!-- 附件管理（仅编辑模式可用） -->
+    <template v-if="canManageAttachments">
+      <a-divider>{{ $t('page.ledger.flowFile.manage') }}</a-divider>
+
+      <div class="flex items-center gap-2 mb-3">
+        <a-upload
+          :show-upload-list="false"
+          :before-upload="beforeUpload"
+          :custom-request="handleUpload"
+          :disabled="uploading"
+        >
+          <a-button
+            type="primary"
+            :loading="uploading"
+            :icon="h(LucideUpload)"
+          >
+            {{ $t('page.ledger.flowFile.upload') }}
+          </a-button>
+        </a-upload>
+        <a-button
+          :loading="attachmentsLoading"
+          size="small"
+          @click="loadAttachments(Number(data?.row?.id))"
+        >
+          {{ $t('ui.button.refresh') }}
+        </a-button>
+      </div>
+
+      <a-list
+        :data-source="attachments"
+        :loading="attachmentsLoading"
+        size="small"
+        bordered
+      >
+        <template #renderItem="{ item }">
+          <a-list-item>
+            <div class="flex items-center justify-between w-full">
+              <div class="flex flex-col flex-1 min-w-0 mr-3">
+                <span class="truncate">{{ item.originalName }}</span>
+                <span class="text-xs text-gray-400">
+                  {{ item.contentType }} · {{ formatSize(item.size) }}
+                </span>
+              </div>
+              <a-button
+                danger
+                type="link"
+                size="small"
+                :icon="h(LucideTrash2)"
+                @click="handleDeleteAttachment(item)"
+              />
+            </div>
+          </a-list-item>
+        </template>
+        <template #emptyText>
+          {{ $t('page.ledger.flowFile.noAttachments') }}
+        </template>
+      </a-list>
+    </template>
   </Drawer>
 </template>

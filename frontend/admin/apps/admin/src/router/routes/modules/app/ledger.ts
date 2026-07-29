@@ -37,6 +37,18 @@ const ledger: RouteRecordRaw[] = [
         component: () => import('#/views/app/ledger/account/index.vue'),
       },
       {
+        path: 'accounts/overview',
+        name: 'AccountOverview',
+        meta: {
+          order: 2,
+          icon: 'lucide:pie-chart',
+          title: $t('menu.ledger.accountOverview'),
+          hideInMenu: false,
+          activePath: '/ledger/accounts',
+        },
+        component: () => import('#/views/app/ledger/account/overview.vue'),
+      },
+      {
         path: 'balance-flows',
         name: 'BalanceFlowManagement',
         meta: {

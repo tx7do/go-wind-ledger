@@ -60,3 +60,9 @@ export const LucideCircleAlert = createIconifyIcon('lucide:circle-alert');
 
 export const LucideSparkles = createIconifyIcon('lucide:sparkles');
 export const LucideWand = createIconifyIcon('lucide:wand');
+
+export const LucideSettings = createIconifyIcon('lucide:settings');
+
+export const LucideUpload = createIconifyIcon('lucide:upload');
+export const LucidePaperclip = createIconifyIcon('lucide:paperclip');
+export const LucideEye = createIconifyIcon('lucide:eye');

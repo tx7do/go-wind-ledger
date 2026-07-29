@@ -57,6 +57,18 @@ class _LedgerHomePageState extends State<LedgerHomePage> {
         route: '/ledger/books',
       ),
       _MenuEntry(
+        icon: Icons.savings_outlined,
+        title: '预算管理',
+        subtitle: '管理收支预算',
+        route: '/ledger/budgets',
+      ),
+      _MenuEntry(
+        icon: Icons.group_outlined,
+        title: '成员管理',
+        subtitle: '邀请与管理租户成员',
+        route: '/ledger/members',
+      ),
+      _MenuEntry(
         icon: Icons.category_outlined,
         title: '分类管理',
         subtitle: '管理收支分类',

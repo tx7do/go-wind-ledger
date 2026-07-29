@@ -5,11 +5,14 @@ import 'package:flutter_app/generated/api/app/service/v1/index.dart'
     show
         ApiClient,
         BookServiceClient,
+        BookTemplateServiceClient,
         LedgerServiceV1Book,
         LedgerServiceV1ListBookResponse,
+        LedgerServiceV1BookTemplate,
         LedgerServiceV1ListAllBookRequest,
         LedgerServiceV1GetBookRequest,
         LedgerServiceV1CreateBookRequest,
+        LedgerServiceV1CreateBookByTemplateRequest,
         LedgerServiceV1UpdateBookRequest,
         LedgerServiceV1DeleteBookRequest,
         LedgerServiceV1ToggleBookRequest;
@@ -20,6 +23,7 @@ import 'package:flutter_app/src/core/transport/http/index.dart';
 
 typedef Book = LedgerServiceV1Book;
 typedef ListBookResponse = LedgerServiceV1ListBookResponse;
+typedef BookTemplate = LedgerServiceV1BookTemplate;
 
 /// 账本服务
 ///
@@ -28,6 +32,38 @@ class BookService extends BaseService {
   BookService() : super(tag: 'BookService');
 
   BookServiceClient get _api => GetIt.instance<ApiClient>().bookService;
+  BookTemplateServiceClient get _templateApi =>
+      GetIt.instance<ApiClient>().bookTemplateService;
+
+  /// 获取所有账本模板
+  Future<dynamic> listTemplates() async {
+    try {
+      return await _templateApi.listAll({});
+    } on DioException catch (e) {
+      return handleDioError(e);
+    }
+  }
+
+  /// 从模板创建账本（会一并创建模板中的分类/标签/收款人）
+  Future<dynamic> createByTemplate({
+    required int templateId,
+    required String name,
+    required String defaultCurrencyCode,
+    String? notes,
+  }) async {
+    try {
+      return await _api.createByTemplate(
+        LedgerServiceV1CreateBookByTemplateRequest(
+          templateId: templateId,
+          name: name,
+          defaultCurrencyCode: defaultCurrencyCode,
+          notes: notes,
+        ),
+      );
+    } on DioException catch (e) {
+      return handleDioError(e);
+    }
+  }
 
   /// 获取账本列表（分页）
   Future<dynamic> list([PaginationQuery? query]) async {

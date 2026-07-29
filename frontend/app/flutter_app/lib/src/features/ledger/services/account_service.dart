@@ -6,7 +6,10 @@ import 'package:flutter_app/generated/api/app/service/v1/index.dart'
         ApiClient,
         AccountServiceClient,
         LedgerServiceV1Account,
+        LedgerServiceV1AccountAsset,
         LedgerServiceV1ListAccountResponse,
+        LedgerServiceV1OverviewResponse,
+        LedgerServiceV1OverviewRequest,
         LedgerServiceV1ListAllAccountRequest,
         LedgerServiceV1GetAccountRequest,
         LedgerServiceV1CreateAccountRequest,
@@ -21,6 +24,8 @@ import 'package:flutter_app/src/core/transport/http/index.dart';
 
 typedef Account = LedgerServiceV1Account;
 typedef ListAccountResponse = LedgerServiceV1ListAccountResponse;
+typedef OverviewResponse = LedgerServiceV1OverviewResponse;
+typedef AccountAsset = LedgerServiceV1AccountAsset;
 
 /// 账户服务
 ///
@@ -46,6 +51,15 @@ class AccountService extends BaseService {
       return await _api.listAll(
         LedgerServiceV1ListAllAccountRequest(includeDisabled: includeDisabled),
       );
+    } on DioException catch (e) {
+      return handleDioError(e);
+    }
+  }
+
+  /// 获取账户概览（总资产/总负债/净资产及明细）
+  Future<dynamic> overview() async {
+    try {
+      return await _api.overview(LedgerServiceV1OverviewRequest());
     } on DioException catch (e) {
       return handleDioError(e);
     }

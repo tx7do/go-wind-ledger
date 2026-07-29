@@ -790,7 +790,11 @@
       "defaultIncomeCategory": "Default Income Category",
       "button": {
         "create": "New Book"
-      }
+      },
+      "template": "Book Template",
+      "templatePlaceholder": "No template",
+      "templateDescription": "Selecting a template will create the book from the template (with default categories/tags/payees)",
+      "createByTemplate": "Create from Template"
     },
     "account": {
       "moduleName": "Account",
@@ -814,8 +818,23 @@
       "adjustBalance": "Adjust Balance",
       "targetBalance": "Target Balance",
       "button": {
-        "create": "New Account"
-      }
+        "create": "New Account",
+        "overview": "Overview"
+      },
+      "capability": "Capability Settings",
+      "capabilitySettings": "Account Capability Settings",
+      "overview": "Account Overview",
+      "totalAssets": "Total Assets",
+      "totalDebts": "Total Debts",
+      "netWorth": "Net Worth",
+      "assetDetail": "Asset Details",
+      "debtDetail": "Debt Details",
+      "assetName": "Name",
+      "assetType": "Type",
+      "assetBalance": "Balance",
+      "assetCurrency": "Currency",
+      "noData": "No data",
+      "refreshOverview": "Refresh"
     },
     "balanceFlow": {
       "moduleName": "Transaction",
@@ -934,7 +953,14 @@
       "originalName": "File Name",
       "contentType": "File Type",
       "size": "File Size",
-      "createTime": "Upload Time"
+      "createTime": "Upload Time",
+      "upload": "Upload Attachment",
+      "uploadHint": "Click or drag file to upload",
+      "uploading": "Uploading...",
+      "attachments": "Attachments",
+      "manage": "Attachment Management",
+      "view": "View",
+      "noAttachments": "No attachments"
     },
     "member": {
       "moduleName": "Members",

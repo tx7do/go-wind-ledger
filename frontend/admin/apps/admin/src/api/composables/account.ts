@@ -1,6 +1,9 @@
 import type {
   ledgerservicev1_Account,
+  ledgerservicev1_AccountStatisticsRequest,
+  ledgerservicev1_AccountStatisticsResponse,
   ledgerservicev1_ListAccountResponse,
+  ledgerservicev1_OverviewResponse,
 } from '#/api/generated/admin/service/v1';
 
 import {
@@ -92,6 +95,83 @@ export function useAdjustBalance(
 ) {
   return useMutation({
     mutationFn: (req) => apiClient.accountService.AdjustBalance(req),
+    ...options,
+  });
+}
+
+export function useToggleInclude(
+  options?: UseMutationOptions<object, Error, { id: number }>,
+) {
+  return useMutation({
+    mutationFn: (req) => apiClient.accountService.ToggleInclude(req),
+    ...options,
+  });
+}
+
+export function useToggleCanExpense(
+  options?: UseMutationOptions<object, Error, { id: number }>,
+) {
+  return useMutation({
+    mutationFn: (req) => apiClient.accountService.ToggleCanExpense(req),
+    ...options,
+  });
+}
+
+export function useToggleCanIncome(
+  options?: UseMutationOptions<object, Error, { id: number }>,
+) {
+  return useMutation({
+    mutationFn: (req) => apiClient.accountService.ToggleCanIncome(req),
+    ...options,
+  });
+}
+
+export function useToggleCanTransferFrom(
+  options?: UseMutationOptions<object, Error, { id: number }>,
+) {
+  return useMutation({
+    mutationFn: (req) => apiClient.accountService.ToggleCanTransferFrom(req),
+    ...options,
+  });
+}
+
+export function useToggleCanTransferTo(
+  options?: UseMutationOptions<object, Error, { id: number }>,
+) {
+  return useMutation({
+    mutationFn: (req) => apiClient.accountService.ToggleCanTransferTo(req),
+    ...options,
+  });
+}
+
+// 账户概览：资产/负债/净资产
+export function useOverview(
+  options?: UseQueryOptions<ledgerservicev1_OverviewResponse, Error>,
+) {
+  return useQuery({
+    queryKey: ['accountOverview'],
+    queryFn: () => apiClient.accountService.Overview({}),
+    ...options,
+  });
+}
+
+export async function fetchOverview() {
+  return queryClient.fetchQuery({
+    queryKey: ['accountOverview'],
+    queryFn: () => apiClient.accountService.Overview({}),
+    staleTime: 0,
+    retry: 0,
+  });
+}
+
+// 账户统计（按币种汇总）
+export function useAccountStatistics(
+  req: ledgerservicev1_AccountStatisticsRequest,
+  options?: UseQueryOptions<ledgerservicev1_AccountStatisticsResponse, Error>,
+) {
+  return useQuery({
+    queryKey: ['accountStatistics', req],
+    queryFn: () => apiClient.accountService.Statistics(req),
     ...options,
   });
 }

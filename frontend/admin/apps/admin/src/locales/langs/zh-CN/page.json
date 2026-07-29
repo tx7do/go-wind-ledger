@@ -829,7 +829,11 @@
       "defaultIncomeCategory": "默认收入分类",
       "button": {
         "create": "新建账本"
-      }
+      },
+      "template": "账本模板",
+      "templatePlaceholder": "不使用模板",
+      "templateDescription": "选择模板将从模板创建账本（包含默认分类/标签/收款人）",
+      "createByTemplate": "从模板创建"
     },
     "account": {
       "moduleName": "账户",
@@ -853,8 +857,23 @@
       "adjustBalance": "余额调整",
       "targetBalance": "目标余额",
       "button": {
-        "create": "新建账户"
-      }
+        "create": "新建账户",
+        "overview": "账户概览"
+      },
+      "capability": "能力设置",
+      "capabilitySettings": "账户能力设置",
+      "overview": "账户概览",
+      "totalAssets": "总资产",
+      "totalDebts": "总负债",
+      "netWorth": "净资产",
+      "assetDetail": "资产明细",
+      "debtDetail": "负债明细",
+      "assetName": "名称",
+      "assetType": "类型",
+      "assetBalance": "金额",
+      "assetCurrency": "币种",
+      "noData": "暂无数据",
+      "refreshOverview": "刷新"
     },
     "balanceFlow": {
       "moduleName": "收支流水",
@@ -973,7 +992,14 @@
       "originalName": "文件名",
       "contentType": "文件类型",
       "size": "文件大小",
-      "createTime": "上传时间"
+      "createTime": "上传时间",
+      "upload": "上传附件",
+      "uploadHint": "点击或拖拽文件上传",
+      "uploading": "上传中...",
+      "attachments": "附件列表",
+      "manage": "附件管理",
+      "view": "查看",
+      "noAttachments": "暂无附件"
     },
     "member": {
       "moduleName": "成员管理",

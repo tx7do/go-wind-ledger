@@ -86,3 +86,21 @@ export function useTogglePayee(
     ...options,
   });
 }
+
+export function useTogglePayeeCanExpense(
+  options?: UseMutationOptions<object, Error, { id: number }>,
+) {
+  return useMutation({
+    mutationFn: (req) => apiClient.payeeService.ToggleCanExpense(req),
+    ...options,
+  });
+}
+
+export function useTogglePayeeCanIncome(
+  options?: UseMutationOptions<object, Error, { id: number }>,
+) {
+  return useMutation({
+    mutationFn: (req) => apiClient.payeeService.ToggleCanIncome(req),
+    ...options,
+  });
+}
