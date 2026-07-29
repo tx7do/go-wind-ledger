@@ -6,6 +6,7 @@ import (
 
 	"github.com/go-kratos/kratos/v2/log"
 	entCrud "github.com/tx7do/go-crud/entgo"
+	"github.com/tx7do/go-utils/mapper"
 	"github.com/tx7do/go-utils/timeutil"
 	"github.com/tx7do/kratos-bootstrap/bootstrap"
 
@@ -19,17 +20,21 @@ type UserOrgUnitRepo struct {
 	log *log.Helper
 
 	entClient       *entCrud.EntClient[*ent.Client]
+	statusConverter *mapper.EnumTypeConverter[identityV1.UserOrgUnit_Status, userorgunit.Status]
 }
 
 func NewUserOrgUnitRepo(ctx *bootstrap.Context, entClient *entCrud.EntClient[*ent.Client]) *UserOrgUnitRepo {
-	repo := &UserOrgUnitRepo{
-		log:       ctx.NewLoggerHelper("userorgunit/repo/core-service"),
+	return &UserOrgUnitRepo{
+		log:       ctx.NewLoggerHelper("user-org-unit/repo/core-service"),
 		entClient: entClient,
+		statusConverter: mapper.NewEnumTypeConverter[identityV1.UserOrgUnit_Status, userorgunit.Status](
+			identityV1.UserOrgUnit_Status_name,
+			identityV1.UserOrgUnit_Status_value,
+		),
 	}
-	return repo
 }
 
-
+// CleanRelationsByUserID 清理用户组织单元关联
 func (r *UserOrgUnitRepo) CleanRelationsByUserID(ctx context.Context, tx *ent.Tx, userID uint32) error {
 	if userID == 0 {
 		return nil
@@ -128,20 +133,22 @@ func (r *UserOrgUnitRepo) AssignUserOrgUnit(
 		return nil
 	}
 
-	var _ = time.Now()
+	now := time.Now()
 	if data.StartAt == nil {
-		data.StartAt = timeutil.TimeToTimestamppb(nowAddr())
+		data.StartAt = timeutil.TimeToTimestamppb(&now)
 	}
 	_, err := tx.UserOrgUnit.
 		Create().
 		SetUserID(data.GetUserId()).
 		SetOrgUnitID(data.GetOrgUnitId()).
-		SetNillableStatus(userorgunitStatusToEntity(data.Status)).
+		SetNillableStatus(r.statusConverter.ToEntity(data.Status)).
+		SetNillableAssignedBy(data.AssignedBy).
+		SetNillableAssignedAt(timeutil.TimestamppbToTime(data.AssignedAt)).
 		SetNillableIsPrimary(data.IsPrimary).
 		SetNillableStartAt(timeutil.TimestamppbToTime(data.StartAt)).
 		SetNillableEndAt(timeutil.TimestamppbToTime(data.EndAt)).
 		SetNillableCreatedBy(data.CreatedBy).
-		SetCreatedAt(time.Now()).
+		SetCreatedAt(now).
 		Save(ctx)
 	if err != nil {
 		r.log.Errorf("assign orgUnit to user failed: %s", err.Error())
@@ -167,24 +174,26 @@ func (r *UserOrgUnitRepo) AssignUserOrgUnits(
 		return identityV1.ErrorInternalServerError("clean old user orgUnits failed")
 	}
 
-	var _ = time.Now()
+	now := time.Now()
 
 	var userOrgUnitCreates []*ent.UserOrgUnitCreate
 	for _, data := range datas {
 		if data.StartAt == nil {
-			data.StartAt = timeutil.TimeToTimestamppb(nowAddr())
+			data.StartAt = timeutil.TimeToTimestamppb(&now)
 		}
 		rm := tx.UserOrgUnit.
 			Create().
 			SetNillableTenantID(data.TenantId).
 			SetUserID(data.GetUserId()).
 			SetOrgUnitID(data.GetOrgUnitId()).
-			SetNillableStatus(userorgunitStatusToEntity(data.Status)).
+			SetNillableStatus(r.statusConverter.ToEntity(data.Status)).
+			SetNillableAssignedBy(data.AssignedBy).
+			SetNillableAssignedAt(timeutil.TimestamppbToTime(data.AssignedAt)).
 			SetNillableIsPrimary(data.IsPrimary).
 			SetNillableStartAt(timeutil.TimestamppbToTime(data.StartAt)).
 			SetNillableEndAt(timeutil.TimestamppbToTime(data.EndAt)).
 			SetNillableCreatedBy(data.CreatedBy).
-			SetCreatedAt(time.Now())
+			SetCreatedAt(now)
 		userOrgUnitCreates = append(userOrgUnitCreates, rm)
 	}
 
@@ -209,9 +218,11 @@ func (r *UserOrgUnitRepo) ListOrgUnitIDs(ctx context.Context, userID uint32, exc
 		)
 
 	if excludeExpired {
-		var _ = time.Now()
+		now := time.Now()
 		q = q.Where(
 			userorgunit.Or(
+				userorgunit.EndAtIsNil(),
+				userorgunit.EndAtGT(now),
 			),
 		)
 	}
@@ -242,9 +253,11 @@ func (r *UserOrgUnitRepo) ListUserIDs(ctx context.Context, orgUnitID uint32, exc
 		)
 
 	if excludeExpired {
-		var _ = time.Now()
+		now := time.Now()
 		q = q.Where(
 			userorgunit.Or(
+				userorgunit.EndAtIsNil(),
+				userorgunit.EndAtGT(now),
 			),
 		)
 	}
@@ -275,9 +288,11 @@ func (r *UserOrgUnitRepo) ListUserIDsByOrgUnitIDs(ctx context.Context, orgUnitID
 		)
 
 	if excludeExpired {
-		var _ = time.Now()
+		now := time.Now()
 		q = q.Where(
 			userorgunit.Or(
+				userorgunit.EndAtIsNil(),
+				userorgunit.EndAtGT(now),
 			),
 		)
 	}
@@ -294,13 +309,4 @@ func (r *UserOrgUnitRepo) ListUserIDsByOrgUnitIDs(ctx context.Context, orgUnitID
 		ids[i] = uint32(v)
 	}
 	return ids, nil
-}
-
-// userorgunitStatusToEntity converts proto Membership_Status to ent userorgunit.Status.
-func userorgunitStatusToEntity(s *identityV1.UserOrgUnit_Status) *userorgunit.Status {
-	if s == nil {
-		return nil
-	}
-	v := userorgunit.Status(s.String())
-	return &v
 }

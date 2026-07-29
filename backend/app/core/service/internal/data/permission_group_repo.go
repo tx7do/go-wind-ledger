@@ -28,7 +28,8 @@ type PermissionGroupRepo struct {
 	entClient *entCrud.EntClient[*ent.Client]
 	log       *log.Helper
 
-	mapper *mapper.CopierMapper[permissionV1.PermissionGroup, ent.PermissionGroup]
+	mapper          *mapper.CopierMapper[permissionV1.PermissionGroup, ent.PermissionGroup]
+	statusConverter *mapper.EnumTypeConverter[permissionV1.PermissionGroup_Status, permissiongroup.Status]
 
 	repository *entCrud.Repository[
 		ent.PermissionGroupQuery, ent.PermissionGroupSelect,
@@ -40,13 +41,21 @@ type PermissionGroupRepo struct {
 	]
 }
 
-func NewPermissionGroupRepo(ctx *bootstrap.Context, entClient *entCrud.EntClient[*ent.Client]) *PermissionGroupRepo {
+func NewPermissionGroupRepo(
+	ctx *bootstrap.Context,
+	entClient *entCrud.EntClient[*ent.Client],
+) *PermissionGroupRepo {
 	repo := &PermissionGroupRepo{
-		log:       ctx.NewLoggerHelper("permissiongroup/repo/core-service"),
+		log:       ctx.NewLoggerHelper("permission-group/repo/core-service"),
 		entClient: entClient,
 		mapper:    mapper.NewCopierMapper[permissionV1.PermissionGroup, ent.PermissionGroup](),
+		statusConverter: mapper.NewEnumTypeConverter[permissionV1.PermissionGroup_Status, permissiongroup.Status](
+			permissionV1.PermissionGroup_Status_name, permissionV1.PermissionGroup_Status_value,
+		),
 	}
+
 	repo.init()
+
 	return repo
 }
 
@@ -62,6 +71,8 @@ func (r *PermissionGroupRepo) init() {
 
 	r.mapper.AppendConverters(copierutil.NewTimeStringConverterPair())
 	r.mapper.AppendConverters(copierutil.NewTimeTimestamppbConverterPair())
+
+	r.mapper.AppendConverters(r.statusConverter.NewConverterPair())
 }
 
 func (r *PermissionGroupRepo) Count(ctx context.Context, whereCond []func(s *sql.Selector)) (int, error) {
@@ -251,7 +262,7 @@ func (r *PermissionGroupRepo) newPermissionCreate(permissionGroup *permissionV1.
 func (r *PermissionGroupRepo) newPermissionCreateWithBuilder(builder *ent.PermissionGroupCreate, permissionGroup *permissionV1.PermissionGroup) *ent.PermissionGroupCreate {
 	builder.
 		SetName(permissionGroup.GetName()).
-		SetNillableStatus(pgStatusToEntity(permissionGroup.Status)).
+		SetNillableStatus(r.statusConverter.ToEntity(permissionGroup.Status)).
 		SetNillableModule(permissionGroup.Module).
 		SetNillableSortOrder(permissionGroup.SortOrder).
 		SetNillableDescription(permissionGroup.Description).
@@ -291,7 +302,8 @@ func (r *PermissionGroupRepo) Update(ctx context.Context, req *permissionV1.Upda
 	_, err := r.repository.UpdateOne(ctx, builder, req.Data, req.GetUpdateMask(),
 		func(dto *permissionV1.PermissionGroup) {
 			builder.
-				SetNillableStatus(pgStatusToEntity(req.Data.Status)).
+				SetNillableName(req.Data.Name).
+				SetNillableStatus(r.statusConverter.ToEntity(req.Data.Status)).
 				SetNillableModule(req.Data.Module).
 				SetNillableSortOrder(req.Data.SortOrder).
 				SetNillableDescription(req.Data.Description).
@@ -335,8 +347,9 @@ func (r *PermissionGroupRepo) UpdateParentIDs(ctx context.Context, parentIDs map
 		}
 	}()
 
-	for _, permID := range parentIDs {
+	for permID, parentID := range parentIDs {
 		builder := tx.PermissionGroup.Update().
+			SetParentID(parentID).
 			Where(permissiongroup.IDEQ(permID))
 
 		if err = builder.Exec(ctx); err != nil {
@@ -438,13 +451,4 @@ func (r *PermissionGroupRepo) setTreePath(ctx context.Context, tx *ent.Tx, entit
 		Exec(ctx)
 
 	return err
-}
-
-// pgStatusToEntity converts proto Status to ent permissiongroup.Status.
-func pgStatusToEntity(s *permissionV1.PermissionGroup_Status) *permissiongroup.Status {
-	if s == nil {
-		return nil
-	}
-	v := permissiongroup.Status(s.String())
-	return &v
 }

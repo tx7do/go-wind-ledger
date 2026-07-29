@@ -26,7 +26,10 @@ type TenantRepo struct {
 	entClient *entCrud.EntClient[*ent.Client]
 	log       *log.Helper
 
-	mapper *mapper.CopierMapper[identityV1.Tenant, ent.Tenant]
+	mapper               *mapper.CopierMapper[identityV1.Tenant, ent.Tenant]
+	statusConverter      *mapper.EnumTypeConverter[identityV1.Tenant_Status, tenant.Status]
+	typeConverter        *mapper.EnumTypeConverter[identityV1.Tenant_Type, tenant.Type]
+	auditStatusConverter *mapper.EnumTypeConverter[identityV1.Tenant_AuditStatus, tenant.AuditStatus]
 
 	repository *entCrud.Repository[
 		ent.TenantQuery, ent.TenantSelect,
@@ -40,11 +43,16 @@ type TenantRepo struct {
 
 func NewTenantRepo(ctx *bootstrap.Context, entClient *entCrud.EntClient[*ent.Client]) *TenantRepo {
 	repo := &TenantRepo{
-		log:       ctx.NewLoggerHelper("tenant/repo/core-service"),
-		entClient: entClient,
-		mapper:    mapper.NewCopierMapper[identityV1.Tenant, ent.Tenant](),
+		log:                  ctx.NewLoggerHelper("tenant/repo/core-service"),
+		entClient:            entClient,
+		mapper:               mapper.NewCopierMapper[identityV1.Tenant, ent.Tenant](),
+		statusConverter:      mapper.NewEnumTypeConverter[identityV1.Tenant_Status, tenant.Status](identityV1.Tenant_Status_name, identityV1.Tenant_Status_value),
+		typeConverter:        mapper.NewEnumTypeConverter[identityV1.Tenant_Type, tenant.Type](identityV1.Tenant_Type_name, identityV1.Tenant_Type_value),
+		auditStatusConverter: mapper.NewEnumTypeConverter[identityV1.Tenant_AuditStatus, tenant.AuditStatus](identityV1.Tenant_AuditStatus_name, identityV1.Tenant_AuditStatus_value),
 	}
+
 	repo.init()
+
 	return repo
 }
 
@@ -60,6 +68,10 @@ func (r *TenantRepo) init() {
 
 	r.mapper.AppendConverters(copierutil.NewTimeStringConverterPair())
 	r.mapper.AppendConverters(copierutil.NewTimeTimestamppbConverterPair())
+
+	r.mapper.AppendConverters(r.statusConverter.NewConverterPair())
+	r.mapper.AppendConverters(r.typeConverter.NewConverterPair())
+	r.mapper.AppendConverters(r.auditStatusConverter.NewConverterPair())
 }
 
 func (r *TenantRepo) Count(ctx context.Context, req *paginationV1.PagingRequest) (int, error) {
@@ -217,9 +229,9 @@ func (r *TenantRepo) CreateWithTx(ctx context.Context, tx *ent.Tx, data *identit
 		SetNillableRemark(data.Remark).
 		SetNillableIndustry(data.Industry).
 		SetNillableAdminUserID(data.AdminUserId).
-		SetNillableStatus(nil).
-		SetNillableType(nil).
-		SetNillableAuditStatus(nil).
+		SetNillableStatus(r.statusConverter.ToEntity(data.Status)).
+		SetNillableType(r.typeConverter.ToEntity(data.Type)).
+		SetNillableAuditStatus(r.auditStatusConverter.ToEntity(data.AuditStatus)).
 		SetNillableSubscriptionPlan(data.SubscriptionPlan).
 		SetNillableExpiredAt(timeutil.TimestamppbToTime(data.ExpiredAt)).
 		SetNillableSubscriptionAt(timeutil.TimestamppbToTime(data.SubscriptionAt)).
@@ -270,9 +282,9 @@ func (r *TenantRepo) Update(ctx context.Context, req *identityV1.UpdateTenantReq
 				SetNillableRemark(req.Data.Remark).
 				SetNillableIndustry(req.Data.Industry).
 				SetNillableAdminUserID(req.Data.AdminUserId).
-				SetNillableStatus(nil).
-				SetNillableType(nil).
-				SetNillableAuditStatus(nil).
+				SetNillableStatus(r.statusConverter.ToEntity(req.Data.Status)).
+				SetNillableType(r.typeConverter.ToEntity(req.Data.Type)).
+				SetNillableAuditStatus(r.auditStatusConverter.ToEntity(req.Data.AuditStatus)).
 				SetNillableSubscriptionPlan(req.Data.SubscriptionPlan).
 				SetNillableExpiredAt(timeutil.TimestamppbToTime(req.Data.ExpiredAt)).
 				SetNillableSubscriptionAt(timeutil.TimestamppbToTime(req.Data.SubscriptionAt)).
@@ -359,22 +371,4 @@ func (r *TenantRepo) ListTenantsByIds(ctx context.Context, ids []uint32) ([]*ide
 	}
 
 	return dtos, nil
-}
-
-// tenantStatusToEntity converts proto Status to ent tenant.Status.
-func tenantStatusToEntity(s *identityV1.Tenant_Status) *tenant.Status {
-	if s == nil {
-		return nil
-	}
-	v := tenant.Status(s.String())
-	return &v
-}
-
-// tenantAuditStatusToEntity converts proto AuditStatus to ent tenant.AuditStatus.
-func tenantAuditStatusToEntity(s *identityV1.Tenant_AuditStatus) *tenant.AuditStatus {
-	if s == nil {
-		return nil
-	}
-	v := tenant.AuditStatus(s.String())
-	return &v
 }

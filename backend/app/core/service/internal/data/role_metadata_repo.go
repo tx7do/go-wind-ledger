@@ -2,15 +2,17 @@ package data
 
 import (
 	"context"
+	"time"
 
 	"github.com/go-kratos/kratos/v2/log"
+	entCrud "github.com/tx7do/go-crud/entgo"
+	"github.com/tx7do/go-utils/copierutil"
+	"github.com/tx7do/go-utils/mapper"
+	"github.com/tx7do/go-utils/timeutil"
 	"github.com/tx7do/kratos-bootstrap/bootstrap"
 
-	paginationV1 "github.com/tx7do/go-crud/api/gen/go/pagination/v1"
-	entCrud "github.com/tx7do/go-crud/entgo"
-	"github.com/tx7do/go-utils/mapper"
-
 	"go-wind-ledger/app/core/service/internal/data/ent"
+	"go-wind-ledger/app/core/service/internal/data/ent/predicate"
 	"go-wind-ledger/app/core/service/internal/data/ent/rolemetadata"
 
 	permissionV1 "go-wind-ledger/api/gen/go/permission/service/v1"
@@ -19,34 +21,175 @@ import (
 type RoleMetadataRepo struct {
 	entClient *entCrud.EntClient[*ent.Client]
 	log       *log.Helper
-	mapper    *mapper.CopierMapper[permissionV1.Role, ent.RoleMetadata]
+
+	mapper              *mapper.CopierMapper[permissionV1.RoleMetadata, ent.RoleMetadata]
+	syncPolicyConverter *mapper.EnumTypeConverter[permissionV1.RoleMetadata_SyncPolicy, rolemetadata.SyncPolicy]
+	scopeConverter      *mapper.EnumTypeConverter[permissionV1.RoleMetadata_Scope, rolemetadata.Scope]
+
+	repository *entCrud.Repository[
+		ent.RoleMetadataQuery, ent.RoleMetadataSelect,
+		ent.RoleMetadataCreate, ent.RoleMetadataCreateBulk,
+		ent.RoleMetadataUpdate, ent.RoleMetadataUpdateOne,
+		ent.RoleMetadataDelete,
+		predicate.RoleMetadata,
+		permissionV1.RoleMetadata, ent.RoleMetadata,
+	]
 }
 
-func NewRoleMetadataRepo(ctx *bootstrap.Context, entClient *entCrud.EntClient[*ent.Client]) *RoleMetadataRepo {
-	return &RoleMetadataRepo{
-		log:       ctx.NewLoggerHelper("rolemetadata/repo/core-service"),
+func NewRoleMetadataRepo(
+	ctx *bootstrap.Context,
+	entClient *entCrud.EntClient[*ent.Client],
+) *RoleMetadataRepo {
+	repo := &RoleMetadataRepo{
+		log:       ctx.NewLoggerHelper("role-metadata/repo/core-service"),
 		entClient: entClient,
-		mapper:    mapper.NewCopierMapper[permissionV1.Role, ent.RoleMetadata](),
+		mapper:    mapper.NewCopierMapper[permissionV1.RoleMetadata, ent.RoleMetadata](),
+		syncPolicyConverter: mapper.NewEnumTypeConverter[permissionV1.RoleMetadata_SyncPolicy, rolemetadata.SyncPolicy](
+			permissionV1.RoleMetadata_SyncPolicy_name, permissionV1.RoleMetadata_SyncPolicy_value,
+		),
+		scopeConverter: mapper.NewEnumTypeConverter[permissionV1.RoleMetadata_Scope, rolemetadata.Scope](
+			permissionV1.RoleMetadata_Scope_name, permissionV1.RoleMetadata_Scope_value,
+		),
 	}
+
+	repo.init()
+
+	return repo
 }
 
-func (r *RoleMetadataRepo) List(ctx context.Context, req *paginationV1.PagingRequest) (*permissionV1.ListRoleResponse, error) {
-	q := r.entClient.Client().RoleMetadata.Query()
-	total, _ := q.Count(ctx)
-	entities, err := q.All(ctx)
+func (r *RoleMetadataRepo) init() {
+	r.repository = entCrud.NewRepository[
+		ent.RoleMetadataQuery, ent.RoleMetadataSelect,
+		ent.RoleMetadataCreate, ent.RoleMetadataCreateBulk,
+		ent.RoleMetadataUpdate, ent.RoleMetadataUpdateOne,
+		ent.RoleMetadataDelete,
+		predicate.RoleMetadata,
+		permissionV1.RoleMetadata, ent.RoleMetadata,
+	](r.mapper)
+
+	r.mapper.AppendConverters(copierutil.NewTimeStringConverterPair())
+	r.mapper.AppendConverters(copierutil.NewTimeTimestamppbConverterPair())
+
+	r.mapper.AppendConverters(r.syncPolicyConverter.NewConverterPair())
+	r.mapper.AppendConverters(r.scopeConverter.NewConverterPair())
+}
+
+func (r *RoleMetadataRepo) Create(ctx context.Context, tx *ent.Tx, data *permissionV1.RoleMetadata) error {
+	err := tx.RoleMetadata.Create().
+		SetNillableTenantID(data.TenantId).
+		SetRoleID(data.GetRoleId()).
+		SetNillableIsTemplate(data.IsTemplate).
+		SetNillableTemplateFor(data.TemplateFor).
+		SetNillableTemplateVersion(data.TemplateVersion).
+		SetNillableLastSyncedVersion(data.LastSyncedVersion).
+		SetNillableLastSyncedAt(timeutil.TimestamppbToTime(data.LastSyncedAt)).
+		SetNillableSyncPolicy(r.syncPolicyConverter.ToEntity(data.SyncPolicy)).
+		SetNillableScope(r.scopeConverter.ToEntity(data.Scope)).
+		SetCustomOverrides(data.CustomOverrides).
+		SetCreatedAt(time.Now()).
+		SetNillableCreatedBy(data.CreatedBy).
+		Exec(ctx)
+	return err
+}
+
+// Upsert 插入或更新角色元数据
+func (r *RoleMetadataRepo) Upsert(ctx context.Context, data *permissionV1.RoleMetadata) error {
+	now := time.Now()
+	builder := r.entClient.Client().RoleMetadata.Create().
+		SetNillableTenantID(data.TenantId).
+		SetRoleID(data.GetRoleId()).
+		SetNillableIsTemplate(data.IsTemplate).
+		SetNillableTemplateFor(data.TemplateFor).
+		SetNillableTemplateVersion(data.TemplateVersion).
+		SetNillableLastSyncedVersion(data.LastSyncedVersion).
+		SetNillableLastSyncedAt(timeutil.TimestamppbToTime(data.LastSyncedAt)).
+		SetNillableSyncPolicy(r.syncPolicyConverter.ToEntity(data.SyncPolicy)).
+		SetNillableScope(r.scopeConverter.ToEntity(data.Scope)).
+		SetCustomOverrides(data.CustomOverrides).
+		SetCreatedAt(now).
+		SetNillableCreatedBy(data.CreatedBy).
+		OnConflictColumns(
+			rolemetadata.FieldRoleID,
+		).
+		AddTemplateVersion(1).
+		SetUpdatedAt(now).
+		SetUpdatedBy(data.GetUpdatedBy())
+
+	if data.LastSyncedAt != nil {
+		builder.SetLastSyncedAt(*timeutil.TimestamppbToTime(data.LastSyncedAt))
+	}
+	if data.SyncPolicy != nil {
+		builder.SetSyncPolicy(*r.syncPolicyConverter.ToEntity(data.SyncPolicy))
+	}
+	if data.Scope != nil {
+		builder.SetScope(*r.scopeConverter.ToEntity(data.Scope))
+	}
+	if data.CustomOverrides != nil {
+		builder.SetCustomOverrides(data.GetCustomOverrides())
+	}
+
+	err := builder.Exec(ctx)
+	return err
+}
+
+// Get 获取角色元数据
+func (r *RoleMetadataRepo) Get(ctx context.Context, roleID uint32) (*permissionV1.RoleMetadata, error) {
+	rm, err := r.entClient.Client().RoleMetadata.Query().
+		Where(
+			rolemetadata.RoleIDEQ(roleID),
+		).
+		Only(ctx)
 	if err != nil {
-		return nil, permissionV1.ErrorInternalServerError("query failed")
+		return nil, err
 	}
-	items := make([]*permissionV1.Role, 0, len(entities))
-	for _, e := range entities {
-		items = append(items, r.mapper.ToDTO(e))
-	}
-	return &permissionV1.ListRoleResponse{Items: items, Total: uint64(total)}, nil
+
+	dto := r.mapper.ToDTO(rm)
+	return dto, nil
 }
 
-func (r *RoleMetadataRepo) Delete(ctx context.Context, id uint32) error {
-	return r.entClient.Client().RoleMetadata.DeleteOneID(id).Exec(ctx)
+// IsExistByRoleID 判断角色元数据是否存在
+func (r *RoleMetadataRepo) IsExistByRoleID(ctx context.Context, roleID uint32) (bool, error) {
+	count, err := r.entClient.Client().RoleMetadata.Query().
+		Where(
+			rolemetadata.RoleIDEQ(roleID),
+		).
+		Count(ctx)
+	if err != nil {
+		return false, err
+	}
+	return count > 0, nil
 }
 
-// Suppress unused import warning
-var _ = rolemetadata.IDEQ
+// IsTemplateRole 判断角色是否是模版角色
+func (r *RoleMetadataRepo) IsTemplateRole(ctx context.Context, roleID uint32) (bool, error) {
+	rm, err := r.entClient.Client().RoleMetadata.Query().
+		Where(
+			rolemetadata.RoleIDEQ(roleID),
+		).
+		Only(ctx)
+	if err != nil {
+		return false, err
+	}
+	var isTemplate bool
+	if rm.IsTemplate != nil {
+		isTemplate = *rm.IsTemplate
+	}
+	return isTemplate, nil
+}
+
+// UpgradeTemplateVersion 升级模版版本号
+func (r *RoleMetadataRepo) UpgradeTemplateVersion(ctx context.Context, tx *ent.Tx, roleID uint32) error {
+	err := tx.RoleMetadata.Update().
+		Where(
+			rolemetadata.RoleIDEQ(roleID),
+			rolemetadata.IsTemplateEQ(true),
+		).
+		AddTemplateVersion(1).
+		SetUpdatedAt(time.Now()).
+		Exec(ctx)
+	if err != nil {
+		return err
+	}
+
+	return err
+}

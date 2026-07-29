@@ -20,14 +20,13 @@ type PermissionMenuRepo struct {
 }
 
 func NewPermissionMenuRepo(ctx *bootstrap.Context, entClient *entCrud.EntClient[*ent.Client]) *PermissionMenuRepo {
-	repo := &PermissionMenuRepo{
-		log:       ctx.NewLoggerHelper("permissionmenu/repo/core-service"),
+	return &PermissionMenuRepo{
+		log:       ctx.NewLoggerHelper("permission-menu/repo/core-service"),
 		entClient: entClient,
 	}
-	return repo
 }
 
-
+// CleanMenus 清理权限的所有菜单
 func (r *PermissionMenuRepo) CleanMenus(
 	ctx context.Context,
 	tx *ent.Tx,

@@ -28,7 +28,9 @@ type OrgUnitRepo struct {
 	entClient *entCrud.EntClient[*ent.Client]
 	log       *log.Helper
 
-	mapper *mapper.CopierMapper[identityV1.OrgUnit, ent.OrgUnit]
+	mapper          *mapper.CopierMapper[identityV1.OrgUnit, ent.OrgUnit]
+	typeConverter   *mapper.EnumTypeConverter[identityV1.OrgUnit_Type, orgunit.Type]
+	statusConverter *mapper.EnumTypeConverter[identityV1.OrgUnit_Status, orgunit.Status]
 
 	repository *entCrud.Repository[
 		ent.OrgUnitQuery, ent.OrgUnitSelect,
@@ -42,11 +44,15 @@ type OrgUnitRepo struct {
 
 func NewOrgUnitRepo(ctx *bootstrap.Context, entClient *entCrud.EntClient[*ent.Client]) *OrgUnitRepo {
 	repo := &OrgUnitRepo{
-		log:       ctx.NewLoggerHelper("orgunit/repo/core-service"),
-		entClient: entClient,
-		mapper:    mapper.NewCopierMapper[identityV1.OrgUnit, ent.OrgUnit](),
+		log:             ctx.NewLoggerHelper("org-unit/repo/core-service"),
+		entClient:       entClient,
+		mapper:          mapper.NewCopierMapper[identityV1.OrgUnit, ent.OrgUnit](),
+		typeConverter:   mapper.NewEnumTypeConverter[identityV1.OrgUnit_Type, orgunit.Type](identityV1.OrgUnit_Type_name, identityV1.OrgUnit_Type_value),
+		statusConverter: mapper.NewEnumTypeConverter[identityV1.OrgUnit_Status, orgunit.Status](identityV1.OrgUnit_Status_name, identityV1.OrgUnit_Status_value),
 	}
+
 	repo.init()
+
 	return repo
 }
 
@@ -62,6 +68,9 @@ func (r *OrgUnitRepo) init() {
 
 	r.mapper.AppendConverters(copierutil.NewTimeStringConverterPair())
 	r.mapper.AppendConverters(copierutil.NewTimeTimestamppbConverterPair())
+
+	r.mapper.AppendConverters(r.typeConverter.NewConverterPair())
+	r.mapper.AppendConverters(r.statusConverter.NewConverterPair())
 }
 
 func (r *OrgUnitRepo) count(ctx context.Context, whereCond []func(s *sql.Selector)) (int, error) {
@@ -236,9 +245,15 @@ func (r *OrgUnitRepo) Create(ctx context.Context, req *identityV1.CreateOrgUnitR
 		SetNillableTenantID(req.Data.TenantId).
 		SetName(req.Data.GetName()).
 		SetNillableCode(req.Data.Code).
+		SetNillableStatus(r.statusConverter.ToEntity(req.Data.Status)).
+		SetNillableType(r.typeConverter.ToEntity(req.Data.Type)).
 		SetNillablePath(req.Data.Path).
 		SetNillableParentID(req.Data.ParentId).
 		SetNillableSortOrder(req.Data.SortOrder).
+		SetNillableLeaderID(req.Data.LeaderId).
+		SetNillableDescription(req.Data.Description).
+		SetNillableRemark(req.Data.Remark).
+		SetNillableExternalID(req.Data.ExternalId).
 		SetNillableIsLegalEntity(req.Data.IsLegalEntity).
 		SetNillableRegistrationNumber(req.Data.RegistrationNumber).
 		SetNillableTaxID(req.Data.TaxId).
@@ -255,6 +270,13 @@ func (r *OrgUnitRepo) Create(ctx context.Context, req *identityV1.CreateOrgUnitR
 		SetNillableContactUserID(req.Data.ContactUserId).
 		SetNillableCreatedBy(req.Data.CreatedBy).
 		SetCreatedAt(time.Now())
+
+	if req.Data.BusinessScopes == nil {
+		builder.SetBusinessScopes(req.Data.GetBusinessScopes())
+	}
+	if req.Data.PermissionTags == nil {
+		builder.SetPermissionTags(req.Data.GetPermissionTags())
+	}
 
 	if req.Data.Id != nil {
 		builder.SetID(req.GetData().GetId())
@@ -298,9 +320,15 @@ func (r *OrgUnitRepo) Update(ctx context.Context, req *identityV1.UpdateOrgUnitR
 			builder.
 				SetNillableName(req.Data.Name).
 				SetNillableCode(req.Data.Code).
+				SetNillableStatus(r.statusConverter.ToEntity(req.Data.Status)).
+				SetNillableType(r.typeConverter.ToEntity(req.Data.Type)).
 				SetNillablePath(req.Data.Path).
 				SetNillableParentID(req.Data.ParentId).
 				SetNillableSortOrder(req.Data.SortOrder).
+				SetNillableLeaderID(req.Data.LeaderId).
+				SetNillableDescription(req.Data.Description).
+				SetNillableRemark(req.Data.Remark).
+				SetNillableExternalID(req.Data.ExternalId).
 				SetNillableIsLegalEntity(req.Data.IsLegalEntity).
 				SetNillableRegistrationNumber(req.Data.RegistrationNumber).
 				SetNillableTaxID(req.Data.TaxId).
@@ -318,6 +346,12 @@ func (r *OrgUnitRepo) Update(ctx context.Context, req *identityV1.UpdateOrgUnitR
 				SetNillableUpdatedBy(req.Data.UpdatedBy).
 				SetUpdatedAt(time.Now())
 
+			if req.Data.BusinessScopes == nil {
+				builder.SetBusinessScopes(req.Data.GetBusinessScopes())
+			}
+			if req.Data.PermissionTags == nil {
+				builder.SetPermissionTags(req.Data.GetPermissionTags())
+			}
 		},
 		func(s *sql.Selector) {
 			s.Where(sql.EQ(orgunit.FieldID, req.GetId()))

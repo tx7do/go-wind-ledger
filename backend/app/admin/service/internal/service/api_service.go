@@ -18,7 +18,7 @@ import (
 
 	"go-wind-ledger/app/admin/service/cmd/server/assets"
 
-	appViewer "go-wind-ledger/pkg/entgo/viewer"
+	metadata "go-wind-ledger/pkg/metadata"
 	"go-wind-ledger/pkg/middleware/auth"
 )
 
@@ -50,8 +50,19 @@ func NewApiService(
 }
 
 func (s *ApiService) init() {
-	ctx := appViewer.NewSystemViewerContext(context.Background())
-	if resp, _ := s.apiServiceClient.Count(ctx, nil); resp != nil && resp.Count == 0 {
+	ctx, err := metadata.NewSystemContext(context.Background())
+	if err != nil {
+		s.log.Errorf("failed to create system context: %v", err)
+		return
+	}
+
+	resp, err := s.apiServiceClient.Count(ctx, nil)
+	if err != nil {
+		s.log.Errorf("failed to count APIs: %v", err)
+		return
+	}
+
+	if resp != nil && resp.Count == 0 {
 		_, _ = s.SyncApis(ctx, &emptypb.Empty{})
 	}
 }

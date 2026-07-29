@@ -31,7 +31,8 @@ type PermissionRepo struct {
 	entClient *entCrud.EntClient[*ent.Client]
 	log       *log.Helper
 
-	mapper *mapper.CopierMapper[permissionV1.Permission, ent.Permission]
+	mapper          *mapper.CopierMapper[permissionV1.Permission, ent.Permission]
+	statusConverter *mapper.EnumTypeConverter[permissionV1.Permission_Status, permission.Status]
 
 	repository *entCrud.Repository[
 		ent.PermissionQuery, ent.PermissionSelect,
@@ -53,13 +54,18 @@ func NewPermissionRepo(
 	permissionMenuRepo *PermissionMenuRepo,
 ) *PermissionRepo {
 	repo := &PermissionRepo{
-		log:                ctx.NewLoggerHelper("permission/repo/core-service"),
-		entClient:          entClient,
-		mapper:             mapper.NewCopierMapper[permissionV1.Permission, ent.Permission](),
+		log:       ctx.NewLoggerHelper("permission/repo/core-service"),
+		entClient: entClient,
+		mapper:    mapper.NewCopierMapper[permissionV1.Permission, ent.Permission](),
+		statusConverter: mapper.NewEnumTypeConverter[permissionV1.Permission_Status, permission.Status](
+			permissionV1.Permission_Status_name, permissionV1.Permission_Status_value,
+		),
 		permissionApiRepo:  permissionApiRepo,
 		permissionMenuRepo: permissionMenuRepo,
 	}
+
 	repo.init()
+
 	return repo
 }
 
@@ -75,6 +81,8 @@ func (r *PermissionRepo) init() {
 
 	r.mapper.AppendConverters(copierutil.NewTimeStringConverterPair())
 	r.mapper.AppendConverters(copierutil.NewTimeTimestamppbConverterPair())
+
+	r.mapper.AppendConverters(r.statusConverter.NewConverterPair())
 }
 
 func (r *PermissionRepo) Count(ctx context.Context, req *paginationV1.PagingRequest) (*permissionV1.CountPermissionResponse, error) {
@@ -381,7 +389,7 @@ func (r *PermissionRepo) newPermissionCreate(permission *permissionV1.Permission
 	builder := r.entClient.Client().Permission.Create().
 		SetName(permission.GetName()).
 		SetCode(permission.GetCode()).
-		SetNillableStatus(permStatusToEntity(permission.Status)).
+		SetNillableStatus(r.statusConverter.ToEntity(permission.Status)).
 		SetNillableDescription(permission.Description).
 		SetNillableGroupID(permission.GroupId).
 		SetNillableCreatedBy(permission.CreatedBy).
@@ -430,7 +438,7 @@ func (r *PermissionRepo) Update(ctx context.Context, req *permissionV1.UpdatePer
 				SetNillableName(req.Data.Name).
 				SetNillableCode(req.Data.Code).
 				SetNillableGroupID(req.Data.GroupId).
-				SetNillableStatus(permStatusToEntity(req.Data.Status)).
+				SetNillableStatus(r.statusConverter.ToEntity(req.Data.Status)).
 				SetNillableDescription(req.Data.Description).
 				SetNillableUpdatedBy(req.Data.UpdatedBy).
 				SetUpdatedAt(time.Now())
@@ -704,13 +712,4 @@ func (r *PermissionRepo) ListPermissionResources(ctx context.Context, req *permi
 	}
 
 	return resp, nil
-}
-
-// permStatusToEntity converts proto Status to ent permission.Status.
-func permStatusToEntity(s *permissionV1.Permission_Status) *permission.Status {
-	if s == nil {
-		return nil
-	}
-	v := permission.Status(s.String())
-	return &v
 }

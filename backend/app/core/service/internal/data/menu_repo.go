@@ -14,6 +14,7 @@ import (
 
 	paginationV1 "github.com/tx7do/go-crud/api/gen/go/pagination/v1"
 	entCrud "github.com/tx7do/go-crud/entgo"
+	entgoUpdate "github.com/tx7do/go-crud/entgo/update"
 	"github.com/tx7do/go-crud/pagination"
 
 	"go-wind-ledger/app/core/service/internal/data/ent"
@@ -27,7 +28,9 @@ type MenuRepo struct {
 	entClient *entCrud.EntClient[*ent.Client]
 	log       *log.Helper
 
-	mapper *mapper.CopierMapper[permissionV1.Menu, ent.Menu]
+	mapper          *mapper.CopierMapper[permissionV1.Menu, ent.Menu]
+	statusConverter *mapper.EnumTypeConverter[permissionV1.Menu_Status, menu.Status]
+	typeConverter   *mapper.EnumTypeConverter[permissionV1.Menu_Type, menu.Type]
 
 	repository *entCrud.Repository[
 		ent.MenuQuery, ent.MenuSelect,
@@ -41,11 +44,15 @@ type MenuRepo struct {
 
 func NewMenuRepo(ctx *bootstrap.Context, entClient *entCrud.EntClient[*ent.Client]) *MenuRepo {
 	repo := &MenuRepo{
-		log:       ctx.NewLoggerHelper("menu/repo/core-service"),
-		entClient: entClient,
-		mapper:    mapper.NewCopierMapper[permissionV1.Menu, ent.Menu](),
+		log:             ctx.NewLoggerHelper("menu/repo/core-service"),
+		entClient:       entClient,
+		mapper:          mapper.NewCopierMapper[permissionV1.Menu, ent.Menu](),
+		statusConverter: mapper.NewEnumTypeConverter[permissionV1.Menu_Status, menu.Status](permissionV1.Menu_Status_name, permissionV1.Menu_Status_value),
+		typeConverter:   mapper.NewEnumTypeConverter[permissionV1.Menu_Type, menu.Type](permissionV1.Menu_Type_name, permissionV1.Menu_Type_value),
 	}
+
 	repo.init()
+
 	return repo
 }
 
@@ -61,6 +68,9 @@ func (r *MenuRepo) init() {
 
 	r.mapper.AppendConverters(copierutil.NewTimeStringConverterPair())
 	r.mapper.AppendConverters(copierutil.NewTimeTimestamppbConverterPair())
+
+	r.mapper.AppendConverters(r.statusConverter.NewConverterPair())
+	r.mapper.AppendConverters(r.typeConverter.NewConverterPair())
 }
 
 func (r *MenuRepo) Count(ctx context.Context, whereCond []func(s *sql.Selector)) (int, error) {
@@ -178,12 +188,18 @@ func (r *MenuRepo) Create(ctx context.Context, req *permissionV1.CreateMenuReque
 
 	builder := r.entClient.Client().Menu.Create().
 		SetNillableParentID(req.Data.ParentId).
+		SetNillableType(r.typeConverter.ToEntity(req.Data.Type)).
 		SetNillablePath(req.Data.Path).
+		SetNillableRedirect(req.Data.Redirect).
+		SetNillableAlias(req.Data.Alias).
 		SetNillableName(req.Data.Name).
+		SetNillableComponent(req.Data.Component).
+		SetNillableStatus(r.statusConverter.ToEntity(req.Data.Status)).
 		SetNillableCreatedBy(req.Data.CreatedBy).
 		SetCreatedAt(time.Now())
 
 	if req.Data.Meta != nil {
+		builder.SetMeta(req.Data.Meta)
 	}
 
 	if req.Data.Id != nil {
@@ -231,8 +247,13 @@ func (r *MenuRepo) Update(ctx context.Context, req *permissionV1.UpdateMenuReque
 		func(dto *permissionV1.Menu) {
 			builder.
 				SetNillableParentID(req.Data.ParentId).
+				SetNillableType(r.typeConverter.ToEntity(req.Data.Type)).
 				SetNillablePath(req.Data.Path).
+				SetNillableRedirect(req.Data.Redirect).
+				SetNillableAlias(req.Data.Alias).
 				SetNillableName(req.Data.Name).
+				SetNillableComponent(req.Data.Component).
+				SetNillableStatus(r.statusConverter.ToEntity(req.Data.Status)).
 				SetNillableUpdatedBy(req.Data.UpdatedBy).
 				SetUpdatedAt(time.Now())
 
@@ -249,14 +270,17 @@ func (r *MenuRepo) Update(ctx context.Context, req *permissionV1.UpdateMenuReque
 }
 
 func (r *MenuRepo) updateMetaField(builder *ent.MenuUpdate, meta *permissionV1.MenuMeta, metaPaths []string) {
+	//builder.SetMeta(meta)
 
 	// 删除空值
-	if false {
-		builder.Modify(nil)
+	nullUpdater := entgoUpdate.SetJsonFieldValueUpdateBuilder(menu.FieldMeta, meta, metaPaths, false)
+	if nullUpdater != nil {
+		builder.Modify(nullUpdater)
 	}
 	// 更新字段
-	if false {
-		builder.Modify(nil)
+	setUpdater := entgoUpdate.SetJsonNullFieldUpdateBuilder(menu.FieldMeta, meta, metaPaths)
+	if setUpdater != nil {
+		builder.Modify(setUpdater)
 	}
 }
 

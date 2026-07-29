@@ -25,7 +25,9 @@ type LoginPolicyRepo struct {
 	entClient *entCrud.EntClient[*ent.Client]
 	log       *log.Helper
 
-	mapper *mapper.CopierMapper[authenticationV1.LoginPolicy, ent.LoginPolicy]
+	mapper          *mapper.CopierMapper[authenticationV1.LoginPolicy, ent.LoginPolicy]
+	typeConverter   *mapper.EnumTypeConverter[authenticationV1.LoginPolicy_Type, loginpolicy.Type]
+	methodConverter *mapper.EnumTypeConverter[authenticationV1.LoginPolicy_Method, loginpolicy.Method]
 
 	repository *entCrud.Repository[
 		ent.LoginPolicyQuery, ent.LoginPolicySelect,
@@ -39,11 +41,19 @@ type LoginPolicyRepo struct {
 
 func NewLoginPolicyRepo(ctx *bootstrap.Context, entClient *entCrud.EntClient[*ent.Client]) *LoginPolicyRepo {
 	repo := &LoginPolicyRepo{
-		log:       ctx.NewLoggerHelper("loginpolicy/repo/core-service"),
+		log:       ctx.NewLoggerHelper("login-policy/repo/core-service"),
 		entClient: entClient,
 		mapper:    mapper.NewCopierMapper[authenticationV1.LoginPolicy, ent.LoginPolicy](),
+		typeConverter: mapper.NewEnumTypeConverter[authenticationV1.LoginPolicy_Type, loginpolicy.Type](
+			authenticationV1.LoginPolicy_Type_name, authenticationV1.LoginPolicy_Type_value,
+		),
+		methodConverter: mapper.NewEnumTypeConverter[authenticationV1.LoginPolicy_Method, loginpolicy.Method](
+			authenticationV1.LoginPolicy_Method_name, authenticationV1.LoginPolicy_Method_value,
+		),
 	}
+
 	repo.init()
+
 	return repo
 }
 
@@ -59,6 +69,9 @@ func (r *LoginPolicyRepo) init() {
 
 	r.mapper.AppendConverters(copierutil.NewTimeStringConverterPair())
 	r.mapper.AppendConverters(copierutil.NewTimeTimestamppbConverterPair())
+
+	r.mapper.AppendConverters(r.typeConverter.NewConverterPair())
+	r.mapper.AppendConverters(r.methodConverter.NewConverterPair())
 }
 
 func (r *LoginPolicyRepo) Count(ctx context.Context, whereCond []func(s *sql.Selector)) (int, error) {
@@ -137,6 +150,11 @@ func (r *LoginPolicyRepo) Create(ctx context.Context, req *authenticationV1.Crea
 
 	builder := r.entClient.Client().LoginPolicy.Create().
 		SetNillableTenantID(req.Data.TenantId).
+		SetNillableTargetID(req.Data.TargetId).
+		SetNillableType(r.typeConverter.ToEntity(req.Data.Type)).
+		SetNillableMethod(r.methodConverter.ToEntity(req.Data.Method)).
+		SetNillableValue(req.Data.Value).
+		SetNillableReason(req.Data.Reason).
 		SetNillableCreatedBy(req.Data.CreatedBy).
 		SetCreatedAt(time.Now())
 
@@ -171,6 +189,11 @@ func (r *LoginPolicyRepo) Update(ctx context.Context, req *authenticationV1.Upda
 	err := r.repository.UpdateX(ctx, builder, req.Data, req.GetUpdateMask(),
 		func(dto *authenticationV1.LoginPolicy) {
 			builder.
+				SetNillableTargetID(req.Data.TargetId).
+				SetNillableType(r.typeConverter.ToEntity(req.Data.Type)).
+				SetNillableMethod(r.methodConverter.ToEntity(req.Data.Method)).
+				SetNillableValue(req.Data.Value).
+				SetNillableReason(req.Data.Reason).
 				SetNillableUpdatedBy(req.Data.UpdatedBy).
 				SetUpdatedAt(time.Now())
 		},

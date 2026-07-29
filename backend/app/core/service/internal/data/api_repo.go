@@ -26,7 +26,8 @@ type ApiRepo struct {
 	entClient *entCrud.EntClient[*ent.Client]
 	log       *log.Helper
 
-	mapper *mapper.CopierMapper[permissionV1.Api, ent.Api]
+	mapper         *mapper.CopierMapper[permissionV1.Api, ent.Api]
+	scopeConverter *mapper.EnumTypeConverter[permissionV1.Api_Scope, api.Scope]
 
 	repository *entCrud.Repository[
 		ent.APIQuery, ent.APISelect,
@@ -43,8 +44,13 @@ func NewApiRepo(ctx *bootstrap.Context, entClient *entCrud.EntClient[*ent.Client
 		log:       ctx.NewLoggerHelper("api/repo/core-service"),
 		entClient: entClient,
 		mapper:    mapper.NewCopierMapper[permissionV1.Api, ent.Api](),
+		scopeConverter: mapper.NewEnumTypeConverter[permissionV1.Api_Scope, api.Scope](
+			permissionV1.Api_Scope_name, permissionV1.Api_Scope_value,
+		),
 	}
+
 	repo.init()
+
 	return repo
 }
 
@@ -60,6 +66,8 @@ func (r *ApiRepo) init() {
 
 	r.mapper.AppendConverters(copierutil.NewTimeStringConverterPair())
 	r.mapper.AppendConverters(copierutil.NewTimeTimestamppbConverterPair())
+
+	r.mapper.AppendConverters(r.scopeConverter.NewConverterPair())
 }
 
 func (r *ApiRepo) Count(ctx context.Context, req *paginationV1.PagingRequest) (*permissionV1.CountApiResponse, error) {
@@ -208,9 +216,12 @@ func (r *ApiRepo) Create(ctx context.Context, req *permissionV1.CreateApiRequest
 func (r *ApiRepo) newApiCreate(api *permissionV1.Api) *ent.APICreate {
 	builder := r.entClient.Client().Api.Create().
 		SetNillableDescription(api.Description).
+		SetNillableModule(api.Module).
+		SetNillableModuleDescription(api.ModuleDescription).
+		SetNillableOperation(api.Operation).
 		SetNillablePath(api.Path).
 		SetNillableMethod(api.Method).
-		SetNillableScope(scopeToEntity(api.Scope)).
+		SetNillableScope(r.scopeConverter.ToEntity(api.Scope)).
 		SetNillableCreatedBy(api.CreatedBy).
 		SetCreatedAt(time.Now())
 
@@ -266,9 +277,12 @@ func (r *ApiRepo) Update(ctx context.Context, req *permissionV1.UpdateApiRequest
 		func(dto *permissionV1.Api) {
 			builder.
 				SetNillableDescription(req.Data.Description).
+				SetNillableModule(req.Data.Module).
+				SetNillableModuleDescription(req.Data.ModuleDescription).
+				SetNillableOperation(req.Data.Operation).
 				SetNillablePath(req.Data.Path).
 				SetNillableMethod(req.Data.Method).
-				SetNillableScope(scopeToEntity(req.Data.Scope)).
+				SetNillableScope(r.scopeConverter.ToEntity(req.Data.Scope)).
 				SetNillableUpdatedBy(req.Data.UpdatedBy).
 				SetUpdatedAt(time.Now())
 		},
@@ -305,13 +319,4 @@ func (r *ApiRepo) Truncate(ctx context.Context) error {
 		return permissionV1.ErrorInternalServerError("truncate failed")
 	}
 	return nil
-}
-
-// scopeToEntity converts proto Api_Scope to ent api.Scope.
-func scopeToEntity(s *permissionV1.Api_Scope) *api.Scope {
-	if s == nil {
-		return nil
-	}
-	v := api.Scope(s.String())
-	return &v
 }

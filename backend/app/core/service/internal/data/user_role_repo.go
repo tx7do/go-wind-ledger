@@ -6,6 +6,7 @@ import (
 
 	"github.com/go-kratos/kratos/v2/log"
 	entCrud "github.com/tx7do/go-crud/entgo"
+	"github.com/tx7do/go-utils/mapper"
 	"github.com/tx7do/go-utils/timeutil"
 	"github.com/tx7do/kratos-bootstrap/bootstrap"
 
@@ -18,17 +19,21 @@ import (
 type UserRoleRepo struct {
 	log             *log.Helper
 	entClient       *entCrud.EntClient[*ent.Client]
+	statusConverter *mapper.EnumTypeConverter[permissionV1.UserRole_Status, userrole.Status]
 }
 
 func NewUserRoleRepo(ctx *bootstrap.Context, entClient *entCrud.EntClient[*ent.Client]) *UserRoleRepo {
-	repo := &UserRoleRepo{
-		log:       ctx.NewLoggerHelper("userrole/repo/core-service"),
+	return &UserRoleRepo{
+		log:       ctx.NewLoggerHelper("user-role/repo/core-service"),
 		entClient: entClient,
+		statusConverter: mapper.NewEnumTypeConverter[permissionV1.UserRole_Status, userrole.Status](
+			permissionV1.UserRole_Status_name,
+			permissionV1.UserRole_Status_value,
+		),
 	}
-	return repo
 }
 
-
+// CleanRelationsByUserID 删除会员的所有角色关联
 func (r *UserRoleRepo) CleanRelationsByUserID(ctx context.Context, tx *ent.Tx, userID uint32) error {
 	if userID == 0 {
 		return nil
@@ -123,17 +128,19 @@ func (r *UserRoleRepo) AssignUserRole(ctx context.Context, tx *ent.Tx, data *per
 		return nil
 	}
 
-	var _ = time.Now()
+	now := time.Now()
 
 	_, err := tx.UserRole.
 		Create().
 		SetUserID(data.GetUserId()).
 		SetRoleID(data.GetRoleId()).
-		SetNillableStatus(userroleStatusToEntity(data.Status)).
+		SetNillableStatus(r.statusConverter.ToEntity(data.Status)).
+		SetNillableAssignedBy(data.AssignedBy).
+		SetNillableAssignedAt(timeutil.TimestamppbToTime(data.AssignedAt)).
 		SetNillableIsPrimary(data.IsPrimary).
 		SetNillableStartAt(timeutil.TimestamppbToTime(data.StartAt)).
 		SetNillableEndAt(timeutil.TimestamppbToTime(data.EndAt)).
-		SetCreatedAt(time.Now()).
+		SetCreatedAt(now).
 		SetNillableCreatedBy(data.CreatedBy).
 		Save(ctx)
 	if err != nil {
@@ -157,12 +164,12 @@ func (r *UserRoleRepo) AssignUserRoles(ctx context.Context, tx *ent.Tx, userID u
 		return permissionV1.ErrorInternalServerError("clean old user roles failed")
 	}
 
-	var _ = time.Now()
+	now := time.Now()
 
 	var userRoleCreates []*ent.UserRoleCreate
 	for _, data := range datas {
 		if data.StartAt == nil {
-			data.StartAt = timeutil.TimeToTimestamppb(nowAddr())
+			data.StartAt = timeutil.TimeToTimestamppb(&now)
 		}
 
 		rm := tx.UserRole.
@@ -170,11 +177,13 @@ func (r *UserRoleRepo) AssignUserRoles(ctx context.Context, tx *ent.Tx, userID u
 			SetNillableTenantID(data.TenantId).
 			SetUserID(userID).
 			SetRoleID(data.GetRoleId()).
-			SetNillableStatus(userroleStatusToEntity(data.Status)).
+			SetNillableStatus(r.statusConverter.ToEntity(data.Status)).
+			SetNillableAssignedBy(data.AssignedBy).
+			SetNillableAssignedAt(timeutil.TimestamppbToTime(data.AssignedAt)).
 			SetNillableIsPrimary(data.IsPrimary).
 			SetNillableStartAt(timeutil.TimestamppbToTime(data.StartAt)).
 			SetNillableEndAt(timeutil.TimestamppbToTime(data.EndAt)).
-			SetCreatedAt(time.Now()).
+			SetCreatedAt(now).
 			SetNillableCreatedBy(data.CreatedBy)
 		userRoleCreates = append(userRoleCreates, rm)
 	}
@@ -200,9 +209,11 @@ func (r *UserRoleRepo) ListRoleIDs(ctx context.Context, userID uint32, excludeEx
 		)
 
 	if excludeExpired {
-		var _ = time.Now()
+		now := time.Now()
 		q = q.Where(
 			userrole.Or(
+				userrole.EndAtIsNil(),
+				userrole.EndAtGT(now),
 			),
 		)
 	}
@@ -233,9 +244,11 @@ func (r *UserRoleRepo) ListUserIDs(ctx context.Context, roleID uint32, excludeEx
 		)
 
 	if excludeExpired {
-		var _ = time.Now()
+		now := time.Now()
 		q = q.Where(
 			userrole.Or(
+				userrole.EndAtIsNil(),
+				userrole.EndAtGT(now),
 			),
 		)
 	}
@@ -266,9 +279,11 @@ func (r *UserRoleRepo) ListUserIDsByRoleIDs(ctx context.Context, roleIDs []uint3
 		)
 
 	if excludeExpired {
-		var _ = time.Now()
+		now := time.Now()
 		q = q.Where(
 			userrole.Or(
+				userrole.EndAtIsNil(),
+				userrole.EndAtGT(now),
 			),
 		)
 	}
@@ -285,13 +300,4 @@ func (r *UserRoleRepo) ListUserIDsByRoleIDs(ctx context.Context, roleIDs []uint3
 		ids[i] = uint32(v)
 	}
 	return ids, nil
-}
-
-// userroleStatusToEntity converts proto UserRole_Status to ent userrole.Status.
-func userroleStatusToEntity(s *permissionV1.UserRole_Status) *userrole.Status {
-	if s == nil {
-		return nil
-	}
-	v := userrole.Status(s.String())
-	return &v
 }

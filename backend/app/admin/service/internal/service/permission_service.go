@@ -20,7 +20,6 @@ import (
 	permissionV1 "go-wind-ledger/api/gen/go/permission/service/v1"
 
 	"go-wind-ledger/pkg/constants"
-	appViewer "go-wind-ledger/pkg/entgo/viewer"
 	metadata "go-wind-ledger/pkg/metadata"
 	"go-wind-ledger/pkg/middleware/auth"
 	"go-wind-ledger/pkg/utils/converter"
@@ -70,8 +69,12 @@ func NewPermissionService(
 }
 
 func (s *PermissionService) init() {
-	ctx := appViewer.NewSystemViewerContext(context.Background())
-		ctx, _ = metadata.NewSystemContext(ctx)
+	ctx, err := metadata.NewSystemContext(context.Background())
+	if err != nil {
+		s.log.Errorf("failed to create system context: %v", err)
+		return
+	}
+
 	if resp, _ := s.permissionServiceClient.Count(ctx, nil); resp != nil && (resp.Count == 0 || resp.Count == (uint64)(len(constants.DefaultPermissions))) {
 		apiCount, _ := s.apiServiceClient.Count(ctx, nil)
 

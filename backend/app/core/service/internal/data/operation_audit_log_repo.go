@@ -2,17 +2,21 @@ package data
 
 import (
 	"context"
-	"entgo.io/ent/dialect/sql"
 	"time"
 
+	"entgo.io/ent/dialect/sql"
 	"github.com/go-kratos/kratos/v2/log"
 	"github.com/tx7do/kratos-bootstrap/bootstrap"
 
 	paginationV1 "github.com/tx7do/go-crud/api/gen/go/pagination/v1"
 	entCrud "github.com/tx7do/go-crud/entgo"
+
+	"github.com/tx7do/go-utils/copierutil"
 	"github.com/tx7do/go-utils/mapper"
 
 	"go-wind-ledger/app/core/service/internal/data/ent"
+	"go-wind-ledger/app/core/service/internal/data/ent/operationauditlog"
+	"go-wind-ledger/app/core/service/internal/data/ent/predicate"
 
 	auditV1 "go-wind-ledger/api/gen/go/audit/service/v1"
 )
@@ -20,45 +24,154 @@ import (
 type OperationAuditLogRepo struct {
 	entClient *entCrud.EntClient[*ent.Client]
 	log       *log.Helper
-	mapper    *mapper.CopierMapper[auditV1.OperationAuditLog, ent.OperationAuditLog]
+
+	mapper *mapper.CopierMapper[auditV1.OperationAuditLog, ent.OperationAuditLog]
+
+	actionTypeConverter     *mapper.EnumTypeConverter[auditV1.OperationAuditLog_ActionType, operationauditlog.Action]
+	sensitiveLevelConverter *mapper.EnumTypeConverter[auditV1.SensitiveLevel, operationauditlog.SensitiveLevel]
+
+	repository *entCrud.Repository[
+		ent.OperationAuditLogQuery, ent.OperationAuditLogSelect,
+		ent.OperationAuditLogCreate, ent.OperationAuditLogCreateBulk,
+		ent.OperationAuditLogUpdate, ent.OperationAuditLogUpdateOne,
+		ent.OperationAuditLogDelete,
+		predicate.OperationAuditLog, auditV1.OperationAuditLog, ent.OperationAuditLog,
+	]
 }
 
 func NewOperationAuditLogRepo(ctx *bootstrap.Context, entClient *entCrud.EntClient[*ent.Client]) *OperationAuditLogRepo {
-	return &OperationAuditLogRepo{
-		log:       ctx.NewLoggerHelper("operationauditlog/repo/core-service"),
+	repo := &OperationAuditLogRepo{
+		log:       ctx.NewLoggerHelper("operation-audit-log/repo/core-service"),
 		entClient: entClient,
 		mapper:    mapper.NewCopierMapper[auditV1.OperationAuditLog, ent.OperationAuditLog](),
+		actionTypeConverter: mapper.NewEnumTypeConverter[auditV1.OperationAuditLog_ActionType, operationauditlog.Action](
+			auditV1.OperationAuditLog_ActionType_name, auditV1.OperationAuditLog_ActionType_value,
+		),
+		sensitiveLevelConverter: mapper.NewEnumTypeConverter[auditV1.SensitiveLevel, operationauditlog.SensitiveLevel](
+			auditV1.SensitiveLevel_name, auditV1.SensitiveLevel_value,
+		),
 	}
+
+	repo.init()
+
+	return repo
+}
+
+func (r *OperationAuditLogRepo) init() {
+	r.repository = entCrud.NewRepository[
+		ent.OperationAuditLogQuery, ent.OperationAuditLogSelect,
+		ent.OperationAuditLogCreate, ent.OperationAuditLogCreateBulk,
+		ent.OperationAuditLogUpdate, ent.OperationAuditLogUpdateOne,
+		ent.OperationAuditLogDelete,
+		predicate.OperationAuditLog, auditV1.OperationAuditLog, ent.OperationAuditLog,
+	](r.mapper)
+
+	r.mapper.AppendConverters(copierutil.NewTimeStringConverterPair())
+	r.mapper.AppendConverters(copierutil.NewTimeTimestamppbConverterPair())
+
+	r.mapper.AppendConverters(r.actionTypeConverter.NewConverterPair())
+	r.mapper.AppendConverters(r.sensitiveLevelConverter.NewConverterPair())
+}
+
+func (r *OperationAuditLogRepo) Count(ctx context.Context, whereCond []func(s *sql.Selector)) (int, error) {
+	builder := r.entClient.Client().OperationAuditLog.Query()
+	if len(whereCond) != 0 {
+		builder.Modify(whereCond...)
+	}
+
+	count, err := builder.Count(ctx)
+	if err != nil {
+		r.log.Errorf("query count failed: %s", err.Error())
+		return 0, auditV1.ErrorInternalServerError("query count failed")
+	}
+
+	return count, nil
 }
 
 func (r *OperationAuditLogRepo) List(ctx context.Context, req *paginationV1.PagingRequest) (*auditV1.ListOperationAuditLogResponse, error) {
-	q := r.entClient.Client().OperationAuditLog.Query()
-	total, _ := q.Count(ctx)
-	entities, err := q.All(ctx)
-	if err != nil {
-		return nil, auditV1.ErrorInternalServerError("query failed")
+	if req == nil {
+		return nil, auditV1.ErrorBadRequest("invalid parameter")
 	}
-	items := make([]*auditV1.OperationAuditLog, 0, len(entities))
-	for _, e := range entities {
-		items = append(items, r.mapper.ToDTO(e))
-	}
-	return &auditV1.ListOperationAuditLogResponse{Items: items, Total: uint64(total)}, nil
-}
 
-func (r *OperationAuditLogRepo) Create(ctx context.Context, data *auditV1.OperationAuditLog) (*auditV1.OperationAuditLog, error) {
-	saved, err := r.entClient.Client().OperationAuditLog.Create().
-		SetCreatedAt(time.Now()).
-		Save(ctx)
-	if err != nil {
-		return nil, auditV1.ErrorInternalServerError("create failed")
-	}
-	return r.mapper.ToDTO(saved), nil
-}
+	builder := r.entClient.Client().OperationAuditLog.Query()
 
-func (r *OperationAuditLogRepo) Get(ctx context.Context, id uint32) (*auditV1.OperationAuditLog, error) {
-	entity, err := r.entClient.Client().OperationAuditLog.Query().Where(func(s *sql.Selector) { s.Where(sql.EQ(s.C("id"), id)) }).Only(ctx)
+	ret, err := r.repository.ListWithPaging(ctx, builder, builder.Clone(), req)
 	if err != nil {
 		return nil, err
 	}
-	return r.mapper.ToDTO(entity), nil
+	if ret == nil {
+		return &auditV1.ListOperationAuditLogResponse{Total: 0, Items: nil}, nil
+	}
+
+	return &auditV1.ListOperationAuditLogResponse{
+		Total: ret.Total,
+		Items: ret.Items,
+	}, nil
+}
+
+func (r *OperationAuditLogRepo) IsExist(ctx context.Context, id uint32) (bool, error) {
+	exist, err := r.entClient.Client().OperationAuditLog.Query().
+		Where(operationauditlog.IDEQ(id)).
+		Exist(ctx)
+	if err != nil {
+		r.log.Errorf("query exist failed: %s", err.Error())
+		return false, auditV1.ErrorInternalServerError("query exist failed")
+	}
+	return exist, nil
+}
+
+func (r *OperationAuditLogRepo) Get(ctx context.Context, req *auditV1.GetOperationAuditLogRequest) (*auditV1.OperationAuditLog, error) {
+	if req == nil {
+		return nil, auditV1.ErrorBadRequest("invalid parameter")
+	}
+
+	builder := r.entClient.Client().Debug().OperationAuditLog.Query()
+
+	var whereCond []func(s *sql.Selector)
+	switch req.QueryBy.(type) {
+	default:
+	case *auditV1.GetOperationAuditLogRequest_Id:
+		whereCond = append(whereCond, operationauditlog.IDEQ(req.GetId()))
+	}
+
+	dto, err := r.repository.Get(ctx, builder, req.GetViewMask(), whereCond...)
+	if err != nil {
+		return nil, err
+	}
+
+	return dto, err
+}
+
+func (r *OperationAuditLogRepo) Create(ctx context.Context, req *auditV1.CreateOperationAuditLogRequest) error {
+	if req == nil || req.Data == nil {
+		return auditV1.ErrorBadRequest("invalid parameter")
+	}
+
+	builder := r.entClient.Client().OperationAuditLog.
+		Create().
+		SetNillableTenantID(req.Data.TenantId).
+		SetNillableUserID(req.Data.UserId).
+		SetNillableUsername(req.Data.Username).
+		SetNillableResourceType(req.Data.ResourceType).
+		SetNillableResourceID(req.Data.RequestId).
+		SetNillableAction(r.actionTypeConverter.ToEntity(req.Data.Action)).
+		SetNillableBeforeData(req.Data.BeforeData).
+		SetNillableAfterData(req.Data.AfterData).
+		SetNillableSensitiveLevel(r.sensitiveLevelConverter.ToEntity(req.Data.SensitiveLevel)).
+		SetNillableRequestID(req.Data.RequestId).
+		SetNillableTraceID(req.Data.TraceId).
+		SetNillableSuccess(req.Data.Success).
+		SetNillableFailureReason(req.Data.FailureReason).
+		SetNillableIPAddress(req.Data.IpAddress).
+		SetGeoLocation(req.Data.GeoLocation).
+		SetNillableLogHash(req.Data.LogHash).
+		SetSignature(req.Data.Signature).
+		SetCreatedAt(time.Now())
+
+	if err := builder.Exec(ctx); err != nil {
+		r.log.Errorf("insert operation audit log failed: %s", err.Error())
+		return auditV1.ErrorInternalServerError("insert operation audit log failed")
+	}
+
+	return nil
 }

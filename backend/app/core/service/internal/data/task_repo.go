@@ -25,7 +25,8 @@ type TaskRepo struct {
 	entClient *entCrud.EntClient[*ent.Client]
 	log       *log.Helper
 
-	mapper *mapper.CopierMapper[taskV1.Task, ent.Task]
+	mapper        *mapper.CopierMapper[taskV1.Task, ent.Task]
+	typeConverter *mapper.EnumTypeConverter[taskV1.Task_Type, task.Type]
 
 	repository *entCrud.Repository[
 		ent.TaskQuery, ent.TaskSelect,
@@ -39,11 +40,14 @@ type TaskRepo struct {
 
 func NewTaskRepo(ctx *bootstrap.Context, entClient *entCrud.EntClient[*ent.Client]) *TaskRepo {
 	repo := &TaskRepo{
-		log:       ctx.NewLoggerHelper("task/repo/core-service"),
-		entClient: entClient,
-		mapper:    mapper.NewCopierMapper[taskV1.Task, ent.Task](),
+		log:           ctx.NewLoggerHelper("task/repo/core-service"),
+		entClient:     entClient,
+		mapper:        mapper.NewCopierMapper[taskV1.Task, ent.Task](),
+		typeConverter: mapper.NewEnumTypeConverter[taskV1.Task_Type, task.Type](taskV1.Task_Type_name, taskV1.Task_Type_value),
 	}
+
 	repo.init()
+
 	return repo
 }
 
@@ -59,6 +63,8 @@ func (r *TaskRepo) init() {
 
 	r.mapper.AppendConverters(copierutil.NewTimeStringConverterPair())
 	r.mapper.AppendConverters(copierutil.NewTimeTimestamppbConverterPair())
+
+	r.mapper.AppendConverters(r.typeConverter.NewConverterPair())
 }
 
 func (r *TaskRepo) Count(ctx context.Context, whereCond []func(s *sql.Selector)) (int, error) {
@@ -140,7 +146,7 @@ func (r *TaskRepo) Create(ctx context.Context, req *taskV1.CreateTaskRequest) (*
 
 	builder := r.entClient.Client().Task.Create().
 		SetNillableTenantID(req.Data.TenantId).
-		SetNillableType(nil).
+		SetNillableType(r.typeConverter.ToEntity(req.Data.Type)).
 		SetNillableTypeName(req.Data.TypeName).
 		SetNillableTaskPayload(req.Data.TaskPayload).
 		SetNillableCronSpec(req.Data.CronSpec).
@@ -150,6 +156,7 @@ func (r *TaskRepo) Create(ctx context.Context, req *taskV1.CreateTaskRequest) (*
 		SetCreatedAt(time.Now())
 
 	if req.Data.TaskOptions != nil {
+		builder.SetTaskOptions(req.Data.TaskOptions)
 	}
 
 	if req.Data.Id != nil {
@@ -188,7 +195,7 @@ func (r *TaskRepo) Update(ctx context.Context, req *taskV1.UpdateTaskRequest) (*
 	result, err := r.repository.UpdateOne(ctx, builder, req.Data, req.GetUpdateMask(),
 		func(dto *taskV1.Task) {
 			builder.
-				SetNillableType(nil).
+				SetNillableType(r.typeConverter.ToEntity(req.Data.Type)).
 				SetNillableTypeName(req.Data.TypeName).
 				SetNillableTaskPayload(req.Data.TaskPayload).
 				SetNillableCronSpec(req.Data.CronSpec).
@@ -198,6 +205,7 @@ func (r *TaskRepo) Update(ctx context.Context, req *taskV1.UpdateTaskRequest) (*
 				SetUpdatedAt(time.Now())
 
 			if req.Data.TaskOptions != nil {
+				builder.SetTaskOptions(req.Data.TaskOptions)
 			}
 		},
 		func(s *sql.Selector) {

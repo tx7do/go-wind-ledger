@@ -6,6 +6,7 @@ import (
 
 	"github.com/go-kratos/kratos/v2/log"
 	entCrud "github.com/tx7do/go-crud/entgo"
+	"github.com/tx7do/go-utils/mapper"
 	"github.com/tx7do/go-utils/timeutil"
 	"github.com/tx7do/kratos-bootstrap/bootstrap"
 
@@ -18,17 +19,21 @@ import (
 type UserPositionRepo struct {
 	log             *log.Helper
 	entClient       *entCrud.EntClient[*ent.Client]
+	statusConverter *mapper.EnumTypeConverter[identityV1.UserPosition_Status, userposition.Status]
 }
 
 func NewUserPositionRepo(ctx *bootstrap.Context, entClient *entCrud.EntClient[*ent.Client]) *UserPositionRepo {
-	repo := &UserPositionRepo{
-		log:       ctx.NewLoggerHelper("userposition/repo/core-service"),
+	return &UserPositionRepo{
+		log:       ctx.NewLoggerHelper("user-position/repo/core-service"),
 		entClient: entClient,
+		statusConverter: mapper.NewEnumTypeConverter[identityV1.UserPosition_Status, userposition.Status](
+			identityV1.UserPosition_Status_name,
+			identityV1.UserPosition_Status_value,
+		),
 	}
-	return repo
 }
 
-
+// CleanRelationsByUserID 删除用户的所有岗位关联
 func (r *UserPositionRepo) CleanRelationsByUserID(ctx context.Context, tx *ent.Tx, userID uint32) error {
 	if userID == 0 {
 		return nil
@@ -125,18 +130,20 @@ func (r *UserPositionRepo) AssignUserPosition(
 		return nil
 	}
 
-	var _ = time.Now()
+	now := time.Now()
 
 	rm := tx.UserPosition.
 		Create().
 		SetUserID(data.GetUserId()).
 		SetPositionID(data.GetPositionId()).
-		SetNillableStatus(userpositionStatusToEntity(data.Status)).
+		SetNillableStatus(r.statusConverter.ToEntity(data.Status)).
+		SetNillableAssignedBy(data.AssignedBy).
+		SetNillableAssignedAt(timeutil.TimestamppbToTime(data.AssignedAt)).
 		SetNillableIsPrimary(data.IsPrimary).
 		SetNillableStartAt(timeutil.TimestamppbToTime(data.StartAt)).
 		SetNillableEndAt(timeutil.TimestamppbToTime(data.EndAt)).
 		SetNillableCreatedBy(data.CreatedBy).
-		SetCreatedAt(time.Now())
+		SetCreatedAt(now)
 
 	_, err := rm.Save(ctx)
 	if err != nil {
@@ -164,24 +171,26 @@ func (r *UserPositionRepo) AssignUserPositions(
 		return identityV1.ErrorInternalServerError("clean old user positions failed")
 	}
 
-	var _ = time.Now()
+	now := time.Now()
 
 	var userPositionCreates []*ent.UserPositionCreate
 	for _, data := range datas {
 		if data.StartAt == nil {
-			data.StartAt = timeutil.TimeToTimestamppb(nowAddr())
+			data.StartAt = timeutil.TimeToTimestamppb(&now)
 		}
 		rm := tx.UserPosition.
 			Create().
 			SetNillableTenantID(data.TenantId).
 			SetUserID(userID).
 			SetPositionID(data.GetPositionId()).
-			SetNillableStatus(userpositionStatusToEntity(data.Status)).
+			SetNillableStatus(r.statusConverter.ToEntity(data.Status)).
+			SetNillableAssignedBy(data.AssignedBy).
+			SetNillableAssignedAt(timeutil.TimestamppbToTime(data.AssignedAt)).
 			SetNillableIsPrimary(data.IsPrimary).
 			SetNillableStartAt(timeutil.TimestamppbToTime(data.StartAt)).
 			SetNillableEndAt(timeutil.TimestamppbToTime(data.EndAt)).
 			SetNillableCreatedBy(data.CreatedBy).
-			SetCreatedAt(time.Now())
+			SetCreatedAt(now)
 		userPositionCreates = append(userPositionCreates, rm)
 	}
 
@@ -206,9 +215,11 @@ func (r *UserPositionRepo) ListPositionIDs(ctx context.Context, userID uint32, e
 		)
 
 	if excludeExpired {
-		var _ = time.Now()
+		now := time.Now()
 		q = q.Where(
 			userposition.Or(
+				userposition.EndAtIsNil(),
+				userposition.EndAtGT(now),
 			),
 		)
 	}
@@ -239,9 +250,11 @@ func (r *UserPositionRepo) ListUserIDs(ctx context.Context, positionID uint32, e
 		)
 
 	if excludeExpired {
-		var _ = time.Now()
+		now := time.Now()
 		q = q.Where(
 			userposition.Or(
+				userposition.EndAtIsNil(),
+				userposition.EndAtGT(now),
 			),
 		)
 	}
@@ -272,9 +285,11 @@ func (r *UserPositionRepo) ListUserIDsByPositionIDs(ctx context.Context, positio
 		)
 
 	if excludeExpired {
-		var _ = time.Now()
+		now := time.Now()
 		q = q.Where(
 			userposition.Or(
+				userposition.EndAtIsNil(),
+				userposition.EndAtGT(now),
 			),
 		)
 	}
@@ -291,13 +306,4 @@ func (r *UserPositionRepo) ListUserIDsByPositionIDs(ctx context.Context, positio
 		ids[i] = uint32(v)
 	}
 	return ids, nil
-}
-
-// userpositionStatusToEntity converts proto Membership_Status to ent userposition.Status.
-func userpositionStatusToEntity(s *identityV1.UserPosition_Status) *userposition.Status {
-	if s == nil {
-		return nil
-	}
-	v := userposition.Status(s.String())
-	return &v
 }
