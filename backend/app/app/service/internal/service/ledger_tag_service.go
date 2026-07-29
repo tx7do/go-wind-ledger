@@ -53,3 +53,15 @@ func (s *LedgerTagService) Delete(ctx context.Context, req *ledgerV1.DeleteTagRe
 func (s *LedgerTagService) Toggle(ctx context.Context, req *ledgerV1.ToggleTagRequest) (*ledgerV1.Tag, error) {
 	return s.client.Toggle(ctx, req)
 }
+
+func (s *LedgerTagService) ToggleCanExpense(ctx context.Context, req *ledgerV1.ToggleTagRequest) (*ledgerV1.Tag, error) {
+	return s.client.ToggleCanExpense(ctx, req)
+}
+
+func (s *LedgerTagService) ToggleCanIncome(ctx context.Context, req *ledgerV1.ToggleTagRequest) (*ledgerV1.Tag, error) {
+	return s.client.ToggleCanIncome(ctx, req)
+}
+
+func (s *LedgerTagService) ToggleCanTransfer(ctx context.Context, req *ledgerV1.ToggleTagRequest) (*ledgerV1.Tag, error) {
+	return s.client.ToggleCanTransfer(ctx, req)
+}

@@ -23,18 +23,26 @@ const _ = http.SupportPackageIsVersion1
 
 const OperationFlowFileServiceDelete = "/admin.service.v1.FlowFileService/Delete"
 const OperationFlowFileServiceList = "/admin.service.v1.FlowFileService/List"
+const OperationFlowFileServiceUploadFile = "/admin.service.v1.FlowFileService/UploadFile"
+const OperationFlowFileServiceViewFile = "/admin.service.v1.FlowFileService/ViewFile"
 
 type FlowFileServiceHTTPServer interface {
 	// Delete 删除附件
 	Delete(context.Context, *v1.DeleteFlowFileRequest) (*emptypb.Empty, error)
 	// List 按流水ID查询附件列表
 	List(context.Context, *v1.ListFlowFileRequest) (*v1.ListFlowFileResponse, error)
+	// UploadFile 上传附件
+	UploadFile(context.Context, *v1.UploadFlowFileRequest) (*v1.FlowFile, error)
+	// ViewFile 查看附件（免认证，按 create_time 安全验证）
+	ViewFile(context.Context, *v1.ViewFlowFileRequest) (*v1.ViewFlowFileResponse, error)
 }
 
 func RegisterFlowFileServiceHTTPServer(s *http.Server, srv FlowFileServiceHTTPServer) {
 	r := s.Route("/")
 	r.GET("/admin/v1/flow-files", _FlowFileService_List13_HTTP_Handler(srv))
 	r.DELETE("/admin/v1/flow-files/{id}", _FlowFileService_Delete10_HTTP_Handler(srv))
+	r.POST("/admin/v1/flow-files/upload", _FlowFileService_UploadFile0_HTTP_Handler(srv))
+	r.GET("/admin/v1/flow-files/view", _FlowFileService_ViewFile0_HTTP_Handler(srv))
 }
 
 func _FlowFileService_List13_HTTP_Handler(srv FlowFileServiceHTTPServer) func(ctx http.Context) error {
@@ -78,11 +86,56 @@ func _FlowFileService_Delete10_HTTP_Handler(srv FlowFileServiceHTTPServer) func(
 	}
 }
 
+func _FlowFileService_UploadFile0_HTTP_Handler(srv FlowFileServiceHTTPServer) func(ctx http.Context) error {
+	return func(ctx http.Context) error {
+		var in v1.UploadFlowFileRequest
+		if err := ctx.Bind(&in); err != nil {
+			return err
+		}
+		if err := ctx.BindQuery(&in); err != nil {
+			return err
+		}
+		http.SetOperation(ctx, OperationFlowFileServiceUploadFile)
+		h := ctx.Middleware(func(ctx context.Context, req interface{}) (interface{}, error) {
+			return srv.UploadFile(ctx, req.(*v1.UploadFlowFileRequest))
+		})
+		out, err := h(ctx, &in)
+		if err != nil {
+			return err
+		}
+		reply := out.(*v1.FlowFile)
+		return ctx.Result(200, reply)
+	}
+}
+
+func _FlowFileService_ViewFile0_HTTP_Handler(srv FlowFileServiceHTTPServer) func(ctx http.Context) error {
+	return func(ctx http.Context) error {
+		var in v1.ViewFlowFileRequest
+		if err := ctx.BindQuery(&in); err != nil {
+			return err
+		}
+		http.SetOperation(ctx, OperationFlowFileServiceViewFile)
+		h := ctx.Middleware(func(ctx context.Context, req interface{}) (interface{}, error) {
+			return srv.ViewFile(ctx, req.(*v1.ViewFlowFileRequest))
+		})
+		out, err := h(ctx, &in)
+		if err != nil {
+			return err
+		}
+		reply := out.(*v1.ViewFlowFileResponse)
+		return ctx.Result(200, reply)
+	}
+}
+
 type FlowFileServiceHTTPClient interface {
 	// Delete 删除附件
 	Delete(ctx context.Context, req *v1.DeleteFlowFileRequest, opts ...http.CallOption) (rsp *emptypb.Empty, err error)
 	// List 按流水ID查询附件列表
 	List(ctx context.Context, req *v1.ListFlowFileRequest, opts ...http.CallOption) (rsp *v1.ListFlowFileResponse, err error)
+	// UploadFile 上传附件
+	UploadFile(ctx context.Context, req *v1.UploadFlowFileRequest, opts ...http.CallOption) (rsp *v1.FlowFile, err error)
+	// ViewFile 查看附件（免认证，按 create_time 安全验证）
+	ViewFile(ctx context.Context, req *v1.ViewFlowFileRequest, opts ...http.CallOption) (rsp *v1.ViewFlowFileResponse, err error)
 }
 
 type FlowFileServiceHTTPClientImpl struct {
@@ -113,6 +166,34 @@ func (c *FlowFileServiceHTTPClientImpl) List(ctx context.Context, in *v1.ListFlo
 	pattern := "/admin/v1/flow-files"
 	path := binding.EncodeURL(pattern, in, true)
 	opts = append(opts, http.Operation(OperationFlowFileServiceList))
+	opts = append(opts, http.PathTemplate(pattern))
+	err := c.cc.Invoke(ctx, "GET", path, nil, &out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return &out, nil
+}
+
+// UploadFile 上传附件
+func (c *FlowFileServiceHTTPClientImpl) UploadFile(ctx context.Context, in *v1.UploadFlowFileRequest, opts ...http.CallOption) (*v1.FlowFile, error) {
+	var out v1.FlowFile
+	pattern := "/admin/v1/flow-files/upload"
+	path := binding.EncodeURL(pattern, in, false)
+	opts = append(opts, http.Operation(OperationFlowFileServiceUploadFile))
+	opts = append(opts, http.PathTemplate(pattern))
+	err := c.cc.Invoke(ctx, "POST", path, in, &out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return &out, nil
+}
+
+// ViewFile 查看附件（免认证，按 create_time 安全验证）
+func (c *FlowFileServiceHTTPClientImpl) ViewFile(ctx context.Context, in *v1.ViewFlowFileRequest, opts ...http.CallOption) (*v1.ViewFlowFileResponse, error) {
+	var out v1.ViewFlowFileResponse
+	pattern := "/admin/v1/flow-files/view"
+	path := binding.EncodeURL(pattern, in, true)
+	opts = append(opts, http.Operation(OperationFlowFileServiceViewFile))
 	opts = append(opts, http.PathTemplate(pattern))
 	err := c.cc.Invoke(ctx, "GET", path, nil, &out, opts...)
 	if err != nil {

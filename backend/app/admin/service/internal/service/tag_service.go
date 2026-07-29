@@ -74,3 +74,15 @@ func (s *TagService) ListAll(ctx context.Context, req *ledgerV1.ListAllTagReques
 func (s *TagService) Toggle(ctx context.Context, req *ledgerV1.ToggleTagRequest) (*ledgerV1.Tag, error) {
 	return s.client.Toggle(ctx, req)
 }
+
+func (s *TagService) ToggleCanExpense(ctx context.Context, req *ledgerV1.ToggleTagRequest) (*ledgerV1.Tag, error) {
+	return s.client.ToggleCanExpense(ctx, req)
+}
+
+func (s *TagService) ToggleCanIncome(ctx context.Context, req *ledgerV1.ToggleTagRequest) (*ledgerV1.Tag, error) {
+	return s.client.ToggleCanIncome(ctx, req)
+}
+
+func (s *TagService) ToggleCanTransfer(ctx context.Context, req *ledgerV1.ToggleTagRequest) (*ledgerV1.Tag, error) {
+	return s.client.ToggleCanTransfer(ctx, req)
+}

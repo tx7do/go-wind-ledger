@@ -20,8 +20,10 @@ import (
 const _ = grpc.SupportPackageIsVersion9
 
 const (
-	FlowFileService_List_FullMethodName   = "/ledger.service.v1.FlowFileService/List"
-	FlowFileService_Delete_FullMethodName = "/ledger.service.v1.FlowFileService/Delete"
+	FlowFileService_List_FullMethodName       = "/ledger.service.v1.FlowFileService/List"
+	FlowFileService_Delete_FullMethodName     = "/ledger.service.v1.FlowFileService/Delete"
+	FlowFileService_UploadFile_FullMethodName = "/ledger.service.v1.FlowFileService/UploadFile"
+	FlowFileService_ViewFile_FullMethodName   = "/ledger.service.v1.FlowFileService/ViewFile"
 )
 
 // FlowFileServiceClient is the client API for FlowFileService service.
@@ -32,6 +34,8 @@ const (
 type FlowFileServiceClient interface {
 	List(ctx context.Context, in *ListFlowFileRequest, opts ...grpc.CallOption) (*ListFlowFileResponse, error)
 	Delete(ctx context.Context, in *DeleteFlowFileRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
+	UploadFile(ctx context.Context, in *UploadFlowFileRequest, opts ...grpc.CallOption) (*FlowFile, error)
+	ViewFile(ctx context.Context, in *ViewFlowFileRequest, opts ...grpc.CallOption) (*ViewFlowFileResponse, error)
 }
 
 type flowFileServiceClient struct {
@@ -62,6 +66,26 @@ func (c *flowFileServiceClient) Delete(ctx context.Context, in *DeleteFlowFileRe
 	return out, nil
 }
 
+func (c *flowFileServiceClient) UploadFile(ctx context.Context, in *UploadFlowFileRequest, opts ...grpc.CallOption) (*FlowFile, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(FlowFile)
+	err := c.cc.Invoke(ctx, FlowFileService_UploadFile_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *flowFileServiceClient) ViewFile(ctx context.Context, in *ViewFlowFileRequest, opts ...grpc.CallOption) (*ViewFlowFileResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(ViewFlowFileResponse)
+	err := c.cc.Invoke(ctx, FlowFileService_ViewFile_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // FlowFileServiceServer is the server API for FlowFileService service.
 // All implementations must embed UnimplementedFlowFileServiceServer
 // for forward compatibility.
@@ -70,6 +94,8 @@ func (c *flowFileServiceClient) Delete(ctx context.Context, in *DeleteFlowFileRe
 type FlowFileServiceServer interface {
 	List(context.Context, *ListFlowFileRequest) (*ListFlowFileResponse, error)
 	Delete(context.Context, *DeleteFlowFileRequest) (*emptypb.Empty, error)
+	UploadFile(context.Context, *UploadFlowFileRequest) (*FlowFile, error)
+	ViewFile(context.Context, *ViewFlowFileRequest) (*ViewFlowFileResponse, error)
 	mustEmbedUnimplementedFlowFileServiceServer()
 }
 
@@ -85,6 +111,12 @@ func (UnimplementedFlowFileServiceServer) List(context.Context, *ListFlowFileReq
 }
 func (UnimplementedFlowFileServiceServer) Delete(context.Context, *DeleteFlowFileRequest) (*emptypb.Empty, error) {
 	return nil, status.Error(codes.Unimplemented, "method Delete not implemented")
+}
+func (UnimplementedFlowFileServiceServer) UploadFile(context.Context, *UploadFlowFileRequest) (*FlowFile, error) {
+	return nil, status.Error(codes.Unimplemented, "method UploadFile not implemented")
+}
+func (UnimplementedFlowFileServiceServer) ViewFile(context.Context, *ViewFlowFileRequest) (*ViewFlowFileResponse, error) {
+	return nil, status.Error(codes.Unimplemented, "method ViewFile not implemented")
 }
 func (UnimplementedFlowFileServiceServer) mustEmbedUnimplementedFlowFileServiceServer() {}
 func (UnimplementedFlowFileServiceServer) testEmbeddedByValue()                         {}
@@ -143,6 +175,42 @@ func _FlowFileService_Delete_Handler(srv interface{}, ctx context.Context, dec f
 	return interceptor(ctx, in, info, handler)
 }
 
+func _FlowFileService_UploadFile_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(UploadFlowFileRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(FlowFileServiceServer).UploadFile(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: FlowFileService_UploadFile_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(FlowFileServiceServer).UploadFile(ctx, req.(*UploadFlowFileRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _FlowFileService_ViewFile_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ViewFlowFileRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(FlowFileServiceServer).ViewFile(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: FlowFileService_ViewFile_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(FlowFileServiceServer).ViewFile(ctx, req.(*ViewFlowFileRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // FlowFileService_ServiceDesc is the grpc.ServiceDesc for FlowFileService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -157,6 +225,14 @@ var FlowFileService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "Delete",
 			Handler:    _FlowFileService_Delete_Handler,
+		},
+		{
+			MethodName: "UploadFile",
+			Handler:    _FlowFileService_UploadFile_Handler,
+		},
+		{
+			MethodName: "ViewFile",
+			Handler:    _FlowFileService_ViewFile_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

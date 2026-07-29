@@ -22,14 +22,19 @@ import (
 const _ = grpc.SupportPackageIsVersion9
 
 const (
-	AccountService_List_FullMethodName          = "/admin.service.v1.AccountService/List"
-	AccountService_ListAll_FullMethodName       = "/admin.service.v1.AccountService/ListAll"
-	AccountService_Get_FullMethodName           = "/admin.service.v1.AccountService/Get"
-	AccountService_Create_FullMethodName        = "/admin.service.v1.AccountService/Create"
-	AccountService_Update_FullMethodName        = "/admin.service.v1.AccountService/Update"
-	AccountService_Delete_FullMethodName        = "/admin.service.v1.AccountService/Delete"
-	AccountService_Toggle_FullMethodName        = "/admin.service.v1.AccountService/Toggle"
-	AccountService_AdjustBalance_FullMethodName = "/admin.service.v1.AccountService/AdjustBalance"
+	AccountService_List_FullMethodName                  = "/admin.service.v1.AccountService/List"
+	AccountService_ListAll_FullMethodName               = "/admin.service.v1.AccountService/ListAll"
+	AccountService_Get_FullMethodName                   = "/admin.service.v1.AccountService/Get"
+	AccountService_Create_FullMethodName                = "/admin.service.v1.AccountService/Create"
+	AccountService_Update_FullMethodName                = "/admin.service.v1.AccountService/Update"
+	AccountService_Delete_FullMethodName                = "/admin.service.v1.AccountService/Delete"
+	AccountService_Toggle_FullMethodName                = "/admin.service.v1.AccountService/Toggle"
+	AccountService_ToggleInclude_FullMethodName         = "/admin.service.v1.AccountService/ToggleInclude"
+	AccountService_ToggleCanExpense_FullMethodName      = "/admin.service.v1.AccountService/ToggleCanExpense"
+	AccountService_ToggleCanIncome_FullMethodName       = "/admin.service.v1.AccountService/ToggleCanIncome"
+	AccountService_ToggleCanTransferFrom_FullMethodName = "/admin.service.v1.AccountService/ToggleCanTransferFrom"
+	AccountService_ToggleCanTransferTo_FullMethodName   = "/admin.service.v1.AccountService/ToggleCanTransferTo"
+	AccountService_AdjustBalance_FullMethodName         = "/admin.service.v1.AccountService/AdjustBalance"
 )
 
 // AccountServiceClient is the client API for AccountService service.
@@ -45,6 +50,11 @@ type AccountServiceClient interface {
 	Update(ctx context.Context, in *v11.UpdateAccountRequest, opts ...grpc.CallOption) (*v11.Account, error)
 	Delete(ctx context.Context, in *v11.DeleteAccountRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
 	Toggle(ctx context.Context, in *v11.ToggleAccountRequest, opts ...grpc.CallOption) (*v11.Account, error)
+	ToggleInclude(ctx context.Context, in *v11.ToggleAccountRequest, opts ...grpc.CallOption) (*v11.Account, error)
+	ToggleCanExpense(ctx context.Context, in *v11.ToggleAccountRequest, opts ...grpc.CallOption) (*v11.Account, error)
+	ToggleCanIncome(ctx context.Context, in *v11.ToggleAccountRequest, opts ...grpc.CallOption) (*v11.Account, error)
+	ToggleCanTransferFrom(ctx context.Context, in *v11.ToggleAccountRequest, opts ...grpc.CallOption) (*v11.Account, error)
+	ToggleCanTransferTo(ctx context.Context, in *v11.ToggleAccountRequest, opts ...grpc.CallOption) (*v11.Account, error)
 	AdjustBalance(ctx context.Context, in *v11.AdjustBalanceRequest, opts ...grpc.CallOption) (*v11.Account, error)
 }
 
@@ -126,6 +136,56 @@ func (c *accountServiceClient) Toggle(ctx context.Context, in *v11.ToggleAccount
 	return out, nil
 }
 
+func (c *accountServiceClient) ToggleInclude(ctx context.Context, in *v11.ToggleAccountRequest, opts ...grpc.CallOption) (*v11.Account, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(v11.Account)
+	err := c.cc.Invoke(ctx, AccountService_ToggleInclude_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *accountServiceClient) ToggleCanExpense(ctx context.Context, in *v11.ToggleAccountRequest, opts ...grpc.CallOption) (*v11.Account, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(v11.Account)
+	err := c.cc.Invoke(ctx, AccountService_ToggleCanExpense_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *accountServiceClient) ToggleCanIncome(ctx context.Context, in *v11.ToggleAccountRequest, opts ...grpc.CallOption) (*v11.Account, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(v11.Account)
+	err := c.cc.Invoke(ctx, AccountService_ToggleCanIncome_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *accountServiceClient) ToggleCanTransferFrom(ctx context.Context, in *v11.ToggleAccountRequest, opts ...grpc.CallOption) (*v11.Account, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(v11.Account)
+	err := c.cc.Invoke(ctx, AccountService_ToggleCanTransferFrom_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *accountServiceClient) ToggleCanTransferTo(ctx context.Context, in *v11.ToggleAccountRequest, opts ...grpc.CallOption) (*v11.Account, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(v11.Account)
+	err := c.cc.Invoke(ctx, AccountService_ToggleCanTransferTo_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 func (c *accountServiceClient) AdjustBalance(ctx context.Context, in *v11.AdjustBalanceRequest, opts ...grpc.CallOption) (*v11.Account, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(v11.Account)
@@ -149,6 +209,11 @@ type AccountServiceServer interface {
 	Update(context.Context, *v11.UpdateAccountRequest) (*v11.Account, error)
 	Delete(context.Context, *v11.DeleteAccountRequest) (*emptypb.Empty, error)
 	Toggle(context.Context, *v11.ToggleAccountRequest) (*v11.Account, error)
+	ToggleInclude(context.Context, *v11.ToggleAccountRequest) (*v11.Account, error)
+	ToggleCanExpense(context.Context, *v11.ToggleAccountRequest) (*v11.Account, error)
+	ToggleCanIncome(context.Context, *v11.ToggleAccountRequest) (*v11.Account, error)
+	ToggleCanTransferFrom(context.Context, *v11.ToggleAccountRequest) (*v11.Account, error)
+	ToggleCanTransferTo(context.Context, *v11.ToggleAccountRequest) (*v11.Account, error)
 	AdjustBalance(context.Context, *v11.AdjustBalanceRequest) (*v11.Account, error)
 	mustEmbedUnimplementedAccountServiceServer()
 }
@@ -180,6 +245,21 @@ func (UnimplementedAccountServiceServer) Delete(context.Context, *v11.DeleteAcco
 }
 func (UnimplementedAccountServiceServer) Toggle(context.Context, *v11.ToggleAccountRequest) (*v11.Account, error) {
 	return nil, status.Error(codes.Unimplemented, "method Toggle not implemented")
+}
+func (UnimplementedAccountServiceServer) ToggleInclude(context.Context, *v11.ToggleAccountRequest) (*v11.Account, error) {
+	return nil, status.Error(codes.Unimplemented, "method ToggleInclude not implemented")
+}
+func (UnimplementedAccountServiceServer) ToggleCanExpense(context.Context, *v11.ToggleAccountRequest) (*v11.Account, error) {
+	return nil, status.Error(codes.Unimplemented, "method ToggleCanExpense not implemented")
+}
+func (UnimplementedAccountServiceServer) ToggleCanIncome(context.Context, *v11.ToggleAccountRequest) (*v11.Account, error) {
+	return nil, status.Error(codes.Unimplemented, "method ToggleCanIncome not implemented")
+}
+func (UnimplementedAccountServiceServer) ToggleCanTransferFrom(context.Context, *v11.ToggleAccountRequest) (*v11.Account, error) {
+	return nil, status.Error(codes.Unimplemented, "method ToggleCanTransferFrom not implemented")
+}
+func (UnimplementedAccountServiceServer) ToggleCanTransferTo(context.Context, *v11.ToggleAccountRequest) (*v11.Account, error) {
+	return nil, status.Error(codes.Unimplemented, "method ToggleCanTransferTo not implemented")
 }
 func (UnimplementedAccountServiceServer) AdjustBalance(context.Context, *v11.AdjustBalanceRequest) (*v11.Account, error) {
 	return nil, status.Error(codes.Unimplemented, "method AdjustBalance not implemented")
@@ -331,6 +411,96 @@ func _AccountService_Toggle_Handler(srv interface{}, ctx context.Context, dec fu
 	return interceptor(ctx, in, info, handler)
 }
 
+func _AccountService_ToggleInclude_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(v11.ToggleAccountRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AccountServiceServer).ToggleInclude(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: AccountService_ToggleInclude_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AccountServiceServer).ToggleInclude(ctx, req.(*v11.ToggleAccountRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _AccountService_ToggleCanExpense_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(v11.ToggleAccountRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AccountServiceServer).ToggleCanExpense(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: AccountService_ToggleCanExpense_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AccountServiceServer).ToggleCanExpense(ctx, req.(*v11.ToggleAccountRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _AccountService_ToggleCanIncome_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(v11.ToggleAccountRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AccountServiceServer).ToggleCanIncome(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: AccountService_ToggleCanIncome_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AccountServiceServer).ToggleCanIncome(ctx, req.(*v11.ToggleAccountRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _AccountService_ToggleCanTransferFrom_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(v11.ToggleAccountRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AccountServiceServer).ToggleCanTransferFrom(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: AccountService_ToggleCanTransferFrom_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AccountServiceServer).ToggleCanTransferFrom(ctx, req.(*v11.ToggleAccountRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _AccountService_ToggleCanTransferTo_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(v11.ToggleAccountRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AccountServiceServer).ToggleCanTransferTo(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: AccountService_ToggleCanTransferTo_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AccountServiceServer).ToggleCanTransferTo(ctx, req.(*v11.ToggleAccountRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 func _AccountService_AdjustBalance_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(v11.AdjustBalanceRequest)
 	if err := dec(in); err != nil {
@@ -383,6 +553,26 @@ var AccountService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "Toggle",
 			Handler:    _AccountService_Toggle_Handler,
+		},
+		{
+			MethodName: "ToggleInclude",
+			Handler:    _AccountService_ToggleInclude_Handler,
+		},
+		{
+			MethodName: "ToggleCanExpense",
+			Handler:    _AccountService_ToggleCanExpense_Handler,
+		},
+		{
+			MethodName: "ToggleCanIncome",
+			Handler:    _AccountService_ToggleCanIncome_Handler,
+		},
+		{
+			MethodName: "ToggleCanTransferFrom",
+			Handler:    _AccountService_ToggleCanTransferFrom_Handler,
+		},
+		{
+			MethodName: "ToggleCanTransferTo",
+			Handler:    _AccountService_ToggleCanTransferTo_Handler,
 		},
 		{
 			MethodName: "AdjustBalance",

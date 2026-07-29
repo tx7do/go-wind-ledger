@@ -252,6 +252,197 @@ func (x *DeleteFlowFileRequest) GetId() uint32 {
 	return 0
 }
 
+// 请求 - 上传附件
+type UploadFlowFileRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	FlowId        uint32                 `protobuf:"varint,1,opt,name=flow_id,json=flowId,proto3" json:"flow_id,omitempty"`
+	FileName      string                 `protobuf:"bytes,2,opt,name=file_name,json=fileName,proto3" json:"file_name,omitempty"`
+	ContentType   string                 `protobuf:"bytes,3,opt,name=content_type,json=contentType,proto3" json:"content_type,omitempty"`
+	Size          int64                  `protobuf:"varint,4,opt,name=size,proto3" json:"size,omitempty"`
+	Data          []byte                 `protobuf:"bytes,5,opt,name=data,proto3" json:"data,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *UploadFlowFileRequest) Reset() {
+	*x = UploadFlowFileRequest{}
+	mi := &file_ledger_service_v1_flow_file_proto_msgTypes[4]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *UploadFlowFileRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*UploadFlowFileRequest) ProtoMessage() {}
+
+func (x *UploadFlowFileRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_ledger_service_v1_flow_file_proto_msgTypes[4]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use UploadFlowFileRequest.ProtoReflect.Descriptor instead.
+func (*UploadFlowFileRequest) Descriptor() ([]byte, []int) {
+	return file_ledger_service_v1_flow_file_proto_rawDescGZIP(), []int{4}
+}
+
+func (x *UploadFlowFileRequest) GetFlowId() uint32 {
+	if x != nil {
+		return x.FlowId
+	}
+	return 0
+}
+
+func (x *UploadFlowFileRequest) GetFileName() string {
+	if x != nil {
+		return x.FileName
+	}
+	return ""
+}
+
+func (x *UploadFlowFileRequest) GetContentType() string {
+	if x != nil {
+		return x.ContentType
+	}
+	return ""
+}
+
+func (x *UploadFlowFileRequest) GetSize() int64 {
+	if x != nil {
+		return x.Size
+	}
+	return 0
+}
+
+func (x *UploadFlowFileRequest) GetData() []byte {
+	if x != nil {
+		return x.Data
+	}
+	return nil
+}
+
+// 请求 - 查看附件（公开免认证，按 create_time 安全验证）
+type ViewFlowFileRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Id            uint32                 `protobuf:"varint,1,opt,name=id,proto3" json:"id,omitempty"`
+	CreateTime    int64                  `protobuf:"varint,2,opt,name=create_time,json=createTime,proto3" json:"create_time,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *ViewFlowFileRequest) Reset() {
+	*x = ViewFlowFileRequest{}
+	mi := &file_ledger_service_v1_flow_file_proto_msgTypes[5]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *ViewFlowFileRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ViewFlowFileRequest) ProtoMessage() {}
+
+func (x *ViewFlowFileRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_ledger_service_v1_flow_file_proto_msgTypes[5]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ViewFlowFileRequest.ProtoReflect.Descriptor instead.
+func (*ViewFlowFileRequest) Descriptor() ([]byte, []int) {
+	return file_ledger_service_v1_flow_file_proto_rawDescGZIP(), []int{5}
+}
+
+func (x *ViewFlowFileRequest) GetId() uint32 {
+	if x != nil {
+		return x.Id
+	}
+	return 0
+}
+
+func (x *ViewFlowFileRequest) GetCreateTime() int64 {
+	if x != nil {
+		return x.CreateTime
+	}
+	return 0
+}
+
+// 回应 - 查看附件（返回文件内容）
+type ViewFlowFileResponse struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	ContentType   string                 `protobuf:"bytes,1,opt,name=content_type,json=contentType,proto3" json:"content_type,omitempty"`
+	OriginalName  string                 `protobuf:"bytes,2,opt,name=original_name,json=originalName,proto3" json:"original_name,omitempty"`
+	Data          []byte                 `protobuf:"bytes,3,opt,name=data,proto3" json:"data,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *ViewFlowFileResponse) Reset() {
+	*x = ViewFlowFileResponse{}
+	mi := &file_ledger_service_v1_flow_file_proto_msgTypes[6]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *ViewFlowFileResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ViewFlowFileResponse) ProtoMessage() {}
+
+func (x *ViewFlowFileResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_ledger_service_v1_flow_file_proto_msgTypes[6]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ViewFlowFileResponse.ProtoReflect.Descriptor instead.
+func (*ViewFlowFileResponse) Descriptor() ([]byte, []int) {
+	return file_ledger_service_v1_flow_file_proto_rawDescGZIP(), []int{6}
+}
+
+func (x *ViewFlowFileResponse) GetContentType() string {
+	if x != nil {
+		return x.ContentType
+	}
+	return ""
+}
+
+func (x *ViewFlowFileResponse) GetOriginalName() string {
+	if x != nil {
+		return x.OriginalName
+	}
+	return ""
+}
+
+func (x *ViewFlowFileResponse) GetData() []byte {
+	if x != nil {
+		return x.Data
+	}
+	return nil
+}
+
 var File_ledger_service_v1_flow_file_proto protoreflect.FileDescriptor
 
 const file_ledger_service_v1_flow_file_proto_rawDesc = "" +
@@ -281,10 +472,27 @@ const file_ledger_service_v1_flow_file_proto_rawDesc = "" +
 	"\x13ListFlowFileRequest\x12\x17\n" +
 	"\aflow_id\x18\x01 \x01(\rR\x06flowId\"'\n" +
 	"\x15DeleteFlowFileRequest\x12\x0e\n" +
-	"\x02id\x18\x01 \x01(\rR\x02id2\xba\x01\n" +
+	"\x02id\x18\x01 \x01(\rR\x02id\"\x98\x01\n" +
+	"\x15UploadFlowFileRequest\x12\x17\n" +
+	"\aflow_id\x18\x01 \x01(\rR\x06flowId\x12\x1b\n" +
+	"\tfile_name\x18\x02 \x01(\tR\bfileName\x12!\n" +
+	"\fcontent_type\x18\x03 \x01(\tR\vcontentType\x12\x12\n" +
+	"\x04size\x18\x04 \x01(\x03R\x04size\x12\x12\n" +
+	"\x04data\x18\x05 \x01(\fR\x04data\"F\n" +
+	"\x13ViewFlowFileRequest\x12\x0e\n" +
+	"\x02id\x18\x01 \x01(\rR\x02id\x12\x1f\n" +
+	"\vcreate_time\x18\x02 \x01(\x03R\n" +
+	"createTime\"r\n" +
+	"\x14ViewFlowFileResponse\x12!\n" +
+	"\fcontent_type\x18\x01 \x01(\tR\vcontentType\x12#\n" +
+	"\roriginal_name\x18\x02 \x01(\tR\foriginalName\x12\x12\n" +
+	"\x04data\x18\x03 \x01(\fR\x04data2\xf0\x02\n" +
 	"\x0fFlowFileService\x12Y\n" +
 	"\x04List\x12&.ledger.service.v1.ListFlowFileRequest\x1a'.ledger.service.v1.ListFlowFileResponse\"\x00\x12L\n" +
-	"\x06Delete\x12(.ledger.service.v1.DeleteFlowFileRequest\x1a\x16.google.protobuf.Empty\"\x00B\xc0\x01\n" +
+	"\x06Delete\x12(.ledger.service.v1.DeleteFlowFileRequest\x1a\x16.google.protobuf.Empty\"\x00\x12U\n" +
+	"\n" +
+	"UploadFile\x12(.ledger.service.v1.UploadFlowFileRequest\x1a\x1b.ledger.service.v1.FlowFile\"\x00\x12]\n" +
+	"\bViewFile\x12&.ledger.service.v1.ViewFlowFileRequest\x1a'.ledger.service.v1.ViewFlowFileResponse\"\x00B\xc0\x01\n" +
 	"\x15com.ledger.service.v1B\rFlowFileProtoP\x01Z2go-wind-cms/api/gen/go/ledger/service/v1;servicev1\xa2\x02\x03LSX\xaa\x02\x11Ledger.Service.V1\xca\x02\x11Ledger\\Service\\V1\xe2\x02\x1dLedger\\Service\\V1\\GPBMetadata\xea\x02\x13Ledger::Service::V1b\x06proto3"
 
 var (
@@ -299,22 +507,29 @@ func file_ledger_service_v1_flow_file_proto_rawDescGZIP() []byte {
 	return file_ledger_service_v1_flow_file_proto_rawDescData
 }
 
-var file_ledger_service_v1_flow_file_proto_msgTypes = make([]protoimpl.MessageInfo, 4)
+var file_ledger_service_v1_flow_file_proto_msgTypes = make([]protoimpl.MessageInfo, 7)
 var file_ledger_service_v1_flow_file_proto_goTypes = []any{
 	(*FlowFile)(nil),              // 0: ledger.service.v1.FlowFile
 	(*ListFlowFileResponse)(nil),  // 1: ledger.service.v1.ListFlowFileResponse
 	(*ListFlowFileRequest)(nil),   // 2: ledger.service.v1.ListFlowFileRequest
 	(*DeleteFlowFileRequest)(nil), // 3: ledger.service.v1.DeleteFlowFileRequest
-	(*emptypb.Empty)(nil),         // 4: google.protobuf.Empty
+	(*UploadFlowFileRequest)(nil), // 4: ledger.service.v1.UploadFlowFileRequest
+	(*ViewFlowFileRequest)(nil),   // 5: ledger.service.v1.ViewFlowFileRequest
+	(*ViewFlowFileResponse)(nil),  // 6: ledger.service.v1.ViewFlowFileResponse
+	(*emptypb.Empty)(nil),         // 7: google.protobuf.Empty
 }
 var file_ledger_service_v1_flow_file_proto_depIdxs = []int32{
 	0, // 0: ledger.service.v1.ListFlowFileResponse.items:type_name -> ledger.service.v1.FlowFile
 	2, // 1: ledger.service.v1.FlowFileService.List:input_type -> ledger.service.v1.ListFlowFileRequest
 	3, // 2: ledger.service.v1.FlowFileService.Delete:input_type -> ledger.service.v1.DeleteFlowFileRequest
-	1, // 3: ledger.service.v1.FlowFileService.List:output_type -> ledger.service.v1.ListFlowFileResponse
-	4, // 4: ledger.service.v1.FlowFileService.Delete:output_type -> google.protobuf.Empty
-	3, // [3:5] is the sub-list for method output_type
-	1, // [1:3] is the sub-list for method input_type
+	4, // 3: ledger.service.v1.FlowFileService.UploadFile:input_type -> ledger.service.v1.UploadFlowFileRequest
+	5, // 4: ledger.service.v1.FlowFileService.ViewFile:input_type -> ledger.service.v1.ViewFlowFileRequest
+	1, // 5: ledger.service.v1.FlowFileService.List:output_type -> ledger.service.v1.ListFlowFileResponse
+	7, // 6: ledger.service.v1.FlowFileService.Delete:output_type -> google.protobuf.Empty
+	0, // 7: ledger.service.v1.FlowFileService.UploadFile:output_type -> ledger.service.v1.FlowFile
+	6, // 8: ledger.service.v1.FlowFileService.ViewFile:output_type -> ledger.service.v1.ViewFlowFileResponse
+	5, // [5:9] is the sub-list for method output_type
+	1, // [1:5] is the sub-list for method input_type
 	1, // [1:1] is the sub-list for extension type_name
 	1, // [1:1] is the sub-list for extension extendee
 	0, // [0:1] is the sub-list for field type_name
@@ -332,7 +547,7 @@ func file_ledger_service_v1_flow_file_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_ledger_service_v1_flow_file_proto_rawDesc), len(file_ledger_service_v1_flow_file_proto_rawDesc)),
 			NumEnums:      0,
-			NumMessages:   4,
+			NumMessages:   7,
 			NumExtensions: 0,
 			NumServices:   1,
 		},

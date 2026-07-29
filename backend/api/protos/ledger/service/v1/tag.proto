@@ -17,6 +17,9 @@ service TagService {
   rpc Update (UpdateTagRequest) returns (Tag) {}
   rpc Delete (DeleteTagRequest) returns (google.protobuf.Empty) {}
   rpc Toggle (ToggleTagRequest) returns (Tag) {}
+  rpc ToggleCanExpense (ToggleTagRequest) returns (Tag) {}
+  rpc ToggleCanIncome (ToggleTagRequest) returns (Tag) {}
+  rpc ToggleCanTransfer (ToggleTagRequest) returns (Tag) {}
 }
 
 message Tag {

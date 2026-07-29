@@ -654,7 +654,7 @@ const file_ledger_service_v1_tag_proto_rawDesc = "" +
 	"\x10DeleteTagRequest\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\rR\x02id\"\"\n" +
 	"\x10ToggleTagRequest\x12\x0e\n" +
-	"\x02id\x18\x01 \x01(\rR\x02id2\x93\x04\n" +
+	"\x02id\x18\x01 \x01(\rR\x02id2\x8c\x06\n" +
 	"\n" +
 	"TagService\x12G\n" +
 	"\x04List\x12\x19.pagination.PagingRequest\x1a\".ledger.service.v1.ListTagResponse\"\x00\x12U\n" +
@@ -663,7 +663,10 @@ const file_ledger_service_v1_tag_proto_rawDesc = "" +
 	"\x06Create\x12#.ledger.service.v1.CreateTagRequest\x1a\x16.ledger.service.v1.Tag\"\x00\x12G\n" +
 	"\x06Update\x12#.ledger.service.v1.UpdateTagRequest\x1a\x16.ledger.service.v1.Tag\"\x00\x12G\n" +
 	"\x06Delete\x12#.ledger.service.v1.DeleteTagRequest\x1a\x16.google.protobuf.Empty\"\x00\x12G\n" +
-	"\x06Toggle\x12#.ledger.service.v1.ToggleTagRequest\x1a\x16.ledger.service.v1.Tag\"\x00B\xbb\x01\n" +
+	"\x06Toggle\x12#.ledger.service.v1.ToggleTagRequest\x1a\x16.ledger.service.v1.Tag\"\x00\x12Q\n" +
+	"\x10ToggleCanExpense\x12#.ledger.service.v1.ToggleTagRequest\x1a\x16.ledger.service.v1.Tag\"\x00\x12P\n" +
+	"\x0fToggleCanIncome\x12#.ledger.service.v1.ToggleTagRequest\x1a\x16.ledger.service.v1.Tag\"\x00\x12R\n" +
+	"\x11ToggleCanTransfer\x12#.ledger.service.v1.ToggleTagRequest\x1a\x16.ledger.service.v1.Tag\"\x00B\xbb\x01\n" +
 	"\x15com.ledger.service.v1B\bTagProtoP\x01Z2go-wind-cms/api/gen/go/ledger/service/v1;servicev1\xa2\x02\x03LSX\xaa\x02\x11Ledger.Service.V1\xca\x02\x11Ledger\\Service\\V1\xe2\x02\x1dLedger\\Service\\V1\\GPBMetadata\xea\x02\x13Ledger::Service::V1b\x06proto3"
 
 var (
@@ -710,15 +713,21 @@ var file_ledger_service_v1_tag_proto_depIdxs = []int32{
 	5,  // 13: ledger.service.v1.TagService.Update:input_type -> ledger.service.v1.UpdateTagRequest
 	6,  // 14: ledger.service.v1.TagService.Delete:input_type -> ledger.service.v1.DeleteTagRequest
 	7,  // 15: ledger.service.v1.TagService.Toggle:input_type -> ledger.service.v1.ToggleTagRequest
-	1,  // 16: ledger.service.v1.TagService.List:output_type -> ledger.service.v1.ListTagResponse
-	1,  // 17: ledger.service.v1.TagService.ListAll:output_type -> ledger.service.v1.ListTagResponse
-	0,  // 18: ledger.service.v1.TagService.Get:output_type -> ledger.service.v1.Tag
-	0,  // 19: ledger.service.v1.TagService.Create:output_type -> ledger.service.v1.Tag
-	0,  // 20: ledger.service.v1.TagService.Update:output_type -> ledger.service.v1.Tag
-	11, // 21: ledger.service.v1.TagService.Delete:output_type -> google.protobuf.Empty
-	0,  // 22: ledger.service.v1.TagService.Toggle:output_type -> ledger.service.v1.Tag
-	16, // [16:23] is the sub-list for method output_type
-	9,  // [9:16] is the sub-list for method input_type
+	7,  // 16: ledger.service.v1.TagService.ToggleCanExpense:input_type -> ledger.service.v1.ToggleTagRequest
+	7,  // 17: ledger.service.v1.TagService.ToggleCanIncome:input_type -> ledger.service.v1.ToggleTagRequest
+	7,  // 18: ledger.service.v1.TagService.ToggleCanTransfer:input_type -> ledger.service.v1.ToggleTagRequest
+	1,  // 19: ledger.service.v1.TagService.List:output_type -> ledger.service.v1.ListTagResponse
+	1,  // 20: ledger.service.v1.TagService.ListAll:output_type -> ledger.service.v1.ListTagResponse
+	0,  // 21: ledger.service.v1.TagService.Get:output_type -> ledger.service.v1.Tag
+	0,  // 22: ledger.service.v1.TagService.Create:output_type -> ledger.service.v1.Tag
+	0,  // 23: ledger.service.v1.TagService.Update:output_type -> ledger.service.v1.Tag
+	11, // 24: ledger.service.v1.TagService.Delete:output_type -> google.protobuf.Empty
+	0,  // 25: ledger.service.v1.TagService.Toggle:output_type -> ledger.service.v1.Tag
+	0,  // 26: ledger.service.v1.TagService.ToggleCanExpense:output_type -> ledger.service.v1.Tag
+	0,  // 27: ledger.service.v1.TagService.ToggleCanIncome:output_type -> ledger.service.v1.Tag
+	0,  // 28: ledger.service.v1.TagService.ToggleCanTransfer:output_type -> ledger.service.v1.Tag
+	19, // [19:29] is the sub-list for method output_type
+	9,  // [9:19] is the sub-list for method input_type
 	9,  // [9:9] is the sub-list for extension type_name
 	9,  // [9:9] is the sub-list for extension extendee
 	0,  // [0:9] is the sub-list for field type_name

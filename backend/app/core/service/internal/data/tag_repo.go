@@ -164,6 +164,42 @@ func (r *TagRepo) Toggle(ctx context.Context, id uint32) (*ledgerV1.Tag, error) 
 	return r.mapper.ToDTO(updated), nil
 }
 
+func (r *TagRepo) ToggleCanExpense(ctx context.Context, id uint32) (*ledgerV1.Tag, error) {
+	entity, err := r.entClient.Client().Tag.Query().Where(tag.IDEQ(id)).Only(ctx)
+	if err != nil {
+		if ent.IsNotFound(err) {
+			return nil, ledgerV1.ErrorNotFound("tag not found")
+		}
+		return nil, ledgerV1.ErrorInternalServerError("get tag failed")
+	}
+	updated, _ := r.entClient.Client().Tag.UpdateOneID(id).SetCanExpense(!*entity.CanExpense).Save(ctx)
+	return r.mapper.ToDTO(updated), nil
+}
+
+func (r *TagRepo) ToggleCanIncome(ctx context.Context, id uint32) (*ledgerV1.Tag, error) {
+	entity, err := r.entClient.Client().Tag.Query().Where(tag.IDEQ(id)).Only(ctx)
+	if err != nil {
+		if ent.IsNotFound(err) {
+			return nil, ledgerV1.ErrorNotFound("tag not found")
+		}
+		return nil, ledgerV1.ErrorInternalServerError("get tag failed")
+	}
+	updated, _ := r.entClient.Client().Tag.UpdateOneID(id).SetCanIncome(!*entity.CanIncome).Save(ctx)
+	return r.mapper.ToDTO(updated), nil
+}
+
+func (r *TagRepo) ToggleCanTransfer(ctx context.Context, id uint32) (*ledgerV1.Tag, error) {
+	entity, err := r.entClient.Client().Tag.Query().Where(tag.IDEQ(id)).Only(ctx)
+	if err != nil {
+		if ent.IsNotFound(err) {
+			return nil, ledgerV1.ErrorNotFound("tag not found")
+		}
+		return nil, ledgerV1.ErrorInternalServerError("get tag failed")
+	}
+	updated, _ := r.entClient.Client().Tag.UpdateOneID(id).SetCanTransfer(!*entity.CanTransfer).Save(ctx)
+	return r.mapper.ToDTO(updated), nil
+}
+
 func (r *TagRepo) UnChildren(ctx context.Context, parentID uint32) error {
 	_, err := r.entClient.Client().Tag.Update().Where(tag.ParentIDEQ(parentID)).ClearParentID().Save(ctx)
 	return err

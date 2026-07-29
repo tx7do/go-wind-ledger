@@ -42,6 +42,8 @@ func NewRestMiddleware(
 	// add white list for authentication.
 	rpc.AddWhiteList(
 		adminV1.OperationAuthenticationServiceLogin,
+		// 流水附件查看：公开免认证访问，按 id+create_time 安全校验防止遍历。
+		adminV1.OperationFlowFileServiceViewFile,
 	)
 
 	ms = append(ms, applogging.Server(

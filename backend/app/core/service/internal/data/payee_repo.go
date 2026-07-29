@@ -150,3 +150,27 @@ func (r *PayeeRepo) Toggle(ctx context.Context, id uint32) (*ledgerV1.Payee, err
 	updated, _ := r.entClient.Client().Payee.UpdateOneID(id).SetEnable(!*entity.Enable).Save(ctx)
 	return r.mapper.ToDTO(updated), nil
 }
+
+func (r *PayeeRepo) ToggleCanExpense(ctx context.Context, id uint32) (*ledgerV1.Payee, error) {
+	entity, err := r.entClient.Client().Payee.Query().Where(payee.IDEQ(id)).Only(ctx)
+	if err != nil {
+		if ent.IsNotFound(err) {
+			return nil, ledgerV1.ErrorNotFound("payee not found")
+		}
+		return nil, ledgerV1.ErrorInternalServerError("get payee failed")
+	}
+	updated, _ := r.entClient.Client().Payee.UpdateOneID(id).SetCanExpense(!*entity.CanExpense).Save(ctx)
+	return r.mapper.ToDTO(updated), nil
+}
+
+func (r *PayeeRepo) ToggleCanIncome(ctx context.Context, id uint32) (*ledgerV1.Payee, error) {
+	entity, err := r.entClient.Client().Payee.Query().Where(payee.IDEQ(id)).Only(ctx)
+	if err != nil {
+		if ent.IsNotFound(err) {
+			return nil, ledgerV1.ErrorNotFound("payee not found")
+		}
+		return nil, ledgerV1.ErrorInternalServerError("get payee failed")
+	}
+	updated, _ := r.entClient.Client().Payee.UpdateOneID(id).SetCanIncome(!*entity.CanIncome).Save(ctx)
+	return r.mapper.ToDTO(updated), nil
+}

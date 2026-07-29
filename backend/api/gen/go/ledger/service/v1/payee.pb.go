@@ -603,7 +603,7 @@ const file_ledger_service_v1_payee_proto_rawDesc = "" +
 	"\x12DeletePayeeRequest\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\rR\x02id\"$\n" +
 	"\x12TogglePayeeRequest\x12\x0e\n" +
-	"\x02id\x18\x01 \x01(\rR\x02id2\xad\x04\n" +
+	"\x02id\x18\x01 \x01(\rR\x02id2\xda\x05\n" +
 	"\fPayeeService\x12I\n" +
 	"\x04List\x12\x19.pagination.PagingRequest\x1a$.ledger.service.v1.ListPayeeResponse\"\x00\x12Y\n" +
 	"\aListAll\x12&.ledger.service.v1.ListAllPayeeRequest\x1a$.ledger.service.v1.ListPayeeResponse\"\x00\x12E\n" +
@@ -611,7 +611,9 @@ const file_ledger_service_v1_payee_proto_rawDesc = "" +
 	"\x06Create\x12%.ledger.service.v1.CreatePayeeRequest\x1a\x18.ledger.service.v1.Payee\"\x00\x12K\n" +
 	"\x06Update\x12%.ledger.service.v1.UpdatePayeeRequest\x1a\x18.ledger.service.v1.Payee\"\x00\x12I\n" +
 	"\x06Delete\x12%.ledger.service.v1.DeletePayeeRequest\x1a\x16.google.protobuf.Empty\"\x00\x12K\n" +
-	"\x06Toggle\x12%.ledger.service.v1.TogglePayeeRequest\x1a\x18.ledger.service.v1.Payee\"\x00B\xbd\x01\n" +
+	"\x06Toggle\x12%.ledger.service.v1.TogglePayeeRequest\x1a\x18.ledger.service.v1.Payee\"\x00\x12U\n" +
+	"\x10ToggleCanExpense\x12%.ledger.service.v1.TogglePayeeRequest\x1a\x18.ledger.service.v1.Payee\"\x00\x12T\n" +
+	"\x0fToggleCanIncome\x12%.ledger.service.v1.TogglePayeeRequest\x1a\x18.ledger.service.v1.Payee\"\x00B\xbd\x01\n" +
 	"\x15com.ledger.service.v1B\n" +
 	"PayeeProtoP\x01Z2go-wind-cms/api/gen/go/ledger/service/v1;servicev1\xa2\x02\x03LSX\xaa\x02\x11Ledger.Service.V1\xca\x02\x11Ledger\\Service\\V1\xe2\x02\x1dLedger\\Service\\V1\\GPBMetadata\xea\x02\x13Ledger::Service::V1b\x06proto3"
 
@@ -658,15 +660,19 @@ var file_ledger_service_v1_payee_proto_depIdxs = []int32{
 	5,  // 12: ledger.service.v1.PayeeService.Update:input_type -> ledger.service.v1.UpdatePayeeRequest
 	6,  // 13: ledger.service.v1.PayeeService.Delete:input_type -> ledger.service.v1.DeletePayeeRequest
 	7,  // 14: ledger.service.v1.PayeeService.Toggle:input_type -> ledger.service.v1.TogglePayeeRequest
-	1,  // 15: ledger.service.v1.PayeeService.List:output_type -> ledger.service.v1.ListPayeeResponse
-	1,  // 16: ledger.service.v1.PayeeService.ListAll:output_type -> ledger.service.v1.ListPayeeResponse
-	0,  // 17: ledger.service.v1.PayeeService.Get:output_type -> ledger.service.v1.Payee
-	0,  // 18: ledger.service.v1.PayeeService.Create:output_type -> ledger.service.v1.Payee
-	0,  // 19: ledger.service.v1.PayeeService.Update:output_type -> ledger.service.v1.Payee
-	11, // 20: ledger.service.v1.PayeeService.Delete:output_type -> google.protobuf.Empty
-	0,  // 21: ledger.service.v1.PayeeService.Toggle:output_type -> ledger.service.v1.Payee
-	15, // [15:22] is the sub-list for method output_type
-	8,  // [8:15] is the sub-list for method input_type
+	7,  // 15: ledger.service.v1.PayeeService.ToggleCanExpense:input_type -> ledger.service.v1.TogglePayeeRequest
+	7,  // 16: ledger.service.v1.PayeeService.ToggleCanIncome:input_type -> ledger.service.v1.TogglePayeeRequest
+	1,  // 17: ledger.service.v1.PayeeService.List:output_type -> ledger.service.v1.ListPayeeResponse
+	1,  // 18: ledger.service.v1.PayeeService.ListAll:output_type -> ledger.service.v1.ListPayeeResponse
+	0,  // 19: ledger.service.v1.PayeeService.Get:output_type -> ledger.service.v1.Payee
+	0,  // 20: ledger.service.v1.PayeeService.Create:output_type -> ledger.service.v1.Payee
+	0,  // 21: ledger.service.v1.PayeeService.Update:output_type -> ledger.service.v1.Payee
+	11, // 22: ledger.service.v1.PayeeService.Delete:output_type -> google.protobuf.Empty
+	0,  // 23: ledger.service.v1.PayeeService.Toggle:output_type -> ledger.service.v1.Payee
+	0,  // 24: ledger.service.v1.PayeeService.ToggleCanExpense:output_type -> ledger.service.v1.Payee
+	0,  // 25: ledger.service.v1.PayeeService.ToggleCanIncome:output_type -> ledger.service.v1.Payee
+	17, // [17:26] is the sub-list for method output_type
+	8,  // [8:17] is the sub-list for method input_type
 	8,  // [8:8] is the sub-list for extension type_name
 	8,  // [8:8] is the sub-list for extension extendee
 	0,  // [0:8] is the sub-list for field type_name

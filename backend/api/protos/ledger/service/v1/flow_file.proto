@@ -10,6 +10,8 @@ import "google/protobuf/timestamp.proto";
 service FlowFileService {
   rpc List (ListFlowFileRequest) returns (ListFlowFileResponse) {}
   rpc Delete (DeleteFlowFileRequest) returns (google.protobuf.Empty) {}
+  rpc UploadFile (UploadFlowFileRequest) returns (FlowFile) {}
+  rpc ViewFile (ViewFlowFileRequest) returns (ViewFlowFileResponse) {}
 }
 
 // 流水附件
@@ -40,4 +42,26 @@ message ListFlowFileRequest {
 // 请求 - 删除附件
 message DeleteFlowFileRequest {
   uint32 id = 1 [json_name = "id"];
+}
+
+// 请求 - 上传附件
+message UploadFlowFileRequest {
+  uint32 flow_id = 1 [json_name = "flowId"];
+  string file_name = 2 [json_name = "fileName"];
+  string content_type = 3 [json_name = "contentType"];
+  int64 size = 4 [json_name = "size"];
+  bytes data = 5 [json_name = "data"];
+}
+
+// 请求 - 查看附件（公开免认证，按 create_time 安全验证）
+message ViewFlowFileRequest {
+  uint32 id = 1 [json_name = "id"];
+  int64 create_time = 2 [json_name = "createTime"];
+}
+
+// 回应 - 查看附件（返回文件内容）
+message ViewFlowFileResponse {
+  string content_type = 1 [json_name = "contentType"];
+  string original_name = 2 [json_name = "originalName"];
+  bytes data = 3 [json_name = "data"];
 }

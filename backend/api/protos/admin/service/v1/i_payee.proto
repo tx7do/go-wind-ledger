@@ -54,4 +54,18 @@ service PayeeService {
       body: "*"
     };
   }
+
+  rpc ToggleCanExpense (ledger.service.v1.TogglePayeeRequest) returns (ledger.service.v1.Payee) {
+    option (google.api.http) = {
+      patch: "/admin/v1/payees/{id}/toggle-can-expense"
+      body: "*"
+    };
+  }
+
+  rpc ToggleCanIncome (ledger.service.v1.TogglePayeeRequest) returns (ledger.service.v1.Payee) {
+    option (google.api.http) = {
+      patch: "/admin/v1/payees/{id}/toggle-can-income"
+      body: "*"
+    };
+  }
 }

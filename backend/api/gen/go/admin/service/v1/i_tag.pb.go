@@ -28,7 +28,7 @@ var File_admin_service_v1_i_tag_proto protoreflect.FileDescriptor
 
 const file_admin_service_v1_i_tag_proto_rawDesc = "" +
 	"\n" +
-	"\x1cadmin/service/v1/i_tag.proto\x12\x10admin.service.v1\x1a\x1cgoogle/api/annotations.proto\x1a\x1bgoogle/protobuf/empty.proto\x1a\x1epagination/v1/pagination.proto\x1a\x1bledger/service/v1/tag.proto2\xd5\x05\n" +
+	"\x1cadmin/service/v1/i_tag.proto\x12\x10admin.service.v1\x1a\x1cgoogle/api/annotations.proto\x1a\x1bgoogle/protobuf/empty.proto\x1a\x1epagination/v1/pagination.proto\x1a\x1bledger/service/v1/tag.proto2\xe4\b\n" +
 	"\n" +
 	"TagService\x12]\n" +
 	"\x04List\x12\x19.pagination.PagingRequest\x1a\".ledger.service.v1.ListTagResponse\"\x16\x82\xd3\xe4\x93\x02\x10\x12\x0e/admin/v1/tags\x12o\n" +
@@ -37,7 +37,10 @@ const file_admin_service_v1_i_tag_proto_rawDesc = "" +
 	"\x06Create\x12#.ledger.service.v1.CreateTagRequest\x1a\x16.ledger.service.v1.Tag\"\x19\x82\xd3\xe4\x93\x02\x13:\x01*\"\x0e/admin/v1/tags\x12e\n" +
 	"\x06Update\x12#.ledger.service.v1.UpdateTagRequest\x1a\x16.ledger.service.v1.Tag\"\x1e\x82\xd3\xe4\x93\x02\x18:\x01*\x1a\x13/admin/v1/tags/{id}\x12b\n" +
 	"\x06Delete\x12#.ledger.service.v1.DeleteTagRequest\x1a\x16.google.protobuf.Empty\"\x1b\x82\xd3\xe4\x93\x02\x15*\x13/admin/v1/tags/{id}\x12l\n" +
-	"\x06Toggle\x12#.ledger.service.v1.ToggleTagRequest\x1a\x16.ledger.service.v1.Tag\"%\x82\xd3\xe4\x93\x02\x1f:\x01*2\x1a/admin/v1/tags/{id}/toggleB\xb4\x01\n" +
+	"\x06Toggle\x12#.ledger.service.v1.ToggleTagRequest\x1a\x16.ledger.service.v1.Tag\"%\x82\xd3\xe4\x93\x02\x1f:\x01*2\x1a/admin/v1/tags/{id}/toggle\x12\x82\x01\n" +
+	"\x10ToggleCanExpense\x12#.ledger.service.v1.ToggleTagRequest\x1a\x16.ledger.service.v1.Tag\"1\x82\xd3\xe4\x93\x02+:\x01*2&/admin/v1/tags/{id}/toggle-can-expense\x12\x80\x01\n" +
+	"\x0fToggleCanIncome\x12#.ledger.service.v1.ToggleTagRequest\x1a\x16.ledger.service.v1.Tag\"0\x82\xd3\xe4\x93\x02*:\x01*2%/admin/v1/tags/{id}/toggle-can-income\x12\x84\x01\n" +
+	"\x11ToggleCanTransfer\x12#.ledger.service.v1.ToggleTagRequest\x1a\x16.ledger.service.v1.Tag\"2\x82\xd3\xe4\x93\x02,:\x01*2'/admin/v1/tags/{id}/toggle-can-transferB\xb4\x01\n" +
 	"\x14com.admin.service.v1B\tITagProtoP\x01Z/go-wind-cms/api/gen/go/admin/service/v1;adminpb\xa2\x02\x03ASX\xaa\x02\x10Admin.Service.V1\xca\x02\x10Admin\\Service\\V1\xe2\x02\x1cAdmin\\Service\\V1\\GPBMetadata\xea\x02\x12Admin::Service::V1b\x06proto3"
 
 var file_admin_service_v1_i_tag_proto_goTypes = []any{
@@ -53,25 +56,31 @@ var file_admin_service_v1_i_tag_proto_goTypes = []any{
 	(*emptypb.Empty)(nil),         // 9: google.protobuf.Empty
 }
 var file_admin_service_v1_i_tag_proto_depIdxs = []int32{
-	0, // 0: admin.service.v1.TagService.List:input_type -> pagination.PagingRequest
-	1, // 1: admin.service.v1.TagService.ListAll:input_type -> ledger.service.v1.ListAllTagRequest
-	2, // 2: admin.service.v1.TagService.Get:input_type -> ledger.service.v1.GetTagRequest
-	3, // 3: admin.service.v1.TagService.Create:input_type -> ledger.service.v1.CreateTagRequest
-	4, // 4: admin.service.v1.TagService.Update:input_type -> ledger.service.v1.UpdateTagRequest
-	5, // 5: admin.service.v1.TagService.Delete:input_type -> ledger.service.v1.DeleteTagRequest
-	6, // 6: admin.service.v1.TagService.Toggle:input_type -> ledger.service.v1.ToggleTagRequest
-	7, // 7: admin.service.v1.TagService.List:output_type -> ledger.service.v1.ListTagResponse
-	7, // 8: admin.service.v1.TagService.ListAll:output_type -> ledger.service.v1.ListTagResponse
-	8, // 9: admin.service.v1.TagService.Get:output_type -> ledger.service.v1.Tag
-	8, // 10: admin.service.v1.TagService.Create:output_type -> ledger.service.v1.Tag
-	8, // 11: admin.service.v1.TagService.Update:output_type -> ledger.service.v1.Tag
-	9, // 12: admin.service.v1.TagService.Delete:output_type -> google.protobuf.Empty
-	8, // 13: admin.service.v1.TagService.Toggle:output_type -> ledger.service.v1.Tag
-	7, // [7:14] is the sub-list for method output_type
-	0, // [0:7] is the sub-list for method input_type
-	0, // [0:0] is the sub-list for extension type_name
-	0, // [0:0] is the sub-list for extension extendee
-	0, // [0:0] is the sub-list for field type_name
+	0,  // 0: admin.service.v1.TagService.List:input_type -> pagination.PagingRequest
+	1,  // 1: admin.service.v1.TagService.ListAll:input_type -> ledger.service.v1.ListAllTagRequest
+	2,  // 2: admin.service.v1.TagService.Get:input_type -> ledger.service.v1.GetTagRequest
+	3,  // 3: admin.service.v1.TagService.Create:input_type -> ledger.service.v1.CreateTagRequest
+	4,  // 4: admin.service.v1.TagService.Update:input_type -> ledger.service.v1.UpdateTagRequest
+	5,  // 5: admin.service.v1.TagService.Delete:input_type -> ledger.service.v1.DeleteTagRequest
+	6,  // 6: admin.service.v1.TagService.Toggle:input_type -> ledger.service.v1.ToggleTagRequest
+	6,  // 7: admin.service.v1.TagService.ToggleCanExpense:input_type -> ledger.service.v1.ToggleTagRequest
+	6,  // 8: admin.service.v1.TagService.ToggleCanIncome:input_type -> ledger.service.v1.ToggleTagRequest
+	6,  // 9: admin.service.v1.TagService.ToggleCanTransfer:input_type -> ledger.service.v1.ToggleTagRequest
+	7,  // 10: admin.service.v1.TagService.List:output_type -> ledger.service.v1.ListTagResponse
+	7,  // 11: admin.service.v1.TagService.ListAll:output_type -> ledger.service.v1.ListTagResponse
+	8,  // 12: admin.service.v1.TagService.Get:output_type -> ledger.service.v1.Tag
+	8,  // 13: admin.service.v1.TagService.Create:output_type -> ledger.service.v1.Tag
+	8,  // 14: admin.service.v1.TagService.Update:output_type -> ledger.service.v1.Tag
+	9,  // 15: admin.service.v1.TagService.Delete:output_type -> google.protobuf.Empty
+	8,  // 16: admin.service.v1.TagService.Toggle:output_type -> ledger.service.v1.Tag
+	8,  // 17: admin.service.v1.TagService.ToggleCanExpense:output_type -> ledger.service.v1.Tag
+	8,  // 18: admin.service.v1.TagService.ToggleCanIncome:output_type -> ledger.service.v1.Tag
+	8,  // 19: admin.service.v1.TagService.ToggleCanTransfer:output_type -> ledger.service.v1.Tag
+	10, // [10:20] is the sub-list for method output_type
+	0,  // [0:10] is the sub-list for method input_type
+	0,  // [0:0] is the sub-list for extension type_name
+	0,  // [0:0] is the sub-list for extension extendee
+	0,  // [0:0] is the sub-list for field type_name
 }
 
 func init() { file_admin_service_v1_i_tag_proto_init() }

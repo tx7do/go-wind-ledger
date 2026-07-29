@@ -177,6 +177,66 @@ func (r *AccountRepo) Toggle(ctx context.Context, id uint32) (*ledgerV1.Account,
 	return r.mapper.ToDTO(updated), nil
 }
 
+func (r *AccountRepo) ToggleInclude(ctx context.Context, id uint32) (*ledgerV1.Account, error) {
+	entity, err := r.entClient.Client().Account.Query().Where(account.IDEQ(id)).Only(ctx)
+	if err != nil {
+		if ent.IsNotFound(err) {
+			return nil, ledgerV1.ErrorNotFound("account not found")
+		}
+		return nil, ledgerV1.ErrorInternalServerError("get account failed")
+	}
+	updated, _ := r.entClient.Client().Account.UpdateOneID(id).SetInclude(!*entity.Include).Save(ctx)
+	return r.mapper.ToDTO(updated), nil
+}
+
+func (r *AccountRepo) ToggleCanExpense(ctx context.Context, id uint32) (*ledgerV1.Account, error) {
+	entity, err := r.entClient.Client().Account.Query().Where(account.IDEQ(id)).Only(ctx)
+	if err != nil {
+		if ent.IsNotFound(err) {
+			return nil, ledgerV1.ErrorNotFound("account not found")
+		}
+		return nil, ledgerV1.ErrorInternalServerError("get account failed")
+	}
+	updated, _ := r.entClient.Client().Account.UpdateOneID(id).SetCanExpense(!*entity.CanExpense).Save(ctx)
+	return r.mapper.ToDTO(updated), nil
+}
+
+func (r *AccountRepo) ToggleCanIncome(ctx context.Context, id uint32) (*ledgerV1.Account, error) {
+	entity, err := r.entClient.Client().Account.Query().Where(account.IDEQ(id)).Only(ctx)
+	if err != nil {
+		if ent.IsNotFound(err) {
+			return nil, ledgerV1.ErrorNotFound("account not found")
+		}
+		return nil, ledgerV1.ErrorInternalServerError("get account failed")
+	}
+	updated, _ := r.entClient.Client().Account.UpdateOneID(id).SetCanIncome(!*entity.CanIncome).Save(ctx)
+	return r.mapper.ToDTO(updated), nil
+}
+
+func (r *AccountRepo) ToggleCanTransferFrom(ctx context.Context, id uint32) (*ledgerV1.Account, error) {
+	entity, err := r.entClient.Client().Account.Query().Where(account.IDEQ(id)).Only(ctx)
+	if err != nil {
+		if ent.IsNotFound(err) {
+			return nil, ledgerV1.ErrorNotFound("account not found")
+		}
+		return nil, ledgerV1.ErrorInternalServerError("get account failed")
+	}
+	updated, _ := r.entClient.Client().Account.UpdateOneID(id).SetCanTransferFrom(!*entity.CanTransferFrom).Save(ctx)
+	return r.mapper.ToDTO(updated), nil
+}
+
+func (r *AccountRepo) ToggleCanTransferTo(ctx context.Context, id uint32) (*ledgerV1.Account, error) {
+	entity, err := r.entClient.Client().Account.Query().Where(account.IDEQ(id)).Only(ctx)
+	if err != nil {
+		if ent.IsNotFound(err) {
+			return nil, ledgerV1.ErrorNotFound("account not found")
+		}
+		return nil, ledgerV1.ErrorInternalServerError("get account failed")
+	}
+	updated, _ := r.entClient.Client().Account.UpdateOneID(id).SetCanTransferTo(!*entity.CanTransferTo).Save(ctx)
+	return r.mapper.ToDTO(updated), nil
+}
+
 func (r *AccountRepo) UpdateBalance(ctx context.Context, id uint32, newBalance float64) error {
 	_, err := r.entClient.Client().Account.UpdateOneID(id).SetBalance(newBalance).Save(ctx)
 	return err

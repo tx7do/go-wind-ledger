@@ -28,7 +28,7 @@ var File_admin_service_v1_i_account_proto protoreflect.FileDescriptor
 
 const file_admin_service_v1_i_account_proto_rawDesc = "" +
 	"\n" +
-	" admin/service/v1/i_account.proto\x12\x10admin.service.v1\x1a\x1cgoogle/api/annotations.proto\x1a\x1bgoogle/protobuf/empty.proto\x1a\x1epagination/v1/pagination.proto\x1a\x1fledger/service/v1/account.proto2\xa6\a\n" +
+	" admin/service/v1/i_account.proto\x12\x10admin.service.v1\x1a\x1cgoogle/api/annotations.proto\x1a\x1bgoogle/protobuf/empty.proto\x1a\x1epagination/v1/pagination.proto\x1a\x1fledger/service/v1/account.proto2\x84\r\n" +
 	"\x0eAccountService\x12e\n" +
 	"\x04List\x12\x19.pagination.PagingRequest\x1a&.ledger.service.v1.ListAccountResponse\"\x1a\x82\xd3\xe4\x93\x02\x14\x12\x12/admin/v1/accounts\x12{\n" +
 	"\aListAll\x12(.ledger.service.v1.ListAllAccountRequest\x1a&.ledger.service.v1.ListAccountResponse\"\x1e\x82\xd3\xe4\x93\x02\x18\x12\x16/admin/v1/accounts/all\x12h\n" +
@@ -36,7 +36,12 @@ const file_admin_service_v1_i_account_proto_rawDesc = "" +
 	"\x06Create\x12'.ledger.service.v1.CreateAccountRequest\x1a\x1a.ledger.service.v1.Account\"\x1d\x82\xd3\xe4\x93\x02\x17:\x01*\"\x12/admin/v1/accounts\x12q\n" +
 	"\x06Update\x12'.ledger.service.v1.UpdateAccountRequest\x1a\x1a.ledger.service.v1.Account\"\"\x82\xd3\xe4\x93\x02\x1c:\x01*\x1a\x17/admin/v1/accounts/{id}\x12j\n" +
 	"\x06Delete\x12'.ledger.service.v1.DeleteAccountRequest\x1a\x16.google.protobuf.Empty\"\x1f\x82\xd3\xe4\x93\x02\x19*\x17/admin/v1/accounts/{id}\x12x\n" +
-	"\x06Toggle\x12'.ledger.service.v1.ToggleAccountRequest\x1a\x1a.ledger.service.v1.Account\")\x82\xd3\xe4\x93\x02#:\x01*2\x1e/admin/v1/accounts/{id}/toggle\x12\x7f\n" +
+	"\x06Toggle\x12'.ledger.service.v1.ToggleAccountRequest\x1a\x1a.ledger.service.v1.Account\")\x82\xd3\xe4\x93\x02#:\x01*2\x1e/admin/v1/accounts/{id}/toggle\x12\x87\x01\n" +
+	"\rToggleInclude\x12'.ledger.service.v1.ToggleAccountRequest\x1a\x1a.ledger.service.v1.Account\"1\x82\xd3\xe4\x93\x02+:\x01*2&/admin/v1/accounts/{id}/toggle-include\x12\x8e\x01\n" +
+	"\x10ToggleCanExpense\x12'.ledger.service.v1.ToggleAccountRequest\x1a\x1a.ledger.service.v1.Account\"5\x82\xd3\xe4\x93\x02/:\x01*2*/admin/v1/accounts/{id}/toggle-can-expense\x12\x8c\x01\n" +
+	"\x0fToggleCanIncome\x12'.ledger.service.v1.ToggleAccountRequest\x1a\x1a.ledger.service.v1.Account\"4\x82\xd3\xe4\x93\x02.:\x01*2)/admin/v1/accounts/{id}/toggle-can-income\x12\x99\x01\n" +
+	"\x15ToggleCanTransferFrom\x12'.ledger.service.v1.ToggleAccountRequest\x1a\x1a.ledger.service.v1.Account\";\x82\xd3\xe4\x93\x025:\x01*20/admin/v1/accounts/{id}/toggle-can-transfer-from\x12\x95\x01\n" +
+	"\x13ToggleCanTransferTo\x12'.ledger.service.v1.ToggleAccountRequest\x1a\x1a.ledger.service.v1.Account\"9\x82\xd3\xe4\x93\x023:\x01*2./admin/v1/accounts/{id}/toggle-can-transfer-to\x12\x7f\n" +
 	"\rAdjustBalance\x12'.ledger.service.v1.AdjustBalanceRequest\x1a\x1a.ledger.service.v1.Account\")\x82\xd3\xe4\x93\x02#:\x01*\"\x1e/admin/v1/accounts/{id}/adjustB\xb8\x01\n" +
 	"\x14com.admin.service.v1B\rIAccountProtoP\x01Z/go-wind-cms/api/gen/go/admin/service/v1;adminpb\xa2\x02\x03ASX\xaa\x02\x10Admin.Service.V1\xca\x02\x10Admin\\Service\\V1\xe2\x02\x1cAdmin\\Service\\V1\\GPBMetadata\xea\x02\x12Admin::Service::V1b\x06proto3"
 
@@ -61,17 +66,27 @@ var file_admin_service_v1_i_account_proto_depIdxs = []int32{
 	4,  // 4: admin.service.v1.AccountService.Update:input_type -> ledger.service.v1.UpdateAccountRequest
 	5,  // 5: admin.service.v1.AccountService.Delete:input_type -> ledger.service.v1.DeleteAccountRequest
 	6,  // 6: admin.service.v1.AccountService.Toggle:input_type -> ledger.service.v1.ToggleAccountRequest
-	7,  // 7: admin.service.v1.AccountService.AdjustBalance:input_type -> ledger.service.v1.AdjustBalanceRequest
-	8,  // 8: admin.service.v1.AccountService.List:output_type -> ledger.service.v1.ListAccountResponse
-	8,  // 9: admin.service.v1.AccountService.ListAll:output_type -> ledger.service.v1.ListAccountResponse
-	9,  // 10: admin.service.v1.AccountService.Get:output_type -> ledger.service.v1.Account
-	9,  // 11: admin.service.v1.AccountService.Create:output_type -> ledger.service.v1.Account
-	9,  // 12: admin.service.v1.AccountService.Update:output_type -> ledger.service.v1.Account
-	10, // 13: admin.service.v1.AccountService.Delete:output_type -> google.protobuf.Empty
-	9,  // 14: admin.service.v1.AccountService.Toggle:output_type -> ledger.service.v1.Account
-	9,  // 15: admin.service.v1.AccountService.AdjustBalance:output_type -> ledger.service.v1.Account
-	8,  // [8:16] is the sub-list for method output_type
-	0,  // [0:8] is the sub-list for method input_type
+	6,  // 7: admin.service.v1.AccountService.ToggleInclude:input_type -> ledger.service.v1.ToggleAccountRequest
+	6,  // 8: admin.service.v1.AccountService.ToggleCanExpense:input_type -> ledger.service.v1.ToggleAccountRequest
+	6,  // 9: admin.service.v1.AccountService.ToggleCanIncome:input_type -> ledger.service.v1.ToggleAccountRequest
+	6,  // 10: admin.service.v1.AccountService.ToggleCanTransferFrom:input_type -> ledger.service.v1.ToggleAccountRequest
+	6,  // 11: admin.service.v1.AccountService.ToggleCanTransferTo:input_type -> ledger.service.v1.ToggleAccountRequest
+	7,  // 12: admin.service.v1.AccountService.AdjustBalance:input_type -> ledger.service.v1.AdjustBalanceRequest
+	8,  // 13: admin.service.v1.AccountService.List:output_type -> ledger.service.v1.ListAccountResponse
+	8,  // 14: admin.service.v1.AccountService.ListAll:output_type -> ledger.service.v1.ListAccountResponse
+	9,  // 15: admin.service.v1.AccountService.Get:output_type -> ledger.service.v1.Account
+	9,  // 16: admin.service.v1.AccountService.Create:output_type -> ledger.service.v1.Account
+	9,  // 17: admin.service.v1.AccountService.Update:output_type -> ledger.service.v1.Account
+	10, // 18: admin.service.v1.AccountService.Delete:output_type -> google.protobuf.Empty
+	9,  // 19: admin.service.v1.AccountService.Toggle:output_type -> ledger.service.v1.Account
+	9,  // 20: admin.service.v1.AccountService.ToggleInclude:output_type -> ledger.service.v1.Account
+	9,  // 21: admin.service.v1.AccountService.ToggleCanExpense:output_type -> ledger.service.v1.Account
+	9,  // 22: admin.service.v1.AccountService.ToggleCanIncome:output_type -> ledger.service.v1.Account
+	9,  // 23: admin.service.v1.AccountService.ToggleCanTransferFrom:output_type -> ledger.service.v1.Account
+	9,  // 24: admin.service.v1.AccountService.ToggleCanTransferTo:output_type -> ledger.service.v1.Account
+	9,  // 25: admin.service.v1.AccountService.AdjustBalance:output_type -> ledger.service.v1.Account
+	13, // [13:26] is the sub-list for method output_type
+	0,  // [0:13] is the sub-list for method input_type
 	0,  // [0:0] is the sub-list for extension type_name
 	0,  // [0:0] is the sub-list for extension extendee
 	0,  // [0:0] is the sub-list for field type_name

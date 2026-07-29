@@ -55,6 +55,41 @@ service AccountService {
     };
   }
 
+  rpc ToggleInclude (ledger.service.v1.ToggleAccountRequest) returns (ledger.service.v1.Account) {
+    option (google.api.http) = {
+      patch: "/admin/v1/accounts/{id}/toggle-include"
+      body: "*"
+    };
+  }
+
+  rpc ToggleCanExpense (ledger.service.v1.ToggleAccountRequest) returns (ledger.service.v1.Account) {
+    option (google.api.http) = {
+      patch: "/admin/v1/accounts/{id}/toggle-can-expense"
+      body: "*"
+    };
+  }
+
+  rpc ToggleCanIncome (ledger.service.v1.ToggleAccountRequest) returns (ledger.service.v1.Account) {
+    option (google.api.http) = {
+      patch: "/admin/v1/accounts/{id}/toggle-can-income"
+      body: "*"
+    };
+  }
+
+  rpc ToggleCanTransferFrom (ledger.service.v1.ToggleAccountRequest) returns (ledger.service.v1.Account) {
+    option (google.api.http) = {
+      patch: "/admin/v1/accounts/{id}/toggle-can-transfer-from"
+      body: "*"
+    };
+  }
+
+  rpc ToggleCanTransferTo (ledger.service.v1.ToggleAccountRequest) returns (ledger.service.v1.Account) {
+    option (google.api.http) = {
+      patch: "/admin/v1/accounts/{id}/toggle-can-transfer-to"
+      body: "*"
+    };
+  }
+
   rpc AdjustBalance (ledger.service.v1.AdjustBalanceRequest) returns (ledger.service.v1.Account) {
     option (google.api.http) = {
       post: "/admin/v1/accounts/{id}/adjust"

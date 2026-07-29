@@ -28,6 +28,9 @@ const OperationTagServiceGet = "/admin.service.v1.TagService/Get"
 const OperationTagServiceList = "/admin.service.v1.TagService/List"
 const OperationTagServiceListAll = "/admin.service.v1.TagService/ListAll"
 const OperationTagServiceToggle = "/admin.service.v1.TagService/Toggle"
+const OperationTagServiceToggleCanExpense = "/admin.service.v1.TagService/ToggleCanExpense"
+const OperationTagServiceToggleCanIncome = "/admin.service.v1.TagService/ToggleCanIncome"
+const OperationTagServiceToggleCanTransfer = "/admin.service.v1.TagService/ToggleCanTransfer"
 const OperationTagServiceUpdate = "/admin.service.v1.TagService/Update"
 
 type TagServiceHTTPServer interface {
@@ -37,6 +40,9 @@ type TagServiceHTTPServer interface {
 	List(context.Context, *v1.PagingRequest) (*v11.ListTagResponse, error)
 	ListAll(context.Context, *v11.ListAllTagRequest) (*v11.ListTagResponse, error)
 	Toggle(context.Context, *v11.ToggleTagRequest) (*v11.Tag, error)
+	ToggleCanExpense(context.Context, *v11.ToggleTagRequest) (*v11.Tag, error)
+	ToggleCanIncome(context.Context, *v11.ToggleTagRequest) (*v11.Tag, error)
+	ToggleCanTransfer(context.Context, *v11.ToggleTagRequest) (*v11.Tag, error)
 	Update(context.Context, *v11.UpdateTagRequest) (*v11.Tag, error)
 }
 
@@ -49,6 +55,9 @@ func RegisterTagServiceHTTPServer(s *http.Server, srv TagServiceHTTPServer) {
 	r.PUT("/admin/v1/tags/{id}", _TagService_Update29_HTTP_Handler(srv))
 	r.DELETE("/admin/v1/tags/{id}", _TagService_Delete30_HTTP_Handler(srv))
 	r.PATCH("/admin/v1/tags/{id}/toggle", _TagService_Toggle4_HTTP_Handler(srv))
+	r.PATCH("/admin/v1/tags/{id}/toggle-can-expense", _TagService_ToggleCanExpense2_HTTP_Handler(srv))
+	r.PATCH("/admin/v1/tags/{id}/toggle-can-income", _TagService_ToggleCanIncome2_HTTP_Handler(srv))
+	r.PATCH("/admin/v1/tags/{id}/toggle-can-transfer", _TagService_ToggleCanTransfer0_HTTP_Handler(srv))
 }
 
 func _TagService_List37_HTTP_Handler(srv TagServiceHTTPServer) func(ctx http.Context) error {
@@ -205,6 +214,81 @@ func _TagService_Toggle4_HTTP_Handler(srv TagServiceHTTPServer) func(ctx http.Co
 	}
 }
 
+func _TagService_ToggleCanExpense2_HTTP_Handler(srv TagServiceHTTPServer) func(ctx http.Context) error {
+	return func(ctx http.Context) error {
+		var in v11.ToggleTagRequest
+		if err := ctx.Bind(&in); err != nil {
+			return err
+		}
+		if err := ctx.BindQuery(&in); err != nil {
+			return err
+		}
+		if err := ctx.BindVars(&in); err != nil {
+			return err
+		}
+		http.SetOperation(ctx, OperationTagServiceToggleCanExpense)
+		h := ctx.Middleware(func(ctx context.Context, req interface{}) (interface{}, error) {
+			return srv.ToggleCanExpense(ctx, req.(*v11.ToggleTagRequest))
+		})
+		out, err := h(ctx, &in)
+		if err != nil {
+			return err
+		}
+		reply := out.(*v11.Tag)
+		return ctx.Result(200, reply)
+	}
+}
+
+func _TagService_ToggleCanIncome2_HTTP_Handler(srv TagServiceHTTPServer) func(ctx http.Context) error {
+	return func(ctx http.Context) error {
+		var in v11.ToggleTagRequest
+		if err := ctx.Bind(&in); err != nil {
+			return err
+		}
+		if err := ctx.BindQuery(&in); err != nil {
+			return err
+		}
+		if err := ctx.BindVars(&in); err != nil {
+			return err
+		}
+		http.SetOperation(ctx, OperationTagServiceToggleCanIncome)
+		h := ctx.Middleware(func(ctx context.Context, req interface{}) (interface{}, error) {
+			return srv.ToggleCanIncome(ctx, req.(*v11.ToggleTagRequest))
+		})
+		out, err := h(ctx, &in)
+		if err != nil {
+			return err
+		}
+		reply := out.(*v11.Tag)
+		return ctx.Result(200, reply)
+	}
+}
+
+func _TagService_ToggleCanTransfer0_HTTP_Handler(srv TagServiceHTTPServer) func(ctx http.Context) error {
+	return func(ctx http.Context) error {
+		var in v11.ToggleTagRequest
+		if err := ctx.Bind(&in); err != nil {
+			return err
+		}
+		if err := ctx.BindQuery(&in); err != nil {
+			return err
+		}
+		if err := ctx.BindVars(&in); err != nil {
+			return err
+		}
+		http.SetOperation(ctx, OperationTagServiceToggleCanTransfer)
+		h := ctx.Middleware(func(ctx context.Context, req interface{}) (interface{}, error) {
+			return srv.ToggleCanTransfer(ctx, req.(*v11.ToggleTagRequest))
+		})
+		out, err := h(ctx, &in)
+		if err != nil {
+			return err
+		}
+		reply := out.(*v11.Tag)
+		return ctx.Result(200, reply)
+	}
+}
+
 type TagServiceHTTPClient interface {
 	Create(ctx context.Context, req *v11.CreateTagRequest, opts ...http.CallOption) (rsp *v11.Tag, err error)
 	Delete(ctx context.Context, req *v11.DeleteTagRequest, opts ...http.CallOption) (rsp *emptypb.Empty, err error)
@@ -212,6 +296,9 @@ type TagServiceHTTPClient interface {
 	List(ctx context.Context, req *v1.PagingRequest, opts ...http.CallOption) (rsp *v11.ListTagResponse, err error)
 	ListAll(ctx context.Context, req *v11.ListAllTagRequest, opts ...http.CallOption) (rsp *v11.ListTagResponse, err error)
 	Toggle(ctx context.Context, req *v11.ToggleTagRequest, opts ...http.CallOption) (rsp *v11.Tag, err error)
+	ToggleCanExpense(ctx context.Context, req *v11.ToggleTagRequest, opts ...http.CallOption) (rsp *v11.Tag, err error)
+	ToggleCanIncome(ctx context.Context, req *v11.ToggleTagRequest, opts ...http.CallOption) (rsp *v11.Tag, err error)
+	ToggleCanTransfer(ctx context.Context, req *v11.ToggleTagRequest, opts ...http.CallOption) (rsp *v11.Tag, err error)
 	Update(ctx context.Context, req *v11.UpdateTagRequest, opts ...http.CallOption) (rsp *v11.Tag, err error)
 }
 
@@ -293,6 +380,45 @@ func (c *TagServiceHTTPClientImpl) Toggle(ctx context.Context, in *v11.ToggleTag
 	pattern := "/admin/v1/tags/{id}/toggle"
 	path := binding.EncodeURL(pattern, in, false)
 	opts = append(opts, http.Operation(OperationTagServiceToggle))
+	opts = append(opts, http.PathTemplate(pattern))
+	err := c.cc.Invoke(ctx, "PATCH", path, in, &out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return &out, nil
+}
+
+func (c *TagServiceHTTPClientImpl) ToggleCanExpense(ctx context.Context, in *v11.ToggleTagRequest, opts ...http.CallOption) (*v11.Tag, error) {
+	var out v11.Tag
+	pattern := "/admin/v1/tags/{id}/toggle-can-expense"
+	path := binding.EncodeURL(pattern, in, false)
+	opts = append(opts, http.Operation(OperationTagServiceToggleCanExpense))
+	opts = append(opts, http.PathTemplate(pattern))
+	err := c.cc.Invoke(ctx, "PATCH", path, in, &out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return &out, nil
+}
+
+func (c *TagServiceHTTPClientImpl) ToggleCanIncome(ctx context.Context, in *v11.ToggleTagRequest, opts ...http.CallOption) (*v11.Tag, error) {
+	var out v11.Tag
+	pattern := "/admin/v1/tags/{id}/toggle-can-income"
+	path := binding.EncodeURL(pattern, in, false)
+	opts = append(opts, http.Operation(OperationTagServiceToggleCanIncome))
+	opts = append(opts, http.PathTemplate(pattern))
+	err := c.cc.Invoke(ctx, "PATCH", path, in, &out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return &out, nil
+}
+
+func (c *TagServiceHTTPClientImpl) ToggleCanTransfer(ctx context.Context, in *v11.ToggleTagRequest, opts ...http.CallOption) (*v11.Tag, error) {
+	var out v11.Tag
+	pattern := "/admin/v1/tags/{id}/toggle-can-transfer"
+	path := binding.EncodeURL(pattern, in, false)
+	opts = append(opts, http.Operation(OperationTagServiceToggleCanTransfer))
 	opts = append(opts, http.PathTemplate(pattern))
 	err := c.cc.Invoke(ctx, "PATCH", path, in, &out, opts...)
 	if err != nil {

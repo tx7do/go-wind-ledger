@@ -27,25 +27,36 @@ var File_admin_service_v1_i_flow_file_proto protoreflect.FileDescriptor
 
 const file_admin_service_v1_i_flow_file_proto_rawDesc = "" +
 	"\n" +
-	"\"admin/service/v1/i_flow_file.proto\x12\x10admin.service.v1\x1a\x1cgoogle/api/annotations.proto\x1a\x1bgoogle/protobuf/empty.proto\x1a!ledger/service/v1/flow_file.proto2\xf7\x01\n" +
+	"\"admin/service/v1/i_flow_file.proto\x12\x10admin.service.v1\x1a\x1cgoogle/api/annotations.proto\x1a\x1bgoogle/protobuf/empty.proto\x1a!ledger/service/v1/flow_file.proto2\xf4\x03\n" +
 	"\x0fFlowFileService\x12u\n" +
 	"\x04List\x12&.ledger.service.v1.ListFlowFileRequest\x1a'.ledger.service.v1.ListFlowFileResponse\"\x1c\x82\xd3\xe4\x93\x02\x16\x12\x14/admin/v1/flow-files\x12m\n" +
-	"\x06Delete\x12(.ledger.service.v1.DeleteFlowFileRequest\x1a\x16.google.protobuf.Empty\"!\x82\xd3\xe4\x93\x02\x1b*\x19/admin/v1/flow-files/{id}B\xb9\x01\n" +
+	"\x06Delete\x12(.ledger.service.v1.DeleteFlowFileRequest\x1a\x16.google.protobuf.Empty\"!\x82\xd3\xe4\x93\x02\x1b*\x19/admin/v1/flow-files/{id}\x12{\n" +
+	"\n" +
+	"UploadFile\x12(.ledger.service.v1.UploadFlowFileRequest\x1a\x1b.ledger.service.v1.FlowFile\"&\x82\xd3\xe4\x93\x02 :\x01*\"\x1b/admin/v1/flow-files/upload\x12~\n" +
+	"\bViewFile\x12&.ledger.service.v1.ViewFlowFileRequest\x1a'.ledger.service.v1.ViewFlowFileResponse\"!\x82\xd3\xe4\x93\x02\x1b\x12\x19/admin/v1/flow-files/viewB\xb9\x01\n" +
 	"\x14com.admin.service.v1B\x0eIFlowFileProtoP\x01Z/go-wind-cms/api/gen/go/admin/service/v1;adminpb\xa2\x02\x03ASX\xaa\x02\x10Admin.Service.V1\xca\x02\x10Admin\\Service\\V1\xe2\x02\x1cAdmin\\Service\\V1\\GPBMetadata\xea\x02\x12Admin::Service::V1b\x06proto3"
 
 var file_admin_service_v1_i_flow_file_proto_goTypes = []any{
 	(*v1.ListFlowFileRequest)(nil),   // 0: ledger.service.v1.ListFlowFileRequest
 	(*v1.DeleteFlowFileRequest)(nil), // 1: ledger.service.v1.DeleteFlowFileRequest
-	(*v1.ListFlowFileResponse)(nil),  // 2: ledger.service.v1.ListFlowFileResponse
-	(*emptypb.Empty)(nil),            // 3: google.protobuf.Empty
+	(*v1.UploadFlowFileRequest)(nil), // 2: ledger.service.v1.UploadFlowFileRequest
+	(*v1.ViewFlowFileRequest)(nil),   // 3: ledger.service.v1.ViewFlowFileRequest
+	(*v1.ListFlowFileResponse)(nil),  // 4: ledger.service.v1.ListFlowFileResponse
+	(*emptypb.Empty)(nil),            // 5: google.protobuf.Empty
+	(*v1.FlowFile)(nil),              // 6: ledger.service.v1.FlowFile
+	(*v1.ViewFlowFileResponse)(nil),  // 7: ledger.service.v1.ViewFlowFileResponse
 }
 var file_admin_service_v1_i_flow_file_proto_depIdxs = []int32{
 	0, // 0: admin.service.v1.FlowFileService.List:input_type -> ledger.service.v1.ListFlowFileRequest
 	1, // 1: admin.service.v1.FlowFileService.Delete:input_type -> ledger.service.v1.DeleteFlowFileRequest
-	2, // 2: admin.service.v1.FlowFileService.List:output_type -> ledger.service.v1.ListFlowFileResponse
-	3, // 3: admin.service.v1.FlowFileService.Delete:output_type -> google.protobuf.Empty
-	2, // [2:4] is the sub-list for method output_type
-	0, // [0:2] is the sub-list for method input_type
+	2, // 2: admin.service.v1.FlowFileService.UploadFile:input_type -> ledger.service.v1.UploadFlowFileRequest
+	3, // 3: admin.service.v1.FlowFileService.ViewFile:input_type -> ledger.service.v1.ViewFlowFileRequest
+	4, // 4: admin.service.v1.FlowFileService.List:output_type -> ledger.service.v1.ListFlowFileResponse
+	5, // 5: admin.service.v1.FlowFileService.Delete:output_type -> google.protobuf.Empty
+	6, // 6: admin.service.v1.FlowFileService.UploadFile:output_type -> ledger.service.v1.FlowFile
+	7, // 7: admin.service.v1.FlowFileService.ViewFile:output_type -> ledger.service.v1.ViewFlowFileResponse
+	4, // [4:8] is the sub-list for method output_type
+	0, // [0:4] is the sub-list for method input_type
 	0, // [0:0] is the sub-list for extension type_name
 	0, // [0:0] is the sub-list for extension extendee
 	0, // [0:0] is the sub-list for field type_name

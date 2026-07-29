@@ -21,13 +21,15 @@ import (
 const _ = grpc.SupportPackageIsVersion9
 
 const (
-	PayeeService_List_FullMethodName    = "/ledger.service.v1.PayeeService/List"
-	PayeeService_ListAll_FullMethodName = "/ledger.service.v1.PayeeService/ListAll"
-	PayeeService_Get_FullMethodName     = "/ledger.service.v1.PayeeService/Get"
-	PayeeService_Create_FullMethodName  = "/ledger.service.v1.PayeeService/Create"
-	PayeeService_Update_FullMethodName  = "/ledger.service.v1.PayeeService/Update"
-	PayeeService_Delete_FullMethodName  = "/ledger.service.v1.PayeeService/Delete"
-	PayeeService_Toggle_FullMethodName  = "/ledger.service.v1.PayeeService/Toggle"
+	PayeeService_List_FullMethodName             = "/ledger.service.v1.PayeeService/List"
+	PayeeService_ListAll_FullMethodName          = "/ledger.service.v1.PayeeService/ListAll"
+	PayeeService_Get_FullMethodName              = "/ledger.service.v1.PayeeService/Get"
+	PayeeService_Create_FullMethodName           = "/ledger.service.v1.PayeeService/Create"
+	PayeeService_Update_FullMethodName           = "/ledger.service.v1.PayeeService/Update"
+	PayeeService_Delete_FullMethodName           = "/ledger.service.v1.PayeeService/Delete"
+	PayeeService_Toggle_FullMethodName           = "/ledger.service.v1.PayeeService/Toggle"
+	PayeeService_ToggleCanExpense_FullMethodName = "/ledger.service.v1.PayeeService/ToggleCanExpense"
+	PayeeService_ToggleCanIncome_FullMethodName  = "/ledger.service.v1.PayeeService/ToggleCanIncome"
 )
 
 // PayeeServiceClient is the client API for PayeeService service.
@@ -43,6 +45,8 @@ type PayeeServiceClient interface {
 	Update(ctx context.Context, in *UpdatePayeeRequest, opts ...grpc.CallOption) (*Payee, error)
 	Delete(ctx context.Context, in *DeletePayeeRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
 	Toggle(ctx context.Context, in *TogglePayeeRequest, opts ...grpc.CallOption) (*Payee, error)
+	ToggleCanExpense(ctx context.Context, in *TogglePayeeRequest, opts ...grpc.CallOption) (*Payee, error)
+	ToggleCanIncome(ctx context.Context, in *TogglePayeeRequest, opts ...grpc.CallOption) (*Payee, error)
 }
 
 type payeeServiceClient struct {
@@ -123,6 +127,26 @@ func (c *payeeServiceClient) Toggle(ctx context.Context, in *TogglePayeeRequest,
 	return out, nil
 }
 
+func (c *payeeServiceClient) ToggleCanExpense(ctx context.Context, in *TogglePayeeRequest, opts ...grpc.CallOption) (*Payee, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(Payee)
+	err := c.cc.Invoke(ctx, PayeeService_ToggleCanExpense_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *payeeServiceClient) ToggleCanIncome(ctx context.Context, in *TogglePayeeRequest, opts ...grpc.CallOption) (*Payee, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(Payee)
+	err := c.cc.Invoke(ctx, PayeeService_ToggleCanIncome_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // PayeeServiceServer is the server API for PayeeService service.
 // All implementations must embed UnimplementedPayeeServiceServer
 // for forward compatibility.
@@ -136,6 +160,8 @@ type PayeeServiceServer interface {
 	Update(context.Context, *UpdatePayeeRequest) (*Payee, error)
 	Delete(context.Context, *DeletePayeeRequest) (*emptypb.Empty, error)
 	Toggle(context.Context, *TogglePayeeRequest) (*Payee, error)
+	ToggleCanExpense(context.Context, *TogglePayeeRequest) (*Payee, error)
+	ToggleCanIncome(context.Context, *TogglePayeeRequest) (*Payee, error)
 	mustEmbedUnimplementedPayeeServiceServer()
 }
 
@@ -166,6 +192,12 @@ func (UnimplementedPayeeServiceServer) Delete(context.Context, *DeletePayeeReque
 }
 func (UnimplementedPayeeServiceServer) Toggle(context.Context, *TogglePayeeRequest) (*Payee, error) {
 	return nil, status.Error(codes.Unimplemented, "method Toggle not implemented")
+}
+func (UnimplementedPayeeServiceServer) ToggleCanExpense(context.Context, *TogglePayeeRequest) (*Payee, error) {
+	return nil, status.Error(codes.Unimplemented, "method ToggleCanExpense not implemented")
+}
+func (UnimplementedPayeeServiceServer) ToggleCanIncome(context.Context, *TogglePayeeRequest) (*Payee, error) {
+	return nil, status.Error(codes.Unimplemented, "method ToggleCanIncome not implemented")
 }
 func (UnimplementedPayeeServiceServer) mustEmbedUnimplementedPayeeServiceServer() {}
 func (UnimplementedPayeeServiceServer) testEmbeddedByValue()                      {}
@@ -314,6 +346,42 @@ func _PayeeService_Toggle_Handler(srv interface{}, ctx context.Context, dec func
 	return interceptor(ctx, in, info, handler)
 }
 
+func _PayeeService_ToggleCanExpense_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(TogglePayeeRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(PayeeServiceServer).ToggleCanExpense(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: PayeeService_ToggleCanExpense_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(PayeeServiceServer).ToggleCanExpense(ctx, req.(*TogglePayeeRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _PayeeService_ToggleCanIncome_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(TogglePayeeRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(PayeeServiceServer).ToggleCanIncome(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: PayeeService_ToggleCanIncome_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(PayeeServiceServer).ToggleCanIncome(ctx, req.(*TogglePayeeRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // PayeeService_ServiceDesc is the grpc.ServiceDesc for PayeeService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -348,6 +416,14 @@ var PayeeService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "Toggle",
 			Handler:    _PayeeService_Toggle_Handler,
+		},
+		{
+			MethodName: "ToggleCanExpense",
+			Handler:    _PayeeService_ToggleCanExpense_Handler,
+		},
+		{
+			MethodName: "ToggleCanIncome",
+			Handler:    _PayeeService_ToggleCanIncome_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

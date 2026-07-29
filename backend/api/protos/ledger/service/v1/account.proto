@@ -35,6 +35,11 @@ service AccountService {
 
   // 余额调整
   rpc AdjustBalance (AdjustBalanceRequest) returns (Account) {}
+  rpc ToggleInclude (ToggleAccountRequest) returns (Account) {}
+  rpc ToggleCanExpense (ToggleAccountRequest) returns (Account) {}
+  rpc ToggleCanIncome (ToggleAccountRequest) returns (Account) {}
+  rpc ToggleCanTransferFrom (ToggleAccountRequest) returns (Account) {}
+  rpc ToggleCanTransferTo (ToggleAccountRequest) returns (Account) {}
 }
 
 // 账户

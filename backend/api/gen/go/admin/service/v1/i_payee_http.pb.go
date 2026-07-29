@@ -28,6 +28,8 @@ const OperationPayeeServiceGet = "/admin.service.v1.PayeeService/Get"
 const OperationPayeeServiceList = "/admin.service.v1.PayeeService/List"
 const OperationPayeeServiceListAll = "/admin.service.v1.PayeeService/ListAll"
 const OperationPayeeServiceToggle = "/admin.service.v1.PayeeService/Toggle"
+const OperationPayeeServiceToggleCanExpense = "/admin.service.v1.PayeeService/ToggleCanExpense"
+const OperationPayeeServiceToggleCanIncome = "/admin.service.v1.PayeeService/ToggleCanIncome"
 const OperationPayeeServiceUpdate = "/admin.service.v1.PayeeService/Update"
 
 type PayeeServiceHTTPServer interface {
@@ -37,6 +39,8 @@ type PayeeServiceHTTPServer interface {
 	List(context.Context, *v1.PagingRequest) (*v11.ListPayeeResponse, error)
 	ListAll(context.Context, *v11.ListAllPayeeRequest) (*v11.ListPayeeResponse, error)
 	Toggle(context.Context, *v11.TogglePayeeRequest) (*v11.Payee, error)
+	ToggleCanExpense(context.Context, *v11.TogglePayeeRequest) (*v11.Payee, error)
+	ToggleCanIncome(context.Context, *v11.TogglePayeeRequest) (*v11.Payee, error)
 	Update(context.Context, *v11.UpdatePayeeRequest) (*v11.Payee, error)
 }
 
@@ -49,6 +53,8 @@ func RegisterPayeeServiceHTTPServer(s *http.Server, srv PayeeServiceHTTPServer) 
 	r.PUT("/admin/v1/payees/{id}", _PayeeService_Update20_HTTP_Handler(srv))
 	r.DELETE("/admin/v1/payees/{id}", _PayeeService_Delete21_HTTP_Handler(srv))
 	r.PATCH("/admin/v1/payees/{id}/toggle", _PayeeService_Toggle3_HTTP_Handler(srv))
+	r.PATCH("/admin/v1/payees/{id}/toggle-can-expense", _PayeeService_ToggleCanExpense1_HTTP_Handler(srv))
+	r.PATCH("/admin/v1/payees/{id}/toggle-can-income", _PayeeService_ToggleCanIncome1_HTTP_Handler(srv))
 }
 
 func _PayeeService_List26_HTTP_Handler(srv PayeeServiceHTTPServer) func(ctx http.Context) error {
@@ -205,6 +211,56 @@ func _PayeeService_Toggle3_HTTP_Handler(srv PayeeServiceHTTPServer) func(ctx htt
 	}
 }
 
+func _PayeeService_ToggleCanExpense1_HTTP_Handler(srv PayeeServiceHTTPServer) func(ctx http.Context) error {
+	return func(ctx http.Context) error {
+		var in v11.TogglePayeeRequest
+		if err := ctx.Bind(&in); err != nil {
+			return err
+		}
+		if err := ctx.BindQuery(&in); err != nil {
+			return err
+		}
+		if err := ctx.BindVars(&in); err != nil {
+			return err
+		}
+		http.SetOperation(ctx, OperationPayeeServiceToggleCanExpense)
+		h := ctx.Middleware(func(ctx context.Context, req interface{}) (interface{}, error) {
+			return srv.ToggleCanExpense(ctx, req.(*v11.TogglePayeeRequest))
+		})
+		out, err := h(ctx, &in)
+		if err != nil {
+			return err
+		}
+		reply := out.(*v11.Payee)
+		return ctx.Result(200, reply)
+	}
+}
+
+func _PayeeService_ToggleCanIncome1_HTTP_Handler(srv PayeeServiceHTTPServer) func(ctx http.Context) error {
+	return func(ctx http.Context) error {
+		var in v11.TogglePayeeRequest
+		if err := ctx.Bind(&in); err != nil {
+			return err
+		}
+		if err := ctx.BindQuery(&in); err != nil {
+			return err
+		}
+		if err := ctx.BindVars(&in); err != nil {
+			return err
+		}
+		http.SetOperation(ctx, OperationPayeeServiceToggleCanIncome)
+		h := ctx.Middleware(func(ctx context.Context, req interface{}) (interface{}, error) {
+			return srv.ToggleCanIncome(ctx, req.(*v11.TogglePayeeRequest))
+		})
+		out, err := h(ctx, &in)
+		if err != nil {
+			return err
+		}
+		reply := out.(*v11.Payee)
+		return ctx.Result(200, reply)
+	}
+}
+
 type PayeeServiceHTTPClient interface {
 	Create(ctx context.Context, req *v11.CreatePayeeRequest, opts ...http.CallOption) (rsp *v11.Payee, err error)
 	Delete(ctx context.Context, req *v11.DeletePayeeRequest, opts ...http.CallOption) (rsp *emptypb.Empty, err error)
@@ -212,6 +268,8 @@ type PayeeServiceHTTPClient interface {
 	List(ctx context.Context, req *v1.PagingRequest, opts ...http.CallOption) (rsp *v11.ListPayeeResponse, err error)
 	ListAll(ctx context.Context, req *v11.ListAllPayeeRequest, opts ...http.CallOption) (rsp *v11.ListPayeeResponse, err error)
 	Toggle(ctx context.Context, req *v11.TogglePayeeRequest, opts ...http.CallOption) (rsp *v11.Payee, err error)
+	ToggleCanExpense(ctx context.Context, req *v11.TogglePayeeRequest, opts ...http.CallOption) (rsp *v11.Payee, err error)
+	ToggleCanIncome(ctx context.Context, req *v11.TogglePayeeRequest, opts ...http.CallOption) (rsp *v11.Payee, err error)
 	Update(ctx context.Context, req *v11.UpdatePayeeRequest, opts ...http.CallOption) (rsp *v11.Payee, err error)
 }
 
@@ -293,6 +351,32 @@ func (c *PayeeServiceHTTPClientImpl) Toggle(ctx context.Context, in *v11.ToggleP
 	pattern := "/admin/v1/payees/{id}/toggle"
 	path := binding.EncodeURL(pattern, in, false)
 	opts = append(opts, http.Operation(OperationPayeeServiceToggle))
+	opts = append(opts, http.PathTemplate(pattern))
+	err := c.cc.Invoke(ctx, "PATCH", path, in, &out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return &out, nil
+}
+
+func (c *PayeeServiceHTTPClientImpl) ToggleCanExpense(ctx context.Context, in *v11.TogglePayeeRequest, opts ...http.CallOption) (*v11.Payee, error) {
+	var out v11.Payee
+	pattern := "/admin/v1/payees/{id}/toggle-can-expense"
+	path := binding.EncodeURL(pattern, in, false)
+	opts = append(opts, http.Operation(OperationPayeeServiceToggleCanExpense))
+	opts = append(opts, http.PathTemplate(pattern))
+	err := c.cc.Invoke(ctx, "PATCH", path, in, &out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return &out, nil
+}
+
+func (c *PayeeServiceHTTPClientImpl) ToggleCanIncome(ctx context.Context, in *v11.TogglePayeeRequest, opts ...http.CallOption) (*v11.Payee, error) {
+	var out v11.Payee
+	pattern := "/admin/v1/payees/{id}/toggle-can-income"
+	path := binding.EncodeURL(pattern, in, false)
+	opts = append(opts, http.Operation(OperationPayeeServiceToggleCanIncome))
 	opts = append(opts, http.PathTemplate(pattern))
 	err := c.cc.Invoke(ctx, "PATCH", path, in, &out, opts...)
 	if err != nil {

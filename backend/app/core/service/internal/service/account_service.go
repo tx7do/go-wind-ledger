@@ -62,6 +62,26 @@ func (s *AccountService) Toggle(ctx context.Context, req *ledgerV1.ToggleAccount
 	return s.accountRepo.Toggle(ctx, req.GetId())
 }
 
+func (s *AccountService) ToggleInclude(ctx context.Context, req *ledgerV1.ToggleAccountRequest) (*ledgerV1.Account, error) {
+	return s.accountRepo.ToggleInclude(ctx, req.GetId())
+}
+
+func (s *AccountService) ToggleCanExpense(ctx context.Context, req *ledgerV1.ToggleAccountRequest) (*ledgerV1.Account, error) {
+	return s.accountRepo.ToggleCanExpense(ctx, req.GetId())
+}
+
+func (s *AccountService) ToggleCanIncome(ctx context.Context, req *ledgerV1.ToggleAccountRequest) (*ledgerV1.Account, error) {
+	return s.accountRepo.ToggleCanIncome(ctx, req.GetId())
+}
+
+func (s *AccountService) ToggleCanTransferFrom(ctx context.Context, req *ledgerV1.ToggleAccountRequest) (*ledgerV1.Account, error) {
+	return s.accountRepo.ToggleCanTransferFrom(ctx, req.GetId())
+}
+
+func (s *AccountService) ToggleCanTransferTo(ctx context.Context, req *ledgerV1.ToggleAccountRequest) (*ledgerV1.Account, error) {
+	return s.accountRepo.ToggleCanTransferTo(ctx, req.GetId())
+}
+
 // AdjustBalance implements balance adjustment with ADJUST flow creation.
 // Maps to Java AccountService.adjustBalance.
 func (s *AccountService) AdjustBalance(ctx context.Context, req *ledgerV1.AdjustBalanceRequest) (*ledgerV1.Account, error) {

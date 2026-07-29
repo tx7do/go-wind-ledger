@@ -29,6 +29,11 @@ const OperationAccountServiceGet = "/admin.service.v1.AccountService/Get"
 const OperationAccountServiceList = "/admin.service.v1.AccountService/List"
 const OperationAccountServiceListAll = "/admin.service.v1.AccountService/ListAll"
 const OperationAccountServiceToggle = "/admin.service.v1.AccountService/Toggle"
+const OperationAccountServiceToggleCanExpense = "/admin.service.v1.AccountService/ToggleCanExpense"
+const OperationAccountServiceToggleCanIncome = "/admin.service.v1.AccountService/ToggleCanIncome"
+const OperationAccountServiceToggleCanTransferFrom = "/admin.service.v1.AccountService/ToggleCanTransferFrom"
+const OperationAccountServiceToggleCanTransferTo = "/admin.service.v1.AccountService/ToggleCanTransferTo"
+const OperationAccountServiceToggleInclude = "/admin.service.v1.AccountService/ToggleInclude"
 const OperationAccountServiceUpdate = "/admin.service.v1.AccountService/Update"
 
 type AccountServiceHTTPServer interface {
@@ -39,6 +44,11 @@ type AccountServiceHTTPServer interface {
 	List(context.Context, *v1.PagingRequest) (*v11.ListAccountResponse, error)
 	ListAll(context.Context, *v11.ListAllAccountRequest) (*v11.ListAccountResponse, error)
 	Toggle(context.Context, *v11.ToggleAccountRequest) (*v11.Account, error)
+	ToggleCanExpense(context.Context, *v11.ToggleAccountRequest) (*v11.Account, error)
+	ToggleCanIncome(context.Context, *v11.ToggleAccountRequest) (*v11.Account, error)
+	ToggleCanTransferFrom(context.Context, *v11.ToggleAccountRequest) (*v11.Account, error)
+	ToggleCanTransferTo(context.Context, *v11.ToggleAccountRequest) (*v11.Account, error)
+	ToggleInclude(context.Context, *v11.ToggleAccountRequest) (*v11.Account, error)
 	Update(context.Context, *v11.UpdateAccountRequest) (*v11.Account, error)
 }
 
@@ -51,6 +61,11 @@ func RegisterAccountServiceHTTPServer(s *http.Server, srv AccountServiceHTTPServ
 	r.PUT("/admin/v1/accounts/{id}", _AccountService_Update0_HTTP_Handler(srv))
 	r.DELETE("/admin/v1/accounts/{id}", _AccountService_Delete0_HTTP_Handler(srv))
 	r.PATCH("/admin/v1/accounts/{id}/toggle", _AccountService_Toggle0_HTTP_Handler(srv))
+	r.PATCH("/admin/v1/accounts/{id}/toggle-include", _AccountService_ToggleInclude0_HTTP_Handler(srv))
+	r.PATCH("/admin/v1/accounts/{id}/toggle-can-expense", _AccountService_ToggleCanExpense0_HTTP_Handler(srv))
+	r.PATCH("/admin/v1/accounts/{id}/toggle-can-income", _AccountService_ToggleCanIncome0_HTTP_Handler(srv))
+	r.PATCH("/admin/v1/accounts/{id}/toggle-can-transfer-from", _AccountService_ToggleCanTransferFrom0_HTTP_Handler(srv))
+	r.PATCH("/admin/v1/accounts/{id}/toggle-can-transfer-to", _AccountService_ToggleCanTransferTo0_HTTP_Handler(srv))
 	r.POST("/admin/v1/accounts/{id}/adjust", _AccountService_AdjustBalance0_HTTP_Handler(srv))
 }
 
@@ -208,6 +223,131 @@ func _AccountService_Toggle0_HTTP_Handler(srv AccountServiceHTTPServer) func(ctx
 	}
 }
 
+func _AccountService_ToggleInclude0_HTTP_Handler(srv AccountServiceHTTPServer) func(ctx http.Context) error {
+	return func(ctx http.Context) error {
+		var in v11.ToggleAccountRequest
+		if err := ctx.Bind(&in); err != nil {
+			return err
+		}
+		if err := ctx.BindQuery(&in); err != nil {
+			return err
+		}
+		if err := ctx.BindVars(&in); err != nil {
+			return err
+		}
+		http.SetOperation(ctx, OperationAccountServiceToggleInclude)
+		h := ctx.Middleware(func(ctx context.Context, req interface{}) (interface{}, error) {
+			return srv.ToggleInclude(ctx, req.(*v11.ToggleAccountRequest))
+		})
+		out, err := h(ctx, &in)
+		if err != nil {
+			return err
+		}
+		reply := out.(*v11.Account)
+		return ctx.Result(200, reply)
+	}
+}
+
+func _AccountService_ToggleCanExpense0_HTTP_Handler(srv AccountServiceHTTPServer) func(ctx http.Context) error {
+	return func(ctx http.Context) error {
+		var in v11.ToggleAccountRequest
+		if err := ctx.Bind(&in); err != nil {
+			return err
+		}
+		if err := ctx.BindQuery(&in); err != nil {
+			return err
+		}
+		if err := ctx.BindVars(&in); err != nil {
+			return err
+		}
+		http.SetOperation(ctx, OperationAccountServiceToggleCanExpense)
+		h := ctx.Middleware(func(ctx context.Context, req interface{}) (interface{}, error) {
+			return srv.ToggleCanExpense(ctx, req.(*v11.ToggleAccountRequest))
+		})
+		out, err := h(ctx, &in)
+		if err != nil {
+			return err
+		}
+		reply := out.(*v11.Account)
+		return ctx.Result(200, reply)
+	}
+}
+
+func _AccountService_ToggleCanIncome0_HTTP_Handler(srv AccountServiceHTTPServer) func(ctx http.Context) error {
+	return func(ctx http.Context) error {
+		var in v11.ToggleAccountRequest
+		if err := ctx.Bind(&in); err != nil {
+			return err
+		}
+		if err := ctx.BindQuery(&in); err != nil {
+			return err
+		}
+		if err := ctx.BindVars(&in); err != nil {
+			return err
+		}
+		http.SetOperation(ctx, OperationAccountServiceToggleCanIncome)
+		h := ctx.Middleware(func(ctx context.Context, req interface{}) (interface{}, error) {
+			return srv.ToggleCanIncome(ctx, req.(*v11.ToggleAccountRequest))
+		})
+		out, err := h(ctx, &in)
+		if err != nil {
+			return err
+		}
+		reply := out.(*v11.Account)
+		return ctx.Result(200, reply)
+	}
+}
+
+func _AccountService_ToggleCanTransferFrom0_HTTP_Handler(srv AccountServiceHTTPServer) func(ctx http.Context) error {
+	return func(ctx http.Context) error {
+		var in v11.ToggleAccountRequest
+		if err := ctx.Bind(&in); err != nil {
+			return err
+		}
+		if err := ctx.BindQuery(&in); err != nil {
+			return err
+		}
+		if err := ctx.BindVars(&in); err != nil {
+			return err
+		}
+		http.SetOperation(ctx, OperationAccountServiceToggleCanTransferFrom)
+		h := ctx.Middleware(func(ctx context.Context, req interface{}) (interface{}, error) {
+			return srv.ToggleCanTransferFrom(ctx, req.(*v11.ToggleAccountRequest))
+		})
+		out, err := h(ctx, &in)
+		if err != nil {
+			return err
+		}
+		reply := out.(*v11.Account)
+		return ctx.Result(200, reply)
+	}
+}
+
+func _AccountService_ToggleCanTransferTo0_HTTP_Handler(srv AccountServiceHTTPServer) func(ctx http.Context) error {
+	return func(ctx http.Context) error {
+		var in v11.ToggleAccountRequest
+		if err := ctx.Bind(&in); err != nil {
+			return err
+		}
+		if err := ctx.BindQuery(&in); err != nil {
+			return err
+		}
+		if err := ctx.BindVars(&in); err != nil {
+			return err
+		}
+		http.SetOperation(ctx, OperationAccountServiceToggleCanTransferTo)
+		h := ctx.Middleware(func(ctx context.Context, req interface{}) (interface{}, error) {
+			return srv.ToggleCanTransferTo(ctx, req.(*v11.ToggleAccountRequest))
+		})
+		out, err := h(ctx, &in)
+		if err != nil {
+			return err
+		}
+		reply := out.(*v11.Account)
+		return ctx.Result(200, reply)
+	}
+}
+
 func _AccountService_AdjustBalance0_HTTP_Handler(srv AccountServiceHTTPServer) func(ctx http.Context) error {
 	return func(ctx http.Context) error {
 		var in v11.AdjustBalanceRequest
@@ -241,6 +381,11 @@ type AccountServiceHTTPClient interface {
 	List(ctx context.Context, req *v1.PagingRequest, opts ...http.CallOption) (rsp *v11.ListAccountResponse, err error)
 	ListAll(ctx context.Context, req *v11.ListAllAccountRequest, opts ...http.CallOption) (rsp *v11.ListAccountResponse, err error)
 	Toggle(ctx context.Context, req *v11.ToggleAccountRequest, opts ...http.CallOption) (rsp *v11.Account, err error)
+	ToggleCanExpense(ctx context.Context, req *v11.ToggleAccountRequest, opts ...http.CallOption) (rsp *v11.Account, err error)
+	ToggleCanIncome(ctx context.Context, req *v11.ToggleAccountRequest, opts ...http.CallOption) (rsp *v11.Account, err error)
+	ToggleCanTransferFrom(ctx context.Context, req *v11.ToggleAccountRequest, opts ...http.CallOption) (rsp *v11.Account, err error)
+	ToggleCanTransferTo(ctx context.Context, req *v11.ToggleAccountRequest, opts ...http.CallOption) (rsp *v11.Account, err error)
+	ToggleInclude(ctx context.Context, req *v11.ToggleAccountRequest, opts ...http.CallOption) (rsp *v11.Account, err error)
 	Update(ctx context.Context, req *v11.UpdateAccountRequest, opts ...http.CallOption) (rsp *v11.Account, err error)
 }
 
@@ -335,6 +480,71 @@ func (c *AccountServiceHTTPClientImpl) Toggle(ctx context.Context, in *v11.Toggl
 	pattern := "/admin/v1/accounts/{id}/toggle"
 	path := binding.EncodeURL(pattern, in, false)
 	opts = append(opts, http.Operation(OperationAccountServiceToggle))
+	opts = append(opts, http.PathTemplate(pattern))
+	err := c.cc.Invoke(ctx, "PATCH", path, in, &out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return &out, nil
+}
+
+func (c *AccountServiceHTTPClientImpl) ToggleCanExpense(ctx context.Context, in *v11.ToggleAccountRequest, opts ...http.CallOption) (*v11.Account, error) {
+	var out v11.Account
+	pattern := "/admin/v1/accounts/{id}/toggle-can-expense"
+	path := binding.EncodeURL(pattern, in, false)
+	opts = append(opts, http.Operation(OperationAccountServiceToggleCanExpense))
+	opts = append(opts, http.PathTemplate(pattern))
+	err := c.cc.Invoke(ctx, "PATCH", path, in, &out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return &out, nil
+}
+
+func (c *AccountServiceHTTPClientImpl) ToggleCanIncome(ctx context.Context, in *v11.ToggleAccountRequest, opts ...http.CallOption) (*v11.Account, error) {
+	var out v11.Account
+	pattern := "/admin/v1/accounts/{id}/toggle-can-income"
+	path := binding.EncodeURL(pattern, in, false)
+	opts = append(opts, http.Operation(OperationAccountServiceToggleCanIncome))
+	opts = append(opts, http.PathTemplate(pattern))
+	err := c.cc.Invoke(ctx, "PATCH", path, in, &out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return &out, nil
+}
+
+func (c *AccountServiceHTTPClientImpl) ToggleCanTransferFrom(ctx context.Context, in *v11.ToggleAccountRequest, opts ...http.CallOption) (*v11.Account, error) {
+	var out v11.Account
+	pattern := "/admin/v1/accounts/{id}/toggle-can-transfer-from"
+	path := binding.EncodeURL(pattern, in, false)
+	opts = append(opts, http.Operation(OperationAccountServiceToggleCanTransferFrom))
+	opts = append(opts, http.PathTemplate(pattern))
+	err := c.cc.Invoke(ctx, "PATCH", path, in, &out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return &out, nil
+}
+
+func (c *AccountServiceHTTPClientImpl) ToggleCanTransferTo(ctx context.Context, in *v11.ToggleAccountRequest, opts ...http.CallOption) (*v11.Account, error) {
+	var out v11.Account
+	pattern := "/admin/v1/accounts/{id}/toggle-can-transfer-to"
+	path := binding.EncodeURL(pattern, in, false)
+	opts = append(opts, http.Operation(OperationAccountServiceToggleCanTransferTo))
+	opts = append(opts, http.PathTemplate(pattern))
+	err := c.cc.Invoke(ctx, "PATCH", path, in, &out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return &out, nil
+}
+
+func (c *AccountServiceHTTPClientImpl) ToggleInclude(ctx context.Context, in *v11.ToggleAccountRequest, opts ...http.CallOption) (*v11.Account, error) {
+	var out v11.Account
+	pattern := "/admin/v1/accounts/{id}/toggle-include"
+	path := binding.EncodeURL(pattern, in, false)
+	opts = append(opts, http.Operation(OperationAccountServiceToggleInclude))
 	opts = append(opts, http.PathTemplate(pattern))
 	err := c.cc.Invoke(ctx, "PATCH", path, in, &out, opts...)
 	if err != nil {

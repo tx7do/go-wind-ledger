@@ -54,4 +54,25 @@ service TagService {
       body: "*"
     };
   }
+
+  rpc ToggleCanExpense (ledger.service.v1.ToggleTagRequest) returns (ledger.service.v1.Tag) {
+    option (google.api.http) = {
+      patch: "/admin/v1/tags/{id}/toggle-can-expense"
+      body: "*"
+    };
+  }
+
+  rpc ToggleCanIncome (ledger.service.v1.ToggleTagRequest) returns (ledger.service.v1.Tag) {
+    option (google.api.http) = {
+      patch: "/admin/v1/tags/{id}/toggle-can-income"
+      body: "*"
+    };
+  }
+
+  rpc ToggleCanTransfer (ledger.service.v1.ToggleTagRequest) returns (ledger.service.v1.Tag) {
+    option (google.api.http) = {
+      patch: "/admin/v1/tags/{id}/toggle-can-transfer"
+      body: "*"
+    };
+  }
 }

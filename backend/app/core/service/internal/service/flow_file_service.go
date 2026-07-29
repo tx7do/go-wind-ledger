@@ -10,6 +10,8 @@ import (
 	"go-wind-cms/app/core/service/internal/data"
 
 	ledgerV1 "go-wind-cms/api/gen/go/ledger/service/v1"
+
+	"go-wind-cms/pkg/middleware/auth"
 )
 
 type FlowFileService struct {
@@ -38,4 +40,22 @@ func (s *FlowFileService) Delete(ctx context.Context, req *ledgerV1.DeleteFlowFi
 		return nil, err
 	}
 	return &emptypb.Empty{}, nil
+}
+
+// UploadFile 上传流水附件。creator_id 取自认证上下文，由 repo 落库。
+func (s *FlowFileService) UploadFile(ctx context.Context, req *ledgerV1.UploadFlowFileRequest) (*ledgerV1.FlowFile, error) {
+	operator, err := auth.FromContext(ctx)
+	if err != nil {
+		return nil, err
+	}
+	creatorID := operator.GetUserId()
+	if creatorID == 0 {
+		return nil, ledgerV1.ErrorBadRequest("invalid creator")
+	}
+	return s.flowFileRepo.UploadFile(ctx, creatorID, req)
+}
+
+// ViewFile 查看流水附件（免认证，按 create_time 安全校验）。
+func (s *FlowFileService) ViewFile(ctx context.Context, req *ledgerV1.ViewFlowFileRequest) (*ledgerV1.ViewFlowFileResponse, error) {
+	return s.flowFileRepo.ViewFile(ctx, req)
 }

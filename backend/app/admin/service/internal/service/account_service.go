@@ -75,6 +75,26 @@ func (s *AccountService) Toggle(ctx context.Context, req *ledgerV1.ToggleAccount
 	return s.client.Toggle(ctx, req)
 }
 
+func (s *AccountService) ToggleInclude(ctx context.Context, req *ledgerV1.ToggleAccountRequest) (*ledgerV1.Account, error) {
+	return s.client.ToggleInclude(ctx, req)
+}
+
+func (s *AccountService) ToggleCanExpense(ctx context.Context, req *ledgerV1.ToggleAccountRequest) (*ledgerV1.Account, error) {
+	return s.client.ToggleCanExpense(ctx, req)
+}
+
+func (s *AccountService) ToggleCanIncome(ctx context.Context, req *ledgerV1.ToggleAccountRequest) (*ledgerV1.Account, error) {
+	return s.client.ToggleCanIncome(ctx, req)
+}
+
+func (s *AccountService) ToggleCanTransferFrom(ctx context.Context, req *ledgerV1.ToggleAccountRequest) (*ledgerV1.Account, error) {
+	return s.client.ToggleCanTransferFrom(ctx, req)
+}
+
+func (s *AccountService) ToggleCanTransferTo(ctx context.Context, req *ledgerV1.ToggleAccountRequest) (*ledgerV1.Account, error) {
+	return s.client.ToggleCanTransferTo(ctx, req)
+}
+
 func (s *AccountService) AdjustBalance(ctx context.Context, req *ledgerV1.AdjustBalanceRequest) (*ledgerV1.Account, error) {
 	return s.client.AdjustBalance(ctx, req)
 }

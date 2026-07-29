@@ -21,13 +21,16 @@ import (
 const _ = grpc.SupportPackageIsVersion9
 
 const (
-	TagService_List_FullMethodName    = "/ledger.service.v1.TagService/List"
-	TagService_ListAll_FullMethodName = "/ledger.service.v1.TagService/ListAll"
-	TagService_Get_FullMethodName     = "/ledger.service.v1.TagService/Get"
-	TagService_Create_FullMethodName  = "/ledger.service.v1.TagService/Create"
-	TagService_Update_FullMethodName  = "/ledger.service.v1.TagService/Update"
-	TagService_Delete_FullMethodName  = "/ledger.service.v1.TagService/Delete"
-	TagService_Toggle_FullMethodName  = "/ledger.service.v1.TagService/Toggle"
+	TagService_List_FullMethodName              = "/ledger.service.v1.TagService/List"
+	TagService_ListAll_FullMethodName           = "/ledger.service.v1.TagService/ListAll"
+	TagService_Get_FullMethodName               = "/ledger.service.v1.TagService/Get"
+	TagService_Create_FullMethodName            = "/ledger.service.v1.TagService/Create"
+	TagService_Update_FullMethodName            = "/ledger.service.v1.TagService/Update"
+	TagService_Delete_FullMethodName            = "/ledger.service.v1.TagService/Delete"
+	TagService_Toggle_FullMethodName            = "/ledger.service.v1.TagService/Toggle"
+	TagService_ToggleCanExpense_FullMethodName  = "/ledger.service.v1.TagService/ToggleCanExpense"
+	TagService_ToggleCanIncome_FullMethodName   = "/ledger.service.v1.TagService/ToggleCanIncome"
+	TagService_ToggleCanTransfer_FullMethodName = "/ledger.service.v1.TagService/ToggleCanTransfer"
 )
 
 // TagServiceClient is the client API for TagService service.
@@ -43,6 +46,9 @@ type TagServiceClient interface {
 	Update(ctx context.Context, in *UpdateTagRequest, opts ...grpc.CallOption) (*Tag, error)
 	Delete(ctx context.Context, in *DeleteTagRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
 	Toggle(ctx context.Context, in *ToggleTagRequest, opts ...grpc.CallOption) (*Tag, error)
+	ToggleCanExpense(ctx context.Context, in *ToggleTagRequest, opts ...grpc.CallOption) (*Tag, error)
+	ToggleCanIncome(ctx context.Context, in *ToggleTagRequest, opts ...grpc.CallOption) (*Tag, error)
+	ToggleCanTransfer(ctx context.Context, in *ToggleTagRequest, opts ...grpc.CallOption) (*Tag, error)
 }
 
 type tagServiceClient struct {
@@ -123,6 +129,36 @@ func (c *tagServiceClient) Toggle(ctx context.Context, in *ToggleTagRequest, opt
 	return out, nil
 }
 
+func (c *tagServiceClient) ToggleCanExpense(ctx context.Context, in *ToggleTagRequest, opts ...grpc.CallOption) (*Tag, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(Tag)
+	err := c.cc.Invoke(ctx, TagService_ToggleCanExpense_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *tagServiceClient) ToggleCanIncome(ctx context.Context, in *ToggleTagRequest, opts ...grpc.CallOption) (*Tag, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(Tag)
+	err := c.cc.Invoke(ctx, TagService_ToggleCanIncome_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *tagServiceClient) ToggleCanTransfer(ctx context.Context, in *ToggleTagRequest, opts ...grpc.CallOption) (*Tag, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(Tag)
+	err := c.cc.Invoke(ctx, TagService_ToggleCanTransfer_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // TagServiceServer is the server API for TagService service.
 // All implementations must embed UnimplementedTagServiceServer
 // for forward compatibility.
@@ -136,6 +172,9 @@ type TagServiceServer interface {
 	Update(context.Context, *UpdateTagRequest) (*Tag, error)
 	Delete(context.Context, *DeleteTagRequest) (*emptypb.Empty, error)
 	Toggle(context.Context, *ToggleTagRequest) (*Tag, error)
+	ToggleCanExpense(context.Context, *ToggleTagRequest) (*Tag, error)
+	ToggleCanIncome(context.Context, *ToggleTagRequest) (*Tag, error)
+	ToggleCanTransfer(context.Context, *ToggleTagRequest) (*Tag, error)
 	mustEmbedUnimplementedTagServiceServer()
 }
 
@@ -166,6 +205,15 @@ func (UnimplementedTagServiceServer) Delete(context.Context, *DeleteTagRequest) 
 }
 func (UnimplementedTagServiceServer) Toggle(context.Context, *ToggleTagRequest) (*Tag, error) {
 	return nil, status.Error(codes.Unimplemented, "method Toggle not implemented")
+}
+func (UnimplementedTagServiceServer) ToggleCanExpense(context.Context, *ToggleTagRequest) (*Tag, error) {
+	return nil, status.Error(codes.Unimplemented, "method ToggleCanExpense not implemented")
+}
+func (UnimplementedTagServiceServer) ToggleCanIncome(context.Context, *ToggleTagRequest) (*Tag, error) {
+	return nil, status.Error(codes.Unimplemented, "method ToggleCanIncome not implemented")
+}
+func (UnimplementedTagServiceServer) ToggleCanTransfer(context.Context, *ToggleTagRequest) (*Tag, error) {
+	return nil, status.Error(codes.Unimplemented, "method ToggleCanTransfer not implemented")
 }
 func (UnimplementedTagServiceServer) mustEmbedUnimplementedTagServiceServer() {}
 func (UnimplementedTagServiceServer) testEmbeddedByValue()                    {}
@@ -314,6 +362,60 @@ func _TagService_Toggle_Handler(srv interface{}, ctx context.Context, dec func(i
 	return interceptor(ctx, in, info, handler)
 }
 
+func _TagService_ToggleCanExpense_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ToggleTagRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(TagServiceServer).ToggleCanExpense(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: TagService_ToggleCanExpense_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(TagServiceServer).ToggleCanExpense(ctx, req.(*ToggleTagRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _TagService_ToggleCanIncome_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ToggleTagRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(TagServiceServer).ToggleCanIncome(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: TagService_ToggleCanIncome_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(TagServiceServer).ToggleCanIncome(ctx, req.(*ToggleTagRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _TagService_ToggleCanTransfer_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ToggleTagRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(TagServiceServer).ToggleCanTransfer(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: TagService_ToggleCanTransfer_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(TagServiceServer).ToggleCanTransfer(ctx, req.(*ToggleTagRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // TagService_ServiceDesc is the grpc.ServiceDesc for TagService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -348,6 +450,18 @@ var TagService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "Toggle",
 			Handler:    _TagService_Toggle_Handler,
+		},
+		{
+			MethodName: "ToggleCanExpense",
+			Handler:    _TagService_ToggleCanExpense_Handler,
+		},
+		{
+			MethodName: "ToggleCanIncome",
+			Handler:    _TagService_ToggleCanIncome_Handler,
+		},
+		{
+			MethodName: "ToggleCanTransfer",
+			Handler:    _TagService_ToggleCanTransfer_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

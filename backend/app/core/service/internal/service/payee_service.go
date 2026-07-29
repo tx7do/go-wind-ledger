@@ -59,3 +59,11 @@ func (s *PayeeService) Delete(ctx context.Context, req *ledgerV1.DeletePayeeRequ
 func (s *PayeeService) Toggle(ctx context.Context, req *ledgerV1.TogglePayeeRequest) (*ledgerV1.Payee, error) {
 	return s.payeeRepo.Toggle(ctx, req.GetId())
 }
+
+func (s *PayeeService) ToggleCanExpense(ctx context.Context, req *ledgerV1.TogglePayeeRequest) (*ledgerV1.Payee, error) {
+	return s.payeeRepo.ToggleCanExpense(ctx, req.GetId())
+}
+
+func (s *PayeeService) ToggleCanIncome(ctx context.Context, req *ledgerV1.TogglePayeeRequest) (*ledgerV1.Payee, error) {
+	return s.payeeRepo.ToggleCanIncome(ctx, req.GetId())
+}

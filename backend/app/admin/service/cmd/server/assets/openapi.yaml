@@ -238,6 +238,131 @@ paths:
                         application/json:
                             schema:
                                 $ref: '#/components/schemas/ledger.service.v1.Account'
+    /admin/v1/accounts/{id}/toggle-can-expense:
+        patch:
+            tags:
+                - AccountService
+            operationId: AccountService_ToggleCanExpense
+            parameters:
+                - name: id
+                  in: path
+                  required: true
+                  schema:
+                    type: integer
+                    format: uint32
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/ledger.service.v1.ToggleAccountRequest'
+                required: true
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/ledger.service.v1.Account'
+    /admin/v1/accounts/{id}/toggle-can-income:
+        patch:
+            tags:
+                - AccountService
+            operationId: AccountService_ToggleCanIncome
+            parameters:
+                - name: id
+                  in: path
+                  required: true
+                  schema:
+                    type: integer
+                    format: uint32
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/ledger.service.v1.ToggleAccountRequest'
+                required: true
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/ledger.service.v1.Account'
+    /admin/v1/accounts/{id}/toggle-can-transfer-from:
+        patch:
+            tags:
+                - AccountService
+            operationId: AccountService_ToggleCanTransferFrom
+            parameters:
+                - name: id
+                  in: path
+                  required: true
+                  schema:
+                    type: integer
+                    format: uint32
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/ledger.service.v1.ToggleAccountRequest'
+                required: true
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/ledger.service.v1.Account'
+    /admin/v1/accounts/{id}/toggle-can-transfer-to:
+        patch:
+            tags:
+                - AccountService
+            operationId: AccountService_ToggleCanTransferTo
+            parameters:
+                - name: id
+                  in: path
+                  required: true
+                  schema:
+                    type: integer
+                    format: uint32
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/ledger.service.v1.ToggleAccountRequest'
+                required: true
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/ledger.service.v1.Account'
+    /admin/v1/accounts/{id}/toggle-include:
+        patch:
+            tags:
+                - AccountService
+            operationId: AccountService_ToggleInclude
+            parameters:
+                - name: id
+                  in: path
+                  required: true
+                  schema:
+                    type: integer
+                    format: uint32
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/ledger.service.v1.ToggleAccountRequest'
+                required: true
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/ledger.service.v1.Account'
     /admin/v1/api-audit-logs:
         get:
             tags:
@@ -2587,6 +2712,48 @@ paths:
                         application/json:
                             schema:
                                 $ref: '#/components/schemas/ledger.service.v1.ListFlowFileResponse'
+    /admin/v1/flow-files/upload:
+        post:
+            tags:
+                - FlowFileService
+            description: 上传附件
+            operationId: FlowFileService_UploadFile
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/ledger.service.v1.UploadFlowFileRequest'
+                required: true
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/ledger.service.v1.FlowFile'
+    /admin/v1/flow-files/view:
+        get:
+            tags:
+                - FlowFileService
+            description: 查看附件（免认证，按 create_time 安全验证）
+            operationId: FlowFileService_ViewFile
+            parameters:
+                - name: id
+                  in: query
+                  schema:
+                    type: integer
+                    format: uint32
+                - name: createTime
+                  in: query
+                  schema:
+                    type: string
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/ledger.service.v1.ViewFlowFileResponse'
     /admin/v1/flow-files/{id}:
         delete:
             tags:
@@ -5119,6 +5286,56 @@ paths:
                         application/json:
                             schema:
                                 $ref: '#/components/schemas/ledger.service.v1.Payee'
+    /admin/v1/payees/{id}/toggle-can-expense:
+        patch:
+            tags:
+                - PayeeService
+            operationId: PayeeService_ToggleCanExpense
+            parameters:
+                - name: id
+                  in: path
+                  required: true
+                  schema:
+                    type: integer
+                    format: uint32
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/ledger.service.v1.TogglePayeeRequest'
+                required: true
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/ledger.service.v1.Payee'
+    /admin/v1/payees/{id}/toggle-can-income:
+        patch:
+            tags:
+                - PayeeService
+            operationId: PayeeService_ToggleCanIncome
+            parameters:
+                - name: id
+                  in: path
+                  required: true
+                  schema:
+                    type: integer
+                    format: uint32
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/ledger.service.v1.TogglePayeeRequest'
+                required: true
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/ledger.service.v1.Payee'
     /admin/v1/perm-codes:
         get:
             tags:
@@ -7265,6 +7482,81 @@ paths:
             tags:
                 - TagService
             operationId: TagService_Toggle
+            parameters:
+                - name: id
+                  in: path
+                  required: true
+                  schema:
+                    type: integer
+                    format: uint32
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/ledger.service.v1.ToggleTagRequest'
+                required: true
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/ledger.service.v1.Tag'
+    /admin/v1/tags/{id}/toggle-can-expense:
+        patch:
+            tags:
+                - TagService
+            operationId: TagService_ToggleCanExpense
+            parameters:
+                - name: id
+                  in: path
+                  required: true
+                  schema:
+                    type: integer
+                    format: uint32
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/ledger.service.v1.ToggleTagRequest'
+                required: true
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/ledger.service.v1.Tag'
+    /admin/v1/tags/{id}/toggle-can-income:
+        patch:
+            tags:
+                - TagService
+            operationId: TagService_ToggleCanIncome
+            parameters:
+                - name: id
+                  in: path
+                  required: true
+                  schema:
+                    type: integer
+                    format: uint32
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/ledger.service.v1.ToggleTagRequest'
+                required: true
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/ledger.service.v1.Tag'
+    /admin/v1/tags/{id}/toggle-can-transfer:
+        patch:
+            tags:
+                - TagService
+            operationId: TagService_ToggleCanTransfer
             parameters:
                 - name: id
                   in: path
@@ -12427,6 +12719,33 @@ components:
                     format: field-mask
                 allowMissing:
                     type: boolean
+        ledger.service.v1.UploadFlowFileRequest:
+            type: object
+            properties:
+                flowId:
+                    type: integer
+                    format: uint32
+                fileName:
+                    type: string
+                contentType:
+                    type: string
+                size:
+                    type: string
+                data:
+                    type: string
+                    format: bytes
+            description: 请求 - 上传附件
+        ledger.service.v1.ViewFlowFileResponse:
+            type: object
+            properties:
+                contentType:
+                    type: string
+                originalName:
+                    type: string
+                data:
+                    type: string
+                    format: bytes
+            description: 回应 - 查看附件（返回文件内容）
         media.service.v1.CreateMediaAssetRequest:
             type: object
             properties:

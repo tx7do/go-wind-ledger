@@ -93,7 +93,7 @@ func initApp(context *bootstrap.Context) (*kratos.App, func(), error) {
 	tagService := service.NewTagService(context, tagRepo)
 	payeeRepo := data.NewPayeeRepo(context, entClient)
 	payeeService := service.NewPayeeService(context, payeeRepo)
-	flowFileRepo := data.NewFlowFileRepo(context, entClient)
+	flowFileRepo := data.NewFlowFileRepo(context, entClient, minIOClient)
 	balanceFlowService := service.NewBalanceFlowService(context, balanceFlowRepo, flowFileRepo)
 	noteDayRepo := data.NewNoteDayRepo(context, entClient)
 	noteDayService := service.NewNoteDayService(context, noteDayRepo)

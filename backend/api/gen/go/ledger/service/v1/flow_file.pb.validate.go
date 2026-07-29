@@ -505,3 +505,329 @@ var _ interface {
 	Cause() error
 	ErrorName() string
 } = DeleteFlowFileRequestValidationError{}
+
+// Validate checks the field values on UploadFlowFileRequest with the rules
+// defined in the proto definition for this message. If any rules are
+// violated, the first error encountered is returned, or nil if there are no violations.
+func (m *UploadFlowFileRequest) Validate() error {
+	return m.validate(false)
+}
+
+// ValidateAll checks the field values on UploadFlowFileRequest with the rules
+// defined in the proto definition for this message. If any rules are
+// violated, the result is a list of violation errors wrapped in
+// UploadFlowFileRequestMultiError, or nil if none found.
+func (m *UploadFlowFileRequest) ValidateAll() error {
+	return m.validate(true)
+}
+
+func (m *UploadFlowFileRequest) validate(all bool) error {
+	if m == nil {
+		return nil
+	}
+
+	var errors []error
+
+	// no validation rules for FlowId
+
+	// no validation rules for FileName
+
+	// no validation rules for ContentType
+
+	// no validation rules for Size
+
+	// no validation rules for Data
+
+	if len(errors) > 0 {
+		return UploadFlowFileRequestMultiError(errors)
+	}
+
+	return nil
+}
+
+// UploadFlowFileRequestMultiError is an error wrapping multiple validation
+// errors returned by UploadFlowFileRequest.ValidateAll() if the designated
+// constraints aren't met.
+type UploadFlowFileRequestMultiError []error
+
+// Error returns a concatenation of all the error messages it wraps.
+func (m UploadFlowFileRequestMultiError) Error() string {
+	msgs := make([]string, 0, len(m))
+	for _, err := range m {
+		msgs = append(msgs, err.Error())
+	}
+	return strings.Join(msgs, "; ")
+}
+
+// AllErrors returns a list of validation violation errors.
+func (m UploadFlowFileRequestMultiError) AllErrors() []error { return m }
+
+// UploadFlowFileRequestValidationError is the validation error returned by
+// UploadFlowFileRequest.Validate if the designated constraints aren't met.
+type UploadFlowFileRequestValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e UploadFlowFileRequestValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e UploadFlowFileRequestValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e UploadFlowFileRequestValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e UploadFlowFileRequestValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e UploadFlowFileRequestValidationError) ErrorName() string {
+	return "UploadFlowFileRequestValidationError"
+}
+
+// Error satisfies the builtin error interface
+func (e UploadFlowFileRequestValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sUploadFlowFileRequest.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = UploadFlowFileRequestValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = UploadFlowFileRequestValidationError{}
+
+// Validate checks the field values on ViewFlowFileRequest with the rules
+// defined in the proto definition for this message. If any rules are
+// violated, the first error encountered is returned, or nil if there are no violations.
+func (m *ViewFlowFileRequest) Validate() error {
+	return m.validate(false)
+}
+
+// ValidateAll checks the field values on ViewFlowFileRequest with the rules
+// defined in the proto definition for this message. If any rules are
+// violated, the result is a list of violation errors wrapped in
+// ViewFlowFileRequestMultiError, or nil if none found.
+func (m *ViewFlowFileRequest) ValidateAll() error {
+	return m.validate(true)
+}
+
+func (m *ViewFlowFileRequest) validate(all bool) error {
+	if m == nil {
+		return nil
+	}
+
+	var errors []error
+
+	// no validation rules for Id
+
+	// no validation rules for CreateTime
+
+	if len(errors) > 0 {
+		return ViewFlowFileRequestMultiError(errors)
+	}
+
+	return nil
+}
+
+// ViewFlowFileRequestMultiError is an error wrapping multiple validation
+// errors returned by ViewFlowFileRequest.ValidateAll() if the designated
+// constraints aren't met.
+type ViewFlowFileRequestMultiError []error
+
+// Error returns a concatenation of all the error messages it wraps.
+func (m ViewFlowFileRequestMultiError) Error() string {
+	msgs := make([]string, 0, len(m))
+	for _, err := range m {
+		msgs = append(msgs, err.Error())
+	}
+	return strings.Join(msgs, "; ")
+}
+
+// AllErrors returns a list of validation violation errors.
+func (m ViewFlowFileRequestMultiError) AllErrors() []error { return m }
+
+// ViewFlowFileRequestValidationError is the validation error returned by
+// ViewFlowFileRequest.Validate if the designated constraints aren't met.
+type ViewFlowFileRequestValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e ViewFlowFileRequestValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e ViewFlowFileRequestValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e ViewFlowFileRequestValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e ViewFlowFileRequestValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e ViewFlowFileRequestValidationError) ErrorName() string {
+	return "ViewFlowFileRequestValidationError"
+}
+
+// Error satisfies the builtin error interface
+func (e ViewFlowFileRequestValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sViewFlowFileRequest.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = ViewFlowFileRequestValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = ViewFlowFileRequestValidationError{}
+
+// Validate checks the field values on ViewFlowFileResponse with the rules
+// defined in the proto definition for this message. If any rules are
+// violated, the first error encountered is returned, or nil if there are no violations.
+func (m *ViewFlowFileResponse) Validate() error {
+	return m.validate(false)
+}
+
+// ValidateAll checks the field values on ViewFlowFileResponse with the rules
+// defined in the proto definition for this message. If any rules are
+// violated, the result is a list of violation errors wrapped in
+// ViewFlowFileResponseMultiError, or nil if none found.
+func (m *ViewFlowFileResponse) ValidateAll() error {
+	return m.validate(true)
+}
+
+func (m *ViewFlowFileResponse) validate(all bool) error {
+	if m == nil {
+		return nil
+	}
+
+	var errors []error
+
+	// no validation rules for ContentType
+
+	// no validation rules for OriginalName
+
+	// no validation rules for Data
+
+	if len(errors) > 0 {
+		return ViewFlowFileResponseMultiError(errors)
+	}
+
+	return nil
+}
+
+// ViewFlowFileResponseMultiError is an error wrapping multiple validation
+// errors returned by ViewFlowFileResponse.ValidateAll() if the designated
+// constraints aren't met.
+type ViewFlowFileResponseMultiError []error
+
+// Error returns a concatenation of all the error messages it wraps.
+func (m ViewFlowFileResponseMultiError) Error() string {
+	msgs := make([]string, 0, len(m))
+	for _, err := range m {
+		msgs = append(msgs, err.Error())
+	}
+	return strings.Join(msgs, "; ")
+}
+
+// AllErrors returns a list of validation violation errors.
+func (m ViewFlowFileResponseMultiError) AllErrors() []error { return m }
+
+// ViewFlowFileResponseValidationError is the validation error returned by
+// ViewFlowFileResponse.Validate if the designated constraints aren't met.
+type ViewFlowFileResponseValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e ViewFlowFileResponseValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e ViewFlowFileResponseValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e ViewFlowFileResponseValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e ViewFlowFileResponseValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e ViewFlowFileResponseValidationError) ErrorName() string {
+	return "ViewFlowFileResponseValidationError"
+}
+
+// Error satisfies the builtin error interface
+func (e ViewFlowFileResponseValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sViewFlowFileResponse.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = ViewFlowFileResponseValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = ViewFlowFileResponseValidationError{}

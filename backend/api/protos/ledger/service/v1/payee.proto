@@ -17,6 +17,8 @@ service PayeeService {
   rpc Update (UpdatePayeeRequest) returns (Payee) {}
   rpc Delete (DeletePayeeRequest) returns (google.protobuf.Empty) {}
   rpc Toggle (TogglePayeeRequest) returns (Payee) {}
+  rpc ToggleCanExpense (TogglePayeeRequest) returns (Payee) {}
+  rpc ToggleCanIncome (TogglePayeeRequest) returns (Payee) {}
 }
 
 message Payee {

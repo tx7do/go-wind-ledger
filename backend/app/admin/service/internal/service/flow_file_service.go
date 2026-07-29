@@ -31,3 +31,11 @@ func (s *FlowFileService) List(ctx context.Context, req *ledgerV1.ListFlowFileRe
 func (s *FlowFileService) Delete(ctx context.Context, req *ledgerV1.DeleteFlowFileRequest) (*emptypb.Empty, error) {
 	return s.client.Delete(ctx, req)
 }
+
+func (s *FlowFileService) UploadFile(ctx context.Context, req *ledgerV1.UploadFlowFileRequest) (*ledgerV1.FlowFile, error) {
+	return s.client.UploadFile(ctx, req)
+}
+
+func (s *FlowFileService) ViewFile(ctx context.Context, req *ledgerV1.ViewFlowFileRequest) (*ledgerV1.ViewFlowFileResponse, error) {
+	return s.client.ViewFile(ctx, req)
+}

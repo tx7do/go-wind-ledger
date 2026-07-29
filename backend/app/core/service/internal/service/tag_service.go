@@ -59,3 +59,15 @@ func (s *TagService) Delete(ctx context.Context, req *ledgerV1.DeleteTagRequest)
 func (s *TagService) Toggle(ctx context.Context, req *ledgerV1.ToggleTagRequest) (*ledgerV1.Tag, error) {
 	return s.tagRepo.Toggle(ctx, req.GetId())
 }
+
+func (s *TagService) ToggleCanExpense(ctx context.Context, req *ledgerV1.ToggleTagRequest) (*ledgerV1.Tag, error) {
+	return s.tagRepo.ToggleCanExpense(ctx, req.GetId())
+}
+
+func (s *TagService) ToggleCanIncome(ctx context.Context, req *ledgerV1.ToggleTagRequest) (*ledgerV1.Tag, error) {
+	return s.tagRepo.ToggleCanIncome(ctx, req.GetId())
+}
+
+func (s *TagService) ToggleCanTransfer(ctx context.Context, req *ledgerV1.ToggleTagRequest) (*ledgerV1.Tag, error) {
+	return s.tagRepo.ToggleCanTransfer(ctx, req.GetId())
+}
