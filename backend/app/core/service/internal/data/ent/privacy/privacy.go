@@ -231,6 +231,30 @@ func (f BookMutationRuleFunc) EvalMutation(ctx context.Context, m ent.Mutation) 
 	return Denyf("ent/privacy: unexpected mutation type %T, expect *ent.BookMutation", m)
 }
 
+// The BookTemplateQueryRuleFunc type is an adapter to allow the use of ordinary
+// functions as a query rule.
+type BookTemplateQueryRuleFunc func(context.Context, *ent.BookTemplateQuery) error
+
+// EvalQuery return f(ctx, q).
+func (f BookTemplateQueryRuleFunc) EvalQuery(ctx context.Context, q ent.Query) error {
+	if q, ok := q.(*ent.BookTemplateQuery); ok {
+		return f(ctx, q)
+	}
+	return Denyf("ent/privacy: unexpected query type %T, expect *ent.BookTemplateQuery", q)
+}
+
+// The BookTemplateMutationRuleFunc type is an adapter to allow the use of ordinary
+// functions as a mutation rule.
+type BookTemplateMutationRuleFunc func(context.Context, *ent.BookTemplateMutation) error
+
+// EvalMutation calls f(ctx, m).
+func (f BookTemplateMutationRuleFunc) EvalMutation(ctx context.Context, m ent.Mutation) error {
+	if m, ok := m.(*ent.BookTemplateMutation); ok {
+		return f(ctx, m)
+	}
+	return Denyf("ent/privacy: unexpected mutation type %T, expect *ent.BookTemplateMutation", m)
+}
+
 // The BudgetQueryRuleFunc type is an adapter to allow the use of ordinary
 // functions as a query rule.
 type BudgetQueryRuleFunc func(context.Context, *ent.BudgetQuery) error
@@ -1188,6 +1212,8 @@ func queryFilter(q ent.Query) (Filter, error) {
 		return q.Filter(), nil
 	case *ent.BookQuery:
 		return q.Filter(), nil
+	case *ent.BookTemplateQuery:
+		return q.Filter(), nil
 	case *ent.BudgetQuery:
 		return q.Filter(), nil
 	case *ent.CategoryQuery:
@@ -1280,6 +1306,8 @@ func mutationFilter(m ent.Mutation) (Filter, error) {
 	case *ent.BalanceFlowMutation:
 		return m.Filter(), nil
 	case *ent.BookMutation:
+		return m.Filter(), nil
+	case *ent.BookTemplateMutation:
 		return m.Filter(), nil
 	case *ent.BudgetMutation:
 		return m.Filter(), nil

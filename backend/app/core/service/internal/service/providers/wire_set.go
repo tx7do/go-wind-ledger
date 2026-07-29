@@ -54,6 +54,7 @@ var ProviderSet = wire.NewSet(
 	service.NewFlowFileService,
 		service.NewMembershipService,
 		service.NewBudgetService,
+		service.NewBookTemplateService,
 
 		// === 记账认证服务 ===
 		service.NewLedgerAuthService,

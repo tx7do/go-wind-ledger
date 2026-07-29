@@ -47,8 +47,8 @@ type PayeeServiceHTTPServer interface {
 func RegisterPayeeServiceHTTPServer(s *http.Server, srv PayeeServiceHTTPServer) {
 	r := s.Route("/")
 	r.GET("/admin/v1/payees", _PayeeService_List26_HTTP_Handler(srv))
-	r.GET("/admin/v1/payees/all", _PayeeService_ListAll5_HTTP_Handler(srv))
-	r.GET("/admin/v1/payees/{id}", _PayeeService_Get24_HTTP_Handler(srv))
+	r.GET("/admin/v1/payees/all", _PayeeService_ListAll6_HTTP_Handler(srv))
+	r.GET("/admin/v1/payees/{id}", _PayeeService_Get25_HTTP_Handler(srv))
 	r.POST("/admin/v1/payees", _PayeeService_Create20_HTTP_Handler(srv))
 	r.PUT("/admin/v1/payees/{id}", _PayeeService_Update20_HTTP_Handler(srv))
 	r.DELETE("/admin/v1/payees/{id}", _PayeeService_Delete21_HTTP_Handler(srv))
@@ -76,7 +76,7 @@ func _PayeeService_List26_HTTP_Handler(srv PayeeServiceHTTPServer) func(ctx http
 	}
 }
 
-func _PayeeService_ListAll5_HTTP_Handler(srv PayeeServiceHTTPServer) func(ctx http.Context) error {
+func _PayeeService_ListAll6_HTTP_Handler(srv PayeeServiceHTTPServer) func(ctx http.Context) error {
 	return func(ctx http.Context) error {
 		var in v11.ListAllPayeeRequest
 		if err := ctx.BindQuery(&in); err != nil {
@@ -95,7 +95,7 @@ func _PayeeService_ListAll5_HTTP_Handler(srv PayeeServiceHTTPServer) func(ctx ht
 	}
 }
 
-func _PayeeService_Get24_HTTP_Handler(srv PayeeServiceHTTPServer) func(ctx http.Context) error {
+func _PayeeService_Get25_HTTP_Handler(srv PayeeServiceHTTPServer) func(ctx http.Context) error {
 	return func(ctx http.Context) error {
 		var in v11.GetPayeeRequest
 		if err := ctx.BindQuery(&in); err != nil {

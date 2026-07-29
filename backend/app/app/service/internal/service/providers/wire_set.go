@@ -31,6 +31,7 @@ var ProviderSet = wire.NewSet(
 	service.NewNavigationService,
 
 	service.NewBookService,
+	service.NewBookTemplateService,
 	service.NewAccountService,
 	service.NewBalanceFlowService,
 	service.NewLedgerCategoryService,

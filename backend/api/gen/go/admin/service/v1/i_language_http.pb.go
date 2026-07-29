@@ -47,7 +47,7 @@ type LanguageServiceHTTPServer interface {
 func RegisterLanguageServiceHTTPServer(s *http.Server, srv LanguageServiceHTTPServer) {
 	r := s.Route("/")
 	r.GET("/admin/v1/dict/langs", _LanguageService_List15_HTTP_Handler(srv))
-	r.GET("/admin/v1/dict/langs/{id}", _LanguageService_Get13_HTTP_Handler(srv))
+	r.GET("/admin/v1/dict/langs/{id}", _LanguageService_Get14_HTTP_Handler(srv))
 	r.POST("/admin/v1/dict/langs", _LanguageService_Create11_HTTP_Handler(srv))
 	r.PUT("/admin/v1/dict/langs/{id}", _LanguageService_Update11_HTTP_Handler(srv))
 	r.DELETE("/admin/v1/dict/langs", _LanguageService_Delete12_HTTP_Handler(srv))
@@ -73,7 +73,7 @@ func _LanguageService_List15_HTTP_Handler(srv LanguageServiceHTTPServer) func(ct
 	}
 }
 
-func _LanguageService_Get13_HTTP_Handler(srv LanguageServiceHTTPServer) func(ctx http.Context) error {
+func _LanguageService_Get14_HTTP_Handler(srv LanguageServiceHTTPServer) func(ctx http.Context) error {
 	return func(ctx http.Context) error {
 		var in v11.GetLanguageRequest
 		if err := ctx.BindQuery(&in); err != nil {

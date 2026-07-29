@@ -57,6 +57,8 @@ func initApp(context *bootstrap.Context) (*kratos.App, func(), error) {
 	navigationService := service.NewNavigationService(context, navigationServiceClient)
 	bookServiceClient := data.NewBookServiceClient(context, discovery)
 	bookService := service.NewBookService(context, bookServiceClient)
+	bookTemplateServiceClient := data.NewBookTemplateServiceClient(context, discovery)
+	bookTemplateService := service.NewBookTemplateService(context, bookTemplateServiceClient)
 	accountServiceClient := data.NewAccountServiceClient(context, discovery)
 	accountService := service.NewAccountService(context, accountServiceClient)
 	balanceFlowServiceClient := data.NewBalanceFlowServiceClient(context, discovery)
@@ -77,7 +79,7 @@ func initApp(context *bootstrap.Context) (*kratos.App, func(), error) {
 	flowFileService := service.NewFlowFileService(context, flowFileServiceClient)
 	ledgerAuthServiceClient := data.NewLedgerAuthServiceClient(context, discovery)
 	ledgerAuthService := service.NewLedgerAuthService(context, ledgerAuthServiceClient)
-	httpServer := server.NewRestServer(context, v, authenticationService, fileTransferService, userProfileService, postService, categoryService, commentService, tagService, pageService, sectionService, navigationService, bookService, accountService, balanceFlowService, ledgerCategoryService, ledgerTagService, payeeService, noteDayService, currencyService, reportService, flowFileService, ledgerAuthService)
+	httpServer := server.NewRestServer(context, v, authenticationService, fileTransferService, userProfileService, postService, categoryService, commentService, tagService, pageService, sectionService, navigationService, bookService, bookTemplateService, accountService, balanceFlowService, ledgerCategoryService, ledgerTagService, payeeService, noteDayService, currencyService, reportService, flowFileService, ledgerAuthService)
 	grpcMiddlewares := server.NewGrpcMiddleware(context)
 	grpcServer, err := server.NewGrpcServer(context, grpcMiddlewares)
 	if err != nil {

@@ -21,12 +21,14 @@ var _ = binding.EncodeURL
 
 const _ = http.SupportPackageIsVersion1
 
+const OperationCurrencyServiceChangeRate = "/admin.service.v1.CurrencyService/ChangeRate"
 const OperationCurrencyServiceConvert = "/admin.service.v1.CurrencyService/Convert"
 const OperationCurrencyServiceList = "/admin.service.v1.CurrencyService/List"
 const OperationCurrencyServiceListAll = "/admin.service.v1.CurrencyService/ListAll"
 const OperationCurrencyServiceRefresh = "/admin.service.v1.CurrencyService/Refresh"
 
 type CurrencyServiceHTTPServer interface {
+	ChangeRate(context.Context, *v1.ChangeRateRequest) (*v1.Currency, error)
 	Convert(context.Context, *v1.ConvertCurrencyRequest) (*v1.ConvertCurrencyResponse, error)
 	List(context.Context, *v11.PagingRequest) (*v1.ListCurrencyResponse, error)
 	ListAll(context.Context, *v1.ListAllCurrencyRequest) (*v1.ListCurrencyResponse, error)
@@ -35,13 +37,14 @@ type CurrencyServiceHTTPServer interface {
 
 func RegisterCurrencyServiceHTTPServer(s *http.Server, srv CurrencyServiceHTTPServer) {
 	r := s.Route("/")
-	r.GET("/admin/v1/currencies/all", _CurrencyService_ListAll4_HTTP_Handler(srv))
+	r.GET("/admin/v1/currencies/all", _CurrencyService_ListAll5_HTTP_Handler(srv))
 	r.GET("/admin/v1/currencies", _CurrencyService_List8_HTTP_Handler(srv))
 	r.POST("/admin/v1/currencies/refresh", _CurrencyService_Refresh0_HTTP_Handler(srv))
 	r.GET("/admin/v1/currencies/calc", _CurrencyService_Convert0_HTTP_Handler(srv))
+	r.PUT("/admin/v1/currencies/{id}/rate", _CurrencyService_ChangeRate0_HTTP_Handler(srv))
 }
 
-func _CurrencyService_ListAll4_HTTP_Handler(srv CurrencyServiceHTTPServer) func(ctx http.Context) error {
+func _CurrencyService_ListAll5_HTTP_Handler(srv CurrencyServiceHTTPServer) func(ctx http.Context) error {
 	return func(ctx http.Context) error {
 		var in v1.ListAllCurrencyRequest
 		if err := ctx.BindQuery(&in); err != nil {
@@ -120,7 +123,33 @@ func _CurrencyService_Convert0_HTTP_Handler(srv CurrencyServiceHTTPServer) func(
 	}
 }
 
+func _CurrencyService_ChangeRate0_HTTP_Handler(srv CurrencyServiceHTTPServer) func(ctx http.Context) error {
+	return func(ctx http.Context) error {
+		var in v1.ChangeRateRequest
+		if err := ctx.Bind(&in); err != nil {
+			return err
+		}
+		if err := ctx.BindQuery(&in); err != nil {
+			return err
+		}
+		if err := ctx.BindVars(&in); err != nil {
+			return err
+		}
+		http.SetOperation(ctx, OperationCurrencyServiceChangeRate)
+		h := ctx.Middleware(func(ctx context.Context, req interface{}) (interface{}, error) {
+			return srv.ChangeRate(ctx, req.(*v1.ChangeRateRequest))
+		})
+		out, err := h(ctx, &in)
+		if err != nil {
+			return err
+		}
+		reply := out.(*v1.Currency)
+		return ctx.Result(200, reply)
+	}
+}
+
 type CurrencyServiceHTTPClient interface {
+	ChangeRate(ctx context.Context, req *v1.ChangeRateRequest, opts ...http.CallOption) (rsp *v1.Currency, err error)
 	Convert(ctx context.Context, req *v1.ConvertCurrencyRequest, opts ...http.CallOption) (rsp *v1.ConvertCurrencyResponse, err error)
 	List(ctx context.Context, req *v11.PagingRequest, opts ...http.CallOption) (rsp *v1.ListCurrencyResponse, err error)
 	ListAll(ctx context.Context, req *v1.ListAllCurrencyRequest, opts ...http.CallOption) (rsp *v1.ListCurrencyResponse, err error)
@@ -133,6 +162,19 @@ type CurrencyServiceHTTPClientImpl struct {
 
 func NewCurrencyServiceHTTPClient(client *http.Client) CurrencyServiceHTTPClient {
 	return &CurrencyServiceHTTPClientImpl{client}
+}
+
+func (c *CurrencyServiceHTTPClientImpl) ChangeRate(ctx context.Context, in *v1.ChangeRateRequest, opts ...http.CallOption) (*v1.Currency, error) {
+	var out v1.Currency
+	pattern := "/admin/v1/currencies/{id}/rate"
+	path := binding.EncodeURL(pattern, in, false)
+	opts = append(opts, http.Operation(OperationCurrencyServiceChangeRate))
+	opts = append(opts, http.PathTemplate(pattern))
+	err := c.cc.Invoke(ctx, "PUT", path, in, &out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return &out, nil
 }
 
 func (c *CurrencyServiceHTTPClientImpl) Convert(ctx context.Context, in *v1.ConvertCurrencyRequest, opts ...http.CallOption) (*v1.ConvertCurrencyResponse, error) {

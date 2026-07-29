@@ -43,7 +43,7 @@ type NoteDayServiceHTTPServer interface {
 func RegisterNoteDayServiceHTTPServer(s *http.Server, srv NoteDayServiceHTTPServer) {
 	r := s.Route("/")
 	r.GET("/admin/v1/note-days", _NoteDayService_List22_HTTP_Handler(srv))
-	r.GET("/admin/v1/note-days/{id}", _NoteDayService_Get20_HTTP_Handler(srv))
+	r.GET("/admin/v1/note-days/{id}", _NoteDayService_Get21_HTTP_Handler(srv))
 	r.POST("/admin/v1/note-days", _NoteDayService_Create17_HTTP_Handler(srv))
 	r.PUT("/admin/v1/note-days/{id}", _NoteDayService_Update17_HTTP_Handler(srv))
 	r.DELETE("/admin/v1/note-days/{id}", _NoteDayService_Delete18_HTTP_Handler(srv))
@@ -70,7 +70,7 @@ func _NoteDayService_List22_HTTP_Handler(srv NoteDayServiceHTTPServer) func(ctx 
 	}
 }
 
-func _NoteDayService_Get20_HTTP_Handler(srv NoteDayServiceHTTPServer) func(ctx http.Context) error {
+func _NoteDayService_Get21_HTTP_Handler(srv NoteDayServiceHTTPServer) func(ctx http.Context) error {
 	return func(ctx http.Context) error {
 		var in v11.GetNoteDayRequest
 		if err := ctx.BindQuery(&in); err != nil {

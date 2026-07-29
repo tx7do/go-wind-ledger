@@ -27,12 +27,14 @@ var File_app_service_v1_i_currency_proto protoreflect.FileDescriptor
 
 const file_app_service_v1_i_currency_proto_rawDesc = "" +
 	"\n" +
-	"\x1fapp/service/v1/i_currency.proto\x12\x0eapp.service.v1\x1a\x1cgoogle/api/annotations.proto\x1a\x1epagination/v1/pagination.proto\x1a ledger/service/v1/currency.proto2\x83\x04\n" +
+	"\x1fapp/service/v1/i_currency.proto\x12\x0eapp.service.v1\x1a\x1cgoogle/api/annotations.proto\x1a\x1epagination/v1/pagination.proto\x1a ledger/service/v1/currency.proto2\xfd\x04\n" +
 	"\x0fCurrencyService\x12}\n" +
 	"\aListAll\x12).ledger.service.v1.ListAllCurrencyRequest\x1a'.ledger.service.v1.ListCurrencyResponse\"\x1e\x82\xd3\xe4\x93\x02\x18\x12\x16/app/v1/currencies/all\x12f\n" +
 	"\x04List\x12\x19.pagination.PagingRequest\x1a'.ledger.service.v1.ListCurrencyResponse\"\x1a\x82\xd3\xe4\x93\x02\x14\x12\x12/app/v1/currencies\x12\x84\x01\n" +
 	"\aRefresh\x12).ledger.service.v1.RefreshCurrencyRequest\x1a'.ledger.service.v1.ListCurrencyResponse\"%\x82\xd3\xe4\x93\x02\x1f:\x01*\"\x1a/app/v1/currencies/refresh\x12\x81\x01\n" +
-	"\aConvert\x12).ledger.service.v1.ConvertCurrencyRequest\x1a*.ledger.service.v1.ConvertCurrencyResponse\"\x1f\x82\xd3\xe4\x93\x02\x19\x12\x17/app/v1/currencies/calcB\xaf\x01\n" +
+	"\aConvert\x12).ledger.service.v1.ConvertCurrencyRequest\x1a*.ledger.service.v1.ConvertCurrencyResponse\"\x1f\x82\xd3\xe4\x93\x02\x19\x12\x17/app/v1/currencies/calc\x12x\n" +
+	"\n" +
+	"ChangeRate\x12$.ledger.service.v1.ChangeRateRequest\x1a\x1b.ledger.service.v1.Currency\"'\x82\xd3\xe4\x93\x02!:\x01*\x1a\x1c/app/v1/currencies/{id}/rateB\xaf\x01\n" +
 	"\x12com.app.service.v1B\x0eICurrencyProtoP\x01Z/go-wind-cms/api/gen/go/app/service/v1;servicev1\xa2\x02\x03ASX\xaa\x02\x0eApp.Service.V1\xca\x02\x0eApp\\Service\\V1\xe2\x02\x1aApp\\Service\\V1\\GPBMetadata\xea\x02\x10App::Service::V1b\x06proto3"
 
 var file_app_service_v1_i_currency_proto_goTypes = []any{
@@ -40,20 +42,24 @@ var file_app_service_v1_i_currency_proto_goTypes = []any{
 	(*v11.PagingRequest)(nil),          // 1: pagination.PagingRequest
 	(*v1.RefreshCurrencyRequest)(nil),  // 2: ledger.service.v1.RefreshCurrencyRequest
 	(*v1.ConvertCurrencyRequest)(nil),  // 3: ledger.service.v1.ConvertCurrencyRequest
-	(*v1.ListCurrencyResponse)(nil),    // 4: ledger.service.v1.ListCurrencyResponse
-	(*v1.ConvertCurrencyResponse)(nil), // 5: ledger.service.v1.ConvertCurrencyResponse
+	(*v1.ChangeRateRequest)(nil),       // 4: ledger.service.v1.ChangeRateRequest
+	(*v1.ListCurrencyResponse)(nil),    // 5: ledger.service.v1.ListCurrencyResponse
+	(*v1.ConvertCurrencyResponse)(nil), // 6: ledger.service.v1.ConvertCurrencyResponse
+	(*v1.Currency)(nil),                // 7: ledger.service.v1.Currency
 }
 var file_app_service_v1_i_currency_proto_depIdxs = []int32{
 	0, // 0: app.service.v1.CurrencyService.ListAll:input_type -> ledger.service.v1.ListAllCurrencyRequest
 	1, // 1: app.service.v1.CurrencyService.List:input_type -> pagination.PagingRequest
 	2, // 2: app.service.v1.CurrencyService.Refresh:input_type -> ledger.service.v1.RefreshCurrencyRequest
 	3, // 3: app.service.v1.CurrencyService.Convert:input_type -> ledger.service.v1.ConvertCurrencyRequest
-	4, // 4: app.service.v1.CurrencyService.ListAll:output_type -> ledger.service.v1.ListCurrencyResponse
-	4, // 5: app.service.v1.CurrencyService.List:output_type -> ledger.service.v1.ListCurrencyResponse
-	4, // 6: app.service.v1.CurrencyService.Refresh:output_type -> ledger.service.v1.ListCurrencyResponse
-	5, // 7: app.service.v1.CurrencyService.Convert:output_type -> ledger.service.v1.ConvertCurrencyResponse
-	4, // [4:8] is the sub-list for method output_type
-	0, // [0:4] is the sub-list for method input_type
+	4, // 4: app.service.v1.CurrencyService.ChangeRate:input_type -> ledger.service.v1.ChangeRateRequest
+	5, // 5: app.service.v1.CurrencyService.ListAll:output_type -> ledger.service.v1.ListCurrencyResponse
+	5, // 6: app.service.v1.CurrencyService.List:output_type -> ledger.service.v1.ListCurrencyResponse
+	5, // 7: app.service.v1.CurrencyService.Refresh:output_type -> ledger.service.v1.ListCurrencyResponse
+	6, // 8: app.service.v1.CurrencyService.Convert:output_type -> ledger.service.v1.ConvertCurrencyResponse
+	7, // 9: app.service.v1.CurrencyService.ChangeRate:output_type -> ledger.service.v1.Currency
+	5, // [5:10] is the sub-list for method output_type
+	0, // [0:5] is the sub-list for method input_type
 	0, // [0:0] is the sub-list for extension type_name
 	0, // [0:0] is the sub-list for extension extendee
 	0, // [0:0] is the sub-list for field type_name

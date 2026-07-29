@@ -1,0 +1,66 @@
+syntax = "proto3";
+
+package ledger.service.v1;
+
+import "gnostic/openapi/v3/annotations.proto";
+import "google/protobuf/empty.proto";
+
+// 账本模板服务
+service BookTemplateService {
+  // 获取所有账本模板
+  rpc ListAll (google.protobuf.Empty) returns (ListBookTemplateResponse) {}
+
+  // 获取单个账本模板
+  rpc Get (GetBookTemplateRequest) returns (BookTemplate) {}
+}
+
+// 账本模板
+message BookTemplate {
+  optional uint32 id = 1 [json_name = "id"];
+
+  optional string name = 2 [
+    json_name = "name",
+    (gnostic.openapi.v3.property) = {description: "模板名称"}
+  ];
+
+  optional string locale = 3 [
+    json_name = "locale",
+    (gnostic.openapi.v3.property) = {description: "区域语言"}
+  ];
+
+  optional string thumbnail = 4 [
+    json_name = "thumbnail",
+    (gnostic.openapi.v3.property) = {description: "缩略图"}
+  ];
+
+  repeated CategoryTemplate categories = 10 [json_name = "categories"];
+  repeated TagTemplate tags = 11 [json_name = "tags"];
+  repeated PayeeTemplate payees = 12 [json_name = "payees"];
+}
+
+// 分类模板
+message CategoryTemplate {
+  optional string name = 1 [json_name = "name"];
+  optional string type = 2 [json_name = "type"];
+  optional uint32 level = 3 [json_name = "level"];
+}
+
+// 标签模板
+message TagTemplate {
+  optional string name = 1 [json_name = "name"];
+}
+
+// 收款人模板
+message PayeeTemplate {
+  optional string name = 1 [json_name = "name"];
+}
+
+// 回应 - 账本模板列表
+message ListBookTemplateResponse {
+  repeated BookTemplate items = 1 [json_name = "items"];
+}
+
+// 请求 - 获取单个账本模板
+message GetBookTemplateRequest {
+  uint32 id = 1 [json_name = "id"];
+}

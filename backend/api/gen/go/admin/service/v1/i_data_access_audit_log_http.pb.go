@@ -34,7 +34,7 @@ type DataAccessAuditLogServiceHTTPServer interface {
 func RegisterDataAccessAuditLogServiceHTTPServer(s *http.Server, srv DataAccessAuditLogServiceHTTPServer) {
 	r := s.Route("/")
 	r.GET("/admin/v1/data-access-audit-logs", _DataAccessAuditLogService_List9_HTTP_Handler(srv))
-	r.GET("/admin/v1/data-access-audit-logs/{id}", _DataAccessAuditLogService_Get8_HTTP_Handler(srv))
+	r.GET("/admin/v1/data-access-audit-logs/{id}", _DataAccessAuditLogService_Get9_HTTP_Handler(srv))
 }
 
 func _DataAccessAuditLogService_List9_HTTP_Handler(srv DataAccessAuditLogServiceHTTPServer) func(ctx http.Context) error {
@@ -56,7 +56,7 @@ func _DataAccessAuditLogService_List9_HTTP_Handler(srv DataAccessAuditLogService
 	}
 }
 
-func _DataAccessAuditLogService_Get8_HTTP_Handler(srv DataAccessAuditLogServiceHTTPServer) func(ctx http.Context) error {
+func _DataAccessAuditLogService_Get9_HTTP_Handler(srv DataAccessAuditLogServiceHTTPServer) func(ctx http.Context) error {
 	return func(ctx http.Context) error {
 		var in v11.GetDataAccessAuditLogRequest
 		if err := ctx.BindQuery(&in); err != nil {

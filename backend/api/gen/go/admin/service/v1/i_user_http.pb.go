@@ -50,8 +50,8 @@ type UserServiceHTTPServer interface {
 func RegisterUserServiceHTTPServer(s *http.Server, srv UserServiceHTTPServer) {
 	r := s.Route("/")
 	r.GET("/admin/v1/users", _UserService_List40_HTTP_Handler(srv))
-	r.GET("/admin/v1/users/username/{username}", _UserService_Get39_HTTP_Handler(srv))
-	r.GET("/admin/v1/users/{id}", _UserService_Get40_HTTP_Handler(srv))
+	r.GET("/admin/v1/users/username/{username}", _UserService_Get40_HTTP_Handler(srv))
+	r.GET("/admin/v1/users/{id}", _UserService_Get41_HTTP_Handler(srv))
 	r.POST("/admin/v1/users", _UserService_Create32_HTTP_Handler(srv))
 	r.PUT("/admin/v1/users/{id}", _UserService_Update32_HTTP_Handler(srv))
 	r.DELETE("/admin/v1/users/username/{username}", _UserService_Delete33_HTTP_Handler(srv))
@@ -79,7 +79,7 @@ func _UserService_List40_HTTP_Handler(srv UserServiceHTTPServer) func(ctx http.C
 	}
 }
 
-func _UserService_Get39_HTTP_Handler(srv UserServiceHTTPServer) func(ctx http.Context) error {
+func _UserService_Get40_HTTP_Handler(srv UserServiceHTTPServer) func(ctx http.Context) error {
 	return func(ctx http.Context) error {
 		var in v11.GetUserRequest
 		if err := ctx.BindQuery(&in); err != nil {
@@ -101,7 +101,7 @@ func _UserService_Get39_HTTP_Handler(srv UserServiceHTTPServer) func(ctx http.Co
 	}
 }
 
-func _UserService_Get40_HTTP_Handler(srv UserServiceHTTPServer) func(ctx http.Context) error {
+func _UserService_Get41_HTTP_Handler(srv UserServiceHTTPServer) func(ctx http.Context) error {
 	return func(ctx http.Context) error {
 		var in v11.GetUserRequest
 		if err := ctx.BindQuery(&in); err != nil {

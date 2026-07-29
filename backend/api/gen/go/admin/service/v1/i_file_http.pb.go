@@ -44,7 +44,7 @@ type FileServiceHTTPServer interface {
 func RegisterFileServiceHTTPServer(s *http.Server, srv FileServiceHTTPServer) {
 	r := s.Route("/")
 	r.GET("/admin/v1/files", _FileService_List12_HTTP_Handler(srv))
-	r.GET("/admin/v1/files/{id}", _FileService_Get11_HTTP_Handler(srv))
+	r.GET("/admin/v1/files/{id}", _FileService_Get12_HTTP_Handler(srv))
 	r.POST("/admin/v1/files", _FileService_Create9_HTTP_Handler(srv))
 	r.PUT("/admin/v1/files/{id}", _FileService_Update9_HTTP_Handler(srv))
 	r.DELETE("/admin/v1/files/{id}", _FileService_Delete9_HTTP_Handler(srv))
@@ -69,7 +69,7 @@ func _FileService_List12_HTTP_Handler(srv FileServiceHTTPServer) func(ctx http.C
 	}
 }
 
-func _FileService_Get11_HTTP_Handler(srv FileServiceHTTPServer) func(ctx http.Context) error {
+func _FileService_Get12_HTTP_Handler(srv FileServiceHTTPServer) func(ctx http.Context) error {
 	return func(ctx http.Context) error {
 		var in v11.GetFileRequest
 		if err := ctx.BindQuery(&in); err != nil {

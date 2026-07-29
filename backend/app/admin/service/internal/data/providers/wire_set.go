@@ -60,6 +60,7 @@ var ProviderSet = wire.NewSet(
 
 	// === 记账系统 gRPC Clients ===
 	data.NewBookServiceClient,
+	data.NewBookTemplateServiceClient,
 	data.NewAccountServiceClient,
 	data.NewCategoryServiceClient,
 	data.NewTagServiceClient,

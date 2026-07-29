@@ -30,6 +30,18 @@ service BookService {
 
   // 切换启用/禁用
   rpc Toggle (ToggleBookRequest) returns (Book) {}
+
+  // 从模板创建账本
+  rpc CreateByTemplate (CreateBookByTemplateRequest) returns (Book) {}
+
+  // 复制账本
+  rpc Copy (CopyBookRequest) returns (Book) {}
+
+  // 导出账本流水（CSV）
+  rpc Export (ExportBookRequest) returns (ExportBookResponse) {}
+
+  // 跨租户账本列表（bookSelect，按当前用户可访问的租户）
+  rpc ListAllBooks (google.protobuf.Empty) returns (ListBookResponse) {}
 }
 
 // 账本
@@ -170,4 +182,32 @@ message ToggleBookRequest {
     (gnostic.openapi.v3.property) = {description: "账本ID"},
     json_name = "id"
   ];
+}
+
+// 请求 - 从模板创建账本
+message CreateBookByTemplateRequest {
+  string name = 1 [json_name = "name"];
+  string default_currency_code = 2 [json_name = "defaultCurrencyCode"];
+  uint32 template_id = 3 [json_name = "templateId"];
+  optional string notes = 4 [json_name = "notes"];
+}
+
+// 请求 - 复制账本
+message CopyBookRequest {
+  uint32 source_book_id = 1 [json_name = "sourceBookId"];
+  string name = 2 [json_name = "name"];
+  optional string notes = 3 [json_name = "notes"];
+}
+
+// 请求 - 导出账本流水
+message ExportBookRequest {
+  uint32 id = 1 [json_name = "id"];
+  optional int32 time_zone_offset = 2 [json_name = "timeZoneOffset"];
+}
+
+// 回应 - 导出账本流水
+message ExportBookResponse {
+  string file_name = 1 [json_name = "fileName"];
+  string content_type = 2 [json_name = "contentType"];
+  bytes data = 3 [json_name = "data"];
 }

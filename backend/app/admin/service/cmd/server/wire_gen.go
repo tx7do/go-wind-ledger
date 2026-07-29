@@ -76,6 +76,8 @@ func initApp(context *bootstrap.Context) (*kratos.App, func(), error) {
 	permissionAuditLogService := service.NewPermissionAuditLogService(context, permissionAuditLogServiceClient)
 	bookServiceClient := data.NewBookServiceClient(context, discovery)
 	bookService := service.NewBookService(context, bookServiceClient)
+	bookTemplateServiceClient := data.NewBookTemplateServiceClient(context, discovery)
+	bookTemplateService := service.NewBookTemplateService(context, bookTemplateServiceClient)
 	accountServiceClient := data.NewAccountServiceClient(context, discovery)
 	accountService := service.NewAccountService(context, accountServiceClient)
 	categoryServiceClient := data.NewCategoryServiceClient(context, discovery)
@@ -98,7 +100,7 @@ func initApp(context *bootstrap.Context) (*kratos.App, func(), error) {
 	budgetService := service.NewBudgetService(context, budgetServiceClient)
 	tenantMemberServiceClient := data.NewTenantMemberServiceClient(context, discovery)
 	tenantMemberService := service.NewTenantMemberService(context, tenantMemberServiceClient)
-	httpServer := server.NewRestServer(context, v, userService, userProfileService, roleService, tenantService, orgUnitService, positionService, menuService, apiService, permissionGroupService, permissionService, adminPortalService, taskService, authenticationService, loginPolicyService, languageService, fileService, translatorService, apiAuditLogService, dataAccessAuditLogService, loginAuditLogService, policyEvaluationLogService, operationAuditLogService, permissionAuditLogService, bookService, accountService, categoryService, tagService, payeeService, balanceFlowService, flowFileService, noteDayService, currencyService, reportService, budgetService, tenantMemberService)
+	httpServer := server.NewRestServer(context, v, userService, userProfileService, roleService, tenantService, orgUnitService, positionService, menuService, apiService, permissionGroupService, permissionService, adminPortalService, taskService, authenticationService, loginPolicyService, languageService, fileService, translatorService, apiAuditLogService, dataAccessAuditLogService, loginAuditLogService, policyEvaluationLogService, operationAuditLogService, permissionAuditLogService, bookService, bookTemplateService, accountService, categoryService, tagService, payeeService, balanceFlowService, flowFileService, noteDayService, currencyService, reportService, budgetService, tenantMemberService)
 	grpcMiddlewares := server.NewGrpcMiddleware(context)
 	grpcServer, err := server.NewGrpcServer(context, grpcMiddlewares)
 	if err != nil {

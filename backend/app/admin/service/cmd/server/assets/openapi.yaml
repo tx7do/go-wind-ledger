@@ -936,6 +936,37 @@ paths:
                         application/json:
                             schema:
                                 $ref: '#/components/schemas/ledger.service.v1.BalanceFlow'
+    /admin/v1/book-templates/all:
+        get:
+            tags:
+                - BookTemplateService
+            operationId: BookTemplateService_ListAll
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/ledger.service.v1.ListBookTemplateResponse'
+    /admin/v1/book-templates/{id}:
+        get:
+            tags:
+                - BookTemplateService
+            operationId: BookTemplateService_Get
+            parameters:
+                - name: id
+                  in: path
+                  required: true
+                  schema:
+                    type: integer
+                    format: uint32
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/ledger.service.v1.BookTemplate'
     /admin/v1/books:
         get:
             tags:
@@ -1047,6 +1078,54 @@ paths:
                         application/json:
                             schema:
                                 $ref: '#/components/schemas/ledger.service.v1.ListBookResponse'
+    /admin/v1/books/copy:
+        post:
+            tags:
+                - BookService
+            operationId: BookService_Copy
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/ledger.service.v1.CopyBookRequest'
+                required: true
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/ledger.service.v1.Book'
+    /admin/v1/books/select-all:
+        get:
+            tags:
+                - BookService
+            operationId: BookService_ListAllBooks
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/ledger.service.v1.ListBookResponse'
+    /admin/v1/books/template:
+        post:
+            tags:
+                - BookService
+            operationId: BookService_CreateByTemplate
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/ledger.service.v1.CreateBookByTemplateRequest'
+                required: true
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/ledger.service.v1.Book'
     /admin/v1/books/{id}:
         get:
             tags:
@@ -1110,6 +1189,30 @@ paths:
                 "200":
                     description: OK
                     content: {}
+    /admin/v1/books/{id}/export:
+        get:
+            tags:
+                - BookService
+            operationId: BookService_Export
+            parameters:
+                - name: id
+                  in: path
+                  required: true
+                  schema:
+                    type: integer
+                    format: uint32
+                - name: timeZoneOffset
+                  in: query
+                  schema:
+                    type: integer
+                    format: int32
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/ledger.service.v1.ExportBookResponse'
     /admin/v1/books/{id}/toggle:
         patch:
             tags:
@@ -1827,6 +1930,31 @@ paths:
                         application/json:
                             schema:
                                 $ref: '#/components/schemas/ledger.service.v1.ListCurrencyResponse'
+    /admin/v1/currencies/{id}/rate:
+        put:
+            tags:
+                - CurrencyService
+            operationId: CurrencyService_ChangeRate
+            parameters:
+                - name: id
+                  in: path
+                  required: true
+                  schema:
+                    type: integer
+                    format: uint32
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/ledger.service.v1.ChangeRateRequest'
+                required: true
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/ledger.service.v1.Currency'
     /admin/v1/data-access-audit-logs:
         get:
             tags:
@@ -12048,6 +12176,34 @@ components:
                     type: string
                     format: date-time
             description: 账本
+        ledger.service.v1.BookTemplate:
+            type: object
+            properties:
+                id:
+                    type: integer
+                    format: uint32
+                name:
+                    type: string
+                    description: 模板名称
+                locale:
+                    type: string
+                    description: 区域语言
+                thumbnail:
+                    type: string
+                    description: 缩略图
+                categories:
+                    type: array
+                    items:
+                        $ref: '#/components/schemas/ledger.service.v1.CategoryTemplate'
+                tags:
+                    type: array
+                    items:
+                        $ref: '#/components/schemas/ledger.service.v1.TagTemplate'
+                payees:
+                    type: array
+                    items:
+                        $ref: '#/components/schemas/ledger.service.v1.PayeeTemplate'
+            description: 账本模板
         ledger.service.v1.Budget:
             type: object
             properties:
@@ -12210,6 +12366,26 @@ components:
                     type: string
                     description: 换算后的金额
             description: 类别关系（一条流水可拆分到多个类别）
+        ledger.service.v1.CategoryTemplate:
+            type: object
+            properties:
+                name:
+                    type: string
+                type:
+                    type: string
+                level:
+                    type: integer
+                    format: uint32
+            description: 分类模板
+        ledger.service.v1.ChangeRateRequest:
+            type: object
+            properties:
+                id:
+                    type: integer
+                    format: uint32
+                rate:
+                    type: string
+            description: 请求 - 手动修改币种汇率
         ledger.service.v1.ChartPoint:
             type: object
             properties:
@@ -12238,6 +12414,17 @@ components:
                 rate:
                     type: string
             description: 回应 - 币种转换
+        ledger.service.v1.CopyBookRequest:
+            type: object
+            properties:
+                sourceBookId:
+                    type: integer
+                    format: uint32
+                name:
+                    type: string
+                notes:
+                    type: string
+            description: 请求 - 复制账本
         ledger.service.v1.CreateAccountRequest:
             type: object
             properties:
@@ -12250,6 +12437,19 @@ components:
                 data:
                     $ref: '#/components/schemas/ledger.service.v1.BalanceFlow'
             description: 请求 - 创建流水
+        ledger.service.v1.CreateBookByTemplateRequest:
+            type: object
+            properties:
+                name:
+                    type: string
+                defaultCurrencyCode:
+                    type: string
+                templateId:
+                    type: integer
+                    format: uint32
+                notes:
+                    type: string
+            description: 请求 - 从模板创建账本
         ledger.service.v1.CreateBookRequest:
             type: object
             properties:
@@ -12299,6 +12499,17 @@ components:
                     type: string
                     description: 对美元汇率
             description: 币种
+        ledger.service.v1.ExportBookResponse:
+            type: object
+            properties:
+                fileName:
+                    type: string
+                contentType:
+                    type: string
+                data:
+                    type: string
+                    format: bytes
+            description: 回应 - 导出账本流水
         ledger.service.v1.FlowFile:
             type: object
             properties:
@@ -12351,6 +12562,14 @@ components:
                 total:
                     type: string
             description: 回应 - 账本列表
+        ledger.service.v1.ListBookTemplateResponse:
+            type: object
+            properties:
+                items:
+                    type: array
+                    items:
+                        $ref: '#/components/schemas/ledger.service.v1.BookTemplate'
+            description: 回应 - 账本模板列表
         ledger.service.v1.ListBudgetResponse:
             type: object
             properties:
@@ -12533,6 +12752,12 @@ components:
                 deletedAt:
                     type: string
                     format: date-time
+        ledger.service.v1.PayeeTemplate:
+            type: object
+            properties:
+                name:
+                    type: string
+            description: 收款人模板
         ledger.service.v1.RecallNoteDayRequest:
             type: object
             properties:
@@ -12643,6 +12868,12 @@ components:
                 convertedAmount:
                     type: string
             description: 标签关系
+        ledger.service.v1.TagTemplate:
+            type: object
+            properties:
+                name:
+                    type: string
+            description: 标签模板
         ledger.service.v1.ToggleAccountRequest:
             type: object
             properties:
@@ -14564,6 +14795,8 @@ tags:
       description: 余额流水服务（Admin BFF）
     - name: BookService
       description: 账本服务（Admin BFF）
+    - name: BookTemplateService
+      description: 账本模板服务（Admin BFF）
     - name: BudgetService
       description: 预算服务（Admin BFF）
     - name: CategoryService

@@ -28,7 +28,7 @@ var File_app_service_v1_i_book_proto protoreflect.FileDescriptor
 
 const file_app_service_v1_i_book_proto_rawDesc = "" +
 	"\n" +
-	"\x1bapp/service/v1/i_book.proto\x12\x0eapp.service.v1\x1a\x1cgoogle/api/annotations.proto\x1a\x1bgoogle/protobuf/empty.proto\x1a\x1epagination/v1/pagination.proto\x1a\x1cledger/service/v1/book.proto2\xdb\x05\n" +
+	"\x1bapp/service/v1/i_book.proto\x12\x0eapp.service.v1\x1a\x1cgoogle/api/annotations.proto\x1a\x1bgoogle/protobuf/empty.proto\x1a\x1epagination/v1/pagination.proto\x1a\x1cledger/service/v1/book.proto2\xa8\t\n" +
 	"\vBookService\x12]\n" +
 	"\x04List\x12\x19.pagination.PagingRequest\x1a#.ledger.service.v1.ListBookResponse\"\x15\x82\xd3\xe4\x93\x02\x0f\x12\r/app/v1/books\x12p\n" +
 	"\aListAll\x12%.ledger.service.v1.ListAllBookRequest\x1a#.ledger.service.v1.ListBookResponse\"\x19\x82\xd3\xe4\x93\x02\x13\x12\x11/app/v1/books/all\x12]\n" +
@@ -36,42 +36,58 @@ const file_app_service_v1_i_book_proto_rawDesc = "" +
 	"\x06Create\x12$.ledger.service.v1.CreateBookRequest\x1a\x17.ledger.service.v1.Book\"\x18\x82\xd3\xe4\x93\x02\x12:\x01*\"\r/app/v1/books\x12f\n" +
 	"\x06Update\x12$.ledger.service.v1.UpdateBookRequest\x1a\x17.ledger.service.v1.Book\"\x1d\x82\xd3\xe4\x93\x02\x17:\x01*\x1a\x12/app/v1/books/{id}\x12b\n" +
 	"\x06Delete\x12$.ledger.service.v1.DeleteBookRequest\x1a\x16.google.protobuf.Empty\"\x1a\x82\xd3\xe4\x93\x02\x14*\x12/app/v1/books/{id}\x12m\n" +
-	"\x06Toggle\x12$.ledger.service.v1.ToggleBookRequest\x1a\x17.ledger.service.v1.Book\"$\x82\xd3\xe4\x93\x02\x1e:\x01*2\x19/app/v1/books/{id}/toggleB\xab\x01\n" +
+	"\x06Toggle\x12$.ledger.service.v1.ToggleBookRequest\x1a\x17.ledger.service.v1.Book\"$\x82\xd3\xe4\x93\x02\x1e:\x01*2\x19/app/v1/books/{id}/toggle\x12~\n" +
+	"\x10CreateByTemplate\x12..ledger.service.v1.CreateBookByTemplateRequest\x1a\x17.ledger.service.v1.Book\"!\x82\xd3\xe4\x93\x02\x1b:\x01*\"\x16/app/v1/books/template\x12b\n" +
+	"\x04Copy\x12\".ledger.service.v1.CopyBookRequest\x1a\x17.ledger.service.v1.Book\"\x1d\x82\xd3\xe4\x93\x02\x17:\x01*\"\x12/app/v1/books/copy\x12x\n" +
+	"\x06Export\x12$.ledger.service.v1.ExportBookRequest\x1a%.ledger.service.v1.ExportBookResponse\"!\x82\xd3\xe4\x93\x02\x1b\x12\x19/app/v1/books/{id}/export\x12m\n" +
+	"\fListAllBooks\x12\x16.google.protobuf.Empty\x1a#.ledger.service.v1.ListBookResponse\" \x82\xd3\xe4\x93\x02\x1a\x12\x18/app/v1/books/select-allB\xab\x01\n" +
 	"\x12com.app.service.v1B\n" +
 	"IBookProtoP\x01Z/go-wind-cms/api/gen/go/app/service/v1;servicev1\xa2\x02\x03ASX\xaa\x02\x0eApp.Service.V1\xca\x02\x0eApp\\Service\\V1\xe2\x02\x1aApp\\Service\\V1\\GPBMetadata\xea\x02\x10App::Service::V1b\x06proto3"
 
 var file_app_service_v1_i_book_proto_goTypes = []any{
-	(*v1.PagingRequest)(nil),       // 0: pagination.PagingRequest
-	(*v11.ListAllBookRequest)(nil), // 1: ledger.service.v1.ListAllBookRequest
-	(*v11.GetBookRequest)(nil),     // 2: ledger.service.v1.GetBookRequest
-	(*v11.CreateBookRequest)(nil),  // 3: ledger.service.v1.CreateBookRequest
-	(*v11.UpdateBookRequest)(nil),  // 4: ledger.service.v1.UpdateBookRequest
-	(*v11.DeleteBookRequest)(nil),  // 5: ledger.service.v1.DeleteBookRequest
-	(*v11.ToggleBookRequest)(nil),  // 6: ledger.service.v1.ToggleBookRequest
-	(*v11.ListBookResponse)(nil),   // 7: ledger.service.v1.ListBookResponse
-	(*v11.Book)(nil),               // 8: ledger.service.v1.Book
-	(*emptypb.Empty)(nil),          // 9: google.protobuf.Empty
+	(*v1.PagingRequest)(nil),                // 0: pagination.PagingRequest
+	(*v11.ListAllBookRequest)(nil),          // 1: ledger.service.v1.ListAllBookRequest
+	(*v11.GetBookRequest)(nil),              // 2: ledger.service.v1.GetBookRequest
+	(*v11.CreateBookRequest)(nil),           // 3: ledger.service.v1.CreateBookRequest
+	(*v11.UpdateBookRequest)(nil),           // 4: ledger.service.v1.UpdateBookRequest
+	(*v11.DeleteBookRequest)(nil),           // 5: ledger.service.v1.DeleteBookRequest
+	(*v11.ToggleBookRequest)(nil),           // 6: ledger.service.v1.ToggleBookRequest
+	(*v11.CreateBookByTemplateRequest)(nil), // 7: ledger.service.v1.CreateBookByTemplateRequest
+	(*v11.CopyBookRequest)(nil),             // 8: ledger.service.v1.CopyBookRequest
+	(*v11.ExportBookRequest)(nil),           // 9: ledger.service.v1.ExportBookRequest
+	(*emptypb.Empty)(nil),                   // 10: google.protobuf.Empty
+	(*v11.ListBookResponse)(nil),            // 11: ledger.service.v1.ListBookResponse
+	(*v11.Book)(nil),                        // 12: ledger.service.v1.Book
+	(*v11.ExportBookResponse)(nil),          // 13: ledger.service.v1.ExportBookResponse
 }
 var file_app_service_v1_i_book_proto_depIdxs = []int32{
-	0, // 0: app.service.v1.BookService.List:input_type -> pagination.PagingRequest
-	1, // 1: app.service.v1.BookService.ListAll:input_type -> ledger.service.v1.ListAllBookRequest
-	2, // 2: app.service.v1.BookService.Get:input_type -> ledger.service.v1.GetBookRequest
-	3, // 3: app.service.v1.BookService.Create:input_type -> ledger.service.v1.CreateBookRequest
-	4, // 4: app.service.v1.BookService.Update:input_type -> ledger.service.v1.UpdateBookRequest
-	5, // 5: app.service.v1.BookService.Delete:input_type -> ledger.service.v1.DeleteBookRequest
-	6, // 6: app.service.v1.BookService.Toggle:input_type -> ledger.service.v1.ToggleBookRequest
-	7, // 7: app.service.v1.BookService.List:output_type -> ledger.service.v1.ListBookResponse
-	7, // 8: app.service.v1.BookService.ListAll:output_type -> ledger.service.v1.ListBookResponse
-	8, // 9: app.service.v1.BookService.Get:output_type -> ledger.service.v1.Book
-	8, // 10: app.service.v1.BookService.Create:output_type -> ledger.service.v1.Book
-	8, // 11: app.service.v1.BookService.Update:output_type -> ledger.service.v1.Book
-	9, // 12: app.service.v1.BookService.Delete:output_type -> google.protobuf.Empty
-	8, // 13: app.service.v1.BookService.Toggle:output_type -> ledger.service.v1.Book
-	7, // [7:14] is the sub-list for method output_type
-	0, // [0:7] is the sub-list for method input_type
-	0, // [0:0] is the sub-list for extension type_name
-	0, // [0:0] is the sub-list for extension extendee
-	0, // [0:0] is the sub-list for field type_name
+	0,  // 0: app.service.v1.BookService.List:input_type -> pagination.PagingRequest
+	1,  // 1: app.service.v1.BookService.ListAll:input_type -> ledger.service.v1.ListAllBookRequest
+	2,  // 2: app.service.v1.BookService.Get:input_type -> ledger.service.v1.GetBookRequest
+	3,  // 3: app.service.v1.BookService.Create:input_type -> ledger.service.v1.CreateBookRequest
+	4,  // 4: app.service.v1.BookService.Update:input_type -> ledger.service.v1.UpdateBookRequest
+	5,  // 5: app.service.v1.BookService.Delete:input_type -> ledger.service.v1.DeleteBookRequest
+	6,  // 6: app.service.v1.BookService.Toggle:input_type -> ledger.service.v1.ToggleBookRequest
+	7,  // 7: app.service.v1.BookService.CreateByTemplate:input_type -> ledger.service.v1.CreateBookByTemplateRequest
+	8,  // 8: app.service.v1.BookService.Copy:input_type -> ledger.service.v1.CopyBookRequest
+	9,  // 9: app.service.v1.BookService.Export:input_type -> ledger.service.v1.ExportBookRequest
+	10, // 10: app.service.v1.BookService.ListAllBooks:input_type -> google.protobuf.Empty
+	11, // 11: app.service.v1.BookService.List:output_type -> ledger.service.v1.ListBookResponse
+	11, // 12: app.service.v1.BookService.ListAll:output_type -> ledger.service.v1.ListBookResponse
+	12, // 13: app.service.v1.BookService.Get:output_type -> ledger.service.v1.Book
+	12, // 14: app.service.v1.BookService.Create:output_type -> ledger.service.v1.Book
+	12, // 15: app.service.v1.BookService.Update:output_type -> ledger.service.v1.Book
+	10, // 16: app.service.v1.BookService.Delete:output_type -> google.protobuf.Empty
+	12, // 17: app.service.v1.BookService.Toggle:output_type -> ledger.service.v1.Book
+	12, // 18: app.service.v1.BookService.CreateByTemplate:output_type -> ledger.service.v1.Book
+	12, // 19: app.service.v1.BookService.Copy:output_type -> ledger.service.v1.Book
+	13, // 20: app.service.v1.BookService.Export:output_type -> ledger.service.v1.ExportBookResponse
+	11, // 21: app.service.v1.BookService.ListAllBooks:output_type -> ledger.service.v1.ListBookResponse
+	11, // [11:22] is the sub-list for method output_type
+	0,  // [0:11] is the sub-list for method input_type
+	0,  // [0:0] is the sub-list for extension type_name
+	0,  // [0:0] is the sub-list for extension extendee
+	0,  // [0:0] is the sub-list for field type_name
 }
 
 func init() { file_app_service_v1_i_book_proto_init() }

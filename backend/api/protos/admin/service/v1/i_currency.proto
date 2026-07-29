@@ -33,4 +33,11 @@ service CurrencyService {
       get: "/admin/v1/currencies/calc"
     };
   }
+
+  rpc ChangeRate (ledger.service.v1.ChangeRateRequest) returns (ledger.service.v1.Currency) {
+    option (google.api.http) = {
+      put: "/admin/v1/currencies/{id}/rate"
+      body: "*"
+    };
+  }
 }

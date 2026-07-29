@@ -166,6 +166,12 @@ export interface AccountService {
   AdjustBalance(
     request: ledgerservicev1_AdjustBalanceRequest,
   ): Promise<ledgerservicev1_Account>;
+  Overview(
+    request: ledgerservicev1_OverviewRequest,
+  ): Promise<ledgerservicev1_OverviewResponse>;
+  Statistics(
+    request: ledgerservicev1_AccountStatisticsRequest,
+  ): Promise<ledgerservicev1_AccountStatisticsResponse>;
 }
 
 export function createAccountServiceClient(
@@ -433,6 +439,32 @@ export function createAccountServiceClient(
         method: 'AdjustBalance',
       }) as Promise<ledgerservicev1_Account>;
     },
+    Overview(_request) {
+      const path = `admin/v1/accounts/overview`;
+      const body = null;
+      return transport.unary(path, 'GET', body, {
+        service: 'AccountService',
+        method: 'Overview',
+      }) as Promise<ledgerservicev1_OverviewResponse>;
+    },
+    Statistics(request) {
+      const path = `admin/v1/accounts/statistics`;
+      const body = null;
+      const queryParams: string[] = [];
+      if (request.currencyCode) {
+        queryParams.push(
+          `currencyCode=${encodeURIComponent(request.currencyCode.toString())}`,
+        );
+      }
+      let uri = path;
+      if (queryParams.length > 0) {
+        uri += `?${queryParams.join('&')}`;
+      }
+      return transport.unary(uri, 'GET', body, {
+        service: 'AccountService',
+        method: 'Statistics',
+      }) as Promise<ledgerservicev1_AccountStatisticsResponse>;
+    },
   };
 }
 // ------------------------------
@@ -692,6 +724,39 @@ export type ledgerservicev1_AdjustBalanceRequest = {
   id: number | undefined;
   notes?: string;
   title?: string;
+};
+
+// 请求 - 账户概览
+export type ledgerservicev1_OverviewRequest = {
+};
+
+// 回应 - 账户概览
+export type ledgerservicev1_OverviewResponse = {
+  assets: ledgerservicev1_AccountAsset[] | undefined;
+  debts: ledgerservicev1_AccountAsset[] | undefined;
+  netWorth: string | undefined;
+  totalAssets: string | undefined;
+  totalDebts: string | undefined;
+};
+
+// 账户资产/负债明细
+export type ledgerservicev1_AccountAsset = {
+  balance: string | undefined;
+  currencyCode: string | undefined;
+  name: string | undefined;
+  type: string | undefined;
+};
+
+// 请求 - 账户统计
+export type ledgerservicev1_AccountStatisticsRequest = {
+  currencyCode?: string;
+};
+
+// 回应 - 账户统计
+export type ledgerservicev1_AccountStatisticsResponse = {
+  totalAvailable: string | undefined;
+  totalBalance: string | undefined;
+  totalCreditLimit: string | undefined;
 };
 
 // 查询路由列表 - 回应
@@ -1887,6 +1952,18 @@ export interface BookService {
   Toggle(
     request: ledgerservicev1_ToggleBookRequest,
   ): Promise<ledgerservicev1_Book>;
+  CreateByTemplate(
+    request: ledgerservicev1_CreateBookByTemplateRequest,
+  ): Promise<ledgerservicev1_Book>;
+  Copy(
+    request: ledgerservicev1_CopyBookRequest,
+  ): Promise<ledgerservicev1_Book>;
+  Export(
+    request: ledgerservicev1_ExportBookRequest,
+  ): Promise<ledgerservicev1_ExportBookResponse>;
+  ListAllBooks(
+    request: wellKnownEmpty,
+  ): Promise<ledgerservicev1_ListBookResponse>;
 }
 
 export function createBookServiceClient(
@@ -2088,6 +2165,51 @@ export function createBookServiceClient(
         method: 'Toggle',
       }) as Promise<ledgerservicev1_Book>;
     },
+    CreateByTemplate(request) {
+      const path = `admin/v1/books/template`;
+      const body = JSON.stringify(request);
+      return transport.unary(path, 'POST', body, {
+        service: 'BookService',
+        method: 'CreateByTemplate',
+      }) as Promise<ledgerservicev1_Book>;
+    },
+    Copy(request) {
+      const path = `admin/v1/books/copy`;
+      const body = JSON.stringify(request);
+      return transport.unary(path, 'POST', body, {
+        service: 'BookService',
+        method: 'Copy',
+      }) as Promise<ledgerservicev1_Book>;
+    },
+    Export(request) {
+      if (request.id === undefined || request.id === null) {
+        throw new Error('missing required field request.id');
+      }
+      const path = `admin/v1/books/${request.id}/export`;
+      const body = null;
+      const queryParams: string[] = [];
+      if (request.timeZoneOffset) {
+        queryParams.push(
+          `timeZoneOffset=${encodeURIComponent(request.timeZoneOffset.toString())}`,
+        );
+      }
+      let uri = path;
+      if (queryParams.length > 0) {
+        uri += `?${queryParams.join('&')}`;
+      }
+      return transport.unary(uri, 'GET', body, {
+        service: 'BookService',
+        method: 'Export',
+      }) as Promise<ledgerservicev1_ExportBookResponse>;
+    },
+    ListAllBooks(_request) {
+      const path = `admin/v1/books/select-all`;
+      const body = null;
+      return transport.unary(path, 'GET', body, {
+        service: 'BookService',
+        method: 'ListAllBooks',
+      }) as Promise<ledgerservicev1_ListBookResponse>;
+    },
   };
 }
 // 回应 - 账本列表
@@ -2153,6 +2275,107 @@ export type ledgerservicev1_DeleteBookRequest = {
 
 // 请求 - 切换启用/禁用
 export type ledgerservicev1_ToggleBookRequest = {
+  id: number | undefined;
+};
+
+// 请求 - 从模板创建账本
+export type ledgerservicev1_CreateBookByTemplateRequest = {
+  defaultCurrencyCode: string | undefined;
+  name: string | undefined;
+  notes?: string;
+  templateId: number | undefined;
+};
+
+// 请求 - 复制账本
+export type ledgerservicev1_CopyBookRequest = {
+  name: string | undefined;
+  notes?: string;
+  sourceBookId: number | undefined;
+};
+
+// 请求 - 导出账本流水
+export type ledgerservicev1_ExportBookRequest = {
+  id: number | undefined;
+  timeZoneOffset?: number;
+};
+
+// 回应 - 导出账本流水
+export type ledgerservicev1_ExportBookResponse = {
+  contentType: string | undefined;
+  data: string | undefined;
+  fileName: string | undefined;
+};
+
+// 账本模板服务（Admin BFF）
+export interface BookTemplateService {
+  ListAll(
+    request: wellKnownEmpty,
+  ): Promise<ledgerservicev1_ListBookTemplateResponse>;
+  Get(
+    request: ledgerservicev1_GetBookTemplateRequest,
+  ): Promise<ledgerservicev1_BookTemplate>;
+}
+
+export function createBookTemplateServiceClient(
+  transport: ClientTransport,
+): BookTemplateService {
+  return {
+    ListAll(_request) {
+      const path = `admin/v1/book-templates/all`;
+      const body = null;
+      return transport.unary(path, 'GET', body, {
+        service: 'BookTemplateService',
+        method: 'ListAll',
+      }) as Promise<ledgerservicev1_ListBookTemplateResponse>;
+    },
+    Get(request) {
+      if (request.id === undefined || request.id === null) {
+        throw new Error('missing required field request.id');
+      }
+      const path = `admin/v1/book-templates/${request.id}`;
+      const body = null;
+      return transport.unary(path, 'GET', body, {
+        service: 'BookTemplateService',
+        method: 'Get',
+      }) as Promise<ledgerservicev1_BookTemplate>;
+    },
+  };
+}
+// 回应 - 账本模板列表
+export type ledgerservicev1_ListBookTemplateResponse = {
+  items: ledgerservicev1_BookTemplate[] | undefined;
+};
+
+// 账本模板
+export type ledgerservicev1_BookTemplate = {
+  categories: ledgerservicev1_CategoryTemplate[] | undefined;
+  id?: number;
+  locale?: string;
+  name?: string;
+  payees: ledgerservicev1_PayeeTemplate[] | undefined;
+  tags: ledgerservicev1_TagTemplate[] | undefined;
+  thumbnail?: string;
+};
+
+// 分类模板
+export type ledgerservicev1_CategoryTemplate = {
+  level?: number;
+  name?: string;
+  type?: string;
+};
+
+// 标签模板
+export type ledgerservicev1_TagTemplate = {
+  name?: string;
+};
+
+// 收款人模板
+export type ledgerservicev1_PayeeTemplate = {
+  name?: string;
+};
+
+// 请求 - 获取单个账本模板
+export type ledgerservicev1_GetBookTemplateRequest = {
   id: number | undefined;
 };
 
@@ -3045,6 +3268,9 @@ export interface CurrencyService {
   Convert(
     request: ledgerservicev1_ConvertCurrencyRequest,
   ): Promise<ledgerservicev1_ConvertCurrencyResponse>;
+  ChangeRate(
+    request: ledgerservicev1_ChangeRateRequest,
+  ): Promise<ledgerservicev1_Currency>;
 }
 
 export function createCurrencyServiceClient(
@@ -3210,6 +3436,17 @@ export function createCurrencyServiceClient(
         method: 'Convert',
       }) as Promise<ledgerservicev1_ConvertCurrencyResponse>;
     },
+    ChangeRate(request) {
+      if (request.id === undefined || request.id === null) {
+        throw new Error('missing required field request.id');
+      }
+      const path = `admin/v1/currencies/${request.id}/rate`;
+      const body = JSON.stringify(request);
+      return transport.unary(path, 'PUT', body, {
+        service: 'CurrencyService',
+        method: 'ChangeRate',
+      }) as Promise<ledgerservicev1_Currency>;
+    },
   };
 }
 // 请求 - 获取所有币种
@@ -3244,6 +3481,12 @@ export type ledgerservicev1_ConvertCurrencyRequest = {
 // 回应 - 币种转换
 export type ledgerservicev1_ConvertCurrencyResponse = {
   amount: string | undefined;
+  rate: string | undefined;
+};
+
+// 请求 - 手动修改币种汇率
+export type ledgerservicev1_ChangeRateRequest = {
+  id: number | undefined;
   rate: string | undefined;
 };
 
@@ -13456,6 +13699,7 @@ export class ApiClient {
   private _authenticationService?: AuthenticationService;
   private _balanceFlowService?: BalanceFlowService;
   private _bookService?: BookService;
+  private _bookTemplateService?: BookTemplateService;
   private _budgetService?: BudgetService;
   private _categoryService?: CategoryService;
   private _commentService?: CommentService;
@@ -13531,6 +13775,10 @@ export class ApiClient {
 
   get bookService(): BookService {
     return this._bookService ??= createBookServiceClient(this._transport);
+  }
+
+  get bookTemplateService(): BookTemplateService {
+    return this._bookTemplateService ??= createBookTemplateServiceClient(this._transport);
   }
 
   get budgetService(): BudgetService {

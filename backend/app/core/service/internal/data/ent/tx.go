@@ -22,6 +22,8 @@ type Tx struct {
 	BalanceFlow *BalanceFlowClient
 	// Book is the client for interacting with the Book builders.
 	Book *BookClient
+	// BookTemplate is the client for interacting with the BookTemplate builders.
+	BookTemplate *BookTemplateClient
 	// Budget is the client for interacting with the Budget builders.
 	Budget *BudgetClient
 	// Category is the client for interacting with the Category builders.
@@ -234,6 +236,7 @@ func (tx *Tx) init() {
 	tx.ApiAuditLog = NewApiAuditLogClient(tx.config)
 	tx.BalanceFlow = NewBalanceFlowClient(tx.config)
 	tx.Book = NewBookClient(tx.config)
+	tx.BookTemplate = NewBookTemplateClient(tx.config)
 	tx.Budget = NewBudgetClient(tx.config)
 	tx.Category = NewCategoryClient(tx.config)
 	tx.CategoryRelation = NewCategoryRelationClient(tx.config)

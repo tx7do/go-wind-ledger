@@ -22,20 +22,28 @@ var _ = binding.EncodeURL
 
 const _ = http.SupportPackageIsVersion1
 
+const OperationBookServiceCopy = "/app.service.v1.BookService/Copy"
 const OperationBookServiceCreate = "/app.service.v1.BookService/Create"
+const OperationBookServiceCreateByTemplate = "/app.service.v1.BookService/CreateByTemplate"
 const OperationBookServiceDelete = "/app.service.v1.BookService/Delete"
+const OperationBookServiceExport = "/app.service.v1.BookService/Export"
 const OperationBookServiceGet = "/app.service.v1.BookService/Get"
 const OperationBookServiceList = "/app.service.v1.BookService/List"
 const OperationBookServiceListAll = "/app.service.v1.BookService/ListAll"
+const OperationBookServiceListAllBooks = "/app.service.v1.BookService/ListAllBooks"
 const OperationBookServiceToggle = "/app.service.v1.BookService/Toggle"
 const OperationBookServiceUpdate = "/app.service.v1.BookService/Update"
 
 type BookServiceHTTPServer interface {
+	Copy(context.Context, *v11.CopyBookRequest) (*v11.Book, error)
 	Create(context.Context, *v11.CreateBookRequest) (*v11.Book, error)
+	CreateByTemplate(context.Context, *v11.CreateBookByTemplateRequest) (*v11.Book, error)
 	Delete(context.Context, *v11.DeleteBookRequest) (*emptypb.Empty, error)
+	Export(context.Context, *v11.ExportBookRequest) (*v11.ExportBookResponse, error)
 	Get(context.Context, *v11.GetBookRequest) (*v11.Book, error)
 	List(context.Context, *v1.PagingRequest) (*v11.ListBookResponse, error)
 	ListAll(context.Context, *v11.ListAllBookRequest) (*v11.ListBookResponse, error)
+	ListAllBooks(context.Context, *emptypb.Empty) (*v11.ListBookResponse, error)
 	Toggle(context.Context, *v11.ToggleBookRequest) (*v11.Book, error)
 	Update(context.Context, *v11.UpdateBookRequest) (*v11.Book, error)
 }
@@ -49,6 +57,10 @@ func RegisterBookServiceHTTPServer(s *http.Server, srv BookServiceHTTPServer) {
 	r.PUT("/app/v1/books/{id}", _BookService_Update2_HTTP_Handler(srv))
 	r.DELETE("/app/v1/books/{id}", _BookService_Delete2_HTTP_Handler(srv))
 	r.PATCH("/app/v1/books/{id}/toggle", _BookService_Toggle1_HTTP_Handler(srv))
+	r.POST("/app/v1/books/template", _BookService_CreateByTemplate0_HTTP_Handler(srv))
+	r.POST("/app/v1/books/copy", _BookService_Copy0_HTTP_Handler(srv))
+	r.GET("/app/v1/books/{id}/export", _BookService_Export0_HTTP_Handler(srv))
+	r.GET("/app/v1/books/select-all", _BookService_ListAllBooks0_HTTP_Handler(srv))
 }
 
 func _BookService_List2_HTTP_Handler(srv BookServiceHTTPServer) func(ctx http.Context) error {
@@ -205,12 +217,101 @@ func _BookService_Toggle1_HTTP_Handler(srv BookServiceHTTPServer) func(ctx http.
 	}
 }
 
+func _BookService_CreateByTemplate0_HTTP_Handler(srv BookServiceHTTPServer) func(ctx http.Context) error {
+	return func(ctx http.Context) error {
+		var in v11.CreateBookByTemplateRequest
+		if err := ctx.Bind(&in); err != nil {
+			return err
+		}
+		if err := ctx.BindQuery(&in); err != nil {
+			return err
+		}
+		http.SetOperation(ctx, OperationBookServiceCreateByTemplate)
+		h := ctx.Middleware(func(ctx context.Context, req interface{}) (interface{}, error) {
+			return srv.CreateByTemplate(ctx, req.(*v11.CreateBookByTemplateRequest))
+		})
+		out, err := h(ctx, &in)
+		if err != nil {
+			return err
+		}
+		reply := out.(*v11.Book)
+		return ctx.Result(200, reply)
+	}
+}
+
+func _BookService_Copy0_HTTP_Handler(srv BookServiceHTTPServer) func(ctx http.Context) error {
+	return func(ctx http.Context) error {
+		var in v11.CopyBookRequest
+		if err := ctx.Bind(&in); err != nil {
+			return err
+		}
+		if err := ctx.BindQuery(&in); err != nil {
+			return err
+		}
+		http.SetOperation(ctx, OperationBookServiceCopy)
+		h := ctx.Middleware(func(ctx context.Context, req interface{}) (interface{}, error) {
+			return srv.Copy(ctx, req.(*v11.CopyBookRequest))
+		})
+		out, err := h(ctx, &in)
+		if err != nil {
+			return err
+		}
+		reply := out.(*v11.Book)
+		return ctx.Result(200, reply)
+	}
+}
+
+func _BookService_Export0_HTTP_Handler(srv BookServiceHTTPServer) func(ctx http.Context) error {
+	return func(ctx http.Context) error {
+		var in v11.ExportBookRequest
+		if err := ctx.BindQuery(&in); err != nil {
+			return err
+		}
+		if err := ctx.BindVars(&in); err != nil {
+			return err
+		}
+		http.SetOperation(ctx, OperationBookServiceExport)
+		h := ctx.Middleware(func(ctx context.Context, req interface{}) (interface{}, error) {
+			return srv.Export(ctx, req.(*v11.ExportBookRequest))
+		})
+		out, err := h(ctx, &in)
+		if err != nil {
+			return err
+		}
+		reply := out.(*v11.ExportBookResponse)
+		return ctx.Result(200, reply)
+	}
+}
+
+func _BookService_ListAllBooks0_HTTP_Handler(srv BookServiceHTTPServer) func(ctx http.Context) error {
+	return func(ctx http.Context) error {
+		var in emptypb.Empty
+		if err := ctx.BindQuery(&in); err != nil {
+			return err
+		}
+		http.SetOperation(ctx, OperationBookServiceListAllBooks)
+		h := ctx.Middleware(func(ctx context.Context, req interface{}) (interface{}, error) {
+			return srv.ListAllBooks(ctx, req.(*emptypb.Empty))
+		})
+		out, err := h(ctx, &in)
+		if err != nil {
+			return err
+		}
+		reply := out.(*v11.ListBookResponse)
+		return ctx.Result(200, reply)
+	}
+}
+
 type BookServiceHTTPClient interface {
+	Copy(ctx context.Context, req *v11.CopyBookRequest, opts ...http.CallOption) (rsp *v11.Book, err error)
 	Create(ctx context.Context, req *v11.CreateBookRequest, opts ...http.CallOption) (rsp *v11.Book, err error)
+	CreateByTemplate(ctx context.Context, req *v11.CreateBookByTemplateRequest, opts ...http.CallOption) (rsp *v11.Book, err error)
 	Delete(ctx context.Context, req *v11.DeleteBookRequest, opts ...http.CallOption) (rsp *emptypb.Empty, err error)
+	Export(ctx context.Context, req *v11.ExportBookRequest, opts ...http.CallOption) (rsp *v11.ExportBookResponse, err error)
 	Get(ctx context.Context, req *v11.GetBookRequest, opts ...http.CallOption) (rsp *v11.Book, err error)
 	List(ctx context.Context, req *v1.PagingRequest, opts ...http.CallOption) (rsp *v11.ListBookResponse, err error)
 	ListAll(ctx context.Context, req *v11.ListAllBookRequest, opts ...http.CallOption) (rsp *v11.ListBookResponse, err error)
+	ListAllBooks(ctx context.Context, req *emptypb.Empty, opts ...http.CallOption) (rsp *v11.ListBookResponse, err error)
 	Toggle(ctx context.Context, req *v11.ToggleBookRequest, opts ...http.CallOption) (rsp *v11.Book, err error)
 	Update(ctx context.Context, req *v11.UpdateBookRequest, opts ...http.CallOption) (rsp *v11.Book, err error)
 }
@@ -221,6 +322,19 @@ type BookServiceHTTPClientImpl struct {
 
 func NewBookServiceHTTPClient(client *http.Client) BookServiceHTTPClient {
 	return &BookServiceHTTPClientImpl{client}
+}
+
+func (c *BookServiceHTTPClientImpl) Copy(ctx context.Context, in *v11.CopyBookRequest, opts ...http.CallOption) (*v11.Book, error) {
+	var out v11.Book
+	pattern := "/app/v1/books/copy"
+	path := binding.EncodeURL(pattern, in, false)
+	opts = append(opts, http.Operation(OperationBookServiceCopy))
+	opts = append(opts, http.PathTemplate(pattern))
+	err := c.cc.Invoke(ctx, "POST", path, in, &out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return &out, nil
 }
 
 func (c *BookServiceHTTPClientImpl) Create(ctx context.Context, in *v11.CreateBookRequest, opts ...http.CallOption) (*v11.Book, error) {
@@ -236,6 +350,19 @@ func (c *BookServiceHTTPClientImpl) Create(ctx context.Context, in *v11.CreateBo
 	return &out, nil
 }
 
+func (c *BookServiceHTTPClientImpl) CreateByTemplate(ctx context.Context, in *v11.CreateBookByTemplateRequest, opts ...http.CallOption) (*v11.Book, error) {
+	var out v11.Book
+	pattern := "/app/v1/books/template"
+	path := binding.EncodeURL(pattern, in, false)
+	opts = append(opts, http.Operation(OperationBookServiceCreateByTemplate))
+	opts = append(opts, http.PathTemplate(pattern))
+	err := c.cc.Invoke(ctx, "POST", path, in, &out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return &out, nil
+}
+
 func (c *BookServiceHTTPClientImpl) Delete(ctx context.Context, in *v11.DeleteBookRequest, opts ...http.CallOption) (*emptypb.Empty, error) {
 	var out emptypb.Empty
 	pattern := "/app/v1/books/{id}"
@@ -243,6 +370,19 @@ func (c *BookServiceHTTPClientImpl) Delete(ctx context.Context, in *v11.DeleteBo
 	opts = append(opts, http.Operation(OperationBookServiceDelete))
 	opts = append(opts, http.PathTemplate(pattern))
 	err := c.cc.Invoke(ctx, "DELETE", path, nil, &out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return &out, nil
+}
+
+func (c *BookServiceHTTPClientImpl) Export(ctx context.Context, in *v11.ExportBookRequest, opts ...http.CallOption) (*v11.ExportBookResponse, error) {
+	var out v11.ExportBookResponse
+	pattern := "/app/v1/books/{id}/export"
+	path := binding.EncodeURL(pattern, in, true)
+	opts = append(opts, http.Operation(OperationBookServiceExport))
+	opts = append(opts, http.PathTemplate(pattern))
+	err := c.cc.Invoke(ctx, "GET", path, nil, &out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -280,6 +420,19 @@ func (c *BookServiceHTTPClientImpl) ListAll(ctx context.Context, in *v11.ListAll
 	pattern := "/app/v1/books/all"
 	path := binding.EncodeURL(pattern, in, true)
 	opts = append(opts, http.Operation(OperationBookServiceListAll))
+	opts = append(opts, http.PathTemplate(pattern))
+	err := c.cc.Invoke(ctx, "GET", path, nil, &out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return &out, nil
+}
+
+func (c *BookServiceHTTPClientImpl) ListAllBooks(ctx context.Context, in *emptypb.Empty, opts ...http.CallOption) (*v11.ListBookResponse, error) {
+	var out v11.ListBookResponse
+	pattern := "/app/v1/books/select-all"
+	path := binding.EncodeURL(pattern, in, true)
+	opts = append(opts, http.Operation(OperationBookServiceListAllBooks))
 	opts = append(opts, http.PathTemplate(pattern))
 	err := c.cc.Invoke(ctx, "GET", path, nil, &out, opts...)
 	if err != nil {

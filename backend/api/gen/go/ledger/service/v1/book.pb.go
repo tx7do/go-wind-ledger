@@ -580,6 +580,250 @@ func (x *ToggleBookRequest) GetId() uint32 {
 	return 0
 }
 
+// 请求 - 从模板创建账本
+type CreateBookByTemplateRequest struct {
+	state               protoimpl.MessageState `protogen:"open.v1"`
+	Name                string                 `protobuf:"bytes,1,opt,name=name,proto3" json:"name,omitempty"`
+	DefaultCurrencyCode string                 `protobuf:"bytes,2,opt,name=default_currency_code,json=defaultCurrencyCode,proto3" json:"default_currency_code,omitempty"`
+	TemplateId          uint32                 `protobuf:"varint,3,opt,name=template_id,json=templateId,proto3" json:"template_id,omitempty"`
+	Notes               *string                `protobuf:"bytes,4,opt,name=notes,proto3,oneof" json:"notes,omitempty"`
+	unknownFields       protoimpl.UnknownFields
+	sizeCache           protoimpl.SizeCache
+}
+
+func (x *CreateBookByTemplateRequest) Reset() {
+	*x = CreateBookByTemplateRequest{}
+	mi := &file_ledger_service_v1_book_proto_msgTypes[8]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *CreateBookByTemplateRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*CreateBookByTemplateRequest) ProtoMessage() {}
+
+func (x *CreateBookByTemplateRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_ledger_service_v1_book_proto_msgTypes[8]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use CreateBookByTemplateRequest.ProtoReflect.Descriptor instead.
+func (*CreateBookByTemplateRequest) Descriptor() ([]byte, []int) {
+	return file_ledger_service_v1_book_proto_rawDescGZIP(), []int{8}
+}
+
+func (x *CreateBookByTemplateRequest) GetName() string {
+	if x != nil {
+		return x.Name
+	}
+	return ""
+}
+
+func (x *CreateBookByTemplateRequest) GetDefaultCurrencyCode() string {
+	if x != nil {
+		return x.DefaultCurrencyCode
+	}
+	return ""
+}
+
+func (x *CreateBookByTemplateRequest) GetTemplateId() uint32 {
+	if x != nil {
+		return x.TemplateId
+	}
+	return 0
+}
+
+func (x *CreateBookByTemplateRequest) GetNotes() string {
+	if x != nil && x.Notes != nil {
+		return *x.Notes
+	}
+	return ""
+}
+
+// 请求 - 复制账本
+type CopyBookRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	SourceBookId  uint32                 `protobuf:"varint,1,opt,name=source_book_id,json=sourceBookId,proto3" json:"source_book_id,omitempty"`
+	Name          string                 `protobuf:"bytes,2,opt,name=name,proto3" json:"name,omitempty"`
+	Notes         *string                `protobuf:"bytes,3,opt,name=notes,proto3,oneof" json:"notes,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *CopyBookRequest) Reset() {
+	*x = CopyBookRequest{}
+	mi := &file_ledger_service_v1_book_proto_msgTypes[9]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *CopyBookRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*CopyBookRequest) ProtoMessage() {}
+
+func (x *CopyBookRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_ledger_service_v1_book_proto_msgTypes[9]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use CopyBookRequest.ProtoReflect.Descriptor instead.
+func (*CopyBookRequest) Descriptor() ([]byte, []int) {
+	return file_ledger_service_v1_book_proto_rawDescGZIP(), []int{9}
+}
+
+func (x *CopyBookRequest) GetSourceBookId() uint32 {
+	if x != nil {
+		return x.SourceBookId
+	}
+	return 0
+}
+
+func (x *CopyBookRequest) GetName() string {
+	if x != nil {
+		return x.Name
+	}
+	return ""
+}
+
+func (x *CopyBookRequest) GetNotes() string {
+	if x != nil && x.Notes != nil {
+		return *x.Notes
+	}
+	return ""
+}
+
+// 请求 - 导出账本流水
+type ExportBookRequest struct {
+	state          protoimpl.MessageState `protogen:"open.v1"`
+	Id             uint32                 `protobuf:"varint,1,opt,name=id,proto3" json:"id,omitempty"`
+	TimeZoneOffset *int32                 `protobuf:"varint,2,opt,name=time_zone_offset,json=timeZoneOffset,proto3,oneof" json:"time_zone_offset,omitempty"`
+	unknownFields  protoimpl.UnknownFields
+	sizeCache      protoimpl.SizeCache
+}
+
+func (x *ExportBookRequest) Reset() {
+	*x = ExportBookRequest{}
+	mi := &file_ledger_service_v1_book_proto_msgTypes[10]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *ExportBookRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ExportBookRequest) ProtoMessage() {}
+
+func (x *ExportBookRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_ledger_service_v1_book_proto_msgTypes[10]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ExportBookRequest.ProtoReflect.Descriptor instead.
+func (*ExportBookRequest) Descriptor() ([]byte, []int) {
+	return file_ledger_service_v1_book_proto_rawDescGZIP(), []int{10}
+}
+
+func (x *ExportBookRequest) GetId() uint32 {
+	if x != nil {
+		return x.Id
+	}
+	return 0
+}
+
+func (x *ExportBookRequest) GetTimeZoneOffset() int32 {
+	if x != nil && x.TimeZoneOffset != nil {
+		return *x.TimeZoneOffset
+	}
+	return 0
+}
+
+// 回应 - 导出账本流水
+type ExportBookResponse struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	FileName      string                 `protobuf:"bytes,1,opt,name=file_name,json=fileName,proto3" json:"file_name,omitempty"`
+	ContentType   string                 `protobuf:"bytes,2,opt,name=content_type,json=contentType,proto3" json:"content_type,omitempty"`
+	Data          []byte                 `protobuf:"bytes,3,opt,name=data,proto3" json:"data,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *ExportBookResponse) Reset() {
+	*x = ExportBookResponse{}
+	mi := &file_ledger_service_v1_book_proto_msgTypes[11]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *ExportBookResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ExportBookResponse) ProtoMessage() {}
+
+func (x *ExportBookResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_ledger_service_v1_book_proto_msgTypes[11]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ExportBookResponse.ProtoReflect.Descriptor instead.
+func (*ExportBookResponse) Descriptor() ([]byte, []int) {
+	return file_ledger_service_v1_book_proto_rawDescGZIP(), []int{11}
+}
+
+func (x *ExportBookResponse) GetFileName() string {
+	if x != nil {
+		return x.FileName
+	}
+	return ""
+}
+
+func (x *ExportBookResponse) GetContentType() string {
+	if x != nil {
+		return x.ContentType
+	}
+	return ""
+}
+
+func (x *ExportBookResponse) GetData() []byte {
+	if x != nil {
+		return x.Data
+	}
+	return nil
+}
+
 var File_ledger_service_v1_book_proto protoreflect.FileDescriptor
 
 const file_ledger_service_v1_book_proto_rawDesc = "" +
@@ -660,7 +904,27 @@ const file_ledger_service_v1_book_proto_rawDesc = "" +
 	"\x11DeleteBookRequest\x12\x1e\n" +
 	"\x02id\x18\x01 \x01(\rB\x0e\xbaG\v\x92\x02\b账本IDR\x02id\"3\n" +
 	"\x11ToggleBookRequest\x12\x1e\n" +
-	"\x02id\x18\x01 \x01(\rB\x0e\xbaG\v\x92\x02\b账本IDR\x02id2\xa0\x04\n" +
+	"\x02id\x18\x01 \x01(\rB\x0e\xbaG\v\x92\x02\b账本IDR\x02id\"\xab\x01\n" +
+	"\x1bCreateBookByTemplateRequest\x12\x12\n" +
+	"\x04name\x18\x01 \x01(\tR\x04name\x122\n" +
+	"\x15default_currency_code\x18\x02 \x01(\tR\x13defaultCurrencyCode\x12\x1f\n" +
+	"\vtemplate_id\x18\x03 \x01(\rR\n" +
+	"templateId\x12\x19\n" +
+	"\x05notes\x18\x04 \x01(\tH\x00R\x05notes\x88\x01\x01B\b\n" +
+	"\x06_notes\"p\n" +
+	"\x0fCopyBookRequest\x12$\n" +
+	"\x0esource_book_id\x18\x01 \x01(\rR\fsourceBookId\x12\x12\n" +
+	"\x04name\x18\x02 \x01(\tR\x04name\x12\x19\n" +
+	"\x05notes\x18\x03 \x01(\tH\x00R\x05notes\x88\x01\x01B\b\n" +
+	"\x06_notes\"g\n" +
+	"\x11ExportBookRequest\x12\x0e\n" +
+	"\x02id\x18\x01 \x01(\rR\x02id\x12-\n" +
+	"\x10time_zone_offset\x18\x02 \x01(\x05H\x00R\x0etimeZoneOffset\x88\x01\x01B\x13\n" +
+	"\x11_time_zone_offset\"h\n" +
+	"\x12ExportBookResponse\x12\x1b\n" +
+	"\tfile_name\x18\x01 \x01(\tR\bfileName\x12!\n" +
+	"\fcontent_type\x18\x02 \x01(\tR\vcontentType\x12\x12\n" +
+	"\x04data\x18\x03 \x01(\fR\x04data2\xee\x06\n" +
 	"\vBookService\x12H\n" +
 	"\x04List\x12\x19.pagination.PagingRequest\x1a#.ledger.service.v1.ListBookResponse\"\x00\x12W\n" +
 	"\aListAll\x12%.ledger.service.v1.ListAllBookRequest\x1a#.ledger.service.v1.ListBookResponse\"\x00\x12C\n" +
@@ -668,7 +932,11 @@ const file_ledger_service_v1_book_proto_rawDesc = "" +
 	"\x06Create\x12$.ledger.service.v1.CreateBookRequest\x1a\x17.ledger.service.v1.Book\"\x00\x12I\n" +
 	"\x06Update\x12$.ledger.service.v1.UpdateBookRequest\x1a\x17.ledger.service.v1.Book\"\x00\x12H\n" +
 	"\x06Delete\x12$.ledger.service.v1.DeleteBookRequest\x1a\x16.google.protobuf.Empty\"\x00\x12I\n" +
-	"\x06Toggle\x12$.ledger.service.v1.ToggleBookRequest\x1a\x17.ledger.service.v1.Book\"\x00B\xbc\x01\n" +
+	"\x06Toggle\x12$.ledger.service.v1.ToggleBookRequest\x1a\x17.ledger.service.v1.Book\"\x00\x12]\n" +
+	"\x10CreateByTemplate\x12..ledger.service.v1.CreateBookByTemplateRequest\x1a\x17.ledger.service.v1.Book\"\x00\x12E\n" +
+	"\x04Copy\x12\".ledger.service.v1.CopyBookRequest\x1a\x17.ledger.service.v1.Book\"\x00\x12W\n" +
+	"\x06Export\x12$.ledger.service.v1.ExportBookRequest\x1a%.ledger.service.v1.ExportBookResponse\"\x00\x12M\n" +
+	"\fListAllBooks\x12\x16.google.protobuf.Empty\x1a#.ledger.service.v1.ListBookResponse\"\x00B\xbc\x01\n" +
 	"\x15com.ledger.service.v1B\tBookProtoP\x01Z2go-wind-cms/api/gen/go/ledger/service/v1;servicev1\xa2\x02\x03LSX\xaa\x02\x11Ledger.Service.V1\xca\x02\x11Ledger\\Service\\V1\xe2\x02\x1dLedger\\Service\\V1\\GPBMetadata\xea\x02\x13Ledger::Service::V1b\x06proto3"
 
 var (
@@ -683,46 +951,58 @@ func file_ledger_service_v1_book_proto_rawDescGZIP() []byte {
 	return file_ledger_service_v1_book_proto_rawDescData
 }
 
-var file_ledger_service_v1_book_proto_msgTypes = make([]protoimpl.MessageInfo, 8)
+var file_ledger_service_v1_book_proto_msgTypes = make([]protoimpl.MessageInfo, 12)
 var file_ledger_service_v1_book_proto_goTypes = []any{
-	(*Book)(nil),                  // 0: ledger.service.v1.Book
-	(*ListBookResponse)(nil),      // 1: ledger.service.v1.ListBookResponse
-	(*ListAllBookRequest)(nil),    // 2: ledger.service.v1.ListAllBookRequest
-	(*GetBookRequest)(nil),        // 3: ledger.service.v1.GetBookRequest
-	(*CreateBookRequest)(nil),     // 4: ledger.service.v1.CreateBookRequest
-	(*UpdateBookRequest)(nil),     // 5: ledger.service.v1.UpdateBookRequest
-	(*DeleteBookRequest)(nil),     // 6: ledger.service.v1.DeleteBookRequest
-	(*ToggleBookRequest)(nil),     // 7: ledger.service.v1.ToggleBookRequest
-	(*timestamppb.Timestamp)(nil), // 8: google.protobuf.Timestamp
-	(*fieldmaskpb.FieldMask)(nil), // 9: google.protobuf.FieldMask
-	(*v1.PagingRequest)(nil),      // 10: pagination.PagingRequest
-	(*emptypb.Empty)(nil),         // 11: google.protobuf.Empty
+	(*Book)(nil),                        // 0: ledger.service.v1.Book
+	(*ListBookResponse)(nil),            // 1: ledger.service.v1.ListBookResponse
+	(*ListAllBookRequest)(nil),          // 2: ledger.service.v1.ListAllBookRequest
+	(*GetBookRequest)(nil),              // 3: ledger.service.v1.GetBookRequest
+	(*CreateBookRequest)(nil),           // 4: ledger.service.v1.CreateBookRequest
+	(*UpdateBookRequest)(nil),           // 5: ledger.service.v1.UpdateBookRequest
+	(*DeleteBookRequest)(nil),           // 6: ledger.service.v1.DeleteBookRequest
+	(*ToggleBookRequest)(nil),           // 7: ledger.service.v1.ToggleBookRequest
+	(*CreateBookByTemplateRequest)(nil), // 8: ledger.service.v1.CreateBookByTemplateRequest
+	(*CopyBookRequest)(nil),             // 9: ledger.service.v1.CopyBookRequest
+	(*ExportBookRequest)(nil),           // 10: ledger.service.v1.ExportBookRequest
+	(*ExportBookResponse)(nil),          // 11: ledger.service.v1.ExportBookResponse
+	(*timestamppb.Timestamp)(nil),       // 12: google.protobuf.Timestamp
+	(*fieldmaskpb.FieldMask)(nil),       // 13: google.protobuf.FieldMask
+	(*v1.PagingRequest)(nil),            // 14: pagination.PagingRequest
+	(*emptypb.Empty)(nil),               // 15: google.protobuf.Empty
 }
 var file_ledger_service_v1_book_proto_depIdxs = []int32{
-	8,  // 0: ledger.service.v1.Book.created_at:type_name -> google.protobuf.Timestamp
-	8,  // 1: ledger.service.v1.Book.updated_at:type_name -> google.protobuf.Timestamp
-	8,  // 2: ledger.service.v1.Book.deleted_at:type_name -> google.protobuf.Timestamp
+	12, // 0: ledger.service.v1.Book.created_at:type_name -> google.protobuf.Timestamp
+	12, // 1: ledger.service.v1.Book.updated_at:type_name -> google.protobuf.Timestamp
+	12, // 2: ledger.service.v1.Book.deleted_at:type_name -> google.protobuf.Timestamp
 	0,  // 3: ledger.service.v1.ListBookResponse.items:type_name -> ledger.service.v1.Book
-	9,  // 4: ledger.service.v1.GetBookRequest.view_mask:type_name -> google.protobuf.FieldMask
+	13, // 4: ledger.service.v1.GetBookRequest.view_mask:type_name -> google.protobuf.FieldMask
 	0,  // 5: ledger.service.v1.CreateBookRequest.data:type_name -> ledger.service.v1.Book
 	0,  // 6: ledger.service.v1.UpdateBookRequest.data:type_name -> ledger.service.v1.Book
-	9,  // 7: ledger.service.v1.UpdateBookRequest.update_mask:type_name -> google.protobuf.FieldMask
-	10, // 8: ledger.service.v1.BookService.List:input_type -> pagination.PagingRequest
+	13, // 7: ledger.service.v1.UpdateBookRequest.update_mask:type_name -> google.protobuf.FieldMask
+	14, // 8: ledger.service.v1.BookService.List:input_type -> pagination.PagingRequest
 	2,  // 9: ledger.service.v1.BookService.ListAll:input_type -> ledger.service.v1.ListAllBookRequest
 	3,  // 10: ledger.service.v1.BookService.Get:input_type -> ledger.service.v1.GetBookRequest
 	4,  // 11: ledger.service.v1.BookService.Create:input_type -> ledger.service.v1.CreateBookRequest
 	5,  // 12: ledger.service.v1.BookService.Update:input_type -> ledger.service.v1.UpdateBookRequest
 	6,  // 13: ledger.service.v1.BookService.Delete:input_type -> ledger.service.v1.DeleteBookRequest
 	7,  // 14: ledger.service.v1.BookService.Toggle:input_type -> ledger.service.v1.ToggleBookRequest
-	1,  // 15: ledger.service.v1.BookService.List:output_type -> ledger.service.v1.ListBookResponse
-	1,  // 16: ledger.service.v1.BookService.ListAll:output_type -> ledger.service.v1.ListBookResponse
-	0,  // 17: ledger.service.v1.BookService.Get:output_type -> ledger.service.v1.Book
-	0,  // 18: ledger.service.v1.BookService.Create:output_type -> ledger.service.v1.Book
-	0,  // 19: ledger.service.v1.BookService.Update:output_type -> ledger.service.v1.Book
-	11, // 20: ledger.service.v1.BookService.Delete:output_type -> google.protobuf.Empty
-	0,  // 21: ledger.service.v1.BookService.Toggle:output_type -> ledger.service.v1.Book
-	15, // [15:22] is the sub-list for method output_type
-	8,  // [8:15] is the sub-list for method input_type
+	8,  // 15: ledger.service.v1.BookService.CreateByTemplate:input_type -> ledger.service.v1.CreateBookByTemplateRequest
+	9,  // 16: ledger.service.v1.BookService.Copy:input_type -> ledger.service.v1.CopyBookRequest
+	10, // 17: ledger.service.v1.BookService.Export:input_type -> ledger.service.v1.ExportBookRequest
+	15, // 18: ledger.service.v1.BookService.ListAllBooks:input_type -> google.protobuf.Empty
+	1,  // 19: ledger.service.v1.BookService.List:output_type -> ledger.service.v1.ListBookResponse
+	1,  // 20: ledger.service.v1.BookService.ListAll:output_type -> ledger.service.v1.ListBookResponse
+	0,  // 21: ledger.service.v1.BookService.Get:output_type -> ledger.service.v1.Book
+	0,  // 22: ledger.service.v1.BookService.Create:output_type -> ledger.service.v1.Book
+	0,  // 23: ledger.service.v1.BookService.Update:output_type -> ledger.service.v1.Book
+	15, // 24: ledger.service.v1.BookService.Delete:output_type -> google.protobuf.Empty
+	0,  // 25: ledger.service.v1.BookService.Toggle:output_type -> ledger.service.v1.Book
+	0,  // 26: ledger.service.v1.BookService.CreateByTemplate:output_type -> ledger.service.v1.Book
+	0,  // 27: ledger.service.v1.BookService.Copy:output_type -> ledger.service.v1.Book
+	11, // 28: ledger.service.v1.BookService.Export:output_type -> ledger.service.v1.ExportBookResponse
+	1,  // 29: ledger.service.v1.BookService.ListAllBooks:output_type -> ledger.service.v1.ListBookResponse
+	19, // [19:30] is the sub-list for method output_type
+	8,  // [8:19] is the sub-list for method input_type
 	8,  // [8:8] is the sub-list for extension type_name
 	8,  // [8:8] is the sub-list for extension extendee
 	0,  // [0:8] is the sub-list for field type_name
@@ -737,13 +1017,16 @@ func file_ledger_service_v1_book_proto_init() {
 	file_ledger_service_v1_book_proto_msgTypes[2].OneofWrappers = []any{}
 	file_ledger_service_v1_book_proto_msgTypes[3].OneofWrappers = []any{}
 	file_ledger_service_v1_book_proto_msgTypes[5].OneofWrappers = []any{}
+	file_ledger_service_v1_book_proto_msgTypes[8].OneofWrappers = []any{}
+	file_ledger_service_v1_book_proto_msgTypes[9].OneofWrappers = []any{}
+	file_ledger_service_v1_book_proto_msgTypes[10].OneofWrappers = []any{}
 	type x struct{}
 	out := protoimpl.TypeBuilder{
 		File: protoimpl.DescBuilder{
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_ledger_service_v1_book_proto_rawDesc), len(file_ledger_service_v1_book_proto_rawDesc)),
 			NumEnums:      0,
-			NumMessages:   8,
+			NumMessages:   12,
 			NumExtensions: 0,
 			NumServices:   1,
 		},

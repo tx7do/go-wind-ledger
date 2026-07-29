@@ -324,6 +324,14 @@ func NewBookServiceClient(ctx *bootstrap.Context, r registry.Discovery) ledgerV1
 	return ledgerV1.NewBookServiceClient(cli)
 }
 
+func NewBookTemplateServiceClient(ctx *bootstrap.Context, r registry.Discovery) ledgerV1.BookTemplateServiceClient {
+	cli, err := rpc.CreateGrpcClient(ctx.Context(), r, serviceid.NewDiscoveryName(serviceid.CoreService), ctx.GetConfig())
+	if err != nil {
+		return nil
+	}
+	return ledgerV1.NewBookTemplateServiceClient(cli)
+}
+
 func NewAccountServiceClient(ctx *bootstrap.Context, r registry.Discovery) ledgerV1.AccountServiceClient {
 	cli, err := rpc.CreateGrpcClient(ctx.Context(), r, serviceid.NewDiscoveryName(serviceid.CoreService), ctx.GetConfig())
 	if err != nil {

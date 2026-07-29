@@ -21,6 +21,9 @@ type BalanceFlow func(*sql.Selector)
 // Book is the predicate function for book builders.
 type Book func(*sql.Selector)
 
+// BookTemplate is the predicate function for booktemplate builders.
+type BookTemplate func(*sql.Selector)
+
 // Budget is the predicate function for budget builders.
 type Budget func(*sql.Selector)
 

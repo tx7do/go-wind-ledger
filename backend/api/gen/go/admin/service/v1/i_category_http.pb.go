@@ -43,8 +43,8 @@ type CategoryServiceHTTPServer interface {
 func RegisterCategoryServiceHTTPServer(s *http.Server, srv CategoryServiceHTTPServer) {
 	r := s.Route("/")
 	r.GET("/admin/v1/categories", _CategoryService_List6_HTTP_Handler(srv))
-	r.GET("/admin/v1/categories/all", _CategoryService_ListAll3_HTTP_Handler(srv))
-	r.GET("/admin/v1/categories/{id}", _CategoryService_Get6_HTTP_Handler(srv))
+	r.GET("/admin/v1/categories/all", _CategoryService_ListAll4_HTTP_Handler(srv))
+	r.GET("/admin/v1/categories/{id}", _CategoryService_Get7_HTTP_Handler(srv))
 	r.POST("/admin/v1/categories", _CategoryService_Create5_HTTP_Handler(srv))
 	r.PUT("/admin/v1/categories/{id}", _CategoryService_Update5_HTTP_Handler(srv))
 	r.DELETE("/admin/v1/categories/{id}", _CategoryService_Delete5_HTTP_Handler(srv))
@@ -70,7 +70,7 @@ func _CategoryService_List6_HTTP_Handler(srv CategoryServiceHTTPServer) func(ctx
 	}
 }
 
-func _CategoryService_ListAll3_HTTP_Handler(srv CategoryServiceHTTPServer) func(ctx http.Context) error {
+func _CategoryService_ListAll4_HTTP_Handler(srv CategoryServiceHTTPServer) func(ctx http.Context) error {
 	return func(ctx http.Context) error {
 		var in v11.ListAllCategoryRequest
 		if err := ctx.BindQuery(&in); err != nil {
@@ -89,7 +89,7 @@ func _CategoryService_ListAll3_HTTP_Handler(srv CategoryServiceHTTPServer) func(
 	}
 }
 
-func _CategoryService_Get6_HTTP_Handler(srv CategoryServiceHTTPServer) func(ctx http.Context) error {
+func _CategoryService_Get7_HTTP_Handler(srv CategoryServiceHTTPServer) func(ctx http.Context) error {
 	return func(ctx http.Context) error {
 		var in v11.GetCategoryRequest
 		if err := ctx.BindQuery(&in); err != nil {

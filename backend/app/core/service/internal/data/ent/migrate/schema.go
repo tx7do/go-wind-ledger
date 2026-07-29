@@ -256,6 +256,23 @@ var (
 			},
 		},
 	}
+	// BookTemplatesColumns holds the columns for the "book_templates" table.
+	BookTemplatesColumns = []*schema.Column{
+		{Name: "id", Type: field.TypeUint32, Increment: true, Comment: "id"},
+		{Name: "created_at", Type: field.TypeTime, Nullable: true, Comment: "创建时间"},
+		{Name: "updated_at", Type: field.TypeTime, Nullable: true, Comment: "更新时间"},
+		{Name: "deleted_at", Type: field.TypeTime, Nullable: true, Comment: "删除时间"},
+		{Name: "name", Type: field.TypeString, Nullable: true, Size: 64, Comment: "模板名称"},
+		{Name: "locale", Type: field.TypeString, Nullable: true, Size: 16, Comment: "区域语言"},
+		{Name: "thumbnail", Type: field.TypeString, Nullable: true, Size: 512, Comment: "缩略图"},
+	}
+	// BookTemplatesTable holds the schema information for the "book_templates" table.
+	BookTemplatesTable = &schema.Table{
+		Name:       "book_templates",
+		Comment:    "账本模板表",
+		Columns:    BookTemplatesColumns,
+		PrimaryKey: []*schema.Column{BookTemplatesColumns[0]},
+	}
 	// BudgetsColumns holds the columns for the "budgets" table.
 	BudgetsColumns = []*schema.Column{
 		{Name: "id", Type: field.TypeUint32, Increment: true, Comment: "id"},
@@ -1762,6 +1779,7 @@ var (
 		APIAuditLogsTable,
 		BalanceFlowsTable,
 		BooksTable,
+		BookTemplatesTable,
 		BudgetsTable,
 		CategoriesTable,
 		CategoryRelationsTable,
@@ -1826,6 +1844,11 @@ func init() {
 	}
 	BooksTable.Annotation = &entsql.Annotation{
 		Table:     "books",
+		Charset:   "utf8mb4",
+		Collation: "utf8mb4_bin",
+	}
+	BookTemplatesTable.Annotation = &entsql.Annotation{
+		Table:     "book_templates",
 		Charset:   "utf8mb4",
 		Collation: "utf8mb4_bin",
 	}

@@ -43,8 +43,8 @@ type LedgerCategoryServiceHTTPServer interface {
 func RegisterLedgerCategoryServiceHTTPServer(s *http.Server, srv LedgerCategoryServiceHTTPServer) {
 	r := s.Route("/")
 	r.GET("/app/v1/ledger-categories", _LedgerCategoryService_List7_HTTP_Handler(srv))
-	r.GET("/app/v1/ledger-categories/all", _LedgerCategoryService_ListAll3_HTTP_Handler(srv))
-	r.GET("/app/v1/ledger-categories/{id}", _LedgerCategoryService_Get5_HTTP_Handler(srv))
+	r.GET("/app/v1/ledger-categories/all", _LedgerCategoryService_ListAll4_HTTP_Handler(srv))
+	r.GET("/app/v1/ledger-categories/{id}", _LedgerCategoryService_Get6_HTTP_Handler(srv))
 	r.POST("/app/v1/ledger-categories", _LedgerCategoryService_Create5_HTTP_Handler(srv))
 	r.PUT("/app/v1/ledger-categories/{id}", _LedgerCategoryService_Update5_HTTP_Handler(srv))
 	r.DELETE("/app/v1/ledger-categories/{id}", _LedgerCategoryService_Delete6_HTTP_Handler(srv))
@@ -70,7 +70,7 @@ func _LedgerCategoryService_List7_HTTP_Handler(srv LedgerCategoryServiceHTTPServ
 	}
 }
 
-func _LedgerCategoryService_ListAll3_HTTP_Handler(srv LedgerCategoryServiceHTTPServer) func(ctx http.Context) error {
+func _LedgerCategoryService_ListAll4_HTTP_Handler(srv LedgerCategoryServiceHTTPServer) func(ctx http.Context) error {
 	return func(ctx http.Context) error {
 		var in v11.ListAllCategoryRequest
 		if err := ctx.BindQuery(&in); err != nil {
@@ -89,7 +89,7 @@ func _LedgerCategoryService_ListAll3_HTTP_Handler(srv LedgerCategoryServiceHTTPS
 	}
 }
 
-func _LedgerCategoryService_Get5_HTTP_Handler(srv LedgerCategoryServiceHTTPServer) func(ctx http.Context) error {
+func _LedgerCategoryService_Get6_HTTP_Handler(srv LedgerCategoryServiceHTTPServer) func(ctx http.Context) error {
 	return func(ctx http.Context) error {
 		var in v11.GetCategoryRequest
 		if err := ctx.BindQuery(&in); err != nil {

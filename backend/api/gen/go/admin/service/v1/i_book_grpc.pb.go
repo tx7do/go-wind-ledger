@@ -22,13 +22,17 @@ import (
 const _ = grpc.SupportPackageIsVersion9
 
 const (
-	BookService_List_FullMethodName    = "/admin.service.v1.BookService/List"
-	BookService_ListAll_FullMethodName = "/admin.service.v1.BookService/ListAll"
-	BookService_Get_FullMethodName     = "/admin.service.v1.BookService/Get"
-	BookService_Create_FullMethodName  = "/admin.service.v1.BookService/Create"
-	BookService_Update_FullMethodName  = "/admin.service.v1.BookService/Update"
-	BookService_Delete_FullMethodName  = "/admin.service.v1.BookService/Delete"
-	BookService_Toggle_FullMethodName  = "/admin.service.v1.BookService/Toggle"
+	BookService_List_FullMethodName             = "/admin.service.v1.BookService/List"
+	BookService_ListAll_FullMethodName          = "/admin.service.v1.BookService/ListAll"
+	BookService_Get_FullMethodName              = "/admin.service.v1.BookService/Get"
+	BookService_Create_FullMethodName           = "/admin.service.v1.BookService/Create"
+	BookService_Update_FullMethodName           = "/admin.service.v1.BookService/Update"
+	BookService_Delete_FullMethodName           = "/admin.service.v1.BookService/Delete"
+	BookService_Toggle_FullMethodName           = "/admin.service.v1.BookService/Toggle"
+	BookService_CreateByTemplate_FullMethodName = "/admin.service.v1.BookService/CreateByTemplate"
+	BookService_Copy_FullMethodName             = "/admin.service.v1.BookService/Copy"
+	BookService_Export_FullMethodName           = "/admin.service.v1.BookService/Export"
+	BookService_ListAllBooks_FullMethodName     = "/admin.service.v1.BookService/ListAllBooks"
 )
 
 // BookServiceClient is the client API for BookService service.
@@ -44,6 +48,10 @@ type BookServiceClient interface {
 	Update(ctx context.Context, in *v11.UpdateBookRequest, opts ...grpc.CallOption) (*v11.Book, error)
 	Delete(ctx context.Context, in *v11.DeleteBookRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
 	Toggle(ctx context.Context, in *v11.ToggleBookRequest, opts ...grpc.CallOption) (*v11.Book, error)
+	CreateByTemplate(ctx context.Context, in *v11.CreateBookByTemplateRequest, opts ...grpc.CallOption) (*v11.Book, error)
+	Copy(ctx context.Context, in *v11.CopyBookRequest, opts ...grpc.CallOption) (*v11.Book, error)
+	Export(ctx context.Context, in *v11.ExportBookRequest, opts ...grpc.CallOption) (*v11.ExportBookResponse, error)
+	ListAllBooks(ctx context.Context, in *emptypb.Empty, opts ...grpc.CallOption) (*v11.ListBookResponse, error)
 }
 
 type bookServiceClient struct {
@@ -124,6 +132,46 @@ func (c *bookServiceClient) Toggle(ctx context.Context, in *v11.ToggleBookReques
 	return out, nil
 }
 
+func (c *bookServiceClient) CreateByTemplate(ctx context.Context, in *v11.CreateBookByTemplateRequest, opts ...grpc.CallOption) (*v11.Book, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(v11.Book)
+	err := c.cc.Invoke(ctx, BookService_CreateByTemplate_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *bookServiceClient) Copy(ctx context.Context, in *v11.CopyBookRequest, opts ...grpc.CallOption) (*v11.Book, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(v11.Book)
+	err := c.cc.Invoke(ctx, BookService_Copy_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *bookServiceClient) Export(ctx context.Context, in *v11.ExportBookRequest, opts ...grpc.CallOption) (*v11.ExportBookResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(v11.ExportBookResponse)
+	err := c.cc.Invoke(ctx, BookService_Export_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *bookServiceClient) ListAllBooks(ctx context.Context, in *emptypb.Empty, opts ...grpc.CallOption) (*v11.ListBookResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(v11.ListBookResponse)
+	err := c.cc.Invoke(ctx, BookService_ListAllBooks_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // BookServiceServer is the server API for BookService service.
 // All implementations must embed UnimplementedBookServiceServer
 // for forward compatibility.
@@ -137,6 +185,10 @@ type BookServiceServer interface {
 	Update(context.Context, *v11.UpdateBookRequest) (*v11.Book, error)
 	Delete(context.Context, *v11.DeleteBookRequest) (*emptypb.Empty, error)
 	Toggle(context.Context, *v11.ToggleBookRequest) (*v11.Book, error)
+	CreateByTemplate(context.Context, *v11.CreateBookByTemplateRequest) (*v11.Book, error)
+	Copy(context.Context, *v11.CopyBookRequest) (*v11.Book, error)
+	Export(context.Context, *v11.ExportBookRequest) (*v11.ExportBookResponse, error)
+	ListAllBooks(context.Context, *emptypb.Empty) (*v11.ListBookResponse, error)
 	mustEmbedUnimplementedBookServiceServer()
 }
 
@@ -167,6 +219,18 @@ func (UnimplementedBookServiceServer) Delete(context.Context, *v11.DeleteBookReq
 }
 func (UnimplementedBookServiceServer) Toggle(context.Context, *v11.ToggleBookRequest) (*v11.Book, error) {
 	return nil, status.Error(codes.Unimplemented, "method Toggle not implemented")
+}
+func (UnimplementedBookServiceServer) CreateByTemplate(context.Context, *v11.CreateBookByTemplateRequest) (*v11.Book, error) {
+	return nil, status.Error(codes.Unimplemented, "method CreateByTemplate not implemented")
+}
+func (UnimplementedBookServiceServer) Copy(context.Context, *v11.CopyBookRequest) (*v11.Book, error) {
+	return nil, status.Error(codes.Unimplemented, "method Copy not implemented")
+}
+func (UnimplementedBookServiceServer) Export(context.Context, *v11.ExportBookRequest) (*v11.ExportBookResponse, error) {
+	return nil, status.Error(codes.Unimplemented, "method Export not implemented")
+}
+func (UnimplementedBookServiceServer) ListAllBooks(context.Context, *emptypb.Empty) (*v11.ListBookResponse, error) {
+	return nil, status.Error(codes.Unimplemented, "method ListAllBooks not implemented")
 }
 func (UnimplementedBookServiceServer) mustEmbedUnimplementedBookServiceServer() {}
 func (UnimplementedBookServiceServer) testEmbeddedByValue()                     {}
@@ -315,6 +379,78 @@ func _BookService_Toggle_Handler(srv interface{}, ctx context.Context, dec func(
 	return interceptor(ctx, in, info, handler)
 }
 
+func _BookService_CreateByTemplate_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(v11.CreateBookByTemplateRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(BookServiceServer).CreateByTemplate(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: BookService_CreateByTemplate_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(BookServiceServer).CreateByTemplate(ctx, req.(*v11.CreateBookByTemplateRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _BookService_Copy_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(v11.CopyBookRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(BookServiceServer).Copy(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: BookService_Copy_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(BookServiceServer).Copy(ctx, req.(*v11.CopyBookRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _BookService_Export_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(v11.ExportBookRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(BookServiceServer).Export(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: BookService_Export_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(BookServiceServer).Export(ctx, req.(*v11.ExportBookRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _BookService_ListAllBooks_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(emptypb.Empty)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(BookServiceServer).ListAllBooks(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: BookService_ListAllBooks_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(BookServiceServer).ListAllBooks(ctx, req.(*emptypb.Empty))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // BookService_ServiceDesc is the grpc.ServiceDesc for BookService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -349,6 +485,22 @@ var BookService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "Toggle",
 			Handler:    _BookService_Toggle_Handler,
+		},
+		{
+			MethodName: "CreateByTemplate",
+			Handler:    _BookService_CreateByTemplate_Handler,
+		},
+		{
+			MethodName: "Copy",
+			Handler:    _BookService_Copy_Handler,
+		},
+		{
+			MethodName: "Export",
+			Handler:    _BookService_Export_Handler,
+		},
+		{
+			MethodName: "ListAllBooks",
+			Handler:    _BookService_ListAllBooks_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

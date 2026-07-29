@@ -44,7 +44,7 @@ type SiteServiceHTTPServer interface {
 func RegisterSiteServiceHTTPServer(s *http.Server, srv SiteServiceHTTPServer) {
 	r := s.Route("/")
 	r.GET("/admin/v1/sites", _SiteService_List35_HTTP_Handler(srv))
-	r.GET("/admin/v1/sites/{id}", _SiteService_Get33_HTTP_Handler(srv))
+	r.GET("/admin/v1/sites/{id}", _SiteService_Get34_HTTP_Handler(srv))
 	r.POST("/admin/v1/sites", _SiteService_Create27_HTTP_Handler(srv))
 	r.PUT("/admin/v1/sites/{id}", _SiteService_Update27_HTTP_Handler(srv))
 	r.DELETE("/admin/v1/sites/{id}", _SiteService_Delete28_HTTP_Handler(srv))
@@ -69,7 +69,7 @@ func _SiteService_List35_HTTP_Handler(srv SiteServiceHTTPServer) func(ctx http.C
 	}
 }
 
-func _SiteService_Get33_HTTP_Handler(srv SiteServiceHTTPServer) func(ctx http.Context) error {
+func _SiteService_Get34_HTTP_Handler(srv SiteServiceHTTPServer) func(ctx http.Context) error {
 	return func(ctx http.Context) error {
 		var in v11.GetSiteRequest
 		if err := ctx.BindQuery(&in); err != nil {

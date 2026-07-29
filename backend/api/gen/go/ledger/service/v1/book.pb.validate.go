@@ -1181,3 +1181,440 @@ var _ interface {
 	Cause() error
 	ErrorName() string
 } = ToggleBookRequestValidationError{}
+
+// Validate checks the field values on CreateBookByTemplateRequest with the
+// rules defined in the proto definition for this message. If any rules are
+// violated, the first error encountered is returned, or nil if there are no violations.
+func (m *CreateBookByTemplateRequest) Validate() error {
+	return m.validate(false)
+}
+
+// ValidateAll checks the field values on CreateBookByTemplateRequest with the
+// rules defined in the proto definition for this message. If any rules are
+// violated, the result is a list of violation errors wrapped in
+// CreateBookByTemplateRequestMultiError, or nil if none found.
+func (m *CreateBookByTemplateRequest) ValidateAll() error {
+	return m.validate(true)
+}
+
+func (m *CreateBookByTemplateRequest) validate(all bool) error {
+	if m == nil {
+		return nil
+	}
+
+	var errors []error
+
+	// no validation rules for Name
+
+	// no validation rules for DefaultCurrencyCode
+
+	// no validation rules for TemplateId
+
+	if m.Notes != nil {
+		// no validation rules for Notes
+	}
+
+	if len(errors) > 0 {
+		return CreateBookByTemplateRequestMultiError(errors)
+	}
+
+	return nil
+}
+
+// CreateBookByTemplateRequestMultiError is an error wrapping multiple
+// validation errors returned by CreateBookByTemplateRequest.ValidateAll() if
+// the designated constraints aren't met.
+type CreateBookByTemplateRequestMultiError []error
+
+// Error returns a concatenation of all the error messages it wraps.
+func (m CreateBookByTemplateRequestMultiError) Error() string {
+	msgs := make([]string, 0, len(m))
+	for _, err := range m {
+		msgs = append(msgs, err.Error())
+	}
+	return strings.Join(msgs, "; ")
+}
+
+// AllErrors returns a list of validation violation errors.
+func (m CreateBookByTemplateRequestMultiError) AllErrors() []error { return m }
+
+// CreateBookByTemplateRequestValidationError is the validation error returned
+// by CreateBookByTemplateRequest.Validate if the designated constraints
+// aren't met.
+type CreateBookByTemplateRequestValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e CreateBookByTemplateRequestValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e CreateBookByTemplateRequestValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e CreateBookByTemplateRequestValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e CreateBookByTemplateRequestValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e CreateBookByTemplateRequestValidationError) ErrorName() string {
+	return "CreateBookByTemplateRequestValidationError"
+}
+
+// Error satisfies the builtin error interface
+func (e CreateBookByTemplateRequestValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sCreateBookByTemplateRequest.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = CreateBookByTemplateRequestValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = CreateBookByTemplateRequestValidationError{}
+
+// Validate checks the field values on CopyBookRequest with the rules defined
+// in the proto definition for this message. If any rules are violated, the
+// first error encountered is returned, or nil if there are no violations.
+func (m *CopyBookRequest) Validate() error {
+	return m.validate(false)
+}
+
+// ValidateAll checks the field values on CopyBookRequest with the rules
+// defined in the proto definition for this message. If any rules are
+// violated, the result is a list of violation errors wrapped in
+// CopyBookRequestMultiError, or nil if none found.
+func (m *CopyBookRequest) ValidateAll() error {
+	return m.validate(true)
+}
+
+func (m *CopyBookRequest) validate(all bool) error {
+	if m == nil {
+		return nil
+	}
+
+	var errors []error
+
+	// no validation rules for SourceBookId
+
+	// no validation rules for Name
+
+	if m.Notes != nil {
+		// no validation rules for Notes
+	}
+
+	if len(errors) > 0 {
+		return CopyBookRequestMultiError(errors)
+	}
+
+	return nil
+}
+
+// CopyBookRequestMultiError is an error wrapping multiple validation errors
+// returned by CopyBookRequest.ValidateAll() if the designated constraints
+// aren't met.
+type CopyBookRequestMultiError []error
+
+// Error returns a concatenation of all the error messages it wraps.
+func (m CopyBookRequestMultiError) Error() string {
+	msgs := make([]string, 0, len(m))
+	for _, err := range m {
+		msgs = append(msgs, err.Error())
+	}
+	return strings.Join(msgs, "; ")
+}
+
+// AllErrors returns a list of validation violation errors.
+func (m CopyBookRequestMultiError) AllErrors() []error { return m }
+
+// CopyBookRequestValidationError is the validation error returned by
+// CopyBookRequest.Validate if the designated constraints aren't met.
+type CopyBookRequestValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e CopyBookRequestValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e CopyBookRequestValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e CopyBookRequestValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e CopyBookRequestValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e CopyBookRequestValidationError) ErrorName() string { return "CopyBookRequestValidationError" }
+
+// Error satisfies the builtin error interface
+func (e CopyBookRequestValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sCopyBookRequest.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = CopyBookRequestValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = CopyBookRequestValidationError{}
+
+// Validate checks the field values on ExportBookRequest with the rules defined
+// in the proto definition for this message. If any rules are violated, the
+// first error encountered is returned, or nil if there are no violations.
+func (m *ExportBookRequest) Validate() error {
+	return m.validate(false)
+}
+
+// ValidateAll checks the field values on ExportBookRequest with the rules
+// defined in the proto definition for this message. If any rules are
+// violated, the result is a list of violation errors wrapped in
+// ExportBookRequestMultiError, or nil if none found.
+func (m *ExportBookRequest) ValidateAll() error {
+	return m.validate(true)
+}
+
+func (m *ExportBookRequest) validate(all bool) error {
+	if m == nil {
+		return nil
+	}
+
+	var errors []error
+
+	// no validation rules for Id
+
+	if m.TimeZoneOffset != nil {
+		// no validation rules for TimeZoneOffset
+	}
+
+	if len(errors) > 0 {
+		return ExportBookRequestMultiError(errors)
+	}
+
+	return nil
+}
+
+// ExportBookRequestMultiError is an error wrapping multiple validation errors
+// returned by ExportBookRequest.ValidateAll() if the designated constraints
+// aren't met.
+type ExportBookRequestMultiError []error
+
+// Error returns a concatenation of all the error messages it wraps.
+func (m ExportBookRequestMultiError) Error() string {
+	msgs := make([]string, 0, len(m))
+	for _, err := range m {
+		msgs = append(msgs, err.Error())
+	}
+	return strings.Join(msgs, "; ")
+}
+
+// AllErrors returns a list of validation violation errors.
+func (m ExportBookRequestMultiError) AllErrors() []error { return m }
+
+// ExportBookRequestValidationError is the validation error returned by
+// ExportBookRequest.Validate if the designated constraints aren't met.
+type ExportBookRequestValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e ExportBookRequestValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e ExportBookRequestValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e ExportBookRequestValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e ExportBookRequestValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e ExportBookRequestValidationError) ErrorName() string {
+	return "ExportBookRequestValidationError"
+}
+
+// Error satisfies the builtin error interface
+func (e ExportBookRequestValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sExportBookRequest.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = ExportBookRequestValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = ExportBookRequestValidationError{}
+
+// Validate checks the field values on ExportBookResponse with the rules
+// defined in the proto definition for this message. If any rules are
+// violated, the first error encountered is returned, or nil if there are no violations.
+func (m *ExportBookResponse) Validate() error {
+	return m.validate(false)
+}
+
+// ValidateAll checks the field values on ExportBookResponse with the rules
+// defined in the proto definition for this message. If any rules are
+// violated, the result is a list of violation errors wrapped in
+// ExportBookResponseMultiError, or nil if none found.
+func (m *ExportBookResponse) ValidateAll() error {
+	return m.validate(true)
+}
+
+func (m *ExportBookResponse) validate(all bool) error {
+	if m == nil {
+		return nil
+	}
+
+	var errors []error
+
+	// no validation rules for FileName
+
+	// no validation rules for ContentType
+
+	// no validation rules for Data
+
+	if len(errors) > 0 {
+		return ExportBookResponseMultiError(errors)
+	}
+
+	return nil
+}
+
+// ExportBookResponseMultiError is an error wrapping multiple validation errors
+// returned by ExportBookResponse.ValidateAll() if the designated constraints
+// aren't met.
+type ExportBookResponseMultiError []error
+
+// Error returns a concatenation of all the error messages it wraps.
+func (m ExportBookResponseMultiError) Error() string {
+	msgs := make([]string, 0, len(m))
+	for _, err := range m {
+		msgs = append(msgs, err.Error())
+	}
+	return strings.Join(msgs, "; ")
+}
+
+// AllErrors returns a list of validation violation errors.
+func (m ExportBookResponseMultiError) AllErrors() []error { return m }
+
+// ExportBookResponseValidationError is the validation error returned by
+// ExportBookResponse.Validate if the designated constraints aren't met.
+type ExportBookResponseValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e ExportBookResponseValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e ExportBookResponseValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e ExportBookResponseValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e ExportBookResponseValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e ExportBookResponseValidationError) ErrorName() string {
+	return "ExportBookResponseValidationError"
+}
+
+// Error satisfies the builtin error interface
+func (e ExportBookResponseValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sExportBookResponse.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = ExportBookResponseValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = ExportBookResponseValidationError{}

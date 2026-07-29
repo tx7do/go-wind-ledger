@@ -77,6 +77,7 @@ func NewGrpcServer(
 	flowFileService      *service.FlowFileService,
 		membershipService    *service.MembershipService,
 		budgetService        *service.BudgetService,
+		bookTemplateService  *service.BookTemplateService,
 
 		// === 记账认证服务 ===
 		ledgerAuthService *service.LedgerAuthService,
@@ -134,6 +135,7 @@ func NewGrpcServer(
 	ledgerV1.RegisterReportServiceServer(srv, reportService)
 	ledgerV1.RegisterFlowFileServiceServer(srv, flowFileService)
 	ledgerV1.RegisterBudgetServiceServer(srv, budgetService)
+	ledgerV1.RegisterBookTemplateServiceServer(srv, bookTemplateService)
 
 	// === 记账认证服务 gRPC 注册 ===
 	appV1.RegisterLedgerAuthServiceServer(srv, ledgerAuthService)

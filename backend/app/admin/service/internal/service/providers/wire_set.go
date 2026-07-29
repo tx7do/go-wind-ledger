@@ -52,6 +52,7 @@ var ProviderSet = wire.NewSet(
 
 	// === 记账系统 Admin BFF Services ===
 	service.NewBookService,
+	service.NewBookTemplateService,
 	service.NewAccountService,
 	service.NewCategoryService,
 	service.NewTagService,

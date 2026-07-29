@@ -43,8 +43,8 @@ type BudgetServiceHTTPServer interface {
 func RegisterBudgetServiceHTTPServer(s *http.Server, srv BudgetServiceHTTPServer) {
 	r := s.Route("/")
 	r.GET("/admin/v1/budgets", _BudgetService_List5_HTTP_Handler(srv))
-	r.GET("/admin/v1/budgets/all", _BudgetService_ListAll2_HTTP_Handler(srv))
-	r.GET("/admin/v1/budgets/{id}", _BudgetService_Get5_HTTP_Handler(srv))
+	r.GET("/admin/v1/budgets/all", _BudgetService_ListAll3_HTTP_Handler(srv))
+	r.GET("/admin/v1/budgets/{id}", _BudgetService_Get6_HTTP_Handler(srv))
 	r.POST("/admin/v1/budgets", _BudgetService_Create4_HTTP_Handler(srv))
 	r.PUT("/admin/v1/budgets/{id}", _BudgetService_Update4_HTTP_Handler(srv))
 	r.DELETE("/admin/v1/budgets/{id}", _BudgetService_Delete4_HTTP_Handler(srv))
@@ -70,7 +70,7 @@ func _BudgetService_List5_HTTP_Handler(srv BudgetServiceHTTPServer) func(ctx htt
 	}
 }
 
-func _BudgetService_ListAll2_HTTP_Handler(srv BudgetServiceHTTPServer) func(ctx http.Context) error {
+func _BudgetService_ListAll3_HTTP_Handler(srv BudgetServiceHTTPServer) func(ctx http.Context) error {
 	return func(ctx http.Context) error {
 		var in v11.ListAllBudgetRequest
 		if err := ctx.BindQuery(&in); err != nil {
@@ -89,7 +89,7 @@ func _BudgetService_ListAll2_HTTP_Handler(srv BudgetServiceHTTPServer) func(ctx 
 	}
 }
 
-func _BudgetService_Get5_HTTP_Handler(srv BudgetServiceHTTPServer) func(ctx http.Context) error {
+func _BudgetService_Get6_HTTP_Handler(srv BudgetServiceHTTPServer) func(ctx http.Context) error {
 	return func(ctx http.Context) error {
 		var in v11.GetBudgetRequest
 		if err := ctx.BindQuery(&in); err != nil {

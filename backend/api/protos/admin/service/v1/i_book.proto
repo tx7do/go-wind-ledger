@@ -54,4 +54,30 @@ service BookService {
       body: "*"
     };
   }
+
+  rpc CreateByTemplate (ledger.service.v1.CreateBookByTemplateRequest) returns (ledger.service.v1.Book) {
+    option (google.api.http) = {
+      post: "/admin/v1/books/template"
+      body: "*"
+    };
+  }
+
+  rpc Copy (ledger.service.v1.CopyBookRequest) returns (ledger.service.v1.Book) {
+    option (google.api.http) = {
+      post: "/admin/v1/books/copy"
+      body: "*"
+    };
+  }
+
+  rpc Export (ledger.service.v1.ExportBookRequest) returns (ledger.service.v1.ExportBookResponse) {
+    option (google.api.http) = {
+      get: "/admin/v1/books/{id}/export"
+    };
+  }
+
+  rpc ListAllBooks (google.protobuf.Empty) returns (ledger.service.v1.ListBookResponse) {
+    option (google.api.http) = {
+      get: "/admin/v1/books/select-all"
+    };
+  }
 }

@@ -333,6 +333,59 @@ func (x *ConvertCurrencyResponse) GetRate() string {
 	return ""
 }
 
+// 请求 - 手动修改币种汇率
+type ChangeRateRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Id            uint32                 `protobuf:"varint,1,opt,name=id,proto3" json:"id,omitempty"`
+	Rate          string                 `protobuf:"bytes,2,opt,name=rate,proto3" json:"rate,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *ChangeRateRequest) Reset() {
+	*x = ChangeRateRequest{}
+	mi := &file_ledger_service_v1_currency_proto_msgTypes[6]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *ChangeRateRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ChangeRateRequest) ProtoMessage() {}
+
+func (x *ChangeRateRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_ledger_service_v1_currency_proto_msgTypes[6]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ChangeRateRequest.ProtoReflect.Descriptor instead.
+func (*ChangeRateRequest) Descriptor() ([]byte, []int) {
+	return file_ledger_service_v1_currency_proto_rawDescGZIP(), []int{6}
+}
+
+func (x *ChangeRateRequest) GetId() uint32 {
+	if x != nil {
+		return x.Id
+	}
+	return 0
+}
+
+func (x *ChangeRateRequest) GetRate() string {
+	if x != nil {
+		return x.Rate
+	}
+	return ""
+}
+
 var File_ledger_service_v1_currency_proto protoreflect.FileDescriptor
 
 const file_ledger_service_v1_currency_proto_rawDesc = "" +
@@ -358,12 +411,17 @@ const file_ledger_service_v1_currency_proto_rawDesc = "" +
 	"\x02to\x18\x03 \x01(\tB\x18\xbaG\x15\x92\x02\x12目标币种代码R\x02to\"E\n" +
 	"\x17ConvertCurrencyResponse\x12\x16\n" +
 	"\x06amount\x18\x01 \x01(\tR\x06amount\x12\x12\n" +
-	"\x04rate\x18\x02 \x01(\tR\x04rate2\x85\x03\n" +
+	"\x04rate\x18\x02 \x01(\tR\x04rate\"7\n" +
+	"\x11ChangeRateRequest\x12\x0e\n" +
+	"\x02id\x18\x01 \x01(\rR\x02id\x12\x12\n" +
+	"\x04rate\x18\x02 \x01(\tR\x04rate2\xd8\x03\n" +
 	"\x0fCurrencyService\x12_\n" +
 	"\aListAll\x12).ledger.service.v1.ListAllCurrencyRequest\x1a'.ledger.service.v1.ListCurrencyResponse\"\x00\x12L\n" +
 	"\x04List\x12\x19.pagination.PagingRequest\x1a'.ledger.service.v1.ListCurrencyResponse\"\x00\x12_\n" +
 	"\aRefresh\x12).ledger.service.v1.RefreshCurrencyRequest\x1a'.ledger.service.v1.ListCurrencyResponse\"\x00\x12b\n" +
-	"\aConvert\x12).ledger.service.v1.ConvertCurrencyRequest\x1a*.ledger.service.v1.ConvertCurrencyResponse\"\x00B\xc0\x01\n" +
+	"\aConvert\x12).ledger.service.v1.ConvertCurrencyRequest\x1a*.ledger.service.v1.ConvertCurrencyResponse\"\x00\x12Q\n" +
+	"\n" +
+	"ChangeRate\x12$.ledger.service.v1.ChangeRateRequest\x1a\x1b.ledger.service.v1.Currency\"\x00B\xc0\x01\n" +
 	"\x15com.ledger.service.v1B\rCurrencyProtoP\x01Z2go-wind-cms/api/gen/go/ledger/service/v1;servicev1\xa2\x02\x03LSX\xaa\x02\x11Ledger.Service.V1\xca\x02\x11Ledger\\Service\\V1\xe2\x02\x1dLedger\\Service\\V1\\GPBMetadata\xea\x02\x13Ledger::Service::V1b\x06proto3"
 
 var (
@@ -378,7 +436,7 @@ func file_ledger_service_v1_currency_proto_rawDescGZIP() []byte {
 	return file_ledger_service_v1_currency_proto_rawDescData
 }
 
-var file_ledger_service_v1_currency_proto_msgTypes = make([]protoimpl.MessageInfo, 6)
+var file_ledger_service_v1_currency_proto_msgTypes = make([]protoimpl.MessageInfo, 7)
 var file_ledger_service_v1_currency_proto_goTypes = []any{
 	(*Currency)(nil),                // 0: ledger.service.v1.Currency
 	(*ListCurrencyResponse)(nil),    // 1: ledger.service.v1.ListCurrencyResponse
@@ -386,20 +444,23 @@ var file_ledger_service_v1_currency_proto_goTypes = []any{
 	(*RefreshCurrencyRequest)(nil),  // 3: ledger.service.v1.RefreshCurrencyRequest
 	(*ConvertCurrencyRequest)(nil),  // 4: ledger.service.v1.ConvertCurrencyRequest
 	(*ConvertCurrencyResponse)(nil), // 5: ledger.service.v1.ConvertCurrencyResponse
-	(*v1.PagingRequest)(nil),        // 6: pagination.PagingRequest
+	(*ChangeRateRequest)(nil),       // 6: ledger.service.v1.ChangeRateRequest
+	(*v1.PagingRequest)(nil),        // 7: pagination.PagingRequest
 }
 var file_ledger_service_v1_currency_proto_depIdxs = []int32{
 	0, // 0: ledger.service.v1.ListCurrencyResponse.items:type_name -> ledger.service.v1.Currency
 	2, // 1: ledger.service.v1.CurrencyService.ListAll:input_type -> ledger.service.v1.ListAllCurrencyRequest
-	6, // 2: ledger.service.v1.CurrencyService.List:input_type -> pagination.PagingRequest
+	7, // 2: ledger.service.v1.CurrencyService.List:input_type -> pagination.PagingRequest
 	3, // 3: ledger.service.v1.CurrencyService.Refresh:input_type -> ledger.service.v1.RefreshCurrencyRequest
 	4, // 4: ledger.service.v1.CurrencyService.Convert:input_type -> ledger.service.v1.ConvertCurrencyRequest
-	1, // 5: ledger.service.v1.CurrencyService.ListAll:output_type -> ledger.service.v1.ListCurrencyResponse
-	1, // 6: ledger.service.v1.CurrencyService.List:output_type -> ledger.service.v1.ListCurrencyResponse
-	1, // 7: ledger.service.v1.CurrencyService.Refresh:output_type -> ledger.service.v1.ListCurrencyResponse
-	5, // 8: ledger.service.v1.CurrencyService.Convert:output_type -> ledger.service.v1.ConvertCurrencyResponse
-	5, // [5:9] is the sub-list for method output_type
-	1, // [1:5] is the sub-list for method input_type
+	6, // 5: ledger.service.v1.CurrencyService.ChangeRate:input_type -> ledger.service.v1.ChangeRateRequest
+	1, // 6: ledger.service.v1.CurrencyService.ListAll:output_type -> ledger.service.v1.ListCurrencyResponse
+	1, // 7: ledger.service.v1.CurrencyService.List:output_type -> ledger.service.v1.ListCurrencyResponse
+	1, // 8: ledger.service.v1.CurrencyService.Refresh:output_type -> ledger.service.v1.ListCurrencyResponse
+	5, // 9: ledger.service.v1.CurrencyService.Convert:output_type -> ledger.service.v1.ConvertCurrencyResponse
+	0, // 10: ledger.service.v1.CurrencyService.ChangeRate:output_type -> ledger.service.v1.Currency
+	6, // [6:11] is the sub-list for method output_type
+	1, // [1:6] is the sub-list for method input_type
 	1, // [1:1] is the sub-list for extension type_name
 	1, // [1:1] is the sub-list for extension extendee
 	0, // [0:1] is the sub-list for field type_name
@@ -417,7 +478,7 @@ func file_ledger_service_v1_currency_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_ledger_service_v1_currency_proto_rawDesc), len(file_ledger_service_v1_currency_proto_rawDesc)),
 			NumEnums:      0,
-			NumMessages:   6,
+			NumMessages:   7,
 			NumExtensions: 0,
 			NumServices:   1,
 		},

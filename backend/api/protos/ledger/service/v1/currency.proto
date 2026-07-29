@@ -18,6 +18,9 @@ service CurrencyService {
 
   // 币种转换计算
   rpc Convert (ConvertCurrencyRequest) returns (ConvertCurrencyResponse) {}
+
+  // 手动修改币种汇率
+  rpc ChangeRate (ChangeRateRequest) returns (Currency) {}
 }
 
 // 币种
@@ -68,5 +71,11 @@ message ConvertCurrencyRequest {
 // 回应 - 币种转换
 message ConvertCurrencyResponse {
   string amount = 1 [json_name = "amount"];
+  string rate = 2 [json_name = "rate"];
+}
+
+// 请求 - 手动修改币种汇率
+message ChangeRateRequest {
+  uint32 id = 1 [json_name = "id"];
   string rate = 2 [json_name = "rate"];
 }

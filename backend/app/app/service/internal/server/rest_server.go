@@ -99,6 +99,7 @@ func NewRestServer(
 	navigationService *service.NavigationService,
 
 	bookService *service.BookService,
+	bookTemplateService *service.BookTemplateService,
 	accountService *service.AccountService,
 	balanceFlowService *service.BalanceFlowService,
 	ledgerCategoryService *service.LedgerCategoryService,
@@ -138,6 +139,7 @@ func NewRestServer(
 	appV1.RegisterCommentServiceHTTPServer(srv, commentService)
 
 	appV1.RegisterBookServiceHTTPServer(srv, bookService)
+	appV1.RegisterBookTemplateServiceHTTPServer(srv, bookTemplateService)
 	appV1.RegisterAccountServiceHTTPServer(srv, accountService)
 	appV1.RegisterBalanceFlowServiceHTTPServer(srv, balanceFlowService)
 	appV1.RegisterLedgerCategoryServiceHTTPServer(srv, ledgerCategoryService)

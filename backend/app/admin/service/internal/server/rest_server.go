@@ -111,8 +111,9 @@ func NewRestServer(
 	permissionAuditLogService *service.PermissionAuditLogService,
 
 	// === 记账系统 Admin BFF Services ===
-	bookService        *service.BookService,
-	accountService     *service.AccountService,
+	bookService         *service.BookService,
+	bookTemplateService *service.BookTemplateService,
+	accountService      *service.AccountService,
 	categoryService    *service.CategoryService,
 	tagService         *service.TagService,
 	payeeService       *service.PayeeService,
@@ -170,6 +171,7 @@ func NewRestServer(
 
 		// === 记账系统 Admin REST API ===
 		adminV1.RegisterBookServiceHTTPServer(srv, bookService)
+		adminV1.RegisterBookTemplateServiceHTTPServer(srv, bookTemplateService)
 		adminV1.RegisterAccountServiceHTTPServer(srv, accountService)
 		adminV1.RegisterCategoryServiceHTTPServer(srv, categoryService)
 		adminV1.RegisterTagServiceHTTPServer(srv, tagService)

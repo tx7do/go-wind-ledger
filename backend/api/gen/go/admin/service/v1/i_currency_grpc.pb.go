@@ -21,10 +21,11 @@ import (
 const _ = grpc.SupportPackageIsVersion9
 
 const (
-	CurrencyService_ListAll_FullMethodName = "/admin.service.v1.CurrencyService/ListAll"
-	CurrencyService_List_FullMethodName    = "/admin.service.v1.CurrencyService/List"
-	CurrencyService_Refresh_FullMethodName = "/admin.service.v1.CurrencyService/Refresh"
-	CurrencyService_Convert_FullMethodName = "/admin.service.v1.CurrencyService/Convert"
+	CurrencyService_ListAll_FullMethodName    = "/admin.service.v1.CurrencyService/ListAll"
+	CurrencyService_List_FullMethodName       = "/admin.service.v1.CurrencyService/List"
+	CurrencyService_Refresh_FullMethodName    = "/admin.service.v1.CurrencyService/Refresh"
+	CurrencyService_Convert_FullMethodName    = "/admin.service.v1.CurrencyService/Convert"
+	CurrencyService_ChangeRate_FullMethodName = "/admin.service.v1.CurrencyService/ChangeRate"
 )
 
 // CurrencyServiceClient is the client API for CurrencyService service.
@@ -37,6 +38,7 @@ type CurrencyServiceClient interface {
 	List(ctx context.Context, in *v11.PagingRequest, opts ...grpc.CallOption) (*v1.ListCurrencyResponse, error)
 	Refresh(ctx context.Context, in *v1.RefreshCurrencyRequest, opts ...grpc.CallOption) (*v1.ListCurrencyResponse, error)
 	Convert(ctx context.Context, in *v1.ConvertCurrencyRequest, opts ...grpc.CallOption) (*v1.ConvertCurrencyResponse, error)
+	ChangeRate(ctx context.Context, in *v1.ChangeRateRequest, opts ...grpc.CallOption) (*v1.Currency, error)
 }
 
 type currencyServiceClient struct {
@@ -87,6 +89,16 @@ func (c *currencyServiceClient) Convert(ctx context.Context, in *v1.ConvertCurre
 	return out, nil
 }
 
+func (c *currencyServiceClient) ChangeRate(ctx context.Context, in *v1.ChangeRateRequest, opts ...grpc.CallOption) (*v1.Currency, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(v1.Currency)
+	err := c.cc.Invoke(ctx, CurrencyService_ChangeRate_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // CurrencyServiceServer is the server API for CurrencyService service.
 // All implementations must embed UnimplementedCurrencyServiceServer
 // for forward compatibility.
@@ -97,6 +109,7 @@ type CurrencyServiceServer interface {
 	List(context.Context, *v11.PagingRequest) (*v1.ListCurrencyResponse, error)
 	Refresh(context.Context, *v1.RefreshCurrencyRequest) (*v1.ListCurrencyResponse, error)
 	Convert(context.Context, *v1.ConvertCurrencyRequest) (*v1.ConvertCurrencyResponse, error)
+	ChangeRate(context.Context, *v1.ChangeRateRequest) (*v1.Currency, error)
 	mustEmbedUnimplementedCurrencyServiceServer()
 }
 
@@ -118,6 +131,9 @@ func (UnimplementedCurrencyServiceServer) Refresh(context.Context, *v1.RefreshCu
 }
 func (UnimplementedCurrencyServiceServer) Convert(context.Context, *v1.ConvertCurrencyRequest) (*v1.ConvertCurrencyResponse, error) {
 	return nil, status.Error(codes.Unimplemented, "method Convert not implemented")
+}
+func (UnimplementedCurrencyServiceServer) ChangeRate(context.Context, *v1.ChangeRateRequest) (*v1.Currency, error) {
+	return nil, status.Error(codes.Unimplemented, "method ChangeRate not implemented")
 }
 func (UnimplementedCurrencyServiceServer) mustEmbedUnimplementedCurrencyServiceServer() {}
 func (UnimplementedCurrencyServiceServer) testEmbeddedByValue()                         {}
@@ -212,6 +228,24 @@ func _CurrencyService_Convert_Handler(srv interface{}, ctx context.Context, dec 
 	return interceptor(ctx, in, info, handler)
 }
 
+func _CurrencyService_ChangeRate_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(v1.ChangeRateRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(CurrencyServiceServer).ChangeRate(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: CurrencyService_ChangeRate_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(CurrencyServiceServer).ChangeRate(ctx, req.(*v1.ChangeRateRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // CurrencyService_ServiceDesc is the grpc.ServiceDesc for CurrencyService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -234,6 +268,10 @@ var CurrencyService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "Convert",
 			Handler:    _CurrencyService_Convert_Handler,
+		},
+		{
+			MethodName: "ChangeRate",
+			Handler:    _CurrencyService_ChangeRate_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

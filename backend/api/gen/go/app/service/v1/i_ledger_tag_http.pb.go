@@ -43,8 +43,8 @@ type LedgerTagServiceHTTPServer interface {
 func RegisterLedgerTagServiceHTTPServer(s *http.Server, srv LedgerTagServiceHTTPServer) {
 	r := s.Route("/")
 	r.GET("/app/v1/ledger-tags", _LedgerTagService_List8_HTTP_Handler(srv))
-	r.GET("/app/v1/ledger-tags/all", _LedgerTagService_ListAll4_HTTP_Handler(srv))
-	r.GET("/app/v1/ledger-tags/{id}", _LedgerTagService_Get6_HTTP_Handler(srv))
+	r.GET("/app/v1/ledger-tags/all", _LedgerTagService_ListAll5_HTTP_Handler(srv))
+	r.GET("/app/v1/ledger-tags/{id}", _LedgerTagService_Get7_HTTP_Handler(srv))
 	r.POST("/app/v1/ledger-tags", _LedgerTagService_Create6_HTTP_Handler(srv))
 	r.PUT("/app/v1/ledger-tags/{id}", _LedgerTagService_Update6_HTTP_Handler(srv))
 	r.DELETE("/app/v1/ledger-tags/{id}", _LedgerTagService_Delete7_HTTP_Handler(srv))
@@ -70,7 +70,7 @@ func _LedgerTagService_List8_HTTP_Handler(srv LedgerTagServiceHTTPServer) func(c
 	}
 }
 
-func _LedgerTagService_ListAll4_HTTP_Handler(srv LedgerTagServiceHTTPServer) func(ctx http.Context) error {
+func _LedgerTagService_ListAll5_HTTP_Handler(srv LedgerTagServiceHTTPServer) func(ctx http.Context) error {
 	return func(ctx http.Context) error {
 		var in v11.ListAllTagRequest
 		if err := ctx.BindQuery(&in); err != nil {
@@ -89,7 +89,7 @@ func _LedgerTagService_ListAll4_HTTP_Handler(srv LedgerTagServiceHTTPServer) fun
 	}
 }
 
-func _LedgerTagService_Get6_HTTP_Handler(srv LedgerTagServiceHTTPServer) func(ctx http.Context) error {
+func _LedgerTagService_Get7_HTTP_Handler(srv LedgerTagServiceHTTPServer) func(ctx http.Context) error {
 	return func(ctx http.Context) error {
 		var in v11.GetTagRequest
 		if err := ctx.BindQuery(&in); err != nil {

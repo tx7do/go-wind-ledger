@@ -9,6 +9,7 @@ import (
 	"go-wind-cms/app/core/service/internal/data/ent/apiauditlog"
 	"go-wind-cms/app/core/service/internal/data/ent/balanceflow"
 	"go-wind-cms/app/core/service/internal/data/ent/book"
+	"go-wind-cms/app/core/service/internal/data/ent/booktemplate"
 	"go-wind-cms/app/core/service/internal/data/ent/budget"
 	"go-wind-cms/app/core/service/internal/data/ent/category"
 	"go-wind-cms/app/core/service/internal/data/ent/categoryrelation"
@@ -369,6 +370,41 @@ func init() {
 	bookDescID := bookMixinFields0[0].Descriptor()
 	// book.IDValidator is a validator for the "id" field. It is called by the builders before save.
 	book.IDValidator = bookDescID.Validators[0].(func(uint32) error)
+	booktemplateMixin := schema.BookTemplate{}.Mixin()
+	booktemplateMixinFields0 := booktemplateMixin[0].Fields()
+	_ = booktemplateMixinFields0
+	booktemplateFields := schema.BookTemplate{}.Fields()
+	_ = booktemplateFields
+	// booktemplateDescName is the schema descriptor for name field.
+	booktemplateDescName := booktemplateFields[0].Descriptor()
+	// booktemplate.NameValidator is a validator for the "name" field. It is called by the builders before save.
+	booktemplate.NameValidator = func() func(string) error {
+		validators := booktemplateDescName.Validators
+		fns := [...]func(string) error{
+			validators[0].(func(string) error),
+			validators[1].(func(string) error),
+		}
+		return func(name string) error {
+			for _, fn := range fns {
+				if err := fn(name); err != nil {
+					return err
+				}
+			}
+			return nil
+		}
+	}()
+	// booktemplateDescLocale is the schema descriptor for locale field.
+	booktemplateDescLocale := booktemplateFields[1].Descriptor()
+	// booktemplate.LocaleValidator is a validator for the "locale" field. It is called by the builders before save.
+	booktemplate.LocaleValidator = booktemplateDescLocale.Validators[0].(func(string) error)
+	// booktemplateDescThumbnail is the schema descriptor for thumbnail field.
+	booktemplateDescThumbnail := booktemplateFields[2].Descriptor()
+	// booktemplate.ThumbnailValidator is a validator for the "thumbnail" field. It is called by the builders before save.
+	booktemplate.ThumbnailValidator = booktemplateDescThumbnail.Validators[0].(func(string) error)
+	// booktemplateDescID is the schema descriptor for id field.
+	booktemplateDescID := booktemplateMixinFields0[0].Descriptor()
+	// booktemplate.IDValidator is a validator for the "id" field. It is called by the builders before save.
+	booktemplate.IDValidator = booktemplateDescID.Validators[0].(func(uint32) error)
 	budgetMixin := schema.Budget{}.Mixin()
 	budget.Policy = privacy.NewPolicies(budgetMixin[1], schema.Budget{})
 	budget.Hooks[0] = func(next ent.Mutator) ent.Mutator {

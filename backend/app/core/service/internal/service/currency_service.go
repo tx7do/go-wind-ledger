@@ -30,16 +30,16 @@ func NewCurrencyService(ctx *bootstrap.Context) *CurrencyService {
 func (s *CurrencyService) loadSeed() {
 	// Seed data from common currency codes with approximate USD rates
 	s.currencies = []*ledgerV1.Currency{
-		{Code: strPtr("CNY"), Name: strPtr("人民币"), Rate: strPtr("7.2")},
-		{Code: strPtr("USD"), Name: strPtr("美元"), Rate: strPtr("1.0")},
-		{Code: strPtr("EUR"), Name: strPtr("欧元"), Rate: strPtr("0.92")},
-		{Code: strPtr("JPY"), Name: strPtr("日元"), Rate: strPtr("148.0")},
-		{Code: strPtr("GBP"), Name: strPtr("英镑"), Rate: strPtr("0.79")},
-		{Code: strPtr("HKD"), Name: strPtr("港币"), Rate: strPtr("7.8")},
-		{Code: strPtr("KRW"), Name: strPtr("韩元"), Rate: strPtr("1340.0")},
-		{Code: strPtr("AUD"), Name: strPtr("澳元"), Rate: strPtr("1.52")},
-		{Code: strPtr("CAD"), Name: strPtr("加元"), Rate: strPtr("1.36")},
-		{Code: strPtr("CHF"), Name: strPtr("瑞郎"), Rate: strPtr("0.88")},
+		{Id: uint32Ptr(1), Code: strPtr("CNY"), Name: strPtr("人民币"), Rate: strPtr("7.2")},
+		{Id: uint32Ptr(2), Code: strPtr("USD"), Name: strPtr("美元"), Rate: strPtr("1.0")},
+		{Id: uint32Ptr(3), Code: strPtr("EUR"), Name: strPtr("欧元"), Rate: strPtr("0.92")},
+		{Id: uint32Ptr(4), Code: strPtr("JPY"), Name: strPtr("日元"), Rate: strPtr("148.0")},
+		{Id: uint32Ptr(5), Code: strPtr("GBP"), Name: strPtr("英镑"), Rate: strPtr("0.79")},
+		{Id: uint32Ptr(6), Code: strPtr("HKD"), Name: strPtr("港币"), Rate: strPtr("7.8")},
+		{Id: uint32Ptr(7), Code: strPtr("KRW"), Name: strPtr("韩元"), Rate: strPtr("1340.0")},
+		{Id: uint32Ptr(8), Code: strPtr("AUD"), Name: strPtr("澳元"), Rate: strPtr("1.52")},
+		{Id: uint32Ptr(9), Code: strPtr("CAD"), Name: strPtr("加元"), Rate: strPtr("1.36")},
+		{Id: uint32Ptr(10), Code: strPtr("CHF"), Name: strPtr("瑞郎"), Rate: strPtr("0.88")},
 	}
 }
 
@@ -95,6 +95,33 @@ func (s *CurrencyService) Convert(ctx context.Context, req *ledgerV1.ConvertCurr
 	}, nil
 }
 
+// ChangeRate 手动修改指定币种的汇率（内存实现，直接修改缓存）。
+func (s *CurrencyService) ChangeRate(ctx context.Context, req *ledgerV1.ChangeRateRequest) (*ledgerV1.Currency, error) {
+	if req == nil || req.GetId() == 0 {
+		return nil, ledgerV1.ErrorBadRequest("invalid currency id")
+	}
+	if req.GetRate() == "" {
+		return nil, ledgerV1.ErrorBadRequest("rate is required")
+	}
+	// 校验 rate 必须为合法数值
+	if parseFloat(req.GetRate()) == 0 {
+		return nil, ledgerV1.ErrorBadRequest("invalid rate value")
+	}
+
+	s.mu.Lock()
+	defer s.mu.Unlock()
+
+	for _, c := range s.currencies {
+		if c.GetId() == req.GetId() {
+			rate := req.GetRate()
+			c.Rate = &rate
+			s.log.Infof("currency rate changed id=%d code=%s", c.GetId(), c.GetCode())
+			return c, nil
+		}
+	}
+	return nil, ledgerV1.ErrorNotFound("currency not found")
+}
+
 func (s *CurrencyService) findRate(code string) float64 {
 	for _, c := range s.currencies {
 		if c.GetCode() == code {
@@ -118,3 +145,5 @@ func formatFloat(f float64) string {
 }
 
 func strPtr(s string) *string { return &s }
+
+func uint32Ptr(v uint32) *uint32 { return &v }

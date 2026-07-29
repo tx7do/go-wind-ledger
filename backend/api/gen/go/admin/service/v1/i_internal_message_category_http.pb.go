@@ -44,7 +44,7 @@ type InternalMessageCategoryServiceHTTPServer interface {
 func RegisterInternalMessageCategoryServiceHTTPServer(s *http.Server, srv InternalMessageCategoryServiceHTTPServer) {
 	r := s.Route("/")
 	r.GET("/admin/v1/internal-message/categories", _InternalMessageCategoryService_List14_HTTP_Handler(srv))
-	r.GET("/admin/v1/internal-message/categories/{id}", _InternalMessageCategoryService_Get12_HTTP_Handler(srv))
+	r.GET("/admin/v1/internal-message/categories/{id}", _InternalMessageCategoryService_Get13_HTTP_Handler(srv))
 	r.POST("/admin/v1/internal-message/categories", _InternalMessageCategoryService_Create10_HTTP_Handler(srv))
 	r.PUT("/admin/v1/internal-message/categories/{id}", _InternalMessageCategoryService_Update10_HTTP_Handler(srv))
 	r.DELETE("/admin/v1/internal-message/categories/{id}", _InternalMessageCategoryService_Delete11_HTTP_Handler(srv))
@@ -69,7 +69,7 @@ func _InternalMessageCategoryService_List14_HTTP_Handler(srv InternalMessageCate
 	}
 }
 
-func _InternalMessageCategoryService_Get12_HTTP_Handler(srv InternalMessageCategoryServiceHTTPServer) func(ctx http.Context) error {
+func _InternalMessageCategoryService_Get13_HTTP_Handler(srv InternalMessageCategoryServiceHTTPServer) func(ctx http.Context) error {
 	return func(ctx http.Context) error {
 		var in v11.GetInternalMessageCategoryRequest
 		if err := ctx.BindQuery(&in); err != nil {

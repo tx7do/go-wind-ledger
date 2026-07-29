@@ -1,0 +1,23 @@
+syntax = "proto3";
+
+package app.service.v1;
+
+import "google/api/annotations.proto";
+import "google/protobuf/empty.proto";
+
+import "ledger/service/v1/book_template.proto";
+
+// 账本模板服务（App BFF）
+service BookTemplateService {
+  rpc ListAll (google.protobuf.Empty) returns (ledger.service.v1.ListBookTemplateResponse) {
+    option (google.api.http) = {
+      get: "/app/v1/book-templates/all"
+    };
+  }
+
+  rpc Get (ledger.service.v1.GetBookTemplateRequest) returns (ledger.service.v1.BookTemplate) {
+    option (google.api.http) = {
+      get: "/app/v1/book-templates/{id}"
+    };
+  }
+}

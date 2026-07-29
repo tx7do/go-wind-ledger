@@ -356,6 +356,14 @@ func (r *BalanceFlowRepo) QueryFlowsByType(ctx context.Context, bookID uint32, f
 		All(ctx)
 }
 
+// QueryFlowsByBook returns all flows in a book ordered by create_time ascending.
+func (r *BalanceFlowRepo) QueryFlowsByBook(ctx context.Context, bookID uint32) ([]*ent.BalanceFlow, error) {
+	return r.entClient.Client().BalanceFlow.Query().
+		Where(balanceflow.BookIDEQ(bookID)).
+		Order(ent.Asc(balanceflow.FieldCreateTime)).
+		All(ctx)
+}
+
 // QueryCategoryRelationsByFlowIDs returns category relations for the given flow IDs.
 func (r *BalanceFlowRepo) QueryCategoryRelationsByFlowIDs(ctx context.Context, flowIDs []uint32) ([]*ent.CategoryRelation, error) {
 	return r.entClient.Client().CategoryRelation.Query().

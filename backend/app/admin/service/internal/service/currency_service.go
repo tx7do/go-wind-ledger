@@ -39,3 +39,7 @@ func (s *CurrencyService) Refresh(ctx context.Context, req *ledgerV1.RefreshCurr
 func (s *CurrencyService) Convert(ctx context.Context, req *ledgerV1.ConvertCurrencyRequest) (*ledgerV1.ConvertCurrencyResponse, error) {
 	return s.client.Convert(ctx, req)
 }
+
+func (s *CurrencyService) ChangeRate(ctx context.Context, req *ledgerV1.ChangeRateRequest) (*ledgerV1.Currency, error) {
+	return s.client.ChangeRate(ctx, req)
+}

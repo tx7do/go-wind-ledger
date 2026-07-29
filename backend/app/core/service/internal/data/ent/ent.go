@@ -11,6 +11,7 @@ import (
 	"go-wind-cms/app/core/service/internal/data/ent/apiauditlog"
 	"go-wind-cms/app/core/service/internal/data/ent/balanceflow"
 	"go-wind-cms/app/core/service/internal/data/ent/book"
+	"go-wind-cms/app/core/service/internal/data/ent/booktemplate"
 	"go-wind-cms/app/core/service/internal/data/ent/budget"
 	"go-wind-cms/app/core/service/internal/data/ent/category"
 	"go-wind-cms/app/core/service/internal/data/ent/categoryrelation"
@@ -120,6 +121,7 @@ func checkColumn(t, c string) error {
 			apiauditlog.Table:         apiauditlog.ValidColumn,
 			balanceflow.Table:         balanceflow.ValidColumn,
 			book.Table:                book.ValidColumn,
+			booktemplate.Table:        booktemplate.ValidColumn,
 			budget.Table:              budget.ValidColumn,
 			category.Table:            category.ValidColumn,
 			categoryrelation.Table:    categoryrelation.ValidColumn,

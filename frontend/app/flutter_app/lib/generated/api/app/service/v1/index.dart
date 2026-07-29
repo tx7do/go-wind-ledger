@@ -220,6 +220,32 @@ class AccountServiceClient {
     ), headers: headers);
     return LedgerServiceV1Account.fromJson(result as Map<String, dynamic>);
   }
+
+  Future<LedgerServiceV1OverviewResponse> overview(LedgerServiceV1OverviewRequest _request, {Map<String, String>? headers}) async {
+    final path = '/app/v1/accounts/overview';
+    final result = await _transport.unary(path, 'GET', null, TransportMeta(
+      service: 'AccountService',
+      method: 'Overview',
+    ), headers: headers);
+    return LedgerServiceV1OverviewResponse.fromJson(result as Map<String, dynamic>);
+  }
+
+  Future<LedgerServiceV1AccountStatisticsResponse> statistics(LedgerServiceV1AccountStatisticsRequest request, {Map<String, String>? headers}) async {
+    final path = '/app/v1/accounts/statistics';
+    final queryParams = <String>[];
+    if (request.currencyCode != null) {
+      queryParams.add('currencyCode=${Uri.encodeComponent(request.currencyCode!.toString())}');
+    }
+    var uri = path;
+    if (queryParams.isNotEmpty) {
+      uri += '?${queryParams.join("&")}';
+    }
+    final result = await _transport.unary(uri, 'GET', null, TransportMeta(
+      service: 'AccountService',
+      method: 'Statistics',
+    ), headers: headers);
+    return LedgerServiceV1AccountStatisticsResponse.fromJson(result as Map<String, dynamic>);
+  }
 }
 
 /// ------------------------------
@@ -1421,6 +1447,305 @@ class LedgerServiceV1AdjustBalanceRequest {
       id: id ?? this.id,
       notes: notes ?? this.notes,
       title: title ?? this.title,
+    );
+  }
+}
+
+/// 请求 - 账户概览
+class LedgerServiceV1OverviewRequest {
+
+  LedgerServiceV1OverviewRequest({
+  });
+
+  factory LedgerServiceV1OverviewRequest.fromJson(Map<String, dynamic> json) {
+    return LedgerServiceV1OverviewRequest(
+    );
+  }
+
+  Map<String, dynamic> toJson() {
+    final json = <String, dynamic>{};
+    return json;
+  }
+
+  @override
+  String toString() {
+    return 'LedgerServiceV1OverviewRequest()';
+  }
+
+  @override
+  bool operator ==(Object other) =>
+    identical(this, other) ||
+    other is LedgerServiceV1OverviewRequest &&
+      runtimeType == other.runtimeType
+    ;
+
+  @override
+  int get hashCode => Object.hashAll([
+  ]);
+
+  LedgerServiceV1OverviewRequest copyWith({
+  }) {
+    return LedgerServiceV1OverviewRequest(
+    );
+  }
+}
+
+/// 回应 - 账户概览
+class LedgerServiceV1OverviewResponse {
+  List<LedgerServiceV1AccountAsset>? assets;
+  List<LedgerServiceV1AccountAsset>? debts;
+  String? netWorth;
+  String? totalAssets;
+  String? totalDebts;
+
+  LedgerServiceV1OverviewResponse({
+    this.assets,
+    this.debts,
+    this.netWorth,
+    this.totalAssets,
+    this.totalDebts,
+  });
+
+  factory LedgerServiceV1OverviewResponse.fromJson(Map<String, dynamic> json) {
+    return LedgerServiceV1OverviewResponse(
+      assets: (json['assets'] as List<dynamic>?)?.map((e) => LedgerServiceV1AccountAsset.fromJson(e as Map<String, dynamic>)).toList(),
+      debts: (json['debts'] as List<dynamic>?)?.map((e) => LedgerServiceV1AccountAsset.fromJson(e as Map<String, dynamic>)).toList(),
+      netWorth: json['netWorth'] as String?,
+      totalAssets: json['totalAssets'] as String?,
+      totalDebts: json['totalDebts'] as String?,
+    );
+  }
+
+  Map<String, dynamic> toJson() {
+    final json = <String, dynamic>{};
+    if (assets != null) json['assets'] = assets!.map((e) => e.toJson()).toList();
+    if (debts != null) json['debts'] = debts!.map((e) => e.toJson()).toList();
+    if (netWorth != null) json['netWorth'] = netWorth;
+    if (totalAssets != null) json['totalAssets'] = totalAssets;
+    if (totalDebts != null) json['totalDebts'] = totalDebts;
+    return json;
+  }
+
+  @override
+  String toString() {
+    return 'LedgerServiceV1OverviewResponse(assets: $assets, debts: $debts, netWorth: $netWorth, totalAssets: $totalAssets, totalDebts: $totalDebts)';
+  }
+
+  @override
+  bool operator ==(Object other) =>
+    identical(this, other) ||
+    other is LedgerServiceV1OverviewResponse &&
+      runtimeType == other.runtimeType
+      && assets == other.assets
+      && debts == other.debts
+      && netWorth == other.netWorth
+      && totalAssets == other.totalAssets
+      && totalDebts == other.totalDebts
+    ;
+
+  @override
+  int get hashCode => Object.hashAll([
+    assets,
+    debts,
+    netWorth,
+    totalAssets,
+    totalDebts,
+  ]);
+
+  LedgerServiceV1OverviewResponse copyWith({
+    List<LedgerServiceV1AccountAsset>? assets,
+    List<LedgerServiceV1AccountAsset>? debts,
+    String? netWorth,
+    String? totalAssets,
+    String? totalDebts,
+  }) {
+    return LedgerServiceV1OverviewResponse(
+      assets: assets ?? this.assets,
+      debts: debts ?? this.debts,
+      netWorth: netWorth ?? this.netWorth,
+      totalAssets: totalAssets ?? this.totalAssets,
+      totalDebts: totalDebts ?? this.totalDebts,
+    );
+  }
+}
+
+/// 账户资产/负债明细
+class LedgerServiceV1AccountAsset {
+  String? balance;
+  String? currencyCode;
+  String? name;
+  String? type;
+
+  LedgerServiceV1AccountAsset({
+    this.balance,
+    this.currencyCode,
+    this.name,
+    this.type,
+  });
+
+  factory LedgerServiceV1AccountAsset.fromJson(Map<String, dynamic> json) {
+    return LedgerServiceV1AccountAsset(
+      balance: json['balance'] as String?,
+      currencyCode: json['currencyCode'] as String?,
+      name: json['name'] as String?,
+      type: json['type'] as String?,
+    );
+  }
+
+  Map<String, dynamic> toJson() {
+    final json = <String, dynamic>{};
+    if (balance != null) json['balance'] = balance;
+    if (currencyCode != null) json['currencyCode'] = currencyCode;
+    if (name != null) json['name'] = name;
+    if (type != null) json['type'] = type;
+    return json;
+  }
+
+  @override
+  String toString() {
+    return 'LedgerServiceV1AccountAsset(balance: $balance, currencyCode: $currencyCode, name: $name, type: $type)';
+  }
+
+  @override
+  bool operator ==(Object other) =>
+    identical(this, other) ||
+    other is LedgerServiceV1AccountAsset &&
+      runtimeType == other.runtimeType
+      && balance == other.balance
+      && currencyCode == other.currencyCode
+      && name == other.name
+      && type == other.type
+    ;
+
+  @override
+  int get hashCode => Object.hashAll([
+    balance,
+    currencyCode,
+    name,
+    type,
+  ]);
+
+  LedgerServiceV1AccountAsset copyWith({
+    String? balance,
+    String? currencyCode,
+    String? name,
+    String? type,
+  }) {
+    return LedgerServiceV1AccountAsset(
+      balance: balance ?? this.balance,
+      currencyCode: currencyCode ?? this.currencyCode,
+      name: name ?? this.name,
+      type: type ?? this.type,
+    );
+  }
+}
+
+/// 请求 - 账户统计
+class LedgerServiceV1AccountStatisticsRequest {
+  String? currencyCode;
+
+  LedgerServiceV1AccountStatisticsRequest({
+    this.currencyCode,
+  });
+
+  factory LedgerServiceV1AccountStatisticsRequest.fromJson(Map<String, dynamic> json) {
+    return LedgerServiceV1AccountStatisticsRequest(
+      currencyCode: json['currencyCode'] as String?,
+    );
+  }
+
+  Map<String, dynamic> toJson() {
+    final json = <String, dynamic>{};
+    if (currencyCode != null) json['currencyCode'] = currencyCode;
+    return json;
+  }
+
+  @override
+  String toString() {
+    return 'LedgerServiceV1AccountStatisticsRequest(currencyCode: $currencyCode)';
+  }
+
+  @override
+  bool operator ==(Object other) =>
+    identical(this, other) ||
+    other is LedgerServiceV1AccountStatisticsRequest &&
+      runtimeType == other.runtimeType
+      && currencyCode == other.currencyCode
+    ;
+
+  @override
+  int get hashCode => Object.hashAll([
+    currencyCode,
+  ]);
+
+  LedgerServiceV1AccountStatisticsRequest copyWith({
+    String? currencyCode,
+  }) {
+    return LedgerServiceV1AccountStatisticsRequest(
+      currencyCode: currencyCode ?? this.currencyCode,
+    );
+  }
+}
+
+/// 回应 - 账户统计
+class LedgerServiceV1AccountStatisticsResponse {
+  String? totalAvailable;
+  String? totalBalance;
+  String? totalCreditLimit;
+
+  LedgerServiceV1AccountStatisticsResponse({
+    this.totalAvailable,
+    this.totalBalance,
+    this.totalCreditLimit,
+  });
+
+  factory LedgerServiceV1AccountStatisticsResponse.fromJson(Map<String, dynamic> json) {
+    return LedgerServiceV1AccountStatisticsResponse(
+      totalAvailable: json['totalAvailable'] as String?,
+      totalBalance: json['totalBalance'] as String?,
+      totalCreditLimit: json['totalCreditLimit'] as String?,
+    );
+  }
+
+  Map<String, dynamic> toJson() {
+    final json = <String, dynamic>{};
+    if (totalAvailable != null) json['totalAvailable'] = totalAvailable;
+    if (totalBalance != null) json['totalBalance'] = totalBalance;
+    if (totalCreditLimit != null) json['totalCreditLimit'] = totalCreditLimit;
+    return json;
+  }
+
+  @override
+  String toString() {
+    return 'LedgerServiceV1AccountStatisticsResponse(totalAvailable: $totalAvailable, totalBalance: $totalBalance, totalCreditLimit: $totalCreditLimit)';
+  }
+
+  @override
+  bool operator ==(Object other) =>
+    identical(this, other) ||
+    other is LedgerServiceV1AccountStatisticsResponse &&
+      runtimeType == other.runtimeType
+      && totalAvailable == other.totalAvailable
+      && totalBalance == other.totalBalance
+      && totalCreditLimit == other.totalCreditLimit
+    ;
+
+  @override
+  int get hashCode => Object.hashAll([
+    totalAvailable,
+    totalBalance,
+    totalCreditLimit,
+  ]);
+
+  LedgerServiceV1AccountStatisticsResponse copyWith({
+    String? totalAvailable,
+    String? totalBalance,
+    String? totalCreditLimit,
+  }) {
+    return LedgerServiceV1AccountStatisticsResponse(
+      totalAvailable: totalAvailable ?? this.totalAvailable,
+      totalBalance: totalBalance ?? this.totalBalance,
+      totalCreditLimit: totalCreditLimit ?? this.totalCreditLimit,
     );
   }
 }
@@ -2989,6 +3314,55 @@ class BookServiceClient {
     ), headers: headers);
     return LedgerServiceV1Book.fromJson(result as Map<String, dynamic>);
   }
+
+  Future<LedgerServiceV1Book> createByTemplate(LedgerServiceV1CreateBookByTemplateRequest request, {Map<String, String>? headers}) async {
+    final path = '/app/v1/books/template';
+    final body = jsonEncode(request.toJson());
+    final result = await _transport.unary(path, 'POST', body, TransportMeta(
+      service: 'BookService',
+      method: 'CreateByTemplate',
+    ), headers: headers);
+    return LedgerServiceV1Book.fromJson(result as Map<String, dynamic>);
+  }
+
+  Future<LedgerServiceV1Book> copy(LedgerServiceV1CopyBookRequest request, {Map<String, String>? headers}) async {
+    final path = '/app/v1/books/copy';
+    final body = jsonEncode(request.toJson());
+    final result = await _transport.unary(path, 'POST', body, TransportMeta(
+      service: 'BookService',
+      method: 'Copy',
+    ), headers: headers);
+    return LedgerServiceV1Book.fromJson(result as Map<String, dynamic>);
+  }
+
+  Future<LedgerServiceV1ExportBookResponse> export(LedgerServiceV1ExportBookRequest request, {Map<String, String>? headers}) async {
+    if (request.id == null) {
+      throw ArgumentError('missing required field request.id');
+    }
+    final path = '/app/v1/books/${request.id}/export';
+    final queryParams = <String>[];
+    if (request.timeZoneOffset != null) {
+      queryParams.add('timeZoneOffset=${Uri.encodeComponent(request.timeZoneOffset!.toString())}');
+    }
+    var uri = path;
+    if (queryParams.isNotEmpty) {
+      uri += '?${queryParams.join("&")}';
+    }
+    final result = await _transport.unary(uri, 'GET', null, TransportMeta(
+      service: 'BookService',
+      method: 'Export',
+    ), headers: headers);
+    return LedgerServiceV1ExportBookResponse.fromJson(result as Map<String, dynamic>);
+  }
+
+  Future<LedgerServiceV1ListBookResponse> listAllBooks(Map<String, dynamic> _request, {Map<String, String>? headers}) async {
+    final path = '/app/v1/books/select-all';
+    final result = await _transport.unary(path, 'GET', null, TransportMeta(
+      service: 'BookService',
+      method: 'ListAllBooks',
+    ), headers: headers);
+    return LedgerServiceV1ListBookResponse.fromJson(result as Map<String, dynamic>);
+  }
 }
 
 /// 回应 - 账本列表
@@ -3556,6 +3930,632 @@ class LedgerServiceV1ToggleBookRequest {
     int? id,
   }) {
     return LedgerServiceV1ToggleBookRequest(
+      id: id ?? this.id,
+    );
+  }
+}
+
+/// 请求 - 从模板创建账本
+class LedgerServiceV1CreateBookByTemplateRequest {
+  String? defaultCurrencyCode;
+  String? name;
+  String? notes;
+  int? templateId;
+
+  LedgerServiceV1CreateBookByTemplateRequest({
+    this.defaultCurrencyCode,
+    this.name,
+    this.notes,
+    this.templateId,
+  });
+
+  factory LedgerServiceV1CreateBookByTemplateRequest.fromJson(Map<String, dynamic> json) {
+    return LedgerServiceV1CreateBookByTemplateRequest(
+      defaultCurrencyCode: json['defaultCurrencyCode'] as String?,
+      name: json['name'] as String?,
+      notes: json['notes'] as String?,
+      templateId: json['templateId'] as int?,
+    );
+  }
+
+  Map<String, dynamic> toJson() {
+    final json = <String, dynamic>{};
+    if (defaultCurrencyCode != null) json['defaultCurrencyCode'] = defaultCurrencyCode;
+    if (name != null) json['name'] = name;
+    if (notes != null) json['notes'] = notes;
+    if (templateId != null) json['templateId'] = templateId;
+    return json;
+  }
+
+  @override
+  String toString() {
+    return 'LedgerServiceV1CreateBookByTemplateRequest(defaultCurrencyCode: $defaultCurrencyCode, name: $name, notes: $notes, templateId: $templateId)';
+  }
+
+  @override
+  bool operator ==(Object other) =>
+    identical(this, other) ||
+    other is LedgerServiceV1CreateBookByTemplateRequest &&
+      runtimeType == other.runtimeType
+      && defaultCurrencyCode == other.defaultCurrencyCode
+      && name == other.name
+      && notes == other.notes
+      && templateId == other.templateId
+    ;
+
+  @override
+  int get hashCode => Object.hashAll([
+    defaultCurrencyCode,
+    name,
+    notes,
+    templateId,
+  ]);
+
+  LedgerServiceV1CreateBookByTemplateRequest copyWith({
+    String? defaultCurrencyCode,
+    String? name,
+    String? notes,
+    int? templateId,
+  }) {
+    return LedgerServiceV1CreateBookByTemplateRequest(
+      defaultCurrencyCode: defaultCurrencyCode ?? this.defaultCurrencyCode,
+      name: name ?? this.name,
+      notes: notes ?? this.notes,
+      templateId: templateId ?? this.templateId,
+    );
+  }
+}
+
+/// 请求 - 复制账本
+class LedgerServiceV1CopyBookRequest {
+  String? name;
+  String? notes;
+  int? sourceBookId;
+
+  LedgerServiceV1CopyBookRequest({
+    this.name,
+    this.notes,
+    this.sourceBookId,
+  });
+
+  factory LedgerServiceV1CopyBookRequest.fromJson(Map<String, dynamic> json) {
+    return LedgerServiceV1CopyBookRequest(
+      name: json['name'] as String?,
+      notes: json['notes'] as String?,
+      sourceBookId: json['sourceBookId'] as int?,
+    );
+  }
+
+  Map<String, dynamic> toJson() {
+    final json = <String, dynamic>{};
+    if (name != null) json['name'] = name;
+    if (notes != null) json['notes'] = notes;
+    if (sourceBookId != null) json['sourceBookId'] = sourceBookId;
+    return json;
+  }
+
+  @override
+  String toString() {
+    return 'LedgerServiceV1CopyBookRequest(name: $name, notes: $notes, sourceBookId: $sourceBookId)';
+  }
+
+  @override
+  bool operator ==(Object other) =>
+    identical(this, other) ||
+    other is LedgerServiceV1CopyBookRequest &&
+      runtimeType == other.runtimeType
+      && name == other.name
+      && notes == other.notes
+      && sourceBookId == other.sourceBookId
+    ;
+
+  @override
+  int get hashCode => Object.hashAll([
+    name,
+    notes,
+    sourceBookId,
+  ]);
+
+  LedgerServiceV1CopyBookRequest copyWith({
+    String? name,
+    String? notes,
+    int? sourceBookId,
+  }) {
+    return LedgerServiceV1CopyBookRequest(
+      name: name ?? this.name,
+      notes: notes ?? this.notes,
+      sourceBookId: sourceBookId ?? this.sourceBookId,
+    );
+  }
+}
+
+/// 请求 - 导出账本流水
+class LedgerServiceV1ExportBookRequest {
+  int? id;
+  int? timeZoneOffset;
+
+  LedgerServiceV1ExportBookRequest({
+    this.id,
+    this.timeZoneOffset,
+  });
+
+  factory LedgerServiceV1ExportBookRequest.fromJson(Map<String, dynamic> json) {
+    return LedgerServiceV1ExportBookRequest(
+      id: json['id'] as int?,
+      timeZoneOffset: json['timeZoneOffset'] as int?,
+    );
+  }
+
+  Map<String, dynamic> toJson() {
+    final json = <String, dynamic>{};
+    if (id != null) json['id'] = id;
+    if (timeZoneOffset != null) json['timeZoneOffset'] = timeZoneOffset;
+    return json;
+  }
+
+  @override
+  String toString() {
+    return 'LedgerServiceV1ExportBookRequest(id: $id, timeZoneOffset: $timeZoneOffset)';
+  }
+
+  @override
+  bool operator ==(Object other) =>
+    identical(this, other) ||
+    other is LedgerServiceV1ExportBookRequest &&
+      runtimeType == other.runtimeType
+      && id == other.id
+      && timeZoneOffset == other.timeZoneOffset
+    ;
+
+  @override
+  int get hashCode => Object.hashAll([
+    id,
+    timeZoneOffset,
+  ]);
+
+  LedgerServiceV1ExportBookRequest copyWith({
+    int? id,
+    int? timeZoneOffset,
+  }) {
+    return LedgerServiceV1ExportBookRequest(
+      id: id ?? this.id,
+      timeZoneOffset: timeZoneOffset ?? this.timeZoneOffset,
+    );
+  }
+}
+
+/// 回应 - 导出账本流水
+class LedgerServiceV1ExportBookResponse {
+  String? contentType;
+  String? data;
+  String? fileName;
+
+  LedgerServiceV1ExportBookResponse({
+    this.contentType,
+    this.data,
+    this.fileName,
+  });
+
+  factory LedgerServiceV1ExportBookResponse.fromJson(Map<String, dynamic> json) {
+    return LedgerServiceV1ExportBookResponse(
+      contentType: json['contentType'] as String?,
+      data: json['data'] as String?,
+      fileName: json['fileName'] as String?,
+    );
+  }
+
+  Map<String, dynamic> toJson() {
+    final json = <String, dynamic>{};
+    if (contentType != null) json['contentType'] = contentType;
+    if (data != null) json['data'] = data;
+    if (fileName != null) json['fileName'] = fileName;
+    return json;
+  }
+
+  @override
+  String toString() {
+    return 'LedgerServiceV1ExportBookResponse(contentType: $contentType, data: $data, fileName: $fileName)';
+  }
+
+  @override
+  bool operator ==(Object other) =>
+    identical(this, other) ||
+    other is LedgerServiceV1ExportBookResponse &&
+      runtimeType == other.runtimeType
+      && contentType == other.contentType
+      && data == other.data
+      && fileName == other.fileName
+    ;
+
+  @override
+  int get hashCode => Object.hashAll([
+    contentType,
+    data,
+    fileName,
+  ]);
+
+  LedgerServiceV1ExportBookResponse copyWith({
+    String? contentType,
+    String? data,
+    String? fileName,
+  }) {
+    return LedgerServiceV1ExportBookResponse(
+      contentType: contentType ?? this.contentType,
+      data: data ?? this.data,
+      fileName: fileName ?? this.fileName,
+    );
+  }
+}
+
+/// 账本模板服务（App BFF）
+class BookTemplateServiceClient {
+  final ClientTransport _transport;
+
+  BookTemplateServiceClient(this._transport);
+
+  Future<LedgerServiceV1ListBookTemplateResponse> listAll(Map<String, dynamic> _request, {Map<String, String>? headers}) async {
+    final path = '/app/v1/book-templates/all';
+    final result = await _transport.unary(path, 'GET', null, TransportMeta(
+      service: 'BookTemplateService',
+      method: 'ListAll',
+    ), headers: headers);
+    return LedgerServiceV1ListBookTemplateResponse.fromJson(result as Map<String, dynamic>);
+  }
+
+  Future<LedgerServiceV1BookTemplate> get(LedgerServiceV1GetBookTemplateRequest request, {Map<String, String>? headers}) async {
+    if (request.id == null) {
+      throw ArgumentError('missing required field request.id');
+    }
+    final path = '/app/v1/book-templates/${request.id}';
+    final result = await _transport.unary(path, 'GET', null, TransportMeta(
+      service: 'BookTemplateService',
+      method: 'Get',
+    ), headers: headers);
+    return LedgerServiceV1BookTemplate.fromJson(result as Map<String, dynamic>);
+  }
+}
+
+/// 回应 - 账本模板列表
+class LedgerServiceV1ListBookTemplateResponse {
+  List<LedgerServiceV1BookTemplate>? items;
+
+  LedgerServiceV1ListBookTemplateResponse({
+    this.items,
+  });
+
+  factory LedgerServiceV1ListBookTemplateResponse.fromJson(Map<String, dynamic> json) {
+    return LedgerServiceV1ListBookTemplateResponse(
+      items: (json['items'] as List<dynamic>?)?.map((e) => LedgerServiceV1BookTemplate.fromJson(e as Map<String, dynamic>)).toList(),
+    );
+  }
+
+  Map<String, dynamic> toJson() {
+    final json = <String, dynamic>{};
+    if (items != null) json['items'] = items!.map((e) => e.toJson()).toList();
+    return json;
+  }
+
+  @override
+  String toString() {
+    return 'LedgerServiceV1ListBookTemplateResponse(items: $items)';
+  }
+
+  @override
+  bool operator ==(Object other) =>
+    identical(this, other) ||
+    other is LedgerServiceV1ListBookTemplateResponse &&
+      runtimeType == other.runtimeType
+      && items == other.items
+    ;
+
+  @override
+  int get hashCode => Object.hashAll([
+    items,
+  ]);
+
+  LedgerServiceV1ListBookTemplateResponse copyWith({
+    List<LedgerServiceV1BookTemplate>? items,
+  }) {
+    return LedgerServiceV1ListBookTemplateResponse(
+      items: items ?? this.items,
+    );
+  }
+}
+
+/// 账本模板
+class LedgerServiceV1BookTemplate {
+  List<LedgerServiceV1CategoryTemplate>? categories;
+  int? id;
+  String? locale;
+  String? name;
+  List<LedgerServiceV1PayeeTemplate>? payees;
+  List<LedgerServiceV1TagTemplate>? tags;
+  String? thumbnail;
+
+  LedgerServiceV1BookTemplate({
+    this.categories,
+    this.id,
+    this.locale,
+    this.name,
+    this.payees,
+    this.tags,
+    this.thumbnail,
+  });
+
+  factory LedgerServiceV1BookTemplate.fromJson(Map<String, dynamic> json) {
+    return LedgerServiceV1BookTemplate(
+      categories: (json['categories'] as List<dynamic>?)?.map((e) => LedgerServiceV1CategoryTemplate.fromJson(e as Map<String, dynamic>)).toList(),
+      id: json['id'] as int?,
+      locale: json['locale'] as String?,
+      name: json['name'] as String?,
+      payees: (json['payees'] as List<dynamic>?)?.map((e) => LedgerServiceV1PayeeTemplate.fromJson(e as Map<String, dynamic>)).toList(),
+      tags: (json['tags'] as List<dynamic>?)?.map((e) => LedgerServiceV1TagTemplate.fromJson(e as Map<String, dynamic>)).toList(),
+      thumbnail: json['thumbnail'] as String?,
+    );
+  }
+
+  Map<String, dynamic> toJson() {
+    final json = <String, dynamic>{};
+    if (categories != null) json['categories'] = categories!.map((e) => e.toJson()).toList();
+    if (id != null) json['id'] = id;
+    if (locale != null) json['locale'] = locale;
+    if (name != null) json['name'] = name;
+    if (payees != null) json['payees'] = payees!.map((e) => e.toJson()).toList();
+    if (tags != null) json['tags'] = tags!.map((e) => e.toJson()).toList();
+    if (thumbnail != null) json['thumbnail'] = thumbnail;
+    return json;
+  }
+
+  @override
+  String toString() {
+    return 'LedgerServiceV1BookTemplate(categories: $categories, id: $id, locale: $locale, name: $name, payees: $payees, tags: $tags, thumbnail: $thumbnail)';
+  }
+
+  @override
+  bool operator ==(Object other) =>
+    identical(this, other) ||
+    other is LedgerServiceV1BookTemplate &&
+      runtimeType == other.runtimeType
+      && categories == other.categories
+      && id == other.id
+      && locale == other.locale
+      && name == other.name
+      && payees == other.payees
+      && tags == other.tags
+      && thumbnail == other.thumbnail
+    ;
+
+  @override
+  int get hashCode => Object.hashAll([
+    categories,
+    id,
+    locale,
+    name,
+    payees,
+    tags,
+    thumbnail,
+  ]);
+
+  LedgerServiceV1BookTemplate copyWith({
+    List<LedgerServiceV1CategoryTemplate>? categories,
+    int? id,
+    String? locale,
+    String? name,
+    List<LedgerServiceV1PayeeTemplate>? payees,
+    List<LedgerServiceV1TagTemplate>? tags,
+    String? thumbnail,
+  }) {
+    return LedgerServiceV1BookTemplate(
+      categories: categories ?? this.categories,
+      id: id ?? this.id,
+      locale: locale ?? this.locale,
+      name: name ?? this.name,
+      payees: payees ?? this.payees,
+      tags: tags ?? this.tags,
+      thumbnail: thumbnail ?? this.thumbnail,
+    );
+  }
+}
+
+/// 分类模板
+class LedgerServiceV1CategoryTemplate {
+  int? level;
+  String? name;
+  String? type;
+
+  LedgerServiceV1CategoryTemplate({
+    this.level,
+    this.name,
+    this.type,
+  });
+
+  factory LedgerServiceV1CategoryTemplate.fromJson(Map<String, dynamic> json) {
+    return LedgerServiceV1CategoryTemplate(
+      level: json['level'] as int?,
+      name: json['name'] as String?,
+      type: json['type'] as String?,
+    );
+  }
+
+  Map<String, dynamic> toJson() {
+    final json = <String, dynamic>{};
+    if (level != null) json['level'] = level;
+    if (name != null) json['name'] = name;
+    if (type != null) json['type'] = type;
+    return json;
+  }
+
+  @override
+  String toString() {
+    return 'LedgerServiceV1CategoryTemplate(level: $level, name: $name, type: $type)';
+  }
+
+  @override
+  bool operator ==(Object other) =>
+    identical(this, other) ||
+    other is LedgerServiceV1CategoryTemplate &&
+      runtimeType == other.runtimeType
+      && level == other.level
+      && name == other.name
+      && type == other.type
+    ;
+
+  @override
+  int get hashCode => Object.hashAll([
+    level,
+    name,
+    type,
+  ]);
+
+  LedgerServiceV1CategoryTemplate copyWith({
+    int? level,
+    String? name,
+    String? type,
+  }) {
+    return LedgerServiceV1CategoryTemplate(
+      level: level ?? this.level,
+      name: name ?? this.name,
+      type: type ?? this.type,
+    );
+  }
+}
+
+/// 标签模板
+class LedgerServiceV1TagTemplate {
+  String? name;
+
+  LedgerServiceV1TagTemplate({
+    this.name,
+  });
+
+  factory LedgerServiceV1TagTemplate.fromJson(Map<String, dynamic> json) {
+    return LedgerServiceV1TagTemplate(
+      name: json['name'] as String?,
+    );
+  }
+
+  Map<String, dynamic> toJson() {
+    final json = <String, dynamic>{};
+    if (name != null) json['name'] = name;
+    return json;
+  }
+
+  @override
+  String toString() {
+    return 'LedgerServiceV1TagTemplate(name: $name)';
+  }
+
+  @override
+  bool operator ==(Object other) =>
+    identical(this, other) ||
+    other is LedgerServiceV1TagTemplate &&
+      runtimeType == other.runtimeType
+      && name == other.name
+    ;
+
+  @override
+  int get hashCode => Object.hashAll([
+    name,
+  ]);
+
+  LedgerServiceV1TagTemplate copyWith({
+    String? name,
+  }) {
+    return LedgerServiceV1TagTemplate(
+      name: name ?? this.name,
+    );
+  }
+}
+
+/// 收款人模板
+class LedgerServiceV1PayeeTemplate {
+  String? name;
+
+  LedgerServiceV1PayeeTemplate({
+    this.name,
+  });
+
+  factory LedgerServiceV1PayeeTemplate.fromJson(Map<String, dynamic> json) {
+    return LedgerServiceV1PayeeTemplate(
+      name: json['name'] as String?,
+    );
+  }
+
+  Map<String, dynamic> toJson() {
+    final json = <String, dynamic>{};
+    if (name != null) json['name'] = name;
+    return json;
+  }
+
+  @override
+  String toString() {
+    return 'LedgerServiceV1PayeeTemplate(name: $name)';
+  }
+
+  @override
+  bool operator ==(Object other) =>
+    identical(this, other) ||
+    other is LedgerServiceV1PayeeTemplate &&
+      runtimeType == other.runtimeType
+      && name == other.name
+    ;
+
+  @override
+  int get hashCode => Object.hashAll([
+    name,
+  ]);
+
+  LedgerServiceV1PayeeTemplate copyWith({
+    String? name,
+  }) {
+    return LedgerServiceV1PayeeTemplate(
+      name: name ?? this.name,
+    );
+  }
+}
+
+/// 请求 - 获取单个账本模板
+class LedgerServiceV1GetBookTemplateRequest {
+  int? id;
+
+  LedgerServiceV1GetBookTemplateRequest({
+    this.id,
+  });
+
+  factory LedgerServiceV1GetBookTemplateRequest.fromJson(Map<String, dynamic> json) {
+    return LedgerServiceV1GetBookTemplateRequest(
+      id: json['id'] as int?,
+    );
+  }
+
+  Map<String, dynamic> toJson() {
+    final json = <String, dynamic>{};
+    if (id != null) json['id'] = id;
+    return json;
+  }
+
+  @override
+  String toString() {
+    return 'LedgerServiceV1GetBookTemplateRequest(id: $id)';
+  }
+
+  @override
+  bool operator ==(Object other) =>
+    identical(this, other) ||
+    other is LedgerServiceV1GetBookTemplateRequest &&
+      runtimeType == other.runtimeType
+      && id == other.id
+    ;
+
+  @override
+  int get hashCode => Object.hashAll([
+    id,
+  ]);
+
+  LedgerServiceV1GetBookTemplateRequest copyWith({
+    int? id,
+  }) {
+    return LedgerServiceV1GetBookTemplateRequest(
       id: id ?? this.id,
     );
   }
@@ -5279,6 +6279,19 @@ class CurrencyServiceClient {
     ), headers: headers);
     return LedgerServiceV1ConvertCurrencyResponse.fromJson(result as Map<String, dynamic>);
   }
+
+  Future<LedgerServiceV1Currency> changeRate(LedgerServiceV1ChangeRateRequest request, {Map<String, String>? headers}) async {
+    if (request.id == null) {
+      throw ArgumentError('missing required field request.id');
+    }
+    final path = '/app/v1/currencies/${request.id}/rate';
+    final body = jsonEncode(request.toJson());
+    final result = await _transport.unary(path, 'PUT', body, TransportMeta(
+      service: 'CurrencyService',
+      method: 'ChangeRate',
+    ), headers: headers);
+    return LedgerServiceV1Currency.fromJson(result as Map<String, dynamic>);
+  }
 }
 
 /// 请求 - 获取所有币种
@@ -5598,6 +6611,61 @@ class LedgerServiceV1ConvertCurrencyResponse {
   }) {
     return LedgerServiceV1ConvertCurrencyResponse(
       amount: amount ?? this.amount,
+      rate: rate ?? this.rate,
+    );
+  }
+}
+
+/// 请求 - 手动修改币种汇率
+class LedgerServiceV1ChangeRateRequest {
+  int? id;
+  String? rate;
+
+  LedgerServiceV1ChangeRateRequest({
+    this.id,
+    this.rate,
+  });
+
+  factory LedgerServiceV1ChangeRateRequest.fromJson(Map<String, dynamic> json) {
+    return LedgerServiceV1ChangeRateRequest(
+      id: json['id'] as int?,
+      rate: json['rate'] as String?,
+    );
+  }
+
+  Map<String, dynamic> toJson() {
+    final json = <String, dynamic>{};
+    if (id != null) json['id'] = id;
+    if (rate != null) json['rate'] = rate;
+    return json;
+  }
+
+  @override
+  String toString() {
+    return 'LedgerServiceV1ChangeRateRequest(id: $id, rate: $rate)';
+  }
+
+  @override
+  bool operator ==(Object other) =>
+    identical(this, other) ||
+    other is LedgerServiceV1ChangeRateRequest &&
+      runtimeType == other.runtimeType
+      && id == other.id
+      && rate == other.rate
+    ;
+
+  @override
+  int get hashCode => Object.hashAll([
+    id,
+    rate,
+  ]);
+
+  LedgerServiceV1ChangeRateRequest copyWith({
+    int? id,
+    String? rate,
+  }) {
+    return LedgerServiceV1ChangeRateRequest(
+      id: id ?? this.id,
       rate: rate ?? this.rate,
     );
   }
@@ -15573,6 +16641,7 @@ class ApiClient {
   AuthenticationServiceClient? _authenticationService;
   BalanceFlowServiceClient? _balanceFlowService;
   BookServiceClient? _bookService;
+  BookTemplateServiceClient? _bookTemplateService;
   CategoryServiceClient? _categoryService;
   CommentServiceClient? _commentService;
   CurrencyServiceClient? _currencyService;
@@ -15611,6 +16680,11 @@ class ApiClient {
   BookServiceClient get bookService {
     _bookService ??= BookServiceClient(_transport);
     return _bookService!;
+  }
+
+  BookTemplateServiceClient get bookTemplateService {
+    _bookTemplateService ??= BookTemplateServiceClient(_transport);
+    return _bookTemplateService!;
   }
 
   CategoryServiceClient get categoryService {
@@ -15704,6 +16778,7 @@ class ApiClient {
     _authenticationService = null;
     _balanceFlowService = null;
     _bookService = null;
+    _bookTemplateService = null;
     _categoryService = null;
     _commentService = null;
     _currencyService = null;

@@ -44,7 +44,7 @@ type MenuServiceHTTPServer interface {
 func RegisterMenuServiceHTTPServer(s *http.Server, srv MenuServiceHTTPServer) {
 	r := s.Route("/")
 	r.GET("/admin/v1/menus", _MenuService_List19_HTTP_Handler(srv))
-	r.GET("/admin/v1/menus/{id}", _MenuService_Get17_HTTP_Handler(srv))
+	r.GET("/admin/v1/menus/{id}", _MenuService_Get18_HTTP_Handler(srv))
 	r.POST("/admin/v1/menus", _MenuService_Create14_HTTP_Handler(srv))
 	r.PUT("/admin/v1/menus/{id}", _MenuService_Update14_HTTP_Handler(srv))
 	r.DELETE("/admin/v1/menus/{id}", _MenuService_Delete15_HTTP_Handler(srv))
@@ -69,7 +69,7 @@ func _MenuService_List19_HTTP_Handler(srv MenuServiceHTTPServer) func(ctx http.C
 	}
 }
 
-func _MenuService_Get17_HTTP_Handler(srv MenuServiceHTTPServer) func(ctx http.Context) error {
+func _MenuService_Get18_HTTP_Handler(srv MenuServiceHTTPServer) func(ctx http.Context) error {
 	return func(ctx http.Context) error {
 		var in v11.GetMenuRequest
 		if err := ctx.BindQuery(&in); err != nil {

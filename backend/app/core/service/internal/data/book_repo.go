@@ -89,6 +89,24 @@ func (r *BookRepo) ListAll(ctx context.Context, includeDisabled bool) (*ledgerV1
 	return &ledgerV1.ListBookResponse{Items: items, Total: uint64(len(items))}, nil
 }
 
+// ListByTenants returns enabled books belonging to the given tenant IDs.
+func (r *BookRepo) ListByTenants(ctx context.Context, tenantIDs []uint32) (*ledgerV1.ListBookResponse, error) {
+	q := r.entClient.Client().Book.Query().
+		Where(book.EnableEQ(true))
+	if len(tenantIDs) > 0 {
+		q = q.Where(book.TenantIDIn(tenantIDs...))
+	}
+	entities, err := q.All(ctx)
+	if err != nil {
+		return nil, ledgerV1.ErrorInternalServerError("query books failed")
+	}
+	items := make([]*ledgerV1.Book, 0, len(entities))
+	for _, e := range entities {
+		items = append(items, r.mapper.ToDTO(e))
+	}
+	return &ledgerV1.ListBookResponse{Items: items, Total: uint64(len(items))}, nil
+}
+
 func (r *BookRepo) Get(ctx context.Context, id uint32) (*ledgerV1.Book, error) {
 	entity, err := r.entClient.Client().Book.Query().Where(book.IDEQ(id)).Only(ctx)
 	if err != nil {
