@@ -30,12 +30,18 @@ type Language struct {
 	UpdatedBy *uint32 `json:"updated_by,omitempty"`
 	// 删除者ID
 	DeletedBy *uint32 `json:"deleted_by,omitempty"`
-	// Code holds the value of the "code" field.
-	Code *string `json:"code,omitempty"`
-	// Name holds the value of the "name" field.
-	Name *string `json:"name,omitempty"`
-	// Enable holds the value of the "enable" field.
-	Enable       *bool `json:"enable,omitempty"`
+	// 排序值（越小越靠前）
+	SortOrder *uint32 `json:"sort_order,omitempty"`
+	// 是否启用
+	IsEnabled *bool `json:"is_enabled,omitempty"`
+	// 标准语言代码
+	LanguageCode *string `json:"language_code,omitempty"`
+	// 语言名称
+	LanguageName *string `json:"language_name,omitempty"`
+	// 本地语言名称
+	NativeName *string `json:"native_name,omitempty"`
+	// 是否为默认语言
+	IsDefault    *bool `json:"is_default,omitempty"`
 	selectValues sql.SelectValues
 }
 
@@ -44,11 +50,11 @@ func (*Language) scanValues(columns []string) ([]any, error) {
 	values := make([]any, len(columns))
 	for i := range columns {
 		switch columns[i] {
-		case language.FieldEnable:
+		case language.FieldIsEnabled, language.FieldIsDefault:
 			values[i] = new(sql.NullBool)
-		case language.FieldID, language.FieldCreatedBy, language.FieldUpdatedBy, language.FieldDeletedBy:
+		case language.FieldID, language.FieldCreatedBy, language.FieldUpdatedBy, language.FieldDeletedBy, language.FieldSortOrder:
 			values[i] = new(sql.NullInt64)
-		case language.FieldCode, language.FieldName:
+		case language.FieldLanguageCode, language.FieldLanguageName, language.FieldNativeName:
 			values[i] = new(sql.NullString)
 		case language.FieldCreatedAt, language.FieldUpdatedAt, language.FieldDeletedAt:
 			values[i] = new(sql.NullTime)
@@ -115,26 +121,47 @@ func (_m *Language) assignValues(columns []string, values []any) error {
 				_m.DeletedBy = new(uint32)
 				*_m.DeletedBy = uint32(value.Int64)
 			}
-		case language.FieldCode:
-			if value, ok := values[i].(*sql.NullString); !ok {
-				return fmt.Errorf("unexpected type %T for field code", values[i])
+		case language.FieldSortOrder:
+			if value, ok := values[i].(*sql.NullInt64); !ok {
+				return fmt.Errorf("unexpected type %T for field sort_order", values[i])
 			} else if value.Valid {
-				_m.Code = new(string)
-				*_m.Code = value.String
+				_m.SortOrder = new(uint32)
+				*_m.SortOrder = uint32(value.Int64)
 			}
-		case language.FieldName:
-			if value, ok := values[i].(*sql.NullString); !ok {
-				return fmt.Errorf("unexpected type %T for field name", values[i])
-			} else if value.Valid {
-				_m.Name = new(string)
-				*_m.Name = value.String
-			}
-		case language.FieldEnable:
+		case language.FieldIsEnabled:
 			if value, ok := values[i].(*sql.NullBool); !ok {
-				return fmt.Errorf("unexpected type %T for field enable", values[i])
+				return fmt.Errorf("unexpected type %T for field is_enabled", values[i])
 			} else if value.Valid {
-				_m.Enable = new(bool)
-				*_m.Enable = value.Bool
+				_m.IsEnabled = new(bool)
+				*_m.IsEnabled = value.Bool
+			}
+		case language.FieldLanguageCode:
+			if value, ok := values[i].(*sql.NullString); !ok {
+				return fmt.Errorf("unexpected type %T for field language_code", values[i])
+			} else if value.Valid {
+				_m.LanguageCode = new(string)
+				*_m.LanguageCode = value.String
+			}
+		case language.FieldLanguageName:
+			if value, ok := values[i].(*sql.NullString); !ok {
+				return fmt.Errorf("unexpected type %T for field language_name", values[i])
+			} else if value.Valid {
+				_m.LanguageName = new(string)
+				*_m.LanguageName = value.String
+			}
+		case language.FieldNativeName:
+			if value, ok := values[i].(*sql.NullString); !ok {
+				return fmt.Errorf("unexpected type %T for field native_name", values[i])
+			} else if value.Valid {
+				_m.NativeName = new(string)
+				*_m.NativeName = value.String
+			}
+		case language.FieldIsDefault:
+			if value, ok := values[i].(*sql.NullBool); !ok {
+				return fmt.Errorf("unexpected type %T for field is_default", values[i])
+			} else if value.Valid {
+				_m.IsDefault = new(bool)
+				*_m.IsDefault = value.Bool
 			}
 		default:
 			_m.selectValues.Set(columns[i], values[i])
@@ -202,18 +229,33 @@ func (_m *Language) String() string {
 		builder.WriteString(fmt.Sprintf("%v", *v))
 	}
 	builder.WriteString(", ")
-	if v := _m.Code; v != nil {
-		builder.WriteString("code=")
+	if v := _m.SortOrder; v != nil {
+		builder.WriteString("sort_order=")
+		builder.WriteString(fmt.Sprintf("%v", *v))
+	}
+	builder.WriteString(", ")
+	if v := _m.IsEnabled; v != nil {
+		builder.WriteString("is_enabled=")
+		builder.WriteString(fmt.Sprintf("%v", *v))
+	}
+	builder.WriteString(", ")
+	if v := _m.LanguageCode; v != nil {
+		builder.WriteString("language_code=")
 		builder.WriteString(*v)
 	}
 	builder.WriteString(", ")
-	if v := _m.Name; v != nil {
-		builder.WriteString("name=")
+	if v := _m.LanguageName; v != nil {
+		builder.WriteString("language_name=")
 		builder.WriteString(*v)
 	}
 	builder.WriteString(", ")
-	if v := _m.Enable; v != nil {
-		builder.WriteString("enable=")
+	if v := _m.NativeName; v != nil {
+		builder.WriteString("native_name=")
+		builder.WriteString(*v)
+	}
+	builder.WriteString(", ")
+	if v := _m.IsDefault; v != nil {
+		builder.WriteString("is_default=")
 		builder.WriteString(fmt.Sprintf("%v", *v))
 	}
 	builder.WriteByte(')')

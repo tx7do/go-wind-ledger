@@ -170,26 +170,6 @@ func (_u *UserUpdate) ClearRemark() *UserUpdate {
 	return _u
 }
 
-// SetUsername sets the "username" field.
-func (_u *UserUpdate) SetUsername(v string) *UserUpdate {
-	_u.mutation.SetUsername(v)
-	return _u
-}
-
-// SetNillableUsername sets the "username" field if the given value is not nil.
-func (_u *UserUpdate) SetNillableUsername(v *string) *UserUpdate {
-	if v != nil {
-		_u.SetUsername(*v)
-	}
-	return _u
-}
-
-// ClearUsername clears the value of the "username" field.
-func (_u *UserUpdate) ClearUsername() *UserUpdate {
-	_u.mutation.ClearUsername()
-	return _u
-}
-
 // SetNickname sets the "nickname" field.
 func (_u *UserUpdate) SetNickname(v string) *UserUpdate {
 	_u.mutation.SetNickname(v)
@@ -227,46 +207,6 @@ func (_u *UserUpdate) SetNillableRealname(v *string) *UserUpdate {
 // ClearRealname clears the value of the "realname" field.
 func (_u *UserUpdate) ClearRealname() *UserUpdate {
 	_u.mutation.ClearRealname()
-	return _u
-}
-
-// SetPassword sets the "password" field.
-func (_u *UserUpdate) SetPassword(v string) *UserUpdate {
-	_u.mutation.SetPassword(v)
-	return _u
-}
-
-// SetNillablePassword sets the "password" field if the given value is not nil.
-func (_u *UserUpdate) SetNillablePassword(v *string) *UserUpdate {
-	if v != nil {
-		_u.SetPassword(*v)
-	}
-	return _u
-}
-
-// ClearPassword clears the value of the "password" field.
-func (_u *UserUpdate) ClearPassword() *UserUpdate {
-	_u.mutation.ClearPassword()
-	return _u
-}
-
-// SetAvatar sets the "avatar" field.
-func (_u *UserUpdate) SetAvatar(v string) *UserUpdate {
-	_u.mutation.SetAvatar(v)
-	return _u
-}
-
-// SetNillableAvatar sets the "avatar" field if the given value is not nil.
-func (_u *UserUpdate) SetNillableAvatar(v *string) *UserUpdate {
-	if v != nil {
-		_u.SetAvatar(*v)
-	}
-	return _u
-}
-
-// ClearAvatar clears the value of the "avatar" field.
-func (_u *UserUpdate) ClearAvatar() *UserUpdate {
-	_u.mutation.ClearAvatar()
 	return _u
 }
 
@@ -330,23 +270,23 @@ func (_u *UserUpdate) ClearTelephone() *UserUpdate {
 	return _u
 }
 
-// SetGender sets the "gender" field.
-func (_u *UserUpdate) SetGender(v user.Gender) *UserUpdate {
-	_u.mutation.SetGender(v)
+// SetAvatar sets the "avatar" field.
+func (_u *UserUpdate) SetAvatar(v string) *UserUpdate {
+	_u.mutation.SetAvatar(v)
 	return _u
 }
 
-// SetNillableGender sets the "gender" field if the given value is not nil.
-func (_u *UserUpdate) SetNillableGender(v *user.Gender) *UserUpdate {
+// SetNillableAvatar sets the "avatar" field if the given value is not nil.
+func (_u *UserUpdate) SetNillableAvatar(v *string) *UserUpdate {
 	if v != nil {
-		_u.SetGender(*v)
+		_u.SetAvatar(*v)
 	}
 	return _u
 }
 
-// ClearGender clears the value of the "gender" field.
-func (_u *UserUpdate) ClearGender() *UserUpdate {
-	_u.mutation.ClearGender()
+// ClearAvatar clears the value of the "avatar" field.
+func (_u *UserUpdate) ClearAvatar() *UserUpdate {
+	_u.mutation.ClearAvatar()
 	return _u
 }
 
@@ -410,23 +350,23 @@ func (_u *UserUpdate) ClearDescription() *UserUpdate {
 	return _u
 }
 
-// SetStatus sets the "status" field.
-func (_u *UserUpdate) SetStatus(v user.Status) *UserUpdate {
-	_u.mutation.SetStatus(v)
+// SetGender sets the "gender" field.
+func (_u *UserUpdate) SetGender(v user.Gender) *UserUpdate {
+	_u.mutation.SetGender(v)
 	return _u
 }
 
-// SetNillableStatus sets the "status" field if the given value is not nil.
-func (_u *UserUpdate) SetNillableStatus(v *user.Status) *UserUpdate {
+// SetNillableGender sets the "gender" field if the given value is not nil.
+func (_u *UserUpdate) SetNillableGender(v *user.Gender) *UserUpdate {
 	if v != nil {
-		_u.SetStatus(*v)
+		_u.SetGender(*v)
 	}
 	return _u
 }
 
-// ClearStatus clears the value of the "status" field.
-func (_u *UserUpdate) ClearStatus() *UserUpdate {
-	_u.mutation.ClearStatus()
+// ClearGender clears the value of the "gender" field.
+func (_u *UserUpdate) ClearGender() *UserUpdate {
+	_u.mutation.ClearGender()
 	return _u
 }
 
@@ -490,141 +430,6 @@ func (_u *UserUpdate) ClearLockedUntil() *UserUpdate {
 	return _u
 }
 
-// SetFollowers sets the "followers" field.
-func (_u *UserUpdate) SetFollowers(v uint64) *UserUpdate {
-	_u.mutation.ResetFollowers()
-	_u.mutation.SetFollowers(v)
-	return _u
-}
-
-// SetNillableFollowers sets the "followers" field if the given value is not nil.
-func (_u *UserUpdate) SetNillableFollowers(v *uint64) *UserUpdate {
-	if v != nil {
-		_u.SetFollowers(*v)
-	}
-	return _u
-}
-
-// AddFollowers adds value to the "followers" field.
-func (_u *UserUpdate) AddFollowers(v int64) *UserUpdate {
-	_u.mutation.AddFollowers(v)
-	return _u
-}
-
-// ClearFollowers clears the value of the "followers" field.
-func (_u *UserUpdate) ClearFollowers() *UserUpdate {
-	_u.mutation.ClearFollowers()
-	return _u
-}
-
-// SetFollowing sets the "following" field.
-func (_u *UserUpdate) SetFollowing(v uint64) *UserUpdate {
-	_u.mutation.ResetFollowing()
-	_u.mutation.SetFollowing(v)
-	return _u
-}
-
-// SetNillableFollowing sets the "following" field if the given value is not nil.
-func (_u *UserUpdate) SetNillableFollowing(v *uint64) *UserUpdate {
-	if v != nil {
-		_u.SetFollowing(*v)
-	}
-	return _u
-}
-
-// AddFollowing adds value to the "following" field.
-func (_u *UserUpdate) AddFollowing(v int64) *UserUpdate {
-	_u.mutation.AddFollowing(v)
-	return _u
-}
-
-// ClearFollowing clears the value of the "following" field.
-func (_u *UserUpdate) ClearFollowing() *UserUpdate {
-	_u.mutation.ClearFollowing()
-	return _u
-}
-
-// SetPostCount sets the "post_count" field.
-func (_u *UserUpdate) SetPostCount(v uint64) *UserUpdate {
-	_u.mutation.ResetPostCount()
-	_u.mutation.SetPostCount(v)
-	return _u
-}
-
-// SetNillablePostCount sets the "post_count" field if the given value is not nil.
-func (_u *UserUpdate) SetNillablePostCount(v *uint64) *UserUpdate {
-	if v != nil {
-		_u.SetPostCount(*v)
-	}
-	return _u
-}
-
-// AddPostCount adds value to the "post_count" field.
-func (_u *UserUpdate) AddPostCount(v int64) *UserUpdate {
-	_u.mutation.AddPostCount(v)
-	return _u
-}
-
-// ClearPostCount clears the value of the "post_count" field.
-func (_u *UserUpdate) ClearPostCount() *UserUpdate {
-	_u.mutation.ClearPostCount()
-	return _u
-}
-
-// SetCommentCount sets the "comment_count" field.
-func (_u *UserUpdate) SetCommentCount(v uint64) *UserUpdate {
-	_u.mutation.ResetCommentCount()
-	_u.mutation.SetCommentCount(v)
-	return _u
-}
-
-// SetNillableCommentCount sets the "comment_count" field if the given value is not nil.
-func (_u *UserUpdate) SetNillableCommentCount(v *uint64) *UserUpdate {
-	if v != nil {
-		_u.SetCommentCount(*v)
-	}
-	return _u
-}
-
-// AddCommentCount adds value to the "comment_count" field.
-func (_u *UserUpdate) AddCommentCount(v int64) *UserUpdate {
-	_u.mutation.AddCommentCount(v)
-	return _u
-}
-
-// ClearCommentCount clears the value of the "comment_count" field.
-func (_u *UserUpdate) ClearCommentCount() *UserUpdate {
-	_u.mutation.ClearCommentCount()
-	return _u
-}
-
-// SetLikeCount sets the "like_count" field.
-func (_u *UserUpdate) SetLikeCount(v uint64) *UserUpdate {
-	_u.mutation.ResetLikeCount()
-	_u.mutation.SetLikeCount(v)
-	return _u
-}
-
-// SetNillableLikeCount sets the "like_count" field if the given value is not nil.
-func (_u *UserUpdate) SetNillableLikeCount(v *uint64) *UserUpdate {
-	if v != nil {
-		_u.SetLikeCount(*v)
-	}
-	return _u
-}
-
-// AddLikeCount adds value to the "like_count" field.
-func (_u *UserUpdate) AddLikeCount(v int64) *UserUpdate {
-	_u.mutation.AddLikeCount(v)
-	return _u
-}
-
-// ClearLikeCount clears the value of the "like_count" field.
-func (_u *UserUpdate) ClearLikeCount() *UserUpdate {
-	_u.mutation.ClearLikeCount()
-	return _u
-}
-
 // SetDefaultGroupID sets the "default_group_id" field.
 func (_u *UserUpdate) SetDefaultGroupID(v uint32) *UserUpdate {
 	_u.mutation.ResetDefaultGroupID()
@@ -679,6 +484,26 @@ func (_u *UserUpdate) ClearDefaultBookID() *UserUpdate {
 	return _u
 }
 
+// SetStatus sets the "status" field.
+func (_u *UserUpdate) SetStatus(v user.Status) *UserUpdate {
+	_u.mutation.SetStatus(v)
+	return _u
+}
+
+// SetNillableStatus sets the "status" field if the given value is not nil.
+func (_u *UserUpdate) SetNillableStatus(v *user.Status) *UserUpdate {
+	if v != nil {
+		_u.SetStatus(*v)
+	}
+	return _u
+}
+
+// ClearStatus clears the value of the "status" field.
+func (_u *UserUpdate) ClearStatus() *UserUpdate {
+	_u.mutation.ClearStatus()
+	return _u
+}
+
 // Mutation returns the UserMutation object of the builder.
 func (_u *UserUpdate) Mutation() *UserMutation {
 	return _u.mutation
@@ -713,31 +538,6 @@ func (_u *UserUpdate) ExecX(ctx context.Context) {
 
 // check runs all checks and user-defined validators on the builder.
 func (_u *UserUpdate) check() error {
-	if v, ok := _u.mutation.Username(); ok {
-		if err := user.UsernameValidator(v); err != nil {
-			return &ValidationError{Name: "username", err: fmt.Errorf(`ent: validator failed for field "User.username": %w`, err)}
-		}
-	}
-	if v, ok := _u.mutation.Nickname(); ok {
-		if err := user.NicknameValidator(v); err != nil {
-			return &ValidationError{Name: "nickname", err: fmt.Errorf(`ent: validator failed for field "User.nickname": %w`, err)}
-		}
-	}
-	if v, ok := _u.mutation.Realname(); ok {
-		if err := user.RealnameValidator(v); err != nil {
-			return &ValidationError{Name: "realname", err: fmt.Errorf(`ent: validator failed for field "User.realname": %w`, err)}
-		}
-	}
-	if v, ok := _u.mutation.Password(); ok {
-		if err := user.PasswordValidator(v); err != nil {
-			return &ValidationError{Name: "password", err: fmt.Errorf(`ent: validator failed for field "User.password": %w`, err)}
-		}
-	}
-	if v, ok := _u.mutation.Avatar(); ok {
-		if err := user.AvatarValidator(v); err != nil {
-			return &ValidationError{Name: "avatar", err: fmt.Errorf(`ent: validator failed for field "User.avatar": %w`, err)}
-		}
-	}
 	if v, ok := _u.mutation.Email(); ok {
 		if err := user.EmailValidator(v); err != nil {
 			return &ValidationError{Name: "email", err: fmt.Errorf(`ent: validator failed for field "User.email": %w`, err)}
@@ -753,34 +553,19 @@ func (_u *UserUpdate) check() error {
 			return &ValidationError{Name: "telephone", err: fmt.Errorf(`ent: validator failed for field "User.telephone": %w`, err)}
 		}
 	}
-	if v, ok := _u.mutation.Gender(); ok {
-		if err := user.GenderValidator(v); err != nil {
-			return &ValidationError{Name: "gender", err: fmt.Errorf(`ent: validator failed for field "User.gender": %w`, err)}
-		}
-	}
-	if v, ok := _u.mutation.Address(); ok {
-		if err := user.AddressValidator(v); err != nil {
-			return &ValidationError{Name: "address", err: fmt.Errorf(`ent: validator failed for field "User.address": %w`, err)}
-		}
-	}
-	if v, ok := _u.mutation.Region(); ok {
-		if err := user.RegionValidator(v); err != nil {
-			return &ValidationError{Name: "region", err: fmt.Errorf(`ent: validator failed for field "User.region": %w`, err)}
-		}
-	}
 	if v, ok := _u.mutation.Description(); ok {
 		if err := user.DescriptionValidator(v); err != nil {
 			return &ValidationError{Name: "description", err: fmt.Errorf(`ent: validator failed for field "User.description": %w`, err)}
 		}
 	}
+	if v, ok := _u.mutation.Gender(); ok {
+		if err := user.GenderValidator(v); err != nil {
+			return &ValidationError{Name: "gender", err: fmt.Errorf(`ent: validator failed for field "User.gender": %w`, err)}
+		}
+	}
 	if v, ok := _u.mutation.Status(); ok {
 		if err := user.StatusValidator(v); err != nil {
 			return &ValidationError{Name: "status", err: fmt.Errorf(`ent: validator failed for field "User.status": %w`, err)}
-		}
-	}
-	if v, ok := _u.mutation.LastLoginIP(); ok {
-		if err := user.LastLoginIPValidator(v); err != nil {
-			return &ValidationError{Name: "last_login_ip", err: fmt.Errorf(`ent: validator failed for field "User.last_login_ip": %w`, err)}
 		}
 	}
 	return nil
@@ -855,9 +640,6 @@ func (_u *UserUpdate) sqlSave(ctx context.Context) (_node int, err error) {
 	if _u.mutation.TenantIDCleared() {
 		_spec.ClearField(user.FieldTenantID, field.TypeUint32)
 	}
-	if value, ok := _u.mutation.Username(); ok {
-		_spec.SetField(user.FieldUsername, field.TypeString, value)
-	}
 	if _u.mutation.UsernameCleared() {
 		_spec.ClearField(user.FieldUsername, field.TypeString)
 	}
@@ -872,18 +654,6 @@ func (_u *UserUpdate) sqlSave(ctx context.Context) (_node int, err error) {
 	}
 	if _u.mutation.RealnameCleared() {
 		_spec.ClearField(user.FieldRealname, field.TypeString)
-	}
-	if value, ok := _u.mutation.Password(); ok {
-		_spec.SetField(user.FieldPassword, field.TypeString, value)
-	}
-	if _u.mutation.PasswordCleared() {
-		_spec.ClearField(user.FieldPassword, field.TypeString)
-	}
-	if value, ok := _u.mutation.Avatar(); ok {
-		_spec.SetField(user.FieldAvatar, field.TypeString, value)
-	}
-	if _u.mutation.AvatarCleared() {
-		_spec.ClearField(user.FieldAvatar, field.TypeString)
 	}
 	if value, ok := _u.mutation.Email(); ok {
 		_spec.SetField(user.FieldEmail, field.TypeString, value)
@@ -903,11 +673,11 @@ func (_u *UserUpdate) sqlSave(ctx context.Context) (_node int, err error) {
 	if _u.mutation.TelephoneCleared() {
 		_spec.ClearField(user.FieldTelephone, field.TypeString)
 	}
-	if value, ok := _u.mutation.Gender(); ok {
-		_spec.SetField(user.FieldGender, field.TypeEnum, value)
+	if value, ok := _u.mutation.Avatar(); ok {
+		_spec.SetField(user.FieldAvatar, field.TypeString, value)
 	}
-	if _u.mutation.GenderCleared() {
-		_spec.ClearField(user.FieldGender, field.TypeEnum)
+	if _u.mutation.AvatarCleared() {
+		_spec.ClearField(user.FieldAvatar, field.TypeString)
 	}
 	if value, ok := _u.mutation.Address(); ok {
 		_spec.SetField(user.FieldAddress, field.TypeString, value)
@@ -927,11 +697,11 @@ func (_u *UserUpdate) sqlSave(ctx context.Context) (_node int, err error) {
 	if _u.mutation.DescriptionCleared() {
 		_spec.ClearField(user.FieldDescription, field.TypeString)
 	}
-	if value, ok := _u.mutation.Status(); ok {
-		_spec.SetField(user.FieldStatus, field.TypeEnum, value)
+	if value, ok := _u.mutation.Gender(); ok {
+		_spec.SetField(user.FieldGender, field.TypeEnum, value)
 	}
-	if _u.mutation.StatusCleared() {
-		_spec.ClearField(user.FieldStatus, field.TypeEnum)
+	if _u.mutation.GenderCleared() {
+		_spec.ClearField(user.FieldGender, field.TypeEnum)
 	}
 	if value, ok := _u.mutation.LastLoginAt(); ok {
 		_spec.SetField(user.FieldLastLoginAt, field.TypeTime, value)
@@ -951,51 +721,6 @@ func (_u *UserUpdate) sqlSave(ctx context.Context) (_node int, err error) {
 	if _u.mutation.LockedUntilCleared() {
 		_spec.ClearField(user.FieldLockedUntil, field.TypeTime)
 	}
-	if value, ok := _u.mutation.Followers(); ok {
-		_spec.SetField(user.FieldFollowers, field.TypeUint64, value)
-	}
-	if value, ok := _u.mutation.AddedFollowers(); ok {
-		_spec.AddField(user.FieldFollowers, field.TypeUint64, value)
-	}
-	if _u.mutation.FollowersCleared() {
-		_spec.ClearField(user.FieldFollowers, field.TypeUint64)
-	}
-	if value, ok := _u.mutation.Following(); ok {
-		_spec.SetField(user.FieldFollowing, field.TypeUint64, value)
-	}
-	if value, ok := _u.mutation.AddedFollowing(); ok {
-		_spec.AddField(user.FieldFollowing, field.TypeUint64, value)
-	}
-	if _u.mutation.FollowingCleared() {
-		_spec.ClearField(user.FieldFollowing, field.TypeUint64)
-	}
-	if value, ok := _u.mutation.PostCount(); ok {
-		_spec.SetField(user.FieldPostCount, field.TypeUint64, value)
-	}
-	if value, ok := _u.mutation.AddedPostCount(); ok {
-		_spec.AddField(user.FieldPostCount, field.TypeUint64, value)
-	}
-	if _u.mutation.PostCountCleared() {
-		_spec.ClearField(user.FieldPostCount, field.TypeUint64)
-	}
-	if value, ok := _u.mutation.CommentCount(); ok {
-		_spec.SetField(user.FieldCommentCount, field.TypeUint64, value)
-	}
-	if value, ok := _u.mutation.AddedCommentCount(); ok {
-		_spec.AddField(user.FieldCommentCount, field.TypeUint64, value)
-	}
-	if _u.mutation.CommentCountCleared() {
-		_spec.ClearField(user.FieldCommentCount, field.TypeUint64)
-	}
-	if value, ok := _u.mutation.LikeCount(); ok {
-		_spec.SetField(user.FieldLikeCount, field.TypeUint64, value)
-	}
-	if value, ok := _u.mutation.AddedLikeCount(); ok {
-		_spec.AddField(user.FieldLikeCount, field.TypeUint64, value)
-	}
-	if _u.mutation.LikeCountCleared() {
-		_spec.ClearField(user.FieldLikeCount, field.TypeUint64)
-	}
 	if value, ok := _u.mutation.DefaultGroupID(); ok {
 		_spec.SetField(user.FieldDefaultGroupID, field.TypeUint32, value)
 	}
@@ -1013,6 +738,12 @@ func (_u *UserUpdate) sqlSave(ctx context.Context) (_node int, err error) {
 	}
 	if _u.mutation.DefaultBookIDCleared() {
 		_spec.ClearField(user.FieldDefaultBookID, field.TypeUint32)
+	}
+	if value, ok := _u.mutation.Status(); ok {
+		_spec.SetField(user.FieldStatus, field.TypeEnum, value)
+	}
+	if _u.mutation.StatusCleared() {
+		_spec.ClearField(user.FieldStatus, field.TypeEnum)
 	}
 	_spec.AddModifiers(_u.modifiers...)
 	if _node, err = sqlgraph.UpdateNodes(ctx, _u.driver, _spec); err != nil {
@@ -1177,26 +908,6 @@ func (_u *UserUpdateOne) ClearRemark() *UserUpdateOne {
 	return _u
 }
 
-// SetUsername sets the "username" field.
-func (_u *UserUpdateOne) SetUsername(v string) *UserUpdateOne {
-	_u.mutation.SetUsername(v)
-	return _u
-}
-
-// SetNillableUsername sets the "username" field if the given value is not nil.
-func (_u *UserUpdateOne) SetNillableUsername(v *string) *UserUpdateOne {
-	if v != nil {
-		_u.SetUsername(*v)
-	}
-	return _u
-}
-
-// ClearUsername clears the value of the "username" field.
-func (_u *UserUpdateOne) ClearUsername() *UserUpdateOne {
-	_u.mutation.ClearUsername()
-	return _u
-}
-
 // SetNickname sets the "nickname" field.
 func (_u *UserUpdateOne) SetNickname(v string) *UserUpdateOne {
 	_u.mutation.SetNickname(v)
@@ -1234,46 +945,6 @@ func (_u *UserUpdateOne) SetNillableRealname(v *string) *UserUpdateOne {
 // ClearRealname clears the value of the "realname" field.
 func (_u *UserUpdateOne) ClearRealname() *UserUpdateOne {
 	_u.mutation.ClearRealname()
-	return _u
-}
-
-// SetPassword sets the "password" field.
-func (_u *UserUpdateOne) SetPassword(v string) *UserUpdateOne {
-	_u.mutation.SetPassword(v)
-	return _u
-}
-
-// SetNillablePassword sets the "password" field if the given value is not nil.
-func (_u *UserUpdateOne) SetNillablePassword(v *string) *UserUpdateOne {
-	if v != nil {
-		_u.SetPassword(*v)
-	}
-	return _u
-}
-
-// ClearPassword clears the value of the "password" field.
-func (_u *UserUpdateOne) ClearPassword() *UserUpdateOne {
-	_u.mutation.ClearPassword()
-	return _u
-}
-
-// SetAvatar sets the "avatar" field.
-func (_u *UserUpdateOne) SetAvatar(v string) *UserUpdateOne {
-	_u.mutation.SetAvatar(v)
-	return _u
-}
-
-// SetNillableAvatar sets the "avatar" field if the given value is not nil.
-func (_u *UserUpdateOne) SetNillableAvatar(v *string) *UserUpdateOne {
-	if v != nil {
-		_u.SetAvatar(*v)
-	}
-	return _u
-}
-
-// ClearAvatar clears the value of the "avatar" field.
-func (_u *UserUpdateOne) ClearAvatar() *UserUpdateOne {
-	_u.mutation.ClearAvatar()
 	return _u
 }
 
@@ -1337,23 +1008,23 @@ func (_u *UserUpdateOne) ClearTelephone() *UserUpdateOne {
 	return _u
 }
 
-// SetGender sets the "gender" field.
-func (_u *UserUpdateOne) SetGender(v user.Gender) *UserUpdateOne {
-	_u.mutation.SetGender(v)
+// SetAvatar sets the "avatar" field.
+func (_u *UserUpdateOne) SetAvatar(v string) *UserUpdateOne {
+	_u.mutation.SetAvatar(v)
 	return _u
 }
 
-// SetNillableGender sets the "gender" field if the given value is not nil.
-func (_u *UserUpdateOne) SetNillableGender(v *user.Gender) *UserUpdateOne {
+// SetNillableAvatar sets the "avatar" field if the given value is not nil.
+func (_u *UserUpdateOne) SetNillableAvatar(v *string) *UserUpdateOne {
 	if v != nil {
-		_u.SetGender(*v)
+		_u.SetAvatar(*v)
 	}
 	return _u
 }
 
-// ClearGender clears the value of the "gender" field.
-func (_u *UserUpdateOne) ClearGender() *UserUpdateOne {
-	_u.mutation.ClearGender()
+// ClearAvatar clears the value of the "avatar" field.
+func (_u *UserUpdateOne) ClearAvatar() *UserUpdateOne {
+	_u.mutation.ClearAvatar()
 	return _u
 }
 
@@ -1417,23 +1088,23 @@ func (_u *UserUpdateOne) ClearDescription() *UserUpdateOne {
 	return _u
 }
 
-// SetStatus sets the "status" field.
-func (_u *UserUpdateOne) SetStatus(v user.Status) *UserUpdateOne {
-	_u.mutation.SetStatus(v)
+// SetGender sets the "gender" field.
+func (_u *UserUpdateOne) SetGender(v user.Gender) *UserUpdateOne {
+	_u.mutation.SetGender(v)
 	return _u
 }
 
-// SetNillableStatus sets the "status" field if the given value is not nil.
-func (_u *UserUpdateOne) SetNillableStatus(v *user.Status) *UserUpdateOne {
+// SetNillableGender sets the "gender" field if the given value is not nil.
+func (_u *UserUpdateOne) SetNillableGender(v *user.Gender) *UserUpdateOne {
 	if v != nil {
-		_u.SetStatus(*v)
+		_u.SetGender(*v)
 	}
 	return _u
 }
 
-// ClearStatus clears the value of the "status" field.
-func (_u *UserUpdateOne) ClearStatus() *UserUpdateOne {
-	_u.mutation.ClearStatus()
+// ClearGender clears the value of the "gender" field.
+func (_u *UserUpdateOne) ClearGender() *UserUpdateOne {
+	_u.mutation.ClearGender()
 	return _u
 }
 
@@ -1497,141 +1168,6 @@ func (_u *UserUpdateOne) ClearLockedUntil() *UserUpdateOne {
 	return _u
 }
 
-// SetFollowers sets the "followers" field.
-func (_u *UserUpdateOne) SetFollowers(v uint64) *UserUpdateOne {
-	_u.mutation.ResetFollowers()
-	_u.mutation.SetFollowers(v)
-	return _u
-}
-
-// SetNillableFollowers sets the "followers" field if the given value is not nil.
-func (_u *UserUpdateOne) SetNillableFollowers(v *uint64) *UserUpdateOne {
-	if v != nil {
-		_u.SetFollowers(*v)
-	}
-	return _u
-}
-
-// AddFollowers adds value to the "followers" field.
-func (_u *UserUpdateOne) AddFollowers(v int64) *UserUpdateOne {
-	_u.mutation.AddFollowers(v)
-	return _u
-}
-
-// ClearFollowers clears the value of the "followers" field.
-func (_u *UserUpdateOne) ClearFollowers() *UserUpdateOne {
-	_u.mutation.ClearFollowers()
-	return _u
-}
-
-// SetFollowing sets the "following" field.
-func (_u *UserUpdateOne) SetFollowing(v uint64) *UserUpdateOne {
-	_u.mutation.ResetFollowing()
-	_u.mutation.SetFollowing(v)
-	return _u
-}
-
-// SetNillableFollowing sets the "following" field if the given value is not nil.
-func (_u *UserUpdateOne) SetNillableFollowing(v *uint64) *UserUpdateOne {
-	if v != nil {
-		_u.SetFollowing(*v)
-	}
-	return _u
-}
-
-// AddFollowing adds value to the "following" field.
-func (_u *UserUpdateOne) AddFollowing(v int64) *UserUpdateOne {
-	_u.mutation.AddFollowing(v)
-	return _u
-}
-
-// ClearFollowing clears the value of the "following" field.
-func (_u *UserUpdateOne) ClearFollowing() *UserUpdateOne {
-	_u.mutation.ClearFollowing()
-	return _u
-}
-
-// SetPostCount sets the "post_count" field.
-func (_u *UserUpdateOne) SetPostCount(v uint64) *UserUpdateOne {
-	_u.mutation.ResetPostCount()
-	_u.mutation.SetPostCount(v)
-	return _u
-}
-
-// SetNillablePostCount sets the "post_count" field if the given value is not nil.
-func (_u *UserUpdateOne) SetNillablePostCount(v *uint64) *UserUpdateOne {
-	if v != nil {
-		_u.SetPostCount(*v)
-	}
-	return _u
-}
-
-// AddPostCount adds value to the "post_count" field.
-func (_u *UserUpdateOne) AddPostCount(v int64) *UserUpdateOne {
-	_u.mutation.AddPostCount(v)
-	return _u
-}
-
-// ClearPostCount clears the value of the "post_count" field.
-func (_u *UserUpdateOne) ClearPostCount() *UserUpdateOne {
-	_u.mutation.ClearPostCount()
-	return _u
-}
-
-// SetCommentCount sets the "comment_count" field.
-func (_u *UserUpdateOne) SetCommentCount(v uint64) *UserUpdateOne {
-	_u.mutation.ResetCommentCount()
-	_u.mutation.SetCommentCount(v)
-	return _u
-}
-
-// SetNillableCommentCount sets the "comment_count" field if the given value is not nil.
-func (_u *UserUpdateOne) SetNillableCommentCount(v *uint64) *UserUpdateOne {
-	if v != nil {
-		_u.SetCommentCount(*v)
-	}
-	return _u
-}
-
-// AddCommentCount adds value to the "comment_count" field.
-func (_u *UserUpdateOne) AddCommentCount(v int64) *UserUpdateOne {
-	_u.mutation.AddCommentCount(v)
-	return _u
-}
-
-// ClearCommentCount clears the value of the "comment_count" field.
-func (_u *UserUpdateOne) ClearCommentCount() *UserUpdateOne {
-	_u.mutation.ClearCommentCount()
-	return _u
-}
-
-// SetLikeCount sets the "like_count" field.
-func (_u *UserUpdateOne) SetLikeCount(v uint64) *UserUpdateOne {
-	_u.mutation.ResetLikeCount()
-	_u.mutation.SetLikeCount(v)
-	return _u
-}
-
-// SetNillableLikeCount sets the "like_count" field if the given value is not nil.
-func (_u *UserUpdateOne) SetNillableLikeCount(v *uint64) *UserUpdateOne {
-	if v != nil {
-		_u.SetLikeCount(*v)
-	}
-	return _u
-}
-
-// AddLikeCount adds value to the "like_count" field.
-func (_u *UserUpdateOne) AddLikeCount(v int64) *UserUpdateOne {
-	_u.mutation.AddLikeCount(v)
-	return _u
-}
-
-// ClearLikeCount clears the value of the "like_count" field.
-func (_u *UserUpdateOne) ClearLikeCount() *UserUpdateOne {
-	_u.mutation.ClearLikeCount()
-	return _u
-}
-
 // SetDefaultGroupID sets the "default_group_id" field.
 func (_u *UserUpdateOne) SetDefaultGroupID(v uint32) *UserUpdateOne {
 	_u.mutation.ResetDefaultGroupID()
@@ -1686,6 +1222,26 @@ func (_u *UserUpdateOne) ClearDefaultBookID() *UserUpdateOne {
 	return _u
 }
 
+// SetStatus sets the "status" field.
+func (_u *UserUpdateOne) SetStatus(v user.Status) *UserUpdateOne {
+	_u.mutation.SetStatus(v)
+	return _u
+}
+
+// SetNillableStatus sets the "status" field if the given value is not nil.
+func (_u *UserUpdateOne) SetNillableStatus(v *user.Status) *UserUpdateOne {
+	if v != nil {
+		_u.SetStatus(*v)
+	}
+	return _u
+}
+
+// ClearStatus clears the value of the "status" field.
+func (_u *UserUpdateOne) ClearStatus() *UserUpdateOne {
+	_u.mutation.ClearStatus()
+	return _u
+}
+
 // Mutation returns the UserMutation object of the builder.
 func (_u *UserUpdateOne) Mutation() *UserMutation {
 	return _u.mutation
@@ -1733,31 +1289,6 @@ func (_u *UserUpdateOne) ExecX(ctx context.Context) {
 
 // check runs all checks and user-defined validators on the builder.
 func (_u *UserUpdateOne) check() error {
-	if v, ok := _u.mutation.Username(); ok {
-		if err := user.UsernameValidator(v); err != nil {
-			return &ValidationError{Name: "username", err: fmt.Errorf(`ent: validator failed for field "User.username": %w`, err)}
-		}
-	}
-	if v, ok := _u.mutation.Nickname(); ok {
-		if err := user.NicknameValidator(v); err != nil {
-			return &ValidationError{Name: "nickname", err: fmt.Errorf(`ent: validator failed for field "User.nickname": %w`, err)}
-		}
-	}
-	if v, ok := _u.mutation.Realname(); ok {
-		if err := user.RealnameValidator(v); err != nil {
-			return &ValidationError{Name: "realname", err: fmt.Errorf(`ent: validator failed for field "User.realname": %w`, err)}
-		}
-	}
-	if v, ok := _u.mutation.Password(); ok {
-		if err := user.PasswordValidator(v); err != nil {
-			return &ValidationError{Name: "password", err: fmt.Errorf(`ent: validator failed for field "User.password": %w`, err)}
-		}
-	}
-	if v, ok := _u.mutation.Avatar(); ok {
-		if err := user.AvatarValidator(v); err != nil {
-			return &ValidationError{Name: "avatar", err: fmt.Errorf(`ent: validator failed for field "User.avatar": %w`, err)}
-		}
-	}
 	if v, ok := _u.mutation.Email(); ok {
 		if err := user.EmailValidator(v); err != nil {
 			return &ValidationError{Name: "email", err: fmt.Errorf(`ent: validator failed for field "User.email": %w`, err)}
@@ -1773,34 +1304,19 @@ func (_u *UserUpdateOne) check() error {
 			return &ValidationError{Name: "telephone", err: fmt.Errorf(`ent: validator failed for field "User.telephone": %w`, err)}
 		}
 	}
-	if v, ok := _u.mutation.Gender(); ok {
-		if err := user.GenderValidator(v); err != nil {
-			return &ValidationError{Name: "gender", err: fmt.Errorf(`ent: validator failed for field "User.gender": %w`, err)}
-		}
-	}
-	if v, ok := _u.mutation.Address(); ok {
-		if err := user.AddressValidator(v); err != nil {
-			return &ValidationError{Name: "address", err: fmt.Errorf(`ent: validator failed for field "User.address": %w`, err)}
-		}
-	}
-	if v, ok := _u.mutation.Region(); ok {
-		if err := user.RegionValidator(v); err != nil {
-			return &ValidationError{Name: "region", err: fmt.Errorf(`ent: validator failed for field "User.region": %w`, err)}
-		}
-	}
 	if v, ok := _u.mutation.Description(); ok {
 		if err := user.DescriptionValidator(v); err != nil {
 			return &ValidationError{Name: "description", err: fmt.Errorf(`ent: validator failed for field "User.description": %w`, err)}
 		}
 	}
+	if v, ok := _u.mutation.Gender(); ok {
+		if err := user.GenderValidator(v); err != nil {
+			return &ValidationError{Name: "gender", err: fmt.Errorf(`ent: validator failed for field "User.gender": %w`, err)}
+		}
+	}
 	if v, ok := _u.mutation.Status(); ok {
 		if err := user.StatusValidator(v); err != nil {
 			return &ValidationError{Name: "status", err: fmt.Errorf(`ent: validator failed for field "User.status": %w`, err)}
-		}
-	}
-	if v, ok := _u.mutation.LastLoginIP(); ok {
-		if err := user.LastLoginIPValidator(v); err != nil {
-			return &ValidationError{Name: "last_login_ip", err: fmt.Errorf(`ent: validator failed for field "User.last_login_ip": %w`, err)}
 		}
 	}
 	return nil
@@ -1892,9 +1408,6 @@ func (_u *UserUpdateOne) sqlSave(ctx context.Context) (_node *User, err error) {
 	if _u.mutation.TenantIDCleared() {
 		_spec.ClearField(user.FieldTenantID, field.TypeUint32)
 	}
-	if value, ok := _u.mutation.Username(); ok {
-		_spec.SetField(user.FieldUsername, field.TypeString, value)
-	}
 	if _u.mutation.UsernameCleared() {
 		_spec.ClearField(user.FieldUsername, field.TypeString)
 	}
@@ -1909,18 +1422,6 @@ func (_u *UserUpdateOne) sqlSave(ctx context.Context) (_node *User, err error) {
 	}
 	if _u.mutation.RealnameCleared() {
 		_spec.ClearField(user.FieldRealname, field.TypeString)
-	}
-	if value, ok := _u.mutation.Password(); ok {
-		_spec.SetField(user.FieldPassword, field.TypeString, value)
-	}
-	if _u.mutation.PasswordCleared() {
-		_spec.ClearField(user.FieldPassword, field.TypeString)
-	}
-	if value, ok := _u.mutation.Avatar(); ok {
-		_spec.SetField(user.FieldAvatar, field.TypeString, value)
-	}
-	if _u.mutation.AvatarCleared() {
-		_spec.ClearField(user.FieldAvatar, field.TypeString)
 	}
 	if value, ok := _u.mutation.Email(); ok {
 		_spec.SetField(user.FieldEmail, field.TypeString, value)
@@ -1940,11 +1441,11 @@ func (_u *UserUpdateOne) sqlSave(ctx context.Context) (_node *User, err error) {
 	if _u.mutation.TelephoneCleared() {
 		_spec.ClearField(user.FieldTelephone, field.TypeString)
 	}
-	if value, ok := _u.mutation.Gender(); ok {
-		_spec.SetField(user.FieldGender, field.TypeEnum, value)
+	if value, ok := _u.mutation.Avatar(); ok {
+		_spec.SetField(user.FieldAvatar, field.TypeString, value)
 	}
-	if _u.mutation.GenderCleared() {
-		_spec.ClearField(user.FieldGender, field.TypeEnum)
+	if _u.mutation.AvatarCleared() {
+		_spec.ClearField(user.FieldAvatar, field.TypeString)
 	}
 	if value, ok := _u.mutation.Address(); ok {
 		_spec.SetField(user.FieldAddress, field.TypeString, value)
@@ -1964,11 +1465,11 @@ func (_u *UserUpdateOne) sqlSave(ctx context.Context) (_node *User, err error) {
 	if _u.mutation.DescriptionCleared() {
 		_spec.ClearField(user.FieldDescription, field.TypeString)
 	}
-	if value, ok := _u.mutation.Status(); ok {
-		_spec.SetField(user.FieldStatus, field.TypeEnum, value)
+	if value, ok := _u.mutation.Gender(); ok {
+		_spec.SetField(user.FieldGender, field.TypeEnum, value)
 	}
-	if _u.mutation.StatusCleared() {
-		_spec.ClearField(user.FieldStatus, field.TypeEnum)
+	if _u.mutation.GenderCleared() {
+		_spec.ClearField(user.FieldGender, field.TypeEnum)
 	}
 	if value, ok := _u.mutation.LastLoginAt(); ok {
 		_spec.SetField(user.FieldLastLoginAt, field.TypeTime, value)
@@ -1988,51 +1489,6 @@ func (_u *UserUpdateOne) sqlSave(ctx context.Context) (_node *User, err error) {
 	if _u.mutation.LockedUntilCleared() {
 		_spec.ClearField(user.FieldLockedUntil, field.TypeTime)
 	}
-	if value, ok := _u.mutation.Followers(); ok {
-		_spec.SetField(user.FieldFollowers, field.TypeUint64, value)
-	}
-	if value, ok := _u.mutation.AddedFollowers(); ok {
-		_spec.AddField(user.FieldFollowers, field.TypeUint64, value)
-	}
-	if _u.mutation.FollowersCleared() {
-		_spec.ClearField(user.FieldFollowers, field.TypeUint64)
-	}
-	if value, ok := _u.mutation.Following(); ok {
-		_spec.SetField(user.FieldFollowing, field.TypeUint64, value)
-	}
-	if value, ok := _u.mutation.AddedFollowing(); ok {
-		_spec.AddField(user.FieldFollowing, field.TypeUint64, value)
-	}
-	if _u.mutation.FollowingCleared() {
-		_spec.ClearField(user.FieldFollowing, field.TypeUint64)
-	}
-	if value, ok := _u.mutation.PostCount(); ok {
-		_spec.SetField(user.FieldPostCount, field.TypeUint64, value)
-	}
-	if value, ok := _u.mutation.AddedPostCount(); ok {
-		_spec.AddField(user.FieldPostCount, field.TypeUint64, value)
-	}
-	if _u.mutation.PostCountCleared() {
-		_spec.ClearField(user.FieldPostCount, field.TypeUint64)
-	}
-	if value, ok := _u.mutation.CommentCount(); ok {
-		_spec.SetField(user.FieldCommentCount, field.TypeUint64, value)
-	}
-	if value, ok := _u.mutation.AddedCommentCount(); ok {
-		_spec.AddField(user.FieldCommentCount, field.TypeUint64, value)
-	}
-	if _u.mutation.CommentCountCleared() {
-		_spec.ClearField(user.FieldCommentCount, field.TypeUint64)
-	}
-	if value, ok := _u.mutation.LikeCount(); ok {
-		_spec.SetField(user.FieldLikeCount, field.TypeUint64, value)
-	}
-	if value, ok := _u.mutation.AddedLikeCount(); ok {
-		_spec.AddField(user.FieldLikeCount, field.TypeUint64, value)
-	}
-	if _u.mutation.LikeCountCleared() {
-		_spec.ClearField(user.FieldLikeCount, field.TypeUint64)
-	}
 	if value, ok := _u.mutation.DefaultGroupID(); ok {
 		_spec.SetField(user.FieldDefaultGroupID, field.TypeUint32, value)
 	}
@@ -2050,6 +1506,12 @@ func (_u *UserUpdateOne) sqlSave(ctx context.Context) (_node *User, err error) {
 	}
 	if _u.mutation.DefaultBookIDCleared() {
 		_spec.ClearField(user.FieldDefaultBookID, field.TypeUint32)
+	}
+	if value, ok := _u.mutation.Status(); ok {
+		_spec.SetField(user.FieldStatus, field.TypeEnum, value)
+	}
+	if _u.mutation.StatusCleared() {
+		_spec.ClearField(user.FieldStatus, field.TypeEnum)
 	}
 	_spec.AddModifiers(_u.modifiers...)
 	_node = &User{config: _u.config}

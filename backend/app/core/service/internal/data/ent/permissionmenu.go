@@ -12,7 +12,7 @@ import (
 	"entgo.io/ent/dialect/sql"
 )
 
-// PermissionMenu is the model entity for the PermissionMenu schema.
+// 权限点与前端菜单关联表
 type PermissionMenu struct {
 	config `json:"-"`
 	// ID of the ent.
@@ -24,12 +24,16 @@ type PermissionMenu struct {
 	UpdatedAt *time.Time `json:"updated_at,omitempty"`
 	// 删除时间
 	DeletedAt *time.Time `json:"deleted_at,omitempty"`
-	// 权限ID
+	// 创建者ID
+	CreatedBy *uint32 `json:"created_by,omitempty"`
+	// 更新者ID
+	UpdatedBy *uint32 `json:"updated_by,omitempty"`
+	// 删除者ID
+	DeletedBy *uint32 `json:"deleted_by,omitempty"`
+	// 权限ID（关联sys_permissions.id）
 	PermissionID *uint32 `json:"permission_id,omitempty"`
-	// MenuID holds the value of the "menu_id" field.
-	MenuID *uint32 `json:"menu_id,omitempty"`
-	// 目标ID
-	TargetID     *uint32 `json:"target_id,omitempty"`
+	// 菜单ID（关联sys_menus.id）
+	MenuID       *uint32 `json:"menu_id,omitempty"`
 	selectValues sql.SelectValues
 }
 
@@ -38,7 +42,7 @@ func (*PermissionMenu) scanValues(columns []string) ([]any, error) {
 	values := make([]any, len(columns))
 	for i := range columns {
 		switch columns[i] {
-		case permissionmenu.FieldID, permissionmenu.FieldPermissionID, permissionmenu.FieldMenuID, permissionmenu.FieldTargetID:
+		case permissionmenu.FieldID, permissionmenu.FieldCreatedBy, permissionmenu.FieldUpdatedBy, permissionmenu.FieldDeletedBy, permissionmenu.FieldPermissionID, permissionmenu.FieldMenuID:
 			values[i] = new(sql.NullInt64)
 		case permissionmenu.FieldCreatedAt, permissionmenu.FieldUpdatedAt, permissionmenu.FieldDeletedAt:
 			values[i] = new(sql.NullTime)
@@ -84,6 +88,27 @@ func (_m *PermissionMenu) assignValues(columns []string, values []any) error {
 				_m.DeletedAt = new(time.Time)
 				*_m.DeletedAt = value.Time
 			}
+		case permissionmenu.FieldCreatedBy:
+			if value, ok := values[i].(*sql.NullInt64); !ok {
+				return fmt.Errorf("unexpected type %T for field created_by", values[i])
+			} else if value.Valid {
+				_m.CreatedBy = new(uint32)
+				*_m.CreatedBy = uint32(value.Int64)
+			}
+		case permissionmenu.FieldUpdatedBy:
+			if value, ok := values[i].(*sql.NullInt64); !ok {
+				return fmt.Errorf("unexpected type %T for field updated_by", values[i])
+			} else if value.Valid {
+				_m.UpdatedBy = new(uint32)
+				*_m.UpdatedBy = uint32(value.Int64)
+			}
+		case permissionmenu.FieldDeletedBy:
+			if value, ok := values[i].(*sql.NullInt64); !ok {
+				return fmt.Errorf("unexpected type %T for field deleted_by", values[i])
+			} else if value.Valid {
+				_m.DeletedBy = new(uint32)
+				*_m.DeletedBy = uint32(value.Int64)
+			}
 		case permissionmenu.FieldPermissionID:
 			if value, ok := values[i].(*sql.NullInt64); !ok {
 				return fmt.Errorf("unexpected type %T for field permission_id", values[i])
@@ -97,13 +122,6 @@ func (_m *PermissionMenu) assignValues(columns []string, values []any) error {
 			} else if value.Valid {
 				_m.MenuID = new(uint32)
 				*_m.MenuID = uint32(value.Int64)
-			}
-		case permissionmenu.FieldTargetID:
-			if value, ok := values[i].(*sql.NullInt64); !ok {
-				return fmt.Errorf("unexpected type %T for field target_id", values[i])
-			} else if value.Valid {
-				_m.TargetID = new(uint32)
-				*_m.TargetID = uint32(value.Int64)
 			}
 		default:
 			_m.selectValues.Set(columns[i], values[i])
@@ -156,6 +174,21 @@ func (_m *PermissionMenu) String() string {
 		builder.WriteString(v.Format(time.ANSIC))
 	}
 	builder.WriteString(", ")
+	if v := _m.CreatedBy; v != nil {
+		builder.WriteString("created_by=")
+		builder.WriteString(fmt.Sprintf("%v", *v))
+	}
+	builder.WriteString(", ")
+	if v := _m.UpdatedBy; v != nil {
+		builder.WriteString("updated_by=")
+		builder.WriteString(fmt.Sprintf("%v", *v))
+	}
+	builder.WriteString(", ")
+	if v := _m.DeletedBy; v != nil {
+		builder.WriteString("deleted_by=")
+		builder.WriteString(fmt.Sprintf("%v", *v))
+	}
+	builder.WriteString(", ")
 	if v := _m.PermissionID; v != nil {
 		builder.WriteString("permission_id=")
 		builder.WriteString(fmt.Sprintf("%v", *v))
@@ -163,11 +196,6 @@ func (_m *PermissionMenu) String() string {
 	builder.WriteString(", ")
 	if v := _m.MenuID; v != nil {
 		builder.WriteString("menu_id=")
-		builder.WriteString(fmt.Sprintf("%v", *v))
-	}
-	builder.WriteString(", ")
-	if v := _m.TargetID; v != nil {
-		builder.WriteString("target_id=")
 		builder.WriteString(fmt.Sprintf("%v", *v))
 	}
 	builder.WriteByte(')')

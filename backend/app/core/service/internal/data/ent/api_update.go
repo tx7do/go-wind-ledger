@@ -150,6 +150,100 @@ func (_u *APIUpdate) ClearDeletedBy() *APIUpdate {
 	return _u
 }
 
+// SetStatus sets the "status" field.
+func (_u *APIUpdate) SetStatus(v api.Status) *APIUpdate {
+	_u.mutation.SetStatus(v)
+	return _u
+}
+
+// SetNillableStatus sets the "status" field if the given value is not nil.
+func (_u *APIUpdate) SetNillableStatus(v *api.Status) *APIUpdate {
+	if v != nil {
+		_u.SetStatus(*v)
+	}
+	return _u
+}
+
+// SetDescription sets the "description" field.
+func (_u *APIUpdate) SetDescription(v string) *APIUpdate {
+	_u.mutation.SetDescription(v)
+	return _u
+}
+
+// SetNillableDescription sets the "description" field if the given value is not nil.
+func (_u *APIUpdate) SetNillableDescription(v *string) *APIUpdate {
+	if v != nil {
+		_u.SetDescription(*v)
+	}
+	return _u
+}
+
+// ClearDescription clears the value of the "description" field.
+func (_u *APIUpdate) ClearDescription() *APIUpdate {
+	_u.mutation.ClearDescription()
+	return _u
+}
+
+// SetModule sets the "module" field.
+func (_u *APIUpdate) SetModule(v string) *APIUpdate {
+	_u.mutation.SetModule(v)
+	return _u
+}
+
+// SetNillableModule sets the "module" field if the given value is not nil.
+func (_u *APIUpdate) SetNillableModule(v *string) *APIUpdate {
+	if v != nil {
+		_u.SetModule(*v)
+	}
+	return _u
+}
+
+// ClearModule clears the value of the "module" field.
+func (_u *APIUpdate) ClearModule() *APIUpdate {
+	_u.mutation.ClearModule()
+	return _u
+}
+
+// SetModuleDescription sets the "module_description" field.
+func (_u *APIUpdate) SetModuleDescription(v string) *APIUpdate {
+	_u.mutation.SetModuleDescription(v)
+	return _u
+}
+
+// SetNillableModuleDescription sets the "module_description" field if the given value is not nil.
+func (_u *APIUpdate) SetNillableModuleDescription(v *string) *APIUpdate {
+	if v != nil {
+		_u.SetModuleDescription(*v)
+	}
+	return _u
+}
+
+// ClearModuleDescription clears the value of the "module_description" field.
+func (_u *APIUpdate) ClearModuleDescription() *APIUpdate {
+	_u.mutation.ClearModuleDescription()
+	return _u
+}
+
+// SetOperation sets the "operation" field.
+func (_u *APIUpdate) SetOperation(v string) *APIUpdate {
+	_u.mutation.SetOperation(v)
+	return _u
+}
+
+// SetNillableOperation sets the "operation" field if the given value is not nil.
+func (_u *APIUpdate) SetNillableOperation(v *string) *APIUpdate {
+	if v != nil {
+		_u.SetOperation(*v)
+	}
+	return _u
+}
+
+// ClearOperation clears the value of the "operation" field.
+func (_u *APIUpdate) ClearOperation() *APIUpdate {
+	_u.mutation.ClearOperation()
+	return _u
+}
+
 // SetPath sets the "path" field.
 func (_u *APIUpdate) SetPath(v string) *APIUpdate {
 	_u.mutation.SetPath(v)
@@ -187,26 +281,6 @@ func (_u *APIUpdate) SetNillableMethod(v *string) *APIUpdate {
 // ClearMethod clears the value of the "method" field.
 func (_u *APIUpdate) ClearMethod() *APIUpdate {
 	_u.mutation.ClearMethod()
-	return _u
-}
-
-// SetDescription sets the "description" field.
-func (_u *APIUpdate) SetDescription(v string) *APIUpdate {
-	_u.mutation.SetDescription(v)
-	return _u
-}
-
-// SetNillableDescription sets the "description" field if the given value is not nil.
-func (_u *APIUpdate) SetNillableDescription(v *string) *APIUpdate {
-	if v != nil {
-		_u.SetDescription(*v)
-	}
-	return _u
-}
-
-// ClearDescription clears the value of the "description" field.
-func (_u *APIUpdate) ClearDescription() *APIUpdate {
-	_u.mutation.ClearDescription()
 	return _u
 }
 
@@ -264,19 +338,9 @@ func (_u *APIUpdate) ExecX(ctx context.Context) {
 
 // check runs all checks and user-defined validators on the builder.
 func (_u *APIUpdate) check() error {
-	if v, ok := _u.mutation.Path(); ok {
-		if err := api.PathValidator(v); err != nil {
-			return &ValidationError{Name: "path", err: fmt.Errorf(`ent: validator failed for field "Api.path": %w`, err)}
-		}
-	}
-	if v, ok := _u.mutation.Method(); ok {
-		if err := api.MethodValidator(v); err != nil {
-			return &ValidationError{Name: "method", err: fmt.Errorf(`ent: validator failed for field "Api.method": %w`, err)}
-		}
-	}
-	if v, ok := _u.mutation.Description(); ok {
-		if err := api.DescriptionValidator(v); err != nil {
-			return &ValidationError{Name: "description", err: fmt.Errorf(`ent: validator failed for field "Api.description": %w`, err)}
+	if v, ok := _u.mutation.Status(); ok {
+		if err := api.StatusValidator(v); err != nil {
+			return &ValidationError{Name: "status", err: fmt.Errorf(`ent: validator failed for field "Api.status": %w`, err)}
 		}
 	}
 	if v, ok := _u.mutation.Scope(); ok {
@@ -347,8 +411,32 @@ func (_u *APIUpdate) sqlSave(ctx context.Context) (_node int, err error) {
 	if _u.mutation.DeletedByCleared() {
 		_spec.ClearField(api.FieldDeletedBy, field.TypeUint32)
 	}
-	if _u.mutation.TenantIDCleared() {
-		_spec.ClearField(api.FieldTenantID, field.TypeUint32)
+	if value, ok := _u.mutation.Status(); ok {
+		_spec.SetField(api.FieldStatus, field.TypeEnum, value)
+	}
+	if value, ok := _u.mutation.Description(); ok {
+		_spec.SetField(api.FieldDescription, field.TypeString, value)
+	}
+	if _u.mutation.DescriptionCleared() {
+		_spec.ClearField(api.FieldDescription, field.TypeString)
+	}
+	if value, ok := _u.mutation.Module(); ok {
+		_spec.SetField(api.FieldModule, field.TypeString, value)
+	}
+	if _u.mutation.ModuleCleared() {
+		_spec.ClearField(api.FieldModule, field.TypeString)
+	}
+	if value, ok := _u.mutation.ModuleDescription(); ok {
+		_spec.SetField(api.FieldModuleDescription, field.TypeString, value)
+	}
+	if _u.mutation.ModuleDescriptionCleared() {
+		_spec.ClearField(api.FieldModuleDescription, field.TypeString)
+	}
+	if value, ok := _u.mutation.Operation(); ok {
+		_spec.SetField(api.FieldOperation, field.TypeString, value)
+	}
+	if _u.mutation.OperationCleared() {
+		_spec.ClearField(api.FieldOperation, field.TypeString)
 	}
 	if value, ok := _u.mutation.Path(); ok {
 		_spec.SetField(api.FieldPath, field.TypeString, value)
@@ -361,12 +449,6 @@ func (_u *APIUpdate) sqlSave(ctx context.Context) (_node int, err error) {
 	}
 	if _u.mutation.MethodCleared() {
 		_spec.ClearField(api.FieldMethod, field.TypeString)
-	}
-	if value, ok := _u.mutation.Description(); ok {
-		_spec.SetField(api.FieldDescription, field.TypeString, value)
-	}
-	if _u.mutation.DescriptionCleared() {
-		_spec.ClearField(api.FieldDescription, field.TypeString)
 	}
 	if value, ok := _u.mutation.Scope(); ok {
 		_spec.SetField(api.FieldScope, field.TypeEnum, value)
@@ -517,6 +599,100 @@ func (_u *APIUpdateOne) ClearDeletedBy() *APIUpdateOne {
 	return _u
 }
 
+// SetStatus sets the "status" field.
+func (_u *APIUpdateOne) SetStatus(v api.Status) *APIUpdateOne {
+	_u.mutation.SetStatus(v)
+	return _u
+}
+
+// SetNillableStatus sets the "status" field if the given value is not nil.
+func (_u *APIUpdateOne) SetNillableStatus(v *api.Status) *APIUpdateOne {
+	if v != nil {
+		_u.SetStatus(*v)
+	}
+	return _u
+}
+
+// SetDescription sets the "description" field.
+func (_u *APIUpdateOne) SetDescription(v string) *APIUpdateOne {
+	_u.mutation.SetDescription(v)
+	return _u
+}
+
+// SetNillableDescription sets the "description" field if the given value is not nil.
+func (_u *APIUpdateOne) SetNillableDescription(v *string) *APIUpdateOne {
+	if v != nil {
+		_u.SetDescription(*v)
+	}
+	return _u
+}
+
+// ClearDescription clears the value of the "description" field.
+func (_u *APIUpdateOne) ClearDescription() *APIUpdateOne {
+	_u.mutation.ClearDescription()
+	return _u
+}
+
+// SetModule sets the "module" field.
+func (_u *APIUpdateOne) SetModule(v string) *APIUpdateOne {
+	_u.mutation.SetModule(v)
+	return _u
+}
+
+// SetNillableModule sets the "module" field if the given value is not nil.
+func (_u *APIUpdateOne) SetNillableModule(v *string) *APIUpdateOne {
+	if v != nil {
+		_u.SetModule(*v)
+	}
+	return _u
+}
+
+// ClearModule clears the value of the "module" field.
+func (_u *APIUpdateOne) ClearModule() *APIUpdateOne {
+	_u.mutation.ClearModule()
+	return _u
+}
+
+// SetModuleDescription sets the "module_description" field.
+func (_u *APIUpdateOne) SetModuleDescription(v string) *APIUpdateOne {
+	_u.mutation.SetModuleDescription(v)
+	return _u
+}
+
+// SetNillableModuleDescription sets the "module_description" field if the given value is not nil.
+func (_u *APIUpdateOne) SetNillableModuleDescription(v *string) *APIUpdateOne {
+	if v != nil {
+		_u.SetModuleDescription(*v)
+	}
+	return _u
+}
+
+// ClearModuleDescription clears the value of the "module_description" field.
+func (_u *APIUpdateOne) ClearModuleDescription() *APIUpdateOne {
+	_u.mutation.ClearModuleDescription()
+	return _u
+}
+
+// SetOperation sets the "operation" field.
+func (_u *APIUpdateOne) SetOperation(v string) *APIUpdateOne {
+	_u.mutation.SetOperation(v)
+	return _u
+}
+
+// SetNillableOperation sets the "operation" field if the given value is not nil.
+func (_u *APIUpdateOne) SetNillableOperation(v *string) *APIUpdateOne {
+	if v != nil {
+		_u.SetOperation(*v)
+	}
+	return _u
+}
+
+// ClearOperation clears the value of the "operation" field.
+func (_u *APIUpdateOne) ClearOperation() *APIUpdateOne {
+	_u.mutation.ClearOperation()
+	return _u
+}
+
 // SetPath sets the "path" field.
 func (_u *APIUpdateOne) SetPath(v string) *APIUpdateOne {
 	_u.mutation.SetPath(v)
@@ -554,26 +730,6 @@ func (_u *APIUpdateOne) SetNillableMethod(v *string) *APIUpdateOne {
 // ClearMethod clears the value of the "method" field.
 func (_u *APIUpdateOne) ClearMethod() *APIUpdateOne {
 	_u.mutation.ClearMethod()
-	return _u
-}
-
-// SetDescription sets the "description" field.
-func (_u *APIUpdateOne) SetDescription(v string) *APIUpdateOne {
-	_u.mutation.SetDescription(v)
-	return _u
-}
-
-// SetNillableDescription sets the "description" field if the given value is not nil.
-func (_u *APIUpdateOne) SetNillableDescription(v *string) *APIUpdateOne {
-	if v != nil {
-		_u.SetDescription(*v)
-	}
-	return _u
-}
-
-// ClearDescription clears the value of the "description" field.
-func (_u *APIUpdateOne) ClearDescription() *APIUpdateOne {
-	_u.mutation.ClearDescription()
 	return _u
 }
 
@@ -644,19 +800,9 @@ func (_u *APIUpdateOne) ExecX(ctx context.Context) {
 
 // check runs all checks and user-defined validators on the builder.
 func (_u *APIUpdateOne) check() error {
-	if v, ok := _u.mutation.Path(); ok {
-		if err := api.PathValidator(v); err != nil {
-			return &ValidationError{Name: "path", err: fmt.Errorf(`ent: validator failed for field "Api.path": %w`, err)}
-		}
-	}
-	if v, ok := _u.mutation.Method(); ok {
-		if err := api.MethodValidator(v); err != nil {
-			return &ValidationError{Name: "method", err: fmt.Errorf(`ent: validator failed for field "Api.method": %w`, err)}
-		}
-	}
-	if v, ok := _u.mutation.Description(); ok {
-		if err := api.DescriptionValidator(v); err != nil {
-			return &ValidationError{Name: "description", err: fmt.Errorf(`ent: validator failed for field "Api.description": %w`, err)}
+	if v, ok := _u.mutation.Status(); ok {
+		if err := api.StatusValidator(v); err != nil {
+			return &ValidationError{Name: "status", err: fmt.Errorf(`ent: validator failed for field "Api.status": %w`, err)}
 		}
 	}
 	if v, ok := _u.mutation.Scope(); ok {
@@ -744,8 +890,32 @@ func (_u *APIUpdateOne) sqlSave(ctx context.Context) (_node *Api, err error) {
 	if _u.mutation.DeletedByCleared() {
 		_spec.ClearField(api.FieldDeletedBy, field.TypeUint32)
 	}
-	if _u.mutation.TenantIDCleared() {
-		_spec.ClearField(api.FieldTenantID, field.TypeUint32)
+	if value, ok := _u.mutation.Status(); ok {
+		_spec.SetField(api.FieldStatus, field.TypeEnum, value)
+	}
+	if value, ok := _u.mutation.Description(); ok {
+		_spec.SetField(api.FieldDescription, field.TypeString, value)
+	}
+	if _u.mutation.DescriptionCleared() {
+		_spec.ClearField(api.FieldDescription, field.TypeString)
+	}
+	if value, ok := _u.mutation.Module(); ok {
+		_spec.SetField(api.FieldModule, field.TypeString, value)
+	}
+	if _u.mutation.ModuleCleared() {
+		_spec.ClearField(api.FieldModule, field.TypeString)
+	}
+	if value, ok := _u.mutation.ModuleDescription(); ok {
+		_spec.SetField(api.FieldModuleDescription, field.TypeString, value)
+	}
+	if _u.mutation.ModuleDescriptionCleared() {
+		_spec.ClearField(api.FieldModuleDescription, field.TypeString)
+	}
+	if value, ok := _u.mutation.Operation(); ok {
+		_spec.SetField(api.FieldOperation, field.TypeString, value)
+	}
+	if _u.mutation.OperationCleared() {
+		_spec.ClearField(api.FieldOperation, field.TypeString)
 	}
 	if value, ok := _u.mutation.Path(); ok {
 		_spec.SetField(api.FieldPath, field.TypeString, value)
@@ -758,12 +928,6 @@ func (_u *APIUpdateOne) sqlSave(ctx context.Context) (_node *Api, err error) {
 	}
 	if _u.mutation.MethodCleared() {
 		_spec.ClearField(api.FieldMethod, field.TypeString)
-	}
-	if value, ok := _u.mutation.Description(); ok {
-		_spec.SetField(api.FieldDescription, field.TypeString, value)
-	}
-	if _u.mutation.DescriptionCleared() {
-		_spec.ClearField(api.FieldDescription, field.TypeString)
 	}
 	if value, ok := _u.mutation.Scope(); ok {
 		_spec.SetField(api.FieldScope, field.TypeEnum, value)

@@ -150,63 +150,110 @@ func (_u *LanguageUpdate) ClearDeletedBy() *LanguageUpdate {
 	return _u
 }
 
-// SetCode sets the "code" field.
-func (_u *LanguageUpdate) SetCode(v string) *LanguageUpdate {
-	_u.mutation.SetCode(v)
+// SetSortOrder sets the "sort_order" field.
+func (_u *LanguageUpdate) SetSortOrder(v uint32) *LanguageUpdate {
+	_u.mutation.ResetSortOrder()
+	_u.mutation.SetSortOrder(v)
 	return _u
 }
 
-// SetNillableCode sets the "code" field if the given value is not nil.
-func (_u *LanguageUpdate) SetNillableCode(v *string) *LanguageUpdate {
+// SetNillableSortOrder sets the "sort_order" field if the given value is not nil.
+func (_u *LanguageUpdate) SetNillableSortOrder(v *uint32) *LanguageUpdate {
 	if v != nil {
-		_u.SetCode(*v)
+		_u.SetSortOrder(*v)
 	}
 	return _u
 }
 
-// ClearCode clears the value of the "code" field.
-func (_u *LanguageUpdate) ClearCode() *LanguageUpdate {
-	_u.mutation.ClearCode()
+// AddSortOrder adds value to the "sort_order" field.
+func (_u *LanguageUpdate) AddSortOrder(v int32) *LanguageUpdate {
+	_u.mutation.AddSortOrder(v)
 	return _u
 }
 
-// SetName sets the "name" field.
-func (_u *LanguageUpdate) SetName(v string) *LanguageUpdate {
-	_u.mutation.SetName(v)
+// ClearSortOrder clears the value of the "sort_order" field.
+func (_u *LanguageUpdate) ClearSortOrder() *LanguageUpdate {
+	_u.mutation.ClearSortOrder()
 	return _u
 }
 
-// SetNillableName sets the "name" field if the given value is not nil.
-func (_u *LanguageUpdate) SetNillableName(v *string) *LanguageUpdate {
+// SetIsEnabled sets the "is_enabled" field.
+func (_u *LanguageUpdate) SetIsEnabled(v bool) *LanguageUpdate {
+	_u.mutation.SetIsEnabled(v)
+	return _u
+}
+
+// SetNillableIsEnabled sets the "is_enabled" field if the given value is not nil.
+func (_u *LanguageUpdate) SetNillableIsEnabled(v *bool) *LanguageUpdate {
 	if v != nil {
-		_u.SetName(*v)
+		_u.SetIsEnabled(*v)
 	}
 	return _u
 }
 
-// ClearName clears the value of the "name" field.
-func (_u *LanguageUpdate) ClearName() *LanguageUpdate {
-	_u.mutation.ClearName()
+// ClearIsEnabled clears the value of the "is_enabled" field.
+func (_u *LanguageUpdate) ClearIsEnabled() *LanguageUpdate {
+	_u.mutation.ClearIsEnabled()
 	return _u
 }
 
-// SetEnable sets the "enable" field.
-func (_u *LanguageUpdate) SetEnable(v bool) *LanguageUpdate {
-	_u.mutation.SetEnable(v)
+// SetLanguageName sets the "language_name" field.
+func (_u *LanguageUpdate) SetLanguageName(v string) *LanguageUpdate {
+	_u.mutation.SetLanguageName(v)
 	return _u
 }
 
-// SetNillableEnable sets the "enable" field if the given value is not nil.
-func (_u *LanguageUpdate) SetNillableEnable(v *bool) *LanguageUpdate {
+// SetNillableLanguageName sets the "language_name" field if the given value is not nil.
+func (_u *LanguageUpdate) SetNillableLanguageName(v *string) *LanguageUpdate {
 	if v != nil {
-		_u.SetEnable(*v)
+		_u.SetLanguageName(*v)
 	}
 	return _u
 }
 
-// ClearEnable clears the value of the "enable" field.
-func (_u *LanguageUpdate) ClearEnable() *LanguageUpdate {
-	_u.mutation.ClearEnable()
+// ClearLanguageName clears the value of the "language_name" field.
+func (_u *LanguageUpdate) ClearLanguageName() *LanguageUpdate {
+	_u.mutation.ClearLanguageName()
+	return _u
+}
+
+// SetNativeName sets the "native_name" field.
+func (_u *LanguageUpdate) SetNativeName(v string) *LanguageUpdate {
+	_u.mutation.SetNativeName(v)
+	return _u
+}
+
+// SetNillableNativeName sets the "native_name" field if the given value is not nil.
+func (_u *LanguageUpdate) SetNillableNativeName(v *string) *LanguageUpdate {
+	if v != nil {
+		_u.SetNativeName(*v)
+	}
+	return _u
+}
+
+// ClearNativeName clears the value of the "native_name" field.
+func (_u *LanguageUpdate) ClearNativeName() *LanguageUpdate {
+	_u.mutation.ClearNativeName()
+	return _u
+}
+
+// SetIsDefault sets the "is_default" field.
+func (_u *LanguageUpdate) SetIsDefault(v bool) *LanguageUpdate {
+	_u.mutation.SetIsDefault(v)
+	return _u
+}
+
+// SetNillableIsDefault sets the "is_default" field if the given value is not nil.
+func (_u *LanguageUpdate) SetNillableIsDefault(v *bool) *LanguageUpdate {
+	if v != nil {
+		_u.SetIsDefault(*v)
+	}
+	return _u
+}
+
+// ClearIsDefault clears the value of the "is_default" field.
+func (_u *LanguageUpdate) ClearIsDefault() *LanguageUpdate {
+	_u.mutation.ClearIsDefault()
 	return _u
 }
 
@@ -244,14 +291,14 @@ func (_u *LanguageUpdate) ExecX(ctx context.Context) {
 
 // check runs all checks and user-defined validators on the builder.
 func (_u *LanguageUpdate) check() error {
-	if v, ok := _u.mutation.Code(); ok {
-		if err := language.CodeValidator(v); err != nil {
-			return &ValidationError{Name: "code", err: fmt.Errorf(`ent: validator failed for field "Language.code": %w`, err)}
+	if v, ok := _u.mutation.LanguageName(); ok {
+		if err := language.LanguageNameValidator(v); err != nil {
+			return &ValidationError{Name: "language_name", err: fmt.Errorf(`ent: validator failed for field "Language.language_name": %w`, err)}
 		}
 	}
-	if v, ok := _u.mutation.Name(); ok {
-		if err := language.NameValidator(v); err != nil {
-			return &ValidationError{Name: "name", err: fmt.Errorf(`ent: validator failed for field "Language.name": %w`, err)}
+	if v, ok := _u.mutation.NativeName(); ok {
+		if err := language.NativeNameValidator(v); err != nil {
+			return &ValidationError{Name: "native_name", err: fmt.Errorf(`ent: validator failed for field "Language.native_name": %w`, err)}
 		}
 	}
 	return nil
@@ -317,23 +364,41 @@ func (_u *LanguageUpdate) sqlSave(ctx context.Context) (_node int, err error) {
 	if _u.mutation.DeletedByCleared() {
 		_spec.ClearField(language.FieldDeletedBy, field.TypeUint32)
 	}
-	if value, ok := _u.mutation.Code(); ok {
-		_spec.SetField(language.FieldCode, field.TypeString, value)
+	if value, ok := _u.mutation.SortOrder(); ok {
+		_spec.SetField(language.FieldSortOrder, field.TypeUint32, value)
 	}
-	if _u.mutation.CodeCleared() {
-		_spec.ClearField(language.FieldCode, field.TypeString)
+	if value, ok := _u.mutation.AddedSortOrder(); ok {
+		_spec.AddField(language.FieldSortOrder, field.TypeUint32, value)
 	}
-	if value, ok := _u.mutation.Name(); ok {
-		_spec.SetField(language.FieldName, field.TypeString, value)
+	if _u.mutation.SortOrderCleared() {
+		_spec.ClearField(language.FieldSortOrder, field.TypeUint32)
 	}
-	if _u.mutation.NameCleared() {
-		_spec.ClearField(language.FieldName, field.TypeString)
+	if value, ok := _u.mutation.IsEnabled(); ok {
+		_spec.SetField(language.FieldIsEnabled, field.TypeBool, value)
 	}
-	if value, ok := _u.mutation.Enable(); ok {
-		_spec.SetField(language.FieldEnable, field.TypeBool, value)
+	if _u.mutation.IsEnabledCleared() {
+		_spec.ClearField(language.FieldIsEnabled, field.TypeBool)
 	}
-	if _u.mutation.EnableCleared() {
-		_spec.ClearField(language.FieldEnable, field.TypeBool)
+	if _u.mutation.LanguageCodeCleared() {
+		_spec.ClearField(language.FieldLanguageCode, field.TypeString)
+	}
+	if value, ok := _u.mutation.LanguageName(); ok {
+		_spec.SetField(language.FieldLanguageName, field.TypeString, value)
+	}
+	if _u.mutation.LanguageNameCleared() {
+		_spec.ClearField(language.FieldLanguageName, field.TypeString)
+	}
+	if value, ok := _u.mutation.NativeName(); ok {
+		_spec.SetField(language.FieldNativeName, field.TypeString, value)
+	}
+	if _u.mutation.NativeNameCleared() {
+		_spec.ClearField(language.FieldNativeName, field.TypeString)
+	}
+	if value, ok := _u.mutation.IsDefault(); ok {
+		_spec.SetField(language.FieldIsDefault, field.TypeBool, value)
+	}
+	if _u.mutation.IsDefaultCleared() {
+		_spec.ClearField(language.FieldIsDefault, field.TypeBool)
 	}
 	_spec.AddModifiers(_u.modifiers...)
 	if _node, err = sqlgraph.UpdateNodes(ctx, _u.driver, _spec); err != nil {
@@ -478,63 +543,110 @@ func (_u *LanguageUpdateOne) ClearDeletedBy() *LanguageUpdateOne {
 	return _u
 }
 
-// SetCode sets the "code" field.
-func (_u *LanguageUpdateOne) SetCode(v string) *LanguageUpdateOne {
-	_u.mutation.SetCode(v)
+// SetSortOrder sets the "sort_order" field.
+func (_u *LanguageUpdateOne) SetSortOrder(v uint32) *LanguageUpdateOne {
+	_u.mutation.ResetSortOrder()
+	_u.mutation.SetSortOrder(v)
 	return _u
 }
 
-// SetNillableCode sets the "code" field if the given value is not nil.
-func (_u *LanguageUpdateOne) SetNillableCode(v *string) *LanguageUpdateOne {
+// SetNillableSortOrder sets the "sort_order" field if the given value is not nil.
+func (_u *LanguageUpdateOne) SetNillableSortOrder(v *uint32) *LanguageUpdateOne {
 	if v != nil {
-		_u.SetCode(*v)
+		_u.SetSortOrder(*v)
 	}
 	return _u
 }
 
-// ClearCode clears the value of the "code" field.
-func (_u *LanguageUpdateOne) ClearCode() *LanguageUpdateOne {
-	_u.mutation.ClearCode()
+// AddSortOrder adds value to the "sort_order" field.
+func (_u *LanguageUpdateOne) AddSortOrder(v int32) *LanguageUpdateOne {
+	_u.mutation.AddSortOrder(v)
 	return _u
 }
 
-// SetName sets the "name" field.
-func (_u *LanguageUpdateOne) SetName(v string) *LanguageUpdateOne {
-	_u.mutation.SetName(v)
+// ClearSortOrder clears the value of the "sort_order" field.
+func (_u *LanguageUpdateOne) ClearSortOrder() *LanguageUpdateOne {
+	_u.mutation.ClearSortOrder()
 	return _u
 }
 
-// SetNillableName sets the "name" field if the given value is not nil.
-func (_u *LanguageUpdateOne) SetNillableName(v *string) *LanguageUpdateOne {
+// SetIsEnabled sets the "is_enabled" field.
+func (_u *LanguageUpdateOne) SetIsEnabled(v bool) *LanguageUpdateOne {
+	_u.mutation.SetIsEnabled(v)
+	return _u
+}
+
+// SetNillableIsEnabled sets the "is_enabled" field if the given value is not nil.
+func (_u *LanguageUpdateOne) SetNillableIsEnabled(v *bool) *LanguageUpdateOne {
 	if v != nil {
-		_u.SetName(*v)
+		_u.SetIsEnabled(*v)
 	}
 	return _u
 }
 
-// ClearName clears the value of the "name" field.
-func (_u *LanguageUpdateOne) ClearName() *LanguageUpdateOne {
-	_u.mutation.ClearName()
+// ClearIsEnabled clears the value of the "is_enabled" field.
+func (_u *LanguageUpdateOne) ClearIsEnabled() *LanguageUpdateOne {
+	_u.mutation.ClearIsEnabled()
 	return _u
 }
 
-// SetEnable sets the "enable" field.
-func (_u *LanguageUpdateOne) SetEnable(v bool) *LanguageUpdateOne {
-	_u.mutation.SetEnable(v)
+// SetLanguageName sets the "language_name" field.
+func (_u *LanguageUpdateOne) SetLanguageName(v string) *LanguageUpdateOne {
+	_u.mutation.SetLanguageName(v)
 	return _u
 }
 
-// SetNillableEnable sets the "enable" field if the given value is not nil.
-func (_u *LanguageUpdateOne) SetNillableEnable(v *bool) *LanguageUpdateOne {
+// SetNillableLanguageName sets the "language_name" field if the given value is not nil.
+func (_u *LanguageUpdateOne) SetNillableLanguageName(v *string) *LanguageUpdateOne {
 	if v != nil {
-		_u.SetEnable(*v)
+		_u.SetLanguageName(*v)
 	}
 	return _u
 }
 
-// ClearEnable clears the value of the "enable" field.
-func (_u *LanguageUpdateOne) ClearEnable() *LanguageUpdateOne {
-	_u.mutation.ClearEnable()
+// ClearLanguageName clears the value of the "language_name" field.
+func (_u *LanguageUpdateOne) ClearLanguageName() *LanguageUpdateOne {
+	_u.mutation.ClearLanguageName()
+	return _u
+}
+
+// SetNativeName sets the "native_name" field.
+func (_u *LanguageUpdateOne) SetNativeName(v string) *LanguageUpdateOne {
+	_u.mutation.SetNativeName(v)
+	return _u
+}
+
+// SetNillableNativeName sets the "native_name" field if the given value is not nil.
+func (_u *LanguageUpdateOne) SetNillableNativeName(v *string) *LanguageUpdateOne {
+	if v != nil {
+		_u.SetNativeName(*v)
+	}
+	return _u
+}
+
+// ClearNativeName clears the value of the "native_name" field.
+func (_u *LanguageUpdateOne) ClearNativeName() *LanguageUpdateOne {
+	_u.mutation.ClearNativeName()
+	return _u
+}
+
+// SetIsDefault sets the "is_default" field.
+func (_u *LanguageUpdateOne) SetIsDefault(v bool) *LanguageUpdateOne {
+	_u.mutation.SetIsDefault(v)
+	return _u
+}
+
+// SetNillableIsDefault sets the "is_default" field if the given value is not nil.
+func (_u *LanguageUpdateOne) SetNillableIsDefault(v *bool) *LanguageUpdateOne {
+	if v != nil {
+		_u.SetIsDefault(*v)
+	}
+	return _u
+}
+
+// ClearIsDefault clears the value of the "is_default" field.
+func (_u *LanguageUpdateOne) ClearIsDefault() *LanguageUpdateOne {
+	_u.mutation.ClearIsDefault()
 	return _u
 }
 
@@ -585,14 +697,14 @@ func (_u *LanguageUpdateOne) ExecX(ctx context.Context) {
 
 // check runs all checks and user-defined validators on the builder.
 func (_u *LanguageUpdateOne) check() error {
-	if v, ok := _u.mutation.Code(); ok {
-		if err := language.CodeValidator(v); err != nil {
-			return &ValidationError{Name: "code", err: fmt.Errorf(`ent: validator failed for field "Language.code": %w`, err)}
+	if v, ok := _u.mutation.LanguageName(); ok {
+		if err := language.LanguageNameValidator(v); err != nil {
+			return &ValidationError{Name: "language_name", err: fmt.Errorf(`ent: validator failed for field "Language.language_name": %w`, err)}
 		}
 	}
-	if v, ok := _u.mutation.Name(); ok {
-		if err := language.NameValidator(v); err != nil {
-			return &ValidationError{Name: "name", err: fmt.Errorf(`ent: validator failed for field "Language.name": %w`, err)}
+	if v, ok := _u.mutation.NativeName(); ok {
+		if err := language.NativeNameValidator(v); err != nil {
+			return &ValidationError{Name: "native_name", err: fmt.Errorf(`ent: validator failed for field "Language.native_name": %w`, err)}
 		}
 	}
 	return nil
@@ -675,23 +787,41 @@ func (_u *LanguageUpdateOne) sqlSave(ctx context.Context) (_node *Language, err 
 	if _u.mutation.DeletedByCleared() {
 		_spec.ClearField(language.FieldDeletedBy, field.TypeUint32)
 	}
-	if value, ok := _u.mutation.Code(); ok {
-		_spec.SetField(language.FieldCode, field.TypeString, value)
+	if value, ok := _u.mutation.SortOrder(); ok {
+		_spec.SetField(language.FieldSortOrder, field.TypeUint32, value)
 	}
-	if _u.mutation.CodeCleared() {
-		_spec.ClearField(language.FieldCode, field.TypeString)
+	if value, ok := _u.mutation.AddedSortOrder(); ok {
+		_spec.AddField(language.FieldSortOrder, field.TypeUint32, value)
 	}
-	if value, ok := _u.mutation.Name(); ok {
-		_spec.SetField(language.FieldName, field.TypeString, value)
+	if _u.mutation.SortOrderCleared() {
+		_spec.ClearField(language.FieldSortOrder, field.TypeUint32)
 	}
-	if _u.mutation.NameCleared() {
-		_spec.ClearField(language.FieldName, field.TypeString)
+	if value, ok := _u.mutation.IsEnabled(); ok {
+		_spec.SetField(language.FieldIsEnabled, field.TypeBool, value)
 	}
-	if value, ok := _u.mutation.Enable(); ok {
-		_spec.SetField(language.FieldEnable, field.TypeBool, value)
+	if _u.mutation.IsEnabledCleared() {
+		_spec.ClearField(language.FieldIsEnabled, field.TypeBool)
 	}
-	if _u.mutation.EnableCleared() {
-		_spec.ClearField(language.FieldEnable, field.TypeBool)
+	if _u.mutation.LanguageCodeCleared() {
+		_spec.ClearField(language.FieldLanguageCode, field.TypeString)
+	}
+	if value, ok := _u.mutation.LanguageName(); ok {
+		_spec.SetField(language.FieldLanguageName, field.TypeString, value)
+	}
+	if _u.mutation.LanguageNameCleared() {
+		_spec.ClearField(language.FieldLanguageName, field.TypeString)
+	}
+	if value, ok := _u.mutation.NativeName(); ok {
+		_spec.SetField(language.FieldNativeName, field.TypeString, value)
+	}
+	if _u.mutation.NativeNameCleared() {
+		_spec.ClearField(language.FieldNativeName, field.TypeString)
+	}
+	if value, ok := _u.mutation.IsDefault(); ok {
+		_spec.SetField(language.FieldIsDefault, field.TypeBool, value)
+	}
+	if _u.mutation.IsDefaultCleared() {
+		_spec.ClearField(language.FieldIsDefault, field.TypeBool)
 	}
 	_spec.AddModifiers(_u.modifiers...)
 	_node = &Language{config: _u.config}

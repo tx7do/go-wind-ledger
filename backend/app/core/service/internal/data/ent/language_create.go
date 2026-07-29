@@ -106,44 +106,86 @@ func (_c *LanguageCreate) SetNillableDeletedBy(v *uint32) *LanguageCreate {
 	return _c
 }
 
-// SetCode sets the "code" field.
-func (_c *LanguageCreate) SetCode(v string) *LanguageCreate {
-	_c.mutation.SetCode(v)
+// SetSortOrder sets the "sort_order" field.
+func (_c *LanguageCreate) SetSortOrder(v uint32) *LanguageCreate {
+	_c.mutation.SetSortOrder(v)
 	return _c
 }
 
-// SetNillableCode sets the "code" field if the given value is not nil.
-func (_c *LanguageCreate) SetNillableCode(v *string) *LanguageCreate {
+// SetNillableSortOrder sets the "sort_order" field if the given value is not nil.
+func (_c *LanguageCreate) SetNillableSortOrder(v *uint32) *LanguageCreate {
 	if v != nil {
-		_c.SetCode(*v)
+		_c.SetSortOrder(*v)
 	}
 	return _c
 }
 
-// SetName sets the "name" field.
-func (_c *LanguageCreate) SetName(v string) *LanguageCreate {
-	_c.mutation.SetName(v)
+// SetIsEnabled sets the "is_enabled" field.
+func (_c *LanguageCreate) SetIsEnabled(v bool) *LanguageCreate {
+	_c.mutation.SetIsEnabled(v)
 	return _c
 }
 
-// SetNillableName sets the "name" field if the given value is not nil.
-func (_c *LanguageCreate) SetNillableName(v *string) *LanguageCreate {
+// SetNillableIsEnabled sets the "is_enabled" field if the given value is not nil.
+func (_c *LanguageCreate) SetNillableIsEnabled(v *bool) *LanguageCreate {
 	if v != nil {
-		_c.SetName(*v)
+		_c.SetIsEnabled(*v)
 	}
 	return _c
 }
 
-// SetEnable sets the "enable" field.
-func (_c *LanguageCreate) SetEnable(v bool) *LanguageCreate {
-	_c.mutation.SetEnable(v)
+// SetLanguageCode sets the "language_code" field.
+func (_c *LanguageCreate) SetLanguageCode(v string) *LanguageCreate {
+	_c.mutation.SetLanguageCode(v)
 	return _c
 }
 
-// SetNillableEnable sets the "enable" field if the given value is not nil.
-func (_c *LanguageCreate) SetNillableEnable(v *bool) *LanguageCreate {
+// SetNillableLanguageCode sets the "language_code" field if the given value is not nil.
+func (_c *LanguageCreate) SetNillableLanguageCode(v *string) *LanguageCreate {
 	if v != nil {
-		_c.SetEnable(*v)
+		_c.SetLanguageCode(*v)
+	}
+	return _c
+}
+
+// SetLanguageName sets the "language_name" field.
+func (_c *LanguageCreate) SetLanguageName(v string) *LanguageCreate {
+	_c.mutation.SetLanguageName(v)
+	return _c
+}
+
+// SetNillableLanguageName sets the "language_name" field if the given value is not nil.
+func (_c *LanguageCreate) SetNillableLanguageName(v *string) *LanguageCreate {
+	if v != nil {
+		_c.SetLanguageName(*v)
+	}
+	return _c
+}
+
+// SetNativeName sets the "native_name" field.
+func (_c *LanguageCreate) SetNativeName(v string) *LanguageCreate {
+	_c.mutation.SetNativeName(v)
+	return _c
+}
+
+// SetNillableNativeName sets the "native_name" field if the given value is not nil.
+func (_c *LanguageCreate) SetNillableNativeName(v *string) *LanguageCreate {
+	if v != nil {
+		_c.SetNativeName(*v)
+	}
+	return _c
+}
+
+// SetIsDefault sets the "is_default" field.
+func (_c *LanguageCreate) SetIsDefault(v bool) *LanguageCreate {
+	_c.mutation.SetIsDefault(v)
+	return _c
+}
+
+// SetNillableIsDefault sets the "is_default" field if the given value is not nil.
+func (_c *LanguageCreate) SetNillableIsDefault(v *bool) *LanguageCreate {
+	if v != nil {
+		_c.SetIsDefault(*v)
 	}
 	return _c
 }
@@ -189,22 +231,35 @@ func (_c *LanguageCreate) ExecX(ctx context.Context) {
 
 // defaults sets the default values of the builder before save.
 func (_c *LanguageCreate) defaults() {
-	if _, ok := _c.mutation.Enable(); !ok {
-		v := language.DefaultEnable
-		_c.mutation.SetEnable(v)
+	if _, ok := _c.mutation.SortOrder(); !ok {
+		v := language.DefaultSortOrder
+		_c.mutation.SetSortOrder(v)
+	}
+	if _, ok := _c.mutation.IsEnabled(); !ok {
+		v := language.DefaultIsEnabled
+		_c.mutation.SetIsEnabled(v)
+	}
+	if _, ok := _c.mutation.IsDefault(); !ok {
+		v := language.DefaultIsDefault
+		_c.mutation.SetIsDefault(v)
 	}
 }
 
 // check runs all checks and user-defined validators on the builder.
 func (_c *LanguageCreate) check() error {
-	if v, ok := _c.mutation.Code(); ok {
-		if err := language.CodeValidator(v); err != nil {
-			return &ValidationError{Name: "code", err: fmt.Errorf(`ent: validator failed for field "Language.code": %w`, err)}
+	if v, ok := _c.mutation.LanguageCode(); ok {
+		if err := language.LanguageCodeValidator(v); err != nil {
+			return &ValidationError{Name: "language_code", err: fmt.Errorf(`ent: validator failed for field "Language.language_code": %w`, err)}
 		}
 	}
-	if v, ok := _c.mutation.Name(); ok {
-		if err := language.NameValidator(v); err != nil {
-			return &ValidationError{Name: "name", err: fmt.Errorf(`ent: validator failed for field "Language.name": %w`, err)}
+	if v, ok := _c.mutation.LanguageName(); ok {
+		if err := language.LanguageNameValidator(v); err != nil {
+			return &ValidationError{Name: "language_name", err: fmt.Errorf(`ent: validator failed for field "Language.language_name": %w`, err)}
+		}
+	}
+	if v, ok := _c.mutation.NativeName(); ok {
+		if err := language.NativeNameValidator(v); err != nil {
+			return &ValidationError{Name: "native_name", err: fmt.Errorf(`ent: validator failed for field "Language.native_name": %w`, err)}
 		}
 	}
 	if v, ok := _c.mutation.ID(); ok {
@@ -269,17 +324,29 @@ func (_c *LanguageCreate) createSpec() (*Language, *sqlgraph.CreateSpec) {
 		_spec.SetField(language.FieldDeletedBy, field.TypeUint32, value)
 		_node.DeletedBy = &value
 	}
-	if value, ok := _c.mutation.Code(); ok {
-		_spec.SetField(language.FieldCode, field.TypeString, value)
-		_node.Code = &value
+	if value, ok := _c.mutation.SortOrder(); ok {
+		_spec.SetField(language.FieldSortOrder, field.TypeUint32, value)
+		_node.SortOrder = &value
 	}
-	if value, ok := _c.mutation.Name(); ok {
-		_spec.SetField(language.FieldName, field.TypeString, value)
-		_node.Name = &value
+	if value, ok := _c.mutation.IsEnabled(); ok {
+		_spec.SetField(language.FieldIsEnabled, field.TypeBool, value)
+		_node.IsEnabled = &value
 	}
-	if value, ok := _c.mutation.Enable(); ok {
-		_spec.SetField(language.FieldEnable, field.TypeBool, value)
-		_node.Enable = &value
+	if value, ok := _c.mutation.LanguageCode(); ok {
+		_spec.SetField(language.FieldLanguageCode, field.TypeString, value)
+		_node.LanguageCode = &value
+	}
+	if value, ok := _c.mutation.LanguageName(); ok {
+		_spec.SetField(language.FieldLanguageName, field.TypeString, value)
+		_node.LanguageName = &value
+	}
+	if value, ok := _c.mutation.NativeName(); ok {
+		_spec.SetField(language.FieldNativeName, field.TypeString, value)
+		_node.NativeName = &value
+	}
+	if value, ok := _c.mutation.IsDefault(); ok {
+		_spec.SetField(language.FieldIsDefault, field.TypeBool, value)
+		_node.IsDefault = &value
 	}
 	return _node, _spec
 }
@@ -441,57 +508,99 @@ func (u *LanguageUpsert) ClearDeletedBy() *LanguageUpsert {
 	return u
 }
 
-// SetCode sets the "code" field.
-func (u *LanguageUpsert) SetCode(v string) *LanguageUpsert {
-	u.Set(language.FieldCode, v)
+// SetSortOrder sets the "sort_order" field.
+func (u *LanguageUpsert) SetSortOrder(v uint32) *LanguageUpsert {
+	u.Set(language.FieldSortOrder, v)
 	return u
 }
 
-// UpdateCode sets the "code" field to the value that was provided on create.
-func (u *LanguageUpsert) UpdateCode() *LanguageUpsert {
-	u.SetExcluded(language.FieldCode)
+// UpdateSortOrder sets the "sort_order" field to the value that was provided on create.
+func (u *LanguageUpsert) UpdateSortOrder() *LanguageUpsert {
+	u.SetExcluded(language.FieldSortOrder)
 	return u
 }
 
-// ClearCode clears the value of the "code" field.
-func (u *LanguageUpsert) ClearCode() *LanguageUpsert {
-	u.SetNull(language.FieldCode)
+// AddSortOrder adds v to the "sort_order" field.
+func (u *LanguageUpsert) AddSortOrder(v uint32) *LanguageUpsert {
+	u.Add(language.FieldSortOrder, v)
 	return u
 }
 
-// SetName sets the "name" field.
-func (u *LanguageUpsert) SetName(v string) *LanguageUpsert {
-	u.Set(language.FieldName, v)
+// ClearSortOrder clears the value of the "sort_order" field.
+func (u *LanguageUpsert) ClearSortOrder() *LanguageUpsert {
+	u.SetNull(language.FieldSortOrder)
 	return u
 }
 
-// UpdateName sets the "name" field to the value that was provided on create.
-func (u *LanguageUpsert) UpdateName() *LanguageUpsert {
-	u.SetExcluded(language.FieldName)
+// SetIsEnabled sets the "is_enabled" field.
+func (u *LanguageUpsert) SetIsEnabled(v bool) *LanguageUpsert {
+	u.Set(language.FieldIsEnabled, v)
 	return u
 }
 
-// ClearName clears the value of the "name" field.
-func (u *LanguageUpsert) ClearName() *LanguageUpsert {
-	u.SetNull(language.FieldName)
+// UpdateIsEnabled sets the "is_enabled" field to the value that was provided on create.
+func (u *LanguageUpsert) UpdateIsEnabled() *LanguageUpsert {
+	u.SetExcluded(language.FieldIsEnabled)
 	return u
 }
 
-// SetEnable sets the "enable" field.
-func (u *LanguageUpsert) SetEnable(v bool) *LanguageUpsert {
-	u.Set(language.FieldEnable, v)
+// ClearIsEnabled clears the value of the "is_enabled" field.
+func (u *LanguageUpsert) ClearIsEnabled() *LanguageUpsert {
+	u.SetNull(language.FieldIsEnabled)
 	return u
 }
 
-// UpdateEnable sets the "enable" field to the value that was provided on create.
-func (u *LanguageUpsert) UpdateEnable() *LanguageUpsert {
-	u.SetExcluded(language.FieldEnable)
+// SetLanguageName sets the "language_name" field.
+func (u *LanguageUpsert) SetLanguageName(v string) *LanguageUpsert {
+	u.Set(language.FieldLanguageName, v)
 	return u
 }
 
-// ClearEnable clears the value of the "enable" field.
-func (u *LanguageUpsert) ClearEnable() *LanguageUpsert {
-	u.SetNull(language.FieldEnable)
+// UpdateLanguageName sets the "language_name" field to the value that was provided on create.
+func (u *LanguageUpsert) UpdateLanguageName() *LanguageUpsert {
+	u.SetExcluded(language.FieldLanguageName)
+	return u
+}
+
+// ClearLanguageName clears the value of the "language_name" field.
+func (u *LanguageUpsert) ClearLanguageName() *LanguageUpsert {
+	u.SetNull(language.FieldLanguageName)
+	return u
+}
+
+// SetNativeName sets the "native_name" field.
+func (u *LanguageUpsert) SetNativeName(v string) *LanguageUpsert {
+	u.Set(language.FieldNativeName, v)
+	return u
+}
+
+// UpdateNativeName sets the "native_name" field to the value that was provided on create.
+func (u *LanguageUpsert) UpdateNativeName() *LanguageUpsert {
+	u.SetExcluded(language.FieldNativeName)
+	return u
+}
+
+// ClearNativeName clears the value of the "native_name" field.
+func (u *LanguageUpsert) ClearNativeName() *LanguageUpsert {
+	u.SetNull(language.FieldNativeName)
+	return u
+}
+
+// SetIsDefault sets the "is_default" field.
+func (u *LanguageUpsert) SetIsDefault(v bool) *LanguageUpsert {
+	u.Set(language.FieldIsDefault, v)
+	return u
+}
+
+// UpdateIsDefault sets the "is_default" field to the value that was provided on create.
+func (u *LanguageUpsert) UpdateIsDefault() *LanguageUpsert {
+	u.SetExcluded(language.FieldIsDefault)
+	return u
+}
+
+// ClearIsDefault clears the value of the "is_default" field.
+func (u *LanguageUpsert) ClearIsDefault() *LanguageUpsert {
+	u.SetNull(language.FieldIsDefault)
 	return u
 }
 
@@ -514,6 +623,9 @@ func (u *LanguageUpsertOne) UpdateNewValues() *LanguageUpsertOne {
 		}
 		if _, exists := u.create.mutation.CreatedAt(); exists {
 			s.SetIgnore(language.FieldCreatedAt)
+		}
+		if _, exists := u.create.mutation.LanguageCode(); exists {
+			s.SetIgnore(language.FieldLanguageCode)
 		}
 	}))
 	return u
@@ -672,66 +784,115 @@ func (u *LanguageUpsertOne) ClearDeletedBy() *LanguageUpsertOne {
 	})
 }
 
-// SetCode sets the "code" field.
-func (u *LanguageUpsertOne) SetCode(v string) *LanguageUpsertOne {
+// SetSortOrder sets the "sort_order" field.
+func (u *LanguageUpsertOne) SetSortOrder(v uint32) *LanguageUpsertOne {
 	return u.Update(func(s *LanguageUpsert) {
-		s.SetCode(v)
+		s.SetSortOrder(v)
 	})
 }
 
-// UpdateCode sets the "code" field to the value that was provided on create.
-func (u *LanguageUpsertOne) UpdateCode() *LanguageUpsertOne {
+// AddSortOrder adds v to the "sort_order" field.
+func (u *LanguageUpsertOne) AddSortOrder(v uint32) *LanguageUpsertOne {
 	return u.Update(func(s *LanguageUpsert) {
-		s.UpdateCode()
+		s.AddSortOrder(v)
 	})
 }
 
-// ClearCode clears the value of the "code" field.
-func (u *LanguageUpsertOne) ClearCode() *LanguageUpsertOne {
+// UpdateSortOrder sets the "sort_order" field to the value that was provided on create.
+func (u *LanguageUpsertOne) UpdateSortOrder() *LanguageUpsertOne {
 	return u.Update(func(s *LanguageUpsert) {
-		s.ClearCode()
+		s.UpdateSortOrder()
 	})
 }
 
-// SetName sets the "name" field.
-func (u *LanguageUpsertOne) SetName(v string) *LanguageUpsertOne {
+// ClearSortOrder clears the value of the "sort_order" field.
+func (u *LanguageUpsertOne) ClearSortOrder() *LanguageUpsertOne {
 	return u.Update(func(s *LanguageUpsert) {
-		s.SetName(v)
+		s.ClearSortOrder()
 	})
 }
 
-// UpdateName sets the "name" field to the value that was provided on create.
-func (u *LanguageUpsertOne) UpdateName() *LanguageUpsertOne {
+// SetIsEnabled sets the "is_enabled" field.
+func (u *LanguageUpsertOne) SetIsEnabled(v bool) *LanguageUpsertOne {
 	return u.Update(func(s *LanguageUpsert) {
-		s.UpdateName()
+		s.SetIsEnabled(v)
 	})
 }
 
-// ClearName clears the value of the "name" field.
-func (u *LanguageUpsertOne) ClearName() *LanguageUpsertOne {
+// UpdateIsEnabled sets the "is_enabled" field to the value that was provided on create.
+func (u *LanguageUpsertOne) UpdateIsEnabled() *LanguageUpsertOne {
 	return u.Update(func(s *LanguageUpsert) {
-		s.ClearName()
+		s.UpdateIsEnabled()
 	})
 }
 
-// SetEnable sets the "enable" field.
-func (u *LanguageUpsertOne) SetEnable(v bool) *LanguageUpsertOne {
+// ClearIsEnabled clears the value of the "is_enabled" field.
+func (u *LanguageUpsertOne) ClearIsEnabled() *LanguageUpsertOne {
 	return u.Update(func(s *LanguageUpsert) {
-		s.SetEnable(v)
+		s.ClearIsEnabled()
 	})
 }
 
-// UpdateEnable sets the "enable" field to the value that was provided on create.
-func (u *LanguageUpsertOne) UpdateEnable() *LanguageUpsertOne {
+// SetLanguageName sets the "language_name" field.
+func (u *LanguageUpsertOne) SetLanguageName(v string) *LanguageUpsertOne {
 	return u.Update(func(s *LanguageUpsert) {
-		s.UpdateEnable()
+		s.SetLanguageName(v)
 	})
 }
 
-// ClearEnable clears the value of the "enable" field.
-func (u *LanguageUpsertOne) ClearEnable() *LanguageUpsertOne {
+// UpdateLanguageName sets the "language_name" field to the value that was provided on create.
+func (u *LanguageUpsertOne) UpdateLanguageName() *LanguageUpsertOne {
 	return u.Update(func(s *LanguageUpsert) {
-		s.ClearEnable()
+		s.UpdateLanguageName()
+	})
+}
+
+// ClearLanguageName clears the value of the "language_name" field.
+func (u *LanguageUpsertOne) ClearLanguageName() *LanguageUpsertOne {
+	return u.Update(func(s *LanguageUpsert) {
+		s.ClearLanguageName()
+	})
+}
+
+// SetNativeName sets the "native_name" field.
+func (u *LanguageUpsertOne) SetNativeName(v string) *LanguageUpsertOne {
+	return u.Update(func(s *LanguageUpsert) {
+		s.SetNativeName(v)
+	})
+}
+
+// UpdateNativeName sets the "native_name" field to the value that was provided on create.
+func (u *LanguageUpsertOne) UpdateNativeName() *LanguageUpsertOne {
+	return u.Update(func(s *LanguageUpsert) {
+		s.UpdateNativeName()
+	})
+}
+
+// ClearNativeName clears the value of the "native_name" field.
+func (u *LanguageUpsertOne) ClearNativeName() *LanguageUpsertOne {
+	return u.Update(func(s *LanguageUpsert) {
+		s.ClearNativeName()
+	})
+}
+
+// SetIsDefault sets the "is_default" field.
+func (u *LanguageUpsertOne) SetIsDefault(v bool) *LanguageUpsertOne {
+	return u.Update(func(s *LanguageUpsert) {
+		s.SetIsDefault(v)
+	})
+}
+
+// UpdateIsDefault sets the "is_default" field to the value that was provided on create.
+func (u *LanguageUpsertOne) UpdateIsDefault() *LanguageUpsertOne {
+	return u.Update(func(s *LanguageUpsert) {
+		s.UpdateIsDefault()
+	})
+}
+
+// ClearIsDefault clears the value of the "is_default" field.
+func (u *LanguageUpsertOne) ClearIsDefault() *LanguageUpsertOne {
+	return u.Update(func(s *LanguageUpsert) {
+		s.ClearIsDefault()
 	})
 }
 
@@ -920,6 +1081,9 @@ func (u *LanguageUpsertBulk) UpdateNewValues() *LanguageUpsertBulk {
 			if _, exists := b.mutation.CreatedAt(); exists {
 				s.SetIgnore(language.FieldCreatedAt)
 			}
+			if _, exists := b.mutation.LanguageCode(); exists {
+				s.SetIgnore(language.FieldLanguageCode)
+			}
 		}
 	}))
 	return u
@@ -1078,66 +1242,115 @@ func (u *LanguageUpsertBulk) ClearDeletedBy() *LanguageUpsertBulk {
 	})
 }
 
-// SetCode sets the "code" field.
-func (u *LanguageUpsertBulk) SetCode(v string) *LanguageUpsertBulk {
+// SetSortOrder sets the "sort_order" field.
+func (u *LanguageUpsertBulk) SetSortOrder(v uint32) *LanguageUpsertBulk {
 	return u.Update(func(s *LanguageUpsert) {
-		s.SetCode(v)
+		s.SetSortOrder(v)
 	})
 }
 
-// UpdateCode sets the "code" field to the value that was provided on create.
-func (u *LanguageUpsertBulk) UpdateCode() *LanguageUpsertBulk {
+// AddSortOrder adds v to the "sort_order" field.
+func (u *LanguageUpsertBulk) AddSortOrder(v uint32) *LanguageUpsertBulk {
 	return u.Update(func(s *LanguageUpsert) {
-		s.UpdateCode()
+		s.AddSortOrder(v)
 	})
 }
 
-// ClearCode clears the value of the "code" field.
-func (u *LanguageUpsertBulk) ClearCode() *LanguageUpsertBulk {
+// UpdateSortOrder sets the "sort_order" field to the value that was provided on create.
+func (u *LanguageUpsertBulk) UpdateSortOrder() *LanguageUpsertBulk {
 	return u.Update(func(s *LanguageUpsert) {
-		s.ClearCode()
+		s.UpdateSortOrder()
 	})
 }
 
-// SetName sets the "name" field.
-func (u *LanguageUpsertBulk) SetName(v string) *LanguageUpsertBulk {
+// ClearSortOrder clears the value of the "sort_order" field.
+func (u *LanguageUpsertBulk) ClearSortOrder() *LanguageUpsertBulk {
 	return u.Update(func(s *LanguageUpsert) {
-		s.SetName(v)
+		s.ClearSortOrder()
 	})
 }
 
-// UpdateName sets the "name" field to the value that was provided on create.
-func (u *LanguageUpsertBulk) UpdateName() *LanguageUpsertBulk {
+// SetIsEnabled sets the "is_enabled" field.
+func (u *LanguageUpsertBulk) SetIsEnabled(v bool) *LanguageUpsertBulk {
 	return u.Update(func(s *LanguageUpsert) {
-		s.UpdateName()
+		s.SetIsEnabled(v)
 	})
 }
 
-// ClearName clears the value of the "name" field.
-func (u *LanguageUpsertBulk) ClearName() *LanguageUpsertBulk {
+// UpdateIsEnabled sets the "is_enabled" field to the value that was provided on create.
+func (u *LanguageUpsertBulk) UpdateIsEnabled() *LanguageUpsertBulk {
 	return u.Update(func(s *LanguageUpsert) {
-		s.ClearName()
+		s.UpdateIsEnabled()
 	})
 }
 
-// SetEnable sets the "enable" field.
-func (u *LanguageUpsertBulk) SetEnable(v bool) *LanguageUpsertBulk {
+// ClearIsEnabled clears the value of the "is_enabled" field.
+func (u *LanguageUpsertBulk) ClearIsEnabled() *LanguageUpsertBulk {
 	return u.Update(func(s *LanguageUpsert) {
-		s.SetEnable(v)
+		s.ClearIsEnabled()
 	})
 }
 
-// UpdateEnable sets the "enable" field to the value that was provided on create.
-func (u *LanguageUpsertBulk) UpdateEnable() *LanguageUpsertBulk {
+// SetLanguageName sets the "language_name" field.
+func (u *LanguageUpsertBulk) SetLanguageName(v string) *LanguageUpsertBulk {
 	return u.Update(func(s *LanguageUpsert) {
-		s.UpdateEnable()
+		s.SetLanguageName(v)
 	})
 }
 
-// ClearEnable clears the value of the "enable" field.
-func (u *LanguageUpsertBulk) ClearEnable() *LanguageUpsertBulk {
+// UpdateLanguageName sets the "language_name" field to the value that was provided on create.
+func (u *LanguageUpsertBulk) UpdateLanguageName() *LanguageUpsertBulk {
 	return u.Update(func(s *LanguageUpsert) {
-		s.ClearEnable()
+		s.UpdateLanguageName()
+	})
+}
+
+// ClearLanguageName clears the value of the "language_name" field.
+func (u *LanguageUpsertBulk) ClearLanguageName() *LanguageUpsertBulk {
+	return u.Update(func(s *LanguageUpsert) {
+		s.ClearLanguageName()
+	})
+}
+
+// SetNativeName sets the "native_name" field.
+func (u *LanguageUpsertBulk) SetNativeName(v string) *LanguageUpsertBulk {
+	return u.Update(func(s *LanguageUpsert) {
+		s.SetNativeName(v)
+	})
+}
+
+// UpdateNativeName sets the "native_name" field to the value that was provided on create.
+func (u *LanguageUpsertBulk) UpdateNativeName() *LanguageUpsertBulk {
+	return u.Update(func(s *LanguageUpsert) {
+		s.UpdateNativeName()
+	})
+}
+
+// ClearNativeName clears the value of the "native_name" field.
+func (u *LanguageUpsertBulk) ClearNativeName() *LanguageUpsertBulk {
+	return u.Update(func(s *LanguageUpsert) {
+		s.ClearNativeName()
+	})
+}
+
+// SetIsDefault sets the "is_default" field.
+func (u *LanguageUpsertBulk) SetIsDefault(v bool) *LanguageUpsertBulk {
+	return u.Update(func(s *LanguageUpsert) {
+		s.SetIsDefault(v)
+	})
+}
+
+// UpdateIsDefault sets the "is_default" field to the value that was provided on create.
+func (u *LanguageUpsertBulk) UpdateIsDefault() *LanguageUpsertBulk {
+	return u.Update(func(s *LanguageUpsert) {
+		s.UpdateIsDefault()
+	})
+}
+
+// ClearIsDefault clears the value of the "is_default" field.
+func (u *LanguageUpsertBulk) ClearIsDefault() *LanguageUpsertBulk {
+	return u.Update(func(s *LanguageUpsert) {
+		s.ClearIsDefault()
 	})
 }
 

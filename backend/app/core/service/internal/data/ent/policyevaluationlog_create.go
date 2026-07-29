@@ -36,34 +36,6 @@ func (_c *PolicyEvaluationLogCreate) SetNillableCreatedAt(v *time.Time) *PolicyE
 	return _c
 }
 
-// SetUpdatedAt sets the "updated_at" field.
-func (_c *PolicyEvaluationLogCreate) SetUpdatedAt(v time.Time) *PolicyEvaluationLogCreate {
-	_c.mutation.SetUpdatedAt(v)
-	return _c
-}
-
-// SetNillableUpdatedAt sets the "updated_at" field if the given value is not nil.
-func (_c *PolicyEvaluationLogCreate) SetNillableUpdatedAt(v *time.Time) *PolicyEvaluationLogCreate {
-	if v != nil {
-		_c.SetUpdatedAt(*v)
-	}
-	return _c
-}
-
-// SetDeletedAt sets the "deleted_at" field.
-func (_c *PolicyEvaluationLogCreate) SetDeletedAt(v time.Time) *PolicyEvaluationLogCreate {
-	_c.mutation.SetDeletedAt(v)
-	return _c
-}
-
-// SetNillableDeletedAt sets the "deleted_at" field if the given value is not nil.
-func (_c *PolicyEvaluationLogCreate) SetNillableDeletedAt(v *time.Time) *PolicyEvaluationLogCreate {
-	if v != nil {
-		_c.SetDeletedAt(*v)
-	}
-	return _c
-}
-
 // SetTenantID sets the "tenant_id" field.
 func (_c *PolicyEvaluationLogCreate) SetTenantID(v uint32) *PolicyEvaluationLogCreate {
 	_c.mutation.SetTenantID(v)
@@ -78,59 +50,167 @@ func (_c *PolicyEvaluationLogCreate) SetNillableTenantID(v *uint32) *PolicyEvalu
 	return _c
 }
 
-// SetOperatorID sets the "operator_id" field.
-func (_c *PolicyEvaluationLogCreate) SetOperatorID(v uint32) *PolicyEvaluationLogCreate {
-	_c.mutation.SetOperatorID(v)
+// SetUserID sets the "user_id" field.
+func (_c *PolicyEvaluationLogCreate) SetUserID(v uint32) *PolicyEvaluationLogCreate {
+	_c.mutation.SetUserID(v)
 	return _c
 }
 
-// SetNillableOperatorID sets the "operator_id" field if the given value is not nil.
-func (_c *PolicyEvaluationLogCreate) SetNillableOperatorID(v *uint32) *PolicyEvaluationLogCreate {
+// SetMembershipID sets the "membership_id" field.
+func (_c *PolicyEvaluationLogCreate) SetMembershipID(v uint32) *PolicyEvaluationLogCreate {
+	_c.mutation.SetMembershipID(v)
+	return _c
+}
+
+// SetPermissionID sets the "permission_id" field.
+func (_c *PolicyEvaluationLogCreate) SetPermissionID(v uint32) *PolicyEvaluationLogCreate {
+	_c.mutation.SetPermissionID(v)
+	return _c
+}
+
+// SetPolicyID sets the "policy_id" field.
+func (_c *PolicyEvaluationLogCreate) SetPolicyID(v uint32) *PolicyEvaluationLogCreate {
+	_c.mutation.SetPolicyID(v)
+	return _c
+}
+
+// SetNillablePolicyID sets the "policy_id" field if the given value is not nil.
+func (_c *PolicyEvaluationLogCreate) SetNillablePolicyID(v *uint32) *PolicyEvaluationLogCreate {
 	if v != nil {
-		_c.SetOperatorID(*v)
+		_c.SetPolicyID(*v)
 	}
 	return _c
 }
 
-// SetPolicy sets the "policy" field.
-func (_c *PolicyEvaluationLogCreate) SetPolicy(v string) *PolicyEvaluationLogCreate {
-	_c.mutation.SetPolicy(v)
+// SetRequestPath sets the "request_path" field.
+func (_c *PolicyEvaluationLogCreate) SetRequestPath(v string) *PolicyEvaluationLogCreate {
+	_c.mutation.SetRequestPath(v)
 	return _c
 }
 
-// SetNillablePolicy sets the "policy" field if the given value is not nil.
-func (_c *PolicyEvaluationLogCreate) SetNillablePolicy(v *string) *PolicyEvaluationLogCreate {
+// SetNillableRequestPath sets the "request_path" field if the given value is not nil.
+func (_c *PolicyEvaluationLogCreate) SetNillableRequestPath(v *string) *PolicyEvaluationLogCreate {
 	if v != nil {
-		_c.SetPolicy(*v)
+		_c.SetRequestPath(*v)
+	}
+	return _c
+}
+
+// SetRequestMethod sets the "request_method" field.
+func (_c *PolicyEvaluationLogCreate) SetRequestMethod(v string) *PolicyEvaluationLogCreate {
+	_c.mutation.SetRequestMethod(v)
+	return _c
+}
+
+// SetNillableRequestMethod sets the "request_method" field if the given value is not nil.
+func (_c *PolicyEvaluationLogCreate) SetNillableRequestMethod(v *string) *PolicyEvaluationLogCreate {
+	if v != nil {
+		_c.SetRequestMethod(*v)
 	}
 	return _c
 }
 
 // SetResult sets the "result" field.
-func (_c *PolicyEvaluationLogCreate) SetResult(v string) *PolicyEvaluationLogCreate {
+func (_c *PolicyEvaluationLogCreate) SetResult(v bool) *PolicyEvaluationLogCreate {
 	_c.mutation.SetResult(v)
 	return _c
 }
 
 // SetNillableResult sets the "result" field if the given value is not nil.
-func (_c *PolicyEvaluationLogCreate) SetNillableResult(v *string) *PolicyEvaluationLogCreate {
+func (_c *PolicyEvaluationLogCreate) SetNillableResult(v *bool) *PolicyEvaluationLogCreate {
 	if v != nil {
 		_c.SetResult(*v)
 	}
 	return _c
 }
 
-// SetEvaluatedAt sets the "evaluated_at" field.
-func (_c *PolicyEvaluationLogCreate) SetEvaluatedAt(v time.Time) *PolicyEvaluationLogCreate {
-	_c.mutation.SetEvaluatedAt(v)
+// SetEffectDetails sets the "effect_details" field.
+func (_c *PolicyEvaluationLogCreate) SetEffectDetails(v string) *PolicyEvaluationLogCreate {
+	_c.mutation.SetEffectDetails(v)
 	return _c
 }
 
-// SetNillableEvaluatedAt sets the "evaluated_at" field if the given value is not nil.
-func (_c *PolicyEvaluationLogCreate) SetNillableEvaluatedAt(v *time.Time) *PolicyEvaluationLogCreate {
+// SetNillableEffectDetails sets the "effect_details" field if the given value is not nil.
+func (_c *PolicyEvaluationLogCreate) SetNillableEffectDetails(v *string) *PolicyEvaluationLogCreate {
 	if v != nil {
-		_c.SetEvaluatedAt(*v)
+		_c.SetEffectDetails(*v)
 	}
+	return _c
+}
+
+// SetScopeSQL sets the "scope_sql" field.
+func (_c *PolicyEvaluationLogCreate) SetScopeSQL(v string) *PolicyEvaluationLogCreate {
+	_c.mutation.SetScopeSQL(v)
+	return _c
+}
+
+// SetNillableScopeSQL sets the "scope_sql" field if the given value is not nil.
+func (_c *PolicyEvaluationLogCreate) SetNillableScopeSQL(v *string) *PolicyEvaluationLogCreate {
+	if v != nil {
+		_c.SetScopeSQL(*v)
+	}
+	return _c
+}
+
+// SetIPAddress sets the "ip_address" field.
+func (_c *PolicyEvaluationLogCreate) SetIPAddress(v string) *PolicyEvaluationLogCreate {
+	_c.mutation.SetIPAddress(v)
+	return _c
+}
+
+// SetNillableIPAddress sets the "ip_address" field if the given value is not nil.
+func (_c *PolicyEvaluationLogCreate) SetNillableIPAddress(v *string) *PolicyEvaluationLogCreate {
+	if v != nil {
+		_c.SetIPAddress(*v)
+	}
+	return _c
+}
+
+// SetTraceID sets the "trace_id" field.
+func (_c *PolicyEvaluationLogCreate) SetTraceID(v string) *PolicyEvaluationLogCreate {
+	_c.mutation.SetTraceID(v)
+	return _c
+}
+
+// SetNillableTraceID sets the "trace_id" field if the given value is not nil.
+func (_c *PolicyEvaluationLogCreate) SetNillableTraceID(v *string) *PolicyEvaluationLogCreate {
+	if v != nil {
+		_c.SetTraceID(*v)
+	}
+	return _c
+}
+
+// SetEvaluationContext sets the "evaluation_context" field.
+func (_c *PolicyEvaluationLogCreate) SetEvaluationContext(v string) *PolicyEvaluationLogCreate {
+	_c.mutation.SetEvaluationContext(v)
+	return _c
+}
+
+// SetNillableEvaluationContext sets the "evaluation_context" field if the given value is not nil.
+func (_c *PolicyEvaluationLogCreate) SetNillableEvaluationContext(v *string) *PolicyEvaluationLogCreate {
+	if v != nil {
+		_c.SetEvaluationContext(*v)
+	}
+	return _c
+}
+
+// SetLogHash sets the "log_hash" field.
+func (_c *PolicyEvaluationLogCreate) SetLogHash(v string) *PolicyEvaluationLogCreate {
+	_c.mutation.SetLogHash(v)
+	return _c
+}
+
+// SetNillableLogHash sets the "log_hash" field if the given value is not nil.
+func (_c *PolicyEvaluationLogCreate) SetNillableLogHash(v *string) *PolicyEvaluationLogCreate {
+	if v != nil {
+		_c.SetLogHash(*v)
+	}
+	return _c
+}
+
+// SetSignature sets the "signature" field.
+func (_c *PolicyEvaluationLogCreate) SetSignature(v []byte) *PolicyEvaluationLogCreate {
+	_c.mutation.SetSignature(v)
 	return _c
 }
 
@@ -181,20 +261,26 @@ func (_c *PolicyEvaluationLogCreate) defaults() error {
 		v := policyevaluationlog.DefaultTenantID
 		_c.mutation.SetTenantID(v)
 	}
+	if _, ok := _c.mutation.Result(); !ok {
+		v := policyevaluationlog.DefaultResult
+		_c.mutation.SetResult(v)
+	}
 	return nil
 }
 
 // check runs all checks and user-defined validators on the builder.
 func (_c *PolicyEvaluationLogCreate) check() error {
-	if v, ok := _c.mutation.Policy(); ok {
-		if err := policyevaluationlog.PolicyValidator(v); err != nil {
-			return &ValidationError{Name: "policy", err: fmt.Errorf(`ent: validator failed for field "PolicyEvaluationLog.policy": %w`, err)}
-		}
+	if _, ok := _c.mutation.UserID(); !ok {
+		return &ValidationError{Name: "user_id", err: errors.New(`ent: missing required field "PolicyEvaluationLog.user_id"`)}
 	}
-	if v, ok := _c.mutation.Result(); ok {
-		if err := policyevaluationlog.ResultValidator(v); err != nil {
-			return &ValidationError{Name: "result", err: fmt.Errorf(`ent: validator failed for field "PolicyEvaluationLog.result": %w`, err)}
-		}
+	if _, ok := _c.mutation.MembershipID(); !ok {
+		return &ValidationError{Name: "membership_id", err: errors.New(`ent: missing required field "PolicyEvaluationLog.membership_id"`)}
+	}
+	if _, ok := _c.mutation.PermissionID(); !ok {
+		return &ValidationError{Name: "permission_id", err: errors.New(`ent: missing required field "PolicyEvaluationLog.permission_id"`)}
+	}
+	if _, ok := _c.mutation.Result(); !ok {
+		return &ValidationError{Name: "result", err: errors.New(`ent: missing required field "PolicyEvaluationLog.result"`)}
 	}
 	if v, ok := _c.mutation.ID(); ok {
 		if err := policyevaluationlog.IDValidator(v); err != nil {
@@ -238,33 +324,65 @@ func (_c *PolicyEvaluationLogCreate) createSpec() (*PolicyEvaluationLog, *sqlgra
 		_spec.SetField(policyevaluationlog.FieldCreatedAt, field.TypeTime, value)
 		_node.CreatedAt = &value
 	}
-	if value, ok := _c.mutation.UpdatedAt(); ok {
-		_spec.SetField(policyevaluationlog.FieldUpdatedAt, field.TypeTime, value)
-		_node.UpdatedAt = &value
-	}
-	if value, ok := _c.mutation.DeletedAt(); ok {
-		_spec.SetField(policyevaluationlog.FieldDeletedAt, field.TypeTime, value)
-		_node.DeletedAt = &value
-	}
 	if value, ok := _c.mutation.TenantID(); ok {
 		_spec.SetField(policyevaluationlog.FieldTenantID, field.TypeUint32, value)
 		_node.TenantID = &value
 	}
-	if value, ok := _c.mutation.OperatorID(); ok {
-		_spec.SetField(policyevaluationlog.FieldOperatorID, field.TypeUint32, value)
-		_node.OperatorID = &value
+	if value, ok := _c.mutation.UserID(); ok {
+		_spec.SetField(policyevaluationlog.FieldUserID, field.TypeUint32, value)
+		_node.UserID = &value
 	}
-	if value, ok := _c.mutation.Policy(); ok {
-		_spec.SetField(policyevaluationlog.FieldPolicy, field.TypeString, value)
-		_node.Policy = &value
+	if value, ok := _c.mutation.MembershipID(); ok {
+		_spec.SetField(policyevaluationlog.FieldMembershipID, field.TypeUint32, value)
+		_node.MembershipID = &value
+	}
+	if value, ok := _c.mutation.PermissionID(); ok {
+		_spec.SetField(policyevaluationlog.FieldPermissionID, field.TypeUint32, value)
+		_node.PermissionID = &value
+	}
+	if value, ok := _c.mutation.PolicyID(); ok {
+		_spec.SetField(policyevaluationlog.FieldPolicyID, field.TypeUint32, value)
+		_node.PolicyID = &value
+	}
+	if value, ok := _c.mutation.RequestPath(); ok {
+		_spec.SetField(policyevaluationlog.FieldRequestPath, field.TypeString, value)
+		_node.RequestPath = &value
+	}
+	if value, ok := _c.mutation.RequestMethod(); ok {
+		_spec.SetField(policyevaluationlog.FieldRequestMethod, field.TypeString, value)
+		_node.RequestMethod = &value
 	}
 	if value, ok := _c.mutation.Result(); ok {
-		_spec.SetField(policyevaluationlog.FieldResult, field.TypeString, value)
+		_spec.SetField(policyevaluationlog.FieldResult, field.TypeBool, value)
 		_node.Result = &value
 	}
-	if value, ok := _c.mutation.EvaluatedAt(); ok {
-		_spec.SetField(policyevaluationlog.FieldEvaluatedAt, field.TypeTime, value)
-		_node.EvaluatedAt = &value
+	if value, ok := _c.mutation.EffectDetails(); ok {
+		_spec.SetField(policyevaluationlog.FieldEffectDetails, field.TypeString, value)
+		_node.EffectDetails = &value
+	}
+	if value, ok := _c.mutation.ScopeSQL(); ok {
+		_spec.SetField(policyevaluationlog.FieldScopeSQL, field.TypeString, value)
+		_node.ScopeSQL = &value
+	}
+	if value, ok := _c.mutation.IPAddress(); ok {
+		_spec.SetField(policyevaluationlog.FieldIPAddress, field.TypeString, value)
+		_node.IPAddress = &value
+	}
+	if value, ok := _c.mutation.TraceID(); ok {
+		_spec.SetField(policyevaluationlog.FieldTraceID, field.TypeString, value)
+		_node.TraceID = &value
+	}
+	if value, ok := _c.mutation.EvaluationContext(); ok {
+		_spec.SetField(policyevaluationlog.FieldEvaluationContext, field.TypeString, value)
+		_node.EvaluationContext = &value
+	}
+	if value, ok := _c.mutation.LogHash(); ok {
+		_spec.SetField(policyevaluationlog.FieldLogHash, field.TypeString, value)
+		_node.LogHash = &value
+	}
+	if value, ok := _c.mutation.Signature(); ok {
+		_spec.SetField(policyevaluationlog.FieldSignature, field.TypeBytes, value)
+		_node.Signature = &value
 	}
 	return _node, _spec
 }
@@ -318,86 +436,122 @@ type (
 	}
 )
 
-// SetUpdatedAt sets the "updated_at" field.
-func (u *PolicyEvaluationLogUpsert) SetUpdatedAt(v time.Time) *PolicyEvaluationLogUpsert {
-	u.Set(policyevaluationlog.FieldUpdatedAt, v)
+// SetUserID sets the "user_id" field.
+func (u *PolicyEvaluationLogUpsert) SetUserID(v uint32) *PolicyEvaluationLogUpsert {
+	u.Set(policyevaluationlog.FieldUserID, v)
 	return u
 }
 
-// UpdateUpdatedAt sets the "updated_at" field to the value that was provided on create.
-func (u *PolicyEvaluationLogUpsert) UpdateUpdatedAt() *PolicyEvaluationLogUpsert {
-	u.SetExcluded(policyevaluationlog.FieldUpdatedAt)
+// UpdateUserID sets the "user_id" field to the value that was provided on create.
+func (u *PolicyEvaluationLogUpsert) UpdateUserID() *PolicyEvaluationLogUpsert {
+	u.SetExcluded(policyevaluationlog.FieldUserID)
 	return u
 }
 
-// ClearUpdatedAt clears the value of the "updated_at" field.
-func (u *PolicyEvaluationLogUpsert) ClearUpdatedAt() *PolicyEvaluationLogUpsert {
-	u.SetNull(policyevaluationlog.FieldUpdatedAt)
+// AddUserID adds v to the "user_id" field.
+func (u *PolicyEvaluationLogUpsert) AddUserID(v uint32) *PolicyEvaluationLogUpsert {
+	u.Add(policyevaluationlog.FieldUserID, v)
 	return u
 }
 
-// SetDeletedAt sets the "deleted_at" field.
-func (u *PolicyEvaluationLogUpsert) SetDeletedAt(v time.Time) *PolicyEvaluationLogUpsert {
-	u.Set(policyevaluationlog.FieldDeletedAt, v)
+// SetMembershipID sets the "membership_id" field.
+func (u *PolicyEvaluationLogUpsert) SetMembershipID(v uint32) *PolicyEvaluationLogUpsert {
+	u.Set(policyevaluationlog.FieldMembershipID, v)
 	return u
 }
 
-// UpdateDeletedAt sets the "deleted_at" field to the value that was provided on create.
-func (u *PolicyEvaluationLogUpsert) UpdateDeletedAt() *PolicyEvaluationLogUpsert {
-	u.SetExcluded(policyevaluationlog.FieldDeletedAt)
+// UpdateMembershipID sets the "membership_id" field to the value that was provided on create.
+func (u *PolicyEvaluationLogUpsert) UpdateMembershipID() *PolicyEvaluationLogUpsert {
+	u.SetExcluded(policyevaluationlog.FieldMembershipID)
 	return u
 }
 
-// ClearDeletedAt clears the value of the "deleted_at" field.
-func (u *PolicyEvaluationLogUpsert) ClearDeletedAt() *PolicyEvaluationLogUpsert {
-	u.SetNull(policyevaluationlog.FieldDeletedAt)
+// AddMembershipID adds v to the "membership_id" field.
+func (u *PolicyEvaluationLogUpsert) AddMembershipID(v uint32) *PolicyEvaluationLogUpsert {
+	u.Add(policyevaluationlog.FieldMembershipID, v)
 	return u
 }
 
-// SetOperatorID sets the "operator_id" field.
-func (u *PolicyEvaluationLogUpsert) SetOperatorID(v uint32) *PolicyEvaluationLogUpsert {
-	u.Set(policyevaluationlog.FieldOperatorID, v)
+// SetPermissionID sets the "permission_id" field.
+func (u *PolicyEvaluationLogUpsert) SetPermissionID(v uint32) *PolicyEvaluationLogUpsert {
+	u.Set(policyevaluationlog.FieldPermissionID, v)
 	return u
 }
 
-// UpdateOperatorID sets the "operator_id" field to the value that was provided on create.
-func (u *PolicyEvaluationLogUpsert) UpdateOperatorID() *PolicyEvaluationLogUpsert {
-	u.SetExcluded(policyevaluationlog.FieldOperatorID)
+// UpdatePermissionID sets the "permission_id" field to the value that was provided on create.
+func (u *PolicyEvaluationLogUpsert) UpdatePermissionID() *PolicyEvaluationLogUpsert {
+	u.SetExcluded(policyevaluationlog.FieldPermissionID)
 	return u
 }
 
-// AddOperatorID adds v to the "operator_id" field.
-func (u *PolicyEvaluationLogUpsert) AddOperatorID(v uint32) *PolicyEvaluationLogUpsert {
-	u.Add(policyevaluationlog.FieldOperatorID, v)
+// AddPermissionID adds v to the "permission_id" field.
+func (u *PolicyEvaluationLogUpsert) AddPermissionID(v uint32) *PolicyEvaluationLogUpsert {
+	u.Add(policyevaluationlog.FieldPermissionID, v)
 	return u
 }
 
-// ClearOperatorID clears the value of the "operator_id" field.
-func (u *PolicyEvaluationLogUpsert) ClearOperatorID() *PolicyEvaluationLogUpsert {
-	u.SetNull(policyevaluationlog.FieldOperatorID)
+// SetPolicyID sets the "policy_id" field.
+func (u *PolicyEvaluationLogUpsert) SetPolicyID(v uint32) *PolicyEvaluationLogUpsert {
+	u.Set(policyevaluationlog.FieldPolicyID, v)
 	return u
 }
 
-// SetPolicy sets the "policy" field.
-func (u *PolicyEvaluationLogUpsert) SetPolicy(v string) *PolicyEvaluationLogUpsert {
-	u.Set(policyevaluationlog.FieldPolicy, v)
+// UpdatePolicyID sets the "policy_id" field to the value that was provided on create.
+func (u *PolicyEvaluationLogUpsert) UpdatePolicyID() *PolicyEvaluationLogUpsert {
+	u.SetExcluded(policyevaluationlog.FieldPolicyID)
 	return u
 }
 
-// UpdatePolicy sets the "policy" field to the value that was provided on create.
-func (u *PolicyEvaluationLogUpsert) UpdatePolicy() *PolicyEvaluationLogUpsert {
-	u.SetExcluded(policyevaluationlog.FieldPolicy)
+// AddPolicyID adds v to the "policy_id" field.
+func (u *PolicyEvaluationLogUpsert) AddPolicyID(v uint32) *PolicyEvaluationLogUpsert {
+	u.Add(policyevaluationlog.FieldPolicyID, v)
 	return u
 }
 
-// ClearPolicy clears the value of the "policy" field.
-func (u *PolicyEvaluationLogUpsert) ClearPolicy() *PolicyEvaluationLogUpsert {
-	u.SetNull(policyevaluationlog.FieldPolicy)
+// ClearPolicyID clears the value of the "policy_id" field.
+func (u *PolicyEvaluationLogUpsert) ClearPolicyID() *PolicyEvaluationLogUpsert {
+	u.SetNull(policyevaluationlog.FieldPolicyID)
+	return u
+}
+
+// SetRequestPath sets the "request_path" field.
+func (u *PolicyEvaluationLogUpsert) SetRequestPath(v string) *PolicyEvaluationLogUpsert {
+	u.Set(policyevaluationlog.FieldRequestPath, v)
+	return u
+}
+
+// UpdateRequestPath sets the "request_path" field to the value that was provided on create.
+func (u *PolicyEvaluationLogUpsert) UpdateRequestPath() *PolicyEvaluationLogUpsert {
+	u.SetExcluded(policyevaluationlog.FieldRequestPath)
+	return u
+}
+
+// ClearRequestPath clears the value of the "request_path" field.
+func (u *PolicyEvaluationLogUpsert) ClearRequestPath() *PolicyEvaluationLogUpsert {
+	u.SetNull(policyevaluationlog.FieldRequestPath)
+	return u
+}
+
+// SetRequestMethod sets the "request_method" field.
+func (u *PolicyEvaluationLogUpsert) SetRequestMethod(v string) *PolicyEvaluationLogUpsert {
+	u.Set(policyevaluationlog.FieldRequestMethod, v)
+	return u
+}
+
+// UpdateRequestMethod sets the "request_method" field to the value that was provided on create.
+func (u *PolicyEvaluationLogUpsert) UpdateRequestMethod() *PolicyEvaluationLogUpsert {
+	u.SetExcluded(policyevaluationlog.FieldRequestMethod)
+	return u
+}
+
+// ClearRequestMethod clears the value of the "request_method" field.
+func (u *PolicyEvaluationLogUpsert) ClearRequestMethod() *PolicyEvaluationLogUpsert {
+	u.SetNull(policyevaluationlog.FieldRequestMethod)
 	return u
 }
 
 // SetResult sets the "result" field.
-func (u *PolicyEvaluationLogUpsert) SetResult(v string) *PolicyEvaluationLogUpsert {
+func (u *PolicyEvaluationLogUpsert) SetResult(v bool) *PolicyEvaluationLogUpsert {
 	u.Set(policyevaluationlog.FieldResult, v)
 	return u
 }
@@ -408,27 +562,129 @@ func (u *PolicyEvaluationLogUpsert) UpdateResult() *PolicyEvaluationLogUpsert {
 	return u
 }
 
-// ClearResult clears the value of the "result" field.
-func (u *PolicyEvaluationLogUpsert) ClearResult() *PolicyEvaluationLogUpsert {
-	u.SetNull(policyevaluationlog.FieldResult)
+// SetEffectDetails sets the "effect_details" field.
+func (u *PolicyEvaluationLogUpsert) SetEffectDetails(v string) *PolicyEvaluationLogUpsert {
+	u.Set(policyevaluationlog.FieldEffectDetails, v)
 	return u
 }
 
-// SetEvaluatedAt sets the "evaluated_at" field.
-func (u *PolicyEvaluationLogUpsert) SetEvaluatedAt(v time.Time) *PolicyEvaluationLogUpsert {
-	u.Set(policyevaluationlog.FieldEvaluatedAt, v)
+// UpdateEffectDetails sets the "effect_details" field to the value that was provided on create.
+func (u *PolicyEvaluationLogUpsert) UpdateEffectDetails() *PolicyEvaluationLogUpsert {
+	u.SetExcluded(policyevaluationlog.FieldEffectDetails)
 	return u
 }
 
-// UpdateEvaluatedAt sets the "evaluated_at" field to the value that was provided on create.
-func (u *PolicyEvaluationLogUpsert) UpdateEvaluatedAt() *PolicyEvaluationLogUpsert {
-	u.SetExcluded(policyevaluationlog.FieldEvaluatedAt)
+// ClearEffectDetails clears the value of the "effect_details" field.
+func (u *PolicyEvaluationLogUpsert) ClearEffectDetails() *PolicyEvaluationLogUpsert {
+	u.SetNull(policyevaluationlog.FieldEffectDetails)
 	return u
 }
 
-// ClearEvaluatedAt clears the value of the "evaluated_at" field.
-func (u *PolicyEvaluationLogUpsert) ClearEvaluatedAt() *PolicyEvaluationLogUpsert {
-	u.SetNull(policyevaluationlog.FieldEvaluatedAt)
+// SetScopeSQL sets the "scope_sql" field.
+func (u *PolicyEvaluationLogUpsert) SetScopeSQL(v string) *PolicyEvaluationLogUpsert {
+	u.Set(policyevaluationlog.FieldScopeSQL, v)
+	return u
+}
+
+// UpdateScopeSQL sets the "scope_sql" field to the value that was provided on create.
+func (u *PolicyEvaluationLogUpsert) UpdateScopeSQL() *PolicyEvaluationLogUpsert {
+	u.SetExcluded(policyevaluationlog.FieldScopeSQL)
+	return u
+}
+
+// ClearScopeSQL clears the value of the "scope_sql" field.
+func (u *PolicyEvaluationLogUpsert) ClearScopeSQL() *PolicyEvaluationLogUpsert {
+	u.SetNull(policyevaluationlog.FieldScopeSQL)
+	return u
+}
+
+// SetIPAddress sets the "ip_address" field.
+func (u *PolicyEvaluationLogUpsert) SetIPAddress(v string) *PolicyEvaluationLogUpsert {
+	u.Set(policyevaluationlog.FieldIPAddress, v)
+	return u
+}
+
+// UpdateIPAddress sets the "ip_address" field to the value that was provided on create.
+func (u *PolicyEvaluationLogUpsert) UpdateIPAddress() *PolicyEvaluationLogUpsert {
+	u.SetExcluded(policyevaluationlog.FieldIPAddress)
+	return u
+}
+
+// ClearIPAddress clears the value of the "ip_address" field.
+func (u *PolicyEvaluationLogUpsert) ClearIPAddress() *PolicyEvaluationLogUpsert {
+	u.SetNull(policyevaluationlog.FieldIPAddress)
+	return u
+}
+
+// SetTraceID sets the "trace_id" field.
+func (u *PolicyEvaluationLogUpsert) SetTraceID(v string) *PolicyEvaluationLogUpsert {
+	u.Set(policyevaluationlog.FieldTraceID, v)
+	return u
+}
+
+// UpdateTraceID sets the "trace_id" field to the value that was provided on create.
+func (u *PolicyEvaluationLogUpsert) UpdateTraceID() *PolicyEvaluationLogUpsert {
+	u.SetExcluded(policyevaluationlog.FieldTraceID)
+	return u
+}
+
+// ClearTraceID clears the value of the "trace_id" field.
+func (u *PolicyEvaluationLogUpsert) ClearTraceID() *PolicyEvaluationLogUpsert {
+	u.SetNull(policyevaluationlog.FieldTraceID)
+	return u
+}
+
+// SetEvaluationContext sets the "evaluation_context" field.
+func (u *PolicyEvaluationLogUpsert) SetEvaluationContext(v string) *PolicyEvaluationLogUpsert {
+	u.Set(policyevaluationlog.FieldEvaluationContext, v)
+	return u
+}
+
+// UpdateEvaluationContext sets the "evaluation_context" field to the value that was provided on create.
+func (u *PolicyEvaluationLogUpsert) UpdateEvaluationContext() *PolicyEvaluationLogUpsert {
+	u.SetExcluded(policyevaluationlog.FieldEvaluationContext)
+	return u
+}
+
+// ClearEvaluationContext clears the value of the "evaluation_context" field.
+func (u *PolicyEvaluationLogUpsert) ClearEvaluationContext() *PolicyEvaluationLogUpsert {
+	u.SetNull(policyevaluationlog.FieldEvaluationContext)
+	return u
+}
+
+// SetLogHash sets the "log_hash" field.
+func (u *PolicyEvaluationLogUpsert) SetLogHash(v string) *PolicyEvaluationLogUpsert {
+	u.Set(policyevaluationlog.FieldLogHash, v)
+	return u
+}
+
+// UpdateLogHash sets the "log_hash" field to the value that was provided on create.
+func (u *PolicyEvaluationLogUpsert) UpdateLogHash() *PolicyEvaluationLogUpsert {
+	u.SetExcluded(policyevaluationlog.FieldLogHash)
+	return u
+}
+
+// ClearLogHash clears the value of the "log_hash" field.
+func (u *PolicyEvaluationLogUpsert) ClearLogHash() *PolicyEvaluationLogUpsert {
+	u.SetNull(policyevaluationlog.FieldLogHash)
+	return u
+}
+
+// SetSignature sets the "signature" field.
+func (u *PolicyEvaluationLogUpsert) SetSignature(v []byte) *PolicyEvaluationLogUpsert {
+	u.Set(policyevaluationlog.FieldSignature, v)
+	return u
+}
+
+// UpdateSignature sets the "signature" field to the value that was provided on create.
+func (u *PolicyEvaluationLogUpsert) UpdateSignature() *PolicyEvaluationLogUpsert {
+	u.SetExcluded(policyevaluationlog.FieldSignature)
+	return u
+}
+
+// ClearSignature clears the value of the "signature" field.
+func (u *PolicyEvaluationLogUpsert) ClearSignature() *PolicyEvaluationLogUpsert {
+	u.SetNull(policyevaluationlog.FieldSignature)
 	return u
 }
 
@@ -486,99 +742,141 @@ func (u *PolicyEvaluationLogUpsertOne) Update(set func(*PolicyEvaluationLogUpser
 	return u
 }
 
-// SetUpdatedAt sets the "updated_at" field.
-func (u *PolicyEvaluationLogUpsertOne) SetUpdatedAt(v time.Time) *PolicyEvaluationLogUpsertOne {
+// SetUserID sets the "user_id" field.
+func (u *PolicyEvaluationLogUpsertOne) SetUserID(v uint32) *PolicyEvaluationLogUpsertOne {
 	return u.Update(func(s *PolicyEvaluationLogUpsert) {
-		s.SetUpdatedAt(v)
+		s.SetUserID(v)
 	})
 }
 
-// UpdateUpdatedAt sets the "updated_at" field to the value that was provided on create.
-func (u *PolicyEvaluationLogUpsertOne) UpdateUpdatedAt() *PolicyEvaluationLogUpsertOne {
+// AddUserID adds v to the "user_id" field.
+func (u *PolicyEvaluationLogUpsertOne) AddUserID(v uint32) *PolicyEvaluationLogUpsertOne {
 	return u.Update(func(s *PolicyEvaluationLogUpsert) {
-		s.UpdateUpdatedAt()
+		s.AddUserID(v)
 	})
 }
 
-// ClearUpdatedAt clears the value of the "updated_at" field.
-func (u *PolicyEvaluationLogUpsertOne) ClearUpdatedAt() *PolicyEvaluationLogUpsertOne {
+// UpdateUserID sets the "user_id" field to the value that was provided on create.
+func (u *PolicyEvaluationLogUpsertOne) UpdateUserID() *PolicyEvaluationLogUpsertOne {
 	return u.Update(func(s *PolicyEvaluationLogUpsert) {
-		s.ClearUpdatedAt()
+		s.UpdateUserID()
 	})
 }
 
-// SetDeletedAt sets the "deleted_at" field.
-func (u *PolicyEvaluationLogUpsertOne) SetDeletedAt(v time.Time) *PolicyEvaluationLogUpsertOne {
+// SetMembershipID sets the "membership_id" field.
+func (u *PolicyEvaluationLogUpsertOne) SetMembershipID(v uint32) *PolicyEvaluationLogUpsertOne {
 	return u.Update(func(s *PolicyEvaluationLogUpsert) {
-		s.SetDeletedAt(v)
+		s.SetMembershipID(v)
 	})
 }
 
-// UpdateDeletedAt sets the "deleted_at" field to the value that was provided on create.
-func (u *PolicyEvaluationLogUpsertOne) UpdateDeletedAt() *PolicyEvaluationLogUpsertOne {
+// AddMembershipID adds v to the "membership_id" field.
+func (u *PolicyEvaluationLogUpsertOne) AddMembershipID(v uint32) *PolicyEvaluationLogUpsertOne {
 	return u.Update(func(s *PolicyEvaluationLogUpsert) {
-		s.UpdateDeletedAt()
+		s.AddMembershipID(v)
 	})
 }
 
-// ClearDeletedAt clears the value of the "deleted_at" field.
-func (u *PolicyEvaluationLogUpsertOne) ClearDeletedAt() *PolicyEvaluationLogUpsertOne {
+// UpdateMembershipID sets the "membership_id" field to the value that was provided on create.
+func (u *PolicyEvaluationLogUpsertOne) UpdateMembershipID() *PolicyEvaluationLogUpsertOne {
 	return u.Update(func(s *PolicyEvaluationLogUpsert) {
-		s.ClearDeletedAt()
+		s.UpdateMembershipID()
 	})
 }
 
-// SetOperatorID sets the "operator_id" field.
-func (u *PolicyEvaluationLogUpsertOne) SetOperatorID(v uint32) *PolicyEvaluationLogUpsertOne {
+// SetPermissionID sets the "permission_id" field.
+func (u *PolicyEvaluationLogUpsertOne) SetPermissionID(v uint32) *PolicyEvaluationLogUpsertOne {
 	return u.Update(func(s *PolicyEvaluationLogUpsert) {
-		s.SetOperatorID(v)
+		s.SetPermissionID(v)
 	})
 }
 
-// AddOperatorID adds v to the "operator_id" field.
-func (u *PolicyEvaluationLogUpsertOne) AddOperatorID(v uint32) *PolicyEvaluationLogUpsertOne {
+// AddPermissionID adds v to the "permission_id" field.
+func (u *PolicyEvaluationLogUpsertOne) AddPermissionID(v uint32) *PolicyEvaluationLogUpsertOne {
 	return u.Update(func(s *PolicyEvaluationLogUpsert) {
-		s.AddOperatorID(v)
+		s.AddPermissionID(v)
 	})
 }
 
-// UpdateOperatorID sets the "operator_id" field to the value that was provided on create.
-func (u *PolicyEvaluationLogUpsertOne) UpdateOperatorID() *PolicyEvaluationLogUpsertOne {
+// UpdatePermissionID sets the "permission_id" field to the value that was provided on create.
+func (u *PolicyEvaluationLogUpsertOne) UpdatePermissionID() *PolicyEvaluationLogUpsertOne {
 	return u.Update(func(s *PolicyEvaluationLogUpsert) {
-		s.UpdateOperatorID()
+		s.UpdatePermissionID()
 	})
 }
 
-// ClearOperatorID clears the value of the "operator_id" field.
-func (u *PolicyEvaluationLogUpsertOne) ClearOperatorID() *PolicyEvaluationLogUpsertOne {
+// SetPolicyID sets the "policy_id" field.
+func (u *PolicyEvaluationLogUpsertOne) SetPolicyID(v uint32) *PolicyEvaluationLogUpsertOne {
 	return u.Update(func(s *PolicyEvaluationLogUpsert) {
-		s.ClearOperatorID()
+		s.SetPolicyID(v)
 	})
 }
 
-// SetPolicy sets the "policy" field.
-func (u *PolicyEvaluationLogUpsertOne) SetPolicy(v string) *PolicyEvaluationLogUpsertOne {
+// AddPolicyID adds v to the "policy_id" field.
+func (u *PolicyEvaluationLogUpsertOne) AddPolicyID(v uint32) *PolicyEvaluationLogUpsertOne {
 	return u.Update(func(s *PolicyEvaluationLogUpsert) {
-		s.SetPolicy(v)
+		s.AddPolicyID(v)
 	})
 }
 
-// UpdatePolicy sets the "policy" field to the value that was provided on create.
-func (u *PolicyEvaluationLogUpsertOne) UpdatePolicy() *PolicyEvaluationLogUpsertOne {
+// UpdatePolicyID sets the "policy_id" field to the value that was provided on create.
+func (u *PolicyEvaluationLogUpsertOne) UpdatePolicyID() *PolicyEvaluationLogUpsertOne {
 	return u.Update(func(s *PolicyEvaluationLogUpsert) {
-		s.UpdatePolicy()
+		s.UpdatePolicyID()
 	})
 }
 
-// ClearPolicy clears the value of the "policy" field.
-func (u *PolicyEvaluationLogUpsertOne) ClearPolicy() *PolicyEvaluationLogUpsertOne {
+// ClearPolicyID clears the value of the "policy_id" field.
+func (u *PolicyEvaluationLogUpsertOne) ClearPolicyID() *PolicyEvaluationLogUpsertOne {
 	return u.Update(func(s *PolicyEvaluationLogUpsert) {
-		s.ClearPolicy()
+		s.ClearPolicyID()
+	})
+}
+
+// SetRequestPath sets the "request_path" field.
+func (u *PolicyEvaluationLogUpsertOne) SetRequestPath(v string) *PolicyEvaluationLogUpsertOne {
+	return u.Update(func(s *PolicyEvaluationLogUpsert) {
+		s.SetRequestPath(v)
+	})
+}
+
+// UpdateRequestPath sets the "request_path" field to the value that was provided on create.
+func (u *PolicyEvaluationLogUpsertOne) UpdateRequestPath() *PolicyEvaluationLogUpsertOne {
+	return u.Update(func(s *PolicyEvaluationLogUpsert) {
+		s.UpdateRequestPath()
+	})
+}
+
+// ClearRequestPath clears the value of the "request_path" field.
+func (u *PolicyEvaluationLogUpsertOne) ClearRequestPath() *PolicyEvaluationLogUpsertOne {
+	return u.Update(func(s *PolicyEvaluationLogUpsert) {
+		s.ClearRequestPath()
+	})
+}
+
+// SetRequestMethod sets the "request_method" field.
+func (u *PolicyEvaluationLogUpsertOne) SetRequestMethod(v string) *PolicyEvaluationLogUpsertOne {
+	return u.Update(func(s *PolicyEvaluationLogUpsert) {
+		s.SetRequestMethod(v)
+	})
+}
+
+// UpdateRequestMethod sets the "request_method" field to the value that was provided on create.
+func (u *PolicyEvaluationLogUpsertOne) UpdateRequestMethod() *PolicyEvaluationLogUpsertOne {
+	return u.Update(func(s *PolicyEvaluationLogUpsert) {
+		s.UpdateRequestMethod()
+	})
+}
+
+// ClearRequestMethod clears the value of the "request_method" field.
+func (u *PolicyEvaluationLogUpsertOne) ClearRequestMethod() *PolicyEvaluationLogUpsertOne {
+	return u.Update(func(s *PolicyEvaluationLogUpsert) {
+		s.ClearRequestMethod()
 	})
 }
 
 // SetResult sets the "result" field.
-func (u *PolicyEvaluationLogUpsertOne) SetResult(v string) *PolicyEvaluationLogUpsertOne {
+func (u *PolicyEvaluationLogUpsertOne) SetResult(v bool) *PolicyEvaluationLogUpsertOne {
 	return u.Update(func(s *PolicyEvaluationLogUpsert) {
 		s.SetResult(v)
 	})
@@ -591,31 +889,150 @@ func (u *PolicyEvaluationLogUpsertOne) UpdateResult() *PolicyEvaluationLogUpsert
 	})
 }
 
-// ClearResult clears the value of the "result" field.
-func (u *PolicyEvaluationLogUpsertOne) ClearResult() *PolicyEvaluationLogUpsertOne {
+// SetEffectDetails sets the "effect_details" field.
+func (u *PolicyEvaluationLogUpsertOne) SetEffectDetails(v string) *PolicyEvaluationLogUpsertOne {
 	return u.Update(func(s *PolicyEvaluationLogUpsert) {
-		s.ClearResult()
+		s.SetEffectDetails(v)
 	})
 }
 
-// SetEvaluatedAt sets the "evaluated_at" field.
-func (u *PolicyEvaluationLogUpsertOne) SetEvaluatedAt(v time.Time) *PolicyEvaluationLogUpsertOne {
+// UpdateEffectDetails sets the "effect_details" field to the value that was provided on create.
+func (u *PolicyEvaluationLogUpsertOne) UpdateEffectDetails() *PolicyEvaluationLogUpsertOne {
 	return u.Update(func(s *PolicyEvaluationLogUpsert) {
-		s.SetEvaluatedAt(v)
+		s.UpdateEffectDetails()
 	})
 }
 
-// UpdateEvaluatedAt sets the "evaluated_at" field to the value that was provided on create.
-func (u *PolicyEvaluationLogUpsertOne) UpdateEvaluatedAt() *PolicyEvaluationLogUpsertOne {
+// ClearEffectDetails clears the value of the "effect_details" field.
+func (u *PolicyEvaluationLogUpsertOne) ClearEffectDetails() *PolicyEvaluationLogUpsertOne {
 	return u.Update(func(s *PolicyEvaluationLogUpsert) {
-		s.UpdateEvaluatedAt()
+		s.ClearEffectDetails()
 	})
 }
 
-// ClearEvaluatedAt clears the value of the "evaluated_at" field.
-func (u *PolicyEvaluationLogUpsertOne) ClearEvaluatedAt() *PolicyEvaluationLogUpsertOne {
+// SetScopeSQL sets the "scope_sql" field.
+func (u *PolicyEvaluationLogUpsertOne) SetScopeSQL(v string) *PolicyEvaluationLogUpsertOne {
 	return u.Update(func(s *PolicyEvaluationLogUpsert) {
-		s.ClearEvaluatedAt()
+		s.SetScopeSQL(v)
+	})
+}
+
+// UpdateScopeSQL sets the "scope_sql" field to the value that was provided on create.
+func (u *PolicyEvaluationLogUpsertOne) UpdateScopeSQL() *PolicyEvaluationLogUpsertOne {
+	return u.Update(func(s *PolicyEvaluationLogUpsert) {
+		s.UpdateScopeSQL()
+	})
+}
+
+// ClearScopeSQL clears the value of the "scope_sql" field.
+func (u *PolicyEvaluationLogUpsertOne) ClearScopeSQL() *PolicyEvaluationLogUpsertOne {
+	return u.Update(func(s *PolicyEvaluationLogUpsert) {
+		s.ClearScopeSQL()
+	})
+}
+
+// SetIPAddress sets the "ip_address" field.
+func (u *PolicyEvaluationLogUpsertOne) SetIPAddress(v string) *PolicyEvaluationLogUpsertOne {
+	return u.Update(func(s *PolicyEvaluationLogUpsert) {
+		s.SetIPAddress(v)
+	})
+}
+
+// UpdateIPAddress sets the "ip_address" field to the value that was provided on create.
+func (u *PolicyEvaluationLogUpsertOne) UpdateIPAddress() *PolicyEvaluationLogUpsertOne {
+	return u.Update(func(s *PolicyEvaluationLogUpsert) {
+		s.UpdateIPAddress()
+	})
+}
+
+// ClearIPAddress clears the value of the "ip_address" field.
+func (u *PolicyEvaluationLogUpsertOne) ClearIPAddress() *PolicyEvaluationLogUpsertOne {
+	return u.Update(func(s *PolicyEvaluationLogUpsert) {
+		s.ClearIPAddress()
+	})
+}
+
+// SetTraceID sets the "trace_id" field.
+func (u *PolicyEvaluationLogUpsertOne) SetTraceID(v string) *PolicyEvaluationLogUpsertOne {
+	return u.Update(func(s *PolicyEvaluationLogUpsert) {
+		s.SetTraceID(v)
+	})
+}
+
+// UpdateTraceID sets the "trace_id" field to the value that was provided on create.
+func (u *PolicyEvaluationLogUpsertOne) UpdateTraceID() *PolicyEvaluationLogUpsertOne {
+	return u.Update(func(s *PolicyEvaluationLogUpsert) {
+		s.UpdateTraceID()
+	})
+}
+
+// ClearTraceID clears the value of the "trace_id" field.
+func (u *PolicyEvaluationLogUpsertOne) ClearTraceID() *PolicyEvaluationLogUpsertOne {
+	return u.Update(func(s *PolicyEvaluationLogUpsert) {
+		s.ClearTraceID()
+	})
+}
+
+// SetEvaluationContext sets the "evaluation_context" field.
+func (u *PolicyEvaluationLogUpsertOne) SetEvaluationContext(v string) *PolicyEvaluationLogUpsertOne {
+	return u.Update(func(s *PolicyEvaluationLogUpsert) {
+		s.SetEvaluationContext(v)
+	})
+}
+
+// UpdateEvaluationContext sets the "evaluation_context" field to the value that was provided on create.
+func (u *PolicyEvaluationLogUpsertOne) UpdateEvaluationContext() *PolicyEvaluationLogUpsertOne {
+	return u.Update(func(s *PolicyEvaluationLogUpsert) {
+		s.UpdateEvaluationContext()
+	})
+}
+
+// ClearEvaluationContext clears the value of the "evaluation_context" field.
+func (u *PolicyEvaluationLogUpsertOne) ClearEvaluationContext() *PolicyEvaluationLogUpsertOne {
+	return u.Update(func(s *PolicyEvaluationLogUpsert) {
+		s.ClearEvaluationContext()
+	})
+}
+
+// SetLogHash sets the "log_hash" field.
+func (u *PolicyEvaluationLogUpsertOne) SetLogHash(v string) *PolicyEvaluationLogUpsertOne {
+	return u.Update(func(s *PolicyEvaluationLogUpsert) {
+		s.SetLogHash(v)
+	})
+}
+
+// UpdateLogHash sets the "log_hash" field to the value that was provided on create.
+func (u *PolicyEvaluationLogUpsertOne) UpdateLogHash() *PolicyEvaluationLogUpsertOne {
+	return u.Update(func(s *PolicyEvaluationLogUpsert) {
+		s.UpdateLogHash()
+	})
+}
+
+// ClearLogHash clears the value of the "log_hash" field.
+func (u *PolicyEvaluationLogUpsertOne) ClearLogHash() *PolicyEvaluationLogUpsertOne {
+	return u.Update(func(s *PolicyEvaluationLogUpsert) {
+		s.ClearLogHash()
+	})
+}
+
+// SetSignature sets the "signature" field.
+func (u *PolicyEvaluationLogUpsertOne) SetSignature(v []byte) *PolicyEvaluationLogUpsertOne {
+	return u.Update(func(s *PolicyEvaluationLogUpsert) {
+		s.SetSignature(v)
+	})
+}
+
+// UpdateSignature sets the "signature" field to the value that was provided on create.
+func (u *PolicyEvaluationLogUpsertOne) UpdateSignature() *PolicyEvaluationLogUpsertOne {
+	return u.Update(func(s *PolicyEvaluationLogUpsert) {
+		s.UpdateSignature()
+	})
+}
+
+// ClearSignature clears the value of the "signature" field.
+func (u *PolicyEvaluationLogUpsertOne) ClearSignature() *PolicyEvaluationLogUpsertOne {
+	return u.Update(func(s *PolicyEvaluationLogUpsert) {
+		s.ClearSignature()
 	})
 }
 
@@ -839,99 +1256,141 @@ func (u *PolicyEvaluationLogUpsertBulk) Update(set func(*PolicyEvaluationLogUpse
 	return u
 }
 
-// SetUpdatedAt sets the "updated_at" field.
-func (u *PolicyEvaluationLogUpsertBulk) SetUpdatedAt(v time.Time) *PolicyEvaluationLogUpsertBulk {
+// SetUserID sets the "user_id" field.
+func (u *PolicyEvaluationLogUpsertBulk) SetUserID(v uint32) *PolicyEvaluationLogUpsertBulk {
 	return u.Update(func(s *PolicyEvaluationLogUpsert) {
-		s.SetUpdatedAt(v)
+		s.SetUserID(v)
 	})
 }
 
-// UpdateUpdatedAt sets the "updated_at" field to the value that was provided on create.
-func (u *PolicyEvaluationLogUpsertBulk) UpdateUpdatedAt() *PolicyEvaluationLogUpsertBulk {
+// AddUserID adds v to the "user_id" field.
+func (u *PolicyEvaluationLogUpsertBulk) AddUserID(v uint32) *PolicyEvaluationLogUpsertBulk {
 	return u.Update(func(s *PolicyEvaluationLogUpsert) {
-		s.UpdateUpdatedAt()
+		s.AddUserID(v)
 	})
 }
 
-// ClearUpdatedAt clears the value of the "updated_at" field.
-func (u *PolicyEvaluationLogUpsertBulk) ClearUpdatedAt() *PolicyEvaluationLogUpsertBulk {
+// UpdateUserID sets the "user_id" field to the value that was provided on create.
+func (u *PolicyEvaluationLogUpsertBulk) UpdateUserID() *PolicyEvaluationLogUpsertBulk {
 	return u.Update(func(s *PolicyEvaluationLogUpsert) {
-		s.ClearUpdatedAt()
+		s.UpdateUserID()
 	})
 }
 
-// SetDeletedAt sets the "deleted_at" field.
-func (u *PolicyEvaluationLogUpsertBulk) SetDeletedAt(v time.Time) *PolicyEvaluationLogUpsertBulk {
+// SetMembershipID sets the "membership_id" field.
+func (u *PolicyEvaluationLogUpsertBulk) SetMembershipID(v uint32) *PolicyEvaluationLogUpsertBulk {
 	return u.Update(func(s *PolicyEvaluationLogUpsert) {
-		s.SetDeletedAt(v)
+		s.SetMembershipID(v)
 	})
 }
 
-// UpdateDeletedAt sets the "deleted_at" field to the value that was provided on create.
-func (u *PolicyEvaluationLogUpsertBulk) UpdateDeletedAt() *PolicyEvaluationLogUpsertBulk {
+// AddMembershipID adds v to the "membership_id" field.
+func (u *PolicyEvaluationLogUpsertBulk) AddMembershipID(v uint32) *PolicyEvaluationLogUpsertBulk {
 	return u.Update(func(s *PolicyEvaluationLogUpsert) {
-		s.UpdateDeletedAt()
+		s.AddMembershipID(v)
 	})
 }
 
-// ClearDeletedAt clears the value of the "deleted_at" field.
-func (u *PolicyEvaluationLogUpsertBulk) ClearDeletedAt() *PolicyEvaluationLogUpsertBulk {
+// UpdateMembershipID sets the "membership_id" field to the value that was provided on create.
+func (u *PolicyEvaluationLogUpsertBulk) UpdateMembershipID() *PolicyEvaluationLogUpsertBulk {
 	return u.Update(func(s *PolicyEvaluationLogUpsert) {
-		s.ClearDeletedAt()
+		s.UpdateMembershipID()
 	})
 }
 
-// SetOperatorID sets the "operator_id" field.
-func (u *PolicyEvaluationLogUpsertBulk) SetOperatorID(v uint32) *PolicyEvaluationLogUpsertBulk {
+// SetPermissionID sets the "permission_id" field.
+func (u *PolicyEvaluationLogUpsertBulk) SetPermissionID(v uint32) *PolicyEvaluationLogUpsertBulk {
 	return u.Update(func(s *PolicyEvaluationLogUpsert) {
-		s.SetOperatorID(v)
+		s.SetPermissionID(v)
 	})
 }
 
-// AddOperatorID adds v to the "operator_id" field.
-func (u *PolicyEvaluationLogUpsertBulk) AddOperatorID(v uint32) *PolicyEvaluationLogUpsertBulk {
+// AddPermissionID adds v to the "permission_id" field.
+func (u *PolicyEvaluationLogUpsertBulk) AddPermissionID(v uint32) *PolicyEvaluationLogUpsertBulk {
 	return u.Update(func(s *PolicyEvaluationLogUpsert) {
-		s.AddOperatorID(v)
+		s.AddPermissionID(v)
 	})
 }
 
-// UpdateOperatorID sets the "operator_id" field to the value that was provided on create.
-func (u *PolicyEvaluationLogUpsertBulk) UpdateOperatorID() *PolicyEvaluationLogUpsertBulk {
+// UpdatePermissionID sets the "permission_id" field to the value that was provided on create.
+func (u *PolicyEvaluationLogUpsertBulk) UpdatePermissionID() *PolicyEvaluationLogUpsertBulk {
 	return u.Update(func(s *PolicyEvaluationLogUpsert) {
-		s.UpdateOperatorID()
+		s.UpdatePermissionID()
 	})
 }
 
-// ClearOperatorID clears the value of the "operator_id" field.
-func (u *PolicyEvaluationLogUpsertBulk) ClearOperatorID() *PolicyEvaluationLogUpsertBulk {
+// SetPolicyID sets the "policy_id" field.
+func (u *PolicyEvaluationLogUpsertBulk) SetPolicyID(v uint32) *PolicyEvaluationLogUpsertBulk {
 	return u.Update(func(s *PolicyEvaluationLogUpsert) {
-		s.ClearOperatorID()
+		s.SetPolicyID(v)
 	})
 }
 
-// SetPolicy sets the "policy" field.
-func (u *PolicyEvaluationLogUpsertBulk) SetPolicy(v string) *PolicyEvaluationLogUpsertBulk {
+// AddPolicyID adds v to the "policy_id" field.
+func (u *PolicyEvaluationLogUpsertBulk) AddPolicyID(v uint32) *PolicyEvaluationLogUpsertBulk {
 	return u.Update(func(s *PolicyEvaluationLogUpsert) {
-		s.SetPolicy(v)
+		s.AddPolicyID(v)
 	})
 }
 
-// UpdatePolicy sets the "policy" field to the value that was provided on create.
-func (u *PolicyEvaluationLogUpsertBulk) UpdatePolicy() *PolicyEvaluationLogUpsertBulk {
+// UpdatePolicyID sets the "policy_id" field to the value that was provided on create.
+func (u *PolicyEvaluationLogUpsertBulk) UpdatePolicyID() *PolicyEvaluationLogUpsertBulk {
 	return u.Update(func(s *PolicyEvaluationLogUpsert) {
-		s.UpdatePolicy()
+		s.UpdatePolicyID()
 	})
 }
 
-// ClearPolicy clears the value of the "policy" field.
-func (u *PolicyEvaluationLogUpsertBulk) ClearPolicy() *PolicyEvaluationLogUpsertBulk {
+// ClearPolicyID clears the value of the "policy_id" field.
+func (u *PolicyEvaluationLogUpsertBulk) ClearPolicyID() *PolicyEvaluationLogUpsertBulk {
 	return u.Update(func(s *PolicyEvaluationLogUpsert) {
-		s.ClearPolicy()
+		s.ClearPolicyID()
+	})
+}
+
+// SetRequestPath sets the "request_path" field.
+func (u *PolicyEvaluationLogUpsertBulk) SetRequestPath(v string) *PolicyEvaluationLogUpsertBulk {
+	return u.Update(func(s *PolicyEvaluationLogUpsert) {
+		s.SetRequestPath(v)
+	})
+}
+
+// UpdateRequestPath sets the "request_path" field to the value that was provided on create.
+func (u *PolicyEvaluationLogUpsertBulk) UpdateRequestPath() *PolicyEvaluationLogUpsertBulk {
+	return u.Update(func(s *PolicyEvaluationLogUpsert) {
+		s.UpdateRequestPath()
+	})
+}
+
+// ClearRequestPath clears the value of the "request_path" field.
+func (u *PolicyEvaluationLogUpsertBulk) ClearRequestPath() *PolicyEvaluationLogUpsertBulk {
+	return u.Update(func(s *PolicyEvaluationLogUpsert) {
+		s.ClearRequestPath()
+	})
+}
+
+// SetRequestMethod sets the "request_method" field.
+func (u *PolicyEvaluationLogUpsertBulk) SetRequestMethod(v string) *PolicyEvaluationLogUpsertBulk {
+	return u.Update(func(s *PolicyEvaluationLogUpsert) {
+		s.SetRequestMethod(v)
+	})
+}
+
+// UpdateRequestMethod sets the "request_method" field to the value that was provided on create.
+func (u *PolicyEvaluationLogUpsertBulk) UpdateRequestMethod() *PolicyEvaluationLogUpsertBulk {
+	return u.Update(func(s *PolicyEvaluationLogUpsert) {
+		s.UpdateRequestMethod()
+	})
+}
+
+// ClearRequestMethod clears the value of the "request_method" field.
+func (u *PolicyEvaluationLogUpsertBulk) ClearRequestMethod() *PolicyEvaluationLogUpsertBulk {
+	return u.Update(func(s *PolicyEvaluationLogUpsert) {
+		s.ClearRequestMethod()
 	})
 }
 
 // SetResult sets the "result" field.
-func (u *PolicyEvaluationLogUpsertBulk) SetResult(v string) *PolicyEvaluationLogUpsertBulk {
+func (u *PolicyEvaluationLogUpsertBulk) SetResult(v bool) *PolicyEvaluationLogUpsertBulk {
 	return u.Update(func(s *PolicyEvaluationLogUpsert) {
 		s.SetResult(v)
 	})
@@ -944,31 +1403,150 @@ func (u *PolicyEvaluationLogUpsertBulk) UpdateResult() *PolicyEvaluationLogUpser
 	})
 }
 
-// ClearResult clears the value of the "result" field.
-func (u *PolicyEvaluationLogUpsertBulk) ClearResult() *PolicyEvaluationLogUpsertBulk {
+// SetEffectDetails sets the "effect_details" field.
+func (u *PolicyEvaluationLogUpsertBulk) SetEffectDetails(v string) *PolicyEvaluationLogUpsertBulk {
 	return u.Update(func(s *PolicyEvaluationLogUpsert) {
-		s.ClearResult()
+		s.SetEffectDetails(v)
 	})
 }
 
-// SetEvaluatedAt sets the "evaluated_at" field.
-func (u *PolicyEvaluationLogUpsertBulk) SetEvaluatedAt(v time.Time) *PolicyEvaluationLogUpsertBulk {
+// UpdateEffectDetails sets the "effect_details" field to the value that was provided on create.
+func (u *PolicyEvaluationLogUpsertBulk) UpdateEffectDetails() *PolicyEvaluationLogUpsertBulk {
 	return u.Update(func(s *PolicyEvaluationLogUpsert) {
-		s.SetEvaluatedAt(v)
+		s.UpdateEffectDetails()
 	})
 }
 
-// UpdateEvaluatedAt sets the "evaluated_at" field to the value that was provided on create.
-func (u *PolicyEvaluationLogUpsertBulk) UpdateEvaluatedAt() *PolicyEvaluationLogUpsertBulk {
+// ClearEffectDetails clears the value of the "effect_details" field.
+func (u *PolicyEvaluationLogUpsertBulk) ClearEffectDetails() *PolicyEvaluationLogUpsertBulk {
 	return u.Update(func(s *PolicyEvaluationLogUpsert) {
-		s.UpdateEvaluatedAt()
+		s.ClearEffectDetails()
 	})
 }
 
-// ClearEvaluatedAt clears the value of the "evaluated_at" field.
-func (u *PolicyEvaluationLogUpsertBulk) ClearEvaluatedAt() *PolicyEvaluationLogUpsertBulk {
+// SetScopeSQL sets the "scope_sql" field.
+func (u *PolicyEvaluationLogUpsertBulk) SetScopeSQL(v string) *PolicyEvaluationLogUpsertBulk {
 	return u.Update(func(s *PolicyEvaluationLogUpsert) {
-		s.ClearEvaluatedAt()
+		s.SetScopeSQL(v)
+	})
+}
+
+// UpdateScopeSQL sets the "scope_sql" field to the value that was provided on create.
+func (u *PolicyEvaluationLogUpsertBulk) UpdateScopeSQL() *PolicyEvaluationLogUpsertBulk {
+	return u.Update(func(s *PolicyEvaluationLogUpsert) {
+		s.UpdateScopeSQL()
+	})
+}
+
+// ClearScopeSQL clears the value of the "scope_sql" field.
+func (u *PolicyEvaluationLogUpsertBulk) ClearScopeSQL() *PolicyEvaluationLogUpsertBulk {
+	return u.Update(func(s *PolicyEvaluationLogUpsert) {
+		s.ClearScopeSQL()
+	})
+}
+
+// SetIPAddress sets the "ip_address" field.
+func (u *PolicyEvaluationLogUpsertBulk) SetIPAddress(v string) *PolicyEvaluationLogUpsertBulk {
+	return u.Update(func(s *PolicyEvaluationLogUpsert) {
+		s.SetIPAddress(v)
+	})
+}
+
+// UpdateIPAddress sets the "ip_address" field to the value that was provided on create.
+func (u *PolicyEvaluationLogUpsertBulk) UpdateIPAddress() *PolicyEvaluationLogUpsertBulk {
+	return u.Update(func(s *PolicyEvaluationLogUpsert) {
+		s.UpdateIPAddress()
+	})
+}
+
+// ClearIPAddress clears the value of the "ip_address" field.
+func (u *PolicyEvaluationLogUpsertBulk) ClearIPAddress() *PolicyEvaluationLogUpsertBulk {
+	return u.Update(func(s *PolicyEvaluationLogUpsert) {
+		s.ClearIPAddress()
+	})
+}
+
+// SetTraceID sets the "trace_id" field.
+func (u *PolicyEvaluationLogUpsertBulk) SetTraceID(v string) *PolicyEvaluationLogUpsertBulk {
+	return u.Update(func(s *PolicyEvaluationLogUpsert) {
+		s.SetTraceID(v)
+	})
+}
+
+// UpdateTraceID sets the "trace_id" field to the value that was provided on create.
+func (u *PolicyEvaluationLogUpsertBulk) UpdateTraceID() *PolicyEvaluationLogUpsertBulk {
+	return u.Update(func(s *PolicyEvaluationLogUpsert) {
+		s.UpdateTraceID()
+	})
+}
+
+// ClearTraceID clears the value of the "trace_id" field.
+func (u *PolicyEvaluationLogUpsertBulk) ClearTraceID() *PolicyEvaluationLogUpsertBulk {
+	return u.Update(func(s *PolicyEvaluationLogUpsert) {
+		s.ClearTraceID()
+	})
+}
+
+// SetEvaluationContext sets the "evaluation_context" field.
+func (u *PolicyEvaluationLogUpsertBulk) SetEvaluationContext(v string) *PolicyEvaluationLogUpsertBulk {
+	return u.Update(func(s *PolicyEvaluationLogUpsert) {
+		s.SetEvaluationContext(v)
+	})
+}
+
+// UpdateEvaluationContext sets the "evaluation_context" field to the value that was provided on create.
+func (u *PolicyEvaluationLogUpsertBulk) UpdateEvaluationContext() *PolicyEvaluationLogUpsertBulk {
+	return u.Update(func(s *PolicyEvaluationLogUpsert) {
+		s.UpdateEvaluationContext()
+	})
+}
+
+// ClearEvaluationContext clears the value of the "evaluation_context" field.
+func (u *PolicyEvaluationLogUpsertBulk) ClearEvaluationContext() *PolicyEvaluationLogUpsertBulk {
+	return u.Update(func(s *PolicyEvaluationLogUpsert) {
+		s.ClearEvaluationContext()
+	})
+}
+
+// SetLogHash sets the "log_hash" field.
+func (u *PolicyEvaluationLogUpsertBulk) SetLogHash(v string) *PolicyEvaluationLogUpsertBulk {
+	return u.Update(func(s *PolicyEvaluationLogUpsert) {
+		s.SetLogHash(v)
+	})
+}
+
+// UpdateLogHash sets the "log_hash" field to the value that was provided on create.
+func (u *PolicyEvaluationLogUpsertBulk) UpdateLogHash() *PolicyEvaluationLogUpsertBulk {
+	return u.Update(func(s *PolicyEvaluationLogUpsert) {
+		s.UpdateLogHash()
+	})
+}
+
+// ClearLogHash clears the value of the "log_hash" field.
+func (u *PolicyEvaluationLogUpsertBulk) ClearLogHash() *PolicyEvaluationLogUpsertBulk {
+	return u.Update(func(s *PolicyEvaluationLogUpsert) {
+		s.ClearLogHash()
+	})
+}
+
+// SetSignature sets the "signature" field.
+func (u *PolicyEvaluationLogUpsertBulk) SetSignature(v []byte) *PolicyEvaluationLogUpsertBulk {
+	return u.Update(func(s *PolicyEvaluationLogUpsert) {
+		s.SetSignature(v)
+	})
+}
+
+// UpdateSignature sets the "signature" field to the value that was provided on create.
+func (u *PolicyEvaluationLogUpsertBulk) UpdateSignature() *PolicyEvaluationLogUpsertBulk {
+	return u.Update(func(s *PolicyEvaluationLogUpsert) {
+		s.UpdateSignature()
+	})
+}
+
+// ClearSignature clears the value of the "signature" field.
+func (u *PolicyEvaluationLogUpsertBulk) ClearSignature() *PolicyEvaluationLogUpsertBulk {
+	return u.Update(func(s *PolicyEvaluationLogUpsert) {
+		s.ClearSignature()
 	})
 }
 

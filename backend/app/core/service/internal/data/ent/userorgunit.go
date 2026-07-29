@@ -12,7 +12,7 @@ import (
 	"entgo.io/ent/dialect/sql"
 )
 
-// 用户组织单元关联表
+// 成员与组织单元关联表
 type UserOrgUnit struct {
 	config `json:"-"`
 	// ID of the ent.
@@ -24,26 +24,34 @@ type UserOrgUnit struct {
 	UpdatedAt *time.Time `json:"updated_at,omitempty"`
 	// 删除时间
 	DeletedAt *time.Time `json:"deleted_at,omitempty"`
-	// 租户ID
-	TenantID *uint32 `json:"tenant_id,omitempty"`
 	// 创建者ID
 	CreatedBy *uint32 `json:"created_by,omitempty"`
 	// 更新者ID
 	UpdatedBy *uint32 `json:"updated_by,omitempty"`
 	// 删除者ID
 	DeletedBy *uint32 `json:"deleted_by,omitempty"`
-	// Status holds the value of the "status" field.
-	Status *userorgunit.Status `json:"status,omitempty"`
-	// IsPrimary holds the value of the "is_primary" field.
-	IsPrimary *bool `json:"is_primary,omitempty"`
-	// StartAt holds the value of the "start_at" field.
-	StartAt *time.Time `json:"start_at,omitempty"`
-	// EndAt holds the value of the "end_at" field.
-	EndAt *time.Time `json:"end_at,omitempty"`
+	// 租户ID
+	TenantID *uint32 `json:"tenant_id,omitempty"`
+	// 备注
+	Remark *string `json:"remark,omitempty"`
 	// 用户ID
 	UserID *uint32 `json:"user_id,omitempty"`
-	// 组织单元ID
-	OrgUnitID    *uint32 `json:"org_unit_id,omitempty"`
+	// 组织单元 ID
+	OrgUnitID *uint32 `json:"org_unit_id,omitempty"`
+	// 岗位 ID（可选，冗余）
+	PositionID *uint32 `json:"position_id,omitempty"`
+	// 生效时间（UTC）
+	StartAt *time.Time `json:"start_at,omitempty"`
+	// 结束时间（UTC）
+	EndAt *time.Time `json:"end_at,omitempty"`
+	// 分配时间（UTC）
+	AssignedAt *time.Time `json:"assigned_at,omitempty"`
+	// 分配者用户 ID
+	AssignedBy *uint32 `json:"assigned_by,omitempty"`
+	// 是否为主所属
+	IsPrimary *bool `json:"is_primary,omitempty"`
+	// 关联状态
+	Status       *userorgunit.Status `json:"status,omitempty"`
 	selectValues sql.SelectValues
 }
 
@@ -54,11 +62,11 @@ func (*UserOrgUnit) scanValues(columns []string) ([]any, error) {
 		switch columns[i] {
 		case userorgunit.FieldIsPrimary:
 			values[i] = new(sql.NullBool)
-		case userorgunit.FieldID, userorgunit.FieldTenantID, userorgunit.FieldCreatedBy, userorgunit.FieldUpdatedBy, userorgunit.FieldDeletedBy, userorgunit.FieldUserID, userorgunit.FieldOrgUnitID:
+		case userorgunit.FieldID, userorgunit.FieldCreatedBy, userorgunit.FieldUpdatedBy, userorgunit.FieldDeletedBy, userorgunit.FieldTenantID, userorgunit.FieldUserID, userorgunit.FieldOrgUnitID, userorgunit.FieldPositionID, userorgunit.FieldAssignedBy:
 			values[i] = new(sql.NullInt64)
-		case userorgunit.FieldStatus:
+		case userorgunit.FieldRemark, userorgunit.FieldStatus:
 			values[i] = new(sql.NullString)
-		case userorgunit.FieldCreatedAt, userorgunit.FieldUpdatedAt, userorgunit.FieldDeletedAt, userorgunit.FieldStartAt, userorgunit.FieldEndAt:
+		case userorgunit.FieldCreatedAt, userorgunit.FieldUpdatedAt, userorgunit.FieldDeletedAt, userorgunit.FieldStartAt, userorgunit.FieldEndAt, userorgunit.FieldAssignedAt:
 			values[i] = new(sql.NullTime)
 		default:
 			values[i] = new(sql.UnknownType)
@@ -102,13 +110,6 @@ func (_m *UserOrgUnit) assignValues(columns []string, values []any) error {
 				_m.DeletedAt = new(time.Time)
 				*_m.DeletedAt = value.Time
 			}
-		case userorgunit.FieldTenantID:
-			if value, ok := values[i].(*sql.NullInt64); !ok {
-				return fmt.Errorf("unexpected type %T for field tenant_id", values[i])
-			} else if value.Valid {
-				_m.TenantID = new(uint32)
-				*_m.TenantID = uint32(value.Int64)
-			}
 		case userorgunit.FieldCreatedBy:
 			if value, ok := values[i].(*sql.NullInt64); !ok {
 				return fmt.Errorf("unexpected type %T for field created_by", values[i])
@@ -130,19 +131,40 @@ func (_m *UserOrgUnit) assignValues(columns []string, values []any) error {
 				_m.DeletedBy = new(uint32)
 				*_m.DeletedBy = uint32(value.Int64)
 			}
-		case userorgunit.FieldStatus:
-			if value, ok := values[i].(*sql.NullString); !ok {
-				return fmt.Errorf("unexpected type %T for field status", values[i])
+		case userorgunit.FieldTenantID:
+			if value, ok := values[i].(*sql.NullInt64); !ok {
+				return fmt.Errorf("unexpected type %T for field tenant_id", values[i])
 			} else if value.Valid {
-				_m.Status = new(userorgunit.Status)
-				*_m.Status = userorgunit.Status(value.String)
+				_m.TenantID = new(uint32)
+				*_m.TenantID = uint32(value.Int64)
 			}
-		case userorgunit.FieldIsPrimary:
-			if value, ok := values[i].(*sql.NullBool); !ok {
-				return fmt.Errorf("unexpected type %T for field is_primary", values[i])
+		case userorgunit.FieldRemark:
+			if value, ok := values[i].(*sql.NullString); !ok {
+				return fmt.Errorf("unexpected type %T for field remark", values[i])
 			} else if value.Valid {
-				_m.IsPrimary = new(bool)
-				*_m.IsPrimary = value.Bool
+				_m.Remark = new(string)
+				*_m.Remark = value.String
+			}
+		case userorgunit.FieldUserID:
+			if value, ok := values[i].(*sql.NullInt64); !ok {
+				return fmt.Errorf("unexpected type %T for field user_id", values[i])
+			} else if value.Valid {
+				_m.UserID = new(uint32)
+				*_m.UserID = uint32(value.Int64)
+			}
+		case userorgunit.FieldOrgUnitID:
+			if value, ok := values[i].(*sql.NullInt64); !ok {
+				return fmt.Errorf("unexpected type %T for field org_unit_id", values[i])
+			} else if value.Valid {
+				_m.OrgUnitID = new(uint32)
+				*_m.OrgUnitID = uint32(value.Int64)
+			}
+		case userorgunit.FieldPositionID:
+			if value, ok := values[i].(*sql.NullInt64); !ok {
+				return fmt.Errorf("unexpected type %T for field position_id", values[i])
+			} else if value.Valid {
+				_m.PositionID = new(uint32)
+				*_m.PositionID = uint32(value.Int64)
 			}
 		case userorgunit.FieldStartAt:
 			if value, ok := values[i].(*sql.NullTime); !ok {
@@ -158,19 +180,33 @@ func (_m *UserOrgUnit) assignValues(columns []string, values []any) error {
 				_m.EndAt = new(time.Time)
 				*_m.EndAt = value.Time
 			}
-		case userorgunit.FieldUserID:
-			if value, ok := values[i].(*sql.NullInt64); !ok {
-				return fmt.Errorf("unexpected type %T for field user_id", values[i])
+		case userorgunit.FieldAssignedAt:
+			if value, ok := values[i].(*sql.NullTime); !ok {
+				return fmt.Errorf("unexpected type %T for field assigned_at", values[i])
 			} else if value.Valid {
-				_m.UserID = new(uint32)
-				*_m.UserID = uint32(value.Int64)
+				_m.AssignedAt = new(time.Time)
+				*_m.AssignedAt = value.Time
 			}
-		case userorgunit.FieldOrgUnitID:
+		case userorgunit.FieldAssignedBy:
 			if value, ok := values[i].(*sql.NullInt64); !ok {
-				return fmt.Errorf("unexpected type %T for field org_unit_id", values[i])
+				return fmt.Errorf("unexpected type %T for field assigned_by", values[i])
 			} else if value.Valid {
-				_m.OrgUnitID = new(uint32)
-				*_m.OrgUnitID = uint32(value.Int64)
+				_m.AssignedBy = new(uint32)
+				*_m.AssignedBy = uint32(value.Int64)
+			}
+		case userorgunit.FieldIsPrimary:
+			if value, ok := values[i].(*sql.NullBool); !ok {
+				return fmt.Errorf("unexpected type %T for field is_primary", values[i])
+			} else if value.Valid {
+				_m.IsPrimary = new(bool)
+				*_m.IsPrimary = value.Bool
+			}
+		case userorgunit.FieldStatus:
+			if value, ok := values[i].(*sql.NullString); !ok {
+				return fmt.Errorf("unexpected type %T for field status", values[i])
+			} else if value.Valid {
+				_m.Status = new(userorgunit.Status)
+				*_m.Status = userorgunit.Status(value.String)
 			}
 		default:
 			_m.selectValues.Set(columns[i], values[i])
@@ -223,11 +259,6 @@ func (_m *UserOrgUnit) String() string {
 		builder.WriteString(v.Format(time.ANSIC))
 	}
 	builder.WriteString(", ")
-	if v := _m.TenantID; v != nil {
-		builder.WriteString("tenant_id=")
-		builder.WriteString(fmt.Sprintf("%v", *v))
-	}
-	builder.WriteString(", ")
 	if v := _m.CreatedBy; v != nil {
 		builder.WriteString("created_by=")
 		builder.WriteString(fmt.Sprintf("%v", *v))
@@ -243,13 +274,28 @@ func (_m *UserOrgUnit) String() string {
 		builder.WriteString(fmt.Sprintf("%v", *v))
 	}
 	builder.WriteString(", ")
-	if v := _m.Status; v != nil {
-		builder.WriteString("status=")
+	if v := _m.TenantID; v != nil {
+		builder.WriteString("tenant_id=")
 		builder.WriteString(fmt.Sprintf("%v", *v))
 	}
 	builder.WriteString(", ")
-	if v := _m.IsPrimary; v != nil {
-		builder.WriteString("is_primary=")
+	if v := _m.Remark; v != nil {
+		builder.WriteString("remark=")
+		builder.WriteString(*v)
+	}
+	builder.WriteString(", ")
+	if v := _m.UserID; v != nil {
+		builder.WriteString("user_id=")
+		builder.WriteString(fmt.Sprintf("%v", *v))
+	}
+	builder.WriteString(", ")
+	if v := _m.OrgUnitID; v != nil {
+		builder.WriteString("org_unit_id=")
+		builder.WriteString(fmt.Sprintf("%v", *v))
+	}
+	builder.WriteString(", ")
+	if v := _m.PositionID; v != nil {
+		builder.WriteString("position_id=")
 		builder.WriteString(fmt.Sprintf("%v", *v))
 	}
 	builder.WriteString(", ")
@@ -263,13 +309,23 @@ func (_m *UserOrgUnit) String() string {
 		builder.WriteString(v.Format(time.ANSIC))
 	}
 	builder.WriteString(", ")
-	if v := _m.UserID; v != nil {
-		builder.WriteString("user_id=")
+	if v := _m.AssignedAt; v != nil {
+		builder.WriteString("assigned_at=")
+		builder.WriteString(v.Format(time.ANSIC))
+	}
+	builder.WriteString(", ")
+	if v := _m.AssignedBy; v != nil {
+		builder.WriteString("assigned_by=")
 		builder.WriteString(fmt.Sprintf("%v", *v))
 	}
 	builder.WriteString(", ")
-	if v := _m.OrgUnitID; v != nil {
-		builder.WriteString("org_unit_id=")
+	if v := _m.IsPrimary; v != nil {
+		builder.WriteString("is_primary=")
+		builder.WriteString(fmt.Sprintf("%v", *v))
+	}
+	builder.WriteString(", ")
+	if v := _m.Status; v != nil {
+		builder.WriteString("status=")
 		builder.WriteString(fmt.Sprintf("%v", *v))
 	}
 	builder.WriteByte(')')

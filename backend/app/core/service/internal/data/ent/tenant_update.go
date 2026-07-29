@@ -210,26 +210,6 @@ func (_u *TenantUpdate) ClearCode() *TenantUpdate {
 	return _u
 }
 
-// SetDomain sets the "domain" field.
-func (_u *TenantUpdate) SetDomain(v string) *TenantUpdate {
-	_u.mutation.SetDomain(v)
-	return _u
-}
-
-// SetNillableDomain sets the "domain" field if the given value is not nil.
-func (_u *TenantUpdate) SetNillableDomain(v *string) *TenantUpdate {
-	if v != nil {
-		_u.SetDomain(*v)
-	}
-	return _u
-}
-
-// ClearDomain clears the value of the "domain" field.
-func (_u *TenantUpdate) ClearDomain() *TenantUpdate {
-	_u.mutation.ClearDomain()
-	return _u
-}
-
 // SetLogoURL sets the "logo_url" field.
 func (_u *TenantUpdate) SetLogoURL(v string) *TenantUpdate {
 	_u.mutation.SetLogoURL(v)
@@ -250,43 +230,23 @@ func (_u *TenantUpdate) ClearLogoURL() *TenantUpdate {
 	return _u
 }
 
-// SetLogo sets the "logo" field.
-func (_u *TenantUpdate) SetLogo(v string) *TenantUpdate {
-	_u.mutation.SetLogo(v)
+// SetDomain sets the "domain" field.
+func (_u *TenantUpdate) SetDomain(v string) *TenantUpdate {
+	_u.mutation.SetDomain(v)
 	return _u
 }
 
-// SetNillableLogo sets the "logo" field if the given value is not nil.
-func (_u *TenantUpdate) SetNillableLogo(v *string) *TenantUpdate {
+// SetNillableDomain sets the "domain" field if the given value is not nil.
+func (_u *TenantUpdate) SetNillableDomain(v *string) *TenantUpdate {
 	if v != nil {
-		_u.SetLogo(*v)
+		_u.SetDomain(*v)
 	}
 	return _u
 }
 
-// ClearLogo clears the value of the "logo" field.
-func (_u *TenantUpdate) ClearLogo() *TenantUpdate {
-	_u.mutation.ClearLogo()
-	return _u
-}
-
-// SetWebsite sets the "website" field.
-func (_u *TenantUpdate) SetWebsite(v string) *TenantUpdate {
-	_u.mutation.SetWebsite(v)
-	return _u
-}
-
-// SetNillableWebsite sets the "website" field if the given value is not nil.
-func (_u *TenantUpdate) SetNillableWebsite(v *string) *TenantUpdate {
-	if v != nil {
-		_u.SetWebsite(*v)
-	}
-	return _u
-}
-
-// ClearWebsite clears the value of the "website" field.
-func (_u *TenantUpdate) ClearWebsite() *TenantUpdate {
-	_u.mutation.ClearWebsite()
+// ClearDomain clears the value of the "domain" field.
+func (_u *TenantUpdate) ClearDomain() *TenantUpdate {
+	_u.mutation.ClearDomain()
 	return _u
 }
 
@@ -334,66 +294,6 @@ func (_u *TenantUpdate) AddAdminUserID(v int32) *TenantUpdate {
 // ClearAdminUserID clears the value of the "admin_user_id" field.
 func (_u *TenantUpdate) ClearAdminUserID() *TenantUpdate {
 	_u.mutation.ClearAdminUserID()
-	return _u
-}
-
-// SetContactName sets the "contact_name" field.
-func (_u *TenantUpdate) SetContactName(v string) *TenantUpdate {
-	_u.mutation.SetContactName(v)
-	return _u
-}
-
-// SetNillableContactName sets the "contact_name" field if the given value is not nil.
-func (_u *TenantUpdate) SetNillableContactName(v *string) *TenantUpdate {
-	if v != nil {
-		_u.SetContactName(*v)
-	}
-	return _u
-}
-
-// ClearContactName clears the value of the "contact_name" field.
-func (_u *TenantUpdate) ClearContactName() *TenantUpdate {
-	_u.mutation.ClearContactName()
-	return _u
-}
-
-// SetContactEmail sets the "contact_email" field.
-func (_u *TenantUpdate) SetContactEmail(v string) *TenantUpdate {
-	_u.mutation.SetContactEmail(v)
-	return _u
-}
-
-// SetNillableContactEmail sets the "contact_email" field if the given value is not nil.
-func (_u *TenantUpdate) SetNillableContactEmail(v *string) *TenantUpdate {
-	if v != nil {
-		_u.SetContactEmail(*v)
-	}
-	return _u
-}
-
-// ClearContactEmail clears the value of the "contact_email" field.
-func (_u *TenantUpdate) ClearContactEmail() *TenantUpdate {
-	_u.mutation.ClearContactEmail()
-	return _u
-}
-
-// SetContactPhone sets the "contact_phone" field.
-func (_u *TenantUpdate) SetContactPhone(v string) *TenantUpdate {
-	_u.mutation.SetContactPhone(v)
-	return _u
-}
-
-// SetNillableContactPhone sets the "contact_phone" field if the given value is not nil.
-func (_u *TenantUpdate) SetNillableContactPhone(v *string) *TenantUpdate {
-	if v != nil {
-		_u.SetContactPhone(*v)
-	}
-	return _u
-}
-
-// ClearContactPhone clears the value of the "contact_phone" field.
-func (_u *TenantUpdate) ClearContactPhone() *TenantUpdate {
-	_u.mutation.ClearContactPhone()
 	return _u
 }
 
@@ -457,23 +357,23 @@ func (_u *TenantUpdate) ClearAuditStatus() *TenantUpdate {
 	return _u
 }
 
-// SetSubscriptionPlan sets the "subscription_plan" field.
-func (_u *TenantUpdate) SetSubscriptionPlan(v string) *TenantUpdate {
-	_u.mutation.SetSubscriptionPlan(v)
+// SetSubscriptionAt sets the "subscription_at" field.
+func (_u *TenantUpdate) SetSubscriptionAt(v time.Time) *TenantUpdate {
+	_u.mutation.SetSubscriptionAt(v)
 	return _u
 }
 
-// SetNillableSubscriptionPlan sets the "subscription_plan" field if the given value is not nil.
-func (_u *TenantUpdate) SetNillableSubscriptionPlan(v *string) *TenantUpdate {
+// SetNillableSubscriptionAt sets the "subscription_at" field if the given value is not nil.
+func (_u *TenantUpdate) SetNillableSubscriptionAt(v *time.Time) *TenantUpdate {
 	if v != nil {
-		_u.SetSubscriptionPlan(*v)
+		_u.SetSubscriptionAt(*v)
 	}
 	return _u
 }
 
-// ClearSubscriptionPlan clears the value of the "subscription_plan" field.
-func (_u *TenantUpdate) ClearSubscriptionPlan() *TenantUpdate {
-	_u.mutation.ClearSubscriptionPlan()
+// ClearSubscriptionAt clears the value of the "subscription_at" field.
+func (_u *TenantUpdate) ClearSubscriptionAt() *TenantUpdate {
+	_u.mutation.ClearSubscriptionAt()
 	return _u
 }
 
@@ -497,43 +397,23 @@ func (_u *TenantUpdate) ClearUnsubscribeAt() *TenantUpdate {
 	return _u
 }
 
-// SetSubscriptionAt sets the "subscription_at" field.
-func (_u *TenantUpdate) SetSubscriptionAt(v time.Time) *TenantUpdate {
-	_u.mutation.SetSubscriptionAt(v)
+// SetSubscriptionPlan sets the "subscription_plan" field.
+func (_u *TenantUpdate) SetSubscriptionPlan(v string) *TenantUpdate {
+	_u.mutation.SetSubscriptionPlan(v)
 	return _u
 }
 
-// SetNillableSubscriptionAt sets the "subscription_at" field if the given value is not nil.
-func (_u *TenantUpdate) SetNillableSubscriptionAt(v *time.Time) *TenantUpdate {
+// SetNillableSubscriptionPlan sets the "subscription_plan" field if the given value is not nil.
+func (_u *TenantUpdate) SetNillableSubscriptionPlan(v *string) *TenantUpdate {
 	if v != nil {
-		_u.SetSubscriptionAt(*v)
+		_u.SetSubscriptionPlan(*v)
 	}
 	return _u
 }
 
-// ClearSubscriptionAt clears the value of the "subscription_at" field.
-func (_u *TenantUpdate) ClearSubscriptionAt() *TenantUpdate {
-	_u.mutation.ClearSubscriptionAt()
-	return _u
-}
-
-// SetExpiredAt sets the "expired_at" field.
-func (_u *TenantUpdate) SetExpiredAt(v time.Time) *TenantUpdate {
-	_u.mutation.SetExpiredAt(v)
-	return _u
-}
-
-// SetNillableExpiredAt sets the "expired_at" field if the given value is not nil.
-func (_u *TenantUpdate) SetNillableExpiredAt(v *time.Time) *TenantUpdate {
-	if v != nil {
-		_u.SetExpiredAt(*v)
-	}
-	return _u
-}
-
-// ClearExpiredAt clears the value of the "expired_at" field.
-func (_u *TenantUpdate) ClearExpiredAt() *TenantUpdate {
-	_u.mutation.ClearExpiredAt()
+// ClearSubscriptionPlan clears the value of the "subscription_plan" field.
+func (_u *TenantUpdate) ClearSubscriptionPlan() *TenantUpdate {
+	_u.mutation.ClearSubscriptionPlan()
 	return _u
 }
 
@@ -584,6 +464,26 @@ func (_u *TenantUpdate) ClearDefaultBookID() *TenantUpdate {
 	return _u
 }
 
+// SetExpiredAt sets the "expired_at" field.
+func (_u *TenantUpdate) SetExpiredAt(v time.Time) *TenantUpdate {
+	_u.mutation.SetExpiredAt(v)
+	return _u
+}
+
+// SetNillableExpiredAt sets the "expired_at" field if the given value is not nil.
+func (_u *TenantUpdate) SetNillableExpiredAt(v *time.Time) *TenantUpdate {
+	if v != nil {
+		_u.SetExpiredAt(*v)
+	}
+	return _u
+}
+
+// ClearExpiredAt clears the value of the "expired_at" field.
+func (_u *TenantUpdate) ClearExpiredAt() *TenantUpdate {
+	_u.mutation.ClearExpiredAt()
+	return _u
+}
+
 // Mutation returns the TenantMutation object of the builder.
 func (_u *TenantUpdate) Mutation() *TenantMutation {
 	return _u.mutation
@@ -628,21 +528,6 @@ func (_u *TenantUpdate) check() error {
 			return &ValidationError{Name: "code", err: fmt.Errorf(`ent: validator failed for field "Tenant.code": %w`, err)}
 		}
 	}
-	if v, ok := _u.mutation.Domain(); ok {
-		if err := tenant.DomainValidator(v); err != nil {
-			return &ValidationError{Name: "domain", err: fmt.Errorf(`ent: validator failed for field "Tenant.domain": %w`, err)}
-		}
-	}
-	if v, ok := _u.mutation.LogoURL(); ok {
-		if err := tenant.LogoURLValidator(v); err != nil {
-			return &ValidationError{Name: "logo_url", err: fmt.Errorf(`ent: validator failed for field "Tenant.logo_url": %w`, err)}
-		}
-	}
-	if v, ok := _u.mutation.Industry(); ok {
-		if err := tenant.IndustryValidator(v); err != nil {
-			return &ValidationError{Name: "industry", err: fmt.Errorf(`ent: validator failed for field "Tenant.industry": %w`, err)}
-		}
-	}
 	if v, ok := _u.mutation.Status(); ok {
 		if err := tenant.StatusValidator(v); err != nil {
 			return &ValidationError{Name: "status", err: fmt.Errorf(`ent: validator failed for field "Tenant.status": %w`, err)}
@@ -656,11 +541,6 @@ func (_u *TenantUpdate) check() error {
 	if v, ok := _u.mutation.AuditStatus(); ok {
 		if err := tenant.AuditStatusValidator(v); err != nil {
 			return &ValidationError{Name: "audit_status", err: fmt.Errorf(`ent: validator failed for field "Tenant.audit_status": %w`, err)}
-		}
-	}
-	if v, ok := _u.mutation.SubscriptionPlan(); ok {
-		if err := tenant.SubscriptionPlanValidator(v); err != nil {
-			return &ValidationError{Name: "subscription_plan", err: fmt.Errorf(`ent: validator failed for field "Tenant.subscription_plan": %w`, err)}
 		}
 	}
 	if v, ok := _u.mutation.DefaultCurrencyCode(); ok {
@@ -749,29 +629,17 @@ func (_u *TenantUpdate) sqlSave(ctx context.Context) (_node int, err error) {
 	if _u.mutation.CodeCleared() {
 		_spec.ClearField(tenant.FieldCode, field.TypeString)
 	}
-	if value, ok := _u.mutation.Domain(); ok {
-		_spec.SetField(tenant.FieldDomain, field.TypeString, value)
-	}
-	if _u.mutation.DomainCleared() {
-		_spec.ClearField(tenant.FieldDomain, field.TypeString)
-	}
 	if value, ok := _u.mutation.LogoURL(); ok {
 		_spec.SetField(tenant.FieldLogoURL, field.TypeString, value)
 	}
 	if _u.mutation.LogoURLCleared() {
 		_spec.ClearField(tenant.FieldLogoURL, field.TypeString)
 	}
-	if value, ok := _u.mutation.Logo(); ok {
-		_spec.SetField(tenant.FieldLogo, field.TypeString, value)
+	if value, ok := _u.mutation.Domain(); ok {
+		_spec.SetField(tenant.FieldDomain, field.TypeString, value)
 	}
-	if _u.mutation.LogoCleared() {
-		_spec.ClearField(tenant.FieldLogo, field.TypeString)
-	}
-	if value, ok := _u.mutation.Website(); ok {
-		_spec.SetField(tenant.FieldWebsite, field.TypeString, value)
-	}
-	if _u.mutation.WebsiteCleared() {
-		_spec.ClearField(tenant.FieldWebsite, field.TypeString)
+	if _u.mutation.DomainCleared() {
+		_spec.ClearField(tenant.FieldDomain, field.TypeString)
 	}
 	if value, ok := _u.mutation.Industry(); ok {
 		_spec.SetField(tenant.FieldIndustry, field.TypeString, value)
@@ -787,24 +655,6 @@ func (_u *TenantUpdate) sqlSave(ctx context.Context) (_node int, err error) {
 	}
 	if _u.mutation.AdminUserIDCleared() {
 		_spec.ClearField(tenant.FieldAdminUserID, field.TypeUint32)
-	}
-	if value, ok := _u.mutation.ContactName(); ok {
-		_spec.SetField(tenant.FieldContactName, field.TypeString, value)
-	}
-	if _u.mutation.ContactNameCleared() {
-		_spec.ClearField(tenant.FieldContactName, field.TypeString)
-	}
-	if value, ok := _u.mutation.ContactEmail(); ok {
-		_spec.SetField(tenant.FieldContactEmail, field.TypeString, value)
-	}
-	if _u.mutation.ContactEmailCleared() {
-		_spec.ClearField(tenant.FieldContactEmail, field.TypeString)
-	}
-	if value, ok := _u.mutation.ContactPhone(); ok {
-		_spec.SetField(tenant.FieldContactPhone, field.TypeString, value)
-	}
-	if _u.mutation.ContactPhoneCleared() {
-		_spec.ClearField(tenant.FieldContactPhone, field.TypeString)
 	}
 	if value, ok := _u.mutation.Status(); ok {
 		_spec.SetField(tenant.FieldStatus, field.TypeEnum, value)
@@ -824,11 +674,11 @@ func (_u *TenantUpdate) sqlSave(ctx context.Context) (_node int, err error) {
 	if _u.mutation.AuditStatusCleared() {
 		_spec.ClearField(tenant.FieldAuditStatus, field.TypeEnum)
 	}
-	if value, ok := _u.mutation.SubscriptionPlan(); ok {
-		_spec.SetField(tenant.FieldSubscriptionPlan, field.TypeString, value)
+	if value, ok := _u.mutation.SubscriptionAt(); ok {
+		_spec.SetField(tenant.FieldSubscriptionAt, field.TypeTime, value)
 	}
-	if _u.mutation.SubscriptionPlanCleared() {
-		_spec.ClearField(tenant.FieldSubscriptionPlan, field.TypeString)
+	if _u.mutation.SubscriptionAtCleared() {
+		_spec.ClearField(tenant.FieldSubscriptionAt, field.TypeTime)
 	}
 	if value, ok := _u.mutation.UnsubscribeAt(); ok {
 		_spec.SetField(tenant.FieldUnsubscribeAt, field.TypeTime, value)
@@ -836,17 +686,11 @@ func (_u *TenantUpdate) sqlSave(ctx context.Context) (_node int, err error) {
 	if _u.mutation.UnsubscribeAtCleared() {
 		_spec.ClearField(tenant.FieldUnsubscribeAt, field.TypeTime)
 	}
-	if value, ok := _u.mutation.SubscriptionAt(); ok {
-		_spec.SetField(tenant.FieldSubscriptionAt, field.TypeTime, value)
+	if value, ok := _u.mutation.SubscriptionPlan(); ok {
+		_spec.SetField(tenant.FieldSubscriptionPlan, field.TypeString, value)
 	}
-	if _u.mutation.SubscriptionAtCleared() {
-		_spec.ClearField(tenant.FieldSubscriptionAt, field.TypeTime)
-	}
-	if value, ok := _u.mutation.ExpiredAt(); ok {
-		_spec.SetField(tenant.FieldExpiredAt, field.TypeTime, value)
-	}
-	if _u.mutation.ExpiredAtCleared() {
-		_spec.ClearField(tenant.FieldExpiredAt, field.TypeTime)
+	if _u.mutation.SubscriptionPlanCleared() {
+		_spec.ClearField(tenant.FieldSubscriptionPlan, field.TypeString)
 	}
 	if value, ok := _u.mutation.DefaultCurrencyCode(); ok {
 		_spec.SetField(tenant.FieldDefaultCurrencyCode, field.TypeString, value)
@@ -862,6 +706,12 @@ func (_u *TenantUpdate) sqlSave(ctx context.Context) (_node int, err error) {
 	}
 	if _u.mutation.DefaultBookIDCleared() {
 		_spec.ClearField(tenant.FieldDefaultBookID, field.TypeUint32)
+	}
+	if value, ok := _u.mutation.ExpiredAt(); ok {
+		_spec.SetField(tenant.FieldExpiredAt, field.TypeTime, value)
+	}
+	if _u.mutation.ExpiredAtCleared() {
+		_spec.ClearField(tenant.FieldExpiredAt, field.TypeTime)
 	}
 	_spec.AddModifiers(_u.modifiers...)
 	if _node, err = sqlgraph.UpdateNodes(ctx, _u.driver, _spec); err != nil {
@@ -1066,26 +916,6 @@ func (_u *TenantUpdateOne) ClearCode() *TenantUpdateOne {
 	return _u
 }
 
-// SetDomain sets the "domain" field.
-func (_u *TenantUpdateOne) SetDomain(v string) *TenantUpdateOne {
-	_u.mutation.SetDomain(v)
-	return _u
-}
-
-// SetNillableDomain sets the "domain" field if the given value is not nil.
-func (_u *TenantUpdateOne) SetNillableDomain(v *string) *TenantUpdateOne {
-	if v != nil {
-		_u.SetDomain(*v)
-	}
-	return _u
-}
-
-// ClearDomain clears the value of the "domain" field.
-func (_u *TenantUpdateOne) ClearDomain() *TenantUpdateOne {
-	_u.mutation.ClearDomain()
-	return _u
-}
-
 // SetLogoURL sets the "logo_url" field.
 func (_u *TenantUpdateOne) SetLogoURL(v string) *TenantUpdateOne {
 	_u.mutation.SetLogoURL(v)
@@ -1106,43 +936,23 @@ func (_u *TenantUpdateOne) ClearLogoURL() *TenantUpdateOne {
 	return _u
 }
 
-// SetLogo sets the "logo" field.
-func (_u *TenantUpdateOne) SetLogo(v string) *TenantUpdateOne {
-	_u.mutation.SetLogo(v)
+// SetDomain sets the "domain" field.
+func (_u *TenantUpdateOne) SetDomain(v string) *TenantUpdateOne {
+	_u.mutation.SetDomain(v)
 	return _u
 }
 
-// SetNillableLogo sets the "logo" field if the given value is not nil.
-func (_u *TenantUpdateOne) SetNillableLogo(v *string) *TenantUpdateOne {
+// SetNillableDomain sets the "domain" field if the given value is not nil.
+func (_u *TenantUpdateOne) SetNillableDomain(v *string) *TenantUpdateOne {
 	if v != nil {
-		_u.SetLogo(*v)
+		_u.SetDomain(*v)
 	}
 	return _u
 }
 
-// ClearLogo clears the value of the "logo" field.
-func (_u *TenantUpdateOne) ClearLogo() *TenantUpdateOne {
-	_u.mutation.ClearLogo()
-	return _u
-}
-
-// SetWebsite sets the "website" field.
-func (_u *TenantUpdateOne) SetWebsite(v string) *TenantUpdateOne {
-	_u.mutation.SetWebsite(v)
-	return _u
-}
-
-// SetNillableWebsite sets the "website" field if the given value is not nil.
-func (_u *TenantUpdateOne) SetNillableWebsite(v *string) *TenantUpdateOne {
-	if v != nil {
-		_u.SetWebsite(*v)
-	}
-	return _u
-}
-
-// ClearWebsite clears the value of the "website" field.
-func (_u *TenantUpdateOne) ClearWebsite() *TenantUpdateOne {
-	_u.mutation.ClearWebsite()
+// ClearDomain clears the value of the "domain" field.
+func (_u *TenantUpdateOne) ClearDomain() *TenantUpdateOne {
+	_u.mutation.ClearDomain()
 	return _u
 }
 
@@ -1190,66 +1000,6 @@ func (_u *TenantUpdateOne) AddAdminUserID(v int32) *TenantUpdateOne {
 // ClearAdminUserID clears the value of the "admin_user_id" field.
 func (_u *TenantUpdateOne) ClearAdminUserID() *TenantUpdateOne {
 	_u.mutation.ClearAdminUserID()
-	return _u
-}
-
-// SetContactName sets the "contact_name" field.
-func (_u *TenantUpdateOne) SetContactName(v string) *TenantUpdateOne {
-	_u.mutation.SetContactName(v)
-	return _u
-}
-
-// SetNillableContactName sets the "contact_name" field if the given value is not nil.
-func (_u *TenantUpdateOne) SetNillableContactName(v *string) *TenantUpdateOne {
-	if v != nil {
-		_u.SetContactName(*v)
-	}
-	return _u
-}
-
-// ClearContactName clears the value of the "contact_name" field.
-func (_u *TenantUpdateOne) ClearContactName() *TenantUpdateOne {
-	_u.mutation.ClearContactName()
-	return _u
-}
-
-// SetContactEmail sets the "contact_email" field.
-func (_u *TenantUpdateOne) SetContactEmail(v string) *TenantUpdateOne {
-	_u.mutation.SetContactEmail(v)
-	return _u
-}
-
-// SetNillableContactEmail sets the "contact_email" field if the given value is not nil.
-func (_u *TenantUpdateOne) SetNillableContactEmail(v *string) *TenantUpdateOne {
-	if v != nil {
-		_u.SetContactEmail(*v)
-	}
-	return _u
-}
-
-// ClearContactEmail clears the value of the "contact_email" field.
-func (_u *TenantUpdateOne) ClearContactEmail() *TenantUpdateOne {
-	_u.mutation.ClearContactEmail()
-	return _u
-}
-
-// SetContactPhone sets the "contact_phone" field.
-func (_u *TenantUpdateOne) SetContactPhone(v string) *TenantUpdateOne {
-	_u.mutation.SetContactPhone(v)
-	return _u
-}
-
-// SetNillableContactPhone sets the "contact_phone" field if the given value is not nil.
-func (_u *TenantUpdateOne) SetNillableContactPhone(v *string) *TenantUpdateOne {
-	if v != nil {
-		_u.SetContactPhone(*v)
-	}
-	return _u
-}
-
-// ClearContactPhone clears the value of the "contact_phone" field.
-func (_u *TenantUpdateOne) ClearContactPhone() *TenantUpdateOne {
-	_u.mutation.ClearContactPhone()
 	return _u
 }
 
@@ -1313,23 +1063,23 @@ func (_u *TenantUpdateOne) ClearAuditStatus() *TenantUpdateOne {
 	return _u
 }
 
-// SetSubscriptionPlan sets the "subscription_plan" field.
-func (_u *TenantUpdateOne) SetSubscriptionPlan(v string) *TenantUpdateOne {
-	_u.mutation.SetSubscriptionPlan(v)
+// SetSubscriptionAt sets the "subscription_at" field.
+func (_u *TenantUpdateOne) SetSubscriptionAt(v time.Time) *TenantUpdateOne {
+	_u.mutation.SetSubscriptionAt(v)
 	return _u
 }
 
-// SetNillableSubscriptionPlan sets the "subscription_plan" field if the given value is not nil.
-func (_u *TenantUpdateOne) SetNillableSubscriptionPlan(v *string) *TenantUpdateOne {
+// SetNillableSubscriptionAt sets the "subscription_at" field if the given value is not nil.
+func (_u *TenantUpdateOne) SetNillableSubscriptionAt(v *time.Time) *TenantUpdateOne {
 	if v != nil {
-		_u.SetSubscriptionPlan(*v)
+		_u.SetSubscriptionAt(*v)
 	}
 	return _u
 }
 
-// ClearSubscriptionPlan clears the value of the "subscription_plan" field.
-func (_u *TenantUpdateOne) ClearSubscriptionPlan() *TenantUpdateOne {
-	_u.mutation.ClearSubscriptionPlan()
+// ClearSubscriptionAt clears the value of the "subscription_at" field.
+func (_u *TenantUpdateOne) ClearSubscriptionAt() *TenantUpdateOne {
+	_u.mutation.ClearSubscriptionAt()
 	return _u
 }
 
@@ -1353,43 +1103,23 @@ func (_u *TenantUpdateOne) ClearUnsubscribeAt() *TenantUpdateOne {
 	return _u
 }
 
-// SetSubscriptionAt sets the "subscription_at" field.
-func (_u *TenantUpdateOne) SetSubscriptionAt(v time.Time) *TenantUpdateOne {
-	_u.mutation.SetSubscriptionAt(v)
+// SetSubscriptionPlan sets the "subscription_plan" field.
+func (_u *TenantUpdateOne) SetSubscriptionPlan(v string) *TenantUpdateOne {
+	_u.mutation.SetSubscriptionPlan(v)
 	return _u
 }
 
-// SetNillableSubscriptionAt sets the "subscription_at" field if the given value is not nil.
-func (_u *TenantUpdateOne) SetNillableSubscriptionAt(v *time.Time) *TenantUpdateOne {
+// SetNillableSubscriptionPlan sets the "subscription_plan" field if the given value is not nil.
+func (_u *TenantUpdateOne) SetNillableSubscriptionPlan(v *string) *TenantUpdateOne {
 	if v != nil {
-		_u.SetSubscriptionAt(*v)
+		_u.SetSubscriptionPlan(*v)
 	}
 	return _u
 }
 
-// ClearSubscriptionAt clears the value of the "subscription_at" field.
-func (_u *TenantUpdateOne) ClearSubscriptionAt() *TenantUpdateOne {
-	_u.mutation.ClearSubscriptionAt()
-	return _u
-}
-
-// SetExpiredAt sets the "expired_at" field.
-func (_u *TenantUpdateOne) SetExpiredAt(v time.Time) *TenantUpdateOne {
-	_u.mutation.SetExpiredAt(v)
-	return _u
-}
-
-// SetNillableExpiredAt sets the "expired_at" field if the given value is not nil.
-func (_u *TenantUpdateOne) SetNillableExpiredAt(v *time.Time) *TenantUpdateOne {
-	if v != nil {
-		_u.SetExpiredAt(*v)
-	}
-	return _u
-}
-
-// ClearExpiredAt clears the value of the "expired_at" field.
-func (_u *TenantUpdateOne) ClearExpiredAt() *TenantUpdateOne {
-	_u.mutation.ClearExpiredAt()
+// ClearSubscriptionPlan clears the value of the "subscription_plan" field.
+func (_u *TenantUpdateOne) ClearSubscriptionPlan() *TenantUpdateOne {
+	_u.mutation.ClearSubscriptionPlan()
 	return _u
 }
 
@@ -1437,6 +1167,26 @@ func (_u *TenantUpdateOne) AddDefaultBookID(v int32) *TenantUpdateOne {
 // ClearDefaultBookID clears the value of the "default_book_id" field.
 func (_u *TenantUpdateOne) ClearDefaultBookID() *TenantUpdateOne {
 	_u.mutation.ClearDefaultBookID()
+	return _u
+}
+
+// SetExpiredAt sets the "expired_at" field.
+func (_u *TenantUpdateOne) SetExpiredAt(v time.Time) *TenantUpdateOne {
+	_u.mutation.SetExpiredAt(v)
+	return _u
+}
+
+// SetNillableExpiredAt sets the "expired_at" field if the given value is not nil.
+func (_u *TenantUpdateOne) SetNillableExpiredAt(v *time.Time) *TenantUpdateOne {
+	if v != nil {
+		_u.SetExpiredAt(*v)
+	}
+	return _u
+}
+
+// ClearExpiredAt clears the value of the "expired_at" field.
+func (_u *TenantUpdateOne) ClearExpiredAt() *TenantUpdateOne {
+	_u.mutation.ClearExpiredAt()
 	return _u
 }
 
@@ -1497,21 +1247,6 @@ func (_u *TenantUpdateOne) check() error {
 			return &ValidationError{Name: "code", err: fmt.Errorf(`ent: validator failed for field "Tenant.code": %w`, err)}
 		}
 	}
-	if v, ok := _u.mutation.Domain(); ok {
-		if err := tenant.DomainValidator(v); err != nil {
-			return &ValidationError{Name: "domain", err: fmt.Errorf(`ent: validator failed for field "Tenant.domain": %w`, err)}
-		}
-	}
-	if v, ok := _u.mutation.LogoURL(); ok {
-		if err := tenant.LogoURLValidator(v); err != nil {
-			return &ValidationError{Name: "logo_url", err: fmt.Errorf(`ent: validator failed for field "Tenant.logo_url": %w`, err)}
-		}
-	}
-	if v, ok := _u.mutation.Industry(); ok {
-		if err := tenant.IndustryValidator(v); err != nil {
-			return &ValidationError{Name: "industry", err: fmt.Errorf(`ent: validator failed for field "Tenant.industry": %w`, err)}
-		}
-	}
 	if v, ok := _u.mutation.Status(); ok {
 		if err := tenant.StatusValidator(v); err != nil {
 			return &ValidationError{Name: "status", err: fmt.Errorf(`ent: validator failed for field "Tenant.status": %w`, err)}
@@ -1525,11 +1260,6 @@ func (_u *TenantUpdateOne) check() error {
 	if v, ok := _u.mutation.AuditStatus(); ok {
 		if err := tenant.AuditStatusValidator(v); err != nil {
 			return &ValidationError{Name: "audit_status", err: fmt.Errorf(`ent: validator failed for field "Tenant.audit_status": %w`, err)}
-		}
-	}
-	if v, ok := _u.mutation.SubscriptionPlan(); ok {
-		if err := tenant.SubscriptionPlanValidator(v); err != nil {
-			return &ValidationError{Name: "subscription_plan", err: fmt.Errorf(`ent: validator failed for field "Tenant.subscription_plan": %w`, err)}
 		}
 	}
 	if v, ok := _u.mutation.DefaultCurrencyCode(); ok {
@@ -1635,29 +1365,17 @@ func (_u *TenantUpdateOne) sqlSave(ctx context.Context) (_node *Tenant, err erro
 	if _u.mutation.CodeCleared() {
 		_spec.ClearField(tenant.FieldCode, field.TypeString)
 	}
-	if value, ok := _u.mutation.Domain(); ok {
-		_spec.SetField(tenant.FieldDomain, field.TypeString, value)
-	}
-	if _u.mutation.DomainCleared() {
-		_spec.ClearField(tenant.FieldDomain, field.TypeString)
-	}
 	if value, ok := _u.mutation.LogoURL(); ok {
 		_spec.SetField(tenant.FieldLogoURL, field.TypeString, value)
 	}
 	if _u.mutation.LogoURLCleared() {
 		_spec.ClearField(tenant.FieldLogoURL, field.TypeString)
 	}
-	if value, ok := _u.mutation.Logo(); ok {
-		_spec.SetField(tenant.FieldLogo, field.TypeString, value)
+	if value, ok := _u.mutation.Domain(); ok {
+		_spec.SetField(tenant.FieldDomain, field.TypeString, value)
 	}
-	if _u.mutation.LogoCleared() {
-		_spec.ClearField(tenant.FieldLogo, field.TypeString)
-	}
-	if value, ok := _u.mutation.Website(); ok {
-		_spec.SetField(tenant.FieldWebsite, field.TypeString, value)
-	}
-	if _u.mutation.WebsiteCleared() {
-		_spec.ClearField(tenant.FieldWebsite, field.TypeString)
+	if _u.mutation.DomainCleared() {
+		_spec.ClearField(tenant.FieldDomain, field.TypeString)
 	}
 	if value, ok := _u.mutation.Industry(); ok {
 		_spec.SetField(tenant.FieldIndustry, field.TypeString, value)
@@ -1673,24 +1391,6 @@ func (_u *TenantUpdateOne) sqlSave(ctx context.Context) (_node *Tenant, err erro
 	}
 	if _u.mutation.AdminUserIDCleared() {
 		_spec.ClearField(tenant.FieldAdminUserID, field.TypeUint32)
-	}
-	if value, ok := _u.mutation.ContactName(); ok {
-		_spec.SetField(tenant.FieldContactName, field.TypeString, value)
-	}
-	if _u.mutation.ContactNameCleared() {
-		_spec.ClearField(tenant.FieldContactName, field.TypeString)
-	}
-	if value, ok := _u.mutation.ContactEmail(); ok {
-		_spec.SetField(tenant.FieldContactEmail, field.TypeString, value)
-	}
-	if _u.mutation.ContactEmailCleared() {
-		_spec.ClearField(tenant.FieldContactEmail, field.TypeString)
-	}
-	if value, ok := _u.mutation.ContactPhone(); ok {
-		_spec.SetField(tenant.FieldContactPhone, field.TypeString, value)
-	}
-	if _u.mutation.ContactPhoneCleared() {
-		_spec.ClearField(tenant.FieldContactPhone, field.TypeString)
 	}
 	if value, ok := _u.mutation.Status(); ok {
 		_spec.SetField(tenant.FieldStatus, field.TypeEnum, value)
@@ -1710,11 +1410,11 @@ func (_u *TenantUpdateOne) sqlSave(ctx context.Context) (_node *Tenant, err erro
 	if _u.mutation.AuditStatusCleared() {
 		_spec.ClearField(tenant.FieldAuditStatus, field.TypeEnum)
 	}
-	if value, ok := _u.mutation.SubscriptionPlan(); ok {
-		_spec.SetField(tenant.FieldSubscriptionPlan, field.TypeString, value)
+	if value, ok := _u.mutation.SubscriptionAt(); ok {
+		_spec.SetField(tenant.FieldSubscriptionAt, field.TypeTime, value)
 	}
-	if _u.mutation.SubscriptionPlanCleared() {
-		_spec.ClearField(tenant.FieldSubscriptionPlan, field.TypeString)
+	if _u.mutation.SubscriptionAtCleared() {
+		_spec.ClearField(tenant.FieldSubscriptionAt, field.TypeTime)
 	}
 	if value, ok := _u.mutation.UnsubscribeAt(); ok {
 		_spec.SetField(tenant.FieldUnsubscribeAt, field.TypeTime, value)
@@ -1722,17 +1422,11 @@ func (_u *TenantUpdateOne) sqlSave(ctx context.Context) (_node *Tenant, err erro
 	if _u.mutation.UnsubscribeAtCleared() {
 		_spec.ClearField(tenant.FieldUnsubscribeAt, field.TypeTime)
 	}
-	if value, ok := _u.mutation.SubscriptionAt(); ok {
-		_spec.SetField(tenant.FieldSubscriptionAt, field.TypeTime, value)
+	if value, ok := _u.mutation.SubscriptionPlan(); ok {
+		_spec.SetField(tenant.FieldSubscriptionPlan, field.TypeString, value)
 	}
-	if _u.mutation.SubscriptionAtCleared() {
-		_spec.ClearField(tenant.FieldSubscriptionAt, field.TypeTime)
-	}
-	if value, ok := _u.mutation.ExpiredAt(); ok {
-		_spec.SetField(tenant.FieldExpiredAt, field.TypeTime, value)
-	}
-	if _u.mutation.ExpiredAtCleared() {
-		_spec.ClearField(tenant.FieldExpiredAt, field.TypeTime)
+	if _u.mutation.SubscriptionPlanCleared() {
+		_spec.ClearField(tenant.FieldSubscriptionPlan, field.TypeString)
 	}
 	if value, ok := _u.mutation.DefaultCurrencyCode(); ok {
 		_spec.SetField(tenant.FieldDefaultCurrencyCode, field.TypeString, value)
@@ -1748,6 +1442,12 @@ func (_u *TenantUpdateOne) sqlSave(ctx context.Context) (_node *Tenant, err erro
 	}
 	if _u.mutation.DefaultBookIDCleared() {
 		_spec.ClearField(tenant.FieldDefaultBookID, field.TypeUint32)
+	}
+	if value, ok := _u.mutation.ExpiredAt(); ok {
+		_spec.SetField(tenant.FieldExpiredAt, field.TypeTime, value)
+	}
+	if _u.mutation.ExpiredAtCleared() {
+		_spec.ClearField(tenant.FieldExpiredAt, field.TypeTime)
 	}
 	_spec.AddModifiers(_u.modifiers...)
 	_node = &Tenant{config: _u.config}

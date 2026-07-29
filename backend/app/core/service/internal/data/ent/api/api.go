@@ -5,7 +5,6 @@ package api
 import (
 	"fmt"
 
-	"entgo.io/ent"
 	"entgo.io/ent/dialect/sql"
 )
 
@@ -26,18 +25,24 @@ const (
 	FieldUpdatedBy = "updated_by"
 	// FieldDeletedBy holds the string denoting the deleted_by field in the database.
 	FieldDeletedBy = "deleted_by"
-	// FieldTenantID holds the string denoting the tenant_id field in the database.
-	FieldTenantID = "tenant_id"
+	// FieldStatus holds the string denoting the status field in the database.
+	FieldStatus = "status"
+	// FieldDescription holds the string denoting the description field in the database.
+	FieldDescription = "description"
+	// FieldModule holds the string denoting the module field in the database.
+	FieldModule = "module"
+	// FieldModuleDescription holds the string denoting the module_description field in the database.
+	FieldModuleDescription = "module_description"
+	// FieldOperation holds the string denoting the operation field in the database.
+	FieldOperation = "operation"
 	// FieldPath holds the string denoting the path field in the database.
 	FieldPath = "path"
 	// FieldMethod holds the string denoting the method field in the database.
 	FieldMethod = "method"
-	// FieldDescription holds the string denoting the description field in the database.
-	FieldDescription = "description"
 	// FieldScope holds the string denoting the scope field in the database.
 	FieldScope = "scope"
 	// Table holds the table name of the api in the database.
-	Table = "apis"
+	Table = "sys_apis"
 )
 
 // Columns holds all SQL columns for api fields.
@@ -49,10 +54,13 @@ var Columns = []string{
 	FieldCreatedBy,
 	FieldUpdatedBy,
 	FieldDeletedBy,
-	FieldTenantID,
+	FieldStatus,
+	FieldDescription,
+	FieldModule,
+	FieldModuleDescription,
+	FieldOperation,
 	FieldPath,
 	FieldMethod,
-	FieldDescription,
 	FieldScope,
 }
 
@@ -66,36 +74,47 @@ func ValidColumn(column string) bool {
 	return false
 }
 
-// Note that the variables below are initialized by the runtime
-// package on the initialization of the application. Therefore,
-// it should be imported in the main as follows:
-//
-//	import _ "go-wind-ledger/app/core/service/internal/data/ent/runtime"
 var (
-	Hooks  [1]ent.Hook
-	Policy ent.Policy
-	// DefaultTenantID holds the default value on creation for the "tenant_id" field.
-	DefaultTenantID uint32
-	// PathValidator is a validator for the "path" field. It is called by the builders before save.
-	PathValidator func(string) error
-	// MethodValidator is a validator for the "method" field. It is called by the builders before save.
-	MethodValidator func(string) error
-	// DescriptionValidator is a validator for the "description" field. It is called by the builders before save.
-	DescriptionValidator func(string) error
 	// IDValidator is a validator for the "id" field. It is called by the builders before save.
 	IDValidator func(uint32) error
 )
 
+// Status defines the type for the "status" enum field.
+type Status string
+
+// StatusOn is the default value of the Status enum.
+const DefaultStatus = StatusOn
+
+// Status values.
+const (
+	StatusOff Status = "OFF"
+	StatusOn  Status = "ON"
+)
+
+func (s Status) String() string {
+	return string(s)
+}
+
+// StatusValidator is a validator for the "status" field enum values. It is called by the builders before save.
+func StatusValidator(s Status) error {
+	switch s {
+	case StatusOff, StatusOn:
+		return nil
+	default:
+		return fmt.Errorf("api: invalid enum value for status field: %q", s)
+	}
+}
+
 // Scope defines the type for the "scope" enum field.
 type Scope string
 
-// ScopeScopeAdmin is the default value of the Scope enum.
-const DefaultScope = ScopeScopeAdmin
+// ScopeAdmin is the default value of the Scope enum.
+const DefaultScope = ScopeAdmin
 
 // Scope values.
 const (
-	ScopeScopeAdmin Scope = "ADMIN"
-	ScopeScopeApp   Scope = "APP"
+	ScopeAdmin Scope = "ADMIN"
+	ScopeApp   Scope = "APP"
 )
 
 func (s Scope) String() string {
@@ -105,7 +124,7 @@ func (s Scope) String() string {
 // ScopeValidator is a validator for the "scope" field enum values. It is called by the builders before save.
 func ScopeValidator(s Scope) error {
 	switch s {
-	case ScopeScopeAdmin, ScopeScopeApp:
+	case ScopeAdmin, ScopeApp:
 		return nil
 	default:
 		return fmt.Errorf("api: invalid enum value for scope field: %q", s)
@@ -150,9 +169,29 @@ func ByDeletedBy(opts ...sql.OrderTermOption) OrderOption {
 	return sql.OrderByField(FieldDeletedBy, opts...).ToFunc()
 }
 
-// ByTenantID orders the results by the tenant_id field.
-func ByTenantID(opts ...sql.OrderTermOption) OrderOption {
-	return sql.OrderByField(FieldTenantID, opts...).ToFunc()
+// ByStatus orders the results by the status field.
+func ByStatus(opts ...sql.OrderTermOption) OrderOption {
+	return sql.OrderByField(FieldStatus, opts...).ToFunc()
+}
+
+// ByDescription orders the results by the description field.
+func ByDescription(opts ...sql.OrderTermOption) OrderOption {
+	return sql.OrderByField(FieldDescription, opts...).ToFunc()
+}
+
+// ByModule orders the results by the module field.
+func ByModule(opts ...sql.OrderTermOption) OrderOption {
+	return sql.OrderByField(FieldModule, opts...).ToFunc()
+}
+
+// ByModuleDescription orders the results by the module_description field.
+func ByModuleDescription(opts ...sql.OrderTermOption) OrderOption {
+	return sql.OrderByField(FieldModuleDescription, opts...).ToFunc()
+}
+
+// ByOperation orders the results by the operation field.
+func ByOperation(opts ...sql.OrderTermOption) OrderOption {
+	return sql.OrderByField(FieldOperation, opts...).ToFunc()
 }
 
 // ByPath orders the results by the path field.
@@ -163,11 +202,6 @@ func ByPath(opts ...sql.OrderTermOption) OrderOption {
 // ByMethod orders the results by the method field.
 func ByMethod(opts ...sql.OrderTermOption) OrderOption {
 	return sql.OrderByField(FieldMethod, opts...).ToFunc()
-}
-
-// ByDescription orders the results by the description field.
-func ByDescription(opts ...sql.OrderTermOption) OrderOption {
-	return sql.OrderByField(FieldDescription, opts...).ToFunc()
 }
 
 // ByScope orders the results by the scope field.

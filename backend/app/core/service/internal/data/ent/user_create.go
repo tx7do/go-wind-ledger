@@ -176,34 +176,6 @@ func (_c *UserCreate) SetNillableRealname(v *string) *UserCreate {
 	return _c
 }
 
-// SetPassword sets the "password" field.
-func (_c *UserCreate) SetPassword(v string) *UserCreate {
-	_c.mutation.SetPassword(v)
-	return _c
-}
-
-// SetNillablePassword sets the "password" field if the given value is not nil.
-func (_c *UserCreate) SetNillablePassword(v *string) *UserCreate {
-	if v != nil {
-		_c.SetPassword(*v)
-	}
-	return _c
-}
-
-// SetAvatar sets the "avatar" field.
-func (_c *UserCreate) SetAvatar(v string) *UserCreate {
-	_c.mutation.SetAvatar(v)
-	return _c
-}
-
-// SetNillableAvatar sets the "avatar" field if the given value is not nil.
-func (_c *UserCreate) SetNillableAvatar(v *string) *UserCreate {
-	if v != nil {
-		_c.SetAvatar(*v)
-	}
-	return _c
-}
-
 // SetEmail sets the "email" field.
 func (_c *UserCreate) SetEmail(v string) *UserCreate {
 	_c.mutation.SetEmail(v)
@@ -246,16 +218,16 @@ func (_c *UserCreate) SetNillableTelephone(v *string) *UserCreate {
 	return _c
 }
 
-// SetGender sets the "gender" field.
-func (_c *UserCreate) SetGender(v user.Gender) *UserCreate {
-	_c.mutation.SetGender(v)
+// SetAvatar sets the "avatar" field.
+func (_c *UserCreate) SetAvatar(v string) *UserCreate {
+	_c.mutation.SetAvatar(v)
 	return _c
 }
 
-// SetNillableGender sets the "gender" field if the given value is not nil.
-func (_c *UserCreate) SetNillableGender(v *user.Gender) *UserCreate {
+// SetNillableAvatar sets the "avatar" field if the given value is not nil.
+func (_c *UserCreate) SetNillableAvatar(v *string) *UserCreate {
 	if v != nil {
-		_c.SetGender(*v)
+		_c.SetAvatar(*v)
 	}
 	return _c
 }
@@ -302,16 +274,16 @@ func (_c *UserCreate) SetNillableDescription(v *string) *UserCreate {
 	return _c
 }
 
-// SetStatus sets the "status" field.
-func (_c *UserCreate) SetStatus(v user.Status) *UserCreate {
-	_c.mutation.SetStatus(v)
+// SetGender sets the "gender" field.
+func (_c *UserCreate) SetGender(v user.Gender) *UserCreate {
+	_c.mutation.SetGender(v)
 	return _c
 }
 
-// SetNillableStatus sets the "status" field if the given value is not nil.
-func (_c *UserCreate) SetNillableStatus(v *user.Status) *UserCreate {
+// SetNillableGender sets the "gender" field if the given value is not nil.
+func (_c *UserCreate) SetNillableGender(v *user.Gender) *UserCreate {
 	if v != nil {
-		_c.SetStatus(*v)
+		_c.SetGender(*v)
 	}
 	return _c
 }
@@ -358,76 +330,6 @@ func (_c *UserCreate) SetNillableLockedUntil(v *time.Time) *UserCreate {
 	return _c
 }
 
-// SetFollowers sets the "followers" field.
-func (_c *UserCreate) SetFollowers(v uint64) *UserCreate {
-	_c.mutation.SetFollowers(v)
-	return _c
-}
-
-// SetNillableFollowers sets the "followers" field if the given value is not nil.
-func (_c *UserCreate) SetNillableFollowers(v *uint64) *UserCreate {
-	if v != nil {
-		_c.SetFollowers(*v)
-	}
-	return _c
-}
-
-// SetFollowing sets the "following" field.
-func (_c *UserCreate) SetFollowing(v uint64) *UserCreate {
-	_c.mutation.SetFollowing(v)
-	return _c
-}
-
-// SetNillableFollowing sets the "following" field if the given value is not nil.
-func (_c *UserCreate) SetNillableFollowing(v *uint64) *UserCreate {
-	if v != nil {
-		_c.SetFollowing(*v)
-	}
-	return _c
-}
-
-// SetPostCount sets the "post_count" field.
-func (_c *UserCreate) SetPostCount(v uint64) *UserCreate {
-	_c.mutation.SetPostCount(v)
-	return _c
-}
-
-// SetNillablePostCount sets the "post_count" field if the given value is not nil.
-func (_c *UserCreate) SetNillablePostCount(v *uint64) *UserCreate {
-	if v != nil {
-		_c.SetPostCount(*v)
-	}
-	return _c
-}
-
-// SetCommentCount sets the "comment_count" field.
-func (_c *UserCreate) SetCommentCount(v uint64) *UserCreate {
-	_c.mutation.SetCommentCount(v)
-	return _c
-}
-
-// SetNillableCommentCount sets the "comment_count" field if the given value is not nil.
-func (_c *UserCreate) SetNillableCommentCount(v *uint64) *UserCreate {
-	if v != nil {
-		_c.SetCommentCount(*v)
-	}
-	return _c
-}
-
-// SetLikeCount sets the "like_count" field.
-func (_c *UserCreate) SetLikeCount(v uint64) *UserCreate {
-	_c.mutation.SetLikeCount(v)
-	return _c
-}
-
-// SetNillableLikeCount sets the "like_count" field if the given value is not nil.
-func (_c *UserCreate) SetNillableLikeCount(v *uint64) *UserCreate {
-	if v != nil {
-		_c.SetLikeCount(*v)
-	}
-	return _c
-}
-
 // SetDefaultGroupID sets the "default_group_id" field.
 func (_c *UserCreate) SetDefaultGroupID(v uint32) *UserCreate {
 	_c.mutation.SetDefaultGroupID(v)
@@ -452,6 +354,20 @@ func (_c *UserCreate) SetDefaultBookID(v uint32) *UserCreate {
 func (_c *UserCreate) SetNillableDefaultBookID(v *uint32) *UserCreate {
 	if v != nil {
 		_c.SetDefaultBookID(*v)
+	}
+	return _c
+}
+
+// SetStatus sets the "status" field.
+func (_c *UserCreate) SetStatus(v user.Status) *UserCreate {
+	_c.mutation.SetStatus(v)
+	return _c
+}
+
+// SetNillableStatus sets the "status" field if the given value is not nil.
+func (_c *UserCreate) SetNillableStatus(v *user.Status) *UserCreate {
+	if v != nil {
+		_c.SetStatus(*v)
 	}
 	return _c
 }
@@ -503,29 +419,29 @@ func (_c *UserCreate) defaults() error {
 		v := user.DefaultTenantID
 		_c.mutation.SetTenantID(v)
 	}
+	if _, ok := _c.mutation.Mobile(); !ok {
+		v := user.DefaultMobile
+		_c.mutation.SetMobile(v)
+	}
+	if _, ok := _c.mutation.Telephone(); !ok {
+		v := user.DefaultTelephone
+		_c.mutation.SetTelephone(v)
+	}
+	if _, ok := _c.mutation.Address(); !ok {
+		v := user.DefaultAddress
+		_c.mutation.SetAddress(v)
+	}
+	if _, ok := _c.mutation.Region(); !ok {
+		v := user.DefaultRegion
+		_c.mutation.SetRegion(v)
+	}
+	if _, ok := _c.mutation.Gender(); !ok {
+		v := user.DefaultGender
+		_c.mutation.SetGender(v)
+	}
 	if _, ok := _c.mutation.Status(); !ok {
 		v := user.DefaultStatus
 		_c.mutation.SetStatus(v)
-	}
-	if _, ok := _c.mutation.Followers(); !ok {
-		v := user.DefaultFollowers
-		_c.mutation.SetFollowers(v)
-	}
-	if _, ok := _c.mutation.Following(); !ok {
-		v := user.DefaultFollowing
-		_c.mutation.SetFollowing(v)
-	}
-	if _, ok := _c.mutation.PostCount(); !ok {
-		v := user.DefaultPostCount
-		_c.mutation.SetPostCount(v)
-	}
-	if _, ok := _c.mutation.CommentCount(); !ok {
-		v := user.DefaultCommentCount
-		_c.mutation.SetCommentCount(v)
-	}
-	if _, ok := _c.mutation.LikeCount(); !ok {
-		v := user.DefaultLikeCount
-		_c.mutation.SetLikeCount(v)
 	}
 	return nil
 }
@@ -535,26 +451,6 @@ func (_c *UserCreate) check() error {
 	if v, ok := _c.mutation.Username(); ok {
 		if err := user.UsernameValidator(v); err != nil {
 			return &ValidationError{Name: "username", err: fmt.Errorf(`ent: validator failed for field "User.username": %w`, err)}
-		}
-	}
-	if v, ok := _c.mutation.Nickname(); ok {
-		if err := user.NicknameValidator(v); err != nil {
-			return &ValidationError{Name: "nickname", err: fmt.Errorf(`ent: validator failed for field "User.nickname": %w`, err)}
-		}
-	}
-	if v, ok := _c.mutation.Realname(); ok {
-		if err := user.RealnameValidator(v); err != nil {
-			return &ValidationError{Name: "realname", err: fmt.Errorf(`ent: validator failed for field "User.realname": %w`, err)}
-		}
-	}
-	if v, ok := _c.mutation.Password(); ok {
-		if err := user.PasswordValidator(v); err != nil {
-			return &ValidationError{Name: "password", err: fmt.Errorf(`ent: validator failed for field "User.password": %w`, err)}
-		}
-	}
-	if v, ok := _c.mutation.Avatar(); ok {
-		if err := user.AvatarValidator(v); err != nil {
-			return &ValidationError{Name: "avatar", err: fmt.Errorf(`ent: validator failed for field "User.avatar": %w`, err)}
 		}
 	}
 	if v, ok := _c.mutation.Email(); ok {
@@ -572,34 +468,19 @@ func (_c *UserCreate) check() error {
 			return &ValidationError{Name: "telephone", err: fmt.Errorf(`ent: validator failed for field "User.telephone": %w`, err)}
 		}
 	}
-	if v, ok := _c.mutation.Gender(); ok {
-		if err := user.GenderValidator(v); err != nil {
-			return &ValidationError{Name: "gender", err: fmt.Errorf(`ent: validator failed for field "User.gender": %w`, err)}
-		}
-	}
-	if v, ok := _c.mutation.Address(); ok {
-		if err := user.AddressValidator(v); err != nil {
-			return &ValidationError{Name: "address", err: fmt.Errorf(`ent: validator failed for field "User.address": %w`, err)}
-		}
-	}
-	if v, ok := _c.mutation.Region(); ok {
-		if err := user.RegionValidator(v); err != nil {
-			return &ValidationError{Name: "region", err: fmt.Errorf(`ent: validator failed for field "User.region": %w`, err)}
-		}
-	}
 	if v, ok := _c.mutation.Description(); ok {
 		if err := user.DescriptionValidator(v); err != nil {
 			return &ValidationError{Name: "description", err: fmt.Errorf(`ent: validator failed for field "User.description": %w`, err)}
 		}
 	}
+	if v, ok := _c.mutation.Gender(); ok {
+		if err := user.GenderValidator(v); err != nil {
+			return &ValidationError{Name: "gender", err: fmt.Errorf(`ent: validator failed for field "User.gender": %w`, err)}
+		}
+	}
 	if v, ok := _c.mutation.Status(); ok {
 		if err := user.StatusValidator(v); err != nil {
 			return &ValidationError{Name: "status", err: fmt.Errorf(`ent: validator failed for field "User.status": %w`, err)}
-		}
-	}
-	if v, ok := _c.mutation.LastLoginIP(); ok {
-		if err := user.LastLoginIPValidator(v); err != nil {
-			return &ValidationError{Name: "last_login_ip", err: fmt.Errorf(`ent: validator failed for field "User.last_login_ip": %w`, err)}
 		}
 	}
 	if v, ok := _c.mutation.ID(); ok {
@@ -684,14 +565,6 @@ func (_c *UserCreate) createSpec() (*User, *sqlgraph.CreateSpec) {
 		_spec.SetField(user.FieldRealname, field.TypeString, value)
 		_node.Realname = &value
 	}
-	if value, ok := _c.mutation.Password(); ok {
-		_spec.SetField(user.FieldPassword, field.TypeString, value)
-		_node.Password = &value
-	}
-	if value, ok := _c.mutation.Avatar(); ok {
-		_spec.SetField(user.FieldAvatar, field.TypeString, value)
-		_node.Avatar = &value
-	}
 	if value, ok := _c.mutation.Email(); ok {
 		_spec.SetField(user.FieldEmail, field.TypeString, value)
 		_node.Email = &value
@@ -704,9 +577,9 @@ func (_c *UserCreate) createSpec() (*User, *sqlgraph.CreateSpec) {
 		_spec.SetField(user.FieldTelephone, field.TypeString, value)
 		_node.Telephone = &value
 	}
-	if value, ok := _c.mutation.Gender(); ok {
-		_spec.SetField(user.FieldGender, field.TypeEnum, value)
-		_node.Gender = &value
+	if value, ok := _c.mutation.Avatar(); ok {
+		_spec.SetField(user.FieldAvatar, field.TypeString, value)
+		_node.Avatar = &value
 	}
 	if value, ok := _c.mutation.Address(); ok {
 		_spec.SetField(user.FieldAddress, field.TypeString, value)
@@ -720,9 +593,9 @@ func (_c *UserCreate) createSpec() (*User, *sqlgraph.CreateSpec) {
 		_spec.SetField(user.FieldDescription, field.TypeString, value)
 		_node.Description = &value
 	}
-	if value, ok := _c.mutation.Status(); ok {
-		_spec.SetField(user.FieldStatus, field.TypeEnum, value)
-		_node.Status = &value
+	if value, ok := _c.mutation.Gender(); ok {
+		_spec.SetField(user.FieldGender, field.TypeEnum, value)
+		_node.Gender = &value
 	}
 	if value, ok := _c.mutation.LastLoginAt(); ok {
 		_spec.SetField(user.FieldLastLoginAt, field.TypeTime, value)
@@ -736,26 +609,6 @@ func (_c *UserCreate) createSpec() (*User, *sqlgraph.CreateSpec) {
 		_spec.SetField(user.FieldLockedUntil, field.TypeTime, value)
 		_node.LockedUntil = &value
 	}
-	if value, ok := _c.mutation.Followers(); ok {
-		_spec.SetField(user.FieldFollowers, field.TypeUint64, value)
-		_node.Followers = &value
-	}
-	if value, ok := _c.mutation.Following(); ok {
-		_spec.SetField(user.FieldFollowing, field.TypeUint64, value)
-		_node.Following = &value
-	}
-	if value, ok := _c.mutation.PostCount(); ok {
-		_spec.SetField(user.FieldPostCount, field.TypeUint64, value)
-		_node.PostCount = &value
-	}
-	if value, ok := _c.mutation.CommentCount(); ok {
-		_spec.SetField(user.FieldCommentCount, field.TypeUint64, value)
-		_node.CommentCount = &value
-	}
-	if value, ok := _c.mutation.LikeCount(); ok {
-		_spec.SetField(user.FieldLikeCount, field.TypeUint64, value)
-		_node.LikeCount = &value
-	}
 	if value, ok := _c.mutation.DefaultGroupID(); ok {
 		_spec.SetField(user.FieldDefaultGroupID, field.TypeUint32, value)
 		_node.DefaultGroupID = &value
@@ -763,6 +616,10 @@ func (_c *UserCreate) createSpec() (*User, *sqlgraph.CreateSpec) {
 	if value, ok := _c.mutation.DefaultBookID(); ok {
 		_spec.SetField(user.FieldDefaultBookID, field.TypeUint32, value)
 		_node.DefaultBookID = &value
+	}
+	if value, ok := _c.mutation.Status(); ok {
+		_spec.SetField(user.FieldStatus, field.TypeEnum, value)
+		_node.Status = &value
 	}
 	return _node, _spec
 }
@@ -942,24 +799,6 @@ func (u *UserUpsert) ClearRemark() *UserUpsert {
 	return u
 }
 
-// SetUsername sets the "username" field.
-func (u *UserUpsert) SetUsername(v string) *UserUpsert {
-	u.Set(user.FieldUsername, v)
-	return u
-}
-
-// UpdateUsername sets the "username" field to the value that was provided on create.
-func (u *UserUpsert) UpdateUsername() *UserUpsert {
-	u.SetExcluded(user.FieldUsername)
-	return u
-}
-
-// ClearUsername clears the value of the "username" field.
-func (u *UserUpsert) ClearUsername() *UserUpsert {
-	u.SetNull(user.FieldUsername)
-	return u
-}
-
 // SetNickname sets the "nickname" field.
 func (u *UserUpsert) SetNickname(v string) *UserUpsert {
 	u.Set(user.FieldNickname, v)
@@ -993,42 +832,6 @@ func (u *UserUpsert) UpdateRealname() *UserUpsert {
 // ClearRealname clears the value of the "realname" field.
 func (u *UserUpsert) ClearRealname() *UserUpsert {
 	u.SetNull(user.FieldRealname)
-	return u
-}
-
-// SetPassword sets the "password" field.
-func (u *UserUpsert) SetPassword(v string) *UserUpsert {
-	u.Set(user.FieldPassword, v)
-	return u
-}
-
-// UpdatePassword sets the "password" field to the value that was provided on create.
-func (u *UserUpsert) UpdatePassword() *UserUpsert {
-	u.SetExcluded(user.FieldPassword)
-	return u
-}
-
-// ClearPassword clears the value of the "password" field.
-func (u *UserUpsert) ClearPassword() *UserUpsert {
-	u.SetNull(user.FieldPassword)
-	return u
-}
-
-// SetAvatar sets the "avatar" field.
-func (u *UserUpsert) SetAvatar(v string) *UserUpsert {
-	u.Set(user.FieldAvatar, v)
-	return u
-}
-
-// UpdateAvatar sets the "avatar" field to the value that was provided on create.
-func (u *UserUpsert) UpdateAvatar() *UserUpsert {
-	u.SetExcluded(user.FieldAvatar)
-	return u
-}
-
-// ClearAvatar clears the value of the "avatar" field.
-func (u *UserUpsert) ClearAvatar() *UserUpsert {
-	u.SetNull(user.FieldAvatar)
 	return u
 }
 
@@ -1086,21 +889,21 @@ func (u *UserUpsert) ClearTelephone() *UserUpsert {
 	return u
 }
 
-// SetGender sets the "gender" field.
-func (u *UserUpsert) SetGender(v user.Gender) *UserUpsert {
-	u.Set(user.FieldGender, v)
+// SetAvatar sets the "avatar" field.
+func (u *UserUpsert) SetAvatar(v string) *UserUpsert {
+	u.Set(user.FieldAvatar, v)
 	return u
 }
 
-// UpdateGender sets the "gender" field to the value that was provided on create.
-func (u *UserUpsert) UpdateGender() *UserUpsert {
-	u.SetExcluded(user.FieldGender)
+// UpdateAvatar sets the "avatar" field to the value that was provided on create.
+func (u *UserUpsert) UpdateAvatar() *UserUpsert {
+	u.SetExcluded(user.FieldAvatar)
 	return u
 }
 
-// ClearGender clears the value of the "gender" field.
-func (u *UserUpsert) ClearGender() *UserUpsert {
-	u.SetNull(user.FieldGender)
+// ClearAvatar clears the value of the "avatar" field.
+func (u *UserUpsert) ClearAvatar() *UserUpsert {
+	u.SetNull(user.FieldAvatar)
 	return u
 }
 
@@ -1158,21 +961,21 @@ func (u *UserUpsert) ClearDescription() *UserUpsert {
 	return u
 }
 
-// SetStatus sets the "status" field.
-func (u *UserUpsert) SetStatus(v user.Status) *UserUpsert {
-	u.Set(user.FieldStatus, v)
+// SetGender sets the "gender" field.
+func (u *UserUpsert) SetGender(v user.Gender) *UserUpsert {
+	u.Set(user.FieldGender, v)
 	return u
 }
 
-// UpdateStatus sets the "status" field to the value that was provided on create.
-func (u *UserUpsert) UpdateStatus() *UserUpsert {
-	u.SetExcluded(user.FieldStatus)
+// UpdateGender sets the "gender" field to the value that was provided on create.
+func (u *UserUpsert) UpdateGender() *UserUpsert {
+	u.SetExcluded(user.FieldGender)
 	return u
 }
 
-// ClearStatus clears the value of the "status" field.
-func (u *UserUpsert) ClearStatus() *UserUpsert {
-	u.SetNull(user.FieldStatus)
+// ClearGender clears the value of the "gender" field.
+func (u *UserUpsert) ClearGender() *UserUpsert {
+	u.SetNull(user.FieldGender)
 	return u
 }
 
@@ -1230,126 +1033,6 @@ func (u *UserUpsert) ClearLockedUntil() *UserUpsert {
 	return u
 }
 
-// SetFollowers sets the "followers" field.
-func (u *UserUpsert) SetFollowers(v uint64) *UserUpsert {
-	u.Set(user.FieldFollowers, v)
-	return u
-}
-
-// UpdateFollowers sets the "followers" field to the value that was provided on create.
-func (u *UserUpsert) UpdateFollowers() *UserUpsert {
-	u.SetExcluded(user.FieldFollowers)
-	return u
-}
-
-// AddFollowers adds v to the "followers" field.
-func (u *UserUpsert) AddFollowers(v uint64) *UserUpsert {
-	u.Add(user.FieldFollowers, v)
-	return u
-}
-
-// ClearFollowers clears the value of the "followers" field.
-func (u *UserUpsert) ClearFollowers() *UserUpsert {
-	u.SetNull(user.FieldFollowers)
-	return u
-}
-
-// SetFollowing sets the "following" field.
-func (u *UserUpsert) SetFollowing(v uint64) *UserUpsert {
-	u.Set(user.FieldFollowing, v)
-	return u
-}
-
-// UpdateFollowing sets the "following" field to the value that was provided on create.
-func (u *UserUpsert) UpdateFollowing() *UserUpsert {
-	u.SetExcluded(user.FieldFollowing)
-	return u
-}
-
-// AddFollowing adds v to the "following" field.
-func (u *UserUpsert) AddFollowing(v uint64) *UserUpsert {
-	u.Add(user.FieldFollowing, v)
-	return u
-}
-
-// ClearFollowing clears the value of the "following" field.
-func (u *UserUpsert) ClearFollowing() *UserUpsert {
-	u.SetNull(user.FieldFollowing)
-	return u
-}
-
-// SetPostCount sets the "post_count" field.
-func (u *UserUpsert) SetPostCount(v uint64) *UserUpsert {
-	u.Set(user.FieldPostCount, v)
-	return u
-}
-
-// UpdatePostCount sets the "post_count" field to the value that was provided on create.
-func (u *UserUpsert) UpdatePostCount() *UserUpsert {
-	u.SetExcluded(user.FieldPostCount)
-	return u
-}
-
-// AddPostCount adds v to the "post_count" field.
-func (u *UserUpsert) AddPostCount(v uint64) *UserUpsert {
-	u.Add(user.FieldPostCount, v)
-	return u
-}
-
-// ClearPostCount clears the value of the "post_count" field.
-func (u *UserUpsert) ClearPostCount() *UserUpsert {
-	u.SetNull(user.FieldPostCount)
-	return u
-}
-
-// SetCommentCount sets the "comment_count" field.
-func (u *UserUpsert) SetCommentCount(v uint64) *UserUpsert {
-	u.Set(user.FieldCommentCount, v)
-	return u
-}
-
-// UpdateCommentCount sets the "comment_count" field to the value that was provided on create.
-func (u *UserUpsert) UpdateCommentCount() *UserUpsert {
-	u.SetExcluded(user.FieldCommentCount)
-	return u
-}
-
-// AddCommentCount adds v to the "comment_count" field.
-func (u *UserUpsert) AddCommentCount(v uint64) *UserUpsert {
-	u.Add(user.FieldCommentCount, v)
-	return u
-}
-
-// ClearCommentCount clears the value of the "comment_count" field.
-func (u *UserUpsert) ClearCommentCount() *UserUpsert {
-	u.SetNull(user.FieldCommentCount)
-	return u
-}
-
-// SetLikeCount sets the "like_count" field.
-func (u *UserUpsert) SetLikeCount(v uint64) *UserUpsert {
-	u.Set(user.FieldLikeCount, v)
-	return u
-}
-
-// UpdateLikeCount sets the "like_count" field to the value that was provided on create.
-func (u *UserUpsert) UpdateLikeCount() *UserUpsert {
-	u.SetExcluded(user.FieldLikeCount)
-	return u
-}
-
-// AddLikeCount adds v to the "like_count" field.
-func (u *UserUpsert) AddLikeCount(v uint64) *UserUpsert {
-	u.Add(user.FieldLikeCount, v)
-	return u
-}
-
-// ClearLikeCount clears the value of the "like_count" field.
-func (u *UserUpsert) ClearLikeCount() *UserUpsert {
-	u.SetNull(user.FieldLikeCount)
-	return u
-}
-
 // SetDefaultGroupID sets the "default_group_id" field.
 func (u *UserUpsert) SetDefaultGroupID(v uint32) *UserUpsert {
 	u.Set(user.FieldDefaultGroupID, v)
@@ -1398,6 +1081,24 @@ func (u *UserUpsert) ClearDefaultBookID() *UserUpsert {
 	return u
 }
 
+// SetStatus sets the "status" field.
+func (u *UserUpsert) SetStatus(v user.Status) *UserUpsert {
+	u.Set(user.FieldStatus, v)
+	return u
+}
+
+// UpdateStatus sets the "status" field to the value that was provided on create.
+func (u *UserUpsert) UpdateStatus() *UserUpsert {
+	u.SetExcluded(user.FieldStatus)
+	return u
+}
+
+// ClearStatus clears the value of the "status" field.
+func (u *UserUpsert) ClearStatus() *UserUpsert {
+	u.SetNull(user.FieldStatus)
+	return u
+}
+
 // UpdateNewValues updates the mutable fields using the new values that were set on create except the ID field.
 // Using this option is equivalent to using:
 //
@@ -1420,6 +1121,9 @@ func (u *UserUpsertOne) UpdateNewValues() *UserUpsertOne {
 		}
 		if _, exists := u.create.mutation.TenantID(); exists {
 			s.SetIgnore(user.FieldTenantID)
+		}
+		if _, exists := u.create.mutation.Username(); exists {
+			s.SetIgnore(user.FieldUsername)
 		}
 	}))
 	return u
@@ -1599,27 +1303,6 @@ func (u *UserUpsertOne) ClearRemark() *UserUpsertOne {
 	})
 }
 
-// SetUsername sets the "username" field.
-func (u *UserUpsertOne) SetUsername(v string) *UserUpsertOne {
-	return u.Update(func(s *UserUpsert) {
-		s.SetUsername(v)
-	})
-}
-
-// UpdateUsername sets the "username" field to the value that was provided on create.
-func (u *UserUpsertOne) UpdateUsername() *UserUpsertOne {
-	return u.Update(func(s *UserUpsert) {
-		s.UpdateUsername()
-	})
-}
-
-// ClearUsername clears the value of the "username" field.
-func (u *UserUpsertOne) ClearUsername() *UserUpsertOne {
-	return u.Update(func(s *UserUpsert) {
-		s.ClearUsername()
-	})
-}
-
 // SetNickname sets the "nickname" field.
 func (u *UserUpsertOne) SetNickname(v string) *UserUpsertOne {
 	return u.Update(func(s *UserUpsert) {
@@ -1659,48 +1342,6 @@ func (u *UserUpsertOne) UpdateRealname() *UserUpsertOne {
 func (u *UserUpsertOne) ClearRealname() *UserUpsertOne {
 	return u.Update(func(s *UserUpsert) {
 		s.ClearRealname()
-	})
-}
-
-// SetPassword sets the "password" field.
-func (u *UserUpsertOne) SetPassword(v string) *UserUpsertOne {
-	return u.Update(func(s *UserUpsert) {
-		s.SetPassword(v)
-	})
-}
-
-// UpdatePassword sets the "password" field to the value that was provided on create.
-func (u *UserUpsertOne) UpdatePassword() *UserUpsertOne {
-	return u.Update(func(s *UserUpsert) {
-		s.UpdatePassword()
-	})
-}
-
-// ClearPassword clears the value of the "password" field.
-func (u *UserUpsertOne) ClearPassword() *UserUpsertOne {
-	return u.Update(func(s *UserUpsert) {
-		s.ClearPassword()
-	})
-}
-
-// SetAvatar sets the "avatar" field.
-func (u *UserUpsertOne) SetAvatar(v string) *UserUpsertOne {
-	return u.Update(func(s *UserUpsert) {
-		s.SetAvatar(v)
-	})
-}
-
-// UpdateAvatar sets the "avatar" field to the value that was provided on create.
-func (u *UserUpsertOne) UpdateAvatar() *UserUpsertOne {
-	return u.Update(func(s *UserUpsert) {
-		s.UpdateAvatar()
-	})
-}
-
-// ClearAvatar clears the value of the "avatar" field.
-func (u *UserUpsertOne) ClearAvatar() *UserUpsertOne {
-	return u.Update(func(s *UserUpsert) {
-		s.ClearAvatar()
 	})
 }
 
@@ -1767,24 +1408,24 @@ func (u *UserUpsertOne) ClearTelephone() *UserUpsertOne {
 	})
 }
 
-// SetGender sets the "gender" field.
-func (u *UserUpsertOne) SetGender(v user.Gender) *UserUpsertOne {
+// SetAvatar sets the "avatar" field.
+func (u *UserUpsertOne) SetAvatar(v string) *UserUpsertOne {
 	return u.Update(func(s *UserUpsert) {
-		s.SetGender(v)
+		s.SetAvatar(v)
 	})
 }
 
-// UpdateGender sets the "gender" field to the value that was provided on create.
-func (u *UserUpsertOne) UpdateGender() *UserUpsertOne {
+// UpdateAvatar sets the "avatar" field to the value that was provided on create.
+func (u *UserUpsertOne) UpdateAvatar() *UserUpsertOne {
 	return u.Update(func(s *UserUpsert) {
-		s.UpdateGender()
+		s.UpdateAvatar()
 	})
 }
 
-// ClearGender clears the value of the "gender" field.
-func (u *UserUpsertOne) ClearGender() *UserUpsertOne {
+// ClearAvatar clears the value of the "avatar" field.
+func (u *UserUpsertOne) ClearAvatar() *UserUpsertOne {
 	return u.Update(func(s *UserUpsert) {
-		s.ClearGender()
+		s.ClearAvatar()
 	})
 }
 
@@ -1851,24 +1492,24 @@ func (u *UserUpsertOne) ClearDescription() *UserUpsertOne {
 	})
 }
 
-// SetStatus sets the "status" field.
-func (u *UserUpsertOne) SetStatus(v user.Status) *UserUpsertOne {
+// SetGender sets the "gender" field.
+func (u *UserUpsertOne) SetGender(v user.Gender) *UserUpsertOne {
 	return u.Update(func(s *UserUpsert) {
-		s.SetStatus(v)
+		s.SetGender(v)
 	})
 }
 
-// UpdateStatus sets the "status" field to the value that was provided on create.
-func (u *UserUpsertOne) UpdateStatus() *UserUpsertOne {
+// UpdateGender sets the "gender" field to the value that was provided on create.
+func (u *UserUpsertOne) UpdateGender() *UserUpsertOne {
 	return u.Update(func(s *UserUpsert) {
-		s.UpdateStatus()
+		s.UpdateGender()
 	})
 }
 
-// ClearStatus clears the value of the "status" field.
-func (u *UserUpsertOne) ClearStatus() *UserUpsertOne {
+// ClearGender clears the value of the "gender" field.
+func (u *UserUpsertOne) ClearGender() *UserUpsertOne {
 	return u.Update(func(s *UserUpsert) {
-		s.ClearStatus()
+		s.ClearGender()
 	})
 }
 
@@ -1935,146 +1576,6 @@ func (u *UserUpsertOne) ClearLockedUntil() *UserUpsertOne {
 	})
 }
 
-// SetFollowers sets the "followers" field.
-func (u *UserUpsertOne) SetFollowers(v uint64) *UserUpsertOne {
-	return u.Update(func(s *UserUpsert) {
-		s.SetFollowers(v)
-	})
-}
-
-// AddFollowers adds v to the "followers" field.
-func (u *UserUpsertOne) AddFollowers(v uint64) *UserUpsertOne {
-	return u.Update(func(s *UserUpsert) {
-		s.AddFollowers(v)
-	})
-}
-
-// UpdateFollowers sets the "followers" field to the value that was provided on create.
-func (u *UserUpsertOne) UpdateFollowers() *UserUpsertOne {
-	return u.Update(func(s *UserUpsert) {
-		s.UpdateFollowers()
-	})
-}
-
-// ClearFollowers clears the value of the "followers" field.
-func (u *UserUpsertOne) ClearFollowers() *UserUpsertOne {
-	return u.Update(func(s *UserUpsert) {
-		s.ClearFollowers()
-	})
-}
-
-// SetFollowing sets the "following" field.
-func (u *UserUpsertOne) SetFollowing(v uint64) *UserUpsertOne {
-	return u.Update(func(s *UserUpsert) {
-		s.SetFollowing(v)
-	})
-}
-
-// AddFollowing adds v to the "following" field.
-func (u *UserUpsertOne) AddFollowing(v uint64) *UserUpsertOne {
-	return u.Update(func(s *UserUpsert) {
-		s.AddFollowing(v)
-	})
-}
-
-// UpdateFollowing sets the "following" field to the value that was provided on create.
-func (u *UserUpsertOne) UpdateFollowing() *UserUpsertOne {
-	return u.Update(func(s *UserUpsert) {
-		s.UpdateFollowing()
-	})
-}
-
-// ClearFollowing clears the value of the "following" field.
-func (u *UserUpsertOne) ClearFollowing() *UserUpsertOne {
-	return u.Update(func(s *UserUpsert) {
-		s.ClearFollowing()
-	})
-}
-
-// SetPostCount sets the "post_count" field.
-func (u *UserUpsertOne) SetPostCount(v uint64) *UserUpsertOne {
-	return u.Update(func(s *UserUpsert) {
-		s.SetPostCount(v)
-	})
-}
-
-// AddPostCount adds v to the "post_count" field.
-func (u *UserUpsertOne) AddPostCount(v uint64) *UserUpsertOne {
-	return u.Update(func(s *UserUpsert) {
-		s.AddPostCount(v)
-	})
-}
-
-// UpdatePostCount sets the "post_count" field to the value that was provided on create.
-func (u *UserUpsertOne) UpdatePostCount() *UserUpsertOne {
-	return u.Update(func(s *UserUpsert) {
-		s.UpdatePostCount()
-	})
-}
-
-// ClearPostCount clears the value of the "post_count" field.
-func (u *UserUpsertOne) ClearPostCount() *UserUpsertOne {
-	return u.Update(func(s *UserUpsert) {
-		s.ClearPostCount()
-	})
-}
-
-// SetCommentCount sets the "comment_count" field.
-func (u *UserUpsertOne) SetCommentCount(v uint64) *UserUpsertOne {
-	return u.Update(func(s *UserUpsert) {
-		s.SetCommentCount(v)
-	})
-}
-
-// AddCommentCount adds v to the "comment_count" field.
-func (u *UserUpsertOne) AddCommentCount(v uint64) *UserUpsertOne {
-	return u.Update(func(s *UserUpsert) {
-		s.AddCommentCount(v)
-	})
-}
-
-// UpdateCommentCount sets the "comment_count" field to the value that was provided on create.
-func (u *UserUpsertOne) UpdateCommentCount() *UserUpsertOne {
-	return u.Update(func(s *UserUpsert) {
-		s.UpdateCommentCount()
-	})
-}
-
-// ClearCommentCount clears the value of the "comment_count" field.
-func (u *UserUpsertOne) ClearCommentCount() *UserUpsertOne {
-	return u.Update(func(s *UserUpsert) {
-		s.ClearCommentCount()
-	})
-}
-
-// SetLikeCount sets the "like_count" field.
-func (u *UserUpsertOne) SetLikeCount(v uint64) *UserUpsertOne {
-	return u.Update(func(s *UserUpsert) {
-		s.SetLikeCount(v)
-	})
-}
-
-// AddLikeCount adds v to the "like_count" field.
-func (u *UserUpsertOne) AddLikeCount(v uint64) *UserUpsertOne {
-	return u.Update(func(s *UserUpsert) {
-		s.AddLikeCount(v)
-	})
-}
-
-// UpdateLikeCount sets the "like_count" field to the value that was provided on create.
-func (u *UserUpsertOne) UpdateLikeCount() *UserUpsertOne {
-	return u.Update(func(s *UserUpsert) {
-		s.UpdateLikeCount()
-	})
-}
-
-// ClearLikeCount clears the value of the "like_count" field.
-func (u *UserUpsertOne) ClearLikeCount() *UserUpsertOne {
-	return u.Update(func(s *UserUpsert) {
-		s.ClearLikeCount()
-	})
-}
-
 // SetDefaultGroupID sets the "default_group_id" field.
 func (u *UserUpsertOne) SetDefaultGroupID(v uint32) *UserUpsertOne {
 	return u.Update(func(s *UserUpsert) {
@@ -2128,6 +1629,27 @@ func (u *UserUpsertOne) UpdateDefaultBookID() *UserUpsertOne {
 func (u *UserUpsertOne) ClearDefaultBookID() *UserUpsertOne {
 	return u.Update(func(s *UserUpsert) {
 		s.ClearDefaultBookID()
+	})
+}
+
+// SetStatus sets the "status" field.
+func (u *UserUpsertOne) SetStatus(v user.Status) *UserUpsertOne {
+	return u.Update(func(s *UserUpsert) {
+		s.SetStatus(v)
+	})
+}
+
+// UpdateStatus sets the "status" field to the value that was provided on create.
+func (u *UserUpsertOne) UpdateStatus() *UserUpsertOne {
+	return u.Update(func(s *UserUpsert) {
+		s.UpdateStatus()
+	})
+}
+
+// ClearStatus clears the value of the "status" field.
+func (u *UserUpsertOne) ClearStatus() *UserUpsertOne {
+	return u.Update(func(s *UserUpsert) {
+		s.ClearStatus()
 	})
 }
 
@@ -2319,6 +1841,9 @@ func (u *UserUpsertBulk) UpdateNewValues() *UserUpsertBulk {
 			if _, exists := b.mutation.TenantID(); exists {
 				s.SetIgnore(user.FieldTenantID)
 			}
+			if _, exists := b.mutation.Username(); exists {
+				s.SetIgnore(user.FieldUsername)
+			}
 		}
 	}))
 	return u
@@ -2498,27 +2023,6 @@ func (u *UserUpsertBulk) ClearRemark() *UserUpsertBulk {
 	})
 }
 
-// SetUsername sets the "username" field.
-func (u *UserUpsertBulk) SetUsername(v string) *UserUpsertBulk {
-	return u.Update(func(s *UserUpsert) {
-		s.SetUsername(v)
-	})
-}
-
-// UpdateUsername sets the "username" field to the value that was provided on create.
-func (u *UserUpsertBulk) UpdateUsername() *UserUpsertBulk {
-	return u.Update(func(s *UserUpsert) {
-		s.UpdateUsername()
-	})
-}
-
-// ClearUsername clears the value of the "username" field.
-func (u *UserUpsertBulk) ClearUsername() *UserUpsertBulk {
-	return u.Update(func(s *UserUpsert) {
-		s.ClearUsername()
-	})
-}
-
 // SetNickname sets the "nickname" field.
 func (u *UserUpsertBulk) SetNickname(v string) *UserUpsertBulk {
 	return u.Update(func(s *UserUpsert) {
@@ -2558,48 +2062,6 @@ func (u *UserUpsertBulk) UpdateRealname() *UserUpsertBulk {
 func (u *UserUpsertBulk) ClearRealname() *UserUpsertBulk {
 	return u.Update(func(s *UserUpsert) {
 		s.ClearRealname()
-	})
-}
-
-// SetPassword sets the "password" field.
-func (u *UserUpsertBulk) SetPassword(v string) *UserUpsertBulk {
-	return u.Update(func(s *UserUpsert) {
-		s.SetPassword(v)
-	})
-}
-
-// UpdatePassword sets the "password" field to the value that was provided on create.
-func (u *UserUpsertBulk) UpdatePassword() *UserUpsertBulk {
-	return u.Update(func(s *UserUpsert) {
-		s.UpdatePassword()
-	})
-}
-
-// ClearPassword clears the value of the "password" field.
-func (u *UserUpsertBulk) ClearPassword() *UserUpsertBulk {
-	return u.Update(func(s *UserUpsert) {
-		s.ClearPassword()
-	})
-}
-
-// SetAvatar sets the "avatar" field.
-func (u *UserUpsertBulk) SetAvatar(v string) *UserUpsertBulk {
-	return u.Update(func(s *UserUpsert) {
-		s.SetAvatar(v)
-	})
-}
-
-// UpdateAvatar sets the "avatar" field to the value that was provided on create.
-func (u *UserUpsertBulk) UpdateAvatar() *UserUpsertBulk {
-	return u.Update(func(s *UserUpsert) {
-		s.UpdateAvatar()
-	})
-}
-
-// ClearAvatar clears the value of the "avatar" field.
-func (u *UserUpsertBulk) ClearAvatar() *UserUpsertBulk {
-	return u.Update(func(s *UserUpsert) {
-		s.ClearAvatar()
 	})
 }
 
@@ -2666,24 +2128,24 @@ func (u *UserUpsertBulk) ClearTelephone() *UserUpsertBulk {
 	})
 }
 
-// SetGender sets the "gender" field.
-func (u *UserUpsertBulk) SetGender(v user.Gender) *UserUpsertBulk {
+// SetAvatar sets the "avatar" field.
+func (u *UserUpsertBulk) SetAvatar(v string) *UserUpsertBulk {
 	return u.Update(func(s *UserUpsert) {
-		s.SetGender(v)
+		s.SetAvatar(v)
 	})
 }
 
-// UpdateGender sets the "gender" field to the value that was provided on create.
-func (u *UserUpsertBulk) UpdateGender() *UserUpsertBulk {
+// UpdateAvatar sets the "avatar" field to the value that was provided on create.
+func (u *UserUpsertBulk) UpdateAvatar() *UserUpsertBulk {
 	return u.Update(func(s *UserUpsert) {
-		s.UpdateGender()
+		s.UpdateAvatar()
 	})
 }
 
-// ClearGender clears the value of the "gender" field.
-func (u *UserUpsertBulk) ClearGender() *UserUpsertBulk {
+// ClearAvatar clears the value of the "avatar" field.
+func (u *UserUpsertBulk) ClearAvatar() *UserUpsertBulk {
 	return u.Update(func(s *UserUpsert) {
-		s.ClearGender()
+		s.ClearAvatar()
 	})
 }
 
@@ -2750,24 +2212,24 @@ func (u *UserUpsertBulk) ClearDescription() *UserUpsertBulk {
 	})
 }
 
-// SetStatus sets the "status" field.
-func (u *UserUpsertBulk) SetStatus(v user.Status) *UserUpsertBulk {
+// SetGender sets the "gender" field.
+func (u *UserUpsertBulk) SetGender(v user.Gender) *UserUpsertBulk {
 	return u.Update(func(s *UserUpsert) {
-		s.SetStatus(v)
+		s.SetGender(v)
 	})
 }
 
-// UpdateStatus sets the "status" field to the value that was provided on create.
-func (u *UserUpsertBulk) UpdateStatus() *UserUpsertBulk {
+// UpdateGender sets the "gender" field to the value that was provided on create.
+func (u *UserUpsertBulk) UpdateGender() *UserUpsertBulk {
 	return u.Update(func(s *UserUpsert) {
-		s.UpdateStatus()
+		s.UpdateGender()
 	})
 }
 
-// ClearStatus clears the value of the "status" field.
-func (u *UserUpsertBulk) ClearStatus() *UserUpsertBulk {
+// ClearGender clears the value of the "gender" field.
+func (u *UserUpsertBulk) ClearGender() *UserUpsertBulk {
 	return u.Update(func(s *UserUpsert) {
-		s.ClearStatus()
+		s.ClearGender()
 	})
 }
 
@@ -2834,146 +2296,6 @@ func (u *UserUpsertBulk) ClearLockedUntil() *UserUpsertBulk {
 	})
 }
 
-// SetFollowers sets the "followers" field.
-func (u *UserUpsertBulk) SetFollowers(v uint64) *UserUpsertBulk {
-	return u.Update(func(s *UserUpsert) {
-		s.SetFollowers(v)
-	})
-}
-
-// AddFollowers adds v to the "followers" field.
-func (u *UserUpsertBulk) AddFollowers(v uint64) *UserUpsertBulk {
-	return u.Update(func(s *UserUpsert) {
-		s.AddFollowers(v)
-	})
-}
-
-// UpdateFollowers sets the "followers" field to the value that was provided on create.
-func (u *UserUpsertBulk) UpdateFollowers() *UserUpsertBulk {
-	return u.Update(func(s *UserUpsert) {
-		s.UpdateFollowers()
-	})
-}
-
-// ClearFollowers clears the value of the "followers" field.
-func (u *UserUpsertBulk) ClearFollowers() *UserUpsertBulk {
-	return u.Update(func(s *UserUpsert) {
-		s.ClearFollowers()
-	})
-}
-
-// SetFollowing sets the "following" field.
-func (u *UserUpsertBulk) SetFollowing(v uint64) *UserUpsertBulk {
-	return u.Update(func(s *UserUpsert) {
-		s.SetFollowing(v)
-	})
-}
-
-// AddFollowing adds v to the "following" field.
-func (u *UserUpsertBulk) AddFollowing(v uint64) *UserUpsertBulk {
-	return u.Update(func(s *UserUpsert) {
-		s.AddFollowing(v)
-	})
-}
-
-// UpdateFollowing sets the "following" field to the value that was provided on create.
-func (u *UserUpsertBulk) UpdateFollowing() *UserUpsertBulk {
-	return u.Update(func(s *UserUpsert) {
-		s.UpdateFollowing()
-	})
-}
-
-// ClearFollowing clears the value of the "following" field.
-func (u *UserUpsertBulk) ClearFollowing() *UserUpsertBulk {
-	return u.Update(func(s *UserUpsert) {
-		s.ClearFollowing()
-	})
-}
-
-// SetPostCount sets the "post_count" field.
-func (u *UserUpsertBulk) SetPostCount(v uint64) *UserUpsertBulk {
-	return u.Update(func(s *UserUpsert) {
-		s.SetPostCount(v)
-	})
-}
-
-// AddPostCount adds v to the "post_count" field.
-func (u *UserUpsertBulk) AddPostCount(v uint64) *UserUpsertBulk {
-	return u.Update(func(s *UserUpsert) {
-		s.AddPostCount(v)
-	})
-}
-
-// UpdatePostCount sets the "post_count" field to the value that was provided on create.
-func (u *UserUpsertBulk) UpdatePostCount() *UserUpsertBulk {
-	return u.Update(func(s *UserUpsert) {
-		s.UpdatePostCount()
-	})
-}
-
-// ClearPostCount clears the value of the "post_count" field.
-func (u *UserUpsertBulk) ClearPostCount() *UserUpsertBulk {
-	return u.Update(func(s *UserUpsert) {
-		s.ClearPostCount()
-	})
-}
-
-// SetCommentCount sets the "comment_count" field.
-func (u *UserUpsertBulk) SetCommentCount(v uint64) *UserUpsertBulk {
-	return u.Update(func(s *UserUpsert) {
-		s.SetCommentCount(v)
-	})
-}
-
-// AddCommentCount adds v to the "comment_count" field.
-func (u *UserUpsertBulk) AddCommentCount(v uint64) *UserUpsertBulk {
-	return u.Update(func(s *UserUpsert) {
-		s.AddCommentCount(v)
-	})
-}
-
-// UpdateCommentCount sets the "comment_count" field to the value that was provided on create.
-func (u *UserUpsertBulk) UpdateCommentCount() *UserUpsertBulk {
-	return u.Update(func(s *UserUpsert) {
-		s.UpdateCommentCount()
-	})
-}
-
-// ClearCommentCount clears the value of the "comment_count" field.
-func (u *UserUpsertBulk) ClearCommentCount() *UserUpsertBulk {
-	return u.Update(func(s *UserUpsert) {
-		s.ClearCommentCount()
-	})
-}
-
-// SetLikeCount sets the "like_count" field.
-func (u *UserUpsertBulk) SetLikeCount(v uint64) *UserUpsertBulk {
-	return u.Update(func(s *UserUpsert) {
-		s.SetLikeCount(v)
-	})
-}
-
-// AddLikeCount adds v to the "like_count" field.
-func (u *UserUpsertBulk) AddLikeCount(v uint64) *UserUpsertBulk {
-	return u.Update(func(s *UserUpsert) {
-		s.AddLikeCount(v)
-	})
-}
-
-// UpdateLikeCount sets the "like_count" field to the value that was provided on create.
-func (u *UserUpsertBulk) UpdateLikeCount() *UserUpsertBulk {
-	return u.Update(func(s *UserUpsert) {
-		s.UpdateLikeCount()
-	})
-}
-
-// ClearLikeCount clears the value of the "like_count" field.
-func (u *UserUpsertBulk) ClearLikeCount() *UserUpsertBulk {
-	return u.Update(func(s *UserUpsert) {
-		s.ClearLikeCount()
-	})
-}
-
 // SetDefaultGroupID sets the "default_group_id" field.
 func (u *UserUpsertBulk) SetDefaultGroupID(v uint32) *UserUpsertBulk {
 	return u.Update(func(s *UserUpsert) {
@@ -3027,6 +2349,27 @@ func (u *UserUpsertBulk) UpdateDefaultBookID() *UserUpsertBulk {
 func (u *UserUpsertBulk) ClearDefaultBookID() *UserUpsertBulk {
 	return u.Update(func(s *UserUpsert) {
 		s.ClearDefaultBookID()
+	})
+}
+
+// SetStatus sets the "status" field.
+func (u *UserUpsertBulk) SetStatus(v user.Status) *UserUpsertBulk {
+	return u.Update(func(s *UserUpsert) {
+		s.SetStatus(v)
+	})
+}
+
+// UpdateStatus sets the "status" field to the value that was provided on create.
+func (u *UserUpsertBulk) UpdateStatus() *UserUpsertBulk {
+	return u.Update(func(s *UserUpsert) {
+		s.UpdateStatus()
+	})
+}
+
+// ClearStatus clears the value of the "status" field.
+func (u *UserUpsertBulk) ClearStatus() *UserUpsertBulk {
+	return u.Update(func(s *UserUpsert) {
+		s.ClearStatus()
 	})
 }
 

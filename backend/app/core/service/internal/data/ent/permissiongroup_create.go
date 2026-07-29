@@ -106,58 +106,16 @@ func (_c *PermissionGroupCreate) SetNillableDeletedBy(v *uint32) *PermissionGrou
 	return _c
 }
 
-// SetTenantID sets the "tenant_id" field.
-func (_c *PermissionGroupCreate) SetTenantID(v uint32) *PermissionGroupCreate {
-	_c.mutation.SetTenantID(v)
+// SetDescription sets the "description" field.
+func (_c *PermissionGroupCreate) SetDescription(v string) *PermissionGroupCreate {
+	_c.mutation.SetDescription(v)
 	return _c
 }
 
-// SetNillableTenantID sets the "tenant_id" field if the given value is not nil.
-func (_c *PermissionGroupCreate) SetNillableTenantID(v *uint32) *PermissionGroupCreate {
+// SetNillableDescription sets the "description" field if the given value is not nil.
+func (_c *PermissionGroupCreate) SetNillableDescription(v *string) *PermissionGroupCreate {
 	if v != nil {
-		_c.SetTenantID(*v)
-	}
-	return _c
-}
-
-// SetName sets the "name" field.
-func (_c *PermissionGroupCreate) SetName(v string) *PermissionGroupCreate {
-	_c.mutation.SetName(v)
-	return _c
-}
-
-// SetNillableName sets the "name" field if the given value is not nil.
-func (_c *PermissionGroupCreate) SetNillableName(v *string) *PermissionGroupCreate {
-	if v != nil {
-		_c.SetName(*v)
-	}
-	return _c
-}
-
-// SetCode sets the "code" field.
-func (_c *PermissionGroupCreate) SetCode(v string) *PermissionGroupCreate {
-	_c.mutation.SetCode(v)
-	return _c
-}
-
-// SetNillableCode sets the "code" field if the given value is not nil.
-func (_c *PermissionGroupCreate) SetNillableCode(v *string) *PermissionGroupCreate {
-	if v != nil {
-		_c.SetCode(*v)
-	}
-	return _c
-}
-
-// SetModule sets the "module" field.
-func (_c *PermissionGroupCreate) SetModule(v string) *PermissionGroupCreate {
-	_c.mutation.SetModule(v)
-	return _c
-}
-
-// SetNillableModule sets the "module" field if the given value is not nil.
-func (_c *PermissionGroupCreate) SetNillableModule(v *string) *PermissionGroupCreate {
-	if v != nil {
-		_c.SetModule(*v)
+		_c.SetDescription(*v)
 	}
 	return _c
 }
@@ -176,34 +134,6 @@ func (_c *PermissionGroupCreate) SetNillableStatus(v *permissiongroup.Status) *P
 	return _c
 }
 
-// SetParentID sets the "parent_id" field.
-func (_c *PermissionGroupCreate) SetParentID(v uint32) *PermissionGroupCreate {
-	_c.mutation.SetParentID(v)
-	return _c
-}
-
-// SetNillableParentID sets the "parent_id" field if the given value is not nil.
-func (_c *PermissionGroupCreate) SetNillableParentID(v *uint32) *PermissionGroupCreate {
-	if v != nil {
-		_c.SetParentID(*v)
-	}
-	return _c
-}
-
-// SetPermissionID sets the "permission_id" field.
-func (_c *PermissionGroupCreate) SetPermissionID(v uint32) *PermissionGroupCreate {
-	_c.mutation.SetPermissionID(v)
-	return _c
-}
-
-// SetNillablePermissionID sets the "permission_id" field if the given value is not nil.
-func (_c *PermissionGroupCreate) SetNillablePermissionID(v *uint32) *PermissionGroupCreate {
-	if v != nil {
-		_c.SetPermissionID(*v)
-	}
-	return _c
-}
-
 // SetSortOrder sets the "sort_order" field.
 func (_c *PermissionGroupCreate) SetSortOrder(v uint32) *PermissionGroupCreate {
 	_c.mutation.SetSortOrder(v)
@@ -218,16 +148,16 @@ func (_c *PermissionGroupCreate) SetNillableSortOrder(v *uint32) *PermissionGrou
 	return _c
 }
 
-// SetDescription sets the "description" field.
-func (_c *PermissionGroupCreate) SetDescription(v string) *PermissionGroupCreate {
-	_c.mutation.SetDescription(v)
+// SetParentID sets the "parent_id" field.
+func (_c *PermissionGroupCreate) SetParentID(v uint32) *PermissionGroupCreate {
+	_c.mutation.SetParentID(v)
 	return _c
 }
 
-// SetNillableDescription sets the "description" field if the given value is not nil.
-func (_c *PermissionGroupCreate) SetNillableDescription(v *string) *PermissionGroupCreate {
+// SetNillableParentID sets the "parent_id" field if the given value is not nil.
+func (_c *PermissionGroupCreate) SetNillableParentID(v *uint32) *PermissionGroupCreate {
 	if v != nil {
-		_c.SetDescription(*v)
+		_c.SetParentID(*v)
 	}
 	return _c
 }
@@ -246,16 +176,22 @@ func (_c *PermissionGroupCreate) SetNillablePath(v *string) *PermissionGroupCrea
 	return _c
 }
 
-// SetTargetID sets the "target_id" field.
-func (_c *PermissionGroupCreate) SetTargetID(v uint32) *PermissionGroupCreate {
-	_c.mutation.SetTargetID(v)
+// SetName sets the "name" field.
+func (_c *PermissionGroupCreate) SetName(v string) *PermissionGroupCreate {
+	_c.mutation.SetName(v)
 	return _c
 }
 
-// SetNillableTargetID sets the "target_id" field if the given value is not nil.
-func (_c *PermissionGroupCreate) SetNillableTargetID(v *uint32) *PermissionGroupCreate {
+// SetModule sets the "module" field.
+func (_c *PermissionGroupCreate) SetModule(v string) *PermissionGroupCreate {
+	_c.mutation.SetModule(v)
+	return _c
+}
+
+// SetNillableModule sets the "module" field if the given value is not nil.
+func (_c *PermissionGroupCreate) SetNillableModule(v *string) *PermissionGroupCreate {
 	if v != nil {
-		_c.SetTargetID(*v)
+		_c.SetModule(*v)
 	}
 	return _c
 }
@@ -266,6 +202,26 @@ func (_c *PermissionGroupCreate) SetID(v uint32) *PermissionGroupCreate {
 	return _c
 }
 
+// SetParent sets the "parent" edge to the PermissionGroup entity.
+func (_c *PermissionGroupCreate) SetParent(v *PermissionGroup) *PermissionGroupCreate {
+	return _c.SetParentID(v.ID)
+}
+
+// AddChildIDs adds the "children" edge to the PermissionGroup entity by IDs.
+func (_c *PermissionGroupCreate) AddChildIDs(ids ...uint32) *PermissionGroupCreate {
+	_c.mutation.AddChildIDs(ids...)
+	return _c
+}
+
+// AddChildren adds the "children" edges to the PermissionGroup entity.
+func (_c *PermissionGroupCreate) AddChildren(v ...*PermissionGroup) *PermissionGroupCreate {
+	ids := make([]uint32, len(v))
+	for i := range v {
+		ids[i] = v[i].ID
+	}
+	return _c.AddChildIDs(ids...)
+}
+
 // Mutation returns the PermissionGroupMutation object of the builder.
 func (_c *PermissionGroupCreate) Mutation() *PermissionGroupMutation {
 	return _c.mutation
@@ -273,9 +229,7 @@ func (_c *PermissionGroupCreate) Mutation() *PermissionGroupMutation {
 
 // Save creates the PermissionGroup in the database.
 func (_c *PermissionGroupCreate) Save(ctx context.Context) (*PermissionGroup, error) {
-	if err := _c.defaults(); err != nil {
-		return nil, err
-	}
+	_c.defaults()
 	return withHooks(ctx, _c.sqlSave, _c.mutation, _c.hooks)
 }
 
@@ -302,11 +256,7 @@ func (_c *PermissionGroupCreate) ExecX(ctx context.Context) {
 }
 
 // defaults sets the default values of the builder before save.
-func (_c *PermissionGroupCreate) defaults() error {
-	if _, ok := _c.mutation.TenantID(); !ok {
-		v := permissiongroup.DefaultTenantID
-		_c.mutation.SetTenantID(v)
-	}
+func (_c *PermissionGroupCreate) defaults() {
 	if _, ok := _c.mutation.Status(); !ok {
 		v := permissiongroup.DefaultStatus
 		_c.mutation.SetStatus(v)
@@ -315,39 +265,29 @@ func (_c *PermissionGroupCreate) defaults() error {
 		v := permissiongroup.DefaultSortOrder
 		_c.mutation.SetSortOrder(v)
 	}
-	return nil
 }
 
 // check runs all checks and user-defined validators on the builder.
 func (_c *PermissionGroupCreate) check() error {
-	if v, ok := _c.mutation.Name(); ok {
-		if err := permissiongroup.NameValidator(v); err != nil {
-			return &ValidationError{Name: "name", err: fmt.Errorf(`ent: validator failed for field "PermissionGroup.name": %w`, err)}
-		}
-	}
-	if v, ok := _c.mutation.Code(); ok {
-		if err := permissiongroup.CodeValidator(v); err != nil {
-			return &ValidationError{Name: "code", err: fmt.Errorf(`ent: validator failed for field "PermissionGroup.code": %w`, err)}
-		}
-	}
-	if v, ok := _c.mutation.Module(); ok {
-		if err := permissiongroup.ModuleValidator(v); err != nil {
-			return &ValidationError{Name: "module", err: fmt.Errorf(`ent: validator failed for field "PermissionGroup.module": %w`, err)}
-		}
+	if _, ok := _c.mutation.Status(); !ok {
+		return &ValidationError{Name: "status", err: errors.New(`ent: missing required field "PermissionGroup.status"`)}
 	}
 	if v, ok := _c.mutation.Status(); ok {
 		if err := permissiongroup.StatusValidator(v); err != nil {
 			return &ValidationError{Name: "status", err: fmt.Errorf(`ent: validator failed for field "PermissionGroup.status": %w`, err)}
 		}
 	}
-	if v, ok := _c.mutation.Description(); ok {
-		if err := permissiongroup.DescriptionValidator(v); err != nil {
-			return &ValidationError{Name: "description", err: fmt.Errorf(`ent: validator failed for field "PermissionGroup.description": %w`, err)}
-		}
-	}
 	if v, ok := _c.mutation.Path(); ok {
 		if err := permissiongroup.PathValidator(v); err != nil {
 			return &ValidationError{Name: "path", err: fmt.Errorf(`ent: validator failed for field "PermissionGroup.path": %w`, err)}
+		}
+	}
+	if _, ok := _c.mutation.Name(); !ok {
+		return &ValidationError{Name: "name", err: errors.New(`ent: missing required field "PermissionGroup.name"`)}
+	}
+	if v, ok := _c.mutation.Name(); ok {
+		if err := permissiongroup.NameValidator(v); err != nil {
+			return &ValidationError{Name: "name", err: fmt.Errorf(`ent: validator failed for field "PermissionGroup.name": %w`, err)}
 		}
 	}
 	if v, ok := _c.mutation.ID(); ok {
@@ -412,49 +352,62 @@ func (_c *PermissionGroupCreate) createSpec() (*PermissionGroup, *sqlgraph.Creat
 		_spec.SetField(permissiongroup.FieldDeletedBy, field.TypeUint32, value)
 		_node.DeletedBy = &value
 	}
-	if value, ok := _c.mutation.TenantID(); ok {
-		_spec.SetField(permissiongroup.FieldTenantID, field.TypeUint32, value)
-		_node.TenantID = &value
-	}
-	if value, ok := _c.mutation.Name(); ok {
-		_spec.SetField(permissiongroup.FieldName, field.TypeString, value)
-		_node.Name = &value
-	}
-	if value, ok := _c.mutation.Code(); ok {
-		_spec.SetField(permissiongroup.FieldCode, field.TypeString, value)
-		_node.Code = &value
-	}
-	if value, ok := _c.mutation.Module(); ok {
-		_spec.SetField(permissiongroup.FieldModule, field.TypeString, value)
-		_node.Module = &value
+	if value, ok := _c.mutation.Description(); ok {
+		_spec.SetField(permissiongroup.FieldDescription, field.TypeString, value)
+		_node.Description = &value
 	}
 	if value, ok := _c.mutation.Status(); ok {
 		_spec.SetField(permissiongroup.FieldStatus, field.TypeEnum, value)
 		_node.Status = &value
 	}
-	if value, ok := _c.mutation.ParentID(); ok {
-		_spec.SetField(permissiongroup.FieldParentID, field.TypeUint32, value)
-		_node.ParentID = &value
-	}
-	if value, ok := _c.mutation.PermissionID(); ok {
-		_spec.SetField(permissiongroup.FieldPermissionID, field.TypeUint32, value)
-		_node.PermissionID = &value
-	}
 	if value, ok := _c.mutation.SortOrder(); ok {
 		_spec.SetField(permissiongroup.FieldSortOrder, field.TypeUint32, value)
 		_node.SortOrder = &value
-	}
-	if value, ok := _c.mutation.Description(); ok {
-		_spec.SetField(permissiongroup.FieldDescription, field.TypeString, value)
-		_node.Description = &value
 	}
 	if value, ok := _c.mutation.Path(); ok {
 		_spec.SetField(permissiongroup.FieldPath, field.TypeString, value)
 		_node.Path = &value
 	}
-	if value, ok := _c.mutation.TargetID(); ok {
-		_spec.SetField(permissiongroup.FieldTargetID, field.TypeUint32, value)
-		_node.TargetID = &value
+	if value, ok := _c.mutation.Name(); ok {
+		_spec.SetField(permissiongroup.FieldName, field.TypeString, value)
+		_node.Name = &value
+	}
+	if value, ok := _c.mutation.Module(); ok {
+		_spec.SetField(permissiongroup.FieldModule, field.TypeString, value)
+		_node.Module = &value
+	}
+	if nodes := _c.mutation.ParentIDs(); len(nodes) > 0 {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.M2O,
+			Inverse: true,
+			Table:   permissiongroup.ParentTable,
+			Columns: []string{permissiongroup.ParentColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: sqlgraph.NewFieldSpec(permissiongroup.FieldID, field.TypeUint32),
+			},
+		}
+		for _, k := range nodes {
+			edge.Target.Nodes = append(edge.Target.Nodes, k)
+		}
+		_node.ParentID = &nodes[0]
+		_spec.Edges = append(_spec.Edges, edge)
+	}
+	if nodes := _c.mutation.ChildrenIDs(); len(nodes) > 0 {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.O2M,
+			Inverse: false,
+			Table:   permissiongroup.ChildrenTable,
+			Columns: []string{permissiongroup.ChildrenColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: sqlgraph.NewFieldSpec(permissiongroup.FieldID, field.TypeUint32),
+			},
+		}
+		for _, k := range nodes {
+			edge.Target.Nodes = append(edge.Target.Nodes, k)
+		}
+		_spec.Edges = append(_spec.Edges, edge)
 	}
 	return _node, _spec
 }
@@ -616,57 +569,21 @@ func (u *PermissionGroupUpsert) ClearDeletedBy() *PermissionGroupUpsert {
 	return u
 }
 
-// SetName sets the "name" field.
-func (u *PermissionGroupUpsert) SetName(v string) *PermissionGroupUpsert {
-	u.Set(permissiongroup.FieldName, v)
+// SetDescription sets the "description" field.
+func (u *PermissionGroupUpsert) SetDescription(v string) *PermissionGroupUpsert {
+	u.Set(permissiongroup.FieldDescription, v)
 	return u
 }
 
-// UpdateName sets the "name" field to the value that was provided on create.
-func (u *PermissionGroupUpsert) UpdateName() *PermissionGroupUpsert {
-	u.SetExcluded(permissiongroup.FieldName)
+// UpdateDescription sets the "description" field to the value that was provided on create.
+func (u *PermissionGroupUpsert) UpdateDescription() *PermissionGroupUpsert {
+	u.SetExcluded(permissiongroup.FieldDescription)
 	return u
 }
 
-// ClearName clears the value of the "name" field.
-func (u *PermissionGroupUpsert) ClearName() *PermissionGroupUpsert {
-	u.SetNull(permissiongroup.FieldName)
-	return u
-}
-
-// SetCode sets the "code" field.
-func (u *PermissionGroupUpsert) SetCode(v string) *PermissionGroupUpsert {
-	u.Set(permissiongroup.FieldCode, v)
-	return u
-}
-
-// UpdateCode sets the "code" field to the value that was provided on create.
-func (u *PermissionGroupUpsert) UpdateCode() *PermissionGroupUpsert {
-	u.SetExcluded(permissiongroup.FieldCode)
-	return u
-}
-
-// ClearCode clears the value of the "code" field.
-func (u *PermissionGroupUpsert) ClearCode() *PermissionGroupUpsert {
-	u.SetNull(permissiongroup.FieldCode)
-	return u
-}
-
-// SetModule sets the "module" field.
-func (u *PermissionGroupUpsert) SetModule(v string) *PermissionGroupUpsert {
-	u.Set(permissiongroup.FieldModule, v)
-	return u
-}
-
-// UpdateModule sets the "module" field to the value that was provided on create.
-func (u *PermissionGroupUpsert) UpdateModule() *PermissionGroupUpsert {
-	u.SetExcluded(permissiongroup.FieldModule)
-	return u
-}
-
-// ClearModule clears the value of the "module" field.
-func (u *PermissionGroupUpsert) ClearModule() *PermissionGroupUpsert {
-	u.SetNull(permissiongroup.FieldModule)
+// ClearDescription clears the value of the "description" field.
+func (u *PermissionGroupUpsert) ClearDescription() *PermissionGroupUpsert {
+	u.SetNull(permissiongroup.FieldDescription)
 	return u
 }
 
@@ -679,60 +596,6 @@ func (u *PermissionGroupUpsert) SetStatus(v permissiongroup.Status) *PermissionG
 // UpdateStatus sets the "status" field to the value that was provided on create.
 func (u *PermissionGroupUpsert) UpdateStatus() *PermissionGroupUpsert {
 	u.SetExcluded(permissiongroup.FieldStatus)
-	return u
-}
-
-// ClearStatus clears the value of the "status" field.
-func (u *PermissionGroupUpsert) ClearStatus() *PermissionGroupUpsert {
-	u.SetNull(permissiongroup.FieldStatus)
-	return u
-}
-
-// SetParentID sets the "parent_id" field.
-func (u *PermissionGroupUpsert) SetParentID(v uint32) *PermissionGroupUpsert {
-	u.Set(permissiongroup.FieldParentID, v)
-	return u
-}
-
-// UpdateParentID sets the "parent_id" field to the value that was provided on create.
-func (u *PermissionGroupUpsert) UpdateParentID() *PermissionGroupUpsert {
-	u.SetExcluded(permissiongroup.FieldParentID)
-	return u
-}
-
-// AddParentID adds v to the "parent_id" field.
-func (u *PermissionGroupUpsert) AddParentID(v uint32) *PermissionGroupUpsert {
-	u.Add(permissiongroup.FieldParentID, v)
-	return u
-}
-
-// ClearParentID clears the value of the "parent_id" field.
-func (u *PermissionGroupUpsert) ClearParentID() *PermissionGroupUpsert {
-	u.SetNull(permissiongroup.FieldParentID)
-	return u
-}
-
-// SetPermissionID sets the "permission_id" field.
-func (u *PermissionGroupUpsert) SetPermissionID(v uint32) *PermissionGroupUpsert {
-	u.Set(permissiongroup.FieldPermissionID, v)
-	return u
-}
-
-// UpdatePermissionID sets the "permission_id" field to the value that was provided on create.
-func (u *PermissionGroupUpsert) UpdatePermissionID() *PermissionGroupUpsert {
-	u.SetExcluded(permissiongroup.FieldPermissionID)
-	return u
-}
-
-// AddPermissionID adds v to the "permission_id" field.
-func (u *PermissionGroupUpsert) AddPermissionID(v uint32) *PermissionGroupUpsert {
-	u.Add(permissiongroup.FieldPermissionID, v)
-	return u
-}
-
-// ClearPermissionID clears the value of the "permission_id" field.
-func (u *PermissionGroupUpsert) ClearPermissionID() *PermissionGroupUpsert {
-	u.SetNull(permissiongroup.FieldPermissionID)
 	return u
 }
 
@@ -760,21 +623,21 @@ func (u *PermissionGroupUpsert) ClearSortOrder() *PermissionGroupUpsert {
 	return u
 }
 
-// SetDescription sets the "description" field.
-func (u *PermissionGroupUpsert) SetDescription(v string) *PermissionGroupUpsert {
-	u.Set(permissiongroup.FieldDescription, v)
+// SetParentID sets the "parent_id" field.
+func (u *PermissionGroupUpsert) SetParentID(v uint32) *PermissionGroupUpsert {
+	u.Set(permissiongroup.FieldParentID, v)
 	return u
 }
 
-// UpdateDescription sets the "description" field to the value that was provided on create.
-func (u *PermissionGroupUpsert) UpdateDescription() *PermissionGroupUpsert {
-	u.SetExcluded(permissiongroup.FieldDescription)
+// UpdateParentID sets the "parent_id" field to the value that was provided on create.
+func (u *PermissionGroupUpsert) UpdateParentID() *PermissionGroupUpsert {
+	u.SetExcluded(permissiongroup.FieldParentID)
 	return u
 }
 
-// ClearDescription clears the value of the "description" field.
-func (u *PermissionGroupUpsert) ClearDescription() *PermissionGroupUpsert {
-	u.SetNull(permissiongroup.FieldDescription)
+// ClearParentID clears the value of the "parent_id" field.
+func (u *PermissionGroupUpsert) ClearParentID() *PermissionGroupUpsert {
+	u.SetNull(permissiongroup.FieldParentID)
 	return u
 }
 
@@ -796,27 +659,33 @@ func (u *PermissionGroupUpsert) ClearPath() *PermissionGroupUpsert {
 	return u
 }
 
-// SetTargetID sets the "target_id" field.
-func (u *PermissionGroupUpsert) SetTargetID(v uint32) *PermissionGroupUpsert {
-	u.Set(permissiongroup.FieldTargetID, v)
+// SetName sets the "name" field.
+func (u *PermissionGroupUpsert) SetName(v string) *PermissionGroupUpsert {
+	u.Set(permissiongroup.FieldName, v)
 	return u
 }
 
-// UpdateTargetID sets the "target_id" field to the value that was provided on create.
-func (u *PermissionGroupUpsert) UpdateTargetID() *PermissionGroupUpsert {
-	u.SetExcluded(permissiongroup.FieldTargetID)
+// UpdateName sets the "name" field to the value that was provided on create.
+func (u *PermissionGroupUpsert) UpdateName() *PermissionGroupUpsert {
+	u.SetExcluded(permissiongroup.FieldName)
 	return u
 }
 
-// AddTargetID adds v to the "target_id" field.
-func (u *PermissionGroupUpsert) AddTargetID(v uint32) *PermissionGroupUpsert {
-	u.Add(permissiongroup.FieldTargetID, v)
+// SetModule sets the "module" field.
+func (u *PermissionGroupUpsert) SetModule(v string) *PermissionGroupUpsert {
+	u.Set(permissiongroup.FieldModule, v)
 	return u
 }
 
-// ClearTargetID clears the value of the "target_id" field.
-func (u *PermissionGroupUpsert) ClearTargetID() *PermissionGroupUpsert {
-	u.SetNull(permissiongroup.FieldTargetID)
+// UpdateModule sets the "module" field to the value that was provided on create.
+func (u *PermissionGroupUpsert) UpdateModule() *PermissionGroupUpsert {
+	u.SetExcluded(permissiongroup.FieldModule)
+	return u
+}
+
+// ClearModule clears the value of the "module" field.
+func (u *PermissionGroupUpsert) ClearModule() *PermissionGroupUpsert {
+	u.SetNull(permissiongroup.FieldModule)
 	return u
 }
 
@@ -839,9 +708,6 @@ func (u *PermissionGroupUpsertOne) UpdateNewValues() *PermissionGroupUpsertOne {
 		}
 		if _, exists := u.create.mutation.CreatedAt(); exists {
 			s.SetIgnore(permissiongroup.FieldCreatedAt)
-		}
-		if _, exists := u.create.mutation.TenantID(); exists {
-			s.SetIgnore(permissiongroup.FieldTenantID)
 		}
 	}))
 	return u
@@ -1000,66 +866,24 @@ func (u *PermissionGroupUpsertOne) ClearDeletedBy() *PermissionGroupUpsertOne {
 	})
 }
 
-// SetName sets the "name" field.
-func (u *PermissionGroupUpsertOne) SetName(v string) *PermissionGroupUpsertOne {
+// SetDescription sets the "description" field.
+func (u *PermissionGroupUpsertOne) SetDescription(v string) *PermissionGroupUpsertOne {
 	return u.Update(func(s *PermissionGroupUpsert) {
-		s.SetName(v)
+		s.SetDescription(v)
 	})
 }
 
-// UpdateName sets the "name" field to the value that was provided on create.
-func (u *PermissionGroupUpsertOne) UpdateName() *PermissionGroupUpsertOne {
+// UpdateDescription sets the "description" field to the value that was provided on create.
+func (u *PermissionGroupUpsertOne) UpdateDescription() *PermissionGroupUpsertOne {
 	return u.Update(func(s *PermissionGroupUpsert) {
-		s.UpdateName()
+		s.UpdateDescription()
 	})
 }
 
-// ClearName clears the value of the "name" field.
-func (u *PermissionGroupUpsertOne) ClearName() *PermissionGroupUpsertOne {
+// ClearDescription clears the value of the "description" field.
+func (u *PermissionGroupUpsertOne) ClearDescription() *PermissionGroupUpsertOne {
 	return u.Update(func(s *PermissionGroupUpsert) {
-		s.ClearName()
-	})
-}
-
-// SetCode sets the "code" field.
-func (u *PermissionGroupUpsertOne) SetCode(v string) *PermissionGroupUpsertOne {
-	return u.Update(func(s *PermissionGroupUpsert) {
-		s.SetCode(v)
-	})
-}
-
-// UpdateCode sets the "code" field to the value that was provided on create.
-func (u *PermissionGroupUpsertOne) UpdateCode() *PermissionGroupUpsertOne {
-	return u.Update(func(s *PermissionGroupUpsert) {
-		s.UpdateCode()
-	})
-}
-
-// ClearCode clears the value of the "code" field.
-func (u *PermissionGroupUpsertOne) ClearCode() *PermissionGroupUpsertOne {
-	return u.Update(func(s *PermissionGroupUpsert) {
-		s.ClearCode()
-	})
-}
-
-// SetModule sets the "module" field.
-func (u *PermissionGroupUpsertOne) SetModule(v string) *PermissionGroupUpsertOne {
-	return u.Update(func(s *PermissionGroupUpsert) {
-		s.SetModule(v)
-	})
-}
-
-// UpdateModule sets the "module" field to the value that was provided on create.
-func (u *PermissionGroupUpsertOne) UpdateModule() *PermissionGroupUpsertOne {
-	return u.Update(func(s *PermissionGroupUpsert) {
-		s.UpdateModule()
-	})
-}
-
-// ClearModule clears the value of the "module" field.
-func (u *PermissionGroupUpsertOne) ClearModule() *PermissionGroupUpsertOne {
-	return u.Update(func(s *PermissionGroupUpsert) {
-		s.ClearModule()
+		s.ClearDescription()
 	})
 }
 
@@ -1074,69 +898,6 @@ func (u *PermissionGroupUpsertOne) SetStatus(v permissiongroup.Status) *Permissi
 func (u *PermissionGroupUpsertOne) UpdateStatus() *PermissionGroupUpsertOne {
 	return u.Update(func(s *PermissionGroupUpsert) {
 		s.UpdateStatus()
-	})
-}
-
-// ClearStatus clears the value of the "status" field.
-func (u *PermissionGroupUpsertOne) ClearStatus() *PermissionGroupUpsertOne {
-	return u.Update(func(s *PermissionGroupUpsert) {
-		s.ClearStatus()
-	})
-}
-
-// SetParentID sets the "parent_id" field.
-func (u *PermissionGroupUpsertOne) SetParentID(v uint32) *PermissionGroupUpsertOne {
-	return u.Update(func(s *PermissionGroupUpsert) {
-		s.SetParentID(v)
-	})
-}
-
-// AddParentID adds v to the "parent_id" field.
-func (u *PermissionGroupUpsertOne) AddParentID(v uint32) *PermissionGroupUpsertOne {
-	return u.Update(func(s *PermissionGroupUpsert) {
-		s.AddParentID(v)
-	})
-}
-
-// UpdateParentID sets the "parent_id" field to the value that was provided on create.
-func (u *PermissionGroupUpsertOne) UpdateParentID() *PermissionGroupUpsertOne {
-	return u.Update(func(s *PermissionGroupUpsert) {
-		s.UpdateParentID()
-	})
-}
-
-// ClearParentID clears the value of the "parent_id" field.
-func (u *PermissionGroupUpsertOne) ClearParentID() *PermissionGroupUpsertOne {
-	return u.Update(func(s *PermissionGroupUpsert) {
-		s.ClearParentID()
-	})
-}
-
-// SetPermissionID sets the "permission_id" field.
-func (u *PermissionGroupUpsertOne) SetPermissionID(v uint32) *PermissionGroupUpsertOne {
-	return u.Update(func(s *PermissionGroupUpsert) {
-		s.SetPermissionID(v)
-	})
-}
-
-// AddPermissionID adds v to the "permission_id" field.
-func (u *PermissionGroupUpsertOne) AddPermissionID(v uint32) *PermissionGroupUpsertOne {
-	return u.Update(func(s *PermissionGroupUpsert) {
-		s.AddPermissionID(v)
-	})
-}
-
-// UpdatePermissionID sets the "permission_id" field to the value that was provided on create.
-func (u *PermissionGroupUpsertOne) UpdatePermissionID() *PermissionGroupUpsertOne {
-	return u.Update(func(s *PermissionGroupUpsert) {
-		s.UpdatePermissionID()
-	})
-}
-
-// ClearPermissionID clears the value of the "permission_id" field.
-func (u *PermissionGroupUpsertOne) ClearPermissionID() *PermissionGroupUpsertOne {
-	return u.Update(func(s *PermissionGroupUpsert) {
-		s.ClearPermissionID()
 	})
 }
 
@@ -1168,24 +929,24 @@ func (u *PermissionGroupUpsertOne) ClearSortOrder() *PermissionGroupUpsertOne {
 	})
 }
 
-// SetDescription sets the "description" field.
-func (u *PermissionGroupUpsertOne) SetDescription(v string) *PermissionGroupUpsertOne {
+// SetParentID sets the "parent_id" field.
+func (u *PermissionGroupUpsertOne) SetParentID(v uint32) *PermissionGroupUpsertOne {
 	return u.Update(func(s *PermissionGroupUpsert) {
-		s.SetDescription(v)
+		s.SetParentID(v)
 	})
 }
 
-// UpdateDescription sets the "description" field to the value that was provided on create.
-func (u *PermissionGroupUpsertOne) UpdateDescription() *PermissionGroupUpsertOne {
+// UpdateParentID sets the "parent_id" field to the value that was provided on create.
+func (u *PermissionGroupUpsertOne) UpdateParentID() *PermissionGroupUpsertOne {
 	return u.Update(func(s *PermissionGroupUpsert) {
-		s.UpdateDescription()
+		s.UpdateParentID()
 	})
 }
 
-// ClearDescription clears the value of the "description" field.
-func (u *PermissionGroupUpsertOne) ClearDescription() *PermissionGroupUpsertOne {
+// ClearParentID clears the value of the "parent_id" field.
+func (u *PermissionGroupUpsertOne) ClearParentID() *PermissionGroupUpsertOne {
 	return u.Update(func(s *PermissionGroupUpsert) {
-		s.ClearDescription()
+		s.ClearParentID()
 	})
 }
 
@@ -1210,31 +971,38 @@ func (u *PermissionGroupUpsertOne) ClearPath() *PermissionGroupUpsertOne {
 	})
 }
 
-// SetTargetID sets the "target_id" field.
-func (u *PermissionGroupUpsertOne) SetTargetID(v uint32) *PermissionGroupUpsertOne {
+// SetName sets the "name" field.
+func (u *PermissionGroupUpsertOne) SetName(v string) *PermissionGroupUpsertOne {
 	return u.Update(func(s *PermissionGroupUpsert) {
-		s.SetTargetID(v)
+		s.SetName(v)
 	})
 }
 
-// AddTargetID adds v to the "target_id" field.
-func (u *PermissionGroupUpsertOne) AddTargetID(v uint32) *PermissionGroupUpsertOne {
+// UpdateName sets the "name" field to the value that was provided on create.
+func (u *PermissionGroupUpsertOne) UpdateName() *PermissionGroupUpsertOne {
 	return u.Update(func(s *PermissionGroupUpsert) {
-		s.AddTargetID(v)
+		s.UpdateName()
 	})
 }
 
-// UpdateTargetID sets the "target_id" field to the value that was provided on create.
-func (u *PermissionGroupUpsertOne) UpdateTargetID() *PermissionGroupUpsertOne {
+// SetModule sets the "module" field.
+func (u *PermissionGroupUpsertOne) SetModule(v string) *PermissionGroupUpsertOne {
 	return u.Update(func(s *PermissionGroupUpsert) {
-		s.UpdateTargetID()
+		s.SetModule(v)
 	})
 }
 
-// ClearTargetID clears the value of the "target_id" field.
-func (u *PermissionGroupUpsertOne) ClearTargetID() *PermissionGroupUpsertOne {
+// UpdateModule sets the "module" field to the value that was provided on create.
+func (u *PermissionGroupUpsertOne) UpdateModule() *PermissionGroupUpsertOne {
 	return u.Update(func(s *PermissionGroupUpsert) {
-		s.ClearTargetID()
+		s.UpdateModule()
+	})
+}
+
+// ClearModule clears the value of the "module" field.
+func (u *PermissionGroupUpsertOne) ClearModule() *PermissionGroupUpsertOne {
+	return u.Update(func(s *PermissionGroupUpsert) {
+		s.ClearModule()
 	})
 }
 
@@ -1423,9 +1191,6 @@ func (u *PermissionGroupUpsertBulk) UpdateNewValues() *PermissionGroupUpsertBulk
 			if _, exists := b.mutation.CreatedAt(); exists {
 				s.SetIgnore(permissiongroup.FieldCreatedAt)
 			}
-			if _, exists := b.mutation.TenantID(); exists {
-				s.SetIgnore(permissiongroup.FieldTenantID)
-			}
 		}
 	}))
 	return u
@@ -1584,66 +1349,24 @@ func (u *PermissionGroupUpsertBulk) ClearDeletedBy() *PermissionGroupUpsertBulk 
 	})
 }
 
-// SetName sets the "name" field.
-func (u *PermissionGroupUpsertBulk) SetName(v string) *PermissionGroupUpsertBulk {
+// SetDescription sets the "description" field.
+func (u *PermissionGroupUpsertBulk) SetDescription(v string) *PermissionGroupUpsertBulk {
 	return u.Update(func(s *PermissionGroupUpsert) {
-		s.SetName(v)
+		s.SetDescription(v)
 	})
 }
 
-// UpdateName sets the "name" field to the value that was provided on create.
-func (u *PermissionGroupUpsertBulk) UpdateName() *PermissionGroupUpsertBulk {
+// UpdateDescription sets the "description" field to the value that was provided on create.
+func (u *PermissionGroupUpsertBulk) UpdateDescription() *PermissionGroupUpsertBulk {
 	return u.Update(func(s *PermissionGroupUpsert) {
-		s.UpdateName()
+		s.UpdateDescription()
 	})
 }
 
-// ClearName clears the value of the "name" field.
-func (u *PermissionGroupUpsertBulk) ClearName() *PermissionGroupUpsertBulk {
+// ClearDescription clears the value of the "description" field.
+func (u *PermissionGroupUpsertBulk) ClearDescription() *PermissionGroupUpsertBulk {
 	return u.Update(func(s *PermissionGroupUpsert) {
-		s.ClearName()
-	})
-}
-
-// SetCode sets the "code" field.
-func (u *PermissionGroupUpsertBulk) SetCode(v string) *PermissionGroupUpsertBulk {
-	return u.Update(func(s *PermissionGroupUpsert) {
-		s.SetCode(v)
-	})
-}
-
-// UpdateCode sets the "code" field to the value that was provided on create.
-func (u *PermissionGroupUpsertBulk) UpdateCode() *PermissionGroupUpsertBulk {
-	return u.Update(func(s *PermissionGroupUpsert) {
-		s.UpdateCode()
-	})
-}
-
-// ClearCode clears the value of the "code" field.
-func (u *PermissionGroupUpsertBulk) ClearCode() *PermissionGroupUpsertBulk {
-	return u.Update(func(s *PermissionGroupUpsert) {
-		s.ClearCode()
-	})
-}
-
-// SetModule sets the "module" field.
-func (u *PermissionGroupUpsertBulk) SetModule(v string) *PermissionGroupUpsertBulk {
-	return u.Update(func(s *PermissionGroupUpsert) {
-		s.SetModule(v)
-	})
-}
-
-// UpdateModule sets the "module" field to the value that was provided on create.
-func (u *PermissionGroupUpsertBulk) UpdateModule() *PermissionGroupUpsertBulk {
-	return u.Update(func(s *PermissionGroupUpsert) {
-		s.UpdateModule()
-	})
-}
-
-// ClearModule clears the value of the "module" field.
-func (u *PermissionGroupUpsertBulk) ClearModule() *PermissionGroupUpsertBulk {
-	return u.Update(func(s *PermissionGroupUpsert) {
-		s.ClearModule()
+		s.ClearDescription()
 	})
 }
 
@@ -1658,69 +1381,6 @@ func (u *PermissionGroupUpsertBulk) SetStatus(v permissiongroup.Status) *Permiss
 func (u *PermissionGroupUpsertBulk) UpdateStatus() *PermissionGroupUpsertBulk {
 	return u.Update(func(s *PermissionGroupUpsert) {
 		s.UpdateStatus()
-	})
-}
-
-// ClearStatus clears the value of the "status" field.
-func (u *PermissionGroupUpsertBulk) ClearStatus() *PermissionGroupUpsertBulk {
-	return u.Update(func(s *PermissionGroupUpsert) {
-		s.ClearStatus()
-	})
-}
-
-// SetParentID sets the "parent_id" field.
-func (u *PermissionGroupUpsertBulk) SetParentID(v uint32) *PermissionGroupUpsertBulk {
-	return u.Update(func(s *PermissionGroupUpsert) {
-		s.SetParentID(v)
-	})
-}
-
-// AddParentID adds v to the "parent_id" field.
-func (u *PermissionGroupUpsertBulk) AddParentID(v uint32) *PermissionGroupUpsertBulk {
-	return u.Update(func(s *PermissionGroupUpsert) {
-		s.AddParentID(v)
-	})
-}
-
-// UpdateParentID sets the "parent_id" field to the value that was provided on create.
-func (u *PermissionGroupUpsertBulk) UpdateParentID() *PermissionGroupUpsertBulk {
-	return u.Update(func(s *PermissionGroupUpsert) {
-		s.UpdateParentID()
-	})
-}
-
-// ClearParentID clears the value of the "parent_id" field.
-func (u *PermissionGroupUpsertBulk) ClearParentID() *PermissionGroupUpsertBulk {
-	return u.Update(func(s *PermissionGroupUpsert) {
-		s.ClearParentID()
-	})
-}
-
-// SetPermissionID sets the "permission_id" field.
-func (u *PermissionGroupUpsertBulk) SetPermissionID(v uint32) *PermissionGroupUpsertBulk {
-	return u.Update(func(s *PermissionGroupUpsert) {
-		s.SetPermissionID(v)
-	})
-}
-
-// AddPermissionID adds v to the "permission_id" field.
-func (u *PermissionGroupUpsertBulk) AddPermissionID(v uint32) *PermissionGroupUpsertBulk {
-	return u.Update(func(s *PermissionGroupUpsert) {
-		s.AddPermissionID(v)
-	})
-}
-
-// UpdatePermissionID sets the "permission_id" field to the value that was provided on create.
-func (u *PermissionGroupUpsertBulk) UpdatePermissionID() *PermissionGroupUpsertBulk {
-	return u.Update(func(s *PermissionGroupUpsert) {
-		s.UpdatePermissionID()
-	})
-}
-
-// ClearPermissionID clears the value of the "permission_id" field.
-func (u *PermissionGroupUpsertBulk) ClearPermissionID() *PermissionGroupUpsertBulk {
-	return u.Update(func(s *PermissionGroupUpsert) {
-		s.ClearPermissionID()
 	})
 }
 
@@ -1752,24 +1412,24 @@ func (u *PermissionGroupUpsertBulk) ClearSortOrder() *PermissionGroupUpsertBulk 
 	})
 }
 
-// SetDescription sets the "description" field.
-func (u *PermissionGroupUpsertBulk) SetDescription(v string) *PermissionGroupUpsertBulk {
+// SetParentID sets the "parent_id" field.
+func (u *PermissionGroupUpsertBulk) SetParentID(v uint32) *PermissionGroupUpsertBulk {
 	return u.Update(func(s *PermissionGroupUpsert) {
-		s.SetDescription(v)
+		s.SetParentID(v)
 	})
 }
 
-// UpdateDescription sets the "description" field to the value that was provided on create.
-func (u *PermissionGroupUpsertBulk) UpdateDescription() *PermissionGroupUpsertBulk {
+// UpdateParentID sets the "parent_id" field to the value that was provided on create.
+func (u *PermissionGroupUpsertBulk) UpdateParentID() *PermissionGroupUpsertBulk {
 	return u.Update(func(s *PermissionGroupUpsert) {
-		s.UpdateDescription()
+		s.UpdateParentID()
 	})
 }
 
-// ClearDescription clears the value of the "description" field.
-func (u *PermissionGroupUpsertBulk) ClearDescription() *PermissionGroupUpsertBulk {
+// ClearParentID clears the value of the "parent_id" field.
+func (u *PermissionGroupUpsertBulk) ClearParentID() *PermissionGroupUpsertBulk {
 	return u.Update(func(s *PermissionGroupUpsert) {
-		s.ClearDescription()
+		s.ClearParentID()
 	})
 }
 
@@ -1794,31 +1454,38 @@ func (u *PermissionGroupUpsertBulk) ClearPath() *PermissionGroupUpsertBulk {
 	})
 }
 
-// SetTargetID sets the "target_id" field.
-func (u *PermissionGroupUpsertBulk) SetTargetID(v uint32) *PermissionGroupUpsertBulk {
+// SetName sets the "name" field.
+func (u *PermissionGroupUpsertBulk) SetName(v string) *PermissionGroupUpsertBulk {
 	return u.Update(func(s *PermissionGroupUpsert) {
-		s.SetTargetID(v)
+		s.SetName(v)
 	})
 }
 
-// AddTargetID adds v to the "target_id" field.
-func (u *PermissionGroupUpsertBulk) AddTargetID(v uint32) *PermissionGroupUpsertBulk {
+// UpdateName sets the "name" field to the value that was provided on create.
+func (u *PermissionGroupUpsertBulk) UpdateName() *PermissionGroupUpsertBulk {
 	return u.Update(func(s *PermissionGroupUpsert) {
-		s.AddTargetID(v)
+		s.UpdateName()
 	})
 }
 
-// UpdateTargetID sets the "target_id" field to the value that was provided on create.
-func (u *PermissionGroupUpsertBulk) UpdateTargetID() *PermissionGroupUpsertBulk {
+// SetModule sets the "module" field.
+func (u *PermissionGroupUpsertBulk) SetModule(v string) *PermissionGroupUpsertBulk {
 	return u.Update(func(s *PermissionGroupUpsert) {
-		s.UpdateTargetID()
+		s.SetModule(v)
 	})
 }
 
-// ClearTargetID clears the value of the "target_id" field.
-func (u *PermissionGroupUpsertBulk) ClearTargetID() *PermissionGroupUpsertBulk {
+// UpdateModule sets the "module" field to the value that was provided on create.
+func (u *PermissionGroupUpsertBulk) UpdateModule() *PermissionGroupUpsertBulk {
 	return u.Update(func(s *PermissionGroupUpsert) {
-		s.ClearTargetID()
+		s.UpdateModule()
+	})
+}
+
+// ClearModule clears the value of the "module" field.
+func (u *PermissionGroupUpsertBulk) ClearModule() *PermissionGroupUpsertBulk {
+	return u.Update(func(s *PermissionGroupUpsert) {
+		s.ClearModule()
 	})
 }
 

@@ -115,44 +115,14 @@ func Path(v string) predicate.OrgUnit {
 	return predicate.OrgUnit(sql.FieldEQ(FieldPath, v))
 }
 
-// Code applies equality check predicate on the "code" field. It's identical to CodeEQ.
-func Code(v string) predicate.OrgUnit {
-	return predicate.OrgUnit(sql.FieldEQ(FieldCode, v))
-}
-
 // Name applies equality check predicate on the "name" field. It's identical to NameEQ.
 func Name(v string) predicate.OrgUnit {
 	return predicate.OrgUnit(sql.FieldEQ(FieldName, v))
 }
 
-// Type applies equality check predicate on the "type" field. It's identical to TypeEQ.
-func Type(v string) predicate.OrgUnit {
-	return predicate.OrgUnit(sql.FieldEQ(FieldType, v))
-}
-
-// IsLegalEntity applies equality check predicate on the "is_legal_entity" field. It's identical to IsLegalEntityEQ.
-func IsLegalEntity(v bool) predicate.OrgUnit {
-	return predicate.OrgUnit(sql.FieldEQ(FieldIsLegalEntity, v))
-}
-
-// ExternalID applies equality check predicate on the "external_id" field. It's identical to ExternalIDEQ.
-func ExternalID(v string) predicate.OrgUnit {
-	return predicate.OrgUnit(sql.FieldEQ(FieldExternalID, v))
-}
-
-// LegalEntityOrgID applies equality check predicate on the "legal_entity_org_id" field. It's identical to LegalEntityOrgIDEQ.
-func LegalEntityOrgID(v uint32) predicate.OrgUnit {
-	return predicate.OrgUnit(sql.FieldEQ(FieldLegalEntityOrgID, v))
-}
-
-// TaxID applies equality check predicate on the "tax_id" field. It's identical to TaxIDEQ.
-func TaxID(v string) predicate.OrgUnit {
-	return predicate.OrgUnit(sql.FieldEQ(FieldTaxID, v))
-}
-
-// RegistrationNumber applies equality check predicate on the "registration_number" field. It's identical to RegistrationNumberEQ.
-func RegistrationNumber(v string) predicate.OrgUnit {
-	return predicate.OrgUnit(sql.FieldEQ(FieldRegistrationNumber, v))
+// Code applies equality check predicate on the "code" field. It's identical to CodeEQ.
+func Code(v string) predicate.OrgUnit {
+	return predicate.OrgUnit(sql.FieldEQ(FieldCode, v))
 }
 
 // LeaderID applies equality check predicate on the "leader_id" field. It's identical to LeaderIDEQ.
@@ -160,19 +130,29 @@ func LeaderID(v uint32) predicate.OrgUnit {
 	return predicate.OrgUnit(sql.FieldEQ(FieldLeaderID, v))
 }
 
-// ContactUserID applies equality check predicate on the "contact_user_id" field. It's identical to ContactUserIDEQ.
-func ContactUserID(v uint32) predicate.OrgUnit {
-	return predicate.OrgUnit(sql.FieldEQ(FieldContactUserID, v))
+// ExternalID applies equality check predicate on the "external_id" field. It's identical to ExternalIDEQ.
+func ExternalID(v string) predicate.OrgUnit {
+	return predicate.OrgUnit(sql.FieldEQ(FieldExternalID, v))
 }
 
-// StartAt applies equality check predicate on the "start_at" field. It's identical to StartAtEQ.
-func StartAt(v time.Time) predicate.OrgUnit {
-	return predicate.OrgUnit(sql.FieldEQ(FieldStartAt, v))
+// IsLegalEntity applies equality check predicate on the "is_legal_entity" field. It's identical to IsLegalEntityEQ.
+func IsLegalEntity(v bool) predicate.OrgUnit {
+	return predicate.OrgUnit(sql.FieldEQ(FieldIsLegalEntity, v))
 }
 
-// EndAt applies equality check predicate on the "end_at" field. It's identical to EndAtEQ.
-func EndAt(v time.Time) predicate.OrgUnit {
-	return predicate.OrgUnit(sql.FieldEQ(FieldEndAt, v))
+// RegistrationNumber applies equality check predicate on the "registration_number" field. It's identical to RegistrationNumberEQ.
+func RegistrationNumber(v string) predicate.OrgUnit {
+	return predicate.OrgUnit(sql.FieldEQ(FieldRegistrationNumber, v))
+}
+
+// TaxID applies equality check predicate on the "tax_id" field. It's identical to TaxIDEQ.
+func TaxID(v string) predicate.OrgUnit {
+	return predicate.OrgUnit(sql.FieldEQ(FieldTaxID, v))
+}
+
+// LegalEntityOrgID applies equality check predicate on the "legal_entity_org_id" field. It's identical to LegalEntityOrgIDEQ.
+func LegalEntityOrgID(v uint32) predicate.OrgUnit {
+	return predicate.OrgUnit(sql.FieldEQ(FieldLegalEntityOrgID, v))
 }
 
 // Address applies equality check predicate on the "address" field. It's identical to AddressEQ.
@@ -190,34 +170,14 @@ func Email(v string) predicate.OrgUnit {
 	return predicate.OrgUnit(sql.FieldEQ(FieldEmail, v))
 }
 
-// Website applies equality check predicate on the "website" field. It's identical to WebsiteEQ.
-func Website(v string) predicate.OrgUnit {
-	return predicate.OrgUnit(sql.FieldEQ(FieldWebsite, v))
-}
-
 // Timezone applies equality check predicate on the "timezone" field. It's identical to TimezoneEQ.
 func Timezone(v string) predicate.OrgUnit {
 	return predicate.OrgUnit(sql.FieldEQ(FieldTimezone, v))
 }
 
-// Region applies equality check predicate on the "region" field. It's identical to RegionEQ.
-func Region(v string) predicate.OrgUnit {
-	return predicate.OrgUnit(sql.FieldEQ(FieldRegion, v))
-}
-
 // Country applies equality check predicate on the "country" field. It's identical to CountryEQ.
 func Country(v string) predicate.OrgUnit {
 	return predicate.OrgUnit(sql.FieldEQ(FieldCountry, v))
-}
-
-// City applies equality check predicate on the "city" field. It's identical to CityEQ.
-func City(v string) predicate.OrgUnit {
-	return predicate.OrgUnit(sql.FieldEQ(FieldCity, v))
-}
-
-// PostalCode applies equality check predicate on the "postal_code" field. It's identical to PostalCodeEQ.
-func PostalCode(v string) predicate.OrgUnit {
-	return predicate.OrgUnit(sql.FieldEQ(FieldPostalCode, v))
 }
 
 // Latitude applies equality check predicate on the "latitude" field. It's identical to LatitudeEQ.
@@ -230,9 +190,19 @@ func Longitude(v float64) predicate.OrgUnit {
 	return predicate.OrgUnit(sql.FieldEQ(FieldLongitude, v))
 }
 
-// Logo applies equality check predicate on the "logo" field. It's identical to LogoEQ.
-func Logo(v string) predicate.OrgUnit {
-	return predicate.OrgUnit(sql.FieldEQ(FieldLogo, v))
+// StartAt applies equality check predicate on the "start_at" field. It's identical to StartAtEQ.
+func StartAt(v time.Time) predicate.OrgUnit {
+	return predicate.OrgUnit(sql.FieldEQ(FieldStartAt, v))
+}
+
+// EndAt applies equality check predicate on the "end_at" field. It's identical to EndAtEQ.
+func EndAt(v time.Time) predicate.OrgUnit {
+	return predicate.OrgUnit(sql.FieldEQ(FieldEndAt, v))
+}
+
+// ContactUserID applies equality check predicate on the "contact_user_id" field. It's identical to ContactUserIDEQ.
+func ContactUserID(v uint32) predicate.OrgUnit {
+	return predicate.OrgUnit(sql.FieldEQ(FieldContactUserID, v))
 }
 
 // CreatedAtEQ applies the EQ predicate on the "created_at" field.
@@ -910,6 +880,71 @@ func PathContainsFold(v string) predicate.OrgUnit {
 	return predicate.OrgUnit(sql.FieldContainsFold(FieldPath, v))
 }
 
+// NameEQ applies the EQ predicate on the "name" field.
+func NameEQ(v string) predicate.OrgUnit {
+	return predicate.OrgUnit(sql.FieldEQ(FieldName, v))
+}
+
+// NameNEQ applies the NEQ predicate on the "name" field.
+func NameNEQ(v string) predicate.OrgUnit {
+	return predicate.OrgUnit(sql.FieldNEQ(FieldName, v))
+}
+
+// NameIn applies the In predicate on the "name" field.
+func NameIn(vs ...string) predicate.OrgUnit {
+	return predicate.OrgUnit(sql.FieldIn(FieldName, vs...))
+}
+
+// NameNotIn applies the NotIn predicate on the "name" field.
+func NameNotIn(vs ...string) predicate.OrgUnit {
+	return predicate.OrgUnit(sql.FieldNotIn(FieldName, vs...))
+}
+
+// NameGT applies the GT predicate on the "name" field.
+func NameGT(v string) predicate.OrgUnit {
+	return predicate.OrgUnit(sql.FieldGT(FieldName, v))
+}
+
+// NameGTE applies the GTE predicate on the "name" field.
+func NameGTE(v string) predicate.OrgUnit {
+	return predicate.OrgUnit(sql.FieldGTE(FieldName, v))
+}
+
+// NameLT applies the LT predicate on the "name" field.
+func NameLT(v string) predicate.OrgUnit {
+	return predicate.OrgUnit(sql.FieldLT(FieldName, v))
+}
+
+// NameLTE applies the LTE predicate on the "name" field.
+func NameLTE(v string) predicate.OrgUnit {
+	return predicate.OrgUnit(sql.FieldLTE(FieldName, v))
+}
+
+// NameContains applies the Contains predicate on the "name" field.
+func NameContains(v string) predicate.OrgUnit {
+	return predicate.OrgUnit(sql.FieldContains(FieldName, v))
+}
+
+// NameHasPrefix applies the HasPrefix predicate on the "name" field.
+func NameHasPrefix(v string) predicate.OrgUnit {
+	return predicate.OrgUnit(sql.FieldHasPrefix(FieldName, v))
+}
+
+// NameHasSuffix applies the HasSuffix predicate on the "name" field.
+func NameHasSuffix(v string) predicate.OrgUnit {
+	return predicate.OrgUnit(sql.FieldHasSuffix(FieldName, v))
+}
+
+// NameEqualFold applies the EqualFold predicate on the "name" field.
+func NameEqualFold(v string) predicate.OrgUnit {
+	return predicate.OrgUnit(sql.FieldEqualFold(FieldName, v))
+}
+
+// NameContainsFold applies the ContainsFold predicate on the "name" field.
+func NameContainsFold(v string) predicate.OrgUnit {
+	return predicate.OrgUnit(sql.FieldContainsFold(FieldName, v))
+}
+
 // CodeEQ applies the EQ predicate on the "code" field.
 func CodeEQ(v string) predicate.OrgUnit {
 	return predicate.OrgUnit(sql.FieldEQ(FieldCode, v))
@@ -985,174 +1020,84 @@ func CodeContainsFold(v string) predicate.OrgUnit {
 	return predicate.OrgUnit(sql.FieldContainsFold(FieldCode, v))
 }
 
-// NameEQ applies the EQ predicate on the "name" field.
-func NameEQ(v string) predicate.OrgUnit {
-	return predicate.OrgUnit(sql.FieldEQ(FieldName, v))
+// LeaderIDEQ applies the EQ predicate on the "leader_id" field.
+func LeaderIDEQ(v uint32) predicate.OrgUnit {
+	return predicate.OrgUnit(sql.FieldEQ(FieldLeaderID, v))
 }
 
-// NameNEQ applies the NEQ predicate on the "name" field.
-func NameNEQ(v string) predicate.OrgUnit {
-	return predicate.OrgUnit(sql.FieldNEQ(FieldName, v))
+// LeaderIDNEQ applies the NEQ predicate on the "leader_id" field.
+func LeaderIDNEQ(v uint32) predicate.OrgUnit {
+	return predicate.OrgUnit(sql.FieldNEQ(FieldLeaderID, v))
 }
 
-// NameIn applies the In predicate on the "name" field.
-func NameIn(vs ...string) predicate.OrgUnit {
-	return predicate.OrgUnit(sql.FieldIn(FieldName, vs...))
+// LeaderIDIn applies the In predicate on the "leader_id" field.
+func LeaderIDIn(vs ...uint32) predicate.OrgUnit {
+	return predicate.OrgUnit(sql.FieldIn(FieldLeaderID, vs...))
 }
 
-// NameNotIn applies the NotIn predicate on the "name" field.
-func NameNotIn(vs ...string) predicate.OrgUnit {
-	return predicate.OrgUnit(sql.FieldNotIn(FieldName, vs...))
+// LeaderIDNotIn applies the NotIn predicate on the "leader_id" field.
+func LeaderIDNotIn(vs ...uint32) predicate.OrgUnit {
+	return predicate.OrgUnit(sql.FieldNotIn(FieldLeaderID, vs...))
 }
 
-// NameGT applies the GT predicate on the "name" field.
-func NameGT(v string) predicate.OrgUnit {
-	return predicate.OrgUnit(sql.FieldGT(FieldName, v))
+// LeaderIDGT applies the GT predicate on the "leader_id" field.
+func LeaderIDGT(v uint32) predicate.OrgUnit {
+	return predicate.OrgUnit(sql.FieldGT(FieldLeaderID, v))
 }
 
-// NameGTE applies the GTE predicate on the "name" field.
-func NameGTE(v string) predicate.OrgUnit {
-	return predicate.OrgUnit(sql.FieldGTE(FieldName, v))
+// LeaderIDGTE applies the GTE predicate on the "leader_id" field.
+func LeaderIDGTE(v uint32) predicate.OrgUnit {
+	return predicate.OrgUnit(sql.FieldGTE(FieldLeaderID, v))
 }
 
-// NameLT applies the LT predicate on the "name" field.
-func NameLT(v string) predicate.OrgUnit {
-	return predicate.OrgUnit(sql.FieldLT(FieldName, v))
+// LeaderIDLT applies the LT predicate on the "leader_id" field.
+func LeaderIDLT(v uint32) predicate.OrgUnit {
+	return predicate.OrgUnit(sql.FieldLT(FieldLeaderID, v))
 }
 
-// NameLTE applies the LTE predicate on the "name" field.
-func NameLTE(v string) predicate.OrgUnit {
-	return predicate.OrgUnit(sql.FieldLTE(FieldName, v))
+// LeaderIDLTE applies the LTE predicate on the "leader_id" field.
+func LeaderIDLTE(v uint32) predicate.OrgUnit {
+	return predicate.OrgUnit(sql.FieldLTE(FieldLeaderID, v))
 }
 
-// NameContains applies the Contains predicate on the "name" field.
-func NameContains(v string) predicate.OrgUnit {
-	return predicate.OrgUnit(sql.FieldContains(FieldName, v))
+// LeaderIDIsNil applies the IsNil predicate on the "leader_id" field.
+func LeaderIDIsNil() predicate.OrgUnit {
+	return predicate.OrgUnit(sql.FieldIsNull(FieldLeaderID))
 }
 
-// NameHasPrefix applies the HasPrefix predicate on the "name" field.
-func NameHasPrefix(v string) predicate.OrgUnit {
-	return predicate.OrgUnit(sql.FieldHasPrefix(FieldName, v))
-}
-
-// NameHasSuffix applies the HasSuffix predicate on the "name" field.
-func NameHasSuffix(v string) predicate.OrgUnit {
-	return predicate.OrgUnit(sql.FieldHasSuffix(FieldName, v))
-}
-
-// NameIsNil applies the IsNil predicate on the "name" field.
-func NameIsNil() predicate.OrgUnit {
-	return predicate.OrgUnit(sql.FieldIsNull(FieldName))
-}
-
-// NameNotNil applies the NotNil predicate on the "name" field.
-func NameNotNil() predicate.OrgUnit {
-	return predicate.OrgUnit(sql.FieldNotNull(FieldName))
-}
-
-// NameEqualFold applies the EqualFold predicate on the "name" field.
-func NameEqualFold(v string) predicate.OrgUnit {
-	return predicate.OrgUnit(sql.FieldEqualFold(FieldName, v))
-}
-
-// NameContainsFold applies the ContainsFold predicate on the "name" field.
-func NameContainsFold(v string) predicate.OrgUnit {
-	return predicate.OrgUnit(sql.FieldContainsFold(FieldName, v))
+// LeaderIDNotNil applies the NotNil predicate on the "leader_id" field.
+func LeaderIDNotNil() predicate.OrgUnit {
+	return predicate.OrgUnit(sql.FieldNotNull(FieldLeaderID))
 }
 
 // TypeEQ applies the EQ predicate on the "type" field.
-func TypeEQ(v string) predicate.OrgUnit {
+func TypeEQ(v Type) predicate.OrgUnit {
 	return predicate.OrgUnit(sql.FieldEQ(FieldType, v))
 }
 
 // TypeNEQ applies the NEQ predicate on the "type" field.
-func TypeNEQ(v string) predicate.OrgUnit {
+func TypeNEQ(v Type) predicate.OrgUnit {
 	return predicate.OrgUnit(sql.FieldNEQ(FieldType, v))
 }
 
 // TypeIn applies the In predicate on the "type" field.
-func TypeIn(vs ...string) predicate.OrgUnit {
+func TypeIn(vs ...Type) predicate.OrgUnit {
 	return predicate.OrgUnit(sql.FieldIn(FieldType, vs...))
 }
 
 // TypeNotIn applies the NotIn predicate on the "type" field.
-func TypeNotIn(vs ...string) predicate.OrgUnit {
+func TypeNotIn(vs ...Type) predicate.OrgUnit {
 	return predicate.OrgUnit(sql.FieldNotIn(FieldType, vs...))
 }
 
-// TypeGT applies the GT predicate on the "type" field.
-func TypeGT(v string) predicate.OrgUnit {
-	return predicate.OrgUnit(sql.FieldGT(FieldType, v))
+// BusinessScopesIsNil applies the IsNil predicate on the "business_scopes" field.
+func BusinessScopesIsNil() predicate.OrgUnit {
+	return predicate.OrgUnit(sql.FieldIsNull(FieldBusinessScopes))
 }
 
-// TypeGTE applies the GTE predicate on the "type" field.
-func TypeGTE(v string) predicate.OrgUnit {
-	return predicate.OrgUnit(sql.FieldGTE(FieldType, v))
-}
-
-// TypeLT applies the LT predicate on the "type" field.
-func TypeLT(v string) predicate.OrgUnit {
-	return predicate.OrgUnit(sql.FieldLT(FieldType, v))
-}
-
-// TypeLTE applies the LTE predicate on the "type" field.
-func TypeLTE(v string) predicate.OrgUnit {
-	return predicate.OrgUnit(sql.FieldLTE(FieldType, v))
-}
-
-// TypeContains applies the Contains predicate on the "type" field.
-func TypeContains(v string) predicate.OrgUnit {
-	return predicate.OrgUnit(sql.FieldContains(FieldType, v))
-}
-
-// TypeHasPrefix applies the HasPrefix predicate on the "type" field.
-func TypeHasPrefix(v string) predicate.OrgUnit {
-	return predicate.OrgUnit(sql.FieldHasPrefix(FieldType, v))
-}
-
-// TypeHasSuffix applies the HasSuffix predicate on the "type" field.
-func TypeHasSuffix(v string) predicate.OrgUnit {
-	return predicate.OrgUnit(sql.FieldHasSuffix(FieldType, v))
-}
-
-// TypeIsNil applies the IsNil predicate on the "type" field.
-func TypeIsNil() predicate.OrgUnit {
-	return predicate.OrgUnit(sql.FieldIsNull(FieldType))
-}
-
-// TypeNotNil applies the NotNil predicate on the "type" field.
-func TypeNotNil() predicate.OrgUnit {
-	return predicate.OrgUnit(sql.FieldNotNull(FieldType))
-}
-
-// TypeEqualFold applies the EqualFold predicate on the "type" field.
-func TypeEqualFold(v string) predicate.OrgUnit {
-	return predicate.OrgUnit(sql.FieldEqualFold(FieldType, v))
-}
-
-// TypeContainsFold applies the ContainsFold predicate on the "type" field.
-func TypeContainsFold(v string) predicate.OrgUnit {
-	return predicate.OrgUnit(sql.FieldContainsFold(FieldType, v))
-}
-
-// IsLegalEntityEQ applies the EQ predicate on the "is_legal_entity" field.
-func IsLegalEntityEQ(v bool) predicate.OrgUnit {
-	return predicate.OrgUnit(sql.FieldEQ(FieldIsLegalEntity, v))
-}
-
-// IsLegalEntityNEQ applies the NEQ predicate on the "is_legal_entity" field.
-func IsLegalEntityNEQ(v bool) predicate.OrgUnit {
-	return predicate.OrgUnit(sql.FieldNEQ(FieldIsLegalEntity, v))
-}
-
-// IsLegalEntityIsNil applies the IsNil predicate on the "is_legal_entity" field.
-func IsLegalEntityIsNil() predicate.OrgUnit {
-	return predicate.OrgUnit(sql.FieldIsNull(FieldIsLegalEntity))
-}
-
-// IsLegalEntityNotNil applies the NotNil predicate on the "is_legal_entity" field.
-func IsLegalEntityNotNil() predicate.OrgUnit {
-	return predicate.OrgUnit(sql.FieldNotNull(FieldIsLegalEntity))
+// BusinessScopesNotNil applies the NotNil predicate on the "business_scopes" field.
+func BusinessScopesNotNil() predicate.OrgUnit {
+	return predicate.OrgUnit(sql.FieldNotNull(FieldBusinessScopes))
 }
 
 // ExternalIDEQ applies the EQ predicate on the "external_id" field.
@@ -1230,129 +1175,24 @@ func ExternalIDContainsFold(v string) predicate.OrgUnit {
 	return predicate.OrgUnit(sql.FieldContainsFold(FieldExternalID, v))
 }
 
-// LegalEntityOrgIDEQ applies the EQ predicate on the "legal_entity_org_id" field.
-func LegalEntityOrgIDEQ(v uint32) predicate.OrgUnit {
-	return predicate.OrgUnit(sql.FieldEQ(FieldLegalEntityOrgID, v))
+// IsLegalEntityEQ applies the EQ predicate on the "is_legal_entity" field.
+func IsLegalEntityEQ(v bool) predicate.OrgUnit {
+	return predicate.OrgUnit(sql.FieldEQ(FieldIsLegalEntity, v))
 }
 
-// LegalEntityOrgIDNEQ applies the NEQ predicate on the "legal_entity_org_id" field.
-func LegalEntityOrgIDNEQ(v uint32) predicate.OrgUnit {
-	return predicate.OrgUnit(sql.FieldNEQ(FieldLegalEntityOrgID, v))
+// IsLegalEntityNEQ applies the NEQ predicate on the "is_legal_entity" field.
+func IsLegalEntityNEQ(v bool) predicate.OrgUnit {
+	return predicate.OrgUnit(sql.FieldNEQ(FieldIsLegalEntity, v))
 }
 
-// LegalEntityOrgIDIn applies the In predicate on the "legal_entity_org_id" field.
-func LegalEntityOrgIDIn(vs ...uint32) predicate.OrgUnit {
-	return predicate.OrgUnit(sql.FieldIn(FieldLegalEntityOrgID, vs...))
+// IsLegalEntityIsNil applies the IsNil predicate on the "is_legal_entity" field.
+func IsLegalEntityIsNil() predicate.OrgUnit {
+	return predicate.OrgUnit(sql.FieldIsNull(FieldIsLegalEntity))
 }
 
-// LegalEntityOrgIDNotIn applies the NotIn predicate on the "legal_entity_org_id" field.
-func LegalEntityOrgIDNotIn(vs ...uint32) predicate.OrgUnit {
-	return predicate.OrgUnit(sql.FieldNotIn(FieldLegalEntityOrgID, vs...))
-}
-
-// LegalEntityOrgIDGT applies the GT predicate on the "legal_entity_org_id" field.
-func LegalEntityOrgIDGT(v uint32) predicate.OrgUnit {
-	return predicate.OrgUnit(sql.FieldGT(FieldLegalEntityOrgID, v))
-}
-
-// LegalEntityOrgIDGTE applies the GTE predicate on the "legal_entity_org_id" field.
-func LegalEntityOrgIDGTE(v uint32) predicate.OrgUnit {
-	return predicate.OrgUnit(sql.FieldGTE(FieldLegalEntityOrgID, v))
-}
-
-// LegalEntityOrgIDLT applies the LT predicate on the "legal_entity_org_id" field.
-func LegalEntityOrgIDLT(v uint32) predicate.OrgUnit {
-	return predicate.OrgUnit(sql.FieldLT(FieldLegalEntityOrgID, v))
-}
-
-// LegalEntityOrgIDLTE applies the LTE predicate on the "legal_entity_org_id" field.
-func LegalEntityOrgIDLTE(v uint32) predicate.OrgUnit {
-	return predicate.OrgUnit(sql.FieldLTE(FieldLegalEntityOrgID, v))
-}
-
-// LegalEntityOrgIDIsNil applies the IsNil predicate on the "legal_entity_org_id" field.
-func LegalEntityOrgIDIsNil() predicate.OrgUnit {
-	return predicate.OrgUnit(sql.FieldIsNull(FieldLegalEntityOrgID))
-}
-
-// LegalEntityOrgIDNotNil applies the NotNil predicate on the "legal_entity_org_id" field.
-func LegalEntityOrgIDNotNil() predicate.OrgUnit {
-	return predicate.OrgUnit(sql.FieldNotNull(FieldLegalEntityOrgID))
-}
-
-// TaxIDEQ applies the EQ predicate on the "tax_id" field.
-func TaxIDEQ(v string) predicate.OrgUnit {
-	return predicate.OrgUnit(sql.FieldEQ(FieldTaxID, v))
-}
-
-// TaxIDNEQ applies the NEQ predicate on the "tax_id" field.
-func TaxIDNEQ(v string) predicate.OrgUnit {
-	return predicate.OrgUnit(sql.FieldNEQ(FieldTaxID, v))
-}
-
-// TaxIDIn applies the In predicate on the "tax_id" field.
-func TaxIDIn(vs ...string) predicate.OrgUnit {
-	return predicate.OrgUnit(sql.FieldIn(FieldTaxID, vs...))
-}
-
-// TaxIDNotIn applies the NotIn predicate on the "tax_id" field.
-func TaxIDNotIn(vs ...string) predicate.OrgUnit {
-	return predicate.OrgUnit(sql.FieldNotIn(FieldTaxID, vs...))
-}
-
-// TaxIDGT applies the GT predicate on the "tax_id" field.
-func TaxIDGT(v string) predicate.OrgUnit {
-	return predicate.OrgUnit(sql.FieldGT(FieldTaxID, v))
-}
-
-// TaxIDGTE applies the GTE predicate on the "tax_id" field.
-func TaxIDGTE(v string) predicate.OrgUnit {
-	return predicate.OrgUnit(sql.FieldGTE(FieldTaxID, v))
-}
-
-// TaxIDLT applies the LT predicate on the "tax_id" field.
-func TaxIDLT(v string) predicate.OrgUnit {
-	return predicate.OrgUnit(sql.FieldLT(FieldTaxID, v))
-}
-
-// TaxIDLTE applies the LTE predicate on the "tax_id" field.
-func TaxIDLTE(v string) predicate.OrgUnit {
-	return predicate.OrgUnit(sql.FieldLTE(FieldTaxID, v))
-}
-
-// TaxIDContains applies the Contains predicate on the "tax_id" field.
-func TaxIDContains(v string) predicate.OrgUnit {
-	return predicate.OrgUnit(sql.FieldContains(FieldTaxID, v))
-}
-
-// TaxIDHasPrefix applies the HasPrefix predicate on the "tax_id" field.
-func TaxIDHasPrefix(v string) predicate.OrgUnit {
-	return predicate.OrgUnit(sql.FieldHasPrefix(FieldTaxID, v))
-}
-
-// TaxIDHasSuffix applies the HasSuffix predicate on the "tax_id" field.
-func TaxIDHasSuffix(v string) predicate.OrgUnit {
-	return predicate.OrgUnit(sql.FieldHasSuffix(FieldTaxID, v))
-}
-
-// TaxIDIsNil applies the IsNil predicate on the "tax_id" field.
-func TaxIDIsNil() predicate.OrgUnit {
-	return predicate.OrgUnit(sql.FieldIsNull(FieldTaxID))
-}
-
-// TaxIDNotNil applies the NotNil predicate on the "tax_id" field.
-func TaxIDNotNil() predicate.OrgUnit {
-	return predicate.OrgUnit(sql.FieldNotNull(FieldTaxID))
-}
-
-// TaxIDEqualFold applies the EqualFold predicate on the "tax_id" field.
-func TaxIDEqualFold(v string) predicate.OrgUnit {
-	return predicate.OrgUnit(sql.FieldEqualFold(FieldTaxID, v))
-}
-
-// TaxIDContainsFold applies the ContainsFold predicate on the "tax_id" field.
-func TaxIDContainsFold(v string) predicate.OrgUnit {
-	return predicate.OrgUnit(sql.FieldContainsFold(FieldTaxID, v))
+// IsLegalEntityNotNil applies the NotNil predicate on the "is_legal_entity" field.
+func IsLegalEntityNotNil() predicate.OrgUnit {
+	return predicate.OrgUnit(sql.FieldNotNull(FieldIsLegalEntity))
 }
 
 // RegistrationNumberEQ applies the EQ predicate on the "registration_number" field.
@@ -1430,204 +1270,129 @@ func RegistrationNumberContainsFold(v string) predicate.OrgUnit {
 	return predicate.OrgUnit(sql.FieldContainsFold(FieldRegistrationNumber, v))
 }
 
-// LeaderIDEQ applies the EQ predicate on the "leader_id" field.
-func LeaderIDEQ(v uint32) predicate.OrgUnit {
-	return predicate.OrgUnit(sql.FieldEQ(FieldLeaderID, v))
+// TaxIDEQ applies the EQ predicate on the "tax_id" field.
+func TaxIDEQ(v string) predicate.OrgUnit {
+	return predicate.OrgUnit(sql.FieldEQ(FieldTaxID, v))
 }
 
-// LeaderIDNEQ applies the NEQ predicate on the "leader_id" field.
-func LeaderIDNEQ(v uint32) predicate.OrgUnit {
-	return predicate.OrgUnit(sql.FieldNEQ(FieldLeaderID, v))
+// TaxIDNEQ applies the NEQ predicate on the "tax_id" field.
+func TaxIDNEQ(v string) predicate.OrgUnit {
+	return predicate.OrgUnit(sql.FieldNEQ(FieldTaxID, v))
 }
 
-// LeaderIDIn applies the In predicate on the "leader_id" field.
-func LeaderIDIn(vs ...uint32) predicate.OrgUnit {
-	return predicate.OrgUnit(sql.FieldIn(FieldLeaderID, vs...))
+// TaxIDIn applies the In predicate on the "tax_id" field.
+func TaxIDIn(vs ...string) predicate.OrgUnit {
+	return predicate.OrgUnit(sql.FieldIn(FieldTaxID, vs...))
 }
 
-// LeaderIDNotIn applies the NotIn predicate on the "leader_id" field.
-func LeaderIDNotIn(vs ...uint32) predicate.OrgUnit {
-	return predicate.OrgUnit(sql.FieldNotIn(FieldLeaderID, vs...))
+// TaxIDNotIn applies the NotIn predicate on the "tax_id" field.
+func TaxIDNotIn(vs ...string) predicate.OrgUnit {
+	return predicate.OrgUnit(sql.FieldNotIn(FieldTaxID, vs...))
 }
 
-// LeaderIDGT applies the GT predicate on the "leader_id" field.
-func LeaderIDGT(v uint32) predicate.OrgUnit {
-	return predicate.OrgUnit(sql.FieldGT(FieldLeaderID, v))
+// TaxIDGT applies the GT predicate on the "tax_id" field.
+func TaxIDGT(v string) predicate.OrgUnit {
+	return predicate.OrgUnit(sql.FieldGT(FieldTaxID, v))
 }
 
-// LeaderIDGTE applies the GTE predicate on the "leader_id" field.
-func LeaderIDGTE(v uint32) predicate.OrgUnit {
-	return predicate.OrgUnit(sql.FieldGTE(FieldLeaderID, v))
+// TaxIDGTE applies the GTE predicate on the "tax_id" field.
+func TaxIDGTE(v string) predicate.OrgUnit {
+	return predicate.OrgUnit(sql.FieldGTE(FieldTaxID, v))
 }
 
-// LeaderIDLT applies the LT predicate on the "leader_id" field.
-func LeaderIDLT(v uint32) predicate.OrgUnit {
-	return predicate.OrgUnit(sql.FieldLT(FieldLeaderID, v))
+// TaxIDLT applies the LT predicate on the "tax_id" field.
+func TaxIDLT(v string) predicate.OrgUnit {
+	return predicate.OrgUnit(sql.FieldLT(FieldTaxID, v))
 }
 
-// LeaderIDLTE applies the LTE predicate on the "leader_id" field.
-func LeaderIDLTE(v uint32) predicate.OrgUnit {
-	return predicate.OrgUnit(sql.FieldLTE(FieldLeaderID, v))
+// TaxIDLTE applies the LTE predicate on the "tax_id" field.
+func TaxIDLTE(v string) predicate.OrgUnit {
+	return predicate.OrgUnit(sql.FieldLTE(FieldTaxID, v))
 }
 
-// LeaderIDIsNil applies the IsNil predicate on the "leader_id" field.
-func LeaderIDIsNil() predicate.OrgUnit {
-	return predicate.OrgUnit(sql.FieldIsNull(FieldLeaderID))
+// TaxIDContains applies the Contains predicate on the "tax_id" field.
+func TaxIDContains(v string) predicate.OrgUnit {
+	return predicate.OrgUnit(sql.FieldContains(FieldTaxID, v))
 }
 
-// LeaderIDNotNil applies the NotNil predicate on the "leader_id" field.
-func LeaderIDNotNil() predicate.OrgUnit {
-	return predicate.OrgUnit(sql.FieldNotNull(FieldLeaderID))
+// TaxIDHasPrefix applies the HasPrefix predicate on the "tax_id" field.
+func TaxIDHasPrefix(v string) predicate.OrgUnit {
+	return predicate.OrgUnit(sql.FieldHasPrefix(FieldTaxID, v))
 }
 
-// ContactUserIDEQ applies the EQ predicate on the "contact_user_id" field.
-func ContactUserIDEQ(v uint32) predicate.OrgUnit {
-	return predicate.OrgUnit(sql.FieldEQ(FieldContactUserID, v))
+// TaxIDHasSuffix applies the HasSuffix predicate on the "tax_id" field.
+func TaxIDHasSuffix(v string) predicate.OrgUnit {
+	return predicate.OrgUnit(sql.FieldHasSuffix(FieldTaxID, v))
 }
 
-// ContactUserIDNEQ applies the NEQ predicate on the "contact_user_id" field.
-func ContactUserIDNEQ(v uint32) predicate.OrgUnit {
-	return predicate.OrgUnit(sql.FieldNEQ(FieldContactUserID, v))
+// TaxIDIsNil applies the IsNil predicate on the "tax_id" field.
+func TaxIDIsNil() predicate.OrgUnit {
+	return predicate.OrgUnit(sql.FieldIsNull(FieldTaxID))
 }
 
-// ContactUserIDIn applies the In predicate on the "contact_user_id" field.
-func ContactUserIDIn(vs ...uint32) predicate.OrgUnit {
-	return predicate.OrgUnit(sql.FieldIn(FieldContactUserID, vs...))
+// TaxIDNotNil applies the NotNil predicate on the "tax_id" field.
+func TaxIDNotNil() predicate.OrgUnit {
+	return predicate.OrgUnit(sql.FieldNotNull(FieldTaxID))
 }
 
-// ContactUserIDNotIn applies the NotIn predicate on the "contact_user_id" field.
-func ContactUserIDNotIn(vs ...uint32) predicate.OrgUnit {
-	return predicate.OrgUnit(sql.FieldNotIn(FieldContactUserID, vs...))
+// TaxIDEqualFold applies the EqualFold predicate on the "tax_id" field.
+func TaxIDEqualFold(v string) predicate.OrgUnit {
+	return predicate.OrgUnit(sql.FieldEqualFold(FieldTaxID, v))
 }
 
-// ContactUserIDGT applies the GT predicate on the "contact_user_id" field.
-func ContactUserIDGT(v uint32) predicate.OrgUnit {
-	return predicate.OrgUnit(sql.FieldGT(FieldContactUserID, v))
+// TaxIDContainsFold applies the ContainsFold predicate on the "tax_id" field.
+func TaxIDContainsFold(v string) predicate.OrgUnit {
+	return predicate.OrgUnit(sql.FieldContainsFold(FieldTaxID, v))
 }
 
-// ContactUserIDGTE applies the GTE predicate on the "contact_user_id" field.
-func ContactUserIDGTE(v uint32) predicate.OrgUnit {
-	return predicate.OrgUnit(sql.FieldGTE(FieldContactUserID, v))
+// LegalEntityOrgIDEQ applies the EQ predicate on the "legal_entity_org_id" field.
+func LegalEntityOrgIDEQ(v uint32) predicate.OrgUnit {
+	return predicate.OrgUnit(sql.FieldEQ(FieldLegalEntityOrgID, v))
 }
 
-// ContactUserIDLT applies the LT predicate on the "contact_user_id" field.
-func ContactUserIDLT(v uint32) predicate.OrgUnit {
-	return predicate.OrgUnit(sql.FieldLT(FieldContactUserID, v))
+// LegalEntityOrgIDNEQ applies the NEQ predicate on the "legal_entity_org_id" field.
+func LegalEntityOrgIDNEQ(v uint32) predicate.OrgUnit {
+	return predicate.OrgUnit(sql.FieldNEQ(FieldLegalEntityOrgID, v))
 }
 
-// ContactUserIDLTE applies the LTE predicate on the "contact_user_id" field.
-func ContactUserIDLTE(v uint32) predicate.OrgUnit {
-	return predicate.OrgUnit(sql.FieldLTE(FieldContactUserID, v))
+// LegalEntityOrgIDIn applies the In predicate on the "legal_entity_org_id" field.
+func LegalEntityOrgIDIn(vs ...uint32) predicate.OrgUnit {
+	return predicate.OrgUnit(sql.FieldIn(FieldLegalEntityOrgID, vs...))
 }
 
-// ContactUserIDIsNil applies the IsNil predicate on the "contact_user_id" field.
-func ContactUserIDIsNil() predicate.OrgUnit {
-	return predicate.OrgUnit(sql.FieldIsNull(FieldContactUserID))
+// LegalEntityOrgIDNotIn applies the NotIn predicate on the "legal_entity_org_id" field.
+func LegalEntityOrgIDNotIn(vs ...uint32) predicate.OrgUnit {
+	return predicate.OrgUnit(sql.FieldNotIn(FieldLegalEntityOrgID, vs...))
 }
 
-// ContactUserIDNotNil applies the NotNil predicate on the "contact_user_id" field.
-func ContactUserIDNotNil() predicate.OrgUnit {
-	return predicate.OrgUnit(sql.FieldNotNull(FieldContactUserID))
+// LegalEntityOrgIDGT applies the GT predicate on the "legal_entity_org_id" field.
+func LegalEntityOrgIDGT(v uint32) predicate.OrgUnit {
+	return predicate.OrgUnit(sql.FieldGT(FieldLegalEntityOrgID, v))
 }
 
-// StartAtEQ applies the EQ predicate on the "start_at" field.
-func StartAtEQ(v time.Time) predicate.OrgUnit {
-	return predicate.OrgUnit(sql.FieldEQ(FieldStartAt, v))
+// LegalEntityOrgIDGTE applies the GTE predicate on the "legal_entity_org_id" field.
+func LegalEntityOrgIDGTE(v uint32) predicate.OrgUnit {
+	return predicate.OrgUnit(sql.FieldGTE(FieldLegalEntityOrgID, v))
 }
 
-// StartAtNEQ applies the NEQ predicate on the "start_at" field.
-func StartAtNEQ(v time.Time) predicate.OrgUnit {
-	return predicate.OrgUnit(sql.FieldNEQ(FieldStartAt, v))
+// LegalEntityOrgIDLT applies the LT predicate on the "legal_entity_org_id" field.
+func LegalEntityOrgIDLT(v uint32) predicate.OrgUnit {
+	return predicate.OrgUnit(sql.FieldLT(FieldLegalEntityOrgID, v))
 }
 
-// StartAtIn applies the In predicate on the "start_at" field.
-func StartAtIn(vs ...time.Time) predicate.OrgUnit {
-	return predicate.OrgUnit(sql.FieldIn(FieldStartAt, vs...))
+// LegalEntityOrgIDLTE applies the LTE predicate on the "legal_entity_org_id" field.
+func LegalEntityOrgIDLTE(v uint32) predicate.OrgUnit {
+	return predicate.OrgUnit(sql.FieldLTE(FieldLegalEntityOrgID, v))
 }
 
-// StartAtNotIn applies the NotIn predicate on the "start_at" field.
-func StartAtNotIn(vs ...time.Time) predicate.OrgUnit {
-	return predicate.OrgUnit(sql.FieldNotIn(FieldStartAt, vs...))
+// LegalEntityOrgIDIsNil applies the IsNil predicate on the "legal_entity_org_id" field.
+func LegalEntityOrgIDIsNil() predicate.OrgUnit {
+	return predicate.OrgUnit(sql.FieldIsNull(FieldLegalEntityOrgID))
 }
 
-// StartAtGT applies the GT predicate on the "start_at" field.
-func StartAtGT(v time.Time) predicate.OrgUnit {
-	return predicate.OrgUnit(sql.FieldGT(FieldStartAt, v))
-}
-
-// StartAtGTE applies the GTE predicate on the "start_at" field.
-func StartAtGTE(v time.Time) predicate.OrgUnit {
-	return predicate.OrgUnit(sql.FieldGTE(FieldStartAt, v))
-}
-
-// StartAtLT applies the LT predicate on the "start_at" field.
-func StartAtLT(v time.Time) predicate.OrgUnit {
-	return predicate.OrgUnit(sql.FieldLT(FieldStartAt, v))
-}
-
-// StartAtLTE applies the LTE predicate on the "start_at" field.
-func StartAtLTE(v time.Time) predicate.OrgUnit {
-	return predicate.OrgUnit(sql.FieldLTE(FieldStartAt, v))
-}
-
-// StartAtIsNil applies the IsNil predicate on the "start_at" field.
-func StartAtIsNil() predicate.OrgUnit {
-	return predicate.OrgUnit(sql.FieldIsNull(FieldStartAt))
-}
-
-// StartAtNotNil applies the NotNil predicate on the "start_at" field.
-func StartAtNotNil() predicate.OrgUnit {
-	return predicate.OrgUnit(sql.FieldNotNull(FieldStartAt))
-}
-
-// EndAtEQ applies the EQ predicate on the "end_at" field.
-func EndAtEQ(v time.Time) predicate.OrgUnit {
-	return predicate.OrgUnit(sql.FieldEQ(FieldEndAt, v))
-}
-
-// EndAtNEQ applies the NEQ predicate on the "end_at" field.
-func EndAtNEQ(v time.Time) predicate.OrgUnit {
-	return predicate.OrgUnit(sql.FieldNEQ(FieldEndAt, v))
-}
-
-// EndAtIn applies the In predicate on the "end_at" field.
-func EndAtIn(vs ...time.Time) predicate.OrgUnit {
-	return predicate.OrgUnit(sql.FieldIn(FieldEndAt, vs...))
-}
-
-// EndAtNotIn applies the NotIn predicate on the "end_at" field.
-func EndAtNotIn(vs ...time.Time) predicate.OrgUnit {
-	return predicate.OrgUnit(sql.FieldNotIn(FieldEndAt, vs...))
-}
-
-// EndAtGT applies the GT predicate on the "end_at" field.
-func EndAtGT(v time.Time) predicate.OrgUnit {
-	return predicate.OrgUnit(sql.FieldGT(FieldEndAt, v))
-}
-
-// EndAtGTE applies the GTE predicate on the "end_at" field.
-func EndAtGTE(v time.Time) predicate.OrgUnit {
-	return predicate.OrgUnit(sql.FieldGTE(FieldEndAt, v))
-}
-
-// EndAtLT applies the LT predicate on the "end_at" field.
-func EndAtLT(v time.Time) predicate.OrgUnit {
-	return predicate.OrgUnit(sql.FieldLT(FieldEndAt, v))
-}
-
-// EndAtLTE applies the LTE predicate on the "end_at" field.
-func EndAtLTE(v time.Time) predicate.OrgUnit {
-	return predicate.OrgUnit(sql.FieldLTE(FieldEndAt, v))
-}
-
-// EndAtIsNil applies the IsNil predicate on the "end_at" field.
-func EndAtIsNil() predicate.OrgUnit {
-	return predicate.OrgUnit(sql.FieldIsNull(FieldEndAt))
-}
-
-// EndAtNotNil applies the NotNil predicate on the "end_at" field.
-func EndAtNotNil() predicate.OrgUnit {
-	return predicate.OrgUnit(sql.FieldNotNull(FieldEndAt))
+// LegalEntityOrgIDNotNil applies the NotNil predicate on the "legal_entity_org_id" field.
+func LegalEntityOrgIDNotNil() predicate.OrgUnit {
+	return predicate.OrgUnit(sql.FieldNotNull(FieldLegalEntityOrgID))
 }
 
 // AddressEQ applies the EQ predicate on the "address" field.
@@ -1855,81 +1620,6 @@ func EmailContainsFold(v string) predicate.OrgUnit {
 	return predicate.OrgUnit(sql.FieldContainsFold(FieldEmail, v))
 }
 
-// WebsiteEQ applies the EQ predicate on the "website" field.
-func WebsiteEQ(v string) predicate.OrgUnit {
-	return predicate.OrgUnit(sql.FieldEQ(FieldWebsite, v))
-}
-
-// WebsiteNEQ applies the NEQ predicate on the "website" field.
-func WebsiteNEQ(v string) predicate.OrgUnit {
-	return predicate.OrgUnit(sql.FieldNEQ(FieldWebsite, v))
-}
-
-// WebsiteIn applies the In predicate on the "website" field.
-func WebsiteIn(vs ...string) predicate.OrgUnit {
-	return predicate.OrgUnit(sql.FieldIn(FieldWebsite, vs...))
-}
-
-// WebsiteNotIn applies the NotIn predicate on the "website" field.
-func WebsiteNotIn(vs ...string) predicate.OrgUnit {
-	return predicate.OrgUnit(sql.FieldNotIn(FieldWebsite, vs...))
-}
-
-// WebsiteGT applies the GT predicate on the "website" field.
-func WebsiteGT(v string) predicate.OrgUnit {
-	return predicate.OrgUnit(sql.FieldGT(FieldWebsite, v))
-}
-
-// WebsiteGTE applies the GTE predicate on the "website" field.
-func WebsiteGTE(v string) predicate.OrgUnit {
-	return predicate.OrgUnit(sql.FieldGTE(FieldWebsite, v))
-}
-
-// WebsiteLT applies the LT predicate on the "website" field.
-func WebsiteLT(v string) predicate.OrgUnit {
-	return predicate.OrgUnit(sql.FieldLT(FieldWebsite, v))
-}
-
-// WebsiteLTE applies the LTE predicate on the "website" field.
-func WebsiteLTE(v string) predicate.OrgUnit {
-	return predicate.OrgUnit(sql.FieldLTE(FieldWebsite, v))
-}
-
-// WebsiteContains applies the Contains predicate on the "website" field.
-func WebsiteContains(v string) predicate.OrgUnit {
-	return predicate.OrgUnit(sql.FieldContains(FieldWebsite, v))
-}
-
-// WebsiteHasPrefix applies the HasPrefix predicate on the "website" field.
-func WebsiteHasPrefix(v string) predicate.OrgUnit {
-	return predicate.OrgUnit(sql.FieldHasPrefix(FieldWebsite, v))
-}
-
-// WebsiteHasSuffix applies the HasSuffix predicate on the "website" field.
-func WebsiteHasSuffix(v string) predicate.OrgUnit {
-	return predicate.OrgUnit(sql.FieldHasSuffix(FieldWebsite, v))
-}
-
-// WebsiteIsNil applies the IsNil predicate on the "website" field.
-func WebsiteIsNil() predicate.OrgUnit {
-	return predicate.OrgUnit(sql.FieldIsNull(FieldWebsite))
-}
-
-// WebsiteNotNil applies the NotNil predicate on the "website" field.
-func WebsiteNotNil() predicate.OrgUnit {
-	return predicate.OrgUnit(sql.FieldNotNull(FieldWebsite))
-}
-
-// WebsiteEqualFold applies the EqualFold predicate on the "website" field.
-func WebsiteEqualFold(v string) predicate.OrgUnit {
-	return predicate.OrgUnit(sql.FieldEqualFold(FieldWebsite, v))
-}
-
-// WebsiteContainsFold applies the ContainsFold predicate on the "website" field.
-func WebsiteContainsFold(v string) predicate.OrgUnit {
-	return predicate.OrgUnit(sql.FieldContainsFold(FieldWebsite, v))
-}
-
 // TimezoneEQ applies the EQ predicate on the "timezone" field.
 func TimezoneEQ(v string) predicate.OrgUnit {
 	return predicate.OrgUnit(sql.FieldEQ(FieldTimezone, v))
@@ -2005,81 +1695,6 @@ func TimezoneContainsFold(v string) predicate.OrgUnit {
 	return predicate.OrgUnit(sql.FieldContainsFold(FieldTimezone, v))
 }
 
-// RegionEQ applies the EQ predicate on the "region" field.
-func RegionEQ(v string) predicate.OrgUnit {
-	return predicate.OrgUnit(sql.FieldEQ(FieldRegion, v))
-}
-
-// RegionNEQ applies the NEQ predicate on the "region" field.
-func RegionNEQ(v string) predicate.OrgUnit {
-	return predicate.OrgUnit(sql.FieldNEQ(FieldRegion, v))
-}
-
-// RegionIn applies the In predicate on the "region" field.
-func RegionIn(vs ...string) predicate.OrgUnit {
-	return predicate.OrgUnit(sql.FieldIn(FieldRegion, vs...))
-}
-
-// RegionNotIn applies the NotIn predicate on the "region" field.
-func RegionNotIn(vs ...string) predicate.OrgUnit {
-	return predicate.OrgUnit(sql.FieldNotIn(FieldRegion, vs...))
-}
-
-// RegionGT applies the GT predicate on the "region" field.
-func RegionGT(v string) predicate.OrgUnit {
-	return predicate.OrgUnit(sql.FieldGT(FieldRegion, v))
-}
-
-// RegionGTE applies the GTE predicate on the "region" field.
-func RegionGTE(v string) predicate.OrgUnit {
-	return predicate.OrgUnit(sql.FieldGTE(FieldRegion, v))
-}
-
-// RegionLT applies the LT predicate on the "region" field.
-func RegionLT(v string) predicate.OrgUnit {
-	return predicate.OrgUnit(sql.FieldLT(FieldRegion, v))
-}
-
-// RegionLTE applies the LTE predicate on the "region" field.
-func RegionLTE(v string) predicate.OrgUnit {
-	return predicate.OrgUnit(sql.FieldLTE(FieldRegion, v))
-}
-
-// RegionContains applies the Contains predicate on the "region" field.
-func RegionContains(v string) predicate.OrgUnit {
-	return predicate.OrgUnit(sql.FieldContains(FieldRegion, v))
-}
-
-// RegionHasPrefix applies the HasPrefix predicate on the "region" field.
-func RegionHasPrefix(v string) predicate.OrgUnit {
-	return predicate.OrgUnit(sql.FieldHasPrefix(FieldRegion, v))
-}
-
-// RegionHasSuffix applies the HasSuffix predicate on the "region" field.
-func RegionHasSuffix(v string) predicate.OrgUnit {
-	return predicate.OrgUnit(sql.FieldHasSuffix(FieldRegion, v))
-}
-
-// RegionIsNil applies the IsNil predicate on the "region" field.
-func RegionIsNil() predicate.OrgUnit {
-	return predicate.OrgUnit(sql.FieldIsNull(FieldRegion))
-}
-
-// RegionNotNil applies the NotNil predicate on the "region" field.
-func RegionNotNil() predicate.OrgUnit {
-	return predicate.OrgUnit(sql.FieldNotNull(FieldRegion))
-}
-
-// RegionEqualFold applies the EqualFold predicate on the "region" field.
-func RegionEqualFold(v string) predicate.OrgUnit {
-	return predicate.OrgUnit(sql.FieldEqualFold(FieldRegion, v))
-}
-
-// RegionContainsFold applies the ContainsFold predicate on the "region" field.
-func RegionContainsFold(v string) predicate.OrgUnit {
-	return predicate.OrgUnit(sql.FieldContainsFold(FieldRegion, v))
-}
-
 // CountryEQ applies the EQ predicate on the "country" field.
 func CountryEQ(v string) predicate.OrgUnit {
 	return predicate.OrgUnit(sql.FieldEQ(FieldCountry, v))
@@ -2153,156 +1768,6 @@ func CountryEqualFold(v string) predicate.OrgUnit {
 // CountryContainsFold applies the ContainsFold predicate on the "country" field.
 func CountryContainsFold(v string) predicate.OrgUnit {
 	return predicate.OrgUnit(sql.FieldContainsFold(FieldCountry, v))
-}
-
-// CityEQ applies the EQ predicate on the "city" field.
-func CityEQ(v string) predicate.OrgUnit {
-	return predicate.OrgUnit(sql.FieldEQ(FieldCity, v))
-}
-
-// CityNEQ applies the NEQ predicate on the "city" field.
-func CityNEQ(v string) predicate.OrgUnit {
-	return predicate.OrgUnit(sql.FieldNEQ(FieldCity, v))
-}
-
-// CityIn applies the In predicate on the "city" field.
-func CityIn(vs ...string) predicate.OrgUnit {
-	return predicate.OrgUnit(sql.FieldIn(FieldCity, vs...))
-}
-
-// CityNotIn applies the NotIn predicate on the "city" field.
-func CityNotIn(vs ...string) predicate.OrgUnit {
-	return predicate.OrgUnit(sql.FieldNotIn(FieldCity, vs...))
-}
-
-// CityGT applies the GT predicate on the "city" field.
-func CityGT(v string) predicate.OrgUnit {
-	return predicate.OrgUnit(sql.FieldGT(FieldCity, v))
-}
-
-// CityGTE applies the GTE predicate on the "city" field.
-func CityGTE(v string) predicate.OrgUnit {
-	return predicate.OrgUnit(sql.FieldGTE(FieldCity, v))
-}
-
-// CityLT applies the LT predicate on the "city" field.
-func CityLT(v string) predicate.OrgUnit {
-	return predicate.OrgUnit(sql.FieldLT(FieldCity, v))
-}
-
-// CityLTE applies the LTE predicate on the "city" field.
-func CityLTE(v string) predicate.OrgUnit {
-	return predicate.OrgUnit(sql.FieldLTE(FieldCity, v))
-}
-
-// CityContains applies the Contains predicate on the "city" field.
-func CityContains(v string) predicate.OrgUnit {
-	return predicate.OrgUnit(sql.FieldContains(FieldCity, v))
-}
-
-// CityHasPrefix applies the HasPrefix predicate on the "city" field.
-func CityHasPrefix(v string) predicate.OrgUnit {
-	return predicate.OrgUnit(sql.FieldHasPrefix(FieldCity, v))
-}
-
-// CityHasSuffix applies the HasSuffix predicate on the "city" field.
-func CityHasSuffix(v string) predicate.OrgUnit {
-	return predicate.OrgUnit(sql.FieldHasSuffix(FieldCity, v))
-}
-
-// CityIsNil applies the IsNil predicate on the "city" field.
-func CityIsNil() predicate.OrgUnit {
-	return predicate.OrgUnit(sql.FieldIsNull(FieldCity))
-}
-
-// CityNotNil applies the NotNil predicate on the "city" field.
-func CityNotNil() predicate.OrgUnit {
-	return predicate.OrgUnit(sql.FieldNotNull(FieldCity))
-}
-
-// CityEqualFold applies the EqualFold predicate on the "city" field.
-func CityEqualFold(v string) predicate.OrgUnit {
-	return predicate.OrgUnit(sql.FieldEqualFold(FieldCity, v))
-}
-
-// CityContainsFold applies the ContainsFold predicate on the "city" field.
-func CityContainsFold(v string) predicate.OrgUnit {
-	return predicate.OrgUnit(sql.FieldContainsFold(FieldCity, v))
-}
-
-// PostalCodeEQ applies the EQ predicate on the "postal_code" field.
-func PostalCodeEQ(v string) predicate.OrgUnit {
-	return predicate.OrgUnit(sql.FieldEQ(FieldPostalCode, v))
-}
-
-// PostalCodeNEQ applies the NEQ predicate on the "postal_code" field.
-func PostalCodeNEQ(v string) predicate.OrgUnit {
-	return predicate.OrgUnit(sql.FieldNEQ(FieldPostalCode, v))
-}
-
-// PostalCodeIn applies the In predicate on the "postal_code" field.
-func PostalCodeIn(vs ...string) predicate.OrgUnit {
-	return predicate.OrgUnit(sql.FieldIn(FieldPostalCode, vs...))
-}
-
-// PostalCodeNotIn applies the NotIn predicate on the "postal_code" field.
-func PostalCodeNotIn(vs ...string) predicate.OrgUnit {
-	return predicate.OrgUnit(sql.FieldNotIn(FieldPostalCode, vs...))
-}
-
-// PostalCodeGT applies the GT predicate on the "postal_code" field.
-func PostalCodeGT(v string) predicate.OrgUnit {
-	return predicate.OrgUnit(sql.FieldGT(FieldPostalCode, v))
-}
-
-// PostalCodeGTE applies the GTE predicate on the "postal_code" field.
-func PostalCodeGTE(v string) predicate.OrgUnit {
-	return predicate.OrgUnit(sql.FieldGTE(FieldPostalCode, v))
-}
-
-// PostalCodeLT applies the LT predicate on the "postal_code" field.
-func PostalCodeLT(v string) predicate.OrgUnit {
-	return predicate.OrgUnit(sql.FieldLT(FieldPostalCode, v))
-}
-
-// PostalCodeLTE applies the LTE predicate on the "postal_code" field.
-func PostalCodeLTE(v string) predicate.OrgUnit {
-	return predicate.OrgUnit(sql.FieldLTE(FieldPostalCode, v))
-}
-
-// PostalCodeContains applies the Contains predicate on the "postal_code" field.
-func PostalCodeContains(v string) predicate.OrgUnit {
-	return predicate.OrgUnit(sql.FieldContains(FieldPostalCode, v))
-}
-
-// PostalCodeHasPrefix applies the HasPrefix predicate on the "postal_code" field.
-func PostalCodeHasPrefix(v string) predicate.OrgUnit {
-	return predicate.OrgUnit(sql.FieldHasPrefix(FieldPostalCode, v))
-}
-
-// PostalCodeHasSuffix applies the HasSuffix predicate on the "postal_code" field.
-func PostalCodeHasSuffix(v string) predicate.OrgUnit {
-	return predicate.OrgUnit(sql.FieldHasSuffix(FieldPostalCode, v))
-}
-
-// PostalCodeIsNil applies the IsNil predicate on the "postal_code" field.
-func PostalCodeIsNil() predicate.OrgUnit {
-	return predicate.OrgUnit(sql.FieldIsNull(FieldPostalCode))
-}
-
-// PostalCodeNotNil applies the NotNil predicate on the "postal_code" field.
-func PostalCodeNotNil() predicate.OrgUnit {
-	return predicate.OrgUnit(sql.FieldNotNull(FieldPostalCode))
-}
-
-// PostalCodeEqualFold applies the EqualFold predicate on the "postal_code" field.
-func PostalCodeEqualFold(v string) predicate.OrgUnit {
-	return predicate.OrgUnit(sql.FieldEqualFold(FieldPostalCode, v))
-}
-
-// PostalCodeContainsFold applies the ContainsFold predicate on the "postal_code" field.
-func PostalCodeContainsFold(v string) predicate.OrgUnit {
-	return predicate.OrgUnit(sql.FieldContainsFold(FieldPostalCode, v))
 }
 
 // LatitudeEQ applies the EQ predicate on the "latitude" field.
@@ -2405,79 +1870,164 @@ func LongitudeNotNil() predicate.OrgUnit {
 	return predicate.OrgUnit(sql.FieldNotNull(FieldLongitude))
 }
 
-// LogoEQ applies the EQ predicate on the "logo" field.
-func LogoEQ(v string) predicate.OrgUnit {
-	return predicate.OrgUnit(sql.FieldEQ(FieldLogo, v))
+// StartAtEQ applies the EQ predicate on the "start_at" field.
+func StartAtEQ(v time.Time) predicate.OrgUnit {
+	return predicate.OrgUnit(sql.FieldEQ(FieldStartAt, v))
 }
 
-// LogoNEQ applies the NEQ predicate on the "logo" field.
-func LogoNEQ(v string) predicate.OrgUnit {
-	return predicate.OrgUnit(sql.FieldNEQ(FieldLogo, v))
+// StartAtNEQ applies the NEQ predicate on the "start_at" field.
+func StartAtNEQ(v time.Time) predicate.OrgUnit {
+	return predicate.OrgUnit(sql.FieldNEQ(FieldStartAt, v))
 }
 
-// LogoIn applies the In predicate on the "logo" field.
-func LogoIn(vs ...string) predicate.OrgUnit {
-	return predicate.OrgUnit(sql.FieldIn(FieldLogo, vs...))
+// StartAtIn applies the In predicate on the "start_at" field.
+func StartAtIn(vs ...time.Time) predicate.OrgUnit {
+	return predicate.OrgUnit(sql.FieldIn(FieldStartAt, vs...))
 }
 
-// LogoNotIn applies the NotIn predicate on the "logo" field.
-func LogoNotIn(vs ...string) predicate.OrgUnit {
-	return predicate.OrgUnit(sql.FieldNotIn(FieldLogo, vs...))
+// StartAtNotIn applies the NotIn predicate on the "start_at" field.
+func StartAtNotIn(vs ...time.Time) predicate.OrgUnit {
+	return predicate.OrgUnit(sql.FieldNotIn(FieldStartAt, vs...))
 }
 
-// LogoGT applies the GT predicate on the "logo" field.
-func LogoGT(v string) predicate.OrgUnit {
-	return predicate.OrgUnit(sql.FieldGT(FieldLogo, v))
+// StartAtGT applies the GT predicate on the "start_at" field.
+func StartAtGT(v time.Time) predicate.OrgUnit {
+	return predicate.OrgUnit(sql.FieldGT(FieldStartAt, v))
 }
 
-// LogoGTE applies the GTE predicate on the "logo" field.
-func LogoGTE(v string) predicate.OrgUnit {
-	return predicate.OrgUnit(sql.FieldGTE(FieldLogo, v))
+// StartAtGTE applies the GTE predicate on the "start_at" field.
+func StartAtGTE(v time.Time) predicate.OrgUnit {
+	return predicate.OrgUnit(sql.FieldGTE(FieldStartAt, v))
 }
 
-// LogoLT applies the LT predicate on the "logo" field.
-func LogoLT(v string) predicate.OrgUnit {
-	return predicate.OrgUnit(sql.FieldLT(FieldLogo, v))
+// StartAtLT applies the LT predicate on the "start_at" field.
+func StartAtLT(v time.Time) predicate.OrgUnit {
+	return predicate.OrgUnit(sql.FieldLT(FieldStartAt, v))
 }
 
-// LogoLTE applies the LTE predicate on the "logo" field.
-func LogoLTE(v string) predicate.OrgUnit {
-	return predicate.OrgUnit(sql.FieldLTE(FieldLogo, v))
+// StartAtLTE applies the LTE predicate on the "start_at" field.
+func StartAtLTE(v time.Time) predicate.OrgUnit {
+	return predicate.OrgUnit(sql.FieldLTE(FieldStartAt, v))
 }
 
-// LogoContains applies the Contains predicate on the "logo" field.
-func LogoContains(v string) predicate.OrgUnit {
-	return predicate.OrgUnit(sql.FieldContains(FieldLogo, v))
+// StartAtIsNil applies the IsNil predicate on the "start_at" field.
+func StartAtIsNil() predicate.OrgUnit {
+	return predicate.OrgUnit(sql.FieldIsNull(FieldStartAt))
 }
 
-// LogoHasPrefix applies the HasPrefix predicate on the "logo" field.
-func LogoHasPrefix(v string) predicate.OrgUnit {
-	return predicate.OrgUnit(sql.FieldHasPrefix(FieldLogo, v))
+// StartAtNotNil applies the NotNil predicate on the "start_at" field.
+func StartAtNotNil() predicate.OrgUnit {
+	return predicate.OrgUnit(sql.FieldNotNull(FieldStartAt))
 }
 
-// LogoHasSuffix applies the HasSuffix predicate on the "logo" field.
-func LogoHasSuffix(v string) predicate.OrgUnit {
-	return predicate.OrgUnit(sql.FieldHasSuffix(FieldLogo, v))
+// EndAtEQ applies the EQ predicate on the "end_at" field.
+func EndAtEQ(v time.Time) predicate.OrgUnit {
+	return predicate.OrgUnit(sql.FieldEQ(FieldEndAt, v))
 }
 
-// LogoIsNil applies the IsNil predicate on the "logo" field.
-func LogoIsNil() predicate.OrgUnit {
-	return predicate.OrgUnit(sql.FieldIsNull(FieldLogo))
+// EndAtNEQ applies the NEQ predicate on the "end_at" field.
+func EndAtNEQ(v time.Time) predicate.OrgUnit {
+	return predicate.OrgUnit(sql.FieldNEQ(FieldEndAt, v))
 }
 
-// LogoNotNil applies the NotNil predicate on the "logo" field.
-func LogoNotNil() predicate.OrgUnit {
-	return predicate.OrgUnit(sql.FieldNotNull(FieldLogo))
+// EndAtIn applies the In predicate on the "end_at" field.
+func EndAtIn(vs ...time.Time) predicate.OrgUnit {
+	return predicate.OrgUnit(sql.FieldIn(FieldEndAt, vs...))
 }
 
-// LogoEqualFold applies the EqualFold predicate on the "logo" field.
-func LogoEqualFold(v string) predicate.OrgUnit {
-	return predicate.OrgUnit(sql.FieldEqualFold(FieldLogo, v))
+// EndAtNotIn applies the NotIn predicate on the "end_at" field.
+func EndAtNotIn(vs ...time.Time) predicate.OrgUnit {
+	return predicate.OrgUnit(sql.FieldNotIn(FieldEndAt, vs...))
 }
 
-// LogoContainsFold applies the ContainsFold predicate on the "logo" field.
-func LogoContainsFold(v string) predicate.OrgUnit {
-	return predicate.OrgUnit(sql.FieldContainsFold(FieldLogo, v))
+// EndAtGT applies the GT predicate on the "end_at" field.
+func EndAtGT(v time.Time) predicate.OrgUnit {
+	return predicate.OrgUnit(sql.FieldGT(FieldEndAt, v))
+}
+
+// EndAtGTE applies the GTE predicate on the "end_at" field.
+func EndAtGTE(v time.Time) predicate.OrgUnit {
+	return predicate.OrgUnit(sql.FieldGTE(FieldEndAt, v))
+}
+
+// EndAtLT applies the LT predicate on the "end_at" field.
+func EndAtLT(v time.Time) predicate.OrgUnit {
+	return predicate.OrgUnit(sql.FieldLT(FieldEndAt, v))
+}
+
+// EndAtLTE applies the LTE predicate on the "end_at" field.
+func EndAtLTE(v time.Time) predicate.OrgUnit {
+	return predicate.OrgUnit(sql.FieldLTE(FieldEndAt, v))
+}
+
+// EndAtIsNil applies the IsNil predicate on the "end_at" field.
+func EndAtIsNil() predicate.OrgUnit {
+	return predicate.OrgUnit(sql.FieldIsNull(FieldEndAt))
+}
+
+// EndAtNotNil applies the NotNil predicate on the "end_at" field.
+func EndAtNotNil() predicate.OrgUnit {
+	return predicate.OrgUnit(sql.FieldNotNull(FieldEndAt))
+}
+
+// ContactUserIDEQ applies the EQ predicate on the "contact_user_id" field.
+func ContactUserIDEQ(v uint32) predicate.OrgUnit {
+	return predicate.OrgUnit(sql.FieldEQ(FieldContactUserID, v))
+}
+
+// ContactUserIDNEQ applies the NEQ predicate on the "contact_user_id" field.
+func ContactUserIDNEQ(v uint32) predicate.OrgUnit {
+	return predicate.OrgUnit(sql.FieldNEQ(FieldContactUserID, v))
+}
+
+// ContactUserIDIn applies the In predicate on the "contact_user_id" field.
+func ContactUserIDIn(vs ...uint32) predicate.OrgUnit {
+	return predicate.OrgUnit(sql.FieldIn(FieldContactUserID, vs...))
+}
+
+// ContactUserIDNotIn applies the NotIn predicate on the "contact_user_id" field.
+func ContactUserIDNotIn(vs ...uint32) predicate.OrgUnit {
+	return predicate.OrgUnit(sql.FieldNotIn(FieldContactUserID, vs...))
+}
+
+// ContactUserIDGT applies the GT predicate on the "contact_user_id" field.
+func ContactUserIDGT(v uint32) predicate.OrgUnit {
+	return predicate.OrgUnit(sql.FieldGT(FieldContactUserID, v))
+}
+
+// ContactUserIDGTE applies the GTE predicate on the "contact_user_id" field.
+func ContactUserIDGTE(v uint32) predicate.OrgUnit {
+	return predicate.OrgUnit(sql.FieldGTE(FieldContactUserID, v))
+}
+
+// ContactUserIDLT applies the LT predicate on the "contact_user_id" field.
+func ContactUserIDLT(v uint32) predicate.OrgUnit {
+	return predicate.OrgUnit(sql.FieldLT(FieldContactUserID, v))
+}
+
+// ContactUserIDLTE applies the LTE predicate on the "contact_user_id" field.
+func ContactUserIDLTE(v uint32) predicate.OrgUnit {
+	return predicate.OrgUnit(sql.FieldLTE(FieldContactUserID, v))
+}
+
+// ContactUserIDIsNil applies the IsNil predicate on the "contact_user_id" field.
+func ContactUserIDIsNil() predicate.OrgUnit {
+	return predicate.OrgUnit(sql.FieldIsNull(FieldContactUserID))
+}
+
+// ContactUserIDNotNil applies the NotNil predicate on the "contact_user_id" field.
+func ContactUserIDNotNil() predicate.OrgUnit {
+	return predicate.OrgUnit(sql.FieldNotNull(FieldContactUserID))
+}
+
+// PermissionTagsIsNil applies the IsNil predicate on the "permission_tags" field.
+func PermissionTagsIsNil() predicate.OrgUnit {
+	return predicate.OrgUnit(sql.FieldIsNull(FieldPermissionTags))
+}
+
+// PermissionTagsNotNil applies the NotNil predicate on the "permission_tags" field.
+func PermissionTagsNotNil() predicate.OrgUnit {
+	return predicate.OrgUnit(sql.FieldNotNull(FieldPermissionTags))
 }
 
 // HasParent applies the HasEdge predicate on the "parent" edge.

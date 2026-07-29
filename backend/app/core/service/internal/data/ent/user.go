@@ -38,49 +38,37 @@ type User struct {
 	Username *string `json:"username,omitempty"`
 	// 昵称
 	Nickname *string `json:"nickname,omitempty"`
-	// 真实姓名
+	// 真实名字
 	Realname *string `json:"realname,omitempty"`
-	// 密码
-	Password *string `json:"-"`
+	// 电子邮箱
+	Email *string `json:"email,omitempty"`
+	// 手机号码
+	Mobile *string `json:"mobile,omitempty"`
+	// 座机号码
+	Telephone *string `json:"telephone,omitempty"`
 	// 头像
 	Avatar *string `json:"avatar,omitempty"`
-	// 邮箱
-	Email *string `json:"email,omitempty"`
-	// 手机号
-	Mobile *string `json:"mobile,omitempty"`
-	// 电话
-	Telephone *string `json:"telephone,omitempty"`
-	// 性别
-	Gender *user.Gender `json:"gender,omitempty"`
 	// 地址
 	Address *string `json:"address,omitempty"`
-	// 地区
+	// 国家地区
 	Region *string `json:"region,omitempty"`
-	// 描述
+	// 个人说明
 	Description *string `json:"description,omitempty"`
-	// 用户状态
-	Status *user.Status `json:"status,omitempty"`
-	// 最后登录时间
+	// 性别
+	Gender *user.Gender `json:"gender,omitempty"`
+	// 最后一次登录的时间
 	LastLoginAt *time.Time `json:"last_login_at,omitempty"`
-	// 最后登录IP
+	// 最后一次登录的IP
 	LastLoginIP *string `json:"last_login_ip,omitempty"`
 	// 锁定截止时间
 	LockedUntil *time.Time `json:"locked_until,omitempty"`
-	// 粉丝数
-	Followers *uint64 `json:"followers,omitempty"`
-	// 关注数
-	Following *uint64 `json:"following,omitempty"`
-	// 文章数
-	PostCount *uint64 `json:"post_count,omitempty"`
-	// 评论数
-	CommentCount *uint64 `json:"comment_count,omitempty"`
-	// 获赞数
-	LikeCount *uint64 `json:"like_count,omitempty"`
-	// 默认群组(租户)ID
+	// 默认租户ID
 	DefaultGroupID *uint32 `json:"default_group_id,omitempty"`
 	// 默认账本ID
 	DefaultBookID *uint32 `json:"default_book_id,omitempty"`
-	selectValues  sql.SelectValues
+	// 状态
+	Status       *user.Status `json:"status,omitempty"`
+	selectValues sql.SelectValues
 }
 
 // scanValues returns the types for scanning values from sql.Rows.
@@ -88,9 +76,9 @@ func (*User) scanValues(columns []string) ([]any, error) {
 	values := make([]any, len(columns))
 	for i := range columns {
 		switch columns[i] {
-		case user.FieldID, user.FieldCreatedBy, user.FieldUpdatedBy, user.FieldDeletedBy, user.FieldTenantID, user.FieldFollowers, user.FieldFollowing, user.FieldPostCount, user.FieldCommentCount, user.FieldLikeCount, user.FieldDefaultGroupID, user.FieldDefaultBookID:
+		case user.FieldID, user.FieldCreatedBy, user.FieldUpdatedBy, user.FieldDeletedBy, user.FieldTenantID, user.FieldDefaultGroupID, user.FieldDefaultBookID:
 			values[i] = new(sql.NullInt64)
-		case user.FieldRemark, user.FieldUsername, user.FieldNickname, user.FieldRealname, user.FieldPassword, user.FieldAvatar, user.FieldEmail, user.FieldMobile, user.FieldTelephone, user.FieldGender, user.FieldAddress, user.FieldRegion, user.FieldDescription, user.FieldStatus, user.FieldLastLoginIP:
+		case user.FieldRemark, user.FieldUsername, user.FieldNickname, user.FieldRealname, user.FieldEmail, user.FieldMobile, user.FieldTelephone, user.FieldAvatar, user.FieldAddress, user.FieldRegion, user.FieldDescription, user.FieldGender, user.FieldLastLoginIP, user.FieldStatus:
 			values[i] = new(sql.NullString)
 		case user.FieldCreatedAt, user.FieldUpdatedAt, user.FieldDeletedAt, user.FieldLastLoginAt, user.FieldLockedUntil:
 			values[i] = new(sql.NullTime)
@@ -192,20 +180,6 @@ func (_m *User) assignValues(columns []string, values []any) error {
 				_m.Realname = new(string)
 				*_m.Realname = value.String
 			}
-		case user.FieldPassword:
-			if value, ok := values[i].(*sql.NullString); !ok {
-				return fmt.Errorf("unexpected type %T for field password", values[i])
-			} else if value.Valid {
-				_m.Password = new(string)
-				*_m.Password = value.String
-			}
-		case user.FieldAvatar:
-			if value, ok := values[i].(*sql.NullString); !ok {
-				return fmt.Errorf("unexpected type %T for field avatar", values[i])
-			} else if value.Valid {
-				_m.Avatar = new(string)
-				*_m.Avatar = value.String
-			}
 		case user.FieldEmail:
 			if value, ok := values[i].(*sql.NullString); !ok {
 				return fmt.Errorf("unexpected type %T for field email", values[i])
@@ -227,12 +201,12 @@ func (_m *User) assignValues(columns []string, values []any) error {
 				_m.Telephone = new(string)
 				*_m.Telephone = value.String
 			}
-		case user.FieldGender:
+		case user.FieldAvatar:
 			if value, ok := values[i].(*sql.NullString); !ok {
-				return fmt.Errorf("unexpected type %T for field gender", values[i])
+				return fmt.Errorf("unexpected type %T for field avatar", values[i])
 			} else if value.Valid {
-				_m.Gender = new(user.Gender)
-				*_m.Gender = user.Gender(value.String)
+				_m.Avatar = new(string)
+				*_m.Avatar = value.String
 			}
 		case user.FieldAddress:
 			if value, ok := values[i].(*sql.NullString); !ok {
@@ -255,12 +229,12 @@ func (_m *User) assignValues(columns []string, values []any) error {
 				_m.Description = new(string)
 				*_m.Description = value.String
 			}
-		case user.FieldStatus:
+		case user.FieldGender:
 			if value, ok := values[i].(*sql.NullString); !ok {
-				return fmt.Errorf("unexpected type %T for field status", values[i])
+				return fmt.Errorf("unexpected type %T for field gender", values[i])
 			} else if value.Valid {
-				_m.Status = new(user.Status)
-				*_m.Status = user.Status(value.String)
+				_m.Gender = new(user.Gender)
+				*_m.Gender = user.Gender(value.String)
 			}
 		case user.FieldLastLoginAt:
 			if value, ok := values[i].(*sql.NullTime); !ok {
@@ -283,41 +257,6 @@ func (_m *User) assignValues(columns []string, values []any) error {
 				_m.LockedUntil = new(time.Time)
 				*_m.LockedUntil = value.Time
 			}
-		case user.FieldFollowers:
-			if value, ok := values[i].(*sql.NullInt64); !ok {
-				return fmt.Errorf("unexpected type %T for field followers", values[i])
-			} else if value.Valid {
-				_m.Followers = new(uint64)
-				*_m.Followers = uint64(value.Int64)
-			}
-		case user.FieldFollowing:
-			if value, ok := values[i].(*sql.NullInt64); !ok {
-				return fmt.Errorf("unexpected type %T for field following", values[i])
-			} else if value.Valid {
-				_m.Following = new(uint64)
-				*_m.Following = uint64(value.Int64)
-			}
-		case user.FieldPostCount:
-			if value, ok := values[i].(*sql.NullInt64); !ok {
-				return fmt.Errorf("unexpected type %T for field post_count", values[i])
-			} else if value.Valid {
-				_m.PostCount = new(uint64)
-				*_m.PostCount = uint64(value.Int64)
-			}
-		case user.FieldCommentCount:
-			if value, ok := values[i].(*sql.NullInt64); !ok {
-				return fmt.Errorf("unexpected type %T for field comment_count", values[i])
-			} else if value.Valid {
-				_m.CommentCount = new(uint64)
-				*_m.CommentCount = uint64(value.Int64)
-			}
-		case user.FieldLikeCount:
-			if value, ok := values[i].(*sql.NullInt64); !ok {
-				return fmt.Errorf("unexpected type %T for field like_count", values[i])
-			} else if value.Valid {
-				_m.LikeCount = new(uint64)
-				*_m.LikeCount = uint64(value.Int64)
-			}
 		case user.FieldDefaultGroupID:
 			if value, ok := values[i].(*sql.NullInt64); !ok {
 				return fmt.Errorf("unexpected type %T for field default_group_id", values[i])
@@ -331,6 +270,13 @@ func (_m *User) assignValues(columns []string, values []any) error {
 			} else if value.Valid {
 				_m.DefaultBookID = new(uint32)
 				*_m.DefaultBookID = uint32(value.Int64)
+			}
+		case user.FieldStatus:
+			if value, ok := values[i].(*sql.NullString); !ok {
+				return fmt.Errorf("unexpected type %T for field status", values[i])
+			} else if value.Valid {
+				_m.Status = new(user.Status)
+				*_m.Status = user.Status(value.String)
 			}
 		default:
 			_m.selectValues.Set(columns[i], values[i])
@@ -423,13 +369,6 @@ func (_m *User) String() string {
 		builder.WriteString(*v)
 	}
 	builder.WriteString(", ")
-	builder.WriteString("password=<sensitive>")
-	builder.WriteString(", ")
-	if v := _m.Avatar; v != nil {
-		builder.WriteString("avatar=")
-		builder.WriteString(*v)
-	}
-	builder.WriteString(", ")
 	if v := _m.Email; v != nil {
 		builder.WriteString("email=")
 		builder.WriteString(*v)
@@ -445,9 +384,9 @@ func (_m *User) String() string {
 		builder.WriteString(*v)
 	}
 	builder.WriteString(", ")
-	if v := _m.Gender; v != nil {
-		builder.WriteString("gender=")
-		builder.WriteString(fmt.Sprintf("%v", *v))
+	if v := _m.Avatar; v != nil {
+		builder.WriteString("avatar=")
+		builder.WriteString(*v)
 	}
 	builder.WriteString(", ")
 	if v := _m.Address; v != nil {
@@ -465,8 +404,8 @@ func (_m *User) String() string {
 		builder.WriteString(*v)
 	}
 	builder.WriteString(", ")
-	if v := _m.Status; v != nil {
-		builder.WriteString("status=")
+	if v := _m.Gender; v != nil {
+		builder.WriteString("gender=")
 		builder.WriteString(fmt.Sprintf("%v", *v))
 	}
 	builder.WriteString(", ")
@@ -485,31 +424,6 @@ func (_m *User) String() string {
 		builder.WriteString(v.Format(time.ANSIC))
 	}
 	builder.WriteString(", ")
-	if v := _m.Followers; v != nil {
-		builder.WriteString("followers=")
-		builder.WriteString(fmt.Sprintf("%v", *v))
-	}
-	builder.WriteString(", ")
-	if v := _m.Following; v != nil {
-		builder.WriteString("following=")
-		builder.WriteString(fmt.Sprintf("%v", *v))
-	}
-	builder.WriteString(", ")
-	if v := _m.PostCount; v != nil {
-		builder.WriteString("post_count=")
-		builder.WriteString(fmt.Sprintf("%v", *v))
-	}
-	builder.WriteString(", ")
-	if v := _m.CommentCount; v != nil {
-		builder.WriteString("comment_count=")
-		builder.WriteString(fmt.Sprintf("%v", *v))
-	}
-	builder.WriteString(", ")
-	if v := _m.LikeCount; v != nil {
-		builder.WriteString("like_count=")
-		builder.WriteString(fmt.Sprintf("%v", *v))
-	}
-	builder.WriteString(", ")
 	if v := _m.DefaultGroupID; v != nil {
 		builder.WriteString("default_group_id=")
 		builder.WriteString(fmt.Sprintf("%v", *v))
@@ -517,6 +431,11 @@ func (_m *User) String() string {
 	builder.WriteString(", ")
 	if v := _m.DefaultBookID; v != nil {
 		builder.WriteString("default_book_id=")
+		builder.WriteString(fmt.Sprintf("%v", *v))
+	}
+	builder.WriteString(", ")
+	if v := _m.Status; v != nil {
+		builder.WriteString("status=")
 		builder.WriteString(fmt.Sprintf("%v", *v))
 	}
 	builder.WriteByte(')')

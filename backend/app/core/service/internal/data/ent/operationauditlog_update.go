@@ -6,9 +6,9 @@ import (
 	"context"
 	"errors"
 	"fmt"
+	auditpb "go-wind-ledger/api/gen/go/audit/service/v1"
 	"go-wind-ledger/app/core/service/internal/data/ent/operationauditlog"
 	"go-wind-ledger/app/core/service/internal/data/ent/predicate"
-	"time"
 
 	"entgo.io/ent/dialect/sql"
 	"entgo.io/ent/dialect/sql/sqlgraph"
@@ -29,81 +29,101 @@ func (_u *OperationAuditLogUpdate) Where(ps ...predicate.OperationAuditLog) *Ope
 	return _u
 }
 
-// SetUpdatedAt sets the "updated_at" field.
-func (_u *OperationAuditLogUpdate) SetUpdatedAt(v time.Time) *OperationAuditLogUpdate {
-	_u.mutation.SetUpdatedAt(v)
+// SetUserID sets the "user_id" field.
+func (_u *OperationAuditLogUpdate) SetUserID(v uint32) *OperationAuditLogUpdate {
+	_u.mutation.ResetUserID()
+	_u.mutation.SetUserID(v)
 	return _u
 }
 
-// SetNillableUpdatedAt sets the "updated_at" field if the given value is not nil.
-func (_u *OperationAuditLogUpdate) SetNillableUpdatedAt(v *time.Time) *OperationAuditLogUpdate {
+// SetNillableUserID sets the "user_id" field if the given value is not nil.
+func (_u *OperationAuditLogUpdate) SetNillableUserID(v *uint32) *OperationAuditLogUpdate {
 	if v != nil {
-		_u.SetUpdatedAt(*v)
+		_u.SetUserID(*v)
 	}
 	return _u
 }
 
-// ClearUpdatedAt clears the value of the "updated_at" field.
-func (_u *OperationAuditLogUpdate) ClearUpdatedAt() *OperationAuditLogUpdate {
-	_u.mutation.ClearUpdatedAt()
+// AddUserID adds value to the "user_id" field.
+func (_u *OperationAuditLogUpdate) AddUserID(v int32) *OperationAuditLogUpdate {
+	_u.mutation.AddUserID(v)
 	return _u
 }
 
-// SetDeletedAt sets the "deleted_at" field.
-func (_u *OperationAuditLogUpdate) SetDeletedAt(v time.Time) *OperationAuditLogUpdate {
-	_u.mutation.SetDeletedAt(v)
+// ClearUserID clears the value of the "user_id" field.
+func (_u *OperationAuditLogUpdate) ClearUserID() *OperationAuditLogUpdate {
+	_u.mutation.ClearUserID()
 	return _u
 }
 
-// SetNillableDeletedAt sets the "deleted_at" field if the given value is not nil.
-func (_u *OperationAuditLogUpdate) SetNillableDeletedAt(v *time.Time) *OperationAuditLogUpdate {
+// SetUsername sets the "username" field.
+func (_u *OperationAuditLogUpdate) SetUsername(v string) *OperationAuditLogUpdate {
+	_u.mutation.SetUsername(v)
+	return _u
+}
+
+// SetNillableUsername sets the "username" field if the given value is not nil.
+func (_u *OperationAuditLogUpdate) SetNillableUsername(v *string) *OperationAuditLogUpdate {
 	if v != nil {
-		_u.SetDeletedAt(*v)
+		_u.SetUsername(*v)
 	}
 	return _u
 }
 
-// ClearDeletedAt clears the value of the "deleted_at" field.
-func (_u *OperationAuditLogUpdate) ClearDeletedAt() *OperationAuditLogUpdate {
-	_u.mutation.ClearDeletedAt()
+// ClearUsername clears the value of the "username" field.
+func (_u *OperationAuditLogUpdate) ClearUsername() *OperationAuditLogUpdate {
+	_u.mutation.ClearUsername()
 	return _u
 }
 
-// SetOperatorID sets the "operator_id" field.
-func (_u *OperationAuditLogUpdate) SetOperatorID(v uint32) *OperationAuditLogUpdate {
-	_u.mutation.ResetOperatorID()
-	_u.mutation.SetOperatorID(v)
+// SetResourceType sets the "resource_type" field.
+func (_u *OperationAuditLogUpdate) SetResourceType(v string) *OperationAuditLogUpdate {
+	_u.mutation.SetResourceType(v)
 	return _u
 }
 
-// SetNillableOperatorID sets the "operator_id" field if the given value is not nil.
-func (_u *OperationAuditLogUpdate) SetNillableOperatorID(v *uint32) *OperationAuditLogUpdate {
+// SetNillableResourceType sets the "resource_type" field if the given value is not nil.
+func (_u *OperationAuditLogUpdate) SetNillableResourceType(v *string) *OperationAuditLogUpdate {
 	if v != nil {
-		_u.SetOperatorID(*v)
+		_u.SetResourceType(*v)
 	}
 	return _u
 }
 
-// AddOperatorID adds value to the "operator_id" field.
-func (_u *OperationAuditLogUpdate) AddOperatorID(v int32) *OperationAuditLogUpdate {
-	_u.mutation.AddOperatorID(v)
+// ClearResourceType clears the value of the "resource_type" field.
+func (_u *OperationAuditLogUpdate) ClearResourceType() *OperationAuditLogUpdate {
+	_u.mutation.ClearResourceType()
 	return _u
 }
 
-// ClearOperatorID clears the value of the "operator_id" field.
-func (_u *OperationAuditLogUpdate) ClearOperatorID() *OperationAuditLogUpdate {
-	_u.mutation.ClearOperatorID()
+// SetResourceID sets the "resource_id" field.
+func (_u *OperationAuditLogUpdate) SetResourceID(v string) *OperationAuditLogUpdate {
+	_u.mutation.SetResourceID(v)
+	return _u
+}
+
+// SetNillableResourceID sets the "resource_id" field if the given value is not nil.
+func (_u *OperationAuditLogUpdate) SetNillableResourceID(v *string) *OperationAuditLogUpdate {
+	if v != nil {
+		_u.SetResourceID(*v)
+	}
+	return _u
+}
+
+// ClearResourceID clears the value of the "resource_id" field.
+func (_u *OperationAuditLogUpdate) ClearResourceID() *OperationAuditLogUpdate {
+	_u.mutation.ClearResourceID()
 	return _u
 }
 
 // SetAction sets the "action" field.
-func (_u *OperationAuditLogUpdate) SetAction(v string) *OperationAuditLogUpdate {
+func (_u *OperationAuditLogUpdate) SetAction(v operationauditlog.Action) *OperationAuditLogUpdate {
 	_u.mutation.SetAction(v)
 	return _u
 }
 
 // SetNillableAction sets the "action" field if the given value is not nil.
-func (_u *OperationAuditLogUpdate) SetNillableAction(v *string) *OperationAuditLogUpdate {
+func (_u *OperationAuditLogUpdate) SetNillableAction(v *operationauditlog.Action) *OperationAuditLogUpdate {
 	if v != nil {
 		_u.SetAction(*v)
 	}
@@ -116,47 +136,219 @@ func (_u *OperationAuditLogUpdate) ClearAction() *OperationAuditLogUpdate {
 	return _u
 }
 
-// SetOldData sets the "old_data" field.
-func (_u *OperationAuditLogUpdate) SetOldData(v map[string]interface{}) *OperationAuditLogUpdate {
-	_u.mutation.SetOldData(v)
+// SetBeforeData sets the "before_data" field.
+func (_u *OperationAuditLogUpdate) SetBeforeData(v string) *OperationAuditLogUpdate {
+	_u.mutation.SetBeforeData(v)
 	return _u
 }
 
-// ClearOldData clears the value of the "old_data" field.
-func (_u *OperationAuditLogUpdate) ClearOldData() *OperationAuditLogUpdate {
-	_u.mutation.ClearOldData()
-	return _u
-}
-
-// SetNewData sets the "new_data" field.
-func (_u *OperationAuditLogUpdate) SetNewData(v map[string]interface{}) *OperationAuditLogUpdate {
-	_u.mutation.SetNewData(v)
-	return _u
-}
-
-// ClearNewData clears the value of the "new_data" field.
-func (_u *OperationAuditLogUpdate) ClearNewData() *OperationAuditLogUpdate {
-	_u.mutation.ClearNewData()
-	return _u
-}
-
-// SetOperatedAt sets the "operated_at" field.
-func (_u *OperationAuditLogUpdate) SetOperatedAt(v time.Time) *OperationAuditLogUpdate {
-	_u.mutation.SetOperatedAt(v)
-	return _u
-}
-
-// SetNillableOperatedAt sets the "operated_at" field if the given value is not nil.
-func (_u *OperationAuditLogUpdate) SetNillableOperatedAt(v *time.Time) *OperationAuditLogUpdate {
+// SetNillableBeforeData sets the "before_data" field if the given value is not nil.
+func (_u *OperationAuditLogUpdate) SetNillableBeforeData(v *string) *OperationAuditLogUpdate {
 	if v != nil {
-		_u.SetOperatedAt(*v)
+		_u.SetBeforeData(*v)
 	}
 	return _u
 }
 
-// ClearOperatedAt clears the value of the "operated_at" field.
-func (_u *OperationAuditLogUpdate) ClearOperatedAt() *OperationAuditLogUpdate {
-	_u.mutation.ClearOperatedAt()
+// ClearBeforeData clears the value of the "before_data" field.
+func (_u *OperationAuditLogUpdate) ClearBeforeData() *OperationAuditLogUpdate {
+	_u.mutation.ClearBeforeData()
+	return _u
+}
+
+// SetAfterData sets the "after_data" field.
+func (_u *OperationAuditLogUpdate) SetAfterData(v string) *OperationAuditLogUpdate {
+	_u.mutation.SetAfterData(v)
+	return _u
+}
+
+// SetNillableAfterData sets the "after_data" field if the given value is not nil.
+func (_u *OperationAuditLogUpdate) SetNillableAfterData(v *string) *OperationAuditLogUpdate {
+	if v != nil {
+		_u.SetAfterData(*v)
+	}
+	return _u
+}
+
+// ClearAfterData clears the value of the "after_data" field.
+func (_u *OperationAuditLogUpdate) ClearAfterData() *OperationAuditLogUpdate {
+	_u.mutation.ClearAfterData()
+	return _u
+}
+
+// SetSensitiveLevel sets the "sensitive_level" field.
+func (_u *OperationAuditLogUpdate) SetSensitiveLevel(v operationauditlog.SensitiveLevel) *OperationAuditLogUpdate {
+	_u.mutation.SetSensitiveLevel(v)
+	return _u
+}
+
+// SetNillableSensitiveLevel sets the "sensitive_level" field if the given value is not nil.
+func (_u *OperationAuditLogUpdate) SetNillableSensitiveLevel(v *operationauditlog.SensitiveLevel) *OperationAuditLogUpdate {
+	if v != nil {
+		_u.SetSensitiveLevel(*v)
+	}
+	return _u
+}
+
+// ClearSensitiveLevel clears the value of the "sensitive_level" field.
+func (_u *OperationAuditLogUpdate) ClearSensitiveLevel() *OperationAuditLogUpdate {
+	_u.mutation.ClearSensitiveLevel()
+	return _u
+}
+
+// SetRequestID sets the "request_id" field.
+func (_u *OperationAuditLogUpdate) SetRequestID(v string) *OperationAuditLogUpdate {
+	_u.mutation.SetRequestID(v)
+	return _u
+}
+
+// SetNillableRequestID sets the "request_id" field if the given value is not nil.
+func (_u *OperationAuditLogUpdate) SetNillableRequestID(v *string) *OperationAuditLogUpdate {
+	if v != nil {
+		_u.SetRequestID(*v)
+	}
+	return _u
+}
+
+// ClearRequestID clears the value of the "request_id" field.
+func (_u *OperationAuditLogUpdate) ClearRequestID() *OperationAuditLogUpdate {
+	_u.mutation.ClearRequestID()
+	return _u
+}
+
+// SetTraceID sets the "trace_id" field.
+func (_u *OperationAuditLogUpdate) SetTraceID(v string) *OperationAuditLogUpdate {
+	_u.mutation.SetTraceID(v)
+	return _u
+}
+
+// SetNillableTraceID sets the "trace_id" field if the given value is not nil.
+func (_u *OperationAuditLogUpdate) SetNillableTraceID(v *string) *OperationAuditLogUpdate {
+	if v != nil {
+		_u.SetTraceID(*v)
+	}
+	return _u
+}
+
+// ClearTraceID clears the value of the "trace_id" field.
+func (_u *OperationAuditLogUpdate) ClearTraceID() *OperationAuditLogUpdate {
+	_u.mutation.ClearTraceID()
+	return _u
+}
+
+// SetSuccess sets the "success" field.
+func (_u *OperationAuditLogUpdate) SetSuccess(v bool) *OperationAuditLogUpdate {
+	_u.mutation.SetSuccess(v)
+	return _u
+}
+
+// SetNillableSuccess sets the "success" field if the given value is not nil.
+func (_u *OperationAuditLogUpdate) SetNillableSuccess(v *bool) *OperationAuditLogUpdate {
+	if v != nil {
+		_u.SetSuccess(*v)
+	}
+	return _u
+}
+
+// ClearSuccess clears the value of the "success" field.
+func (_u *OperationAuditLogUpdate) ClearSuccess() *OperationAuditLogUpdate {
+	_u.mutation.ClearSuccess()
+	return _u
+}
+
+// SetFailureReason sets the "failure_reason" field.
+func (_u *OperationAuditLogUpdate) SetFailureReason(v string) *OperationAuditLogUpdate {
+	_u.mutation.SetFailureReason(v)
+	return _u
+}
+
+// SetNillableFailureReason sets the "failure_reason" field if the given value is not nil.
+func (_u *OperationAuditLogUpdate) SetNillableFailureReason(v *string) *OperationAuditLogUpdate {
+	if v != nil {
+		_u.SetFailureReason(*v)
+	}
+	return _u
+}
+
+// ClearFailureReason clears the value of the "failure_reason" field.
+func (_u *OperationAuditLogUpdate) ClearFailureReason() *OperationAuditLogUpdate {
+	_u.mutation.ClearFailureReason()
+	return _u
+}
+
+// SetIPAddress sets the "ip_address" field.
+func (_u *OperationAuditLogUpdate) SetIPAddress(v string) *OperationAuditLogUpdate {
+	_u.mutation.SetIPAddress(v)
+	return _u
+}
+
+// SetNillableIPAddress sets the "ip_address" field if the given value is not nil.
+func (_u *OperationAuditLogUpdate) SetNillableIPAddress(v *string) *OperationAuditLogUpdate {
+	if v != nil {
+		_u.SetIPAddress(*v)
+	}
+	return _u
+}
+
+// ClearIPAddress clears the value of the "ip_address" field.
+func (_u *OperationAuditLogUpdate) ClearIPAddress() *OperationAuditLogUpdate {
+	_u.mutation.ClearIPAddress()
+	return _u
+}
+
+// SetGeoLocation sets the "geo_location" field.
+func (_u *OperationAuditLogUpdate) SetGeoLocation(v *auditpb.GeoLocation) *OperationAuditLogUpdate {
+	_u.mutation.SetGeoLocation(v)
+	return _u
+}
+
+// ClearGeoLocation clears the value of the "geo_location" field.
+func (_u *OperationAuditLogUpdate) ClearGeoLocation() *OperationAuditLogUpdate {
+	_u.mutation.ClearGeoLocation()
+	return _u
+}
+
+// SetDeviceInfo sets the "device_info" field.
+func (_u *OperationAuditLogUpdate) SetDeviceInfo(v *auditpb.DeviceInfo) *OperationAuditLogUpdate {
+	_u.mutation.SetDeviceInfo(v)
+	return _u
+}
+
+// ClearDeviceInfo clears the value of the "device_info" field.
+func (_u *OperationAuditLogUpdate) ClearDeviceInfo() *OperationAuditLogUpdate {
+	_u.mutation.ClearDeviceInfo()
+	return _u
+}
+
+// SetLogHash sets the "log_hash" field.
+func (_u *OperationAuditLogUpdate) SetLogHash(v string) *OperationAuditLogUpdate {
+	_u.mutation.SetLogHash(v)
+	return _u
+}
+
+// SetNillableLogHash sets the "log_hash" field if the given value is not nil.
+func (_u *OperationAuditLogUpdate) SetNillableLogHash(v *string) *OperationAuditLogUpdate {
+	if v != nil {
+		_u.SetLogHash(*v)
+	}
+	return _u
+}
+
+// ClearLogHash clears the value of the "log_hash" field.
+func (_u *OperationAuditLogUpdate) ClearLogHash() *OperationAuditLogUpdate {
+	_u.mutation.ClearLogHash()
+	return _u
+}
+
+// SetSignature sets the "signature" field.
+func (_u *OperationAuditLogUpdate) SetSignature(v []byte) *OperationAuditLogUpdate {
+	_u.mutation.SetSignature(v)
+	return _u
+}
+
+// ClearSignature clears the value of the "signature" field.
+func (_u *OperationAuditLogUpdate) ClearSignature() *OperationAuditLogUpdate {
+	_u.mutation.ClearSignature()
 	return _u
 }
 
@@ -199,6 +391,21 @@ func (_u *OperationAuditLogUpdate) check() error {
 			return &ValidationError{Name: "action", err: fmt.Errorf(`ent: validator failed for field "OperationAuditLog.action": %w`, err)}
 		}
 	}
+	if v, ok := _u.mutation.SensitiveLevel(); ok {
+		if err := operationauditlog.SensitiveLevelValidator(v); err != nil {
+			return &ValidationError{Name: "sensitive_level", err: fmt.Errorf(`ent: validator failed for field "OperationAuditLog.sensitive_level": %w`, err)}
+		}
+	}
+	if v, ok := _u.mutation.GeoLocation(); ok {
+		if err := v.Validate(); err != nil {
+			return &ValidationError{Name: "geo_location", err: fmt.Errorf(`ent: validator failed for field "OperationAuditLog.geo_location": %w`, err)}
+		}
+	}
+	if v, ok := _u.mutation.DeviceInfo(); ok {
+		if err := v.Validate(); err != nil {
+			return &ValidationError{Name: "device_info", err: fmt.Errorf(`ent: validator failed for field "OperationAuditLog.device_info": %w`, err)}
+		}
+	}
 	return nil
 }
 
@@ -223,53 +430,113 @@ func (_u *OperationAuditLogUpdate) sqlSave(ctx context.Context) (_node int, err 
 	if _u.mutation.CreatedAtCleared() {
 		_spec.ClearField(operationauditlog.FieldCreatedAt, field.TypeTime)
 	}
-	if value, ok := _u.mutation.UpdatedAt(); ok {
-		_spec.SetField(operationauditlog.FieldUpdatedAt, field.TypeTime, value)
-	}
-	if _u.mutation.UpdatedAtCleared() {
-		_spec.ClearField(operationauditlog.FieldUpdatedAt, field.TypeTime)
-	}
-	if value, ok := _u.mutation.DeletedAt(); ok {
-		_spec.SetField(operationauditlog.FieldDeletedAt, field.TypeTime, value)
-	}
-	if _u.mutation.DeletedAtCleared() {
-		_spec.ClearField(operationauditlog.FieldDeletedAt, field.TypeTime)
-	}
 	if _u.mutation.TenantIDCleared() {
 		_spec.ClearField(operationauditlog.FieldTenantID, field.TypeUint32)
 	}
-	if value, ok := _u.mutation.OperatorID(); ok {
-		_spec.SetField(operationauditlog.FieldOperatorID, field.TypeUint32, value)
+	if value, ok := _u.mutation.UserID(); ok {
+		_spec.SetField(operationauditlog.FieldUserID, field.TypeUint32, value)
 	}
-	if value, ok := _u.mutation.AddedOperatorID(); ok {
-		_spec.AddField(operationauditlog.FieldOperatorID, field.TypeUint32, value)
+	if value, ok := _u.mutation.AddedUserID(); ok {
+		_spec.AddField(operationauditlog.FieldUserID, field.TypeUint32, value)
 	}
-	if _u.mutation.OperatorIDCleared() {
-		_spec.ClearField(operationauditlog.FieldOperatorID, field.TypeUint32)
+	if _u.mutation.UserIDCleared() {
+		_spec.ClearField(operationauditlog.FieldUserID, field.TypeUint32)
+	}
+	if value, ok := _u.mutation.Username(); ok {
+		_spec.SetField(operationauditlog.FieldUsername, field.TypeString, value)
+	}
+	if _u.mutation.UsernameCleared() {
+		_spec.ClearField(operationauditlog.FieldUsername, field.TypeString)
+	}
+	if value, ok := _u.mutation.ResourceType(); ok {
+		_spec.SetField(operationauditlog.FieldResourceType, field.TypeString, value)
+	}
+	if _u.mutation.ResourceTypeCleared() {
+		_spec.ClearField(operationauditlog.FieldResourceType, field.TypeString)
+	}
+	if value, ok := _u.mutation.ResourceID(); ok {
+		_spec.SetField(operationauditlog.FieldResourceID, field.TypeString, value)
+	}
+	if _u.mutation.ResourceIDCleared() {
+		_spec.ClearField(operationauditlog.FieldResourceID, field.TypeString)
 	}
 	if value, ok := _u.mutation.Action(); ok {
-		_spec.SetField(operationauditlog.FieldAction, field.TypeString, value)
+		_spec.SetField(operationauditlog.FieldAction, field.TypeEnum, value)
 	}
 	if _u.mutation.ActionCleared() {
-		_spec.ClearField(operationauditlog.FieldAction, field.TypeString)
+		_spec.ClearField(operationauditlog.FieldAction, field.TypeEnum)
 	}
-	if value, ok := _u.mutation.OldData(); ok {
-		_spec.SetField(operationauditlog.FieldOldData, field.TypeJSON, value)
+	if value, ok := _u.mutation.BeforeData(); ok {
+		_spec.SetField(operationauditlog.FieldBeforeData, field.TypeString, value)
 	}
-	if _u.mutation.OldDataCleared() {
-		_spec.ClearField(operationauditlog.FieldOldData, field.TypeJSON)
+	if _u.mutation.BeforeDataCleared() {
+		_spec.ClearField(operationauditlog.FieldBeforeData, field.TypeString)
 	}
-	if value, ok := _u.mutation.NewData(); ok {
-		_spec.SetField(operationauditlog.FieldNewData, field.TypeJSON, value)
+	if value, ok := _u.mutation.AfterData(); ok {
+		_spec.SetField(operationauditlog.FieldAfterData, field.TypeString, value)
 	}
-	if _u.mutation.NewDataCleared() {
-		_spec.ClearField(operationauditlog.FieldNewData, field.TypeJSON)
+	if _u.mutation.AfterDataCleared() {
+		_spec.ClearField(operationauditlog.FieldAfterData, field.TypeString)
 	}
-	if value, ok := _u.mutation.OperatedAt(); ok {
-		_spec.SetField(operationauditlog.FieldOperatedAt, field.TypeTime, value)
+	if value, ok := _u.mutation.SensitiveLevel(); ok {
+		_spec.SetField(operationauditlog.FieldSensitiveLevel, field.TypeEnum, value)
 	}
-	if _u.mutation.OperatedAtCleared() {
-		_spec.ClearField(operationauditlog.FieldOperatedAt, field.TypeTime)
+	if _u.mutation.SensitiveLevelCleared() {
+		_spec.ClearField(operationauditlog.FieldSensitiveLevel, field.TypeEnum)
+	}
+	if value, ok := _u.mutation.RequestID(); ok {
+		_spec.SetField(operationauditlog.FieldRequestID, field.TypeString, value)
+	}
+	if _u.mutation.RequestIDCleared() {
+		_spec.ClearField(operationauditlog.FieldRequestID, field.TypeString)
+	}
+	if value, ok := _u.mutation.TraceID(); ok {
+		_spec.SetField(operationauditlog.FieldTraceID, field.TypeString, value)
+	}
+	if _u.mutation.TraceIDCleared() {
+		_spec.ClearField(operationauditlog.FieldTraceID, field.TypeString)
+	}
+	if value, ok := _u.mutation.Success(); ok {
+		_spec.SetField(operationauditlog.FieldSuccess, field.TypeBool, value)
+	}
+	if _u.mutation.SuccessCleared() {
+		_spec.ClearField(operationauditlog.FieldSuccess, field.TypeBool)
+	}
+	if value, ok := _u.mutation.FailureReason(); ok {
+		_spec.SetField(operationauditlog.FieldFailureReason, field.TypeString, value)
+	}
+	if _u.mutation.FailureReasonCleared() {
+		_spec.ClearField(operationauditlog.FieldFailureReason, field.TypeString)
+	}
+	if value, ok := _u.mutation.IPAddress(); ok {
+		_spec.SetField(operationauditlog.FieldIPAddress, field.TypeString, value)
+	}
+	if _u.mutation.IPAddressCleared() {
+		_spec.ClearField(operationauditlog.FieldIPAddress, field.TypeString)
+	}
+	if value, ok := _u.mutation.GeoLocation(); ok {
+		_spec.SetField(operationauditlog.FieldGeoLocation, field.TypeJSON, value)
+	}
+	if _u.mutation.GeoLocationCleared() {
+		_spec.ClearField(operationauditlog.FieldGeoLocation, field.TypeJSON)
+	}
+	if value, ok := _u.mutation.DeviceInfo(); ok {
+		_spec.SetField(operationauditlog.FieldDeviceInfo, field.TypeJSON, value)
+	}
+	if _u.mutation.DeviceInfoCleared() {
+		_spec.ClearField(operationauditlog.FieldDeviceInfo, field.TypeJSON)
+	}
+	if value, ok := _u.mutation.LogHash(); ok {
+		_spec.SetField(operationauditlog.FieldLogHash, field.TypeString, value)
+	}
+	if _u.mutation.LogHashCleared() {
+		_spec.ClearField(operationauditlog.FieldLogHash, field.TypeString)
+	}
+	if value, ok := _u.mutation.Signature(); ok {
+		_spec.SetField(operationauditlog.FieldSignature, field.TypeBytes, value)
+	}
+	if _u.mutation.SignatureCleared() {
+		_spec.ClearField(operationauditlog.FieldSignature, field.TypeBytes)
 	}
 	_spec.AddModifiers(_u.modifiers...)
 	if _node, err = sqlgraph.UpdateNodes(ctx, _u.driver, _spec); err != nil {
@@ -293,81 +560,101 @@ type OperationAuditLogUpdateOne struct {
 	modifiers []func(*sql.UpdateBuilder)
 }
 
-// SetUpdatedAt sets the "updated_at" field.
-func (_u *OperationAuditLogUpdateOne) SetUpdatedAt(v time.Time) *OperationAuditLogUpdateOne {
-	_u.mutation.SetUpdatedAt(v)
+// SetUserID sets the "user_id" field.
+func (_u *OperationAuditLogUpdateOne) SetUserID(v uint32) *OperationAuditLogUpdateOne {
+	_u.mutation.ResetUserID()
+	_u.mutation.SetUserID(v)
 	return _u
 }
 
-// SetNillableUpdatedAt sets the "updated_at" field if the given value is not nil.
-func (_u *OperationAuditLogUpdateOne) SetNillableUpdatedAt(v *time.Time) *OperationAuditLogUpdateOne {
+// SetNillableUserID sets the "user_id" field if the given value is not nil.
+func (_u *OperationAuditLogUpdateOne) SetNillableUserID(v *uint32) *OperationAuditLogUpdateOne {
 	if v != nil {
-		_u.SetUpdatedAt(*v)
+		_u.SetUserID(*v)
 	}
 	return _u
 }
 
-// ClearUpdatedAt clears the value of the "updated_at" field.
-func (_u *OperationAuditLogUpdateOne) ClearUpdatedAt() *OperationAuditLogUpdateOne {
-	_u.mutation.ClearUpdatedAt()
+// AddUserID adds value to the "user_id" field.
+func (_u *OperationAuditLogUpdateOne) AddUserID(v int32) *OperationAuditLogUpdateOne {
+	_u.mutation.AddUserID(v)
 	return _u
 }
 
-// SetDeletedAt sets the "deleted_at" field.
-func (_u *OperationAuditLogUpdateOne) SetDeletedAt(v time.Time) *OperationAuditLogUpdateOne {
-	_u.mutation.SetDeletedAt(v)
+// ClearUserID clears the value of the "user_id" field.
+func (_u *OperationAuditLogUpdateOne) ClearUserID() *OperationAuditLogUpdateOne {
+	_u.mutation.ClearUserID()
 	return _u
 }
 
-// SetNillableDeletedAt sets the "deleted_at" field if the given value is not nil.
-func (_u *OperationAuditLogUpdateOne) SetNillableDeletedAt(v *time.Time) *OperationAuditLogUpdateOne {
+// SetUsername sets the "username" field.
+func (_u *OperationAuditLogUpdateOne) SetUsername(v string) *OperationAuditLogUpdateOne {
+	_u.mutation.SetUsername(v)
+	return _u
+}
+
+// SetNillableUsername sets the "username" field if the given value is not nil.
+func (_u *OperationAuditLogUpdateOne) SetNillableUsername(v *string) *OperationAuditLogUpdateOne {
 	if v != nil {
-		_u.SetDeletedAt(*v)
+		_u.SetUsername(*v)
 	}
 	return _u
 }
 
-// ClearDeletedAt clears the value of the "deleted_at" field.
-func (_u *OperationAuditLogUpdateOne) ClearDeletedAt() *OperationAuditLogUpdateOne {
-	_u.mutation.ClearDeletedAt()
+// ClearUsername clears the value of the "username" field.
+func (_u *OperationAuditLogUpdateOne) ClearUsername() *OperationAuditLogUpdateOne {
+	_u.mutation.ClearUsername()
 	return _u
 }
 
-// SetOperatorID sets the "operator_id" field.
-func (_u *OperationAuditLogUpdateOne) SetOperatorID(v uint32) *OperationAuditLogUpdateOne {
-	_u.mutation.ResetOperatorID()
-	_u.mutation.SetOperatorID(v)
+// SetResourceType sets the "resource_type" field.
+func (_u *OperationAuditLogUpdateOne) SetResourceType(v string) *OperationAuditLogUpdateOne {
+	_u.mutation.SetResourceType(v)
 	return _u
 }
 
-// SetNillableOperatorID sets the "operator_id" field if the given value is not nil.
-func (_u *OperationAuditLogUpdateOne) SetNillableOperatorID(v *uint32) *OperationAuditLogUpdateOne {
+// SetNillableResourceType sets the "resource_type" field if the given value is not nil.
+func (_u *OperationAuditLogUpdateOne) SetNillableResourceType(v *string) *OperationAuditLogUpdateOne {
 	if v != nil {
-		_u.SetOperatorID(*v)
+		_u.SetResourceType(*v)
 	}
 	return _u
 }
 
-// AddOperatorID adds value to the "operator_id" field.
-func (_u *OperationAuditLogUpdateOne) AddOperatorID(v int32) *OperationAuditLogUpdateOne {
-	_u.mutation.AddOperatorID(v)
+// ClearResourceType clears the value of the "resource_type" field.
+func (_u *OperationAuditLogUpdateOne) ClearResourceType() *OperationAuditLogUpdateOne {
+	_u.mutation.ClearResourceType()
 	return _u
 }
 
-// ClearOperatorID clears the value of the "operator_id" field.
-func (_u *OperationAuditLogUpdateOne) ClearOperatorID() *OperationAuditLogUpdateOne {
-	_u.mutation.ClearOperatorID()
+// SetResourceID sets the "resource_id" field.
+func (_u *OperationAuditLogUpdateOne) SetResourceID(v string) *OperationAuditLogUpdateOne {
+	_u.mutation.SetResourceID(v)
+	return _u
+}
+
+// SetNillableResourceID sets the "resource_id" field if the given value is not nil.
+func (_u *OperationAuditLogUpdateOne) SetNillableResourceID(v *string) *OperationAuditLogUpdateOne {
+	if v != nil {
+		_u.SetResourceID(*v)
+	}
+	return _u
+}
+
+// ClearResourceID clears the value of the "resource_id" field.
+func (_u *OperationAuditLogUpdateOne) ClearResourceID() *OperationAuditLogUpdateOne {
+	_u.mutation.ClearResourceID()
 	return _u
 }
 
 // SetAction sets the "action" field.
-func (_u *OperationAuditLogUpdateOne) SetAction(v string) *OperationAuditLogUpdateOne {
+func (_u *OperationAuditLogUpdateOne) SetAction(v operationauditlog.Action) *OperationAuditLogUpdateOne {
 	_u.mutation.SetAction(v)
 	return _u
 }
 
 // SetNillableAction sets the "action" field if the given value is not nil.
-func (_u *OperationAuditLogUpdateOne) SetNillableAction(v *string) *OperationAuditLogUpdateOne {
+func (_u *OperationAuditLogUpdateOne) SetNillableAction(v *operationauditlog.Action) *OperationAuditLogUpdateOne {
 	if v != nil {
 		_u.SetAction(*v)
 	}
@@ -380,47 +667,219 @@ func (_u *OperationAuditLogUpdateOne) ClearAction() *OperationAuditLogUpdateOne 
 	return _u
 }
 
-// SetOldData sets the "old_data" field.
-func (_u *OperationAuditLogUpdateOne) SetOldData(v map[string]interface{}) *OperationAuditLogUpdateOne {
-	_u.mutation.SetOldData(v)
+// SetBeforeData sets the "before_data" field.
+func (_u *OperationAuditLogUpdateOne) SetBeforeData(v string) *OperationAuditLogUpdateOne {
+	_u.mutation.SetBeforeData(v)
 	return _u
 }
 
-// ClearOldData clears the value of the "old_data" field.
-func (_u *OperationAuditLogUpdateOne) ClearOldData() *OperationAuditLogUpdateOne {
-	_u.mutation.ClearOldData()
-	return _u
-}
-
-// SetNewData sets the "new_data" field.
-func (_u *OperationAuditLogUpdateOne) SetNewData(v map[string]interface{}) *OperationAuditLogUpdateOne {
-	_u.mutation.SetNewData(v)
-	return _u
-}
-
-// ClearNewData clears the value of the "new_data" field.
-func (_u *OperationAuditLogUpdateOne) ClearNewData() *OperationAuditLogUpdateOne {
-	_u.mutation.ClearNewData()
-	return _u
-}
-
-// SetOperatedAt sets the "operated_at" field.
-func (_u *OperationAuditLogUpdateOne) SetOperatedAt(v time.Time) *OperationAuditLogUpdateOne {
-	_u.mutation.SetOperatedAt(v)
-	return _u
-}
-
-// SetNillableOperatedAt sets the "operated_at" field if the given value is not nil.
-func (_u *OperationAuditLogUpdateOne) SetNillableOperatedAt(v *time.Time) *OperationAuditLogUpdateOne {
+// SetNillableBeforeData sets the "before_data" field if the given value is not nil.
+func (_u *OperationAuditLogUpdateOne) SetNillableBeforeData(v *string) *OperationAuditLogUpdateOne {
 	if v != nil {
-		_u.SetOperatedAt(*v)
+		_u.SetBeforeData(*v)
 	}
 	return _u
 }
 
-// ClearOperatedAt clears the value of the "operated_at" field.
-func (_u *OperationAuditLogUpdateOne) ClearOperatedAt() *OperationAuditLogUpdateOne {
-	_u.mutation.ClearOperatedAt()
+// ClearBeforeData clears the value of the "before_data" field.
+func (_u *OperationAuditLogUpdateOne) ClearBeforeData() *OperationAuditLogUpdateOne {
+	_u.mutation.ClearBeforeData()
+	return _u
+}
+
+// SetAfterData sets the "after_data" field.
+func (_u *OperationAuditLogUpdateOne) SetAfterData(v string) *OperationAuditLogUpdateOne {
+	_u.mutation.SetAfterData(v)
+	return _u
+}
+
+// SetNillableAfterData sets the "after_data" field if the given value is not nil.
+func (_u *OperationAuditLogUpdateOne) SetNillableAfterData(v *string) *OperationAuditLogUpdateOne {
+	if v != nil {
+		_u.SetAfterData(*v)
+	}
+	return _u
+}
+
+// ClearAfterData clears the value of the "after_data" field.
+func (_u *OperationAuditLogUpdateOne) ClearAfterData() *OperationAuditLogUpdateOne {
+	_u.mutation.ClearAfterData()
+	return _u
+}
+
+// SetSensitiveLevel sets the "sensitive_level" field.
+func (_u *OperationAuditLogUpdateOne) SetSensitiveLevel(v operationauditlog.SensitiveLevel) *OperationAuditLogUpdateOne {
+	_u.mutation.SetSensitiveLevel(v)
+	return _u
+}
+
+// SetNillableSensitiveLevel sets the "sensitive_level" field if the given value is not nil.
+func (_u *OperationAuditLogUpdateOne) SetNillableSensitiveLevel(v *operationauditlog.SensitiveLevel) *OperationAuditLogUpdateOne {
+	if v != nil {
+		_u.SetSensitiveLevel(*v)
+	}
+	return _u
+}
+
+// ClearSensitiveLevel clears the value of the "sensitive_level" field.
+func (_u *OperationAuditLogUpdateOne) ClearSensitiveLevel() *OperationAuditLogUpdateOne {
+	_u.mutation.ClearSensitiveLevel()
+	return _u
+}
+
+// SetRequestID sets the "request_id" field.
+func (_u *OperationAuditLogUpdateOne) SetRequestID(v string) *OperationAuditLogUpdateOne {
+	_u.mutation.SetRequestID(v)
+	return _u
+}
+
+// SetNillableRequestID sets the "request_id" field if the given value is not nil.
+func (_u *OperationAuditLogUpdateOne) SetNillableRequestID(v *string) *OperationAuditLogUpdateOne {
+	if v != nil {
+		_u.SetRequestID(*v)
+	}
+	return _u
+}
+
+// ClearRequestID clears the value of the "request_id" field.
+func (_u *OperationAuditLogUpdateOne) ClearRequestID() *OperationAuditLogUpdateOne {
+	_u.mutation.ClearRequestID()
+	return _u
+}
+
+// SetTraceID sets the "trace_id" field.
+func (_u *OperationAuditLogUpdateOne) SetTraceID(v string) *OperationAuditLogUpdateOne {
+	_u.mutation.SetTraceID(v)
+	return _u
+}
+
+// SetNillableTraceID sets the "trace_id" field if the given value is not nil.
+func (_u *OperationAuditLogUpdateOne) SetNillableTraceID(v *string) *OperationAuditLogUpdateOne {
+	if v != nil {
+		_u.SetTraceID(*v)
+	}
+	return _u
+}
+
+// ClearTraceID clears the value of the "trace_id" field.
+func (_u *OperationAuditLogUpdateOne) ClearTraceID() *OperationAuditLogUpdateOne {
+	_u.mutation.ClearTraceID()
+	return _u
+}
+
+// SetSuccess sets the "success" field.
+func (_u *OperationAuditLogUpdateOne) SetSuccess(v bool) *OperationAuditLogUpdateOne {
+	_u.mutation.SetSuccess(v)
+	return _u
+}
+
+// SetNillableSuccess sets the "success" field if the given value is not nil.
+func (_u *OperationAuditLogUpdateOne) SetNillableSuccess(v *bool) *OperationAuditLogUpdateOne {
+	if v != nil {
+		_u.SetSuccess(*v)
+	}
+	return _u
+}
+
+// ClearSuccess clears the value of the "success" field.
+func (_u *OperationAuditLogUpdateOne) ClearSuccess() *OperationAuditLogUpdateOne {
+	_u.mutation.ClearSuccess()
+	return _u
+}
+
+// SetFailureReason sets the "failure_reason" field.
+func (_u *OperationAuditLogUpdateOne) SetFailureReason(v string) *OperationAuditLogUpdateOne {
+	_u.mutation.SetFailureReason(v)
+	return _u
+}
+
+// SetNillableFailureReason sets the "failure_reason" field if the given value is not nil.
+func (_u *OperationAuditLogUpdateOne) SetNillableFailureReason(v *string) *OperationAuditLogUpdateOne {
+	if v != nil {
+		_u.SetFailureReason(*v)
+	}
+	return _u
+}
+
+// ClearFailureReason clears the value of the "failure_reason" field.
+func (_u *OperationAuditLogUpdateOne) ClearFailureReason() *OperationAuditLogUpdateOne {
+	_u.mutation.ClearFailureReason()
+	return _u
+}
+
+// SetIPAddress sets the "ip_address" field.
+func (_u *OperationAuditLogUpdateOne) SetIPAddress(v string) *OperationAuditLogUpdateOne {
+	_u.mutation.SetIPAddress(v)
+	return _u
+}
+
+// SetNillableIPAddress sets the "ip_address" field if the given value is not nil.
+func (_u *OperationAuditLogUpdateOne) SetNillableIPAddress(v *string) *OperationAuditLogUpdateOne {
+	if v != nil {
+		_u.SetIPAddress(*v)
+	}
+	return _u
+}
+
+// ClearIPAddress clears the value of the "ip_address" field.
+func (_u *OperationAuditLogUpdateOne) ClearIPAddress() *OperationAuditLogUpdateOne {
+	_u.mutation.ClearIPAddress()
+	return _u
+}
+
+// SetGeoLocation sets the "geo_location" field.
+func (_u *OperationAuditLogUpdateOne) SetGeoLocation(v *auditpb.GeoLocation) *OperationAuditLogUpdateOne {
+	_u.mutation.SetGeoLocation(v)
+	return _u
+}
+
+// ClearGeoLocation clears the value of the "geo_location" field.
+func (_u *OperationAuditLogUpdateOne) ClearGeoLocation() *OperationAuditLogUpdateOne {
+	_u.mutation.ClearGeoLocation()
+	return _u
+}
+
+// SetDeviceInfo sets the "device_info" field.
+func (_u *OperationAuditLogUpdateOne) SetDeviceInfo(v *auditpb.DeviceInfo) *OperationAuditLogUpdateOne {
+	_u.mutation.SetDeviceInfo(v)
+	return _u
+}
+
+// ClearDeviceInfo clears the value of the "device_info" field.
+func (_u *OperationAuditLogUpdateOne) ClearDeviceInfo() *OperationAuditLogUpdateOne {
+	_u.mutation.ClearDeviceInfo()
+	return _u
+}
+
+// SetLogHash sets the "log_hash" field.
+func (_u *OperationAuditLogUpdateOne) SetLogHash(v string) *OperationAuditLogUpdateOne {
+	_u.mutation.SetLogHash(v)
+	return _u
+}
+
+// SetNillableLogHash sets the "log_hash" field if the given value is not nil.
+func (_u *OperationAuditLogUpdateOne) SetNillableLogHash(v *string) *OperationAuditLogUpdateOne {
+	if v != nil {
+		_u.SetLogHash(*v)
+	}
+	return _u
+}
+
+// ClearLogHash clears the value of the "log_hash" field.
+func (_u *OperationAuditLogUpdateOne) ClearLogHash() *OperationAuditLogUpdateOne {
+	_u.mutation.ClearLogHash()
+	return _u
+}
+
+// SetSignature sets the "signature" field.
+func (_u *OperationAuditLogUpdateOne) SetSignature(v []byte) *OperationAuditLogUpdateOne {
+	_u.mutation.SetSignature(v)
+	return _u
+}
+
+// ClearSignature clears the value of the "signature" field.
+func (_u *OperationAuditLogUpdateOne) ClearSignature() *OperationAuditLogUpdateOne {
+	_u.mutation.ClearSignature()
 	return _u
 }
 
@@ -476,6 +935,21 @@ func (_u *OperationAuditLogUpdateOne) check() error {
 			return &ValidationError{Name: "action", err: fmt.Errorf(`ent: validator failed for field "OperationAuditLog.action": %w`, err)}
 		}
 	}
+	if v, ok := _u.mutation.SensitiveLevel(); ok {
+		if err := operationauditlog.SensitiveLevelValidator(v); err != nil {
+			return &ValidationError{Name: "sensitive_level", err: fmt.Errorf(`ent: validator failed for field "OperationAuditLog.sensitive_level": %w`, err)}
+		}
+	}
+	if v, ok := _u.mutation.GeoLocation(); ok {
+		if err := v.Validate(); err != nil {
+			return &ValidationError{Name: "geo_location", err: fmt.Errorf(`ent: validator failed for field "OperationAuditLog.geo_location": %w`, err)}
+		}
+	}
+	if v, ok := _u.mutation.DeviceInfo(); ok {
+		if err := v.Validate(); err != nil {
+			return &ValidationError{Name: "device_info", err: fmt.Errorf(`ent: validator failed for field "OperationAuditLog.device_info": %w`, err)}
+		}
+	}
 	return nil
 }
 
@@ -517,53 +991,113 @@ func (_u *OperationAuditLogUpdateOne) sqlSave(ctx context.Context) (_node *Opera
 	if _u.mutation.CreatedAtCleared() {
 		_spec.ClearField(operationauditlog.FieldCreatedAt, field.TypeTime)
 	}
-	if value, ok := _u.mutation.UpdatedAt(); ok {
-		_spec.SetField(operationauditlog.FieldUpdatedAt, field.TypeTime, value)
-	}
-	if _u.mutation.UpdatedAtCleared() {
-		_spec.ClearField(operationauditlog.FieldUpdatedAt, field.TypeTime)
-	}
-	if value, ok := _u.mutation.DeletedAt(); ok {
-		_spec.SetField(operationauditlog.FieldDeletedAt, field.TypeTime, value)
-	}
-	if _u.mutation.DeletedAtCleared() {
-		_spec.ClearField(operationauditlog.FieldDeletedAt, field.TypeTime)
-	}
 	if _u.mutation.TenantIDCleared() {
 		_spec.ClearField(operationauditlog.FieldTenantID, field.TypeUint32)
 	}
-	if value, ok := _u.mutation.OperatorID(); ok {
-		_spec.SetField(operationauditlog.FieldOperatorID, field.TypeUint32, value)
+	if value, ok := _u.mutation.UserID(); ok {
+		_spec.SetField(operationauditlog.FieldUserID, field.TypeUint32, value)
 	}
-	if value, ok := _u.mutation.AddedOperatorID(); ok {
-		_spec.AddField(operationauditlog.FieldOperatorID, field.TypeUint32, value)
+	if value, ok := _u.mutation.AddedUserID(); ok {
+		_spec.AddField(operationauditlog.FieldUserID, field.TypeUint32, value)
 	}
-	if _u.mutation.OperatorIDCleared() {
-		_spec.ClearField(operationauditlog.FieldOperatorID, field.TypeUint32)
+	if _u.mutation.UserIDCleared() {
+		_spec.ClearField(operationauditlog.FieldUserID, field.TypeUint32)
+	}
+	if value, ok := _u.mutation.Username(); ok {
+		_spec.SetField(operationauditlog.FieldUsername, field.TypeString, value)
+	}
+	if _u.mutation.UsernameCleared() {
+		_spec.ClearField(operationauditlog.FieldUsername, field.TypeString)
+	}
+	if value, ok := _u.mutation.ResourceType(); ok {
+		_spec.SetField(operationauditlog.FieldResourceType, field.TypeString, value)
+	}
+	if _u.mutation.ResourceTypeCleared() {
+		_spec.ClearField(operationauditlog.FieldResourceType, field.TypeString)
+	}
+	if value, ok := _u.mutation.ResourceID(); ok {
+		_spec.SetField(operationauditlog.FieldResourceID, field.TypeString, value)
+	}
+	if _u.mutation.ResourceIDCleared() {
+		_spec.ClearField(operationauditlog.FieldResourceID, field.TypeString)
 	}
 	if value, ok := _u.mutation.Action(); ok {
-		_spec.SetField(operationauditlog.FieldAction, field.TypeString, value)
+		_spec.SetField(operationauditlog.FieldAction, field.TypeEnum, value)
 	}
 	if _u.mutation.ActionCleared() {
-		_spec.ClearField(operationauditlog.FieldAction, field.TypeString)
+		_spec.ClearField(operationauditlog.FieldAction, field.TypeEnum)
 	}
-	if value, ok := _u.mutation.OldData(); ok {
-		_spec.SetField(operationauditlog.FieldOldData, field.TypeJSON, value)
+	if value, ok := _u.mutation.BeforeData(); ok {
+		_spec.SetField(operationauditlog.FieldBeforeData, field.TypeString, value)
 	}
-	if _u.mutation.OldDataCleared() {
-		_spec.ClearField(operationauditlog.FieldOldData, field.TypeJSON)
+	if _u.mutation.BeforeDataCleared() {
+		_spec.ClearField(operationauditlog.FieldBeforeData, field.TypeString)
 	}
-	if value, ok := _u.mutation.NewData(); ok {
-		_spec.SetField(operationauditlog.FieldNewData, field.TypeJSON, value)
+	if value, ok := _u.mutation.AfterData(); ok {
+		_spec.SetField(operationauditlog.FieldAfterData, field.TypeString, value)
 	}
-	if _u.mutation.NewDataCleared() {
-		_spec.ClearField(operationauditlog.FieldNewData, field.TypeJSON)
+	if _u.mutation.AfterDataCleared() {
+		_spec.ClearField(operationauditlog.FieldAfterData, field.TypeString)
 	}
-	if value, ok := _u.mutation.OperatedAt(); ok {
-		_spec.SetField(operationauditlog.FieldOperatedAt, field.TypeTime, value)
+	if value, ok := _u.mutation.SensitiveLevel(); ok {
+		_spec.SetField(operationauditlog.FieldSensitiveLevel, field.TypeEnum, value)
 	}
-	if _u.mutation.OperatedAtCleared() {
-		_spec.ClearField(operationauditlog.FieldOperatedAt, field.TypeTime)
+	if _u.mutation.SensitiveLevelCleared() {
+		_spec.ClearField(operationauditlog.FieldSensitiveLevel, field.TypeEnum)
+	}
+	if value, ok := _u.mutation.RequestID(); ok {
+		_spec.SetField(operationauditlog.FieldRequestID, field.TypeString, value)
+	}
+	if _u.mutation.RequestIDCleared() {
+		_spec.ClearField(operationauditlog.FieldRequestID, field.TypeString)
+	}
+	if value, ok := _u.mutation.TraceID(); ok {
+		_spec.SetField(operationauditlog.FieldTraceID, field.TypeString, value)
+	}
+	if _u.mutation.TraceIDCleared() {
+		_spec.ClearField(operationauditlog.FieldTraceID, field.TypeString)
+	}
+	if value, ok := _u.mutation.Success(); ok {
+		_spec.SetField(operationauditlog.FieldSuccess, field.TypeBool, value)
+	}
+	if _u.mutation.SuccessCleared() {
+		_spec.ClearField(operationauditlog.FieldSuccess, field.TypeBool)
+	}
+	if value, ok := _u.mutation.FailureReason(); ok {
+		_spec.SetField(operationauditlog.FieldFailureReason, field.TypeString, value)
+	}
+	if _u.mutation.FailureReasonCleared() {
+		_spec.ClearField(operationauditlog.FieldFailureReason, field.TypeString)
+	}
+	if value, ok := _u.mutation.IPAddress(); ok {
+		_spec.SetField(operationauditlog.FieldIPAddress, field.TypeString, value)
+	}
+	if _u.mutation.IPAddressCleared() {
+		_spec.ClearField(operationauditlog.FieldIPAddress, field.TypeString)
+	}
+	if value, ok := _u.mutation.GeoLocation(); ok {
+		_spec.SetField(operationauditlog.FieldGeoLocation, field.TypeJSON, value)
+	}
+	if _u.mutation.GeoLocationCleared() {
+		_spec.ClearField(operationauditlog.FieldGeoLocation, field.TypeJSON)
+	}
+	if value, ok := _u.mutation.DeviceInfo(); ok {
+		_spec.SetField(operationauditlog.FieldDeviceInfo, field.TypeJSON, value)
+	}
+	if _u.mutation.DeviceInfoCleared() {
+		_spec.ClearField(operationauditlog.FieldDeviceInfo, field.TypeJSON)
+	}
+	if value, ok := _u.mutation.LogHash(); ok {
+		_spec.SetField(operationauditlog.FieldLogHash, field.TypeString, value)
+	}
+	if _u.mutation.LogHashCleared() {
+		_spec.ClearField(operationauditlog.FieldLogHash, field.TypeString)
+	}
+	if value, ok := _u.mutation.Signature(); ok {
+		_spec.SetField(operationauditlog.FieldSignature, field.TypeBytes, value)
+	}
+	if _u.mutation.SignatureCleared() {
+		_spec.ClearField(operationauditlog.FieldSignature, field.TypeBytes)
 	}
 	_spec.AddModifiers(_u.modifiers...)
 	_node = &OperationAuditLog{config: _u.config}

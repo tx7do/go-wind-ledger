@@ -150,46 +150,6 @@ func (_u *PermissionUpdate) ClearDeletedBy() *PermissionUpdate {
 	return _u
 }
 
-// SetRemark sets the "remark" field.
-func (_u *PermissionUpdate) SetRemark(v string) *PermissionUpdate {
-	_u.mutation.SetRemark(v)
-	return _u
-}
-
-// SetNillableRemark sets the "remark" field if the given value is not nil.
-func (_u *PermissionUpdate) SetNillableRemark(v *string) *PermissionUpdate {
-	if v != nil {
-		_u.SetRemark(*v)
-	}
-	return _u
-}
-
-// ClearRemark clears the value of the "remark" field.
-func (_u *PermissionUpdate) ClearRemark() *PermissionUpdate {
-	_u.mutation.ClearRemark()
-	return _u
-}
-
-// SetCode sets the "code" field.
-func (_u *PermissionUpdate) SetCode(v string) *PermissionUpdate {
-	_u.mutation.SetCode(v)
-	return _u
-}
-
-// SetNillableCode sets the "code" field if the given value is not nil.
-func (_u *PermissionUpdate) SetNillableCode(v *string) *PermissionUpdate {
-	if v != nil {
-		_u.SetCode(*v)
-	}
-	return _u
-}
-
-// ClearCode clears the value of the "code" field.
-func (_u *PermissionUpdate) ClearCode() *PermissionUpdate {
-	_u.mutation.ClearCode()
-	return _u
-}
-
 // SetStatus sets the "status" field.
 func (_u *PermissionUpdate) SetStatus(v permission.Status) *PermissionUpdate {
 	_u.mutation.SetStatus(v)
@@ -201,12 +161,6 @@ func (_u *PermissionUpdate) SetNillableStatus(v *permission.Status) *PermissionU
 	if v != nil {
 		_u.SetStatus(*v)
 	}
-	return _u
-}
-
-// ClearStatus clears the value of the "status" field.
-func (_u *PermissionUpdate) ClearStatus() *PermissionUpdate {
-	_u.mutation.ClearStatus()
 	return _u
 }
 
@@ -227,6 +181,34 @@ func (_u *PermissionUpdate) SetNillableDescription(v *string) *PermissionUpdate 
 // ClearDescription clears the value of the "description" field.
 func (_u *PermissionUpdate) ClearDescription() *PermissionUpdate {
 	_u.mutation.ClearDescription()
+	return _u
+}
+
+// SetName sets the "name" field.
+func (_u *PermissionUpdate) SetName(v string) *PermissionUpdate {
+	_u.mutation.SetName(v)
+	return _u
+}
+
+// SetNillableName sets the "name" field if the given value is not nil.
+func (_u *PermissionUpdate) SetNillableName(v *string) *PermissionUpdate {
+	if v != nil {
+		_u.SetName(*v)
+	}
+	return _u
+}
+
+// SetCode sets the "code" field.
+func (_u *PermissionUpdate) SetCode(v string) *PermissionUpdate {
+	_u.mutation.SetCode(v)
+	return _u
+}
+
+// SetNillableCode sets the "code" field if the given value is not nil.
+func (_u *PermissionUpdate) SetNillableCode(v *string) *PermissionUpdate {
+	if v != nil {
+		_u.SetCode(*v)
+	}
 	return _u
 }
 
@@ -254,46 +236,6 @@ func (_u *PermissionUpdate) AddGroupID(v int32) *PermissionUpdate {
 // ClearGroupID clears the value of the "group_id" field.
 func (_u *PermissionUpdate) ClearGroupID() *PermissionUpdate {
 	_u.mutation.ClearGroupID()
-	return _u
-}
-
-// SetName sets the "name" field.
-func (_u *PermissionUpdate) SetName(v string) *PermissionUpdate {
-	_u.mutation.SetName(v)
-	return _u
-}
-
-// SetNillableName sets the "name" field if the given value is not nil.
-func (_u *PermissionUpdate) SetNillableName(v *string) *PermissionUpdate {
-	if v != nil {
-		_u.SetName(*v)
-	}
-	return _u
-}
-
-// ClearName clears the value of the "name" field.
-func (_u *PermissionUpdate) ClearName() *PermissionUpdate {
-	_u.mutation.ClearName()
-	return _u
-}
-
-// SetType sets the "type" field.
-func (_u *PermissionUpdate) SetType(v permission.Type) *PermissionUpdate {
-	_u.mutation.SetType(v)
-	return _u
-}
-
-// SetNillableType sets the "type" field if the given value is not nil.
-func (_u *PermissionUpdate) SetNillableType(v *permission.Type) *PermissionUpdate {
-	if v != nil {
-		_u.SetType(*v)
-	}
-	return _u
-}
-
-// ClearType clears the value of the "type" field.
-func (_u *PermissionUpdate) ClearType() *PermissionUpdate {
-	_u.mutation.ClearType()
 	return _u
 }
 
@@ -331,29 +273,14 @@ func (_u *PermissionUpdate) ExecX(ctx context.Context) {
 
 // check runs all checks and user-defined validators on the builder.
 func (_u *PermissionUpdate) check() error {
-	if v, ok := _u.mutation.Code(); ok {
-		if err := permission.CodeValidator(v); err != nil {
-			return &ValidationError{Name: "code", err: fmt.Errorf(`ent: validator failed for field "Permission.code": %w`, err)}
-		}
-	}
 	if v, ok := _u.mutation.Status(); ok {
 		if err := permission.StatusValidator(v); err != nil {
 			return &ValidationError{Name: "status", err: fmt.Errorf(`ent: validator failed for field "Permission.status": %w`, err)}
 		}
 	}
-	if v, ok := _u.mutation.Description(); ok {
-		if err := permission.DescriptionValidator(v); err != nil {
-			return &ValidationError{Name: "description", err: fmt.Errorf(`ent: validator failed for field "Permission.description": %w`, err)}
-		}
-	}
 	if v, ok := _u.mutation.Name(); ok {
 		if err := permission.NameValidator(v); err != nil {
 			return &ValidationError{Name: "name", err: fmt.Errorf(`ent: validator failed for field "Permission.name": %w`, err)}
-		}
-	}
-	if v, ok := _u.mutation.GetType(); ok {
-		if err := permission.TypeValidator(v); err != nil {
-			return &ValidationError{Name: "type", err: fmt.Errorf(`ent: validator failed for field "Permission.type": %w`, err)}
 		}
 	}
 	return nil
@@ -419,32 +346,20 @@ func (_u *PermissionUpdate) sqlSave(ctx context.Context) (_node int, err error) 
 	if _u.mutation.DeletedByCleared() {
 		_spec.ClearField(permission.FieldDeletedBy, field.TypeUint32)
 	}
-	if _u.mutation.TenantIDCleared() {
-		_spec.ClearField(permission.FieldTenantID, field.TypeUint32)
-	}
-	if value, ok := _u.mutation.Remark(); ok {
-		_spec.SetField(permission.FieldRemark, field.TypeString, value)
-	}
-	if _u.mutation.RemarkCleared() {
-		_spec.ClearField(permission.FieldRemark, field.TypeString)
-	}
-	if value, ok := _u.mutation.Code(); ok {
-		_spec.SetField(permission.FieldCode, field.TypeString, value)
-	}
-	if _u.mutation.CodeCleared() {
-		_spec.ClearField(permission.FieldCode, field.TypeString)
-	}
 	if value, ok := _u.mutation.Status(); ok {
 		_spec.SetField(permission.FieldStatus, field.TypeEnum, value)
-	}
-	if _u.mutation.StatusCleared() {
-		_spec.ClearField(permission.FieldStatus, field.TypeEnum)
 	}
 	if value, ok := _u.mutation.Description(); ok {
 		_spec.SetField(permission.FieldDescription, field.TypeString, value)
 	}
 	if _u.mutation.DescriptionCleared() {
 		_spec.ClearField(permission.FieldDescription, field.TypeString)
+	}
+	if value, ok := _u.mutation.Name(); ok {
+		_spec.SetField(permission.FieldName, field.TypeString, value)
+	}
+	if value, ok := _u.mutation.Code(); ok {
+		_spec.SetField(permission.FieldCode, field.TypeString, value)
 	}
 	if value, ok := _u.mutation.GroupID(); ok {
 		_spec.SetField(permission.FieldGroupID, field.TypeUint32, value)
@@ -454,18 +369,6 @@ func (_u *PermissionUpdate) sqlSave(ctx context.Context) (_node int, err error) 
 	}
 	if _u.mutation.GroupIDCleared() {
 		_spec.ClearField(permission.FieldGroupID, field.TypeUint32)
-	}
-	if value, ok := _u.mutation.Name(); ok {
-		_spec.SetField(permission.FieldName, field.TypeString, value)
-	}
-	if _u.mutation.NameCleared() {
-		_spec.ClearField(permission.FieldName, field.TypeString)
-	}
-	if value, ok := _u.mutation.GetType(); ok {
-		_spec.SetField(permission.FieldType, field.TypeEnum, value)
-	}
-	if _u.mutation.TypeCleared() {
-		_spec.ClearField(permission.FieldType, field.TypeEnum)
 	}
 	_spec.AddModifiers(_u.modifiers...)
 	if _node, err = sqlgraph.UpdateNodes(ctx, _u.driver, _spec); err != nil {
@@ -610,46 +513,6 @@ func (_u *PermissionUpdateOne) ClearDeletedBy() *PermissionUpdateOne {
 	return _u
 }
 
-// SetRemark sets the "remark" field.
-func (_u *PermissionUpdateOne) SetRemark(v string) *PermissionUpdateOne {
-	_u.mutation.SetRemark(v)
-	return _u
-}
-
-// SetNillableRemark sets the "remark" field if the given value is not nil.
-func (_u *PermissionUpdateOne) SetNillableRemark(v *string) *PermissionUpdateOne {
-	if v != nil {
-		_u.SetRemark(*v)
-	}
-	return _u
-}
-
-// ClearRemark clears the value of the "remark" field.
-func (_u *PermissionUpdateOne) ClearRemark() *PermissionUpdateOne {
-	_u.mutation.ClearRemark()
-	return _u
-}
-
-// SetCode sets the "code" field.
-func (_u *PermissionUpdateOne) SetCode(v string) *PermissionUpdateOne {
-	_u.mutation.SetCode(v)
-	return _u
-}
-
-// SetNillableCode sets the "code" field if the given value is not nil.
-func (_u *PermissionUpdateOne) SetNillableCode(v *string) *PermissionUpdateOne {
-	if v != nil {
-		_u.SetCode(*v)
-	}
-	return _u
-}
-
-// ClearCode clears the value of the "code" field.
-func (_u *PermissionUpdateOne) ClearCode() *PermissionUpdateOne {
-	_u.mutation.ClearCode()
-	return _u
-}
-
 // SetStatus sets the "status" field.
 func (_u *PermissionUpdateOne) SetStatus(v permission.Status) *PermissionUpdateOne {
 	_u.mutation.SetStatus(v)
@@ -661,12 +524,6 @@ func (_u *PermissionUpdateOne) SetNillableStatus(v *permission.Status) *Permissi
 	if v != nil {
 		_u.SetStatus(*v)
 	}
-	return _u
-}
-
-// ClearStatus clears the value of the "status" field.
-func (_u *PermissionUpdateOne) ClearStatus() *PermissionUpdateOne {
-	_u.mutation.ClearStatus()
 	return _u
 }
 
@@ -687,6 +544,34 @@ func (_u *PermissionUpdateOne) SetNillableDescription(v *string) *PermissionUpda
 // ClearDescription clears the value of the "description" field.
 func (_u *PermissionUpdateOne) ClearDescription() *PermissionUpdateOne {
 	_u.mutation.ClearDescription()
+	return _u
+}
+
+// SetName sets the "name" field.
+func (_u *PermissionUpdateOne) SetName(v string) *PermissionUpdateOne {
+	_u.mutation.SetName(v)
+	return _u
+}
+
+// SetNillableName sets the "name" field if the given value is not nil.
+func (_u *PermissionUpdateOne) SetNillableName(v *string) *PermissionUpdateOne {
+	if v != nil {
+		_u.SetName(*v)
+	}
+	return _u
+}
+
+// SetCode sets the "code" field.
+func (_u *PermissionUpdateOne) SetCode(v string) *PermissionUpdateOne {
+	_u.mutation.SetCode(v)
+	return _u
+}
+
+// SetNillableCode sets the "code" field if the given value is not nil.
+func (_u *PermissionUpdateOne) SetNillableCode(v *string) *PermissionUpdateOne {
+	if v != nil {
+		_u.SetCode(*v)
+	}
 	return _u
 }
 
@@ -714,46 +599,6 @@ func (_u *PermissionUpdateOne) AddGroupID(v int32) *PermissionUpdateOne {
 // ClearGroupID clears the value of the "group_id" field.
 func (_u *PermissionUpdateOne) ClearGroupID() *PermissionUpdateOne {
 	_u.mutation.ClearGroupID()
-	return _u
-}
-
-// SetName sets the "name" field.
-func (_u *PermissionUpdateOne) SetName(v string) *PermissionUpdateOne {
-	_u.mutation.SetName(v)
-	return _u
-}
-
-// SetNillableName sets the "name" field if the given value is not nil.
-func (_u *PermissionUpdateOne) SetNillableName(v *string) *PermissionUpdateOne {
-	if v != nil {
-		_u.SetName(*v)
-	}
-	return _u
-}
-
-// ClearName clears the value of the "name" field.
-func (_u *PermissionUpdateOne) ClearName() *PermissionUpdateOne {
-	_u.mutation.ClearName()
-	return _u
-}
-
-// SetType sets the "type" field.
-func (_u *PermissionUpdateOne) SetType(v permission.Type) *PermissionUpdateOne {
-	_u.mutation.SetType(v)
-	return _u
-}
-
-// SetNillableType sets the "type" field if the given value is not nil.
-func (_u *PermissionUpdateOne) SetNillableType(v *permission.Type) *PermissionUpdateOne {
-	if v != nil {
-		_u.SetType(*v)
-	}
-	return _u
-}
-
-// ClearType clears the value of the "type" field.
-func (_u *PermissionUpdateOne) ClearType() *PermissionUpdateOne {
-	_u.mutation.ClearType()
 	return _u
 }
 
@@ -804,29 +649,14 @@ func (_u *PermissionUpdateOne) ExecX(ctx context.Context) {
 
 // check runs all checks and user-defined validators on the builder.
 func (_u *PermissionUpdateOne) check() error {
-	if v, ok := _u.mutation.Code(); ok {
-		if err := permission.CodeValidator(v); err != nil {
-			return &ValidationError{Name: "code", err: fmt.Errorf(`ent: validator failed for field "Permission.code": %w`, err)}
-		}
-	}
 	if v, ok := _u.mutation.Status(); ok {
 		if err := permission.StatusValidator(v); err != nil {
 			return &ValidationError{Name: "status", err: fmt.Errorf(`ent: validator failed for field "Permission.status": %w`, err)}
 		}
 	}
-	if v, ok := _u.mutation.Description(); ok {
-		if err := permission.DescriptionValidator(v); err != nil {
-			return &ValidationError{Name: "description", err: fmt.Errorf(`ent: validator failed for field "Permission.description": %w`, err)}
-		}
-	}
 	if v, ok := _u.mutation.Name(); ok {
 		if err := permission.NameValidator(v); err != nil {
 			return &ValidationError{Name: "name", err: fmt.Errorf(`ent: validator failed for field "Permission.name": %w`, err)}
-		}
-	}
-	if v, ok := _u.mutation.GetType(); ok {
-		if err := permission.TypeValidator(v); err != nil {
-			return &ValidationError{Name: "type", err: fmt.Errorf(`ent: validator failed for field "Permission.type": %w`, err)}
 		}
 	}
 	return nil
@@ -909,32 +739,20 @@ func (_u *PermissionUpdateOne) sqlSave(ctx context.Context) (_node *Permission, 
 	if _u.mutation.DeletedByCleared() {
 		_spec.ClearField(permission.FieldDeletedBy, field.TypeUint32)
 	}
-	if _u.mutation.TenantIDCleared() {
-		_spec.ClearField(permission.FieldTenantID, field.TypeUint32)
-	}
-	if value, ok := _u.mutation.Remark(); ok {
-		_spec.SetField(permission.FieldRemark, field.TypeString, value)
-	}
-	if _u.mutation.RemarkCleared() {
-		_spec.ClearField(permission.FieldRemark, field.TypeString)
-	}
-	if value, ok := _u.mutation.Code(); ok {
-		_spec.SetField(permission.FieldCode, field.TypeString, value)
-	}
-	if _u.mutation.CodeCleared() {
-		_spec.ClearField(permission.FieldCode, field.TypeString)
-	}
 	if value, ok := _u.mutation.Status(); ok {
 		_spec.SetField(permission.FieldStatus, field.TypeEnum, value)
-	}
-	if _u.mutation.StatusCleared() {
-		_spec.ClearField(permission.FieldStatus, field.TypeEnum)
 	}
 	if value, ok := _u.mutation.Description(); ok {
 		_spec.SetField(permission.FieldDescription, field.TypeString, value)
 	}
 	if _u.mutation.DescriptionCleared() {
 		_spec.ClearField(permission.FieldDescription, field.TypeString)
+	}
+	if value, ok := _u.mutation.Name(); ok {
+		_spec.SetField(permission.FieldName, field.TypeString, value)
+	}
+	if value, ok := _u.mutation.Code(); ok {
+		_spec.SetField(permission.FieldCode, field.TypeString, value)
 	}
 	if value, ok := _u.mutation.GroupID(); ok {
 		_spec.SetField(permission.FieldGroupID, field.TypeUint32, value)
@@ -944,18 +762,6 @@ func (_u *PermissionUpdateOne) sqlSave(ctx context.Context) (_node *Permission, 
 	}
 	if _u.mutation.GroupIDCleared() {
 		_spec.ClearField(permission.FieldGroupID, field.TypeUint32)
-	}
-	if value, ok := _u.mutation.Name(); ok {
-		_spec.SetField(permission.FieldName, field.TypeString, value)
-	}
-	if _u.mutation.NameCleared() {
-		_spec.ClearField(permission.FieldName, field.TypeString)
-	}
-	if value, ok := _u.mutation.GetType(); ok {
-		_spec.SetField(permission.FieldType, field.TypeEnum, value)
-	}
-	if _u.mutation.TypeCleared() {
-		_spec.ClearField(permission.FieldType, field.TypeEnum)
 	}
 	_spec.AddModifiers(_u.modifiers...)
 	_node = &Permission{config: _u.config}

@@ -3,6 +3,9 @@
 package rolemetadata
 
 import (
+	"fmt"
+	permissionpb "go-wind-ledger/api/gen/go/permission/service/v1"
+
 	"entgo.io/ent"
 	"entgo.io/ent/dialect/sql"
 )
@@ -18,24 +21,32 @@ const (
 	FieldUpdatedAt = "updated_at"
 	// FieldDeletedAt holds the string denoting the deleted_at field in the database.
 	FieldDeletedAt = "deleted_at"
+	// FieldCreatedBy holds the string denoting the created_by field in the database.
+	FieldCreatedBy = "created_by"
+	// FieldUpdatedBy holds the string denoting the updated_by field in the database.
+	FieldUpdatedBy = "updated_by"
+	// FieldDeletedBy holds the string denoting the deleted_by field in the database.
+	FieldDeletedBy = "deleted_by"
 	// FieldTenantID holds the string denoting the tenant_id field in the database.
 	FieldTenantID = "tenant_id"
 	// FieldRoleID holds the string denoting the role_id field in the database.
 	FieldRoleID = "role_id"
+	// FieldIsTemplate holds the string denoting the is_template field in the database.
+	FieldIsTemplate = "is_template"
 	// FieldTemplateFor holds the string denoting the template_for field in the database.
 	FieldTemplateFor = "template_for"
 	// FieldTemplateVersion holds the string denoting the template_version field in the database.
 	FieldTemplateVersion = "template_version"
-	// FieldLastSyncedAt holds the string denoting the last_synced_at field in the database.
-	FieldLastSyncedAt = "last_synced_at"
 	// FieldLastSyncedVersion holds the string denoting the last_synced_version field in the database.
 	FieldLastSyncedVersion = "last_synced_version"
-	// FieldIsTemplate holds the string denoting the is_template field in the database.
-	FieldIsTemplate = "is_template"
-	// FieldKey holds the string denoting the key field in the database.
-	FieldKey = "key"
-	// FieldValue holds the string denoting the value field in the database.
-	FieldValue = "value"
+	// FieldLastSyncedAt holds the string denoting the last_synced_at field in the database.
+	FieldLastSyncedAt = "last_synced_at"
+	// FieldSyncPolicy holds the string denoting the sync_policy field in the database.
+	FieldSyncPolicy = "sync_policy"
+	// FieldScope holds the string denoting the scope field in the database.
+	FieldScope = "scope"
+	// FieldCustomOverrides holds the string denoting the custom_overrides field in the database.
+	FieldCustomOverrides = "custom_overrides"
 	// Table holds the table name of the rolemetadata in the database.
 	Table = "sys_role_metadata"
 )
@@ -46,15 +57,19 @@ var Columns = []string{
 	FieldCreatedAt,
 	FieldUpdatedAt,
 	FieldDeletedAt,
+	FieldCreatedBy,
+	FieldUpdatedBy,
+	FieldDeletedBy,
 	FieldTenantID,
 	FieldRoleID,
+	FieldIsTemplate,
 	FieldTemplateFor,
 	FieldTemplateVersion,
-	FieldLastSyncedAt,
 	FieldLastSyncedVersion,
-	FieldIsTemplate,
-	FieldKey,
-	FieldValue,
+	FieldLastSyncedAt,
+	FieldSyncPolicy,
+	FieldScope,
+	FieldCustomOverrides,
 }
 
 // ValidColumn reports if the column name is valid (part of the table columns).
@@ -77,21 +92,68 @@ var (
 	Policy ent.Policy
 	// DefaultTenantID holds the default value on creation for the "tenant_id" field.
 	DefaultTenantID uint32
-	// TemplateForValidator is a validator for the "template_for" field. It is called by the builders before save.
-	TemplateForValidator func(string) error
-	// DefaultTemplateVersion holds the default value on creation for the "template_version" field.
-	DefaultTemplateVersion int32
-	// DefaultLastSyncedVersion holds the default value on creation for the "last_synced_version" field.
-	DefaultLastSyncedVersion int32
 	// DefaultIsTemplate holds the default value on creation for the "is_template" field.
 	DefaultIsTemplate bool
-	// KeyValidator is a validator for the "key" field. It is called by the builders before save.
-	KeyValidator func(string) error
-	// ValueValidator is a validator for the "value" field. It is called by the builders before save.
-	ValueValidator func(string) error
+	// DefaultTemplateVersion holds the default value on creation for the "template_version" field.
+	DefaultTemplateVersion int32
+	// DefaultCustomOverrides holds the default value on creation for the "custom_overrides" field.
+	DefaultCustomOverrides *permissionpb.RoleOverride
 	// IDValidator is a validator for the "id" field. It is called by the builders before save.
 	IDValidator func(uint32) error
 )
+
+// SyncPolicy defines the type for the "sync_policy" enum field.
+type SyncPolicy string
+
+// SyncPolicyAuto is the default value of the SyncPolicy enum.
+const DefaultSyncPolicy = SyncPolicyAuto
+
+// SyncPolicy values.
+const (
+	SyncPolicyAuto    SyncPolicy = "AUTO"
+	SyncPolicyManual  SyncPolicy = "MANUAL"
+	SyncPolicyBlocked SyncPolicy = "BLOCKED"
+)
+
+func (sp SyncPolicy) String() string {
+	return string(sp)
+}
+
+// SyncPolicyValidator is a validator for the "sync_policy" field enum values. It is called by the builders before save.
+func SyncPolicyValidator(sp SyncPolicy) error {
+	switch sp {
+	case SyncPolicyAuto, SyncPolicyManual, SyncPolicyBlocked:
+		return nil
+	default:
+		return fmt.Errorf("rolemetadata: invalid enum value for sync_policy field: %q", sp)
+	}
+}
+
+// Scope defines the type for the "scope" enum field.
+type Scope string
+
+// ScopeTenant is the default value of the Scope enum.
+const DefaultScope = ScopeTenant
+
+// Scope values.
+const (
+	ScopePlatform Scope = "PLATFORM"
+	ScopeTenant   Scope = "TENANT"
+)
+
+func (s Scope) String() string {
+	return string(s)
+}
+
+// ScopeValidator is a validator for the "scope" field enum values. It is called by the builders before save.
+func ScopeValidator(s Scope) error {
+	switch s {
+	case ScopePlatform, ScopeTenant:
+		return nil
+	default:
+		return fmt.Errorf("rolemetadata: invalid enum value for scope field: %q", s)
+	}
+}
 
 // OrderOption defines the ordering options for the RoleMetadata queries.
 type OrderOption func(*sql.Selector)
@@ -116,6 +178,21 @@ func ByDeletedAt(opts ...sql.OrderTermOption) OrderOption {
 	return sql.OrderByField(FieldDeletedAt, opts...).ToFunc()
 }
 
+// ByCreatedBy orders the results by the created_by field.
+func ByCreatedBy(opts ...sql.OrderTermOption) OrderOption {
+	return sql.OrderByField(FieldCreatedBy, opts...).ToFunc()
+}
+
+// ByUpdatedBy orders the results by the updated_by field.
+func ByUpdatedBy(opts ...sql.OrderTermOption) OrderOption {
+	return sql.OrderByField(FieldUpdatedBy, opts...).ToFunc()
+}
+
+// ByDeletedBy orders the results by the deleted_by field.
+func ByDeletedBy(opts ...sql.OrderTermOption) OrderOption {
+	return sql.OrderByField(FieldDeletedBy, opts...).ToFunc()
+}
+
 // ByTenantID orders the results by the tenant_id field.
 func ByTenantID(opts ...sql.OrderTermOption) OrderOption {
 	return sql.OrderByField(FieldTenantID, opts...).ToFunc()
@@ -124,6 +201,11 @@ func ByTenantID(opts ...sql.OrderTermOption) OrderOption {
 // ByRoleID orders the results by the role_id field.
 func ByRoleID(opts ...sql.OrderTermOption) OrderOption {
 	return sql.OrderByField(FieldRoleID, opts...).ToFunc()
+}
+
+// ByIsTemplate orders the results by the is_template field.
+func ByIsTemplate(opts ...sql.OrderTermOption) OrderOption {
+	return sql.OrderByField(FieldIsTemplate, opts...).ToFunc()
 }
 
 // ByTemplateFor orders the results by the template_for field.
@@ -136,27 +218,22 @@ func ByTemplateVersion(opts ...sql.OrderTermOption) OrderOption {
 	return sql.OrderByField(FieldTemplateVersion, opts...).ToFunc()
 }
 
-// ByLastSyncedAt orders the results by the last_synced_at field.
-func ByLastSyncedAt(opts ...sql.OrderTermOption) OrderOption {
-	return sql.OrderByField(FieldLastSyncedAt, opts...).ToFunc()
-}
-
 // ByLastSyncedVersion orders the results by the last_synced_version field.
 func ByLastSyncedVersion(opts ...sql.OrderTermOption) OrderOption {
 	return sql.OrderByField(FieldLastSyncedVersion, opts...).ToFunc()
 }
 
-// ByIsTemplate orders the results by the is_template field.
-func ByIsTemplate(opts ...sql.OrderTermOption) OrderOption {
-	return sql.OrderByField(FieldIsTemplate, opts...).ToFunc()
+// ByLastSyncedAt orders the results by the last_synced_at field.
+func ByLastSyncedAt(opts ...sql.OrderTermOption) OrderOption {
+	return sql.OrderByField(FieldLastSyncedAt, opts...).ToFunc()
 }
 
-// ByKey orders the results by the key field.
-func ByKey(opts ...sql.OrderTermOption) OrderOption {
-	return sql.OrderByField(FieldKey, opts...).ToFunc()
+// BySyncPolicy orders the results by the sync_policy field.
+func BySyncPolicy(opts ...sql.OrderTermOption) OrderOption {
+	return sql.OrderByField(FieldSyncPolicy, opts...).ToFunc()
 }
 
-// ByValue orders the results by the value field.
-func ByValue(opts ...sql.OrderTermOption) OrderOption {
-	return sql.OrderByField(FieldValue, opts...).ToFunc()
+// ByScope orders the results by the scope field.
+func ByScope(opts ...sql.OrderTermOption) OrderOption {
+	return sql.OrderByField(FieldScope, opts...).ToFunc()
 }

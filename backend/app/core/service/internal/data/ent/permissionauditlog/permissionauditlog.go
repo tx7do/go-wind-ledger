@@ -3,6 +3,8 @@
 package permissionauditlog
 
 import (
+	"fmt"
+
 	"entgo.io/ent"
 	"entgo.io/ent/dialect/sql"
 )
@@ -14,32 +16,50 @@ const (
 	FieldID = "id"
 	// FieldCreatedAt holds the string denoting the created_at field in the database.
 	FieldCreatedAt = "created_at"
-	// FieldUpdatedAt holds the string denoting the updated_at field in the database.
-	FieldUpdatedAt = "updated_at"
-	// FieldDeletedAt holds the string denoting the deleted_at field in the database.
-	FieldDeletedAt = "deleted_at"
 	// FieldTenantID holds the string denoting the tenant_id field in the database.
 	FieldTenantID = "tenant_id"
 	// FieldOperatorID holds the string denoting the operator_id field in the database.
 	FieldOperatorID = "operator_id"
+	// FieldTargetType holds the string denoting the target_type field in the database.
+	FieldTargetType = "target_type"
+	// FieldTargetID holds the string denoting the target_id field in the database.
+	FieldTargetID = "target_id"
 	// FieldAction holds the string denoting the action field in the database.
 	FieldAction = "action"
-	// FieldOperatedAt holds the string denoting the operated_at field in the database.
-	FieldOperatedAt = "operated_at"
+	// FieldOldValue holds the string denoting the old_value field in the database.
+	FieldOldValue = "old_value"
+	// FieldNewValue holds the string denoting the new_value field in the database.
+	FieldNewValue = "new_value"
+	// FieldIPAddress holds the string denoting the ip_address field in the database.
+	FieldIPAddress = "ip_address"
+	// FieldRequestID holds the string denoting the request_id field in the database.
+	FieldRequestID = "request_id"
+	// FieldReason holds the string denoting the reason field in the database.
+	FieldReason = "reason"
+	// FieldLogHash holds the string denoting the log_hash field in the database.
+	FieldLogHash = "log_hash"
+	// FieldSignature holds the string denoting the signature field in the database.
+	FieldSignature = "signature"
 	// Table holds the table name of the permissionauditlog in the database.
-	Table = "permission_audit_logs"
+	Table = "sys_permission_audit_logs"
 )
 
 // Columns holds all SQL columns for permissionauditlog fields.
 var Columns = []string{
 	FieldID,
 	FieldCreatedAt,
-	FieldUpdatedAt,
-	FieldDeletedAt,
 	FieldTenantID,
 	FieldOperatorID,
+	FieldTargetType,
+	FieldTargetID,
 	FieldAction,
-	FieldOperatedAt,
+	FieldOldValue,
+	FieldNewValue,
+	FieldIPAddress,
+	FieldRequestID,
+	FieldReason,
+	FieldLogHash,
+	FieldSignature,
 }
 
 // ValidColumn reports if the column name is valid (part of the table columns).
@@ -62,11 +82,45 @@ var (
 	Policy ent.Policy
 	// DefaultTenantID holds the default value on creation for the "tenant_id" field.
 	DefaultTenantID uint32
-	// ActionValidator is a validator for the "action" field. It is called by the builders before save.
-	ActionValidator func(string) error
 	// IDValidator is a validator for the "id" field. It is called by the builders before save.
 	IDValidator func(uint32) error
 )
+
+// Action defines the type for the "action" enum field.
+type Action string
+
+// Action values.
+const (
+	ActionGrant             Action = "GRANT"
+	ActionRevoke            Action = "REVOKE"
+	ActionUpdateTranslation Action = "UPDATE"
+	ActionReset             Action = "RESET"
+	ActionCreateTranslation Action = "CREATE"
+	ActionDelete            Action = "DELETE"
+	ActionAssign            Action = "ASSIGN"
+	ActionUnassign          Action = "UNASSIGN"
+	ActionBulkGrant         Action = "BULK_GRANT"
+	ActionBulkRevoke        Action = "BULK_REVOKE"
+	ActionExpire            Action = "EXPIRE"
+	ActionSuspend           Action = "SUSPEND"
+	ActionResume            Action = "RESUME"
+	ActionRollback          Action = "ROLLBACK"
+	ActionOther             Action = "OTHER"
+)
+
+func (a Action) String() string {
+	return string(a)
+}
+
+// ActionValidator is a validator for the "action" field enum values. It is called by the builders before save.
+func ActionValidator(a Action) error {
+	switch a {
+	case ActionGrant, ActionRevoke, ActionUpdateTranslation, ActionReset, ActionCreateTranslation, ActionDelete, ActionAssign, ActionUnassign, ActionBulkGrant, ActionBulkRevoke, ActionExpire, ActionSuspend, ActionResume, ActionRollback, ActionOther:
+		return nil
+	default:
+		return fmt.Errorf("permissionauditlog: invalid enum value for action field: %q", a)
+	}
+}
 
 // OrderOption defines the ordering options for the PermissionAuditLog queries.
 type OrderOption func(*sql.Selector)
@@ -81,16 +135,6 @@ func ByCreatedAt(opts ...sql.OrderTermOption) OrderOption {
 	return sql.OrderByField(FieldCreatedAt, opts...).ToFunc()
 }
 
-// ByUpdatedAt orders the results by the updated_at field.
-func ByUpdatedAt(opts ...sql.OrderTermOption) OrderOption {
-	return sql.OrderByField(FieldUpdatedAt, opts...).ToFunc()
-}
-
-// ByDeletedAt orders the results by the deleted_at field.
-func ByDeletedAt(opts ...sql.OrderTermOption) OrderOption {
-	return sql.OrderByField(FieldDeletedAt, opts...).ToFunc()
-}
-
 // ByTenantID orders the results by the tenant_id field.
 func ByTenantID(opts ...sql.OrderTermOption) OrderOption {
 	return sql.OrderByField(FieldTenantID, opts...).ToFunc()
@@ -101,12 +145,47 @@ func ByOperatorID(opts ...sql.OrderTermOption) OrderOption {
 	return sql.OrderByField(FieldOperatorID, opts...).ToFunc()
 }
 
+// ByTargetType orders the results by the target_type field.
+func ByTargetType(opts ...sql.OrderTermOption) OrderOption {
+	return sql.OrderByField(FieldTargetType, opts...).ToFunc()
+}
+
+// ByTargetID orders the results by the target_id field.
+func ByTargetID(opts ...sql.OrderTermOption) OrderOption {
+	return sql.OrderByField(FieldTargetID, opts...).ToFunc()
+}
+
 // ByAction orders the results by the action field.
 func ByAction(opts ...sql.OrderTermOption) OrderOption {
 	return sql.OrderByField(FieldAction, opts...).ToFunc()
 }
 
-// ByOperatedAt orders the results by the operated_at field.
-func ByOperatedAt(opts ...sql.OrderTermOption) OrderOption {
-	return sql.OrderByField(FieldOperatedAt, opts...).ToFunc()
+// ByOldValue orders the results by the old_value field.
+func ByOldValue(opts ...sql.OrderTermOption) OrderOption {
+	return sql.OrderByField(FieldOldValue, opts...).ToFunc()
+}
+
+// ByNewValue orders the results by the new_value field.
+func ByNewValue(opts ...sql.OrderTermOption) OrderOption {
+	return sql.OrderByField(FieldNewValue, opts...).ToFunc()
+}
+
+// ByIPAddress orders the results by the ip_address field.
+func ByIPAddress(opts ...sql.OrderTermOption) OrderOption {
+	return sql.OrderByField(FieldIPAddress, opts...).ToFunc()
+}
+
+// ByRequestID orders the results by the request_id field.
+func ByRequestID(opts ...sql.OrderTermOption) OrderOption {
+	return sql.OrderByField(FieldRequestID, opts...).ToFunc()
+}
+
+// ByReason orders the results by the reason field.
+func ByReason(opts ...sql.OrderTermOption) OrderOption {
+	return sql.OrderByField(FieldReason, opts...).ToFunc()
+}
+
+// ByLogHash orders the results by the log_hash field.
+func ByLogHash(opts ...sql.OrderTermOption) OrderOption {
+	return sql.OrderByField(FieldLogHash, opts...).ToFunc()
 }

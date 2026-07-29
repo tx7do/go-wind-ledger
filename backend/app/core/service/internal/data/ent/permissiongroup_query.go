@@ -4,7 +4,7 @@ package ent
 
 import (
 	"context"
-	"errors"
+	"database/sql/driver"
 	"fmt"
 	"go-wind-ledger/app/core/service/internal/data/ent/permissiongroup"
 	"go-wind-ledger/app/core/service/internal/data/ent/predicate"
@@ -20,11 +20,13 @@ import (
 // PermissionGroupQuery is the builder for querying PermissionGroup entities.
 type PermissionGroupQuery struct {
 	config
-	ctx        *QueryContext
-	order      []permissiongroup.OrderOption
-	inters     []Interceptor
-	predicates []predicate.PermissionGroup
-	modifiers  []func(*sql.Selector)
+	ctx          *QueryContext
+	order        []permissiongroup.OrderOption
+	inters       []Interceptor
+	predicates   []predicate.PermissionGroup
+	withParent   *PermissionGroupQuery
+	withChildren *PermissionGroupQuery
+	modifiers    []func(*sql.Selector)
 	// intermediate query (i.e. traversal path).
 	sql  *sql.Selector
 	path func(context.Context) (*sql.Selector, error)
@@ -59,6 +61,50 @@ func (_q *PermissionGroupQuery) Unique(unique bool) *PermissionGroupQuery {
 func (_q *PermissionGroupQuery) Order(o ...permissiongroup.OrderOption) *PermissionGroupQuery {
 	_q.order = append(_q.order, o...)
 	return _q
+}
+
+// QueryParent chains the current query on the "parent" edge.
+func (_q *PermissionGroupQuery) QueryParent() *PermissionGroupQuery {
+	query := (&PermissionGroupClient{config: _q.config}).Query()
+	query.path = func(ctx context.Context) (fromU *sql.Selector, err error) {
+		if err := _q.prepareQuery(ctx); err != nil {
+			return nil, err
+		}
+		selector := _q.sqlQuery(ctx)
+		if err := selector.Err(); err != nil {
+			return nil, err
+		}
+		step := sqlgraph.NewStep(
+			sqlgraph.From(permissiongroup.Table, permissiongroup.FieldID, selector),
+			sqlgraph.To(permissiongroup.Table, permissiongroup.FieldID),
+			sqlgraph.Edge(sqlgraph.M2O, true, permissiongroup.ParentTable, permissiongroup.ParentColumn),
+		)
+		fromU = sqlgraph.SetNeighbors(_q.driver.Dialect(), step)
+		return fromU, nil
+	}
+	return query
+}
+
+// QueryChildren chains the current query on the "children" edge.
+func (_q *PermissionGroupQuery) QueryChildren() *PermissionGroupQuery {
+	query := (&PermissionGroupClient{config: _q.config}).Query()
+	query.path = func(ctx context.Context) (fromU *sql.Selector, err error) {
+		if err := _q.prepareQuery(ctx); err != nil {
+			return nil, err
+		}
+		selector := _q.sqlQuery(ctx)
+		if err := selector.Err(); err != nil {
+			return nil, err
+		}
+		step := sqlgraph.NewStep(
+			sqlgraph.From(permissiongroup.Table, permissiongroup.FieldID, selector),
+			sqlgraph.To(permissiongroup.Table, permissiongroup.FieldID),
+			sqlgraph.Edge(sqlgraph.O2M, false, permissiongroup.ChildrenTable, permissiongroup.ChildrenColumn),
+		)
+		fromU = sqlgraph.SetNeighbors(_q.driver.Dialect(), step)
+		return fromU, nil
+	}
+	return query
 }
 
 // First returns the first PermissionGroup entity from the query.
@@ -248,16 +294,40 @@ func (_q *PermissionGroupQuery) Clone() *PermissionGroupQuery {
 		return nil
 	}
 	return &PermissionGroupQuery{
-		config:     _q.config,
-		ctx:        _q.ctx.Clone(),
-		order:      append([]permissiongroup.OrderOption{}, _q.order...),
-		inters:     append([]Interceptor{}, _q.inters...),
-		predicates: append([]predicate.PermissionGroup{}, _q.predicates...),
+		config:       _q.config,
+		ctx:          _q.ctx.Clone(),
+		order:        append([]permissiongroup.OrderOption{}, _q.order...),
+		inters:       append([]Interceptor{}, _q.inters...),
+		predicates:   append([]predicate.PermissionGroup{}, _q.predicates...),
+		withParent:   _q.withParent.Clone(),
+		withChildren: _q.withChildren.Clone(),
 		// clone intermediate query.
 		sql:       _q.sql.Clone(),
 		path:      _q.path,
 		modifiers: append([]func(*sql.Selector){}, _q.modifiers...),
 	}
+}
+
+// WithParent tells the query-builder to eager-load the nodes that are connected to
+// the "parent" edge. The optional arguments are used to configure the query builder of the edge.
+func (_q *PermissionGroupQuery) WithParent(opts ...func(*PermissionGroupQuery)) *PermissionGroupQuery {
+	query := (&PermissionGroupClient{config: _q.config}).Query()
+	for _, opt := range opts {
+		opt(query)
+	}
+	_q.withParent = query
+	return _q
+}
+
+// WithChildren tells the query-builder to eager-load the nodes that are connected to
+// the "children" edge. The optional arguments are used to configure the query builder of the edge.
+func (_q *PermissionGroupQuery) WithChildren(opts ...func(*PermissionGroupQuery)) *PermissionGroupQuery {
+	query := (&PermissionGroupClient{config: _q.config}).Query()
+	for _, opt := range opts {
+		opt(query)
+	}
+	_q.withChildren = query
+	return _q
 }
 
 // GroupBy is used to group vertices by one or more fields/columns.
@@ -331,19 +401,17 @@ func (_q *PermissionGroupQuery) prepareQuery(ctx context.Context) error {
 		}
 		_q.sql = prev
 	}
-	if permissiongroup.Policy == nil {
-		return errors.New("ent: uninitialized permissiongroup.Policy (forgotten import ent/runtime?)")
-	}
-	if err := permissiongroup.Policy.EvalQuery(ctx, _q); err != nil {
-		return err
-	}
 	return nil
 }
 
 func (_q *PermissionGroupQuery) sqlAll(ctx context.Context, hooks ...queryHook) ([]*PermissionGroup, error) {
 	var (
-		nodes = []*PermissionGroup{}
-		_spec = _q.querySpec()
+		nodes       = []*PermissionGroup{}
+		_spec       = _q.querySpec()
+		loadedTypes = [2]bool{
+			_q.withParent != nil,
+			_q.withChildren != nil,
+		}
 	)
 	_spec.ScanValues = func(columns []string) ([]any, error) {
 		return (*PermissionGroup).scanValues(nil, columns)
@@ -351,6 +419,7 @@ func (_q *PermissionGroupQuery) sqlAll(ctx context.Context, hooks ...queryHook) 
 	_spec.Assign = func(columns []string, values []any) error {
 		node := &PermissionGroup{config: _q.config}
 		nodes = append(nodes, node)
+		node.Edges.loadedTypes = loadedTypes
 		return node.assignValues(columns, values)
 	}
 	if len(_q.modifiers) > 0 {
@@ -365,7 +434,86 @@ func (_q *PermissionGroupQuery) sqlAll(ctx context.Context, hooks ...queryHook) 
 	if len(nodes) == 0 {
 		return nodes, nil
 	}
+	if query := _q.withParent; query != nil {
+		if err := _q.loadParent(ctx, query, nodes, nil,
+			func(n *PermissionGroup, e *PermissionGroup) { n.Edges.Parent = e }); err != nil {
+			return nil, err
+		}
+	}
+	if query := _q.withChildren; query != nil {
+		if err := _q.loadChildren(ctx, query, nodes,
+			func(n *PermissionGroup) { n.Edges.Children = []*PermissionGroup{} },
+			func(n *PermissionGroup, e *PermissionGroup) { n.Edges.Children = append(n.Edges.Children, e) }); err != nil {
+			return nil, err
+		}
+	}
 	return nodes, nil
+}
+
+func (_q *PermissionGroupQuery) loadParent(ctx context.Context, query *PermissionGroupQuery, nodes []*PermissionGroup, init func(*PermissionGroup), assign func(*PermissionGroup, *PermissionGroup)) error {
+	ids := make([]uint32, 0, len(nodes))
+	nodeids := make(map[uint32][]*PermissionGroup)
+	for i := range nodes {
+		if nodes[i].ParentID == nil {
+			continue
+		}
+		fk := *nodes[i].ParentID
+		if _, ok := nodeids[fk]; !ok {
+			ids = append(ids, fk)
+		}
+		nodeids[fk] = append(nodeids[fk], nodes[i])
+	}
+	if len(ids) == 0 {
+		return nil
+	}
+	query.Where(permissiongroup.IDIn(ids...))
+	neighbors, err := query.All(ctx)
+	if err != nil {
+		return err
+	}
+	for _, n := range neighbors {
+		nodes, ok := nodeids[n.ID]
+		if !ok {
+			return fmt.Errorf(`unexpected foreign-key "parent_id" returned %v`, n.ID)
+		}
+		for i := range nodes {
+			assign(nodes[i], n)
+		}
+	}
+	return nil
+}
+func (_q *PermissionGroupQuery) loadChildren(ctx context.Context, query *PermissionGroupQuery, nodes []*PermissionGroup, init func(*PermissionGroup), assign func(*PermissionGroup, *PermissionGroup)) error {
+	fks := make([]driver.Value, 0, len(nodes))
+	nodeids := make(map[uint32]*PermissionGroup)
+	for i := range nodes {
+		fks = append(fks, nodes[i].ID)
+		nodeids[nodes[i].ID] = nodes[i]
+		if init != nil {
+			init(nodes[i])
+		}
+	}
+	if len(query.ctx.Fields) > 0 {
+		query.ctx.AppendFieldOnce(permissiongroup.FieldParentID)
+	}
+	query.Where(predicate.PermissionGroup(func(s *sql.Selector) {
+		s.Where(sql.InValues(s.C(permissiongroup.ChildrenColumn), fks...))
+	}))
+	neighbors, err := query.All(ctx)
+	if err != nil {
+		return err
+	}
+	for _, n := range neighbors {
+		fk := n.ParentID
+		if fk == nil {
+			return fmt.Errorf(`foreign-key "parent_id" is nil for node %v`, n.ID)
+		}
+		node, ok := nodeids[*fk]
+		if !ok {
+			return fmt.Errorf(`unexpected referenced foreign-key "parent_id" returned %v for node %v`, *fk, n.ID)
+		}
+		assign(node, n)
+	}
+	return nil
 }
 
 func (_q *PermissionGroupQuery) sqlCount(ctx context.Context) (int, error) {
@@ -395,6 +543,9 @@ func (_q *PermissionGroupQuery) querySpec() *sqlgraph.QuerySpec {
 			if fields[i] != permissiongroup.FieldID {
 				_spec.Node.Columns = append(_spec.Node.Columns, fields[i])
 			}
+		}
+		if _q.withParent != nil {
+			_spec.Node.AddColumnOnce(permissiongroup.FieldParentID)
 		}
 	}
 	if ps := _q.predicates; len(ps) > 0 {

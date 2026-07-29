@@ -89,29 +89,19 @@ func SortOrder(v uint32) predicate.Position {
 	return predicate.Position(sql.FieldEQ(FieldSortOrder, v))
 }
 
-// TenantID applies equality check predicate on the "tenant_id" field. It's identical to TenantIDEQ.
-func TenantID(v uint32) predicate.Position {
-	return predicate.Position(sql.FieldEQ(FieldTenantID, v))
-}
-
 // Remark applies equality check predicate on the "remark" field. It's identical to RemarkEQ.
 func Remark(v string) predicate.Position {
 	return predicate.Position(sql.FieldEQ(FieldRemark, v))
 }
 
-// JobGrade applies equality check predicate on the "job_grade" field. It's identical to JobGradeEQ.
-func JobGrade(v string) predicate.Position {
-	return predicate.Position(sql.FieldEQ(FieldJobGrade, v))
+// TenantID applies equality check predicate on the "tenant_id" field. It's identical to TenantIDEQ.
+func TenantID(v uint32) predicate.Position {
+	return predicate.Position(sql.FieldEQ(FieldTenantID, v))
 }
 
-// JobFamily applies equality check predicate on the "job_family" field. It's identical to JobFamilyEQ.
-func JobFamily(v string) predicate.Position {
-	return predicate.Position(sql.FieldEQ(FieldJobFamily, v))
-}
-
-// Type applies equality check predicate on the "type" field. It's identical to TypeEQ.
-func Type(v string) predicate.Position {
-	return predicate.Position(sql.FieldEQ(FieldType, v))
+// Name applies equality check predicate on the "name" field. It's identical to NameEQ.
+func Name(v string) predicate.Position {
+	return predicate.Position(sql.FieldEQ(FieldName, v))
 }
 
 // Code applies equality check predicate on the "code" field. It's identical to CodeEQ.
@@ -119,24 +109,54 @@ func Code(v string) predicate.Position {
 	return predicate.Position(sql.FieldEQ(FieldCode, v))
 }
 
-// ReportsToPositionID applies equality check predicate on the "reports_to_position_id" field. It's identical to ReportsToPositionIDEQ.
-func ReportsToPositionID(v uint32) predicate.Position {
-	return predicate.Position(sql.FieldEQ(FieldReportsToPositionID, v))
-}
-
-// IsTemplate applies equality check predicate on the "is_template" field. It's identical to IsTemplateEQ.
-func IsTemplate(v bool) predicate.Position {
-	return predicate.Position(sql.FieldEQ(FieldIsTemplate, v))
-}
-
 // OrgUnitID applies equality check predicate on the "org_unit_id" field. It's identical to OrgUnitIDEQ.
 func OrgUnitID(v uint32) predicate.Position {
 	return predicate.Position(sql.FieldEQ(FieldOrgUnitID, v))
 }
 
-// Name applies equality check predicate on the "name" field. It's identical to NameEQ.
-func Name(v string) predicate.Position {
-	return predicate.Position(sql.FieldEQ(FieldName, v))
+// ReportsToPositionID applies equality check predicate on the "reports_to_position_id" field. It's identical to ReportsToPositionIDEQ.
+func ReportsToPositionID(v uint32) predicate.Position {
+	return predicate.Position(sql.FieldEQ(FieldReportsToPositionID, v))
+}
+
+// Description applies equality check predicate on the "description" field. It's identical to DescriptionEQ.
+func Description(v string) predicate.Position {
+	return predicate.Position(sql.FieldEQ(FieldDescription, v))
+}
+
+// JobFamily applies equality check predicate on the "job_family" field. It's identical to JobFamilyEQ.
+func JobFamily(v string) predicate.Position {
+	return predicate.Position(sql.FieldEQ(FieldJobFamily, v))
+}
+
+// JobGrade applies equality check predicate on the "job_grade" field. It's identical to JobGradeEQ.
+func JobGrade(v string) predicate.Position {
+	return predicate.Position(sql.FieldEQ(FieldJobGrade, v))
+}
+
+// Level applies equality check predicate on the "level" field. It's identical to LevelEQ.
+func Level(v int32) predicate.Position {
+	return predicate.Position(sql.FieldEQ(FieldLevel, v))
+}
+
+// Headcount applies equality check predicate on the "headcount" field. It's identical to HeadcountEQ.
+func Headcount(v uint32) predicate.Position {
+	return predicate.Position(sql.FieldEQ(FieldHeadcount, v))
+}
+
+// IsKeyPosition applies equality check predicate on the "is_key_position" field. It's identical to IsKeyPositionEQ.
+func IsKeyPosition(v bool) predicate.Position {
+	return predicate.Position(sql.FieldEQ(FieldIsKeyPosition, v))
+}
+
+// StartAt applies equality check predicate on the "start_at" field. It's identical to StartAtEQ.
+func StartAt(v time.Time) predicate.Position {
+	return predicate.Position(sql.FieldEQ(FieldStartAt, v))
+}
+
+// EndAt applies equality check predicate on the "end_at" field. It's identical to EndAtEQ.
+func EndAt(v time.Time) predicate.Position {
+	return predicate.Position(sql.FieldEQ(FieldEndAt, v))
 }
 
 // CreatedAtEQ applies the EQ predicate on the "created_at" field.
@@ -439,26 +459,6 @@ func DeletedByNotNil() predicate.Position {
 	return predicate.Position(sql.FieldNotNull(FieldDeletedBy))
 }
 
-// StatusEQ applies the EQ predicate on the "status" field.
-func StatusEQ(v Status) predicate.Position {
-	return predicate.Position(sql.FieldEQ(FieldStatus, v))
-}
-
-// StatusNEQ applies the NEQ predicate on the "status" field.
-func StatusNEQ(v Status) predicate.Position {
-	return predicate.Position(sql.FieldNEQ(FieldStatus, v))
-}
-
-// StatusIn applies the In predicate on the "status" field.
-func StatusIn(vs ...Status) predicate.Position {
-	return predicate.Position(sql.FieldIn(FieldStatus, vs...))
-}
-
-// StatusNotIn applies the NotIn predicate on the "status" field.
-func StatusNotIn(vs ...Status) predicate.Position {
-	return predicate.Position(sql.FieldNotIn(FieldStatus, vs...))
-}
-
 // SortOrderEQ applies the EQ predicate on the "sort_order" field.
 func SortOrderEQ(v uint32) predicate.Position {
 	return predicate.Position(sql.FieldEQ(FieldSortOrder, v))
@@ -507,56 +507,6 @@ func SortOrderIsNil() predicate.Position {
 // SortOrderNotNil applies the NotNil predicate on the "sort_order" field.
 func SortOrderNotNil() predicate.Position {
 	return predicate.Position(sql.FieldNotNull(FieldSortOrder))
-}
-
-// TenantIDEQ applies the EQ predicate on the "tenant_id" field.
-func TenantIDEQ(v uint32) predicate.Position {
-	return predicate.Position(sql.FieldEQ(FieldTenantID, v))
-}
-
-// TenantIDNEQ applies the NEQ predicate on the "tenant_id" field.
-func TenantIDNEQ(v uint32) predicate.Position {
-	return predicate.Position(sql.FieldNEQ(FieldTenantID, v))
-}
-
-// TenantIDIn applies the In predicate on the "tenant_id" field.
-func TenantIDIn(vs ...uint32) predicate.Position {
-	return predicate.Position(sql.FieldIn(FieldTenantID, vs...))
-}
-
-// TenantIDNotIn applies the NotIn predicate on the "tenant_id" field.
-func TenantIDNotIn(vs ...uint32) predicate.Position {
-	return predicate.Position(sql.FieldNotIn(FieldTenantID, vs...))
-}
-
-// TenantIDGT applies the GT predicate on the "tenant_id" field.
-func TenantIDGT(v uint32) predicate.Position {
-	return predicate.Position(sql.FieldGT(FieldTenantID, v))
-}
-
-// TenantIDGTE applies the GTE predicate on the "tenant_id" field.
-func TenantIDGTE(v uint32) predicate.Position {
-	return predicate.Position(sql.FieldGTE(FieldTenantID, v))
-}
-
-// TenantIDLT applies the LT predicate on the "tenant_id" field.
-func TenantIDLT(v uint32) predicate.Position {
-	return predicate.Position(sql.FieldLT(FieldTenantID, v))
-}
-
-// TenantIDLTE applies the LTE predicate on the "tenant_id" field.
-func TenantIDLTE(v uint32) predicate.Position {
-	return predicate.Position(sql.FieldLTE(FieldTenantID, v))
-}
-
-// TenantIDIsNil applies the IsNil predicate on the "tenant_id" field.
-func TenantIDIsNil() predicate.Position {
-	return predicate.Position(sql.FieldIsNull(FieldTenantID))
-}
-
-// TenantIDNotNil applies the NotNil predicate on the "tenant_id" field.
-func TenantIDNotNil() predicate.Position {
-	return predicate.Position(sql.FieldNotNull(FieldTenantID))
 }
 
 // RemarkEQ applies the EQ predicate on the "remark" field.
@@ -634,79 +584,369 @@ func RemarkContainsFold(v string) predicate.Position {
 	return predicate.Position(sql.FieldContainsFold(FieldRemark, v))
 }
 
-// JobGradeEQ applies the EQ predicate on the "job_grade" field.
-func JobGradeEQ(v string) predicate.Position {
-	return predicate.Position(sql.FieldEQ(FieldJobGrade, v))
+// TenantIDEQ applies the EQ predicate on the "tenant_id" field.
+func TenantIDEQ(v uint32) predicate.Position {
+	return predicate.Position(sql.FieldEQ(FieldTenantID, v))
 }
 
-// JobGradeNEQ applies the NEQ predicate on the "job_grade" field.
-func JobGradeNEQ(v string) predicate.Position {
-	return predicate.Position(sql.FieldNEQ(FieldJobGrade, v))
+// TenantIDNEQ applies the NEQ predicate on the "tenant_id" field.
+func TenantIDNEQ(v uint32) predicate.Position {
+	return predicate.Position(sql.FieldNEQ(FieldTenantID, v))
 }
 
-// JobGradeIn applies the In predicate on the "job_grade" field.
-func JobGradeIn(vs ...string) predicate.Position {
-	return predicate.Position(sql.FieldIn(FieldJobGrade, vs...))
+// TenantIDIn applies the In predicate on the "tenant_id" field.
+func TenantIDIn(vs ...uint32) predicate.Position {
+	return predicate.Position(sql.FieldIn(FieldTenantID, vs...))
 }
 
-// JobGradeNotIn applies the NotIn predicate on the "job_grade" field.
-func JobGradeNotIn(vs ...string) predicate.Position {
-	return predicate.Position(sql.FieldNotIn(FieldJobGrade, vs...))
+// TenantIDNotIn applies the NotIn predicate on the "tenant_id" field.
+func TenantIDNotIn(vs ...uint32) predicate.Position {
+	return predicate.Position(sql.FieldNotIn(FieldTenantID, vs...))
 }
 
-// JobGradeGT applies the GT predicate on the "job_grade" field.
-func JobGradeGT(v string) predicate.Position {
-	return predicate.Position(sql.FieldGT(FieldJobGrade, v))
+// TenantIDGT applies the GT predicate on the "tenant_id" field.
+func TenantIDGT(v uint32) predicate.Position {
+	return predicate.Position(sql.FieldGT(FieldTenantID, v))
 }
 
-// JobGradeGTE applies the GTE predicate on the "job_grade" field.
-func JobGradeGTE(v string) predicate.Position {
-	return predicate.Position(sql.FieldGTE(FieldJobGrade, v))
+// TenantIDGTE applies the GTE predicate on the "tenant_id" field.
+func TenantIDGTE(v uint32) predicate.Position {
+	return predicate.Position(sql.FieldGTE(FieldTenantID, v))
 }
 
-// JobGradeLT applies the LT predicate on the "job_grade" field.
-func JobGradeLT(v string) predicate.Position {
-	return predicate.Position(sql.FieldLT(FieldJobGrade, v))
+// TenantIDLT applies the LT predicate on the "tenant_id" field.
+func TenantIDLT(v uint32) predicate.Position {
+	return predicate.Position(sql.FieldLT(FieldTenantID, v))
 }
 
-// JobGradeLTE applies the LTE predicate on the "job_grade" field.
-func JobGradeLTE(v string) predicate.Position {
-	return predicate.Position(sql.FieldLTE(FieldJobGrade, v))
+// TenantIDLTE applies the LTE predicate on the "tenant_id" field.
+func TenantIDLTE(v uint32) predicate.Position {
+	return predicate.Position(sql.FieldLTE(FieldTenantID, v))
 }
 
-// JobGradeContains applies the Contains predicate on the "job_grade" field.
-func JobGradeContains(v string) predicate.Position {
-	return predicate.Position(sql.FieldContains(FieldJobGrade, v))
+// TenantIDIsNil applies the IsNil predicate on the "tenant_id" field.
+func TenantIDIsNil() predicate.Position {
+	return predicate.Position(sql.FieldIsNull(FieldTenantID))
 }
 
-// JobGradeHasPrefix applies the HasPrefix predicate on the "job_grade" field.
-func JobGradeHasPrefix(v string) predicate.Position {
-	return predicate.Position(sql.FieldHasPrefix(FieldJobGrade, v))
+// TenantIDNotNil applies the NotNil predicate on the "tenant_id" field.
+func TenantIDNotNil() predicate.Position {
+	return predicate.Position(sql.FieldNotNull(FieldTenantID))
 }
 
-// JobGradeHasSuffix applies the HasSuffix predicate on the "job_grade" field.
-func JobGradeHasSuffix(v string) predicate.Position {
-	return predicate.Position(sql.FieldHasSuffix(FieldJobGrade, v))
+// StatusEQ applies the EQ predicate on the "status" field.
+func StatusEQ(v Status) predicate.Position {
+	return predicate.Position(sql.FieldEQ(FieldStatus, v))
 }
 
-// JobGradeIsNil applies the IsNil predicate on the "job_grade" field.
-func JobGradeIsNil() predicate.Position {
-	return predicate.Position(sql.FieldIsNull(FieldJobGrade))
+// StatusNEQ applies the NEQ predicate on the "status" field.
+func StatusNEQ(v Status) predicate.Position {
+	return predicate.Position(sql.FieldNEQ(FieldStatus, v))
 }
 
-// JobGradeNotNil applies the NotNil predicate on the "job_grade" field.
-func JobGradeNotNil() predicate.Position {
-	return predicate.Position(sql.FieldNotNull(FieldJobGrade))
+// StatusIn applies the In predicate on the "status" field.
+func StatusIn(vs ...Status) predicate.Position {
+	return predicate.Position(sql.FieldIn(FieldStatus, vs...))
 }
 
-// JobGradeEqualFold applies the EqualFold predicate on the "job_grade" field.
-func JobGradeEqualFold(v string) predicate.Position {
-	return predicate.Position(sql.FieldEqualFold(FieldJobGrade, v))
+// StatusNotIn applies the NotIn predicate on the "status" field.
+func StatusNotIn(vs ...Status) predicate.Position {
+	return predicate.Position(sql.FieldNotIn(FieldStatus, vs...))
 }
 
-// JobGradeContainsFold applies the ContainsFold predicate on the "job_grade" field.
-func JobGradeContainsFold(v string) predicate.Position {
-	return predicate.Position(sql.FieldContainsFold(FieldJobGrade, v))
+// NameEQ applies the EQ predicate on the "name" field.
+func NameEQ(v string) predicate.Position {
+	return predicate.Position(sql.FieldEQ(FieldName, v))
+}
+
+// NameNEQ applies the NEQ predicate on the "name" field.
+func NameNEQ(v string) predicate.Position {
+	return predicate.Position(sql.FieldNEQ(FieldName, v))
+}
+
+// NameIn applies the In predicate on the "name" field.
+func NameIn(vs ...string) predicate.Position {
+	return predicate.Position(sql.FieldIn(FieldName, vs...))
+}
+
+// NameNotIn applies the NotIn predicate on the "name" field.
+func NameNotIn(vs ...string) predicate.Position {
+	return predicate.Position(sql.FieldNotIn(FieldName, vs...))
+}
+
+// NameGT applies the GT predicate on the "name" field.
+func NameGT(v string) predicate.Position {
+	return predicate.Position(sql.FieldGT(FieldName, v))
+}
+
+// NameGTE applies the GTE predicate on the "name" field.
+func NameGTE(v string) predicate.Position {
+	return predicate.Position(sql.FieldGTE(FieldName, v))
+}
+
+// NameLT applies the LT predicate on the "name" field.
+func NameLT(v string) predicate.Position {
+	return predicate.Position(sql.FieldLT(FieldName, v))
+}
+
+// NameLTE applies the LTE predicate on the "name" field.
+func NameLTE(v string) predicate.Position {
+	return predicate.Position(sql.FieldLTE(FieldName, v))
+}
+
+// NameContains applies the Contains predicate on the "name" field.
+func NameContains(v string) predicate.Position {
+	return predicate.Position(sql.FieldContains(FieldName, v))
+}
+
+// NameHasPrefix applies the HasPrefix predicate on the "name" field.
+func NameHasPrefix(v string) predicate.Position {
+	return predicate.Position(sql.FieldHasPrefix(FieldName, v))
+}
+
+// NameHasSuffix applies the HasSuffix predicate on the "name" field.
+func NameHasSuffix(v string) predicate.Position {
+	return predicate.Position(sql.FieldHasSuffix(FieldName, v))
+}
+
+// NameEqualFold applies the EqualFold predicate on the "name" field.
+func NameEqualFold(v string) predicate.Position {
+	return predicate.Position(sql.FieldEqualFold(FieldName, v))
+}
+
+// NameContainsFold applies the ContainsFold predicate on the "name" field.
+func NameContainsFold(v string) predicate.Position {
+	return predicate.Position(sql.FieldContainsFold(FieldName, v))
+}
+
+// CodeEQ applies the EQ predicate on the "code" field.
+func CodeEQ(v string) predicate.Position {
+	return predicate.Position(sql.FieldEQ(FieldCode, v))
+}
+
+// CodeNEQ applies the NEQ predicate on the "code" field.
+func CodeNEQ(v string) predicate.Position {
+	return predicate.Position(sql.FieldNEQ(FieldCode, v))
+}
+
+// CodeIn applies the In predicate on the "code" field.
+func CodeIn(vs ...string) predicate.Position {
+	return predicate.Position(sql.FieldIn(FieldCode, vs...))
+}
+
+// CodeNotIn applies the NotIn predicate on the "code" field.
+func CodeNotIn(vs ...string) predicate.Position {
+	return predicate.Position(sql.FieldNotIn(FieldCode, vs...))
+}
+
+// CodeGT applies the GT predicate on the "code" field.
+func CodeGT(v string) predicate.Position {
+	return predicate.Position(sql.FieldGT(FieldCode, v))
+}
+
+// CodeGTE applies the GTE predicate on the "code" field.
+func CodeGTE(v string) predicate.Position {
+	return predicate.Position(sql.FieldGTE(FieldCode, v))
+}
+
+// CodeLT applies the LT predicate on the "code" field.
+func CodeLT(v string) predicate.Position {
+	return predicate.Position(sql.FieldLT(FieldCode, v))
+}
+
+// CodeLTE applies the LTE predicate on the "code" field.
+func CodeLTE(v string) predicate.Position {
+	return predicate.Position(sql.FieldLTE(FieldCode, v))
+}
+
+// CodeContains applies the Contains predicate on the "code" field.
+func CodeContains(v string) predicate.Position {
+	return predicate.Position(sql.FieldContains(FieldCode, v))
+}
+
+// CodeHasPrefix applies the HasPrefix predicate on the "code" field.
+func CodeHasPrefix(v string) predicate.Position {
+	return predicate.Position(sql.FieldHasPrefix(FieldCode, v))
+}
+
+// CodeHasSuffix applies the HasSuffix predicate on the "code" field.
+func CodeHasSuffix(v string) predicate.Position {
+	return predicate.Position(sql.FieldHasSuffix(FieldCode, v))
+}
+
+// CodeEqualFold applies the EqualFold predicate on the "code" field.
+func CodeEqualFold(v string) predicate.Position {
+	return predicate.Position(sql.FieldEqualFold(FieldCode, v))
+}
+
+// CodeContainsFold applies the ContainsFold predicate on the "code" field.
+func CodeContainsFold(v string) predicate.Position {
+	return predicate.Position(sql.FieldContainsFold(FieldCode, v))
+}
+
+// OrgUnitIDEQ applies the EQ predicate on the "org_unit_id" field.
+func OrgUnitIDEQ(v uint32) predicate.Position {
+	return predicate.Position(sql.FieldEQ(FieldOrgUnitID, v))
+}
+
+// OrgUnitIDNEQ applies the NEQ predicate on the "org_unit_id" field.
+func OrgUnitIDNEQ(v uint32) predicate.Position {
+	return predicate.Position(sql.FieldNEQ(FieldOrgUnitID, v))
+}
+
+// OrgUnitIDIn applies the In predicate on the "org_unit_id" field.
+func OrgUnitIDIn(vs ...uint32) predicate.Position {
+	return predicate.Position(sql.FieldIn(FieldOrgUnitID, vs...))
+}
+
+// OrgUnitIDNotIn applies the NotIn predicate on the "org_unit_id" field.
+func OrgUnitIDNotIn(vs ...uint32) predicate.Position {
+	return predicate.Position(sql.FieldNotIn(FieldOrgUnitID, vs...))
+}
+
+// OrgUnitIDGT applies the GT predicate on the "org_unit_id" field.
+func OrgUnitIDGT(v uint32) predicate.Position {
+	return predicate.Position(sql.FieldGT(FieldOrgUnitID, v))
+}
+
+// OrgUnitIDGTE applies the GTE predicate on the "org_unit_id" field.
+func OrgUnitIDGTE(v uint32) predicate.Position {
+	return predicate.Position(sql.FieldGTE(FieldOrgUnitID, v))
+}
+
+// OrgUnitIDLT applies the LT predicate on the "org_unit_id" field.
+func OrgUnitIDLT(v uint32) predicate.Position {
+	return predicate.Position(sql.FieldLT(FieldOrgUnitID, v))
+}
+
+// OrgUnitIDLTE applies the LTE predicate on the "org_unit_id" field.
+func OrgUnitIDLTE(v uint32) predicate.Position {
+	return predicate.Position(sql.FieldLTE(FieldOrgUnitID, v))
+}
+
+// ReportsToPositionIDEQ applies the EQ predicate on the "reports_to_position_id" field.
+func ReportsToPositionIDEQ(v uint32) predicate.Position {
+	return predicate.Position(sql.FieldEQ(FieldReportsToPositionID, v))
+}
+
+// ReportsToPositionIDNEQ applies the NEQ predicate on the "reports_to_position_id" field.
+func ReportsToPositionIDNEQ(v uint32) predicate.Position {
+	return predicate.Position(sql.FieldNEQ(FieldReportsToPositionID, v))
+}
+
+// ReportsToPositionIDIn applies the In predicate on the "reports_to_position_id" field.
+func ReportsToPositionIDIn(vs ...uint32) predicate.Position {
+	return predicate.Position(sql.FieldIn(FieldReportsToPositionID, vs...))
+}
+
+// ReportsToPositionIDNotIn applies the NotIn predicate on the "reports_to_position_id" field.
+func ReportsToPositionIDNotIn(vs ...uint32) predicate.Position {
+	return predicate.Position(sql.FieldNotIn(FieldReportsToPositionID, vs...))
+}
+
+// ReportsToPositionIDGT applies the GT predicate on the "reports_to_position_id" field.
+func ReportsToPositionIDGT(v uint32) predicate.Position {
+	return predicate.Position(sql.FieldGT(FieldReportsToPositionID, v))
+}
+
+// ReportsToPositionIDGTE applies the GTE predicate on the "reports_to_position_id" field.
+func ReportsToPositionIDGTE(v uint32) predicate.Position {
+	return predicate.Position(sql.FieldGTE(FieldReportsToPositionID, v))
+}
+
+// ReportsToPositionIDLT applies the LT predicate on the "reports_to_position_id" field.
+func ReportsToPositionIDLT(v uint32) predicate.Position {
+	return predicate.Position(sql.FieldLT(FieldReportsToPositionID, v))
+}
+
+// ReportsToPositionIDLTE applies the LTE predicate on the "reports_to_position_id" field.
+func ReportsToPositionIDLTE(v uint32) predicate.Position {
+	return predicate.Position(sql.FieldLTE(FieldReportsToPositionID, v))
+}
+
+// ReportsToPositionIDIsNil applies the IsNil predicate on the "reports_to_position_id" field.
+func ReportsToPositionIDIsNil() predicate.Position {
+	return predicate.Position(sql.FieldIsNull(FieldReportsToPositionID))
+}
+
+// ReportsToPositionIDNotNil applies the NotNil predicate on the "reports_to_position_id" field.
+func ReportsToPositionIDNotNil() predicate.Position {
+	return predicate.Position(sql.FieldNotNull(FieldReportsToPositionID))
+}
+
+// DescriptionEQ applies the EQ predicate on the "description" field.
+func DescriptionEQ(v string) predicate.Position {
+	return predicate.Position(sql.FieldEQ(FieldDescription, v))
+}
+
+// DescriptionNEQ applies the NEQ predicate on the "description" field.
+func DescriptionNEQ(v string) predicate.Position {
+	return predicate.Position(sql.FieldNEQ(FieldDescription, v))
+}
+
+// DescriptionIn applies the In predicate on the "description" field.
+func DescriptionIn(vs ...string) predicate.Position {
+	return predicate.Position(sql.FieldIn(FieldDescription, vs...))
+}
+
+// DescriptionNotIn applies the NotIn predicate on the "description" field.
+func DescriptionNotIn(vs ...string) predicate.Position {
+	return predicate.Position(sql.FieldNotIn(FieldDescription, vs...))
+}
+
+// DescriptionGT applies the GT predicate on the "description" field.
+func DescriptionGT(v string) predicate.Position {
+	return predicate.Position(sql.FieldGT(FieldDescription, v))
+}
+
+// DescriptionGTE applies the GTE predicate on the "description" field.
+func DescriptionGTE(v string) predicate.Position {
+	return predicate.Position(sql.FieldGTE(FieldDescription, v))
+}
+
+// DescriptionLT applies the LT predicate on the "description" field.
+func DescriptionLT(v string) predicate.Position {
+	return predicate.Position(sql.FieldLT(FieldDescription, v))
+}
+
+// DescriptionLTE applies the LTE predicate on the "description" field.
+func DescriptionLTE(v string) predicate.Position {
+	return predicate.Position(sql.FieldLTE(FieldDescription, v))
+}
+
+// DescriptionContains applies the Contains predicate on the "description" field.
+func DescriptionContains(v string) predicate.Position {
+	return predicate.Position(sql.FieldContains(FieldDescription, v))
+}
+
+// DescriptionHasPrefix applies the HasPrefix predicate on the "description" field.
+func DescriptionHasPrefix(v string) predicate.Position {
+	return predicate.Position(sql.FieldHasPrefix(FieldDescription, v))
+}
+
+// DescriptionHasSuffix applies the HasSuffix predicate on the "description" field.
+func DescriptionHasSuffix(v string) predicate.Position {
+	return predicate.Position(sql.FieldHasSuffix(FieldDescription, v))
+}
+
+// DescriptionIsNil applies the IsNil predicate on the "description" field.
+func DescriptionIsNil() predicate.Position {
+	return predicate.Position(sql.FieldIsNull(FieldDescription))
+}
+
+// DescriptionNotNil applies the NotNil predicate on the "description" field.
+func DescriptionNotNil() predicate.Position {
+	return predicate.Position(sql.FieldNotNull(FieldDescription))
+}
+
+// DescriptionEqualFold applies the EqualFold predicate on the "description" field.
+func DescriptionEqualFold(v string) predicate.Position {
+	return predicate.Position(sql.FieldEqualFold(FieldDescription, v))
+}
+
+// DescriptionContainsFold applies the ContainsFold predicate on the "description" field.
+func DescriptionContainsFold(v string) predicate.Position {
+	return predicate.Position(sql.FieldContainsFold(FieldDescription, v))
 }
 
 // JobFamilyEQ applies the EQ predicate on the "job_family" field.
@@ -784,349 +1024,299 @@ func JobFamilyContainsFold(v string) predicate.Position {
 	return predicate.Position(sql.FieldContainsFold(FieldJobFamily, v))
 }
 
+// JobGradeEQ applies the EQ predicate on the "job_grade" field.
+func JobGradeEQ(v string) predicate.Position {
+	return predicate.Position(sql.FieldEQ(FieldJobGrade, v))
+}
+
+// JobGradeNEQ applies the NEQ predicate on the "job_grade" field.
+func JobGradeNEQ(v string) predicate.Position {
+	return predicate.Position(sql.FieldNEQ(FieldJobGrade, v))
+}
+
+// JobGradeIn applies the In predicate on the "job_grade" field.
+func JobGradeIn(vs ...string) predicate.Position {
+	return predicate.Position(sql.FieldIn(FieldJobGrade, vs...))
+}
+
+// JobGradeNotIn applies the NotIn predicate on the "job_grade" field.
+func JobGradeNotIn(vs ...string) predicate.Position {
+	return predicate.Position(sql.FieldNotIn(FieldJobGrade, vs...))
+}
+
+// JobGradeGT applies the GT predicate on the "job_grade" field.
+func JobGradeGT(v string) predicate.Position {
+	return predicate.Position(sql.FieldGT(FieldJobGrade, v))
+}
+
+// JobGradeGTE applies the GTE predicate on the "job_grade" field.
+func JobGradeGTE(v string) predicate.Position {
+	return predicate.Position(sql.FieldGTE(FieldJobGrade, v))
+}
+
+// JobGradeLT applies the LT predicate on the "job_grade" field.
+func JobGradeLT(v string) predicate.Position {
+	return predicate.Position(sql.FieldLT(FieldJobGrade, v))
+}
+
+// JobGradeLTE applies the LTE predicate on the "job_grade" field.
+func JobGradeLTE(v string) predicate.Position {
+	return predicate.Position(sql.FieldLTE(FieldJobGrade, v))
+}
+
+// JobGradeContains applies the Contains predicate on the "job_grade" field.
+func JobGradeContains(v string) predicate.Position {
+	return predicate.Position(sql.FieldContains(FieldJobGrade, v))
+}
+
+// JobGradeHasPrefix applies the HasPrefix predicate on the "job_grade" field.
+func JobGradeHasPrefix(v string) predicate.Position {
+	return predicate.Position(sql.FieldHasPrefix(FieldJobGrade, v))
+}
+
+// JobGradeHasSuffix applies the HasSuffix predicate on the "job_grade" field.
+func JobGradeHasSuffix(v string) predicate.Position {
+	return predicate.Position(sql.FieldHasSuffix(FieldJobGrade, v))
+}
+
+// JobGradeIsNil applies the IsNil predicate on the "job_grade" field.
+func JobGradeIsNil() predicate.Position {
+	return predicate.Position(sql.FieldIsNull(FieldJobGrade))
+}
+
+// JobGradeNotNil applies the NotNil predicate on the "job_grade" field.
+func JobGradeNotNil() predicate.Position {
+	return predicate.Position(sql.FieldNotNull(FieldJobGrade))
+}
+
+// JobGradeEqualFold applies the EqualFold predicate on the "job_grade" field.
+func JobGradeEqualFold(v string) predicate.Position {
+	return predicate.Position(sql.FieldEqualFold(FieldJobGrade, v))
+}
+
+// JobGradeContainsFold applies the ContainsFold predicate on the "job_grade" field.
+func JobGradeContainsFold(v string) predicate.Position {
+	return predicate.Position(sql.FieldContainsFold(FieldJobGrade, v))
+}
+
+// LevelEQ applies the EQ predicate on the "level" field.
+func LevelEQ(v int32) predicate.Position {
+	return predicate.Position(sql.FieldEQ(FieldLevel, v))
+}
+
+// LevelNEQ applies the NEQ predicate on the "level" field.
+func LevelNEQ(v int32) predicate.Position {
+	return predicate.Position(sql.FieldNEQ(FieldLevel, v))
+}
+
+// LevelIn applies the In predicate on the "level" field.
+func LevelIn(vs ...int32) predicate.Position {
+	return predicate.Position(sql.FieldIn(FieldLevel, vs...))
+}
+
+// LevelNotIn applies the NotIn predicate on the "level" field.
+func LevelNotIn(vs ...int32) predicate.Position {
+	return predicate.Position(sql.FieldNotIn(FieldLevel, vs...))
+}
+
+// LevelGT applies the GT predicate on the "level" field.
+func LevelGT(v int32) predicate.Position {
+	return predicate.Position(sql.FieldGT(FieldLevel, v))
+}
+
+// LevelGTE applies the GTE predicate on the "level" field.
+func LevelGTE(v int32) predicate.Position {
+	return predicate.Position(sql.FieldGTE(FieldLevel, v))
+}
+
+// LevelLT applies the LT predicate on the "level" field.
+func LevelLT(v int32) predicate.Position {
+	return predicate.Position(sql.FieldLT(FieldLevel, v))
+}
+
+// LevelLTE applies the LTE predicate on the "level" field.
+func LevelLTE(v int32) predicate.Position {
+	return predicate.Position(sql.FieldLTE(FieldLevel, v))
+}
+
+// LevelIsNil applies the IsNil predicate on the "level" field.
+func LevelIsNil() predicate.Position {
+	return predicate.Position(sql.FieldIsNull(FieldLevel))
+}
+
+// LevelNotNil applies the NotNil predicate on the "level" field.
+func LevelNotNil() predicate.Position {
+	return predicate.Position(sql.FieldNotNull(FieldLevel))
+}
+
+// HeadcountEQ applies the EQ predicate on the "headcount" field.
+func HeadcountEQ(v uint32) predicate.Position {
+	return predicate.Position(sql.FieldEQ(FieldHeadcount, v))
+}
+
+// HeadcountNEQ applies the NEQ predicate on the "headcount" field.
+func HeadcountNEQ(v uint32) predicate.Position {
+	return predicate.Position(sql.FieldNEQ(FieldHeadcount, v))
+}
+
+// HeadcountIn applies the In predicate on the "headcount" field.
+func HeadcountIn(vs ...uint32) predicate.Position {
+	return predicate.Position(sql.FieldIn(FieldHeadcount, vs...))
+}
+
+// HeadcountNotIn applies the NotIn predicate on the "headcount" field.
+func HeadcountNotIn(vs ...uint32) predicate.Position {
+	return predicate.Position(sql.FieldNotIn(FieldHeadcount, vs...))
+}
+
+// HeadcountGT applies the GT predicate on the "headcount" field.
+func HeadcountGT(v uint32) predicate.Position {
+	return predicate.Position(sql.FieldGT(FieldHeadcount, v))
+}
+
+// HeadcountGTE applies the GTE predicate on the "headcount" field.
+func HeadcountGTE(v uint32) predicate.Position {
+	return predicate.Position(sql.FieldGTE(FieldHeadcount, v))
+}
+
+// HeadcountLT applies the LT predicate on the "headcount" field.
+func HeadcountLT(v uint32) predicate.Position {
+	return predicate.Position(sql.FieldLT(FieldHeadcount, v))
+}
+
+// HeadcountLTE applies the LTE predicate on the "headcount" field.
+func HeadcountLTE(v uint32) predicate.Position {
+	return predicate.Position(sql.FieldLTE(FieldHeadcount, v))
+}
+
+// IsKeyPositionEQ applies the EQ predicate on the "is_key_position" field.
+func IsKeyPositionEQ(v bool) predicate.Position {
+	return predicate.Position(sql.FieldEQ(FieldIsKeyPosition, v))
+}
+
+// IsKeyPositionNEQ applies the NEQ predicate on the "is_key_position" field.
+func IsKeyPositionNEQ(v bool) predicate.Position {
+	return predicate.Position(sql.FieldNEQ(FieldIsKeyPosition, v))
+}
+
 // TypeEQ applies the EQ predicate on the "type" field.
-func TypeEQ(v string) predicate.Position {
+func TypeEQ(v Type) predicate.Position {
 	return predicate.Position(sql.FieldEQ(FieldType, v))
 }
 
 // TypeNEQ applies the NEQ predicate on the "type" field.
-func TypeNEQ(v string) predicate.Position {
+func TypeNEQ(v Type) predicate.Position {
 	return predicate.Position(sql.FieldNEQ(FieldType, v))
 }
 
 // TypeIn applies the In predicate on the "type" field.
-func TypeIn(vs ...string) predicate.Position {
+func TypeIn(vs ...Type) predicate.Position {
 	return predicate.Position(sql.FieldIn(FieldType, vs...))
 }
 
 // TypeNotIn applies the NotIn predicate on the "type" field.
-func TypeNotIn(vs ...string) predicate.Position {
+func TypeNotIn(vs ...Type) predicate.Position {
 	return predicate.Position(sql.FieldNotIn(FieldType, vs...))
 }
 
-// TypeGT applies the GT predicate on the "type" field.
-func TypeGT(v string) predicate.Position {
-	return predicate.Position(sql.FieldGT(FieldType, v))
+// StartAtEQ applies the EQ predicate on the "start_at" field.
+func StartAtEQ(v time.Time) predicate.Position {
+	return predicate.Position(sql.FieldEQ(FieldStartAt, v))
 }
 
-// TypeGTE applies the GTE predicate on the "type" field.
-func TypeGTE(v string) predicate.Position {
-	return predicate.Position(sql.FieldGTE(FieldType, v))
+// StartAtNEQ applies the NEQ predicate on the "start_at" field.
+func StartAtNEQ(v time.Time) predicate.Position {
+	return predicate.Position(sql.FieldNEQ(FieldStartAt, v))
 }
 
-// TypeLT applies the LT predicate on the "type" field.
-func TypeLT(v string) predicate.Position {
-	return predicate.Position(sql.FieldLT(FieldType, v))
+// StartAtIn applies the In predicate on the "start_at" field.
+func StartAtIn(vs ...time.Time) predicate.Position {
+	return predicate.Position(sql.FieldIn(FieldStartAt, vs...))
 }
 
-// TypeLTE applies the LTE predicate on the "type" field.
-func TypeLTE(v string) predicate.Position {
-	return predicate.Position(sql.FieldLTE(FieldType, v))
+// StartAtNotIn applies the NotIn predicate on the "start_at" field.
+func StartAtNotIn(vs ...time.Time) predicate.Position {
+	return predicate.Position(sql.FieldNotIn(FieldStartAt, vs...))
 }
 
-// TypeContains applies the Contains predicate on the "type" field.
-func TypeContains(v string) predicate.Position {
-	return predicate.Position(sql.FieldContains(FieldType, v))
+// StartAtGT applies the GT predicate on the "start_at" field.
+func StartAtGT(v time.Time) predicate.Position {
+	return predicate.Position(sql.FieldGT(FieldStartAt, v))
 }
 
-// TypeHasPrefix applies the HasPrefix predicate on the "type" field.
-func TypeHasPrefix(v string) predicate.Position {
-	return predicate.Position(sql.FieldHasPrefix(FieldType, v))
+// StartAtGTE applies the GTE predicate on the "start_at" field.
+func StartAtGTE(v time.Time) predicate.Position {
+	return predicate.Position(sql.FieldGTE(FieldStartAt, v))
 }
 
-// TypeHasSuffix applies the HasSuffix predicate on the "type" field.
-func TypeHasSuffix(v string) predicate.Position {
-	return predicate.Position(sql.FieldHasSuffix(FieldType, v))
+// StartAtLT applies the LT predicate on the "start_at" field.
+func StartAtLT(v time.Time) predicate.Position {
+	return predicate.Position(sql.FieldLT(FieldStartAt, v))
 }
 
-// TypeIsNil applies the IsNil predicate on the "type" field.
-func TypeIsNil() predicate.Position {
-	return predicate.Position(sql.FieldIsNull(FieldType))
+// StartAtLTE applies the LTE predicate on the "start_at" field.
+func StartAtLTE(v time.Time) predicate.Position {
+	return predicate.Position(sql.FieldLTE(FieldStartAt, v))
 }
 
-// TypeNotNil applies the NotNil predicate on the "type" field.
-func TypeNotNil() predicate.Position {
-	return predicate.Position(sql.FieldNotNull(FieldType))
+// StartAtIsNil applies the IsNil predicate on the "start_at" field.
+func StartAtIsNil() predicate.Position {
+	return predicate.Position(sql.FieldIsNull(FieldStartAt))
 }
 
-// TypeEqualFold applies the EqualFold predicate on the "type" field.
-func TypeEqualFold(v string) predicate.Position {
-	return predicate.Position(sql.FieldEqualFold(FieldType, v))
+// StartAtNotNil applies the NotNil predicate on the "start_at" field.
+func StartAtNotNil() predicate.Position {
+	return predicate.Position(sql.FieldNotNull(FieldStartAt))
 }
 
-// TypeContainsFold applies the ContainsFold predicate on the "type" field.
-func TypeContainsFold(v string) predicate.Position {
-	return predicate.Position(sql.FieldContainsFold(FieldType, v))
+// EndAtEQ applies the EQ predicate on the "end_at" field.
+func EndAtEQ(v time.Time) predicate.Position {
+	return predicate.Position(sql.FieldEQ(FieldEndAt, v))
 }
 
-// CodeEQ applies the EQ predicate on the "code" field.
-func CodeEQ(v string) predicate.Position {
-	return predicate.Position(sql.FieldEQ(FieldCode, v))
+// EndAtNEQ applies the NEQ predicate on the "end_at" field.
+func EndAtNEQ(v time.Time) predicate.Position {
+	return predicate.Position(sql.FieldNEQ(FieldEndAt, v))
 }
 
-// CodeNEQ applies the NEQ predicate on the "code" field.
-func CodeNEQ(v string) predicate.Position {
-	return predicate.Position(sql.FieldNEQ(FieldCode, v))
+// EndAtIn applies the In predicate on the "end_at" field.
+func EndAtIn(vs ...time.Time) predicate.Position {
+	return predicate.Position(sql.FieldIn(FieldEndAt, vs...))
 }
 
-// CodeIn applies the In predicate on the "code" field.
-func CodeIn(vs ...string) predicate.Position {
-	return predicate.Position(sql.FieldIn(FieldCode, vs...))
+// EndAtNotIn applies the NotIn predicate on the "end_at" field.
+func EndAtNotIn(vs ...time.Time) predicate.Position {
+	return predicate.Position(sql.FieldNotIn(FieldEndAt, vs...))
 }
 
-// CodeNotIn applies the NotIn predicate on the "code" field.
-func CodeNotIn(vs ...string) predicate.Position {
-	return predicate.Position(sql.FieldNotIn(FieldCode, vs...))
+// EndAtGT applies the GT predicate on the "end_at" field.
+func EndAtGT(v time.Time) predicate.Position {
+	return predicate.Position(sql.FieldGT(FieldEndAt, v))
 }
 
-// CodeGT applies the GT predicate on the "code" field.
-func CodeGT(v string) predicate.Position {
-	return predicate.Position(sql.FieldGT(FieldCode, v))
+// EndAtGTE applies the GTE predicate on the "end_at" field.
+func EndAtGTE(v time.Time) predicate.Position {
+	return predicate.Position(sql.FieldGTE(FieldEndAt, v))
 }
 
-// CodeGTE applies the GTE predicate on the "code" field.
-func CodeGTE(v string) predicate.Position {
-	return predicate.Position(sql.FieldGTE(FieldCode, v))
+// EndAtLT applies the LT predicate on the "end_at" field.
+func EndAtLT(v time.Time) predicate.Position {
+	return predicate.Position(sql.FieldLT(FieldEndAt, v))
 }
 
-// CodeLT applies the LT predicate on the "code" field.
-func CodeLT(v string) predicate.Position {
-	return predicate.Position(sql.FieldLT(FieldCode, v))
+// EndAtLTE applies the LTE predicate on the "end_at" field.
+func EndAtLTE(v time.Time) predicate.Position {
+	return predicate.Position(sql.FieldLTE(FieldEndAt, v))
 }
 
-// CodeLTE applies the LTE predicate on the "code" field.
-func CodeLTE(v string) predicate.Position {
-	return predicate.Position(sql.FieldLTE(FieldCode, v))
+// EndAtIsNil applies the IsNil predicate on the "end_at" field.
+func EndAtIsNil() predicate.Position {
+	return predicate.Position(sql.FieldIsNull(FieldEndAt))
 }
 
-// CodeContains applies the Contains predicate on the "code" field.
-func CodeContains(v string) predicate.Position {
-	return predicate.Position(sql.FieldContains(FieldCode, v))
-}
-
-// CodeHasPrefix applies the HasPrefix predicate on the "code" field.
-func CodeHasPrefix(v string) predicate.Position {
-	return predicate.Position(sql.FieldHasPrefix(FieldCode, v))
-}
-
-// CodeHasSuffix applies the HasSuffix predicate on the "code" field.
-func CodeHasSuffix(v string) predicate.Position {
-	return predicate.Position(sql.FieldHasSuffix(FieldCode, v))
-}
-
-// CodeIsNil applies the IsNil predicate on the "code" field.
-func CodeIsNil() predicate.Position {
-	return predicate.Position(sql.FieldIsNull(FieldCode))
-}
-
-// CodeNotNil applies the NotNil predicate on the "code" field.
-func CodeNotNil() predicate.Position {
-	return predicate.Position(sql.FieldNotNull(FieldCode))
-}
-
-// CodeEqualFold applies the EqualFold predicate on the "code" field.
-func CodeEqualFold(v string) predicate.Position {
-	return predicate.Position(sql.FieldEqualFold(FieldCode, v))
-}
-
-// CodeContainsFold applies the ContainsFold predicate on the "code" field.
-func CodeContainsFold(v string) predicate.Position {
-	return predicate.Position(sql.FieldContainsFold(FieldCode, v))
-}
-
-// ReportsToPositionIDEQ applies the EQ predicate on the "reports_to_position_id" field.
-func ReportsToPositionIDEQ(v uint32) predicate.Position {
-	return predicate.Position(sql.FieldEQ(FieldReportsToPositionID, v))
-}
-
-// ReportsToPositionIDNEQ applies the NEQ predicate on the "reports_to_position_id" field.
-func ReportsToPositionIDNEQ(v uint32) predicate.Position {
-	return predicate.Position(sql.FieldNEQ(FieldReportsToPositionID, v))
-}
-
-// ReportsToPositionIDIn applies the In predicate on the "reports_to_position_id" field.
-func ReportsToPositionIDIn(vs ...uint32) predicate.Position {
-	return predicate.Position(sql.FieldIn(FieldReportsToPositionID, vs...))
-}
-
-// ReportsToPositionIDNotIn applies the NotIn predicate on the "reports_to_position_id" field.
-func ReportsToPositionIDNotIn(vs ...uint32) predicate.Position {
-	return predicate.Position(sql.FieldNotIn(FieldReportsToPositionID, vs...))
-}
-
-// ReportsToPositionIDGT applies the GT predicate on the "reports_to_position_id" field.
-func ReportsToPositionIDGT(v uint32) predicate.Position {
-	return predicate.Position(sql.FieldGT(FieldReportsToPositionID, v))
-}
-
-// ReportsToPositionIDGTE applies the GTE predicate on the "reports_to_position_id" field.
-func ReportsToPositionIDGTE(v uint32) predicate.Position {
-	return predicate.Position(sql.FieldGTE(FieldReportsToPositionID, v))
-}
-
-// ReportsToPositionIDLT applies the LT predicate on the "reports_to_position_id" field.
-func ReportsToPositionIDLT(v uint32) predicate.Position {
-	return predicate.Position(sql.FieldLT(FieldReportsToPositionID, v))
-}
-
-// ReportsToPositionIDLTE applies the LTE predicate on the "reports_to_position_id" field.
-func ReportsToPositionIDLTE(v uint32) predicate.Position {
-	return predicate.Position(sql.FieldLTE(FieldReportsToPositionID, v))
-}
-
-// ReportsToPositionIDIsNil applies the IsNil predicate on the "reports_to_position_id" field.
-func ReportsToPositionIDIsNil() predicate.Position {
-	return predicate.Position(sql.FieldIsNull(FieldReportsToPositionID))
-}
-
-// ReportsToPositionIDNotNil applies the NotNil predicate on the "reports_to_position_id" field.
-func ReportsToPositionIDNotNil() predicate.Position {
-	return predicate.Position(sql.FieldNotNull(FieldReportsToPositionID))
-}
-
-// IsTemplateEQ applies the EQ predicate on the "is_template" field.
-func IsTemplateEQ(v bool) predicate.Position {
-	return predicate.Position(sql.FieldEQ(FieldIsTemplate, v))
-}
-
-// IsTemplateNEQ applies the NEQ predicate on the "is_template" field.
-func IsTemplateNEQ(v bool) predicate.Position {
-	return predicate.Position(sql.FieldNEQ(FieldIsTemplate, v))
-}
-
-// IsTemplateIsNil applies the IsNil predicate on the "is_template" field.
-func IsTemplateIsNil() predicate.Position {
-	return predicate.Position(sql.FieldIsNull(FieldIsTemplate))
-}
-
-// IsTemplateNotNil applies the NotNil predicate on the "is_template" field.
-func IsTemplateNotNil() predicate.Position {
-	return predicate.Position(sql.FieldNotNull(FieldIsTemplate))
-}
-
-// OrgUnitIDEQ applies the EQ predicate on the "org_unit_id" field.
-func OrgUnitIDEQ(v uint32) predicate.Position {
-	return predicate.Position(sql.FieldEQ(FieldOrgUnitID, v))
-}
-
-// OrgUnitIDNEQ applies the NEQ predicate on the "org_unit_id" field.
-func OrgUnitIDNEQ(v uint32) predicate.Position {
-	return predicate.Position(sql.FieldNEQ(FieldOrgUnitID, v))
-}
-
-// OrgUnitIDIn applies the In predicate on the "org_unit_id" field.
-func OrgUnitIDIn(vs ...uint32) predicate.Position {
-	return predicate.Position(sql.FieldIn(FieldOrgUnitID, vs...))
-}
-
-// OrgUnitIDNotIn applies the NotIn predicate on the "org_unit_id" field.
-func OrgUnitIDNotIn(vs ...uint32) predicate.Position {
-	return predicate.Position(sql.FieldNotIn(FieldOrgUnitID, vs...))
-}
-
-// OrgUnitIDGT applies the GT predicate on the "org_unit_id" field.
-func OrgUnitIDGT(v uint32) predicate.Position {
-	return predicate.Position(sql.FieldGT(FieldOrgUnitID, v))
-}
-
-// OrgUnitIDGTE applies the GTE predicate on the "org_unit_id" field.
-func OrgUnitIDGTE(v uint32) predicate.Position {
-	return predicate.Position(sql.FieldGTE(FieldOrgUnitID, v))
-}
-
-// OrgUnitIDLT applies the LT predicate on the "org_unit_id" field.
-func OrgUnitIDLT(v uint32) predicate.Position {
-	return predicate.Position(sql.FieldLT(FieldOrgUnitID, v))
-}
-
-// OrgUnitIDLTE applies the LTE predicate on the "org_unit_id" field.
-func OrgUnitIDLTE(v uint32) predicate.Position {
-	return predicate.Position(sql.FieldLTE(FieldOrgUnitID, v))
-}
-
-// OrgUnitIDIsNil applies the IsNil predicate on the "org_unit_id" field.
-func OrgUnitIDIsNil() predicate.Position {
-	return predicate.Position(sql.FieldIsNull(FieldOrgUnitID))
-}
-
-// OrgUnitIDNotNil applies the NotNil predicate on the "org_unit_id" field.
-func OrgUnitIDNotNil() predicate.Position {
-	return predicate.Position(sql.FieldNotNull(FieldOrgUnitID))
-}
-
-// NameEQ applies the EQ predicate on the "name" field.
-func NameEQ(v string) predicate.Position {
-	return predicate.Position(sql.FieldEQ(FieldName, v))
-}
-
-// NameNEQ applies the NEQ predicate on the "name" field.
-func NameNEQ(v string) predicate.Position {
-	return predicate.Position(sql.FieldNEQ(FieldName, v))
-}
-
-// NameIn applies the In predicate on the "name" field.
-func NameIn(vs ...string) predicate.Position {
-	return predicate.Position(sql.FieldIn(FieldName, vs...))
-}
-
-// NameNotIn applies the NotIn predicate on the "name" field.
-func NameNotIn(vs ...string) predicate.Position {
-	return predicate.Position(sql.FieldNotIn(FieldName, vs...))
-}
-
-// NameGT applies the GT predicate on the "name" field.
-func NameGT(v string) predicate.Position {
-	return predicate.Position(sql.FieldGT(FieldName, v))
-}
-
-// NameGTE applies the GTE predicate on the "name" field.
-func NameGTE(v string) predicate.Position {
-	return predicate.Position(sql.FieldGTE(FieldName, v))
-}
-
-// NameLT applies the LT predicate on the "name" field.
-func NameLT(v string) predicate.Position {
-	return predicate.Position(sql.FieldLT(FieldName, v))
-}
-
-// NameLTE applies the LTE predicate on the "name" field.
-func NameLTE(v string) predicate.Position {
-	return predicate.Position(sql.FieldLTE(FieldName, v))
-}
-
-// NameContains applies the Contains predicate on the "name" field.
-func NameContains(v string) predicate.Position {
-	return predicate.Position(sql.FieldContains(FieldName, v))
-}
-
-// NameHasPrefix applies the HasPrefix predicate on the "name" field.
-func NameHasPrefix(v string) predicate.Position {
-	return predicate.Position(sql.FieldHasPrefix(FieldName, v))
-}
-
-// NameHasSuffix applies the HasSuffix predicate on the "name" field.
-func NameHasSuffix(v string) predicate.Position {
-	return predicate.Position(sql.FieldHasSuffix(FieldName, v))
-}
-
-// NameIsNil applies the IsNil predicate on the "name" field.
-func NameIsNil() predicate.Position {
-	return predicate.Position(sql.FieldIsNull(FieldName))
-}
-
-// NameNotNil applies the NotNil predicate on the "name" field.
-func NameNotNil() predicate.Position {
-	return predicate.Position(sql.FieldNotNull(FieldName))
-}
-
-// NameEqualFold applies the EqualFold predicate on the "name" field.
-func NameEqualFold(v string) predicate.Position {
-	return predicate.Position(sql.FieldEqualFold(FieldName, v))
-}
-
-// NameContainsFold applies the ContainsFold predicate on the "name" field.
-func NameContainsFold(v string) predicate.Position {
-	return predicate.Position(sql.FieldContainsFold(FieldName, v))
+// EndAtNotNil applies the NotNil predicate on the "end_at" field.
+func EndAtNotNil() predicate.Position {
+	return predicate.Position(sql.FieldNotNull(FieldEndAt))
 }
 
 // And groups predicates with the AND operator between them.

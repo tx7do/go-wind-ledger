@@ -106,16 +106,72 @@ func (_c *APICreate) SetNillableDeletedBy(v *uint32) *APICreate {
 	return _c
 }
 
-// SetTenantID sets the "tenant_id" field.
-func (_c *APICreate) SetTenantID(v uint32) *APICreate {
-	_c.mutation.SetTenantID(v)
+// SetStatus sets the "status" field.
+func (_c *APICreate) SetStatus(v api.Status) *APICreate {
+	_c.mutation.SetStatus(v)
 	return _c
 }
 
-// SetNillableTenantID sets the "tenant_id" field if the given value is not nil.
-func (_c *APICreate) SetNillableTenantID(v *uint32) *APICreate {
+// SetNillableStatus sets the "status" field if the given value is not nil.
+func (_c *APICreate) SetNillableStatus(v *api.Status) *APICreate {
 	if v != nil {
-		_c.SetTenantID(*v)
+		_c.SetStatus(*v)
+	}
+	return _c
+}
+
+// SetDescription sets the "description" field.
+func (_c *APICreate) SetDescription(v string) *APICreate {
+	_c.mutation.SetDescription(v)
+	return _c
+}
+
+// SetNillableDescription sets the "description" field if the given value is not nil.
+func (_c *APICreate) SetNillableDescription(v *string) *APICreate {
+	if v != nil {
+		_c.SetDescription(*v)
+	}
+	return _c
+}
+
+// SetModule sets the "module" field.
+func (_c *APICreate) SetModule(v string) *APICreate {
+	_c.mutation.SetModule(v)
+	return _c
+}
+
+// SetNillableModule sets the "module" field if the given value is not nil.
+func (_c *APICreate) SetNillableModule(v *string) *APICreate {
+	if v != nil {
+		_c.SetModule(*v)
+	}
+	return _c
+}
+
+// SetModuleDescription sets the "module_description" field.
+func (_c *APICreate) SetModuleDescription(v string) *APICreate {
+	_c.mutation.SetModuleDescription(v)
+	return _c
+}
+
+// SetNillableModuleDescription sets the "module_description" field if the given value is not nil.
+func (_c *APICreate) SetNillableModuleDescription(v *string) *APICreate {
+	if v != nil {
+		_c.SetModuleDescription(*v)
+	}
+	return _c
+}
+
+// SetOperation sets the "operation" field.
+func (_c *APICreate) SetOperation(v string) *APICreate {
+	_c.mutation.SetOperation(v)
+	return _c
+}
+
+// SetNillableOperation sets the "operation" field if the given value is not nil.
+func (_c *APICreate) SetNillableOperation(v *string) *APICreate {
+	if v != nil {
+		_c.SetOperation(*v)
 	}
 	return _c
 }
@@ -148,20 +204,6 @@ func (_c *APICreate) SetNillableMethod(v *string) *APICreate {
 	return _c
 }
 
-// SetDescription sets the "description" field.
-func (_c *APICreate) SetDescription(v string) *APICreate {
-	_c.mutation.SetDescription(v)
-	return _c
-}
-
-// SetNillableDescription sets the "description" field if the given value is not nil.
-func (_c *APICreate) SetNillableDescription(v *string) *APICreate {
-	if v != nil {
-		_c.SetDescription(*v)
-	}
-	return _c
-}
-
 // SetScope sets the "scope" field.
 func (_c *APICreate) SetScope(v api.Scope) *APICreate {
 	_c.mutation.SetScope(v)
@@ -189,9 +231,7 @@ func (_c *APICreate) Mutation() *APIMutation {
 
 // Save creates the Api in the database.
 func (_c *APICreate) Save(ctx context.Context) (*Api, error) {
-	if err := _c.defaults(); err != nil {
-		return nil, err
-	}
+	_c.defaults()
 	return withHooks(ctx, _c.sqlSave, _c.mutation, _c.hooks)
 }
 
@@ -218,33 +258,25 @@ func (_c *APICreate) ExecX(ctx context.Context) {
 }
 
 // defaults sets the default values of the builder before save.
-func (_c *APICreate) defaults() error {
-	if _, ok := _c.mutation.TenantID(); !ok {
-		v := api.DefaultTenantID
-		_c.mutation.SetTenantID(v)
+func (_c *APICreate) defaults() {
+	if _, ok := _c.mutation.Status(); !ok {
+		v := api.DefaultStatus
+		_c.mutation.SetStatus(v)
 	}
 	if _, ok := _c.mutation.Scope(); !ok {
 		v := api.DefaultScope
 		_c.mutation.SetScope(v)
 	}
-	return nil
 }
 
 // check runs all checks and user-defined validators on the builder.
 func (_c *APICreate) check() error {
-	if v, ok := _c.mutation.Path(); ok {
-		if err := api.PathValidator(v); err != nil {
-			return &ValidationError{Name: "path", err: fmt.Errorf(`ent: validator failed for field "Api.path": %w`, err)}
-		}
+	if _, ok := _c.mutation.Status(); !ok {
+		return &ValidationError{Name: "status", err: errors.New(`ent: missing required field "Api.status"`)}
 	}
-	if v, ok := _c.mutation.Method(); ok {
-		if err := api.MethodValidator(v); err != nil {
-			return &ValidationError{Name: "method", err: fmt.Errorf(`ent: validator failed for field "Api.method": %w`, err)}
-		}
-	}
-	if v, ok := _c.mutation.Description(); ok {
-		if err := api.DescriptionValidator(v); err != nil {
-			return &ValidationError{Name: "description", err: fmt.Errorf(`ent: validator failed for field "Api.description": %w`, err)}
+	if v, ok := _c.mutation.Status(); ok {
+		if err := api.StatusValidator(v); err != nil {
+			return &ValidationError{Name: "status", err: fmt.Errorf(`ent: validator failed for field "Api.status": %w`, err)}
 		}
 	}
 	if v, ok := _c.mutation.Scope(); ok {
@@ -314,9 +346,25 @@ func (_c *APICreate) createSpec() (*Api, *sqlgraph.CreateSpec) {
 		_spec.SetField(api.FieldDeletedBy, field.TypeUint32, value)
 		_node.DeletedBy = &value
 	}
-	if value, ok := _c.mutation.TenantID(); ok {
-		_spec.SetField(api.FieldTenantID, field.TypeUint32, value)
-		_node.TenantID = &value
+	if value, ok := _c.mutation.Status(); ok {
+		_spec.SetField(api.FieldStatus, field.TypeEnum, value)
+		_node.Status = &value
+	}
+	if value, ok := _c.mutation.Description(); ok {
+		_spec.SetField(api.FieldDescription, field.TypeString, value)
+		_node.Description = &value
+	}
+	if value, ok := _c.mutation.Module(); ok {
+		_spec.SetField(api.FieldModule, field.TypeString, value)
+		_node.Module = &value
+	}
+	if value, ok := _c.mutation.ModuleDescription(); ok {
+		_spec.SetField(api.FieldModuleDescription, field.TypeString, value)
+		_node.ModuleDescription = &value
+	}
+	if value, ok := _c.mutation.Operation(); ok {
+		_spec.SetField(api.FieldOperation, field.TypeString, value)
+		_node.Operation = &value
 	}
 	if value, ok := _c.mutation.Path(); ok {
 		_spec.SetField(api.FieldPath, field.TypeString, value)
@@ -325,10 +373,6 @@ func (_c *APICreate) createSpec() (*Api, *sqlgraph.CreateSpec) {
 	if value, ok := _c.mutation.Method(); ok {
 		_spec.SetField(api.FieldMethod, field.TypeString, value)
 		_node.Method = &value
-	}
-	if value, ok := _c.mutation.Description(); ok {
-		_spec.SetField(api.FieldDescription, field.TypeString, value)
-		_node.Description = &value
 	}
 	if value, ok := _c.mutation.Scope(); ok {
 		_spec.SetField(api.FieldScope, field.TypeEnum, value)
@@ -494,6 +538,90 @@ func (u *ApiUpsert) ClearDeletedBy() *ApiUpsert {
 	return u
 }
 
+// SetStatus sets the "status" field.
+func (u *ApiUpsert) SetStatus(v api.Status) *ApiUpsert {
+	u.Set(api.FieldStatus, v)
+	return u
+}
+
+// UpdateStatus sets the "status" field to the value that was provided on create.
+func (u *ApiUpsert) UpdateStatus() *ApiUpsert {
+	u.SetExcluded(api.FieldStatus)
+	return u
+}
+
+// SetDescription sets the "description" field.
+func (u *ApiUpsert) SetDescription(v string) *ApiUpsert {
+	u.Set(api.FieldDescription, v)
+	return u
+}
+
+// UpdateDescription sets the "description" field to the value that was provided on create.
+func (u *ApiUpsert) UpdateDescription() *ApiUpsert {
+	u.SetExcluded(api.FieldDescription)
+	return u
+}
+
+// ClearDescription clears the value of the "description" field.
+func (u *ApiUpsert) ClearDescription() *ApiUpsert {
+	u.SetNull(api.FieldDescription)
+	return u
+}
+
+// SetModule sets the "module" field.
+func (u *ApiUpsert) SetModule(v string) *ApiUpsert {
+	u.Set(api.FieldModule, v)
+	return u
+}
+
+// UpdateModule sets the "module" field to the value that was provided on create.
+func (u *ApiUpsert) UpdateModule() *ApiUpsert {
+	u.SetExcluded(api.FieldModule)
+	return u
+}
+
+// ClearModule clears the value of the "module" field.
+func (u *ApiUpsert) ClearModule() *ApiUpsert {
+	u.SetNull(api.FieldModule)
+	return u
+}
+
+// SetModuleDescription sets the "module_description" field.
+func (u *ApiUpsert) SetModuleDescription(v string) *ApiUpsert {
+	u.Set(api.FieldModuleDescription, v)
+	return u
+}
+
+// UpdateModuleDescription sets the "module_description" field to the value that was provided on create.
+func (u *ApiUpsert) UpdateModuleDescription() *ApiUpsert {
+	u.SetExcluded(api.FieldModuleDescription)
+	return u
+}
+
+// ClearModuleDescription clears the value of the "module_description" field.
+func (u *ApiUpsert) ClearModuleDescription() *ApiUpsert {
+	u.SetNull(api.FieldModuleDescription)
+	return u
+}
+
+// SetOperation sets the "operation" field.
+func (u *ApiUpsert) SetOperation(v string) *ApiUpsert {
+	u.Set(api.FieldOperation, v)
+	return u
+}
+
+// UpdateOperation sets the "operation" field to the value that was provided on create.
+func (u *ApiUpsert) UpdateOperation() *ApiUpsert {
+	u.SetExcluded(api.FieldOperation)
+	return u
+}
+
+// ClearOperation clears the value of the "operation" field.
+func (u *ApiUpsert) ClearOperation() *ApiUpsert {
+	u.SetNull(api.FieldOperation)
+	return u
+}
+
 // SetPath sets the "path" field.
 func (u *ApiUpsert) SetPath(v string) *ApiUpsert {
 	u.Set(api.FieldPath, v)
@@ -527,24 +655,6 @@ func (u *ApiUpsert) UpdateMethod() *ApiUpsert {
 // ClearMethod clears the value of the "method" field.
 func (u *ApiUpsert) ClearMethod() *ApiUpsert {
 	u.SetNull(api.FieldMethod)
-	return u
-}
-
-// SetDescription sets the "description" field.
-func (u *ApiUpsert) SetDescription(v string) *ApiUpsert {
-	u.Set(api.FieldDescription, v)
-	return u
-}
-
-// UpdateDescription sets the "description" field to the value that was provided on create.
-func (u *ApiUpsert) UpdateDescription() *ApiUpsert {
-	u.SetExcluded(api.FieldDescription)
-	return u
-}
-
-// ClearDescription clears the value of the "description" field.
-func (u *ApiUpsert) ClearDescription() *ApiUpsert {
-	u.SetNull(api.FieldDescription)
 	return u
 }
 
@@ -585,9 +695,6 @@ func (u *ApiUpsertOne) UpdateNewValues() *ApiUpsertOne {
 		}
 		if _, exists := u.create.mutation.CreatedAt(); exists {
 			s.SetIgnore(api.FieldCreatedAt)
-		}
-		if _, exists := u.create.mutation.TenantID(); exists {
-			s.SetIgnore(api.FieldTenantID)
 		}
 	}))
 	return u
@@ -746,6 +853,104 @@ func (u *ApiUpsertOne) ClearDeletedBy() *ApiUpsertOne {
 	})
 }
 
+// SetStatus sets the "status" field.
+func (u *ApiUpsertOne) SetStatus(v api.Status) *ApiUpsertOne {
+	return u.Update(func(s *ApiUpsert) {
+		s.SetStatus(v)
+	})
+}
+
+// UpdateStatus sets the "status" field to the value that was provided on create.
+func (u *ApiUpsertOne) UpdateStatus() *ApiUpsertOne {
+	return u.Update(func(s *ApiUpsert) {
+		s.UpdateStatus()
+	})
+}
+
+// SetDescription sets the "description" field.
+func (u *ApiUpsertOne) SetDescription(v string) *ApiUpsertOne {
+	return u.Update(func(s *ApiUpsert) {
+		s.SetDescription(v)
+	})
+}
+
+// UpdateDescription sets the "description" field to the value that was provided on create.
+func (u *ApiUpsertOne) UpdateDescription() *ApiUpsertOne {
+	return u.Update(func(s *ApiUpsert) {
+		s.UpdateDescription()
+	})
+}
+
+// ClearDescription clears the value of the "description" field.
+func (u *ApiUpsertOne) ClearDescription() *ApiUpsertOne {
+	return u.Update(func(s *ApiUpsert) {
+		s.ClearDescription()
+	})
+}
+
+// SetModule sets the "module" field.
+func (u *ApiUpsertOne) SetModule(v string) *ApiUpsertOne {
+	return u.Update(func(s *ApiUpsert) {
+		s.SetModule(v)
+	})
+}
+
+// UpdateModule sets the "module" field to the value that was provided on create.
+func (u *ApiUpsertOne) UpdateModule() *ApiUpsertOne {
+	return u.Update(func(s *ApiUpsert) {
+		s.UpdateModule()
+	})
+}
+
+// ClearModule clears the value of the "module" field.
+func (u *ApiUpsertOne) ClearModule() *ApiUpsertOne {
+	return u.Update(func(s *ApiUpsert) {
+		s.ClearModule()
+	})
+}
+
+// SetModuleDescription sets the "module_description" field.
+func (u *ApiUpsertOne) SetModuleDescription(v string) *ApiUpsertOne {
+	return u.Update(func(s *ApiUpsert) {
+		s.SetModuleDescription(v)
+	})
+}
+
+// UpdateModuleDescription sets the "module_description" field to the value that was provided on create.
+func (u *ApiUpsertOne) UpdateModuleDescription() *ApiUpsertOne {
+	return u.Update(func(s *ApiUpsert) {
+		s.UpdateModuleDescription()
+	})
+}
+
+// ClearModuleDescription clears the value of the "module_description" field.
+func (u *ApiUpsertOne) ClearModuleDescription() *ApiUpsertOne {
+	return u.Update(func(s *ApiUpsert) {
+		s.ClearModuleDescription()
+	})
+}
+
+// SetOperation sets the "operation" field.
+func (u *ApiUpsertOne) SetOperation(v string) *ApiUpsertOne {
+	return u.Update(func(s *ApiUpsert) {
+		s.SetOperation(v)
+	})
+}
+
+// UpdateOperation sets the "operation" field to the value that was provided on create.
+func (u *ApiUpsertOne) UpdateOperation() *ApiUpsertOne {
+	return u.Update(func(s *ApiUpsert) {
+		s.UpdateOperation()
+	})
+}
+
+// ClearOperation clears the value of the "operation" field.
+func (u *ApiUpsertOne) ClearOperation() *ApiUpsertOne {
+	return u.Update(func(s *ApiUpsert) {
+		s.ClearOperation()
+	})
+}
+
 // SetPath sets the "path" field.
 func (u *ApiUpsertOne) SetPath(v string) *ApiUpsertOne {
 	return u.Update(func(s *ApiUpsert) {
@@ -785,27 +990,6 @@ func (u *ApiUpsertOne) UpdateMethod() *ApiUpsertOne {
 func (u *ApiUpsertOne) ClearMethod() *ApiUpsertOne {
 	return u.Update(func(s *ApiUpsert) {
 		s.ClearMethod()
-	})
-}
-
-// SetDescription sets the "description" field.
-func (u *ApiUpsertOne) SetDescription(v string) *ApiUpsertOne {
-	return u.Update(func(s *ApiUpsert) {
-		s.SetDescription(v)
-	})
-}
-
-// UpdateDescription sets the "description" field to the value that was provided on create.
-func (u *ApiUpsertOne) UpdateDescription() *ApiUpsertOne {
-	return u.Update(func(s *ApiUpsert) {
-		s.UpdateDescription()
-	})
-}
-
-// ClearDescription clears the value of the "description" field.
-func (u *ApiUpsertOne) ClearDescription() *ApiUpsertOne {
-	return u.Update(func(s *ApiUpsert) {
-		s.ClearDescription()
 	})
 }
 
@@ -1015,9 +1199,6 @@ func (u *ApiUpsertBulk) UpdateNewValues() *ApiUpsertBulk {
 			if _, exists := b.mutation.CreatedAt(); exists {
 				s.SetIgnore(api.FieldCreatedAt)
 			}
-			if _, exists := b.mutation.TenantID(); exists {
-				s.SetIgnore(api.FieldTenantID)
-			}
 		}
 	}))
 	return u
@@ -1176,6 +1357,104 @@ func (u *ApiUpsertBulk) ClearDeletedBy() *ApiUpsertBulk {
 	})
 }
 
+// SetStatus sets the "status" field.
+func (u *ApiUpsertBulk) SetStatus(v api.Status) *ApiUpsertBulk {
+	return u.Update(func(s *ApiUpsert) {
+		s.SetStatus(v)
+	})
+}
+
+// UpdateStatus sets the "status" field to the value that was provided on create.
+func (u *ApiUpsertBulk) UpdateStatus() *ApiUpsertBulk {
+	return u.Update(func(s *ApiUpsert) {
+		s.UpdateStatus()
+	})
+}
+
+// SetDescription sets the "description" field.
+func (u *ApiUpsertBulk) SetDescription(v string) *ApiUpsertBulk {
+	return u.Update(func(s *ApiUpsert) {
+		s.SetDescription(v)
+	})
+}
+
+// UpdateDescription sets the "description" field to the value that was provided on create.
+func (u *ApiUpsertBulk) UpdateDescription() *ApiUpsertBulk {
+	return u.Update(func(s *ApiUpsert) {
+		s.UpdateDescription()
+	})
+}
+
+// ClearDescription clears the value of the "description" field.
+func (u *ApiUpsertBulk) ClearDescription() *ApiUpsertBulk {
+	return u.Update(func(s *ApiUpsert) {
+		s.ClearDescription()
+	})
+}
+
+// SetModule sets the "module" field.
+func (u *ApiUpsertBulk) SetModule(v string) *ApiUpsertBulk {
+	return u.Update(func(s *ApiUpsert) {
+		s.SetModule(v)
+	})
+}
+
+// UpdateModule sets the "module" field to the value that was provided on create.
+func (u *ApiUpsertBulk) UpdateModule() *ApiUpsertBulk {
+	return u.Update(func(s *ApiUpsert) {
+		s.UpdateModule()
+	})
+}
+
+// ClearModule clears the value of the "module" field.
+func (u *ApiUpsertBulk) ClearModule() *ApiUpsertBulk {
+	return u.Update(func(s *ApiUpsert) {
+		s.ClearModule()
+	})
+}
+
+// SetModuleDescription sets the "module_description" field.
+func (u *ApiUpsertBulk) SetModuleDescription(v string) *ApiUpsertBulk {
+	return u.Update(func(s *ApiUpsert) {
+		s.SetModuleDescription(v)
+	})
+}
+
+// UpdateModuleDescription sets the "module_description" field to the value that was provided on create.
+func (u *ApiUpsertBulk) UpdateModuleDescription() *ApiUpsertBulk {
+	return u.Update(func(s *ApiUpsert) {
+		s.UpdateModuleDescription()
+	})
+}
+
+// ClearModuleDescription clears the value of the "module_description" field.
+func (u *ApiUpsertBulk) ClearModuleDescription() *ApiUpsertBulk {
+	return u.Update(func(s *ApiUpsert) {
+		s.ClearModuleDescription()
+	})
+}
+
+// SetOperation sets the "operation" field.
+func (u *ApiUpsertBulk) SetOperation(v string) *ApiUpsertBulk {
+	return u.Update(func(s *ApiUpsert) {
+		s.SetOperation(v)
+	})
+}
+
+// UpdateOperation sets the "operation" field to the value that was provided on create.
+func (u *ApiUpsertBulk) UpdateOperation() *ApiUpsertBulk {
+	return u.Update(func(s *ApiUpsert) {
+		s.UpdateOperation()
+	})
+}
+
+// ClearOperation clears the value of the "operation" field.
+func (u *ApiUpsertBulk) ClearOperation() *ApiUpsertBulk {
+	return u.Update(func(s *ApiUpsert) {
+		s.ClearOperation()
+	})
+}
+
 // SetPath sets the "path" field.
 func (u *ApiUpsertBulk) SetPath(v string) *ApiUpsertBulk {
 	return u.Update(func(s *ApiUpsert) {
@@ -1215,27 +1494,6 @@ func (u *ApiUpsertBulk) UpdateMethod() *ApiUpsertBulk {
 func (u *ApiUpsertBulk) ClearMethod() *ApiUpsertBulk {
 	return u.Update(func(s *ApiUpsert) {
 		s.ClearMethod()
-	})
-}
-
-// SetDescription sets the "description" field.
-func (u *ApiUpsertBulk) SetDescription(v string) *ApiUpsertBulk {
-	return u.Update(func(s *ApiUpsert) {
-		s.SetDescription(v)
-	})
-}
-
-// UpdateDescription sets the "description" field to the value that was provided on create.
-func (u *ApiUpsertBulk) UpdateDescription() *ApiUpsertBulk {
-	return u.Update(func(s *ApiUpsert) {
-		s.UpdateDescription()
-	})
-}
-
-// ClearDescription clears the value of the "description" field.
-func (u *ApiUpsertBulk) ClearDescription() *ApiUpsertBulk {
-	return u.Update(func(s *ApiUpsert) {
-		s.ClearDescription()
 	})
 }
 

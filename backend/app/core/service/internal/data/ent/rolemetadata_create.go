@@ -6,6 +6,7 @@ import (
 	"context"
 	"errors"
 	"fmt"
+	permissionpb "go-wind-ledger/api/gen/go/permission/service/v1"
 	"go-wind-ledger/app/core/service/internal/data/ent/rolemetadata"
 	"time"
 
@@ -64,6 +65,48 @@ func (_c *RoleMetadataCreate) SetNillableDeletedAt(v *time.Time) *RoleMetadataCr
 	return _c
 }
 
+// SetCreatedBy sets the "created_by" field.
+func (_c *RoleMetadataCreate) SetCreatedBy(v uint32) *RoleMetadataCreate {
+	_c.mutation.SetCreatedBy(v)
+	return _c
+}
+
+// SetNillableCreatedBy sets the "created_by" field if the given value is not nil.
+func (_c *RoleMetadataCreate) SetNillableCreatedBy(v *uint32) *RoleMetadataCreate {
+	if v != nil {
+		_c.SetCreatedBy(*v)
+	}
+	return _c
+}
+
+// SetUpdatedBy sets the "updated_by" field.
+func (_c *RoleMetadataCreate) SetUpdatedBy(v uint32) *RoleMetadataCreate {
+	_c.mutation.SetUpdatedBy(v)
+	return _c
+}
+
+// SetNillableUpdatedBy sets the "updated_by" field if the given value is not nil.
+func (_c *RoleMetadataCreate) SetNillableUpdatedBy(v *uint32) *RoleMetadataCreate {
+	if v != nil {
+		_c.SetUpdatedBy(*v)
+	}
+	return _c
+}
+
+// SetDeletedBy sets the "deleted_by" field.
+func (_c *RoleMetadataCreate) SetDeletedBy(v uint32) *RoleMetadataCreate {
+	_c.mutation.SetDeletedBy(v)
+	return _c
+}
+
+// SetNillableDeletedBy sets the "deleted_by" field if the given value is not nil.
+func (_c *RoleMetadataCreate) SetNillableDeletedBy(v *uint32) *RoleMetadataCreate {
+	if v != nil {
+		_c.SetDeletedBy(*v)
+	}
+	return _c
+}
+
 // SetTenantID sets the "tenant_id" field.
 func (_c *RoleMetadataCreate) SetTenantID(v uint32) *RoleMetadataCreate {
 	_c.mutation.SetTenantID(v)
@@ -88,6 +131,20 @@ func (_c *RoleMetadataCreate) SetRoleID(v uint32) *RoleMetadataCreate {
 func (_c *RoleMetadataCreate) SetNillableRoleID(v *uint32) *RoleMetadataCreate {
 	if v != nil {
 		_c.SetRoleID(*v)
+	}
+	return _c
+}
+
+// SetIsTemplate sets the "is_template" field.
+func (_c *RoleMetadataCreate) SetIsTemplate(v bool) *RoleMetadataCreate {
+	_c.mutation.SetIsTemplate(v)
+	return _c
+}
+
+// SetNillableIsTemplate sets the "is_template" field if the given value is not nil.
+func (_c *RoleMetadataCreate) SetNillableIsTemplate(v *bool) *RoleMetadataCreate {
+	if v != nil {
+		_c.SetIsTemplate(*v)
 	}
 	return _c
 }
@@ -120,20 +177,6 @@ func (_c *RoleMetadataCreate) SetNillableTemplateVersion(v *int32) *RoleMetadata
 	return _c
 }
 
-// SetLastSyncedAt sets the "last_synced_at" field.
-func (_c *RoleMetadataCreate) SetLastSyncedAt(v time.Time) *RoleMetadataCreate {
-	_c.mutation.SetLastSyncedAt(v)
-	return _c
-}
-
-// SetNillableLastSyncedAt sets the "last_synced_at" field if the given value is not nil.
-func (_c *RoleMetadataCreate) SetNillableLastSyncedAt(v *time.Time) *RoleMetadataCreate {
-	if v != nil {
-		_c.SetLastSyncedAt(*v)
-	}
-	return _c
-}
-
 // SetLastSyncedVersion sets the "last_synced_version" field.
 func (_c *RoleMetadataCreate) SetLastSyncedVersion(v int32) *RoleMetadataCreate {
 	_c.mutation.SetLastSyncedVersion(v)
@@ -148,45 +191,51 @@ func (_c *RoleMetadataCreate) SetNillableLastSyncedVersion(v *int32) *RoleMetada
 	return _c
 }
 
-// SetIsTemplate sets the "is_template" field.
-func (_c *RoleMetadataCreate) SetIsTemplate(v bool) *RoleMetadataCreate {
-	_c.mutation.SetIsTemplate(v)
+// SetLastSyncedAt sets the "last_synced_at" field.
+func (_c *RoleMetadataCreate) SetLastSyncedAt(v time.Time) *RoleMetadataCreate {
+	_c.mutation.SetLastSyncedAt(v)
 	return _c
 }
 
-// SetNillableIsTemplate sets the "is_template" field if the given value is not nil.
-func (_c *RoleMetadataCreate) SetNillableIsTemplate(v *bool) *RoleMetadataCreate {
+// SetNillableLastSyncedAt sets the "last_synced_at" field if the given value is not nil.
+func (_c *RoleMetadataCreate) SetNillableLastSyncedAt(v *time.Time) *RoleMetadataCreate {
 	if v != nil {
-		_c.SetIsTemplate(*v)
+		_c.SetLastSyncedAt(*v)
 	}
 	return _c
 }
 
-// SetKey sets the "key" field.
-func (_c *RoleMetadataCreate) SetKey(v string) *RoleMetadataCreate {
-	_c.mutation.SetKey(v)
+// SetSyncPolicy sets the "sync_policy" field.
+func (_c *RoleMetadataCreate) SetSyncPolicy(v rolemetadata.SyncPolicy) *RoleMetadataCreate {
+	_c.mutation.SetSyncPolicy(v)
 	return _c
 }
 
-// SetNillableKey sets the "key" field if the given value is not nil.
-func (_c *RoleMetadataCreate) SetNillableKey(v *string) *RoleMetadataCreate {
+// SetNillableSyncPolicy sets the "sync_policy" field if the given value is not nil.
+func (_c *RoleMetadataCreate) SetNillableSyncPolicy(v *rolemetadata.SyncPolicy) *RoleMetadataCreate {
 	if v != nil {
-		_c.SetKey(*v)
+		_c.SetSyncPolicy(*v)
 	}
 	return _c
 }
 
-// SetValue sets the "value" field.
-func (_c *RoleMetadataCreate) SetValue(v string) *RoleMetadataCreate {
-	_c.mutation.SetValue(v)
+// SetScope sets the "scope" field.
+func (_c *RoleMetadataCreate) SetScope(v rolemetadata.Scope) *RoleMetadataCreate {
+	_c.mutation.SetScope(v)
 	return _c
 }
 
-// SetNillableValue sets the "value" field if the given value is not nil.
-func (_c *RoleMetadataCreate) SetNillableValue(v *string) *RoleMetadataCreate {
+// SetNillableScope sets the "scope" field if the given value is not nil.
+func (_c *RoleMetadataCreate) SetNillableScope(v *rolemetadata.Scope) *RoleMetadataCreate {
 	if v != nil {
-		_c.SetValue(*v)
+		_c.SetScope(*v)
 	}
+	return _c
+}
+
+// SetCustomOverrides sets the "custom_overrides" field.
+func (_c *RoleMetadataCreate) SetCustomOverrides(v *permissionpb.RoleOverride) *RoleMetadataCreate {
+	_c.mutation.SetCustomOverrides(v)
 	return _c
 }
 
@@ -237,36 +286,47 @@ func (_c *RoleMetadataCreate) defaults() error {
 		v := rolemetadata.DefaultTenantID
 		_c.mutation.SetTenantID(v)
 	}
+	if _, ok := _c.mutation.IsTemplate(); !ok {
+		v := rolemetadata.DefaultIsTemplate
+		_c.mutation.SetIsTemplate(v)
+	}
 	if _, ok := _c.mutation.TemplateVersion(); !ok {
 		v := rolemetadata.DefaultTemplateVersion
 		_c.mutation.SetTemplateVersion(v)
 	}
-	if _, ok := _c.mutation.LastSyncedVersion(); !ok {
-		v := rolemetadata.DefaultLastSyncedVersion
-		_c.mutation.SetLastSyncedVersion(v)
+	if _, ok := _c.mutation.SyncPolicy(); !ok {
+		v := rolemetadata.DefaultSyncPolicy
+		_c.mutation.SetSyncPolicy(v)
 	}
-	if _, ok := _c.mutation.IsTemplate(); !ok {
-		v := rolemetadata.DefaultIsTemplate
-		_c.mutation.SetIsTemplate(v)
+	if _, ok := _c.mutation.Scope(); !ok {
+		v := rolemetadata.DefaultScope
+		_c.mutation.SetScope(v)
+	}
+	if _, ok := _c.mutation.CustomOverrides(); !ok {
+		v := rolemetadata.DefaultCustomOverrides
+		_c.mutation.SetCustomOverrides(v)
 	}
 	return nil
 }
 
 // check runs all checks and user-defined validators on the builder.
 func (_c *RoleMetadataCreate) check() error {
-	if v, ok := _c.mutation.TemplateFor(); ok {
-		if err := rolemetadata.TemplateForValidator(v); err != nil {
-			return &ValidationError{Name: "template_for", err: fmt.Errorf(`ent: validator failed for field "RoleMetadata.template_for": %w`, err)}
+	if v, ok := _c.mutation.SyncPolicy(); ok {
+		if err := rolemetadata.SyncPolicyValidator(v); err != nil {
+			return &ValidationError{Name: "sync_policy", err: fmt.Errorf(`ent: validator failed for field "RoleMetadata.sync_policy": %w`, err)}
 		}
 	}
-	if v, ok := _c.mutation.Key(); ok {
-		if err := rolemetadata.KeyValidator(v); err != nil {
-			return &ValidationError{Name: "key", err: fmt.Errorf(`ent: validator failed for field "RoleMetadata.key": %w`, err)}
+	if v, ok := _c.mutation.Scope(); ok {
+		if err := rolemetadata.ScopeValidator(v); err != nil {
+			return &ValidationError{Name: "scope", err: fmt.Errorf(`ent: validator failed for field "RoleMetadata.scope": %w`, err)}
 		}
 	}
-	if v, ok := _c.mutation.Value(); ok {
-		if err := rolemetadata.ValueValidator(v); err != nil {
-			return &ValidationError{Name: "value", err: fmt.Errorf(`ent: validator failed for field "RoleMetadata.value": %w`, err)}
+	if _, ok := _c.mutation.CustomOverrides(); !ok {
+		return &ValidationError{Name: "custom_overrides", err: errors.New(`ent: missing required field "RoleMetadata.custom_overrides"`)}
+	}
+	if v, ok := _c.mutation.CustomOverrides(); ok {
+		if err := v.Validate(); err != nil {
+			return &ValidationError{Name: "custom_overrides", err: fmt.Errorf(`ent: validator failed for field "RoleMetadata.custom_overrides": %w`, err)}
 		}
 	}
 	if v, ok := _c.mutation.ID(); ok {
@@ -319,6 +379,18 @@ func (_c *RoleMetadataCreate) createSpec() (*RoleMetadata, *sqlgraph.CreateSpec)
 		_spec.SetField(rolemetadata.FieldDeletedAt, field.TypeTime, value)
 		_node.DeletedAt = &value
 	}
+	if value, ok := _c.mutation.CreatedBy(); ok {
+		_spec.SetField(rolemetadata.FieldCreatedBy, field.TypeUint32, value)
+		_node.CreatedBy = &value
+	}
+	if value, ok := _c.mutation.UpdatedBy(); ok {
+		_spec.SetField(rolemetadata.FieldUpdatedBy, field.TypeUint32, value)
+		_node.UpdatedBy = &value
+	}
+	if value, ok := _c.mutation.DeletedBy(); ok {
+		_spec.SetField(rolemetadata.FieldDeletedBy, field.TypeUint32, value)
+		_node.DeletedBy = &value
+	}
 	if value, ok := _c.mutation.TenantID(); ok {
 		_spec.SetField(rolemetadata.FieldTenantID, field.TypeUint32, value)
 		_node.TenantID = &value
@@ -326,6 +398,10 @@ func (_c *RoleMetadataCreate) createSpec() (*RoleMetadata, *sqlgraph.CreateSpec)
 	if value, ok := _c.mutation.RoleID(); ok {
 		_spec.SetField(rolemetadata.FieldRoleID, field.TypeUint32, value)
 		_node.RoleID = &value
+	}
+	if value, ok := _c.mutation.IsTemplate(); ok {
+		_spec.SetField(rolemetadata.FieldIsTemplate, field.TypeBool, value)
+		_node.IsTemplate = &value
 	}
 	if value, ok := _c.mutation.TemplateFor(); ok {
 		_spec.SetField(rolemetadata.FieldTemplateFor, field.TypeString, value)
@@ -335,25 +411,25 @@ func (_c *RoleMetadataCreate) createSpec() (*RoleMetadata, *sqlgraph.CreateSpec)
 		_spec.SetField(rolemetadata.FieldTemplateVersion, field.TypeInt32, value)
 		_node.TemplateVersion = &value
 	}
-	if value, ok := _c.mutation.LastSyncedAt(); ok {
-		_spec.SetField(rolemetadata.FieldLastSyncedAt, field.TypeTime, value)
-		_node.LastSyncedAt = &value
-	}
 	if value, ok := _c.mutation.LastSyncedVersion(); ok {
 		_spec.SetField(rolemetadata.FieldLastSyncedVersion, field.TypeInt32, value)
 		_node.LastSyncedVersion = &value
 	}
-	if value, ok := _c.mutation.IsTemplate(); ok {
-		_spec.SetField(rolemetadata.FieldIsTemplate, field.TypeBool, value)
-		_node.IsTemplate = &value
+	if value, ok := _c.mutation.LastSyncedAt(); ok {
+		_spec.SetField(rolemetadata.FieldLastSyncedAt, field.TypeTime, value)
+		_node.LastSyncedAt = &value
 	}
-	if value, ok := _c.mutation.Key(); ok {
-		_spec.SetField(rolemetadata.FieldKey, field.TypeString, value)
-		_node.Key = &value
+	if value, ok := _c.mutation.SyncPolicy(); ok {
+		_spec.SetField(rolemetadata.FieldSyncPolicy, field.TypeEnum, value)
+		_node.SyncPolicy = &value
 	}
-	if value, ok := _c.mutation.Value(); ok {
-		_spec.SetField(rolemetadata.FieldValue, field.TypeString, value)
-		_node.Value = &value
+	if value, ok := _c.mutation.Scope(); ok {
+		_spec.SetField(rolemetadata.FieldScope, field.TypeEnum, value)
+		_node.Scope = &value
+	}
+	if value, ok := _c.mutation.CustomOverrides(); ok {
+		_spec.SetField(rolemetadata.FieldCustomOverrides, field.TypeJSON, value)
+		_node.CustomOverrides = value
 	}
 	return _node, _spec
 }
@@ -443,6 +519,78 @@ func (u *RoleMetadataUpsert) ClearDeletedAt() *RoleMetadataUpsert {
 	return u
 }
 
+// SetCreatedBy sets the "created_by" field.
+func (u *RoleMetadataUpsert) SetCreatedBy(v uint32) *RoleMetadataUpsert {
+	u.Set(rolemetadata.FieldCreatedBy, v)
+	return u
+}
+
+// UpdateCreatedBy sets the "created_by" field to the value that was provided on create.
+func (u *RoleMetadataUpsert) UpdateCreatedBy() *RoleMetadataUpsert {
+	u.SetExcluded(rolemetadata.FieldCreatedBy)
+	return u
+}
+
+// AddCreatedBy adds v to the "created_by" field.
+func (u *RoleMetadataUpsert) AddCreatedBy(v uint32) *RoleMetadataUpsert {
+	u.Add(rolemetadata.FieldCreatedBy, v)
+	return u
+}
+
+// ClearCreatedBy clears the value of the "created_by" field.
+func (u *RoleMetadataUpsert) ClearCreatedBy() *RoleMetadataUpsert {
+	u.SetNull(rolemetadata.FieldCreatedBy)
+	return u
+}
+
+// SetUpdatedBy sets the "updated_by" field.
+func (u *RoleMetadataUpsert) SetUpdatedBy(v uint32) *RoleMetadataUpsert {
+	u.Set(rolemetadata.FieldUpdatedBy, v)
+	return u
+}
+
+// UpdateUpdatedBy sets the "updated_by" field to the value that was provided on create.
+func (u *RoleMetadataUpsert) UpdateUpdatedBy() *RoleMetadataUpsert {
+	u.SetExcluded(rolemetadata.FieldUpdatedBy)
+	return u
+}
+
+// AddUpdatedBy adds v to the "updated_by" field.
+func (u *RoleMetadataUpsert) AddUpdatedBy(v uint32) *RoleMetadataUpsert {
+	u.Add(rolemetadata.FieldUpdatedBy, v)
+	return u
+}
+
+// ClearUpdatedBy clears the value of the "updated_by" field.
+func (u *RoleMetadataUpsert) ClearUpdatedBy() *RoleMetadataUpsert {
+	u.SetNull(rolemetadata.FieldUpdatedBy)
+	return u
+}
+
+// SetDeletedBy sets the "deleted_by" field.
+func (u *RoleMetadataUpsert) SetDeletedBy(v uint32) *RoleMetadataUpsert {
+	u.Set(rolemetadata.FieldDeletedBy, v)
+	return u
+}
+
+// UpdateDeletedBy sets the "deleted_by" field to the value that was provided on create.
+func (u *RoleMetadataUpsert) UpdateDeletedBy() *RoleMetadataUpsert {
+	u.SetExcluded(rolemetadata.FieldDeletedBy)
+	return u
+}
+
+// AddDeletedBy adds v to the "deleted_by" field.
+func (u *RoleMetadataUpsert) AddDeletedBy(v uint32) *RoleMetadataUpsert {
+	u.Add(rolemetadata.FieldDeletedBy, v)
+	return u
+}
+
+// ClearDeletedBy clears the value of the "deleted_by" field.
+func (u *RoleMetadataUpsert) ClearDeletedBy() *RoleMetadataUpsert {
+	u.SetNull(rolemetadata.FieldDeletedBy)
+	return u
+}
+
 // SetRoleID sets the "role_id" field.
 func (u *RoleMetadataUpsert) SetRoleID(v uint32) *RoleMetadataUpsert {
 	u.Set(rolemetadata.FieldRoleID, v)
@@ -464,6 +612,24 @@ func (u *RoleMetadataUpsert) AddRoleID(v uint32) *RoleMetadataUpsert {
 // ClearRoleID clears the value of the "role_id" field.
 func (u *RoleMetadataUpsert) ClearRoleID() *RoleMetadataUpsert {
 	u.SetNull(rolemetadata.FieldRoleID)
+	return u
+}
+
+// SetIsTemplate sets the "is_template" field.
+func (u *RoleMetadataUpsert) SetIsTemplate(v bool) *RoleMetadataUpsert {
+	u.Set(rolemetadata.FieldIsTemplate, v)
+	return u
+}
+
+// UpdateIsTemplate sets the "is_template" field to the value that was provided on create.
+func (u *RoleMetadataUpsert) UpdateIsTemplate() *RoleMetadataUpsert {
+	u.SetExcluded(rolemetadata.FieldIsTemplate)
+	return u
+}
+
+// ClearIsTemplate clears the value of the "is_template" field.
+func (u *RoleMetadataUpsert) ClearIsTemplate() *RoleMetadataUpsert {
+	u.SetNull(rolemetadata.FieldIsTemplate)
 	return u
 }
 
@@ -509,24 +675,6 @@ func (u *RoleMetadataUpsert) ClearTemplateVersion() *RoleMetadataUpsert {
 	return u
 }
 
-// SetLastSyncedAt sets the "last_synced_at" field.
-func (u *RoleMetadataUpsert) SetLastSyncedAt(v time.Time) *RoleMetadataUpsert {
-	u.Set(rolemetadata.FieldLastSyncedAt, v)
-	return u
-}
-
-// UpdateLastSyncedAt sets the "last_synced_at" field to the value that was provided on create.
-func (u *RoleMetadataUpsert) UpdateLastSyncedAt() *RoleMetadataUpsert {
-	u.SetExcluded(rolemetadata.FieldLastSyncedAt)
-	return u
-}
-
-// ClearLastSyncedAt clears the value of the "last_synced_at" field.
-func (u *RoleMetadataUpsert) ClearLastSyncedAt() *RoleMetadataUpsert {
-	u.SetNull(rolemetadata.FieldLastSyncedAt)
-	return u
-}
-
 // SetLastSyncedVersion sets the "last_synced_version" field.
 func (u *RoleMetadataUpsert) SetLastSyncedVersion(v int32) *RoleMetadataUpsert {
 	u.Set(rolemetadata.FieldLastSyncedVersion, v)
@@ -551,57 +699,69 @@ func (u *RoleMetadataUpsert) ClearLastSyncedVersion() *RoleMetadataUpsert {
 	return u
 }
 
-// SetIsTemplate sets the "is_template" field.
-func (u *RoleMetadataUpsert) SetIsTemplate(v bool) *RoleMetadataUpsert {
-	u.Set(rolemetadata.FieldIsTemplate, v)
+// SetLastSyncedAt sets the "last_synced_at" field.
+func (u *RoleMetadataUpsert) SetLastSyncedAt(v time.Time) *RoleMetadataUpsert {
+	u.Set(rolemetadata.FieldLastSyncedAt, v)
 	return u
 }
 
-// UpdateIsTemplate sets the "is_template" field to the value that was provided on create.
-func (u *RoleMetadataUpsert) UpdateIsTemplate() *RoleMetadataUpsert {
-	u.SetExcluded(rolemetadata.FieldIsTemplate)
+// UpdateLastSyncedAt sets the "last_synced_at" field to the value that was provided on create.
+func (u *RoleMetadataUpsert) UpdateLastSyncedAt() *RoleMetadataUpsert {
+	u.SetExcluded(rolemetadata.FieldLastSyncedAt)
 	return u
 }
 
-// ClearIsTemplate clears the value of the "is_template" field.
-func (u *RoleMetadataUpsert) ClearIsTemplate() *RoleMetadataUpsert {
-	u.SetNull(rolemetadata.FieldIsTemplate)
+// ClearLastSyncedAt clears the value of the "last_synced_at" field.
+func (u *RoleMetadataUpsert) ClearLastSyncedAt() *RoleMetadataUpsert {
+	u.SetNull(rolemetadata.FieldLastSyncedAt)
 	return u
 }
 
-// SetKey sets the "key" field.
-func (u *RoleMetadataUpsert) SetKey(v string) *RoleMetadataUpsert {
-	u.Set(rolemetadata.FieldKey, v)
+// SetSyncPolicy sets the "sync_policy" field.
+func (u *RoleMetadataUpsert) SetSyncPolicy(v rolemetadata.SyncPolicy) *RoleMetadataUpsert {
+	u.Set(rolemetadata.FieldSyncPolicy, v)
 	return u
 }
 
-// UpdateKey sets the "key" field to the value that was provided on create.
-func (u *RoleMetadataUpsert) UpdateKey() *RoleMetadataUpsert {
-	u.SetExcluded(rolemetadata.FieldKey)
+// UpdateSyncPolicy sets the "sync_policy" field to the value that was provided on create.
+func (u *RoleMetadataUpsert) UpdateSyncPolicy() *RoleMetadataUpsert {
+	u.SetExcluded(rolemetadata.FieldSyncPolicy)
 	return u
 }
 
-// ClearKey clears the value of the "key" field.
-func (u *RoleMetadataUpsert) ClearKey() *RoleMetadataUpsert {
-	u.SetNull(rolemetadata.FieldKey)
+// ClearSyncPolicy clears the value of the "sync_policy" field.
+func (u *RoleMetadataUpsert) ClearSyncPolicy() *RoleMetadataUpsert {
+	u.SetNull(rolemetadata.FieldSyncPolicy)
 	return u
 }
 
-// SetValue sets the "value" field.
-func (u *RoleMetadataUpsert) SetValue(v string) *RoleMetadataUpsert {
-	u.Set(rolemetadata.FieldValue, v)
+// SetScope sets the "scope" field.
+func (u *RoleMetadataUpsert) SetScope(v rolemetadata.Scope) *RoleMetadataUpsert {
+	u.Set(rolemetadata.FieldScope, v)
 	return u
 }
 
-// UpdateValue sets the "value" field to the value that was provided on create.
-func (u *RoleMetadataUpsert) UpdateValue() *RoleMetadataUpsert {
-	u.SetExcluded(rolemetadata.FieldValue)
+// UpdateScope sets the "scope" field to the value that was provided on create.
+func (u *RoleMetadataUpsert) UpdateScope() *RoleMetadataUpsert {
+	u.SetExcluded(rolemetadata.FieldScope)
 	return u
 }
 
-// ClearValue clears the value of the "value" field.
-func (u *RoleMetadataUpsert) ClearValue() *RoleMetadataUpsert {
-	u.SetNull(rolemetadata.FieldValue)
+// ClearScope clears the value of the "scope" field.
+func (u *RoleMetadataUpsert) ClearScope() *RoleMetadataUpsert {
+	u.SetNull(rolemetadata.FieldScope)
+	return u
+}
+
+// SetCustomOverrides sets the "custom_overrides" field.
+func (u *RoleMetadataUpsert) SetCustomOverrides(v *permissionpb.RoleOverride) *RoleMetadataUpsert {
+	u.Set(rolemetadata.FieldCustomOverrides, v)
+	return u
+}
+
+// UpdateCustomOverrides sets the "custom_overrides" field to the value that was provided on create.
+func (u *RoleMetadataUpsert) UpdateCustomOverrides() *RoleMetadataUpsert {
+	u.SetExcluded(rolemetadata.FieldCustomOverrides)
 	return u
 }
 
@@ -701,6 +861,90 @@ func (u *RoleMetadataUpsertOne) ClearDeletedAt() *RoleMetadataUpsertOne {
 	})
 }
 
+// SetCreatedBy sets the "created_by" field.
+func (u *RoleMetadataUpsertOne) SetCreatedBy(v uint32) *RoleMetadataUpsertOne {
+	return u.Update(func(s *RoleMetadataUpsert) {
+		s.SetCreatedBy(v)
+	})
+}
+
+// AddCreatedBy adds v to the "created_by" field.
+func (u *RoleMetadataUpsertOne) AddCreatedBy(v uint32) *RoleMetadataUpsertOne {
+	return u.Update(func(s *RoleMetadataUpsert) {
+		s.AddCreatedBy(v)
+	})
+}
+
+// UpdateCreatedBy sets the "created_by" field to the value that was provided on create.
+func (u *RoleMetadataUpsertOne) UpdateCreatedBy() *RoleMetadataUpsertOne {
+	return u.Update(func(s *RoleMetadataUpsert) {
+		s.UpdateCreatedBy()
+	})
+}
+
+// ClearCreatedBy clears the value of the "created_by" field.
+func (u *RoleMetadataUpsertOne) ClearCreatedBy() *RoleMetadataUpsertOne {
+	return u.Update(func(s *RoleMetadataUpsert) {
+		s.ClearCreatedBy()
+	})
+}
+
+// SetUpdatedBy sets the "updated_by" field.
+func (u *RoleMetadataUpsertOne) SetUpdatedBy(v uint32) *RoleMetadataUpsertOne {
+	return u.Update(func(s *RoleMetadataUpsert) {
+		s.SetUpdatedBy(v)
+	})
+}
+
+// AddUpdatedBy adds v to the "updated_by" field.
+func (u *RoleMetadataUpsertOne) AddUpdatedBy(v uint32) *RoleMetadataUpsertOne {
+	return u.Update(func(s *RoleMetadataUpsert) {
+		s.AddUpdatedBy(v)
+	})
+}
+
+// UpdateUpdatedBy sets the "updated_by" field to the value that was provided on create.
+func (u *RoleMetadataUpsertOne) UpdateUpdatedBy() *RoleMetadataUpsertOne {
+	return u.Update(func(s *RoleMetadataUpsert) {
+		s.UpdateUpdatedBy()
+	})
+}
+
+// ClearUpdatedBy clears the value of the "updated_by" field.
+func (u *RoleMetadataUpsertOne) ClearUpdatedBy() *RoleMetadataUpsertOne {
+	return u.Update(func(s *RoleMetadataUpsert) {
+		s.ClearUpdatedBy()
+	})
+}
+
+// SetDeletedBy sets the "deleted_by" field.
+func (u *RoleMetadataUpsertOne) SetDeletedBy(v uint32) *RoleMetadataUpsertOne {
+	return u.Update(func(s *RoleMetadataUpsert) {
+		s.SetDeletedBy(v)
+	})
+}
+
+// AddDeletedBy adds v to the "deleted_by" field.
+func (u *RoleMetadataUpsertOne) AddDeletedBy(v uint32) *RoleMetadataUpsertOne {
+	return u.Update(func(s *RoleMetadataUpsert) {
+		s.AddDeletedBy(v)
+	})
+}
+
+// UpdateDeletedBy sets the "deleted_by" field to the value that was provided on create.
+func (u *RoleMetadataUpsertOne) UpdateDeletedBy() *RoleMetadataUpsertOne {
+	return u.Update(func(s *RoleMetadataUpsert) {
+		s.UpdateDeletedBy()
+	})
+}
+
+// ClearDeletedBy clears the value of the "deleted_by" field.
+func (u *RoleMetadataUpsertOne) ClearDeletedBy() *RoleMetadataUpsertOne {
+	return u.Update(func(s *RoleMetadataUpsert) {
+		s.ClearDeletedBy()
+	})
+}
+
 // SetRoleID sets the "role_id" field.
 func (u *RoleMetadataUpsertOne) SetRoleID(v uint32) *RoleMetadataUpsertOne {
 	return u.Update(func(s *RoleMetadataUpsert) {
@@ -726,6 +970,27 @@ func (u *RoleMetadataUpsertOne) UpdateRoleID() *RoleMetadataUpsertOne {
 func (u *RoleMetadataUpsertOne) ClearRoleID() *RoleMetadataUpsertOne {
 	return u.Update(func(s *RoleMetadataUpsert) {
 		s.ClearRoleID()
+	})
+}
+
+// SetIsTemplate sets the "is_template" field.
+func (u *RoleMetadataUpsertOne) SetIsTemplate(v bool) *RoleMetadataUpsertOne {
+	return u.Update(func(s *RoleMetadataUpsert) {
+		s.SetIsTemplate(v)
+	})
+}
+
+// UpdateIsTemplate sets the "is_template" field to the value that was provided on create.
+func (u *RoleMetadataUpsertOne) UpdateIsTemplate() *RoleMetadataUpsertOne {
+	return u.Update(func(s *RoleMetadataUpsert) {
+		s.UpdateIsTemplate()
+	})
+}
+
+// ClearIsTemplate clears the value of the "is_template" field.
+func (u *RoleMetadataUpsertOne) ClearIsTemplate() *RoleMetadataUpsertOne {
+	return u.Update(func(s *RoleMetadataUpsert) {
+		s.ClearIsTemplate()
 	})
 }
 
@@ -778,27 +1043,6 @@ func (u *RoleMetadataUpsertOne) ClearTemplateVersion() *RoleMetadataUpsertOne {
 	})
 }
 
-// SetLastSyncedAt sets the "last_synced_at" field.
-func (u *RoleMetadataUpsertOne) SetLastSyncedAt(v time.Time) *RoleMetadataUpsertOne {
-	return u.Update(func(s *RoleMetadataUpsert) {
-		s.SetLastSyncedAt(v)
-	})
-}
-
-// UpdateLastSyncedAt sets the "last_synced_at" field to the value that was provided on create.
-func (u *RoleMetadataUpsertOne) UpdateLastSyncedAt() *RoleMetadataUpsertOne {
-	return u.Update(func(s *RoleMetadataUpsert) {
-		s.UpdateLastSyncedAt()
-	})
-}
-
-// ClearLastSyncedAt clears the value of the "last_synced_at" field.
-func (u *RoleMetadataUpsertOne) ClearLastSyncedAt() *RoleMetadataUpsertOne {
-	return u.Update(func(s *RoleMetadataUpsert) {
-		s.ClearLastSyncedAt()
-	})
-}
-
 // SetLastSyncedVersion sets the "last_synced_version" field.
 func (u *RoleMetadataUpsertOne) SetLastSyncedVersion(v int32) *RoleMetadataUpsertOne {
 	return u.Update(func(s *RoleMetadataUpsert) {
@@ -827,66 +1071,80 @@ func (u *RoleMetadataUpsertOne) ClearLastSyncedVersion() *RoleMetadataUpsertOne 
 	})
 }
 
-// SetIsTemplate sets the "is_template" field.
-func (u *RoleMetadataUpsertOne) SetIsTemplate(v bool) *RoleMetadataUpsertOne {
+// SetLastSyncedAt sets the "last_synced_at" field.
+func (u *RoleMetadataUpsertOne) SetLastSyncedAt(v time.Time) *RoleMetadataUpsertOne {
 	return u.Update(func(s *RoleMetadataUpsert) {
-		s.SetIsTemplate(v)
+		s.SetLastSyncedAt(v)
 	})
 }
 
-// UpdateIsTemplate sets the "is_template" field to the value that was provided on create.
-func (u *RoleMetadataUpsertOne) UpdateIsTemplate() *RoleMetadataUpsertOne {
+// UpdateLastSyncedAt sets the "last_synced_at" field to the value that was provided on create.
+func (u *RoleMetadataUpsertOne) UpdateLastSyncedAt() *RoleMetadataUpsertOne {
 	return u.Update(func(s *RoleMetadataUpsert) {
-		s.UpdateIsTemplate()
+		s.UpdateLastSyncedAt()
 	})
 }
 
-// ClearIsTemplate clears the value of the "is_template" field.
-func (u *RoleMetadataUpsertOne) ClearIsTemplate() *RoleMetadataUpsertOne {
+// ClearLastSyncedAt clears the value of the "last_synced_at" field.
+func (u *RoleMetadataUpsertOne) ClearLastSyncedAt() *RoleMetadataUpsertOne {
 	return u.Update(func(s *RoleMetadataUpsert) {
-		s.ClearIsTemplate()
+		s.ClearLastSyncedAt()
 	})
 }
 
-// SetKey sets the "key" field.
-func (u *RoleMetadataUpsertOne) SetKey(v string) *RoleMetadataUpsertOne {
+// SetSyncPolicy sets the "sync_policy" field.
+func (u *RoleMetadataUpsertOne) SetSyncPolicy(v rolemetadata.SyncPolicy) *RoleMetadataUpsertOne {
 	return u.Update(func(s *RoleMetadataUpsert) {
-		s.SetKey(v)
+		s.SetSyncPolicy(v)
 	})
 }
 
-// UpdateKey sets the "key" field to the value that was provided on create.
-func (u *RoleMetadataUpsertOne) UpdateKey() *RoleMetadataUpsertOne {
+// UpdateSyncPolicy sets the "sync_policy" field to the value that was provided on create.
+func (u *RoleMetadataUpsertOne) UpdateSyncPolicy() *RoleMetadataUpsertOne {
 	return u.Update(func(s *RoleMetadataUpsert) {
-		s.UpdateKey()
+		s.UpdateSyncPolicy()
 	})
 }
 
-// ClearKey clears the value of the "key" field.
-func (u *RoleMetadataUpsertOne) ClearKey() *RoleMetadataUpsertOne {
+// ClearSyncPolicy clears the value of the "sync_policy" field.
+func (u *RoleMetadataUpsertOne) ClearSyncPolicy() *RoleMetadataUpsertOne {
 	return u.Update(func(s *RoleMetadataUpsert) {
-		s.ClearKey()
+		s.ClearSyncPolicy()
 	})
 }
 
-// SetValue sets the "value" field.
-func (u *RoleMetadataUpsertOne) SetValue(v string) *RoleMetadataUpsertOne {
+// SetScope sets the "scope" field.
+func (u *RoleMetadataUpsertOne) SetScope(v rolemetadata.Scope) *RoleMetadataUpsertOne {
 	return u.Update(func(s *RoleMetadataUpsert) {
-		s.SetValue(v)
+		s.SetScope(v)
 	})
 }
 
-// UpdateValue sets the "value" field to the value that was provided on create.
-func (u *RoleMetadataUpsertOne) UpdateValue() *RoleMetadataUpsertOne {
+// UpdateScope sets the "scope" field to the value that was provided on create.
+func (u *RoleMetadataUpsertOne) UpdateScope() *RoleMetadataUpsertOne {
 	return u.Update(func(s *RoleMetadataUpsert) {
-		s.UpdateValue()
+		s.UpdateScope()
 	})
 }
 
-// ClearValue clears the value of the "value" field.
-func (u *RoleMetadataUpsertOne) ClearValue() *RoleMetadataUpsertOne {
+// ClearScope clears the value of the "scope" field.
+func (u *RoleMetadataUpsertOne) ClearScope() *RoleMetadataUpsertOne {
 	return u.Update(func(s *RoleMetadataUpsert) {
-		s.ClearValue()
+		s.ClearScope()
+	})
+}
+
+// SetCustomOverrides sets the "custom_overrides" field.
+func (u *RoleMetadataUpsertOne) SetCustomOverrides(v *permissionpb.RoleOverride) *RoleMetadataUpsertOne {
+	return u.Update(func(s *RoleMetadataUpsert) {
+		s.SetCustomOverrides(v)
+	})
+}
+
+// UpdateCustomOverrides sets the "custom_overrides" field to the value that was provided on create.
+func (u *RoleMetadataUpsertOne) UpdateCustomOverrides() *RoleMetadataUpsertOne {
+	return u.Update(func(s *RoleMetadataUpsert) {
+		s.UpdateCustomOverrides()
 	})
 }
 
@@ -1152,6 +1410,90 @@ func (u *RoleMetadataUpsertBulk) ClearDeletedAt() *RoleMetadataUpsertBulk {
 	})
 }
 
+// SetCreatedBy sets the "created_by" field.
+func (u *RoleMetadataUpsertBulk) SetCreatedBy(v uint32) *RoleMetadataUpsertBulk {
+	return u.Update(func(s *RoleMetadataUpsert) {
+		s.SetCreatedBy(v)
+	})
+}
+
+// AddCreatedBy adds v to the "created_by" field.
+func (u *RoleMetadataUpsertBulk) AddCreatedBy(v uint32) *RoleMetadataUpsertBulk {
+	return u.Update(func(s *RoleMetadataUpsert) {
+		s.AddCreatedBy(v)
+	})
+}
+
+// UpdateCreatedBy sets the "created_by" field to the value that was provided on create.
+func (u *RoleMetadataUpsertBulk) UpdateCreatedBy() *RoleMetadataUpsertBulk {
+	return u.Update(func(s *RoleMetadataUpsert) {
+		s.UpdateCreatedBy()
+	})
+}
+
+// ClearCreatedBy clears the value of the "created_by" field.
+func (u *RoleMetadataUpsertBulk) ClearCreatedBy() *RoleMetadataUpsertBulk {
+	return u.Update(func(s *RoleMetadataUpsert) {
+		s.ClearCreatedBy()
+	})
+}
+
+// SetUpdatedBy sets the "updated_by" field.
+func (u *RoleMetadataUpsertBulk) SetUpdatedBy(v uint32) *RoleMetadataUpsertBulk {
+	return u.Update(func(s *RoleMetadataUpsert) {
+		s.SetUpdatedBy(v)
+	})
+}
+
+// AddUpdatedBy adds v to the "updated_by" field.
+func (u *RoleMetadataUpsertBulk) AddUpdatedBy(v uint32) *RoleMetadataUpsertBulk {
+	return u.Update(func(s *RoleMetadataUpsert) {
+		s.AddUpdatedBy(v)
+	})
+}
+
+// UpdateUpdatedBy sets the "updated_by" field to the value that was provided on create.
+func (u *RoleMetadataUpsertBulk) UpdateUpdatedBy() *RoleMetadataUpsertBulk {
+	return u.Update(func(s *RoleMetadataUpsert) {
+		s.UpdateUpdatedBy()
+	})
+}
+
+// ClearUpdatedBy clears the value of the "updated_by" field.
+func (u *RoleMetadataUpsertBulk) ClearUpdatedBy() *RoleMetadataUpsertBulk {
+	return u.Update(func(s *RoleMetadataUpsert) {
+		s.ClearUpdatedBy()
+	})
+}
+
+// SetDeletedBy sets the "deleted_by" field.
+func (u *RoleMetadataUpsertBulk) SetDeletedBy(v uint32) *RoleMetadataUpsertBulk {
+	return u.Update(func(s *RoleMetadataUpsert) {
+		s.SetDeletedBy(v)
+	})
+}
+
+// AddDeletedBy adds v to the "deleted_by" field.
+func (u *RoleMetadataUpsertBulk) AddDeletedBy(v uint32) *RoleMetadataUpsertBulk {
+	return u.Update(func(s *RoleMetadataUpsert) {
+		s.AddDeletedBy(v)
+	})
+}
+
+// UpdateDeletedBy sets the "deleted_by" field to the value that was provided on create.
+func (u *RoleMetadataUpsertBulk) UpdateDeletedBy() *RoleMetadataUpsertBulk {
+	return u.Update(func(s *RoleMetadataUpsert) {
+		s.UpdateDeletedBy()
+	})
+}
+
+// ClearDeletedBy clears the value of the "deleted_by" field.
+func (u *RoleMetadataUpsertBulk) ClearDeletedBy() *RoleMetadataUpsertBulk {
+	return u.Update(func(s *RoleMetadataUpsert) {
+		s.ClearDeletedBy()
+	})
+}
+
 // SetRoleID sets the "role_id" field.
 func (u *RoleMetadataUpsertBulk) SetRoleID(v uint32) *RoleMetadataUpsertBulk {
 	return u.Update(func(s *RoleMetadataUpsert) {
@@ -1177,6 +1519,27 @@ func (u *RoleMetadataUpsertBulk) UpdateRoleID() *RoleMetadataUpsertBulk {
 func (u *RoleMetadataUpsertBulk) ClearRoleID() *RoleMetadataUpsertBulk {
 	return u.Update(func(s *RoleMetadataUpsert) {
 		s.ClearRoleID()
+	})
+}
+
+// SetIsTemplate sets the "is_template" field.
+func (u *RoleMetadataUpsertBulk) SetIsTemplate(v bool) *RoleMetadataUpsertBulk {
+	return u.Update(func(s *RoleMetadataUpsert) {
+		s.SetIsTemplate(v)
+	})
+}
+
+// UpdateIsTemplate sets the "is_template" field to the value that was provided on create.
+func (u *RoleMetadataUpsertBulk) UpdateIsTemplate() *RoleMetadataUpsertBulk {
+	return u.Update(func(s *RoleMetadataUpsert) {
+		s.UpdateIsTemplate()
+	})
+}
+
+// ClearIsTemplate clears the value of the "is_template" field.
+func (u *RoleMetadataUpsertBulk) ClearIsTemplate() *RoleMetadataUpsertBulk {
+	return u.Update(func(s *RoleMetadataUpsert) {
+		s.ClearIsTemplate()
 	})
 }
 
@@ -1229,27 +1592,6 @@ func (u *RoleMetadataUpsertBulk) ClearTemplateVersion() *RoleMetadataUpsertBulk 
 	})
 }
 
-// SetLastSyncedAt sets the "last_synced_at" field.
-func (u *RoleMetadataUpsertBulk) SetLastSyncedAt(v time.Time) *RoleMetadataUpsertBulk {
-	return u.Update(func(s *RoleMetadataUpsert) {
-		s.SetLastSyncedAt(v)
-	})
-}
-
-// UpdateLastSyncedAt sets the "last_synced_at" field to the value that was provided on create.
-func (u *RoleMetadataUpsertBulk) UpdateLastSyncedAt() *RoleMetadataUpsertBulk {
-	return u.Update(func(s *RoleMetadataUpsert) {
-		s.UpdateLastSyncedAt()
-	})
-}
-
-// ClearLastSyncedAt clears the value of the "last_synced_at" field.
-func (u *RoleMetadataUpsertBulk) ClearLastSyncedAt() *RoleMetadataUpsertBulk {
-	return u.Update(func(s *RoleMetadataUpsert) {
-		s.ClearLastSyncedAt()
-	})
-}
-
 // SetLastSyncedVersion sets the "last_synced_version" field.
 func (u *RoleMetadataUpsertBulk) SetLastSyncedVersion(v int32) *RoleMetadataUpsertBulk {
 	return u.Update(func(s *RoleMetadataUpsert) {
@@ -1278,66 +1620,80 @@ func (u *RoleMetadataUpsertBulk) ClearLastSyncedVersion() *RoleMetadataUpsertBul
 	})
 }
 
-// SetIsTemplate sets the "is_template" field.
-func (u *RoleMetadataUpsertBulk) SetIsTemplate(v bool) *RoleMetadataUpsertBulk {
+// SetLastSyncedAt sets the "last_synced_at" field.
+func (u *RoleMetadataUpsertBulk) SetLastSyncedAt(v time.Time) *RoleMetadataUpsertBulk {
 	return u.Update(func(s *RoleMetadataUpsert) {
-		s.SetIsTemplate(v)
+		s.SetLastSyncedAt(v)
 	})
 }
 
-// UpdateIsTemplate sets the "is_template" field to the value that was provided on create.
-func (u *RoleMetadataUpsertBulk) UpdateIsTemplate() *RoleMetadataUpsertBulk {
+// UpdateLastSyncedAt sets the "last_synced_at" field to the value that was provided on create.
+func (u *RoleMetadataUpsertBulk) UpdateLastSyncedAt() *RoleMetadataUpsertBulk {
 	return u.Update(func(s *RoleMetadataUpsert) {
-		s.UpdateIsTemplate()
+		s.UpdateLastSyncedAt()
 	})
 }
 
-// ClearIsTemplate clears the value of the "is_template" field.
-func (u *RoleMetadataUpsertBulk) ClearIsTemplate() *RoleMetadataUpsertBulk {
+// ClearLastSyncedAt clears the value of the "last_synced_at" field.
+func (u *RoleMetadataUpsertBulk) ClearLastSyncedAt() *RoleMetadataUpsertBulk {
 	return u.Update(func(s *RoleMetadataUpsert) {
-		s.ClearIsTemplate()
+		s.ClearLastSyncedAt()
 	})
 }
 
-// SetKey sets the "key" field.
-func (u *RoleMetadataUpsertBulk) SetKey(v string) *RoleMetadataUpsertBulk {
+// SetSyncPolicy sets the "sync_policy" field.
+func (u *RoleMetadataUpsertBulk) SetSyncPolicy(v rolemetadata.SyncPolicy) *RoleMetadataUpsertBulk {
 	return u.Update(func(s *RoleMetadataUpsert) {
-		s.SetKey(v)
+		s.SetSyncPolicy(v)
 	})
 }
 
-// UpdateKey sets the "key" field to the value that was provided on create.
-func (u *RoleMetadataUpsertBulk) UpdateKey() *RoleMetadataUpsertBulk {
+// UpdateSyncPolicy sets the "sync_policy" field to the value that was provided on create.
+func (u *RoleMetadataUpsertBulk) UpdateSyncPolicy() *RoleMetadataUpsertBulk {
 	return u.Update(func(s *RoleMetadataUpsert) {
-		s.UpdateKey()
+		s.UpdateSyncPolicy()
 	})
 }
 
-// ClearKey clears the value of the "key" field.
-func (u *RoleMetadataUpsertBulk) ClearKey() *RoleMetadataUpsertBulk {
+// ClearSyncPolicy clears the value of the "sync_policy" field.
+func (u *RoleMetadataUpsertBulk) ClearSyncPolicy() *RoleMetadataUpsertBulk {
 	return u.Update(func(s *RoleMetadataUpsert) {
-		s.ClearKey()
+		s.ClearSyncPolicy()
 	})
 }
 
-// SetValue sets the "value" field.
-func (u *RoleMetadataUpsertBulk) SetValue(v string) *RoleMetadataUpsertBulk {
+// SetScope sets the "scope" field.
+func (u *RoleMetadataUpsertBulk) SetScope(v rolemetadata.Scope) *RoleMetadataUpsertBulk {
 	return u.Update(func(s *RoleMetadataUpsert) {
-		s.SetValue(v)
+		s.SetScope(v)
 	})
 }
 
-// UpdateValue sets the "value" field to the value that was provided on create.
-func (u *RoleMetadataUpsertBulk) UpdateValue() *RoleMetadataUpsertBulk {
+// UpdateScope sets the "scope" field to the value that was provided on create.
+func (u *RoleMetadataUpsertBulk) UpdateScope() *RoleMetadataUpsertBulk {
 	return u.Update(func(s *RoleMetadataUpsert) {
-		s.UpdateValue()
+		s.UpdateScope()
 	})
 }
 
-// ClearValue clears the value of the "value" field.
-func (u *RoleMetadataUpsertBulk) ClearValue() *RoleMetadataUpsertBulk {
+// ClearScope clears the value of the "scope" field.
+func (u *RoleMetadataUpsertBulk) ClearScope() *RoleMetadataUpsertBulk {
 	return u.Update(func(s *RoleMetadataUpsert) {
-		s.ClearValue()
+		s.ClearScope()
+	})
+}
+
+// SetCustomOverrides sets the "custom_overrides" field.
+func (u *RoleMetadataUpsertBulk) SetCustomOverrides(v *permissionpb.RoleOverride) *RoleMetadataUpsertBulk {
+	return u.Update(func(s *RoleMetadataUpsert) {
+		s.SetCustomOverrides(v)
+	})
+}
+
+// UpdateCustomOverrides sets the "custom_overrides" field to the value that was provided on create.
+func (u *RoleMetadataUpsertBulk) UpdateCustomOverrides() *RoleMetadataUpsertBulk {
+	return u.Update(func(s *RoleMetadataUpsert) {
+		s.UpdateCustomOverrides()
 	})
 }
 

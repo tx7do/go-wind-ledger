@@ -69,20 +69,6 @@ func (_u *RolePermissionUpdate) ClearDeletedAt() *RolePermissionUpdate {
 	return _u
 }
 
-// SetStatus sets the "status" field.
-func (_u *RolePermissionUpdate) SetStatus(v rolepermission.Status) *RolePermissionUpdate {
-	_u.mutation.SetStatus(v)
-	return _u
-}
-
-// SetNillableStatus sets the "status" field if the given value is not nil.
-func (_u *RolePermissionUpdate) SetNillableStatus(v *rolepermission.Status) *RolePermissionUpdate {
-	if v != nil {
-		_u.SetStatus(*v)
-	}
-	return _u
-}
-
 // SetCreatedBy sets the "created_by" field.
 func (_u *RolePermissionUpdate) SetCreatedBy(v uint32) *RolePermissionUpdate {
 	_u.mutation.ResetCreatedBy()
@@ -164,23 +150,17 @@ func (_u *RolePermissionUpdate) ClearDeletedBy() *RolePermissionUpdate {
 	return _u
 }
 
-// SetEffect sets the "effect" field.
-func (_u *RolePermissionUpdate) SetEffect(v string) *RolePermissionUpdate {
-	_u.mutation.SetEffect(v)
+// SetStatus sets the "status" field.
+func (_u *RolePermissionUpdate) SetStatus(v rolepermission.Status) *RolePermissionUpdate {
+	_u.mutation.SetStatus(v)
 	return _u
 }
 
-// SetNillableEffect sets the "effect" field if the given value is not nil.
-func (_u *RolePermissionUpdate) SetNillableEffect(v *string) *RolePermissionUpdate {
+// SetNillableStatus sets the "status" field if the given value is not nil.
+func (_u *RolePermissionUpdate) SetNillableStatus(v *rolepermission.Status) *RolePermissionUpdate {
 	if v != nil {
-		_u.SetEffect(*v)
+		_u.SetStatus(*v)
 	}
-	return _u
-}
-
-// ClearEffect clears the value of the "effect" field.
-func (_u *RolePermissionUpdate) ClearEffect() *RolePermissionUpdate {
-	_u.mutation.ClearEffect()
 	return _u
 }
 
@@ -205,12 +185,6 @@ func (_u *RolePermissionUpdate) AddRoleID(v int32) *RolePermissionUpdate {
 	return _u
 }
 
-// ClearRoleID clears the value of the "role_id" field.
-func (_u *RolePermissionUpdate) ClearRoleID() *RolePermissionUpdate {
-	_u.mutation.ClearRoleID()
-	return _u
-}
-
 // SetPermissionID sets the "permission_id" field.
 func (_u *RolePermissionUpdate) SetPermissionID(v uint32) *RolePermissionUpdate {
 	_u.mutation.ResetPermissionID()
@@ -232,9 +206,50 @@ func (_u *RolePermissionUpdate) AddPermissionID(v int32) *RolePermissionUpdate {
 	return _u
 }
 
-// ClearPermissionID clears the value of the "permission_id" field.
-func (_u *RolePermissionUpdate) ClearPermissionID() *RolePermissionUpdate {
-	_u.mutation.ClearPermissionID()
+// SetEffect sets the "effect" field.
+func (_u *RolePermissionUpdate) SetEffect(v rolepermission.Effect) *RolePermissionUpdate {
+	_u.mutation.SetEffect(v)
+	return _u
+}
+
+// SetNillableEffect sets the "effect" field if the given value is not nil.
+func (_u *RolePermissionUpdate) SetNillableEffect(v *rolepermission.Effect) *RolePermissionUpdate {
+	if v != nil {
+		_u.SetEffect(*v)
+	}
+	return _u
+}
+
+// ClearEffect clears the value of the "effect" field.
+func (_u *RolePermissionUpdate) ClearEffect() *RolePermissionUpdate {
+	_u.mutation.ClearEffect()
+	return _u
+}
+
+// SetPriority sets the "priority" field.
+func (_u *RolePermissionUpdate) SetPriority(v int32) *RolePermissionUpdate {
+	_u.mutation.ResetPriority()
+	_u.mutation.SetPriority(v)
+	return _u
+}
+
+// SetNillablePriority sets the "priority" field if the given value is not nil.
+func (_u *RolePermissionUpdate) SetNillablePriority(v *int32) *RolePermissionUpdate {
+	if v != nil {
+		_u.SetPriority(*v)
+	}
+	return _u
+}
+
+// AddPriority adds value to the "priority" field.
+func (_u *RolePermissionUpdate) AddPriority(v int32) *RolePermissionUpdate {
+	_u.mutation.AddPriority(v)
+	return _u
+}
+
+// ClearPriority clears the value of the "priority" field.
+func (_u *RolePermissionUpdate) ClearPriority() *RolePermissionUpdate {
+	_u.mutation.ClearPriority()
 	return _u
 }
 
@@ -318,12 +333,6 @@ func (_u *RolePermissionUpdate) sqlSave(ctx context.Context) (_node int, err err
 	if _u.mutation.DeletedAtCleared() {
 		_spec.ClearField(rolepermission.FieldDeletedAt, field.TypeTime)
 	}
-	if _u.mutation.TenantIDCleared() {
-		_spec.ClearField(rolepermission.FieldTenantID, field.TypeUint32)
-	}
-	if value, ok := _u.mutation.Status(); ok {
-		_spec.SetField(rolepermission.FieldStatus, field.TypeEnum, value)
-	}
 	if value, ok := _u.mutation.CreatedBy(); ok {
 		_spec.SetField(rolepermission.FieldCreatedBy, field.TypeUint32, value)
 	}
@@ -351,11 +360,11 @@ func (_u *RolePermissionUpdate) sqlSave(ctx context.Context) (_node int, err err
 	if _u.mutation.DeletedByCleared() {
 		_spec.ClearField(rolepermission.FieldDeletedBy, field.TypeUint32)
 	}
-	if value, ok := _u.mutation.Effect(); ok {
-		_spec.SetField(rolepermission.FieldEffect, field.TypeString, value)
+	if _u.mutation.TenantIDCleared() {
+		_spec.ClearField(rolepermission.FieldTenantID, field.TypeUint32)
 	}
-	if _u.mutation.EffectCleared() {
-		_spec.ClearField(rolepermission.FieldEffect, field.TypeString)
+	if value, ok := _u.mutation.Status(); ok {
+		_spec.SetField(rolepermission.FieldStatus, field.TypeEnum, value)
 	}
 	if value, ok := _u.mutation.RoleID(); ok {
 		_spec.SetField(rolepermission.FieldRoleID, field.TypeUint32, value)
@@ -363,17 +372,26 @@ func (_u *RolePermissionUpdate) sqlSave(ctx context.Context) (_node int, err err
 	if value, ok := _u.mutation.AddedRoleID(); ok {
 		_spec.AddField(rolepermission.FieldRoleID, field.TypeUint32, value)
 	}
-	if _u.mutation.RoleIDCleared() {
-		_spec.ClearField(rolepermission.FieldRoleID, field.TypeUint32)
-	}
 	if value, ok := _u.mutation.PermissionID(); ok {
 		_spec.SetField(rolepermission.FieldPermissionID, field.TypeUint32, value)
 	}
 	if value, ok := _u.mutation.AddedPermissionID(); ok {
 		_spec.AddField(rolepermission.FieldPermissionID, field.TypeUint32, value)
 	}
-	if _u.mutation.PermissionIDCleared() {
-		_spec.ClearField(rolepermission.FieldPermissionID, field.TypeUint32)
+	if value, ok := _u.mutation.Effect(); ok {
+		_spec.SetField(rolepermission.FieldEffect, field.TypeEnum, value)
+	}
+	if _u.mutation.EffectCleared() {
+		_spec.ClearField(rolepermission.FieldEffect, field.TypeEnum)
+	}
+	if value, ok := _u.mutation.Priority(); ok {
+		_spec.SetField(rolepermission.FieldPriority, field.TypeInt32, value)
+	}
+	if value, ok := _u.mutation.AddedPriority(); ok {
+		_spec.AddField(rolepermission.FieldPriority, field.TypeInt32, value)
+	}
+	if _u.mutation.PriorityCleared() {
+		_spec.ClearField(rolepermission.FieldPriority, field.TypeInt32)
 	}
 	_spec.AddModifiers(_u.modifiers...)
 	if _node, err = sqlgraph.UpdateNodes(ctx, _u.driver, _spec); err != nil {
@@ -434,20 +452,6 @@ func (_u *RolePermissionUpdateOne) SetNillableDeletedAt(v *time.Time) *RolePermi
 // ClearDeletedAt clears the value of the "deleted_at" field.
 func (_u *RolePermissionUpdateOne) ClearDeletedAt() *RolePermissionUpdateOne {
 	_u.mutation.ClearDeletedAt()
-	return _u
-}
-
-// SetStatus sets the "status" field.
-func (_u *RolePermissionUpdateOne) SetStatus(v rolepermission.Status) *RolePermissionUpdateOne {
-	_u.mutation.SetStatus(v)
-	return _u
-}
-
-// SetNillableStatus sets the "status" field if the given value is not nil.
-func (_u *RolePermissionUpdateOne) SetNillableStatus(v *rolepermission.Status) *RolePermissionUpdateOne {
-	if v != nil {
-		_u.SetStatus(*v)
-	}
 	return _u
 }
 
@@ -532,23 +536,17 @@ func (_u *RolePermissionUpdateOne) ClearDeletedBy() *RolePermissionUpdateOne {
 	return _u
 }
 
-// SetEffect sets the "effect" field.
-func (_u *RolePermissionUpdateOne) SetEffect(v string) *RolePermissionUpdateOne {
-	_u.mutation.SetEffect(v)
+// SetStatus sets the "status" field.
+func (_u *RolePermissionUpdateOne) SetStatus(v rolepermission.Status) *RolePermissionUpdateOne {
+	_u.mutation.SetStatus(v)
 	return _u
 }
 
-// SetNillableEffect sets the "effect" field if the given value is not nil.
-func (_u *RolePermissionUpdateOne) SetNillableEffect(v *string) *RolePermissionUpdateOne {
+// SetNillableStatus sets the "status" field if the given value is not nil.
+func (_u *RolePermissionUpdateOne) SetNillableStatus(v *rolepermission.Status) *RolePermissionUpdateOne {
 	if v != nil {
-		_u.SetEffect(*v)
+		_u.SetStatus(*v)
 	}
-	return _u
-}
-
-// ClearEffect clears the value of the "effect" field.
-func (_u *RolePermissionUpdateOne) ClearEffect() *RolePermissionUpdateOne {
-	_u.mutation.ClearEffect()
 	return _u
 }
 
@@ -573,12 +571,6 @@ func (_u *RolePermissionUpdateOne) AddRoleID(v int32) *RolePermissionUpdateOne {
 	return _u
 }
 
-// ClearRoleID clears the value of the "role_id" field.
-func (_u *RolePermissionUpdateOne) ClearRoleID() *RolePermissionUpdateOne {
-	_u.mutation.ClearRoleID()
-	return _u
-}
-
 // SetPermissionID sets the "permission_id" field.
 func (_u *RolePermissionUpdateOne) SetPermissionID(v uint32) *RolePermissionUpdateOne {
 	_u.mutation.ResetPermissionID()
@@ -600,9 +592,50 @@ func (_u *RolePermissionUpdateOne) AddPermissionID(v int32) *RolePermissionUpdat
 	return _u
 }
 
-// ClearPermissionID clears the value of the "permission_id" field.
-func (_u *RolePermissionUpdateOne) ClearPermissionID() *RolePermissionUpdateOne {
-	_u.mutation.ClearPermissionID()
+// SetEffect sets the "effect" field.
+func (_u *RolePermissionUpdateOne) SetEffect(v rolepermission.Effect) *RolePermissionUpdateOne {
+	_u.mutation.SetEffect(v)
+	return _u
+}
+
+// SetNillableEffect sets the "effect" field if the given value is not nil.
+func (_u *RolePermissionUpdateOne) SetNillableEffect(v *rolepermission.Effect) *RolePermissionUpdateOne {
+	if v != nil {
+		_u.SetEffect(*v)
+	}
+	return _u
+}
+
+// ClearEffect clears the value of the "effect" field.
+func (_u *RolePermissionUpdateOne) ClearEffect() *RolePermissionUpdateOne {
+	_u.mutation.ClearEffect()
+	return _u
+}
+
+// SetPriority sets the "priority" field.
+func (_u *RolePermissionUpdateOne) SetPriority(v int32) *RolePermissionUpdateOne {
+	_u.mutation.ResetPriority()
+	_u.mutation.SetPriority(v)
+	return _u
+}
+
+// SetNillablePriority sets the "priority" field if the given value is not nil.
+func (_u *RolePermissionUpdateOne) SetNillablePriority(v *int32) *RolePermissionUpdateOne {
+	if v != nil {
+		_u.SetPriority(*v)
+	}
+	return _u
+}
+
+// AddPriority adds value to the "priority" field.
+func (_u *RolePermissionUpdateOne) AddPriority(v int32) *RolePermissionUpdateOne {
+	_u.mutation.AddPriority(v)
+	return _u
+}
+
+// ClearPriority clears the value of the "priority" field.
+func (_u *RolePermissionUpdateOne) ClearPriority() *RolePermissionUpdateOne {
+	_u.mutation.ClearPriority()
 	return _u
 }
 
@@ -716,12 +749,6 @@ func (_u *RolePermissionUpdateOne) sqlSave(ctx context.Context) (_node *RolePerm
 	if _u.mutation.DeletedAtCleared() {
 		_spec.ClearField(rolepermission.FieldDeletedAt, field.TypeTime)
 	}
-	if _u.mutation.TenantIDCleared() {
-		_spec.ClearField(rolepermission.FieldTenantID, field.TypeUint32)
-	}
-	if value, ok := _u.mutation.Status(); ok {
-		_spec.SetField(rolepermission.FieldStatus, field.TypeEnum, value)
-	}
 	if value, ok := _u.mutation.CreatedBy(); ok {
 		_spec.SetField(rolepermission.FieldCreatedBy, field.TypeUint32, value)
 	}
@@ -749,11 +776,11 @@ func (_u *RolePermissionUpdateOne) sqlSave(ctx context.Context) (_node *RolePerm
 	if _u.mutation.DeletedByCleared() {
 		_spec.ClearField(rolepermission.FieldDeletedBy, field.TypeUint32)
 	}
-	if value, ok := _u.mutation.Effect(); ok {
-		_spec.SetField(rolepermission.FieldEffect, field.TypeString, value)
+	if _u.mutation.TenantIDCleared() {
+		_spec.ClearField(rolepermission.FieldTenantID, field.TypeUint32)
 	}
-	if _u.mutation.EffectCleared() {
-		_spec.ClearField(rolepermission.FieldEffect, field.TypeString)
+	if value, ok := _u.mutation.Status(); ok {
+		_spec.SetField(rolepermission.FieldStatus, field.TypeEnum, value)
 	}
 	if value, ok := _u.mutation.RoleID(); ok {
 		_spec.SetField(rolepermission.FieldRoleID, field.TypeUint32, value)
@@ -761,17 +788,26 @@ func (_u *RolePermissionUpdateOne) sqlSave(ctx context.Context) (_node *RolePerm
 	if value, ok := _u.mutation.AddedRoleID(); ok {
 		_spec.AddField(rolepermission.FieldRoleID, field.TypeUint32, value)
 	}
-	if _u.mutation.RoleIDCleared() {
-		_spec.ClearField(rolepermission.FieldRoleID, field.TypeUint32)
-	}
 	if value, ok := _u.mutation.PermissionID(); ok {
 		_spec.SetField(rolepermission.FieldPermissionID, field.TypeUint32, value)
 	}
 	if value, ok := _u.mutation.AddedPermissionID(); ok {
 		_spec.AddField(rolepermission.FieldPermissionID, field.TypeUint32, value)
 	}
-	if _u.mutation.PermissionIDCleared() {
-		_spec.ClearField(rolepermission.FieldPermissionID, field.TypeUint32)
+	if value, ok := _u.mutation.Effect(); ok {
+		_spec.SetField(rolepermission.FieldEffect, field.TypeEnum, value)
+	}
+	if _u.mutation.EffectCleared() {
+		_spec.ClearField(rolepermission.FieldEffect, field.TypeEnum)
+	}
+	if value, ok := _u.mutation.Priority(); ok {
+		_spec.SetField(rolepermission.FieldPriority, field.TypeInt32, value)
+	}
+	if value, ok := _u.mutation.AddedPriority(); ok {
+		_spec.AddField(rolepermission.FieldPriority, field.TypeInt32, value)
+	}
+	if _u.mutation.PriorityCleared() {
+		_spec.ClearField(rolepermission.FieldPriority, field.TypeInt32)
 	}
 	_spec.AddModifiers(_u.modifiers...)
 	_node = &RolePermission{config: _u.config}

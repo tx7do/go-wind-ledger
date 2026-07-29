@@ -120,30 +120,44 @@ func (_c *LoginPolicyCreate) SetNillableTenantID(v *uint32) *LoginPolicyCreate {
 	return _c
 }
 
-// SetRemark sets the "remark" field.
-func (_c *LoginPolicyCreate) SetRemark(v string) *LoginPolicyCreate {
-	_c.mutation.SetRemark(v)
+// SetTargetID sets the "target_id" field.
+func (_c *LoginPolicyCreate) SetTargetID(v uint32) *LoginPolicyCreate {
+	_c.mutation.SetTargetID(v)
 	return _c
 }
 
-// SetNillableRemark sets the "remark" field if the given value is not nil.
-func (_c *LoginPolicyCreate) SetNillableRemark(v *string) *LoginPolicyCreate {
+// SetNillableTargetID sets the "target_id" field if the given value is not nil.
+func (_c *LoginPolicyCreate) SetNillableTargetID(v *uint32) *LoginPolicyCreate {
 	if v != nil {
-		_c.SetRemark(*v)
+		_c.SetTargetID(*v)
 	}
 	return _c
 }
 
-// SetName sets the "name" field.
-func (_c *LoginPolicyCreate) SetName(v string) *LoginPolicyCreate {
-	_c.mutation.SetName(v)
+// SetValue sets the "value" field.
+func (_c *LoginPolicyCreate) SetValue(v string) *LoginPolicyCreate {
+	_c.mutation.SetValue(v)
 	return _c
 }
 
-// SetNillableName sets the "name" field if the given value is not nil.
-func (_c *LoginPolicyCreate) SetNillableName(v *string) *LoginPolicyCreate {
+// SetNillableValue sets the "value" field if the given value is not nil.
+func (_c *LoginPolicyCreate) SetNillableValue(v *string) *LoginPolicyCreate {
 	if v != nil {
-		_c.SetName(*v)
+		_c.SetValue(*v)
+	}
+	return _c
+}
+
+// SetReason sets the "reason" field.
+func (_c *LoginPolicyCreate) SetReason(v string) *LoginPolicyCreate {
+	_c.mutation.SetReason(v)
+	return _c
+}
+
+// SetNillableReason sets the "reason" field if the given value is not nil.
+func (_c *LoginPolicyCreate) SetNillableReason(v *string) *LoginPolicyCreate {
+	if v != nil {
+		_c.SetReason(*v)
 	}
 	return _c
 }
@@ -162,20 +176,6 @@ func (_c *LoginPolicyCreate) SetNillableType(v *loginpolicy.Type) *LoginPolicyCr
 	return _c
 }
 
-// SetConfig sets the "config" field.
-func (_c *LoginPolicyCreate) SetConfig(v string) *LoginPolicyCreate {
-	_c.mutation.SetConfig(v)
-	return _c
-}
-
-// SetNillableConfig sets the "config" field if the given value is not nil.
-func (_c *LoginPolicyCreate) SetNillableConfig(v *string) *LoginPolicyCreate {
-	if v != nil {
-		_c.SetConfig(*v)
-	}
-	return _c
-}
-
 // SetMethod sets the "method" field.
 func (_c *LoginPolicyCreate) SetMethod(v loginpolicy.Method) *LoginPolicyCreate {
 	_c.mutation.SetMethod(v)
@@ -186,20 +186,6 @@ func (_c *LoginPolicyCreate) SetMethod(v loginpolicy.Method) *LoginPolicyCreate 
 func (_c *LoginPolicyCreate) SetNillableMethod(v *loginpolicy.Method) *LoginPolicyCreate {
 	if v != nil {
 		_c.SetMethod(*v)
-	}
-	return _c
-}
-
-// SetEnable sets the "enable" field.
-func (_c *LoginPolicyCreate) SetEnable(v bool) *LoginPolicyCreate {
-	_c.mutation.SetEnable(v)
-	return _c
-}
-
-// SetNillableEnable sets the "enable" field if the given value is not nil.
-func (_c *LoginPolicyCreate) SetNillableEnable(v *bool) *LoginPolicyCreate {
-	if v != nil {
-		_c.SetEnable(*v)
 	}
 	return _c
 }
@@ -251,32 +237,22 @@ func (_c *LoginPolicyCreate) defaults() error {
 		v := loginpolicy.DefaultTenantID
 		_c.mutation.SetTenantID(v)
 	}
+	if _, ok := _c.mutation.GetType(); !ok {
+		v := loginpolicy.DefaultType
+		_c.mutation.SetType(v)
+	}
 	if _, ok := _c.mutation.Method(); !ok {
 		v := loginpolicy.DefaultMethod
 		_c.mutation.SetMethod(v)
-	}
-	if _, ok := _c.mutation.Enable(); !ok {
-		v := loginpolicy.DefaultEnable
-		_c.mutation.SetEnable(v)
 	}
 	return nil
 }
 
 // check runs all checks and user-defined validators on the builder.
 func (_c *LoginPolicyCreate) check() error {
-	if v, ok := _c.mutation.Name(); ok {
-		if err := loginpolicy.NameValidator(v); err != nil {
-			return &ValidationError{Name: "name", err: fmt.Errorf(`ent: validator failed for field "LoginPolicy.name": %w`, err)}
-		}
-	}
 	if v, ok := _c.mutation.GetType(); ok {
 		if err := loginpolicy.TypeValidator(v); err != nil {
 			return &ValidationError{Name: "type", err: fmt.Errorf(`ent: validator failed for field "LoginPolicy.type": %w`, err)}
-		}
-	}
-	if v, ok := _c.mutation.Config(); ok {
-		if err := loginpolicy.ConfigValidator(v); err != nil {
-			return &ValidationError{Name: "config", err: fmt.Errorf(`ent: validator failed for field "LoginPolicy.config": %w`, err)}
 		}
 	}
 	if v, ok := _c.mutation.Method(); ok {
@@ -350,29 +326,25 @@ func (_c *LoginPolicyCreate) createSpec() (*LoginPolicy, *sqlgraph.CreateSpec) {
 		_spec.SetField(loginpolicy.FieldTenantID, field.TypeUint32, value)
 		_node.TenantID = &value
 	}
-	if value, ok := _c.mutation.Remark(); ok {
-		_spec.SetField(loginpolicy.FieldRemark, field.TypeString, value)
-		_node.Remark = &value
+	if value, ok := _c.mutation.TargetID(); ok {
+		_spec.SetField(loginpolicy.FieldTargetID, field.TypeUint32, value)
+		_node.TargetID = &value
 	}
-	if value, ok := _c.mutation.Name(); ok {
-		_spec.SetField(loginpolicy.FieldName, field.TypeString, value)
-		_node.Name = &value
+	if value, ok := _c.mutation.Value(); ok {
+		_spec.SetField(loginpolicy.FieldValue, field.TypeString, value)
+		_node.Value = &value
+	}
+	if value, ok := _c.mutation.Reason(); ok {
+		_spec.SetField(loginpolicy.FieldReason, field.TypeString, value)
+		_node.Reason = &value
 	}
 	if value, ok := _c.mutation.GetType(); ok {
 		_spec.SetField(loginpolicy.FieldType, field.TypeEnum, value)
 		_node.Type = &value
 	}
-	if value, ok := _c.mutation.Config(); ok {
-		_spec.SetField(loginpolicy.FieldConfig, field.TypeString, value)
-		_node.Config = &value
-	}
 	if value, ok := _c.mutation.Method(); ok {
 		_spec.SetField(loginpolicy.FieldMethod, field.TypeEnum, value)
 		_node.Method = &value
-	}
-	if value, ok := _c.mutation.Enable(); ok {
-		_spec.SetField(loginpolicy.FieldEnable, field.TypeBool, value)
-		_node.Enable = &value
 	}
 	return _node, _spec
 }
@@ -534,39 +506,63 @@ func (u *LoginPolicyUpsert) ClearDeletedBy() *LoginPolicyUpsert {
 	return u
 }
 
-// SetRemark sets the "remark" field.
-func (u *LoginPolicyUpsert) SetRemark(v string) *LoginPolicyUpsert {
-	u.Set(loginpolicy.FieldRemark, v)
+// SetTargetID sets the "target_id" field.
+func (u *LoginPolicyUpsert) SetTargetID(v uint32) *LoginPolicyUpsert {
+	u.Set(loginpolicy.FieldTargetID, v)
 	return u
 }
 
-// UpdateRemark sets the "remark" field to the value that was provided on create.
-func (u *LoginPolicyUpsert) UpdateRemark() *LoginPolicyUpsert {
-	u.SetExcluded(loginpolicy.FieldRemark)
+// UpdateTargetID sets the "target_id" field to the value that was provided on create.
+func (u *LoginPolicyUpsert) UpdateTargetID() *LoginPolicyUpsert {
+	u.SetExcluded(loginpolicy.FieldTargetID)
 	return u
 }
 
-// ClearRemark clears the value of the "remark" field.
-func (u *LoginPolicyUpsert) ClearRemark() *LoginPolicyUpsert {
-	u.SetNull(loginpolicy.FieldRemark)
+// AddTargetID adds v to the "target_id" field.
+func (u *LoginPolicyUpsert) AddTargetID(v uint32) *LoginPolicyUpsert {
+	u.Add(loginpolicy.FieldTargetID, v)
 	return u
 }
 
-// SetName sets the "name" field.
-func (u *LoginPolicyUpsert) SetName(v string) *LoginPolicyUpsert {
-	u.Set(loginpolicy.FieldName, v)
+// ClearTargetID clears the value of the "target_id" field.
+func (u *LoginPolicyUpsert) ClearTargetID() *LoginPolicyUpsert {
+	u.SetNull(loginpolicy.FieldTargetID)
 	return u
 }
 
-// UpdateName sets the "name" field to the value that was provided on create.
-func (u *LoginPolicyUpsert) UpdateName() *LoginPolicyUpsert {
-	u.SetExcluded(loginpolicy.FieldName)
+// SetValue sets the "value" field.
+func (u *LoginPolicyUpsert) SetValue(v string) *LoginPolicyUpsert {
+	u.Set(loginpolicy.FieldValue, v)
 	return u
 }
 
-// ClearName clears the value of the "name" field.
-func (u *LoginPolicyUpsert) ClearName() *LoginPolicyUpsert {
-	u.SetNull(loginpolicy.FieldName)
+// UpdateValue sets the "value" field to the value that was provided on create.
+func (u *LoginPolicyUpsert) UpdateValue() *LoginPolicyUpsert {
+	u.SetExcluded(loginpolicy.FieldValue)
+	return u
+}
+
+// ClearValue clears the value of the "value" field.
+func (u *LoginPolicyUpsert) ClearValue() *LoginPolicyUpsert {
+	u.SetNull(loginpolicy.FieldValue)
+	return u
+}
+
+// SetReason sets the "reason" field.
+func (u *LoginPolicyUpsert) SetReason(v string) *LoginPolicyUpsert {
+	u.Set(loginpolicy.FieldReason, v)
+	return u
+}
+
+// UpdateReason sets the "reason" field to the value that was provided on create.
+func (u *LoginPolicyUpsert) UpdateReason() *LoginPolicyUpsert {
+	u.SetExcluded(loginpolicy.FieldReason)
+	return u
+}
+
+// ClearReason clears the value of the "reason" field.
+func (u *LoginPolicyUpsert) ClearReason() *LoginPolicyUpsert {
+	u.SetNull(loginpolicy.FieldReason)
 	return u
 }
 
@@ -588,24 +584,6 @@ func (u *LoginPolicyUpsert) ClearType() *LoginPolicyUpsert {
 	return u
 }
 
-// SetConfig sets the "config" field.
-func (u *LoginPolicyUpsert) SetConfig(v string) *LoginPolicyUpsert {
-	u.Set(loginpolicy.FieldConfig, v)
-	return u
-}
-
-// UpdateConfig sets the "config" field to the value that was provided on create.
-func (u *LoginPolicyUpsert) UpdateConfig() *LoginPolicyUpsert {
-	u.SetExcluded(loginpolicy.FieldConfig)
-	return u
-}
-
-// ClearConfig clears the value of the "config" field.
-func (u *LoginPolicyUpsert) ClearConfig() *LoginPolicyUpsert {
-	u.SetNull(loginpolicy.FieldConfig)
-	return u
-}
-
 // SetMethod sets the "method" field.
 func (u *LoginPolicyUpsert) SetMethod(v loginpolicy.Method) *LoginPolicyUpsert {
 	u.Set(loginpolicy.FieldMethod, v)
@@ -621,24 +599,6 @@ func (u *LoginPolicyUpsert) UpdateMethod() *LoginPolicyUpsert {
 // ClearMethod clears the value of the "method" field.
 func (u *LoginPolicyUpsert) ClearMethod() *LoginPolicyUpsert {
 	u.SetNull(loginpolicy.FieldMethod)
-	return u
-}
-
-// SetEnable sets the "enable" field.
-func (u *LoginPolicyUpsert) SetEnable(v bool) *LoginPolicyUpsert {
-	u.Set(loginpolicy.FieldEnable, v)
-	return u
-}
-
-// UpdateEnable sets the "enable" field to the value that was provided on create.
-func (u *LoginPolicyUpsert) UpdateEnable() *LoginPolicyUpsert {
-	u.SetExcluded(loginpolicy.FieldEnable)
-	return u
-}
-
-// ClearEnable clears the value of the "enable" field.
-func (u *LoginPolicyUpsert) ClearEnable() *LoginPolicyUpsert {
-	u.SetNull(loginpolicy.FieldEnable)
 	return u
 }
 
@@ -822,45 +782,73 @@ func (u *LoginPolicyUpsertOne) ClearDeletedBy() *LoginPolicyUpsertOne {
 	})
 }
 
-// SetRemark sets the "remark" field.
-func (u *LoginPolicyUpsertOne) SetRemark(v string) *LoginPolicyUpsertOne {
+// SetTargetID sets the "target_id" field.
+func (u *LoginPolicyUpsertOne) SetTargetID(v uint32) *LoginPolicyUpsertOne {
 	return u.Update(func(s *LoginPolicyUpsert) {
-		s.SetRemark(v)
+		s.SetTargetID(v)
 	})
 }
 
-// UpdateRemark sets the "remark" field to the value that was provided on create.
-func (u *LoginPolicyUpsertOne) UpdateRemark() *LoginPolicyUpsertOne {
+// AddTargetID adds v to the "target_id" field.
+func (u *LoginPolicyUpsertOne) AddTargetID(v uint32) *LoginPolicyUpsertOne {
 	return u.Update(func(s *LoginPolicyUpsert) {
-		s.UpdateRemark()
+		s.AddTargetID(v)
 	})
 }
 
-// ClearRemark clears the value of the "remark" field.
-func (u *LoginPolicyUpsertOne) ClearRemark() *LoginPolicyUpsertOne {
+// UpdateTargetID sets the "target_id" field to the value that was provided on create.
+func (u *LoginPolicyUpsertOne) UpdateTargetID() *LoginPolicyUpsertOne {
 	return u.Update(func(s *LoginPolicyUpsert) {
-		s.ClearRemark()
+		s.UpdateTargetID()
 	})
 }
 
-// SetName sets the "name" field.
-func (u *LoginPolicyUpsertOne) SetName(v string) *LoginPolicyUpsertOne {
+// ClearTargetID clears the value of the "target_id" field.
+func (u *LoginPolicyUpsertOne) ClearTargetID() *LoginPolicyUpsertOne {
 	return u.Update(func(s *LoginPolicyUpsert) {
-		s.SetName(v)
+		s.ClearTargetID()
 	})
 }
 
-// UpdateName sets the "name" field to the value that was provided on create.
-func (u *LoginPolicyUpsertOne) UpdateName() *LoginPolicyUpsertOne {
+// SetValue sets the "value" field.
+func (u *LoginPolicyUpsertOne) SetValue(v string) *LoginPolicyUpsertOne {
 	return u.Update(func(s *LoginPolicyUpsert) {
-		s.UpdateName()
+		s.SetValue(v)
 	})
 }
 
-// ClearName clears the value of the "name" field.
-func (u *LoginPolicyUpsertOne) ClearName() *LoginPolicyUpsertOne {
+// UpdateValue sets the "value" field to the value that was provided on create.
+func (u *LoginPolicyUpsertOne) UpdateValue() *LoginPolicyUpsertOne {
 	return u.Update(func(s *LoginPolicyUpsert) {
-		s.ClearName()
+		s.UpdateValue()
+	})
+}
+
+// ClearValue clears the value of the "value" field.
+func (u *LoginPolicyUpsertOne) ClearValue() *LoginPolicyUpsertOne {
+	return u.Update(func(s *LoginPolicyUpsert) {
+		s.ClearValue()
+	})
+}
+
+// SetReason sets the "reason" field.
+func (u *LoginPolicyUpsertOne) SetReason(v string) *LoginPolicyUpsertOne {
+	return u.Update(func(s *LoginPolicyUpsert) {
+		s.SetReason(v)
+	})
+}
+
+// UpdateReason sets the "reason" field to the value that was provided on create.
+func (u *LoginPolicyUpsertOne) UpdateReason() *LoginPolicyUpsertOne {
+	return u.Update(func(s *LoginPolicyUpsert) {
+		s.UpdateReason()
+	})
+}
+
+// ClearReason clears the value of the "reason" field.
+func (u *LoginPolicyUpsertOne) ClearReason() *LoginPolicyUpsertOne {
+	return u.Update(func(s *LoginPolicyUpsert) {
+		s.ClearReason()
 	})
 }
 
@@ -885,27 +873,6 @@ func (u *LoginPolicyUpsertOne) ClearType() *LoginPolicyUpsertOne {
 	})
 }
 
-// SetConfig sets the "config" field.
-func (u *LoginPolicyUpsertOne) SetConfig(v string) *LoginPolicyUpsertOne {
-	return u.Update(func(s *LoginPolicyUpsert) {
-		s.SetConfig(v)
-	})
-}
-
-// UpdateConfig sets the "config" field to the value that was provided on create.
-func (u *LoginPolicyUpsertOne) UpdateConfig() *LoginPolicyUpsertOne {
-	return u.Update(func(s *LoginPolicyUpsert) {
-		s.UpdateConfig()
-	})
-}
-
-// ClearConfig clears the value of the "config" field.
-func (u *LoginPolicyUpsertOne) ClearConfig() *LoginPolicyUpsertOne {
-	return u.Update(func(s *LoginPolicyUpsert) {
-		s.ClearConfig()
-	})
-}
-
 // SetMethod sets the "method" field.
 func (u *LoginPolicyUpsertOne) SetMethod(v loginpolicy.Method) *LoginPolicyUpsertOne {
 	return u.Update(func(s *LoginPolicyUpsert) {
@@ -924,27 +891,6 @@ func (u *LoginPolicyUpsertOne) UpdateMethod() *LoginPolicyUpsertOne {
 func (u *LoginPolicyUpsertOne) ClearMethod() *LoginPolicyUpsertOne {
 	return u.Update(func(s *LoginPolicyUpsert) {
 		s.ClearMethod()
-	})
-}
-
-// SetEnable sets the "enable" field.
-func (u *LoginPolicyUpsertOne) SetEnable(v bool) *LoginPolicyUpsertOne {
-	return u.Update(func(s *LoginPolicyUpsert) {
-		s.SetEnable(v)
-	})
-}
-
-// UpdateEnable sets the "enable" field to the value that was provided on create.
-func (u *LoginPolicyUpsertOne) UpdateEnable() *LoginPolicyUpsertOne {
-	return u.Update(func(s *LoginPolicyUpsert) {
-		s.UpdateEnable()
-	})
-}
-
-// ClearEnable clears the value of the "enable" field.
-func (u *LoginPolicyUpsertOne) ClearEnable() *LoginPolicyUpsertOne {
-	return u.Update(func(s *LoginPolicyUpsert) {
-		s.ClearEnable()
 	})
 }
 
@@ -1294,45 +1240,73 @@ func (u *LoginPolicyUpsertBulk) ClearDeletedBy() *LoginPolicyUpsertBulk {
 	})
 }
 
-// SetRemark sets the "remark" field.
-func (u *LoginPolicyUpsertBulk) SetRemark(v string) *LoginPolicyUpsertBulk {
+// SetTargetID sets the "target_id" field.
+func (u *LoginPolicyUpsertBulk) SetTargetID(v uint32) *LoginPolicyUpsertBulk {
 	return u.Update(func(s *LoginPolicyUpsert) {
-		s.SetRemark(v)
+		s.SetTargetID(v)
 	})
 }
 
-// UpdateRemark sets the "remark" field to the value that was provided on create.
-func (u *LoginPolicyUpsertBulk) UpdateRemark() *LoginPolicyUpsertBulk {
+// AddTargetID adds v to the "target_id" field.
+func (u *LoginPolicyUpsertBulk) AddTargetID(v uint32) *LoginPolicyUpsertBulk {
 	return u.Update(func(s *LoginPolicyUpsert) {
-		s.UpdateRemark()
+		s.AddTargetID(v)
 	})
 }
 
-// ClearRemark clears the value of the "remark" field.
-func (u *LoginPolicyUpsertBulk) ClearRemark() *LoginPolicyUpsertBulk {
+// UpdateTargetID sets the "target_id" field to the value that was provided on create.
+func (u *LoginPolicyUpsertBulk) UpdateTargetID() *LoginPolicyUpsertBulk {
 	return u.Update(func(s *LoginPolicyUpsert) {
-		s.ClearRemark()
+		s.UpdateTargetID()
 	})
 }
 
-// SetName sets the "name" field.
-func (u *LoginPolicyUpsertBulk) SetName(v string) *LoginPolicyUpsertBulk {
+// ClearTargetID clears the value of the "target_id" field.
+func (u *LoginPolicyUpsertBulk) ClearTargetID() *LoginPolicyUpsertBulk {
 	return u.Update(func(s *LoginPolicyUpsert) {
-		s.SetName(v)
+		s.ClearTargetID()
 	})
 }
 
-// UpdateName sets the "name" field to the value that was provided on create.
-func (u *LoginPolicyUpsertBulk) UpdateName() *LoginPolicyUpsertBulk {
+// SetValue sets the "value" field.
+func (u *LoginPolicyUpsertBulk) SetValue(v string) *LoginPolicyUpsertBulk {
 	return u.Update(func(s *LoginPolicyUpsert) {
-		s.UpdateName()
+		s.SetValue(v)
 	})
 }
 
-// ClearName clears the value of the "name" field.
-func (u *LoginPolicyUpsertBulk) ClearName() *LoginPolicyUpsertBulk {
+// UpdateValue sets the "value" field to the value that was provided on create.
+func (u *LoginPolicyUpsertBulk) UpdateValue() *LoginPolicyUpsertBulk {
 	return u.Update(func(s *LoginPolicyUpsert) {
-		s.ClearName()
+		s.UpdateValue()
+	})
+}
+
+// ClearValue clears the value of the "value" field.
+func (u *LoginPolicyUpsertBulk) ClearValue() *LoginPolicyUpsertBulk {
+	return u.Update(func(s *LoginPolicyUpsert) {
+		s.ClearValue()
+	})
+}
+
+// SetReason sets the "reason" field.
+func (u *LoginPolicyUpsertBulk) SetReason(v string) *LoginPolicyUpsertBulk {
+	return u.Update(func(s *LoginPolicyUpsert) {
+		s.SetReason(v)
+	})
+}
+
+// UpdateReason sets the "reason" field to the value that was provided on create.
+func (u *LoginPolicyUpsertBulk) UpdateReason() *LoginPolicyUpsertBulk {
+	return u.Update(func(s *LoginPolicyUpsert) {
+		s.UpdateReason()
+	})
+}
+
+// ClearReason clears the value of the "reason" field.
+func (u *LoginPolicyUpsertBulk) ClearReason() *LoginPolicyUpsertBulk {
+	return u.Update(func(s *LoginPolicyUpsert) {
+		s.ClearReason()
 	})
 }
 
@@ -1357,27 +1331,6 @@ func (u *LoginPolicyUpsertBulk) ClearType() *LoginPolicyUpsertBulk {
 	})
 }
 
-// SetConfig sets the "config" field.
-func (u *LoginPolicyUpsertBulk) SetConfig(v string) *LoginPolicyUpsertBulk {
-	return u.Update(func(s *LoginPolicyUpsert) {
-		s.SetConfig(v)
-	})
-}
-
-// UpdateConfig sets the "config" field to the value that was provided on create.
-func (u *LoginPolicyUpsertBulk) UpdateConfig() *LoginPolicyUpsertBulk {
-	return u.Update(func(s *LoginPolicyUpsert) {
-		s.UpdateConfig()
-	})
-}
-
-// ClearConfig clears the value of the "config" field.
-func (u *LoginPolicyUpsertBulk) ClearConfig() *LoginPolicyUpsertBulk {
-	return u.Update(func(s *LoginPolicyUpsert) {
-		s.ClearConfig()
-	})
-}
-
 // SetMethod sets the "method" field.
 func (u *LoginPolicyUpsertBulk) SetMethod(v loginpolicy.Method) *LoginPolicyUpsertBulk {
 	return u.Update(func(s *LoginPolicyUpsert) {
@@ -1396,27 +1349,6 @@ func (u *LoginPolicyUpsertBulk) UpdateMethod() *LoginPolicyUpsertBulk {
 func (u *LoginPolicyUpsertBulk) ClearMethod() *LoginPolicyUpsertBulk {
 	return u.Update(func(s *LoginPolicyUpsert) {
 		s.ClearMethod()
-	})
-}
-
-// SetEnable sets the "enable" field.
-func (u *LoginPolicyUpsertBulk) SetEnable(v bool) *LoginPolicyUpsertBulk {
-	return u.Update(func(s *LoginPolicyUpsert) {
-		s.SetEnable(v)
-	})
-}
-
-// UpdateEnable sets the "enable" field to the value that was provided on create.
-func (u *LoginPolicyUpsertBulk) UpdateEnable() *LoginPolicyUpsertBulk {
-	return u.Update(func(s *LoginPolicyUpsert) {
-		s.UpdateEnable()
-	})
-}
-
-// ClearEnable clears the value of the "enable" field.
-func (u *LoginPolicyUpsertBulk) ClearEnable() *LoginPolicyUpsertBulk {
-	return u.Update(func(s *LoginPolicyUpsert) {
-		s.ClearEnable()
 	})
 }
 

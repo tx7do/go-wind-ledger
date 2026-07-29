@@ -28,18 +28,16 @@ const (
 	FieldDeletedBy = "deleted_by"
 	// FieldTenantID holds the string denoting the tenant_id field in the database.
 	FieldTenantID = "tenant_id"
-	// FieldRemark holds the string denoting the remark field in the database.
-	FieldRemark = "remark"
-	// FieldName holds the string denoting the name field in the database.
-	FieldName = "name"
+	// FieldTargetID holds the string denoting the target_id field in the database.
+	FieldTargetID = "target_id"
+	// FieldValue holds the string denoting the value field in the database.
+	FieldValue = "value"
+	// FieldReason holds the string denoting the reason field in the database.
+	FieldReason = "reason"
 	// FieldType holds the string denoting the type field in the database.
 	FieldType = "type"
-	// FieldConfig holds the string denoting the config field in the database.
-	FieldConfig = "config"
 	// FieldMethod holds the string denoting the method field in the database.
 	FieldMethod = "method"
-	// FieldEnable holds the string denoting the enable field in the database.
-	FieldEnable = "enable"
 	// Table holds the table name of the loginpolicy in the database.
 	Table = "sys_login_policies"
 )
@@ -54,12 +52,11 @@ var Columns = []string{
 	FieldUpdatedBy,
 	FieldDeletedBy,
 	FieldTenantID,
-	FieldRemark,
-	FieldName,
+	FieldTargetID,
+	FieldValue,
+	FieldReason,
 	FieldType,
-	FieldConfig,
 	FieldMethod,
-	FieldEnable,
 }
 
 // ValidColumn reports if the column name is valid (part of the table columns).
@@ -82,12 +79,6 @@ var (
 	Policy ent.Policy
 	// DefaultTenantID holds the default value on creation for the "tenant_id" field.
 	DefaultTenantID uint32
-	// NameValidator is a validator for the "name" field. It is called by the builders before save.
-	NameValidator func(string) error
-	// ConfigValidator is a validator for the "config" field. It is called by the builders before save.
-	ConfigValidator func(string) error
-	// DefaultEnable holds the default value on creation for the "enable" field.
-	DefaultEnable bool
 	// IDValidator is a validator for the "id" field. It is called by the builders before save.
 	IDValidator func(uint32) error
 )
@@ -95,10 +86,13 @@ var (
 // Type defines the type for the "type" enum field.
 type Type string
 
+// TypeBlacklist is the default value of the Type enum.
+const DefaultType = TypeBlacklist
+
 // Type values.
 const (
-	TypePolicyTypeIpBlacklist  Type = "POLICY_TYPE_IP_BLACKLIST"
-	TypePolicyTypeMacWhitelist Type = "POLICY_TYPE_MAC_WHITELIST"
+	TypeBlacklist Type = "BLACK_LIST"
+	TypeWhitelist Type = "WHITE_LIST"
 )
 
 func (_type Type) String() string {
@@ -108,7 +102,7 @@ func (_type Type) String() string {
 // TypeValidator is a validator for the "type" field enum values. It is called by the builders before save.
 func TypeValidator(_type Type) error {
 	switch _type {
-	case TypePolicyTypeIpBlacklist, TypePolicyTypeMacWhitelist:
+	case TypeBlacklist, TypeWhitelist:
 		return nil
 	default:
 		return fmt.Errorf("loginpolicy: invalid enum value for type field: %q", _type)
@@ -118,14 +112,16 @@ func TypeValidator(_type Type) error {
 // Method defines the type for the "method" enum field.
 type Method string
 
-// MethodMethodPassword is the default value of the Method enum.
-const DefaultMethod = MethodMethodPassword
+// MethodIp is the default value of the Method enum.
+const DefaultMethod = MethodIp
 
 // Method values.
 const (
-	MethodMethodPassword Method = "METHOD_PASSWORD"
-	MethodMethodOauth    Method = "METHOD_OAUTH"
-	MethodMethodSms      Method = "METHOD_SMS"
+	MethodIp     Method = "IP"
+	MethodMac    Method = "MAC"
+	MethodRegion Method = "REGION"
+	MethodTime   Method = "TIME"
+	MethodDevice Method = "DEVICE"
 )
 
 func (m Method) String() string {
@@ -135,7 +131,7 @@ func (m Method) String() string {
 // MethodValidator is a validator for the "method" field enum values. It is called by the builders before save.
 func MethodValidator(m Method) error {
 	switch m {
-	case MethodMethodPassword, MethodMethodOauth, MethodMethodSms:
+	case MethodIp, MethodMac, MethodRegion, MethodTime, MethodDevice:
 		return nil
 	default:
 		return fmt.Errorf("loginpolicy: invalid enum value for method field: %q", m)
@@ -185,14 +181,19 @@ func ByTenantID(opts ...sql.OrderTermOption) OrderOption {
 	return sql.OrderByField(FieldTenantID, opts...).ToFunc()
 }
 
-// ByRemark orders the results by the remark field.
-func ByRemark(opts ...sql.OrderTermOption) OrderOption {
-	return sql.OrderByField(FieldRemark, opts...).ToFunc()
+// ByTargetID orders the results by the target_id field.
+func ByTargetID(opts ...sql.OrderTermOption) OrderOption {
+	return sql.OrderByField(FieldTargetID, opts...).ToFunc()
 }
 
-// ByName orders the results by the name field.
-func ByName(opts ...sql.OrderTermOption) OrderOption {
-	return sql.OrderByField(FieldName, opts...).ToFunc()
+// ByValue orders the results by the value field.
+func ByValue(opts ...sql.OrderTermOption) OrderOption {
+	return sql.OrderByField(FieldValue, opts...).ToFunc()
+}
+
+// ByReason orders the results by the reason field.
+func ByReason(opts ...sql.OrderTermOption) OrderOption {
+	return sql.OrderByField(FieldReason, opts...).ToFunc()
 }
 
 // ByType orders the results by the type field.
@@ -200,17 +201,7 @@ func ByType(opts ...sql.OrderTermOption) OrderOption {
 	return sql.OrderByField(FieldType, opts...).ToFunc()
 }
 
-// ByConfig orders the results by the config field.
-func ByConfig(opts ...sql.OrderTermOption) OrderOption {
-	return sql.OrderByField(FieldConfig, opts...).ToFunc()
-}
-
 // ByMethod orders the results by the method field.
 func ByMethod(opts ...sql.OrderTermOption) OrderOption {
 	return sql.OrderByField(FieldMethod, opts...).ToFunc()
-}
-
-// ByEnable orders the results by the enable field.
-func ByEnable(opts ...sql.OrderTermOption) OrderOption {
-	return sql.OrderByField(FieldEnable, opts...).ToFunc()
 }

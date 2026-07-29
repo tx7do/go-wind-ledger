@@ -12,7 +12,7 @@ import (
 	"entgo.io/ent/dialect/sql"
 )
 
-// 用户岗位关联表
+// 用户与岗位关联表
 type UserPosition struct {
 	config `json:"-"`
 	// ID of the ent.
@@ -24,26 +24,32 @@ type UserPosition struct {
 	UpdatedAt *time.Time `json:"updated_at,omitempty"`
 	// 删除时间
 	DeletedAt *time.Time `json:"deleted_at,omitempty"`
-	// 租户ID
-	TenantID *uint32 `json:"tenant_id,omitempty"`
 	// 创建者ID
 	CreatedBy *uint32 `json:"created_by,omitempty"`
 	// 更新者ID
 	UpdatedBy *uint32 `json:"updated_by,omitempty"`
 	// 删除者ID
 	DeletedBy *uint32 `json:"deleted_by,omitempty"`
-	// Status holds the value of the "status" field.
-	Status *userposition.Status `json:"status,omitempty"`
-	// IsPrimary holds the value of the "is_primary" field.
-	IsPrimary *bool `json:"is_primary,omitempty"`
-	// StartAt holds the value of the "start_at" field.
-	StartAt *time.Time `json:"start_at,omitempty"`
-	// EndAt holds the value of the "end_at" field.
-	EndAt *time.Time `json:"end_at,omitempty"`
+	// 租户ID
+	TenantID *uint32 `json:"tenant_id,omitempty"`
+	// 备注
+	Remark *string `json:"remark,omitempty"`
 	// 用户ID
 	UserID *uint32 `json:"user_id,omitempty"`
 	// 岗位ID
-	PositionID   *uint32 `json:"position_id,omitempty"`
+	PositionID *uint32 `json:"position_id,omitempty"`
+	// 是否主岗位
+	IsPrimary *bool `json:"is_primary,omitempty"`
+	// 生效时间
+	StartAt *time.Time `json:"start_at,omitempty"`
+	// 失效时间
+	EndAt *time.Time `json:"end_at,omitempty"`
+	// 岗位分配时间
+	AssignedAt *time.Time `json:"assigned_at,omitempty"`
+	// 分配者用户 ID
+	AssignedBy *uint32 `json:"assigned_by,omitempty"`
+	// 岗位状态
+	Status       userposition.Status `json:"status,omitempty"`
 	selectValues sql.SelectValues
 }
 
@@ -54,11 +60,11 @@ func (*UserPosition) scanValues(columns []string) ([]any, error) {
 		switch columns[i] {
 		case userposition.FieldIsPrimary:
 			values[i] = new(sql.NullBool)
-		case userposition.FieldID, userposition.FieldTenantID, userposition.FieldCreatedBy, userposition.FieldUpdatedBy, userposition.FieldDeletedBy, userposition.FieldUserID, userposition.FieldPositionID:
+		case userposition.FieldID, userposition.FieldCreatedBy, userposition.FieldUpdatedBy, userposition.FieldDeletedBy, userposition.FieldTenantID, userposition.FieldUserID, userposition.FieldPositionID, userposition.FieldAssignedBy:
 			values[i] = new(sql.NullInt64)
-		case userposition.FieldStatus:
+		case userposition.FieldRemark, userposition.FieldStatus:
 			values[i] = new(sql.NullString)
-		case userposition.FieldCreatedAt, userposition.FieldUpdatedAt, userposition.FieldDeletedAt, userposition.FieldStartAt, userposition.FieldEndAt:
+		case userposition.FieldCreatedAt, userposition.FieldUpdatedAt, userposition.FieldDeletedAt, userposition.FieldStartAt, userposition.FieldEndAt, userposition.FieldAssignedAt:
 			values[i] = new(sql.NullTime)
 		default:
 			values[i] = new(sql.UnknownType)
@@ -102,13 +108,6 @@ func (_m *UserPosition) assignValues(columns []string, values []any) error {
 				_m.DeletedAt = new(time.Time)
 				*_m.DeletedAt = value.Time
 			}
-		case userposition.FieldTenantID:
-			if value, ok := values[i].(*sql.NullInt64); !ok {
-				return fmt.Errorf("unexpected type %T for field tenant_id", values[i])
-			} else if value.Valid {
-				_m.TenantID = new(uint32)
-				*_m.TenantID = uint32(value.Int64)
-			}
 		case userposition.FieldCreatedBy:
 			if value, ok := values[i].(*sql.NullInt64); !ok {
 				return fmt.Errorf("unexpected type %T for field created_by", values[i])
@@ -130,12 +129,33 @@ func (_m *UserPosition) assignValues(columns []string, values []any) error {
 				_m.DeletedBy = new(uint32)
 				*_m.DeletedBy = uint32(value.Int64)
 			}
-		case userposition.FieldStatus:
-			if value, ok := values[i].(*sql.NullString); !ok {
-				return fmt.Errorf("unexpected type %T for field status", values[i])
+		case userposition.FieldTenantID:
+			if value, ok := values[i].(*sql.NullInt64); !ok {
+				return fmt.Errorf("unexpected type %T for field tenant_id", values[i])
 			} else if value.Valid {
-				_m.Status = new(userposition.Status)
-				*_m.Status = userposition.Status(value.String)
+				_m.TenantID = new(uint32)
+				*_m.TenantID = uint32(value.Int64)
+			}
+		case userposition.FieldRemark:
+			if value, ok := values[i].(*sql.NullString); !ok {
+				return fmt.Errorf("unexpected type %T for field remark", values[i])
+			} else if value.Valid {
+				_m.Remark = new(string)
+				*_m.Remark = value.String
+			}
+		case userposition.FieldUserID:
+			if value, ok := values[i].(*sql.NullInt64); !ok {
+				return fmt.Errorf("unexpected type %T for field user_id", values[i])
+			} else if value.Valid {
+				_m.UserID = new(uint32)
+				*_m.UserID = uint32(value.Int64)
+			}
+		case userposition.FieldPositionID:
+			if value, ok := values[i].(*sql.NullInt64); !ok {
+				return fmt.Errorf("unexpected type %T for field position_id", values[i])
+			} else if value.Valid {
+				_m.PositionID = new(uint32)
+				*_m.PositionID = uint32(value.Int64)
 			}
 		case userposition.FieldIsPrimary:
 			if value, ok := values[i].(*sql.NullBool); !ok {
@@ -158,19 +178,25 @@ func (_m *UserPosition) assignValues(columns []string, values []any) error {
 				_m.EndAt = new(time.Time)
 				*_m.EndAt = value.Time
 			}
-		case userposition.FieldUserID:
-			if value, ok := values[i].(*sql.NullInt64); !ok {
-				return fmt.Errorf("unexpected type %T for field user_id", values[i])
+		case userposition.FieldAssignedAt:
+			if value, ok := values[i].(*sql.NullTime); !ok {
+				return fmt.Errorf("unexpected type %T for field assigned_at", values[i])
 			} else if value.Valid {
-				_m.UserID = new(uint32)
-				*_m.UserID = uint32(value.Int64)
+				_m.AssignedAt = new(time.Time)
+				*_m.AssignedAt = value.Time
 			}
-		case userposition.FieldPositionID:
+		case userposition.FieldAssignedBy:
 			if value, ok := values[i].(*sql.NullInt64); !ok {
-				return fmt.Errorf("unexpected type %T for field position_id", values[i])
+				return fmt.Errorf("unexpected type %T for field assigned_by", values[i])
 			} else if value.Valid {
-				_m.PositionID = new(uint32)
-				*_m.PositionID = uint32(value.Int64)
+				_m.AssignedBy = new(uint32)
+				*_m.AssignedBy = uint32(value.Int64)
+			}
+		case userposition.FieldStatus:
+			if value, ok := values[i].(*sql.NullString); !ok {
+				return fmt.Errorf("unexpected type %T for field status", values[i])
+			} else if value.Valid {
+				_m.Status = userposition.Status(value.String)
 			}
 		default:
 			_m.selectValues.Set(columns[i], values[i])
@@ -223,11 +249,6 @@ func (_m *UserPosition) String() string {
 		builder.WriteString(v.Format(time.ANSIC))
 	}
 	builder.WriteString(", ")
-	if v := _m.TenantID; v != nil {
-		builder.WriteString("tenant_id=")
-		builder.WriteString(fmt.Sprintf("%v", *v))
-	}
-	builder.WriteString(", ")
 	if v := _m.CreatedBy; v != nil {
 		builder.WriteString("created_by=")
 		builder.WriteString(fmt.Sprintf("%v", *v))
@@ -243,8 +264,23 @@ func (_m *UserPosition) String() string {
 		builder.WriteString(fmt.Sprintf("%v", *v))
 	}
 	builder.WriteString(", ")
-	if v := _m.Status; v != nil {
-		builder.WriteString("status=")
+	if v := _m.TenantID; v != nil {
+		builder.WriteString("tenant_id=")
+		builder.WriteString(fmt.Sprintf("%v", *v))
+	}
+	builder.WriteString(", ")
+	if v := _m.Remark; v != nil {
+		builder.WriteString("remark=")
+		builder.WriteString(*v)
+	}
+	builder.WriteString(", ")
+	if v := _m.UserID; v != nil {
+		builder.WriteString("user_id=")
+		builder.WriteString(fmt.Sprintf("%v", *v))
+	}
+	builder.WriteString(", ")
+	if v := _m.PositionID; v != nil {
+		builder.WriteString("position_id=")
 		builder.WriteString(fmt.Sprintf("%v", *v))
 	}
 	builder.WriteString(", ")
@@ -263,15 +299,18 @@ func (_m *UserPosition) String() string {
 		builder.WriteString(v.Format(time.ANSIC))
 	}
 	builder.WriteString(", ")
-	if v := _m.UserID; v != nil {
-		builder.WriteString("user_id=")
+	if v := _m.AssignedAt; v != nil {
+		builder.WriteString("assigned_at=")
+		builder.WriteString(v.Format(time.ANSIC))
+	}
+	builder.WriteString(", ")
+	if v := _m.AssignedBy; v != nil {
+		builder.WriteString("assigned_by=")
 		builder.WriteString(fmt.Sprintf("%v", *v))
 	}
 	builder.WriteString(", ")
-	if v := _m.PositionID; v != nil {
-		builder.WriteString("position_id=")
-		builder.WriteString(fmt.Sprintf("%v", *v))
-	}
+	builder.WriteString("status=")
+	builder.WriteString(fmt.Sprintf("%v", _m.Status))
 	builder.WriteByte(')')
 	return builder.String()
 }

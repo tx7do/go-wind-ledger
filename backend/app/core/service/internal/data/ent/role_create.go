@@ -176,20 +176,6 @@ func (_c *RoleCreate) SetNillableStatus(v *role.Status) *RoleCreate {
 	return _c
 }
 
-// SetCode sets the "code" field.
-func (_c *RoleCreate) SetCode(v string) *RoleCreate {
-	_c.mutation.SetCode(v)
-	return _c
-}
-
-// SetNillableCode sets the "code" field if the given value is not nil.
-func (_c *RoleCreate) SetNillableCode(v *string) *RoleCreate {
-	if v != nil {
-		_c.SetCode(*v)
-	}
-	return _c
-}
-
 // SetName sets the "name" field.
 func (_c *RoleCreate) SetName(v string) *RoleCreate {
 	_c.mutation.SetName(v)
@@ -204,16 +190,44 @@ func (_c *RoleCreate) SetNillableName(v *string) *RoleCreate {
 	return _c
 }
 
-// SetIsSystem sets the "is_system" field.
-func (_c *RoleCreate) SetIsSystem(v bool) *RoleCreate {
-	_c.mutation.SetIsSystem(v)
+// SetCode sets the "code" field.
+func (_c *RoleCreate) SetCode(v string) *RoleCreate {
+	_c.mutation.SetCode(v)
 	return _c
 }
 
-// SetNillableIsSystem sets the "is_system" field if the given value is not nil.
-func (_c *RoleCreate) SetNillableIsSystem(v *bool) *RoleCreate {
+// SetNillableCode sets the "code" field if the given value is not nil.
+func (_c *RoleCreate) SetNillableCode(v *string) *RoleCreate {
 	if v != nil {
-		_c.SetIsSystem(*v)
+		_c.SetCode(*v)
+	}
+	return _c
+}
+
+// SetIsProtected sets the "is_protected" field.
+func (_c *RoleCreate) SetIsProtected(v bool) *RoleCreate {
+	_c.mutation.SetIsProtected(v)
+	return _c
+}
+
+// SetNillableIsProtected sets the "is_protected" field if the given value is not nil.
+func (_c *RoleCreate) SetNillableIsProtected(v *bool) *RoleCreate {
+	if v != nil {
+		_c.SetIsProtected(*v)
+	}
+	return _c
+}
+
+// SetType sets the "type" field.
+func (_c *RoleCreate) SetType(v role.Type) *RoleCreate {
+	_c.mutation.SetType(v)
+	return _c
+}
+
+// SetNillableType sets the "type" field if the given value is not nil.
+func (_c *RoleCreate) SetNillableType(v *role.Type) *RoleCreate {
+	if v != nil {
+		_c.SetType(*v)
 	}
 	return _c
 }
@@ -273,9 +287,13 @@ func (_c *RoleCreate) defaults() error {
 		v := role.DefaultStatus
 		_c.mutation.SetStatus(v)
 	}
-	if _, ok := _c.mutation.IsSystem(); !ok {
-		v := role.DefaultIsSystem
-		_c.mutation.SetIsSystem(v)
+	if _, ok := _c.mutation.IsProtected(); !ok {
+		v := role.DefaultIsProtected
+		_c.mutation.SetIsProtected(v)
+	}
+	if _, ok := _c.mutation.GetType(); !ok {
+		v := role.DefaultType
+		_c.mutation.SetType(v)
 	}
 	return nil
 }
@@ -290,14 +308,25 @@ func (_c *RoleCreate) check() error {
 			return &ValidationError{Name: "status", err: fmt.Errorf(`ent: validator failed for field "Role.status": %w`, err)}
 		}
 	}
+	if v, ok := _c.mutation.Name(); ok {
+		if err := role.NameValidator(v); err != nil {
+			return &ValidationError{Name: "name", err: fmt.Errorf(`ent: validator failed for field "Role.name": %w`, err)}
+		}
+	}
 	if v, ok := _c.mutation.Code(); ok {
 		if err := role.CodeValidator(v); err != nil {
 			return &ValidationError{Name: "code", err: fmt.Errorf(`ent: validator failed for field "Role.code": %w`, err)}
 		}
 	}
-	if v, ok := _c.mutation.Name(); ok {
-		if err := role.NameValidator(v); err != nil {
-			return &ValidationError{Name: "name", err: fmt.Errorf(`ent: validator failed for field "Role.name": %w`, err)}
+	if _, ok := _c.mutation.IsProtected(); !ok {
+		return &ValidationError{Name: "is_protected", err: errors.New(`ent: missing required field "Role.is_protected"`)}
+	}
+	if _, ok := _c.mutation.GetType(); !ok {
+		return &ValidationError{Name: "type", err: errors.New(`ent: missing required field "Role.type"`)}
+	}
+	if v, ok := _c.mutation.GetType(); ok {
+		if err := role.TypeValidator(v); err != nil {
+			return &ValidationError{Name: "type", err: fmt.Errorf(`ent: validator failed for field "Role.type": %w`, err)}
 		}
 	}
 	if v, ok := _c.mutation.ID(); ok {
@@ -382,17 +411,21 @@ func (_c *RoleCreate) createSpec() (*Role, *sqlgraph.CreateSpec) {
 		_spec.SetField(role.FieldStatus, field.TypeEnum, value)
 		_node.Status = &value
 	}
-	if value, ok := _c.mutation.Code(); ok {
-		_spec.SetField(role.FieldCode, field.TypeString, value)
-		_node.Code = &value
-	}
 	if value, ok := _c.mutation.Name(); ok {
 		_spec.SetField(role.FieldName, field.TypeString, value)
 		_node.Name = &value
 	}
-	if value, ok := _c.mutation.IsSystem(); ok {
-		_spec.SetField(role.FieldIsSystem, field.TypeBool, value)
-		_node.IsSystem = &value
+	if value, ok := _c.mutation.Code(); ok {
+		_spec.SetField(role.FieldCode, field.TypeString, value)
+		_node.Code = &value
+	}
+	if value, ok := _c.mutation.IsProtected(); ok {
+		_spec.SetField(role.FieldIsProtected, field.TypeBool, value)
+		_node.IsProtected = &value
+	}
+	if value, ok := _c.mutation.GetType(); ok {
+		_spec.SetField(role.FieldType, field.TypeEnum, value)
+		_node.Type = &value
 	}
 	return _node, _spec
 }
@@ -626,24 +659,6 @@ func (u *RoleUpsert) UpdateStatus() *RoleUpsert {
 	return u
 }
 
-// SetCode sets the "code" field.
-func (u *RoleUpsert) SetCode(v string) *RoleUpsert {
-	u.Set(role.FieldCode, v)
-	return u
-}
-
-// UpdateCode sets the "code" field to the value that was provided on create.
-func (u *RoleUpsert) UpdateCode() *RoleUpsert {
-	u.SetExcluded(role.FieldCode)
-	return u
-}
-
-// ClearCode clears the value of the "code" field.
-func (u *RoleUpsert) ClearCode() *RoleUpsert {
-	u.SetNull(role.FieldCode)
-	return u
-}
-
 // SetName sets the "name" field.
 func (u *RoleUpsert) SetName(v string) *RoleUpsert {
 	u.Set(role.FieldName, v)
@@ -662,21 +677,45 @@ func (u *RoleUpsert) ClearName() *RoleUpsert {
 	return u
 }
 
-// SetIsSystem sets the "is_system" field.
-func (u *RoleUpsert) SetIsSystem(v bool) *RoleUpsert {
-	u.Set(role.FieldIsSystem, v)
+// SetCode sets the "code" field.
+func (u *RoleUpsert) SetCode(v string) *RoleUpsert {
+	u.Set(role.FieldCode, v)
 	return u
 }
 
-// UpdateIsSystem sets the "is_system" field to the value that was provided on create.
-func (u *RoleUpsert) UpdateIsSystem() *RoleUpsert {
-	u.SetExcluded(role.FieldIsSystem)
+// UpdateCode sets the "code" field to the value that was provided on create.
+func (u *RoleUpsert) UpdateCode() *RoleUpsert {
+	u.SetExcluded(role.FieldCode)
 	return u
 }
 
-// ClearIsSystem clears the value of the "is_system" field.
-func (u *RoleUpsert) ClearIsSystem() *RoleUpsert {
-	u.SetNull(role.FieldIsSystem)
+// ClearCode clears the value of the "code" field.
+func (u *RoleUpsert) ClearCode() *RoleUpsert {
+	u.SetNull(role.FieldCode)
+	return u
+}
+
+// SetIsProtected sets the "is_protected" field.
+func (u *RoleUpsert) SetIsProtected(v bool) *RoleUpsert {
+	u.Set(role.FieldIsProtected, v)
+	return u
+}
+
+// UpdateIsProtected sets the "is_protected" field to the value that was provided on create.
+func (u *RoleUpsert) UpdateIsProtected() *RoleUpsert {
+	u.SetExcluded(role.FieldIsProtected)
+	return u
+}
+
+// SetType sets the "type" field.
+func (u *RoleUpsert) SetType(v role.Type) *RoleUpsert {
+	u.Set(role.FieldType, v)
+	return u
+}
+
+// UpdateType sets the "type" field to the value that was provided on create.
+func (u *RoleUpsert) UpdateType() *RoleUpsert {
+	u.SetExcluded(role.FieldType)
 	return u
 }
 
@@ -944,27 +983,6 @@ func (u *RoleUpsertOne) UpdateStatus() *RoleUpsertOne {
 	})
 }
 
-// SetCode sets the "code" field.
-func (u *RoleUpsertOne) SetCode(v string) *RoleUpsertOne {
-	return u.Update(func(s *RoleUpsert) {
-		s.SetCode(v)
-	})
-}
-
-// UpdateCode sets the "code" field to the value that was provided on create.
-func (u *RoleUpsertOne) UpdateCode() *RoleUpsertOne {
-	return u.Update(func(s *RoleUpsert) {
-		s.UpdateCode()
-	})
-}
-
-// ClearCode clears the value of the "code" field.
-func (u *RoleUpsertOne) ClearCode() *RoleUpsertOne {
-	return u.Update(func(s *RoleUpsert) {
-		s.ClearCode()
-	})
-}
-
 // SetName sets the "name" field.
 func (u *RoleUpsertOne) SetName(v string) *RoleUpsertOne {
 	return u.Update(func(s *RoleUpsert) {
@@ -986,24 +1004,52 @@ func (u *RoleUpsertOne) ClearName() *RoleUpsertOne {
 	})
 }
 
-// SetIsSystem sets the "is_system" field.
-func (u *RoleUpsertOne) SetIsSystem(v bool) *RoleUpsertOne {
+// SetCode sets the "code" field.
+func (u *RoleUpsertOne) SetCode(v string) *RoleUpsertOne {
 	return u.Update(func(s *RoleUpsert) {
-		s.SetIsSystem(v)
+		s.SetCode(v)
 	})
 }
 
-// UpdateIsSystem sets the "is_system" field to the value that was provided on create.
-func (u *RoleUpsertOne) UpdateIsSystem() *RoleUpsertOne {
+// UpdateCode sets the "code" field to the value that was provided on create.
+func (u *RoleUpsertOne) UpdateCode() *RoleUpsertOne {
 	return u.Update(func(s *RoleUpsert) {
-		s.UpdateIsSystem()
+		s.UpdateCode()
 	})
 }
 
-// ClearIsSystem clears the value of the "is_system" field.
-func (u *RoleUpsertOne) ClearIsSystem() *RoleUpsertOne {
+// ClearCode clears the value of the "code" field.
+func (u *RoleUpsertOne) ClearCode() *RoleUpsertOne {
 	return u.Update(func(s *RoleUpsert) {
-		s.ClearIsSystem()
+		s.ClearCode()
+	})
+}
+
+// SetIsProtected sets the "is_protected" field.
+func (u *RoleUpsertOne) SetIsProtected(v bool) *RoleUpsertOne {
+	return u.Update(func(s *RoleUpsert) {
+		s.SetIsProtected(v)
+	})
+}
+
+// UpdateIsProtected sets the "is_protected" field to the value that was provided on create.
+func (u *RoleUpsertOne) UpdateIsProtected() *RoleUpsertOne {
+	return u.Update(func(s *RoleUpsert) {
+		s.UpdateIsProtected()
+	})
+}
+
+// SetType sets the "type" field.
+func (u *RoleUpsertOne) SetType(v role.Type) *RoleUpsertOne {
+	return u.Update(func(s *RoleUpsert) {
+		s.SetType(v)
+	})
+}
+
+// UpdateType sets the "type" field to the value that was provided on create.
+func (u *RoleUpsertOne) UpdateType() *RoleUpsertOne {
+	return u.Update(func(s *RoleUpsert) {
+		s.UpdateType()
 	})
 }
 
@@ -1437,27 +1483,6 @@ func (u *RoleUpsertBulk) UpdateStatus() *RoleUpsertBulk {
 	})
 }
 
-// SetCode sets the "code" field.
-func (u *RoleUpsertBulk) SetCode(v string) *RoleUpsertBulk {
-	return u.Update(func(s *RoleUpsert) {
-		s.SetCode(v)
-	})
-}
-
-// UpdateCode sets the "code" field to the value that was provided on create.
-func (u *RoleUpsertBulk) UpdateCode() *RoleUpsertBulk {
-	return u.Update(func(s *RoleUpsert) {
-		s.UpdateCode()
-	})
-}
-
-// ClearCode clears the value of the "code" field.
-func (u *RoleUpsertBulk) ClearCode() *RoleUpsertBulk {
-	return u.Update(func(s *RoleUpsert) {
-		s.ClearCode()
-	})
-}
-
 // SetName sets the "name" field.
 func (u *RoleUpsertBulk) SetName(v string) *RoleUpsertBulk {
 	return u.Update(func(s *RoleUpsert) {
@@ -1479,24 +1504,52 @@ func (u *RoleUpsertBulk) ClearName() *RoleUpsertBulk {
 	})
 }
 
-// SetIsSystem sets the "is_system" field.
-func (u *RoleUpsertBulk) SetIsSystem(v bool) *RoleUpsertBulk {
+// SetCode sets the "code" field.
+func (u *RoleUpsertBulk) SetCode(v string) *RoleUpsertBulk {
 	return u.Update(func(s *RoleUpsert) {
-		s.SetIsSystem(v)
+		s.SetCode(v)
 	})
 }
 
-// UpdateIsSystem sets the "is_system" field to the value that was provided on create.
-func (u *RoleUpsertBulk) UpdateIsSystem() *RoleUpsertBulk {
+// UpdateCode sets the "code" field to the value that was provided on create.
+func (u *RoleUpsertBulk) UpdateCode() *RoleUpsertBulk {
 	return u.Update(func(s *RoleUpsert) {
-		s.UpdateIsSystem()
+		s.UpdateCode()
 	})
 }
 
-// ClearIsSystem clears the value of the "is_system" field.
-func (u *RoleUpsertBulk) ClearIsSystem() *RoleUpsertBulk {
+// ClearCode clears the value of the "code" field.
+func (u *RoleUpsertBulk) ClearCode() *RoleUpsertBulk {
 	return u.Update(func(s *RoleUpsert) {
-		s.ClearIsSystem()
+		s.ClearCode()
+	})
+}
+
+// SetIsProtected sets the "is_protected" field.
+func (u *RoleUpsertBulk) SetIsProtected(v bool) *RoleUpsertBulk {
+	return u.Update(func(s *RoleUpsert) {
+		s.SetIsProtected(v)
+	})
+}
+
+// UpdateIsProtected sets the "is_protected" field to the value that was provided on create.
+func (u *RoleUpsertBulk) UpdateIsProtected() *RoleUpsertBulk {
+	return u.Update(func(s *RoleUpsert) {
+		s.UpdateIsProtected()
+	})
+}
+
+// SetType sets the "type" field.
+func (u *RoleUpsertBulk) SetType(v role.Type) *RoleUpsertBulk {
+	return u.Update(func(s *RoleUpsert) {
+		s.SetType(v)
+	})
+}
+
+// UpdateType sets the "type" field to the value that was provided on create.
+func (u *RoleUpsertBulk) UpdateType() *RoleUpsertBulk {
+	return u.Update(func(s *RoleUpsert) {
+		s.UpdateType()
 	})
 }
 

@@ -231,26 +231,6 @@ func (_u *RoleUpdate) SetNillableStatus(v *role.Status) *RoleUpdate {
 	return _u
 }
 
-// SetCode sets the "code" field.
-func (_u *RoleUpdate) SetCode(v string) *RoleUpdate {
-	_u.mutation.SetCode(v)
-	return _u
-}
-
-// SetNillableCode sets the "code" field if the given value is not nil.
-func (_u *RoleUpdate) SetNillableCode(v *string) *RoleUpdate {
-	if v != nil {
-		_u.SetCode(*v)
-	}
-	return _u
-}
-
-// ClearCode clears the value of the "code" field.
-func (_u *RoleUpdate) ClearCode() *RoleUpdate {
-	_u.mutation.ClearCode()
-	return _u
-}
-
 // SetName sets the "name" field.
 func (_u *RoleUpdate) SetName(v string) *RoleUpdate {
 	_u.mutation.SetName(v)
@@ -271,23 +251,51 @@ func (_u *RoleUpdate) ClearName() *RoleUpdate {
 	return _u
 }
 
-// SetIsSystem sets the "is_system" field.
-func (_u *RoleUpdate) SetIsSystem(v bool) *RoleUpdate {
-	_u.mutation.SetIsSystem(v)
+// SetCode sets the "code" field.
+func (_u *RoleUpdate) SetCode(v string) *RoleUpdate {
+	_u.mutation.SetCode(v)
 	return _u
 }
 
-// SetNillableIsSystem sets the "is_system" field if the given value is not nil.
-func (_u *RoleUpdate) SetNillableIsSystem(v *bool) *RoleUpdate {
+// SetNillableCode sets the "code" field if the given value is not nil.
+func (_u *RoleUpdate) SetNillableCode(v *string) *RoleUpdate {
 	if v != nil {
-		_u.SetIsSystem(*v)
+		_u.SetCode(*v)
 	}
 	return _u
 }
 
-// ClearIsSystem clears the value of the "is_system" field.
-func (_u *RoleUpdate) ClearIsSystem() *RoleUpdate {
-	_u.mutation.ClearIsSystem()
+// ClearCode clears the value of the "code" field.
+func (_u *RoleUpdate) ClearCode() *RoleUpdate {
+	_u.mutation.ClearCode()
+	return _u
+}
+
+// SetIsProtected sets the "is_protected" field.
+func (_u *RoleUpdate) SetIsProtected(v bool) *RoleUpdate {
+	_u.mutation.SetIsProtected(v)
+	return _u
+}
+
+// SetNillableIsProtected sets the "is_protected" field if the given value is not nil.
+func (_u *RoleUpdate) SetNillableIsProtected(v *bool) *RoleUpdate {
+	if v != nil {
+		_u.SetIsProtected(*v)
+	}
+	return _u
+}
+
+// SetType sets the "type" field.
+func (_u *RoleUpdate) SetType(v role.Type) *RoleUpdate {
+	_u.mutation.SetType(v)
+	return _u
+}
+
+// SetNillableType sets the "type" field if the given value is not nil.
+func (_u *RoleUpdate) SetNillableType(v *role.Type) *RoleUpdate {
+	if v != nil {
+		_u.SetType(*v)
+	}
 	return _u
 }
 
@@ -330,14 +338,19 @@ func (_u *RoleUpdate) check() error {
 			return &ValidationError{Name: "status", err: fmt.Errorf(`ent: validator failed for field "Role.status": %w`, err)}
 		}
 	}
+	if v, ok := _u.mutation.Name(); ok {
+		if err := role.NameValidator(v); err != nil {
+			return &ValidationError{Name: "name", err: fmt.Errorf(`ent: validator failed for field "Role.name": %w`, err)}
+		}
+	}
 	if v, ok := _u.mutation.Code(); ok {
 		if err := role.CodeValidator(v); err != nil {
 			return &ValidationError{Name: "code", err: fmt.Errorf(`ent: validator failed for field "Role.code": %w`, err)}
 		}
 	}
-	if v, ok := _u.mutation.Name(); ok {
-		if err := role.NameValidator(v); err != nil {
-			return &ValidationError{Name: "name", err: fmt.Errorf(`ent: validator failed for field "Role.name": %w`, err)}
+	if v, ok := _u.mutation.GetType(); ok {
+		if err := role.TypeValidator(v); err != nil {
+			return &ValidationError{Name: "type", err: fmt.Errorf(`ent: validator failed for field "Role.type": %w`, err)}
 		}
 	}
 	return nil
@@ -430,23 +443,23 @@ func (_u *RoleUpdate) sqlSave(ctx context.Context) (_node int, err error) {
 	if value, ok := _u.mutation.Status(); ok {
 		_spec.SetField(role.FieldStatus, field.TypeEnum, value)
 	}
-	if value, ok := _u.mutation.Code(); ok {
-		_spec.SetField(role.FieldCode, field.TypeString, value)
-	}
-	if _u.mutation.CodeCleared() {
-		_spec.ClearField(role.FieldCode, field.TypeString)
-	}
 	if value, ok := _u.mutation.Name(); ok {
 		_spec.SetField(role.FieldName, field.TypeString, value)
 	}
 	if _u.mutation.NameCleared() {
 		_spec.ClearField(role.FieldName, field.TypeString)
 	}
-	if value, ok := _u.mutation.IsSystem(); ok {
-		_spec.SetField(role.FieldIsSystem, field.TypeBool, value)
+	if value, ok := _u.mutation.Code(); ok {
+		_spec.SetField(role.FieldCode, field.TypeString, value)
 	}
-	if _u.mutation.IsSystemCleared() {
-		_spec.ClearField(role.FieldIsSystem, field.TypeBool)
+	if _u.mutation.CodeCleared() {
+		_spec.ClearField(role.FieldCode, field.TypeString)
+	}
+	if value, ok := _u.mutation.IsProtected(); ok {
+		_spec.SetField(role.FieldIsProtected, field.TypeBool, value)
+	}
+	if value, ok := _u.mutation.GetType(); ok {
+		_spec.SetField(role.FieldType, field.TypeEnum, value)
 	}
 	_spec.AddModifiers(_u.modifiers...)
 	if _node, err = sqlgraph.UpdateNodes(ctx, _u.driver, _spec); err != nil {
@@ -672,26 +685,6 @@ func (_u *RoleUpdateOne) SetNillableStatus(v *role.Status) *RoleUpdateOne {
 	return _u
 }
 
-// SetCode sets the "code" field.
-func (_u *RoleUpdateOne) SetCode(v string) *RoleUpdateOne {
-	_u.mutation.SetCode(v)
-	return _u
-}
-
-// SetNillableCode sets the "code" field if the given value is not nil.
-func (_u *RoleUpdateOne) SetNillableCode(v *string) *RoleUpdateOne {
-	if v != nil {
-		_u.SetCode(*v)
-	}
-	return _u
-}
-
-// ClearCode clears the value of the "code" field.
-func (_u *RoleUpdateOne) ClearCode() *RoleUpdateOne {
-	_u.mutation.ClearCode()
-	return _u
-}
-
 // SetName sets the "name" field.
 func (_u *RoleUpdateOne) SetName(v string) *RoleUpdateOne {
 	_u.mutation.SetName(v)
@@ -712,23 +705,51 @@ func (_u *RoleUpdateOne) ClearName() *RoleUpdateOne {
 	return _u
 }
 
-// SetIsSystem sets the "is_system" field.
-func (_u *RoleUpdateOne) SetIsSystem(v bool) *RoleUpdateOne {
-	_u.mutation.SetIsSystem(v)
+// SetCode sets the "code" field.
+func (_u *RoleUpdateOne) SetCode(v string) *RoleUpdateOne {
+	_u.mutation.SetCode(v)
 	return _u
 }
 
-// SetNillableIsSystem sets the "is_system" field if the given value is not nil.
-func (_u *RoleUpdateOne) SetNillableIsSystem(v *bool) *RoleUpdateOne {
+// SetNillableCode sets the "code" field if the given value is not nil.
+func (_u *RoleUpdateOne) SetNillableCode(v *string) *RoleUpdateOne {
 	if v != nil {
-		_u.SetIsSystem(*v)
+		_u.SetCode(*v)
 	}
 	return _u
 }
 
-// ClearIsSystem clears the value of the "is_system" field.
-func (_u *RoleUpdateOne) ClearIsSystem() *RoleUpdateOne {
-	_u.mutation.ClearIsSystem()
+// ClearCode clears the value of the "code" field.
+func (_u *RoleUpdateOne) ClearCode() *RoleUpdateOne {
+	_u.mutation.ClearCode()
+	return _u
+}
+
+// SetIsProtected sets the "is_protected" field.
+func (_u *RoleUpdateOne) SetIsProtected(v bool) *RoleUpdateOne {
+	_u.mutation.SetIsProtected(v)
+	return _u
+}
+
+// SetNillableIsProtected sets the "is_protected" field if the given value is not nil.
+func (_u *RoleUpdateOne) SetNillableIsProtected(v *bool) *RoleUpdateOne {
+	if v != nil {
+		_u.SetIsProtected(*v)
+	}
+	return _u
+}
+
+// SetType sets the "type" field.
+func (_u *RoleUpdateOne) SetType(v role.Type) *RoleUpdateOne {
+	_u.mutation.SetType(v)
+	return _u
+}
+
+// SetNillableType sets the "type" field if the given value is not nil.
+func (_u *RoleUpdateOne) SetNillableType(v *role.Type) *RoleUpdateOne {
+	if v != nil {
+		_u.SetType(*v)
+	}
 	return _u
 }
 
@@ -784,14 +805,19 @@ func (_u *RoleUpdateOne) check() error {
 			return &ValidationError{Name: "status", err: fmt.Errorf(`ent: validator failed for field "Role.status": %w`, err)}
 		}
 	}
+	if v, ok := _u.mutation.Name(); ok {
+		if err := role.NameValidator(v); err != nil {
+			return &ValidationError{Name: "name", err: fmt.Errorf(`ent: validator failed for field "Role.name": %w`, err)}
+		}
+	}
 	if v, ok := _u.mutation.Code(); ok {
 		if err := role.CodeValidator(v); err != nil {
 			return &ValidationError{Name: "code", err: fmt.Errorf(`ent: validator failed for field "Role.code": %w`, err)}
 		}
 	}
-	if v, ok := _u.mutation.Name(); ok {
-		if err := role.NameValidator(v); err != nil {
-			return &ValidationError{Name: "name", err: fmt.Errorf(`ent: validator failed for field "Role.name": %w`, err)}
+	if v, ok := _u.mutation.GetType(); ok {
+		if err := role.TypeValidator(v); err != nil {
+			return &ValidationError{Name: "type", err: fmt.Errorf(`ent: validator failed for field "Role.type": %w`, err)}
 		}
 	}
 	return nil
@@ -901,23 +927,23 @@ func (_u *RoleUpdateOne) sqlSave(ctx context.Context) (_node *Role, err error) {
 	if value, ok := _u.mutation.Status(); ok {
 		_spec.SetField(role.FieldStatus, field.TypeEnum, value)
 	}
-	if value, ok := _u.mutation.Code(); ok {
-		_spec.SetField(role.FieldCode, field.TypeString, value)
-	}
-	if _u.mutation.CodeCleared() {
-		_spec.ClearField(role.FieldCode, field.TypeString)
-	}
 	if value, ok := _u.mutation.Name(); ok {
 		_spec.SetField(role.FieldName, field.TypeString, value)
 	}
 	if _u.mutation.NameCleared() {
 		_spec.ClearField(role.FieldName, field.TypeString)
 	}
-	if value, ok := _u.mutation.IsSystem(); ok {
-		_spec.SetField(role.FieldIsSystem, field.TypeBool, value)
+	if value, ok := _u.mutation.Code(); ok {
+		_spec.SetField(role.FieldCode, field.TypeString, value)
 	}
-	if _u.mutation.IsSystemCleared() {
-		_spec.ClearField(role.FieldIsSystem, field.TypeBool)
+	if _u.mutation.CodeCleared() {
+		_spec.ClearField(role.FieldCode, field.TypeString)
+	}
+	if value, ok := _u.mutation.IsProtected(); ok {
+		_spec.SetField(role.FieldIsProtected, field.TypeBool, value)
+	}
+	if value, ok := _u.mutation.GetType(); ok {
+		_spec.SetField(role.FieldType, field.TypeEnum, value)
 	}
 	_spec.AddModifiers(_u.modifiers...)
 	_node = &Role{config: _u.config}

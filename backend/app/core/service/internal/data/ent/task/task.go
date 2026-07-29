@@ -26,28 +26,20 @@ const (
 	FieldUpdatedBy = "updated_by"
 	// FieldDeletedBy holds the string denoting the deleted_by field in the database.
 	FieldDeletedBy = "deleted_by"
-	// FieldTenantID holds the string denoting the tenant_id field in the database.
-	FieldTenantID = "tenant_id"
 	// FieldRemark holds the string denoting the remark field in the database.
 	FieldRemark = "remark"
-	// FieldName holds the string denoting the name field in the database.
-	FieldName = "name"
-	// FieldTypeName holds the string denoting the type_name field in the database.
-	FieldTypeName = "type_name"
-	// FieldCronSpec holds the string denoting the cron_spec field in the database.
-	FieldCronSpec = "cron_spec"
-	// FieldTaskPayload holds the string denoting the task_payload field in the database.
-	FieldTaskPayload = "task_payload"
-	// FieldTaskOptions holds the string denoting the task_options field in the database.
-	FieldTaskOptions = "task_options"
+	// FieldTenantID holds the string denoting the tenant_id field in the database.
+	FieldTenantID = "tenant_id"
 	// FieldType holds the string denoting the type field in the database.
 	FieldType = "type"
-	// FieldCronExpr holds the string denoting the cron_expr field in the database.
-	FieldCronExpr = "cron_expr"
-	// FieldHandler holds the string denoting the handler field in the database.
-	FieldHandler = "handler"
-	// FieldParams holds the string denoting the params field in the database.
-	FieldParams = "params"
+	// FieldTypeName holds the string denoting the type_name field in the database.
+	FieldTypeName = "type_name"
+	// FieldTaskPayload holds the string denoting the task_payload field in the database.
+	FieldTaskPayload = "task_payload"
+	// FieldCronSpec holds the string denoting the cron_spec field in the database.
+	FieldCronSpec = "cron_spec"
+	// FieldTaskOptions holds the string denoting the task_options field in the database.
+	FieldTaskOptions = "task_options"
 	// FieldEnable holds the string denoting the enable field in the database.
 	FieldEnable = "enable"
 	// Table holds the table name of the task in the database.
@@ -63,17 +55,13 @@ var Columns = []string{
 	FieldCreatedBy,
 	FieldUpdatedBy,
 	FieldDeletedBy,
-	FieldTenantID,
 	FieldRemark,
-	FieldName,
-	FieldTypeName,
-	FieldCronSpec,
-	FieldTaskPayload,
-	FieldTaskOptions,
+	FieldTenantID,
 	FieldType,
-	FieldCronExpr,
-	FieldHandler,
-	FieldParams,
+	FieldTypeName,
+	FieldTaskPayload,
+	FieldCronSpec,
+	FieldTaskOptions,
 	FieldEnable,
 }
 
@@ -97,18 +85,6 @@ var (
 	Policy ent.Policy
 	// DefaultTenantID holds the default value on creation for the "tenant_id" field.
 	DefaultTenantID uint32
-	// NameValidator is a validator for the "name" field. It is called by the builders before save.
-	NameValidator func(string) error
-	// TypeNameValidator is a validator for the "type_name" field. It is called by the builders before save.
-	TypeNameValidator func(string) error
-	// CronSpecValidator is a validator for the "cron_spec" field. It is called by the builders before save.
-	CronSpecValidator func(string) error
-	// TaskPayloadValidator is a validator for the "task_payload" field. It is called by the builders before save.
-	TaskPayloadValidator func(string) error
-	// CronExprValidator is a validator for the "cron_expr" field. It is called by the builders before save.
-	CronExprValidator func(string) error
-	// HandlerValidator is a validator for the "handler" field. It is called by the builders before save.
-	HandlerValidator func(string) error
 	// DefaultEnable holds the default value on creation for the "enable" field.
 	DefaultEnable bool
 	// IDValidator is a validator for the "id" field. It is called by the builders before save.
@@ -118,10 +94,14 @@ var (
 // Type defines the type for the "type" enum field.
 type Type string
 
+// TypePeriodic is the default value of the Type enum.
+const DefaultType = TypePeriodic
+
 // Type values.
 const (
-	TypeTaskTypeCron   Type = "TASK_TYPE_CRON"
-	TypeTaskTypeOneOff Type = "TASK_TYPE_ONE_OFF"
+	TypePeriodic   Type = "PERIODIC"
+	TypeDelay      Type = "DELAY"
+	TypeWaitResult Type = "WAIT_RESULT"
 )
 
 func (_type Type) String() string {
@@ -131,7 +111,7 @@ func (_type Type) String() string {
 // TypeValidator is a validator for the "type" field enum values. It is called by the builders before save.
 func TypeValidator(_type Type) error {
 	switch _type {
-	case TypeTaskTypeCron, TypeTaskTypeOneOff:
+	case TypePeriodic, TypeDelay, TypeWaitResult:
 		return nil
 	default:
 		return fmt.Errorf("task: invalid enum value for type field: %q", _type)
@@ -176,34 +156,14 @@ func ByDeletedBy(opts ...sql.OrderTermOption) OrderOption {
 	return sql.OrderByField(FieldDeletedBy, opts...).ToFunc()
 }
 
-// ByTenantID orders the results by the tenant_id field.
-func ByTenantID(opts ...sql.OrderTermOption) OrderOption {
-	return sql.OrderByField(FieldTenantID, opts...).ToFunc()
-}
-
 // ByRemark orders the results by the remark field.
 func ByRemark(opts ...sql.OrderTermOption) OrderOption {
 	return sql.OrderByField(FieldRemark, opts...).ToFunc()
 }
 
-// ByName orders the results by the name field.
-func ByName(opts ...sql.OrderTermOption) OrderOption {
-	return sql.OrderByField(FieldName, opts...).ToFunc()
-}
-
-// ByTypeName orders the results by the type_name field.
-func ByTypeName(opts ...sql.OrderTermOption) OrderOption {
-	return sql.OrderByField(FieldTypeName, opts...).ToFunc()
-}
-
-// ByCronSpec orders the results by the cron_spec field.
-func ByCronSpec(opts ...sql.OrderTermOption) OrderOption {
-	return sql.OrderByField(FieldCronSpec, opts...).ToFunc()
-}
-
-// ByTaskPayload orders the results by the task_payload field.
-func ByTaskPayload(opts ...sql.OrderTermOption) OrderOption {
-	return sql.OrderByField(FieldTaskPayload, opts...).ToFunc()
+// ByTenantID orders the results by the tenant_id field.
+func ByTenantID(opts ...sql.OrderTermOption) OrderOption {
+	return sql.OrderByField(FieldTenantID, opts...).ToFunc()
 }
 
 // ByType orders the results by the type field.
@@ -211,14 +171,19 @@ func ByType(opts ...sql.OrderTermOption) OrderOption {
 	return sql.OrderByField(FieldType, opts...).ToFunc()
 }
 
-// ByCronExpr orders the results by the cron_expr field.
-func ByCronExpr(opts ...sql.OrderTermOption) OrderOption {
-	return sql.OrderByField(FieldCronExpr, opts...).ToFunc()
+// ByTypeName orders the results by the type_name field.
+func ByTypeName(opts ...sql.OrderTermOption) OrderOption {
+	return sql.OrderByField(FieldTypeName, opts...).ToFunc()
 }
 
-// ByHandler orders the results by the handler field.
-func ByHandler(opts ...sql.OrderTermOption) OrderOption {
-	return sql.OrderByField(FieldHandler, opts...).ToFunc()
+// ByTaskPayload orders the results by the task_payload field.
+func ByTaskPayload(opts ...sql.OrderTermOption) OrderOption {
+	return sql.OrderByField(FieldTaskPayload, opts...).ToFunc()
+}
+
+// ByCronSpec orders the results by the cron_spec field.
+func ByCronSpec(opts ...sql.OrderTermOption) OrderOption {
+	return sql.OrderByField(FieldCronSpec, opts...).ToFunc()
 }
 
 // ByEnable orders the results by the enable field.

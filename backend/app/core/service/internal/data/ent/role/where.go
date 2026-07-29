@@ -104,19 +104,19 @@ func TenantID(v uint32) predicate.Role {
 	return predicate.Role(sql.FieldEQ(FieldTenantID, v))
 }
 
-// Code applies equality check predicate on the "code" field. It's identical to CodeEQ.
-func Code(v string) predicate.Role {
-	return predicate.Role(sql.FieldEQ(FieldCode, v))
-}
-
 // Name applies equality check predicate on the "name" field. It's identical to NameEQ.
 func Name(v string) predicate.Role {
 	return predicate.Role(sql.FieldEQ(FieldName, v))
 }
 
-// IsSystem applies equality check predicate on the "is_system" field. It's identical to IsSystemEQ.
-func IsSystem(v bool) predicate.Role {
-	return predicate.Role(sql.FieldEQ(FieldIsSystem, v))
+// Code applies equality check predicate on the "code" field. It's identical to CodeEQ.
+func Code(v string) predicate.Role {
+	return predicate.Role(sql.FieldEQ(FieldCode, v))
+}
+
+// IsProtected applies equality check predicate on the "is_protected" field. It's identical to IsProtectedEQ.
+func IsProtected(v bool) predicate.Role {
+	return predicate.Role(sql.FieldEQ(FieldIsProtected, v))
 }
 
 // CreatedAtEQ applies the EQ predicate on the "created_at" field.
@@ -689,81 +689,6 @@ func StatusNotIn(vs ...Status) predicate.Role {
 	return predicate.Role(sql.FieldNotIn(FieldStatus, vs...))
 }
 
-// CodeEQ applies the EQ predicate on the "code" field.
-func CodeEQ(v string) predicate.Role {
-	return predicate.Role(sql.FieldEQ(FieldCode, v))
-}
-
-// CodeNEQ applies the NEQ predicate on the "code" field.
-func CodeNEQ(v string) predicate.Role {
-	return predicate.Role(sql.FieldNEQ(FieldCode, v))
-}
-
-// CodeIn applies the In predicate on the "code" field.
-func CodeIn(vs ...string) predicate.Role {
-	return predicate.Role(sql.FieldIn(FieldCode, vs...))
-}
-
-// CodeNotIn applies the NotIn predicate on the "code" field.
-func CodeNotIn(vs ...string) predicate.Role {
-	return predicate.Role(sql.FieldNotIn(FieldCode, vs...))
-}
-
-// CodeGT applies the GT predicate on the "code" field.
-func CodeGT(v string) predicate.Role {
-	return predicate.Role(sql.FieldGT(FieldCode, v))
-}
-
-// CodeGTE applies the GTE predicate on the "code" field.
-func CodeGTE(v string) predicate.Role {
-	return predicate.Role(sql.FieldGTE(FieldCode, v))
-}
-
-// CodeLT applies the LT predicate on the "code" field.
-func CodeLT(v string) predicate.Role {
-	return predicate.Role(sql.FieldLT(FieldCode, v))
-}
-
-// CodeLTE applies the LTE predicate on the "code" field.
-func CodeLTE(v string) predicate.Role {
-	return predicate.Role(sql.FieldLTE(FieldCode, v))
-}
-
-// CodeContains applies the Contains predicate on the "code" field.
-func CodeContains(v string) predicate.Role {
-	return predicate.Role(sql.FieldContains(FieldCode, v))
-}
-
-// CodeHasPrefix applies the HasPrefix predicate on the "code" field.
-func CodeHasPrefix(v string) predicate.Role {
-	return predicate.Role(sql.FieldHasPrefix(FieldCode, v))
-}
-
-// CodeHasSuffix applies the HasSuffix predicate on the "code" field.
-func CodeHasSuffix(v string) predicate.Role {
-	return predicate.Role(sql.FieldHasSuffix(FieldCode, v))
-}
-
-// CodeIsNil applies the IsNil predicate on the "code" field.
-func CodeIsNil() predicate.Role {
-	return predicate.Role(sql.FieldIsNull(FieldCode))
-}
-
-// CodeNotNil applies the NotNil predicate on the "code" field.
-func CodeNotNil() predicate.Role {
-	return predicate.Role(sql.FieldNotNull(FieldCode))
-}
-
-// CodeEqualFold applies the EqualFold predicate on the "code" field.
-func CodeEqualFold(v string) predicate.Role {
-	return predicate.Role(sql.FieldEqualFold(FieldCode, v))
-}
-
-// CodeContainsFold applies the ContainsFold predicate on the "code" field.
-func CodeContainsFold(v string) predicate.Role {
-	return predicate.Role(sql.FieldContainsFold(FieldCode, v))
-}
-
 // NameEQ applies the EQ predicate on the "name" field.
 func NameEQ(v string) predicate.Role {
 	return predicate.Role(sql.FieldEQ(FieldName, v))
@@ -839,24 +764,109 @@ func NameContainsFold(v string) predicate.Role {
 	return predicate.Role(sql.FieldContainsFold(FieldName, v))
 }
 
-// IsSystemEQ applies the EQ predicate on the "is_system" field.
-func IsSystemEQ(v bool) predicate.Role {
-	return predicate.Role(sql.FieldEQ(FieldIsSystem, v))
+// CodeEQ applies the EQ predicate on the "code" field.
+func CodeEQ(v string) predicate.Role {
+	return predicate.Role(sql.FieldEQ(FieldCode, v))
 }
 
-// IsSystemNEQ applies the NEQ predicate on the "is_system" field.
-func IsSystemNEQ(v bool) predicate.Role {
-	return predicate.Role(sql.FieldNEQ(FieldIsSystem, v))
+// CodeNEQ applies the NEQ predicate on the "code" field.
+func CodeNEQ(v string) predicate.Role {
+	return predicate.Role(sql.FieldNEQ(FieldCode, v))
 }
 
-// IsSystemIsNil applies the IsNil predicate on the "is_system" field.
-func IsSystemIsNil() predicate.Role {
-	return predicate.Role(sql.FieldIsNull(FieldIsSystem))
+// CodeIn applies the In predicate on the "code" field.
+func CodeIn(vs ...string) predicate.Role {
+	return predicate.Role(sql.FieldIn(FieldCode, vs...))
 }
 
-// IsSystemNotNil applies the NotNil predicate on the "is_system" field.
-func IsSystemNotNil() predicate.Role {
-	return predicate.Role(sql.FieldNotNull(FieldIsSystem))
+// CodeNotIn applies the NotIn predicate on the "code" field.
+func CodeNotIn(vs ...string) predicate.Role {
+	return predicate.Role(sql.FieldNotIn(FieldCode, vs...))
+}
+
+// CodeGT applies the GT predicate on the "code" field.
+func CodeGT(v string) predicate.Role {
+	return predicate.Role(sql.FieldGT(FieldCode, v))
+}
+
+// CodeGTE applies the GTE predicate on the "code" field.
+func CodeGTE(v string) predicate.Role {
+	return predicate.Role(sql.FieldGTE(FieldCode, v))
+}
+
+// CodeLT applies the LT predicate on the "code" field.
+func CodeLT(v string) predicate.Role {
+	return predicate.Role(sql.FieldLT(FieldCode, v))
+}
+
+// CodeLTE applies the LTE predicate on the "code" field.
+func CodeLTE(v string) predicate.Role {
+	return predicate.Role(sql.FieldLTE(FieldCode, v))
+}
+
+// CodeContains applies the Contains predicate on the "code" field.
+func CodeContains(v string) predicate.Role {
+	return predicate.Role(sql.FieldContains(FieldCode, v))
+}
+
+// CodeHasPrefix applies the HasPrefix predicate on the "code" field.
+func CodeHasPrefix(v string) predicate.Role {
+	return predicate.Role(sql.FieldHasPrefix(FieldCode, v))
+}
+
+// CodeHasSuffix applies the HasSuffix predicate on the "code" field.
+func CodeHasSuffix(v string) predicate.Role {
+	return predicate.Role(sql.FieldHasSuffix(FieldCode, v))
+}
+
+// CodeIsNil applies the IsNil predicate on the "code" field.
+func CodeIsNil() predicate.Role {
+	return predicate.Role(sql.FieldIsNull(FieldCode))
+}
+
+// CodeNotNil applies the NotNil predicate on the "code" field.
+func CodeNotNil() predicate.Role {
+	return predicate.Role(sql.FieldNotNull(FieldCode))
+}
+
+// CodeEqualFold applies the EqualFold predicate on the "code" field.
+func CodeEqualFold(v string) predicate.Role {
+	return predicate.Role(sql.FieldEqualFold(FieldCode, v))
+}
+
+// CodeContainsFold applies the ContainsFold predicate on the "code" field.
+func CodeContainsFold(v string) predicate.Role {
+	return predicate.Role(sql.FieldContainsFold(FieldCode, v))
+}
+
+// IsProtectedEQ applies the EQ predicate on the "is_protected" field.
+func IsProtectedEQ(v bool) predicate.Role {
+	return predicate.Role(sql.FieldEQ(FieldIsProtected, v))
+}
+
+// IsProtectedNEQ applies the NEQ predicate on the "is_protected" field.
+func IsProtectedNEQ(v bool) predicate.Role {
+	return predicate.Role(sql.FieldNEQ(FieldIsProtected, v))
+}
+
+// TypeEQ applies the EQ predicate on the "type" field.
+func TypeEQ(v Type) predicate.Role {
+	return predicate.Role(sql.FieldEQ(FieldType, v))
+}
+
+// TypeNEQ applies the NEQ predicate on the "type" field.
+func TypeNEQ(v Type) predicate.Role {
+	return predicate.Role(sql.FieldNEQ(FieldType, v))
+}
+
+// TypeIn applies the In predicate on the "type" field.
+func TypeIn(vs ...Type) predicate.Role {
+	return predicate.Role(sql.FieldIn(FieldType, vs...))
+}
+
+// TypeNotIn applies the NotIn predicate on the "type" field.
+func TypeNotIn(vs ...Type) predicate.Role {
+	return predicate.Role(sql.FieldNotIn(FieldType, vs...))
 }
 
 // And groups predicates with the AND operator between them.

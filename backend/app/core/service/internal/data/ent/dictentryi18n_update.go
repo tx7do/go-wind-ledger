@@ -6,6 +6,7 @@ import (
 	"context"
 	"errors"
 	"fmt"
+	"go-wind-ledger/app/core/service/internal/data/ent/dictentry"
 	"go-wind-ledger/app/core/service/internal/data/ent/dictentryi18n"
 	"go-wind-ledger/app/core/service/internal/data/ent/predicate"
 	"time"
@@ -150,76 +151,101 @@ func (_u *DictEntryI18nUpdate) ClearDeletedBy() *DictEntryI18nUpdate {
 	return _u
 }
 
-// SetDictEntryID sets the "dict_entry_id" field.
-func (_u *DictEntryI18nUpdate) SetDictEntryID(v uint32) *DictEntryI18nUpdate {
-	_u.mutation.ResetDictEntryID()
-	_u.mutation.SetDictEntryID(v)
+// SetDescription sets the "description" field.
+func (_u *DictEntryI18nUpdate) SetDescription(v string) *DictEntryI18nUpdate {
+	_u.mutation.SetDescription(v)
 	return _u
 }
 
-// SetNillableDictEntryID sets the "dict_entry_id" field if the given value is not nil.
-func (_u *DictEntryI18nUpdate) SetNillableDictEntryID(v *uint32) *DictEntryI18nUpdate {
+// SetNillableDescription sets the "description" field if the given value is not nil.
+func (_u *DictEntryI18nUpdate) SetNillableDescription(v *string) *DictEntryI18nUpdate {
 	if v != nil {
-		_u.SetDictEntryID(*v)
+		_u.SetDescription(*v)
 	}
 	return _u
 }
 
-// AddDictEntryID adds value to the "dict_entry_id" field.
-func (_u *DictEntryI18nUpdate) AddDictEntryID(v int32) *DictEntryI18nUpdate {
-	_u.mutation.AddDictEntryID(v)
+// ClearDescription clears the value of the "description" field.
+func (_u *DictEntryI18nUpdate) ClearDescription() *DictEntryI18nUpdate {
+	_u.mutation.ClearDescription()
 	return _u
 }
 
-// ClearDictEntryID clears the value of the "dict_entry_id" field.
-func (_u *DictEntryI18nUpdate) ClearDictEntryID() *DictEntryI18nUpdate {
-	_u.mutation.ClearDictEntryID()
+// SetSortOrder sets the "sort_order" field.
+func (_u *DictEntryI18nUpdate) SetSortOrder(v uint32) *DictEntryI18nUpdate {
+	_u.mutation.ResetSortOrder()
+	_u.mutation.SetSortOrder(v)
 	return _u
 }
 
-// SetLanguageCode sets the "language_code" field.
-func (_u *DictEntryI18nUpdate) SetLanguageCode(v string) *DictEntryI18nUpdate {
-	_u.mutation.SetLanguageCode(v)
-	return _u
-}
-
-// SetNillableLanguageCode sets the "language_code" field if the given value is not nil.
-func (_u *DictEntryI18nUpdate) SetNillableLanguageCode(v *string) *DictEntryI18nUpdate {
+// SetNillableSortOrder sets the "sort_order" field if the given value is not nil.
+func (_u *DictEntryI18nUpdate) SetNillableSortOrder(v *uint32) *DictEntryI18nUpdate {
 	if v != nil {
-		_u.SetLanguageCode(*v)
+		_u.SetSortOrder(*v)
 	}
 	return _u
 }
 
-// ClearLanguageCode clears the value of the "language_code" field.
-func (_u *DictEntryI18nUpdate) ClearLanguageCode() *DictEntryI18nUpdate {
-	_u.mutation.ClearLanguageCode()
+// AddSortOrder adds value to the "sort_order" field.
+func (_u *DictEntryI18nUpdate) AddSortOrder(v int32) *DictEntryI18nUpdate {
+	_u.mutation.AddSortOrder(v)
 	return _u
 }
 
-// SetName sets the "name" field.
-func (_u *DictEntryI18nUpdate) SetName(v string) *DictEntryI18nUpdate {
-	_u.mutation.SetName(v)
+// ClearSortOrder clears the value of the "sort_order" field.
+func (_u *DictEntryI18nUpdate) ClearSortOrder() *DictEntryI18nUpdate {
+	_u.mutation.ClearSortOrder()
 	return _u
 }
 
-// SetNillableName sets the "name" field if the given value is not nil.
-func (_u *DictEntryI18nUpdate) SetNillableName(v *string) *DictEntryI18nUpdate {
+// SetEntryLabel sets the "entry_label" field.
+func (_u *DictEntryI18nUpdate) SetEntryLabel(v string) *DictEntryI18nUpdate {
+	_u.mutation.SetEntryLabel(v)
+	return _u
+}
+
+// SetNillableEntryLabel sets the "entry_label" field if the given value is not nil.
+func (_u *DictEntryI18nUpdate) SetNillableEntryLabel(v *string) *DictEntryI18nUpdate {
 	if v != nil {
-		_u.SetName(*v)
+		_u.SetEntryLabel(*v)
 	}
 	return _u
 }
 
-// ClearName clears the value of the "name" field.
-func (_u *DictEntryI18nUpdate) ClearName() *DictEntryI18nUpdate {
-	_u.mutation.ClearName()
+// ClearEntryLabel clears the value of the "entry_label" field.
+func (_u *DictEntryI18nUpdate) ClearEntryLabel() *DictEntryI18nUpdate {
+	_u.mutation.ClearEntryLabel()
 	return _u
+}
+
+// SetDictEntryID sets the "dict_entry" edge to the DictEntry entity by ID.
+func (_u *DictEntryI18nUpdate) SetDictEntryID(id uint32) *DictEntryI18nUpdate {
+	_u.mutation.SetDictEntryID(id)
+	return _u
+}
+
+// SetNillableDictEntryID sets the "dict_entry" edge to the DictEntry entity by ID if the given value is not nil.
+func (_u *DictEntryI18nUpdate) SetNillableDictEntryID(id *uint32) *DictEntryI18nUpdate {
+	if id != nil {
+		_u = _u.SetDictEntryID(*id)
+	}
+	return _u
+}
+
+// SetDictEntry sets the "dict_entry" edge to the DictEntry entity.
+func (_u *DictEntryI18nUpdate) SetDictEntry(v *DictEntry) *DictEntryI18nUpdate {
+	return _u.SetDictEntryID(v.ID)
 }
 
 // Mutation returns the DictEntryI18nMutation object of the builder.
 func (_u *DictEntryI18nUpdate) Mutation() *DictEntryI18nMutation {
 	return _u.mutation
+}
+
+// ClearDictEntry clears the "dict_entry" edge to the DictEntry entity.
+func (_u *DictEntryI18nUpdate) ClearDictEntry() *DictEntryI18nUpdate {
+	_u.mutation.ClearDictEntry()
+	return _u
 }
 
 // Save executes the query and returns the number of nodes affected by the update operation.
@@ -251,14 +277,9 @@ func (_u *DictEntryI18nUpdate) ExecX(ctx context.Context) {
 
 // check runs all checks and user-defined validators on the builder.
 func (_u *DictEntryI18nUpdate) check() error {
-	if v, ok := _u.mutation.LanguageCode(); ok {
-		if err := dictentryi18n.LanguageCodeValidator(v); err != nil {
-			return &ValidationError{Name: "language_code", err: fmt.Errorf(`ent: validator failed for field "DictEntryI18n.language_code": %w`, err)}
-		}
-	}
-	if v, ok := _u.mutation.Name(); ok {
-		if err := dictentryi18n.NameValidator(v); err != nil {
-			return &ValidationError{Name: "name", err: fmt.Errorf(`ent: validator failed for field "DictEntryI18n.name": %w`, err)}
+	if v, ok := _u.mutation.EntryLabel(); ok {
+		if err := dictentryi18n.EntryLabelValidator(v); err != nil {
+			return &ValidationError{Name: "entry_label", err: fmt.Errorf(`ent: validator failed for field "DictEntryI18n.entry_label": %w`, err)}
 		}
 	}
 	return nil
@@ -297,9 +318,6 @@ func (_u *DictEntryI18nUpdate) sqlSave(ctx context.Context) (_node int, err erro
 	if _u.mutation.DeletedAtCleared() {
 		_spec.ClearField(dictentryi18n.FieldDeletedAt, field.TypeTime)
 	}
-	if _u.mutation.TenantIDCleared() {
-		_spec.ClearField(dictentryi18n.FieldTenantID, field.TypeUint32)
-	}
 	if value, ok := _u.mutation.CreatedBy(); ok {
 		_spec.SetField(dictentryi18n.FieldCreatedBy, field.TypeUint32, value)
 	}
@@ -327,26 +345,61 @@ func (_u *DictEntryI18nUpdate) sqlSave(ctx context.Context) (_node int, err erro
 	if _u.mutation.DeletedByCleared() {
 		_spec.ClearField(dictentryi18n.FieldDeletedBy, field.TypeUint32)
 	}
-	if value, ok := _u.mutation.DictEntryID(); ok {
-		_spec.SetField(dictentryi18n.FieldDictEntryID, field.TypeUint32, value)
+	if value, ok := _u.mutation.Description(); ok {
+		_spec.SetField(dictentryi18n.FieldDescription, field.TypeString, value)
 	}
-	if value, ok := _u.mutation.AddedDictEntryID(); ok {
-		_spec.AddField(dictentryi18n.FieldDictEntryID, field.TypeUint32, value)
+	if _u.mutation.DescriptionCleared() {
+		_spec.ClearField(dictentryi18n.FieldDescription, field.TypeString)
 	}
-	if _u.mutation.DictEntryIDCleared() {
-		_spec.ClearField(dictentryi18n.FieldDictEntryID, field.TypeUint32)
+	if value, ok := _u.mutation.SortOrder(); ok {
+		_spec.SetField(dictentryi18n.FieldSortOrder, field.TypeUint32, value)
 	}
-	if value, ok := _u.mutation.LanguageCode(); ok {
-		_spec.SetField(dictentryi18n.FieldLanguageCode, field.TypeString, value)
+	if value, ok := _u.mutation.AddedSortOrder(); ok {
+		_spec.AddField(dictentryi18n.FieldSortOrder, field.TypeUint32, value)
+	}
+	if _u.mutation.SortOrderCleared() {
+		_spec.ClearField(dictentryi18n.FieldSortOrder, field.TypeUint32)
+	}
+	if _u.mutation.TenantIDCleared() {
+		_spec.ClearField(dictentryi18n.FieldTenantID, field.TypeUint32)
 	}
 	if _u.mutation.LanguageCodeCleared() {
 		_spec.ClearField(dictentryi18n.FieldLanguageCode, field.TypeString)
 	}
-	if value, ok := _u.mutation.Name(); ok {
-		_spec.SetField(dictentryi18n.FieldName, field.TypeString, value)
+	if value, ok := _u.mutation.EntryLabel(); ok {
+		_spec.SetField(dictentryi18n.FieldEntryLabel, field.TypeString, value)
 	}
-	if _u.mutation.NameCleared() {
-		_spec.ClearField(dictentryi18n.FieldName, field.TypeString)
+	if _u.mutation.EntryLabelCleared() {
+		_spec.ClearField(dictentryi18n.FieldEntryLabel, field.TypeString)
+	}
+	if _u.mutation.DictEntryCleared() {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.M2O,
+			Inverse: true,
+			Table:   dictentryi18n.DictEntryTable,
+			Columns: []string{dictentryi18n.DictEntryColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: sqlgraph.NewFieldSpec(dictentry.FieldID, field.TypeUint32),
+			},
+		}
+		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
+	}
+	if nodes := _u.mutation.DictEntryIDs(); len(nodes) > 0 {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.M2O,
+			Inverse: true,
+			Table:   dictentryi18n.DictEntryTable,
+			Columns: []string{dictentryi18n.DictEntryColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: sqlgraph.NewFieldSpec(dictentry.FieldID, field.TypeUint32),
+			},
+		}
+		for _, k := range nodes {
+			edge.Target.Nodes = append(edge.Target.Nodes, k)
+		}
+		_spec.Edges.Add = append(_spec.Edges.Add, edge)
 	}
 	_spec.AddModifiers(_u.modifiers...)
 	if _node, err = sqlgraph.UpdateNodes(ctx, _u.driver, _spec); err != nil {
@@ -491,76 +544,101 @@ func (_u *DictEntryI18nUpdateOne) ClearDeletedBy() *DictEntryI18nUpdateOne {
 	return _u
 }
 
-// SetDictEntryID sets the "dict_entry_id" field.
-func (_u *DictEntryI18nUpdateOne) SetDictEntryID(v uint32) *DictEntryI18nUpdateOne {
-	_u.mutation.ResetDictEntryID()
-	_u.mutation.SetDictEntryID(v)
+// SetDescription sets the "description" field.
+func (_u *DictEntryI18nUpdateOne) SetDescription(v string) *DictEntryI18nUpdateOne {
+	_u.mutation.SetDescription(v)
 	return _u
 }
 
-// SetNillableDictEntryID sets the "dict_entry_id" field if the given value is not nil.
-func (_u *DictEntryI18nUpdateOne) SetNillableDictEntryID(v *uint32) *DictEntryI18nUpdateOne {
+// SetNillableDescription sets the "description" field if the given value is not nil.
+func (_u *DictEntryI18nUpdateOne) SetNillableDescription(v *string) *DictEntryI18nUpdateOne {
 	if v != nil {
-		_u.SetDictEntryID(*v)
+		_u.SetDescription(*v)
 	}
 	return _u
 }
 
-// AddDictEntryID adds value to the "dict_entry_id" field.
-func (_u *DictEntryI18nUpdateOne) AddDictEntryID(v int32) *DictEntryI18nUpdateOne {
-	_u.mutation.AddDictEntryID(v)
+// ClearDescription clears the value of the "description" field.
+func (_u *DictEntryI18nUpdateOne) ClearDescription() *DictEntryI18nUpdateOne {
+	_u.mutation.ClearDescription()
 	return _u
 }
 
-// ClearDictEntryID clears the value of the "dict_entry_id" field.
-func (_u *DictEntryI18nUpdateOne) ClearDictEntryID() *DictEntryI18nUpdateOne {
-	_u.mutation.ClearDictEntryID()
+// SetSortOrder sets the "sort_order" field.
+func (_u *DictEntryI18nUpdateOne) SetSortOrder(v uint32) *DictEntryI18nUpdateOne {
+	_u.mutation.ResetSortOrder()
+	_u.mutation.SetSortOrder(v)
 	return _u
 }
 
-// SetLanguageCode sets the "language_code" field.
-func (_u *DictEntryI18nUpdateOne) SetLanguageCode(v string) *DictEntryI18nUpdateOne {
-	_u.mutation.SetLanguageCode(v)
-	return _u
-}
-
-// SetNillableLanguageCode sets the "language_code" field if the given value is not nil.
-func (_u *DictEntryI18nUpdateOne) SetNillableLanguageCode(v *string) *DictEntryI18nUpdateOne {
+// SetNillableSortOrder sets the "sort_order" field if the given value is not nil.
+func (_u *DictEntryI18nUpdateOne) SetNillableSortOrder(v *uint32) *DictEntryI18nUpdateOne {
 	if v != nil {
-		_u.SetLanguageCode(*v)
+		_u.SetSortOrder(*v)
 	}
 	return _u
 }
 
-// ClearLanguageCode clears the value of the "language_code" field.
-func (_u *DictEntryI18nUpdateOne) ClearLanguageCode() *DictEntryI18nUpdateOne {
-	_u.mutation.ClearLanguageCode()
+// AddSortOrder adds value to the "sort_order" field.
+func (_u *DictEntryI18nUpdateOne) AddSortOrder(v int32) *DictEntryI18nUpdateOne {
+	_u.mutation.AddSortOrder(v)
 	return _u
 }
 
-// SetName sets the "name" field.
-func (_u *DictEntryI18nUpdateOne) SetName(v string) *DictEntryI18nUpdateOne {
-	_u.mutation.SetName(v)
+// ClearSortOrder clears the value of the "sort_order" field.
+func (_u *DictEntryI18nUpdateOne) ClearSortOrder() *DictEntryI18nUpdateOne {
+	_u.mutation.ClearSortOrder()
 	return _u
 }
 
-// SetNillableName sets the "name" field if the given value is not nil.
-func (_u *DictEntryI18nUpdateOne) SetNillableName(v *string) *DictEntryI18nUpdateOne {
+// SetEntryLabel sets the "entry_label" field.
+func (_u *DictEntryI18nUpdateOne) SetEntryLabel(v string) *DictEntryI18nUpdateOne {
+	_u.mutation.SetEntryLabel(v)
+	return _u
+}
+
+// SetNillableEntryLabel sets the "entry_label" field if the given value is not nil.
+func (_u *DictEntryI18nUpdateOne) SetNillableEntryLabel(v *string) *DictEntryI18nUpdateOne {
 	if v != nil {
-		_u.SetName(*v)
+		_u.SetEntryLabel(*v)
 	}
 	return _u
 }
 
-// ClearName clears the value of the "name" field.
-func (_u *DictEntryI18nUpdateOne) ClearName() *DictEntryI18nUpdateOne {
-	_u.mutation.ClearName()
+// ClearEntryLabel clears the value of the "entry_label" field.
+func (_u *DictEntryI18nUpdateOne) ClearEntryLabel() *DictEntryI18nUpdateOne {
+	_u.mutation.ClearEntryLabel()
 	return _u
+}
+
+// SetDictEntryID sets the "dict_entry" edge to the DictEntry entity by ID.
+func (_u *DictEntryI18nUpdateOne) SetDictEntryID(id uint32) *DictEntryI18nUpdateOne {
+	_u.mutation.SetDictEntryID(id)
+	return _u
+}
+
+// SetNillableDictEntryID sets the "dict_entry" edge to the DictEntry entity by ID if the given value is not nil.
+func (_u *DictEntryI18nUpdateOne) SetNillableDictEntryID(id *uint32) *DictEntryI18nUpdateOne {
+	if id != nil {
+		_u = _u.SetDictEntryID(*id)
+	}
+	return _u
+}
+
+// SetDictEntry sets the "dict_entry" edge to the DictEntry entity.
+func (_u *DictEntryI18nUpdateOne) SetDictEntry(v *DictEntry) *DictEntryI18nUpdateOne {
+	return _u.SetDictEntryID(v.ID)
 }
 
 // Mutation returns the DictEntryI18nMutation object of the builder.
 func (_u *DictEntryI18nUpdateOne) Mutation() *DictEntryI18nMutation {
 	return _u.mutation
+}
+
+// ClearDictEntry clears the "dict_entry" edge to the DictEntry entity.
+func (_u *DictEntryI18nUpdateOne) ClearDictEntry() *DictEntryI18nUpdateOne {
+	_u.mutation.ClearDictEntry()
+	return _u
 }
 
 // Where appends a list predicates to the DictEntryI18nUpdate builder.
@@ -605,14 +683,9 @@ func (_u *DictEntryI18nUpdateOne) ExecX(ctx context.Context) {
 
 // check runs all checks and user-defined validators on the builder.
 func (_u *DictEntryI18nUpdateOne) check() error {
-	if v, ok := _u.mutation.LanguageCode(); ok {
-		if err := dictentryi18n.LanguageCodeValidator(v); err != nil {
-			return &ValidationError{Name: "language_code", err: fmt.Errorf(`ent: validator failed for field "DictEntryI18n.language_code": %w`, err)}
-		}
-	}
-	if v, ok := _u.mutation.Name(); ok {
-		if err := dictentryi18n.NameValidator(v); err != nil {
-			return &ValidationError{Name: "name", err: fmt.Errorf(`ent: validator failed for field "DictEntryI18n.name": %w`, err)}
+	if v, ok := _u.mutation.EntryLabel(); ok {
+		if err := dictentryi18n.EntryLabelValidator(v); err != nil {
+			return &ValidationError{Name: "entry_label", err: fmt.Errorf(`ent: validator failed for field "DictEntryI18n.entry_label": %w`, err)}
 		}
 	}
 	return nil
@@ -668,9 +741,6 @@ func (_u *DictEntryI18nUpdateOne) sqlSave(ctx context.Context) (_node *DictEntry
 	if _u.mutation.DeletedAtCleared() {
 		_spec.ClearField(dictentryi18n.FieldDeletedAt, field.TypeTime)
 	}
-	if _u.mutation.TenantIDCleared() {
-		_spec.ClearField(dictentryi18n.FieldTenantID, field.TypeUint32)
-	}
 	if value, ok := _u.mutation.CreatedBy(); ok {
 		_spec.SetField(dictentryi18n.FieldCreatedBy, field.TypeUint32, value)
 	}
@@ -698,26 +768,61 @@ func (_u *DictEntryI18nUpdateOne) sqlSave(ctx context.Context) (_node *DictEntry
 	if _u.mutation.DeletedByCleared() {
 		_spec.ClearField(dictentryi18n.FieldDeletedBy, field.TypeUint32)
 	}
-	if value, ok := _u.mutation.DictEntryID(); ok {
-		_spec.SetField(dictentryi18n.FieldDictEntryID, field.TypeUint32, value)
+	if value, ok := _u.mutation.Description(); ok {
+		_spec.SetField(dictentryi18n.FieldDescription, field.TypeString, value)
 	}
-	if value, ok := _u.mutation.AddedDictEntryID(); ok {
-		_spec.AddField(dictentryi18n.FieldDictEntryID, field.TypeUint32, value)
+	if _u.mutation.DescriptionCleared() {
+		_spec.ClearField(dictentryi18n.FieldDescription, field.TypeString)
 	}
-	if _u.mutation.DictEntryIDCleared() {
-		_spec.ClearField(dictentryi18n.FieldDictEntryID, field.TypeUint32)
+	if value, ok := _u.mutation.SortOrder(); ok {
+		_spec.SetField(dictentryi18n.FieldSortOrder, field.TypeUint32, value)
 	}
-	if value, ok := _u.mutation.LanguageCode(); ok {
-		_spec.SetField(dictentryi18n.FieldLanguageCode, field.TypeString, value)
+	if value, ok := _u.mutation.AddedSortOrder(); ok {
+		_spec.AddField(dictentryi18n.FieldSortOrder, field.TypeUint32, value)
+	}
+	if _u.mutation.SortOrderCleared() {
+		_spec.ClearField(dictentryi18n.FieldSortOrder, field.TypeUint32)
+	}
+	if _u.mutation.TenantIDCleared() {
+		_spec.ClearField(dictentryi18n.FieldTenantID, field.TypeUint32)
 	}
 	if _u.mutation.LanguageCodeCleared() {
 		_spec.ClearField(dictentryi18n.FieldLanguageCode, field.TypeString)
 	}
-	if value, ok := _u.mutation.Name(); ok {
-		_spec.SetField(dictentryi18n.FieldName, field.TypeString, value)
+	if value, ok := _u.mutation.EntryLabel(); ok {
+		_spec.SetField(dictentryi18n.FieldEntryLabel, field.TypeString, value)
 	}
-	if _u.mutation.NameCleared() {
-		_spec.ClearField(dictentryi18n.FieldName, field.TypeString)
+	if _u.mutation.EntryLabelCleared() {
+		_spec.ClearField(dictentryi18n.FieldEntryLabel, field.TypeString)
+	}
+	if _u.mutation.DictEntryCleared() {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.M2O,
+			Inverse: true,
+			Table:   dictentryi18n.DictEntryTable,
+			Columns: []string{dictentryi18n.DictEntryColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: sqlgraph.NewFieldSpec(dictentry.FieldID, field.TypeUint32),
+			},
+		}
+		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
+	}
+	if nodes := _u.mutation.DictEntryIDs(); len(nodes) > 0 {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.M2O,
+			Inverse: true,
+			Table:   dictentryi18n.DictEntryTable,
+			Columns: []string{dictentryi18n.DictEntryColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: sqlgraph.NewFieldSpec(dictentry.FieldID, field.TypeUint32),
+			},
+		}
+		for _, k := range nodes {
+			edge.Target.Nodes = append(edge.Target.Nodes, k)
+		}
+		_spec.Edges.Add = append(_spec.Edges.Add, edge)
 	}
 	_spec.AddModifiers(_u.modifiers...)
 	_node = &DictEntryI18n{config: _u.config}

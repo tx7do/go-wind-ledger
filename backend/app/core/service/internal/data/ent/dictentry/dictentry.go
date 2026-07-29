@@ -5,6 +5,7 @@ package dictentry
 import (
 	"entgo.io/ent"
 	"entgo.io/ent/dialect/sql"
+	"entgo.io/ent/dialect/sql/sqlgraph"
 )
 
 const (
@@ -24,22 +25,36 @@ const (
 	FieldUpdatedBy = "updated_by"
 	// FieldDeletedBy holds the string denoting the deleted_by field in the database.
 	FieldDeletedBy = "deleted_by"
-	// FieldTenantID holds the string denoting the tenant_id field in the database.
-	FieldTenantID = "tenant_id"
-	// FieldRemark holds the string denoting the remark field in the database.
-	FieldRemark = "remark"
 	// FieldSortOrder holds the string denoting the sort_order field in the database.
 	FieldSortOrder = "sort_order"
-	// FieldDictTypeID holds the string denoting the dict_type_id field in the database.
-	FieldDictTypeID = "dict_type_id"
-	// FieldCode holds the string denoting the code field in the database.
-	FieldCode = "code"
-	// FieldName holds the string denoting the name field in the database.
-	FieldName = "name"
-	// FieldValue holds the string denoting the value field in the database.
-	FieldValue = "value"
+	// FieldIsEnabled holds the string denoting the is_enabled field in the database.
+	FieldIsEnabled = "is_enabled"
+	// FieldTenantID holds the string denoting the tenant_id field in the database.
+	FieldTenantID = "tenant_id"
+	// FieldEntryValue holds the string denoting the entry_value field in the database.
+	FieldEntryValue = "entry_value"
+	// FieldNumericValue holds the string denoting the numeric_value field in the database.
+	FieldNumericValue = "numeric_value"
+	// EdgeDictType holds the string denoting the dict_type edge name in mutations.
+	EdgeDictType = "dict_type"
+	// EdgeI18ns holds the string denoting the i18ns edge name in mutations.
+	EdgeI18ns = "i18ns"
 	// Table holds the table name of the dictentry in the database.
 	Table = "sys_dict_entries"
+	// DictTypeTable is the table that holds the dict_type relation/edge.
+	DictTypeTable = "sys_dict_entries"
+	// DictTypeInverseTable is the table name for the DictType entity.
+	// It exists in this package in order to avoid circular dependency with the "dicttype" package.
+	DictTypeInverseTable = "sys_dict_types"
+	// DictTypeColumn is the table column denoting the dict_type relation/edge.
+	DictTypeColumn = "type_id"
+	// I18nsTable is the table that holds the i18ns relation/edge.
+	I18nsTable = "sys_dict_entry_i18n"
+	// I18nsInverseTable is the table name for the DictEntryI18n entity.
+	// It exists in this package in order to avoid circular dependency with the "dictentryi18n" package.
+	I18nsInverseTable = "sys_dict_entry_i18n"
+	// I18nsColumn is the table column denoting the i18ns relation/edge.
+	I18nsColumn = "entry_id"
 )
 
 // Columns holds all SQL columns for dictentry fields.
@@ -51,19 +66,28 @@ var Columns = []string{
 	FieldCreatedBy,
 	FieldUpdatedBy,
 	FieldDeletedBy,
-	FieldTenantID,
-	FieldRemark,
 	FieldSortOrder,
-	FieldDictTypeID,
-	FieldCode,
-	FieldName,
-	FieldValue,
+	FieldIsEnabled,
+	FieldTenantID,
+	FieldEntryValue,
+	FieldNumericValue,
+}
+
+// ForeignKeys holds the SQL foreign-keys that are owned by the "sys_dict_entries"
+// table and are not defined as standalone fields in the schema.
+var ForeignKeys = []string{
+	"type_id",
 }
 
 // ValidColumn reports if the column name is valid (part of the table columns).
 func ValidColumn(column string) bool {
 	for i := range Columns {
 		if column == Columns[i] {
+			return true
+		}
+	}
+	for i := range ForeignKeys {
+		if column == ForeignKeys[i] {
 			return true
 		}
 	}
@@ -78,16 +102,14 @@ func ValidColumn(column string) bool {
 var (
 	Hooks  [1]ent.Hook
 	Policy ent.Policy
-	// DefaultTenantID holds the default value on creation for the "tenant_id" field.
-	DefaultTenantID uint32
 	// DefaultSortOrder holds the default value on creation for the "sort_order" field.
 	DefaultSortOrder uint32
-	// CodeValidator is a validator for the "code" field. It is called by the builders before save.
-	CodeValidator func(string) error
-	// NameValidator is a validator for the "name" field. It is called by the builders before save.
-	NameValidator func(string) error
-	// ValueValidator is a validator for the "value" field. It is called by the builders before save.
-	ValueValidator func(string) error
+	// DefaultIsEnabled holds the default value on creation for the "is_enabled" field.
+	DefaultIsEnabled bool
+	// DefaultTenantID holds the default value on creation for the "tenant_id" field.
+	DefaultTenantID uint32
+	// EntryValueValidator is a validator for the "entry_value" field. It is called by the builders before save.
+	EntryValueValidator func(string) error
 	// IDValidator is a validator for the "id" field. It is called by the builders before save.
 	IDValidator func(uint32) error
 )
@@ -130,37 +152,62 @@ func ByDeletedBy(opts ...sql.OrderTermOption) OrderOption {
 	return sql.OrderByField(FieldDeletedBy, opts...).ToFunc()
 }
 
-// ByTenantID orders the results by the tenant_id field.
-func ByTenantID(opts ...sql.OrderTermOption) OrderOption {
-	return sql.OrderByField(FieldTenantID, opts...).ToFunc()
-}
-
-// ByRemark orders the results by the remark field.
-func ByRemark(opts ...sql.OrderTermOption) OrderOption {
-	return sql.OrderByField(FieldRemark, opts...).ToFunc()
-}
-
 // BySortOrder orders the results by the sort_order field.
 func BySortOrder(opts ...sql.OrderTermOption) OrderOption {
 	return sql.OrderByField(FieldSortOrder, opts...).ToFunc()
 }
 
-// ByDictTypeID orders the results by the dict_type_id field.
-func ByDictTypeID(opts ...sql.OrderTermOption) OrderOption {
-	return sql.OrderByField(FieldDictTypeID, opts...).ToFunc()
+// ByIsEnabled orders the results by the is_enabled field.
+func ByIsEnabled(opts ...sql.OrderTermOption) OrderOption {
+	return sql.OrderByField(FieldIsEnabled, opts...).ToFunc()
 }
 
-// ByCode orders the results by the code field.
-func ByCode(opts ...sql.OrderTermOption) OrderOption {
-	return sql.OrderByField(FieldCode, opts...).ToFunc()
+// ByTenantID orders the results by the tenant_id field.
+func ByTenantID(opts ...sql.OrderTermOption) OrderOption {
+	return sql.OrderByField(FieldTenantID, opts...).ToFunc()
 }
 
-// ByName orders the results by the name field.
-func ByName(opts ...sql.OrderTermOption) OrderOption {
-	return sql.OrderByField(FieldName, opts...).ToFunc()
+// ByEntryValue orders the results by the entry_value field.
+func ByEntryValue(opts ...sql.OrderTermOption) OrderOption {
+	return sql.OrderByField(FieldEntryValue, opts...).ToFunc()
 }
 
-// ByValue orders the results by the value field.
-func ByValue(opts ...sql.OrderTermOption) OrderOption {
-	return sql.OrderByField(FieldValue, opts...).ToFunc()
+// ByNumericValue orders the results by the numeric_value field.
+func ByNumericValue(opts ...sql.OrderTermOption) OrderOption {
+	return sql.OrderByField(FieldNumericValue, opts...).ToFunc()
+}
+
+// ByDictTypeField orders the results by dict_type field.
+func ByDictTypeField(field string, opts ...sql.OrderTermOption) OrderOption {
+	return func(s *sql.Selector) {
+		sqlgraph.OrderByNeighborTerms(s, newDictTypeStep(), sql.OrderByField(field, opts...))
+	}
+}
+
+// ByI18nsCount orders the results by i18ns count.
+func ByI18nsCount(opts ...sql.OrderTermOption) OrderOption {
+	return func(s *sql.Selector) {
+		sqlgraph.OrderByNeighborsCount(s, newI18nsStep(), opts...)
+	}
+}
+
+// ByI18ns orders the results by i18ns terms.
+func ByI18ns(term sql.OrderTerm, terms ...sql.OrderTerm) OrderOption {
+	return func(s *sql.Selector) {
+		sqlgraph.OrderByNeighborTerms(s, newI18nsStep(), append([]sql.OrderTerm{term}, terms...)...)
+	}
+}
+func newDictTypeStep() *sqlgraph.Step {
+	return sqlgraph.NewStep(
+		sqlgraph.From(Table, FieldID),
+		sqlgraph.To(DictTypeInverseTable, FieldID),
+		sqlgraph.Edge(sqlgraph.M2O, true, DictTypeTable, DictTypeColumn),
+	)
+}
+func newI18nsStep() *sqlgraph.Step {
+	return sqlgraph.NewStep(
+		sqlgraph.From(Table, FieldID),
+		sqlgraph.To(I18nsInverseTable, FieldID),
+		sqlgraph.Edge(sqlgraph.O2M, false, I18nsTable, I18nsColumn),
+	)
 }

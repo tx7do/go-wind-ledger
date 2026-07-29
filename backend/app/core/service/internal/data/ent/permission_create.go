@@ -106,48 +106,6 @@ func (_c *PermissionCreate) SetNillableDeletedBy(v *uint32) *PermissionCreate {
 	return _c
 }
 
-// SetTenantID sets the "tenant_id" field.
-func (_c *PermissionCreate) SetTenantID(v uint32) *PermissionCreate {
-	_c.mutation.SetTenantID(v)
-	return _c
-}
-
-// SetNillableTenantID sets the "tenant_id" field if the given value is not nil.
-func (_c *PermissionCreate) SetNillableTenantID(v *uint32) *PermissionCreate {
-	if v != nil {
-		_c.SetTenantID(*v)
-	}
-	return _c
-}
-
-// SetRemark sets the "remark" field.
-func (_c *PermissionCreate) SetRemark(v string) *PermissionCreate {
-	_c.mutation.SetRemark(v)
-	return _c
-}
-
-// SetNillableRemark sets the "remark" field if the given value is not nil.
-func (_c *PermissionCreate) SetNillableRemark(v *string) *PermissionCreate {
-	if v != nil {
-		_c.SetRemark(*v)
-	}
-	return _c
-}
-
-// SetCode sets the "code" field.
-func (_c *PermissionCreate) SetCode(v string) *PermissionCreate {
-	_c.mutation.SetCode(v)
-	return _c
-}
-
-// SetNillableCode sets the "code" field if the given value is not nil.
-func (_c *PermissionCreate) SetNillableCode(v *string) *PermissionCreate {
-	if v != nil {
-		_c.SetCode(*v)
-	}
-	return _c
-}
-
 // SetStatus sets the "status" field.
 func (_c *PermissionCreate) SetStatus(v permission.Status) *PermissionCreate {
 	_c.mutation.SetStatus(v)
@@ -176,6 +134,18 @@ func (_c *PermissionCreate) SetNillableDescription(v *string) *PermissionCreate 
 	return _c
 }
 
+// SetName sets the "name" field.
+func (_c *PermissionCreate) SetName(v string) *PermissionCreate {
+	_c.mutation.SetName(v)
+	return _c
+}
+
+// SetCode sets the "code" field.
+func (_c *PermissionCreate) SetCode(v string) *PermissionCreate {
+	_c.mutation.SetCode(v)
+	return _c
+}
+
 // SetGroupID sets the "group_id" field.
 func (_c *PermissionCreate) SetGroupID(v uint32) *PermissionCreate {
 	_c.mutation.SetGroupID(v)
@@ -186,34 +156,6 @@ func (_c *PermissionCreate) SetGroupID(v uint32) *PermissionCreate {
 func (_c *PermissionCreate) SetNillableGroupID(v *uint32) *PermissionCreate {
 	if v != nil {
 		_c.SetGroupID(*v)
-	}
-	return _c
-}
-
-// SetName sets the "name" field.
-func (_c *PermissionCreate) SetName(v string) *PermissionCreate {
-	_c.mutation.SetName(v)
-	return _c
-}
-
-// SetNillableName sets the "name" field if the given value is not nil.
-func (_c *PermissionCreate) SetNillableName(v *string) *PermissionCreate {
-	if v != nil {
-		_c.SetName(*v)
-	}
-	return _c
-}
-
-// SetType sets the "type" field.
-func (_c *PermissionCreate) SetType(v permission.Type) *PermissionCreate {
-	_c.mutation.SetType(v)
-	return _c
-}
-
-// SetNillableType sets the "type" field if the given value is not nil.
-func (_c *PermissionCreate) SetNillableType(v *permission.Type) *PermissionCreate {
-	if v != nil {
-		_c.SetType(*v)
 	}
 	return _c
 }
@@ -231,9 +173,7 @@ func (_c *PermissionCreate) Mutation() *PermissionMutation {
 
 // Save creates the Permission in the database.
 func (_c *PermissionCreate) Save(ctx context.Context) (*Permission, error) {
-	if err := _c.defaults(); err != nil {
-		return nil, err
-	}
+	_c.defaults()
 	return withHooks(ctx, _c.sqlSave, _c.mutation, _c.hooks)
 }
 
@@ -260,44 +200,33 @@ func (_c *PermissionCreate) ExecX(ctx context.Context) {
 }
 
 // defaults sets the default values of the builder before save.
-func (_c *PermissionCreate) defaults() error {
-	if _, ok := _c.mutation.TenantID(); !ok {
-		v := permission.DefaultTenantID
-		_c.mutation.SetTenantID(v)
-	}
+func (_c *PermissionCreate) defaults() {
 	if _, ok := _c.mutation.Status(); !ok {
 		v := permission.DefaultStatus
 		_c.mutation.SetStatus(v)
 	}
-	return nil
 }
 
 // check runs all checks and user-defined validators on the builder.
 func (_c *PermissionCreate) check() error {
-	if v, ok := _c.mutation.Code(); ok {
-		if err := permission.CodeValidator(v); err != nil {
-			return &ValidationError{Name: "code", err: fmt.Errorf(`ent: validator failed for field "Permission.code": %w`, err)}
-		}
+	if _, ok := _c.mutation.Status(); !ok {
+		return &ValidationError{Name: "status", err: errors.New(`ent: missing required field "Permission.status"`)}
 	}
 	if v, ok := _c.mutation.Status(); ok {
 		if err := permission.StatusValidator(v); err != nil {
 			return &ValidationError{Name: "status", err: fmt.Errorf(`ent: validator failed for field "Permission.status": %w`, err)}
 		}
 	}
-	if v, ok := _c.mutation.Description(); ok {
-		if err := permission.DescriptionValidator(v); err != nil {
-			return &ValidationError{Name: "description", err: fmt.Errorf(`ent: validator failed for field "Permission.description": %w`, err)}
-		}
+	if _, ok := _c.mutation.Name(); !ok {
+		return &ValidationError{Name: "name", err: errors.New(`ent: missing required field "Permission.name"`)}
 	}
 	if v, ok := _c.mutation.Name(); ok {
 		if err := permission.NameValidator(v); err != nil {
 			return &ValidationError{Name: "name", err: fmt.Errorf(`ent: validator failed for field "Permission.name": %w`, err)}
 		}
 	}
-	if v, ok := _c.mutation.GetType(); ok {
-		if err := permission.TypeValidator(v); err != nil {
-			return &ValidationError{Name: "type", err: fmt.Errorf(`ent: validator failed for field "Permission.type": %w`, err)}
-		}
+	if _, ok := _c.mutation.Code(); !ok {
+		return &ValidationError{Name: "code", err: errors.New(`ent: missing required field "Permission.code"`)}
 	}
 	if v, ok := _c.mutation.ID(); ok {
 		if err := permission.IDValidator(v); err != nil {
@@ -361,18 +290,6 @@ func (_c *PermissionCreate) createSpec() (*Permission, *sqlgraph.CreateSpec) {
 		_spec.SetField(permission.FieldDeletedBy, field.TypeUint32, value)
 		_node.DeletedBy = &value
 	}
-	if value, ok := _c.mutation.TenantID(); ok {
-		_spec.SetField(permission.FieldTenantID, field.TypeUint32, value)
-		_node.TenantID = &value
-	}
-	if value, ok := _c.mutation.Remark(); ok {
-		_spec.SetField(permission.FieldRemark, field.TypeString, value)
-		_node.Remark = &value
-	}
-	if value, ok := _c.mutation.Code(); ok {
-		_spec.SetField(permission.FieldCode, field.TypeString, value)
-		_node.Code = &value
-	}
 	if value, ok := _c.mutation.Status(); ok {
 		_spec.SetField(permission.FieldStatus, field.TypeEnum, value)
 		_node.Status = &value
@@ -381,17 +298,17 @@ func (_c *PermissionCreate) createSpec() (*Permission, *sqlgraph.CreateSpec) {
 		_spec.SetField(permission.FieldDescription, field.TypeString, value)
 		_node.Description = &value
 	}
-	if value, ok := _c.mutation.GroupID(); ok {
-		_spec.SetField(permission.FieldGroupID, field.TypeUint32, value)
-		_node.GroupID = &value
-	}
 	if value, ok := _c.mutation.Name(); ok {
 		_spec.SetField(permission.FieldName, field.TypeString, value)
 		_node.Name = &value
 	}
-	if value, ok := _c.mutation.GetType(); ok {
-		_spec.SetField(permission.FieldType, field.TypeEnum, value)
-		_node.Type = &value
+	if value, ok := _c.mutation.Code(); ok {
+		_spec.SetField(permission.FieldCode, field.TypeString, value)
+		_node.Code = &value
+	}
+	if value, ok := _c.mutation.GroupID(); ok {
+		_spec.SetField(permission.FieldGroupID, field.TypeUint32, value)
+		_node.GroupID = &value
 	}
 	return _node, _spec
 }
@@ -553,42 +470,6 @@ func (u *PermissionUpsert) ClearDeletedBy() *PermissionUpsert {
 	return u
 }
 
-// SetRemark sets the "remark" field.
-func (u *PermissionUpsert) SetRemark(v string) *PermissionUpsert {
-	u.Set(permission.FieldRemark, v)
-	return u
-}
-
-// UpdateRemark sets the "remark" field to the value that was provided on create.
-func (u *PermissionUpsert) UpdateRemark() *PermissionUpsert {
-	u.SetExcluded(permission.FieldRemark)
-	return u
-}
-
-// ClearRemark clears the value of the "remark" field.
-func (u *PermissionUpsert) ClearRemark() *PermissionUpsert {
-	u.SetNull(permission.FieldRemark)
-	return u
-}
-
-// SetCode sets the "code" field.
-func (u *PermissionUpsert) SetCode(v string) *PermissionUpsert {
-	u.Set(permission.FieldCode, v)
-	return u
-}
-
-// UpdateCode sets the "code" field to the value that was provided on create.
-func (u *PermissionUpsert) UpdateCode() *PermissionUpsert {
-	u.SetExcluded(permission.FieldCode)
-	return u
-}
-
-// ClearCode clears the value of the "code" field.
-func (u *PermissionUpsert) ClearCode() *PermissionUpsert {
-	u.SetNull(permission.FieldCode)
-	return u
-}
-
 // SetStatus sets the "status" field.
 func (u *PermissionUpsert) SetStatus(v permission.Status) *PermissionUpsert {
 	u.Set(permission.FieldStatus, v)
@@ -598,12 +479,6 @@ func (u *PermissionUpsert) SetStatus(v permission.Status) *PermissionUpsert {
 // UpdateStatus sets the "status" field to the value that was provided on create.
 func (u *PermissionUpsert) UpdateStatus() *PermissionUpsert {
 	u.SetExcluded(permission.FieldStatus)
-	return u
-}
-
-// ClearStatus clears the value of the "status" field.
-func (u *PermissionUpsert) ClearStatus() *PermissionUpsert {
-	u.SetNull(permission.FieldStatus)
 	return u
 }
 
@@ -622,6 +497,30 @@ func (u *PermissionUpsert) UpdateDescription() *PermissionUpsert {
 // ClearDescription clears the value of the "description" field.
 func (u *PermissionUpsert) ClearDescription() *PermissionUpsert {
 	u.SetNull(permission.FieldDescription)
+	return u
+}
+
+// SetName sets the "name" field.
+func (u *PermissionUpsert) SetName(v string) *PermissionUpsert {
+	u.Set(permission.FieldName, v)
+	return u
+}
+
+// UpdateName sets the "name" field to the value that was provided on create.
+func (u *PermissionUpsert) UpdateName() *PermissionUpsert {
+	u.SetExcluded(permission.FieldName)
+	return u
+}
+
+// SetCode sets the "code" field.
+func (u *PermissionUpsert) SetCode(v string) *PermissionUpsert {
+	u.Set(permission.FieldCode, v)
+	return u
+}
+
+// UpdateCode sets the "code" field to the value that was provided on create.
+func (u *PermissionUpsert) UpdateCode() *PermissionUpsert {
+	u.SetExcluded(permission.FieldCode)
 	return u
 }
 
@@ -649,42 +548,6 @@ func (u *PermissionUpsert) ClearGroupID() *PermissionUpsert {
 	return u
 }
 
-// SetName sets the "name" field.
-func (u *PermissionUpsert) SetName(v string) *PermissionUpsert {
-	u.Set(permission.FieldName, v)
-	return u
-}
-
-// UpdateName sets the "name" field to the value that was provided on create.
-func (u *PermissionUpsert) UpdateName() *PermissionUpsert {
-	u.SetExcluded(permission.FieldName)
-	return u
-}
-
-// ClearName clears the value of the "name" field.
-func (u *PermissionUpsert) ClearName() *PermissionUpsert {
-	u.SetNull(permission.FieldName)
-	return u
-}
-
-// SetType sets the "type" field.
-func (u *PermissionUpsert) SetType(v permission.Type) *PermissionUpsert {
-	u.Set(permission.FieldType, v)
-	return u
-}
-
-// UpdateType sets the "type" field to the value that was provided on create.
-func (u *PermissionUpsert) UpdateType() *PermissionUpsert {
-	u.SetExcluded(permission.FieldType)
-	return u
-}
-
-// ClearType clears the value of the "type" field.
-func (u *PermissionUpsert) ClearType() *PermissionUpsert {
-	u.SetNull(permission.FieldType)
-	return u
-}
-
 // UpdateNewValues updates the mutable fields using the new values that were set on create except the ID field.
 // Using this option is equivalent to using:
 //
@@ -704,9 +567,6 @@ func (u *PermissionUpsertOne) UpdateNewValues() *PermissionUpsertOne {
 		}
 		if _, exists := u.create.mutation.CreatedAt(); exists {
 			s.SetIgnore(permission.FieldCreatedAt)
-		}
-		if _, exists := u.create.mutation.TenantID(); exists {
-			s.SetIgnore(permission.FieldTenantID)
 		}
 	}))
 	return u
@@ -865,48 +725,6 @@ func (u *PermissionUpsertOne) ClearDeletedBy() *PermissionUpsertOne {
 	})
 }
 
-// SetRemark sets the "remark" field.
-func (u *PermissionUpsertOne) SetRemark(v string) *PermissionUpsertOne {
-	return u.Update(func(s *PermissionUpsert) {
-		s.SetRemark(v)
-	})
-}
-
-// UpdateRemark sets the "remark" field to the value that was provided on create.
-func (u *PermissionUpsertOne) UpdateRemark() *PermissionUpsertOne {
-	return u.Update(func(s *PermissionUpsert) {
-		s.UpdateRemark()
-	})
-}
-
-// ClearRemark clears the value of the "remark" field.
-func (u *PermissionUpsertOne) ClearRemark() *PermissionUpsertOne {
-	return u.Update(func(s *PermissionUpsert) {
-		s.ClearRemark()
-	})
-}
-
-// SetCode sets the "code" field.
-func (u *PermissionUpsertOne) SetCode(v string) *PermissionUpsertOne {
-	return u.Update(func(s *PermissionUpsert) {
-		s.SetCode(v)
-	})
-}
-
-// UpdateCode sets the "code" field to the value that was provided on create.
-func (u *PermissionUpsertOne) UpdateCode() *PermissionUpsertOne {
-	return u.Update(func(s *PermissionUpsert) {
-		s.UpdateCode()
-	})
-}
-
-// ClearCode clears the value of the "code" field.
-func (u *PermissionUpsertOne) ClearCode() *PermissionUpsertOne {
-	return u.Update(func(s *PermissionUpsert) {
-		s.ClearCode()
-	})
-}
-
 // SetStatus sets the "status" field.
 func (u *PermissionUpsertOne) SetStatus(v permission.Status) *PermissionUpsertOne {
 	return u.Update(func(s *PermissionUpsert) {
@@ -918,13 +736,6 @@ func (u *PermissionUpsertOne) SetStatus(v permission.Status) *PermissionUpsertOn
 func (u *PermissionUpsertOne) UpdateStatus() *PermissionUpsertOne {
 	return u.Update(func(s *PermissionUpsert) {
 		s.UpdateStatus()
-	})
-}
-
-// ClearStatus clears the value of the "status" field.
-func (u *PermissionUpsertOne) ClearStatus() *PermissionUpsertOne {
-	return u.Update(func(s *PermissionUpsert) {
-		s.ClearStatus()
 	})
 }
 
@@ -946,6 +757,34 @@ func (u *PermissionUpsertOne) UpdateDescription() *PermissionUpsertOne {
 func (u *PermissionUpsertOne) ClearDescription() *PermissionUpsertOne {
 	return u.Update(func(s *PermissionUpsert) {
 		s.ClearDescription()
+	})
+}
+
+// SetName sets the "name" field.
+func (u *PermissionUpsertOne) SetName(v string) *PermissionUpsertOne {
+	return u.Update(func(s *PermissionUpsert) {
+		s.SetName(v)
+	})
+}
+
+// UpdateName sets the "name" field to the value that was provided on create.
+func (u *PermissionUpsertOne) UpdateName() *PermissionUpsertOne {
+	return u.Update(func(s *PermissionUpsert) {
+		s.UpdateName()
+	})
+}
+
+// SetCode sets the "code" field.
+func (u *PermissionUpsertOne) SetCode(v string) *PermissionUpsertOne {
+	return u.Update(func(s *PermissionUpsert) {
+		s.SetCode(v)
+	})
+}
+
+// UpdateCode sets the "code" field to the value that was provided on create.
+func (u *PermissionUpsertOne) UpdateCode() *PermissionUpsertOne {
+	return u.Update(func(s *PermissionUpsert) {
+		s.UpdateCode()
 	})
 }
 
@@ -974,48 +813,6 @@ func (u *PermissionUpsertOne) UpdateGroupID() *PermissionUpsertOne {
 func (u *PermissionUpsertOne) ClearGroupID() *PermissionUpsertOne {
 	return u.Update(func(s *PermissionUpsert) {
 		s.ClearGroupID()
-	})
-}
-
-// SetName sets the "name" field.
-func (u *PermissionUpsertOne) SetName(v string) *PermissionUpsertOne {
-	return u.Update(func(s *PermissionUpsert) {
-		s.SetName(v)
-	})
-}
-
-// UpdateName sets the "name" field to the value that was provided on create.
-func (u *PermissionUpsertOne) UpdateName() *PermissionUpsertOne {
-	return u.Update(func(s *PermissionUpsert) {
-		s.UpdateName()
-	})
-}
-
-// ClearName clears the value of the "name" field.
-func (u *PermissionUpsertOne) ClearName() *PermissionUpsertOne {
-	return u.Update(func(s *PermissionUpsert) {
-		s.ClearName()
-	})
-}
-
-// SetType sets the "type" field.
-func (u *PermissionUpsertOne) SetType(v permission.Type) *PermissionUpsertOne {
-	return u.Update(func(s *PermissionUpsert) {
-		s.SetType(v)
-	})
-}
-
-// UpdateType sets the "type" field to the value that was provided on create.
-func (u *PermissionUpsertOne) UpdateType() *PermissionUpsertOne {
-	return u.Update(func(s *PermissionUpsert) {
-		s.UpdateType()
-	})
-}
-
-// ClearType clears the value of the "type" field.
-func (u *PermissionUpsertOne) ClearType() *PermissionUpsertOne {
-	return u.Update(func(s *PermissionUpsert) {
-		s.ClearType()
 	})
 }
 
@@ -1204,9 +1001,6 @@ func (u *PermissionUpsertBulk) UpdateNewValues() *PermissionUpsertBulk {
 			if _, exists := b.mutation.CreatedAt(); exists {
 				s.SetIgnore(permission.FieldCreatedAt)
 			}
-			if _, exists := b.mutation.TenantID(); exists {
-				s.SetIgnore(permission.FieldTenantID)
-			}
 		}
 	}))
 	return u
@@ -1365,48 +1159,6 @@ func (u *PermissionUpsertBulk) ClearDeletedBy() *PermissionUpsertBulk {
 	})
 }
 
-// SetRemark sets the "remark" field.
-func (u *PermissionUpsertBulk) SetRemark(v string) *PermissionUpsertBulk {
-	return u.Update(func(s *PermissionUpsert) {
-		s.SetRemark(v)
-	})
-}
-
-// UpdateRemark sets the "remark" field to the value that was provided on create.
-func (u *PermissionUpsertBulk) UpdateRemark() *PermissionUpsertBulk {
-	return u.Update(func(s *PermissionUpsert) {
-		s.UpdateRemark()
-	})
-}
-
-// ClearRemark clears the value of the "remark" field.
-func (u *PermissionUpsertBulk) ClearRemark() *PermissionUpsertBulk {
-	return u.Update(func(s *PermissionUpsert) {
-		s.ClearRemark()
-	})
-}
-
-// SetCode sets the "code" field.
-func (u *PermissionUpsertBulk) SetCode(v string) *PermissionUpsertBulk {
-	return u.Update(func(s *PermissionUpsert) {
-		s.SetCode(v)
-	})
-}
-
-// UpdateCode sets the "code" field to the value that was provided on create.
-func (u *PermissionUpsertBulk) UpdateCode() *PermissionUpsertBulk {
-	return u.Update(func(s *PermissionUpsert) {
-		s.UpdateCode()
-	})
-}
-
-// ClearCode clears the value of the "code" field.
-func (u *PermissionUpsertBulk) ClearCode() *PermissionUpsertBulk {
-	return u.Update(func(s *PermissionUpsert) {
-		s.ClearCode()
-	})
-}
-
 // SetStatus sets the "status" field.
 func (u *PermissionUpsertBulk) SetStatus(v permission.Status) *PermissionUpsertBulk {
 	return u.Update(func(s *PermissionUpsert) {
@@ -1418,13 +1170,6 @@ func (u *PermissionUpsertBulk) SetStatus(v permission.Status) *PermissionUpsertB
 func (u *PermissionUpsertBulk) UpdateStatus() *PermissionUpsertBulk {
 	return u.Update(func(s *PermissionUpsert) {
 		s.UpdateStatus()
-	})
-}
-
-// ClearStatus clears the value of the "status" field.
-func (u *PermissionUpsertBulk) ClearStatus() *PermissionUpsertBulk {
-	return u.Update(func(s *PermissionUpsert) {
-		s.ClearStatus()
 	})
 }
 
@@ -1446,6 +1191,34 @@ func (u *PermissionUpsertBulk) UpdateDescription() *PermissionUpsertBulk {
 func (u *PermissionUpsertBulk) ClearDescription() *PermissionUpsertBulk {
 	return u.Update(func(s *PermissionUpsert) {
 		s.ClearDescription()
+	})
+}
+
+// SetName sets the "name" field.
+func (u *PermissionUpsertBulk) SetName(v string) *PermissionUpsertBulk {
+	return u.Update(func(s *PermissionUpsert) {
+		s.SetName(v)
+	})
+}
+
+// UpdateName sets the "name" field to the value that was provided on create.
+func (u *PermissionUpsertBulk) UpdateName() *PermissionUpsertBulk {
+	return u.Update(func(s *PermissionUpsert) {
+		s.UpdateName()
+	})
+}
+
+// SetCode sets the "code" field.
+func (u *PermissionUpsertBulk) SetCode(v string) *PermissionUpsertBulk {
+	return u.Update(func(s *PermissionUpsert) {
+		s.SetCode(v)
+	})
+}
+
+// UpdateCode sets the "code" field to the value that was provided on create.
+func (u *PermissionUpsertBulk) UpdateCode() *PermissionUpsertBulk {
+	return u.Update(func(s *PermissionUpsert) {
+		s.UpdateCode()
 	})
 }
 
@@ -1474,48 +1247,6 @@ func (u *PermissionUpsertBulk) UpdateGroupID() *PermissionUpsertBulk {
 func (u *PermissionUpsertBulk) ClearGroupID() *PermissionUpsertBulk {
 	return u.Update(func(s *PermissionUpsert) {
 		s.ClearGroupID()
-	})
-}
-
-// SetName sets the "name" field.
-func (u *PermissionUpsertBulk) SetName(v string) *PermissionUpsertBulk {
-	return u.Update(func(s *PermissionUpsert) {
-		s.SetName(v)
-	})
-}
-
-// UpdateName sets the "name" field to the value that was provided on create.
-func (u *PermissionUpsertBulk) UpdateName() *PermissionUpsertBulk {
-	return u.Update(func(s *PermissionUpsert) {
-		s.UpdateName()
-	})
-}
-
-// ClearName clears the value of the "name" field.
-func (u *PermissionUpsertBulk) ClearName() *PermissionUpsertBulk {
-	return u.Update(func(s *PermissionUpsert) {
-		s.ClearName()
-	})
-}
-
-// SetType sets the "type" field.
-func (u *PermissionUpsertBulk) SetType(v permission.Type) *PermissionUpsertBulk {
-	return u.Update(func(s *PermissionUpsert) {
-		s.SetType(v)
-	})
-}
-
-// UpdateType sets the "type" field to the value that was provided on create.
-func (u *PermissionUpsertBulk) UpdateType() *PermissionUpsertBulk {
-	return u.Update(func(s *PermissionUpsert) {
-		s.UpdateType()
-	})
-}
-
-// ClearType clears the value of the "type" field.
-func (u *PermissionUpsertBulk) ClearType() *PermissionUpsertBulk {
-	return u.Update(func(s *PermissionUpsert) {
-		s.ClearType()
 	})
 }
 

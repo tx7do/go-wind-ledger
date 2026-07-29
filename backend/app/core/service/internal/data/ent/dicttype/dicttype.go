@@ -3,7 +3,9 @@
 package dicttype
 
 import (
+	"entgo.io/ent"
 	"entgo.io/ent/dialect/sql"
+	"entgo.io/ent/dialect/sql/sqlgraph"
 )
 
 const (
@@ -23,14 +25,27 @@ const (
 	FieldUpdatedBy = "updated_by"
 	// FieldDeletedBy holds the string denoting the deleted_by field in the database.
 	FieldDeletedBy = "deleted_by"
-	// FieldRemark holds the string denoting the remark field in the database.
-	FieldRemark = "remark"
-	// FieldCode holds the string denoting the code field in the database.
-	FieldCode = "code"
-	// FieldName holds the string denoting the name field in the database.
-	FieldName = "name"
+	// FieldIsEnabled holds the string denoting the is_enabled field in the database.
+	FieldIsEnabled = "is_enabled"
+	// FieldSortOrder holds the string denoting the sort_order field in the database.
+	FieldSortOrder = "sort_order"
+	// FieldTenantID holds the string denoting the tenant_id field in the database.
+	FieldTenantID = "tenant_id"
+	// FieldTypeCode holds the string denoting the type_code field in the database.
+	FieldTypeCode = "type_code"
+	// FieldTypeName holds the string denoting the type_name field in the database.
+	FieldTypeName = "type_name"
+	// EdgeEntries holds the string denoting the entries edge name in mutations.
+	EdgeEntries = "entries"
 	// Table holds the table name of the dicttype in the database.
 	Table = "sys_dict_types"
+	// EntriesTable is the table that holds the entries relation/edge.
+	EntriesTable = "sys_dict_entries"
+	// EntriesInverseTable is the table name for the DictEntry entity.
+	// It exists in this package in order to avoid circular dependency with the "dictentry" package.
+	EntriesInverseTable = "sys_dict_entries"
+	// EntriesColumn is the table column denoting the entries relation/edge.
+	EntriesColumn = "type_id"
 )
 
 // Columns holds all SQL columns for dicttype fields.
@@ -42,9 +57,11 @@ var Columns = []string{
 	FieldCreatedBy,
 	FieldUpdatedBy,
 	FieldDeletedBy,
-	FieldRemark,
-	FieldCode,
-	FieldName,
+	FieldIsEnabled,
+	FieldSortOrder,
+	FieldTenantID,
+	FieldTypeCode,
+	FieldTypeName,
 }
 
 // ValidColumn reports if the column name is valid (part of the table columns).
@@ -57,11 +74,24 @@ func ValidColumn(column string) bool {
 	return false
 }
 
+// Note that the variables below are initialized by the runtime
+// package on the initialization of the application. Therefore,
+// it should be imported in the main as follows:
+//
+//	import _ "go-wind-ledger/app/core/service/internal/data/ent/runtime"
 var (
-	// CodeValidator is a validator for the "code" field. It is called by the builders before save.
-	CodeValidator func(string) error
-	// NameValidator is a validator for the "name" field. It is called by the builders before save.
-	NameValidator func(string) error
+	Hooks  [1]ent.Hook
+	Policy ent.Policy
+	// DefaultIsEnabled holds the default value on creation for the "is_enabled" field.
+	DefaultIsEnabled bool
+	// DefaultSortOrder holds the default value on creation for the "sort_order" field.
+	DefaultSortOrder uint32
+	// DefaultTenantID holds the default value on creation for the "tenant_id" field.
+	DefaultTenantID uint32
+	// TypeCodeValidator is a validator for the "type_code" field. It is called by the builders before save.
+	TypeCodeValidator func(string) error
+	// TypeNameValidator is a validator for the "type_name" field. It is called by the builders before save.
+	TypeNameValidator func(string) error
 	// IDValidator is a validator for the "id" field. It is called by the builders before save.
 	IDValidator func(uint32) error
 )
@@ -104,17 +134,48 @@ func ByDeletedBy(opts ...sql.OrderTermOption) OrderOption {
 	return sql.OrderByField(FieldDeletedBy, opts...).ToFunc()
 }
 
-// ByRemark orders the results by the remark field.
-func ByRemark(opts ...sql.OrderTermOption) OrderOption {
-	return sql.OrderByField(FieldRemark, opts...).ToFunc()
+// ByIsEnabled orders the results by the is_enabled field.
+func ByIsEnabled(opts ...sql.OrderTermOption) OrderOption {
+	return sql.OrderByField(FieldIsEnabled, opts...).ToFunc()
 }
 
-// ByCode orders the results by the code field.
-func ByCode(opts ...sql.OrderTermOption) OrderOption {
-	return sql.OrderByField(FieldCode, opts...).ToFunc()
+// BySortOrder orders the results by the sort_order field.
+func BySortOrder(opts ...sql.OrderTermOption) OrderOption {
+	return sql.OrderByField(FieldSortOrder, opts...).ToFunc()
 }
 
-// ByName orders the results by the name field.
-func ByName(opts ...sql.OrderTermOption) OrderOption {
-	return sql.OrderByField(FieldName, opts...).ToFunc()
+// ByTenantID orders the results by the tenant_id field.
+func ByTenantID(opts ...sql.OrderTermOption) OrderOption {
+	return sql.OrderByField(FieldTenantID, opts...).ToFunc()
+}
+
+// ByTypeCode orders the results by the type_code field.
+func ByTypeCode(opts ...sql.OrderTermOption) OrderOption {
+	return sql.OrderByField(FieldTypeCode, opts...).ToFunc()
+}
+
+// ByTypeName orders the results by the type_name field.
+func ByTypeName(opts ...sql.OrderTermOption) OrderOption {
+	return sql.OrderByField(FieldTypeName, opts...).ToFunc()
+}
+
+// ByEntriesCount orders the results by entries count.
+func ByEntriesCount(opts ...sql.OrderTermOption) OrderOption {
+	return func(s *sql.Selector) {
+		sqlgraph.OrderByNeighborsCount(s, newEntriesStep(), opts...)
+	}
+}
+
+// ByEntries orders the results by entries terms.
+func ByEntries(term sql.OrderTerm, terms ...sql.OrderTerm) OrderOption {
+	return func(s *sql.Selector) {
+		sqlgraph.OrderByNeighborTerms(s, newEntriesStep(), append([]sql.OrderTerm{term}, terms...)...)
+	}
+}
+func newEntriesStep() *sqlgraph.Step {
+	return sqlgraph.NewStep(
+		sqlgraph.From(Table, FieldID),
+		sqlgraph.To(EntriesInverseTable, FieldID),
+		sqlgraph.Edge(sqlgraph.O2M, false, EntriesTable, EntriesColumn),
+	)
 }

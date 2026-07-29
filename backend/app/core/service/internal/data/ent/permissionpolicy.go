@@ -12,7 +12,7 @@ import (
 	"entgo.io/ent/dialect/sql"
 )
 
-// PermissionPolicy is the model entity for the PermissionPolicy schema.
+// 权限点动态策略表
 type PermissionPolicy struct {
 	config `json:"-"`
 	// ID of the ent.
@@ -24,10 +24,26 @@ type PermissionPolicy struct {
 	UpdatedAt *time.Time `json:"updated_at,omitempty"`
 	// 删除时间
 	DeletedAt *time.Time `json:"deleted_at,omitempty"`
-	// 权限ID
+	// 创建者ID
+	CreatedBy *uint32 `json:"created_by,omitempty"`
+	// 更新者ID
+	UpdatedBy *uint32 `json:"updated_by,omitempty"`
+	// 删除者ID
+	DeletedBy *uint32 `json:"deleted_by,omitempty"`
+	// 状态
+	Status *permissionpolicy.Status `json:"status,omitempty"`
+	// 权限ID（关联sys_permissions.id）
 	PermissionID *uint32 `json:"permission_id,omitempty"`
-	// 目标ID
-	TargetID     *uint32 `json:"target_id,omitempty"`
+	// 策略引擎
+	PolicyEngine *permissionpolicy.PolicyEngine `json:"policy_engine,omitempty"`
+	// 策略定义（动态结构）
+	Definition *string `json:"definition,omitempty"`
+	// 策略版本（用于灰度/回滚）
+	Version *uint32 `json:"version,omitempty"`
+	// 评估优先级（越小越先执行）
+	EvalOrder *uint32 `json:"eval_order,omitempty"`
+	// 结果缓存秒数（0=不缓存）
+	CacheTTL     *uint32 `json:"cache_ttl,omitempty"`
 	selectValues sql.SelectValues
 }
 
@@ -36,8 +52,10 @@ func (*PermissionPolicy) scanValues(columns []string) ([]any, error) {
 	values := make([]any, len(columns))
 	for i := range columns {
 		switch columns[i] {
-		case permissionpolicy.FieldID, permissionpolicy.FieldPermissionID, permissionpolicy.FieldTargetID:
+		case permissionpolicy.FieldID, permissionpolicy.FieldCreatedBy, permissionpolicy.FieldUpdatedBy, permissionpolicy.FieldDeletedBy, permissionpolicy.FieldPermissionID, permissionpolicy.FieldVersion, permissionpolicy.FieldEvalOrder, permissionpolicy.FieldCacheTTL:
 			values[i] = new(sql.NullInt64)
+		case permissionpolicy.FieldStatus, permissionpolicy.FieldPolicyEngine, permissionpolicy.FieldDefinition:
+			values[i] = new(sql.NullString)
 		case permissionpolicy.FieldCreatedAt, permissionpolicy.FieldUpdatedAt, permissionpolicy.FieldDeletedAt:
 			values[i] = new(sql.NullTime)
 		default:
@@ -82,6 +100,34 @@ func (_m *PermissionPolicy) assignValues(columns []string, values []any) error {
 				_m.DeletedAt = new(time.Time)
 				*_m.DeletedAt = value.Time
 			}
+		case permissionpolicy.FieldCreatedBy:
+			if value, ok := values[i].(*sql.NullInt64); !ok {
+				return fmt.Errorf("unexpected type %T for field created_by", values[i])
+			} else if value.Valid {
+				_m.CreatedBy = new(uint32)
+				*_m.CreatedBy = uint32(value.Int64)
+			}
+		case permissionpolicy.FieldUpdatedBy:
+			if value, ok := values[i].(*sql.NullInt64); !ok {
+				return fmt.Errorf("unexpected type %T for field updated_by", values[i])
+			} else if value.Valid {
+				_m.UpdatedBy = new(uint32)
+				*_m.UpdatedBy = uint32(value.Int64)
+			}
+		case permissionpolicy.FieldDeletedBy:
+			if value, ok := values[i].(*sql.NullInt64); !ok {
+				return fmt.Errorf("unexpected type %T for field deleted_by", values[i])
+			} else if value.Valid {
+				_m.DeletedBy = new(uint32)
+				*_m.DeletedBy = uint32(value.Int64)
+			}
+		case permissionpolicy.FieldStatus:
+			if value, ok := values[i].(*sql.NullString); !ok {
+				return fmt.Errorf("unexpected type %T for field status", values[i])
+			} else if value.Valid {
+				_m.Status = new(permissionpolicy.Status)
+				*_m.Status = permissionpolicy.Status(value.String)
+			}
 		case permissionpolicy.FieldPermissionID:
 			if value, ok := values[i].(*sql.NullInt64); !ok {
 				return fmt.Errorf("unexpected type %T for field permission_id", values[i])
@@ -89,12 +135,40 @@ func (_m *PermissionPolicy) assignValues(columns []string, values []any) error {
 				_m.PermissionID = new(uint32)
 				*_m.PermissionID = uint32(value.Int64)
 			}
-		case permissionpolicy.FieldTargetID:
-			if value, ok := values[i].(*sql.NullInt64); !ok {
-				return fmt.Errorf("unexpected type %T for field target_id", values[i])
+		case permissionpolicy.FieldPolicyEngine:
+			if value, ok := values[i].(*sql.NullString); !ok {
+				return fmt.Errorf("unexpected type %T for field policy_engine", values[i])
 			} else if value.Valid {
-				_m.TargetID = new(uint32)
-				*_m.TargetID = uint32(value.Int64)
+				_m.PolicyEngine = new(permissionpolicy.PolicyEngine)
+				*_m.PolicyEngine = permissionpolicy.PolicyEngine(value.String)
+			}
+		case permissionpolicy.FieldDefinition:
+			if value, ok := values[i].(*sql.NullString); !ok {
+				return fmt.Errorf("unexpected type %T for field definition", values[i])
+			} else if value.Valid {
+				_m.Definition = new(string)
+				*_m.Definition = value.String
+			}
+		case permissionpolicy.FieldVersion:
+			if value, ok := values[i].(*sql.NullInt64); !ok {
+				return fmt.Errorf("unexpected type %T for field version", values[i])
+			} else if value.Valid {
+				_m.Version = new(uint32)
+				*_m.Version = uint32(value.Int64)
+			}
+		case permissionpolicy.FieldEvalOrder:
+			if value, ok := values[i].(*sql.NullInt64); !ok {
+				return fmt.Errorf("unexpected type %T for field eval_order", values[i])
+			} else if value.Valid {
+				_m.EvalOrder = new(uint32)
+				*_m.EvalOrder = uint32(value.Int64)
+			}
+		case permissionpolicy.FieldCacheTTL:
+			if value, ok := values[i].(*sql.NullInt64); !ok {
+				return fmt.Errorf("unexpected type %T for field cache_ttl", values[i])
+			} else if value.Valid {
+				_m.CacheTTL = new(uint32)
+				*_m.CacheTTL = uint32(value.Int64)
 			}
 		default:
 			_m.selectValues.Set(columns[i], values[i])
@@ -147,13 +221,53 @@ func (_m *PermissionPolicy) String() string {
 		builder.WriteString(v.Format(time.ANSIC))
 	}
 	builder.WriteString(", ")
+	if v := _m.CreatedBy; v != nil {
+		builder.WriteString("created_by=")
+		builder.WriteString(fmt.Sprintf("%v", *v))
+	}
+	builder.WriteString(", ")
+	if v := _m.UpdatedBy; v != nil {
+		builder.WriteString("updated_by=")
+		builder.WriteString(fmt.Sprintf("%v", *v))
+	}
+	builder.WriteString(", ")
+	if v := _m.DeletedBy; v != nil {
+		builder.WriteString("deleted_by=")
+		builder.WriteString(fmt.Sprintf("%v", *v))
+	}
+	builder.WriteString(", ")
+	if v := _m.Status; v != nil {
+		builder.WriteString("status=")
+		builder.WriteString(fmt.Sprintf("%v", *v))
+	}
+	builder.WriteString(", ")
 	if v := _m.PermissionID; v != nil {
 		builder.WriteString("permission_id=")
 		builder.WriteString(fmt.Sprintf("%v", *v))
 	}
 	builder.WriteString(", ")
-	if v := _m.TargetID; v != nil {
-		builder.WriteString("target_id=")
+	if v := _m.PolicyEngine; v != nil {
+		builder.WriteString("policy_engine=")
+		builder.WriteString(fmt.Sprintf("%v", *v))
+	}
+	builder.WriteString(", ")
+	if v := _m.Definition; v != nil {
+		builder.WriteString("definition=")
+		builder.WriteString(*v)
+	}
+	builder.WriteString(", ")
+	if v := _m.Version; v != nil {
+		builder.WriteString("version=")
+		builder.WriteString(fmt.Sprintf("%v", *v))
+	}
+	builder.WriteString(", ")
+	if v := _m.EvalOrder; v != nil {
+		builder.WriteString("eval_order=")
+		builder.WriteString(fmt.Sprintf("%v", *v))
+	}
+	builder.WriteString(", ")
+	if v := _m.CacheTTL; v != nil {
+		builder.WriteString("cache_ttl=")
 		builder.WriteString(fmt.Sprintf("%v", *v))
 	}
 	builder.WriteByte(')')

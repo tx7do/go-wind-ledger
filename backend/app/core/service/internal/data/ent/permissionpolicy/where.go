@@ -69,14 +69,44 @@ func DeletedAt(v time.Time) predicate.PermissionPolicy {
 	return predicate.PermissionPolicy(sql.FieldEQ(FieldDeletedAt, v))
 }
 
+// CreatedBy applies equality check predicate on the "created_by" field. It's identical to CreatedByEQ.
+func CreatedBy(v uint32) predicate.PermissionPolicy {
+	return predicate.PermissionPolicy(sql.FieldEQ(FieldCreatedBy, v))
+}
+
+// UpdatedBy applies equality check predicate on the "updated_by" field. It's identical to UpdatedByEQ.
+func UpdatedBy(v uint32) predicate.PermissionPolicy {
+	return predicate.PermissionPolicy(sql.FieldEQ(FieldUpdatedBy, v))
+}
+
+// DeletedBy applies equality check predicate on the "deleted_by" field. It's identical to DeletedByEQ.
+func DeletedBy(v uint32) predicate.PermissionPolicy {
+	return predicate.PermissionPolicy(sql.FieldEQ(FieldDeletedBy, v))
+}
+
 // PermissionID applies equality check predicate on the "permission_id" field. It's identical to PermissionIDEQ.
 func PermissionID(v uint32) predicate.PermissionPolicy {
 	return predicate.PermissionPolicy(sql.FieldEQ(FieldPermissionID, v))
 }
 
-// TargetID applies equality check predicate on the "target_id" field. It's identical to TargetIDEQ.
-func TargetID(v uint32) predicate.PermissionPolicy {
-	return predicate.PermissionPolicy(sql.FieldEQ(FieldTargetID, v))
+// Definition applies equality check predicate on the "definition" field. It's identical to DefinitionEQ.
+func Definition(v string) predicate.PermissionPolicy {
+	return predicate.PermissionPolicy(sql.FieldEQ(FieldDefinition, v))
+}
+
+// Version applies equality check predicate on the "version" field. It's identical to VersionEQ.
+func Version(v uint32) predicate.PermissionPolicy {
+	return predicate.PermissionPolicy(sql.FieldEQ(FieldVersion, v))
+}
+
+// EvalOrder applies equality check predicate on the "eval_order" field. It's identical to EvalOrderEQ.
+func EvalOrder(v uint32) predicate.PermissionPolicy {
+	return predicate.PermissionPolicy(sql.FieldEQ(FieldEvalOrder, v))
+}
+
+// CacheTTL applies equality check predicate on the "cache_ttl" field. It's identical to CacheTTLEQ.
+func CacheTTL(v uint32) predicate.PermissionPolicy {
+	return predicate.PermissionPolicy(sql.FieldEQ(FieldCacheTTL, v))
 }
 
 // CreatedAtEQ applies the EQ predicate on the "created_at" field.
@@ -229,6 +259,176 @@ func DeletedAtNotNil() predicate.PermissionPolicy {
 	return predicate.PermissionPolicy(sql.FieldNotNull(FieldDeletedAt))
 }
 
+// CreatedByEQ applies the EQ predicate on the "created_by" field.
+func CreatedByEQ(v uint32) predicate.PermissionPolicy {
+	return predicate.PermissionPolicy(sql.FieldEQ(FieldCreatedBy, v))
+}
+
+// CreatedByNEQ applies the NEQ predicate on the "created_by" field.
+func CreatedByNEQ(v uint32) predicate.PermissionPolicy {
+	return predicate.PermissionPolicy(sql.FieldNEQ(FieldCreatedBy, v))
+}
+
+// CreatedByIn applies the In predicate on the "created_by" field.
+func CreatedByIn(vs ...uint32) predicate.PermissionPolicy {
+	return predicate.PermissionPolicy(sql.FieldIn(FieldCreatedBy, vs...))
+}
+
+// CreatedByNotIn applies the NotIn predicate on the "created_by" field.
+func CreatedByNotIn(vs ...uint32) predicate.PermissionPolicy {
+	return predicate.PermissionPolicy(sql.FieldNotIn(FieldCreatedBy, vs...))
+}
+
+// CreatedByGT applies the GT predicate on the "created_by" field.
+func CreatedByGT(v uint32) predicate.PermissionPolicy {
+	return predicate.PermissionPolicy(sql.FieldGT(FieldCreatedBy, v))
+}
+
+// CreatedByGTE applies the GTE predicate on the "created_by" field.
+func CreatedByGTE(v uint32) predicate.PermissionPolicy {
+	return predicate.PermissionPolicy(sql.FieldGTE(FieldCreatedBy, v))
+}
+
+// CreatedByLT applies the LT predicate on the "created_by" field.
+func CreatedByLT(v uint32) predicate.PermissionPolicy {
+	return predicate.PermissionPolicy(sql.FieldLT(FieldCreatedBy, v))
+}
+
+// CreatedByLTE applies the LTE predicate on the "created_by" field.
+func CreatedByLTE(v uint32) predicate.PermissionPolicy {
+	return predicate.PermissionPolicy(sql.FieldLTE(FieldCreatedBy, v))
+}
+
+// CreatedByIsNil applies the IsNil predicate on the "created_by" field.
+func CreatedByIsNil() predicate.PermissionPolicy {
+	return predicate.PermissionPolicy(sql.FieldIsNull(FieldCreatedBy))
+}
+
+// CreatedByNotNil applies the NotNil predicate on the "created_by" field.
+func CreatedByNotNil() predicate.PermissionPolicy {
+	return predicate.PermissionPolicy(sql.FieldNotNull(FieldCreatedBy))
+}
+
+// UpdatedByEQ applies the EQ predicate on the "updated_by" field.
+func UpdatedByEQ(v uint32) predicate.PermissionPolicy {
+	return predicate.PermissionPolicy(sql.FieldEQ(FieldUpdatedBy, v))
+}
+
+// UpdatedByNEQ applies the NEQ predicate on the "updated_by" field.
+func UpdatedByNEQ(v uint32) predicate.PermissionPolicy {
+	return predicate.PermissionPolicy(sql.FieldNEQ(FieldUpdatedBy, v))
+}
+
+// UpdatedByIn applies the In predicate on the "updated_by" field.
+func UpdatedByIn(vs ...uint32) predicate.PermissionPolicy {
+	return predicate.PermissionPolicy(sql.FieldIn(FieldUpdatedBy, vs...))
+}
+
+// UpdatedByNotIn applies the NotIn predicate on the "updated_by" field.
+func UpdatedByNotIn(vs ...uint32) predicate.PermissionPolicy {
+	return predicate.PermissionPolicy(sql.FieldNotIn(FieldUpdatedBy, vs...))
+}
+
+// UpdatedByGT applies the GT predicate on the "updated_by" field.
+func UpdatedByGT(v uint32) predicate.PermissionPolicy {
+	return predicate.PermissionPolicy(sql.FieldGT(FieldUpdatedBy, v))
+}
+
+// UpdatedByGTE applies the GTE predicate on the "updated_by" field.
+func UpdatedByGTE(v uint32) predicate.PermissionPolicy {
+	return predicate.PermissionPolicy(sql.FieldGTE(FieldUpdatedBy, v))
+}
+
+// UpdatedByLT applies the LT predicate on the "updated_by" field.
+func UpdatedByLT(v uint32) predicate.PermissionPolicy {
+	return predicate.PermissionPolicy(sql.FieldLT(FieldUpdatedBy, v))
+}
+
+// UpdatedByLTE applies the LTE predicate on the "updated_by" field.
+func UpdatedByLTE(v uint32) predicate.PermissionPolicy {
+	return predicate.PermissionPolicy(sql.FieldLTE(FieldUpdatedBy, v))
+}
+
+// UpdatedByIsNil applies the IsNil predicate on the "updated_by" field.
+func UpdatedByIsNil() predicate.PermissionPolicy {
+	return predicate.PermissionPolicy(sql.FieldIsNull(FieldUpdatedBy))
+}
+
+// UpdatedByNotNil applies the NotNil predicate on the "updated_by" field.
+func UpdatedByNotNil() predicate.PermissionPolicy {
+	return predicate.PermissionPolicy(sql.FieldNotNull(FieldUpdatedBy))
+}
+
+// DeletedByEQ applies the EQ predicate on the "deleted_by" field.
+func DeletedByEQ(v uint32) predicate.PermissionPolicy {
+	return predicate.PermissionPolicy(sql.FieldEQ(FieldDeletedBy, v))
+}
+
+// DeletedByNEQ applies the NEQ predicate on the "deleted_by" field.
+func DeletedByNEQ(v uint32) predicate.PermissionPolicy {
+	return predicate.PermissionPolicy(sql.FieldNEQ(FieldDeletedBy, v))
+}
+
+// DeletedByIn applies the In predicate on the "deleted_by" field.
+func DeletedByIn(vs ...uint32) predicate.PermissionPolicy {
+	return predicate.PermissionPolicy(sql.FieldIn(FieldDeletedBy, vs...))
+}
+
+// DeletedByNotIn applies the NotIn predicate on the "deleted_by" field.
+func DeletedByNotIn(vs ...uint32) predicate.PermissionPolicy {
+	return predicate.PermissionPolicy(sql.FieldNotIn(FieldDeletedBy, vs...))
+}
+
+// DeletedByGT applies the GT predicate on the "deleted_by" field.
+func DeletedByGT(v uint32) predicate.PermissionPolicy {
+	return predicate.PermissionPolicy(sql.FieldGT(FieldDeletedBy, v))
+}
+
+// DeletedByGTE applies the GTE predicate on the "deleted_by" field.
+func DeletedByGTE(v uint32) predicate.PermissionPolicy {
+	return predicate.PermissionPolicy(sql.FieldGTE(FieldDeletedBy, v))
+}
+
+// DeletedByLT applies the LT predicate on the "deleted_by" field.
+func DeletedByLT(v uint32) predicate.PermissionPolicy {
+	return predicate.PermissionPolicy(sql.FieldLT(FieldDeletedBy, v))
+}
+
+// DeletedByLTE applies the LTE predicate on the "deleted_by" field.
+func DeletedByLTE(v uint32) predicate.PermissionPolicy {
+	return predicate.PermissionPolicy(sql.FieldLTE(FieldDeletedBy, v))
+}
+
+// DeletedByIsNil applies the IsNil predicate on the "deleted_by" field.
+func DeletedByIsNil() predicate.PermissionPolicy {
+	return predicate.PermissionPolicy(sql.FieldIsNull(FieldDeletedBy))
+}
+
+// DeletedByNotNil applies the NotNil predicate on the "deleted_by" field.
+func DeletedByNotNil() predicate.PermissionPolicy {
+	return predicate.PermissionPolicy(sql.FieldNotNull(FieldDeletedBy))
+}
+
+// StatusEQ applies the EQ predicate on the "status" field.
+func StatusEQ(v Status) predicate.PermissionPolicy {
+	return predicate.PermissionPolicy(sql.FieldEQ(FieldStatus, v))
+}
+
+// StatusNEQ applies the NEQ predicate on the "status" field.
+func StatusNEQ(v Status) predicate.PermissionPolicy {
+	return predicate.PermissionPolicy(sql.FieldNEQ(FieldStatus, v))
+}
+
+// StatusIn applies the In predicate on the "status" field.
+func StatusIn(vs ...Status) predicate.PermissionPolicy {
+	return predicate.PermissionPolicy(sql.FieldIn(FieldStatus, vs...))
+}
+
+// StatusNotIn applies the NotIn predicate on the "status" field.
+func StatusNotIn(vs ...Status) predicate.PermissionPolicy {
+	return predicate.PermissionPolicy(sql.FieldNotIn(FieldStatus, vs...))
+}
+
 // PermissionIDEQ applies the EQ predicate on the "permission_id" field.
 func PermissionIDEQ(v uint32) predicate.PermissionPolicy {
 	return predicate.PermissionPolicy(sql.FieldEQ(FieldPermissionID, v))
@@ -269,64 +469,219 @@ func PermissionIDLTE(v uint32) predicate.PermissionPolicy {
 	return predicate.PermissionPolicy(sql.FieldLTE(FieldPermissionID, v))
 }
 
-// PermissionIDIsNil applies the IsNil predicate on the "permission_id" field.
-func PermissionIDIsNil() predicate.PermissionPolicy {
-	return predicate.PermissionPolicy(sql.FieldIsNull(FieldPermissionID))
+// PolicyEngineEQ applies the EQ predicate on the "policy_engine" field.
+func PolicyEngineEQ(v PolicyEngine) predicate.PermissionPolicy {
+	return predicate.PermissionPolicy(sql.FieldEQ(FieldPolicyEngine, v))
 }
 
-// PermissionIDNotNil applies the NotNil predicate on the "permission_id" field.
-func PermissionIDNotNil() predicate.PermissionPolicy {
-	return predicate.PermissionPolicy(sql.FieldNotNull(FieldPermissionID))
+// PolicyEngineNEQ applies the NEQ predicate on the "policy_engine" field.
+func PolicyEngineNEQ(v PolicyEngine) predicate.PermissionPolicy {
+	return predicate.PermissionPolicy(sql.FieldNEQ(FieldPolicyEngine, v))
 }
 
-// TargetIDEQ applies the EQ predicate on the "target_id" field.
-func TargetIDEQ(v uint32) predicate.PermissionPolicy {
-	return predicate.PermissionPolicy(sql.FieldEQ(FieldTargetID, v))
+// PolicyEngineIn applies the In predicate on the "policy_engine" field.
+func PolicyEngineIn(vs ...PolicyEngine) predicate.PermissionPolicy {
+	return predicate.PermissionPolicy(sql.FieldIn(FieldPolicyEngine, vs...))
 }
 
-// TargetIDNEQ applies the NEQ predicate on the "target_id" field.
-func TargetIDNEQ(v uint32) predicate.PermissionPolicy {
-	return predicate.PermissionPolicy(sql.FieldNEQ(FieldTargetID, v))
+// PolicyEngineNotIn applies the NotIn predicate on the "policy_engine" field.
+func PolicyEngineNotIn(vs ...PolicyEngine) predicate.PermissionPolicy {
+	return predicate.PermissionPolicy(sql.FieldNotIn(FieldPolicyEngine, vs...))
 }
 
-// TargetIDIn applies the In predicate on the "target_id" field.
-func TargetIDIn(vs ...uint32) predicate.PermissionPolicy {
-	return predicate.PermissionPolicy(sql.FieldIn(FieldTargetID, vs...))
+// DefinitionEQ applies the EQ predicate on the "definition" field.
+func DefinitionEQ(v string) predicate.PermissionPolicy {
+	return predicate.PermissionPolicy(sql.FieldEQ(FieldDefinition, v))
 }
 
-// TargetIDNotIn applies the NotIn predicate on the "target_id" field.
-func TargetIDNotIn(vs ...uint32) predicate.PermissionPolicy {
-	return predicate.PermissionPolicy(sql.FieldNotIn(FieldTargetID, vs...))
+// DefinitionNEQ applies the NEQ predicate on the "definition" field.
+func DefinitionNEQ(v string) predicate.PermissionPolicy {
+	return predicate.PermissionPolicy(sql.FieldNEQ(FieldDefinition, v))
 }
 
-// TargetIDGT applies the GT predicate on the "target_id" field.
-func TargetIDGT(v uint32) predicate.PermissionPolicy {
-	return predicate.PermissionPolicy(sql.FieldGT(FieldTargetID, v))
+// DefinitionIn applies the In predicate on the "definition" field.
+func DefinitionIn(vs ...string) predicate.PermissionPolicy {
+	return predicate.PermissionPolicy(sql.FieldIn(FieldDefinition, vs...))
 }
 
-// TargetIDGTE applies the GTE predicate on the "target_id" field.
-func TargetIDGTE(v uint32) predicate.PermissionPolicy {
-	return predicate.PermissionPolicy(sql.FieldGTE(FieldTargetID, v))
+// DefinitionNotIn applies the NotIn predicate on the "definition" field.
+func DefinitionNotIn(vs ...string) predicate.PermissionPolicy {
+	return predicate.PermissionPolicy(sql.FieldNotIn(FieldDefinition, vs...))
 }
 
-// TargetIDLT applies the LT predicate on the "target_id" field.
-func TargetIDLT(v uint32) predicate.PermissionPolicy {
-	return predicate.PermissionPolicy(sql.FieldLT(FieldTargetID, v))
+// DefinitionGT applies the GT predicate on the "definition" field.
+func DefinitionGT(v string) predicate.PermissionPolicy {
+	return predicate.PermissionPolicy(sql.FieldGT(FieldDefinition, v))
 }
 
-// TargetIDLTE applies the LTE predicate on the "target_id" field.
-func TargetIDLTE(v uint32) predicate.PermissionPolicy {
-	return predicate.PermissionPolicy(sql.FieldLTE(FieldTargetID, v))
+// DefinitionGTE applies the GTE predicate on the "definition" field.
+func DefinitionGTE(v string) predicate.PermissionPolicy {
+	return predicate.PermissionPolicy(sql.FieldGTE(FieldDefinition, v))
 }
 
-// TargetIDIsNil applies the IsNil predicate on the "target_id" field.
-func TargetIDIsNil() predicate.PermissionPolicy {
-	return predicate.PermissionPolicy(sql.FieldIsNull(FieldTargetID))
+// DefinitionLT applies the LT predicate on the "definition" field.
+func DefinitionLT(v string) predicate.PermissionPolicy {
+	return predicate.PermissionPolicy(sql.FieldLT(FieldDefinition, v))
 }
 
-// TargetIDNotNil applies the NotNil predicate on the "target_id" field.
-func TargetIDNotNil() predicate.PermissionPolicy {
-	return predicate.PermissionPolicy(sql.FieldNotNull(FieldTargetID))
+// DefinitionLTE applies the LTE predicate on the "definition" field.
+func DefinitionLTE(v string) predicate.PermissionPolicy {
+	return predicate.PermissionPolicy(sql.FieldLTE(FieldDefinition, v))
+}
+
+// DefinitionContains applies the Contains predicate on the "definition" field.
+func DefinitionContains(v string) predicate.PermissionPolicy {
+	return predicate.PermissionPolicy(sql.FieldContains(FieldDefinition, v))
+}
+
+// DefinitionHasPrefix applies the HasPrefix predicate on the "definition" field.
+func DefinitionHasPrefix(v string) predicate.PermissionPolicy {
+	return predicate.PermissionPolicy(sql.FieldHasPrefix(FieldDefinition, v))
+}
+
+// DefinitionHasSuffix applies the HasSuffix predicate on the "definition" field.
+func DefinitionHasSuffix(v string) predicate.PermissionPolicy {
+	return predicate.PermissionPolicy(sql.FieldHasSuffix(FieldDefinition, v))
+}
+
+// DefinitionIsNil applies the IsNil predicate on the "definition" field.
+func DefinitionIsNil() predicate.PermissionPolicy {
+	return predicate.PermissionPolicy(sql.FieldIsNull(FieldDefinition))
+}
+
+// DefinitionNotNil applies the NotNil predicate on the "definition" field.
+func DefinitionNotNil() predicate.PermissionPolicy {
+	return predicate.PermissionPolicy(sql.FieldNotNull(FieldDefinition))
+}
+
+// DefinitionEqualFold applies the EqualFold predicate on the "definition" field.
+func DefinitionEqualFold(v string) predicate.PermissionPolicy {
+	return predicate.PermissionPolicy(sql.FieldEqualFold(FieldDefinition, v))
+}
+
+// DefinitionContainsFold applies the ContainsFold predicate on the "definition" field.
+func DefinitionContainsFold(v string) predicate.PermissionPolicy {
+	return predicate.PermissionPolicy(sql.FieldContainsFold(FieldDefinition, v))
+}
+
+// VersionEQ applies the EQ predicate on the "version" field.
+func VersionEQ(v uint32) predicate.PermissionPolicy {
+	return predicate.PermissionPolicy(sql.FieldEQ(FieldVersion, v))
+}
+
+// VersionNEQ applies the NEQ predicate on the "version" field.
+func VersionNEQ(v uint32) predicate.PermissionPolicy {
+	return predicate.PermissionPolicy(sql.FieldNEQ(FieldVersion, v))
+}
+
+// VersionIn applies the In predicate on the "version" field.
+func VersionIn(vs ...uint32) predicate.PermissionPolicy {
+	return predicate.PermissionPolicy(sql.FieldIn(FieldVersion, vs...))
+}
+
+// VersionNotIn applies the NotIn predicate on the "version" field.
+func VersionNotIn(vs ...uint32) predicate.PermissionPolicy {
+	return predicate.PermissionPolicy(sql.FieldNotIn(FieldVersion, vs...))
+}
+
+// VersionGT applies the GT predicate on the "version" field.
+func VersionGT(v uint32) predicate.PermissionPolicy {
+	return predicate.PermissionPolicy(sql.FieldGT(FieldVersion, v))
+}
+
+// VersionGTE applies the GTE predicate on the "version" field.
+func VersionGTE(v uint32) predicate.PermissionPolicy {
+	return predicate.PermissionPolicy(sql.FieldGTE(FieldVersion, v))
+}
+
+// VersionLT applies the LT predicate on the "version" field.
+func VersionLT(v uint32) predicate.PermissionPolicy {
+	return predicate.PermissionPolicy(sql.FieldLT(FieldVersion, v))
+}
+
+// VersionLTE applies the LTE predicate on the "version" field.
+func VersionLTE(v uint32) predicate.PermissionPolicy {
+	return predicate.PermissionPolicy(sql.FieldLTE(FieldVersion, v))
+}
+
+// EvalOrderEQ applies the EQ predicate on the "eval_order" field.
+func EvalOrderEQ(v uint32) predicate.PermissionPolicy {
+	return predicate.PermissionPolicy(sql.FieldEQ(FieldEvalOrder, v))
+}
+
+// EvalOrderNEQ applies the NEQ predicate on the "eval_order" field.
+func EvalOrderNEQ(v uint32) predicate.PermissionPolicy {
+	return predicate.PermissionPolicy(sql.FieldNEQ(FieldEvalOrder, v))
+}
+
+// EvalOrderIn applies the In predicate on the "eval_order" field.
+func EvalOrderIn(vs ...uint32) predicate.PermissionPolicy {
+	return predicate.PermissionPolicy(sql.FieldIn(FieldEvalOrder, vs...))
+}
+
+// EvalOrderNotIn applies the NotIn predicate on the "eval_order" field.
+func EvalOrderNotIn(vs ...uint32) predicate.PermissionPolicy {
+	return predicate.PermissionPolicy(sql.FieldNotIn(FieldEvalOrder, vs...))
+}
+
+// EvalOrderGT applies the GT predicate on the "eval_order" field.
+func EvalOrderGT(v uint32) predicate.PermissionPolicy {
+	return predicate.PermissionPolicy(sql.FieldGT(FieldEvalOrder, v))
+}
+
+// EvalOrderGTE applies the GTE predicate on the "eval_order" field.
+func EvalOrderGTE(v uint32) predicate.PermissionPolicy {
+	return predicate.PermissionPolicy(sql.FieldGTE(FieldEvalOrder, v))
+}
+
+// EvalOrderLT applies the LT predicate on the "eval_order" field.
+func EvalOrderLT(v uint32) predicate.PermissionPolicy {
+	return predicate.PermissionPolicy(sql.FieldLT(FieldEvalOrder, v))
+}
+
+// EvalOrderLTE applies the LTE predicate on the "eval_order" field.
+func EvalOrderLTE(v uint32) predicate.PermissionPolicy {
+	return predicate.PermissionPolicy(sql.FieldLTE(FieldEvalOrder, v))
+}
+
+// CacheTTLEQ applies the EQ predicate on the "cache_ttl" field.
+func CacheTTLEQ(v uint32) predicate.PermissionPolicy {
+	return predicate.PermissionPolicy(sql.FieldEQ(FieldCacheTTL, v))
+}
+
+// CacheTTLNEQ applies the NEQ predicate on the "cache_ttl" field.
+func CacheTTLNEQ(v uint32) predicate.PermissionPolicy {
+	return predicate.PermissionPolicy(sql.FieldNEQ(FieldCacheTTL, v))
+}
+
+// CacheTTLIn applies the In predicate on the "cache_ttl" field.
+func CacheTTLIn(vs ...uint32) predicate.PermissionPolicy {
+	return predicate.PermissionPolicy(sql.FieldIn(FieldCacheTTL, vs...))
+}
+
+// CacheTTLNotIn applies the NotIn predicate on the "cache_ttl" field.
+func CacheTTLNotIn(vs ...uint32) predicate.PermissionPolicy {
+	return predicate.PermissionPolicy(sql.FieldNotIn(FieldCacheTTL, vs...))
+}
+
+// CacheTTLGT applies the GT predicate on the "cache_ttl" field.
+func CacheTTLGT(v uint32) predicate.PermissionPolicy {
+	return predicate.PermissionPolicy(sql.FieldGT(FieldCacheTTL, v))
+}
+
+// CacheTTLGTE applies the GTE predicate on the "cache_ttl" field.
+func CacheTTLGTE(v uint32) predicate.PermissionPolicy {
+	return predicate.PermissionPolicy(sql.FieldGTE(FieldCacheTTL, v))
+}
+
+// CacheTTLLT applies the LT predicate on the "cache_ttl" field.
+func CacheTTLLT(v uint32) predicate.PermissionPolicy {
+	return predicate.PermissionPolicy(sql.FieldLT(FieldCacheTTL, v))
+}
+
+// CacheTTLLTE applies the LTE predicate on the "cache_ttl" field.
+func CacheTTLLTE(v uint32) predicate.PermissionPolicy {
+	return predicate.PermissionPolicy(sql.FieldLTE(FieldCacheTTL, v))
 }
 
 // And groups predicates with the AND operator between them.

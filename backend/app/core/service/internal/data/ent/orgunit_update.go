@@ -12,6 +12,7 @@ import (
 
 	"entgo.io/ent/dialect/sql"
 	"entgo.io/ent/dialect/sql/sqlgraph"
+	"entgo.io/ent/dialect/sql/sqljson"
 	"entgo.io/ent/schema/field"
 )
 
@@ -271,6 +272,20 @@ func (_u *OrgUnitUpdate) ClearPath() *OrgUnitUpdate {
 	return _u
 }
 
+// SetName sets the "name" field.
+func (_u *OrgUnitUpdate) SetName(v string) *OrgUnitUpdate {
+	_u.mutation.SetName(v)
+	return _u
+}
+
+// SetNillableName sets the "name" field if the given value is not nil.
+func (_u *OrgUnitUpdate) SetNillableName(v *string) *OrgUnitUpdate {
+	if v != nil {
+		_u.SetName(*v)
+	}
+	return _u
+}
+
 // SetCode sets the "code" field.
 func (_u *OrgUnitUpdate) SetCode(v string) *OrgUnitUpdate {
 	_u.mutation.SetCode(v)
@@ -288,153 +303,6 @@ func (_u *OrgUnitUpdate) SetNillableCode(v *string) *OrgUnitUpdate {
 // ClearCode clears the value of the "code" field.
 func (_u *OrgUnitUpdate) ClearCode() *OrgUnitUpdate {
 	_u.mutation.ClearCode()
-	return _u
-}
-
-// SetName sets the "name" field.
-func (_u *OrgUnitUpdate) SetName(v string) *OrgUnitUpdate {
-	_u.mutation.SetName(v)
-	return _u
-}
-
-// SetNillableName sets the "name" field if the given value is not nil.
-func (_u *OrgUnitUpdate) SetNillableName(v *string) *OrgUnitUpdate {
-	if v != nil {
-		_u.SetName(*v)
-	}
-	return _u
-}
-
-// ClearName clears the value of the "name" field.
-func (_u *OrgUnitUpdate) ClearName() *OrgUnitUpdate {
-	_u.mutation.ClearName()
-	return _u
-}
-
-// SetType sets the "type" field.
-func (_u *OrgUnitUpdate) SetType(v string) *OrgUnitUpdate {
-	_u.mutation.SetType(v)
-	return _u
-}
-
-// SetNillableType sets the "type" field if the given value is not nil.
-func (_u *OrgUnitUpdate) SetNillableType(v *string) *OrgUnitUpdate {
-	if v != nil {
-		_u.SetType(*v)
-	}
-	return _u
-}
-
-// ClearType clears the value of the "type" field.
-func (_u *OrgUnitUpdate) ClearType() *OrgUnitUpdate {
-	_u.mutation.ClearType()
-	return _u
-}
-
-// SetIsLegalEntity sets the "is_legal_entity" field.
-func (_u *OrgUnitUpdate) SetIsLegalEntity(v bool) *OrgUnitUpdate {
-	_u.mutation.SetIsLegalEntity(v)
-	return _u
-}
-
-// SetNillableIsLegalEntity sets the "is_legal_entity" field if the given value is not nil.
-func (_u *OrgUnitUpdate) SetNillableIsLegalEntity(v *bool) *OrgUnitUpdate {
-	if v != nil {
-		_u.SetIsLegalEntity(*v)
-	}
-	return _u
-}
-
-// ClearIsLegalEntity clears the value of the "is_legal_entity" field.
-func (_u *OrgUnitUpdate) ClearIsLegalEntity() *OrgUnitUpdate {
-	_u.mutation.ClearIsLegalEntity()
-	return _u
-}
-
-// SetExternalID sets the "external_id" field.
-func (_u *OrgUnitUpdate) SetExternalID(v string) *OrgUnitUpdate {
-	_u.mutation.SetExternalID(v)
-	return _u
-}
-
-// SetNillableExternalID sets the "external_id" field if the given value is not nil.
-func (_u *OrgUnitUpdate) SetNillableExternalID(v *string) *OrgUnitUpdate {
-	if v != nil {
-		_u.SetExternalID(*v)
-	}
-	return _u
-}
-
-// ClearExternalID clears the value of the "external_id" field.
-func (_u *OrgUnitUpdate) ClearExternalID() *OrgUnitUpdate {
-	_u.mutation.ClearExternalID()
-	return _u
-}
-
-// SetLegalEntityOrgID sets the "legal_entity_org_id" field.
-func (_u *OrgUnitUpdate) SetLegalEntityOrgID(v uint32) *OrgUnitUpdate {
-	_u.mutation.ResetLegalEntityOrgID()
-	_u.mutation.SetLegalEntityOrgID(v)
-	return _u
-}
-
-// SetNillableLegalEntityOrgID sets the "legal_entity_org_id" field if the given value is not nil.
-func (_u *OrgUnitUpdate) SetNillableLegalEntityOrgID(v *uint32) *OrgUnitUpdate {
-	if v != nil {
-		_u.SetLegalEntityOrgID(*v)
-	}
-	return _u
-}
-
-// AddLegalEntityOrgID adds value to the "legal_entity_org_id" field.
-func (_u *OrgUnitUpdate) AddLegalEntityOrgID(v int32) *OrgUnitUpdate {
-	_u.mutation.AddLegalEntityOrgID(v)
-	return _u
-}
-
-// ClearLegalEntityOrgID clears the value of the "legal_entity_org_id" field.
-func (_u *OrgUnitUpdate) ClearLegalEntityOrgID() *OrgUnitUpdate {
-	_u.mutation.ClearLegalEntityOrgID()
-	return _u
-}
-
-// SetTaxID sets the "tax_id" field.
-func (_u *OrgUnitUpdate) SetTaxID(v string) *OrgUnitUpdate {
-	_u.mutation.SetTaxID(v)
-	return _u
-}
-
-// SetNillableTaxID sets the "tax_id" field if the given value is not nil.
-func (_u *OrgUnitUpdate) SetNillableTaxID(v *string) *OrgUnitUpdate {
-	if v != nil {
-		_u.SetTaxID(*v)
-	}
-	return _u
-}
-
-// ClearTaxID clears the value of the "tax_id" field.
-func (_u *OrgUnitUpdate) ClearTaxID() *OrgUnitUpdate {
-	_u.mutation.ClearTaxID()
-	return _u
-}
-
-// SetRegistrationNumber sets the "registration_number" field.
-func (_u *OrgUnitUpdate) SetRegistrationNumber(v string) *OrgUnitUpdate {
-	_u.mutation.SetRegistrationNumber(v)
-	return _u
-}
-
-// SetNillableRegistrationNumber sets the "registration_number" field if the given value is not nil.
-func (_u *OrgUnitUpdate) SetNillableRegistrationNumber(v *string) *OrgUnitUpdate {
-	if v != nil {
-		_u.SetRegistrationNumber(*v)
-	}
-	return _u
-}
-
-// ClearRegistrationNumber clears the value of the "registration_number" field.
-func (_u *OrgUnitUpdate) ClearRegistrationNumber() *OrgUnitUpdate {
-	_u.mutation.ClearRegistrationNumber()
 	return _u
 }
 
@@ -465,70 +333,142 @@ func (_u *OrgUnitUpdate) ClearLeaderID() *OrgUnitUpdate {
 	return _u
 }
 
-// SetContactUserID sets the "contact_user_id" field.
-func (_u *OrgUnitUpdate) SetContactUserID(v uint32) *OrgUnitUpdate {
-	_u.mutation.ResetContactUserID()
-	_u.mutation.SetContactUserID(v)
+// SetType sets the "type" field.
+func (_u *OrgUnitUpdate) SetType(v orgunit.Type) *OrgUnitUpdate {
+	_u.mutation.SetType(v)
 	return _u
 }
 
-// SetNillableContactUserID sets the "contact_user_id" field if the given value is not nil.
-func (_u *OrgUnitUpdate) SetNillableContactUserID(v *uint32) *OrgUnitUpdate {
+// SetNillableType sets the "type" field if the given value is not nil.
+func (_u *OrgUnitUpdate) SetNillableType(v *orgunit.Type) *OrgUnitUpdate {
 	if v != nil {
-		_u.SetContactUserID(*v)
+		_u.SetType(*v)
 	}
 	return _u
 }
 
-// AddContactUserID adds value to the "contact_user_id" field.
-func (_u *OrgUnitUpdate) AddContactUserID(v int32) *OrgUnitUpdate {
-	_u.mutation.AddContactUserID(v)
+// SetBusinessScopes sets the "business_scopes" field.
+func (_u *OrgUnitUpdate) SetBusinessScopes(v []string) *OrgUnitUpdate {
+	_u.mutation.SetBusinessScopes(v)
 	return _u
 }
 
-// ClearContactUserID clears the value of the "contact_user_id" field.
-func (_u *OrgUnitUpdate) ClearContactUserID() *OrgUnitUpdate {
-	_u.mutation.ClearContactUserID()
+// AppendBusinessScopes appends value to the "business_scopes" field.
+func (_u *OrgUnitUpdate) AppendBusinessScopes(v []string) *OrgUnitUpdate {
+	_u.mutation.AppendBusinessScopes(v)
 	return _u
 }
 
-// SetStartAt sets the "start_at" field.
-func (_u *OrgUnitUpdate) SetStartAt(v time.Time) *OrgUnitUpdate {
-	_u.mutation.SetStartAt(v)
+// ClearBusinessScopes clears the value of the "business_scopes" field.
+func (_u *OrgUnitUpdate) ClearBusinessScopes() *OrgUnitUpdate {
+	_u.mutation.ClearBusinessScopes()
 	return _u
 }
 
-// SetNillableStartAt sets the "start_at" field if the given value is not nil.
-func (_u *OrgUnitUpdate) SetNillableStartAt(v *time.Time) *OrgUnitUpdate {
+// SetExternalID sets the "external_id" field.
+func (_u *OrgUnitUpdate) SetExternalID(v string) *OrgUnitUpdate {
+	_u.mutation.SetExternalID(v)
+	return _u
+}
+
+// SetNillableExternalID sets the "external_id" field if the given value is not nil.
+func (_u *OrgUnitUpdate) SetNillableExternalID(v *string) *OrgUnitUpdate {
 	if v != nil {
-		_u.SetStartAt(*v)
+		_u.SetExternalID(*v)
 	}
 	return _u
 }
 
-// ClearStartAt clears the value of the "start_at" field.
-func (_u *OrgUnitUpdate) ClearStartAt() *OrgUnitUpdate {
-	_u.mutation.ClearStartAt()
+// ClearExternalID clears the value of the "external_id" field.
+func (_u *OrgUnitUpdate) ClearExternalID() *OrgUnitUpdate {
+	_u.mutation.ClearExternalID()
 	return _u
 }
 
-// SetEndAt sets the "end_at" field.
-func (_u *OrgUnitUpdate) SetEndAt(v time.Time) *OrgUnitUpdate {
-	_u.mutation.SetEndAt(v)
+// SetIsLegalEntity sets the "is_legal_entity" field.
+func (_u *OrgUnitUpdate) SetIsLegalEntity(v bool) *OrgUnitUpdate {
+	_u.mutation.SetIsLegalEntity(v)
 	return _u
 }
 
-// SetNillableEndAt sets the "end_at" field if the given value is not nil.
-func (_u *OrgUnitUpdate) SetNillableEndAt(v *time.Time) *OrgUnitUpdate {
+// SetNillableIsLegalEntity sets the "is_legal_entity" field if the given value is not nil.
+func (_u *OrgUnitUpdate) SetNillableIsLegalEntity(v *bool) *OrgUnitUpdate {
 	if v != nil {
-		_u.SetEndAt(*v)
+		_u.SetIsLegalEntity(*v)
 	}
 	return _u
 }
 
-// ClearEndAt clears the value of the "end_at" field.
-func (_u *OrgUnitUpdate) ClearEndAt() *OrgUnitUpdate {
-	_u.mutation.ClearEndAt()
+// ClearIsLegalEntity clears the value of the "is_legal_entity" field.
+func (_u *OrgUnitUpdate) ClearIsLegalEntity() *OrgUnitUpdate {
+	_u.mutation.ClearIsLegalEntity()
+	return _u
+}
+
+// SetRegistrationNumber sets the "registration_number" field.
+func (_u *OrgUnitUpdate) SetRegistrationNumber(v string) *OrgUnitUpdate {
+	_u.mutation.SetRegistrationNumber(v)
+	return _u
+}
+
+// SetNillableRegistrationNumber sets the "registration_number" field if the given value is not nil.
+func (_u *OrgUnitUpdate) SetNillableRegistrationNumber(v *string) *OrgUnitUpdate {
+	if v != nil {
+		_u.SetRegistrationNumber(*v)
+	}
+	return _u
+}
+
+// ClearRegistrationNumber clears the value of the "registration_number" field.
+func (_u *OrgUnitUpdate) ClearRegistrationNumber() *OrgUnitUpdate {
+	_u.mutation.ClearRegistrationNumber()
+	return _u
+}
+
+// SetTaxID sets the "tax_id" field.
+func (_u *OrgUnitUpdate) SetTaxID(v string) *OrgUnitUpdate {
+	_u.mutation.SetTaxID(v)
+	return _u
+}
+
+// SetNillableTaxID sets the "tax_id" field if the given value is not nil.
+func (_u *OrgUnitUpdate) SetNillableTaxID(v *string) *OrgUnitUpdate {
+	if v != nil {
+		_u.SetTaxID(*v)
+	}
+	return _u
+}
+
+// ClearTaxID clears the value of the "tax_id" field.
+func (_u *OrgUnitUpdate) ClearTaxID() *OrgUnitUpdate {
+	_u.mutation.ClearTaxID()
+	return _u
+}
+
+// SetLegalEntityOrgID sets the "legal_entity_org_id" field.
+func (_u *OrgUnitUpdate) SetLegalEntityOrgID(v uint32) *OrgUnitUpdate {
+	_u.mutation.ResetLegalEntityOrgID()
+	_u.mutation.SetLegalEntityOrgID(v)
+	return _u
+}
+
+// SetNillableLegalEntityOrgID sets the "legal_entity_org_id" field if the given value is not nil.
+func (_u *OrgUnitUpdate) SetNillableLegalEntityOrgID(v *uint32) *OrgUnitUpdate {
+	if v != nil {
+		_u.SetLegalEntityOrgID(*v)
+	}
+	return _u
+}
+
+// AddLegalEntityOrgID adds value to the "legal_entity_org_id" field.
+func (_u *OrgUnitUpdate) AddLegalEntityOrgID(v int32) *OrgUnitUpdate {
+	_u.mutation.AddLegalEntityOrgID(v)
+	return _u
+}
+
+// ClearLegalEntityOrgID clears the value of the "legal_entity_org_id" field.
+func (_u *OrgUnitUpdate) ClearLegalEntityOrgID() *OrgUnitUpdate {
+	_u.mutation.ClearLegalEntityOrgID()
 	return _u
 }
 
@@ -592,26 +532,6 @@ func (_u *OrgUnitUpdate) ClearEmail() *OrgUnitUpdate {
 	return _u
 }
 
-// SetWebsite sets the "website" field.
-func (_u *OrgUnitUpdate) SetWebsite(v string) *OrgUnitUpdate {
-	_u.mutation.SetWebsite(v)
-	return _u
-}
-
-// SetNillableWebsite sets the "website" field if the given value is not nil.
-func (_u *OrgUnitUpdate) SetNillableWebsite(v *string) *OrgUnitUpdate {
-	if v != nil {
-		_u.SetWebsite(*v)
-	}
-	return _u
-}
-
-// ClearWebsite clears the value of the "website" field.
-func (_u *OrgUnitUpdate) ClearWebsite() *OrgUnitUpdate {
-	_u.mutation.ClearWebsite()
-	return _u
-}
-
 // SetTimezone sets the "timezone" field.
 func (_u *OrgUnitUpdate) SetTimezone(v string) *OrgUnitUpdate {
 	_u.mutation.SetTimezone(v)
@@ -632,26 +552,6 @@ func (_u *OrgUnitUpdate) ClearTimezone() *OrgUnitUpdate {
 	return _u
 }
 
-// SetRegion sets the "region" field.
-func (_u *OrgUnitUpdate) SetRegion(v string) *OrgUnitUpdate {
-	_u.mutation.SetRegion(v)
-	return _u
-}
-
-// SetNillableRegion sets the "region" field if the given value is not nil.
-func (_u *OrgUnitUpdate) SetNillableRegion(v *string) *OrgUnitUpdate {
-	if v != nil {
-		_u.SetRegion(*v)
-	}
-	return _u
-}
-
-// ClearRegion clears the value of the "region" field.
-func (_u *OrgUnitUpdate) ClearRegion() *OrgUnitUpdate {
-	_u.mutation.ClearRegion()
-	return _u
-}
-
 // SetCountry sets the "country" field.
 func (_u *OrgUnitUpdate) SetCountry(v string) *OrgUnitUpdate {
 	_u.mutation.SetCountry(v)
@@ -669,46 +569,6 @@ func (_u *OrgUnitUpdate) SetNillableCountry(v *string) *OrgUnitUpdate {
 // ClearCountry clears the value of the "country" field.
 func (_u *OrgUnitUpdate) ClearCountry() *OrgUnitUpdate {
 	_u.mutation.ClearCountry()
-	return _u
-}
-
-// SetCity sets the "city" field.
-func (_u *OrgUnitUpdate) SetCity(v string) *OrgUnitUpdate {
-	_u.mutation.SetCity(v)
-	return _u
-}
-
-// SetNillableCity sets the "city" field if the given value is not nil.
-func (_u *OrgUnitUpdate) SetNillableCity(v *string) *OrgUnitUpdate {
-	if v != nil {
-		_u.SetCity(*v)
-	}
-	return _u
-}
-
-// ClearCity clears the value of the "city" field.
-func (_u *OrgUnitUpdate) ClearCity() *OrgUnitUpdate {
-	_u.mutation.ClearCity()
-	return _u
-}
-
-// SetPostalCode sets the "postal_code" field.
-func (_u *OrgUnitUpdate) SetPostalCode(v string) *OrgUnitUpdate {
-	_u.mutation.SetPostalCode(v)
-	return _u
-}
-
-// SetNillablePostalCode sets the "postal_code" field if the given value is not nil.
-func (_u *OrgUnitUpdate) SetNillablePostalCode(v *string) *OrgUnitUpdate {
-	if v != nil {
-		_u.SetPostalCode(*v)
-	}
-	return _u
-}
-
-// ClearPostalCode clears the value of the "postal_code" field.
-func (_u *OrgUnitUpdate) ClearPostalCode() *OrgUnitUpdate {
-	_u.mutation.ClearPostalCode()
 	return _u
 }
 
@@ -766,23 +626,88 @@ func (_u *OrgUnitUpdate) ClearLongitude() *OrgUnitUpdate {
 	return _u
 }
 
-// SetLogo sets the "logo" field.
-func (_u *OrgUnitUpdate) SetLogo(v string) *OrgUnitUpdate {
-	_u.mutation.SetLogo(v)
+// SetStartAt sets the "start_at" field.
+func (_u *OrgUnitUpdate) SetStartAt(v time.Time) *OrgUnitUpdate {
+	_u.mutation.SetStartAt(v)
 	return _u
 }
 
-// SetNillableLogo sets the "logo" field if the given value is not nil.
-func (_u *OrgUnitUpdate) SetNillableLogo(v *string) *OrgUnitUpdate {
+// SetNillableStartAt sets the "start_at" field if the given value is not nil.
+func (_u *OrgUnitUpdate) SetNillableStartAt(v *time.Time) *OrgUnitUpdate {
 	if v != nil {
-		_u.SetLogo(*v)
+		_u.SetStartAt(*v)
 	}
 	return _u
 }
 
-// ClearLogo clears the value of the "logo" field.
-func (_u *OrgUnitUpdate) ClearLogo() *OrgUnitUpdate {
-	_u.mutation.ClearLogo()
+// ClearStartAt clears the value of the "start_at" field.
+func (_u *OrgUnitUpdate) ClearStartAt() *OrgUnitUpdate {
+	_u.mutation.ClearStartAt()
+	return _u
+}
+
+// SetEndAt sets the "end_at" field.
+func (_u *OrgUnitUpdate) SetEndAt(v time.Time) *OrgUnitUpdate {
+	_u.mutation.SetEndAt(v)
+	return _u
+}
+
+// SetNillableEndAt sets the "end_at" field if the given value is not nil.
+func (_u *OrgUnitUpdate) SetNillableEndAt(v *time.Time) *OrgUnitUpdate {
+	if v != nil {
+		_u.SetEndAt(*v)
+	}
+	return _u
+}
+
+// ClearEndAt clears the value of the "end_at" field.
+func (_u *OrgUnitUpdate) ClearEndAt() *OrgUnitUpdate {
+	_u.mutation.ClearEndAt()
+	return _u
+}
+
+// SetContactUserID sets the "contact_user_id" field.
+func (_u *OrgUnitUpdate) SetContactUserID(v uint32) *OrgUnitUpdate {
+	_u.mutation.ResetContactUserID()
+	_u.mutation.SetContactUserID(v)
+	return _u
+}
+
+// SetNillableContactUserID sets the "contact_user_id" field if the given value is not nil.
+func (_u *OrgUnitUpdate) SetNillableContactUserID(v *uint32) *OrgUnitUpdate {
+	if v != nil {
+		_u.SetContactUserID(*v)
+	}
+	return _u
+}
+
+// AddContactUserID adds value to the "contact_user_id" field.
+func (_u *OrgUnitUpdate) AddContactUserID(v int32) *OrgUnitUpdate {
+	_u.mutation.AddContactUserID(v)
+	return _u
+}
+
+// ClearContactUserID clears the value of the "contact_user_id" field.
+func (_u *OrgUnitUpdate) ClearContactUserID() *OrgUnitUpdate {
+	_u.mutation.ClearContactUserID()
+	return _u
+}
+
+// SetPermissionTags sets the "permission_tags" field.
+func (_u *OrgUnitUpdate) SetPermissionTags(v []string) *OrgUnitUpdate {
+	_u.mutation.SetPermissionTags(v)
+	return _u
+}
+
+// AppendPermissionTags appends value to the "permission_tags" field.
+func (_u *OrgUnitUpdate) AppendPermissionTags(v []string) *OrgUnitUpdate {
+	_u.mutation.AppendPermissionTags(v)
+	return _u
+}
+
+// ClearPermissionTags clears the value of the "permission_tags" field.
+func (_u *OrgUnitUpdate) ClearPermissionTags() *OrgUnitUpdate {
+	_u.mutation.ClearPermissionTags()
 	return _u
 }
 
@@ -877,11 +802,6 @@ func (_u *OrgUnitUpdate) check() error {
 			return &ValidationError{Name: "path", err: fmt.Errorf(`ent: validator failed for field "OrgUnit.path": %w`, err)}
 		}
 	}
-	if v, ok := _u.mutation.Code(); ok {
-		if err := orgunit.CodeValidator(v); err != nil {
-			return &ValidationError{Name: "code", err: fmt.Errorf(`ent: validator failed for field "OrgUnit.code": %w`, err)}
-		}
-	}
 	if v, ok := _u.mutation.Name(); ok {
 		if err := orgunit.NameValidator(v); err != nil {
 			return &ValidationError{Name: "name", err: fmt.Errorf(`ent: validator failed for field "OrgUnit.name": %w`, err)}
@@ -890,71 +810,6 @@ func (_u *OrgUnitUpdate) check() error {
 	if v, ok := _u.mutation.GetType(); ok {
 		if err := orgunit.TypeValidator(v); err != nil {
 			return &ValidationError{Name: "type", err: fmt.Errorf(`ent: validator failed for field "OrgUnit.type": %w`, err)}
-		}
-	}
-	if v, ok := _u.mutation.ExternalID(); ok {
-		if err := orgunit.ExternalIDValidator(v); err != nil {
-			return &ValidationError{Name: "external_id", err: fmt.Errorf(`ent: validator failed for field "OrgUnit.external_id": %w`, err)}
-		}
-	}
-	if v, ok := _u.mutation.TaxID(); ok {
-		if err := orgunit.TaxIDValidator(v); err != nil {
-			return &ValidationError{Name: "tax_id", err: fmt.Errorf(`ent: validator failed for field "OrgUnit.tax_id": %w`, err)}
-		}
-	}
-	if v, ok := _u.mutation.RegistrationNumber(); ok {
-		if err := orgunit.RegistrationNumberValidator(v); err != nil {
-			return &ValidationError{Name: "registration_number", err: fmt.Errorf(`ent: validator failed for field "OrgUnit.registration_number": %w`, err)}
-		}
-	}
-	if v, ok := _u.mutation.Address(); ok {
-		if err := orgunit.AddressValidator(v); err != nil {
-			return &ValidationError{Name: "address", err: fmt.Errorf(`ent: validator failed for field "OrgUnit.address": %w`, err)}
-		}
-	}
-	if v, ok := _u.mutation.Phone(); ok {
-		if err := orgunit.PhoneValidator(v); err != nil {
-			return &ValidationError{Name: "phone", err: fmt.Errorf(`ent: validator failed for field "OrgUnit.phone": %w`, err)}
-		}
-	}
-	if v, ok := _u.mutation.Email(); ok {
-		if err := orgunit.EmailValidator(v); err != nil {
-			return &ValidationError{Name: "email", err: fmt.Errorf(`ent: validator failed for field "OrgUnit.email": %w`, err)}
-		}
-	}
-	if v, ok := _u.mutation.Website(); ok {
-		if err := orgunit.WebsiteValidator(v); err != nil {
-			return &ValidationError{Name: "website", err: fmt.Errorf(`ent: validator failed for field "OrgUnit.website": %w`, err)}
-		}
-	}
-	if v, ok := _u.mutation.Timezone(); ok {
-		if err := orgunit.TimezoneValidator(v); err != nil {
-			return &ValidationError{Name: "timezone", err: fmt.Errorf(`ent: validator failed for field "OrgUnit.timezone": %w`, err)}
-		}
-	}
-	if v, ok := _u.mutation.Region(); ok {
-		if err := orgunit.RegionValidator(v); err != nil {
-			return &ValidationError{Name: "region", err: fmt.Errorf(`ent: validator failed for field "OrgUnit.region": %w`, err)}
-		}
-	}
-	if v, ok := _u.mutation.Country(); ok {
-		if err := orgunit.CountryValidator(v); err != nil {
-			return &ValidationError{Name: "country", err: fmt.Errorf(`ent: validator failed for field "OrgUnit.country": %w`, err)}
-		}
-	}
-	if v, ok := _u.mutation.City(); ok {
-		if err := orgunit.CityValidator(v); err != nil {
-			return &ValidationError{Name: "city", err: fmt.Errorf(`ent: validator failed for field "OrgUnit.city": %w`, err)}
-		}
-	}
-	if v, ok := _u.mutation.PostalCode(); ok {
-		if err := orgunit.PostalCodeValidator(v); err != nil {
-			return &ValidationError{Name: "postal_code", err: fmt.Errorf(`ent: validator failed for field "OrgUnit.postal_code": %w`, err)}
-		}
-	}
-	if v, ok := _u.mutation.Logo(); ok {
-		if err := orgunit.LogoValidator(v); err != nil {
-			return &ValidationError{Name: "logo", err: fmt.Errorf(`ent: validator failed for field "OrgUnit.logo": %w`, err)}
 		}
 	}
 	return nil
@@ -1053,56 +908,14 @@ func (_u *OrgUnitUpdate) sqlSave(ctx context.Context) (_node int, err error) {
 	if _u.mutation.PathCleared() {
 		_spec.ClearField(orgunit.FieldPath, field.TypeString)
 	}
+	if value, ok := _u.mutation.Name(); ok {
+		_spec.SetField(orgunit.FieldName, field.TypeString, value)
+	}
 	if value, ok := _u.mutation.Code(); ok {
 		_spec.SetField(orgunit.FieldCode, field.TypeString, value)
 	}
 	if _u.mutation.CodeCleared() {
 		_spec.ClearField(orgunit.FieldCode, field.TypeString)
-	}
-	if value, ok := _u.mutation.Name(); ok {
-		_spec.SetField(orgunit.FieldName, field.TypeString, value)
-	}
-	if _u.mutation.NameCleared() {
-		_spec.ClearField(orgunit.FieldName, field.TypeString)
-	}
-	if value, ok := _u.mutation.GetType(); ok {
-		_spec.SetField(orgunit.FieldType, field.TypeString, value)
-	}
-	if _u.mutation.TypeCleared() {
-		_spec.ClearField(orgunit.FieldType, field.TypeString)
-	}
-	if value, ok := _u.mutation.IsLegalEntity(); ok {
-		_spec.SetField(orgunit.FieldIsLegalEntity, field.TypeBool, value)
-	}
-	if _u.mutation.IsLegalEntityCleared() {
-		_spec.ClearField(orgunit.FieldIsLegalEntity, field.TypeBool)
-	}
-	if value, ok := _u.mutation.ExternalID(); ok {
-		_spec.SetField(orgunit.FieldExternalID, field.TypeString, value)
-	}
-	if _u.mutation.ExternalIDCleared() {
-		_spec.ClearField(orgunit.FieldExternalID, field.TypeString)
-	}
-	if value, ok := _u.mutation.LegalEntityOrgID(); ok {
-		_spec.SetField(orgunit.FieldLegalEntityOrgID, field.TypeUint32, value)
-	}
-	if value, ok := _u.mutation.AddedLegalEntityOrgID(); ok {
-		_spec.AddField(orgunit.FieldLegalEntityOrgID, field.TypeUint32, value)
-	}
-	if _u.mutation.LegalEntityOrgIDCleared() {
-		_spec.ClearField(orgunit.FieldLegalEntityOrgID, field.TypeUint32)
-	}
-	if value, ok := _u.mutation.TaxID(); ok {
-		_spec.SetField(orgunit.FieldTaxID, field.TypeString, value)
-	}
-	if _u.mutation.TaxIDCleared() {
-		_spec.ClearField(orgunit.FieldTaxID, field.TypeString)
-	}
-	if value, ok := _u.mutation.RegistrationNumber(); ok {
-		_spec.SetField(orgunit.FieldRegistrationNumber, field.TypeString, value)
-	}
-	if _u.mutation.RegistrationNumberCleared() {
-		_spec.ClearField(orgunit.FieldRegistrationNumber, field.TypeString)
 	}
 	if value, ok := _u.mutation.LeaderID(); ok {
 		_spec.SetField(orgunit.FieldLeaderID, field.TypeUint32, value)
@@ -1113,26 +926,52 @@ func (_u *OrgUnitUpdate) sqlSave(ctx context.Context) (_node int, err error) {
 	if _u.mutation.LeaderIDCleared() {
 		_spec.ClearField(orgunit.FieldLeaderID, field.TypeUint32)
 	}
-	if value, ok := _u.mutation.ContactUserID(); ok {
-		_spec.SetField(orgunit.FieldContactUserID, field.TypeUint32, value)
+	if value, ok := _u.mutation.GetType(); ok {
+		_spec.SetField(orgunit.FieldType, field.TypeEnum, value)
 	}
-	if value, ok := _u.mutation.AddedContactUserID(); ok {
-		_spec.AddField(orgunit.FieldContactUserID, field.TypeUint32, value)
+	if value, ok := _u.mutation.BusinessScopes(); ok {
+		_spec.SetField(orgunit.FieldBusinessScopes, field.TypeJSON, value)
 	}
-	if _u.mutation.ContactUserIDCleared() {
-		_spec.ClearField(orgunit.FieldContactUserID, field.TypeUint32)
+	if value, ok := _u.mutation.AppendedBusinessScopes(); ok {
+		_spec.AddModifier(func(u *sql.UpdateBuilder) {
+			sqljson.Append(u, orgunit.FieldBusinessScopes, value)
+		})
 	}
-	if value, ok := _u.mutation.StartAt(); ok {
-		_spec.SetField(orgunit.FieldStartAt, field.TypeTime, value)
+	if _u.mutation.BusinessScopesCleared() {
+		_spec.ClearField(orgunit.FieldBusinessScopes, field.TypeJSON)
 	}
-	if _u.mutation.StartAtCleared() {
-		_spec.ClearField(orgunit.FieldStartAt, field.TypeTime)
+	if value, ok := _u.mutation.ExternalID(); ok {
+		_spec.SetField(orgunit.FieldExternalID, field.TypeString, value)
 	}
-	if value, ok := _u.mutation.EndAt(); ok {
-		_spec.SetField(orgunit.FieldEndAt, field.TypeTime, value)
+	if _u.mutation.ExternalIDCleared() {
+		_spec.ClearField(orgunit.FieldExternalID, field.TypeString)
 	}
-	if _u.mutation.EndAtCleared() {
-		_spec.ClearField(orgunit.FieldEndAt, field.TypeTime)
+	if value, ok := _u.mutation.IsLegalEntity(); ok {
+		_spec.SetField(orgunit.FieldIsLegalEntity, field.TypeBool, value)
+	}
+	if _u.mutation.IsLegalEntityCleared() {
+		_spec.ClearField(orgunit.FieldIsLegalEntity, field.TypeBool)
+	}
+	if value, ok := _u.mutation.RegistrationNumber(); ok {
+		_spec.SetField(orgunit.FieldRegistrationNumber, field.TypeString, value)
+	}
+	if _u.mutation.RegistrationNumberCleared() {
+		_spec.ClearField(orgunit.FieldRegistrationNumber, field.TypeString)
+	}
+	if value, ok := _u.mutation.TaxID(); ok {
+		_spec.SetField(orgunit.FieldTaxID, field.TypeString, value)
+	}
+	if _u.mutation.TaxIDCleared() {
+		_spec.ClearField(orgunit.FieldTaxID, field.TypeString)
+	}
+	if value, ok := _u.mutation.LegalEntityOrgID(); ok {
+		_spec.SetField(orgunit.FieldLegalEntityOrgID, field.TypeUint32, value)
+	}
+	if value, ok := _u.mutation.AddedLegalEntityOrgID(); ok {
+		_spec.AddField(orgunit.FieldLegalEntityOrgID, field.TypeUint32, value)
+	}
+	if _u.mutation.LegalEntityOrgIDCleared() {
+		_spec.ClearField(orgunit.FieldLegalEntityOrgID, field.TypeUint32)
 	}
 	if value, ok := _u.mutation.Address(); ok {
 		_spec.SetField(orgunit.FieldAddress, field.TypeString, value)
@@ -1152,41 +991,17 @@ func (_u *OrgUnitUpdate) sqlSave(ctx context.Context) (_node int, err error) {
 	if _u.mutation.EmailCleared() {
 		_spec.ClearField(orgunit.FieldEmail, field.TypeString)
 	}
-	if value, ok := _u.mutation.Website(); ok {
-		_spec.SetField(orgunit.FieldWebsite, field.TypeString, value)
-	}
-	if _u.mutation.WebsiteCleared() {
-		_spec.ClearField(orgunit.FieldWebsite, field.TypeString)
-	}
 	if value, ok := _u.mutation.Timezone(); ok {
 		_spec.SetField(orgunit.FieldTimezone, field.TypeString, value)
 	}
 	if _u.mutation.TimezoneCleared() {
 		_spec.ClearField(orgunit.FieldTimezone, field.TypeString)
 	}
-	if value, ok := _u.mutation.Region(); ok {
-		_spec.SetField(orgunit.FieldRegion, field.TypeString, value)
-	}
-	if _u.mutation.RegionCleared() {
-		_spec.ClearField(orgunit.FieldRegion, field.TypeString)
-	}
 	if value, ok := _u.mutation.Country(); ok {
 		_spec.SetField(orgunit.FieldCountry, field.TypeString, value)
 	}
 	if _u.mutation.CountryCleared() {
 		_spec.ClearField(orgunit.FieldCountry, field.TypeString)
-	}
-	if value, ok := _u.mutation.City(); ok {
-		_spec.SetField(orgunit.FieldCity, field.TypeString, value)
-	}
-	if _u.mutation.CityCleared() {
-		_spec.ClearField(orgunit.FieldCity, field.TypeString)
-	}
-	if value, ok := _u.mutation.PostalCode(); ok {
-		_spec.SetField(orgunit.FieldPostalCode, field.TypeString, value)
-	}
-	if _u.mutation.PostalCodeCleared() {
-		_spec.ClearField(orgunit.FieldPostalCode, field.TypeString)
 	}
 	if value, ok := _u.mutation.Latitude(); ok {
 		_spec.SetField(orgunit.FieldLatitude, field.TypeFloat64, value)
@@ -1206,11 +1021,37 @@ func (_u *OrgUnitUpdate) sqlSave(ctx context.Context) (_node int, err error) {
 	if _u.mutation.LongitudeCleared() {
 		_spec.ClearField(orgunit.FieldLongitude, field.TypeFloat64)
 	}
-	if value, ok := _u.mutation.Logo(); ok {
-		_spec.SetField(orgunit.FieldLogo, field.TypeString, value)
+	if value, ok := _u.mutation.StartAt(); ok {
+		_spec.SetField(orgunit.FieldStartAt, field.TypeTime, value)
 	}
-	if _u.mutation.LogoCleared() {
-		_spec.ClearField(orgunit.FieldLogo, field.TypeString)
+	if _u.mutation.StartAtCleared() {
+		_spec.ClearField(orgunit.FieldStartAt, field.TypeTime)
+	}
+	if value, ok := _u.mutation.EndAt(); ok {
+		_spec.SetField(orgunit.FieldEndAt, field.TypeTime, value)
+	}
+	if _u.mutation.EndAtCleared() {
+		_spec.ClearField(orgunit.FieldEndAt, field.TypeTime)
+	}
+	if value, ok := _u.mutation.ContactUserID(); ok {
+		_spec.SetField(orgunit.FieldContactUserID, field.TypeUint32, value)
+	}
+	if value, ok := _u.mutation.AddedContactUserID(); ok {
+		_spec.AddField(orgunit.FieldContactUserID, field.TypeUint32, value)
+	}
+	if _u.mutation.ContactUserIDCleared() {
+		_spec.ClearField(orgunit.FieldContactUserID, field.TypeUint32)
+	}
+	if value, ok := _u.mutation.PermissionTags(); ok {
+		_spec.SetField(orgunit.FieldPermissionTags, field.TypeJSON, value)
+	}
+	if value, ok := _u.mutation.AppendedPermissionTags(); ok {
+		_spec.AddModifier(func(u *sql.UpdateBuilder) {
+			sqljson.Append(u, orgunit.FieldPermissionTags, value)
+		})
+	}
+	if _u.mutation.PermissionTagsCleared() {
+		_spec.ClearField(orgunit.FieldPermissionTags, field.TypeJSON)
 	}
 	if _u.mutation.ParentCleared() {
 		edge := &sqlgraph.EdgeSpec{
@@ -1550,6 +1391,20 @@ func (_u *OrgUnitUpdateOne) ClearPath() *OrgUnitUpdateOne {
 	return _u
 }
 
+// SetName sets the "name" field.
+func (_u *OrgUnitUpdateOne) SetName(v string) *OrgUnitUpdateOne {
+	_u.mutation.SetName(v)
+	return _u
+}
+
+// SetNillableName sets the "name" field if the given value is not nil.
+func (_u *OrgUnitUpdateOne) SetNillableName(v *string) *OrgUnitUpdateOne {
+	if v != nil {
+		_u.SetName(*v)
+	}
+	return _u
+}
+
 // SetCode sets the "code" field.
 func (_u *OrgUnitUpdateOne) SetCode(v string) *OrgUnitUpdateOne {
 	_u.mutation.SetCode(v)
@@ -1567,153 +1422,6 @@ func (_u *OrgUnitUpdateOne) SetNillableCode(v *string) *OrgUnitUpdateOne {
 // ClearCode clears the value of the "code" field.
 func (_u *OrgUnitUpdateOne) ClearCode() *OrgUnitUpdateOne {
 	_u.mutation.ClearCode()
-	return _u
-}
-
-// SetName sets the "name" field.
-func (_u *OrgUnitUpdateOne) SetName(v string) *OrgUnitUpdateOne {
-	_u.mutation.SetName(v)
-	return _u
-}
-
-// SetNillableName sets the "name" field if the given value is not nil.
-func (_u *OrgUnitUpdateOne) SetNillableName(v *string) *OrgUnitUpdateOne {
-	if v != nil {
-		_u.SetName(*v)
-	}
-	return _u
-}
-
-// ClearName clears the value of the "name" field.
-func (_u *OrgUnitUpdateOne) ClearName() *OrgUnitUpdateOne {
-	_u.mutation.ClearName()
-	return _u
-}
-
-// SetType sets the "type" field.
-func (_u *OrgUnitUpdateOne) SetType(v string) *OrgUnitUpdateOne {
-	_u.mutation.SetType(v)
-	return _u
-}
-
-// SetNillableType sets the "type" field if the given value is not nil.
-func (_u *OrgUnitUpdateOne) SetNillableType(v *string) *OrgUnitUpdateOne {
-	if v != nil {
-		_u.SetType(*v)
-	}
-	return _u
-}
-
-// ClearType clears the value of the "type" field.
-func (_u *OrgUnitUpdateOne) ClearType() *OrgUnitUpdateOne {
-	_u.mutation.ClearType()
-	return _u
-}
-
-// SetIsLegalEntity sets the "is_legal_entity" field.
-func (_u *OrgUnitUpdateOne) SetIsLegalEntity(v bool) *OrgUnitUpdateOne {
-	_u.mutation.SetIsLegalEntity(v)
-	return _u
-}
-
-// SetNillableIsLegalEntity sets the "is_legal_entity" field if the given value is not nil.
-func (_u *OrgUnitUpdateOne) SetNillableIsLegalEntity(v *bool) *OrgUnitUpdateOne {
-	if v != nil {
-		_u.SetIsLegalEntity(*v)
-	}
-	return _u
-}
-
-// ClearIsLegalEntity clears the value of the "is_legal_entity" field.
-func (_u *OrgUnitUpdateOne) ClearIsLegalEntity() *OrgUnitUpdateOne {
-	_u.mutation.ClearIsLegalEntity()
-	return _u
-}
-
-// SetExternalID sets the "external_id" field.
-func (_u *OrgUnitUpdateOne) SetExternalID(v string) *OrgUnitUpdateOne {
-	_u.mutation.SetExternalID(v)
-	return _u
-}
-
-// SetNillableExternalID sets the "external_id" field if the given value is not nil.
-func (_u *OrgUnitUpdateOne) SetNillableExternalID(v *string) *OrgUnitUpdateOne {
-	if v != nil {
-		_u.SetExternalID(*v)
-	}
-	return _u
-}
-
-// ClearExternalID clears the value of the "external_id" field.
-func (_u *OrgUnitUpdateOne) ClearExternalID() *OrgUnitUpdateOne {
-	_u.mutation.ClearExternalID()
-	return _u
-}
-
-// SetLegalEntityOrgID sets the "legal_entity_org_id" field.
-func (_u *OrgUnitUpdateOne) SetLegalEntityOrgID(v uint32) *OrgUnitUpdateOne {
-	_u.mutation.ResetLegalEntityOrgID()
-	_u.mutation.SetLegalEntityOrgID(v)
-	return _u
-}
-
-// SetNillableLegalEntityOrgID sets the "legal_entity_org_id" field if the given value is not nil.
-func (_u *OrgUnitUpdateOne) SetNillableLegalEntityOrgID(v *uint32) *OrgUnitUpdateOne {
-	if v != nil {
-		_u.SetLegalEntityOrgID(*v)
-	}
-	return _u
-}
-
-// AddLegalEntityOrgID adds value to the "legal_entity_org_id" field.
-func (_u *OrgUnitUpdateOne) AddLegalEntityOrgID(v int32) *OrgUnitUpdateOne {
-	_u.mutation.AddLegalEntityOrgID(v)
-	return _u
-}
-
-// ClearLegalEntityOrgID clears the value of the "legal_entity_org_id" field.
-func (_u *OrgUnitUpdateOne) ClearLegalEntityOrgID() *OrgUnitUpdateOne {
-	_u.mutation.ClearLegalEntityOrgID()
-	return _u
-}
-
-// SetTaxID sets the "tax_id" field.
-func (_u *OrgUnitUpdateOne) SetTaxID(v string) *OrgUnitUpdateOne {
-	_u.mutation.SetTaxID(v)
-	return _u
-}
-
-// SetNillableTaxID sets the "tax_id" field if the given value is not nil.
-func (_u *OrgUnitUpdateOne) SetNillableTaxID(v *string) *OrgUnitUpdateOne {
-	if v != nil {
-		_u.SetTaxID(*v)
-	}
-	return _u
-}
-
-// ClearTaxID clears the value of the "tax_id" field.
-func (_u *OrgUnitUpdateOne) ClearTaxID() *OrgUnitUpdateOne {
-	_u.mutation.ClearTaxID()
-	return _u
-}
-
-// SetRegistrationNumber sets the "registration_number" field.
-func (_u *OrgUnitUpdateOne) SetRegistrationNumber(v string) *OrgUnitUpdateOne {
-	_u.mutation.SetRegistrationNumber(v)
-	return _u
-}
-
-// SetNillableRegistrationNumber sets the "registration_number" field if the given value is not nil.
-func (_u *OrgUnitUpdateOne) SetNillableRegistrationNumber(v *string) *OrgUnitUpdateOne {
-	if v != nil {
-		_u.SetRegistrationNumber(*v)
-	}
-	return _u
-}
-
-// ClearRegistrationNumber clears the value of the "registration_number" field.
-func (_u *OrgUnitUpdateOne) ClearRegistrationNumber() *OrgUnitUpdateOne {
-	_u.mutation.ClearRegistrationNumber()
 	return _u
 }
 
@@ -1744,70 +1452,142 @@ func (_u *OrgUnitUpdateOne) ClearLeaderID() *OrgUnitUpdateOne {
 	return _u
 }
 
-// SetContactUserID sets the "contact_user_id" field.
-func (_u *OrgUnitUpdateOne) SetContactUserID(v uint32) *OrgUnitUpdateOne {
-	_u.mutation.ResetContactUserID()
-	_u.mutation.SetContactUserID(v)
+// SetType sets the "type" field.
+func (_u *OrgUnitUpdateOne) SetType(v orgunit.Type) *OrgUnitUpdateOne {
+	_u.mutation.SetType(v)
 	return _u
 }
 
-// SetNillableContactUserID sets the "contact_user_id" field if the given value is not nil.
-func (_u *OrgUnitUpdateOne) SetNillableContactUserID(v *uint32) *OrgUnitUpdateOne {
+// SetNillableType sets the "type" field if the given value is not nil.
+func (_u *OrgUnitUpdateOne) SetNillableType(v *orgunit.Type) *OrgUnitUpdateOne {
 	if v != nil {
-		_u.SetContactUserID(*v)
+		_u.SetType(*v)
 	}
 	return _u
 }
 
-// AddContactUserID adds value to the "contact_user_id" field.
-func (_u *OrgUnitUpdateOne) AddContactUserID(v int32) *OrgUnitUpdateOne {
-	_u.mutation.AddContactUserID(v)
+// SetBusinessScopes sets the "business_scopes" field.
+func (_u *OrgUnitUpdateOne) SetBusinessScopes(v []string) *OrgUnitUpdateOne {
+	_u.mutation.SetBusinessScopes(v)
 	return _u
 }
 
-// ClearContactUserID clears the value of the "contact_user_id" field.
-func (_u *OrgUnitUpdateOne) ClearContactUserID() *OrgUnitUpdateOne {
-	_u.mutation.ClearContactUserID()
+// AppendBusinessScopes appends value to the "business_scopes" field.
+func (_u *OrgUnitUpdateOne) AppendBusinessScopes(v []string) *OrgUnitUpdateOne {
+	_u.mutation.AppendBusinessScopes(v)
 	return _u
 }
 
-// SetStartAt sets the "start_at" field.
-func (_u *OrgUnitUpdateOne) SetStartAt(v time.Time) *OrgUnitUpdateOne {
-	_u.mutation.SetStartAt(v)
+// ClearBusinessScopes clears the value of the "business_scopes" field.
+func (_u *OrgUnitUpdateOne) ClearBusinessScopes() *OrgUnitUpdateOne {
+	_u.mutation.ClearBusinessScopes()
 	return _u
 }
 
-// SetNillableStartAt sets the "start_at" field if the given value is not nil.
-func (_u *OrgUnitUpdateOne) SetNillableStartAt(v *time.Time) *OrgUnitUpdateOne {
+// SetExternalID sets the "external_id" field.
+func (_u *OrgUnitUpdateOne) SetExternalID(v string) *OrgUnitUpdateOne {
+	_u.mutation.SetExternalID(v)
+	return _u
+}
+
+// SetNillableExternalID sets the "external_id" field if the given value is not nil.
+func (_u *OrgUnitUpdateOne) SetNillableExternalID(v *string) *OrgUnitUpdateOne {
 	if v != nil {
-		_u.SetStartAt(*v)
+		_u.SetExternalID(*v)
 	}
 	return _u
 }
 
-// ClearStartAt clears the value of the "start_at" field.
-func (_u *OrgUnitUpdateOne) ClearStartAt() *OrgUnitUpdateOne {
-	_u.mutation.ClearStartAt()
+// ClearExternalID clears the value of the "external_id" field.
+func (_u *OrgUnitUpdateOne) ClearExternalID() *OrgUnitUpdateOne {
+	_u.mutation.ClearExternalID()
 	return _u
 }
 
-// SetEndAt sets the "end_at" field.
-func (_u *OrgUnitUpdateOne) SetEndAt(v time.Time) *OrgUnitUpdateOne {
-	_u.mutation.SetEndAt(v)
+// SetIsLegalEntity sets the "is_legal_entity" field.
+func (_u *OrgUnitUpdateOne) SetIsLegalEntity(v bool) *OrgUnitUpdateOne {
+	_u.mutation.SetIsLegalEntity(v)
 	return _u
 }
 
-// SetNillableEndAt sets the "end_at" field if the given value is not nil.
-func (_u *OrgUnitUpdateOne) SetNillableEndAt(v *time.Time) *OrgUnitUpdateOne {
+// SetNillableIsLegalEntity sets the "is_legal_entity" field if the given value is not nil.
+func (_u *OrgUnitUpdateOne) SetNillableIsLegalEntity(v *bool) *OrgUnitUpdateOne {
 	if v != nil {
-		_u.SetEndAt(*v)
+		_u.SetIsLegalEntity(*v)
 	}
 	return _u
 }
 
-// ClearEndAt clears the value of the "end_at" field.
-func (_u *OrgUnitUpdateOne) ClearEndAt() *OrgUnitUpdateOne {
-	_u.mutation.ClearEndAt()
+// ClearIsLegalEntity clears the value of the "is_legal_entity" field.
+func (_u *OrgUnitUpdateOne) ClearIsLegalEntity() *OrgUnitUpdateOne {
+	_u.mutation.ClearIsLegalEntity()
+	return _u
+}
+
+// SetRegistrationNumber sets the "registration_number" field.
+func (_u *OrgUnitUpdateOne) SetRegistrationNumber(v string) *OrgUnitUpdateOne {
+	_u.mutation.SetRegistrationNumber(v)
+	return _u
+}
+
+// SetNillableRegistrationNumber sets the "registration_number" field if the given value is not nil.
+func (_u *OrgUnitUpdateOne) SetNillableRegistrationNumber(v *string) *OrgUnitUpdateOne {
+	if v != nil {
+		_u.SetRegistrationNumber(*v)
+	}
+	return _u
+}
+
+// ClearRegistrationNumber clears the value of the "registration_number" field.
+func (_u *OrgUnitUpdateOne) ClearRegistrationNumber() *OrgUnitUpdateOne {
+	_u.mutation.ClearRegistrationNumber()
+	return _u
+}
+
+// SetTaxID sets the "tax_id" field.
+func (_u *OrgUnitUpdateOne) SetTaxID(v string) *OrgUnitUpdateOne {
+	_u.mutation.SetTaxID(v)
+	return _u
+}
+
+// SetNillableTaxID sets the "tax_id" field if the given value is not nil.
+func (_u *OrgUnitUpdateOne) SetNillableTaxID(v *string) *OrgUnitUpdateOne {
+	if v != nil {
+		_u.SetTaxID(*v)
+	}
+	return _u
+}
+
+// ClearTaxID clears the value of the "tax_id" field.
+func (_u *OrgUnitUpdateOne) ClearTaxID() *OrgUnitUpdateOne {
+	_u.mutation.ClearTaxID()
+	return _u
+}
+
+// SetLegalEntityOrgID sets the "legal_entity_org_id" field.
+func (_u *OrgUnitUpdateOne) SetLegalEntityOrgID(v uint32) *OrgUnitUpdateOne {
+	_u.mutation.ResetLegalEntityOrgID()
+	_u.mutation.SetLegalEntityOrgID(v)
+	return _u
+}
+
+// SetNillableLegalEntityOrgID sets the "legal_entity_org_id" field if the given value is not nil.
+func (_u *OrgUnitUpdateOne) SetNillableLegalEntityOrgID(v *uint32) *OrgUnitUpdateOne {
+	if v != nil {
+		_u.SetLegalEntityOrgID(*v)
+	}
+	return _u
+}
+
+// AddLegalEntityOrgID adds value to the "legal_entity_org_id" field.
+func (_u *OrgUnitUpdateOne) AddLegalEntityOrgID(v int32) *OrgUnitUpdateOne {
+	_u.mutation.AddLegalEntityOrgID(v)
+	return _u
+}
+
+// ClearLegalEntityOrgID clears the value of the "legal_entity_org_id" field.
+func (_u *OrgUnitUpdateOne) ClearLegalEntityOrgID() *OrgUnitUpdateOne {
+	_u.mutation.ClearLegalEntityOrgID()
 	return _u
 }
 
@@ -1871,26 +1651,6 @@ func (_u *OrgUnitUpdateOne) ClearEmail() *OrgUnitUpdateOne {
 	return _u
 }
 
-// SetWebsite sets the "website" field.
-func (_u *OrgUnitUpdateOne) SetWebsite(v string) *OrgUnitUpdateOne {
-	_u.mutation.SetWebsite(v)
-	return _u
-}
-
-// SetNillableWebsite sets the "website" field if the given value is not nil.
-func (_u *OrgUnitUpdateOne) SetNillableWebsite(v *string) *OrgUnitUpdateOne {
-	if v != nil {
-		_u.SetWebsite(*v)
-	}
-	return _u
-}
-
-// ClearWebsite clears the value of the "website" field.
-func (_u *OrgUnitUpdateOne) ClearWebsite() *OrgUnitUpdateOne {
-	_u.mutation.ClearWebsite()
-	return _u
-}
-
 // SetTimezone sets the "timezone" field.
 func (_u *OrgUnitUpdateOne) SetTimezone(v string) *OrgUnitUpdateOne {
 	_u.mutation.SetTimezone(v)
@@ -1911,26 +1671,6 @@ func (_u *OrgUnitUpdateOne) ClearTimezone() *OrgUnitUpdateOne {
 	return _u
 }
 
-// SetRegion sets the "region" field.
-func (_u *OrgUnitUpdateOne) SetRegion(v string) *OrgUnitUpdateOne {
-	_u.mutation.SetRegion(v)
-	return _u
-}
-
-// SetNillableRegion sets the "region" field if the given value is not nil.
-func (_u *OrgUnitUpdateOne) SetNillableRegion(v *string) *OrgUnitUpdateOne {
-	if v != nil {
-		_u.SetRegion(*v)
-	}
-	return _u
-}
-
-// ClearRegion clears the value of the "region" field.
-func (_u *OrgUnitUpdateOne) ClearRegion() *OrgUnitUpdateOne {
-	_u.mutation.ClearRegion()
-	return _u
-}
-
 // SetCountry sets the "country" field.
 func (_u *OrgUnitUpdateOne) SetCountry(v string) *OrgUnitUpdateOne {
 	_u.mutation.SetCountry(v)
@@ -1948,46 +1688,6 @@ func (_u *OrgUnitUpdateOne) SetNillableCountry(v *string) *OrgUnitUpdateOne {
 // ClearCountry clears the value of the "country" field.
 func (_u *OrgUnitUpdateOne) ClearCountry() *OrgUnitUpdateOne {
 	_u.mutation.ClearCountry()
-	return _u
-}
-
-// SetCity sets the "city" field.
-func (_u *OrgUnitUpdateOne) SetCity(v string) *OrgUnitUpdateOne {
-	_u.mutation.SetCity(v)
-	return _u
-}
-
-// SetNillableCity sets the "city" field if the given value is not nil.
-func (_u *OrgUnitUpdateOne) SetNillableCity(v *string) *OrgUnitUpdateOne {
-	if v != nil {
-		_u.SetCity(*v)
-	}
-	return _u
-}
-
-// ClearCity clears the value of the "city" field.
-func (_u *OrgUnitUpdateOne) ClearCity() *OrgUnitUpdateOne {
-	_u.mutation.ClearCity()
-	return _u
-}
-
-// SetPostalCode sets the "postal_code" field.
-func (_u *OrgUnitUpdateOne) SetPostalCode(v string) *OrgUnitUpdateOne {
-	_u.mutation.SetPostalCode(v)
-	return _u
-}
-
-// SetNillablePostalCode sets the "postal_code" field if the given value is not nil.
-func (_u *OrgUnitUpdateOne) SetNillablePostalCode(v *string) *OrgUnitUpdateOne {
-	if v != nil {
-		_u.SetPostalCode(*v)
-	}
-	return _u
-}
-
-// ClearPostalCode clears the value of the "postal_code" field.
-func (_u *OrgUnitUpdateOne) ClearPostalCode() *OrgUnitUpdateOne {
-	_u.mutation.ClearPostalCode()
 	return _u
 }
 
@@ -2045,23 +1745,88 @@ func (_u *OrgUnitUpdateOne) ClearLongitude() *OrgUnitUpdateOne {
 	return _u
 }
 
-// SetLogo sets the "logo" field.
-func (_u *OrgUnitUpdateOne) SetLogo(v string) *OrgUnitUpdateOne {
-	_u.mutation.SetLogo(v)
+// SetStartAt sets the "start_at" field.
+func (_u *OrgUnitUpdateOne) SetStartAt(v time.Time) *OrgUnitUpdateOne {
+	_u.mutation.SetStartAt(v)
 	return _u
 }
 
-// SetNillableLogo sets the "logo" field if the given value is not nil.
-func (_u *OrgUnitUpdateOne) SetNillableLogo(v *string) *OrgUnitUpdateOne {
+// SetNillableStartAt sets the "start_at" field if the given value is not nil.
+func (_u *OrgUnitUpdateOne) SetNillableStartAt(v *time.Time) *OrgUnitUpdateOne {
 	if v != nil {
-		_u.SetLogo(*v)
+		_u.SetStartAt(*v)
 	}
 	return _u
 }
 
-// ClearLogo clears the value of the "logo" field.
-func (_u *OrgUnitUpdateOne) ClearLogo() *OrgUnitUpdateOne {
-	_u.mutation.ClearLogo()
+// ClearStartAt clears the value of the "start_at" field.
+func (_u *OrgUnitUpdateOne) ClearStartAt() *OrgUnitUpdateOne {
+	_u.mutation.ClearStartAt()
+	return _u
+}
+
+// SetEndAt sets the "end_at" field.
+func (_u *OrgUnitUpdateOne) SetEndAt(v time.Time) *OrgUnitUpdateOne {
+	_u.mutation.SetEndAt(v)
+	return _u
+}
+
+// SetNillableEndAt sets the "end_at" field if the given value is not nil.
+func (_u *OrgUnitUpdateOne) SetNillableEndAt(v *time.Time) *OrgUnitUpdateOne {
+	if v != nil {
+		_u.SetEndAt(*v)
+	}
+	return _u
+}
+
+// ClearEndAt clears the value of the "end_at" field.
+func (_u *OrgUnitUpdateOne) ClearEndAt() *OrgUnitUpdateOne {
+	_u.mutation.ClearEndAt()
+	return _u
+}
+
+// SetContactUserID sets the "contact_user_id" field.
+func (_u *OrgUnitUpdateOne) SetContactUserID(v uint32) *OrgUnitUpdateOne {
+	_u.mutation.ResetContactUserID()
+	_u.mutation.SetContactUserID(v)
+	return _u
+}
+
+// SetNillableContactUserID sets the "contact_user_id" field if the given value is not nil.
+func (_u *OrgUnitUpdateOne) SetNillableContactUserID(v *uint32) *OrgUnitUpdateOne {
+	if v != nil {
+		_u.SetContactUserID(*v)
+	}
+	return _u
+}
+
+// AddContactUserID adds value to the "contact_user_id" field.
+func (_u *OrgUnitUpdateOne) AddContactUserID(v int32) *OrgUnitUpdateOne {
+	_u.mutation.AddContactUserID(v)
+	return _u
+}
+
+// ClearContactUserID clears the value of the "contact_user_id" field.
+func (_u *OrgUnitUpdateOne) ClearContactUserID() *OrgUnitUpdateOne {
+	_u.mutation.ClearContactUserID()
+	return _u
+}
+
+// SetPermissionTags sets the "permission_tags" field.
+func (_u *OrgUnitUpdateOne) SetPermissionTags(v []string) *OrgUnitUpdateOne {
+	_u.mutation.SetPermissionTags(v)
+	return _u
+}
+
+// AppendPermissionTags appends value to the "permission_tags" field.
+func (_u *OrgUnitUpdateOne) AppendPermissionTags(v []string) *OrgUnitUpdateOne {
+	_u.mutation.AppendPermissionTags(v)
+	return _u
+}
+
+// ClearPermissionTags clears the value of the "permission_tags" field.
+func (_u *OrgUnitUpdateOne) ClearPermissionTags() *OrgUnitUpdateOne {
+	_u.mutation.ClearPermissionTags()
 	return _u
 }
 
@@ -2169,11 +1934,6 @@ func (_u *OrgUnitUpdateOne) check() error {
 			return &ValidationError{Name: "path", err: fmt.Errorf(`ent: validator failed for field "OrgUnit.path": %w`, err)}
 		}
 	}
-	if v, ok := _u.mutation.Code(); ok {
-		if err := orgunit.CodeValidator(v); err != nil {
-			return &ValidationError{Name: "code", err: fmt.Errorf(`ent: validator failed for field "OrgUnit.code": %w`, err)}
-		}
-	}
 	if v, ok := _u.mutation.Name(); ok {
 		if err := orgunit.NameValidator(v); err != nil {
 			return &ValidationError{Name: "name", err: fmt.Errorf(`ent: validator failed for field "OrgUnit.name": %w`, err)}
@@ -2182,71 +1942,6 @@ func (_u *OrgUnitUpdateOne) check() error {
 	if v, ok := _u.mutation.GetType(); ok {
 		if err := orgunit.TypeValidator(v); err != nil {
 			return &ValidationError{Name: "type", err: fmt.Errorf(`ent: validator failed for field "OrgUnit.type": %w`, err)}
-		}
-	}
-	if v, ok := _u.mutation.ExternalID(); ok {
-		if err := orgunit.ExternalIDValidator(v); err != nil {
-			return &ValidationError{Name: "external_id", err: fmt.Errorf(`ent: validator failed for field "OrgUnit.external_id": %w`, err)}
-		}
-	}
-	if v, ok := _u.mutation.TaxID(); ok {
-		if err := orgunit.TaxIDValidator(v); err != nil {
-			return &ValidationError{Name: "tax_id", err: fmt.Errorf(`ent: validator failed for field "OrgUnit.tax_id": %w`, err)}
-		}
-	}
-	if v, ok := _u.mutation.RegistrationNumber(); ok {
-		if err := orgunit.RegistrationNumberValidator(v); err != nil {
-			return &ValidationError{Name: "registration_number", err: fmt.Errorf(`ent: validator failed for field "OrgUnit.registration_number": %w`, err)}
-		}
-	}
-	if v, ok := _u.mutation.Address(); ok {
-		if err := orgunit.AddressValidator(v); err != nil {
-			return &ValidationError{Name: "address", err: fmt.Errorf(`ent: validator failed for field "OrgUnit.address": %w`, err)}
-		}
-	}
-	if v, ok := _u.mutation.Phone(); ok {
-		if err := orgunit.PhoneValidator(v); err != nil {
-			return &ValidationError{Name: "phone", err: fmt.Errorf(`ent: validator failed for field "OrgUnit.phone": %w`, err)}
-		}
-	}
-	if v, ok := _u.mutation.Email(); ok {
-		if err := orgunit.EmailValidator(v); err != nil {
-			return &ValidationError{Name: "email", err: fmt.Errorf(`ent: validator failed for field "OrgUnit.email": %w`, err)}
-		}
-	}
-	if v, ok := _u.mutation.Website(); ok {
-		if err := orgunit.WebsiteValidator(v); err != nil {
-			return &ValidationError{Name: "website", err: fmt.Errorf(`ent: validator failed for field "OrgUnit.website": %w`, err)}
-		}
-	}
-	if v, ok := _u.mutation.Timezone(); ok {
-		if err := orgunit.TimezoneValidator(v); err != nil {
-			return &ValidationError{Name: "timezone", err: fmt.Errorf(`ent: validator failed for field "OrgUnit.timezone": %w`, err)}
-		}
-	}
-	if v, ok := _u.mutation.Region(); ok {
-		if err := orgunit.RegionValidator(v); err != nil {
-			return &ValidationError{Name: "region", err: fmt.Errorf(`ent: validator failed for field "OrgUnit.region": %w`, err)}
-		}
-	}
-	if v, ok := _u.mutation.Country(); ok {
-		if err := orgunit.CountryValidator(v); err != nil {
-			return &ValidationError{Name: "country", err: fmt.Errorf(`ent: validator failed for field "OrgUnit.country": %w`, err)}
-		}
-	}
-	if v, ok := _u.mutation.City(); ok {
-		if err := orgunit.CityValidator(v); err != nil {
-			return &ValidationError{Name: "city", err: fmt.Errorf(`ent: validator failed for field "OrgUnit.city": %w`, err)}
-		}
-	}
-	if v, ok := _u.mutation.PostalCode(); ok {
-		if err := orgunit.PostalCodeValidator(v); err != nil {
-			return &ValidationError{Name: "postal_code", err: fmt.Errorf(`ent: validator failed for field "OrgUnit.postal_code": %w`, err)}
-		}
-	}
-	if v, ok := _u.mutation.Logo(); ok {
-		if err := orgunit.LogoValidator(v); err != nil {
-			return &ValidationError{Name: "logo", err: fmt.Errorf(`ent: validator failed for field "OrgUnit.logo": %w`, err)}
 		}
 	}
 	return nil
@@ -2362,56 +2057,14 @@ func (_u *OrgUnitUpdateOne) sqlSave(ctx context.Context) (_node *OrgUnit, err er
 	if _u.mutation.PathCleared() {
 		_spec.ClearField(orgunit.FieldPath, field.TypeString)
 	}
+	if value, ok := _u.mutation.Name(); ok {
+		_spec.SetField(orgunit.FieldName, field.TypeString, value)
+	}
 	if value, ok := _u.mutation.Code(); ok {
 		_spec.SetField(orgunit.FieldCode, field.TypeString, value)
 	}
 	if _u.mutation.CodeCleared() {
 		_spec.ClearField(orgunit.FieldCode, field.TypeString)
-	}
-	if value, ok := _u.mutation.Name(); ok {
-		_spec.SetField(orgunit.FieldName, field.TypeString, value)
-	}
-	if _u.mutation.NameCleared() {
-		_spec.ClearField(orgunit.FieldName, field.TypeString)
-	}
-	if value, ok := _u.mutation.GetType(); ok {
-		_spec.SetField(orgunit.FieldType, field.TypeString, value)
-	}
-	if _u.mutation.TypeCleared() {
-		_spec.ClearField(orgunit.FieldType, field.TypeString)
-	}
-	if value, ok := _u.mutation.IsLegalEntity(); ok {
-		_spec.SetField(orgunit.FieldIsLegalEntity, field.TypeBool, value)
-	}
-	if _u.mutation.IsLegalEntityCleared() {
-		_spec.ClearField(orgunit.FieldIsLegalEntity, field.TypeBool)
-	}
-	if value, ok := _u.mutation.ExternalID(); ok {
-		_spec.SetField(orgunit.FieldExternalID, field.TypeString, value)
-	}
-	if _u.mutation.ExternalIDCleared() {
-		_spec.ClearField(orgunit.FieldExternalID, field.TypeString)
-	}
-	if value, ok := _u.mutation.LegalEntityOrgID(); ok {
-		_spec.SetField(orgunit.FieldLegalEntityOrgID, field.TypeUint32, value)
-	}
-	if value, ok := _u.mutation.AddedLegalEntityOrgID(); ok {
-		_spec.AddField(orgunit.FieldLegalEntityOrgID, field.TypeUint32, value)
-	}
-	if _u.mutation.LegalEntityOrgIDCleared() {
-		_spec.ClearField(orgunit.FieldLegalEntityOrgID, field.TypeUint32)
-	}
-	if value, ok := _u.mutation.TaxID(); ok {
-		_spec.SetField(orgunit.FieldTaxID, field.TypeString, value)
-	}
-	if _u.mutation.TaxIDCleared() {
-		_spec.ClearField(orgunit.FieldTaxID, field.TypeString)
-	}
-	if value, ok := _u.mutation.RegistrationNumber(); ok {
-		_spec.SetField(orgunit.FieldRegistrationNumber, field.TypeString, value)
-	}
-	if _u.mutation.RegistrationNumberCleared() {
-		_spec.ClearField(orgunit.FieldRegistrationNumber, field.TypeString)
 	}
 	if value, ok := _u.mutation.LeaderID(); ok {
 		_spec.SetField(orgunit.FieldLeaderID, field.TypeUint32, value)
@@ -2422,26 +2075,52 @@ func (_u *OrgUnitUpdateOne) sqlSave(ctx context.Context) (_node *OrgUnit, err er
 	if _u.mutation.LeaderIDCleared() {
 		_spec.ClearField(orgunit.FieldLeaderID, field.TypeUint32)
 	}
-	if value, ok := _u.mutation.ContactUserID(); ok {
-		_spec.SetField(orgunit.FieldContactUserID, field.TypeUint32, value)
+	if value, ok := _u.mutation.GetType(); ok {
+		_spec.SetField(orgunit.FieldType, field.TypeEnum, value)
 	}
-	if value, ok := _u.mutation.AddedContactUserID(); ok {
-		_spec.AddField(orgunit.FieldContactUserID, field.TypeUint32, value)
+	if value, ok := _u.mutation.BusinessScopes(); ok {
+		_spec.SetField(orgunit.FieldBusinessScopes, field.TypeJSON, value)
 	}
-	if _u.mutation.ContactUserIDCleared() {
-		_spec.ClearField(orgunit.FieldContactUserID, field.TypeUint32)
+	if value, ok := _u.mutation.AppendedBusinessScopes(); ok {
+		_spec.AddModifier(func(u *sql.UpdateBuilder) {
+			sqljson.Append(u, orgunit.FieldBusinessScopes, value)
+		})
 	}
-	if value, ok := _u.mutation.StartAt(); ok {
-		_spec.SetField(orgunit.FieldStartAt, field.TypeTime, value)
+	if _u.mutation.BusinessScopesCleared() {
+		_spec.ClearField(orgunit.FieldBusinessScopes, field.TypeJSON)
 	}
-	if _u.mutation.StartAtCleared() {
-		_spec.ClearField(orgunit.FieldStartAt, field.TypeTime)
+	if value, ok := _u.mutation.ExternalID(); ok {
+		_spec.SetField(orgunit.FieldExternalID, field.TypeString, value)
 	}
-	if value, ok := _u.mutation.EndAt(); ok {
-		_spec.SetField(orgunit.FieldEndAt, field.TypeTime, value)
+	if _u.mutation.ExternalIDCleared() {
+		_spec.ClearField(orgunit.FieldExternalID, field.TypeString)
 	}
-	if _u.mutation.EndAtCleared() {
-		_spec.ClearField(orgunit.FieldEndAt, field.TypeTime)
+	if value, ok := _u.mutation.IsLegalEntity(); ok {
+		_spec.SetField(orgunit.FieldIsLegalEntity, field.TypeBool, value)
+	}
+	if _u.mutation.IsLegalEntityCleared() {
+		_spec.ClearField(orgunit.FieldIsLegalEntity, field.TypeBool)
+	}
+	if value, ok := _u.mutation.RegistrationNumber(); ok {
+		_spec.SetField(orgunit.FieldRegistrationNumber, field.TypeString, value)
+	}
+	if _u.mutation.RegistrationNumberCleared() {
+		_spec.ClearField(orgunit.FieldRegistrationNumber, field.TypeString)
+	}
+	if value, ok := _u.mutation.TaxID(); ok {
+		_spec.SetField(orgunit.FieldTaxID, field.TypeString, value)
+	}
+	if _u.mutation.TaxIDCleared() {
+		_spec.ClearField(orgunit.FieldTaxID, field.TypeString)
+	}
+	if value, ok := _u.mutation.LegalEntityOrgID(); ok {
+		_spec.SetField(orgunit.FieldLegalEntityOrgID, field.TypeUint32, value)
+	}
+	if value, ok := _u.mutation.AddedLegalEntityOrgID(); ok {
+		_spec.AddField(orgunit.FieldLegalEntityOrgID, field.TypeUint32, value)
+	}
+	if _u.mutation.LegalEntityOrgIDCleared() {
+		_spec.ClearField(orgunit.FieldLegalEntityOrgID, field.TypeUint32)
 	}
 	if value, ok := _u.mutation.Address(); ok {
 		_spec.SetField(orgunit.FieldAddress, field.TypeString, value)
@@ -2461,41 +2140,17 @@ func (_u *OrgUnitUpdateOne) sqlSave(ctx context.Context) (_node *OrgUnit, err er
 	if _u.mutation.EmailCleared() {
 		_spec.ClearField(orgunit.FieldEmail, field.TypeString)
 	}
-	if value, ok := _u.mutation.Website(); ok {
-		_spec.SetField(orgunit.FieldWebsite, field.TypeString, value)
-	}
-	if _u.mutation.WebsiteCleared() {
-		_spec.ClearField(orgunit.FieldWebsite, field.TypeString)
-	}
 	if value, ok := _u.mutation.Timezone(); ok {
 		_spec.SetField(orgunit.FieldTimezone, field.TypeString, value)
 	}
 	if _u.mutation.TimezoneCleared() {
 		_spec.ClearField(orgunit.FieldTimezone, field.TypeString)
 	}
-	if value, ok := _u.mutation.Region(); ok {
-		_spec.SetField(orgunit.FieldRegion, field.TypeString, value)
-	}
-	if _u.mutation.RegionCleared() {
-		_spec.ClearField(orgunit.FieldRegion, field.TypeString)
-	}
 	if value, ok := _u.mutation.Country(); ok {
 		_spec.SetField(orgunit.FieldCountry, field.TypeString, value)
 	}
 	if _u.mutation.CountryCleared() {
 		_spec.ClearField(orgunit.FieldCountry, field.TypeString)
-	}
-	if value, ok := _u.mutation.City(); ok {
-		_spec.SetField(orgunit.FieldCity, field.TypeString, value)
-	}
-	if _u.mutation.CityCleared() {
-		_spec.ClearField(orgunit.FieldCity, field.TypeString)
-	}
-	if value, ok := _u.mutation.PostalCode(); ok {
-		_spec.SetField(orgunit.FieldPostalCode, field.TypeString, value)
-	}
-	if _u.mutation.PostalCodeCleared() {
-		_spec.ClearField(orgunit.FieldPostalCode, field.TypeString)
 	}
 	if value, ok := _u.mutation.Latitude(); ok {
 		_spec.SetField(orgunit.FieldLatitude, field.TypeFloat64, value)
@@ -2515,11 +2170,37 @@ func (_u *OrgUnitUpdateOne) sqlSave(ctx context.Context) (_node *OrgUnit, err er
 	if _u.mutation.LongitudeCleared() {
 		_spec.ClearField(orgunit.FieldLongitude, field.TypeFloat64)
 	}
-	if value, ok := _u.mutation.Logo(); ok {
-		_spec.SetField(orgunit.FieldLogo, field.TypeString, value)
+	if value, ok := _u.mutation.StartAt(); ok {
+		_spec.SetField(orgunit.FieldStartAt, field.TypeTime, value)
 	}
-	if _u.mutation.LogoCleared() {
-		_spec.ClearField(orgunit.FieldLogo, field.TypeString)
+	if _u.mutation.StartAtCleared() {
+		_spec.ClearField(orgunit.FieldStartAt, field.TypeTime)
+	}
+	if value, ok := _u.mutation.EndAt(); ok {
+		_spec.SetField(orgunit.FieldEndAt, field.TypeTime, value)
+	}
+	if _u.mutation.EndAtCleared() {
+		_spec.ClearField(orgunit.FieldEndAt, field.TypeTime)
+	}
+	if value, ok := _u.mutation.ContactUserID(); ok {
+		_spec.SetField(orgunit.FieldContactUserID, field.TypeUint32, value)
+	}
+	if value, ok := _u.mutation.AddedContactUserID(); ok {
+		_spec.AddField(orgunit.FieldContactUserID, field.TypeUint32, value)
+	}
+	if _u.mutation.ContactUserIDCleared() {
+		_spec.ClearField(orgunit.FieldContactUserID, field.TypeUint32)
+	}
+	if value, ok := _u.mutation.PermissionTags(); ok {
+		_spec.SetField(orgunit.FieldPermissionTags, field.TypeJSON, value)
+	}
+	if value, ok := _u.mutation.AppendedPermissionTags(); ok {
+		_spec.AddModifier(func(u *sql.UpdateBuilder) {
+			sqljson.Append(u, orgunit.FieldPermissionTags, value)
+		})
+	}
+	if _u.mutation.PermissionTagsCleared() {
+		_spec.ClearField(orgunit.FieldPermissionTags, field.TypeJSON)
 	}
 	if _u.mutation.ParentCleared() {
 		edge := &sqlgraph.EdgeSpec{

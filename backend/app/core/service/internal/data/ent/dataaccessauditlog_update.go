@@ -6,9 +6,9 @@ import (
 	"context"
 	"errors"
 	"fmt"
+	auditpb "go-wind-ledger/api/gen/go/audit/service/v1"
 	"go-wind-ledger/app/core/service/internal/data/ent/dataaccessauditlog"
 	"go-wind-ledger/app/core/service/internal/data/ent/predicate"
-	"time"
 
 	"entgo.io/ent/dialect/sql"
 	"entgo.io/ent/dialect/sql/sqlgraph"
@@ -26,113 +26,6 @@ type DataAccessAuditLogUpdate struct {
 // Where appends a list predicates to the DataAccessAuditLogUpdate builder.
 func (_u *DataAccessAuditLogUpdate) Where(ps ...predicate.DataAccessAuditLog) *DataAccessAuditLogUpdate {
 	_u.mutation.Where(ps...)
-	return _u
-}
-
-// SetUpdatedAt sets the "updated_at" field.
-func (_u *DataAccessAuditLogUpdate) SetUpdatedAt(v time.Time) *DataAccessAuditLogUpdate {
-	_u.mutation.SetUpdatedAt(v)
-	return _u
-}
-
-// SetNillableUpdatedAt sets the "updated_at" field if the given value is not nil.
-func (_u *DataAccessAuditLogUpdate) SetNillableUpdatedAt(v *time.Time) *DataAccessAuditLogUpdate {
-	if v != nil {
-		_u.SetUpdatedAt(*v)
-	}
-	return _u
-}
-
-// ClearUpdatedAt clears the value of the "updated_at" field.
-func (_u *DataAccessAuditLogUpdate) ClearUpdatedAt() *DataAccessAuditLogUpdate {
-	_u.mutation.ClearUpdatedAt()
-	return _u
-}
-
-// SetDeletedAt sets the "deleted_at" field.
-func (_u *DataAccessAuditLogUpdate) SetDeletedAt(v time.Time) *DataAccessAuditLogUpdate {
-	_u.mutation.SetDeletedAt(v)
-	return _u
-}
-
-// SetNillableDeletedAt sets the "deleted_at" field if the given value is not nil.
-func (_u *DataAccessAuditLogUpdate) SetNillableDeletedAt(v *time.Time) *DataAccessAuditLogUpdate {
-	if v != nil {
-		_u.SetDeletedAt(*v)
-	}
-	return _u
-}
-
-// ClearDeletedAt clears the value of the "deleted_at" field.
-func (_u *DataAccessAuditLogUpdate) ClearDeletedAt() *DataAccessAuditLogUpdate {
-	_u.mutation.ClearDeletedAt()
-	return _u
-}
-
-// SetOperatorID sets the "operator_id" field.
-func (_u *DataAccessAuditLogUpdate) SetOperatorID(v uint32) *DataAccessAuditLogUpdate {
-	_u.mutation.ResetOperatorID()
-	_u.mutation.SetOperatorID(v)
-	return _u
-}
-
-// SetNillableOperatorID sets the "operator_id" field if the given value is not nil.
-func (_u *DataAccessAuditLogUpdate) SetNillableOperatorID(v *uint32) *DataAccessAuditLogUpdate {
-	if v != nil {
-		_u.SetOperatorID(*v)
-	}
-	return _u
-}
-
-// AddOperatorID adds value to the "operator_id" field.
-func (_u *DataAccessAuditLogUpdate) AddOperatorID(v int32) *DataAccessAuditLogUpdate {
-	_u.mutation.AddOperatorID(v)
-	return _u
-}
-
-// ClearOperatorID clears the value of the "operator_id" field.
-func (_u *DataAccessAuditLogUpdate) ClearOperatorID() *DataAccessAuditLogUpdate {
-	_u.mutation.ClearOperatorID()
-	return _u
-}
-
-// SetResource sets the "resource" field.
-func (_u *DataAccessAuditLogUpdate) SetResource(v string) *DataAccessAuditLogUpdate {
-	_u.mutation.SetResource(v)
-	return _u
-}
-
-// SetNillableResource sets the "resource" field if the given value is not nil.
-func (_u *DataAccessAuditLogUpdate) SetNillableResource(v *string) *DataAccessAuditLogUpdate {
-	if v != nil {
-		_u.SetResource(*v)
-	}
-	return _u
-}
-
-// ClearResource clears the value of the "resource" field.
-func (_u *DataAccessAuditLogUpdate) ClearResource() *DataAccessAuditLogUpdate {
-	_u.mutation.ClearResource()
-	return _u
-}
-
-// SetAction sets the "action" field.
-func (_u *DataAccessAuditLogUpdate) SetAction(v string) *DataAccessAuditLogUpdate {
-	_u.mutation.SetAction(v)
-	return _u
-}
-
-// SetNillableAction sets the "action" field if the given value is not nil.
-func (_u *DataAccessAuditLogUpdate) SetNillableAction(v *string) *DataAccessAuditLogUpdate {
-	if v != nil {
-		_u.SetAction(*v)
-	}
-	return _u
-}
-
-// ClearAction clears the value of the "action" field.
-func (_u *DataAccessAuditLogUpdate) ClearAction() *DataAccessAuditLogUpdate {
-	_u.mutation.ClearAction()
 	return _u
 }
 
@@ -183,46 +76,6 @@ func (_u *DataAccessAuditLogUpdate) ClearUsername() *DataAccessAuditLogUpdate {
 	return _u
 }
 
-// SetAccessType sets the "access_type" field.
-func (_u *DataAccessAuditLogUpdate) SetAccessType(v dataaccessauditlog.AccessType) *DataAccessAuditLogUpdate {
-	_u.mutation.SetAccessType(v)
-	return _u
-}
-
-// SetNillableAccessType sets the "access_type" field if the given value is not nil.
-func (_u *DataAccessAuditLogUpdate) SetNillableAccessType(v *dataaccessauditlog.AccessType) *DataAccessAuditLogUpdate {
-	if v != nil {
-		_u.SetAccessType(*v)
-	}
-	return _u
-}
-
-// ClearAccessType clears the value of the "access_type" field.
-func (_u *DataAccessAuditLogUpdate) ClearAccessType() *DataAccessAuditLogUpdate {
-	_u.mutation.ClearAccessType()
-	return _u
-}
-
-// SetSensitiveLevel sets the "sensitive_level" field.
-func (_u *DataAccessAuditLogUpdate) SetSensitiveLevel(v dataaccessauditlog.SensitiveLevel) *DataAccessAuditLogUpdate {
-	_u.mutation.SetSensitiveLevel(v)
-	return _u
-}
-
-// SetNillableSensitiveLevel sets the "sensitive_level" field if the given value is not nil.
-func (_u *DataAccessAuditLogUpdate) SetNillableSensitiveLevel(v *dataaccessauditlog.SensitiveLevel) *DataAccessAuditLogUpdate {
-	if v != nil {
-		_u.SetSensitiveLevel(*v)
-	}
-	return _u
-}
-
-// ClearSensitiveLevel clears the value of the "sensitive_level" field.
-func (_u *DataAccessAuditLogUpdate) ClearSensitiveLevel() *DataAccessAuditLogUpdate {
-	_u.mutation.ClearSensitiveLevel()
-	return _u
-}
-
 // SetIPAddress sets the "ip_address" field.
 func (_u *DataAccessAuditLogUpdate) SetIPAddress(v string) *DataAccessAuditLogUpdate {
 	_u.mutation.SetIPAddress(v)
@@ -240,6 +93,70 @@ func (_u *DataAccessAuditLogUpdate) SetNillableIPAddress(v *string) *DataAccessA
 // ClearIPAddress clears the value of the "ip_address" field.
 func (_u *DataAccessAuditLogUpdate) ClearIPAddress() *DataAccessAuditLogUpdate {
 	_u.mutation.ClearIPAddress()
+	return _u
+}
+
+// SetGeoLocation sets the "geo_location" field.
+func (_u *DataAccessAuditLogUpdate) SetGeoLocation(v *auditpb.GeoLocation) *DataAccessAuditLogUpdate {
+	_u.mutation.SetGeoLocation(v)
+	return _u
+}
+
+// ClearGeoLocation clears the value of the "geo_location" field.
+func (_u *DataAccessAuditLogUpdate) ClearGeoLocation() *DataAccessAuditLogUpdate {
+	_u.mutation.ClearGeoLocation()
+	return _u
+}
+
+// SetDeviceInfo sets the "device_info" field.
+func (_u *DataAccessAuditLogUpdate) SetDeviceInfo(v *auditpb.DeviceInfo) *DataAccessAuditLogUpdate {
+	_u.mutation.SetDeviceInfo(v)
+	return _u
+}
+
+// ClearDeviceInfo clears the value of the "device_info" field.
+func (_u *DataAccessAuditLogUpdate) ClearDeviceInfo() *DataAccessAuditLogUpdate {
+	_u.mutation.ClearDeviceInfo()
+	return _u
+}
+
+// SetRequestID sets the "request_id" field.
+func (_u *DataAccessAuditLogUpdate) SetRequestID(v string) *DataAccessAuditLogUpdate {
+	_u.mutation.SetRequestID(v)
+	return _u
+}
+
+// SetNillableRequestID sets the "request_id" field if the given value is not nil.
+func (_u *DataAccessAuditLogUpdate) SetNillableRequestID(v *string) *DataAccessAuditLogUpdate {
+	if v != nil {
+		_u.SetRequestID(*v)
+	}
+	return _u
+}
+
+// ClearRequestID clears the value of the "request_id" field.
+func (_u *DataAccessAuditLogUpdate) ClearRequestID() *DataAccessAuditLogUpdate {
+	_u.mutation.ClearRequestID()
+	return _u
+}
+
+// SetTraceID sets the "trace_id" field.
+func (_u *DataAccessAuditLogUpdate) SetTraceID(v string) *DataAccessAuditLogUpdate {
+	_u.mutation.SetTraceID(v)
+	return _u
+}
+
+// SetNillableTraceID sets the "trace_id" field if the given value is not nil.
+func (_u *DataAccessAuditLogUpdate) SetNillableTraceID(v *string) *DataAccessAuditLogUpdate {
+	if v != nil {
+		_u.SetTraceID(*v)
+	}
+	return _u
+}
+
+// ClearTraceID clears the value of the "trace_id" field.
+func (_u *DataAccessAuditLogUpdate) ClearTraceID() *DataAccessAuditLogUpdate {
+	_u.mutation.ClearTraceID()
 	return _u
 }
 
@@ -263,23 +180,329 @@ func (_u *DataAccessAuditLogUpdate) ClearDataSource() *DataAccessAuditLogUpdate 
 	return _u
 }
 
-// SetAccessedAt sets the "accessed_at" field.
-func (_u *DataAccessAuditLogUpdate) SetAccessedAt(v time.Time) *DataAccessAuditLogUpdate {
-	_u.mutation.SetAccessedAt(v)
+// SetTableName sets the "table_name" field.
+func (_u *DataAccessAuditLogUpdate) SetTableName(v string) *DataAccessAuditLogUpdate {
+	_u.mutation.SetTableName(v)
 	return _u
 }
 
-// SetNillableAccessedAt sets the "accessed_at" field if the given value is not nil.
-func (_u *DataAccessAuditLogUpdate) SetNillableAccessedAt(v *time.Time) *DataAccessAuditLogUpdate {
+// SetNillableTableName sets the "table_name" field if the given value is not nil.
+func (_u *DataAccessAuditLogUpdate) SetNillableTableName(v *string) *DataAccessAuditLogUpdate {
 	if v != nil {
-		_u.SetAccessedAt(*v)
+		_u.SetTableName(*v)
 	}
 	return _u
 }
 
-// ClearAccessedAt clears the value of the "accessed_at" field.
-func (_u *DataAccessAuditLogUpdate) ClearAccessedAt() *DataAccessAuditLogUpdate {
-	_u.mutation.ClearAccessedAt()
+// ClearTableName clears the value of the "table_name" field.
+func (_u *DataAccessAuditLogUpdate) ClearTableName() *DataAccessAuditLogUpdate {
+	_u.mutation.ClearTableName()
+	return _u
+}
+
+// SetDataID sets the "data_id" field.
+func (_u *DataAccessAuditLogUpdate) SetDataID(v string) *DataAccessAuditLogUpdate {
+	_u.mutation.SetDataID(v)
+	return _u
+}
+
+// SetNillableDataID sets the "data_id" field if the given value is not nil.
+func (_u *DataAccessAuditLogUpdate) SetNillableDataID(v *string) *DataAccessAuditLogUpdate {
+	if v != nil {
+		_u.SetDataID(*v)
+	}
+	return _u
+}
+
+// ClearDataID clears the value of the "data_id" field.
+func (_u *DataAccessAuditLogUpdate) ClearDataID() *DataAccessAuditLogUpdate {
+	_u.mutation.ClearDataID()
+	return _u
+}
+
+// SetAccessType sets the "access_type" field.
+func (_u *DataAccessAuditLogUpdate) SetAccessType(v dataaccessauditlog.AccessType) *DataAccessAuditLogUpdate {
+	_u.mutation.SetAccessType(v)
+	return _u
+}
+
+// SetNillableAccessType sets the "access_type" field if the given value is not nil.
+func (_u *DataAccessAuditLogUpdate) SetNillableAccessType(v *dataaccessauditlog.AccessType) *DataAccessAuditLogUpdate {
+	if v != nil {
+		_u.SetAccessType(*v)
+	}
+	return _u
+}
+
+// ClearAccessType clears the value of the "access_type" field.
+func (_u *DataAccessAuditLogUpdate) ClearAccessType() *DataAccessAuditLogUpdate {
+	_u.mutation.ClearAccessType()
+	return _u
+}
+
+// SetSQLDigest sets the "sql_digest" field.
+func (_u *DataAccessAuditLogUpdate) SetSQLDigest(v string) *DataAccessAuditLogUpdate {
+	_u.mutation.SetSQLDigest(v)
+	return _u
+}
+
+// SetNillableSQLDigest sets the "sql_digest" field if the given value is not nil.
+func (_u *DataAccessAuditLogUpdate) SetNillableSQLDigest(v *string) *DataAccessAuditLogUpdate {
+	if v != nil {
+		_u.SetSQLDigest(*v)
+	}
+	return _u
+}
+
+// ClearSQLDigest clears the value of the "sql_digest" field.
+func (_u *DataAccessAuditLogUpdate) ClearSQLDigest() *DataAccessAuditLogUpdate {
+	_u.mutation.ClearSQLDigest()
+	return _u
+}
+
+// SetSQLText sets the "sql_text" field.
+func (_u *DataAccessAuditLogUpdate) SetSQLText(v string) *DataAccessAuditLogUpdate {
+	_u.mutation.SetSQLText(v)
+	return _u
+}
+
+// SetNillableSQLText sets the "sql_text" field if the given value is not nil.
+func (_u *DataAccessAuditLogUpdate) SetNillableSQLText(v *string) *DataAccessAuditLogUpdate {
+	if v != nil {
+		_u.SetSQLText(*v)
+	}
+	return _u
+}
+
+// ClearSQLText clears the value of the "sql_text" field.
+func (_u *DataAccessAuditLogUpdate) ClearSQLText() *DataAccessAuditLogUpdate {
+	_u.mutation.ClearSQLText()
+	return _u
+}
+
+// SetAffectedRows sets the "affected_rows" field.
+func (_u *DataAccessAuditLogUpdate) SetAffectedRows(v uint32) *DataAccessAuditLogUpdate {
+	_u.mutation.ResetAffectedRows()
+	_u.mutation.SetAffectedRows(v)
+	return _u
+}
+
+// SetNillableAffectedRows sets the "affected_rows" field if the given value is not nil.
+func (_u *DataAccessAuditLogUpdate) SetNillableAffectedRows(v *uint32) *DataAccessAuditLogUpdate {
+	if v != nil {
+		_u.SetAffectedRows(*v)
+	}
+	return _u
+}
+
+// AddAffectedRows adds value to the "affected_rows" field.
+func (_u *DataAccessAuditLogUpdate) AddAffectedRows(v int32) *DataAccessAuditLogUpdate {
+	_u.mutation.AddAffectedRows(v)
+	return _u
+}
+
+// ClearAffectedRows clears the value of the "affected_rows" field.
+func (_u *DataAccessAuditLogUpdate) ClearAffectedRows() *DataAccessAuditLogUpdate {
+	_u.mutation.ClearAffectedRows()
+	return _u
+}
+
+// SetLatencyMs sets the "latency_ms" field.
+func (_u *DataAccessAuditLogUpdate) SetLatencyMs(v uint32) *DataAccessAuditLogUpdate {
+	_u.mutation.ResetLatencyMs()
+	_u.mutation.SetLatencyMs(v)
+	return _u
+}
+
+// SetNillableLatencyMs sets the "latency_ms" field if the given value is not nil.
+func (_u *DataAccessAuditLogUpdate) SetNillableLatencyMs(v *uint32) *DataAccessAuditLogUpdate {
+	if v != nil {
+		_u.SetLatencyMs(*v)
+	}
+	return _u
+}
+
+// AddLatencyMs adds value to the "latency_ms" field.
+func (_u *DataAccessAuditLogUpdate) AddLatencyMs(v int32) *DataAccessAuditLogUpdate {
+	_u.mutation.AddLatencyMs(v)
+	return _u
+}
+
+// ClearLatencyMs clears the value of the "latency_ms" field.
+func (_u *DataAccessAuditLogUpdate) ClearLatencyMs() *DataAccessAuditLogUpdate {
+	_u.mutation.ClearLatencyMs()
+	return _u
+}
+
+// SetSuccess sets the "success" field.
+func (_u *DataAccessAuditLogUpdate) SetSuccess(v bool) *DataAccessAuditLogUpdate {
+	_u.mutation.SetSuccess(v)
+	return _u
+}
+
+// SetNillableSuccess sets the "success" field if the given value is not nil.
+func (_u *DataAccessAuditLogUpdate) SetNillableSuccess(v *bool) *DataAccessAuditLogUpdate {
+	if v != nil {
+		_u.SetSuccess(*v)
+	}
+	return _u
+}
+
+// ClearSuccess clears the value of the "success" field.
+func (_u *DataAccessAuditLogUpdate) ClearSuccess() *DataAccessAuditLogUpdate {
+	_u.mutation.ClearSuccess()
+	return _u
+}
+
+// SetSensitiveLevel sets the "sensitive_level" field.
+func (_u *DataAccessAuditLogUpdate) SetSensitiveLevel(v dataaccessauditlog.SensitiveLevel) *DataAccessAuditLogUpdate {
+	_u.mutation.SetSensitiveLevel(v)
+	return _u
+}
+
+// SetNillableSensitiveLevel sets the "sensitive_level" field if the given value is not nil.
+func (_u *DataAccessAuditLogUpdate) SetNillableSensitiveLevel(v *dataaccessauditlog.SensitiveLevel) *DataAccessAuditLogUpdate {
+	if v != nil {
+		_u.SetSensitiveLevel(*v)
+	}
+	return _u
+}
+
+// ClearSensitiveLevel clears the value of the "sensitive_level" field.
+func (_u *DataAccessAuditLogUpdate) ClearSensitiveLevel() *DataAccessAuditLogUpdate {
+	_u.mutation.ClearSensitiveLevel()
+	return _u
+}
+
+// SetDataMasked sets the "data_masked" field.
+func (_u *DataAccessAuditLogUpdate) SetDataMasked(v bool) *DataAccessAuditLogUpdate {
+	_u.mutation.SetDataMasked(v)
+	return _u
+}
+
+// SetNillableDataMasked sets the "data_masked" field if the given value is not nil.
+func (_u *DataAccessAuditLogUpdate) SetNillableDataMasked(v *bool) *DataAccessAuditLogUpdate {
+	if v != nil {
+		_u.SetDataMasked(*v)
+	}
+	return _u
+}
+
+// ClearDataMasked clears the value of the "data_masked" field.
+func (_u *DataAccessAuditLogUpdate) ClearDataMasked() *DataAccessAuditLogUpdate {
+	_u.mutation.ClearDataMasked()
+	return _u
+}
+
+// SetMaskingRules sets the "masking_rules" field.
+func (_u *DataAccessAuditLogUpdate) SetMaskingRules(v string) *DataAccessAuditLogUpdate {
+	_u.mutation.SetMaskingRules(v)
+	return _u
+}
+
+// SetNillableMaskingRules sets the "masking_rules" field if the given value is not nil.
+func (_u *DataAccessAuditLogUpdate) SetNillableMaskingRules(v *string) *DataAccessAuditLogUpdate {
+	if v != nil {
+		_u.SetMaskingRules(*v)
+	}
+	return _u
+}
+
+// ClearMaskingRules clears the value of the "masking_rules" field.
+func (_u *DataAccessAuditLogUpdate) ClearMaskingRules() *DataAccessAuditLogUpdate {
+	_u.mutation.ClearMaskingRules()
+	return _u
+}
+
+// SetBusinessPurpose sets the "business_purpose" field.
+func (_u *DataAccessAuditLogUpdate) SetBusinessPurpose(v string) *DataAccessAuditLogUpdate {
+	_u.mutation.SetBusinessPurpose(v)
+	return _u
+}
+
+// SetNillableBusinessPurpose sets the "business_purpose" field if the given value is not nil.
+func (_u *DataAccessAuditLogUpdate) SetNillableBusinessPurpose(v *string) *DataAccessAuditLogUpdate {
+	if v != nil {
+		_u.SetBusinessPurpose(*v)
+	}
+	return _u
+}
+
+// ClearBusinessPurpose clears the value of the "business_purpose" field.
+func (_u *DataAccessAuditLogUpdate) ClearBusinessPurpose() *DataAccessAuditLogUpdate {
+	_u.mutation.ClearBusinessPurpose()
+	return _u
+}
+
+// SetDataCategory sets the "data_category" field.
+func (_u *DataAccessAuditLogUpdate) SetDataCategory(v string) *DataAccessAuditLogUpdate {
+	_u.mutation.SetDataCategory(v)
+	return _u
+}
+
+// SetNillableDataCategory sets the "data_category" field if the given value is not nil.
+func (_u *DataAccessAuditLogUpdate) SetNillableDataCategory(v *string) *DataAccessAuditLogUpdate {
+	if v != nil {
+		_u.SetDataCategory(*v)
+	}
+	return _u
+}
+
+// ClearDataCategory clears the value of the "data_category" field.
+func (_u *DataAccessAuditLogUpdate) ClearDataCategory() *DataAccessAuditLogUpdate {
+	_u.mutation.ClearDataCategory()
+	return _u
+}
+
+// SetDbUser sets the "db_user" field.
+func (_u *DataAccessAuditLogUpdate) SetDbUser(v string) *DataAccessAuditLogUpdate {
+	_u.mutation.SetDbUser(v)
+	return _u
+}
+
+// SetNillableDbUser sets the "db_user" field if the given value is not nil.
+func (_u *DataAccessAuditLogUpdate) SetNillableDbUser(v *string) *DataAccessAuditLogUpdate {
+	if v != nil {
+		_u.SetDbUser(*v)
+	}
+	return _u
+}
+
+// ClearDbUser clears the value of the "db_user" field.
+func (_u *DataAccessAuditLogUpdate) ClearDbUser() *DataAccessAuditLogUpdate {
+	_u.mutation.ClearDbUser()
+	return _u
+}
+
+// SetLogHash sets the "log_hash" field.
+func (_u *DataAccessAuditLogUpdate) SetLogHash(v string) *DataAccessAuditLogUpdate {
+	_u.mutation.SetLogHash(v)
+	return _u
+}
+
+// SetNillableLogHash sets the "log_hash" field if the given value is not nil.
+func (_u *DataAccessAuditLogUpdate) SetNillableLogHash(v *string) *DataAccessAuditLogUpdate {
+	if v != nil {
+		_u.SetLogHash(*v)
+	}
+	return _u
+}
+
+// ClearLogHash clears the value of the "log_hash" field.
+func (_u *DataAccessAuditLogUpdate) ClearLogHash() *DataAccessAuditLogUpdate {
+	_u.mutation.ClearLogHash()
+	return _u
+}
+
+// SetSignature sets the "signature" field.
+func (_u *DataAccessAuditLogUpdate) SetSignature(v []byte) *DataAccessAuditLogUpdate {
+	_u.mutation.SetSignature(v)
+	return _u
+}
+
+// ClearSignature clears the value of the "signature" field.
+func (_u *DataAccessAuditLogUpdate) ClearSignature() *DataAccessAuditLogUpdate {
+	_u.mutation.ClearSignature()
 	return _u
 }
 
@@ -317,19 +540,14 @@ func (_u *DataAccessAuditLogUpdate) ExecX(ctx context.Context) {
 
 // check runs all checks and user-defined validators on the builder.
 func (_u *DataAccessAuditLogUpdate) check() error {
-	if v, ok := _u.mutation.Resource(); ok {
-		if err := dataaccessauditlog.ResourceValidator(v); err != nil {
-			return &ValidationError{Name: "resource", err: fmt.Errorf(`ent: validator failed for field "DataAccessAuditLog.resource": %w`, err)}
+	if v, ok := _u.mutation.GeoLocation(); ok {
+		if err := v.Validate(); err != nil {
+			return &ValidationError{Name: "geo_location", err: fmt.Errorf(`ent: validator failed for field "DataAccessAuditLog.geo_location": %w`, err)}
 		}
 	}
-	if v, ok := _u.mutation.Action(); ok {
-		if err := dataaccessauditlog.ActionValidator(v); err != nil {
-			return &ValidationError{Name: "action", err: fmt.Errorf(`ent: validator failed for field "DataAccessAuditLog.action": %w`, err)}
-		}
-	}
-	if v, ok := _u.mutation.Username(); ok {
-		if err := dataaccessauditlog.UsernameValidator(v); err != nil {
-			return &ValidationError{Name: "username", err: fmt.Errorf(`ent: validator failed for field "DataAccessAuditLog.username": %w`, err)}
+	if v, ok := _u.mutation.DeviceInfo(); ok {
+		if err := v.Validate(); err != nil {
+			return &ValidationError{Name: "device_info", err: fmt.Errorf(`ent: validator failed for field "DataAccessAuditLog.device_info": %w`, err)}
 		}
 	}
 	if v, ok := _u.mutation.AccessType(); ok {
@@ -340,16 +558,6 @@ func (_u *DataAccessAuditLogUpdate) check() error {
 	if v, ok := _u.mutation.SensitiveLevel(); ok {
 		if err := dataaccessauditlog.SensitiveLevelValidator(v); err != nil {
 			return &ValidationError{Name: "sensitive_level", err: fmt.Errorf(`ent: validator failed for field "DataAccessAuditLog.sensitive_level": %w`, err)}
-		}
-	}
-	if v, ok := _u.mutation.IPAddress(); ok {
-		if err := dataaccessauditlog.IPAddressValidator(v); err != nil {
-			return &ValidationError{Name: "ip_address", err: fmt.Errorf(`ent: validator failed for field "DataAccessAuditLog.ip_address": %w`, err)}
-		}
-	}
-	if v, ok := _u.mutation.DataSource(); ok {
-		if err := dataaccessauditlog.DataSourceValidator(v); err != nil {
-			return &ValidationError{Name: "data_source", err: fmt.Errorf(`ent: validator failed for field "DataAccessAuditLog.data_source": %w`, err)}
 		}
 	}
 	return nil
@@ -376,41 +584,8 @@ func (_u *DataAccessAuditLogUpdate) sqlSave(ctx context.Context) (_node int, err
 	if _u.mutation.CreatedAtCleared() {
 		_spec.ClearField(dataaccessauditlog.FieldCreatedAt, field.TypeTime)
 	}
-	if value, ok := _u.mutation.UpdatedAt(); ok {
-		_spec.SetField(dataaccessauditlog.FieldUpdatedAt, field.TypeTime, value)
-	}
-	if _u.mutation.UpdatedAtCleared() {
-		_spec.ClearField(dataaccessauditlog.FieldUpdatedAt, field.TypeTime)
-	}
-	if value, ok := _u.mutation.DeletedAt(); ok {
-		_spec.SetField(dataaccessauditlog.FieldDeletedAt, field.TypeTime, value)
-	}
-	if _u.mutation.DeletedAtCleared() {
-		_spec.ClearField(dataaccessauditlog.FieldDeletedAt, field.TypeTime)
-	}
 	if _u.mutation.TenantIDCleared() {
 		_spec.ClearField(dataaccessauditlog.FieldTenantID, field.TypeUint32)
-	}
-	if value, ok := _u.mutation.OperatorID(); ok {
-		_spec.SetField(dataaccessauditlog.FieldOperatorID, field.TypeUint32, value)
-	}
-	if value, ok := _u.mutation.AddedOperatorID(); ok {
-		_spec.AddField(dataaccessauditlog.FieldOperatorID, field.TypeUint32, value)
-	}
-	if _u.mutation.OperatorIDCleared() {
-		_spec.ClearField(dataaccessauditlog.FieldOperatorID, field.TypeUint32)
-	}
-	if value, ok := _u.mutation.Resource(); ok {
-		_spec.SetField(dataaccessauditlog.FieldResource, field.TypeString, value)
-	}
-	if _u.mutation.ResourceCleared() {
-		_spec.ClearField(dataaccessauditlog.FieldResource, field.TypeString)
-	}
-	if value, ok := _u.mutation.Action(); ok {
-		_spec.SetField(dataaccessauditlog.FieldAction, field.TypeString, value)
-	}
-	if _u.mutation.ActionCleared() {
-		_spec.ClearField(dataaccessauditlog.FieldAction, field.TypeString)
 	}
 	if value, ok := _u.mutation.UserID(); ok {
 		_spec.SetField(dataaccessauditlog.FieldUserID, field.TypeUint32, value)
@@ -427,23 +602,35 @@ func (_u *DataAccessAuditLogUpdate) sqlSave(ctx context.Context) (_node int, err
 	if _u.mutation.UsernameCleared() {
 		_spec.ClearField(dataaccessauditlog.FieldUsername, field.TypeString)
 	}
-	if value, ok := _u.mutation.AccessType(); ok {
-		_spec.SetField(dataaccessauditlog.FieldAccessType, field.TypeEnum, value)
-	}
-	if _u.mutation.AccessTypeCleared() {
-		_spec.ClearField(dataaccessauditlog.FieldAccessType, field.TypeEnum)
-	}
-	if value, ok := _u.mutation.SensitiveLevel(); ok {
-		_spec.SetField(dataaccessauditlog.FieldSensitiveLevel, field.TypeEnum, value)
-	}
-	if _u.mutation.SensitiveLevelCleared() {
-		_spec.ClearField(dataaccessauditlog.FieldSensitiveLevel, field.TypeEnum)
-	}
 	if value, ok := _u.mutation.IPAddress(); ok {
 		_spec.SetField(dataaccessauditlog.FieldIPAddress, field.TypeString, value)
 	}
 	if _u.mutation.IPAddressCleared() {
 		_spec.ClearField(dataaccessauditlog.FieldIPAddress, field.TypeString)
+	}
+	if value, ok := _u.mutation.GeoLocation(); ok {
+		_spec.SetField(dataaccessauditlog.FieldGeoLocation, field.TypeJSON, value)
+	}
+	if _u.mutation.GeoLocationCleared() {
+		_spec.ClearField(dataaccessauditlog.FieldGeoLocation, field.TypeJSON)
+	}
+	if value, ok := _u.mutation.DeviceInfo(); ok {
+		_spec.SetField(dataaccessauditlog.FieldDeviceInfo, field.TypeJSON, value)
+	}
+	if _u.mutation.DeviceInfoCleared() {
+		_spec.ClearField(dataaccessauditlog.FieldDeviceInfo, field.TypeJSON)
+	}
+	if value, ok := _u.mutation.RequestID(); ok {
+		_spec.SetField(dataaccessauditlog.FieldRequestID, field.TypeString, value)
+	}
+	if _u.mutation.RequestIDCleared() {
+		_spec.ClearField(dataaccessauditlog.FieldRequestID, field.TypeString)
+	}
+	if value, ok := _u.mutation.TraceID(); ok {
+		_spec.SetField(dataaccessauditlog.FieldTraceID, field.TypeString, value)
+	}
+	if _u.mutation.TraceIDCleared() {
+		_spec.ClearField(dataaccessauditlog.FieldTraceID, field.TypeString)
 	}
 	if value, ok := _u.mutation.DataSource(); ok {
 		_spec.SetField(dataaccessauditlog.FieldDataSource, field.TypeString, value)
@@ -451,11 +638,107 @@ func (_u *DataAccessAuditLogUpdate) sqlSave(ctx context.Context) (_node int, err
 	if _u.mutation.DataSourceCleared() {
 		_spec.ClearField(dataaccessauditlog.FieldDataSource, field.TypeString)
 	}
-	if value, ok := _u.mutation.AccessedAt(); ok {
-		_spec.SetField(dataaccessauditlog.FieldAccessedAt, field.TypeTime, value)
+	if value, ok := _u.mutation.TableName(); ok {
+		_spec.SetField(dataaccessauditlog.FieldTableName, field.TypeString, value)
 	}
-	if _u.mutation.AccessedAtCleared() {
-		_spec.ClearField(dataaccessauditlog.FieldAccessedAt, field.TypeTime)
+	if _u.mutation.TableNameCleared() {
+		_spec.ClearField(dataaccessauditlog.FieldTableName, field.TypeString)
+	}
+	if value, ok := _u.mutation.DataID(); ok {
+		_spec.SetField(dataaccessauditlog.FieldDataID, field.TypeString, value)
+	}
+	if _u.mutation.DataIDCleared() {
+		_spec.ClearField(dataaccessauditlog.FieldDataID, field.TypeString)
+	}
+	if value, ok := _u.mutation.AccessType(); ok {
+		_spec.SetField(dataaccessauditlog.FieldAccessType, field.TypeEnum, value)
+	}
+	if _u.mutation.AccessTypeCleared() {
+		_spec.ClearField(dataaccessauditlog.FieldAccessType, field.TypeEnum)
+	}
+	if value, ok := _u.mutation.SQLDigest(); ok {
+		_spec.SetField(dataaccessauditlog.FieldSQLDigest, field.TypeString, value)
+	}
+	if _u.mutation.SQLDigestCleared() {
+		_spec.ClearField(dataaccessauditlog.FieldSQLDigest, field.TypeString)
+	}
+	if value, ok := _u.mutation.SQLText(); ok {
+		_spec.SetField(dataaccessauditlog.FieldSQLText, field.TypeString, value)
+	}
+	if _u.mutation.SQLTextCleared() {
+		_spec.ClearField(dataaccessauditlog.FieldSQLText, field.TypeString)
+	}
+	if value, ok := _u.mutation.AffectedRows(); ok {
+		_spec.SetField(dataaccessauditlog.FieldAffectedRows, field.TypeUint32, value)
+	}
+	if value, ok := _u.mutation.AddedAffectedRows(); ok {
+		_spec.AddField(dataaccessauditlog.FieldAffectedRows, field.TypeUint32, value)
+	}
+	if _u.mutation.AffectedRowsCleared() {
+		_spec.ClearField(dataaccessauditlog.FieldAffectedRows, field.TypeUint32)
+	}
+	if value, ok := _u.mutation.LatencyMs(); ok {
+		_spec.SetField(dataaccessauditlog.FieldLatencyMs, field.TypeUint32, value)
+	}
+	if value, ok := _u.mutation.AddedLatencyMs(); ok {
+		_spec.AddField(dataaccessauditlog.FieldLatencyMs, field.TypeUint32, value)
+	}
+	if _u.mutation.LatencyMsCleared() {
+		_spec.ClearField(dataaccessauditlog.FieldLatencyMs, field.TypeUint32)
+	}
+	if value, ok := _u.mutation.Success(); ok {
+		_spec.SetField(dataaccessauditlog.FieldSuccess, field.TypeBool, value)
+	}
+	if _u.mutation.SuccessCleared() {
+		_spec.ClearField(dataaccessauditlog.FieldSuccess, field.TypeBool)
+	}
+	if value, ok := _u.mutation.SensitiveLevel(); ok {
+		_spec.SetField(dataaccessauditlog.FieldSensitiveLevel, field.TypeEnum, value)
+	}
+	if _u.mutation.SensitiveLevelCleared() {
+		_spec.ClearField(dataaccessauditlog.FieldSensitiveLevel, field.TypeEnum)
+	}
+	if value, ok := _u.mutation.DataMasked(); ok {
+		_spec.SetField(dataaccessauditlog.FieldDataMasked, field.TypeBool, value)
+	}
+	if _u.mutation.DataMaskedCleared() {
+		_spec.ClearField(dataaccessauditlog.FieldDataMasked, field.TypeBool)
+	}
+	if value, ok := _u.mutation.MaskingRules(); ok {
+		_spec.SetField(dataaccessauditlog.FieldMaskingRules, field.TypeString, value)
+	}
+	if _u.mutation.MaskingRulesCleared() {
+		_spec.ClearField(dataaccessauditlog.FieldMaskingRules, field.TypeString)
+	}
+	if value, ok := _u.mutation.BusinessPurpose(); ok {
+		_spec.SetField(dataaccessauditlog.FieldBusinessPurpose, field.TypeString, value)
+	}
+	if _u.mutation.BusinessPurposeCleared() {
+		_spec.ClearField(dataaccessauditlog.FieldBusinessPurpose, field.TypeString)
+	}
+	if value, ok := _u.mutation.DataCategory(); ok {
+		_spec.SetField(dataaccessauditlog.FieldDataCategory, field.TypeString, value)
+	}
+	if _u.mutation.DataCategoryCleared() {
+		_spec.ClearField(dataaccessauditlog.FieldDataCategory, field.TypeString)
+	}
+	if value, ok := _u.mutation.DbUser(); ok {
+		_spec.SetField(dataaccessauditlog.FieldDbUser, field.TypeString, value)
+	}
+	if _u.mutation.DbUserCleared() {
+		_spec.ClearField(dataaccessauditlog.FieldDbUser, field.TypeString)
+	}
+	if value, ok := _u.mutation.LogHash(); ok {
+		_spec.SetField(dataaccessauditlog.FieldLogHash, field.TypeString, value)
+	}
+	if _u.mutation.LogHashCleared() {
+		_spec.ClearField(dataaccessauditlog.FieldLogHash, field.TypeString)
+	}
+	if value, ok := _u.mutation.Signature(); ok {
+		_spec.SetField(dataaccessauditlog.FieldSignature, field.TypeBytes, value)
+	}
+	if _u.mutation.SignatureCleared() {
+		_spec.ClearField(dataaccessauditlog.FieldSignature, field.TypeBytes)
 	}
 	_spec.AddModifiers(_u.modifiers...)
 	if _node, err = sqlgraph.UpdateNodes(ctx, _u.driver, _spec); err != nil {
@@ -477,113 +760,6 @@ type DataAccessAuditLogUpdateOne struct {
 	hooks     []Hook
 	mutation  *DataAccessAuditLogMutation
 	modifiers []func(*sql.UpdateBuilder)
-}
-
-// SetUpdatedAt sets the "updated_at" field.
-func (_u *DataAccessAuditLogUpdateOne) SetUpdatedAt(v time.Time) *DataAccessAuditLogUpdateOne {
-	_u.mutation.SetUpdatedAt(v)
-	return _u
-}
-
-// SetNillableUpdatedAt sets the "updated_at" field if the given value is not nil.
-func (_u *DataAccessAuditLogUpdateOne) SetNillableUpdatedAt(v *time.Time) *DataAccessAuditLogUpdateOne {
-	if v != nil {
-		_u.SetUpdatedAt(*v)
-	}
-	return _u
-}
-
-// ClearUpdatedAt clears the value of the "updated_at" field.
-func (_u *DataAccessAuditLogUpdateOne) ClearUpdatedAt() *DataAccessAuditLogUpdateOne {
-	_u.mutation.ClearUpdatedAt()
-	return _u
-}
-
-// SetDeletedAt sets the "deleted_at" field.
-func (_u *DataAccessAuditLogUpdateOne) SetDeletedAt(v time.Time) *DataAccessAuditLogUpdateOne {
-	_u.mutation.SetDeletedAt(v)
-	return _u
-}
-
-// SetNillableDeletedAt sets the "deleted_at" field if the given value is not nil.
-func (_u *DataAccessAuditLogUpdateOne) SetNillableDeletedAt(v *time.Time) *DataAccessAuditLogUpdateOne {
-	if v != nil {
-		_u.SetDeletedAt(*v)
-	}
-	return _u
-}
-
-// ClearDeletedAt clears the value of the "deleted_at" field.
-func (_u *DataAccessAuditLogUpdateOne) ClearDeletedAt() *DataAccessAuditLogUpdateOne {
-	_u.mutation.ClearDeletedAt()
-	return _u
-}
-
-// SetOperatorID sets the "operator_id" field.
-func (_u *DataAccessAuditLogUpdateOne) SetOperatorID(v uint32) *DataAccessAuditLogUpdateOne {
-	_u.mutation.ResetOperatorID()
-	_u.mutation.SetOperatorID(v)
-	return _u
-}
-
-// SetNillableOperatorID sets the "operator_id" field if the given value is not nil.
-func (_u *DataAccessAuditLogUpdateOne) SetNillableOperatorID(v *uint32) *DataAccessAuditLogUpdateOne {
-	if v != nil {
-		_u.SetOperatorID(*v)
-	}
-	return _u
-}
-
-// AddOperatorID adds value to the "operator_id" field.
-func (_u *DataAccessAuditLogUpdateOne) AddOperatorID(v int32) *DataAccessAuditLogUpdateOne {
-	_u.mutation.AddOperatorID(v)
-	return _u
-}
-
-// ClearOperatorID clears the value of the "operator_id" field.
-func (_u *DataAccessAuditLogUpdateOne) ClearOperatorID() *DataAccessAuditLogUpdateOne {
-	_u.mutation.ClearOperatorID()
-	return _u
-}
-
-// SetResource sets the "resource" field.
-func (_u *DataAccessAuditLogUpdateOne) SetResource(v string) *DataAccessAuditLogUpdateOne {
-	_u.mutation.SetResource(v)
-	return _u
-}
-
-// SetNillableResource sets the "resource" field if the given value is not nil.
-func (_u *DataAccessAuditLogUpdateOne) SetNillableResource(v *string) *DataAccessAuditLogUpdateOne {
-	if v != nil {
-		_u.SetResource(*v)
-	}
-	return _u
-}
-
-// ClearResource clears the value of the "resource" field.
-func (_u *DataAccessAuditLogUpdateOne) ClearResource() *DataAccessAuditLogUpdateOne {
-	_u.mutation.ClearResource()
-	return _u
-}
-
-// SetAction sets the "action" field.
-func (_u *DataAccessAuditLogUpdateOne) SetAction(v string) *DataAccessAuditLogUpdateOne {
-	_u.mutation.SetAction(v)
-	return _u
-}
-
-// SetNillableAction sets the "action" field if the given value is not nil.
-func (_u *DataAccessAuditLogUpdateOne) SetNillableAction(v *string) *DataAccessAuditLogUpdateOne {
-	if v != nil {
-		_u.SetAction(*v)
-	}
-	return _u
-}
-
-// ClearAction clears the value of the "action" field.
-func (_u *DataAccessAuditLogUpdateOne) ClearAction() *DataAccessAuditLogUpdateOne {
-	_u.mutation.ClearAction()
-	return _u
 }
 
 // SetUserID sets the "user_id" field.
@@ -633,46 +809,6 @@ func (_u *DataAccessAuditLogUpdateOne) ClearUsername() *DataAccessAuditLogUpdate
 	return _u
 }
 
-// SetAccessType sets the "access_type" field.
-func (_u *DataAccessAuditLogUpdateOne) SetAccessType(v dataaccessauditlog.AccessType) *DataAccessAuditLogUpdateOne {
-	_u.mutation.SetAccessType(v)
-	return _u
-}
-
-// SetNillableAccessType sets the "access_type" field if the given value is not nil.
-func (_u *DataAccessAuditLogUpdateOne) SetNillableAccessType(v *dataaccessauditlog.AccessType) *DataAccessAuditLogUpdateOne {
-	if v != nil {
-		_u.SetAccessType(*v)
-	}
-	return _u
-}
-
-// ClearAccessType clears the value of the "access_type" field.
-func (_u *DataAccessAuditLogUpdateOne) ClearAccessType() *DataAccessAuditLogUpdateOne {
-	_u.mutation.ClearAccessType()
-	return _u
-}
-
-// SetSensitiveLevel sets the "sensitive_level" field.
-func (_u *DataAccessAuditLogUpdateOne) SetSensitiveLevel(v dataaccessauditlog.SensitiveLevel) *DataAccessAuditLogUpdateOne {
-	_u.mutation.SetSensitiveLevel(v)
-	return _u
-}
-
-// SetNillableSensitiveLevel sets the "sensitive_level" field if the given value is not nil.
-func (_u *DataAccessAuditLogUpdateOne) SetNillableSensitiveLevel(v *dataaccessauditlog.SensitiveLevel) *DataAccessAuditLogUpdateOne {
-	if v != nil {
-		_u.SetSensitiveLevel(*v)
-	}
-	return _u
-}
-
-// ClearSensitiveLevel clears the value of the "sensitive_level" field.
-func (_u *DataAccessAuditLogUpdateOne) ClearSensitiveLevel() *DataAccessAuditLogUpdateOne {
-	_u.mutation.ClearSensitiveLevel()
-	return _u
-}
-
 // SetIPAddress sets the "ip_address" field.
 func (_u *DataAccessAuditLogUpdateOne) SetIPAddress(v string) *DataAccessAuditLogUpdateOne {
 	_u.mutation.SetIPAddress(v)
@@ -690,6 +826,70 @@ func (_u *DataAccessAuditLogUpdateOne) SetNillableIPAddress(v *string) *DataAcce
 // ClearIPAddress clears the value of the "ip_address" field.
 func (_u *DataAccessAuditLogUpdateOne) ClearIPAddress() *DataAccessAuditLogUpdateOne {
 	_u.mutation.ClearIPAddress()
+	return _u
+}
+
+// SetGeoLocation sets the "geo_location" field.
+func (_u *DataAccessAuditLogUpdateOne) SetGeoLocation(v *auditpb.GeoLocation) *DataAccessAuditLogUpdateOne {
+	_u.mutation.SetGeoLocation(v)
+	return _u
+}
+
+// ClearGeoLocation clears the value of the "geo_location" field.
+func (_u *DataAccessAuditLogUpdateOne) ClearGeoLocation() *DataAccessAuditLogUpdateOne {
+	_u.mutation.ClearGeoLocation()
+	return _u
+}
+
+// SetDeviceInfo sets the "device_info" field.
+func (_u *DataAccessAuditLogUpdateOne) SetDeviceInfo(v *auditpb.DeviceInfo) *DataAccessAuditLogUpdateOne {
+	_u.mutation.SetDeviceInfo(v)
+	return _u
+}
+
+// ClearDeviceInfo clears the value of the "device_info" field.
+func (_u *DataAccessAuditLogUpdateOne) ClearDeviceInfo() *DataAccessAuditLogUpdateOne {
+	_u.mutation.ClearDeviceInfo()
+	return _u
+}
+
+// SetRequestID sets the "request_id" field.
+func (_u *DataAccessAuditLogUpdateOne) SetRequestID(v string) *DataAccessAuditLogUpdateOne {
+	_u.mutation.SetRequestID(v)
+	return _u
+}
+
+// SetNillableRequestID sets the "request_id" field if the given value is not nil.
+func (_u *DataAccessAuditLogUpdateOne) SetNillableRequestID(v *string) *DataAccessAuditLogUpdateOne {
+	if v != nil {
+		_u.SetRequestID(*v)
+	}
+	return _u
+}
+
+// ClearRequestID clears the value of the "request_id" field.
+func (_u *DataAccessAuditLogUpdateOne) ClearRequestID() *DataAccessAuditLogUpdateOne {
+	_u.mutation.ClearRequestID()
+	return _u
+}
+
+// SetTraceID sets the "trace_id" field.
+func (_u *DataAccessAuditLogUpdateOne) SetTraceID(v string) *DataAccessAuditLogUpdateOne {
+	_u.mutation.SetTraceID(v)
+	return _u
+}
+
+// SetNillableTraceID sets the "trace_id" field if the given value is not nil.
+func (_u *DataAccessAuditLogUpdateOne) SetNillableTraceID(v *string) *DataAccessAuditLogUpdateOne {
+	if v != nil {
+		_u.SetTraceID(*v)
+	}
+	return _u
+}
+
+// ClearTraceID clears the value of the "trace_id" field.
+func (_u *DataAccessAuditLogUpdateOne) ClearTraceID() *DataAccessAuditLogUpdateOne {
+	_u.mutation.ClearTraceID()
 	return _u
 }
 
@@ -713,23 +913,329 @@ func (_u *DataAccessAuditLogUpdateOne) ClearDataSource() *DataAccessAuditLogUpda
 	return _u
 }
 
-// SetAccessedAt sets the "accessed_at" field.
-func (_u *DataAccessAuditLogUpdateOne) SetAccessedAt(v time.Time) *DataAccessAuditLogUpdateOne {
-	_u.mutation.SetAccessedAt(v)
+// SetTableName sets the "table_name" field.
+func (_u *DataAccessAuditLogUpdateOne) SetTableName(v string) *DataAccessAuditLogUpdateOne {
+	_u.mutation.SetTableName(v)
 	return _u
 }
 
-// SetNillableAccessedAt sets the "accessed_at" field if the given value is not nil.
-func (_u *DataAccessAuditLogUpdateOne) SetNillableAccessedAt(v *time.Time) *DataAccessAuditLogUpdateOne {
+// SetNillableTableName sets the "table_name" field if the given value is not nil.
+func (_u *DataAccessAuditLogUpdateOne) SetNillableTableName(v *string) *DataAccessAuditLogUpdateOne {
 	if v != nil {
-		_u.SetAccessedAt(*v)
+		_u.SetTableName(*v)
 	}
 	return _u
 }
 
-// ClearAccessedAt clears the value of the "accessed_at" field.
-func (_u *DataAccessAuditLogUpdateOne) ClearAccessedAt() *DataAccessAuditLogUpdateOne {
-	_u.mutation.ClearAccessedAt()
+// ClearTableName clears the value of the "table_name" field.
+func (_u *DataAccessAuditLogUpdateOne) ClearTableName() *DataAccessAuditLogUpdateOne {
+	_u.mutation.ClearTableName()
+	return _u
+}
+
+// SetDataID sets the "data_id" field.
+func (_u *DataAccessAuditLogUpdateOne) SetDataID(v string) *DataAccessAuditLogUpdateOne {
+	_u.mutation.SetDataID(v)
+	return _u
+}
+
+// SetNillableDataID sets the "data_id" field if the given value is not nil.
+func (_u *DataAccessAuditLogUpdateOne) SetNillableDataID(v *string) *DataAccessAuditLogUpdateOne {
+	if v != nil {
+		_u.SetDataID(*v)
+	}
+	return _u
+}
+
+// ClearDataID clears the value of the "data_id" field.
+func (_u *DataAccessAuditLogUpdateOne) ClearDataID() *DataAccessAuditLogUpdateOne {
+	_u.mutation.ClearDataID()
+	return _u
+}
+
+// SetAccessType sets the "access_type" field.
+func (_u *DataAccessAuditLogUpdateOne) SetAccessType(v dataaccessauditlog.AccessType) *DataAccessAuditLogUpdateOne {
+	_u.mutation.SetAccessType(v)
+	return _u
+}
+
+// SetNillableAccessType sets the "access_type" field if the given value is not nil.
+func (_u *DataAccessAuditLogUpdateOne) SetNillableAccessType(v *dataaccessauditlog.AccessType) *DataAccessAuditLogUpdateOne {
+	if v != nil {
+		_u.SetAccessType(*v)
+	}
+	return _u
+}
+
+// ClearAccessType clears the value of the "access_type" field.
+func (_u *DataAccessAuditLogUpdateOne) ClearAccessType() *DataAccessAuditLogUpdateOne {
+	_u.mutation.ClearAccessType()
+	return _u
+}
+
+// SetSQLDigest sets the "sql_digest" field.
+func (_u *DataAccessAuditLogUpdateOne) SetSQLDigest(v string) *DataAccessAuditLogUpdateOne {
+	_u.mutation.SetSQLDigest(v)
+	return _u
+}
+
+// SetNillableSQLDigest sets the "sql_digest" field if the given value is not nil.
+func (_u *DataAccessAuditLogUpdateOne) SetNillableSQLDigest(v *string) *DataAccessAuditLogUpdateOne {
+	if v != nil {
+		_u.SetSQLDigest(*v)
+	}
+	return _u
+}
+
+// ClearSQLDigest clears the value of the "sql_digest" field.
+func (_u *DataAccessAuditLogUpdateOne) ClearSQLDigest() *DataAccessAuditLogUpdateOne {
+	_u.mutation.ClearSQLDigest()
+	return _u
+}
+
+// SetSQLText sets the "sql_text" field.
+func (_u *DataAccessAuditLogUpdateOne) SetSQLText(v string) *DataAccessAuditLogUpdateOne {
+	_u.mutation.SetSQLText(v)
+	return _u
+}
+
+// SetNillableSQLText sets the "sql_text" field if the given value is not nil.
+func (_u *DataAccessAuditLogUpdateOne) SetNillableSQLText(v *string) *DataAccessAuditLogUpdateOne {
+	if v != nil {
+		_u.SetSQLText(*v)
+	}
+	return _u
+}
+
+// ClearSQLText clears the value of the "sql_text" field.
+func (_u *DataAccessAuditLogUpdateOne) ClearSQLText() *DataAccessAuditLogUpdateOne {
+	_u.mutation.ClearSQLText()
+	return _u
+}
+
+// SetAffectedRows sets the "affected_rows" field.
+func (_u *DataAccessAuditLogUpdateOne) SetAffectedRows(v uint32) *DataAccessAuditLogUpdateOne {
+	_u.mutation.ResetAffectedRows()
+	_u.mutation.SetAffectedRows(v)
+	return _u
+}
+
+// SetNillableAffectedRows sets the "affected_rows" field if the given value is not nil.
+func (_u *DataAccessAuditLogUpdateOne) SetNillableAffectedRows(v *uint32) *DataAccessAuditLogUpdateOne {
+	if v != nil {
+		_u.SetAffectedRows(*v)
+	}
+	return _u
+}
+
+// AddAffectedRows adds value to the "affected_rows" field.
+func (_u *DataAccessAuditLogUpdateOne) AddAffectedRows(v int32) *DataAccessAuditLogUpdateOne {
+	_u.mutation.AddAffectedRows(v)
+	return _u
+}
+
+// ClearAffectedRows clears the value of the "affected_rows" field.
+func (_u *DataAccessAuditLogUpdateOne) ClearAffectedRows() *DataAccessAuditLogUpdateOne {
+	_u.mutation.ClearAffectedRows()
+	return _u
+}
+
+// SetLatencyMs sets the "latency_ms" field.
+func (_u *DataAccessAuditLogUpdateOne) SetLatencyMs(v uint32) *DataAccessAuditLogUpdateOne {
+	_u.mutation.ResetLatencyMs()
+	_u.mutation.SetLatencyMs(v)
+	return _u
+}
+
+// SetNillableLatencyMs sets the "latency_ms" field if the given value is not nil.
+func (_u *DataAccessAuditLogUpdateOne) SetNillableLatencyMs(v *uint32) *DataAccessAuditLogUpdateOne {
+	if v != nil {
+		_u.SetLatencyMs(*v)
+	}
+	return _u
+}
+
+// AddLatencyMs adds value to the "latency_ms" field.
+func (_u *DataAccessAuditLogUpdateOne) AddLatencyMs(v int32) *DataAccessAuditLogUpdateOne {
+	_u.mutation.AddLatencyMs(v)
+	return _u
+}
+
+// ClearLatencyMs clears the value of the "latency_ms" field.
+func (_u *DataAccessAuditLogUpdateOne) ClearLatencyMs() *DataAccessAuditLogUpdateOne {
+	_u.mutation.ClearLatencyMs()
+	return _u
+}
+
+// SetSuccess sets the "success" field.
+func (_u *DataAccessAuditLogUpdateOne) SetSuccess(v bool) *DataAccessAuditLogUpdateOne {
+	_u.mutation.SetSuccess(v)
+	return _u
+}
+
+// SetNillableSuccess sets the "success" field if the given value is not nil.
+func (_u *DataAccessAuditLogUpdateOne) SetNillableSuccess(v *bool) *DataAccessAuditLogUpdateOne {
+	if v != nil {
+		_u.SetSuccess(*v)
+	}
+	return _u
+}
+
+// ClearSuccess clears the value of the "success" field.
+func (_u *DataAccessAuditLogUpdateOne) ClearSuccess() *DataAccessAuditLogUpdateOne {
+	_u.mutation.ClearSuccess()
+	return _u
+}
+
+// SetSensitiveLevel sets the "sensitive_level" field.
+func (_u *DataAccessAuditLogUpdateOne) SetSensitiveLevel(v dataaccessauditlog.SensitiveLevel) *DataAccessAuditLogUpdateOne {
+	_u.mutation.SetSensitiveLevel(v)
+	return _u
+}
+
+// SetNillableSensitiveLevel sets the "sensitive_level" field if the given value is not nil.
+func (_u *DataAccessAuditLogUpdateOne) SetNillableSensitiveLevel(v *dataaccessauditlog.SensitiveLevel) *DataAccessAuditLogUpdateOne {
+	if v != nil {
+		_u.SetSensitiveLevel(*v)
+	}
+	return _u
+}
+
+// ClearSensitiveLevel clears the value of the "sensitive_level" field.
+func (_u *DataAccessAuditLogUpdateOne) ClearSensitiveLevel() *DataAccessAuditLogUpdateOne {
+	_u.mutation.ClearSensitiveLevel()
+	return _u
+}
+
+// SetDataMasked sets the "data_masked" field.
+func (_u *DataAccessAuditLogUpdateOne) SetDataMasked(v bool) *DataAccessAuditLogUpdateOne {
+	_u.mutation.SetDataMasked(v)
+	return _u
+}
+
+// SetNillableDataMasked sets the "data_masked" field if the given value is not nil.
+func (_u *DataAccessAuditLogUpdateOne) SetNillableDataMasked(v *bool) *DataAccessAuditLogUpdateOne {
+	if v != nil {
+		_u.SetDataMasked(*v)
+	}
+	return _u
+}
+
+// ClearDataMasked clears the value of the "data_masked" field.
+func (_u *DataAccessAuditLogUpdateOne) ClearDataMasked() *DataAccessAuditLogUpdateOne {
+	_u.mutation.ClearDataMasked()
+	return _u
+}
+
+// SetMaskingRules sets the "masking_rules" field.
+func (_u *DataAccessAuditLogUpdateOne) SetMaskingRules(v string) *DataAccessAuditLogUpdateOne {
+	_u.mutation.SetMaskingRules(v)
+	return _u
+}
+
+// SetNillableMaskingRules sets the "masking_rules" field if the given value is not nil.
+func (_u *DataAccessAuditLogUpdateOne) SetNillableMaskingRules(v *string) *DataAccessAuditLogUpdateOne {
+	if v != nil {
+		_u.SetMaskingRules(*v)
+	}
+	return _u
+}
+
+// ClearMaskingRules clears the value of the "masking_rules" field.
+func (_u *DataAccessAuditLogUpdateOne) ClearMaskingRules() *DataAccessAuditLogUpdateOne {
+	_u.mutation.ClearMaskingRules()
+	return _u
+}
+
+// SetBusinessPurpose sets the "business_purpose" field.
+func (_u *DataAccessAuditLogUpdateOne) SetBusinessPurpose(v string) *DataAccessAuditLogUpdateOne {
+	_u.mutation.SetBusinessPurpose(v)
+	return _u
+}
+
+// SetNillableBusinessPurpose sets the "business_purpose" field if the given value is not nil.
+func (_u *DataAccessAuditLogUpdateOne) SetNillableBusinessPurpose(v *string) *DataAccessAuditLogUpdateOne {
+	if v != nil {
+		_u.SetBusinessPurpose(*v)
+	}
+	return _u
+}
+
+// ClearBusinessPurpose clears the value of the "business_purpose" field.
+func (_u *DataAccessAuditLogUpdateOne) ClearBusinessPurpose() *DataAccessAuditLogUpdateOne {
+	_u.mutation.ClearBusinessPurpose()
+	return _u
+}
+
+// SetDataCategory sets the "data_category" field.
+func (_u *DataAccessAuditLogUpdateOne) SetDataCategory(v string) *DataAccessAuditLogUpdateOne {
+	_u.mutation.SetDataCategory(v)
+	return _u
+}
+
+// SetNillableDataCategory sets the "data_category" field if the given value is not nil.
+func (_u *DataAccessAuditLogUpdateOne) SetNillableDataCategory(v *string) *DataAccessAuditLogUpdateOne {
+	if v != nil {
+		_u.SetDataCategory(*v)
+	}
+	return _u
+}
+
+// ClearDataCategory clears the value of the "data_category" field.
+func (_u *DataAccessAuditLogUpdateOne) ClearDataCategory() *DataAccessAuditLogUpdateOne {
+	_u.mutation.ClearDataCategory()
+	return _u
+}
+
+// SetDbUser sets the "db_user" field.
+func (_u *DataAccessAuditLogUpdateOne) SetDbUser(v string) *DataAccessAuditLogUpdateOne {
+	_u.mutation.SetDbUser(v)
+	return _u
+}
+
+// SetNillableDbUser sets the "db_user" field if the given value is not nil.
+func (_u *DataAccessAuditLogUpdateOne) SetNillableDbUser(v *string) *DataAccessAuditLogUpdateOne {
+	if v != nil {
+		_u.SetDbUser(*v)
+	}
+	return _u
+}
+
+// ClearDbUser clears the value of the "db_user" field.
+func (_u *DataAccessAuditLogUpdateOne) ClearDbUser() *DataAccessAuditLogUpdateOne {
+	_u.mutation.ClearDbUser()
+	return _u
+}
+
+// SetLogHash sets the "log_hash" field.
+func (_u *DataAccessAuditLogUpdateOne) SetLogHash(v string) *DataAccessAuditLogUpdateOne {
+	_u.mutation.SetLogHash(v)
+	return _u
+}
+
+// SetNillableLogHash sets the "log_hash" field if the given value is not nil.
+func (_u *DataAccessAuditLogUpdateOne) SetNillableLogHash(v *string) *DataAccessAuditLogUpdateOne {
+	if v != nil {
+		_u.SetLogHash(*v)
+	}
+	return _u
+}
+
+// ClearLogHash clears the value of the "log_hash" field.
+func (_u *DataAccessAuditLogUpdateOne) ClearLogHash() *DataAccessAuditLogUpdateOne {
+	_u.mutation.ClearLogHash()
+	return _u
+}
+
+// SetSignature sets the "signature" field.
+func (_u *DataAccessAuditLogUpdateOne) SetSignature(v []byte) *DataAccessAuditLogUpdateOne {
+	_u.mutation.SetSignature(v)
+	return _u
+}
+
+// ClearSignature clears the value of the "signature" field.
+func (_u *DataAccessAuditLogUpdateOne) ClearSignature() *DataAccessAuditLogUpdateOne {
+	_u.mutation.ClearSignature()
 	return _u
 }
 
@@ -780,19 +1286,14 @@ func (_u *DataAccessAuditLogUpdateOne) ExecX(ctx context.Context) {
 
 // check runs all checks and user-defined validators on the builder.
 func (_u *DataAccessAuditLogUpdateOne) check() error {
-	if v, ok := _u.mutation.Resource(); ok {
-		if err := dataaccessauditlog.ResourceValidator(v); err != nil {
-			return &ValidationError{Name: "resource", err: fmt.Errorf(`ent: validator failed for field "DataAccessAuditLog.resource": %w`, err)}
+	if v, ok := _u.mutation.GeoLocation(); ok {
+		if err := v.Validate(); err != nil {
+			return &ValidationError{Name: "geo_location", err: fmt.Errorf(`ent: validator failed for field "DataAccessAuditLog.geo_location": %w`, err)}
 		}
 	}
-	if v, ok := _u.mutation.Action(); ok {
-		if err := dataaccessauditlog.ActionValidator(v); err != nil {
-			return &ValidationError{Name: "action", err: fmt.Errorf(`ent: validator failed for field "DataAccessAuditLog.action": %w`, err)}
-		}
-	}
-	if v, ok := _u.mutation.Username(); ok {
-		if err := dataaccessauditlog.UsernameValidator(v); err != nil {
-			return &ValidationError{Name: "username", err: fmt.Errorf(`ent: validator failed for field "DataAccessAuditLog.username": %w`, err)}
+	if v, ok := _u.mutation.DeviceInfo(); ok {
+		if err := v.Validate(); err != nil {
+			return &ValidationError{Name: "device_info", err: fmt.Errorf(`ent: validator failed for field "DataAccessAuditLog.device_info": %w`, err)}
 		}
 	}
 	if v, ok := _u.mutation.AccessType(); ok {
@@ -803,16 +1304,6 @@ func (_u *DataAccessAuditLogUpdateOne) check() error {
 	if v, ok := _u.mutation.SensitiveLevel(); ok {
 		if err := dataaccessauditlog.SensitiveLevelValidator(v); err != nil {
 			return &ValidationError{Name: "sensitive_level", err: fmt.Errorf(`ent: validator failed for field "DataAccessAuditLog.sensitive_level": %w`, err)}
-		}
-	}
-	if v, ok := _u.mutation.IPAddress(); ok {
-		if err := dataaccessauditlog.IPAddressValidator(v); err != nil {
-			return &ValidationError{Name: "ip_address", err: fmt.Errorf(`ent: validator failed for field "DataAccessAuditLog.ip_address": %w`, err)}
-		}
-	}
-	if v, ok := _u.mutation.DataSource(); ok {
-		if err := dataaccessauditlog.DataSourceValidator(v); err != nil {
-			return &ValidationError{Name: "data_source", err: fmt.Errorf(`ent: validator failed for field "DataAccessAuditLog.data_source": %w`, err)}
 		}
 	}
 	return nil
@@ -856,41 +1347,8 @@ func (_u *DataAccessAuditLogUpdateOne) sqlSave(ctx context.Context) (_node *Data
 	if _u.mutation.CreatedAtCleared() {
 		_spec.ClearField(dataaccessauditlog.FieldCreatedAt, field.TypeTime)
 	}
-	if value, ok := _u.mutation.UpdatedAt(); ok {
-		_spec.SetField(dataaccessauditlog.FieldUpdatedAt, field.TypeTime, value)
-	}
-	if _u.mutation.UpdatedAtCleared() {
-		_spec.ClearField(dataaccessauditlog.FieldUpdatedAt, field.TypeTime)
-	}
-	if value, ok := _u.mutation.DeletedAt(); ok {
-		_spec.SetField(dataaccessauditlog.FieldDeletedAt, field.TypeTime, value)
-	}
-	if _u.mutation.DeletedAtCleared() {
-		_spec.ClearField(dataaccessauditlog.FieldDeletedAt, field.TypeTime)
-	}
 	if _u.mutation.TenantIDCleared() {
 		_spec.ClearField(dataaccessauditlog.FieldTenantID, field.TypeUint32)
-	}
-	if value, ok := _u.mutation.OperatorID(); ok {
-		_spec.SetField(dataaccessauditlog.FieldOperatorID, field.TypeUint32, value)
-	}
-	if value, ok := _u.mutation.AddedOperatorID(); ok {
-		_spec.AddField(dataaccessauditlog.FieldOperatorID, field.TypeUint32, value)
-	}
-	if _u.mutation.OperatorIDCleared() {
-		_spec.ClearField(dataaccessauditlog.FieldOperatorID, field.TypeUint32)
-	}
-	if value, ok := _u.mutation.Resource(); ok {
-		_spec.SetField(dataaccessauditlog.FieldResource, field.TypeString, value)
-	}
-	if _u.mutation.ResourceCleared() {
-		_spec.ClearField(dataaccessauditlog.FieldResource, field.TypeString)
-	}
-	if value, ok := _u.mutation.Action(); ok {
-		_spec.SetField(dataaccessauditlog.FieldAction, field.TypeString, value)
-	}
-	if _u.mutation.ActionCleared() {
-		_spec.ClearField(dataaccessauditlog.FieldAction, field.TypeString)
 	}
 	if value, ok := _u.mutation.UserID(); ok {
 		_spec.SetField(dataaccessauditlog.FieldUserID, field.TypeUint32, value)
@@ -907,23 +1365,35 @@ func (_u *DataAccessAuditLogUpdateOne) sqlSave(ctx context.Context) (_node *Data
 	if _u.mutation.UsernameCleared() {
 		_spec.ClearField(dataaccessauditlog.FieldUsername, field.TypeString)
 	}
-	if value, ok := _u.mutation.AccessType(); ok {
-		_spec.SetField(dataaccessauditlog.FieldAccessType, field.TypeEnum, value)
-	}
-	if _u.mutation.AccessTypeCleared() {
-		_spec.ClearField(dataaccessauditlog.FieldAccessType, field.TypeEnum)
-	}
-	if value, ok := _u.mutation.SensitiveLevel(); ok {
-		_spec.SetField(dataaccessauditlog.FieldSensitiveLevel, field.TypeEnum, value)
-	}
-	if _u.mutation.SensitiveLevelCleared() {
-		_spec.ClearField(dataaccessauditlog.FieldSensitiveLevel, field.TypeEnum)
-	}
 	if value, ok := _u.mutation.IPAddress(); ok {
 		_spec.SetField(dataaccessauditlog.FieldIPAddress, field.TypeString, value)
 	}
 	if _u.mutation.IPAddressCleared() {
 		_spec.ClearField(dataaccessauditlog.FieldIPAddress, field.TypeString)
+	}
+	if value, ok := _u.mutation.GeoLocation(); ok {
+		_spec.SetField(dataaccessauditlog.FieldGeoLocation, field.TypeJSON, value)
+	}
+	if _u.mutation.GeoLocationCleared() {
+		_spec.ClearField(dataaccessauditlog.FieldGeoLocation, field.TypeJSON)
+	}
+	if value, ok := _u.mutation.DeviceInfo(); ok {
+		_spec.SetField(dataaccessauditlog.FieldDeviceInfo, field.TypeJSON, value)
+	}
+	if _u.mutation.DeviceInfoCleared() {
+		_spec.ClearField(dataaccessauditlog.FieldDeviceInfo, field.TypeJSON)
+	}
+	if value, ok := _u.mutation.RequestID(); ok {
+		_spec.SetField(dataaccessauditlog.FieldRequestID, field.TypeString, value)
+	}
+	if _u.mutation.RequestIDCleared() {
+		_spec.ClearField(dataaccessauditlog.FieldRequestID, field.TypeString)
+	}
+	if value, ok := _u.mutation.TraceID(); ok {
+		_spec.SetField(dataaccessauditlog.FieldTraceID, field.TypeString, value)
+	}
+	if _u.mutation.TraceIDCleared() {
+		_spec.ClearField(dataaccessauditlog.FieldTraceID, field.TypeString)
 	}
 	if value, ok := _u.mutation.DataSource(); ok {
 		_spec.SetField(dataaccessauditlog.FieldDataSource, field.TypeString, value)
@@ -931,11 +1401,107 @@ func (_u *DataAccessAuditLogUpdateOne) sqlSave(ctx context.Context) (_node *Data
 	if _u.mutation.DataSourceCleared() {
 		_spec.ClearField(dataaccessauditlog.FieldDataSource, field.TypeString)
 	}
-	if value, ok := _u.mutation.AccessedAt(); ok {
-		_spec.SetField(dataaccessauditlog.FieldAccessedAt, field.TypeTime, value)
+	if value, ok := _u.mutation.TableName(); ok {
+		_spec.SetField(dataaccessauditlog.FieldTableName, field.TypeString, value)
 	}
-	if _u.mutation.AccessedAtCleared() {
-		_spec.ClearField(dataaccessauditlog.FieldAccessedAt, field.TypeTime)
+	if _u.mutation.TableNameCleared() {
+		_spec.ClearField(dataaccessauditlog.FieldTableName, field.TypeString)
+	}
+	if value, ok := _u.mutation.DataID(); ok {
+		_spec.SetField(dataaccessauditlog.FieldDataID, field.TypeString, value)
+	}
+	if _u.mutation.DataIDCleared() {
+		_spec.ClearField(dataaccessauditlog.FieldDataID, field.TypeString)
+	}
+	if value, ok := _u.mutation.AccessType(); ok {
+		_spec.SetField(dataaccessauditlog.FieldAccessType, field.TypeEnum, value)
+	}
+	if _u.mutation.AccessTypeCleared() {
+		_spec.ClearField(dataaccessauditlog.FieldAccessType, field.TypeEnum)
+	}
+	if value, ok := _u.mutation.SQLDigest(); ok {
+		_spec.SetField(dataaccessauditlog.FieldSQLDigest, field.TypeString, value)
+	}
+	if _u.mutation.SQLDigestCleared() {
+		_spec.ClearField(dataaccessauditlog.FieldSQLDigest, field.TypeString)
+	}
+	if value, ok := _u.mutation.SQLText(); ok {
+		_spec.SetField(dataaccessauditlog.FieldSQLText, field.TypeString, value)
+	}
+	if _u.mutation.SQLTextCleared() {
+		_spec.ClearField(dataaccessauditlog.FieldSQLText, field.TypeString)
+	}
+	if value, ok := _u.mutation.AffectedRows(); ok {
+		_spec.SetField(dataaccessauditlog.FieldAffectedRows, field.TypeUint32, value)
+	}
+	if value, ok := _u.mutation.AddedAffectedRows(); ok {
+		_spec.AddField(dataaccessauditlog.FieldAffectedRows, field.TypeUint32, value)
+	}
+	if _u.mutation.AffectedRowsCleared() {
+		_spec.ClearField(dataaccessauditlog.FieldAffectedRows, field.TypeUint32)
+	}
+	if value, ok := _u.mutation.LatencyMs(); ok {
+		_spec.SetField(dataaccessauditlog.FieldLatencyMs, field.TypeUint32, value)
+	}
+	if value, ok := _u.mutation.AddedLatencyMs(); ok {
+		_spec.AddField(dataaccessauditlog.FieldLatencyMs, field.TypeUint32, value)
+	}
+	if _u.mutation.LatencyMsCleared() {
+		_spec.ClearField(dataaccessauditlog.FieldLatencyMs, field.TypeUint32)
+	}
+	if value, ok := _u.mutation.Success(); ok {
+		_spec.SetField(dataaccessauditlog.FieldSuccess, field.TypeBool, value)
+	}
+	if _u.mutation.SuccessCleared() {
+		_spec.ClearField(dataaccessauditlog.FieldSuccess, field.TypeBool)
+	}
+	if value, ok := _u.mutation.SensitiveLevel(); ok {
+		_spec.SetField(dataaccessauditlog.FieldSensitiveLevel, field.TypeEnum, value)
+	}
+	if _u.mutation.SensitiveLevelCleared() {
+		_spec.ClearField(dataaccessauditlog.FieldSensitiveLevel, field.TypeEnum)
+	}
+	if value, ok := _u.mutation.DataMasked(); ok {
+		_spec.SetField(dataaccessauditlog.FieldDataMasked, field.TypeBool, value)
+	}
+	if _u.mutation.DataMaskedCleared() {
+		_spec.ClearField(dataaccessauditlog.FieldDataMasked, field.TypeBool)
+	}
+	if value, ok := _u.mutation.MaskingRules(); ok {
+		_spec.SetField(dataaccessauditlog.FieldMaskingRules, field.TypeString, value)
+	}
+	if _u.mutation.MaskingRulesCleared() {
+		_spec.ClearField(dataaccessauditlog.FieldMaskingRules, field.TypeString)
+	}
+	if value, ok := _u.mutation.BusinessPurpose(); ok {
+		_spec.SetField(dataaccessauditlog.FieldBusinessPurpose, field.TypeString, value)
+	}
+	if _u.mutation.BusinessPurposeCleared() {
+		_spec.ClearField(dataaccessauditlog.FieldBusinessPurpose, field.TypeString)
+	}
+	if value, ok := _u.mutation.DataCategory(); ok {
+		_spec.SetField(dataaccessauditlog.FieldDataCategory, field.TypeString, value)
+	}
+	if _u.mutation.DataCategoryCleared() {
+		_spec.ClearField(dataaccessauditlog.FieldDataCategory, field.TypeString)
+	}
+	if value, ok := _u.mutation.DbUser(); ok {
+		_spec.SetField(dataaccessauditlog.FieldDbUser, field.TypeString, value)
+	}
+	if _u.mutation.DbUserCleared() {
+		_spec.ClearField(dataaccessauditlog.FieldDbUser, field.TypeString)
+	}
+	if value, ok := _u.mutation.LogHash(); ok {
+		_spec.SetField(dataaccessauditlog.FieldLogHash, field.TypeString, value)
+	}
+	if _u.mutation.LogHashCleared() {
+		_spec.ClearField(dataaccessauditlog.FieldLogHash, field.TypeString)
+	}
+	if value, ok := _u.mutation.Signature(); ok {
+		_spec.SetField(dataaccessauditlog.FieldSignature, field.TypeBytes, value)
+	}
+	if _u.mutation.SignatureCleared() {
+		_spec.ClearField(dataaccessauditlog.FieldSignature, field.TypeBytes)
 	}
 	_spec.AddModifiers(_u.modifiers...)
 	_node = &DataAccessAuditLog{config: _u.config}

@@ -69,11 +69,6 @@ func DeletedAt(v time.Time) predicate.UserOrgUnit {
 	return predicate.UserOrgUnit(sql.FieldEQ(FieldDeletedAt, v))
 }
 
-// TenantID applies equality check predicate on the "tenant_id" field. It's identical to TenantIDEQ.
-func TenantID(v uint32) predicate.UserOrgUnit {
-	return predicate.UserOrgUnit(sql.FieldEQ(FieldTenantID, v))
-}
-
 // CreatedBy applies equality check predicate on the "created_by" field. It's identical to CreatedByEQ.
 func CreatedBy(v uint32) predicate.UserOrgUnit {
 	return predicate.UserOrgUnit(sql.FieldEQ(FieldCreatedBy, v))
@@ -89,9 +84,29 @@ func DeletedBy(v uint32) predicate.UserOrgUnit {
 	return predicate.UserOrgUnit(sql.FieldEQ(FieldDeletedBy, v))
 }
 
-// IsPrimary applies equality check predicate on the "is_primary" field. It's identical to IsPrimaryEQ.
-func IsPrimary(v bool) predicate.UserOrgUnit {
-	return predicate.UserOrgUnit(sql.FieldEQ(FieldIsPrimary, v))
+// TenantID applies equality check predicate on the "tenant_id" field. It's identical to TenantIDEQ.
+func TenantID(v uint32) predicate.UserOrgUnit {
+	return predicate.UserOrgUnit(sql.FieldEQ(FieldTenantID, v))
+}
+
+// Remark applies equality check predicate on the "remark" field. It's identical to RemarkEQ.
+func Remark(v string) predicate.UserOrgUnit {
+	return predicate.UserOrgUnit(sql.FieldEQ(FieldRemark, v))
+}
+
+// UserID applies equality check predicate on the "user_id" field. It's identical to UserIDEQ.
+func UserID(v uint32) predicate.UserOrgUnit {
+	return predicate.UserOrgUnit(sql.FieldEQ(FieldUserID, v))
+}
+
+// OrgUnitID applies equality check predicate on the "org_unit_id" field. It's identical to OrgUnitIDEQ.
+func OrgUnitID(v uint32) predicate.UserOrgUnit {
+	return predicate.UserOrgUnit(sql.FieldEQ(FieldOrgUnitID, v))
+}
+
+// PositionID applies equality check predicate on the "position_id" field. It's identical to PositionIDEQ.
+func PositionID(v uint32) predicate.UserOrgUnit {
+	return predicate.UserOrgUnit(sql.FieldEQ(FieldPositionID, v))
 }
 
 // StartAt applies equality check predicate on the "start_at" field. It's identical to StartAtEQ.
@@ -104,14 +119,19 @@ func EndAt(v time.Time) predicate.UserOrgUnit {
 	return predicate.UserOrgUnit(sql.FieldEQ(FieldEndAt, v))
 }
 
-// UserID applies equality check predicate on the "user_id" field. It's identical to UserIDEQ.
-func UserID(v uint32) predicate.UserOrgUnit {
-	return predicate.UserOrgUnit(sql.FieldEQ(FieldUserID, v))
+// AssignedAt applies equality check predicate on the "assigned_at" field. It's identical to AssignedAtEQ.
+func AssignedAt(v time.Time) predicate.UserOrgUnit {
+	return predicate.UserOrgUnit(sql.FieldEQ(FieldAssignedAt, v))
 }
 
-// OrgUnitID applies equality check predicate on the "org_unit_id" field. It's identical to OrgUnitIDEQ.
-func OrgUnitID(v uint32) predicate.UserOrgUnit {
-	return predicate.UserOrgUnit(sql.FieldEQ(FieldOrgUnitID, v))
+// AssignedBy applies equality check predicate on the "assigned_by" field. It's identical to AssignedByEQ.
+func AssignedBy(v uint32) predicate.UserOrgUnit {
+	return predicate.UserOrgUnit(sql.FieldEQ(FieldAssignedBy, v))
+}
+
+// IsPrimary applies equality check predicate on the "is_primary" field. It's identical to IsPrimaryEQ.
+func IsPrimary(v bool) predicate.UserOrgUnit {
+	return predicate.UserOrgUnit(sql.FieldEQ(FieldIsPrimary, v))
 }
 
 // CreatedAtEQ applies the EQ predicate on the "created_at" field.
@@ -264,56 +284,6 @@ func DeletedAtNotNil() predicate.UserOrgUnit {
 	return predicate.UserOrgUnit(sql.FieldNotNull(FieldDeletedAt))
 }
 
-// TenantIDEQ applies the EQ predicate on the "tenant_id" field.
-func TenantIDEQ(v uint32) predicate.UserOrgUnit {
-	return predicate.UserOrgUnit(sql.FieldEQ(FieldTenantID, v))
-}
-
-// TenantIDNEQ applies the NEQ predicate on the "tenant_id" field.
-func TenantIDNEQ(v uint32) predicate.UserOrgUnit {
-	return predicate.UserOrgUnit(sql.FieldNEQ(FieldTenantID, v))
-}
-
-// TenantIDIn applies the In predicate on the "tenant_id" field.
-func TenantIDIn(vs ...uint32) predicate.UserOrgUnit {
-	return predicate.UserOrgUnit(sql.FieldIn(FieldTenantID, vs...))
-}
-
-// TenantIDNotIn applies the NotIn predicate on the "tenant_id" field.
-func TenantIDNotIn(vs ...uint32) predicate.UserOrgUnit {
-	return predicate.UserOrgUnit(sql.FieldNotIn(FieldTenantID, vs...))
-}
-
-// TenantIDGT applies the GT predicate on the "tenant_id" field.
-func TenantIDGT(v uint32) predicate.UserOrgUnit {
-	return predicate.UserOrgUnit(sql.FieldGT(FieldTenantID, v))
-}
-
-// TenantIDGTE applies the GTE predicate on the "tenant_id" field.
-func TenantIDGTE(v uint32) predicate.UserOrgUnit {
-	return predicate.UserOrgUnit(sql.FieldGTE(FieldTenantID, v))
-}
-
-// TenantIDLT applies the LT predicate on the "tenant_id" field.
-func TenantIDLT(v uint32) predicate.UserOrgUnit {
-	return predicate.UserOrgUnit(sql.FieldLT(FieldTenantID, v))
-}
-
-// TenantIDLTE applies the LTE predicate on the "tenant_id" field.
-func TenantIDLTE(v uint32) predicate.UserOrgUnit {
-	return predicate.UserOrgUnit(sql.FieldLTE(FieldTenantID, v))
-}
-
-// TenantIDIsNil applies the IsNil predicate on the "tenant_id" field.
-func TenantIDIsNil() predicate.UserOrgUnit {
-	return predicate.UserOrgUnit(sql.FieldIsNull(FieldTenantID))
-}
-
-// TenantIDNotNil applies the NotNil predicate on the "tenant_id" field.
-func TenantIDNotNil() predicate.UserOrgUnit {
-	return predicate.UserOrgUnit(sql.FieldNotNull(FieldTenantID))
-}
-
 // CreatedByEQ applies the EQ predicate on the "created_by" field.
 func CreatedByEQ(v uint32) predicate.UserOrgUnit {
 	return predicate.UserOrgUnit(sql.FieldEQ(FieldCreatedBy, v))
@@ -464,54 +434,259 @@ func DeletedByNotNil() predicate.UserOrgUnit {
 	return predicate.UserOrgUnit(sql.FieldNotNull(FieldDeletedBy))
 }
 
-// StatusEQ applies the EQ predicate on the "status" field.
-func StatusEQ(v Status) predicate.UserOrgUnit {
-	return predicate.UserOrgUnit(sql.FieldEQ(FieldStatus, v))
+// TenantIDEQ applies the EQ predicate on the "tenant_id" field.
+func TenantIDEQ(v uint32) predicate.UserOrgUnit {
+	return predicate.UserOrgUnit(sql.FieldEQ(FieldTenantID, v))
 }
 
-// StatusNEQ applies the NEQ predicate on the "status" field.
-func StatusNEQ(v Status) predicate.UserOrgUnit {
-	return predicate.UserOrgUnit(sql.FieldNEQ(FieldStatus, v))
+// TenantIDNEQ applies the NEQ predicate on the "tenant_id" field.
+func TenantIDNEQ(v uint32) predicate.UserOrgUnit {
+	return predicate.UserOrgUnit(sql.FieldNEQ(FieldTenantID, v))
 }
 
-// StatusIn applies the In predicate on the "status" field.
-func StatusIn(vs ...Status) predicate.UserOrgUnit {
-	return predicate.UserOrgUnit(sql.FieldIn(FieldStatus, vs...))
+// TenantIDIn applies the In predicate on the "tenant_id" field.
+func TenantIDIn(vs ...uint32) predicate.UserOrgUnit {
+	return predicate.UserOrgUnit(sql.FieldIn(FieldTenantID, vs...))
 }
 
-// StatusNotIn applies the NotIn predicate on the "status" field.
-func StatusNotIn(vs ...Status) predicate.UserOrgUnit {
-	return predicate.UserOrgUnit(sql.FieldNotIn(FieldStatus, vs...))
+// TenantIDNotIn applies the NotIn predicate on the "tenant_id" field.
+func TenantIDNotIn(vs ...uint32) predicate.UserOrgUnit {
+	return predicate.UserOrgUnit(sql.FieldNotIn(FieldTenantID, vs...))
 }
 
-// StatusIsNil applies the IsNil predicate on the "status" field.
-func StatusIsNil() predicate.UserOrgUnit {
-	return predicate.UserOrgUnit(sql.FieldIsNull(FieldStatus))
+// TenantIDGT applies the GT predicate on the "tenant_id" field.
+func TenantIDGT(v uint32) predicate.UserOrgUnit {
+	return predicate.UserOrgUnit(sql.FieldGT(FieldTenantID, v))
 }
 
-// StatusNotNil applies the NotNil predicate on the "status" field.
-func StatusNotNil() predicate.UserOrgUnit {
-	return predicate.UserOrgUnit(sql.FieldNotNull(FieldStatus))
+// TenantIDGTE applies the GTE predicate on the "tenant_id" field.
+func TenantIDGTE(v uint32) predicate.UserOrgUnit {
+	return predicate.UserOrgUnit(sql.FieldGTE(FieldTenantID, v))
 }
 
-// IsPrimaryEQ applies the EQ predicate on the "is_primary" field.
-func IsPrimaryEQ(v bool) predicate.UserOrgUnit {
-	return predicate.UserOrgUnit(sql.FieldEQ(FieldIsPrimary, v))
+// TenantIDLT applies the LT predicate on the "tenant_id" field.
+func TenantIDLT(v uint32) predicate.UserOrgUnit {
+	return predicate.UserOrgUnit(sql.FieldLT(FieldTenantID, v))
 }
 
-// IsPrimaryNEQ applies the NEQ predicate on the "is_primary" field.
-func IsPrimaryNEQ(v bool) predicate.UserOrgUnit {
-	return predicate.UserOrgUnit(sql.FieldNEQ(FieldIsPrimary, v))
+// TenantIDLTE applies the LTE predicate on the "tenant_id" field.
+func TenantIDLTE(v uint32) predicate.UserOrgUnit {
+	return predicate.UserOrgUnit(sql.FieldLTE(FieldTenantID, v))
 }
 
-// IsPrimaryIsNil applies the IsNil predicate on the "is_primary" field.
-func IsPrimaryIsNil() predicate.UserOrgUnit {
-	return predicate.UserOrgUnit(sql.FieldIsNull(FieldIsPrimary))
+// TenantIDIsNil applies the IsNil predicate on the "tenant_id" field.
+func TenantIDIsNil() predicate.UserOrgUnit {
+	return predicate.UserOrgUnit(sql.FieldIsNull(FieldTenantID))
 }
 
-// IsPrimaryNotNil applies the NotNil predicate on the "is_primary" field.
-func IsPrimaryNotNil() predicate.UserOrgUnit {
-	return predicate.UserOrgUnit(sql.FieldNotNull(FieldIsPrimary))
+// TenantIDNotNil applies the NotNil predicate on the "tenant_id" field.
+func TenantIDNotNil() predicate.UserOrgUnit {
+	return predicate.UserOrgUnit(sql.FieldNotNull(FieldTenantID))
+}
+
+// RemarkEQ applies the EQ predicate on the "remark" field.
+func RemarkEQ(v string) predicate.UserOrgUnit {
+	return predicate.UserOrgUnit(sql.FieldEQ(FieldRemark, v))
+}
+
+// RemarkNEQ applies the NEQ predicate on the "remark" field.
+func RemarkNEQ(v string) predicate.UserOrgUnit {
+	return predicate.UserOrgUnit(sql.FieldNEQ(FieldRemark, v))
+}
+
+// RemarkIn applies the In predicate on the "remark" field.
+func RemarkIn(vs ...string) predicate.UserOrgUnit {
+	return predicate.UserOrgUnit(sql.FieldIn(FieldRemark, vs...))
+}
+
+// RemarkNotIn applies the NotIn predicate on the "remark" field.
+func RemarkNotIn(vs ...string) predicate.UserOrgUnit {
+	return predicate.UserOrgUnit(sql.FieldNotIn(FieldRemark, vs...))
+}
+
+// RemarkGT applies the GT predicate on the "remark" field.
+func RemarkGT(v string) predicate.UserOrgUnit {
+	return predicate.UserOrgUnit(sql.FieldGT(FieldRemark, v))
+}
+
+// RemarkGTE applies the GTE predicate on the "remark" field.
+func RemarkGTE(v string) predicate.UserOrgUnit {
+	return predicate.UserOrgUnit(sql.FieldGTE(FieldRemark, v))
+}
+
+// RemarkLT applies the LT predicate on the "remark" field.
+func RemarkLT(v string) predicate.UserOrgUnit {
+	return predicate.UserOrgUnit(sql.FieldLT(FieldRemark, v))
+}
+
+// RemarkLTE applies the LTE predicate on the "remark" field.
+func RemarkLTE(v string) predicate.UserOrgUnit {
+	return predicate.UserOrgUnit(sql.FieldLTE(FieldRemark, v))
+}
+
+// RemarkContains applies the Contains predicate on the "remark" field.
+func RemarkContains(v string) predicate.UserOrgUnit {
+	return predicate.UserOrgUnit(sql.FieldContains(FieldRemark, v))
+}
+
+// RemarkHasPrefix applies the HasPrefix predicate on the "remark" field.
+func RemarkHasPrefix(v string) predicate.UserOrgUnit {
+	return predicate.UserOrgUnit(sql.FieldHasPrefix(FieldRemark, v))
+}
+
+// RemarkHasSuffix applies the HasSuffix predicate on the "remark" field.
+func RemarkHasSuffix(v string) predicate.UserOrgUnit {
+	return predicate.UserOrgUnit(sql.FieldHasSuffix(FieldRemark, v))
+}
+
+// RemarkIsNil applies the IsNil predicate on the "remark" field.
+func RemarkIsNil() predicate.UserOrgUnit {
+	return predicate.UserOrgUnit(sql.FieldIsNull(FieldRemark))
+}
+
+// RemarkNotNil applies the NotNil predicate on the "remark" field.
+func RemarkNotNil() predicate.UserOrgUnit {
+	return predicate.UserOrgUnit(sql.FieldNotNull(FieldRemark))
+}
+
+// RemarkEqualFold applies the EqualFold predicate on the "remark" field.
+func RemarkEqualFold(v string) predicate.UserOrgUnit {
+	return predicate.UserOrgUnit(sql.FieldEqualFold(FieldRemark, v))
+}
+
+// RemarkContainsFold applies the ContainsFold predicate on the "remark" field.
+func RemarkContainsFold(v string) predicate.UserOrgUnit {
+	return predicate.UserOrgUnit(sql.FieldContainsFold(FieldRemark, v))
+}
+
+// UserIDEQ applies the EQ predicate on the "user_id" field.
+func UserIDEQ(v uint32) predicate.UserOrgUnit {
+	return predicate.UserOrgUnit(sql.FieldEQ(FieldUserID, v))
+}
+
+// UserIDNEQ applies the NEQ predicate on the "user_id" field.
+func UserIDNEQ(v uint32) predicate.UserOrgUnit {
+	return predicate.UserOrgUnit(sql.FieldNEQ(FieldUserID, v))
+}
+
+// UserIDIn applies the In predicate on the "user_id" field.
+func UserIDIn(vs ...uint32) predicate.UserOrgUnit {
+	return predicate.UserOrgUnit(sql.FieldIn(FieldUserID, vs...))
+}
+
+// UserIDNotIn applies the NotIn predicate on the "user_id" field.
+func UserIDNotIn(vs ...uint32) predicate.UserOrgUnit {
+	return predicate.UserOrgUnit(sql.FieldNotIn(FieldUserID, vs...))
+}
+
+// UserIDGT applies the GT predicate on the "user_id" field.
+func UserIDGT(v uint32) predicate.UserOrgUnit {
+	return predicate.UserOrgUnit(sql.FieldGT(FieldUserID, v))
+}
+
+// UserIDGTE applies the GTE predicate on the "user_id" field.
+func UserIDGTE(v uint32) predicate.UserOrgUnit {
+	return predicate.UserOrgUnit(sql.FieldGTE(FieldUserID, v))
+}
+
+// UserIDLT applies the LT predicate on the "user_id" field.
+func UserIDLT(v uint32) predicate.UserOrgUnit {
+	return predicate.UserOrgUnit(sql.FieldLT(FieldUserID, v))
+}
+
+// UserIDLTE applies the LTE predicate on the "user_id" field.
+func UserIDLTE(v uint32) predicate.UserOrgUnit {
+	return predicate.UserOrgUnit(sql.FieldLTE(FieldUserID, v))
+}
+
+// OrgUnitIDEQ applies the EQ predicate on the "org_unit_id" field.
+func OrgUnitIDEQ(v uint32) predicate.UserOrgUnit {
+	return predicate.UserOrgUnit(sql.FieldEQ(FieldOrgUnitID, v))
+}
+
+// OrgUnitIDNEQ applies the NEQ predicate on the "org_unit_id" field.
+func OrgUnitIDNEQ(v uint32) predicate.UserOrgUnit {
+	return predicate.UserOrgUnit(sql.FieldNEQ(FieldOrgUnitID, v))
+}
+
+// OrgUnitIDIn applies the In predicate on the "org_unit_id" field.
+func OrgUnitIDIn(vs ...uint32) predicate.UserOrgUnit {
+	return predicate.UserOrgUnit(sql.FieldIn(FieldOrgUnitID, vs...))
+}
+
+// OrgUnitIDNotIn applies the NotIn predicate on the "org_unit_id" field.
+func OrgUnitIDNotIn(vs ...uint32) predicate.UserOrgUnit {
+	return predicate.UserOrgUnit(sql.FieldNotIn(FieldOrgUnitID, vs...))
+}
+
+// OrgUnitIDGT applies the GT predicate on the "org_unit_id" field.
+func OrgUnitIDGT(v uint32) predicate.UserOrgUnit {
+	return predicate.UserOrgUnit(sql.FieldGT(FieldOrgUnitID, v))
+}
+
+// OrgUnitIDGTE applies the GTE predicate on the "org_unit_id" field.
+func OrgUnitIDGTE(v uint32) predicate.UserOrgUnit {
+	return predicate.UserOrgUnit(sql.FieldGTE(FieldOrgUnitID, v))
+}
+
+// OrgUnitIDLT applies the LT predicate on the "org_unit_id" field.
+func OrgUnitIDLT(v uint32) predicate.UserOrgUnit {
+	return predicate.UserOrgUnit(sql.FieldLT(FieldOrgUnitID, v))
+}
+
+// OrgUnitIDLTE applies the LTE predicate on the "org_unit_id" field.
+func OrgUnitIDLTE(v uint32) predicate.UserOrgUnit {
+	return predicate.UserOrgUnit(sql.FieldLTE(FieldOrgUnitID, v))
+}
+
+// PositionIDEQ applies the EQ predicate on the "position_id" field.
+func PositionIDEQ(v uint32) predicate.UserOrgUnit {
+	return predicate.UserOrgUnit(sql.FieldEQ(FieldPositionID, v))
+}
+
+// PositionIDNEQ applies the NEQ predicate on the "position_id" field.
+func PositionIDNEQ(v uint32) predicate.UserOrgUnit {
+	return predicate.UserOrgUnit(sql.FieldNEQ(FieldPositionID, v))
+}
+
+// PositionIDIn applies the In predicate on the "position_id" field.
+func PositionIDIn(vs ...uint32) predicate.UserOrgUnit {
+	return predicate.UserOrgUnit(sql.FieldIn(FieldPositionID, vs...))
+}
+
+// PositionIDNotIn applies the NotIn predicate on the "position_id" field.
+func PositionIDNotIn(vs ...uint32) predicate.UserOrgUnit {
+	return predicate.UserOrgUnit(sql.FieldNotIn(FieldPositionID, vs...))
+}
+
+// PositionIDGT applies the GT predicate on the "position_id" field.
+func PositionIDGT(v uint32) predicate.UserOrgUnit {
+	return predicate.UserOrgUnit(sql.FieldGT(FieldPositionID, v))
+}
+
+// PositionIDGTE applies the GTE predicate on the "position_id" field.
+func PositionIDGTE(v uint32) predicate.UserOrgUnit {
+	return predicate.UserOrgUnit(sql.FieldGTE(FieldPositionID, v))
+}
+
+// PositionIDLT applies the LT predicate on the "position_id" field.
+func PositionIDLT(v uint32) predicate.UserOrgUnit {
+	return predicate.UserOrgUnit(sql.FieldLT(FieldPositionID, v))
+}
+
+// PositionIDLTE applies the LTE predicate on the "position_id" field.
+func PositionIDLTE(v uint32) predicate.UserOrgUnit {
+	return predicate.UserOrgUnit(sql.FieldLTE(FieldPositionID, v))
+}
+
+// PositionIDIsNil applies the IsNil predicate on the "position_id" field.
+func PositionIDIsNil() predicate.UserOrgUnit {
+	return predicate.UserOrgUnit(sql.FieldIsNull(FieldPositionID))
+}
+
+// PositionIDNotNil applies the NotNil predicate on the "position_id" field.
+func PositionIDNotNil() predicate.UserOrgUnit {
+	return predicate.UserOrgUnit(sql.FieldNotNull(FieldPositionID))
 }
 
 // StartAtEQ applies the EQ predicate on the "start_at" field.
@@ -614,104 +789,144 @@ func EndAtNotNil() predicate.UserOrgUnit {
 	return predicate.UserOrgUnit(sql.FieldNotNull(FieldEndAt))
 }
 
-// UserIDEQ applies the EQ predicate on the "user_id" field.
-func UserIDEQ(v uint32) predicate.UserOrgUnit {
-	return predicate.UserOrgUnit(sql.FieldEQ(FieldUserID, v))
+// AssignedAtEQ applies the EQ predicate on the "assigned_at" field.
+func AssignedAtEQ(v time.Time) predicate.UserOrgUnit {
+	return predicate.UserOrgUnit(sql.FieldEQ(FieldAssignedAt, v))
 }
 
-// UserIDNEQ applies the NEQ predicate on the "user_id" field.
-func UserIDNEQ(v uint32) predicate.UserOrgUnit {
-	return predicate.UserOrgUnit(sql.FieldNEQ(FieldUserID, v))
+// AssignedAtNEQ applies the NEQ predicate on the "assigned_at" field.
+func AssignedAtNEQ(v time.Time) predicate.UserOrgUnit {
+	return predicate.UserOrgUnit(sql.FieldNEQ(FieldAssignedAt, v))
 }
 
-// UserIDIn applies the In predicate on the "user_id" field.
-func UserIDIn(vs ...uint32) predicate.UserOrgUnit {
-	return predicate.UserOrgUnit(sql.FieldIn(FieldUserID, vs...))
+// AssignedAtIn applies the In predicate on the "assigned_at" field.
+func AssignedAtIn(vs ...time.Time) predicate.UserOrgUnit {
+	return predicate.UserOrgUnit(sql.FieldIn(FieldAssignedAt, vs...))
 }
 
-// UserIDNotIn applies the NotIn predicate on the "user_id" field.
-func UserIDNotIn(vs ...uint32) predicate.UserOrgUnit {
-	return predicate.UserOrgUnit(sql.FieldNotIn(FieldUserID, vs...))
+// AssignedAtNotIn applies the NotIn predicate on the "assigned_at" field.
+func AssignedAtNotIn(vs ...time.Time) predicate.UserOrgUnit {
+	return predicate.UserOrgUnit(sql.FieldNotIn(FieldAssignedAt, vs...))
 }
 
-// UserIDGT applies the GT predicate on the "user_id" field.
-func UserIDGT(v uint32) predicate.UserOrgUnit {
-	return predicate.UserOrgUnit(sql.FieldGT(FieldUserID, v))
+// AssignedAtGT applies the GT predicate on the "assigned_at" field.
+func AssignedAtGT(v time.Time) predicate.UserOrgUnit {
+	return predicate.UserOrgUnit(sql.FieldGT(FieldAssignedAt, v))
 }
 
-// UserIDGTE applies the GTE predicate on the "user_id" field.
-func UserIDGTE(v uint32) predicate.UserOrgUnit {
-	return predicate.UserOrgUnit(sql.FieldGTE(FieldUserID, v))
+// AssignedAtGTE applies the GTE predicate on the "assigned_at" field.
+func AssignedAtGTE(v time.Time) predicate.UserOrgUnit {
+	return predicate.UserOrgUnit(sql.FieldGTE(FieldAssignedAt, v))
 }
 
-// UserIDLT applies the LT predicate on the "user_id" field.
-func UserIDLT(v uint32) predicate.UserOrgUnit {
-	return predicate.UserOrgUnit(sql.FieldLT(FieldUserID, v))
+// AssignedAtLT applies the LT predicate on the "assigned_at" field.
+func AssignedAtLT(v time.Time) predicate.UserOrgUnit {
+	return predicate.UserOrgUnit(sql.FieldLT(FieldAssignedAt, v))
 }
 
-// UserIDLTE applies the LTE predicate on the "user_id" field.
-func UserIDLTE(v uint32) predicate.UserOrgUnit {
-	return predicate.UserOrgUnit(sql.FieldLTE(FieldUserID, v))
+// AssignedAtLTE applies the LTE predicate on the "assigned_at" field.
+func AssignedAtLTE(v time.Time) predicate.UserOrgUnit {
+	return predicate.UserOrgUnit(sql.FieldLTE(FieldAssignedAt, v))
 }
 
-// UserIDIsNil applies the IsNil predicate on the "user_id" field.
-func UserIDIsNil() predicate.UserOrgUnit {
-	return predicate.UserOrgUnit(sql.FieldIsNull(FieldUserID))
+// AssignedAtIsNil applies the IsNil predicate on the "assigned_at" field.
+func AssignedAtIsNil() predicate.UserOrgUnit {
+	return predicate.UserOrgUnit(sql.FieldIsNull(FieldAssignedAt))
 }
 
-// UserIDNotNil applies the NotNil predicate on the "user_id" field.
-func UserIDNotNil() predicate.UserOrgUnit {
-	return predicate.UserOrgUnit(sql.FieldNotNull(FieldUserID))
+// AssignedAtNotNil applies the NotNil predicate on the "assigned_at" field.
+func AssignedAtNotNil() predicate.UserOrgUnit {
+	return predicate.UserOrgUnit(sql.FieldNotNull(FieldAssignedAt))
 }
 
-// OrgUnitIDEQ applies the EQ predicate on the "org_unit_id" field.
-func OrgUnitIDEQ(v uint32) predicate.UserOrgUnit {
-	return predicate.UserOrgUnit(sql.FieldEQ(FieldOrgUnitID, v))
+// AssignedByEQ applies the EQ predicate on the "assigned_by" field.
+func AssignedByEQ(v uint32) predicate.UserOrgUnit {
+	return predicate.UserOrgUnit(sql.FieldEQ(FieldAssignedBy, v))
 }
 
-// OrgUnitIDNEQ applies the NEQ predicate on the "org_unit_id" field.
-func OrgUnitIDNEQ(v uint32) predicate.UserOrgUnit {
-	return predicate.UserOrgUnit(sql.FieldNEQ(FieldOrgUnitID, v))
+// AssignedByNEQ applies the NEQ predicate on the "assigned_by" field.
+func AssignedByNEQ(v uint32) predicate.UserOrgUnit {
+	return predicate.UserOrgUnit(sql.FieldNEQ(FieldAssignedBy, v))
 }
 
-// OrgUnitIDIn applies the In predicate on the "org_unit_id" field.
-func OrgUnitIDIn(vs ...uint32) predicate.UserOrgUnit {
-	return predicate.UserOrgUnit(sql.FieldIn(FieldOrgUnitID, vs...))
+// AssignedByIn applies the In predicate on the "assigned_by" field.
+func AssignedByIn(vs ...uint32) predicate.UserOrgUnit {
+	return predicate.UserOrgUnit(sql.FieldIn(FieldAssignedBy, vs...))
 }
 
-// OrgUnitIDNotIn applies the NotIn predicate on the "org_unit_id" field.
-func OrgUnitIDNotIn(vs ...uint32) predicate.UserOrgUnit {
-	return predicate.UserOrgUnit(sql.FieldNotIn(FieldOrgUnitID, vs...))
+// AssignedByNotIn applies the NotIn predicate on the "assigned_by" field.
+func AssignedByNotIn(vs ...uint32) predicate.UserOrgUnit {
+	return predicate.UserOrgUnit(sql.FieldNotIn(FieldAssignedBy, vs...))
 }
 
-// OrgUnitIDGT applies the GT predicate on the "org_unit_id" field.
-func OrgUnitIDGT(v uint32) predicate.UserOrgUnit {
-	return predicate.UserOrgUnit(sql.FieldGT(FieldOrgUnitID, v))
+// AssignedByGT applies the GT predicate on the "assigned_by" field.
+func AssignedByGT(v uint32) predicate.UserOrgUnit {
+	return predicate.UserOrgUnit(sql.FieldGT(FieldAssignedBy, v))
 }
 
-// OrgUnitIDGTE applies the GTE predicate on the "org_unit_id" field.
-func OrgUnitIDGTE(v uint32) predicate.UserOrgUnit {
-	return predicate.UserOrgUnit(sql.FieldGTE(FieldOrgUnitID, v))
+// AssignedByGTE applies the GTE predicate on the "assigned_by" field.
+func AssignedByGTE(v uint32) predicate.UserOrgUnit {
+	return predicate.UserOrgUnit(sql.FieldGTE(FieldAssignedBy, v))
 }
 
-// OrgUnitIDLT applies the LT predicate on the "org_unit_id" field.
-func OrgUnitIDLT(v uint32) predicate.UserOrgUnit {
-	return predicate.UserOrgUnit(sql.FieldLT(FieldOrgUnitID, v))
+// AssignedByLT applies the LT predicate on the "assigned_by" field.
+func AssignedByLT(v uint32) predicate.UserOrgUnit {
+	return predicate.UserOrgUnit(sql.FieldLT(FieldAssignedBy, v))
 }
 
-// OrgUnitIDLTE applies the LTE predicate on the "org_unit_id" field.
-func OrgUnitIDLTE(v uint32) predicate.UserOrgUnit {
-	return predicate.UserOrgUnit(sql.FieldLTE(FieldOrgUnitID, v))
+// AssignedByLTE applies the LTE predicate on the "assigned_by" field.
+func AssignedByLTE(v uint32) predicate.UserOrgUnit {
+	return predicate.UserOrgUnit(sql.FieldLTE(FieldAssignedBy, v))
 }
 
-// OrgUnitIDIsNil applies the IsNil predicate on the "org_unit_id" field.
-func OrgUnitIDIsNil() predicate.UserOrgUnit {
-	return predicate.UserOrgUnit(sql.FieldIsNull(FieldOrgUnitID))
+// AssignedByIsNil applies the IsNil predicate on the "assigned_by" field.
+func AssignedByIsNil() predicate.UserOrgUnit {
+	return predicate.UserOrgUnit(sql.FieldIsNull(FieldAssignedBy))
 }
 
-// OrgUnitIDNotNil applies the NotNil predicate on the "org_unit_id" field.
-func OrgUnitIDNotNil() predicate.UserOrgUnit {
-	return predicate.UserOrgUnit(sql.FieldNotNull(FieldOrgUnitID))
+// AssignedByNotNil applies the NotNil predicate on the "assigned_by" field.
+func AssignedByNotNil() predicate.UserOrgUnit {
+	return predicate.UserOrgUnit(sql.FieldNotNull(FieldAssignedBy))
+}
+
+// IsPrimaryEQ applies the EQ predicate on the "is_primary" field.
+func IsPrimaryEQ(v bool) predicate.UserOrgUnit {
+	return predicate.UserOrgUnit(sql.FieldEQ(FieldIsPrimary, v))
+}
+
+// IsPrimaryNEQ applies the NEQ predicate on the "is_primary" field.
+func IsPrimaryNEQ(v bool) predicate.UserOrgUnit {
+	return predicate.UserOrgUnit(sql.FieldNEQ(FieldIsPrimary, v))
+}
+
+// StatusEQ applies the EQ predicate on the "status" field.
+func StatusEQ(v Status) predicate.UserOrgUnit {
+	return predicate.UserOrgUnit(sql.FieldEQ(FieldStatus, v))
+}
+
+// StatusNEQ applies the NEQ predicate on the "status" field.
+func StatusNEQ(v Status) predicate.UserOrgUnit {
+	return predicate.UserOrgUnit(sql.FieldNEQ(FieldStatus, v))
+}
+
+// StatusIn applies the In predicate on the "status" field.
+func StatusIn(vs ...Status) predicate.UserOrgUnit {
+	return predicate.UserOrgUnit(sql.FieldIn(FieldStatus, vs...))
+}
+
+// StatusNotIn applies the NotIn predicate on the "status" field.
+func StatusNotIn(vs ...Status) predicate.UserOrgUnit {
+	return predicate.UserOrgUnit(sql.FieldNotIn(FieldStatus, vs...))
+}
+
+// StatusIsNil applies the IsNil predicate on the "status" field.
+func StatusIsNil() predicate.UserOrgUnit {
+	return predicate.UserOrgUnit(sql.FieldIsNull(FieldStatus))
+}
+
+// StatusNotNil applies the NotNil predicate on the "status" field.
+func StatusNotNil() predicate.UserOrgUnit {
+	return predicate.UserOrgUnit(sql.FieldNotNull(FieldStatus))
 }
 
 // And groups predicates with the AND operator between them.

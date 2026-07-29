@@ -30,24 +30,32 @@ type File struct {
 	UpdatedBy *uint32 `json:"updated_by,omitempty"`
 	// 删除者ID
 	DeletedBy *uint32 `json:"deleted_by,omitempty"`
+	// 备注
+	Remark *string `json:"remark,omitempty"`
 	// 租户ID
 	TenantID *uint32 `json:"tenant_id,omitempty"`
-	// 文件名
-	Name *string `json:"name,omitempty"`
-	// 原始文件名
-	OriginalName *string `json:"original_name,omitempty"`
-	// MIME类型
-	ContentType *string `json:"content_type,omitempty"`
-	// 文件大小
-	Size *int64 `json:"size,omitempty"`
-	// 存储路径
-	Path *string `json:"path,omitempty"`
-	// 访问URL
-	URL *string `json:"url,omitempty"`
-	// Provider holds the value of the "provider" field.
+	// OSS供应商
 	Provider *file.Provider `json:"provider,omitempty"`
-	// 对象Key
-	ObjectKey    *string `json:"object_key,omitempty"`
+	// 存储桶名称
+	BucketName *string `json:"bucket_name,omitempty"`
+	// 文件目录
+	FileDirectory *string `json:"file_directory,omitempty"`
+	// 文件Guid
+	FileGUID *string `json:"file_guid,omitempty"`
+	// 实际存储文件名
+	SaveFileName *string `json:"save_file_name,omitempty"`
+	// 原始文件名
+	FileName *string `json:"file_name,omitempty"`
+	// 文件扩展名
+	Extension *string `json:"extension,omitempty"`
+	// 文件长度，单位：字节
+	Size *uint64 `json:"size,omitempty"`
+	// 格式化后的文件长度字符串
+	SizeFormat *string `json:"size_format,omitempty"`
+	// 链接地址
+	LinkURL *string `json:"link_url,omitempty"`
+	// 文件内容hash值，防止上传重复文件
+	ContentHash  *string `json:"content_hash,omitempty"`
 	selectValues sql.SelectValues
 }
 
@@ -58,7 +66,7 @@ func (*File) scanValues(columns []string) ([]any, error) {
 		switch columns[i] {
 		case file.FieldID, file.FieldCreatedBy, file.FieldUpdatedBy, file.FieldDeletedBy, file.FieldTenantID, file.FieldSize:
 			values[i] = new(sql.NullInt64)
-		case file.FieldName, file.FieldOriginalName, file.FieldContentType, file.FieldPath, file.FieldURL, file.FieldProvider, file.FieldObjectKey:
+		case file.FieldRemark, file.FieldProvider, file.FieldBucketName, file.FieldFileDirectory, file.FieldFileGUID, file.FieldSaveFileName, file.FieldFileName, file.FieldExtension, file.FieldSizeFormat, file.FieldLinkURL, file.FieldContentHash:
 			values[i] = new(sql.NullString)
 		case file.FieldCreatedAt, file.FieldUpdatedAt, file.FieldDeletedAt:
 			values[i] = new(sql.NullTime)
@@ -125,54 +133,19 @@ func (_m *File) assignValues(columns []string, values []any) error {
 				_m.DeletedBy = new(uint32)
 				*_m.DeletedBy = uint32(value.Int64)
 			}
+		case file.FieldRemark:
+			if value, ok := values[i].(*sql.NullString); !ok {
+				return fmt.Errorf("unexpected type %T for field remark", values[i])
+			} else if value.Valid {
+				_m.Remark = new(string)
+				*_m.Remark = value.String
+			}
 		case file.FieldTenantID:
 			if value, ok := values[i].(*sql.NullInt64); !ok {
 				return fmt.Errorf("unexpected type %T for field tenant_id", values[i])
 			} else if value.Valid {
 				_m.TenantID = new(uint32)
 				*_m.TenantID = uint32(value.Int64)
-			}
-		case file.FieldName:
-			if value, ok := values[i].(*sql.NullString); !ok {
-				return fmt.Errorf("unexpected type %T for field name", values[i])
-			} else if value.Valid {
-				_m.Name = new(string)
-				*_m.Name = value.String
-			}
-		case file.FieldOriginalName:
-			if value, ok := values[i].(*sql.NullString); !ok {
-				return fmt.Errorf("unexpected type %T for field original_name", values[i])
-			} else if value.Valid {
-				_m.OriginalName = new(string)
-				*_m.OriginalName = value.String
-			}
-		case file.FieldContentType:
-			if value, ok := values[i].(*sql.NullString); !ok {
-				return fmt.Errorf("unexpected type %T for field content_type", values[i])
-			} else if value.Valid {
-				_m.ContentType = new(string)
-				*_m.ContentType = value.String
-			}
-		case file.FieldSize:
-			if value, ok := values[i].(*sql.NullInt64); !ok {
-				return fmt.Errorf("unexpected type %T for field size", values[i])
-			} else if value.Valid {
-				_m.Size = new(int64)
-				*_m.Size = value.Int64
-			}
-		case file.FieldPath:
-			if value, ok := values[i].(*sql.NullString); !ok {
-				return fmt.Errorf("unexpected type %T for field path", values[i])
-			} else if value.Valid {
-				_m.Path = new(string)
-				*_m.Path = value.String
-			}
-		case file.FieldURL:
-			if value, ok := values[i].(*sql.NullString); !ok {
-				return fmt.Errorf("unexpected type %T for field url", values[i])
-			} else if value.Valid {
-				_m.URL = new(string)
-				*_m.URL = value.String
 			}
 		case file.FieldProvider:
 			if value, ok := values[i].(*sql.NullString); !ok {
@@ -181,12 +154,75 @@ func (_m *File) assignValues(columns []string, values []any) error {
 				_m.Provider = new(file.Provider)
 				*_m.Provider = file.Provider(value.String)
 			}
-		case file.FieldObjectKey:
+		case file.FieldBucketName:
 			if value, ok := values[i].(*sql.NullString); !ok {
-				return fmt.Errorf("unexpected type %T for field object_key", values[i])
+				return fmt.Errorf("unexpected type %T for field bucket_name", values[i])
 			} else if value.Valid {
-				_m.ObjectKey = new(string)
-				*_m.ObjectKey = value.String
+				_m.BucketName = new(string)
+				*_m.BucketName = value.String
+			}
+		case file.FieldFileDirectory:
+			if value, ok := values[i].(*sql.NullString); !ok {
+				return fmt.Errorf("unexpected type %T for field file_directory", values[i])
+			} else if value.Valid {
+				_m.FileDirectory = new(string)
+				*_m.FileDirectory = value.String
+			}
+		case file.FieldFileGUID:
+			if value, ok := values[i].(*sql.NullString); !ok {
+				return fmt.Errorf("unexpected type %T for field file_guid", values[i])
+			} else if value.Valid {
+				_m.FileGUID = new(string)
+				*_m.FileGUID = value.String
+			}
+		case file.FieldSaveFileName:
+			if value, ok := values[i].(*sql.NullString); !ok {
+				return fmt.Errorf("unexpected type %T for field save_file_name", values[i])
+			} else if value.Valid {
+				_m.SaveFileName = new(string)
+				*_m.SaveFileName = value.String
+			}
+		case file.FieldFileName:
+			if value, ok := values[i].(*sql.NullString); !ok {
+				return fmt.Errorf("unexpected type %T for field file_name", values[i])
+			} else if value.Valid {
+				_m.FileName = new(string)
+				*_m.FileName = value.String
+			}
+		case file.FieldExtension:
+			if value, ok := values[i].(*sql.NullString); !ok {
+				return fmt.Errorf("unexpected type %T for field extension", values[i])
+			} else if value.Valid {
+				_m.Extension = new(string)
+				*_m.Extension = value.String
+			}
+		case file.FieldSize:
+			if value, ok := values[i].(*sql.NullInt64); !ok {
+				return fmt.Errorf("unexpected type %T for field size", values[i])
+			} else if value.Valid {
+				_m.Size = new(uint64)
+				*_m.Size = uint64(value.Int64)
+			}
+		case file.FieldSizeFormat:
+			if value, ok := values[i].(*sql.NullString); !ok {
+				return fmt.Errorf("unexpected type %T for field size_format", values[i])
+			} else if value.Valid {
+				_m.SizeFormat = new(string)
+				*_m.SizeFormat = value.String
+			}
+		case file.FieldLinkURL:
+			if value, ok := values[i].(*sql.NullString); !ok {
+				return fmt.Errorf("unexpected type %T for field link_url", values[i])
+			} else if value.Valid {
+				_m.LinkURL = new(string)
+				*_m.LinkURL = value.String
+			}
+		case file.FieldContentHash:
+			if value, ok := values[i].(*sql.NullString); !ok {
+				return fmt.Errorf("unexpected type %T for field content_hash", values[i])
+			} else if value.Valid {
+				_m.ContentHash = new(string)
+				*_m.ContentHash = value.String
 			}
 		default:
 			_m.selectValues.Set(columns[i], values[i])
@@ -254,23 +290,48 @@ func (_m *File) String() string {
 		builder.WriteString(fmt.Sprintf("%v", *v))
 	}
 	builder.WriteString(", ")
+	if v := _m.Remark; v != nil {
+		builder.WriteString("remark=")
+		builder.WriteString(*v)
+	}
+	builder.WriteString(", ")
 	if v := _m.TenantID; v != nil {
 		builder.WriteString("tenant_id=")
 		builder.WriteString(fmt.Sprintf("%v", *v))
 	}
 	builder.WriteString(", ")
-	if v := _m.Name; v != nil {
-		builder.WriteString("name=")
+	if v := _m.Provider; v != nil {
+		builder.WriteString("provider=")
+		builder.WriteString(fmt.Sprintf("%v", *v))
+	}
+	builder.WriteString(", ")
+	if v := _m.BucketName; v != nil {
+		builder.WriteString("bucket_name=")
 		builder.WriteString(*v)
 	}
 	builder.WriteString(", ")
-	if v := _m.OriginalName; v != nil {
-		builder.WriteString("original_name=")
+	if v := _m.FileDirectory; v != nil {
+		builder.WriteString("file_directory=")
 		builder.WriteString(*v)
 	}
 	builder.WriteString(", ")
-	if v := _m.ContentType; v != nil {
-		builder.WriteString("content_type=")
+	if v := _m.FileGUID; v != nil {
+		builder.WriteString("file_guid=")
+		builder.WriteString(*v)
+	}
+	builder.WriteString(", ")
+	if v := _m.SaveFileName; v != nil {
+		builder.WriteString("save_file_name=")
+		builder.WriteString(*v)
+	}
+	builder.WriteString(", ")
+	if v := _m.FileName; v != nil {
+		builder.WriteString("file_name=")
+		builder.WriteString(*v)
+	}
+	builder.WriteString(", ")
+	if v := _m.Extension; v != nil {
+		builder.WriteString("extension=")
 		builder.WriteString(*v)
 	}
 	builder.WriteString(", ")
@@ -279,23 +340,18 @@ func (_m *File) String() string {
 		builder.WriteString(fmt.Sprintf("%v", *v))
 	}
 	builder.WriteString(", ")
-	if v := _m.Path; v != nil {
-		builder.WriteString("path=")
+	if v := _m.SizeFormat; v != nil {
+		builder.WriteString("size_format=")
 		builder.WriteString(*v)
 	}
 	builder.WriteString(", ")
-	if v := _m.URL; v != nil {
-		builder.WriteString("url=")
+	if v := _m.LinkURL; v != nil {
+		builder.WriteString("link_url=")
 		builder.WriteString(*v)
 	}
 	builder.WriteString(", ")
-	if v := _m.Provider; v != nil {
-		builder.WriteString("provider=")
-		builder.WriteString(fmt.Sprintf("%v", *v))
-	}
-	builder.WriteString(", ")
-	if v := _m.ObjectKey; v != nil {
-		builder.WriteString("object_key=")
+	if v := _m.ContentHash; v != nil {
+		builder.WriteString("content_hash=")
 		builder.WriteString(*v)
 	}
 	builder.WriteByte(')')

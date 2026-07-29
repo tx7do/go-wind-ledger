@@ -150,43 +150,70 @@ func (_u *LoginPolicyUpdate) ClearDeletedBy() *LoginPolicyUpdate {
 	return _u
 }
 
-// SetRemark sets the "remark" field.
-func (_u *LoginPolicyUpdate) SetRemark(v string) *LoginPolicyUpdate {
-	_u.mutation.SetRemark(v)
+// SetTargetID sets the "target_id" field.
+func (_u *LoginPolicyUpdate) SetTargetID(v uint32) *LoginPolicyUpdate {
+	_u.mutation.ResetTargetID()
+	_u.mutation.SetTargetID(v)
 	return _u
 }
 
-// SetNillableRemark sets the "remark" field if the given value is not nil.
-func (_u *LoginPolicyUpdate) SetNillableRemark(v *string) *LoginPolicyUpdate {
+// SetNillableTargetID sets the "target_id" field if the given value is not nil.
+func (_u *LoginPolicyUpdate) SetNillableTargetID(v *uint32) *LoginPolicyUpdate {
 	if v != nil {
-		_u.SetRemark(*v)
+		_u.SetTargetID(*v)
 	}
 	return _u
 }
 
-// ClearRemark clears the value of the "remark" field.
-func (_u *LoginPolicyUpdate) ClearRemark() *LoginPolicyUpdate {
-	_u.mutation.ClearRemark()
+// AddTargetID adds value to the "target_id" field.
+func (_u *LoginPolicyUpdate) AddTargetID(v int32) *LoginPolicyUpdate {
+	_u.mutation.AddTargetID(v)
 	return _u
 }
 
-// SetName sets the "name" field.
-func (_u *LoginPolicyUpdate) SetName(v string) *LoginPolicyUpdate {
-	_u.mutation.SetName(v)
+// ClearTargetID clears the value of the "target_id" field.
+func (_u *LoginPolicyUpdate) ClearTargetID() *LoginPolicyUpdate {
+	_u.mutation.ClearTargetID()
 	return _u
 }
 
-// SetNillableName sets the "name" field if the given value is not nil.
-func (_u *LoginPolicyUpdate) SetNillableName(v *string) *LoginPolicyUpdate {
+// SetValue sets the "value" field.
+func (_u *LoginPolicyUpdate) SetValue(v string) *LoginPolicyUpdate {
+	_u.mutation.SetValue(v)
+	return _u
+}
+
+// SetNillableValue sets the "value" field if the given value is not nil.
+func (_u *LoginPolicyUpdate) SetNillableValue(v *string) *LoginPolicyUpdate {
 	if v != nil {
-		_u.SetName(*v)
+		_u.SetValue(*v)
 	}
 	return _u
 }
 
-// ClearName clears the value of the "name" field.
-func (_u *LoginPolicyUpdate) ClearName() *LoginPolicyUpdate {
-	_u.mutation.ClearName()
+// ClearValue clears the value of the "value" field.
+func (_u *LoginPolicyUpdate) ClearValue() *LoginPolicyUpdate {
+	_u.mutation.ClearValue()
+	return _u
+}
+
+// SetReason sets the "reason" field.
+func (_u *LoginPolicyUpdate) SetReason(v string) *LoginPolicyUpdate {
+	_u.mutation.SetReason(v)
+	return _u
+}
+
+// SetNillableReason sets the "reason" field if the given value is not nil.
+func (_u *LoginPolicyUpdate) SetNillableReason(v *string) *LoginPolicyUpdate {
+	if v != nil {
+		_u.SetReason(*v)
+	}
+	return _u
+}
+
+// ClearReason clears the value of the "reason" field.
+func (_u *LoginPolicyUpdate) ClearReason() *LoginPolicyUpdate {
+	_u.mutation.ClearReason()
 	return _u
 }
 
@@ -210,26 +237,6 @@ func (_u *LoginPolicyUpdate) ClearType() *LoginPolicyUpdate {
 	return _u
 }
 
-// SetConfig sets the "config" field.
-func (_u *LoginPolicyUpdate) SetConfig(v string) *LoginPolicyUpdate {
-	_u.mutation.SetConfig(v)
-	return _u
-}
-
-// SetNillableConfig sets the "config" field if the given value is not nil.
-func (_u *LoginPolicyUpdate) SetNillableConfig(v *string) *LoginPolicyUpdate {
-	if v != nil {
-		_u.SetConfig(*v)
-	}
-	return _u
-}
-
-// ClearConfig clears the value of the "config" field.
-func (_u *LoginPolicyUpdate) ClearConfig() *LoginPolicyUpdate {
-	_u.mutation.ClearConfig()
-	return _u
-}
-
 // SetMethod sets the "method" field.
 func (_u *LoginPolicyUpdate) SetMethod(v loginpolicy.Method) *LoginPolicyUpdate {
 	_u.mutation.SetMethod(v)
@@ -247,26 +254,6 @@ func (_u *LoginPolicyUpdate) SetNillableMethod(v *loginpolicy.Method) *LoginPoli
 // ClearMethod clears the value of the "method" field.
 func (_u *LoginPolicyUpdate) ClearMethod() *LoginPolicyUpdate {
 	_u.mutation.ClearMethod()
-	return _u
-}
-
-// SetEnable sets the "enable" field.
-func (_u *LoginPolicyUpdate) SetEnable(v bool) *LoginPolicyUpdate {
-	_u.mutation.SetEnable(v)
-	return _u
-}
-
-// SetNillableEnable sets the "enable" field if the given value is not nil.
-func (_u *LoginPolicyUpdate) SetNillableEnable(v *bool) *LoginPolicyUpdate {
-	if v != nil {
-		_u.SetEnable(*v)
-	}
-	return _u
-}
-
-// ClearEnable clears the value of the "enable" field.
-func (_u *LoginPolicyUpdate) ClearEnable() *LoginPolicyUpdate {
-	_u.mutation.ClearEnable()
 	return _u
 }
 
@@ -304,19 +291,9 @@ func (_u *LoginPolicyUpdate) ExecX(ctx context.Context) {
 
 // check runs all checks and user-defined validators on the builder.
 func (_u *LoginPolicyUpdate) check() error {
-	if v, ok := _u.mutation.Name(); ok {
-		if err := loginpolicy.NameValidator(v); err != nil {
-			return &ValidationError{Name: "name", err: fmt.Errorf(`ent: validator failed for field "LoginPolicy.name": %w`, err)}
-		}
-	}
 	if v, ok := _u.mutation.GetType(); ok {
 		if err := loginpolicy.TypeValidator(v); err != nil {
 			return &ValidationError{Name: "type", err: fmt.Errorf(`ent: validator failed for field "LoginPolicy.type": %w`, err)}
-		}
-	}
-	if v, ok := _u.mutation.Config(); ok {
-		if err := loginpolicy.ConfigValidator(v); err != nil {
-			return &ValidationError{Name: "config", err: fmt.Errorf(`ent: validator failed for field "LoginPolicy.config": %w`, err)}
 		}
 	}
 	if v, ok := _u.mutation.Method(); ok {
@@ -390,17 +367,26 @@ func (_u *LoginPolicyUpdate) sqlSave(ctx context.Context) (_node int, err error)
 	if _u.mutation.TenantIDCleared() {
 		_spec.ClearField(loginpolicy.FieldTenantID, field.TypeUint32)
 	}
-	if value, ok := _u.mutation.Remark(); ok {
-		_spec.SetField(loginpolicy.FieldRemark, field.TypeString, value)
+	if value, ok := _u.mutation.TargetID(); ok {
+		_spec.SetField(loginpolicy.FieldTargetID, field.TypeUint32, value)
 	}
-	if _u.mutation.RemarkCleared() {
-		_spec.ClearField(loginpolicy.FieldRemark, field.TypeString)
+	if value, ok := _u.mutation.AddedTargetID(); ok {
+		_spec.AddField(loginpolicy.FieldTargetID, field.TypeUint32, value)
 	}
-	if value, ok := _u.mutation.Name(); ok {
-		_spec.SetField(loginpolicy.FieldName, field.TypeString, value)
+	if _u.mutation.TargetIDCleared() {
+		_spec.ClearField(loginpolicy.FieldTargetID, field.TypeUint32)
 	}
-	if _u.mutation.NameCleared() {
-		_spec.ClearField(loginpolicy.FieldName, field.TypeString)
+	if value, ok := _u.mutation.Value(); ok {
+		_spec.SetField(loginpolicy.FieldValue, field.TypeString, value)
+	}
+	if _u.mutation.ValueCleared() {
+		_spec.ClearField(loginpolicy.FieldValue, field.TypeString)
+	}
+	if value, ok := _u.mutation.Reason(); ok {
+		_spec.SetField(loginpolicy.FieldReason, field.TypeString, value)
+	}
+	if _u.mutation.ReasonCleared() {
+		_spec.ClearField(loginpolicy.FieldReason, field.TypeString)
 	}
 	if value, ok := _u.mutation.GetType(); ok {
 		_spec.SetField(loginpolicy.FieldType, field.TypeEnum, value)
@@ -408,23 +394,11 @@ func (_u *LoginPolicyUpdate) sqlSave(ctx context.Context) (_node int, err error)
 	if _u.mutation.TypeCleared() {
 		_spec.ClearField(loginpolicy.FieldType, field.TypeEnum)
 	}
-	if value, ok := _u.mutation.Config(); ok {
-		_spec.SetField(loginpolicy.FieldConfig, field.TypeString, value)
-	}
-	if _u.mutation.ConfigCleared() {
-		_spec.ClearField(loginpolicy.FieldConfig, field.TypeString)
-	}
 	if value, ok := _u.mutation.Method(); ok {
 		_spec.SetField(loginpolicy.FieldMethod, field.TypeEnum, value)
 	}
 	if _u.mutation.MethodCleared() {
 		_spec.ClearField(loginpolicy.FieldMethod, field.TypeEnum)
-	}
-	if value, ok := _u.mutation.Enable(); ok {
-		_spec.SetField(loginpolicy.FieldEnable, field.TypeBool, value)
-	}
-	if _u.mutation.EnableCleared() {
-		_spec.ClearField(loginpolicy.FieldEnable, field.TypeBool)
 	}
 	_spec.AddModifiers(_u.modifiers...)
 	if _node, err = sqlgraph.UpdateNodes(ctx, _u.driver, _spec); err != nil {
@@ -569,43 +543,70 @@ func (_u *LoginPolicyUpdateOne) ClearDeletedBy() *LoginPolicyUpdateOne {
 	return _u
 }
 
-// SetRemark sets the "remark" field.
-func (_u *LoginPolicyUpdateOne) SetRemark(v string) *LoginPolicyUpdateOne {
-	_u.mutation.SetRemark(v)
+// SetTargetID sets the "target_id" field.
+func (_u *LoginPolicyUpdateOne) SetTargetID(v uint32) *LoginPolicyUpdateOne {
+	_u.mutation.ResetTargetID()
+	_u.mutation.SetTargetID(v)
 	return _u
 }
 
-// SetNillableRemark sets the "remark" field if the given value is not nil.
-func (_u *LoginPolicyUpdateOne) SetNillableRemark(v *string) *LoginPolicyUpdateOne {
+// SetNillableTargetID sets the "target_id" field if the given value is not nil.
+func (_u *LoginPolicyUpdateOne) SetNillableTargetID(v *uint32) *LoginPolicyUpdateOne {
 	if v != nil {
-		_u.SetRemark(*v)
+		_u.SetTargetID(*v)
 	}
 	return _u
 }
 
-// ClearRemark clears the value of the "remark" field.
-func (_u *LoginPolicyUpdateOne) ClearRemark() *LoginPolicyUpdateOne {
-	_u.mutation.ClearRemark()
+// AddTargetID adds value to the "target_id" field.
+func (_u *LoginPolicyUpdateOne) AddTargetID(v int32) *LoginPolicyUpdateOne {
+	_u.mutation.AddTargetID(v)
 	return _u
 }
 
-// SetName sets the "name" field.
-func (_u *LoginPolicyUpdateOne) SetName(v string) *LoginPolicyUpdateOne {
-	_u.mutation.SetName(v)
+// ClearTargetID clears the value of the "target_id" field.
+func (_u *LoginPolicyUpdateOne) ClearTargetID() *LoginPolicyUpdateOne {
+	_u.mutation.ClearTargetID()
 	return _u
 }
 
-// SetNillableName sets the "name" field if the given value is not nil.
-func (_u *LoginPolicyUpdateOne) SetNillableName(v *string) *LoginPolicyUpdateOne {
+// SetValue sets the "value" field.
+func (_u *LoginPolicyUpdateOne) SetValue(v string) *LoginPolicyUpdateOne {
+	_u.mutation.SetValue(v)
+	return _u
+}
+
+// SetNillableValue sets the "value" field if the given value is not nil.
+func (_u *LoginPolicyUpdateOne) SetNillableValue(v *string) *LoginPolicyUpdateOne {
 	if v != nil {
-		_u.SetName(*v)
+		_u.SetValue(*v)
 	}
 	return _u
 }
 
-// ClearName clears the value of the "name" field.
-func (_u *LoginPolicyUpdateOne) ClearName() *LoginPolicyUpdateOne {
-	_u.mutation.ClearName()
+// ClearValue clears the value of the "value" field.
+func (_u *LoginPolicyUpdateOne) ClearValue() *LoginPolicyUpdateOne {
+	_u.mutation.ClearValue()
+	return _u
+}
+
+// SetReason sets the "reason" field.
+func (_u *LoginPolicyUpdateOne) SetReason(v string) *LoginPolicyUpdateOne {
+	_u.mutation.SetReason(v)
+	return _u
+}
+
+// SetNillableReason sets the "reason" field if the given value is not nil.
+func (_u *LoginPolicyUpdateOne) SetNillableReason(v *string) *LoginPolicyUpdateOne {
+	if v != nil {
+		_u.SetReason(*v)
+	}
+	return _u
+}
+
+// ClearReason clears the value of the "reason" field.
+func (_u *LoginPolicyUpdateOne) ClearReason() *LoginPolicyUpdateOne {
+	_u.mutation.ClearReason()
 	return _u
 }
 
@@ -629,26 +630,6 @@ func (_u *LoginPolicyUpdateOne) ClearType() *LoginPolicyUpdateOne {
 	return _u
 }
 
-// SetConfig sets the "config" field.
-func (_u *LoginPolicyUpdateOne) SetConfig(v string) *LoginPolicyUpdateOne {
-	_u.mutation.SetConfig(v)
-	return _u
-}
-
-// SetNillableConfig sets the "config" field if the given value is not nil.
-func (_u *LoginPolicyUpdateOne) SetNillableConfig(v *string) *LoginPolicyUpdateOne {
-	if v != nil {
-		_u.SetConfig(*v)
-	}
-	return _u
-}
-
-// ClearConfig clears the value of the "config" field.
-func (_u *LoginPolicyUpdateOne) ClearConfig() *LoginPolicyUpdateOne {
-	_u.mutation.ClearConfig()
-	return _u
-}
-
 // SetMethod sets the "method" field.
 func (_u *LoginPolicyUpdateOne) SetMethod(v loginpolicy.Method) *LoginPolicyUpdateOne {
 	_u.mutation.SetMethod(v)
@@ -666,26 +647,6 @@ func (_u *LoginPolicyUpdateOne) SetNillableMethod(v *loginpolicy.Method) *LoginP
 // ClearMethod clears the value of the "method" field.
 func (_u *LoginPolicyUpdateOne) ClearMethod() *LoginPolicyUpdateOne {
 	_u.mutation.ClearMethod()
-	return _u
-}
-
-// SetEnable sets the "enable" field.
-func (_u *LoginPolicyUpdateOne) SetEnable(v bool) *LoginPolicyUpdateOne {
-	_u.mutation.SetEnable(v)
-	return _u
-}
-
-// SetNillableEnable sets the "enable" field if the given value is not nil.
-func (_u *LoginPolicyUpdateOne) SetNillableEnable(v *bool) *LoginPolicyUpdateOne {
-	if v != nil {
-		_u.SetEnable(*v)
-	}
-	return _u
-}
-
-// ClearEnable clears the value of the "enable" field.
-func (_u *LoginPolicyUpdateOne) ClearEnable() *LoginPolicyUpdateOne {
-	_u.mutation.ClearEnable()
 	return _u
 }
 
@@ -736,19 +697,9 @@ func (_u *LoginPolicyUpdateOne) ExecX(ctx context.Context) {
 
 // check runs all checks and user-defined validators on the builder.
 func (_u *LoginPolicyUpdateOne) check() error {
-	if v, ok := _u.mutation.Name(); ok {
-		if err := loginpolicy.NameValidator(v); err != nil {
-			return &ValidationError{Name: "name", err: fmt.Errorf(`ent: validator failed for field "LoginPolicy.name": %w`, err)}
-		}
-	}
 	if v, ok := _u.mutation.GetType(); ok {
 		if err := loginpolicy.TypeValidator(v); err != nil {
 			return &ValidationError{Name: "type", err: fmt.Errorf(`ent: validator failed for field "LoginPolicy.type": %w`, err)}
-		}
-	}
-	if v, ok := _u.mutation.Config(); ok {
-		if err := loginpolicy.ConfigValidator(v); err != nil {
-			return &ValidationError{Name: "config", err: fmt.Errorf(`ent: validator failed for field "LoginPolicy.config": %w`, err)}
 		}
 	}
 	if v, ok := _u.mutation.Method(); ok {
@@ -839,17 +790,26 @@ func (_u *LoginPolicyUpdateOne) sqlSave(ctx context.Context) (_node *LoginPolicy
 	if _u.mutation.TenantIDCleared() {
 		_spec.ClearField(loginpolicy.FieldTenantID, field.TypeUint32)
 	}
-	if value, ok := _u.mutation.Remark(); ok {
-		_spec.SetField(loginpolicy.FieldRemark, field.TypeString, value)
+	if value, ok := _u.mutation.TargetID(); ok {
+		_spec.SetField(loginpolicy.FieldTargetID, field.TypeUint32, value)
 	}
-	if _u.mutation.RemarkCleared() {
-		_spec.ClearField(loginpolicy.FieldRemark, field.TypeString)
+	if value, ok := _u.mutation.AddedTargetID(); ok {
+		_spec.AddField(loginpolicy.FieldTargetID, field.TypeUint32, value)
 	}
-	if value, ok := _u.mutation.Name(); ok {
-		_spec.SetField(loginpolicy.FieldName, field.TypeString, value)
+	if _u.mutation.TargetIDCleared() {
+		_spec.ClearField(loginpolicy.FieldTargetID, field.TypeUint32)
 	}
-	if _u.mutation.NameCleared() {
-		_spec.ClearField(loginpolicy.FieldName, field.TypeString)
+	if value, ok := _u.mutation.Value(); ok {
+		_spec.SetField(loginpolicy.FieldValue, field.TypeString, value)
+	}
+	if _u.mutation.ValueCleared() {
+		_spec.ClearField(loginpolicy.FieldValue, field.TypeString)
+	}
+	if value, ok := _u.mutation.Reason(); ok {
+		_spec.SetField(loginpolicy.FieldReason, field.TypeString, value)
+	}
+	if _u.mutation.ReasonCleared() {
+		_spec.ClearField(loginpolicy.FieldReason, field.TypeString)
 	}
 	if value, ok := _u.mutation.GetType(); ok {
 		_spec.SetField(loginpolicy.FieldType, field.TypeEnum, value)
@@ -857,23 +817,11 @@ func (_u *LoginPolicyUpdateOne) sqlSave(ctx context.Context) (_node *LoginPolicy
 	if _u.mutation.TypeCleared() {
 		_spec.ClearField(loginpolicy.FieldType, field.TypeEnum)
 	}
-	if value, ok := _u.mutation.Config(); ok {
-		_spec.SetField(loginpolicy.FieldConfig, field.TypeString, value)
-	}
-	if _u.mutation.ConfigCleared() {
-		_spec.ClearField(loginpolicy.FieldConfig, field.TypeString)
-	}
 	if value, ok := _u.mutation.Method(); ok {
 		_spec.SetField(loginpolicy.FieldMethod, field.TypeEnum, value)
 	}
 	if _u.mutation.MethodCleared() {
 		_spec.ClearField(loginpolicy.FieldMethod, field.TypeEnum)
-	}
-	if value, ok := _u.mutation.Enable(); ok {
-		_spec.SetField(loginpolicy.FieldEnable, field.TypeBool, value)
-	}
-	if _u.mutation.EnableCleared() {
-		_spec.ClearField(loginpolicy.FieldEnable, field.TypeBool)
 	}
 	_spec.AddModifiers(_u.modifiers...)
 	_node = &LoginPolicy{config: _u.config}

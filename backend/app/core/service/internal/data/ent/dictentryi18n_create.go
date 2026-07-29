@@ -6,6 +6,7 @@ import (
 	"context"
 	"errors"
 	"fmt"
+	"go-wind-ledger/app/core/service/internal/data/ent/dictentry"
 	"go-wind-ledger/app/core/service/internal/data/ent/dictentryi18n"
 	"time"
 
@@ -64,20 +65,6 @@ func (_c *DictEntryI18nCreate) SetNillableDeletedAt(v *time.Time) *DictEntryI18n
 	return _c
 }
 
-// SetTenantID sets the "tenant_id" field.
-func (_c *DictEntryI18nCreate) SetTenantID(v uint32) *DictEntryI18nCreate {
-	_c.mutation.SetTenantID(v)
-	return _c
-}
-
-// SetNillableTenantID sets the "tenant_id" field if the given value is not nil.
-func (_c *DictEntryI18nCreate) SetNillableTenantID(v *uint32) *DictEntryI18nCreate {
-	if v != nil {
-		_c.SetTenantID(*v)
-	}
-	return _c
-}
-
 // SetCreatedBy sets the "created_by" field.
 func (_c *DictEntryI18nCreate) SetCreatedBy(v uint32) *DictEntryI18nCreate {
 	_c.mutation.SetCreatedBy(v)
@@ -120,16 +107,44 @@ func (_c *DictEntryI18nCreate) SetNillableDeletedBy(v *uint32) *DictEntryI18nCre
 	return _c
 }
 
-// SetDictEntryID sets the "dict_entry_id" field.
-func (_c *DictEntryI18nCreate) SetDictEntryID(v uint32) *DictEntryI18nCreate {
-	_c.mutation.SetDictEntryID(v)
+// SetDescription sets the "description" field.
+func (_c *DictEntryI18nCreate) SetDescription(v string) *DictEntryI18nCreate {
+	_c.mutation.SetDescription(v)
 	return _c
 }
 
-// SetNillableDictEntryID sets the "dict_entry_id" field if the given value is not nil.
-func (_c *DictEntryI18nCreate) SetNillableDictEntryID(v *uint32) *DictEntryI18nCreate {
+// SetNillableDescription sets the "description" field if the given value is not nil.
+func (_c *DictEntryI18nCreate) SetNillableDescription(v *string) *DictEntryI18nCreate {
 	if v != nil {
-		_c.SetDictEntryID(*v)
+		_c.SetDescription(*v)
+	}
+	return _c
+}
+
+// SetSortOrder sets the "sort_order" field.
+func (_c *DictEntryI18nCreate) SetSortOrder(v uint32) *DictEntryI18nCreate {
+	_c.mutation.SetSortOrder(v)
+	return _c
+}
+
+// SetNillableSortOrder sets the "sort_order" field if the given value is not nil.
+func (_c *DictEntryI18nCreate) SetNillableSortOrder(v *uint32) *DictEntryI18nCreate {
+	if v != nil {
+		_c.SetSortOrder(*v)
+	}
+	return _c
+}
+
+// SetTenantID sets the "tenant_id" field.
+func (_c *DictEntryI18nCreate) SetTenantID(v uint32) *DictEntryI18nCreate {
+	_c.mutation.SetTenantID(v)
+	return _c
+}
+
+// SetNillableTenantID sets the "tenant_id" field if the given value is not nil.
+func (_c *DictEntryI18nCreate) SetNillableTenantID(v *uint32) *DictEntryI18nCreate {
+	if v != nil {
+		_c.SetTenantID(*v)
 	}
 	return _c
 }
@@ -148,16 +163,16 @@ func (_c *DictEntryI18nCreate) SetNillableLanguageCode(v *string) *DictEntryI18n
 	return _c
 }
 
-// SetName sets the "name" field.
-func (_c *DictEntryI18nCreate) SetName(v string) *DictEntryI18nCreate {
-	_c.mutation.SetName(v)
+// SetEntryLabel sets the "entry_label" field.
+func (_c *DictEntryI18nCreate) SetEntryLabel(v string) *DictEntryI18nCreate {
+	_c.mutation.SetEntryLabel(v)
 	return _c
 }
 
-// SetNillableName sets the "name" field if the given value is not nil.
-func (_c *DictEntryI18nCreate) SetNillableName(v *string) *DictEntryI18nCreate {
+// SetNillableEntryLabel sets the "entry_label" field if the given value is not nil.
+func (_c *DictEntryI18nCreate) SetNillableEntryLabel(v *string) *DictEntryI18nCreate {
 	if v != nil {
-		_c.SetName(*v)
+		_c.SetEntryLabel(*v)
 	}
 	return _c
 }
@@ -166,6 +181,25 @@ func (_c *DictEntryI18nCreate) SetNillableName(v *string) *DictEntryI18nCreate {
 func (_c *DictEntryI18nCreate) SetID(v uint32) *DictEntryI18nCreate {
 	_c.mutation.SetID(v)
 	return _c
+}
+
+// SetDictEntryID sets the "dict_entry" edge to the DictEntry entity by ID.
+func (_c *DictEntryI18nCreate) SetDictEntryID(id uint32) *DictEntryI18nCreate {
+	_c.mutation.SetDictEntryID(id)
+	return _c
+}
+
+// SetNillableDictEntryID sets the "dict_entry" edge to the DictEntry entity by ID if the given value is not nil.
+func (_c *DictEntryI18nCreate) SetNillableDictEntryID(id *uint32) *DictEntryI18nCreate {
+	if id != nil {
+		_c = _c.SetDictEntryID(*id)
+	}
+	return _c
+}
+
+// SetDictEntry sets the "dict_entry" edge to the DictEntry entity.
+func (_c *DictEntryI18nCreate) SetDictEntry(v *DictEntry) *DictEntryI18nCreate {
+	return _c.SetDictEntryID(v.ID)
 }
 
 // Mutation returns the DictEntryI18nMutation object of the builder.
@@ -205,6 +239,10 @@ func (_c *DictEntryI18nCreate) ExecX(ctx context.Context) {
 
 // defaults sets the default values of the builder before save.
 func (_c *DictEntryI18nCreate) defaults() error {
+	if _, ok := _c.mutation.SortOrder(); !ok {
+		v := dictentryi18n.DefaultSortOrder
+		_c.mutation.SetSortOrder(v)
+	}
 	if _, ok := _c.mutation.TenantID(); !ok {
 		v := dictentryi18n.DefaultTenantID
 		_c.mutation.SetTenantID(v)
@@ -219,9 +257,9 @@ func (_c *DictEntryI18nCreate) check() error {
 			return &ValidationError{Name: "language_code", err: fmt.Errorf(`ent: validator failed for field "DictEntryI18n.language_code": %w`, err)}
 		}
 	}
-	if v, ok := _c.mutation.Name(); ok {
-		if err := dictentryi18n.NameValidator(v); err != nil {
-			return &ValidationError{Name: "name", err: fmt.Errorf(`ent: validator failed for field "DictEntryI18n.name": %w`, err)}
+	if v, ok := _c.mutation.EntryLabel(); ok {
+		if err := dictentryi18n.EntryLabelValidator(v); err != nil {
+			return &ValidationError{Name: "entry_label", err: fmt.Errorf(`ent: validator failed for field "DictEntryI18n.entry_label": %w`, err)}
 		}
 	}
 	if v, ok := _c.mutation.ID(); ok {
@@ -274,10 +312,6 @@ func (_c *DictEntryI18nCreate) createSpec() (*DictEntryI18n, *sqlgraph.CreateSpe
 		_spec.SetField(dictentryi18n.FieldDeletedAt, field.TypeTime, value)
 		_node.DeletedAt = &value
 	}
-	if value, ok := _c.mutation.TenantID(); ok {
-		_spec.SetField(dictentryi18n.FieldTenantID, field.TypeUint32, value)
-		_node.TenantID = &value
-	}
 	if value, ok := _c.mutation.CreatedBy(); ok {
 		_spec.SetField(dictentryi18n.FieldCreatedBy, field.TypeUint32, value)
 		_node.CreatedBy = &value
@@ -290,17 +324,42 @@ func (_c *DictEntryI18nCreate) createSpec() (*DictEntryI18n, *sqlgraph.CreateSpe
 		_spec.SetField(dictentryi18n.FieldDeletedBy, field.TypeUint32, value)
 		_node.DeletedBy = &value
 	}
-	if value, ok := _c.mutation.DictEntryID(); ok {
-		_spec.SetField(dictentryi18n.FieldDictEntryID, field.TypeUint32, value)
-		_node.DictEntryID = &value
+	if value, ok := _c.mutation.Description(); ok {
+		_spec.SetField(dictentryi18n.FieldDescription, field.TypeString, value)
+		_node.Description = &value
+	}
+	if value, ok := _c.mutation.SortOrder(); ok {
+		_spec.SetField(dictentryi18n.FieldSortOrder, field.TypeUint32, value)
+		_node.SortOrder = &value
+	}
+	if value, ok := _c.mutation.TenantID(); ok {
+		_spec.SetField(dictentryi18n.FieldTenantID, field.TypeUint32, value)
+		_node.TenantID = &value
 	}
 	if value, ok := _c.mutation.LanguageCode(); ok {
 		_spec.SetField(dictentryi18n.FieldLanguageCode, field.TypeString, value)
 		_node.LanguageCode = &value
 	}
-	if value, ok := _c.mutation.Name(); ok {
-		_spec.SetField(dictentryi18n.FieldName, field.TypeString, value)
-		_node.Name = &value
+	if value, ok := _c.mutation.EntryLabel(); ok {
+		_spec.SetField(dictentryi18n.FieldEntryLabel, field.TypeString, value)
+		_node.EntryLabel = &value
+	}
+	if nodes := _c.mutation.DictEntryIDs(); len(nodes) > 0 {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.M2O,
+			Inverse: true,
+			Table:   dictentryi18n.DictEntryTable,
+			Columns: []string{dictentryi18n.DictEntryColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: sqlgraph.NewFieldSpec(dictentry.FieldID, field.TypeUint32),
+			},
+		}
+		for _, k := range nodes {
+			edge.Target.Nodes = append(edge.Target.Nodes, k)
+		}
+		_node.entry_id = &nodes[0]
+		_spec.Edges = append(_spec.Edges, edge)
 	}
 	return _node, _spec
 }
@@ -462,63 +521,63 @@ func (u *DictEntryI18nUpsert) ClearDeletedBy() *DictEntryI18nUpsert {
 	return u
 }
 
-// SetDictEntryID sets the "dict_entry_id" field.
-func (u *DictEntryI18nUpsert) SetDictEntryID(v uint32) *DictEntryI18nUpsert {
-	u.Set(dictentryi18n.FieldDictEntryID, v)
+// SetDescription sets the "description" field.
+func (u *DictEntryI18nUpsert) SetDescription(v string) *DictEntryI18nUpsert {
+	u.Set(dictentryi18n.FieldDescription, v)
 	return u
 }
 
-// UpdateDictEntryID sets the "dict_entry_id" field to the value that was provided on create.
-func (u *DictEntryI18nUpsert) UpdateDictEntryID() *DictEntryI18nUpsert {
-	u.SetExcluded(dictentryi18n.FieldDictEntryID)
+// UpdateDescription sets the "description" field to the value that was provided on create.
+func (u *DictEntryI18nUpsert) UpdateDescription() *DictEntryI18nUpsert {
+	u.SetExcluded(dictentryi18n.FieldDescription)
 	return u
 }
 
-// AddDictEntryID adds v to the "dict_entry_id" field.
-func (u *DictEntryI18nUpsert) AddDictEntryID(v uint32) *DictEntryI18nUpsert {
-	u.Add(dictentryi18n.FieldDictEntryID, v)
+// ClearDescription clears the value of the "description" field.
+func (u *DictEntryI18nUpsert) ClearDescription() *DictEntryI18nUpsert {
+	u.SetNull(dictentryi18n.FieldDescription)
 	return u
 }
 
-// ClearDictEntryID clears the value of the "dict_entry_id" field.
-func (u *DictEntryI18nUpsert) ClearDictEntryID() *DictEntryI18nUpsert {
-	u.SetNull(dictentryi18n.FieldDictEntryID)
+// SetSortOrder sets the "sort_order" field.
+func (u *DictEntryI18nUpsert) SetSortOrder(v uint32) *DictEntryI18nUpsert {
+	u.Set(dictentryi18n.FieldSortOrder, v)
 	return u
 }
 
-// SetLanguageCode sets the "language_code" field.
-func (u *DictEntryI18nUpsert) SetLanguageCode(v string) *DictEntryI18nUpsert {
-	u.Set(dictentryi18n.FieldLanguageCode, v)
+// UpdateSortOrder sets the "sort_order" field to the value that was provided on create.
+func (u *DictEntryI18nUpsert) UpdateSortOrder() *DictEntryI18nUpsert {
+	u.SetExcluded(dictentryi18n.FieldSortOrder)
 	return u
 }
 
-// UpdateLanguageCode sets the "language_code" field to the value that was provided on create.
-func (u *DictEntryI18nUpsert) UpdateLanguageCode() *DictEntryI18nUpsert {
-	u.SetExcluded(dictentryi18n.FieldLanguageCode)
+// AddSortOrder adds v to the "sort_order" field.
+func (u *DictEntryI18nUpsert) AddSortOrder(v uint32) *DictEntryI18nUpsert {
+	u.Add(dictentryi18n.FieldSortOrder, v)
 	return u
 }
 
-// ClearLanguageCode clears the value of the "language_code" field.
-func (u *DictEntryI18nUpsert) ClearLanguageCode() *DictEntryI18nUpsert {
-	u.SetNull(dictentryi18n.FieldLanguageCode)
+// ClearSortOrder clears the value of the "sort_order" field.
+func (u *DictEntryI18nUpsert) ClearSortOrder() *DictEntryI18nUpsert {
+	u.SetNull(dictentryi18n.FieldSortOrder)
 	return u
 }
 
-// SetName sets the "name" field.
-func (u *DictEntryI18nUpsert) SetName(v string) *DictEntryI18nUpsert {
-	u.Set(dictentryi18n.FieldName, v)
+// SetEntryLabel sets the "entry_label" field.
+func (u *DictEntryI18nUpsert) SetEntryLabel(v string) *DictEntryI18nUpsert {
+	u.Set(dictentryi18n.FieldEntryLabel, v)
 	return u
 }
 
-// UpdateName sets the "name" field to the value that was provided on create.
-func (u *DictEntryI18nUpsert) UpdateName() *DictEntryI18nUpsert {
-	u.SetExcluded(dictentryi18n.FieldName)
+// UpdateEntryLabel sets the "entry_label" field to the value that was provided on create.
+func (u *DictEntryI18nUpsert) UpdateEntryLabel() *DictEntryI18nUpsert {
+	u.SetExcluded(dictentryi18n.FieldEntryLabel)
 	return u
 }
 
-// ClearName clears the value of the "name" field.
-func (u *DictEntryI18nUpsert) ClearName() *DictEntryI18nUpsert {
-	u.SetNull(dictentryi18n.FieldName)
+// ClearEntryLabel clears the value of the "entry_label" field.
+func (u *DictEntryI18nUpsert) ClearEntryLabel() *DictEntryI18nUpsert {
+	u.SetNull(dictentryi18n.FieldEntryLabel)
 	return u
 }
 
@@ -544,6 +603,9 @@ func (u *DictEntryI18nUpsertOne) UpdateNewValues() *DictEntryI18nUpsertOne {
 		}
 		if _, exists := u.create.mutation.TenantID(); exists {
 			s.SetIgnore(dictentryi18n.FieldTenantID)
+		}
+		if _, exists := u.create.mutation.LanguageCode(); exists {
+			s.SetIgnore(dictentryi18n.FieldLanguageCode)
 		}
 	}))
 	return u
@@ -702,73 +764,73 @@ func (u *DictEntryI18nUpsertOne) ClearDeletedBy() *DictEntryI18nUpsertOne {
 	})
 }
 
-// SetDictEntryID sets the "dict_entry_id" field.
-func (u *DictEntryI18nUpsertOne) SetDictEntryID(v uint32) *DictEntryI18nUpsertOne {
+// SetDescription sets the "description" field.
+func (u *DictEntryI18nUpsertOne) SetDescription(v string) *DictEntryI18nUpsertOne {
 	return u.Update(func(s *DictEntryI18nUpsert) {
-		s.SetDictEntryID(v)
+		s.SetDescription(v)
 	})
 }
 
-// AddDictEntryID adds v to the "dict_entry_id" field.
-func (u *DictEntryI18nUpsertOne) AddDictEntryID(v uint32) *DictEntryI18nUpsertOne {
+// UpdateDescription sets the "description" field to the value that was provided on create.
+func (u *DictEntryI18nUpsertOne) UpdateDescription() *DictEntryI18nUpsertOne {
 	return u.Update(func(s *DictEntryI18nUpsert) {
-		s.AddDictEntryID(v)
+		s.UpdateDescription()
 	})
 }
 
-// UpdateDictEntryID sets the "dict_entry_id" field to the value that was provided on create.
-func (u *DictEntryI18nUpsertOne) UpdateDictEntryID() *DictEntryI18nUpsertOne {
+// ClearDescription clears the value of the "description" field.
+func (u *DictEntryI18nUpsertOne) ClearDescription() *DictEntryI18nUpsertOne {
 	return u.Update(func(s *DictEntryI18nUpsert) {
-		s.UpdateDictEntryID()
+		s.ClearDescription()
 	})
 }
 
-// ClearDictEntryID clears the value of the "dict_entry_id" field.
-func (u *DictEntryI18nUpsertOne) ClearDictEntryID() *DictEntryI18nUpsertOne {
+// SetSortOrder sets the "sort_order" field.
+func (u *DictEntryI18nUpsertOne) SetSortOrder(v uint32) *DictEntryI18nUpsertOne {
 	return u.Update(func(s *DictEntryI18nUpsert) {
-		s.ClearDictEntryID()
+		s.SetSortOrder(v)
 	})
 }
 
-// SetLanguageCode sets the "language_code" field.
-func (u *DictEntryI18nUpsertOne) SetLanguageCode(v string) *DictEntryI18nUpsertOne {
+// AddSortOrder adds v to the "sort_order" field.
+func (u *DictEntryI18nUpsertOne) AddSortOrder(v uint32) *DictEntryI18nUpsertOne {
 	return u.Update(func(s *DictEntryI18nUpsert) {
-		s.SetLanguageCode(v)
+		s.AddSortOrder(v)
 	})
 }
 
-// UpdateLanguageCode sets the "language_code" field to the value that was provided on create.
-func (u *DictEntryI18nUpsertOne) UpdateLanguageCode() *DictEntryI18nUpsertOne {
+// UpdateSortOrder sets the "sort_order" field to the value that was provided on create.
+func (u *DictEntryI18nUpsertOne) UpdateSortOrder() *DictEntryI18nUpsertOne {
 	return u.Update(func(s *DictEntryI18nUpsert) {
-		s.UpdateLanguageCode()
+		s.UpdateSortOrder()
 	})
 }
 
-// ClearLanguageCode clears the value of the "language_code" field.
-func (u *DictEntryI18nUpsertOne) ClearLanguageCode() *DictEntryI18nUpsertOne {
+// ClearSortOrder clears the value of the "sort_order" field.
+func (u *DictEntryI18nUpsertOne) ClearSortOrder() *DictEntryI18nUpsertOne {
 	return u.Update(func(s *DictEntryI18nUpsert) {
-		s.ClearLanguageCode()
+		s.ClearSortOrder()
 	})
 }
 
-// SetName sets the "name" field.
-func (u *DictEntryI18nUpsertOne) SetName(v string) *DictEntryI18nUpsertOne {
+// SetEntryLabel sets the "entry_label" field.
+func (u *DictEntryI18nUpsertOne) SetEntryLabel(v string) *DictEntryI18nUpsertOne {
 	return u.Update(func(s *DictEntryI18nUpsert) {
-		s.SetName(v)
+		s.SetEntryLabel(v)
 	})
 }
 
-// UpdateName sets the "name" field to the value that was provided on create.
-func (u *DictEntryI18nUpsertOne) UpdateName() *DictEntryI18nUpsertOne {
+// UpdateEntryLabel sets the "entry_label" field to the value that was provided on create.
+func (u *DictEntryI18nUpsertOne) UpdateEntryLabel() *DictEntryI18nUpsertOne {
 	return u.Update(func(s *DictEntryI18nUpsert) {
-		s.UpdateName()
+		s.UpdateEntryLabel()
 	})
 }
 
-// ClearName clears the value of the "name" field.
-func (u *DictEntryI18nUpsertOne) ClearName() *DictEntryI18nUpsertOne {
+// ClearEntryLabel clears the value of the "entry_label" field.
+func (u *DictEntryI18nUpsertOne) ClearEntryLabel() *DictEntryI18nUpsertOne {
 	return u.Update(func(s *DictEntryI18nUpsert) {
-		s.ClearName()
+		s.ClearEntryLabel()
 	})
 }
 
@@ -960,6 +1022,9 @@ func (u *DictEntryI18nUpsertBulk) UpdateNewValues() *DictEntryI18nUpsertBulk {
 			if _, exists := b.mutation.TenantID(); exists {
 				s.SetIgnore(dictentryi18n.FieldTenantID)
 			}
+			if _, exists := b.mutation.LanguageCode(); exists {
+				s.SetIgnore(dictentryi18n.FieldLanguageCode)
+			}
 		}
 	}))
 	return u
@@ -1118,73 +1183,73 @@ func (u *DictEntryI18nUpsertBulk) ClearDeletedBy() *DictEntryI18nUpsertBulk {
 	})
 }
 
-// SetDictEntryID sets the "dict_entry_id" field.
-func (u *DictEntryI18nUpsertBulk) SetDictEntryID(v uint32) *DictEntryI18nUpsertBulk {
+// SetDescription sets the "description" field.
+func (u *DictEntryI18nUpsertBulk) SetDescription(v string) *DictEntryI18nUpsertBulk {
 	return u.Update(func(s *DictEntryI18nUpsert) {
-		s.SetDictEntryID(v)
+		s.SetDescription(v)
 	})
 }
 
-// AddDictEntryID adds v to the "dict_entry_id" field.
-func (u *DictEntryI18nUpsertBulk) AddDictEntryID(v uint32) *DictEntryI18nUpsertBulk {
+// UpdateDescription sets the "description" field to the value that was provided on create.
+func (u *DictEntryI18nUpsertBulk) UpdateDescription() *DictEntryI18nUpsertBulk {
 	return u.Update(func(s *DictEntryI18nUpsert) {
-		s.AddDictEntryID(v)
+		s.UpdateDescription()
 	})
 }
 
-// UpdateDictEntryID sets the "dict_entry_id" field to the value that was provided on create.
-func (u *DictEntryI18nUpsertBulk) UpdateDictEntryID() *DictEntryI18nUpsertBulk {
+// ClearDescription clears the value of the "description" field.
+func (u *DictEntryI18nUpsertBulk) ClearDescription() *DictEntryI18nUpsertBulk {
 	return u.Update(func(s *DictEntryI18nUpsert) {
-		s.UpdateDictEntryID()
+		s.ClearDescription()
 	})
 }
 
-// ClearDictEntryID clears the value of the "dict_entry_id" field.
-func (u *DictEntryI18nUpsertBulk) ClearDictEntryID() *DictEntryI18nUpsertBulk {
+// SetSortOrder sets the "sort_order" field.
+func (u *DictEntryI18nUpsertBulk) SetSortOrder(v uint32) *DictEntryI18nUpsertBulk {
 	return u.Update(func(s *DictEntryI18nUpsert) {
-		s.ClearDictEntryID()
+		s.SetSortOrder(v)
 	})
 }
 
-// SetLanguageCode sets the "language_code" field.
-func (u *DictEntryI18nUpsertBulk) SetLanguageCode(v string) *DictEntryI18nUpsertBulk {
+// AddSortOrder adds v to the "sort_order" field.
+func (u *DictEntryI18nUpsertBulk) AddSortOrder(v uint32) *DictEntryI18nUpsertBulk {
 	return u.Update(func(s *DictEntryI18nUpsert) {
-		s.SetLanguageCode(v)
+		s.AddSortOrder(v)
 	})
 }
 
-// UpdateLanguageCode sets the "language_code" field to the value that was provided on create.
-func (u *DictEntryI18nUpsertBulk) UpdateLanguageCode() *DictEntryI18nUpsertBulk {
+// UpdateSortOrder sets the "sort_order" field to the value that was provided on create.
+func (u *DictEntryI18nUpsertBulk) UpdateSortOrder() *DictEntryI18nUpsertBulk {
 	return u.Update(func(s *DictEntryI18nUpsert) {
-		s.UpdateLanguageCode()
+		s.UpdateSortOrder()
 	})
 }
 
-// ClearLanguageCode clears the value of the "language_code" field.
-func (u *DictEntryI18nUpsertBulk) ClearLanguageCode() *DictEntryI18nUpsertBulk {
+// ClearSortOrder clears the value of the "sort_order" field.
+func (u *DictEntryI18nUpsertBulk) ClearSortOrder() *DictEntryI18nUpsertBulk {
 	return u.Update(func(s *DictEntryI18nUpsert) {
-		s.ClearLanguageCode()
+		s.ClearSortOrder()
 	})
 }
 
-// SetName sets the "name" field.
-func (u *DictEntryI18nUpsertBulk) SetName(v string) *DictEntryI18nUpsertBulk {
+// SetEntryLabel sets the "entry_label" field.
+func (u *DictEntryI18nUpsertBulk) SetEntryLabel(v string) *DictEntryI18nUpsertBulk {
 	return u.Update(func(s *DictEntryI18nUpsert) {
-		s.SetName(v)
+		s.SetEntryLabel(v)
 	})
 }
 
-// UpdateName sets the "name" field to the value that was provided on create.
-func (u *DictEntryI18nUpsertBulk) UpdateName() *DictEntryI18nUpsertBulk {
+// UpdateEntryLabel sets the "entry_label" field to the value that was provided on create.
+func (u *DictEntryI18nUpsertBulk) UpdateEntryLabel() *DictEntryI18nUpsertBulk {
 	return u.Update(func(s *DictEntryI18nUpsert) {
-		s.UpdateName()
+		s.UpdateEntryLabel()
 	})
 }
 
-// ClearName clears the value of the "name" field.
-func (u *DictEntryI18nUpsertBulk) ClearName() *DictEntryI18nUpsertBulk {
+// ClearEntryLabel clears the value of the "entry_label" field.
+func (u *DictEntryI18nUpsertBulk) ClearEntryLabel() *DictEntryI18nUpsertBulk {
 	return u.Update(func(s *DictEntryI18nUpsert) {
-		s.ClearName()
+		s.ClearEntryLabel()
 	})
 }
 

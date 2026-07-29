@@ -3,7 +3,9 @@
 package ent
 
 import (
+	"encoding/json"
 	"fmt"
+	auditpb "go-wind-ledger/api/gen/go/audit/service/v1"
 	"go-wind-ledger/app/core/service/internal/data/ent/dataaccessauditlog"
 	"strings"
 	"time"
@@ -12,7 +14,7 @@ import (
 	"entgo.io/ent/dialect/sql"
 )
 
-// DataAccessAuditLog is the model entity for the DataAccessAuditLog schema.
+// 数据访问审计日志表
 type DataAccessAuditLog struct {
 	config `json:"-"`
 	// ID of the ent.
@@ -20,32 +22,56 @@ type DataAccessAuditLog struct {
 	ID uint32 `json:"id,omitempty"`
 	// 创建时间
 	CreatedAt *time.Time `json:"created_at,omitempty"`
-	// 更新时间
-	UpdatedAt *time.Time `json:"updated_at,omitempty"`
-	// 删除时间
-	DeletedAt *time.Time `json:"deleted_at,omitempty"`
 	// 租户ID
 	TenantID *uint32 `json:"tenant_id,omitempty"`
-	// OperatorID holds the value of the "operator_id" field.
-	OperatorID *uint32 `json:"operator_id,omitempty"`
-	// Resource holds the value of the "resource" field.
-	Resource *string `json:"resource,omitempty"`
-	// Action holds the value of the "action" field.
-	Action *string `json:"action,omitempty"`
-	// UserID holds the value of the "user_id" field.
+	// 操作者用户ID
 	UserID *uint32 `json:"user_id,omitempty"`
-	// Username holds the value of the "username" field.
+	// 操作者账号名
 	Username *string `json:"username,omitempty"`
-	// AccessType holds the value of the "access_type" field.
-	AccessType *dataaccessauditlog.AccessType `json:"access_type,omitempty"`
-	// SensitiveLevel holds the value of the "sensitive_level" field.
-	SensitiveLevel *dataaccessauditlog.SensitiveLevel `json:"sensitive_level,omitempty"`
-	// IPAddress holds the value of the "ip_address" field.
+	// IP地址
 	IPAddress *string `json:"ip_address,omitempty"`
-	// DataSource holds the value of the "data_source" field.
+	// 地理位置(来自IP库)
+	GeoLocation *auditpb.GeoLocation `json:"geo_location,omitempty"`
+	// 设备信息
+	DeviceInfo *auditpb.DeviceInfo `json:"device_info,omitempty"`
+	// 全局请求ID
+	RequestID *string `json:"request_id,omitempty"`
+	// 全局链路追踪ID
+	TraceID *string `json:"trace_id,omitempty"`
+	// 数据源类型
 	DataSource *string `json:"data_source,omitempty"`
-	// AccessedAt holds the value of the "accessed_at" field.
-	AccessedAt   *time.Time `json:"accessed_at,omitempty"`
+	// 数据表名
+	TableName *string `json:"table_name,omitempty"`
+	// 数据主键ID
+	DataID *string `json:"data_id,omitempty"`
+	// 数据访问类型
+	AccessType *dataaccessauditlog.AccessType `json:"access_type,omitempty"`
+	// 执行的SQL语句摘要
+	SQLDigest *string `json:"sql_digest,omitempty"`
+	// 执行的SQL语句
+	SQLText *string `json:"sql_text,omitempty"`
+	// 影响行数
+	AffectedRows *uint32 `json:"affected_rows,omitempty"`
+	// 延迟时间（毫秒）
+	LatencyMs *uint32 `json:"latency_ms,omitempty"`
+	// 操作结果
+	Success *bool `json:"success,omitempty"`
+	// 数据敏感级别
+	SensitiveLevel *dataaccessauditlog.SensitiveLevel `json:"sensitive_level,omitempty"`
+	// 是否已脱敏
+	DataMasked *bool `json:"data_masked,omitempty"`
+	// 脱敏规则
+	MaskingRules *string `json:"masking_rules,omitempty"`
+	// 业务处理目的
+	BusinessPurpose *string `json:"business_purpose,omitempty"`
+	// 数据分类标签
+	DataCategory *string `json:"data_category,omitempty"`
+	// 数据库用户
+	DbUser *string `json:"db_user,omitempty"`
+	// 日志内容哈希（SHA256，十六进制字符串）
+	LogHash *string `json:"log_hash,omitempty"`
+	// 日志数字签名
+	Signature    *[]byte `json:"signature,omitempty"`
 	selectValues sql.SelectValues
 }
 
@@ -54,11 +80,15 @@ func (*DataAccessAuditLog) scanValues(columns []string) ([]any, error) {
 	values := make([]any, len(columns))
 	for i := range columns {
 		switch columns[i] {
-		case dataaccessauditlog.FieldID, dataaccessauditlog.FieldTenantID, dataaccessauditlog.FieldOperatorID, dataaccessauditlog.FieldUserID:
+		case dataaccessauditlog.FieldGeoLocation, dataaccessauditlog.FieldDeviceInfo, dataaccessauditlog.FieldSignature:
+			values[i] = new([]byte)
+		case dataaccessauditlog.FieldSuccess, dataaccessauditlog.FieldDataMasked:
+			values[i] = new(sql.NullBool)
+		case dataaccessauditlog.FieldID, dataaccessauditlog.FieldTenantID, dataaccessauditlog.FieldUserID, dataaccessauditlog.FieldAffectedRows, dataaccessauditlog.FieldLatencyMs:
 			values[i] = new(sql.NullInt64)
-		case dataaccessauditlog.FieldResource, dataaccessauditlog.FieldAction, dataaccessauditlog.FieldUsername, dataaccessauditlog.FieldAccessType, dataaccessauditlog.FieldSensitiveLevel, dataaccessauditlog.FieldIPAddress, dataaccessauditlog.FieldDataSource:
+		case dataaccessauditlog.FieldUsername, dataaccessauditlog.FieldIPAddress, dataaccessauditlog.FieldRequestID, dataaccessauditlog.FieldTraceID, dataaccessauditlog.FieldDataSource, dataaccessauditlog.FieldTableName, dataaccessauditlog.FieldDataID, dataaccessauditlog.FieldAccessType, dataaccessauditlog.FieldSQLDigest, dataaccessauditlog.FieldSQLText, dataaccessauditlog.FieldSensitiveLevel, dataaccessauditlog.FieldMaskingRules, dataaccessauditlog.FieldBusinessPurpose, dataaccessauditlog.FieldDataCategory, dataaccessauditlog.FieldDbUser, dataaccessauditlog.FieldLogHash:
 			values[i] = new(sql.NullString)
-		case dataaccessauditlog.FieldCreatedAt, dataaccessauditlog.FieldUpdatedAt, dataaccessauditlog.FieldDeletedAt, dataaccessauditlog.FieldAccessedAt:
+		case dataaccessauditlog.FieldCreatedAt:
 			values[i] = new(sql.NullTime)
 		default:
 			values[i] = new(sql.UnknownType)
@@ -88,47 +118,12 @@ func (_m *DataAccessAuditLog) assignValues(columns []string, values []any) error
 				_m.CreatedAt = new(time.Time)
 				*_m.CreatedAt = value.Time
 			}
-		case dataaccessauditlog.FieldUpdatedAt:
-			if value, ok := values[i].(*sql.NullTime); !ok {
-				return fmt.Errorf("unexpected type %T for field updated_at", values[i])
-			} else if value.Valid {
-				_m.UpdatedAt = new(time.Time)
-				*_m.UpdatedAt = value.Time
-			}
-		case dataaccessauditlog.FieldDeletedAt:
-			if value, ok := values[i].(*sql.NullTime); !ok {
-				return fmt.Errorf("unexpected type %T for field deleted_at", values[i])
-			} else if value.Valid {
-				_m.DeletedAt = new(time.Time)
-				*_m.DeletedAt = value.Time
-			}
 		case dataaccessauditlog.FieldTenantID:
 			if value, ok := values[i].(*sql.NullInt64); !ok {
 				return fmt.Errorf("unexpected type %T for field tenant_id", values[i])
 			} else if value.Valid {
 				_m.TenantID = new(uint32)
 				*_m.TenantID = uint32(value.Int64)
-			}
-		case dataaccessauditlog.FieldOperatorID:
-			if value, ok := values[i].(*sql.NullInt64); !ok {
-				return fmt.Errorf("unexpected type %T for field operator_id", values[i])
-			} else if value.Valid {
-				_m.OperatorID = new(uint32)
-				*_m.OperatorID = uint32(value.Int64)
-			}
-		case dataaccessauditlog.FieldResource:
-			if value, ok := values[i].(*sql.NullString); !ok {
-				return fmt.Errorf("unexpected type %T for field resource", values[i])
-			} else if value.Valid {
-				_m.Resource = new(string)
-				*_m.Resource = value.String
-			}
-		case dataaccessauditlog.FieldAction:
-			if value, ok := values[i].(*sql.NullString); !ok {
-				return fmt.Errorf("unexpected type %T for field action", values[i])
-			} else if value.Valid {
-				_m.Action = new(string)
-				*_m.Action = value.String
 			}
 		case dataaccessauditlog.FieldUserID:
 			if value, ok := values[i].(*sql.NullInt64); !ok {
@@ -144,26 +139,42 @@ func (_m *DataAccessAuditLog) assignValues(columns []string, values []any) error
 				_m.Username = new(string)
 				*_m.Username = value.String
 			}
-		case dataaccessauditlog.FieldAccessType:
-			if value, ok := values[i].(*sql.NullString); !ok {
-				return fmt.Errorf("unexpected type %T for field access_type", values[i])
-			} else if value.Valid {
-				_m.AccessType = new(dataaccessauditlog.AccessType)
-				*_m.AccessType = dataaccessauditlog.AccessType(value.String)
-			}
-		case dataaccessauditlog.FieldSensitiveLevel:
-			if value, ok := values[i].(*sql.NullString); !ok {
-				return fmt.Errorf("unexpected type %T for field sensitive_level", values[i])
-			} else if value.Valid {
-				_m.SensitiveLevel = new(dataaccessauditlog.SensitiveLevel)
-				*_m.SensitiveLevel = dataaccessauditlog.SensitiveLevel(value.String)
-			}
 		case dataaccessauditlog.FieldIPAddress:
 			if value, ok := values[i].(*sql.NullString); !ok {
 				return fmt.Errorf("unexpected type %T for field ip_address", values[i])
 			} else if value.Valid {
 				_m.IPAddress = new(string)
 				*_m.IPAddress = value.String
+			}
+		case dataaccessauditlog.FieldGeoLocation:
+			if value, ok := values[i].(*[]byte); !ok {
+				return fmt.Errorf("unexpected type %T for field geo_location", values[i])
+			} else if value != nil && len(*value) > 0 {
+				if err := json.Unmarshal(*value, &_m.GeoLocation); err != nil {
+					return fmt.Errorf("unmarshal field geo_location: %w", err)
+				}
+			}
+		case dataaccessauditlog.FieldDeviceInfo:
+			if value, ok := values[i].(*[]byte); !ok {
+				return fmt.Errorf("unexpected type %T for field device_info", values[i])
+			} else if value != nil && len(*value) > 0 {
+				if err := json.Unmarshal(*value, &_m.DeviceInfo); err != nil {
+					return fmt.Errorf("unmarshal field device_info: %w", err)
+				}
+			}
+		case dataaccessauditlog.FieldRequestID:
+			if value, ok := values[i].(*sql.NullString); !ok {
+				return fmt.Errorf("unexpected type %T for field request_id", values[i])
+			} else if value.Valid {
+				_m.RequestID = new(string)
+				*_m.RequestID = value.String
+			}
+		case dataaccessauditlog.FieldTraceID:
+			if value, ok := values[i].(*sql.NullString); !ok {
+				return fmt.Errorf("unexpected type %T for field trace_id", values[i])
+			} else if value.Valid {
+				_m.TraceID = new(string)
+				*_m.TraceID = value.String
 			}
 		case dataaccessauditlog.FieldDataSource:
 			if value, ok := values[i].(*sql.NullString); !ok {
@@ -172,12 +183,116 @@ func (_m *DataAccessAuditLog) assignValues(columns []string, values []any) error
 				_m.DataSource = new(string)
 				*_m.DataSource = value.String
 			}
-		case dataaccessauditlog.FieldAccessedAt:
-			if value, ok := values[i].(*sql.NullTime); !ok {
-				return fmt.Errorf("unexpected type %T for field accessed_at", values[i])
+		case dataaccessauditlog.FieldTableName:
+			if value, ok := values[i].(*sql.NullString); !ok {
+				return fmt.Errorf("unexpected type %T for field table_name", values[i])
 			} else if value.Valid {
-				_m.AccessedAt = new(time.Time)
-				*_m.AccessedAt = value.Time
+				_m.TableName = new(string)
+				*_m.TableName = value.String
+			}
+		case dataaccessauditlog.FieldDataID:
+			if value, ok := values[i].(*sql.NullString); !ok {
+				return fmt.Errorf("unexpected type %T for field data_id", values[i])
+			} else if value.Valid {
+				_m.DataID = new(string)
+				*_m.DataID = value.String
+			}
+		case dataaccessauditlog.FieldAccessType:
+			if value, ok := values[i].(*sql.NullString); !ok {
+				return fmt.Errorf("unexpected type %T for field access_type", values[i])
+			} else if value.Valid {
+				_m.AccessType = new(dataaccessauditlog.AccessType)
+				*_m.AccessType = dataaccessauditlog.AccessType(value.String)
+			}
+		case dataaccessauditlog.FieldSQLDigest:
+			if value, ok := values[i].(*sql.NullString); !ok {
+				return fmt.Errorf("unexpected type %T for field sql_digest", values[i])
+			} else if value.Valid {
+				_m.SQLDigest = new(string)
+				*_m.SQLDigest = value.String
+			}
+		case dataaccessauditlog.FieldSQLText:
+			if value, ok := values[i].(*sql.NullString); !ok {
+				return fmt.Errorf("unexpected type %T for field sql_text", values[i])
+			} else if value.Valid {
+				_m.SQLText = new(string)
+				*_m.SQLText = value.String
+			}
+		case dataaccessauditlog.FieldAffectedRows:
+			if value, ok := values[i].(*sql.NullInt64); !ok {
+				return fmt.Errorf("unexpected type %T for field affected_rows", values[i])
+			} else if value.Valid {
+				_m.AffectedRows = new(uint32)
+				*_m.AffectedRows = uint32(value.Int64)
+			}
+		case dataaccessauditlog.FieldLatencyMs:
+			if value, ok := values[i].(*sql.NullInt64); !ok {
+				return fmt.Errorf("unexpected type %T for field latency_ms", values[i])
+			} else if value.Valid {
+				_m.LatencyMs = new(uint32)
+				*_m.LatencyMs = uint32(value.Int64)
+			}
+		case dataaccessauditlog.FieldSuccess:
+			if value, ok := values[i].(*sql.NullBool); !ok {
+				return fmt.Errorf("unexpected type %T for field success", values[i])
+			} else if value.Valid {
+				_m.Success = new(bool)
+				*_m.Success = value.Bool
+			}
+		case dataaccessauditlog.FieldSensitiveLevel:
+			if value, ok := values[i].(*sql.NullString); !ok {
+				return fmt.Errorf("unexpected type %T for field sensitive_level", values[i])
+			} else if value.Valid {
+				_m.SensitiveLevel = new(dataaccessauditlog.SensitiveLevel)
+				*_m.SensitiveLevel = dataaccessauditlog.SensitiveLevel(value.String)
+			}
+		case dataaccessauditlog.FieldDataMasked:
+			if value, ok := values[i].(*sql.NullBool); !ok {
+				return fmt.Errorf("unexpected type %T for field data_masked", values[i])
+			} else if value.Valid {
+				_m.DataMasked = new(bool)
+				*_m.DataMasked = value.Bool
+			}
+		case dataaccessauditlog.FieldMaskingRules:
+			if value, ok := values[i].(*sql.NullString); !ok {
+				return fmt.Errorf("unexpected type %T for field masking_rules", values[i])
+			} else if value.Valid {
+				_m.MaskingRules = new(string)
+				*_m.MaskingRules = value.String
+			}
+		case dataaccessauditlog.FieldBusinessPurpose:
+			if value, ok := values[i].(*sql.NullString); !ok {
+				return fmt.Errorf("unexpected type %T for field business_purpose", values[i])
+			} else if value.Valid {
+				_m.BusinessPurpose = new(string)
+				*_m.BusinessPurpose = value.String
+			}
+		case dataaccessauditlog.FieldDataCategory:
+			if value, ok := values[i].(*sql.NullString); !ok {
+				return fmt.Errorf("unexpected type %T for field data_category", values[i])
+			} else if value.Valid {
+				_m.DataCategory = new(string)
+				*_m.DataCategory = value.String
+			}
+		case dataaccessauditlog.FieldDbUser:
+			if value, ok := values[i].(*sql.NullString); !ok {
+				return fmt.Errorf("unexpected type %T for field db_user", values[i])
+			} else if value.Valid {
+				_m.DbUser = new(string)
+				*_m.DbUser = value.String
+			}
+		case dataaccessauditlog.FieldLogHash:
+			if value, ok := values[i].(*sql.NullString); !ok {
+				return fmt.Errorf("unexpected type %T for field log_hash", values[i])
+			} else if value.Valid {
+				_m.LogHash = new(string)
+				*_m.LogHash = value.String
+			}
+		case dataaccessauditlog.FieldSignature:
+			if value, ok := values[i].(*[]byte); !ok {
+				return fmt.Errorf("unexpected type %T for field signature", values[i])
+			} else if value != nil {
+				_m.Signature = value
 			}
 		default:
 			_m.selectValues.Set(columns[i], values[i])
@@ -220,34 +335,9 @@ func (_m *DataAccessAuditLog) String() string {
 		builder.WriteString(v.Format(time.ANSIC))
 	}
 	builder.WriteString(", ")
-	if v := _m.UpdatedAt; v != nil {
-		builder.WriteString("updated_at=")
-		builder.WriteString(v.Format(time.ANSIC))
-	}
-	builder.WriteString(", ")
-	if v := _m.DeletedAt; v != nil {
-		builder.WriteString("deleted_at=")
-		builder.WriteString(v.Format(time.ANSIC))
-	}
-	builder.WriteString(", ")
 	if v := _m.TenantID; v != nil {
 		builder.WriteString("tenant_id=")
 		builder.WriteString(fmt.Sprintf("%v", *v))
-	}
-	builder.WriteString(", ")
-	if v := _m.OperatorID; v != nil {
-		builder.WriteString("operator_id=")
-		builder.WriteString(fmt.Sprintf("%v", *v))
-	}
-	builder.WriteString(", ")
-	if v := _m.Resource; v != nil {
-		builder.WriteString("resource=")
-		builder.WriteString(*v)
-	}
-	builder.WriteString(", ")
-	if v := _m.Action; v != nil {
-		builder.WriteString("action=")
-		builder.WriteString(*v)
 	}
 	builder.WriteString(", ")
 	if v := _m.UserID; v != nil {
@@ -260,18 +350,24 @@ func (_m *DataAccessAuditLog) String() string {
 		builder.WriteString(*v)
 	}
 	builder.WriteString(", ")
-	if v := _m.AccessType; v != nil {
-		builder.WriteString("access_type=")
-		builder.WriteString(fmt.Sprintf("%v", *v))
-	}
-	builder.WriteString(", ")
-	if v := _m.SensitiveLevel; v != nil {
-		builder.WriteString("sensitive_level=")
-		builder.WriteString(fmt.Sprintf("%v", *v))
-	}
-	builder.WriteString(", ")
 	if v := _m.IPAddress; v != nil {
 		builder.WriteString("ip_address=")
+		builder.WriteString(*v)
+	}
+	builder.WriteString(", ")
+	builder.WriteString("geo_location=")
+	builder.WriteString(fmt.Sprintf("%v", _m.GeoLocation))
+	builder.WriteString(", ")
+	builder.WriteString("device_info=")
+	builder.WriteString(fmt.Sprintf("%v", _m.DeviceInfo))
+	builder.WriteString(", ")
+	if v := _m.RequestID; v != nil {
+		builder.WriteString("request_id=")
+		builder.WriteString(*v)
+	}
+	builder.WriteString(", ")
+	if v := _m.TraceID; v != nil {
+		builder.WriteString("trace_id=")
 		builder.WriteString(*v)
 	}
 	builder.WriteString(", ")
@@ -280,9 +376,84 @@ func (_m *DataAccessAuditLog) String() string {
 		builder.WriteString(*v)
 	}
 	builder.WriteString(", ")
-	if v := _m.AccessedAt; v != nil {
-		builder.WriteString("accessed_at=")
-		builder.WriteString(v.Format(time.ANSIC))
+	if v := _m.TableName; v != nil {
+		builder.WriteString("table_name=")
+		builder.WriteString(*v)
+	}
+	builder.WriteString(", ")
+	if v := _m.DataID; v != nil {
+		builder.WriteString("data_id=")
+		builder.WriteString(*v)
+	}
+	builder.WriteString(", ")
+	if v := _m.AccessType; v != nil {
+		builder.WriteString("access_type=")
+		builder.WriteString(fmt.Sprintf("%v", *v))
+	}
+	builder.WriteString(", ")
+	if v := _m.SQLDigest; v != nil {
+		builder.WriteString("sql_digest=")
+		builder.WriteString(*v)
+	}
+	builder.WriteString(", ")
+	if v := _m.SQLText; v != nil {
+		builder.WriteString("sql_text=")
+		builder.WriteString(*v)
+	}
+	builder.WriteString(", ")
+	if v := _m.AffectedRows; v != nil {
+		builder.WriteString("affected_rows=")
+		builder.WriteString(fmt.Sprintf("%v", *v))
+	}
+	builder.WriteString(", ")
+	if v := _m.LatencyMs; v != nil {
+		builder.WriteString("latency_ms=")
+		builder.WriteString(fmt.Sprintf("%v", *v))
+	}
+	builder.WriteString(", ")
+	if v := _m.Success; v != nil {
+		builder.WriteString("success=")
+		builder.WriteString(fmt.Sprintf("%v", *v))
+	}
+	builder.WriteString(", ")
+	if v := _m.SensitiveLevel; v != nil {
+		builder.WriteString("sensitive_level=")
+		builder.WriteString(fmt.Sprintf("%v", *v))
+	}
+	builder.WriteString(", ")
+	if v := _m.DataMasked; v != nil {
+		builder.WriteString("data_masked=")
+		builder.WriteString(fmt.Sprintf("%v", *v))
+	}
+	builder.WriteString(", ")
+	if v := _m.MaskingRules; v != nil {
+		builder.WriteString("masking_rules=")
+		builder.WriteString(*v)
+	}
+	builder.WriteString(", ")
+	if v := _m.BusinessPurpose; v != nil {
+		builder.WriteString("business_purpose=")
+		builder.WriteString(*v)
+	}
+	builder.WriteString(", ")
+	if v := _m.DataCategory; v != nil {
+		builder.WriteString("data_category=")
+		builder.WriteString(*v)
+	}
+	builder.WriteString(", ")
+	if v := _m.DbUser; v != nil {
+		builder.WriteString("db_user=")
+		builder.WriteString(*v)
+	}
+	builder.WriteString(", ")
+	if v := _m.LogHash; v != nil {
+		builder.WriteString("log_hash=")
+		builder.WriteString(*v)
+	}
+	builder.WriteString(", ")
+	if v := _m.Signature; v != nil {
+		builder.WriteString("signature=")
+		builder.WriteString(fmt.Sprintf("%v", *v))
 	}
 	builder.WriteByte(')')
 	return builder.String()

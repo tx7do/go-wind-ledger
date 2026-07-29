@@ -40,12 +40,14 @@ type Role struct {
 	TenantID *uint32 `json:"tenant_id,omitempty"`
 	// 状态
 	Status *role.Status `json:"status,omitempty"`
-	// 角色代码
-	Code *string `json:"code,omitempty"`
 	// 角色名称
 	Name *string `json:"name,omitempty"`
-	// 系统角色
-	IsSystem     *bool `json:"is_system,omitempty"`
+	// 角色标识
+	Code *string `json:"code,omitempty"`
+	// 是否受保护的角色
+	IsProtected *bool `json:"is_protected,omitempty"`
+	// 角色类型
+	Type         *role.Type `json:"type,omitempty"`
 	selectValues sql.SelectValues
 }
 
@@ -54,11 +56,11 @@ func (*Role) scanValues(columns []string) ([]any, error) {
 	values := make([]any, len(columns))
 	for i := range columns {
 		switch columns[i] {
-		case role.FieldIsSystem:
+		case role.FieldIsProtected:
 			values[i] = new(sql.NullBool)
 		case role.FieldID, role.FieldCreatedBy, role.FieldUpdatedBy, role.FieldDeletedBy, role.FieldSortOrder, role.FieldTenantID:
 			values[i] = new(sql.NullInt64)
-		case role.FieldRemark, role.FieldDescription, role.FieldStatus, role.FieldCode, role.FieldName:
+		case role.FieldRemark, role.FieldDescription, role.FieldStatus, role.FieldName, role.FieldCode, role.FieldType:
 			values[i] = new(sql.NullString)
 		case role.FieldCreatedAt, role.FieldUpdatedAt, role.FieldDeletedAt:
 			values[i] = new(sql.NullTime)
@@ -160,13 +162,6 @@ func (_m *Role) assignValues(columns []string, values []any) error {
 				_m.Status = new(role.Status)
 				*_m.Status = role.Status(value.String)
 			}
-		case role.FieldCode:
-			if value, ok := values[i].(*sql.NullString); !ok {
-				return fmt.Errorf("unexpected type %T for field code", values[i])
-			} else if value.Valid {
-				_m.Code = new(string)
-				*_m.Code = value.String
-			}
 		case role.FieldName:
 			if value, ok := values[i].(*sql.NullString); !ok {
 				return fmt.Errorf("unexpected type %T for field name", values[i])
@@ -174,12 +169,26 @@ func (_m *Role) assignValues(columns []string, values []any) error {
 				_m.Name = new(string)
 				*_m.Name = value.String
 			}
-		case role.FieldIsSystem:
-			if value, ok := values[i].(*sql.NullBool); !ok {
-				return fmt.Errorf("unexpected type %T for field is_system", values[i])
+		case role.FieldCode:
+			if value, ok := values[i].(*sql.NullString); !ok {
+				return fmt.Errorf("unexpected type %T for field code", values[i])
 			} else if value.Valid {
-				_m.IsSystem = new(bool)
-				*_m.IsSystem = value.Bool
+				_m.Code = new(string)
+				*_m.Code = value.String
+			}
+		case role.FieldIsProtected:
+			if value, ok := values[i].(*sql.NullBool); !ok {
+				return fmt.Errorf("unexpected type %T for field is_protected", values[i])
+			} else if value.Valid {
+				_m.IsProtected = new(bool)
+				*_m.IsProtected = value.Bool
+			}
+		case role.FieldType:
+			if value, ok := values[i].(*sql.NullString); !ok {
+				return fmt.Errorf("unexpected type %T for field type", values[i])
+			} else if value.Valid {
+				_m.Type = new(role.Type)
+				*_m.Type = role.Type(value.String)
 			}
 		default:
 			_m.selectValues.Set(columns[i], values[i])
@@ -272,18 +281,23 @@ func (_m *Role) String() string {
 		builder.WriteString(fmt.Sprintf("%v", *v))
 	}
 	builder.WriteString(", ")
-	if v := _m.Code; v != nil {
-		builder.WriteString("code=")
-		builder.WriteString(*v)
-	}
-	builder.WriteString(", ")
 	if v := _m.Name; v != nil {
 		builder.WriteString("name=")
 		builder.WriteString(*v)
 	}
 	builder.WriteString(", ")
-	if v := _m.IsSystem; v != nil {
-		builder.WriteString("is_system=")
+	if v := _m.Code; v != nil {
+		builder.WriteString("code=")
+		builder.WriteString(*v)
+	}
+	builder.WriteString(", ")
+	if v := _m.IsProtected; v != nil {
+		builder.WriteString("is_protected=")
+		builder.WriteString(fmt.Sprintf("%v", *v))
+	}
+	builder.WriteString(", ")
+	if v := _m.Type; v != nil {
+		builder.WriteString("type=")
 		builder.WriteString(fmt.Sprintf("%v", *v))
 	}
 	builder.WriteByte(')')

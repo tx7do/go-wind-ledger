@@ -12,7 +12,7 @@ import (
 	"entgo.io/ent/dialect/sql"
 )
 
-// PermissionAuditLog is the model entity for the PermissionAuditLog schema.
+// 权限变更审计日志表
 type PermissionAuditLog struct {
 	config `json:"-"`
 	// ID of the ent.
@@ -20,18 +20,30 @@ type PermissionAuditLog struct {
 	ID uint32 `json:"id,omitempty"`
 	// 创建时间
 	CreatedAt *time.Time `json:"created_at,omitempty"`
-	// 更新时间
-	UpdatedAt *time.Time `json:"updated_at,omitempty"`
-	// 删除时间
-	DeletedAt *time.Time `json:"deleted_at,omitempty"`
 	// 租户ID
 	TenantID *uint32 `json:"tenant_id,omitempty"`
-	// OperatorID holds the value of the "operator_id" field.
+	// 操作者 用户ID
 	OperatorID *uint32 `json:"operator_id,omitempty"`
-	// Action holds the value of the "action" field.
-	Action *string `json:"action,omitempty"`
-	// OperatedAt holds the value of the "operated_at" field.
-	OperatedAt   *time.Time `json:"operated_at,omitempty"`
+	// 目标类型
+	TargetType *string `json:"target_type,omitempty"`
+	// 目标ID
+	TargetID *string `json:"target_id,omitempty"`
+	// 动作
+	Action *permissionauditlog.Action `json:"action,omitempty"`
+	// 旧值（JSON）
+	OldValue *string `json:"old_value,omitempty"`
+	// 新值（JSON）
+	NewValue *string `json:"new_value,omitempty"`
+	// 操作者IP地址
+	IPAddress *string `json:"ip_address,omitempty"`
+	// 关联全局请求ID
+	RequestID *string `json:"request_id,omitempty"`
+	// 变更原因
+	Reason *string `json:"reason,omitempty"`
+	// 日志内容哈希（SHA256，十六进制字符串）
+	LogHash *string `json:"log_hash,omitempty"`
+	// 日志数字签名
+	Signature    *[]byte `json:"signature,omitempty"`
 	selectValues sql.SelectValues
 }
 
@@ -40,11 +52,13 @@ func (*PermissionAuditLog) scanValues(columns []string) ([]any, error) {
 	values := make([]any, len(columns))
 	for i := range columns {
 		switch columns[i] {
+		case permissionauditlog.FieldSignature:
+			values[i] = new([]byte)
 		case permissionauditlog.FieldID, permissionauditlog.FieldTenantID, permissionauditlog.FieldOperatorID:
 			values[i] = new(sql.NullInt64)
-		case permissionauditlog.FieldAction:
+		case permissionauditlog.FieldTargetType, permissionauditlog.FieldTargetID, permissionauditlog.FieldAction, permissionauditlog.FieldOldValue, permissionauditlog.FieldNewValue, permissionauditlog.FieldIPAddress, permissionauditlog.FieldRequestID, permissionauditlog.FieldReason, permissionauditlog.FieldLogHash:
 			values[i] = new(sql.NullString)
-		case permissionauditlog.FieldCreatedAt, permissionauditlog.FieldUpdatedAt, permissionauditlog.FieldDeletedAt, permissionauditlog.FieldOperatedAt:
+		case permissionauditlog.FieldCreatedAt:
 			values[i] = new(sql.NullTime)
 		default:
 			values[i] = new(sql.UnknownType)
@@ -74,20 +88,6 @@ func (_m *PermissionAuditLog) assignValues(columns []string, values []any) error
 				_m.CreatedAt = new(time.Time)
 				*_m.CreatedAt = value.Time
 			}
-		case permissionauditlog.FieldUpdatedAt:
-			if value, ok := values[i].(*sql.NullTime); !ok {
-				return fmt.Errorf("unexpected type %T for field updated_at", values[i])
-			} else if value.Valid {
-				_m.UpdatedAt = new(time.Time)
-				*_m.UpdatedAt = value.Time
-			}
-		case permissionauditlog.FieldDeletedAt:
-			if value, ok := values[i].(*sql.NullTime); !ok {
-				return fmt.Errorf("unexpected type %T for field deleted_at", values[i])
-			} else if value.Valid {
-				_m.DeletedAt = new(time.Time)
-				*_m.DeletedAt = value.Time
-			}
 		case permissionauditlog.FieldTenantID:
 			if value, ok := values[i].(*sql.NullInt64); !ok {
 				return fmt.Errorf("unexpected type %T for field tenant_id", values[i])
@@ -102,19 +102,74 @@ func (_m *PermissionAuditLog) assignValues(columns []string, values []any) error
 				_m.OperatorID = new(uint32)
 				*_m.OperatorID = uint32(value.Int64)
 			}
+		case permissionauditlog.FieldTargetType:
+			if value, ok := values[i].(*sql.NullString); !ok {
+				return fmt.Errorf("unexpected type %T for field target_type", values[i])
+			} else if value.Valid {
+				_m.TargetType = new(string)
+				*_m.TargetType = value.String
+			}
+		case permissionauditlog.FieldTargetID:
+			if value, ok := values[i].(*sql.NullString); !ok {
+				return fmt.Errorf("unexpected type %T for field target_id", values[i])
+			} else if value.Valid {
+				_m.TargetID = new(string)
+				*_m.TargetID = value.String
+			}
 		case permissionauditlog.FieldAction:
 			if value, ok := values[i].(*sql.NullString); !ok {
 				return fmt.Errorf("unexpected type %T for field action", values[i])
 			} else if value.Valid {
-				_m.Action = new(string)
-				*_m.Action = value.String
+				_m.Action = new(permissionauditlog.Action)
+				*_m.Action = permissionauditlog.Action(value.String)
 			}
-		case permissionauditlog.FieldOperatedAt:
-			if value, ok := values[i].(*sql.NullTime); !ok {
-				return fmt.Errorf("unexpected type %T for field operated_at", values[i])
+		case permissionauditlog.FieldOldValue:
+			if value, ok := values[i].(*sql.NullString); !ok {
+				return fmt.Errorf("unexpected type %T for field old_value", values[i])
 			} else if value.Valid {
-				_m.OperatedAt = new(time.Time)
-				*_m.OperatedAt = value.Time
+				_m.OldValue = new(string)
+				*_m.OldValue = value.String
+			}
+		case permissionauditlog.FieldNewValue:
+			if value, ok := values[i].(*sql.NullString); !ok {
+				return fmt.Errorf("unexpected type %T for field new_value", values[i])
+			} else if value.Valid {
+				_m.NewValue = new(string)
+				*_m.NewValue = value.String
+			}
+		case permissionauditlog.FieldIPAddress:
+			if value, ok := values[i].(*sql.NullString); !ok {
+				return fmt.Errorf("unexpected type %T for field ip_address", values[i])
+			} else if value.Valid {
+				_m.IPAddress = new(string)
+				*_m.IPAddress = value.String
+			}
+		case permissionauditlog.FieldRequestID:
+			if value, ok := values[i].(*sql.NullString); !ok {
+				return fmt.Errorf("unexpected type %T for field request_id", values[i])
+			} else if value.Valid {
+				_m.RequestID = new(string)
+				*_m.RequestID = value.String
+			}
+		case permissionauditlog.FieldReason:
+			if value, ok := values[i].(*sql.NullString); !ok {
+				return fmt.Errorf("unexpected type %T for field reason", values[i])
+			} else if value.Valid {
+				_m.Reason = new(string)
+				*_m.Reason = value.String
+			}
+		case permissionauditlog.FieldLogHash:
+			if value, ok := values[i].(*sql.NullString); !ok {
+				return fmt.Errorf("unexpected type %T for field log_hash", values[i])
+			} else if value.Valid {
+				_m.LogHash = new(string)
+				*_m.LogHash = value.String
+			}
+		case permissionauditlog.FieldSignature:
+			if value, ok := values[i].(*[]byte); !ok {
+				return fmt.Errorf("unexpected type %T for field signature", values[i])
+			} else if value != nil {
+				_m.Signature = value
 			}
 		default:
 			_m.selectValues.Set(columns[i], values[i])
@@ -157,16 +212,6 @@ func (_m *PermissionAuditLog) String() string {
 		builder.WriteString(v.Format(time.ANSIC))
 	}
 	builder.WriteString(", ")
-	if v := _m.UpdatedAt; v != nil {
-		builder.WriteString("updated_at=")
-		builder.WriteString(v.Format(time.ANSIC))
-	}
-	builder.WriteString(", ")
-	if v := _m.DeletedAt; v != nil {
-		builder.WriteString("deleted_at=")
-		builder.WriteString(v.Format(time.ANSIC))
-	}
-	builder.WriteString(", ")
 	if v := _m.TenantID; v != nil {
 		builder.WriteString("tenant_id=")
 		builder.WriteString(fmt.Sprintf("%v", *v))
@@ -177,14 +222,54 @@ func (_m *PermissionAuditLog) String() string {
 		builder.WriteString(fmt.Sprintf("%v", *v))
 	}
 	builder.WriteString(", ")
-	if v := _m.Action; v != nil {
-		builder.WriteString("action=")
+	if v := _m.TargetType; v != nil {
+		builder.WriteString("target_type=")
 		builder.WriteString(*v)
 	}
 	builder.WriteString(", ")
-	if v := _m.OperatedAt; v != nil {
-		builder.WriteString("operated_at=")
-		builder.WriteString(v.Format(time.ANSIC))
+	if v := _m.TargetID; v != nil {
+		builder.WriteString("target_id=")
+		builder.WriteString(*v)
+	}
+	builder.WriteString(", ")
+	if v := _m.Action; v != nil {
+		builder.WriteString("action=")
+		builder.WriteString(fmt.Sprintf("%v", *v))
+	}
+	builder.WriteString(", ")
+	if v := _m.OldValue; v != nil {
+		builder.WriteString("old_value=")
+		builder.WriteString(*v)
+	}
+	builder.WriteString(", ")
+	if v := _m.NewValue; v != nil {
+		builder.WriteString("new_value=")
+		builder.WriteString(*v)
+	}
+	builder.WriteString(", ")
+	if v := _m.IPAddress; v != nil {
+		builder.WriteString("ip_address=")
+		builder.WriteString(*v)
+	}
+	builder.WriteString(", ")
+	if v := _m.RequestID; v != nil {
+		builder.WriteString("request_id=")
+		builder.WriteString(*v)
+	}
+	builder.WriteString(", ")
+	if v := _m.Reason; v != nil {
+		builder.WriteString("reason=")
+		builder.WriteString(*v)
+	}
+	builder.WriteString(", ")
+	if v := _m.LogHash; v != nil {
+		builder.WriteString("log_hash=")
+		builder.WriteString(*v)
+	}
+	builder.WriteString(", ")
+	if v := _m.Signature; v != nil {
+		builder.WriteString("signature=")
+		builder.WriteString(fmt.Sprintf("%v", *v))
 	}
 	builder.WriteByte(')')
 	return builder.String()

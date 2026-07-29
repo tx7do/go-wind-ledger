@@ -69,6 +69,101 @@ func (_u *PermissionPolicyUpdate) ClearDeletedAt() *PermissionPolicyUpdate {
 	return _u
 }
 
+// SetCreatedBy sets the "created_by" field.
+func (_u *PermissionPolicyUpdate) SetCreatedBy(v uint32) *PermissionPolicyUpdate {
+	_u.mutation.ResetCreatedBy()
+	_u.mutation.SetCreatedBy(v)
+	return _u
+}
+
+// SetNillableCreatedBy sets the "created_by" field if the given value is not nil.
+func (_u *PermissionPolicyUpdate) SetNillableCreatedBy(v *uint32) *PermissionPolicyUpdate {
+	if v != nil {
+		_u.SetCreatedBy(*v)
+	}
+	return _u
+}
+
+// AddCreatedBy adds value to the "created_by" field.
+func (_u *PermissionPolicyUpdate) AddCreatedBy(v int32) *PermissionPolicyUpdate {
+	_u.mutation.AddCreatedBy(v)
+	return _u
+}
+
+// ClearCreatedBy clears the value of the "created_by" field.
+func (_u *PermissionPolicyUpdate) ClearCreatedBy() *PermissionPolicyUpdate {
+	_u.mutation.ClearCreatedBy()
+	return _u
+}
+
+// SetUpdatedBy sets the "updated_by" field.
+func (_u *PermissionPolicyUpdate) SetUpdatedBy(v uint32) *PermissionPolicyUpdate {
+	_u.mutation.ResetUpdatedBy()
+	_u.mutation.SetUpdatedBy(v)
+	return _u
+}
+
+// SetNillableUpdatedBy sets the "updated_by" field if the given value is not nil.
+func (_u *PermissionPolicyUpdate) SetNillableUpdatedBy(v *uint32) *PermissionPolicyUpdate {
+	if v != nil {
+		_u.SetUpdatedBy(*v)
+	}
+	return _u
+}
+
+// AddUpdatedBy adds value to the "updated_by" field.
+func (_u *PermissionPolicyUpdate) AddUpdatedBy(v int32) *PermissionPolicyUpdate {
+	_u.mutation.AddUpdatedBy(v)
+	return _u
+}
+
+// ClearUpdatedBy clears the value of the "updated_by" field.
+func (_u *PermissionPolicyUpdate) ClearUpdatedBy() *PermissionPolicyUpdate {
+	_u.mutation.ClearUpdatedBy()
+	return _u
+}
+
+// SetDeletedBy sets the "deleted_by" field.
+func (_u *PermissionPolicyUpdate) SetDeletedBy(v uint32) *PermissionPolicyUpdate {
+	_u.mutation.ResetDeletedBy()
+	_u.mutation.SetDeletedBy(v)
+	return _u
+}
+
+// SetNillableDeletedBy sets the "deleted_by" field if the given value is not nil.
+func (_u *PermissionPolicyUpdate) SetNillableDeletedBy(v *uint32) *PermissionPolicyUpdate {
+	if v != nil {
+		_u.SetDeletedBy(*v)
+	}
+	return _u
+}
+
+// AddDeletedBy adds value to the "deleted_by" field.
+func (_u *PermissionPolicyUpdate) AddDeletedBy(v int32) *PermissionPolicyUpdate {
+	_u.mutation.AddDeletedBy(v)
+	return _u
+}
+
+// ClearDeletedBy clears the value of the "deleted_by" field.
+func (_u *PermissionPolicyUpdate) ClearDeletedBy() *PermissionPolicyUpdate {
+	_u.mutation.ClearDeletedBy()
+	return _u
+}
+
+// SetStatus sets the "status" field.
+func (_u *PermissionPolicyUpdate) SetStatus(v permissionpolicy.Status) *PermissionPolicyUpdate {
+	_u.mutation.SetStatus(v)
+	return _u
+}
+
+// SetNillableStatus sets the "status" field if the given value is not nil.
+func (_u *PermissionPolicyUpdate) SetNillableStatus(v *permissionpolicy.Status) *PermissionPolicyUpdate {
+	if v != nil {
+		_u.SetStatus(*v)
+	}
+	return _u
+}
+
 // SetPermissionID sets the "permission_id" field.
 func (_u *PermissionPolicyUpdate) SetPermissionID(v uint32) *PermissionPolicyUpdate {
 	_u.mutation.ResetPermissionID()
@@ -90,36 +185,100 @@ func (_u *PermissionPolicyUpdate) AddPermissionID(v int32) *PermissionPolicyUpda
 	return _u
 }
 
-// ClearPermissionID clears the value of the "permission_id" field.
-func (_u *PermissionPolicyUpdate) ClearPermissionID() *PermissionPolicyUpdate {
-	_u.mutation.ClearPermissionID()
+// SetPolicyEngine sets the "policy_engine" field.
+func (_u *PermissionPolicyUpdate) SetPolicyEngine(v permissionpolicy.PolicyEngine) *PermissionPolicyUpdate {
+	_u.mutation.SetPolicyEngine(v)
 	return _u
 }
 
-// SetTargetID sets the "target_id" field.
-func (_u *PermissionPolicyUpdate) SetTargetID(v uint32) *PermissionPolicyUpdate {
-	_u.mutation.ResetTargetID()
-	_u.mutation.SetTargetID(v)
-	return _u
-}
-
-// SetNillableTargetID sets the "target_id" field if the given value is not nil.
-func (_u *PermissionPolicyUpdate) SetNillableTargetID(v *uint32) *PermissionPolicyUpdate {
+// SetNillablePolicyEngine sets the "policy_engine" field if the given value is not nil.
+func (_u *PermissionPolicyUpdate) SetNillablePolicyEngine(v *permissionpolicy.PolicyEngine) *PermissionPolicyUpdate {
 	if v != nil {
-		_u.SetTargetID(*v)
+		_u.SetPolicyEngine(*v)
 	}
 	return _u
 }
 
-// AddTargetID adds value to the "target_id" field.
-func (_u *PermissionPolicyUpdate) AddTargetID(v int32) *PermissionPolicyUpdate {
-	_u.mutation.AddTargetID(v)
+// SetDefinition sets the "definition" field.
+func (_u *PermissionPolicyUpdate) SetDefinition(v string) *PermissionPolicyUpdate {
+	_u.mutation.SetDefinition(v)
 	return _u
 }
 
-// ClearTargetID clears the value of the "target_id" field.
-func (_u *PermissionPolicyUpdate) ClearTargetID() *PermissionPolicyUpdate {
-	_u.mutation.ClearTargetID()
+// SetNillableDefinition sets the "definition" field if the given value is not nil.
+func (_u *PermissionPolicyUpdate) SetNillableDefinition(v *string) *PermissionPolicyUpdate {
+	if v != nil {
+		_u.SetDefinition(*v)
+	}
+	return _u
+}
+
+// ClearDefinition clears the value of the "definition" field.
+func (_u *PermissionPolicyUpdate) ClearDefinition() *PermissionPolicyUpdate {
+	_u.mutation.ClearDefinition()
+	return _u
+}
+
+// SetVersion sets the "version" field.
+func (_u *PermissionPolicyUpdate) SetVersion(v uint32) *PermissionPolicyUpdate {
+	_u.mutation.ResetVersion()
+	_u.mutation.SetVersion(v)
+	return _u
+}
+
+// SetNillableVersion sets the "version" field if the given value is not nil.
+func (_u *PermissionPolicyUpdate) SetNillableVersion(v *uint32) *PermissionPolicyUpdate {
+	if v != nil {
+		_u.SetVersion(*v)
+	}
+	return _u
+}
+
+// AddVersion adds value to the "version" field.
+func (_u *PermissionPolicyUpdate) AddVersion(v int32) *PermissionPolicyUpdate {
+	_u.mutation.AddVersion(v)
+	return _u
+}
+
+// SetEvalOrder sets the "eval_order" field.
+func (_u *PermissionPolicyUpdate) SetEvalOrder(v uint32) *PermissionPolicyUpdate {
+	_u.mutation.ResetEvalOrder()
+	_u.mutation.SetEvalOrder(v)
+	return _u
+}
+
+// SetNillableEvalOrder sets the "eval_order" field if the given value is not nil.
+func (_u *PermissionPolicyUpdate) SetNillableEvalOrder(v *uint32) *PermissionPolicyUpdate {
+	if v != nil {
+		_u.SetEvalOrder(*v)
+	}
+	return _u
+}
+
+// AddEvalOrder adds value to the "eval_order" field.
+func (_u *PermissionPolicyUpdate) AddEvalOrder(v int32) *PermissionPolicyUpdate {
+	_u.mutation.AddEvalOrder(v)
+	return _u
+}
+
+// SetCacheTTL sets the "cache_ttl" field.
+func (_u *PermissionPolicyUpdate) SetCacheTTL(v uint32) *PermissionPolicyUpdate {
+	_u.mutation.ResetCacheTTL()
+	_u.mutation.SetCacheTTL(v)
+	return _u
+}
+
+// SetNillableCacheTTL sets the "cache_ttl" field if the given value is not nil.
+func (_u *PermissionPolicyUpdate) SetNillableCacheTTL(v *uint32) *PermissionPolicyUpdate {
+	if v != nil {
+		_u.SetCacheTTL(*v)
+	}
+	return _u
+}
+
+// AddCacheTTL adds value to the "cache_ttl" field.
+func (_u *PermissionPolicyUpdate) AddCacheTTL(v int32) *PermissionPolicyUpdate {
+	_u.mutation.AddCacheTTL(v)
 	return _u
 }
 
@@ -155,6 +314,21 @@ func (_u *PermissionPolicyUpdate) ExecX(ctx context.Context) {
 	}
 }
 
+// check runs all checks and user-defined validators on the builder.
+func (_u *PermissionPolicyUpdate) check() error {
+	if v, ok := _u.mutation.Status(); ok {
+		if err := permissionpolicy.StatusValidator(v); err != nil {
+			return &ValidationError{Name: "status", err: fmt.Errorf(`ent: validator failed for field "PermissionPolicy.status": %w`, err)}
+		}
+	}
+	if v, ok := _u.mutation.PolicyEngine(); ok {
+		if err := permissionpolicy.PolicyEngineValidator(v); err != nil {
+			return &ValidationError{Name: "policy_engine", err: fmt.Errorf(`ent: validator failed for field "PermissionPolicy.policy_engine": %w`, err)}
+		}
+	}
+	return nil
+}
+
 // Modify adds a statement modifier for attaching custom logic to the UPDATE statement.
 func (_u *PermissionPolicyUpdate) Modify(modifiers ...func(u *sql.UpdateBuilder)) *PermissionPolicyUpdate {
 	_u.modifiers = append(_u.modifiers, modifiers...)
@@ -162,6 +336,9 @@ func (_u *PermissionPolicyUpdate) Modify(modifiers ...func(u *sql.UpdateBuilder)
 }
 
 func (_u *PermissionPolicyUpdate) sqlSave(ctx context.Context) (_node int, err error) {
+	if err := _u.check(); err != nil {
+		return _node, err
+	}
 	_spec := sqlgraph.NewUpdateSpec(permissionpolicy.Table, permissionpolicy.Columns, sqlgraph.NewFieldSpec(permissionpolicy.FieldID, field.TypeUint32))
 	if ps := _u.mutation.predicates; len(ps) > 0 {
 		_spec.Predicate = func(selector *sql.Selector) {
@@ -185,23 +362,68 @@ func (_u *PermissionPolicyUpdate) sqlSave(ctx context.Context) (_node int, err e
 	if _u.mutation.DeletedAtCleared() {
 		_spec.ClearField(permissionpolicy.FieldDeletedAt, field.TypeTime)
 	}
+	if value, ok := _u.mutation.CreatedBy(); ok {
+		_spec.SetField(permissionpolicy.FieldCreatedBy, field.TypeUint32, value)
+	}
+	if value, ok := _u.mutation.AddedCreatedBy(); ok {
+		_spec.AddField(permissionpolicy.FieldCreatedBy, field.TypeUint32, value)
+	}
+	if _u.mutation.CreatedByCleared() {
+		_spec.ClearField(permissionpolicy.FieldCreatedBy, field.TypeUint32)
+	}
+	if value, ok := _u.mutation.UpdatedBy(); ok {
+		_spec.SetField(permissionpolicy.FieldUpdatedBy, field.TypeUint32, value)
+	}
+	if value, ok := _u.mutation.AddedUpdatedBy(); ok {
+		_spec.AddField(permissionpolicy.FieldUpdatedBy, field.TypeUint32, value)
+	}
+	if _u.mutation.UpdatedByCleared() {
+		_spec.ClearField(permissionpolicy.FieldUpdatedBy, field.TypeUint32)
+	}
+	if value, ok := _u.mutation.DeletedBy(); ok {
+		_spec.SetField(permissionpolicy.FieldDeletedBy, field.TypeUint32, value)
+	}
+	if value, ok := _u.mutation.AddedDeletedBy(); ok {
+		_spec.AddField(permissionpolicy.FieldDeletedBy, field.TypeUint32, value)
+	}
+	if _u.mutation.DeletedByCleared() {
+		_spec.ClearField(permissionpolicy.FieldDeletedBy, field.TypeUint32)
+	}
+	if value, ok := _u.mutation.Status(); ok {
+		_spec.SetField(permissionpolicy.FieldStatus, field.TypeEnum, value)
+	}
 	if value, ok := _u.mutation.PermissionID(); ok {
 		_spec.SetField(permissionpolicy.FieldPermissionID, field.TypeUint32, value)
 	}
 	if value, ok := _u.mutation.AddedPermissionID(); ok {
 		_spec.AddField(permissionpolicy.FieldPermissionID, field.TypeUint32, value)
 	}
-	if _u.mutation.PermissionIDCleared() {
-		_spec.ClearField(permissionpolicy.FieldPermissionID, field.TypeUint32)
+	if value, ok := _u.mutation.PolicyEngine(); ok {
+		_spec.SetField(permissionpolicy.FieldPolicyEngine, field.TypeEnum, value)
 	}
-	if value, ok := _u.mutation.TargetID(); ok {
-		_spec.SetField(permissionpolicy.FieldTargetID, field.TypeUint32, value)
+	if value, ok := _u.mutation.Definition(); ok {
+		_spec.SetField(permissionpolicy.FieldDefinition, field.TypeString, value)
 	}
-	if value, ok := _u.mutation.AddedTargetID(); ok {
-		_spec.AddField(permissionpolicy.FieldTargetID, field.TypeUint32, value)
+	if _u.mutation.DefinitionCleared() {
+		_spec.ClearField(permissionpolicy.FieldDefinition, field.TypeString)
 	}
-	if _u.mutation.TargetIDCleared() {
-		_spec.ClearField(permissionpolicy.FieldTargetID, field.TypeUint32)
+	if value, ok := _u.mutation.Version(); ok {
+		_spec.SetField(permissionpolicy.FieldVersion, field.TypeUint32, value)
+	}
+	if value, ok := _u.mutation.AddedVersion(); ok {
+		_spec.AddField(permissionpolicy.FieldVersion, field.TypeUint32, value)
+	}
+	if value, ok := _u.mutation.EvalOrder(); ok {
+		_spec.SetField(permissionpolicy.FieldEvalOrder, field.TypeUint32, value)
+	}
+	if value, ok := _u.mutation.AddedEvalOrder(); ok {
+		_spec.AddField(permissionpolicy.FieldEvalOrder, field.TypeUint32, value)
+	}
+	if value, ok := _u.mutation.CacheTTL(); ok {
+		_spec.SetField(permissionpolicy.FieldCacheTTL, field.TypeUint32, value)
+	}
+	if value, ok := _u.mutation.AddedCacheTTL(); ok {
+		_spec.AddField(permissionpolicy.FieldCacheTTL, field.TypeUint32, value)
 	}
 	_spec.AddModifiers(_u.modifiers...)
 	if _node, err = sqlgraph.UpdateNodes(ctx, _u.driver, _spec); err != nil {
@@ -265,6 +487,101 @@ func (_u *PermissionPolicyUpdateOne) ClearDeletedAt() *PermissionPolicyUpdateOne
 	return _u
 }
 
+// SetCreatedBy sets the "created_by" field.
+func (_u *PermissionPolicyUpdateOne) SetCreatedBy(v uint32) *PermissionPolicyUpdateOne {
+	_u.mutation.ResetCreatedBy()
+	_u.mutation.SetCreatedBy(v)
+	return _u
+}
+
+// SetNillableCreatedBy sets the "created_by" field if the given value is not nil.
+func (_u *PermissionPolicyUpdateOne) SetNillableCreatedBy(v *uint32) *PermissionPolicyUpdateOne {
+	if v != nil {
+		_u.SetCreatedBy(*v)
+	}
+	return _u
+}
+
+// AddCreatedBy adds value to the "created_by" field.
+func (_u *PermissionPolicyUpdateOne) AddCreatedBy(v int32) *PermissionPolicyUpdateOne {
+	_u.mutation.AddCreatedBy(v)
+	return _u
+}
+
+// ClearCreatedBy clears the value of the "created_by" field.
+func (_u *PermissionPolicyUpdateOne) ClearCreatedBy() *PermissionPolicyUpdateOne {
+	_u.mutation.ClearCreatedBy()
+	return _u
+}
+
+// SetUpdatedBy sets the "updated_by" field.
+func (_u *PermissionPolicyUpdateOne) SetUpdatedBy(v uint32) *PermissionPolicyUpdateOne {
+	_u.mutation.ResetUpdatedBy()
+	_u.mutation.SetUpdatedBy(v)
+	return _u
+}
+
+// SetNillableUpdatedBy sets the "updated_by" field if the given value is not nil.
+func (_u *PermissionPolicyUpdateOne) SetNillableUpdatedBy(v *uint32) *PermissionPolicyUpdateOne {
+	if v != nil {
+		_u.SetUpdatedBy(*v)
+	}
+	return _u
+}
+
+// AddUpdatedBy adds value to the "updated_by" field.
+func (_u *PermissionPolicyUpdateOne) AddUpdatedBy(v int32) *PermissionPolicyUpdateOne {
+	_u.mutation.AddUpdatedBy(v)
+	return _u
+}
+
+// ClearUpdatedBy clears the value of the "updated_by" field.
+func (_u *PermissionPolicyUpdateOne) ClearUpdatedBy() *PermissionPolicyUpdateOne {
+	_u.mutation.ClearUpdatedBy()
+	return _u
+}
+
+// SetDeletedBy sets the "deleted_by" field.
+func (_u *PermissionPolicyUpdateOne) SetDeletedBy(v uint32) *PermissionPolicyUpdateOne {
+	_u.mutation.ResetDeletedBy()
+	_u.mutation.SetDeletedBy(v)
+	return _u
+}
+
+// SetNillableDeletedBy sets the "deleted_by" field if the given value is not nil.
+func (_u *PermissionPolicyUpdateOne) SetNillableDeletedBy(v *uint32) *PermissionPolicyUpdateOne {
+	if v != nil {
+		_u.SetDeletedBy(*v)
+	}
+	return _u
+}
+
+// AddDeletedBy adds value to the "deleted_by" field.
+func (_u *PermissionPolicyUpdateOne) AddDeletedBy(v int32) *PermissionPolicyUpdateOne {
+	_u.mutation.AddDeletedBy(v)
+	return _u
+}
+
+// ClearDeletedBy clears the value of the "deleted_by" field.
+func (_u *PermissionPolicyUpdateOne) ClearDeletedBy() *PermissionPolicyUpdateOne {
+	_u.mutation.ClearDeletedBy()
+	return _u
+}
+
+// SetStatus sets the "status" field.
+func (_u *PermissionPolicyUpdateOne) SetStatus(v permissionpolicy.Status) *PermissionPolicyUpdateOne {
+	_u.mutation.SetStatus(v)
+	return _u
+}
+
+// SetNillableStatus sets the "status" field if the given value is not nil.
+func (_u *PermissionPolicyUpdateOne) SetNillableStatus(v *permissionpolicy.Status) *PermissionPolicyUpdateOne {
+	if v != nil {
+		_u.SetStatus(*v)
+	}
+	return _u
+}
+
 // SetPermissionID sets the "permission_id" field.
 func (_u *PermissionPolicyUpdateOne) SetPermissionID(v uint32) *PermissionPolicyUpdateOne {
 	_u.mutation.ResetPermissionID()
@@ -286,36 +603,100 @@ func (_u *PermissionPolicyUpdateOne) AddPermissionID(v int32) *PermissionPolicyU
 	return _u
 }
 
-// ClearPermissionID clears the value of the "permission_id" field.
-func (_u *PermissionPolicyUpdateOne) ClearPermissionID() *PermissionPolicyUpdateOne {
-	_u.mutation.ClearPermissionID()
+// SetPolicyEngine sets the "policy_engine" field.
+func (_u *PermissionPolicyUpdateOne) SetPolicyEngine(v permissionpolicy.PolicyEngine) *PermissionPolicyUpdateOne {
+	_u.mutation.SetPolicyEngine(v)
 	return _u
 }
 
-// SetTargetID sets the "target_id" field.
-func (_u *PermissionPolicyUpdateOne) SetTargetID(v uint32) *PermissionPolicyUpdateOne {
-	_u.mutation.ResetTargetID()
-	_u.mutation.SetTargetID(v)
-	return _u
-}
-
-// SetNillableTargetID sets the "target_id" field if the given value is not nil.
-func (_u *PermissionPolicyUpdateOne) SetNillableTargetID(v *uint32) *PermissionPolicyUpdateOne {
+// SetNillablePolicyEngine sets the "policy_engine" field if the given value is not nil.
+func (_u *PermissionPolicyUpdateOne) SetNillablePolicyEngine(v *permissionpolicy.PolicyEngine) *PermissionPolicyUpdateOne {
 	if v != nil {
-		_u.SetTargetID(*v)
+		_u.SetPolicyEngine(*v)
 	}
 	return _u
 }
 
-// AddTargetID adds value to the "target_id" field.
-func (_u *PermissionPolicyUpdateOne) AddTargetID(v int32) *PermissionPolicyUpdateOne {
-	_u.mutation.AddTargetID(v)
+// SetDefinition sets the "definition" field.
+func (_u *PermissionPolicyUpdateOne) SetDefinition(v string) *PermissionPolicyUpdateOne {
+	_u.mutation.SetDefinition(v)
 	return _u
 }
 
-// ClearTargetID clears the value of the "target_id" field.
-func (_u *PermissionPolicyUpdateOne) ClearTargetID() *PermissionPolicyUpdateOne {
-	_u.mutation.ClearTargetID()
+// SetNillableDefinition sets the "definition" field if the given value is not nil.
+func (_u *PermissionPolicyUpdateOne) SetNillableDefinition(v *string) *PermissionPolicyUpdateOne {
+	if v != nil {
+		_u.SetDefinition(*v)
+	}
+	return _u
+}
+
+// ClearDefinition clears the value of the "definition" field.
+func (_u *PermissionPolicyUpdateOne) ClearDefinition() *PermissionPolicyUpdateOne {
+	_u.mutation.ClearDefinition()
+	return _u
+}
+
+// SetVersion sets the "version" field.
+func (_u *PermissionPolicyUpdateOne) SetVersion(v uint32) *PermissionPolicyUpdateOne {
+	_u.mutation.ResetVersion()
+	_u.mutation.SetVersion(v)
+	return _u
+}
+
+// SetNillableVersion sets the "version" field if the given value is not nil.
+func (_u *PermissionPolicyUpdateOne) SetNillableVersion(v *uint32) *PermissionPolicyUpdateOne {
+	if v != nil {
+		_u.SetVersion(*v)
+	}
+	return _u
+}
+
+// AddVersion adds value to the "version" field.
+func (_u *PermissionPolicyUpdateOne) AddVersion(v int32) *PermissionPolicyUpdateOne {
+	_u.mutation.AddVersion(v)
+	return _u
+}
+
+// SetEvalOrder sets the "eval_order" field.
+func (_u *PermissionPolicyUpdateOne) SetEvalOrder(v uint32) *PermissionPolicyUpdateOne {
+	_u.mutation.ResetEvalOrder()
+	_u.mutation.SetEvalOrder(v)
+	return _u
+}
+
+// SetNillableEvalOrder sets the "eval_order" field if the given value is not nil.
+func (_u *PermissionPolicyUpdateOne) SetNillableEvalOrder(v *uint32) *PermissionPolicyUpdateOne {
+	if v != nil {
+		_u.SetEvalOrder(*v)
+	}
+	return _u
+}
+
+// AddEvalOrder adds value to the "eval_order" field.
+func (_u *PermissionPolicyUpdateOne) AddEvalOrder(v int32) *PermissionPolicyUpdateOne {
+	_u.mutation.AddEvalOrder(v)
+	return _u
+}
+
+// SetCacheTTL sets the "cache_ttl" field.
+func (_u *PermissionPolicyUpdateOne) SetCacheTTL(v uint32) *PermissionPolicyUpdateOne {
+	_u.mutation.ResetCacheTTL()
+	_u.mutation.SetCacheTTL(v)
+	return _u
+}
+
+// SetNillableCacheTTL sets the "cache_ttl" field if the given value is not nil.
+func (_u *PermissionPolicyUpdateOne) SetNillableCacheTTL(v *uint32) *PermissionPolicyUpdateOne {
+	if v != nil {
+		_u.SetCacheTTL(*v)
+	}
+	return _u
+}
+
+// AddCacheTTL adds value to the "cache_ttl" field.
+func (_u *PermissionPolicyUpdateOne) AddCacheTTL(v int32) *PermissionPolicyUpdateOne {
+	_u.mutation.AddCacheTTL(v)
 	return _u
 }
 
@@ -364,6 +745,21 @@ func (_u *PermissionPolicyUpdateOne) ExecX(ctx context.Context) {
 	}
 }
 
+// check runs all checks and user-defined validators on the builder.
+func (_u *PermissionPolicyUpdateOne) check() error {
+	if v, ok := _u.mutation.Status(); ok {
+		if err := permissionpolicy.StatusValidator(v); err != nil {
+			return &ValidationError{Name: "status", err: fmt.Errorf(`ent: validator failed for field "PermissionPolicy.status": %w`, err)}
+		}
+	}
+	if v, ok := _u.mutation.PolicyEngine(); ok {
+		if err := permissionpolicy.PolicyEngineValidator(v); err != nil {
+			return &ValidationError{Name: "policy_engine", err: fmt.Errorf(`ent: validator failed for field "PermissionPolicy.policy_engine": %w`, err)}
+		}
+	}
+	return nil
+}
+
 // Modify adds a statement modifier for attaching custom logic to the UPDATE statement.
 func (_u *PermissionPolicyUpdateOne) Modify(modifiers ...func(u *sql.UpdateBuilder)) *PermissionPolicyUpdateOne {
 	_u.modifiers = append(_u.modifiers, modifiers...)
@@ -371,6 +767,9 @@ func (_u *PermissionPolicyUpdateOne) Modify(modifiers ...func(u *sql.UpdateBuild
 }
 
 func (_u *PermissionPolicyUpdateOne) sqlSave(ctx context.Context) (_node *PermissionPolicy, err error) {
+	if err := _u.check(); err != nil {
+		return _node, err
+	}
 	_spec := sqlgraph.NewUpdateSpec(permissionpolicy.Table, permissionpolicy.Columns, sqlgraph.NewFieldSpec(permissionpolicy.FieldID, field.TypeUint32))
 	id, ok := _u.mutation.ID()
 	if !ok {
@@ -411,23 +810,68 @@ func (_u *PermissionPolicyUpdateOne) sqlSave(ctx context.Context) (_node *Permis
 	if _u.mutation.DeletedAtCleared() {
 		_spec.ClearField(permissionpolicy.FieldDeletedAt, field.TypeTime)
 	}
+	if value, ok := _u.mutation.CreatedBy(); ok {
+		_spec.SetField(permissionpolicy.FieldCreatedBy, field.TypeUint32, value)
+	}
+	if value, ok := _u.mutation.AddedCreatedBy(); ok {
+		_spec.AddField(permissionpolicy.FieldCreatedBy, field.TypeUint32, value)
+	}
+	if _u.mutation.CreatedByCleared() {
+		_spec.ClearField(permissionpolicy.FieldCreatedBy, field.TypeUint32)
+	}
+	if value, ok := _u.mutation.UpdatedBy(); ok {
+		_spec.SetField(permissionpolicy.FieldUpdatedBy, field.TypeUint32, value)
+	}
+	if value, ok := _u.mutation.AddedUpdatedBy(); ok {
+		_spec.AddField(permissionpolicy.FieldUpdatedBy, field.TypeUint32, value)
+	}
+	if _u.mutation.UpdatedByCleared() {
+		_spec.ClearField(permissionpolicy.FieldUpdatedBy, field.TypeUint32)
+	}
+	if value, ok := _u.mutation.DeletedBy(); ok {
+		_spec.SetField(permissionpolicy.FieldDeletedBy, field.TypeUint32, value)
+	}
+	if value, ok := _u.mutation.AddedDeletedBy(); ok {
+		_spec.AddField(permissionpolicy.FieldDeletedBy, field.TypeUint32, value)
+	}
+	if _u.mutation.DeletedByCleared() {
+		_spec.ClearField(permissionpolicy.FieldDeletedBy, field.TypeUint32)
+	}
+	if value, ok := _u.mutation.Status(); ok {
+		_spec.SetField(permissionpolicy.FieldStatus, field.TypeEnum, value)
+	}
 	if value, ok := _u.mutation.PermissionID(); ok {
 		_spec.SetField(permissionpolicy.FieldPermissionID, field.TypeUint32, value)
 	}
 	if value, ok := _u.mutation.AddedPermissionID(); ok {
 		_spec.AddField(permissionpolicy.FieldPermissionID, field.TypeUint32, value)
 	}
-	if _u.mutation.PermissionIDCleared() {
-		_spec.ClearField(permissionpolicy.FieldPermissionID, field.TypeUint32)
+	if value, ok := _u.mutation.PolicyEngine(); ok {
+		_spec.SetField(permissionpolicy.FieldPolicyEngine, field.TypeEnum, value)
 	}
-	if value, ok := _u.mutation.TargetID(); ok {
-		_spec.SetField(permissionpolicy.FieldTargetID, field.TypeUint32, value)
+	if value, ok := _u.mutation.Definition(); ok {
+		_spec.SetField(permissionpolicy.FieldDefinition, field.TypeString, value)
 	}
-	if value, ok := _u.mutation.AddedTargetID(); ok {
-		_spec.AddField(permissionpolicy.FieldTargetID, field.TypeUint32, value)
+	if _u.mutation.DefinitionCleared() {
+		_spec.ClearField(permissionpolicy.FieldDefinition, field.TypeString)
 	}
-	if _u.mutation.TargetIDCleared() {
-		_spec.ClearField(permissionpolicy.FieldTargetID, field.TypeUint32)
+	if value, ok := _u.mutation.Version(); ok {
+		_spec.SetField(permissionpolicy.FieldVersion, field.TypeUint32, value)
+	}
+	if value, ok := _u.mutation.AddedVersion(); ok {
+		_spec.AddField(permissionpolicy.FieldVersion, field.TypeUint32, value)
+	}
+	if value, ok := _u.mutation.EvalOrder(); ok {
+		_spec.SetField(permissionpolicy.FieldEvalOrder, field.TypeUint32, value)
+	}
+	if value, ok := _u.mutation.AddedEvalOrder(); ok {
+		_spec.AddField(permissionpolicy.FieldEvalOrder, field.TypeUint32, value)
+	}
+	if value, ok := _u.mutation.CacheTTL(); ok {
+		_spec.SetField(permissionpolicy.FieldCacheTTL, field.TypeUint32, value)
+	}
+	if value, ok := _u.mutation.AddedCacheTTL(); ok {
+		_spec.AddField(permissionpolicy.FieldCacheTTL, field.TypeUint32, value)
 	}
 	_spec.AddModifiers(_u.modifiers...)
 	_node = &PermissionPolicy{config: _u.config}

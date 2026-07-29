@@ -64,20 +64,6 @@ func (_c *UserPositionCreate) SetNillableDeletedAt(v *time.Time) *UserPositionCr
 	return _c
 }
 
-// SetTenantID sets the "tenant_id" field.
-func (_c *UserPositionCreate) SetTenantID(v uint32) *UserPositionCreate {
-	_c.mutation.SetTenantID(v)
-	return _c
-}
-
-// SetNillableTenantID sets the "tenant_id" field if the given value is not nil.
-func (_c *UserPositionCreate) SetNillableTenantID(v *uint32) *UserPositionCreate {
-	if v != nil {
-		_c.SetTenantID(*v)
-	}
-	return _c
-}
-
 // SetCreatedBy sets the "created_by" field.
 func (_c *UserPositionCreate) SetCreatedBy(v uint32) *UserPositionCreate {
 	_c.mutation.SetCreatedBy(v)
@@ -120,17 +106,43 @@ func (_c *UserPositionCreate) SetNillableDeletedBy(v *uint32) *UserPositionCreat
 	return _c
 }
 
-// SetStatus sets the "status" field.
-func (_c *UserPositionCreate) SetStatus(v userposition.Status) *UserPositionCreate {
-	_c.mutation.SetStatus(v)
+// SetTenantID sets the "tenant_id" field.
+func (_c *UserPositionCreate) SetTenantID(v uint32) *UserPositionCreate {
+	_c.mutation.SetTenantID(v)
 	return _c
 }
 
-// SetNillableStatus sets the "status" field if the given value is not nil.
-func (_c *UserPositionCreate) SetNillableStatus(v *userposition.Status) *UserPositionCreate {
+// SetNillableTenantID sets the "tenant_id" field if the given value is not nil.
+func (_c *UserPositionCreate) SetNillableTenantID(v *uint32) *UserPositionCreate {
 	if v != nil {
-		_c.SetStatus(*v)
+		_c.SetTenantID(*v)
 	}
+	return _c
+}
+
+// SetRemark sets the "remark" field.
+func (_c *UserPositionCreate) SetRemark(v string) *UserPositionCreate {
+	_c.mutation.SetRemark(v)
+	return _c
+}
+
+// SetNillableRemark sets the "remark" field if the given value is not nil.
+func (_c *UserPositionCreate) SetNillableRemark(v *string) *UserPositionCreate {
+	if v != nil {
+		_c.SetRemark(*v)
+	}
+	return _c
+}
+
+// SetUserID sets the "user_id" field.
+func (_c *UserPositionCreate) SetUserID(v uint32) *UserPositionCreate {
+	_c.mutation.SetUserID(v)
+	return _c
+}
+
+// SetPositionID sets the "position_id" field.
+func (_c *UserPositionCreate) SetPositionID(v uint32) *UserPositionCreate {
+	_c.mutation.SetPositionID(v)
 	return _c
 }
 
@@ -176,30 +188,44 @@ func (_c *UserPositionCreate) SetNillableEndAt(v *time.Time) *UserPositionCreate
 	return _c
 }
 
-// SetUserID sets the "user_id" field.
-func (_c *UserPositionCreate) SetUserID(v uint32) *UserPositionCreate {
-	_c.mutation.SetUserID(v)
+// SetAssignedAt sets the "assigned_at" field.
+func (_c *UserPositionCreate) SetAssignedAt(v time.Time) *UserPositionCreate {
+	_c.mutation.SetAssignedAt(v)
 	return _c
 }
 
-// SetNillableUserID sets the "user_id" field if the given value is not nil.
-func (_c *UserPositionCreate) SetNillableUserID(v *uint32) *UserPositionCreate {
+// SetNillableAssignedAt sets the "assigned_at" field if the given value is not nil.
+func (_c *UserPositionCreate) SetNillableAssignedAt(v *time.Time) *UserPositionCreate {
 	if v != nil {
-		_c.SetUserID(*v)
+		_c.SetAssignedAt(*v)
 	}
 	return _c
 }
 
-// SetPositionID sets the "position_id" field.
-func (_c *UserPositionCreate) SetPositionID(v uint32) *UserPositionCreate {
-	_c.mutation.SetPositionID(v)
+// SetAssignedBy sets the "assigned_by" field.
+func (_c *UserPositionCreate) SetAssignedBy(v uint32) *UserPositionCreate {
+	_c.mutation.SetAssignedBy(v)
 	return _c
 }
 
-// SetNillablePositionID sets the "position_id" field if the given value is not nil.
-func (_c *UserPositionCreate) SetNillablePositionID(v *uint32) *UserPositionCreate {
+// SetNillableAssignedBy sets the "assigned_by" field if the given value is not nil.
+func (_c *UserPositionCreate) SetNillableAssignedBy(v *uint32) *UserPositionCreate {
 	if v != nil {
-		_c.SetPositionID(*v)
+		_c.SetAssignedBy(*v)
+	}
+	return _c
+}
+
+// SetStatus sets the "status" field.
+func (_c *UserPositionCreate) SetStatus(v userposition.Status) *UserPositionCreate {
+	_c.mutation.SetStatus(v)
+	return _c
+}
+
+// SetNillableStatus sets the "status" field if the given value is not nil.
+func (_c *UserPositionCreate) SetNillableStatus(v *userposition.Status) *UserPositionCreate {
+	if v != nil {
+		_c.SetStatus(*v)
 	}
 	return _c
 }
@@ -251,19 +277,28 @@ func (_c *UserPositionCreate) defaults() error {
 		v := userposition.DefaultTenantID
 		_c.mutation.SetTenantID(v)
 	}
-	if _, ok := _c.mutation.Status(); !ok {
-		v := userposition.DefaultStatus
-		_c.mutation.SetStatus(v)
-	}
 	if _, ok := _c.mutation.IsPrimary(); !ok {
 		v := userposition.DefaultIsPrimary
 		_c.mutation.SetIsPrimary(v)
+	}
+	if _, ok := _c.mutation.Status(); !ok {
+		v := userposition.DefaultStatus
+		_c.mutation.SetStatus(v)
 	}
 	return nil
 }
 
 // check runs all checks and user-defined validators on the builder.
 func (_c *UserPositionCreate) check() error {
+	if _, ok := _c.mutation.UserID(); !ok {
+		return &ValidationError{Name: "user_id", err: errors.New(`ent: missing required field "UserPosition.user_id"`)}
+	}
+	if _, ok := _c.mutation.PositionID(); !ok {
+		return &ValidationError{Name: "position_id", err: errors.New(`ent: missing required field "UserPosition.position_id"`)}
+	}
+	if _, ok := _c.mutation.Status(); !ok {
+		return &ValidationError{Name: "status", err: errors.New(`ent: missing required field "UserPosition.status"`)}
+	}
 	if v, ok := _c.mutation.Status(); ok {
 		if err := userposition.StatusValidator(v); err != nil {
 			return &ValidationError{Name: "status", err: fmt.Errorf(`ent: validator failed for field "UserPosition.status": %w`, err)}
@@ -319,10 +354,6 @@ func (_c *UserPositionCreate) createSpec() (*UserPosition, *sqlgraph.CreateSpec)
 		_spec.SetField(userposition.FieldDeletedAt, field.TypeTime, value)
 		_node.DeletedAt = &value
 	}
-	if value, ok := _c.mutation.TenantID(); ok {
-		_spec.SetField(userposition.FieldTenantID, field.TypeUint32, value)
-		_node.TenantID = &value
-	}
 	if value, ok := _c.mutation.CreatedBy(); ok {
 		_spec.SetField(userposition.FieldCreatedBy, field.TypeUint32, value)
 		_node.CreatedBy = &value
@@ -335,9 +366,21 @@ func (_c *UserPositionCreate) createSpec() (*UserPosition, *sqlgraph.CreateSpec)
 		_spec.SetField(userposition.FieldDeletedBy, field.TypeUint32, value)
 		_node.DeletedBy = &value
 	}
-	if value, ok := _c.mutation.Status(); ok {
-		_spec.SetField(userposition.FieldStatus, field.TypeEnum, value)
-		_node.Status = &value
+	if value, ok := _c.mutation.TenantID(); ok {
+		_spec.SetField(userposition.FieldTenantID, field.TypeUint32, value)
+		_node.TenantID = &value
+	}
+	if value, ok := _c.mutation.Remark(); ok {
+		_spec.SetField(userposition.FieldRemark, field.TypeString, value)
+		_node.Remark = &value
+	}
+	if value, ok := _c.mutation.UserID(); ok {
+		_spec.SetField(userposition.FieldUserID, field.TypeUint32, value)
+		_node.UserID = &value
+	}
+	if value, ok := _c.mutation.PositionID(); ok {
+		_spec.SetField(userposition.FieldPositionID, field.TypeUint32, value)
+		_node.PositionID = &value
 	}
 	if value, ok := _c.mutation.IsPrimary(); ok {
 		_spec.SetField(userposition.FieldIsPrimary, field.TypeBool, value)
@@ -351,13 +394,17 @@ func (_c *UserPositionCreate) createSpec() (*UserPosition, *sqlgraph.CreateSpec)
 		_spec.SetField(userposition.FieldEndAt, field.TypeTime, value)
 		_node.EndAt = &value
 	}
-	if value, ok := _c.mutation.UserID(); ok {
-		_spec.SetField(userposition.FieldUserID, field.TypeUint32, value)
-		_node.UserID = &value
+	if value, ok := _c.mutation.AssignedAt(); ok {
+		_spec.SetField(userposition.FieldAssignedAt, field.TypeTime, value)
+		_node.AssignedAt = &value
 	}
-	if value, ok := _c.mutation.PositionID(); ok {
-		_spec.SetField(userposition.FieldPositionID, field.TypeUint32, value)
-		_node.PositionID = &value
+	if value, ok := _c.mutation.AssignedBy(); ok {
+		_spec.SetField(userposition.FieldAssignedBy, field.TypeUint32, value)
+		_node.AssignedBy = &value
+	}
+	if value, ok := _c.mutation.Status(); ok {
+		_spec.SetField(userposition.FieldStatus, field.TypeEnum, value)
+		_node.Status = value
 	}
 	return _node, _spec
 }
@@ -519,21 +566,57 @@ func (u *UserPositionUpsert) ClearDeletedBy() *UserPositionUpsert {
 	return u
 }
 
-// SetStatus sets the "status" field.
-func (u *UserPositionUpsert) SetStatus(v userposition.Status) *UserPositionUpsert {
-	u.Set(userposition.FieldStatus, v)
+// SetRemark sets the "remark" field.
+func (u *UserPositionUpsert) SetRemark(v string) *UserPositionUpsert {
+	u.Set(userposition.FieldRemark, v)
 	return u
 }
 
-// UpdateStatus sets the "status" field to the value that was provided on create.
-func (u *UserPositionUpsert) UpdateStatus() *UserPositionUpsert {
-	u.SetExcluded(userposition.FieldStatus)
+// UpdateRemark sets the "remark" field to the value that was provided on create.
+func (u *UserPositionUpsert) UpdateRemark() *UserPositionUpsert {
+	u.SetExcluded(userposition.FieldRemark)
 	return u
 }
 
-// ClearStatus clears the value of the "status" field.
-func (u *UserPositionUpsert) ClearStatus() *UserPositionUpsert {
-	u.SetNull(userposition.FieldStatus)
+// ClearRemark clears the value of the "remark" field.
+func (u *UserPositionUpsert) ClearRemark() *UserPositionUpsert {
+	u.SetNull(userposition.FieldRemark)
+	return u
+}
+
+// SetUserID sets the "user_id" field.
+func (u *UserPositionUpsert) SetUserID(v uint32) *UserPositionUpsert {
+	u.Set(userposition.FieldUserID, v)
+	return u
+}
+
+// UpdateUserID sets the "user_id" field to the value that was provided on create.
+func (u *UserPositionUpsert) UpdateUserID() *UserPositionUpsert {
+	u.SetExcluded(userposition.FieldUserID)
+	return u
+}
+
+// AddUserID adds v to the "user_id" field.
+func (u *UserPositionUpsert) AddUserID(v uint32) *UserPositionUpsert {
+	u.Add(userposition.FieldUserID, v)
+	return u
+}
+
+// SetPositionID sets the "position_id" field.
+func (u *UserPositionUpsert) SetPositionID(v uint32) *UserPositionUpsert {
+	u.Set(userposition.FieldPositionID, v)
+	return u
+}
+
+// UpdatePositionID sets the "position_id" field to the value that was provided on create.
+func (u *UserPositionUpsert) UpdatePositionID() *UserPositionUpsert {
+	u.SetExcluded(userposition.FieldPositionID)
+	return u
+}
+
+// AddPositionID adds v to the "position_id" field.
+func (u *UserPositionUpsert) AddPositionID(v uint32) *UserPositionUpsert {
+	u.Add(userposition.FieldPositionID, v)
 	return u
 }
 
@@ -591,51 +674,57 @@ func (u *UserPositionUpsert) ClearEndAt() *UserPositionUpsert {
 	return u
 }
 
-// SetUserID sets the "user_id" field.
-func (u *UserPositionUpsert) SetUserID(v uint32) *UserPositionUpsert {
-	u.Set(userposition.FieldUserID, v)
+// SetAssignedAt sets the "assigned_at" field.
+func (u *UserPositionUpsert) SetAssignedAt(v time.Time) *UserPositionUpsert {
+	u.Set(userposition.FieldAssignedAt, v)
 	return u
 }
 
-// UpdateUserID sets the "user_id" field to the value that was provided on create.
-func (u *UserPositionUpsert) UpdateUserID() *UserPositionUpsert {
-	u.SetExcluded(userposition.FieldUserID)
+// UpdateAssignedAt sets the "assigned_at" field to the value that was provided on create.
+func (u *UserPositionUpsert) UpdateAssignedAt() *UserPositionUpsert {
+	u.SetExcluded(userposition.FieldAssignedAt)
 	return u
 }
 
-// AddUserID adds v to the "user_id" field.
-func (u *UserPositionUpsert) AddUserID(v uint32) *UserPositionUpsert {
-	u.Add(userposition.FieldUserID, v)
+// ClearAssignedAt clears the value of the "assigned_at" field.
+func (u *UserPositionUpsert) ClearAssignedAt() *UserPositionUpsert {
+	u.SetNull(userposition.FieldAssignedAt)
 	return u
 }
 
-// ClearUserID clears the value of the "user_id" field.
-func (u *UserPositionUpsert) ClearUserID() *UserPositionUpsert {
-	u.SetNull(userposition.FieldUserID)
+// SetAssignedBy sets the "assigned_by" field.
+func (u *UserPositionUpsert) SetAssignedBy(v uint32) *UserPositionUpsert {
+	u.Set(userposition.FieldAssignedBy, v)
 	return u
 }
 
-// SetPositionID sets the "position_id" field.
-func (u *UserPositionUpsert) SetPositionID(v uint32) *UserPositionUpsert {
-	u.Set(userposition.FieldPositionID, v)
+// UpdateAssignedBy sets the "assigned_by" field to the value that was provided on create.
+func (u *UserPositionUpsert) UpdateAssignedBy() *UserPositionUpsert {
+	u.SetExcluded(userposition.FieldAssignedBy)
 	return u
 }
 
-// UpdatePositionID sets the "position_id" field to the value that was provided on create.
-func (u *UserPositionUpsert) UpdatePositionID() *UserPositionUpsert {
-	u.SetExcluded(userposition.FieldPositionID)
+// AddAssignedBy adds v to the "assigned_by" field.
+func (u *UserPositionUpsert) AddAssignedBy(v uint32) *UserPositionUpsert {
+	u.Add(userposition.FieldAssignedBy, v)
 	return u
 }
 
-// AddPositionID adds v to the "position_id" field.
-func (u *UserPositionUpsert) AddPositionID(v uint32) *UserPositionUpsert {
-	u.Add(userposition.FieldPositionID, v)
+// ClearAssignedBy clears the value of the "assigned_by" field.
+func (u *UserPositionUpsert) ClearAssignedBy() *UserPositionUpsert {
+	u.SetNull(userposition.FieldAssignedBy)
 	return u
 }
 
-// ClearPositionID clears the value of the "position_id" field.
-func (u *UserPositionUpsert) ClearPositionID() *UserPositionUpsert {
-	u.SetNull(userposition.FieldPositionID)
+// SetStatus sets the "status" field.
+func (u *UserPositionUpsert) SetStatus(v userposition.Status) *UserPositionUpsert {
+	u.Set(userposition.FieldStatus, v)
+	return u
+}
+
+// UpdateStatus sets the "status" field to the value that was provided on create.
+func (u *UserPositionUpsert) UpdateStatus() *UserPositionUpsert {
+	u.SetExcluded(userposition.FieldStatus)
 	return u
 }
 
@@ -819,24 +908,66 @@ func (u *UserPositionUpsertOne) ClearDeletedBy() *UserPositionUpsertOne {
 	})
 }
 
-// SetStatus sets the "status" field.
-func (u *UserPositionUpsertOne) SetStatus(v userposition.Status) *UserPositionUpsertOne {
+// SetRemark sets the "remark" field.
+func (u *UserPositionUpsertOne) SetRemark(v string) *UserPositionUpsertOne {
 	return u.Update(func(s *UserPositionUpsert) {
-		s.SetStatus(v)
+		s.SetRemark(v)
 	})
 }
 
-// UpdateStatus sets the "status" field to the value that was provided on create.
-func (u *UserPositionUpsertOne) UpdateStatus() *UserPositionUpsertOne {
+// UpdateRemark sets the "remark" field to the value that was provided on create.
+func (u *UserPositionUpsertOne) UpdateRemark() *UserPositionUpsertOne {
 	return u.Update(func(s *UserPositionUpsert) {
-		s.UpdateStatus()
+		s.UpdateRemark()
 	})
 }
 
-// ClearStatus clears the value of the "status" field.
-func (u *UserPositionUpsertOne) ClearStatus() *UserPositionUpsertOne {
+// ClearRemark clears the value of the "remark" field.
+func (u *UserPositionUpsertOne) ClearRemark() *UserPositionUpsertOne {
 	return u.Update(func(s *UserPositionUpsert) {
-		s.ClearStatus()
+		s.ClearRemark()
+	})
+}
+
+// SetUserID sets the "user_id" field.
+func (u *UserPositionUpsertOne) SetUserID(v uint32) *UserPositionUpsertOne {
+	return u.Update(func(s *UserPositionUpsert) {
+		s.SetUserID(v)
+	})
+}
+
+// AddUserID adds v to the "user_id" field.
+func (u *UserPositionUpsertOne) AddUserID(v uint32) *UserPositionUpsertOne {
+	return u.Update(func(s *UserPositionUpsert) {
+		s.AddUserID(v)
+	})
+}
+
+// UpdateUserID sets the "user_id" field to the value that was provided on create.
+func (u *UserPositionUpsertOne) UpdateUserID() *UserPositionUpsertOne {
+	return u.Update(func(s *UserPositionUpsert) {
+		s.UpdateUserID()
+	})
+}
+
+// SetPositionID sets the "position_id" field.
+func (u *UserPositionUpsertOne) SetPositionID(v uint32) *UserPositionUpsertOne {
+	return u.Update(func(s *UserPositionUpsert) {
+		s.SetPositionID(v)
+	})
+}
+
+// AddPositionID adds v to the "position_id" field.
+func (u *UserPositionUpsertOne) AddPositionID(v uint32) *UserPositionUpsertOne {
+	return u.Update(func(s *UserPositionUpsert) {
+		s.AddPositionID(v)
+	})
+}
+
+// UpdatePositionID sets the "position_id" field to the value that was provided on create.
+func (u *UserPositionUpsertOne) UpdatePositionID() *UserPositionUpsertOne {
+	return u.Update(func(s *UserPositionUpsert) {
+		s.UpdatePositionID()
 	})
 }
 
@@ -903,59 +1034,66 @@ func (u *UserPositionUpsertOne) ClearEndAt() *UserPositionUpsertOne {
 	})
 }
 
-// SetUserID sets the "user_id" field.
-func (u *UserPositionUpsertOne) SetUserID(v uint32) *UserPositionUpsertOne {
+// SetAssignedAt sets the "assigned_at" field.
+func (u *UserPositionUpsertOne) SetAssignedAt(v time.Time) *UserPositionUpsertOne {
 	return u.Update(func(s *UserPositionUpsert) {
-		s.SetUserID(v)
+		s.SetAssignedAt(v)
 	})
 }
 
-// AddUserID adds v to the "user_id" field.
-func (u *UserPositionUpsertOne) AddUserID(v uint32) *UserPositionUpsertOne {
+// UpdateAssignedAt sets the "assigned_at" field to the value that was provided on create.
+func (u *UserPositionUpsertOne) UpdateAssignedAt() *UserPositionUpsertOne {
 	return u.Update(func(s *UserPositionUpsert) {
-		s.AddUserID(v)
+		s.UpdateAssignedAt()
 	})
 }
 
-// UpdateUserID sets the "user_id" field to the value that was provided on create.
-func (u *UserPositionUpsertOne) UpdateUserID() *UserPositionUpsertOne {
+// ClearAssignedAt clears the value of the "assigned_at" field.
+func (u *UserPositionUpsertOne) ClearAssignedAt() *UserPositionUpsertOne {
 	return u.Update(func(s *UserPositionUpsert) {
-		s.UpdateUserID()
+		s.ClearAssignedAt()
 	})
 }
 
-// ClearUserID clears the value of the "user_id" field.
-func (u *UserPositionUpsertOne) ClearUserID() *UserPositionUpsertOne {
+// SetAssignedBy sets the "assigned_by" field.
+func (u *UserPositionUpsertOne) SetAssignedBy(v uint32) *UserPositionUpsertOne {
 	return u.Update(func(s *UserPositionUpsert) {
-		s.ClearUserID()
+		s.SetAssignedBy(v)
 	})
 }
 
-// SetPositionID sets the "position_id" field.
-func (u *UserPositionUpsertOne) SetPositionID(v uint32) *UserPositionUpsertOne {
+// AddAssignedBy adds v to the "assigned_by" field.
+func (u *UserPositionUpsertOne) AddAssignedBy(v uint32) *UserPositionUpsertOne {
 	return u.Update(func(s *UserPositionUpsert) {
-		s.SetPositionID(v)
+		s.AddAssignedBy(v)
 	})
 }
 
-// AddPositionID adds v to the "position_id" field.
-func (u *UserPositionUpsertOne) AddPositionID(v uint32) *UserPositionUpsertOne {
+// UpdateAssignedBy sets the "assigned_by" field to the value that was provided on create.
+func (u *UserPositionUpsertOne) UpdateAssignedBy() *UserPositionUpsertOne {
 	return u.Update(func(s *UserPositionUpsert) {
-		s.AddPositionID(v)
+		s.UpdateAssignedBy()
 	})
 }
 
-// UpdatePositionID sets the "position_id" field to the value that was provided on create.
-func (u *UserPositionUpsertOne) UpdatePositionID() *UserPositionUpsertOne {
+// ClearAssignedBy clears the value of the "assigned_by" field.
+func (u *UserPositionUpsertOne) ClearAssignedBy() *UserPositionUpsertOne {
 	return u.Update(func(s *UserPositionUpsert) {
-		s.UpdatePositionID()
+		s.ClearAssignedBy()
 	})
 }
 
-// ClearPositionID clears the value of the "position_id" field.
-func (u *UserPositionUpsertOne) ClearPositionID() *UserPositionUpsertOne {
+// SetStatus sets the "status" field.
+func (u *UserPositionUpsertOne) SetStatus(v userposition.Status) *UserPositionUpsertOne {
 	return u.Update(func(s *UserPositionUpsert) {
-		s.ClearPositionID()
+		s.SetStatus(v)
+	})
+}
+
+// UpdateStatus sets the "status" field to the value that was provided on create.
+func (u *UserPositionUpsertOne) UpdateStatus() *UserPositionUpsertOne {
+	return u.Update(func(s *UserPositionUpsert) {
+		s.UpdateStatus()
 	})
 }
 
@@ -1305,24 +1443,66 @@ func (u *UserPositionUpsertBulk) ClearDeletedBy() *UserPositionUpsertBulk {
 	})
 }
 
-// SetStatus sets the "status" field.
-func (u *UserPositionUpsertBulk) SetStatus(v userposition.Status) *UserPositionUpsertBulk {
+// SetRemark sets the "remark" field.
+func (u *UserPositionUpsertBulk) SetRemark(v string) *UserPositionUpsertBulk {
 	return u.Update(func(s *UserPositionUpsert) {
-		s.SetStatus(v)
+		s.SetRemark(v)
 	})
 }
 
-// UpdateStatus sets the "status" field to the value that was provided on create.
-func (u *UserPositionUpsertBulk) UpdateStatus() *UserPositionUpsertBulk {
+// UpdateRemark sets the "remark" field to the value that was provided on create.
+func (u *UserPositionUpsertBulk) UpdateRemark() *UserPositionUpsertBulk {
 	return u.Update(func(s *UserPositionUpsert) {
-		s.UpdateStatus()
+		s.UpdateRemark()
 	})
 }
 
-// ClearStatus clears the value of the "status" field.
-func (u *UserPositionUpsertBulk) ClearStatus() *UserPositionUpsertBulk {
+// ClearRemark clears the value of the "remark" field.
+func (u *UserPositionUpsertBulk) ClearRemark() *UserPositionUpsertBulk {
 	return u.Update(func(s *UserPositionUpsert) {
-		s.ClearStatus()
+		s.ClearRemark()
+	})
+}
+
+// SetUserID sets the "user_id" field.
+func (u *UserPositionUpsertBulk) SetUserID(v uint32) *UserPositionUpsertBulk {
+	return u.Update(func(s *UserPositionUpsert) {
+		s.SetUserID(v)
+	})
+}
+
+// AddUserID adds v to the "user_id" field.
+func (u *UserPositionUpsertBulk) AddUserID(v uint32) *UserPositionUpsertBulk {
+	return u.Update(func(s *UserPositionUpsert) {
+		s.AddUserID(v)
+	})
+}
+
+// UpdateUserID sets the "user_id" field to the value that was provided on create.
+func (u *UserPositionUpsertBulk) UpdateUserID() *UserPositionUpsertBulk {
+	return u.Update(func(s *UserPositionUpsert) {
+		s.UpdateUserID()
+	})
+}
+
+// SetPositionID sets the "position_id" field.
+func (u *UserPositionUpsertBulk) SetPositionID(v uint32) *UserPositionUpsertBulk {
+	return u.Update(func(s *UserPositionUpsert) {
+		s.SetPositionID(v)
+	})
+}
+
+// AddPositionID adds v to the "position_id" field.
+func (u *UserPositionUpsertBulk) AddPositionID(v uint32) *UserPositionUpsertBulk {
+	return u.Update(func(s *UserPositionUpsert) {
+		s.AddPositionID(v)
+	})
+}
+
+// UpdatePositionID sets the "position_id" field to the value that was provided on create.
+func (u *UserPositionUpsertBulk) UpdatePositionID() *UserPositionUpsertBulk {
+	return u.Update(func(s *UserPositionUpsert) {
+		s.UpdatePositionID()
 	})
 }
 
@@ -1389,59 +1569,66 @@ func (u *UserPositionUpsertBulk) ClearEndAt() *UserPositionUpsertBulk {
 	})
 }
 
-// SetUserID sets the "user_id" field.
-func (u *UserPositionUpsertBulk) SetUserID(v uint32) *UserPositionUpsertBulk {
+// SetAssignedAt sets the "assigned_at" field.
+func (u *UserPositionUpsertBulk) SetAssignedAt(v time.Time) *UserPositionUpsertBulk {
 	return u.Update(func(s *UserPositionUpsert) {
-		s.SetUserID(v)
+		s.SetAssignedAt(v)
 	})
 }
 
-// AddUserID adds v to the "user_id" field.
-func (u *UserPositionUpsertBulk) AddUserID(v uint32) *UserPositionUpsertBulk {
+// UpdateAssignedAt sets the "assigned_at" field to the value that was provided on create.
+func (u *UserPositionUpsertBulk) UpdateAssignedAt() *UserPositionUpsertBulk {
 	return u.Update(func(s *UserPositionUpsert) {
-		s.AddUserID(v)
+		s.UpdateAssignedAt()
 	})
 }
 
-// UpdateUserID sets the "user_id" field to the value that was provided on create.
-func (u *UserPositionUpsertBulk) UpdateUserID() *UserPositionUpsertBulk {
+// ClearAssignedAt clears the value of the "assigned_at" field.
+func (u *UserPositionUpsertBulk) ClearAssignedAt() *UserPositionUpsertBulk {
 	return u.Update(func(s *UserPositionUpsert) {
-		s.UpdateUserID()
+		s.ClearAssignedAt()
 	})
 }
 
-// ClearUserID clears the value of the "user_id" field.
-func (u *UserPositionUpsertBulk) ClearUserID() *UserPositionUpsertBulk {
+// SetAssignedBy sets the "assigned_by" field.
+func (u *UserPositionUpsertBulk) SetAssignedBy(v uint32) *UserPositionUpsertBulk {
 	return u.Update(func(s *UserPositionUpsert) {
-		s.ClearUserID()
+		s.SetAssignedBy(v)
 	})
 }
 
-// SetPositionID sets the "position_id" field.
-func (u *UserPositionUpsertBulk) SetPositionID(v uint32) *UserPositionUpsertBulk {
+// AddAssignedBy adds v to the "assigned_by" field.
+func (u *UserPositionUpsertBulk) AddAssignedBy(v uint32) *UserPositionUpsertBulk {
 	return u.Update(func(s *UserPositionUpsert) {
-		s.SetPositionID(v)
+		s.AddAssignedBy(v)
 	})
 }
 
-// AddPositionID adds v to the "position_id" field.
-func (u *UserPositionUpsertBulk) AddPositionID(v uint32) *UserPositionUpsertBulk {
+// UpdateAssignedBy sets the "assigned_by" field to the value that was provided on create.
+func (u *UserPositionUpsertBulk) UpdateAssignedBy() *UserPositionUpsertBulk {
 	return u.Update(func(s *UserPositionUpsert) {
-		s.AddPositionID(v)
+		s.UpdateAssignedBy()
 	})
 }
 
-// UpdatePositionID sets the "position_id" field to the value that was provided on create.
-func (u *UserPositionUpsertBulk) UpdatePositionID() *UserPositionUpsertBulk {
+// ClearAssignedBy clears the value of the "assigned_by" field.
+func (u *UserPositionUpsertBulk) ClearAssignedBy() *UserPositionUpsertBulk {
 	return u.Update(func(s *UserPositionUpsert) {
-		s.UpdatePositionID()
+		s.ClearAssignedBy()
 	})
 }
 
-// ClearPositionID clears the value of the "position_id" field.
-func (u *UserPositionUpsertBulk) ClearPositionID() *UserPositionUpsertBulk {
+// SetStatus sets the "status" field.
+func (u *UserPositionUpsertBulk) SetStatus(v userposition.Status) *UserPositionUpsertBulk {
 	return u.Update(func(s *UserPositionUpsert) {
-		s.ClearPositionID()
+		s.SetStatus(v)
+	})
+}
+
+// UpdateStatus sets the "status" field to the value that was provided on create.
+func (u *UserPositionUpsertBulk) UpdateStatus() *UserPositionUpsertBulk {
+	return u.Update(func(s *UserPositionUpsert) {
+		s.UpdateStatus()
 	})
 }
 

@@ -26,24 +26,32 @@ const (
 	FieldUpdatedBy = "updated_by"
 	// FieldDeletedBy holds the string denoting the deleted_by field in the database.
 	FieldDeletedBy = "deleted_by"
+	// FieldRemark holds the string denoting the remark field in the database.
+	FieldRemark = "remark"
 	// FieldTenantID holds the string denoting the tenant_id field in the database.
 	FieldTenantID = "tenant_id"
-	// FieldName holds the string denoting the name field in the database.
-	FieldName = "name"
-	// FieldOriginalName holds the string denoting the original_name field in the database.
-	FieldOriginalName = "original_name"
-	// FieldContentType holds the string denoting the content_type field in the database.
-	FieldContentType = "content_type"
-	// FieldSize holds the string denoting the size field in the database.
-	FieldSize = "size"
-	// FieldPath holds the string denoting the path field in the database.
-	FieldPath = "path"
-	// FieldURL holds the string denoting the url field in the database.
-	FieldURL = "url"
 	// FieldProvider holds the string denoting the provider field in the database.
 	FieldProvider = "provider"
-	// FieldObjectKey holds the string denoting the object_key field in the database.
-	FieldObjectKey = "object_key"
+	// FieldBucketName holds the string denoting the bucket_name field in the database.
+	FieldBucketName = "bucket_name"
+	// FieldFileDirectory holds the string denoting the file_directory field in the database.
+	FieldFileDirectory = "file_directory"
+	// FieldFileGUID holds the string denoting the file_guid field in the database.
+	FieldFileGUID = "file_guid"
+	// FieldSaveFileName holds the string denoting the save_file_name field in the database.
+	FieldSaveFileName = "save_file_name"
+	// FieldFileName holds the string denoting the file_name field in the database.
+	FieldFileName = "file_name"
+	// FieldExtension holds the string denoting the extension field in the database.
+	FieldExtension = "extension"
+	// FieldSize holds the string denoting the size field in the database.
+	FieldSize = "size"
+	// FieldSizeFormat holds the string denoting the size_format field in the database.
+	FieldSizeFormat = "size_format"
+	// FieldLinkURL holds the string denoting the link_url field in the database.
+	FieldLinkURL = "link_url"
+	// FieldContentHash holds the string denoting the content_hash field in the database.
+	FieldContentHash = "content_hash"
 	// Table holds the table name of the file in the database.
 	Table = "files"
 )
@@ -57,15 +65,19 @@ var Columns = []string{
 	FieldCreatedBy,
 	FieldUpdatedBy,
 	FieldDeletedBy,
+	FieldRemark,
 	FieldTenantID,
-	FieldName,
-	FieldOriginalName,
-	FieldContentType,
-	FieldSize,
-	FieldPath,
-	FieldURL,
 	FieldProvider,
-	FieldObjectKey,
+	FieldBucketName,
+	FieldFileDirectory,
+	FieldFileGUID,
+	FieldSaveFileName,
+	FieldFileName,
+	FieldExtension,
+	FieldSize,
+	FieldSizeFormat,
+	FieldLinkURL,
+	FieldContentHash,
 }
 
 // ValidColumn reports if the column name is valid (part of the table columns).
@@ -88,18 +100,6 @@ var (
 	Policy ent.Policy
 	// DefaultTenantID holds the default value on creation for the "tenant_id" field.
 	DefaultTenantID uint32
-	// NameValidator is a validator for the "name" field. It is called by the builders before save.
-	NameValidator func(string) error
-	// OriginalNameValidator is a validator for the "original_name" field. It is called by the builders before save.
-	OriginalNameValidator func(string) error
-	// ContentTypeValidator is a validator for the "content_type" field. It is called by the builders before save.
-	ContentTypeValidator func(string) error
-	// PathValidator is a validator for the "path" field. It is called by the builders before save.
-	PathValidator func(string) error
-	// URLValidator is a validator for the "url" field. It is called by the builders before save.
-	URLValidator func(string) error
-	// ObjectKeyValidator is a validator for the "object_key" field. It is called by the builders before save.
-	ObjectKeyValidator func(string) error
 	// IDValidator is a validator for the "id" field. It is called by the builders before save.
 	IDValidator func(uint32) error
 )
@@ -107,14 +107,22 @@ var (
 // Provider defines the type for the "provider" enum field.
 type Provider string
 
-// ProviderProviderLocal is the default value of the Provider enum.
-const DefaultProvider = ProviderProviderLocal
+// ProviderMinIO is the default value of the Provider enum.
+const DefaultProvider = ProviderMinIO
 
 // Provider values.
 const (
-	ProviderProviderLocal Provider = "PROVIDER_LOCAL"
-	ProviderProviderMinio Provider = "PROVIDER_MINIO"
-	ProviderProviderOss   Provider = "PROVIDER_OSS"
+	ProviderUnknown Provider = "UNKNOWN"
+	ProviderMinIO   Provider = "MINIO"
+	ProviderAliyun  Provider = "ALIYUN"
+	ProviderQiniu   Provider = "QINIU"
+	ProviderTencent Provider = "TENCENT"
+	ProviderAWS     Provider = "AWS"
+	ProviderGoogle  Provider = "GOOGLE"
+	ProviderAzure   Provider = "AZURE"
+	ProviderBaidu   Provider = "BAIDU"
+	ProviderHuawei  Provider = "HUAWEI"
+	ProviderLocal   Provider = "LOCAL"
 )
 
 func (pr Provider) String() string {
@@ -124,7 +132,7 @@ func (pr Provider) String() string {
 // ProviderValidator is a validator for the "provider" field enum values. It is called by the builders before save.
 func ProviderValidator(pr Provider) error {
 	switch pr {
-	case ProviderProviderLocal, ProviderProviderMinio, ProviderProviderOss:
+	case ProviderUnknown, ProviderMinIO, ProviderAliyun, ProviderQiniu, ProviderTencent, ProviderAWS, ProviderGoogle, ProviderAzure, ProviderBaidu, ProviderHuawei, ProviderLocal:
 		return nil
 	default:
 		return fmt.Errorf("file: invalid enum value for provider field: %q", pr)
@@ -169,39 +177,14 @@ func ByDeletedBy(opts ...sql.OrderTermOption) OrderOption {
 	return sql.OrderByField(FieldDeletedBy, opts...).ToFunc()
 }
 
+// ByRemark orders the results by the remark field.
+func ByRemark(opts ...sql.OrderTermOption) OrderOption {
+	return sql.OrderByField(FieldRemark, opts...).ToFunc()
+}
+
 // ByTenantID orders the results by the tenant_id field.
 func ByTenantID(opts ...sql.OrderTermOption) OrderOption {
 	return sql.OrderByField(FieldTenantID, opts...).ToFunc()
-}
-
-// ByName orders the results by the name field.
-func ByName(opts ...sql.OrderTermOption) OrderOption {
-	return sql.OrderByField(FieldName, opts...).ToFunc()
-}
-
-// ByOriginalName orders the results by the original_name field.
-func ByOriginalName(opts ...sql.OrderTermOption) OrderOption {
-	return sql.OrderByField(FieldOriginalName, opts...).ToFunc()
-}
-
-// ByContentType orders the results by the content_type field.
-func ByContentType(opts ...sql.OrderTermOption) OrderOption {
-	return sql.OrderByField(FieldContentType, opts...).ToFunc()
-}
-
-// BySize orders the results by the size field.
-func BySize(opts ...sql.OrderTermOption) OrderOption {
-	return sql.OrderByField(FieldSize, opts...).ToFunc()
-}
-
-// ByPath orders the results by the path field.
-func ByPath(opts ...sql.OrderTermOption) OrderOption {
-	return sql.OrderByField(FieldPath, opts...).ToFunc()
-}
-
-// ByURL orders the results by the url field.
-func ByURL(opts ...sql.OrderTermOption) OrderOption {
-	return sql.OrderByField(FieldURL, opts...).ToFunc()
 }
 
 // ByProvider orders the results by the provider field.
@@ -209,7 +192,52 @@ func ByProvider(opts ...sql.OrderTermOption) OrderOption {
 	return sql.OrderByField(FieldProvider, opts...).ToFunc()
 }
 
-// ByObjectKey orders the results by the object_key field.
-func ByObjectKey(opts ...sql.OrderTermOption) OrderOption {
-	return sql.OrderByField(FieldObjectKey, opts...).ToFunc()
+// ByBucketName orders the results by the bucket_name field.
+func ByBucketName(opts ...sql.OrderTermOption) OrderOption {
+	return sql.OrderByField(FieldBucketName, opts...).ToFunc()
+}
+
+// ByFileDirectory orders the results by the file_directory field.
+func ByFileDirectory(opts ...sql.OrderTermOption) OrderOption {
+	return sql.OrderByField(FieldFileDirectory, opts...).ToFunc()
+}
+
+// ByFileGUID orders the results by the file_guid field.
+func ByFileGUID(opts ...sql.OrderTermOption) OrderOption {
+	return sql.OrderByField(FieldFileGUID, opts...).ToFunc()
+}
+
+// BySaveFileName orders the results by the save_file_name field.
+func BySaveFileName(opts ...sql.OrderTermOption) OrderOption {
+	return sql.OrderByField(FieldSaveFileName, opts...).ToFunc()
+}
+
+// ByFileName orders the results by the file_name field.
+func ByFileName(opts ...sql.OrderTermOption) OrderOption {
+	return sql.OrderByField(FieldFileName, opts...).ToFunc()
+}
+
+// ByExtension orders the results by the extension field.
+func ByExtension(opts ...sql.OrderTermOption) OrderOption {
+	return sql.OrderByField(FieldExtension, opts...).ToFunc()
+}
+
+// BySize orders the results by the size field.
+func BySize(opts ...sql.OrderTermOption) OrderOption {
+	return sql.OrderByField(FieldSize, opts...).ToFunc()
+}
+
+// BySizeFormat orders the results by the size_format field.
+func BySizeFormat(opts ...sql.OrderTermOption) OrderOption {
+	return sql.OrderByField(FieldSizeFormat, opts...).ToFunc()
+}
+
+// ByLinkURL orders the results by the link_url field.
+func ByLinkURL(opts ...sql.OrderTermOption) OrderOption {
+	return sql.OrderByField(FieldLinkURL, opts...).ToFunc()
+}
+
+// ByContentHash orders the results by the content_hash field.
+func ByContentHash(opts ...sql.OrderTermOption) OrderOption {
+	return sql.OrderByField(FieldContentHash, opts...).ToFunc()
 }

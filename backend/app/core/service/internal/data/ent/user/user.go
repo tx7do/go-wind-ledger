@@ -36,46 +36,34 @@ const (
 	FieldNickname = "nickname"
 	// FieldRealname holds the string denoting the realname field in the database.
 	FieldRealname = "realname"
-	// FieldPassword holds the string denoting the password field in the database.
-	FieldPassword = "password"
-	// FieldAvatar holds the string denoting the avatar field in the database.
-	FieldAvatar = "avatar"
 	// FieldEmail holds the string denoting the email field in the database.
 	FieldEmail = "email"
 	// FieldMobile holds the string denoting the mobile field in the database.
 	FieldMobile = "mobile"
 	// FieldTelephone holds the string denoting the telephone field in the database.
 	FieldTelephone = "telephone"
-	// FieldGender holds the string denoting the gender field in the database.
-	FieldGender = "gender"
+	// FieldAvatar holds the string denoting the avatar field in the database.
+	FieldAvatar = "avatar"
 	// FieldAddress holds the string denoting the address field in the database.
 	FieldAddress = "address"
 	// FieldRegion holds the string denoting the region field in the database.
 	FieldRegion = "region"
 	// FieldDescription holds the string denoting the description field in the database.
 	FieldDescription = "description"
-	// FieldStatus holds the string denoting the status field in the database.
-	FieldStatus = "status"
+	// FieldGender holds the string denoting the gender field in the database.
+	FieldGender = "gender"
 	// FieldLastLoginAt holds the string denoting the last_login_at field in the database.
 	FieldLastLoginAt = "last_login_at"
 	// FieldLastLoginIP holds the string denoting the last_login_ip field in the database.
 	FieldLastLoginIP = "last_login_ip"
 	// FieldLockedUntil holds the string denoting the locked_until field in the database.
 	FieldLockedUntil = "locked_until"
-	// FieldFollowers holds the string denoting the followers field in the database.
-	FieldFollowers = "followers"
-	// FieldFollowing holds the string denoting the following field in the database.
-	FieldFollowing = "following"
-	// FieldPostCount holds the string denoting the post_count field in the database.
-	FieldPostCount = "post_count"
-	// FieldCommentCount holds the string denoting the comment_count field in the database.
-	FieldCommentCount = "comment_count"
-	// FieldLikeCount holds the string denoting the like_count field in the database.
-	FieldLikeCount = "like_count"
 	// FieldDefaultGroupID holds the string denoting the default_group_id field in the database.
 	FieldDefaultGroupID = "default_group_id"
 	// FieldDefaultBookID holds the string denoting the default_book_id field in the database.
 	FieldDefaultBookID = "default_book_id"
+	// FieldStatus holds the string denoting the status field in the database.
+	FieldStatus = "status"
 	// Table holds the table name of the user in the database.
 	Table = "sys_users"
 )
@@ -94,26 +82,20 @@ var Columns = []string{
 	FieldUsername,
 	FieldNickname,
 	FieldRealname,
-	FieldPassword,
-	FieldAvatar,
 	FieldEmail,
 	FieldMobile,
 	FieldTelephone,
-	FieldGender,
+	FieldAvatar,
 	FieldAddress,
 	FieldRegion,
 	FieldDescription,
-	FieldStatus,
+	FieldGender,
 	FieldLastLoginAt,
 	FieldLastLoginIP,
 	FieldLockedUntil,
-	FieldFollowers,
-	FieldFollowing,
-	FieldPostCount,
-	FieldCommentCount,
-	FieldLikeCount,
 	FieldDefaultGroupID,
 	FieldDefaultBookID,
+	FieldStatus,
 }
 
 // ValidColumn reports if the column name is valid (part of the table columns).
@@ -138,44 +120,31 @@ var (
 	DefaultTenantID uint32
 	// UsernameValidator is a validator for the "username" field. It is called by the builders before save.
 	UsernameValidator func(string) error
-	// NicknameValidator is a validator for the "nickname" field. It is called by the builders before save.
-	NicknameValidator func(string) error
-	// RealnameValidator is a validator for the "realname" field. It is called by the builders before save.
-	RealnameValidator func(string) error
-	// PasswordValidator is a validator for the "password" field. It is called by the builders before save.
-	PasswordValidator func(string) error
-	// AvatarValidator is a validator for the "avatar" field. It is called by the builders before save.
-	AvatarValidator func(string) error
 	// EmailValidator is a validator for the "email" field. It is called by the builders before save.
 	EmailValidator func(string) error
+	// DefaultMobile holds the default value on creation for the "mobile" field.
+	DefaultMobile string
 	// MobileValidator is a validator for the "mobile" field. It is called by the builders before save.
 	MobileValidator func(string) error
+	// DefaultTelephone holds the default value on creation for the "telephone" field.
+	DefaultTelephone string
 	// TelephoneValidator is a validator for the "telephone" field. It is called by the builders before save.
 	TelephoneValidator func(string) error
-	// AddressValidator is a validator for the "address" field. It is called by the builders before save.
-	AddressValidator func(string) error
-	// RegionValidator is a validator for the "region" field. It is called by the builders before save.
-	RegionValidator func(string) error
+	// DefaultAddress holds the default value on creation for the "address" field.
+	DefaultAddress string
+	// DefaultRegion holds the default value on creation for the "region" field.
+	DefaultRegion string
 	// DescriptionValidator is a validator for the "description" field. It is called by the builders before save.
 	DescriptionValidator func(string) error
-	// LastLoginIPValidator is a validator for the "last_login_ip" field. It is called by the builders before save.
-	LastLoginIPValidator func(string) error
-	// DefaultFollowers holds the default value on creation for the "followers" field.
-	DefaultFollowers uint64
-	// DefaultFollowing holds the default value on creation for the "following" field.
-	DefaultFollowing uint64
-	// DefaultPostCount holds the default value on creation for the "post_count" field.
-	DefaultPostCount uint64
-	// DefaultCommentCount holds the default value on creation for the "comment_count" field.
-	DefaultCommentCount uint64
-	// DefaultLikeCount holds the default value on creation for the "like_count" field.
-	DefaultLikeCount uint64
 	// IDValidator is a validator for the "id" field. It is called by the builders before save.
 	IDValidator func(uint32) error
 )
 
 // Gender defines the type for the "gender" enum field.
 type Gender string
+
+// GenderSecret is the default value of the Gender enum.
+const DefaultGender = GenderSecret
 
 // Gender values.
 const (
@@ -201,17 +170,17 @@ func GenderValidator(ge Gender) error {
 // Status defines the type for the "status" enum field.
 type Status string
 
-// StatusUserStatusNormal is the default value of the Status enum.
-const DefaultStatus = StatusUserStatusNormal
+// StatusNormal is the default value of the Status enum.
+const DefaultStatus = StatusNormal
 
 // Status values.
 const (
-	StatusUserStatusNormal   Status = "NORMAL"
-	StatusUserStatusDisabled Status = "DISABLED"
-	StatusUserStatusPending  Status = "PENDING"
-	StatusUserStatusLocked   Status = "LOCKED"
-	StatusUserStatusExpired  Status = "EXPIRED"
-	StatusUserStatusClosed   Status = "CLOSED"
+	StatusNormal   Status = "NORMAL"
+	StatusDisabled Status = "DISABLED"
+	StatusPending  Status = "PENDING"
+	StatusLocked   Status = "LOCKED"
+	StatusExpired  Status = "EXPIRED"
+	StatusClosed   Status = "CLOSED"
 )
 
 func (s Status) String() string {
@@ -221,7 +190,7 @@ func (s Status) String() string {
 // StatusValidator is a validator for the "status" field enum values. It is called by the builders before save.
 func StatusValidator(s Status) error {
 	switch s {
-	case StatusUserStatusNormal, StatusUserStatusDisabled, StatusUserStatusPending, StatusUserStatusLocked, StatusUserStatusExpired, StatusUserStatusClosed:
+	case StatusNormal, StatusDisabled, StatusPending, StatusLocked, StatusExpired, StatusClosed:
 		return nil
 	default:
 		return fmt.Errorf("user: invalid enum value for status field: %q", s)
@@ -291,16 +260,6 @@ func ByRealname(opts ...sql.OrderTermOption) OrderOption {
 	return sql.OrderByField(FieldRealname, opts...).ToFunc()
 }
 
-// ByPassword orders the results by the password field.
-func ByPassword(opts ...sql.OrderTermOption) OrderOption {
-	return sql.OrderByField(FieldPassword, opts...).ToFunc()
-}
-
-// ByAvatar orders the results by the avatar field.
-func ByAvatar(opts ...sql.OrderTermOption) OrderOption {
-	return sql.OrderByField(FieldAvatar, opts...).ToFunc()
-}
-
 // ByEmail orders the results by the email field.
 func ByEmail(opts ...sql.OrderTermOption) OrderOption {
 	return sql.OrderByField(FieldEmail, opts...).ToFunc()
@@ -316,9 +275,9 @@ func ByTelephone(opts ...sql.OrderTermOption) OrderOption {
 	return sql.OrderByField(FieldTelephone, opts...).ToFunc()
 }
 
-// ByGender orders the results by the gender field.
-func ByGender(opts ...sql.OrderTermOption) OrderOption {
-	return sql.OrderByField(FieldGender, opts...).ToFunc()
+// ByAvatar orders the results by the avatar field.
+func ByAvatar(opts ...sql.OrderTermOption) OrderOption {
+	return sql.OrderByField(FieldAvatar, opts...).ToFunc()
 }
 
 // ByAddress orders the results by the address field.
@@ -336,9 +295,9 @@ func ByDescription(opts ...sql.OrderTermOption) OrderOption {
 	return sql.OrderByField(FieldDescription, opts...).ToFunc()
 }
 
-// ByStatus orders the results by the status field.
-func ByStatus(opts ...sql.OrderTermOption) OrderOption {
-	return sql.OrderByField(FieldStatus, opts...).ToFunc()
+// ByGender orders the results by the gender field.
+func ByGender(opts ...sql.OrderTermOption) OrderOption {
+	return sql.OrderByField(FieldGender, opts...).ToFunc()
 }
 
 // ByLastLoginAt orders the results by the last_login_at field.
@@ -356,31 +315,6 @@ func ByLockedUntil(opts ...sql.OrderTermOption) OrderOption {
 	return sql.OrderByField(FieldLockedUntil, opts...).ToFunc()
 }
 
-// ByFollowers orders the results by the followers field.
-func ByFollowers(opts ...sql.OrderTermOption) OrderOption {
-	return sql.OrderByField(FieldFollowers, opts...).ToFunc()
-}
-
-// ByFollowing orders the results by the following field.
-func ByFollowing(opts ...sql.OrderTermOption) OrderOption {
-	return sql.OrderByField(FieldFollowing, opts...).ToFunc()
-}
-
-// ByPostCount orders the results by the post_count field.
-func ByPostCount(opts ...sql.OrderTermOption) OrderOption {
-	return sql.OrderByField(FieldPostCount, opts...).ToFunc()
-}
-
-// ByCommentCount orders the results by the comment_count field.
-func ByCommentCount(opts ...sql.OrderTermOption) OrderOption {
-	return sql.OrderByField(FieldCommentCount, opts...).ToFunc()
-}
-
-// ByLikeCount orders the results by the like_count field.
-func ByLikeCount(opts ...sql.OrderTermOption) OrderOption {
-	return sql.OrderByField(FieldLikeCount, opts...).ToFunc()
-}
-
 // ByDefaultGroupID orders the results by the default_group_id field.
 func ByDefaultGroupID(opts ...sql.OrderTermOption) OrderOption {
 	return sql.OrderByField(FieldDefaultGroupID, opts...).ToFunc()
@@ -389,4 +323,9 @@ func ByDefaultGroupID(opts ...sql.OrderTermOption) OrderOption {
 // ByDefaultBookID orders the results by the default_book_id field.
 func ByDefaultBookID(opts ...sql.OrderTermOption) OrderOption {
 	return sql.OrderByField(FieldDefaultBookID, opts...).ToFunc()
+}
+
+// ByStatus orders the results by the status field.
+func ByStatus(opts ...sql.OrderTermOption) OrderOption {
+	return sql.OrderByField(FieldStatus, opts...).ToFunc()
 }

@@ -161,7 +161,7 @@ func (s *LedgerAuthService) Register(ctx context.Context, req *appV1.LedgerRegis
 		SetTenantID(tenantEntity.ID).
 		SetNillableUsername(trans.Ptr(username)).
 		SetNillableNickname(trans.Ptr(nickName)).
-		SetStatus(user.StatusUserStatusNormal).
+		SetStatus(user.StatusNormal).
 		SetCreatedAt(time.Now()).
 		Save(privacyCtx)
 	if err != nil {
@@ -183,7 +183,7 @@ func (s *LedgerAuthService) Register(ctx context.Context, req *appV1.LedgerRegis
 		SetIdentityType(userCredentialIdentityType).
 		SetCredentialType(userCredentialCredentialType).
 		SetCredential(req.GetPassword()).
-		SetStatus(usercredential.StatusStatusActive).
+		SetStatus(usercredential.StatusEnabled).
 		SetIsPrimary(true).
 		SetCreatedAt(time.Now()).
 		Exec(privacyCtx); err != nil {

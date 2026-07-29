@@ -150,23 +150,65 @@ func (_u *UserPositionUpdate) ClearDeletedBy() *UserPositionUpdate {
 	return _u
 }
 
-// SetStatus sets the "status" field.
-func (_u *UserPositionUpdate) SetStatus(v userposition.Status) *UserPositionUpdate {
-	_u.mutation.SetStatus(v)
+// SetRemark sets the "remark" field.
+func (_u *UserPositionUpdate) SetRemark(v string) *UserPositionUpdate {
+	_u.mutation.SetRemark(v)
 	return _u
 }
 
-// SetNillableStatus sets the "status" field if the given value is not nil.
-func (_u *UserPositionUpdate) SetNillableStatus(v *userposition.Status) *UserPositionUpdate {
+// SetNillableRemark sets the "remark" field if the given value is not nil.
+func (_u *UserPositionUpdate) SetNillableRemark(v *string) *UserPositionUpdate {
 	if v != nil {
-		_u.SetStatus(*v)
+		_u.SetRemark(*v)
 	}
 	return _u
 }
 
-// ClearStatus clears the value of the "status" field.
-func (_u *UserPositionUpdate) ClearStatus() *UserPositionUpdate {
-	_u.mutation.ClearStatus()
+// ClearRemark clears the value of the "remark" field.
+func (_u *UserPositionUpdate) ClearRemark() *UserPositionUpdate {
+	_u.mutation.ClearRemark()
+	return _u
+}
+
+// SetUserID sets the "user_id" field.
+func (_u *UserPositionUpdate) SetUserID(v uint32) *UserPositionUpdate {
+	_u.mutation.ResetUserID()
+	_u.mutation.SetUserID(v)
+	return _u
+}
+
+// SetNillableUserID sets the "user_id" field if the given value is not nil.
+func (_u *UserPositionUpdate) SetNillableUserID(v *uint32) *UserPositionUpdate {
+	if v != nil {
+		_u.SetUserID(*v)
+	}
+	return _u
+}
+
+// AddUserID adds value to the "user_id" field.
+func (_u *UserPositionUpdate) AddUserID(v int32) *UserPositionUpdate {
+	_u.mutation.AddUserID(v)
+	return _u
+}
+
+// SetPositionID sets the "position_id" field.
+func (_u *UserPositionUpdate) SetPositionID(v uint32) *UserPositionUpdate {
+	_u.mutation.ResetPositionID()
+	_u.mutation.SetPositionID(v)
+	return _u
+}
+
+// SetNillablePositionID sets the "position_id" field if the given value is not nil.
+func (_u *UserPositionUpdate) SetNillablePositionID(v *uint32) *UserPositionUpdate {
+	if v != nil {
+		_u.SetPositionID(*v)
+	}
+	return _u
+}
+
+// AddPositionID adds value to the "position_id" field.
+func (_u *UserPositionUpdate) AddPositionID(v int32) *UserPositionUpdate {
+	_u.mutation.AddPositionID(v)
 	return _u
 }
 
@@ -230,57 +272,64 @@ func (_u *UserPositionUpdate) ClearEndAt() *UserPositionUpdate {
 	return _u
 }
 
-// SetUserID sets the "user_id" field.
-func (_u *UserPositionUpdate) SetUserID(v uint32) *UserPositionUpdate {
-	_u.mutation.ResetUserID()
-	_u.mutation.SetUserID(v)
+// SetAssignedAt sets the "assigned_at" field.
+func (_u *UserPositionUpdate) SetAssignedAt(v time.Time) *UserPositionUpdate {
+	_u.mutation.SetAssignedAt(v)
 	return _u
 }
 
-// SetNillableUserID sets the "user_id" field if the given value is not nil.
-func (_u *UserPositionUpdate) SetNillableUserID(v *uint32) *UserPositionUpdate {
+// SetNillableAssignedAt sets the "assigned_at" field if the given value is not nil.
+func (_u *UserPositionUpdate) SetNillableAssignedAt(v *time.Time) *UserPositionUpdate {
 	if v != nil {
-		_u.SetUserID(*v)
+		_u.SetAssignedAt(*v)
 	}
 	return _u
 }
 
-// AddUserID adds value to the "user_id" field.
-func (_u *UserPositionUpdate) AddUserID(v int32) *UserPositionUpdate {
-	_u.mutation.AddUserID(v)
+// ClearAssignedAt clears the value of the "assigned_at" field.
+func (_u *UserPositionUpdate) ClearAssignedAt() *UserPositionUpdate {
+	_u.mutation.ClearAssignedAt()
 	return _u
 }
 
-// ClearUserID clears the value of the "user_id" field.
-func (_u *UserPositionUpdate) ClearUserID() *UserPositionUpdate {
-	_u.mutation.ClearUserID()
+// SetAssignedBy sets the "assigned_by" field.
+func (_u *UserPositionUpdate) SetAssignedBy(v uint32) *UserPositionUpdate {
+	_u.mutation.ResetAssignedBy()
+	_u.mutation.SetAssignedBy(v)
 	return _u
 }
 
-// SetPositionID sets the "position_id" field.
-func (_u *UserPositionUpdate) SetPositionID(v uint32) *UserPositionUpdate {
-	_u.mutation.ResetPositionID()
-	_u.mutation.SetPositionID(v)
-	return _u
-}
-
-// SetNillablePositionID sets the "position_id" field if the given value is not nil.
-func (_u *UserPositionUpdate) SetNillablePositionID(v *uint32) *UserPositionUpdate {
+// SetNillableAssignedBy sets the "assigned_by" field if the given value is not nil.
+func (_u *UserPositionUpdate) SetNillableAssignedBy(v *uint32) *UserPositionUpdate {
 	if v != nil {
-		_u.SetPositionID(*v)
+		_u.SetAssignedBy(*v)
 	}
 	return _u
 }
 
-// AddPositionID adds value to the "position_id" field.
-func (_u *UserPositionUpdate) AddPositionID(v int32) *UserPositionUpdate {
-	_u.mutation.AddPositionID(v)
+// AddAssignedBy adds value to the "assigned_by" field.
+func (_u *UserPositionUpdate) AddAssignedBy(v int32) *UserPositionUpdate {
+	_u.mutation.AddAssignedBy(v)
 	return _u
 }
 
-// ClearPositionID clears the value of the "position_id" field.
-func (_u *UserPositionUpdate) ClearPositionID() *UserPositionUpdate {
-	_u.mutation.ClearPositionID()
+// ClearAssignedBy clears the value of the "assigned_by" field.
+func (_u *UserPositionUpdate) ClearAssignedBy() *UserPositionUpdate {
+	_u.mutation.ClearAssignedBy()
+	return _u
+}
+
+// SetStatus sets the "status" field.
+func (_u *UserPositionUpdate) SetStatus(v userposition.Status) *UserPositionUpdate {
+	_u.mutation.SetStatus(v)
+	return _u
+}
+
+// SetNillableStatus sets the "status" field if the given value is not nil.
+func (_u *UserPositionUpdate) SetNillableStatus(v *userposition.Status) *UserPositionUpdate {
+	if v != nil {
+		_u.SetStatus(*v)
+	}
 	return _u
 }
 
@@ -359,9 +408,6 @@ func (_u *UserPositionUpdate) sqlSave(ctx context.Context) (_node int, err error
 	if _u.mutation.DeletedAtCleared() {
 		_spec.ClearField(userposition.FieldDeletedAt, field.TypeTime)
 	}
-	if _u.mutation.TenantIDCleared() {
-		_spec.ClearField(userposition.FieldTenantID, field.TypeUint32)
-	}
 	if value, ok := _u.mutation.CreatedBy(); ok {
 		_spec.SetField(userposition.FieldCreatedBy, field.TypeUint32, value)
 	}
@@ -389,11 +435,26 @@ func (_u *UserPositionUpdate) sqlSave(ctx context.Context) (_node int, err error
 	if _u.mutation.DeletedByCleared() {
 		_spec.ClearField(userposition.FieldDeletedBy, field.TypeUint32)
 	}
-	if value, ok := _u.mutation.Status(); ok {
-		_spec.SetField(userposition.FieldStatus, field.TypeEnum, value)
+	if _u.mutation.TenantIDCleared() {
+		_spec.ClearField(userposition.FieldTenantID, field.TypeUint32)
 	}
-	if _u.mutation.StatusCleared() {
-		_spec.ClearField(userposition.FieldStatus, field.TypeEnum)
+	if value, ok := _u.mutation.Remark(); ok {
+		_spec.SetField(userposition.FieldRemark, field.TypeString, value)
+	}
+	if _u.mutation.RemarkCleared() {
+		_spec.ClearField(userposition.FieldRemark, field.TypeString)
+	}
+	if value, ok := _u.mutation.UserID(); ok {
+		_spec.SetField(userposition.FieldUserID, field.TypeUint32, value)
+	}
+	if value, ok := _u.mutation.AddedUserID(); ok {
+		_spec.AddField(userposition.FieldUserID, field.TypeUint32, value)
+	}
+	if value, ok := _u.mutation.PositionID(); ok {
+		_spec.SetField(userposition.FieldPositionID, field.TypeUint32, value)
+	}
+	if value, ok := _u.mutation.AddedPositionID(); ok {
+		_spec.AddField(userposition.FieldPositionID, field.TypeUint32, value)
 	}
 	if value, ok := _u.mutation.IsPrimary(); ok {
 		_spec.SetField(userposition.FieldIsPrimary, field.TypeBool, value)
@@ -413,23 +474,23 @@ func (_u *UserPositionUpdate) sqlSave(ctx context.Context) (_node int, err error
 	if _u.mutation.EndAtCleared() {
 		_spec.ClearField(userposition.FieldEndAt, field.TypeTime)
 	}
-	if value, ok := _u.mutation.UserID(); ok {
-		_spec.SetField(userposition.FieldUserID, field.TypeUint32, value)
+	if value, ok := _u.mutation.AssignedAt(); ok {
+		_spec.SetField(userposition.FieldAssignedAt, field.TypeTime, value)
 	}
-	if value, ok := _u.mutation.AddedUserID(); ok {
-		_spec.AddField(userposition.FieldUserID, field.TypeUint32, value)
+	if _u.mutation.AssignedAtCleared() {
+		_spec.ClearField(userposition.FieldAssignedAt, field.TypeTime)
 	}
-	if _u.mutation.UserIDCleared() {
-		_spec.ClearField(userposition.FieldUserID, field.TypeUint32)
+	if value, ok := _u.mutation.AssignedBy(); ok {
+		_spec.SetField(userposition.FieldAssignedBy, field.TypeUint32, value)
 	}
-	if value, ok := _u.mutation.PositionID(); ok {
-		_spec.SetField(userposition.FieldPositionID, field.TypeUint32, value)
+	if value, ok := _u.mutation.AddedAssignedBy(); ok {
+		_spec.AddField(userposition.FieldAssignedBy, field.TypeUint32, value)
 	}
-	if value, ok := _u.mutation.AddedPositionID(); ok {
-		_spec.AddField(userposition.FieldPositionID, field.TypeUint32, value)
+	if _u.mutation.AssignedByCleared() {
+		_spec.ClearField(userposition.FieldAssignedBy, field.TypeUint32)
 	}
-	if _u.mutation.PositionIDCleared() {
-		_spec.ClearField(userposition.FieldPositionID, field.TypeUint32)
+	if value, ok := _u.mutation.Status(); ok {
+		_spec.SetField(userposition.FieldStatus, field.TypeEnum, value)
 	}
 	_spec.AddModifiers(_u.modifiers...)
 	if _node, err = sqlgraph.UpdateNodes(ctx, _u.driver, _spec); err != nil {
@@ -574,23 +635,65 @@ func (_u *UserPositionUpdateOne) ClearDeletedBy() *UserPositionUpdateOne {
 	return _u
 }
 
-// SetStatus sets the "status" field.
-func (_u *UserPositionUpdateOne) SetStatus(v userposition.Status) *UserPositionUpdateOne {
-	_u.mutation.SetStatus(v)
+// SetRemark sets the "remark" field.
+func (_u *UserPositionUpdateOne) SetRemark(v string) *UserPositionUpdateOne {
+	_u.mutation.SetRemark(v)
 	return _u
 }
 
-// SetNillableStatus sets the "status" field if the given value is not nil.
-func (_u *UserPositionUpdateOne) SetNillableStatus(v *userposition.Status) *UserPositionUpdateOne {
+// SetNillableRemark sets the "remark" field if the given value is not nil.
+func (_u *UserPositionUpdateOne) SetNillableRemark(v *string) *UserPositionUpdateOne {
 	if v != nil {
-		_u.SetStatus(*v)
+		_u.SetRemark(*v)
 	}
 	return _u
 }
 
-// ClearStatus clears the value of the "status" field.
-func (_u *UserPositionUpdateOne) ClearStatus() *UserPositionUpdateOne {
-	_u.mutation.ClearStatus()
+// ClearRemark clears the value of the "remark" field.
+func (_u *UserPositionUpdateOne) ClearRemark() *UserPositionUpdateOne {
+	_u.mutation.ClearRemark()
+	return _u
+}
+
+// SetUserID sets the "user_id" field.
+func (_u *UserPositionUpdateOne) SetUserID(v uint32) *UserPositionUpdateOne {
+	_u.mutation.ResetUserID()
+	_u.mutation.SetUserID(v)
+	return _u
+}
+
+// SetNillableUserID sets the "user_id" field if the given value is not nil.
+func (_u *UserPositionUpdateOne) SetNillableUserID(v *uint32) *UserPositionUpdateOne {
+	if v != nil {
+		_u.SetUserID(*v)
+	}
+	return _u
+}
+
+// AddUserID adds value to the "user_id" field.
+func (_u *UserPositionUpdateOne) AddUserID(v int32) *UserPositionUpdateOne {
+	_u.mutation.AddUserID(v)
+	return _u
+}
+
+// SetPositionID sets the "position_id" field.
+func (_u *UserPositionUpdateOne) SetPositionID(v uint32) *UserPositionUpdateOne {
+	_u.mutation.ResetPositionID()
+	_u.mutation.SetPositionID(v)
+	return _u
+}
+
+// SetNillablePositionID sets the "position_id" field if the given value is not nil.
+func (_u *UserPositionUpdateOne) SetNillablePositionID(v *uint32) *UserPositionUpdateOne {
+	if v != nil {
+		_u.SetPositionID(*v)
+	}
+	return _u
+}
+
+// AddPositionID adds value to the "position_id" field.
+func (_u *UserPositionUpdateOne) AddPositionID(v int32) *UserPositionUpdateOne {
+	_u.mutation.AddPositionID(v)
 	return _u
 }
 
@@ -654,57 +757,64 @@ func (_u *UserPositionUpdateOne) ClearEndAt() *UserPositionUpdateOne {
 	return _u
 }
 
-// SetUserID sets the "user_id" field.
-func (_u *UserPositionUpdateOne) SetUserID(v uint32) *UserPositionUpdateOne {
-	_u.mutation.ResetUserID()
-	_u.mutation.SetUserID(v)
+// SetAssignedAt sets the "assigned_at" field.
+func (_u *UserPositionUpdateOne) SetAssignedAt(v time.Time) *UserPositionUpdateOne {
+	_u.mutation.SetAssignedAt(v)
 	return _u
 }
 
-// SetNillableUserID sets the "user_id" field if the given value is not nil.
-func (_u *UserPositionUpdateOne) SetNillableUserID(v *uint32) *UserPositionUpdateOne {
+// SetNillableAssignedAt sets the "assigned_at" field if the given value is not nil.
+func (_u *UserPositionUpdateOne) SetNillableAssignedAt(v *time.Time) *UserPositionUpdateOne {
 	if v != nil {
-		_u.SetUserID(*v)
+		_u.SetAssignedAt(*v)
 	}
 	return _u
 }
 
-// AddUserID adds value to the "user_id" field.
-func (_u *UserPositionUpdateOne) AddUserID(v int32) *UserPositionUpdateOne {
-	_u.mutation.AddUserID(v)
+// ClearAssignedAt clears the value of the "assigned_at" field.
+func (_u *UserPositionUpdateOne) ClearAssignedAt() *UserPositionUpdateOne {
+	_u.mutation.ClearAssignedAt()
 	return _u
 }
 
-// ClearUserID clears the value of the "user_id" field.
-func (_u *UserPositionUpdateOne) ClearUserID() *UserPositionUpdateOne {
-	_u.mutation.ClearUserID()
+// SetAssignedBy sets the "assigned_by" field.
+func (_u *UserPositionUpdateOne) SetAssignedBy(v uint32) *UserPositionUpdateOne {
+	_u.mutation.ResetAssignedBy()
+	_u.mutation.SetAssignedBy(v)
 	return _u
 }
 
-// SetPositionID sets the "position_id" field.
-func (_u *UserPositionUpdateOne) SetPositionID(v uint32) *UserPositionUpdateOne {
-	_u.mutation.ResetPositionID()
-	_u.mutation.SetPositionID(v)
-	return _u
-}
-
-// SetNillablePositionID sets the "position_id" field if the given value is not nil.
-func (_u *UserPositionUpdateOne) SetNillablePositionID(v *uint32) *UserPositionUpdateOne {
+// SetNillableAssignedBy sets the "assigned_by" field if the given value is not nil.
+func (_u *UserPositionUpdateOne) SetNillableAssignedBy(v *uint32) *UserPositionUpdateOne {
 	if v != nil {
-		_u.SetPositionID(*v)
+		_u.SetAssignedBy(*v)
 	}
 	return _u
 }
 
-// AddPositionID adds value to the "position_id" field.
-func (_u *UserPositionUpdateOne) AddPositionID(v int32) *UserPositionUpdateOne {
-	_u.mutation.AddPositionID(v)
+// AddAssignedBy adds value to the "assigned_by" field.
+func (_u *UserPositionUpdateOne) AddAssignedBy(v int32) *UserPositionUpdateOne {
+	_u.mutation.AddAssignedBy(v)
 	return _u
 }
 
-// ClearPositionID clears the value of the "position_id" field.
-func (_u *UserPositionUpdateOne) ClearPositionID() *UserPositionUpdateOne {
-	_u.mutation.ClearPositionID()
+// ClearAssignedBy clears the value of the "assigned_by" field.
+func (_u *UserPositionUpdateOne) ClearAssignedBy() *UserPositionUpdateOne {
+	_u.mutation.ClearAssignedBy()
+	return _u
+}
+
+// SetStatus sets the "status" field.
+func (_u *UserPositionUpdateOne) SetStatus(v userposition.Status) *UserPositionUpdateOne {
+	_u.mutation.SetStatus(v)
+	return _u
+}
+
+// SetNillableStatus sets the "status" field if the given value is not nil.
+func (_u *UserPositionUpdateOne) SetNillableStatus(v *userposition.Status) *UserPositionUpdateOne {
+	if v != nil {
+		_u.SetStatus(*v)
+	}
 	return _u
 }
 
@@ -813,9 +923,6 @@ func (_u *UserPositionUpdateOne) sqlSave(ctx context.Context) (_node *UserPositi
 	if _u.mutation.DeletedAtCleared() {
 		_spec.ClearField(userposition.FieldDeletedAt, field.TypeTime)
 	}
-	if _u.mutation.TenantIDCleared() {
-		_spec.ClearField(userposition.FieldTenantID, field.TypeUint32)
-	}
 	if value, ok := _u.mutation.CreatedBy(); ok {
 		_spec.SetField(userposition.FieldCreatedBy, field.TypeUint32, value)
 	}
@@ -843,11 +950,26 @@ func (_u *UserPositionUpdateOne) sqlSave(ctx context.Context) (_node *UserPositi
 	if _u.mutation.DeletedByCleared() {
 		_spec.ClearField(userposition.FieldDeletedBy, field.TypeUint32)
 	}
-	if value, ok := _u.mutation.Status(); ok {
-		_spec.SetField(userposition.FieldStatus, field.TypeEnum, value)
+	if _u.mutation.TenantIDCleared() {
+		_spec.ClearField(userposition.FieldTenantID, field.TypeUint32)
 	}
-	if _u.mutation.StatusCleared() {
-		_spec.ClearField(userposition.FieldStatus, field.TypeEnum)
+	if value, ok := _u.mutation.Remark(); ok {
+		_spec.SetField(userposition.FieldRemark, field.TypeString, value)
+	}
+	if _u.mutation.RemarkCleared() {
+		_spec.ClearField(userposition.FieldRemark, field.TypeString)
+	}
+	if value, ok := _u.mutation.UserID(); ok {
+		_spec.SetField(userposition.FieldUserID, field.TypeUint32, value)
+	}
+	if value, ok := _u.mutation.AddedUserID(); ok {
+		_spec.AddField(userposition.FieldUserID, field.TypeUint32, value)
+	}
+	if value, ok := _u.mutation.PositionID(); ok {
+		_spec.SetField(userposition.FieldPositionID, field.TypeUint32, value)
+	}
+	if value, ok := _u.mutation.AddedPositionID(); ok {
+		_spec.AddField(userposition.FieldPositionID, field.TypeUint32, value)
 	}
 	if value, ok := _u.mutation.IsPrimary(); ok {
 		_spec.SetField(userposition.FieldIsPrimary, field.TypeBool, value)
@@ -867,23 +989,23 @@ func (_u *UserPositionUpdateOne) sqlSave(ctx context.Context) (_node *UserPositi
 	if _u.mutation.EndAtCleared() {
 		_spec.ClearField(userposition.FieldEndAt, field.TypeTime)
 	}
-	if value, ok := _u.mutation.UserID(); ok {
-		_spec.SetField(userposition.FieldUserID, field.TypeUint32, value)
+	if value, ok := _u.mutation.AssignedAt(); ok {
+		_spec.SetField(userposition.FieldAssignedAt, field.TypeTime, value)
 	}
-	if value, ok := _u.mutation.AddedUserID(); ok {
-		_spec.AddField(userposition.FieldUserID, field.TypeUint32, value)
+	if _u.mutation.AssignedAtCleared() {
+		_spec.ClearField(userposition.FieldAssignedAt, field.TypeTime)
 	}
-	if _u.mutation.UserIDCleared() {
-		_spec.ClearField(userposition.FieldUserID, field.TypeUint32)
+	if value, ok := _u.mutation.AssignedBy(); ok {
+		_spec.SetField(userposition.FieldAssignedBy, field.TypeUint32, value)
 	}
-	if value, ok := _u.mutation.PositionID(); ok {
-		_spec.SetField(userposition.FieldPositionID, field.TypeUint32, value)
+	if value, ok := _u.mutation.AddedAssignedBy(); ok {
+		_spec.AddField(userposition.FieldAssignedBy, field.TypeUint32, value)
 	}
-	if value, ok := _u.mutation.AddedPositionID(); ok {
-		_spec.AddField(userposition.FieldPositionID, field.TypeUint32, value)
+	if _u.mutation.AssignedByCleared() {
+		_spec.ClearField(userposition.FieldAssignedBy, field.TypeUint32)
 	}
-	if _u.mutation.PositionIDCleared() {
-		_spec.ClearField(userposition.FieldPositionID, field.TypeUint32)
+	if value, ok := _u.mutation.Status(); ok {
+		_spec.SetField(userposition.FieldStatus, field.TypeEnum, value)
 	}
 	_spec.AddModifiers(_u.modifiers...)
 	_node = &UserPosition{config: _u.config}

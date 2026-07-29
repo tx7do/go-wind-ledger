@@ -17,10 +17,16 @@ const (
 	FieldUpdatedAt = "updated_at"
 	// FieldDeletedAt holds the string denoting the deleted_at field in the database.
 	FieldDeletedAt = "deleted_at"
+	// FieldCreatedBy holds the string denoting the created_by field in the database.
+	FieldCreatedBy = "created_by"
+	// FieldUpdatedBy holds the string denoting the updated_by field in the database.
+	FieldUpdatedBy = "updated_by"
+	// FieldDeletedBy holds the string denoting the deleted_by field in the database.
+	FieldDeletedBy = "deleted_by"
 	// FieldPermissionID holds the string denoting the permission_id field in the database.
 	FieldPermissionID = "permission_id"
-	// FieldTargetID holds the string denoting the target_id field in the database.
-	FieldTargetID = "target_id"
+	// FieldAPIID holds the string denoting the api_id field in the database.
+	FieldAPIID = "api_id"
 	// Table holds the table name of the permissionapi in the database.
 	Table = "sys_permission_apis"
 )
@@ -31,8 +37,11 @@ var Columns = []string{
 	FieldCreatedAt,
 	FieldUpdatedAt,
 	FieldDeletedAt,
+	FieldCreatedBy,
+	FieldUpdatedBy,
+	FieldDeletedBy,
 	FieldPermissionID,
-	FieldTargetID,
+	FieldAPIID,
 }
 
 // ValidColumn reports if the column name is valid (part of the table columns).
@@ -73,12 +82,27 @@ func ByDeletedAt(opts ...sql.OrderTermOption) OrderOption {
 	return sql.OrderByField(FieldDeletedAt, opts...).ToFunc()
 }
 
+// ByCreatedBy orders the results by the created_by field.
+func ByCreatedBy(opts ...sql.OrderTermOption) OrderOption {
+	return sql.OrderByField(FieldCreatedBy, opts...).ToFunc()
+}
+
+// ByUpdatedBy orders the results by the updated_by field.
+func ByUpdatedBy(opts ...sql.OrderTermOption) OrderOption {
+	return sql.OrderByField(FieldUpdatedBy, opts...).ToFunc()
+}
+
+// ByDeletedBy orders the results by the deleted_by field.
+func ByDeletedBy(opts ...sql.OrderTermOption) OrderOption {
+	return sql.OrderByField(FieldDeletedBy, opts...).ToFunc()
+}
+
 // ByPermissionID orders the results by the permission_id field.
 func ByPermissionID(opts ...sql.OrderTermOption) OrderOption {
 	return sql.OrderByField(FieldPermissionID, opts...).ToFunc()
 }
 
-// ByTargetID orders the results by the target_id field.
-func ByTargetID(opts ...sql.OrderTermOption) OrderOption {
-	return sql.OrderByField(FieldTargetID, opts...).ToFunc()
+// ByAPIID orders the results by the api_id field.
+func ByAPIID(opts ...sql.OrderTermOption) OrderOption {
+	return sql.OrderByField(FieldAPIID, opts...).ToFunc()
 }

@@ -16,53 +16,89 @@ const (
 	FieldID = "id"
 	// FieldCreatedAt holds the string denoting the created_at field in the database.
 	FieldCreatedAt = "created_at"
-	// FieldUpdatedAt holds the string denoting the updated_at field in the database.
-	FieldUpdatedAt = "updated_at"
-	// FieldDeletedAt holds the string denoting the deleted_at field in the database.
-	FieldDeletedAt = "deleted_at"
 	// FieldTenantID holds the string denoting the tenant_id field in the database.
 	FieldTenantID = "tenant_id"
-	// FieldOperatorID holds the string denoting the operator_id field in the database.
-	FieldOperatorID = "operator_id"
-	// FieldResource holds the string denoting the resource field in the database.
-	FieldResource = "resource"
-	// FieldAction holds the string denoting the action field in the database.
-	FieldAction = "action"
 	// FieldUserID holds the string denoting the user_id field in the database.
 	FieldUserID = "user_id"
 	// FieldUsername holds the string denoting the username field in the database.
 	FieldUsername = "username"
-	// FieldAccessType holds the string denoting the access_type field in the database.
-	FieldAccessType = "access_type"
-	// FieldSensitiveLevel holds the string denoting the sensitive_level field in the database.
-	FieldSensitiveLevel = "sensitive_level"
 	// FieldIPAddress holds the string denoting the ip_address field in the database.
 	FieldIPAddress = "ip_address"
+	// FieldGeoLocation holds the string denoting the geo_location field in the database.
+	FieldGeoLocation = "geo_location"
+	// FieldDeviceInfo holds the string denoting the device_info field in the database.
+	FieldDeviceInfo = "device_info"
+	// FieldRequestID holds the string denoting the request_id field in the database.
+	FieldRequestID = "request_id"
+	// FieldTraceID holds the string denoting the trace_id field in the database.
+	FieldTraceID = "trace_id"
 	// FieldDataSource holds the string denoting the data_source field in the database.
 	FieldDataSource = "data_source"
-	// FieldAccessedAt holds the string denoting the accessed_at field in the database.
-	FieldAccessedAt = "accessed_at"
+	// FieldTableName holds the string denoting the table_name field in the database.
+	FieldTableName = "table_name"
+	// FieldDataID holds the string denoting the data_id field in the database.
+	FieldDataID = "data_id"
+	// FieldAccessType holds the string denoting the access_type field in the database.
+	FieldAccessType = "access_type"
+	// FieldSQLDigest holds the string denoting the sql_digest field in the database.
+	FieldSQLDigest = "sql_digest"
+	// FieldSQLText holds the string denoting the sql_text field in the database.
+	FieldSQLText = "sql_text"
+	// FieldAffectedRows holds the string denoting the affected_rows field in the database.
+	FieldAffectedRows = "affected_rows"
+	// FieldLatencyMs holds the string denoting the latency_ms field in the database.
+	FieldLatencyMs = "latency_ms"
+	// FieldSuccess holds the string denoting the success field in the database.
+	FieldSuccess = "success"
+	// FieldSensitiveLevel holds the string denoting the sensitive_level field in the database.
+	FieldSensitiveLevel = "sensitive_level"
+	// FieldDataMasked holds the string denoting the data_masked field in the database.
+	FieldDataMasked = "data_masked"
+	// FieldMaskingRules holds the string denoting the masking_rules field in the database.
+	FieldMaskingRules = "masking_rules"
+	// FieldBusinessPurpose holds the string denoting the business_purpose field in the database.
+	FieldBusinessPurpose = "business_purpose"
+	// FieldDataCategory holds the string denoting the data_category field in the database.
+	FieldDataCategory = "data_category"
+	// FieldDbUser holds the string denoting the db_user field in the database.
+	FieldDbUser = "db_user"
+	// FieldLogHash holds the string denoting the log_hash field in the database.
+	FieldLogHash = "log_hash"
+	// FieldSignature holds the string denoting the signature field in the database.
+	FieldSignature = "signature"
 	// Table holds the table name of the dataaccessauditlog in the database.
-	Table = "data_access_audit_logs"
+	Table = "sys_data_access_audit_logs"
 )
 
 // Columns holds all SQL columns for dataaccessauditlog fields.
 var Columns = []string{
 	FieldID,
 	FieldCreatedAt,
-	FieldUpdatedAt,
-	FieldDeletedAt,
 	FieldTenantID,
-	FieldOperatorID,
-	FieldResource,
-	FieldAction,
 	FieldUserID,
 	FieldUsername,
-	FieldAccessType,
-	FieldSensitiveLevel,
 	FieldIPAddress,
+	FieldGeoLocation,
+	FieldDeviceInfo,
+	FieldRequestID,
+	FieldTraceID,
 	FieldDataSource,
-	FieldAccessedAt,
+	FieldTableName,
+	FieldDataID,
+	FieldAccessType,
+	FieldSQLDigest,
+	FieldSQLText,
+	FieldAffectedRows,
+	FieldLatencyMs,
+	FieldSuccess,
+	FieldSensitiveLevel,
+	FieldDataMasked,
+	FieldMaskingRules,
+	FieldBusinessPurpose,
+	FieldDataCategory,
+	FieldDbUser,
+	FieldLogHash,
+	FieldSignature,
 }
 
 // ValidColumn reports if the column name is valid (part of the table columns).
@@ -85,16 +121,6 @@ var (
 	Policy ent.Policy
 	// DefaultTenantID holds the default value on creation for the "tenant_id" field.
 	DefaultTenantID uint32
-	// ResourceValidator is a validator for the "resource" field. It is called by the builders before save.
-	ResourceValidator func(string) error
-	// ActionValidator is a validator for the "action" field. It is called by the builders before save.
-	ActionValidator func(string) error
-	// UsernameValidator is a validator for the "username" field. It is called by the builders before save.
-	UsernameValidator func(string) error
-	// IPAddressValidator is a validator for the "ip_address" field. It is called by the builders before save.
-	IPAddressValidator func(string) error
-	// DataSourceValidator is a validator for the "data_source" field. It is called by the builders before save.
-	DataSourceValidator func(string) error
 	// IDValidator is a validator for the "id" field. It is called by the builders before save.
 	IDValidator func(uint32) error
 )
@@ -102,14 +128,23 @@ var (
 // AccessType defines the type for the "access_type" enum field.
 type AccessType string
 
-// AccessTypeAccessTypeRead is the default value of the AccessType enum.
-const DefaultAccessType = AccessTypeAccessTypeRead
-
 // AccessType values.
 const (
-	AccessTypeAccessTypeRead   AccessType = "ACCESS_TYPE_READ"
-	AccessTypeAccessTypeWrite  AccessType = "ACCESS_TYPE_WRITE"
-	AccessTypeAccessTypeDelete AccessType = "ACCESS_TYPE_DELETE"
+	AccessTypeSelect            AccessType = "SELECT"
+	AccessTypeInsert            AccessType = "INSERT"
+	AccessTypeUpdateTranslation AccessType = "UPDATE"
+	AccessTypeDelete            AccessType = "DELETE"
+	AccessTypeView              AccessType = "VIEW"
+	AccessTypeBulkRead          AccessType = "BULK_READ"
+	AccessTypeExport            AccessType = "EXPORT"
+	AccessTypeImport            AccessType = "IMPORT"
+	AccessTypeDDLCreate         AccessType = "DDL_CREATE"
+	AccessTypeDDLAlter          AccessType = "DDL_ALTER"
+	AccessTypeDDLDrop           AccessType = "DDL_DROP"
+	AccessTypeMetadataRead      AccessType = "METADATA_READ"
+	AccessTypeScan              AccessType = "SCAN"
+	AccessTypeAdminOperation    AccessType = "ADMIN_OPERATION"
+	AccessTypeOther             AccessType = "OTHER"
 )
 
 func (at AccessType) String() string {
@@ -119,7 +154,7 @@ func (at AccessType) String() string {
 // AccessTypeValidator is a validator for the "access_type" field enum values. It is called by the builders before save.
 func AccessTypeValidator(at AccessType) error {
 	switch at {
-	case AccessTypeAccessTypeRead, AccessTypeAccessTypeWrite, AccessTypeAccessTypeDelete:
+	case AccessTypeSelect, AccessTypeInsert, AccessTypeUpdateTranslation, AccessTypeDelete, AccessTypeView, AccessTypeBulkRead, AccessTypeExport, AccessTypeImport, AccessTypeDDLCreate, AccessTypeDDLAlter, AccessTypeDDLDrop, AccessTypeMetadataRead, AccessTypeScan, AccessTypeAdminOperation, AccessTypeOther:
 		return nil
 	default:
 		return fmt.Errorf("dataaccessauditlog: invalid enum value for access_type field: %q", at)
@@ -129,14 +164,12 @@ func AccessTypeValidator(at AccessType) error {
 // SensitiveLevel defines the type for the "sensitive_level" enum field.
 type SensitiveLevel string
 
-// SensitiveLevelSensitiveLevelLow is the default value of the SensitiveLevel enum.
-const DefaultSensitiveLevel = SensitiveLevelSensitiveLevelLow
-
 // SensitiveLevel values.
 const (
-	SensitiveLevelSensitiveLevelLow    SensitiveLevel = "SENSITIVE_LEVEL_LOW"
-	SensitiveLevelSensitiveLevelMedium SensitiveLevel = "SENSITIVE_LEVEL_MEDIUM"
-	SensitiveLevelSensitiveLevelHigh   SensitiveLevel = "SENSITIVE_LEVEL_HIGH"
+	SensitiveLevelPublic       SensitiveLevel = "PUBLIC"
+	SensitiveLevelInternal     SensitiveLevel = "INTERNAL"
+	SensitiveLevelConfidential SensitiveLevel = "CONFIDENTIAL"
+	SensitiveLevelSecret       SensitiveLevel = "SECRET"
 )
 
 func (sl SensitiveLevel) String() string {
@@ -146,7 +179,7 @@ func (sl SensitiveLevel) String() string {
 // SensitiveLevelValidator is a validator for the "sensitive_level" field enum values. It is called by the builders before save.
 func SensitiveLevelValidator(sl SensitiveLevel) error {
 	switch sl {
-	case SensitiveLevelSensitiveLevelLow, SensitiveLevelSensitiveLevelMedium, SensitiveLevelSensitiveLevelHigh:
+	case SensitiveLevelPublic, SensitiveLevelInternal, SensitiveLevelConfidential, SensitiveLevelSecret:
 		return nil
 	default:
 		return fmt.Errorf("dataaccessauditlog: invalid enum value for sensitive_level field: %q", sl)
@@ -166,34 +199,9 @@ func ByCreatedAt(opts ...sql.OrderTermOption) OrderOption {
 	return sql.OrderByField(FieldCreatedAt, opts...).ToFunc()
 }
 
-// ByUpdatedAt orders the results by the updated_at field.
-func ByUpdatedAt(opts ...sql.OrderTermOption) OrderOption {
-	return sql.OrderByField(FieldUpdatedAt, opts...).ToFunc()
-}
-
-// ByDeletedAt orders the results by the deleted_at field.
-func ByDeletedAt(opts ...sql.OrderTermOption) OrderOption {
-	return sql.OrderByField(FieldDeletedAt, opts...).ToFunc()
-}
-
 // ByTenantID orders the results by the tenant_id field.
 func ByTenantID(opts ...sql.OrderTermOption) OrderOption {
 	return sql.OrderByField(FieldTenantID, opts...).ToFunc()
-}
-
-// ByOperatorID orders the results by the operator_id field.
-func ByOperatorID(opts ...sql.OrderTermOption) OrderOption {
-	return sql.OrderByField(FieldOperatorID, opts...).ToFunc()
-}
-
-// ByResource orders the results by the resource field.
-func ByResource(opts ...sql.OrderTermOption) OrderOption {
-	return sql.OrderByField(FieldResource, opts...).ToFunc()
-}
-
-// ByAction orders the results by the action field.
-func ByAction(opts ...sql.OrderTermOption) OrderOption {
-	return sql.OrderByField(FieldAction, opts...).ToFunc()
 }
 
 // ByUserID orders the results by the user_id field.
@@ -206,19 +214,19 @@ func ByUsername(opts ...sql.OrderTermOption) OrderOption {
 	return sql.OrderByField(FieldUsername, opts...).ToFunc()
 }
 
-// ByAccessType orders the results by the access_type field.
-func ByAccessType(opts ...sql.OrderTermOption) OrderOption {
-	return sql.OrderByField(FieldAccessType, opts...).ToFunc()
-}
-
-// BySensitiveLevel orders the results by the sensitive_level field.
-func BySensitiveLevel(opts ...sql.OrderTermOption) OrderOption {
-	return sql.OrderByField(FieldSensitiveLevel, opts...).ToFunc()
-}
-
 // ByIPAddress orders the results by the ip_address field.
 func ByIPAddress(opts ...sql.OrderTermOption) OrderOption {
 	return sql.OrderByField(FieldIPAddress, opts...).ToFunc()
+}
+
+// ByRequestID orders the results by the request_id field.
+func ByRequestID(opts ...sql.OrderTermOption) OrderOption {
+	return sql.OrderByField(FieldRequestID, opts...).ToFunc()
+}
+
+// ByTraceID orders the results by the trace_id field.
+func ByTraceID(opts ...sql.OrderTermOption) OrderOption {
+	return sql.OrderByField(FieldTraceID, opts...).ToFunc()
 }
 
 // ByDataSource orders the results by the data_source field.
@@ -226,7 +234,77 @@ func ByDataSource(opts ...sql.OrderTermOption) OrderOption {
 	return sql.OrderByField(FieldDataSource, opts...).ToFunc()
 }
 
-// ByAccessedAt orders the results by the accessed_at field.
-func ByAccessedAt(opts ...sql.OrderTermOption) OrderOption {
-	return sql.OrderByField(FieldAccessedAt, opts...).ToFunc()
+// ByTableName orders the results by the table_name field.
+func ByTableName(opts ...sql.OrderTermOption) OrderOption {
+	return sql.OrderByField(FieldTableName, opts...).ToFunc()
+}
+
+// ByDataID orders the results by the data_id field.
+func ByDataID(opts ...sql.OrderTermOption) OrderOption {
+	return sql.OrderByField(FieldDataID, opts...).ToFunc()
+}
+
+// ByAccessType orders the results by the access_type field.
+func ByAccessType(opts ...sql.OrderTermOption) OrderOption {
+	return sql.OrderByField(FieldAccessType, opts...).ToFunc()
+}
+
+// BySQLDigest orders the results by the sql_digest field.
+func BySQLDigest(opts ...sql.OrderTermOption) OrderOption {
+	return sql.OrderByField(FieldSQLDigest, opts...).ToFunc()
+}
+
+// BySQLText orders the results by the sql_text field.
+func BySQLText(opts ...sql.OrderTermOption) OrderOption {
+	return sql.OrderByField(FieldSQLText, opts...).ToFunc()
+}
+
+// ByAffectedRows orders the results by the affected_rows field.
+func ByAffectedRows(opts ...sql.OrderTermOption) OrderOption {
+	return sql.OrderByField(FieldAffectedRows, opts...).ToFunc()
+}
+
+// ByLatencyMs orders the results by the latency_ms field.
+func ByLatencyMs(opts ...sql.OrderTermOption) OrderOption {
+	return sql.OrderByField(FieldLatencyMs, opts...).ToFunc()
+}
+
+// BySuccess orders the results by the success field.
+func BySuccess(opts ...sql.OrderTermOption) OrderOption {
+	return sql.OrderByField(FieldSuccess, opts...).ToFunc()
+}
+
+// BySensitiveLevel orders the results by the sensitive_level field.
+func BySensitiveLevel(opts ...sql.OrderTermOption) OrderOption {
+	return sql.OrderByField(FieldSensitiveLevel, opts...).ToFunc()
+}
+
+// ByDataMasked orders the results by the data_masked field.
+func ByDataMasked(opts ...sql.OrderTermOption) OrderOption {
+	return sql.OrderByField(FieldDataMasked, opts...).ToFunc()
+}
+
+// ByMaskingRules orders the results by the masking_rules field.
+func ByMaskingRules(opts ...sql.OrderTermOption) OrderOption {
+	return sql.OrderByField(FieldMaskingRules, opts...).ToFunc()
+}
+
+// ByBusinessPurpose orders the results by the business_purpose field.
+func ByBusinessPurpose(opts ...sql.OrderTermOption) OrderOption {
+	return sql.OrderByField(FieldBusinessPurpose, opts...).ToFunc()
+}
+
+// ByDataCategory orders the results by the data_category field.
+func ByDataCategory(opts ...sql.OrderTermOption) OrderOption {
+	return sql.OrderByField(FieldDataCategory, opts...).ToFunc()
+}
+
+// ByDbUser orders the results by the db_user field.
+func ByDbUser(opts ...sql.OrderTermOption) OrderOption {
+	return sql.OrderByField(FieldDbUser, opts...).ToFunc()
+}
+
+// ByLogHash orders the results by the log_hash field.
+func ByLogHash(opts ...sql.OrderTermOption) OrderOption {
+	return sql.OrderByField(FieldLogHash, opts...).ToFunc()
 }

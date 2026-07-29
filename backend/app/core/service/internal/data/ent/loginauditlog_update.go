@@ -6,12 +6,13 @@ import (
 	"context"
 	"errors"
 	"fmt"
+	auditpb "go-wind-ledger/api/gen/go/audit/service/v1"
 	"go-wind-ledger/app/core/service/internal/data/ent/loginauditlog"
 	"go-wind-ledger/app/core/service/internal/data/ent/predicate"
-	"time"
 
 	"entgo.io/ent/dialect/sql"
 	"entgo.io/ent/dialect/sql/sqlgraph"
+	"entgo.io/ent/dialect/sql/sqljson"
 	"entgo.io/ent/schema/field"
 )
 
@@ -26,46 +27,6 @@ type LoginAuditLogUpdate struct {
 // Where appends a list predicates to the LoginAuditLogUpdate builder.
 func (_u *LoginAuditLogUpdate) Where(ps ...predicate.LoginAuditLog) *LoginAuditLogUpdate {
 	_u.mutation.Where(ps...)
-	return _u
-}
-
-// SetUpdatedAt sets the "updated_at" field.
-func (_u *LoginAuditLogUpdate) SetUpdatedAt(v time.Time) *LoginAuditLogUpdate {
-	_u.mutation.SetUpdatedAt(v)
-	return _u
-}
-
-// SetNillableUpdatedAt sets the "updated_at" field if the given value is not nil.
-func (_u *LoginAuditLogUpdate) SetNillableUpdatedAt(v *time.Time) *LoginAuditLogUpdate {
-	if v != nil {
-		_u.SetUpdatedAt(*v)
-	}
-	return _u
-}
-
-// ClearUpdatedAt clears the value of the "updated_at" field.
-func (_u *LoginAuditLogUpdate) ClearUpdatedAt() *LoginAuditLogUpdate {
-	_u.mutation.ClearUpdatedAt()
-	return _u
-}
-
-// SetDeletedAt sets the "deleted_at" field.
-func (_u *LoginAuditLogUpdate) SetDeletedAt(v time.Time) *LoginAuditLogUpdate {
-	_u.mutation.SetDeletedAt(v)
-	return _u
-}
-
-// SetNillableDeletedAt sets the "deleted_at" field if the given value is not nil.
-func (_u *LoginAuditLogUpdate) SetNillableDeletedAt(v *time.Time) *LoginAuditLogUpdate {
-	if v != nil {
-		_u.SetDeletedAt(*v)
-	}
-	return _u
-}
-
-// ClearDeletedAt clears the value of the "deleted_at" field.
-func (_u *LoginAuditLogUpdate) ClearDeletedAt() *LoginAuditLogUpdate {
-	_u.mutation.ClearDeletedAt()
 	return _u
 }
 
@@ -116,43 +77,304 @@ func (_u *LoginAuditLogUpdate) ClearUsername() *LoginAuditLogUpdate {
 	return _u
 }
 
-// SetResult sets the "result" field.
-func (_u *LoginAuditLogUpdate) SetResult(v string) *LoginAuditLogUpdate {
-	_u.mutation.SetResult(v)
+// SetIPAddress sets the "ip_address" field.
+func (_u *LoginAuditLogUpdate) SetIPAddress(v string) *LoginAuditLogUpdate {
+	_u.mutation.SetIPAddress(v)
 	return _u
 }
 
-// SetNillableResult sets the "result" field if the given value is not nil.
-func (_u *LoginAuditLogUpdate) SetNillableResult(v *string) *LoginAuditLogUpdate {
+// SetNillableIPAddress sets the "ip_address" field if the given value is not nil.
+func (_u *LoginAuditLogUpdate) SetNillableIPAddress(v *string) *LoginAuditLogUpdate {
 	if v != nil {
-		_u.SetResult(*v)
+		_u.SetIPAddress(*v)
 	}
 	return _u
 }
 
-// ClearResult clears the value of the "result" field.
-func (_u *LoginAuditLogUpdate) ClearResult() *LoginAuditLogUpdate {
-	_u.mutation.ClearResult()
+// ClearIPAddress clears the value of the "ip_address" field.
+func (_u *LoginAuditLogUpdate) ClearIPAddress() *LoginAuditLogUpdate {
+	_u.mutation.ClearIPAddress()
 	return _u
 }
 
-// SetLoggedAt sets the "logged_at" field.
-func (_u *LoginAuditLogUpdate) SetLoggedAt(v time.Time) *LoginAuditLogUpdate {
-	_u.mutation.SetLoggedAt(v)
+// SetGeoLocation sets the "geo_location" field.
+func (_u *LoginAuditLogUpdate) SetGeoLocation(v *auditpb.GeoLocation) *LoginAuditLogUpdate {
+	_u.mutation.SetGeoLocation(v)
 	return _u
 }
 
-// SetNillableLoggedAt sets the "logged_at" field if the given value is not nil.
-func (_u *LoginAuditLogUpdate) SetNillableLoggedAt(v *time.Time) *LoginAuditLogUpdate {
+// ClearGeoLocation clears the value of the "geo_location" field.
+func (_u *LoginAuditLogUpdate) ClearGeoLocation() *LoginAuditLogUpdate {
+	_u.mutation.ClearGeoLocation()
+	return _u
+}
+
+// SetSessionID sets the "session_id" field.
+func (_u *LoginAuditLogUpdate) SetSessionID(v string) *LoginAuditLogUpdate {
+	_u.mutation.SetSessionID(v)
+	return _u
+}
+
+// SetNillableSessionID sets the "session_id" field if the given value is not nil.
+func (_u *LoginAuditLogUpdate) SetNillableSessionID(v *string) *LoginAuditLogUpdate {
 	if v != nil {
-		_u.SetLoggedAt(*v)
+		_u.SetSessionID(*v)
 	}
 	return _u
 }
 
-// ClearLoggedAt clears the value of the "logged_at" field.
-func (_u *LoginAuditLogUpdate) ClearLoggedAt() *LoginAuditLogUpdate {
-	_u.mutation.ClearLoggedAt()
+// ClearSessionID clears the value of the "session_id" field.
+func (_u *LoginAuditLogUpdate) ClearSessionID() *LoginAuditLogUpdate {
+	_u.mutation.ClearSessionID()
+	return _u
+}
+
+// SetDeviceInfo sets the "device_info" field.
+func (_u *LoginAuditLogUpdate) SetDeviceInfo(v *auditpb.DeviceInfo) *LoginAuditLogUpdate {
+	_u.mutation.SetDeviceInfo(v)
+	return _u
+}
+
+// ClearDeviceInfo clears the value of the "device_info" field.
+func (_u *LoginAuditLogUpdate) ClearDeviceInfo() *LoginAuditLogUpdate {
+	_u.mutation.ClearDeviceInfo()
+	return _u
+}
+
+// SetRequestID sets the "request_id" field.
+func (_u *LoginAuditLogUpdate) SetRequestID(v string) *LoginAuditLogUpdate {
+	_u.mutation.SetRequestID(v)
+	return _u
+}
+
+// SetNillableRequestID sets the "request_id" field if the given value is not nil.
+func (_u *LoginAuditLogUpdate) SetNillableRequestID(v *string) *LoginAuditLogUpdate {
+	if v != nil {
+		_u.SetRequestID(*v)
+	}
+	return _u
+}
+
+// ClearRequestID clears the value of the "request_id" field.
+func (_u *LoginAuditLogUpdate) ClearRequestID() *LoginAuditLogUpdate {
+	_u.mutation.ClearRequestID()
+	return _u
+}
+
+// SetTraceID sets the "trace_id" field.
+func (_u *LoginAuditLogUpdate) SetTraceID(v string) *LoginAuditLogUpdate {
+	_u.mutation.SetTraceID(v)
+	return _u
+}
+
+// SetNillableTraceID sets the "trace_id" field if the given value is not nil.
+func (_u *LoginAuditLogUpdate) SetNillableTraceID(v *string) *LoginAuditLogUpdate {
+	if v != nil {
+		_u.SetTraceID(*v)
+	}
+	return _u
+}
+
+// ClearTraceID clears the value of the "trace_id" field.
+func (_u *LoginAuditLogUpdate) ClearTraceID() *LoginAuditLogUpdate {
+	_u.mutation.ClearTraceID()
+	return _u
+}
+
+// SetActionType sets the "action_type" field.
+func (_u *LoginAuditLogUpdate) SetActionType(v loginauditlog.ActionType) *LoginAuditLogUpdate {
+	_u.mutation.SetActionType(v)
+	return _u
+}
+
+// SetNillableActionType sets the "action_type" field if the given value is not nil.
+func (_u *LoginAuditLogUpdate) SetNillableActionType(v *loginauditlog.ActionType) *LoginAuditLogUpdate {
+	if v != nil {
+		_u.SetActionType(*v)
+	}
+	return _u
+}
+
+// ClearActionType clears the value of the "action_type" field.
+func (_u *LoginAuditLogUpdate) ClearActionType() *LoginAuditLogUpdate {
+	_u.mutation.ClearActionType()
+	return _u
+}
+
+// SetStatus sets the "status" field.
+func (_u *LoginAuditLogUpdate) SetStatus(v loginauditlog.Status) *LoginAuditLogUpdate {
+	_u.mutation.SetStatus(v)
+	return _u
+}
+
+// SetNillableStatus sets the "status" field if the given value is not nil.
+func (_u *LoginAuditLogUpdate) SetNillableStatus(v *loginauditlog.Status) *LoginAuditLogUpdate {
+	if v != nil {
+		_u.SetStatus(*v)
+	}
+	return _u
+}
+
+// ClearStatus clears the value of the "status" field.
+func (_u *LoginAuditLogUpdate) ClearStatus() *LoginAuditLogUpdate {
+	_u.mutation.ClearStatus()
+	return _u
+}
+
+// SetLoginMethod sets the "login_method" field.
+func (_u *LoginAuditLogUpdate) SetLoginMethod(v loginauditlog.LoginMethod) *LoginAuditLogUpdate {
+	_u.mutation.SetLoginMethod(v)
+	return _u
+}
+
+// SetNillableLoginMethod sets the "login_method" field if the given value is not nil.
+func (_u *LoginAuditLogUpdate) SetNillableLoginMethod(v *loginauditlog.LoginMethod) *LoginAuditLogUpdate {
+	if v != nil {
+		_u.SetLoginMethod(*v)
+	}
+	return _u
+}
+
+// ClearLoginMethod clears the value of the "login_method" field.
+func (_u *LoginAuditLogUpdate) ClearLoginMethod() *LoginAuditLogUpdate {
+	_u.mutation.ClearLoginMethod()
+	return _u
+}
+
+// SetFailureReason sets the "failure_reason" field.
+func (_u *LoginAuditLogUpdate) SetFailureReason(v string) *LoginAuditLogUpdate {
+	_u.mutation.SetFailureReason(v)
+	return _u
+}
+
+// SetNillableFailureReason sets the "failure_reason" field if the given value is not nil.
+func (_u *LoginAuditLogUpdate) SetNillableFailureReason(v *string) *LoginAuditLogUpdate {
+	if v != nil {
+		_u.SetFailureReason(*v)
+	}
+	return _u
+}
+
+// ClearFailureReason clears the value of the "failure_reason" field.
+func (_u *LoginAuditLogUpdate) ClearFailureReason() *LoginAuditLogUpdate {
+	_u.mutation.ClearFailureReason()
+	return _u
+}
+
+// SetMfaStatus sets the "mfa_status" field.
+func (_u *LoginAuditLogUpdate) SetMfaStatus(v string) *LoginAuditLogUpdate {
+	_u.mutation.SetMfaStatus(v)
+	return _u
+}
+
+// SetNillableMfaStatus sets the "mfa_status" field if the given value is not nil.
+func (_u *LoginAuditLogUpdate) SetNillableMfaStatus(v *string) *LoginAuditLogUpdate {
+	if v != nil {
+		_u.SetMfaStatus(*v)
+	}
+	return _u
+}
+
+// ClearMfaStatus clears the value of the "mfa_status" field.
+func (_u *LoginAuditLogUpdate) ClearMfaStatus() *LoginAuditLogUpdate {
+	_u.mutation.ClearMfaStatus()
+	return _u
+}
+
+// SetRiskScore sets the "risk_score" field.
+func (_u *LoginAuditLogUpdate) SetRiskScore(v uint32) *LoginAuditLogUpdate {
+	_u.mutation.ResetRiskScore()
+	_u.mutation.SetRiskScore(v)
+	return _u
+}
+
+// SetNillableRiskScore sets the "risk_score" field if the given value is not nil.
+func (_u *LoginAuditLogUpdate) SetNillableRiskScore(v *uint32) *LoginAuditLogUpdate {
+	if v != nil {
+		_u.SetRiskScore(*v)
+	}
+	return _u
+}
+
+// AddRiskScore adds value to the "risk_score" field.
+func (_u *LoginAuditLogUpdate) AddRiskScore(v int32) *LoginAuditLogUpdate {
+	_u.mutation.AddRiskScore(v)
+	return _u
+}
+
+// ClearRiskScore clears the value of the "risk_score" field.
+func (_u *LoginAuditLogUpdate) ClearRiskScore() *LoginAuditLogUpdate {
+	_u.mutation.ClearRiskScore()
+	return _u
+}
+
+// SetRiskLevel sets the "risk_level" field.
+func (_u *LoginAuditLogUpdate) SetRiskLevel(v loginauditlog.RiskLevel) *LoginAuditLogUpdate {
+	_u.mutation.SetRiskLevel(v)
+	return _u
+}
+
+// SetNillableRiskLevel sets the "risk_level" field if the given value is not nil.
+func (_u *LoginAuditLogUpdate) SetNillableRiskLevel(v *loginauditlog.RiskLevel) *LoginAuditLogUpdate {
+	if v != nil {
+		_u.SetRiskLevel(*v)
+	}
+	return _u
+}
+
+// ClearRiskLevel clears the value of the "risk_level" field.
+func (_u *LoginAuditLogUpdate) ClearRiskLevel() *LoginAuditLogUpdate {
+	_u.mutation.ClearRiskLevel()
+	return _u
+}
+
+// SetRiskFactors sets the "risk_factors" field.
+func (_u *LoginAuditLogUpdate) SetRiskFactors(v []string) *LoginAuditLogUpdate {
+	_u.mutation.SetRiskFactors(v)
+	return _u
+}
+
+// AppendRiskFactors appends value to the "risk_factors" field.
+func (_u *LoginAuditLogUpdate) AppendRiskFactors(v []string) *LoginAuditLogUpdate {
+	_u.mutation.AppendRiskFactors(v)
+	return _u
+}
+
+// ClearRiskFactors clears the value of the "risk_factors" field.
+func (_u *LoginAuditLogUpdate) ClearRiskFactors() *LoginAuditLogUpdate {
+	_u.mutation.ClearRiskFactors()
+	return _u
+}
+
+// SetLogHash sets the "log_hash" field.
+func (_u *LoginAuditLogUpdate) SetLogHash(v string) *LoginAuditLogUpdate {
+	_u.mutation.SetLogHash(v)
+	return _u
+}
+
+// SetNillableLogHash sets the "log_hash" field if the given value is not nil.
+func (_u *LoginAuditLogUpdate) SetNillableLogHash(v *string) *LoginAuditLogUpdate {
+	if v != nil {
+		_u.SetLogHash(*v)
+	}
+	return _u
+}
+
+// ClearLogHash clears the value of the "log_hash" field.
+func (_u *LoginAuditLogUpdate) ClearLogHash() *LoginAuditLogUpdate {
+	_u.mutation.ClearLogHash()
+	return _u
+}
+
+// SetSignature sets the "signature" field.
+func (_u *LoginAuditLogUpdate) SetSignature(v []byte) *LoginAuditLogUpdate {
+	_u.mutation.SetSignature(v)
+	return _u
+}
+
+// ClearSignature clears the value of the "signature" field.
+func (_u *LoginAuditLogUpdate) ClearSignature() *LoginAuditLogUpdate {
+	_u.mutation.ClearSignature()
 	return _u
 }
 
@@ -190,14 +412,34 @@ func (_u *LoginAuditLogUpdate) ExecX(ctx context.Context) {
 
 // check runs all checks and user-defined validators on the builder.
 func (_u *LoginAuditLogUpdate) check() error {
-	if v, ok := _u.mutation.Username(); ok {
-		if err := loginauditlog.UsernameValidator(v); err != nil {
-			return &ValidationError{Name: "username", err: fmt.Errorf(`ent: validator failed for field "LoginAuditLog.username": %w`, err)}
+	if v, ok := _u.mutation.GeoLocation(); ok {
+		if err := v.Validate(); err != nil {
+			return &ValidationError{Name: "geo_location", err: fmt.Errorf(`ent: validator failed for field "LoginAuditLog.geo_location": %w`, err)}
 		}
 	}
-	if v, ok := _u.mutation.Result(); ok {
-		if err := loginauditlog.ResultValidator(v); err != nil {
-			return &ValidationError{Name: "result", err: fmt.Errorf(`ent: validator failed for field "LoginAuditLog.result": %w`, err)}
+	if v, ok := _u.mutation.DeviceInfo(); ok {
+		if err := v.Validate(); err != nil {
+			return &ValidationError{Name: "device_info", err: fmt.Errorf(`ent: validator failed for field "LoginAuditLog.device_info": %w`, err)}
+		}
+	}
+	if v, ok := _u.mutation.ActionType(); ok {
+		if err := loginauditlog.ActionTypeValidator(v); err != nil {
+			return &ValidationError{Name: "action_type", err: fmt.Errorf(`ent: validator failed for field "LoginAuditLog.action_type": %w`, err)}
+		}
+	}
+	if v, ok := _u.mutation.Status(); ok {
+		if err := loginauditlog.StatusValidator(v); err != nil {
+			return &ValidationError{Name: "status", err: fmt.Errorf(`ent: validator failed for field "LoginAuditLog.status": %w`, err)}
+		}
+	}
+	if v, ok := _u.mutation.LoginMethod(); ok {
+		if err := loginauditlog.LoginMethodValidator(v); err != nil {
+			return &ValidationError{Name: "login_method", err: fmt.Errorf(`ent: validator failed for field "LoginAuditLog.login_method": %w`, err)}
+		}
+	}
+	if v, ok := _u.mutation.RiskLevel(); ok {
+		if err := loginauditlog.RiskLevelValidator(v); err != nil {
+			return &ValidationError{Name: "risk_level", err: fmt.Errorf(`ent: validator failed for field "LoginAuditLog.risk_level": %w`, err)}
 		}
 	}
 	return nil
@@ -224,18 +466,6 @@ func (_u *LoginAuditLogUpdate) sqlSave(ctx context.Context) (_node int, err erro
 	if _u.mutation.CreatedAtCleared() {
 		_spec.ClearField(loginauditlog.FieldCreatedAt, field.TypeTime)
 	}
-	if value, ok := _u.mutation.UpdatedAt(); ok {
-		_spec.SetField(loginauditlog.FieldUpdatedAt, field.TypeTime, value)
-	}
-	if _u.mutation.UpdatedAtCleared() {
-		_spec.ClearField(loginauditlog.FieldUpdatedAt, field.TypeTime)
-	}
-	if value, ok := _u.mutation.DeletedAt(); ok {
-		_spec.SetField(loginauditlog.FieldDeletedAt, field.TypeTime, value)
-	}
-	if _u.mutation.DeletedAtCleared() {
-		_spec.ClearField(loginauditlog.FieldDeletedAt, field.TypeTime)
-	}
 	if _u.mutation.TenantIDCleared() {
 		_spec.ClearField(loginauditlog.FieldTenantID, field.TypeUint32)
 	}
@@ -254,17 +484,109 @@ func (_u *LoginAuditLogUpdate) sqlSave(ctx context.Context) (_node int, err erro
 	if _u.mutation.UsernameCleared() {
 		_spec.ClearField(loginauditlog.FieldUsername, field.TypeString)
 	}
-	if value, ok := _u.mutation.Result(); ok {
-		_spec.SetField(loginauditlog.FieldResult, field.TypeString, value)
+	if value, ok := _u.mutation.IPAddress(); ok {
+		_spec.SetField(loginauditlog.FieldIPAddress, field.TypeString, value)
 	}
-	if _u.mutation.ResultCleared() {
-		_spec.ClearField(loginauditlog.FieldResult, field.TypeString)
+	if _u.mutation.IPAddressCleared() {
+		_spec.ClearField(loginauditlog.FieldIPAddress, field.TypeString)
 	}
-	if value, ok := _u.mutation.LoggedAt(); ok {
-		_spec.SetField(loginauditlog.FieldLoggedAt, field.TypeTime, value)
+	if value, ok := _u.mutation.GeoLocation(); ok {
+		_spec.SetField(loginauditlog.FieldGeoLocation, field.TypeJSON, value)
 	}
-	if _u.mutation.LoggedAtCleared() {
-		_spec.ClearField(loginauditlog.FieldLoggedAt, field.TypeTime)
+	if _u.mutation.GeoLocationCleared() {
+		_spec.ClearField(loginauditlog.FieldGeoLocation, field.TypeJSON)
+	}
+	if value, ok := _u.mutation.SessionID(); ok {
+		_spec.SetField(loginauditlog.FieldSessionID, field.TypeString, value)
+	}
+	if _u.mutation.SessionIDCleared() {
+		_spec.ClearField(loginauditlog.FieldSessionID, field.TypeString)
+	}
+	if value, ok := _u.mutation.DeviceInfo(); ok {
+		_spec.SetField(loginauditlog.FieldDeviceInfo, field.TypeJSON, value)
+	}
+	if _u.mutation.DeviceInfoCleared() {
+		_spec.ClearField(loginauditlog.FieldDeviceInfo, field.TypeJSON)
+	}
+	if value, ok := _u.mutation.RequestID(); ok {
+		_spec.SetField(loginauditlog.FieldRequestID, field.TypeString, value)
+	}
+	if _u.mutation.RequestIDCleared() {
+		_spec.ClearField(loginauditlog.FieldRequestID, field.TypeString)
+	}
+	if value, ok := _u.mutation.TraceID(); ok {
+		_spec.SetField(loginauditlog.FieldTraceID, field.TypeString, value)
+	}
+	if _u.mutation.TraceIDCleared() {
+		_spec.ClearField(loginauditlog.FieldTraceID, field.TypeString)
+	}
+	if value, ok := _u.mutation.ActionType(); ok {
+		_spec.SetField(loginauditlog.FieldActionType, field.TypeEnum, value)
+	}
+	if _u.mutation.ActionTypeCleared() {
+		_spec.ClearField(loginauditlog.FieldActionType, field.TypeEnum)
+	}
+	if value, ok := _u.mutation.Status(); ok {
+		_spec.SetField(loginauditlog.FieldStatus, field.TypeEnum, value)
+	}
+	if _u.mutation.StatusCleared() {
+		_spec.ClearField(loginauditlog.FieldStatus, field.TypeEnum)
+	}
+	if value, ok := _u.mutation.LoginMethod(); ok {
+		_spec.SetField(loginauditlog.FieldLoginMethod, field.TypeEnum, value)
+	}
+	if _u.mutation.LoginMethodCleared() {
+		_spec.ClearField(loginauditlog.FieldLoginMethod, field.TypeEnum)
+	}
+	if value, ok := _u.mutation.FailureReason(); ok {
+		_spec.SetField(loginauditlog.FieldFailureReason, field.TypeString, value)
+	}
+	if _u.mutation.FailureReasonCleared() {
+		_spec.ClearField(loginauditlog.FieldFailureReason, field.TypeString)
+	}
+	if value, ok := _u.mutation.MfaStatus(); ok {
+		_spec.SetField(loginauditlog.FieldMfaStatus, field.TypeString, value)
+	}
+	if _u.mutation.MfaStatusCleared() {
+		_spec.ClearField(loginauditlog.FieldMfaStatus, field.TypeString)
+	}
+	if value, ok := _u.mutation.RiskScore(); ok {
+		_spec.SetField(loginauditlog.FieldRiskScore, field.TypeUint32, value)
+	}
+	if value, ok := _u.mutation.AddedRiskScore(); ok {
+		_spec.AddField(loginauditlog.FieldRiskScore, field.TypeUint32, value)
+	}
+	if _u.mutation.RiskScoreCleared() {
+		_spec.ClearField(loginauditlog.FieldRiskScore, field.TypeUint32)
+	}
+	if value, ok := _u.mutation.RiskLevel(); ok {
+		_spec.SetField(loginauditlog.FieldRiskLevel, field.TypeEnum, value)
+	}
+	if _u.mutation.RiskLevelCleared() {
+		_spec.ClearField(loginauditlog.FieldRiskLevel, field.TypeEnum)
+	}
+	if value, ok := _u.mutation.RiskFactors(); ok {
+		_spec.SetField(loginauditlog.FieldRiskFactors, field.TypeJSON, value)
+	}
+	if value, ok := _u.mutation.AppendedRiskFactors(); ok {
+		_spec.AddModifier(func(u *sql.UpdateBuilder) {
+			sqljson.Append(u, loginauditlog.FieldRiskFactors, value)
+		})
+	}
+	if _u.mutation.RiskFactorsCleared() {
+		_spec.ClearField(loginauditlog.FieldRiskFactors, field.TypeJSON)
+	}
+	if value, ok := _u.mutation.LogHash(); ok {
+		_spec.SetField(loginauditlog.FieldLogHash, field.TypeString, value)
+	}
+	if _u.mutation.LogHashCleared() {
+		_spec.ClearField(loginauditlog.FieldLogHash, field.TypeString)
+	}
+	if value, ok := _u.mutation.Signature(); ok {
+		_spec.SetField(loginauditlog.FieldSignature, field.TypeBytes, value)
+	}
+	if _u.mutation.SignatureCleared() {
+		_spec.ClearField(loginauditlog.FieldSignature, field.TypeBytes)
 	}
 	_spec.AddModifiers(_u.modifiers...)
 	if _node, err = sqlgraph.UpdateNodes(ctx, _u.driver, _spec); err != nil {
@@ -286,46 +608,6 @@ type LoginAuditLogUpdateOne struct {
 	hooks     []Hook
 	mutation  *LoginAuditLogMutation
 	modifiers []func(*sql.UpdateBuilder)
-}
-
-// SetUpdatedAt sets the "updated_at" field.
-func (_u *LoginAuditLogUpdateOne) SetUpdatedAt(v time.Time) *LoginAuditLogUpdateOne {
-	_u.mutation.SetUpdatedAt(v)
-	return _u
-}
-
-// SetNillableUpdatedAt sets the "updated_at" field if the given value is not nil.
-func (_u *LoginAuditLogUpdateOne) SetNillableUpdatedAt(v *time.Time) *LoginAuditLogUpdateOne {
-	if v != nil {
-		_u.SetUpdatedAt(*v)
-	}
-	return _u
-}
-
-// ClearUpdatedAt clears the value of the "updated_at" field.
-func (_u *LoginAuditLogUpdateOne) ClearUpdatedAt() *LoginAuditLogUpdateOne {
-	_u.mutation.ClearUpdatedAt()
-	return _u
-}
-
-// SetDeletedAt sets the "deleted_at" field.
-func (_u *LoginAuditLogUpdateOne) SetDeletedAt(v time.Time) *LoginAuditLogUpdateOne {
-	_u.mutation.SetDeletedAt(v)
-	return _u
-}
-
-// SetNillableDeletedAt sets the "deleted_at" field if the given value is not nil.
-func (_u *LoginAuditLogUpdateOne) SetNillableDeletedAt(v *time.Time) *LoginAuditLogUpdateOne {
-	if v != nil {
-		_u.SetDeletedAt(*v)
-	}
-	return _u
-}
-
-// ClearDeletedAt clears the value of the "deleted_at" field.
-func (_u *LoginAuditLogUpdateOne) ClearDeletedAt() *LoginAuditLogUpdateOne {
-	_u.mutation.ClearDeletedAt()
-	return _u
 }
 
 // SetUserID sets the "user_id" field.
@@ -375,43 +657,304 @@ func (_u *LoginAuditLogUpdateOne) ClearUsername() *LoginAuditLogUpdateOne {
 	return _u
 }
 
-// SetResult sets the "result" field.
-func (_u *LoginAuditLogUpdateOne) SetResult(v string) *LoginAuditLogUpdateOne {
-	_u.mutation.SetResult(v)
+// SetIPAddress sets the "ip_address" field.
+func (_u *LoginAuditLogUpdateOne) SetIPAddress(v string) *LoginAuditLogUpdateOne {
+	_u.mutation.SetIPAddress(v)
 	return _u
 }
 
-// SetNillableResult sets the "result" field if the given value is not nil.
-func (_u *LoginAuditLogUpdateOne) SetNillableResult(v *string) *LoginAuditLogUpdateOne {
+// SetNillableIPAddress sets the "ip_address" field if the given value is not nil.
+func (_u *LoginAuditLogUpdateOne) SetNillableIPAddress(v *string) *LoginAuditLogUpdateOne {
 	if v != nil {
-		_u.SetResult(*v)
+		_u.SetIPAddress(*v)
 	}
 	return _u
 }
 
-// ClearResult clears the value of the "result" field.
-func (_u *LoginAuditLogUpdateOne) ClearResult() *LoginAuditLogUpdateOne {
-	_u.mutation.ClearResult()
+// ClearIPAddress clears the value of the "ip_address" field.
+func (_u *LoginAuditLogUpdateOne) ClearIPAddress() *LoginAuditLogUpdateOne {
+	_u.mutation.ClearIPAddress()
 	return _u
 }
 
-// SetLoggedAt sets the "logged_at" field.
-func (_u *LoginAuditLogUpdateOne) SetLoggedAt(v time.Time) *LoginAuditLogUpdateOne {
-	_u.mutation.SetLoggedAt(v)
+// SetGeoLocation sets the "geo_location" field.
+func (_u *LoginAuditLogUpdateOne) SetGeoLocation(v *auditpb.GeoLocation) *LoginAuditLogUpdateOne {
+	_u.mutation.SetGeoLocation(v)
 	return _u
 }
 
-// SetNillableLoggedAt sets the "logged_at" field if the given value is not nil.
-func (_u *LoginAuditLogUpdateOne) SetNillableLoggedAt(v *time.Time) *LoginAuditLogUpdateOne {
+// ClearGeoLocation clears the value of the "geo_location" field.
+func (_u *LoginAuditLogUpdateOne) ClearGeoLocation() *LoginAuditLogUpdateOne {
+	_u.mutation.ClearGeoLocation()
+	return _u
+}
+
+// SetSessionID sets the "session_id" field.
+func (_u *LoginAuditLogUpdateOne) SetSessionID(v string) *LoginAuditLogUpdateOne {
+	_u.mutation.SetSessionID(v)
+	return _u
+}
+
+// SetNillableSessionID sets the "session_id" field if the given value is not nil.
+func (_u *LoginAuditLogUpdateOne) SetNillableSessionID(v *string) *LoginAuditLogUpdateOne {
 	if v != nil {
-		_u.SetLoggedAt(*v)
+		_u.SetSessionID(*v)
 	}
 	return _u
 }
 
-// ClearLoggedAt clears the value of the "logged_at" field.
-func (_u *LoginAuditLogUpdateOne) ClearLoggedAt() *LoginAuditLogUpdateOne {
-	_u.mutation.ClearLoggedAt()
+// ClearSessionID clears the value of the "session_id" field.
+func (_u *LoginAuditLogUpdateOne) ClearSessionID() *LoginAuditLogUpdateOne {
+	_u.mutation.ClearSessionID()
+	return _u
+}
+
+// SetDeviceInfo sets the "device_info" field.
+func (_u *LoginAuditLogUpdateOne) SetDeviceInfo(v *auditpb.DeviceInfo) *LoginAuditLogUpdateOne {
+	_u.mutation.SetDeviceInfo(v)
+	return _u
+}
+
+// ClearDeviceInfo clears the value of the "device_info" field.
+func (_u *LoginAuditLogUpdateOne) ClearDeviceInfo() *LoginAuditLogUpdateOne {
+	_u.mutation.ClearDeviceInfo()
+	return _u
+}
+
+// SetRequestID sets the "request_id" field.
+func (_u *LoginAuditLogUpdateOne) SetRequestID(v string) *LoginAuditLogUpdateOne {
+	_u.mutation.SetRequestID(v)
+	return _u
+}
+
+// SetNillableRequestID sets the "request_id" field if the given value is not nil.
+func (_u *LoginAuditLogUpdateOne) SetNillableRequestID(v *string) *LoginAuditLogUpdateOne {
+	if v != nil {
+		_u.SetRequestID(*v)
+	}
+	return _u
+}
+
+// ClearRequestID clears the value of the "request_id" field.
+func (_u *LoginAuditLogUpdateOne) ClearRequestID() *LoginAuditLogUpdateOne {
+	_u.mutation.ClearRequestID()
+	return _u
+}
+
+// SetTraceID sets the "trace_id" field.
+func (_u *LoginAuditLogUpdateOne) SetTraceID(v string) *LoginAuditLogUpdateOne {
+	_u.mutation.SetTraceID(v)
+	return _u
+}
+
+// SetNillableTraceID sets the "trace_id" field if the given value is not nil.
+func (_u *LoginAuditLogUpdateOne) SetNillableTraceID(v *string) *LoginAuditLogUpdateOne {
+	if v != nil {
+		_u.SetTraceID(*v)
+	}
+	return _u
+}
+
+// ClearTraceID clears the value of the "trace_id" field.
+func (_u *LoginAuditLogUpdateOne) ClearTraceID() *LoginAuditLogUpdateOne {
+	_u.mutation.ClearTraceID()
+	return _u
+}
+
+// SetActionType sets the "action_type" field.
+func (_u *LoginAuditLogUpdateOne) SetActionType(v loginauditlog.ActionType) *LoginAuditLogUpdateOne {
+	_u.mutation.SetActionType(v)
+	return _u
+}
+
+// SetNillableActionType sets the "action_type" field if the given value is not nil.
+func (_u *LoginAuditLogUpdateOne) SetNillableActionType(v *loginauditlog.ActionType) *LoginAuditLogUpdateOne {
+	if v != nil {
+		_u.SetActionType(*v)
+	}
+	return _u
+}
+
+// ClearActionType clears the value of the "action_type" field.
+func (_u *LoginAuditLogUpdateOne) ClearActionType() *LoginAuditLogUpdateOne {
+	_u.mutation.ClearActionType()
+	return _u
+}
+
+// SetStatus sets the "status" field.
+func (_u *LoginAuditLogUpdateOne) SetStatus(v loginauditlog.Status) *LoginAuditLogUpdateOne {
+	_u.mutation.SetStatus(v)
+	return _u
+}
+
+// SetNillableStatus sets the "status" field if the given value is not nil.
+func (_u *LoginAuditLogUpdateOne) SetNillableStatus(v *loginauditlog.Status) *LoginAuditLogUpdateOne {
+	if v != nil {
+		_u.SetStatus(*v)
+	}
+	return _u
+}
+
+// ClearStatus clears the value of the "status" field.
+func (_u *LoginAuditLogUpdateOne) ClearStatus() *LoginAuditLogUpdateOne {
+	_u.mutation.ClearStatus()
+	return _u
+}
+
+// SetLoginMethod sets the "login_method" field.
+func (_u *LoginAuditLogUpdateOne) SetLoginMethod(v loginauditlog.LoginMethod) *LoginAuditLogUpdateOne {
+	_u.mutation.SetLoginMethod(v)
+	return _u
+}
+
+// SetNillableLoginMethod sets the "login_method" field if the given value is not nil.
+func (_u *LoginAuditLogUpdateOne) SetNillableLoginMethod(v *loginauditlog.LoginMethod) *LoginAuditLogUpdateOne {
+	if v != nil {
+		_u.SetLoginMethod(*v)
+	}
+	return _u
+}
+
+// ClearLoginMethod clears the value of the "login_method" field.
+func (_u *LoginAuditLogUpdateOne) ClearLoginMethod() *LoginAuditLogUpdateOne {
+	_u.mutation.ClearLoginMethod()
+	return _u
+}
+
+// SetFailureReason sets the "failure_reason" field.
+func (_u *LoginAuditLogUpdateOne) SetFailureReason(v string) *LoginAuditLogUpdateOne {
+	_u.mutation.SetFailureReason(v)
+	return _u
+}
+
+// SetNillableFailureReason sets the "failure_reason" field if the given value is not nil.
+func (_u *LoginAuditLogUpdateOne) SetNillableFailureReason(v *string) *LoginAuditLogUpdateOne {
+	if v != nil {
+		_u.SetFailureReason(*v)
+	}
+	return _u
+}
+
+// ClearFailureReason clears the value of the "failure_reason" field.
+func (_u *LoginAuditLogUpdateOne) ClearFailureReason() *LoginAuditLogUpdateOne {
+	_u.mutation.ClearFailureReason()
+	return _u
+}
+
+// SetMfaStatus sets the "mfa_status" field.
+func (_u *LoginAuditLogUpdateOne) SetMfaStatus(v string) *LoginAuditLogUpdateOne {
+	_u.mutation.SetMfaStatus(v)
+	return _u
+}
+
+// SetNillableMfaStatus sets the "mfa_status" field if the given value is not nil.
+func (_u *LoginAuditLogUpdateOne) SetNillableMfaStatus(v *string) *LoginAuditLogUpdateOne {
+	if v != nil {
+		_u.SetMfaStatus(*v)
+	}
+	return _u
+}
+
+// ClearMfaStatus clears the value of the "mfa_status" field.
+func (_u *LoginAuditLogUpdateOne) ClearMfaStatus() *LoginAuditLogUpdateOne {
+	_u.mutation.ClearMfaStatus()
+	return _u
+}
+
+// SetRiskScore sets the "risk_score" field.
+func (_u *LoginAuditLogUpdateOne) SetRiskScore(v uint32) *LoginAuditLogUpdateOne {
+	_u.mutation.ResetRiskScore()
+	_u.mutation.SetRiskScore(v)
+	return _u
+}
+
+// SetNillableRiskScore sets the "risk_score" field if the given value is not nil.
+func (_u *LoginAuditLogUpdateOne) SetNillableRiskScore(v *uint32) *LoginAuditLogUpdateOne {
+	if v != nil {
+		_u.SetRiskScore(*v)
+	}
+	return _u
+}
+
+// AddRiskScore adds value to the "risk_score" field.
+func (_u *LoginAuditLogUpdateOne) AddRiskScore(v int32) *LoginAuditLogUpdateOne {
+	_u.mutation.AddRiskScore(v)
+	return _u
+}
+
+// ClearRiskScore clears the value of the "risk_score" field.
+func (_u *LoginAuditLogUpdateOne) ClearRiskScore() *LoginAuditLogUpdateOne {
+	_u.mutation.ClearRiskScore()
+	return _u
+}
+
+// SetRiskLevel sets the "risk_level" field.
+func (_u *LoginAuditLogUpdateOne) SetRiskLevel(v loginauditlog.RiskLevel) *LoginAuditLogUpdateOne {
+	_u.mutation.SetRiskLevel(v)
+	return _u
+}
+
+// SetNillableRiskLevel sets the "risk_level" field if the given value is not nil.
+func (_u *LoginAuditLogUpdateOne) SetNillableRiskLevel(v *loginauditlog.RiskLevel) *LoginAuditLogUpdateOne {
+	if v != nil {
+		_u.SetRiskLevel(*v)
+	}
+	return _u
+}
+
+// ClearRiskLevel clears the value of the "risk_level" field.
+func (_u *LoginAuditLogUpdateOne) ClearRiskLevel() *LoginAuditLogUpdateOne {
+	_u.mutation.ClearRiskLevel()
+	return _u
+}
+
+// SetRiskFactors sets the "risk_factors" field.
+func (_u *LoginAuditLogUpdateOne) SetRiskFactors(v []string) *LoginAuditLogUpdateOne {
+	_u.mutation.SetRiskFactors(v)
+	return _u
+}
+
+// AppendRiskFactors appends value to the "risk_factors" field.
+func (_u *LoginAuditLogUpdateOne) AppendRiskFactors(v []string) *LoginAuditLogUpdateOne {
+	_u.mutation.AppendRiskFactors(v)
+	return _u
+}
+
+// ClearRiskFactors clears the value of the "risk_factors" field.
+func (_u *LoginAuditLogUpdateOne) ClearRiskFactors() *LoginAuditLogUpdateOne {
+	_u.mutation.ClearRiskFactors()
+	return _u
+}
+
+// SetLogHash sets the "log_hash" field.
+func (_u *LoginAuditLogUpdateOne) SetLogHash(v string) *LoginAuditLogUpdateOne {
+	_u.mutation.SetLogHash(v)
+	return _u
+}
+
+// SetNillableLogHash sets the "log_hash" field if the given value is not nil.
+func (_u *LoginAuditLogUpdateOne) SetNillableLogHash(v *string) *LoginAuditLogUpdateOne {
+	if v != nil {
+		_u.SetLogHash(*v)
+	}
+	return _u
+}
+
+// ClearLogHash clears the value of the "log_hash" field.
+func (_u *LoginAuditLogUpdateOne) ClearLogHash() *LoginAuditLogUpdateOne {
+	_u.mutation.ClearLogHash()
+	return _u
+}
+
+// SetSignature sets the "signature" field.
+func (_u *LoginAuditLogUpdateOne) SetSignature(v []byte) *LoginAuditLogUpdateOne {
+	_u.mutation.SetSignature(v)
+	return _u
+}
+
+// ClearSignature clears the value of the "signature" field.
+func (_u *LoginAuditLogUpdateOne) ClearSignature() *LoginAuditLogUpdateOne {
+	_u.mutation.ClearSignature()
 	return _u
 }
 
@@ -462,14 +1005,34 @@ func (_u *LoginAuditLogUpdateOne) ExecX(ctx context.Context) {
 
 // check runs all checks and user-defined validators on the builder.
 func (_u *LoginAuditLogUpdateOne) check() error {
-	if v, ok := _u.mutation.Username(); ok {
-		if err := loginauditlog.UsernameValidator(v); err != nil {
-			return &ValidationError{Name: "username", err: fmt.Errorf(`ent: validator failed for field "LoginAuditLog.username": %w`, err)}
+	if v, ok := _u.mutation.GeoLocation(); ok {
+		if err := v.Validate(); err != nil {
+			return &ValidationError{Name: "geo_location", err: fmt.Errorf(`ent: validator failed for field "LoginAuditLog.geo_location": %w`, err)}
 		}
 	}
-	if v, ok := _u.mutation.Result(); ok {
-		if err := loginauditlog.ResultValidator(v); err != nil {
-			return &ValidationError{Name: "result", err: fmt.Errorf(`ent: validator failed for field "LoginAuditLog.result": %w`, err)}
+	if v, ok := _u.mutation.DeviceInfo(); ok {
+		if err := v.Validate(); err != nil {
+			return &ValidationError{Name: "device_info", err: fmt.Errorf(`ent: validator failed for field "LoginAuditLog.device_info": %w`, err)}
+		}
+	}
+	if v, ok := _u.mutation.ActionType(); ok {
+		if err := loginauditlog.ActionTypeValidator(v); err != nil {
+			return &ValidationError{Name: "action_type", err: fmt.Errorf(`ent: validator failed for field "LoginAuditLog.action_type": %w`, err)}
+		}
+	}
+	if v, ok := _u.mutation.Status(); ok {
+		if err := loginauditlog.StatusValidator(v); err != nil {
+			return &ValidationError{Name: "status", err: fmt.Errorf(`ent: validator failed for field "LoginAuditLog.status": %w`, err)}
+		}
+	}
+	if v, ok := _u.mutation.LoginMethod(); ok {
+		if err := loginauditlog.LoginMethodValidator(v); err != nil {
+			return &ValidationError{Name: "login_method", err: fmt.Errorf(`ent: validator failed for field "LoginAuditLog.login_method": %w`, err)}
+		}
+	}
+	if v, ok := _u.mutation.RiskLevel(); ok {
+		if err := loginauditlog.RiskLevelValidator(v); err != nil {
+			return &ValidationError{Name: "risk_level", err: fmt.Errorf(`ent: validator failed for field "LoginAuditLog.risk_level": %w`, err)}
 		}
 	}
 	return nil
@@ -513,18 +1076,6 @@ func (_u *LoginAuditLogUpdateOne) sqlSave(ctx context.Context) (_node *LoginAudi
 	if _u.mutation.CreatedAtCleared() {
 		_spec.ClearField(loginauditlog.FieldCreatedAt, field.TypeTime)
 	}
-	if value, ok := _u.mutation.UpdatedAt(); ok {
-		_spec.SetField(loginauditlog.FieldUpdatedAt, field.TypeTime, value)
-	}
-	if _u.mutation.UpdatedAtCleared() {
-		_spec.ClearField(loginauditlog.FieldUpdatedAt, field.TypeTime)
-	}
-	if value, ok := _u.mutation.DeletedAt(); ok {
-		_spec.SetField(loginauditlog.FieldDeletedAt, field.TypeTime, value)
-	}
-	if _u.mutation.DeletedAtCleared() {
-		_spec.ClearField(loginauditlog.FieldDeletedAt, field.TypeTime)
-	}
 	if _u.mutation.TenantIDCleared() {
 		_spec.ClearField(loginauditlog.FieldTenantID, field.TypeUint32)
 	}
@@ -543,17 +1094,109 @@ func (_u *LoginAuditLogUpdateOne) sqlSave(ctx context.Context) (_node *LoginAudi
 	if _u.mutation.UsernameCleared() {
 		_spec.ClearField(loginauditlog.FieldUsername, field.TypeString)
 	}
-	if value, ok := _u.mutation.Result(); ok {
-		_spec.SetField(loginauditlog.FieldResult, field.TypeString, value)
+	if value, ok := _u.mutation.IPAddress(); ok {
+		_spec.SetField(loginauditlog.FieldIPAddress, field.TypeString, value)
 	}
-	if _u.mutation.ResultCleared() {
-		_spec.ClearField(loginauditlog.FieldResult, field.TypeString)
+	if _u.mutation.IPAddressCleared() {
+		_spec.ClearField(loginauditlog.FieldIPAddress, field.TypeString)
 	}
-	if value, ok := _u.mutation.LoggedAt(); ok {
-		_spec.SetField(loginauditlog.FieldLoggedAt, field.TypeTime, value)
+	if value, ok := _u.mutation.GeoLocation(); ok {
+		_spec.SetField(loginauditlog.FieldGeoLocation, field.TypeJSON, value)
 	}
-	if _u.mutation.LoggedAtCleared() {
-		_spec.ClearField(loginauditlog.FieldLoggedAt, field.TypeTime)
+	if _u.mutation.GeoLocationCleared() {
+		_spec.ClearField(loginauditlog.FieldGeoLocation, field.TypeJSON)
+	}
+	if value, ok := _u.mutation.SessionID(); ok {
+		_spec.SetField(loginauditlog.FieldSessionID, field.TypeString, value)
+	}
+	if _u.mutation.SessionIDCleared() {
+		_spec.ClearField(loginauditlog.FieldSessionID, field.TypeString)
+	}
+	if value, ok := _u.mutation.DeviceInfo(); ok {
+		_spec.SetField(loginauditlog.FieldDeviceInfo, field.TypeJSON, value)
+	}
+	if _u.mutation.DeviceInfoCleared() {
+		_spec.ClearField(loginauditlog.FieldDeviceInfo, field.TypeJSON)
+	}
+	if value, ok := _u.mutation.RequestID(); ok {
+		_spec.SetField(loginauditlog.FieldRequestID, field.TypeString, value)
+	}
+	if _u.mutation.RequestIDCleared() {
+		_spec.ClearField(loginauditlog.FieldRequestID, field.TypeString)
+	}
+	if value, ok := _u.mutation.TraceID(); ok {
+		_spec.SetField(loginauditlog.FieldTraceID, field.TypeString, value)
+	}
+	if _u.mutation.TraceIDCleared() {
+		_spec.ClearField(loginauditlog.FieldTraceID, field.TypeString)
+	}
+	if value, ok := _u.mutation.ActionType(); ok {
+		_spec.SetField(loginauditlog.FieldActionType, field.TypeEnum, value)
+	}
+	if _u.mutation.ActionTypeCleared() {
+		_spec.ClearField(loginauditlog.FieldActionType, field.TypeEnum)
+	}
+	if value, ok := _u.mutation.Status(); ok {
+		_spec.SetField(loginauditlog.FieldStatus, field.TypeEnum, value)
+	}
+	if _u.mutation.StatusCleared() {
+		_spec.ClearField(loginauditlog.FieldStatus, field.TypeEnum)
+	}
+	if value, ok := _u.mutation.LoginMethod(); ok {
+		_spec.SetField(loginauditlog.FieldLoginMethod, field.TypeEnum, value)
+	}
+	if _u.mutation.LoginMethodCleared() {
+		_spec.ClearField(loginauditlog.FieldLoginMethod, field.TypeEnum)
+	}
+	if value, ok := _u.mutation.FailureReason(); ok {
+		_spec.SetField(loginauditlog.FieldFailureReason, field.TypeString, value)
+	}
+	if _u.mutation.FailureReasonCleared() {
+		_spec.ClearField(loginauditlog.FieldFailureReason, field.TypeString)
+	}
+	if value, ok := _u.mutation.MfaStatus(); ok {
+		_spec.SetField(loginauditlog.FieldMfaStatus, field.TypeString, value)
+	}
+	if _u.mutation.MfaStatusCleared() {
+		_spec.ClearField(loginauditlog.FieldMfaStatus, field.TypeString)
+	}
+	if value, ok := _u.mutation.RiskScore(); ok {
+		_spec.SetField(loginauditlog.FieldRiskScore, field.TypeUint32, value)
+	}
+	if value, ok := _u.mutation.AddedRiskScore(); ok {
+		_spec.AddField(loginauditlog.FieldRiskScore, field.TypeUint32, value)
+	}
+	if _u.mutation.RiskScoreCleared() {
+		_spec.ClearField(loginauditlog.FieldRiskScore, field.TypeUint32)
+	}
+	if value, ok := _u.mutation.RiskLevel(); ok {
+		_spec.SetField(loginauditlog.FieldRiskLevel, field.TypeEnum, value)
+	}
+	if _u.mutation.RiskLevelCleared() {
+		_spec.ClearField(loginauditlog.FieldRiskLevel, field.TypeEnum)
+	}
+	if value, ok := _u.mutation.RiskFactors(); ok {
+		_spec.SetField(loginauditlog.FieldRiskFactors, field.TypeJSON, value)
+	}
+	if value, ok := _u.mutation.AppendedRiskFactors(); ok {
+		_spec.AddModifier(func(u *sql.UpdateBuilder) {
+			sqljson.Append(u, loginauditlog.FieldRiskFactors, value)
+		})
+	}
+	if _u.mutation.RiskFactorsCleared() {
+		_spec.ClearField(loginauditlog.FieldRiskFactors, field.TypeJSON)
+	}
+	if value, ok := _u.mutation.LogHash(); ok {
+		_spec.SetField(loginauditlog.FieldLogHash, field.TypeString, value)
+	}
+	if _u.mutation.LogHashCleared() {
+		_spec.ClearField(loginauditlog.FieldLogHash, field.TypeString)
+	}
+	if value, ok := _u.mutation.Signature(); ok {
+		_spec.SetField(loginauditlog.FieldSignature, field.TypeBytes, value)
+	}
+	if _u.mutation.SignatureCleared() {
+		_spec.ClearField(loginauditlog.FieldSignature, field.TypeBytes)
 	}
 	_spec.AddModifiers(_u.modifiers...)
 	_node = &LoginAuditLog{config: _u.config}

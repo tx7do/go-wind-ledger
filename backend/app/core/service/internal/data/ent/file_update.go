@@ -150,130 +150,23 @@ func (_u *FileUpdate) ClearDeletedBy() *FileUpdate {
 	return _u
 }
 
-// SetName sets the "name" field.
-func (_u *FileUpdate) SetName(v string) *FileUpdate {
-	_u.mutation.SetName(v)
+// SetRemark sets the "remark" field.
+func (_u *FileUpdate) SetRemark(v string) *FileUpdate {
+	_u.mutation.SetRemark(v)
 	return _u
 }
 
-// SetNillableName sets the "name" field if the given value is not nil.
-func (_u *FileUpdate) SetNillableName(v *string) *FileUpdate {
+// SetNillableRemark sets the "remark" field if the given value is not nil.
+func (_u *FileUpdate) SetNillableRemark(v *string) *FileUpdate {
 	if v != nil {
-		_u.SetName(*v)
+		_u.SetRemark(*v)
 	}
 	return _u
 }
 
-// ClearName clears the value of the "name" field.
-func (_u *FileUpdate) ClearName() *FileUpdate {
-	_u.mutation.ClearName()
-	return _u
-}
-
-// SetOriginalName sets the "original_name" field.
-func (_u *FileUpdate) SetOriginalName(v string) *FileUpdate {
-	_u.mutation.SetOriginalName(v)
-	return _u
-}
-
-// SetNillableOriginalName sets the "original_name" field if the given value is not nil.
-func (_u *FileUpdate) SetNillableOriginalName(v *string) *FileUpdate {
-	if v != nil {
-		_u.SetOriginalName(*v)
-	}
-	return _u
-}
-
-// ClearOriginalName clears the value of the "original_name" field.
-func (_u *FileUpdate) ClearOriginalName() *FileUpdate {
-	_u.mutation.ClearOriginalName()
-	return _u
-}
-
-// SetContentType sets the "content_type" field.
-func (_u *FileUpdate) SetContentType(v string) *FileUpdate {
-	_u.mutation.SetContentType(v)
-	return _u
-}
-
-// SetNillableContentType sets the "content_type" field if the given value is not nil.
-func (_u *FileUpdate) SetNillableContentType(v *string) *FileUpdate {
-	if v != nil {
-		_u.SetContentType(*v)
-	}
-	return _u
-}
-
-// ClearContentType clears the value of the "content_type" field.
-func (_u *FileUpdate) ClearContentType() *FileUpdate {
-	_u.mutation.ClearContentType()
-	return _u
-}
-
-// SetSize sets the "size" field.
-func (_u *FileUpdate) SetSize(v int64) *FileUpdate {
-	_u.mutation.ResetSize()
-	_u.mutation.SetSize(v)
-	return _u
-}
-
-// SetNillableSize sets the "size" field if the given value is not nil.
-func (_u *FileUpdate) SetNillableSize(v *int64) *FileUpdate {
-	if v != nil {
-		_u.SetSize(*v)
-	}
-	return _u
-}
-
-// AddSize adds value to the "size" field.
-func (_u *FileUpdate) AddSize(v int64) *FileUpdate {
-	_u.mutation.AddSize(v)
-	return _u
-}
-
-// ClearSize clears the value of the "size" field.
-func (_u *FileUpdate) ClearSize() *FileUpdate {
-	_u.mutation.ClearSize()
-	return _u
-}
-
-// SetPath sets the "path" field.
-func (_u *FileUpdate) SetPath(v string) *FileUpdate {
-	_u.mutation.SetPath(v)
-	return _u
-}
-
-// SetNillablePath sets the "path" field if the given value is not nil.
-func (_u *FileUpdate) SetNillablePath(v *string) *FileUpdate {
-	if v != nil {
-		_u.SetPath(*v)
-	}
-	return _u
-}
-
-// ClearPath clears the value of the "path" field.
-func (_u *FileUpdate) ClearPath() *FileUpdate {
-	_u.mutation.ClearPath()
-	return _u
-}
-
-// SetURL sets the "url" field.
-func (_u *FileUpdate) SetURL(v string) *FileUpdate {
-	_u.mutation.SetURL(v)
-	return _u
-}
-
-// SetNillableURL sets the "url" field if the given value is not nil.
-func (_u *FileUpdate) SetNillableURL(v *string) *FileUpdate {
-	if v != nil {
-		_u.SetURL(*v)
-	}
-	return _u
-}
-
-// ClearURL clears the value of the "url" field.
-func (_u *FileUpdate) ClearURL() *FileUpdate {
-	_u.mutation.ClearURL()
+// ClearRemark clears the value of the "remark" field.
+func (_u *FileUpdate) ClearRemark() *FileUpdate {
+	_u.mutation.ClearRemark()
 	return _u
 }
 
@@ -297,23 +190,210 @@ func (_u *FileUpdate) ClearProvider() *FileUpdate {
 	return _u
 }
 
-// SetObjectKey sets the "object_key" field.
-func (_u *FileUpdate) SetObjectKey(v string) *FileUpdate {
-	_u.mutation.SetObjectKey(v)
+// SetBucketName sets the "bucket_name" field.
+func (_u *FileUpdate) SetBucketName(v string) *FileUpdate {
+	_u.mutation.SetBucketName(v)
 	return _u
 }
 
-// SetNillableObjectKey sets the "object_key" field if the given value is not nil.
-func (_u *FileUpdate) SetNillableObjectKey(v *string) *FileUpdate {
+// SetNillableBucketName sets the "bucket_name" field if the given value is not nil.
+func (_u *FileUpdate) SetNillableBucketName(v *string) *FileUpdate {
 	if v != nil {
-		_u.SetObjectKey(*v)
+		_u.SetBucketName(*v)
 	}
 	return _u
 }
 
-// ClearObjectKey clears the value of the "object_key" field.
-func (_u *FileUpdate) ClearObjectKey() *FileUpdate {
-	_u.mutation.ClearObjectKey()
+// ClearBucketName clears the value of the "bucket_name" field.
+func (_u *FileUpdate) ClearBucketName() *FileUpdate {
+	_u.mutation.ClearBucketName()
+	return _u
+}
+
+// SetFileDirectory sets the "file_directory" field.
+func (_u *FileUpdate) SetFileDirectory(v string) *FileUpdate {
+	_u.mutation.SetFileDirectory(v)
+	return _u
+}
+
+// SetNillableFileDirectory sets the "file_directory" field if the given value is not nil.
+func (_u *FileUpdate) SetNillableFileDirectory(v *string) *FileUpdate {
+	if v != nil {
+		_u.SetFileDirectory(*v)
+	}
+	return _u
+}
+
+// ClearFileDirectory clears the value of the "file_directory" field.
+func (_u *FileUpdate) ClearFileDirectory() *FileUpdate {
+	_u.mutation.ClearFileDirectory()
+	return _u
+}
+
+// SetFileGUID sets the "file_guid" field.
+func (_u *FileUpdate) SetFileGUID(v string) *FileUpdate {
+	_u.mutation.SetFileGUID(v)
+	return _u
+}
+
+// SetNillableFileGUID sets the "file_guid" field if the given value is not nil.
+func (_u *FileUpdate) SetNillableFileGUID(v *string) *FileUpdate {
+	if v != nil {
+		_u.SetFileGUID(*v)
+	}
+	return _u
+}
+
+// ClearFileGUID clears the value of the "file_guid" field.
+func (_u *FileUpdate) ClearFileGUID() *FileUpdate {
+	_u.mutation.ClearFileGUID()
+	return _u
+}
+
+// SetSaveFileName sets the "save_file_name" field.
+func (_u *FileUpdate) SetSaveFileName(v string) *FileUpdate {
+	_u.mutation.SetSaveFileName(v)
+	return _u
+}
+
+// SetNillableSaveFileName sets the "save_file_name" field if the given value is not nil.
+func (_u *FileUpdate) SetNillableSaveFileName(v *string) *FileUpdate {
+	if v != nil {
+		_u.SetSaveFileName(*v)
+	}
+	return _u
+}
+
+// ClearSaveFileName clears the value of the "save_file_name" field.
+func (_u *FileUpdate) ClearSaveFileName() *FileUpdate {
+	_u.mutation.ClearSaveFileName()
+	return _u
+}
+
+// SetFileName sets the "file_name" field.
+func (_u *FileUpdate) SetFileName(v string) *FileUpdate {
+	_u.mutation.SetFileName(v)
+	return _u
+}
+
+// SetNillableFileName sets the "file_name" field if the given value is not nil.
+func (_u *FileUpdate) SetNillableFileName(v *string) *FileUpdate {
+	if v != nil {
+		_u.SetFileName(*v)
+	}
+	return _u
+}
+
+// ClearFileName clears the value of the "file_name" field.
+func (_u *FileUpdate) ClearFileName() *FileUpdate {
+	_u.mutation.ClearFileName()
+	return _u
+}
+
+// SetExtension sets the "extension" field.
+func (_u *FileUpdate) SetExtension(v string) *FileUpdate {
+	_u.mutation.SetExtension(v)
+	return _u
+}
+
+// SetNillableExtension sets the "extension" field if the given value is not nil.
+func (_u *FileUpdate) SetNillableExtension(v *string) *FileUpdate {
+	if v != nil {
+		_u.SetExtension(*v)
+	}
+	return _u
+}
+
+// ClearExtension clears the value of the "extension" field.
+func (_u *FileUpdate) ClearExtension() *FileUpdate {
+	_u.mutation.ClearExtension()
+	return _u
+}
+
+// SetSize sets the "size" field.
+func (_u *FileUpdate) SetSize(v uint64) *FileUpdate {
+	_u.mutation.ResetSize()
+	_u.mutation.SetSize(v)
+	return _u
+}
+
+// SetNillableSize sets the "size" field if the given value is not nil.
+func (_u *FileUpdate) SetNillableSize(v *uint64) *FileUpdate {
+	if v != nil {
+		_u.SetSize(*v)
+	}
+	return _u
+}
+
+// AddSize adds value to the "size" field.
+func (_u *FileUpdate) AddSize(v int64) *FileUpdate {
+	_u.mutation.AddSize(v)
+	return _u
+}
+
+// ClearSize clears the value of the "size" field.
+func (_u *FileUpdate) ClearSize() *FileUpdate {
+	_u.mutation.ClearSize()
+	return _u
+}
+
+// SetSizeFormat sets the "size_format" field.
+func (_u *FileUpdate) SetSizeFormat(v string) *FileUpdate {
+	_u.mutation.SetSizeFormat(v)
+	return _u
+}
+
+// SetNillableSizeFormat sets the "size_format" field if the given value is not nil.
+func (_u *FileUpdate) SetNillableSizeFormat(v *string) *FileUpdate {
+	if v != nil {
+		_u.SetSizeFormat(*v)
+	}
+	return _u
+}
+
+// ClearSizeFormat clears the value of the "size_format" field.
+func (_u *FileUpdate) ClearSizeFormat() *FileUpdate {
+	_u.mutation.ClearSizeFormat()
+	return _u
+}
+
+// SetLinkURL sets the "link_url" field.
+func (_u *FileUpdate) SetLinkURL(v string) *FileUpdate {
+	_u.mutation.SetLinkURL(v)
+	return _u
+}
+
+// SetNillableLinkURL sets the "link_url" field if the given value is not nil.
+func (_u *FileUpdate) SetNillableLinkURL(v *string) *FileUpdate {
+	if v != nil {
+		_u.SetLinkURL(*v)
+	}
+	return _u
+}
+
+// ClearLinkURL clears the value of the "link_url" field.
+func (_u *FileUpdate) ClearLinkURL() *FileUpdate {
+	_u.mutation.ClearLinkURL()
+	return _u
+}
+
+// SetContentHash sets the "content_hash" field.
+func (_u *FileUpdate) SetContentHash(v string) *FileUpdate {
+	_u.mutation.SetContentHash(v)
+	return _u
+}
+
+// SetNillableContentHash sets the "content_hash" field if the given value is not nil.
+func (_u *FileUpdate) SetNillableContentHash(v *string) *FileUpdate {
+	if v != nil {
+		_u.SetContentHash(*v)
+	}
+	return _u
+}
+
+// ClearContentHash clears the value of the "content_hash" field.
+func (_u *FileUpdate) ClearContentHash() *FileUpdate {
+	_u.mutation.ClearContentHash()
 	return _u
 }
 
@@ -351,39 +431,9 @@ func (_u *FileUpdate) ExecX(ctx context.Context) {
 
 // check runs all checks and user-defined validators on the builder.
 func (_u *FileUpdate) check() error {
-	if v, ok := _u.mutation.Name(); ok {
-		if err := file.NameValidator(v); err != nil {
-			return &ValidationError{Name: "name", err: fmt.Errorf(`ent: validator failed for field "File.name": %w`, err)}
-		}
-	}
-	if v, ok := _u.mutation.OriginalName(); ok {
-		if err := file.OriginalNameValidator(v); err != nil {
-			return &ValidationError{Name: "original_name", err: fmt.Errorf(`ent: validator failed for field "File.original_name": %w`, err)}
-		}
-	}
-	if v, ok := _u.mutation.ContentType(); ok {
-		if err := file.ContentTypeValidator(v); err != nil {
-			return &ValidationError{Name: "content_type", err: fmt.Errorf(`ent: validator failed for field "File.content_type": %w`, err)}
-		}
-	}
-	if v, ok := _u.mutation.Path(); ok {
-		if err := file.PathValidator(v); err != nil {
-			return &ValidationError{Name: "path", err: fmt.Errorf(`ent: validator failed for field "File.path": %w`, err)}
-		}
-	}
-	if v, ok := _u.mutation.URL(); ok {
-		if err := file.URLValidator(v); err != nil {
-			return &ValidationError{Name: "url", err: fmt.Errorf(`ent: validator failed for field "File.url": %w`, err)}
-		}
-	}
 	if v, ok := _u.mutation.Provider(); ok {
 		if err := file.ProviderValidator(v); err != nil {
 			return &ValidationError{Name: "provider", err: fmt.Errorf(`ent: validator failed for field "File.provider": %w`, err)}
-		}
-	}
-	if v, ok := _u.mutation.ObjectKey(); ok {
-		if err := file.ObjectKeyValidator(v); err != nil {
-			return &ValidationError{Name: "object_key", err: fmt.Errorf(`ent: validator failed for field "File.object_key": %w`, err)}
 		}
 	}
 	return nil
@@ -449,47 +499,14 @@ func (_u *FileUpdate) sqlSave(ctx context.Context) (_node int, err error) {
 	if _u.mutation.DeletedByCleared() {
 		_spec.ClearField(file.FieldDeletedBy, field.TypeUint32)
 	}
+	if value, ok := _u.mutation.Remark(); ok {
+		_spec.SetField(file.FieldRemark, field.TypeString, value)
+	}
+	if _u.mutation.RemarkCleared() {
+		_spec.ClearField(file.FieldRemark, field.TypeString)
+	}
 	if _u.mutation.TenantIDCleared() {
 		_spec.ClearField(file.FieldTenantID, field.TypeUint32)
-	}
-	if value, ok := _u.mutation.Name(); ok {
-		_spec.SetField(file.FieldName, field.TypeString, value)
-	}
-	if _u.mutation.NameCleared() {
-		_spec.ClearField(file.FieldName, field.TypeString)
-	}
-	if value, ok := _u.mutation.OriginalName(); ok {
-		_spec.SetField(file.FieldOriginalName, field.TypeString, value)
-	}
-	if _u.mutation.OriginalNameCleared() {
-		_spec.ClearField(file.FieldOriginalName, field.TypeString)
-	}
-	if value, ok := _u.mutation.ContentType(); ok {
-		_spec.SetField(file.FieldContentType, field.TypeString, value)
-	}
-	if _u.mutation.ContentTypeCleared() {
-		_spec.ClearField(file.FieldContentType, field.TypeString)
-	}
-	if value, ok := _u.mutation.Size(); ok {
-		_spec.SetField(file.FieldSize, field.TypeInt64, value)
-	}
-	if value, ok := _u.mutation.AddedSize(); ok {
-		_spec.AddField(file.FieldSize, field.TypeInt64, value)
-	}
-	if _u.mutation.SizeCleared() {
-		_spec.ClearField(file.FieldSize, field.TypeInt64)
-	}
-	if value, ok := _u.mutation.Path(); ok {
-		_spec.SetField(file.FieldPath, field.TypeString, value)
-	}
-	if _u.mutation.PathCleared() {
-		_spec.ClearField(file.FieldPath, field.TypeString)
-	}
-	if value, ok := _u.mutation.URL(); ok {
-		_spec.SetField(file.FieldURL, field.TypeString, value)
-	}
-	if _u.mutation.URLCleared() {
-		_spec.ClearField(file.FieldURL, field.TypeString)
 	}
 	if value, ok := _u.mutation.Provider(); ok {
 		_spec.SetField(file.FieldProvider, field.TypeEnum, value)
@@ -497,11 +514,68 @@ func (_u *FileUpdate) sqlSave(ctx context.Context) (_node int, err error) {
 	if _u.mutation.ProviderCleared() {
 		_spec.ClearField(file.FieldProvider, field.TypeEnum)
 	}
-	if value, ok := _u.mutation.ObjectKey(); ok {
-		_spec.SetField(file.FieldObjectKey, field.TypeString, value)
+	if value, ok := _u.mutation.BucketName(); ok {
+		_spec.SetField(file.FieldBucketName, field.TypeString, value)
 	}
-	if _u.mutation.ObjectKeyCleared() {
-		_spec.ClearField(file.FieldObjectKey, field.TypeString)
+	if _u.mutation.BucketNameCleared() {
+		_spec.ClearField(file.FieldBucketName, field.TypeString)
+	}
+	if value, ok := _u.mutation.FileDirectory(); ok {
+		_spec.SetField(file.FieldFileDirectory, field.TypeString, value)
+	}
+	if _u.mutation.FileDirectoryCleared() {
+		_spec.ClearField(file.FieldFileDirectory, field.TypeString)
+	}
+	if value, ok := _u.mutation.FileGUID(); ok {
+		_spec.SetField(file.FieldFileGUID, field.TypeString, value)
+	}
+	if _u.mutation.FileGUIDCleared() {
+		_spec.ClearField(file.FieldFileGUID, field.TypeString)
+	}
+	if value, ok := _u.mutation.SaveFileName(); ok {
+		_spec.SetField(file.FieldSaveFileName, field.TypeString, value)
+	}
+	if _u.mutation.SaveFileNameCleared() {
+		_spec.ClearField(file.FieldSaveFileName, field.TypeString)
+	}
+	if value, ok := _u.mutation.FileName(); ok {
+		_spec.SetField(file.FieldFileName, field.TypeString, value)
+	}
+	if _u.mutation.FileNameCleared() {
+		_spec.ClearField(file.FieldFileName, field.TypeString)
+	}
+	if value, ok := _u.mutation.Extension(); ok {
+		_spec.SetField(file.FieldExtension, field.TypeString, value)
+	}
+	if _u.mutation.ExtensionCleared() {
+		_spec.ClearField(file.FieldExtension, field.TypeString)
+	}
+	if value, ok := _u.mutation.Size(); ok {
+		_spec.SetField(file.FieldSize, field.TypeUint64, value)
+	}
+	if value, ok := _u.mutation.AddedSize(); ok {
+		_spec.AddField(file.FieldSize, field.TypeUint64, value)
+	}
+	if _u.mutation.SizeCleared() {
+		_spec.ClearField(file.FieldSize, field.TypeUint64)
+	}
+	if value, ok := _u.mutation.SizeFormat(); ok {
+		_spec.SetField(file.FieldSizeFormat, field.TypeString, value)
+	}
+	if _u.mutation.SizeFormatCleared() {
+		_spec.ClearField(file.FieldSizeFormat, field.TypeString)
+	}
+	if value, ok := _u.mutation.LinkURL(); ok {
+		_spec.SetField(file.FieldLinkURL, field.TypeString, value)
+	}
+	if _u.mutation.LinkURLCleared() {
+		_spec.ClearField(file.FieldLinkURL, field.TypeString)
+	}
+	if value, ok := _u.mutation.ContentHash(); ok {
+		_spec.SetField(file.FieldContentHash, field.TypeString, value)
+	}
+	if _u.mutation.ContentHashCleared() {
+		_spec.ClearField(file.FieldContentHash, field.TypeString)
 	}
 	_spec.AddModifiers(_u.modifiers...)
 	if _node, err = sqlgraph.UpdateNodes(ctx, _u.driver, _spec); err != nil {
@@ -646,130 +720,23 @@ func (_u *FileUpdateOne) ClearDeletedBy() *FileUpdateOne {
 	return _u
 }
 
-// SetName sets the "name" field.
-func (_u *FileUpdateOne) SetName(v string) *FileUpdateOne {
-	_u.mutation.SetName(v)
+// SetRemark sets the "remark" field.
+func (_u *FileUpdateOne) SetRemark(v string) *FileUpdateOne {
+	_u.mutation.SetRemark(v)
 	return _u
 }
 
-// SetNillableName sets the "name" field if the given value is not nil.
-func (_u *FileUpdateOne) SetNillableName(v *string) *FileUpdateOne {
+// SetNillableRemark sets the "remark" field if the given value is not nil.
+func (_u *FileUpdateOne) SetNillableRemark(v *string) *FileUpdateOne {
 	if v != nil {
-		_u.SetName(*v)
+		_u.SetRemark(*v)
 	}
 	return _u
 }
 
-// ClearName clears the value of the "name" field.
-func (_u *FileUpdateOne) ClearName() *FileUpdateOne {
-	_u.mutation.ClearName()
-	return _u
-}
-
-// SetOriginalName sets the "original_name" field.
-func (_u *FileUpdateOne) SetOriginalName(v string) *FileUpdateOne {
-	_u.mutation.SetOriginalName(v)
-	return _u
-}
-
-// SetNillableOriginalName sets the "original_name" field if the given value is not nil.
-func (_u *FileUpdateOne) SetNillableOriginalName(v *string) *FileUpdateOne {
-	if v != nil {
-		_u.SetOriginalName(*v)
-	}
-	return _u
-}
-
-// ClearOriginalName clears the value of the "original_name" field.
-func (_u *FileUpdateOne) ClearOriginalName() *FileUpdateOne {
-	_u.mutation.ClearOriginalName()
-	return _u
-}
-
-// SetContentType sets the "content_type" field.
-func (_u *FileUpdateOne) SetContentType(v string) *FileUpdateOne {
-	_u.mutation.SetContentType(v)
-	return _u
-}
-
-// SetNillableContentType sets the "content_type" field if the given value is not nil.
-func (_u *FileUpdateOne) SetNillableContentType(v *string) *FileUpdateOne {
-	if v != nil {
-		_u.SetContentType(*v)
-	}
-	return _u
-}
-
-// ClearContentType clears the value of the "content_type" field.
-func (_u *FileUpdateOne) ClearContentType() *FileUpdateOne {
-	_u.mutation.ClearContentType()
-	return _u
-}
-
-// SetSize sets the "size" field.
-func (_u *FileUpdateOne) SetSize(v int64) *FileUpdateOne {
-	_u.mutation.ResetSize()
-	_u.mutation.SetSize(v)
-	return _u
-}
-
-// SetNillableSize sets the "size" field if the given value is not nil.
-func (_u *FileUpdateOne) SetNillableSize(v *int64) *FileUpdateOne {
-	if v != nil {
-		_u.SetSize(*v)
-	}
-	return _u
-}
-
-// AddSize adds value to the "size" field.
-func (_u *FileUpdateOne) AddSize(v int64) *FileUpdateOne {
-	_u.mutation.AddSize(v)
-	return _u
-}
-
-// ClearSize clears the value of the "size" field.
-func (_u *FileUpdateOne) ClearSize() *FileUpdateOne {
-	_u.mutation.ClearSize()
-	return _u
-}
-
-// SetPath sets the "path" field.
-func (_u *FileUpdateOne) SetPath(v string) *FileUpdateOne {
-	_u.mutation.SetPath(v)
-	return _u
-}
-
-// SetNillablePath sets the "path" field if the given value is not nil.
-func (_u *FileUpdateOne) SetNillablePath(v *string) *FileUpdateOne {
-	if v != nil {
-		_u.SetPath(*v)
-	}
-	return _u
-}
-
-// ClearPath clears the value of the "path" field.
-func (_u *FileUpdateOne) ClearPath() *FileUpdateOne {
-	_u.mutation.ClearPath()
-	return _u
-}
-
-// SetURL sets the "url" field.
-func (_u *FileUpdateOne) SetURL(v string) *FileUpdateOne {
-	_u.mutation.SetURL(v)
-	return _u
-}
-
-// SetNillableURL sets the "url" field if the given value is not nil.
-func (_u *FileUpdateOne) SetNillableURL(v *string) *FileUpdateOne {
-	if v != nil {
-		_u.SetURL(*v)
-	}
-	return _u
-}
-
-// ClearURL clears the value of the "url" field.
-func (_u *FileUpdateOne) ClearURL() *FileUpdateOne {
-	_u.mutation.ClearURL()
+// ClearRemark clears the value of the "remark" field.
+func (_u *FileUpdateOne) ClearRemark() *FileUpdateOne {
+	_u.mutation.ClearRemark()
 	return _u
 }
 
@@ -793,23 +760,210 @@ func (_u *FileUpdateOne) ClearProvider() *FileUpdateOne {
 	return _u
 }
 
-// SetObjectKey sets the "object_key" field.
-func (_u *FileUpdateOne) SetObjectKey(v string) *FileUpdateOne {
-	_u.mutation.SetObjectKey(v)
+// SetBucketName sets the "bucket_name" field.
+func (_u *FileUpdateOne) SetBucketName(v string) *FileUpdateOne {
+	_u.mutation.SetBucketName(v)
 	return _u
 }
 
-// SetNillableObjectKey sets the "object_key" field if the given value is not nil.
-func (_u *FileUpdateOne) SetNillableObjectKey(v *string) *FileUpdateOne {
+// SetNillableBucketName sets the "bucket_name" field if the given value is not nil.
+func (_u *FileUpdateOne) SetNillableBucketName(v *string) *FileUpdateOne {
 	if v != nil {
-		_u.SetObjectKey(*v)
+		_u.SetBucketName(*v)
 	}
 	return _u
 }
 
-// ClearObjectKey clears the value of the "object_key" field.
-func (_u *FileUpdateOne) ClearObjectKey() *FileUpdateOne {
-	_u.mutation.ClearObjectKey()
+// ClearBucketName clears the value of the "bucket_name" field.
+func (_u *FileUpdateOne) ClearBucketName() *FileUpdateOne {
+	_u.mutation.ClearBucketName()
+	return _u
+}
+
+// SetFileDirectory sets the "file_directory" field.
+func (_u *FileUpdateOne) SetFileDirectory(v string) *FileUpdateOne {
+	_u.mutation.SetFileDirectory(v)
+	return _u
+}
+
+// SetNillableFileDirectory sets the "file_directory" field if the given value is not nil.
+func (_u *FileUpdateOne) SetNillableFileDirectory(v *string) *FileUpdateOne {
+	if v != nil {
+		_u.SetFileDirectory(*v)
+	}
+	return _u
+}
+
+// ClearFileDirectory clears the value of the "file_directory" field.
+func (_u *FileUpdateOne) ClearFileDirectory() *FileUpdateOne {
+	_u.mutation.ClearFileDirectory()
+	return _u
+}
+
+// SetFileGUID sets the "file_guid" field.
+func (_u *FileUpdateOne) SetFileGUID(v string) *FileUpdateOne {
+	_u.mutation.SetFileGUID(v)
+	return _u
+}
+
+// SetNillableFileGUID sets the "file_guid" field if the given value is not nil.
+func (_u *FileUpdateOne) SetNillableFileGUID(v *string) *FileUpdateOne {
+	if v != nil {
+		_u.SetFileGUID(*v)
+	}
+	return _u
+}
+
+// ClearFileGUID clears the value of the "file_guid" field.
+func (_u *FileUpdateOne) ClearFileGUID() *FileUpdateOne {
+	_u.mutation.ClearFileGUID()
+	return _u
+}
+
+// SetSaveFileName sets the "save_file_name" field.
+func (_u *FileUpdateOne) SetSaveFileName(v string) *FileUpdateOne {
+	_u.mutation.SetSaveFileName(v)
+	return _u
+}
+
+// SetNillableSaveFileName sets the "save_file_name" field if the given value is not nil.
+func (_u *FileUpdateOne) SetNillableSaveFileName(v *string) *FileUpdateOne {
+	if v != nil {
+		_u.SetSaveFileName(*v)
+	}
+	return _u
+}
+
+// ClearSaveFileName clears the value of the "save_file_name" field.
+func (_u *FileUpdateOne) ClearSaveFileName() *FileUpdateOne {
+	_u.mutation.ClearSaveFileName()
+	return _u
+}
+
+// SetFileName sets the "file_name" field.
+func (_u *FileUpdateOne) SetFileName(v string) *FileUpdateOne {
+	_u.mutation.SetFileName(v)
+	return _u
+}
+
+// SetNillableFileName sets the "file_name" field if the given value is not nil.
+func (_u *FileUpdateOne) SetNillableFileName(v *string) *FileUpdateOne {
+	if v != nil {
+		_u.SetFileName(*v)
+	}
+	return _u
+}
+
+// ClearFileName clears the value of the "file_name" field.
+func (_u *FileUpdateOne) ClearFileName() *FileUpdateOne {
+	_u.mutation.ClearFileName()
+	return _u
+}
+
+// SetExtension sets the "extension" field.
+func (_u *FileUpdateOne) SetExtension(v string) *FileUpdateOne {
+	_u.mutation.SetExtension(v)
+	return _u
+}
+
+// SetNillableExtension sets the "extension" field if the given value is not nil.
+func (_u *FileUpdateOne) SetNillableExtension(v *string) *FileUpdateOne {
+	if v != nil {
+		_u.SetExtension(*v)
+	}
+	return _u
+}
+
+// ClearExtension clears the value of the "extension" field.
+func (_u *FileUpdateOne) ClearExtension() *FileUpdateOne {
+	_u.mutation.ClearExtension()
+	return _u
+}
+
+// SetSize sets the "size" field.
+func (_u *FileUpdateOne) SetSize(v uint64) *FileUpdateOne {
+	_u.mutation.ResetSize()
+	_u.mutation.SetSize(v)
+	return _u
+}
+
+// SetNillableSize sets the "size" field if the given value is not nil.
+func (_u *FileUpdateOne) SetNillableSize(v *uint64) *FileUpdateOne {
+	if v != nil {
+		_u.SetSize(*v)
+	}
+	return _u
+}
+
+// AddSize adds value to the "size" field.
+func (_u *FileUpdateOne) AddSize(v int64) *FileUpdateOne {
+	_u.mutation.AddSize(v)
+	return _u
+}
+
+// ClearSize clears the value of the "size" field.
+func (_u *FileUpdateOne) ClearSize() *FileUpdateOne {
+	_u.mutation.ClearSize()
+	return _u
+}
+
+// SetSizeFormat sets the "size_format" field.
+func (_u *FileUpdateOne) SetSizeFormat(v string) *FileUpdateOne {
+	_u.mutation.SetSizeFormat(v)
+	return _u
+}
+
+// SetNillableSizeFormat sets the "size_format" field if the given value is not nil.
+func (_u *FileUpdateOne) SetNillableSizeFormat(v *string) *FileUpdateOne {
+	if v != nil {
+		_u.SetSizeFormat(*v)
+	}
+	return _u
+}
+
+// ClearSizeFormat clears the value of the "size_format" field.
+func (_u *FileUpdateOne) ClearSizeFormat() *FileUpdateOne {
+	_u.mutation.ClearSizeFormat()
+	return _u
+}
+
+// SetLinkURL sets the "link_url" field.
+func (_u *FileUpdateOne) SetLinkURL(v string) *FileUpdateOne {
+	_u.mutation.SetLinkURL(v)
+	return _u
+}
+
+// SetNillableLinkURL sets the "link_url" field if the given value is not nil.
+func (_u *FileUpdateOne) SetNillableLinkURL(v *string) *FileUpdateOne {
+	if v != nil {
+		_u.SetLinkURL(*v)
+	}
+	return _u
+}
+
+// ClearLinkURL clears the value of the "link_url" field.
+func (_u *FileUpdateOne) ClearLinkURL() *FileUpdateOne {
+	_u.mutation.ClearLinkURL()
+	return _u
+}
+
+// SetContentHash sets the "content_hash" field.
+func (_u *FileUpdateOne) SetContentHash(v string) *FileUpdateOne {
+	_u.mutation.SetContentHash(v)
+	return _u
+}
+
+// SetNillableContentHash sets the "content_hash" field if the given value is not nil.
+func (_u *FileUpdateOne) SetNillableContentHash(v *string) *FileUpdateOne {
+	if v != nil {
+		_u.SetContentHash(*v)
+	}
+	return _u
+}
+
+// ClearContentHash clears the value of the "content_hash" field.
+func (_u *FileUpdateOne) ClearContentHash() *FileUpdateOne {
+	_u.mutation.ClearContentHash()
 	return _u
 }
 
@@ -860,39 +1014,9 @@ func (_u *FileUpdateOne) ExecX(ctx context.Context) {
 
 // check runs all checks and user-defined validators on the builder.
 func (_u *FileUpdateOne) check() error {
-	if v, ok := _u.mutation.Name(); ok {
-		if err := file.NameValidator(v); err != nil {
-			return &ValidationError{Name: "name", err: fmt.Errorf(`ent: validator failed for field "File.name": %w`, err)}
-		}
-	}
-	if v, ok := _u.mutation.OriginalName(); ok {
-		if err := file.OriginalNameValidator(v); err != nil {
-			return &ValidationError{Name: "original_name", err: fmt.Errorf(`ent: validator failed for field "File.original_name": %w`, err)}
-		}
-	}
-	if v, ok := _u.mutation.ContentType(); ok {
-		if err := file.ContentTypeValidator(v); err != nil {
-			return &ValidationError{Name: "content_type", err: fmt.Errorf(`ent: validator failed for field "File.content_type": %w`, err)}
-		}
-	}
-	if v, ok := _u.mutation.Path(); ok {
-		if err := file.PathValidator(v); err != nil {
-			return &ValidationError{Name: "path", err: fmt.Errorf(`ent: validator failed for field "File.path": %w`, err)}
-		}
-	}
-	if v, ok := _u.mutation.URL(); ok {
-		if err := file.URLValidator(v); err != nil {
-			return &ValidationError{Name: "url", err: fmt.Errorf(`ent: validator failed for field "File.url": %w`, err)}
-		}
-	}
 	if v, ok := _u.mutation.Provider(); ok {
 		if err := file.ProviderValidator(v); err != nil {
 			return &ValidationError{Name: "provider", err: fmt.Errorf(`ent: validator failed for field "File.provider": %w`, err)}
-		}
-	}
-	if v, ok := _u.mutation.ObjectKey(); ok {
-		if err := file.ObjectKeyValidator(v); err != nil {
-			return &ValidationError{Name: "object_key", err: fmt.Errorf(`ent: validator failed for field "File.object_key": %w`, err)}
 		}
 	}
 	return nil
@@ -975,47 +1099,14 @@ func (_u *FileUpdateOne) sqlSave(ctx context.Context) (_node *File, err error) {
 	if _u.mutation.DeletedByCleared() {
 		_spec.ClearField(file.FieldDeletedBy, field.TypeUint32)
 	}
+	if value, ok := _u.mutation.Remark(); ok {
+		_spec.SetField(file.FieldRemark, field.TypeString, value)
+	}
+	if _u.mutation.RemarkCleared() {
+		_spec.ClearField(file.FieldRemark, field.TypeString)
+	}
 	if _u.mutation.TenantIDCleared() {
 		_spec.ClearField(file.FieldTenantID, field.TypeUint32)
-	}
-	if value, ok := _u.mutation.Name(); ok {
-		_spec.SetField(file.FieldName, field.TypeString, value)
-	}
-	if _u.mutation.NameCleared() {
-		_spec.ClearField(file.FieldName, field.TypeString)
-	}
-	if value, ok := _u.mutation.OriginalName(); ok {
-		_spec.SetField(file.FieldOriginalName, field.TypeString, value)
-	}
-	if _u.mutation.OriginalNameCleared() {
-		_spec.ClearField(file.FieldOriginalName, field.TypeString)
-	}
-	if value, ok := _u.mutation.ContentType(); ok {
-		_spec.SetField(file.FieldContentType, field.TypeString, value)
-	}
-	if _u.mutation.ContentTypeCleared() {
-		_spec.ClearField(file.FieldContentType, field.TypeString)
-	}
-	if value, ok := _u.mutation.Size(); ok {
-		_spec.SetField(file.FieldSize, field.TypeInt64, value)
-	}
-	if value, ok := _u.mutation.AddedSize(); ok {
-		_spec.AddField(file.FieldSize, field.TypeInt64, value)
-	}
-	if _u.mutation.SizeCleared() {
-		_spec.ClearField(file.FieldSize, field.TypeInt64)
-	}
-	if value, ok := _u.mutation.Path(); ok {
-		_spec.SetField(file.FieldPath, field.TypeString, value)
-	}
-	if _u.mutation.PathCleared() {
-		_spec.ClearField(file.FieldPath, field.TypeString)
-	}
-	if value, ok := _u.mutation.URL(); ok {
-		_spec.SetField(file.FieldURL, field.TypeString, value)
-	}
-	if _u.mutation.URLCleared() {
-		_spec.ClearField(file.FieldURL, field.TypeString)
 	}
 	if value, ok := _u.mutation.Provider(); ok {
 		_spec.SetField(file.FieldProvider, field.TypeEnum, value)
@@ -1023,11 +1114,68 @@ func (_u *FileUpdateOne) sqlSave(ctx context.Context) (_node *File, err error) {
 	if _u.mutation.ProviderCleared() {
 		_spec.ClearField(file.FieldProvider, field.TypeEnum)
 	}
-	if value, ok := _u.mutation.ObjectKey(); ok {
-		_spec.SetField(file.FieldObjectKey, field.TypeString, value)
+	if value, ok := _u.mutation.BucketName(); ok {
+		_spec.SetField(file.FieldBucketName, field.TypeString, value)
 	}
-	if _u.mutation.ObjectKeyCleared() {
-		_spec.ClearField(file.FieldObjectKey, field.TypeString)
+	if _u.mutation.BucketNameCleared() {
+		_spec.ClearField(file.FieldBucketName, field.TypeString)
+	}
+	if value, ok := _u.mutation.FileDirectory(); ok {
+		_spec.SetField(file.FieldFileDirectory, field.TypeString, value)
+	}
+	if _u.mutation.FileDirectoryCleared() {
+		_spec.ClearField(file.FieldFileDirectory, field.TypeString)
+	}
+	if value, ok := _u.mutation.FileGUID(); ok {
+		_spec.SetField(file.FieldFileGUID, field.TypeString, value)
+	}
+	if _u.mutation.FileGUIDCleared() {
+		_spec.ClearField(file.FieldFileGUID, field.TypeString)
+	}
+	if value, ok := _u.mutation.SaveFileName(); ok {
+		_spec.SetField(file.FieldSaveFileName, field.TypeString, value)
+	}
+	if _u.mutation.SaveFileNameCleared() {
+		_spec.ClearField(file.FieldSaveFileName, field.TypeString)
+	}
+	if value, ok := _u.mutation.FileName(); ok {
+		_spec.SetField(file.FieldFileName, field.TypeString, value)
+	}
+	if _u.mutation.FileNameCleared() {
+		_spec.ClearField(file.FieldFileName, field.TypeString)
+	}
+	if value, ok := _u.mutation.Extension(); ok {
+		_spec.SetField(file.FieldExtension, field.TypeString, value)
+	}
+	if _u.mutation.ExtensionCleared() {
+		_spec.ClearField(file.FieldExtension, field.TypeString)
+	}
+	if value, ok := _u.mutation.Size(); ok {
+		_spec.SetField(file.FieldSize, field.TypeUint64, value)
+	}
+	if value, ok := _u.mutation.AddedSize(); ok {
+		_spec.AddField(file.FieldSize, field.TypeUint64, value)
+	}
+	if _u.mutation.SizeCleared() {
+		_spec.ClearField(file.FieldSize, field.TypeUint64)
+	}
+	if value, ok := _u.mutation.SizeFormat(); ok {
+		_spec.SetField(file.FieldSizeFormat, field.TypeString, value)
+	}
+	if _u.mutation.SizeFormatCleared() {
+		_spec.ClearField(file.FieldSizeFormat, field.TypeString)
+	}
+	if value, ok := _u.mutation.LinkURL(); ok {
+		_spec.SetField(file.FieldLinkURL, field.TypeString, value)
+	}
+	if _u.mutation.LinkURLCleared() {
+		_spec.ClearField(file.FieldLinkURL, field.TypeString)
+	}
+	if value, ok := _u.mutation.ContentHash(); ok {
+		_spec.SetField(file.FieldContentHash, field.TypeString, value)
+	}
+	if _u.mutation.ContentHashCleared() {
+		_spec.ClearField(file.FieldContentHash, field.TypeString)
 	}
 	_spec.AddModifiers(_u.modifiers...)
 	_node = &File{config: _u.config}

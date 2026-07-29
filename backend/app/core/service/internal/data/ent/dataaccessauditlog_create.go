@@ -6,6 +6,7 @@ import (
 	"context"
 	"errors"
 	"fmt"
+	auditpb "go-wind-ledger/api/gen/go/audit/service/v1"
 	"go-wind-ledger/app/core/service/internal/data/ent/dataaccessauditlog"
 	"time"
 
@@ -36,34 +37,6 @@ func (_c *DataAccessAuditLogCreate) SetNillableCreatedAt(v *time.Time) *DataAcce
 	return _c
 }
 
-// SetUpdatedAt sets the "updated_at" field.
-func (_c *DataAccessAuditLogCreate) SetUpdatedAt(v time.Time) *DataAccessAuditLogCreate {
-	_c.mutation.SetUpdatedAt(v)
-	return _c
-}
-
-// SetNillableUpdatedAt sets the "updated_at" field if the given value is not nil.
-func (_c *DataAccessAuditLogCreate) SetNillableUpdatedAt(v *time.Time) *DataAccessAuditLogCreate {
-	if v != nil {
-		_c.SetUpdatedAt(*v)
-	}
-	return _c
-}
-
-// SetDeletedAt sets the "deleted_at" field.
-func (_c *DataAccessAuditLogCreate) SetDeletedAt(v time.Time) *DataAccessAuditLogCreate {
-	_c.mutation.SetDeletedAt(v)
-	return _c
-}
-
-// SetNillableDeletedAt sets the "deleted_at" field if the given value is not nil.
-func (_c *DataAccessAuditLogCreate) SetNillableDeletedAt(v *time.Time) *DataAccessAuditLogCreate {
-	if v != nil {
-		_c.SetDeletedAt(*v)
-	}
-	return _c
-}
-
 // SetTenantID sets the "tenant_id" field.
 func (_c *DataAccessAuditLogCreate) SetTenantID(v uint32) *DataAccessAuditLogCreate {
 	_c.mutation.SetTenantID(v)
@@ -74,48 +47,6 @@ func (_c *DataAccessAuditLogCreate) SetTenantID(v uint32) *DataAccessAuditLogCre
 func (_c *DataAccessAuditLogCreate) SetNillableTenantID(v *uint32) *DataAccessAuditLogCreate {
 	if v != nil {
 		_c.SetTenantID(*v)
-	}
-	return _c
-}
-
-// SetOperatorID sets the "operator_id" field.
-func (_c *DataAccessAuditLogCreate) SetOperatorID(v uint32) *DataAccessAuditLogCreate {
-	_c.mutation.SetOperatorID(v)
-	return _c
-}
-
-// SetNillableOperatorID sets the "operator_id" field if the given value is not nil.
-func (_c *DataAccessAuditLogCreate) SetNillableOperatorID(v *uint32) *DataAccessAuditLogCreate {
-	if v != nil {
-		_c.SetOperatorID(*v)
-	}
-	return _c
-}
-
-// SetResource sets the "resource" field.
-func (_c *DataAccessAuditLogCreate) SetResource(v string) *DataAccessAuditLogCreate {
-	_c.mutation.SetResource(v)
-	return _c
-}
-
-// SetNillableResource sets the "resource" field if the given value is not nil.
-func (_c *DataAccessAuditLogCreate) SetNillableResource(v *string) *DataAccessAuditLogCreate {
-	if v != nil {
-		_c.SetResource(*v)
-	}
-	return _c
-}
-
-// SetAction sets the "action" field.
-func (_c *DataAccessAuditLogCreate) SetAction(v string) *DataAccessAuditLogCreate {
-	_c.mutation.SetAction(v)
-	return _c
-}
-
-// SetNillableAction sets the "action" field if the given value is not nil.
-func (_c *DataAccessAuditLogCreate) SetNillableAction(v *string) *DataAccessAuditLogCreate {
-	if v != nil {
-		_c.SetAction(*v)
 	}
 	return _c
 }
@@ -148,34 +79,6 @@ func (_c *DataAccessAuditLogCreate) SetNillableUsername(v *string) *DataAccessAu
 	return _c
 }
 
-// SetAccessType sets the "access_type" field.
-func (_c *DataAccessAuditLogCreate) SetAccessType(v dataaccessauditlog.AccessType) *DataAccessAuditLogCreate {
-	_c.mutation.SetAccessType(v)
-	return _c
-}
-
-// SetNillableAccessType sets the "access_type" field if the given value is not nil.
-func (_c *DataAccessAuditLogCreate) SetNillableAccessType(v *dataaccessauditlog.AccessType) *DataAccessAuditLogCreate {
-	if v != nil {
-		_c.SetAccessType(*v)
-	}
-	return _c
-}
-
-// SetSensitiveLevel sets the "sensitive_level" field.
-func (_c *DataAccessAuditLogCreate) SetSensitiveLevel(v dataaccessauditlog.SensitiveLevel) *DataAccessAuditLogCreate {
-	_c.mutation.SetSensitiveLevel(v)
-	return _c
-}
-
-// SetNillableSensitiveLevel sets the "sensitive_level" field if the given value is not nil.
-func (_c *DataAccessAuditLogCreate) SetNillableSensitiveLevel(v *dataaccessauditlog.SensitiveLevel) *DataAccessAuditLogCreate {
-	if v != nil {
-		_c.SetSensitiveLevel(*v)
-	}
-	return _c
-}
-
 // SetIPAddress sets the "ip_address" field.
 func (_c *DataAccessAuditLogCreate) SetIPAddress(v string) *DataAccessAuditLogCreate {
 	_c.mutation.SetIPAddress(v)
@@ -186,6 +89,46 @@ func (_c *DataAccessAuditLogCreate) SetIPAddress(v string) *DataAccessAuditLogCr
 func (_c *DataAccessAuditLogCreate) SetNillableIPAddress(v *string) *DataAccessAuditLogCreate {
 	if v != nil {
 		_c.SetIPAddress(*v)
+	}
+	return _c
+}
+
+// SetGeoLocation sets the "geo_location" field.
+func (_c *DataAccessAuditLogCreate) SetGeoLocation(v *auditpb.GeoLocation) *DataAccessAuditLogCreate {
+	_c.mutation.SetGeoLocation(v)
+	return _c
+}
+
+// SetDeviceInfo sets the "device_info" field.
+func (_c *DataAccessAuditLogCreate) SetDeviceInfo(v *auditpb.DeviceInfo) *DataAccessAuditLogCreate {
+	_c.mutation.SetDeviceInfo(v)
+	return _c
+}
+
+// SetRequestID sets the "request_id" field.
+func (_c *DataAccessAuditLogCreate) SetRequestID(v string) *DataAccessAuditLogCreate {
+	_c.mutation.SetRequestID(v)
+	return _c
+}
+
+// SetNillableRequestID sets the "request_id" field if the given value is not nil.
+func (_c *DataAccessAuditLogCreate) SetNillableRequestID(v *string) *DataAccessAuditLogCreate {
+	if v != nil {
+		_c.SetRequestID(*v)
+	}
+	return _c
+}
+
+// SetTraceID sets the "trace_id" field.
+func (_c *DataAccessAuditLogCreate) SetTraceID(v string) *DataAccessAuditLogCreate {
+	_c.mutation.SetTraceID(v)
+	return _c
+}
+
+// SetNillableTraceID sets the "trace_id" field if the given value is not nil.
+func (_c *DataAccessAuditLogCreate) SetNillableTraceID(v *string) *DataAccessAuditLogCreate {
+	if v != nil {
+		_c.SetTraceID(*v)
 	}
 	return _c
 }
@@ -204,17 +147,219 @@ func (_c *DataAccessAuditLogCreate) SetNillableDataSource(v *string) *DataAccess
 	return _c
 }
 
-// SetAccessedAt sets the "accessed_at" field.
-func (_c *DataAccessAuditLogCreate) SetAccessedAt(v time.Time) *DataAccessAuditLogCreate {
-	_c.mutation.SetAccessedAt(v)
+// SetTableName sets the "table_name" field.
+func (_c *DataAccessAuditLogCreate) SetTableName(v string) *DataAccessAuditLogCreate {
+	_c.mutation.SetTableName(v)
 	return _c
 }
 
-// SetNillableAccessedAt sets the "accessed_at" field if the given value is not nil.
-func (_c *DataAccessAuditLogCreate) SetNillableAccessedAt(v *time.Time) *DataAccessAuditLogCreate {
+// SetNillableTableName sets the "table_name" field if the given value is not nil.
+func (_c *DataAccessAuditLogCreate) SetNillableTableName(v *string) *DataAccessAuditLogCreate {
 	if v != nil {
-		_c.SetAccessedAt(*v)
+		_c.SetTableName(*v)
 	}
+	return _c
+}
+
+// SetDataID sets the "data_id" field.
+func (_c *DataAccessAuditLogCreate) SetDataID(v string) *DataAccessAuditLogCreate {
+	_c.mutation.SetDataID(v)
+	return _c
+}
+
+// SetNillableDataID sets the "data_id" field if the given value is not nil.
+func (_c *DataAccessAuditLogCreate) SetNillableDataID(v *string) *DataAccessAuditLogCreate {
+	if v != nil {
+		_c.SetDataID(*v)
+	}
+	return _c
+}
+
+// SetAccessType sets the "access_type" field.
+func (_c *DataAccessAuditLogCreate) SetAccessType(v dataaccessauditlog.AccessType) *DataAccessAuditLogCreate {
+	_c.mutation.SetAccessType(v)
+	return _c
+}
+
+// SetNillableAccessType sets the "access_type" field if the given value is not nil.
+func (_c *DataAccessAuditLogCreate) SetNillableAccessType(v *dataaccessauditlog.AccessType) *DataAccessAuditLogCreate {
+	if v != nil {
+		_c.SetAccessType(*v)
+	}
+	return _c
+}
+
+// SetSQLDigest sets the "sql_digest" field.
+func (_c *DataAccessAuditLogCreate) SetSQLDigest(v string) *DataAccessAuditLogCreate {
+	_c.mutation.SetSQLDigest(v)
+	return _c
+}
+
+// SetNillableSQLDigest sets the "sql_digest" field if the given value is not nil.
+func (_c *DataAccessAuditLogCreate) SetNillableSQLDigest(v *string) *DataAccessAuditLogCreate {
+	if v != nil {
+		_c.SetSQLDigest(*v)
+	}
+	return _c
+}
+
+// SetSQLText sets the "sql_text" field.
+func (_c *DataAccessAuditLogCreate) SetSQLText(v string) *DataAccessAuditLogCreate {
+	_c.mutation.SetSQLText(v)
+	return _c
+}
+
+// SetNillableSQLText sets the "sql_text" field if the given value is not nil.
+func (_c *DataAccessAuditLogCreate) SetNillableSQLText(v *string) *DataAccessAuditLogCreate {
+	if v != nil {
+		_c.SetSQLText(*v)
+	}
+	return _c
+}
+
+// SetAffectedRows sets the "affected_rows" field.
+func (_c *DataAccessAuditLogCreate) SetAffectedRows(v uint32) *DataAccessAuditLogCreate {
+	_c.mutation.SetAffectedRows(v)
+	return _c
+}
+
+// SetNillableAffectedRows sets the "affected_rows" field if the given value is not nil.
+func (_c *DataAccessAuditLogCreate) SetNillableAffectedRows(v *uint32) *DataAccessAuditLogCreate {
+	if v != nil {
+		_c.SetAffectedRows(*v)
+	}
+	return _c
+}
+
+// SetLatencyMs sets the "latency_ms" field.
+func (_c *DataAccessAuditLogCreate) SetLatencyMs(v uint32) *DataAccessAuditLogCreate {
+	_c.mutation.SetLatencyMs(v)
+	return _c
+}
+
+// SetNillableLatencyMs sets the "latency_ms" field if the given value is not nil.
+func (_c *DataAccessAuditLogCreate) SetNillableLatencyMs(v *uint32) *DataAccessAuditLogCreate {
+	if v != nil {
+		_c.SetLatencyMs(*v)
+	}
+	return _c
+}
+
+// SetSuccess sets the "success" field.
+func (_c *DataAccessAuditLogCreate) SetSuccess(v bool) *DataAccessAuditLogCreate {
+	_c.mutation.SetSuccess(v)
+	return _c
+}
+
+// SetNillableSuccess sets the "success" field if the given value is not nil.
+func (_c *DataAccessAuditLogCreate) SetNillableSuccess(v *bool) *DataAccessAuditLogCreate {
+	if v != nil {
+		_c.SetSuccess(*v)
+	}
+	return _c
+}
+
+// SetSensitiveLevel sets the "sensitive_level" field.
+func (_c *DataAccessAuditLogCreate) SetSensitiveLevel(v dataaccessauditlog.SensitiveLevel) *DataAccessAuditLogCreate {
+	_c.mutation.SetSensitiveLevel(v)
+	return _c
+}
+
+// SetNillableSensitiveLevel sets the "sensitive_level" field if the given value is not nil.
+func (_c *DataAccessAuditLogCreate) SetNillableSensitiveLevel(v *dataaccessauditlog.SensitiveLevel) *DataAccessAuditLogCreate {
+	if v != nil {
+		_c.SetSensitiveLevel(*v)
+	}
+	return _c
+}
+
+// SetDataMasked sets the "data_masked" field.
+func (_c *DataAccessAuditLogCreate) SetDataMasked(v bool) *DataAccessAuditLogCreate {
+	_c.mutation.SetDataMasked(v)
+	return _c
+}
+
+// SetNillableDataMasked sets the "data_masked" field if the given value is not nil.
+func (_c *DataAccessAuditLogCreate) SetNillableDataMasked(v *bool) *DataAccessAuditLogCreate {
+	if v != nil {
+		_c.SetDataMasked(*v)
+	}
+	return _c
+}
+
+// SetMaskingRules sets the "masking_rules" field.
+func (_c *DataAccessAuditLogCreate) SetMaskingRules(v string) *DataAccessAuditLogCreate {
+	_c.mutation.SetMaskingRules(v)
+	return _c
+}
+
+// SetNillableMaskingRules sets the "masking_rules" field if the given value is not nil.
+func (_c *DataAccessAuditLogCreate) SetNillableMaskingRules(v *string) *DataAccessAuditLogCreate {
+	if v != nil {
+		_c.SetMaskingRules(*v)
+	}
+	return _c
+}
+
+// SetBusinessPurpose sets the "business_purpose" field.
+func (_c *DataAccessAuditLogCreate) SetBusinessPurpose(v string) *DataAccessAuditLogCreate {
+	_c.mutation.SetBusinessPurpose(v)
+	return _c
+}
+
+// SetNillableBusinessPurpose sets the "business_purpose" field if the given value is not nil.
+func (_c *DataAccessAuditLogCreate) SetNillableBusinessPurpose(v *string) *DataAccessAuditLogCreate {
+	if v != nil {
+		_c.SetBusinessPurpose(*v)
+	}
+	return _c
+}
+
+// SetDataCategory sets the "data_category" field.
+func (_c *DataAccessAuditLogCreate) SetDataCategory(v string) *DataAccessAuditLogCreate {
+	_c.mutation.SetDataCategory(v)
+	return _c
+}
+
+// SetNillableDataCategory sets the "data_category" field if the given value is not nil.
+func (_c *DataAccessAuditLogCreate) SetNillableDataCategory(v *string) *DataAccessAuditLogCreate {
+	if v != nil {
+		_c.SetDataCategory(*v)
+	}
+	return _c
+}
+
+// SetDbUser sets the "db_user" field.
+func (_c *DataAccessAuditLogCreate) SetDbUser(v string) *DataAccessAuditLogCreate {
+	_c.mutation.SetDbUser(v)
+	return _c
+}
+
+// SetNillableDbUser sets the "db_user" field if the given value is not nil.
+func (_c *DataAccessAuditLogCreate) SetNillableDbUser(v *string) *DataAccessAuditLogCreate {
+	if v != nil {
+		_c.SetDbUser(*v)
+	}
+	return _c
+}
+
+// SetLogHash sets the "log_hash" field.
+func (_c *DataAccessAuditLogCreate) SetLogHash(v string) *DataAccessAuditLogCreate {
+	_c.mutation.SetLogHash(v)
+	return _c
+}
+
+// SetNillableLogHash sets the "log_hash" field if the given value is not nil.
+func (_c *DataAccessAuditLogCreate) SetNillableLogHash(v *string) *DataAccessAuditLogCreate {
+	if v != nil {
+		_c.SetLogHash(*v)
+	}
+	return _c
+}
+
+// SetSignature sets the "signature" field.
+func (_c *DataAccessAuditLogCreate) SetSignature(v []byte) *DataAccessAuditLogCreate {
+	_c.mutation.SetSignature(v)
 	return _c
 }
 
@@ -265,32 +410,19 @@ func (_c *DataAccessAuditLogCreate) defaults() error {
 		v := dataaccessauditlog.DefaultTenantID
 		_c.mutation.SetTenantID(v)
 	}
-	if _, ok := _c.mutation.AccessType(); !ok {
-		v := dataaccessauditlog.DefaultAccessType
-		_c.mutation.SetAccessType(v)
-	}
-	if _, ok := _c.mutation.SensitiveLevel(); !ok {
-		v := dataaccessauditlog.DefaultSensitiveLevel
-		_c.mutation.SetSensitiveLevel(v)
-	}
 	return nil
 }
 
 // check runs all checks and user-defined validators on the builder.
 func (_c *DataAccessAuditLogCreate) check() error {
-	if v, ok := _c.mutation.Resource(); ok {
-		if err := dataaccessauditlog.ResourceValidator(v); err != nil {
-			return &ValidationError{Name: "resource", err: fmt.Errorf(`ent: validator failed for field "DataAccessAuditLog.resource": %w`, err)}
+	if v, ok := _c.mutation.GeoLocation(); ok {
+		if err := v.Validate(); err != nil {
+			return &ValidationError{Name: "geo_location", err: fmt.Errorf(`ent: validator failed for field "DataAccessAuditLog.geo_location": %w`, err)}
 		}
 	}
-	if v, ok := _c.mutation.Action(); ok {
-		if err := dataaccessauditlog.ActionValidator(v); err != nil {
-			return &ValidationError{Name: "action", err: fmt.Errorf(`ent: validator failed for field "DataAccessAuditLog.action": %w`, err)}
-		}
-	}
-	if v, ok := _c.mutation.Username(); ok {
-		if err := dataaccessauditlog.UsernameValidator(v); err != nil {
-			return &ValidationError{Name: "username", err: fmt.Errorf(`ent: validator failed for field "DataAccessAuditLog.username": %w`, err)}
+	if v, ok := _c.mutation.DeviceInfo(); ok {
+		if err := v.Validate(); err != nil {
+			return &ValidationError{Name: "device_info", err: fmt.Errorf(`ent: validator failed for field "DataAccessAuditLog.device_info": %w`, err)}
 		}
 	}
 	if v, ok := _c.mutation.AccessType(); ok {
@@ -301,16 +433,6 @@ func (_c *DataAccessAuditLogCreate) check() error {
 	if v, ok := _c.mutation.SensitiveLevel(); ok {
 		if err := dataaccessauditlog.SensitiveLevelValidator(v); err != nil {
 			return &ValidationError{Name: "sensitive_level", err: fmt.Errorf(`ent: validator failed for field "DataAccessAuditLog.sensitive_level": %w`, err)}
-		}
-	}
-	if v, ok := _c.mutation.IPAddress(); ok {
-		if err := dataaccessauditlog.IPAddressValidator(v); err != nil {
-			return &ValidationError{Name: "ip_address", err: fmt.Errorf(`ent: validator failed for field "DataAccessAuditLog.ip_address": %w`, err)}
-		}
-	}
-	if v, ok := _c.mutation.DataSource(); ok {
-		if err := dataaccessauditlog.DataSourceValidator(v); err != nil {
-			return &ValidationError{Name: "data_source", err: fmt.Errorf(`ent: validator failed for field "DataAccessAuditLog.data_source": %w`, err)}
 		}
 	}
 	if v, ok := _c.mutation.ID(); ok {
@@ -355,29 +477,9 @@ func (_c *DataAccessAuditLogCreate) createSpec() (*DataAccessAuditLog, *sqlgraph
 		_spec.SetField(dataaccessauditlog.FieldCreatedAt, field.TypeTime, value)
 		_node.CreatedAt = &value
 	}
-	if value, ok := _c.mutation.UpdatedAt(); ok {
-		_spec.SetField(dataaccessauditlog.FieldUpdatedAt, field.TypeTime, value)
-		_node.UpdatedAt = &value
-	}
-	if value, ok := _c.mutation.DeletedAt(); ok {
-		_spec.SetField(dataaccessauditlog.FieldDeletedAt, field.TypeTime, value)
-		_node.DeletedAt = &value
-	}
 	if value, ok := _c.mutation.TenantID(); ok {
 		_spec.SetField(dataaccessauditlog.FieldTenantID, field.TypeUint32, value)
 		_node.TenantID = &value
-	}
-	if value, ok := _c.mutation.OperatorID(); ok {
-		_spec.SetField(dataaccessauditlog.FieldOperatorID, field.TypeUint32, value)
-		_node.OperatorID = &value
-	}
-	if value, ok := _c.mutation.Resource(); ok {
-		_spec.SetField(dataaccessauditlog.FieldResource, field.TypeString, value)
-		_node.Resource = &value
-	}
-	if value, ok := _c.mutation.Action(); ok {
-		_spec.SetField(dataaccessauditlog.FieldAction, field.TypeString, value)
-		_node.Action = &value
 	}
 	if value, ok := _c.mutation.UserID(); ok {
 		_spec.SetField(dataaccessauditlog.FieldUserID, field.TypeUint32, value)
@@ -387,25 +489,93 @@ func (_c *DataAccessAuditLogCreate) createSpec() (*DataAccessAuditLog, *sqlgraph
 		_spec.SetField(dataaccessauditlog.FieldUsername, field.TypeString, value)
 		_node.Username = &value
 	}
-	if value, ok := _c.mutation.AccessType(); ok {
-		_spec.SetField(dataaccessauditlog.FieldAccessType, field.TypeEnum, value)
-		_node.AccessType = &value
-	}
-	if value, ok := _c.mutation.SensitiveLevel(); ok {
-		_spec.SetField(dataaccessauditlog.FieldSensitiveLevel, field.TypeEnum, value)
-		_node.SensitiveLevel = &value
-	}
 	if value, ok := _c.mutation.IPAddress(); ok {
 		_spec.SetField(dataaccessauditlog.FieldIPAddress, field.TypeString, value)
 		_node.IPAddress = &value
+	}
+	if value, ok := _c.mutation.GeoLocation(); ok {
+		_spec.SetField(dataaccessauditlog.FieldGeoLocation, field.TypeJSON, value)
+		_node.GeoLocation = value
+	}
+	if value, ok := _c.mutation.DeviceInfo(); ok {
+		_spec.SetField(dataaccessauditlog.FieldDeviceInfo, field.TypeJSON, value)
+		_node.DeviceInfo = value
+	}
+	if value, ok := _c.mutation.RequestID(); ok {
+		_spec.SetField(dataaccessauditlog.FieldRequestID, field.TypeString, value)
+		_node.RequestID = &value
+	}
+	if value, ok := _c.mutation.TraceID(); ok {
+		_spec.SetField(dataaccessauditlog.FieldTraceID, field.TypeString, value)
+		_node.TraceID = &value
 	}
 	if value, ok := _c.mutation.DataSource(); ok {
 		_spec.SetField(dataaccessauditlog.FieldDataSource, field.TypeString, value)
 		_node.DataSource = &value
 	}
-	if value, ok := _c.mutation.AccessedAt(); ok {
-		_spec.SetField(dataaccessauditlog.FieldAccessedAt, field.TypeTime, value)
-		_node.AccessedAt = &value
+	if value, ok := _c.mutation.TableName(); ok {
+		_spec.SetField(dataaccessauditlog.FieldTableName, field.TypeString, value)
+		_node.TableName = &value
+	}
+	if value, ok := _c.mutation.DataID(); ok {
+		_spec.SetField(dataaccessauditlog.FieldDataID, field.TypeString, value)
+		_node.DataID = &value
+	}
+	if value, ok := _c.mutation.AccessType(); ok {
+		_spec.SetField(dataaccessauditlog.FieldAccessType, field.TypeEnum, value)
+		_node.AccessType = &value
+	}
+	if value, ok := _c.mutation.SQLDigest(); ok {
+		_spec.SetField(dataaccessauditlog.FieldSQLDigest, field.TypeString, value)
+		_node.SQLDigest = &value
+	}
+	if value, ok := _c.mutation.SQLText(); ok {
+		_spec.SetField(dataaccessauditlog.FieldSQLText, field.TypeString, value)
+		_node.SQLText = &value
+	}
+	if value, ok := _c.mutation.AffectedRows(); ok {
+		_spec.SetField(dataaccessauditlog.FieldAffectedRows, field.TypeUint32, value)
+		_node.AffectedRows = &value
+	}
+	if value, ok := _c.mutation.LatencyMs(); ok {
+		_spec.SetField(dataaccessauditlog.FieldLatencyMs, field.TypeUint32, value)
+		_node.LatencyMs = &value
+	}
+	if value, ok := _c.mutation.Success(); ok {
+		_spec.SetField(dataaccessauditlog.FieldSuccess, field.TypeBool, value)
+		_node.Success = &value
+	}
+	if value, ok := _c.mutation.SensitiveLevel(); ok {
+		_spec.SetField(dataaccessauditlog.FieldSensitiveLevel, field.TypeEnum, value)
+		_node.SensitiveLevel = &value
+	}
+	if value, ok := _c.mutation.DataMasked(); ok {
+		_spec.SetField(dataaccessauditlog.FieldDataMasked, field.TypeBool, value)
+		_node.DataMasked = &value
+	}
+	if value, ok := _c.mutation.MaskingRules(); ok {
+		_spec.SetField(dataaccessauditlog.FieldMaskingRules, field.TypeString, value)
+		_node.MaskingRules = &value
+	}
+	if value, ok := _c.mutation.BusinessPurpose(); ok {
+		_spec.SetField(dataaccessauditlog.FieldBusinessPurpose, field.TypeString, value)
+		_node.BusinessPurpose = &value
+	}
+	if value, ok := _c.mutation.DataCategory(); ok {
+		_spec.SetField(dataaccessauditlog.FieldDataCategory, field.TypeString, value)
+		_node.DataCategory = &value
+	}
+	if value, ok := _c.mutation.DbUser(); ok {
+		_spec.SetField(dataaccessauditlog.FieldDbUser, field.TypeString, value)
+		_node.DbUser = &value
+	}
+	if value, ok := _c.mutation.LogHash(); ok {
+		_spec.SetField(dataaccessauditlog.FieldLogHash, field.TypeString, value)
+		_node.LogHash = &value
+	}
+	if value, ok := _c.mutation.Signature(); ok {
+		_spec.SetField(dataaccessauditlog.FieldSignature, field.TypeBytes, value)
+		_node.Signature = &value
 	}
 	return _node, _spec
 }
@@ -459,102 +629,6 @@ type (
 	}
 )
 
-// SetUpdatedAt sets the "updated_at" field.
-func (u *DataAccessAuditLogUpsert) SetUpdatedAt(v time.Time) *DataAccessAuditLogUpsert {
-	u.Set(dataaccessauditlog.FieldUpdatedAt, v)
-	return u
-}
-
-// UpdateUpdatedAt sets the "updated_at" field to the value that was provided on create.
-func (u *DataAccessAuditLogUpsert) UpdateUpdatedAt() *DataAccessAuditLogUpsert {
-	u.SetExcluded(dataaccessauditlog.FieldUpdatedAt)
-	return u
-}
-
-// ClearUpdatedAt clears the value of the "updated_at" field.
-func (u *DataAccessAuditLogUpsert) ClearUpdatedAt() *DataAccessAuditLogUpsert {
-	u.SetNull(dataaccessauditlog.FieldUpdatedAt)
-	return u
-}
-
-// SetDeletedAt sets the "deleted_at" field.
-func (u *DataAccessAuditLogUpsert) SetDeletedAt(v time.Time) *DataAccessAuditLogUpsert {
-	u.Set(dataaccessauditlog.FieldDeletedAt, v)
-	return u
-}
-
-// UpdateDeletedAt sets the "deleted_at" field to the value that was provided on create.
-func (u *DataAccessAuditLogUpsert) UpdateDeletedAt() *DataAccessAuditLogUpsert {
-	u.SetExcluded(dataaccessauditlog.FieldDeletedAt)
-	return u
-}
-
-// ClearDeletedAt clears the value of the "deleted_at" field.
-func (u *DataAccessAuditLogUpsert) ClearDeletedAt() *DataAccessAuditLogUpsert {
-	u.SetNull(dataaccessauditlog.FieldDeletedAt)
-	return u
-}
-
-// SetOperatorID sets the "operator_id" field.
-func (u *DataAccessAuditLogUpsert) SetOperatorID(v uint32) *DataAccessAuditLogUpsert {
-	u.Set(dataaccessauditlog.FieldOperatorID, v)
-	return u
-}
-
-// UpdateOperatorID sets the "operator_id" field to the value that was provided on create.
-func (u *DataAccessAuditLogUpsert) UpdateOperatorID() *DataAccessAuditLogUpsert {
-	u.SetExcluded(dataaccessauditlog.FieldOperatorID)
-	return u
-}
-
-// AddOperatorID adds v to the "operator_id" field.
-func (u *DataAccessAuditLogUpsert) AddOperatorID(v uint32) *DataAccessAuditLogUpsert {
-	u.Add(dataaccessauditlog.FieldOperatorID, v)
-	return u
-}
-
-// ClearOperatorID clears the value of the "operator_id" field.
-func (u *DataAccessAuditLogUpsert) ClearOperatorID() *DataAccessAuditLogUpsert {
-	u.SetNull(dataaccessauditlog.FieldOperatorID)
-	return u
-}
-
-// SetResource sets the "resource" field.
-func (u *DataAccessAuditLogUpsert) SetResource(v string) *DataAccessAuditLogUpsert {
-	u.Set(dataaccessauditlog.FieldResource, v)
-	return u
-}
-
-// UpdateResource sets the "resource" field to the value that was provided on create.
-func (u *DataAccessAuditLogUpsert) UpdateResource() *DataAccessAuditLogUpsert {
-	u.SetExcluded(dataaccessauditlog.FieldResource)
-	return u
-}
-
-// ClearResource clears the value of the "resource" field.
-func (u *DataAccessAuditLogUpsert) ClearResource() *DataAccessAuditLogUpsert {
-	u.SetNull(dataaccessauditlog.FieldResource)
-	return u
-}
-
-// SetAction sets the "action" field.
-func (u *DataAccessAuditLogUpsert) SetAction(v string) *DataAccessAuditLogUpsert {
-	u.Set(dataaccessauditlog.FieldAction, v)
-	return u
-}
-
-// UpdateAction sets the "action" field to the value that was provided on create.
-func (u *DataAccessAuditLogUpsert) UpdateAction() *DataAccessAuditLogUpsert {
-	u.SetExcluded(dataaccessauditlog.FieldAction)
-	return u
-}
-
-// ClearAction clears the value of the "action" field.
-func (u *DataAccessAuditLogUpsert) ClearAction() *DataAccessAuditLogUpsert {
-	u.SetNull(dataaccessauditlog.FieldAction)
-	return u
-}
-
 // SetUserID sets the "user_id" field.
 func (u *DataAccessAuditLogUpsert) SetUserID(v uint32) *DataAccessAuditLogUpsert {
 	u.Set(dataaccessauditlog.FieldUserID, v)
@@ -597,42 +671,6 @@ func (u *DataAccessAuditLogUpsert) ClearUsername() *DataAccessAuditLogUpsert {
 	return u
 }
 
-// SetAccessType sets the "access_type" field.
-func (u *DataAccessAuditLogUpsert) SetAccessType(v dataaccessauditlog.AccessType) *DataAccessAuditLogUpsert {
-	u.Set(dataaccessauditlog.FieldAccessType, v)
-	return u
-}
-
-// UpdateAccessType sets the "access_type" field to the value that was provided on create.
-func (u *DataAccessAuditLogUpsert) UpdateAccessType() *DataAccessAuditLogUpsert {
-	u.SetExcluded(dataaccessauditlog.FieldAccessType)
-	return u
-}
-
-// ClearAccessType clears the value of the "access_type" field.
-func (u *DataAccessAuditLogUpsert) ClearAccessType() *DataAccessAuditLogUpsert {
-	u.SetNull(dataaccessauditlog.FieldAccessType)
-	return u
-}
-
-// SetSensitiveLevel sets the "sensitive_level" field.
-func (u *DataAccessAuditLogUpsert) SetSensitiveLevel(v dataaccessauditlog.SensitiveLevel) *DataAccessAuditLogUpsert {
-	u.Set(dataaccessauditlog.FieldSensitiveLevel, v)
-	return u
-}
-
-// UpdateSensitiveLevel sets the "sensitive_level" field to the value that was provided on create.
-func (u *DataAccessAuditLogUpsert) UpdateSensitiveLevel() *DataAccessAuditLogUpsert {
-	u.SetExcluded(dataaccessauditlog.FieldSensitiveLevel)
-	return u
-}
-
-// ClearSensitiveLevel clears the value of the "sensitive_level" field.
-func (u *DataAccessAuditLogUpsert) ClearSensitiveLevel() *DataAccessAuditLogUpsert {
-	u.SetNull(dataaccessauditlog.FieldSensitiveLevel)
-	return u
-}
-
 // SetIPAddress sets the "ip_address" field.
 func (u *DataAccessAuditLogUpsert) SetIPAddress(v string) *DataAccessAuditLogUpsert {
 	u.Set(dataaccessauditlog.FieldIPAddress, v)
@@ -648,6 +686,78 @@ func (u *DataAccessAuditLogUpsert) UpdateIPAddress() *DataAccessAuditLogUpsert {
 // ClearIPAddress clears the value of the "ip_address" field.
 func (u *DataAccessAuditLogUpsert) ClearIPAddress() *DataAccessAuditLogUpsert {
 	u.SetNull(dataaccessauditlog.FieldIPAddress)
+	return u
+}
+
+// SetGeoLocation sets the "geo_location" field.
+func (u *DataAccessAuditLogUpsert) SetGeoLocation(v *auditpb.GeoLocation) *DataAccessAuditLogUpsert {
+	u.Set(dataaccessauditlog.FieldGeoLocation, v)
+	return u
+}
+
+// UpdateGeoLocation sets the "geo_location" field to the value that was provided on create.
+func (u *DataAccessAuditLogUpsert) UpdateGeoLocation() *DataAccessAuditLogUpsert {
+	u.SetExcluded(dataaccessauditlog.FieldGeoLocation)
+	return u
+}
+
+// ClearGeoLocation clears the value of the "geo_location" field.
+func (u *DataAccessAuditLogUpsert) ClearGeoLocation() *DataAccessAuditLogUpsert {
+	u.SetNull(dataaccessauditlog.FieldGeoLocation)
+	return u
+}
+
+// SetDeviceInfo sets the "device_info" field.
+func (u *DataAccessAuditLogUpsert) SetDeviceInfo(v *auditpb.DeviceInfo) *DataAccessAuditLogUpsert {
+	u.Set(dataaccessauditlog.FieldDeviceInfo, v)
+	return u
+}
+
+// UpdateDeviceInfo sets the "device_info" field to the value that was provided on create.
+func (u *DataAccessAuditLogUpsert) UpdateDeviceInfo() *DataAccessAuditLogUpsert {
+	u.SetExcluded(dataaccessauditlog.FieldDeviceInfo)
+	return u
+}
+
+// ClearDeviceInfo clears the value of the "device_info" field.
+func (u *DataAccessAuditLogUpsert) ClearDeviceInfo() *DataAccessAuditLogUpsert {
+	u.SetNull(dataaccessauditlog.FieldDeviceInfo)
+	return u
+}
+
+// SetRequestID sets the "request_id" field.
+func (u *DataAccessAuditLogUpsert) SetRequestID(v string) *DataAccessAuditLogUpsert {
+	u.Set(dataaccessauditlog.FieldRequestID, v)
+	return u
+}
+
+// UpdateRequestID sets the "request_id" field to the value that was provided on create.
+func (u *DataAccessAuditLogUpsert) UpdateRequestID() *DataAccessAuditLogUpsert {
+	u.SetExcluded(dataaccessauditlog.FieldRequestID)
+	return u
+}
+
+// ClearRequestID clears the value of the "request_id" field.
+func (u *DataAccessAuditLogUpsert) ClearRequestID() *DataAccessAuditLogUpsert {
+	u.SetNull(dataaccessauditlog.FieldRequestID)
+	return u
+}
+
+// SetTraceID sets the "trace_id" field.
+func (u *DataAccessAuditLogUpsert) SetTraceID(v string) *DataAccessAuditLogUpsert {
+	u.Set(dataaccessauditlog.FieldTraceID, v)
+	return u
+}
+
+// UpdateTraceID sets the "trace_id" field to the value that was provided on create.
+func (u *DataAccessAuditLogUpsert) UpdateTraceID() *DataAccessAuditLogUpsert {
+	u.SetExcluded(dataaccessauditlog.FieldTraceID)
+	return u
+}
+
+// ClearTraceID clears the value of the "trace_id" field.
+func (u *DataAccessAuditLogUpsert) ClearTraceID() *DataAccessAuditLogUpsert {
+	u.SetNull(dataaccessauditlog.FieldTraceID)
 	return u
 }
 
@@ -669,21 +779,303 @@ func (u *DataAccessAuditLogUpsert) ClearDataSource() *DataAccessAuditLogUpsert {
 	return u
 }
 
-// SetAccessedAt sets the "accessed_at" field.
-func (u *DataAccessAuditLogUpsert) SetAccessedAt(v time.Time) *DataAccessAuditLogUpsert {
-	u.Set(dataaccessauditlog.FieldAccessedAt, v)
+// SetTableName sets the "table_name" field.
+func (u *DataAccessAuditLogUpsert) SetTableName(v string) *DataAccessAuditLogUpsert {
+	u.Set(dataaccessauditlog.FieldTableName, v)
 	return u
 }
 
-// UpdateAccessedAt sets the "accessed_at" field to the value that was provided on create.
-func (u *DataAccessAuditLogUpsert) UpdateAccessedAt() *DataAccessAuditLogUpsert {
-	u.SetExcluded(dataaccessauditlog.FieldAccessedAt)
+// UpdateTableName sets the "table_name" field to the value that was provided on create.
+func (u *DataAccessAuditLogUpsert) UpdateTableName() *DataAccessAuditLogUpsert {
+	u.SetExcluded(dataaccessauditlog.FieldTableName)
 	return u
 }
 
-// ClearAccessedAt clears the value of the "accessed_at" field.
-func (u *DataAccessAuditLogUpsert) ClearAccessedAt() *DataAccessAuditLogUpsert {
-	u.SetNull(dataaccessauditlog.FieldAccessedAt)
+// ClearTableName clears the value of the "table_name" field.
+func (u *DataAccessAuditLogUpsert) ClearTableName() *DataAccessAuditLogUpsert {
+	u.SetNull(dataaccessauditlog.FieldTableName)
+	return u
+}
+
+// SetDataID sets the "data_id" field.
+func (u *DataAccessAuditLogUpsert) SetDataID(v string) *DataAccessAuditLogUpsert {
+	u.Set(dataaccessauditlog.FieldDataID, v)
+	return u
+}
+
+// UpdateDataID sets the "data_id" field to the value that was provided on create.
+func (u *DataAccessAuditLogUpsert) UpdateDataID() *DataAccessAuditLogUpsert {
+	u.SetExcluded(dataaccessauditlog.FieldDataID)
+	return u
+}
+
+// ClearDataID clears the value of the "data_id" field.
+func (u *DataAccessAuditLogUpsert) ClearDataID() *DataAccessAuditLogUpsert {
+	u.SetNull(dataaccessauditlog.FieldDataID)
+	return u
+}
+
+// SetAccessType sets the "access_type" field.
+func (u *DataAccessAuditLogUpsert) SetAccessType(v dataaccessauditlog.AccessType) *DataAccessAuditLogUpsert {
+	u.Set(dataaccessauditlog.FieldAccessType, v)
+	return u
+}
+
+// UpdateAccessType sets the "access_type" field to the value that was provided on create.
+func (u *DataAccessAuditLogUpsert) UpdateAccessType() *DataAccessAuditLogUpsert {
+	u.SetExcluded(dataaccessauditlog.FieldAccessType)
+	return u
+}
+
+// ClearAccessType clears the value of the "access_type" field.
+func (u *DataAccessAuditLogUpsert) ClearAccessType() *DataAccessAuditLogUpsert {
+	u.SetNull(dataaccessauditlog.FieldAccessType)
+	return u
+}
+
+// SetSQLDigest sets the "sql_digest" field.
+func (u *DataAccessAuditLogUpsert) SetSQLDigest(v string) *DataAccessAuditLogUpsert {
+	u.Set(dataaccessauditlog.FieldSQLDigest, v)
+	return u
+}
+
+// UpdateSQLDigest sets the "sql_digest" field to the value that was provided on create.
+func (u *DataAccessAuditLogUpsert) UpdateSQLDigest() *DataAccessAuditLogUpsert {
+	u.SetExcluded(dataaccessauditlog.FieldSQLDigest)
+	return u
+}
+
+// ClearSQLDigest clears the value of the "sql_digest" field.
+func (u *DataAccessAuditLogUpsert) ClearSQLDigest() *DataAccessAuditLogUpsert {
+	u.SetNull(dataaccessauditlog.FieldSQLDigest)
+	return u
+}
+
+// SetSQLText sets the "sql_text" field.
+func (u *DataAccessAuditLogUpsert) SetSQLText(v string) *DataAccessAuditLogUpsert {
+	u.Set(dataaccessauditlog.FieldSQLText, v)
+	return u
+}
+
+// UpdateSQLText sets the "sql_text" field to the value that was provided on create.
+func (u *DataAccessAuditLogUpsert) UpdateSQLText() *DataAccessAuditLogUpsert {
+	u.SetExcluded(dataaccessauditlog.FieldSQLText)
+	return u
+}
+
+// ClearSQLText clears the value of the "sql_text" field.
+func (u *DataAccessAuditLogUpsert) ClearSQLText() *DataAccessAuditLogUpsert {
+	u.SetNull(dataaccessauditlog.FieldSQLText)
+	return u
+}
+
+// SetAffectedRows sets the "affected_rows" field.
+func (u *DataAccessAuditLogUpsert) SetAffectedRows(v uint32) *DataAccessAuditLogUpsert {
+	u.Set(dataaccessauditlog.FieldAffectedRows, v)
+	return u
+}
+
+// UpdateAffectedRows sets the "affected_rows" field to the value that was provided on create.
+func (u *DataAccessAuditLogUpsert) UpdateAffectedRows() *DataAccessAuditLogUpsert {
+	u.SetExcluded(dataaccessauditlog.FieldAffectedRows)
+	return u
+}
+
+// AddAffectedRows adds v to the "affected_rows" field.
+func (u *DataAccessAuditLogUpsert) AddAffectedRows(v uint32) *DataAccessAuditLogUpsert {
+	u.Add(dataaccessauditlog.FieldAffectedRows, v)
+	return u
+}
+
+// ClearAffectedRows clears the value of the "affected_rows" field.
+func (u *DataAccessAuditLogUpsert) ClearAffectedRows() *DataAccessAuditLogUpsert {
+	u.SetNull(dataaccessauditlog.FieldAffectedRows)
+	return u
+}
+
+// SetLatencyMs sets the "latency_ms" field.
+func (u *DataAccessAuditLogUpsert) SetLatencyMs(v uint32) *DataAccessAuditLogUpsert {
+	u.Set(dataaccessauditlog.FieldLatencyMs, v)
+	return u
+}
+
+// UpdateLatencyMs sets the "latency_ms" field to the value that was provided on create.
+func (u *DataAccessAuditLogUpsert) UpdateLatencyMs() *DataAccessAuditLogUpsert {
+	u.SetExcluded(dataaccessauditlog.FieldLatencyMs)
+	return u
+}
+
+// AddLatencyMs adds v to the "latency_ms" field.
+func (u *DataAccessAuditLogUpsert) AddLatencyMs(v uint32) *DataAccessAuditLogUpsert {
+	u.Add(dataaccessauditlog.FieldLatencyMs, v)
+	return u
+}
+
+// ClearLatencyMs clears the value of the "latency_ms" field.
+func (u *DataAccessAuditLogUpsert) ClearLatencyMs() *DataAccessAuditLogUpsert {
+	u.SetNull(dataaccessauditlog.FieldLatencyMs)
+	return u
+}
+
+// SetSuccess sets the "success" field.
+func (u *DataAccessAuditLogUpsert) SetSuccess(v bool) *DataAccessAuditLogUpsert {
+	u.Set(dataaccessauditlog.FieldSuccess, v)
+	return u
+}
+
+// UpdateSuccess sets the "success" field to the value that was provided on create.
+func (u *DataAccessAuditLogUpsert) UpdateSuccess() *DataAccessAuditLogUpsert {
+	u.SetExcluded(dataaccessauditlog.FieldSuccess)
+	return u
+}
+
+// ClearSuccess clears the value of the "success" field.
+func (u *DataAccessAuditLogUpsert) ClearSuccess() *DataAccessAuditLogUpsert {
+	u.SetNull(dataaccessauditlog.FieldSuccess)
+	return u
+}
+
+// SetSensitiveLevel sets the "sensitive_level" field.
+func (u *DataAccessAuditLogUpsert) SetSensitiveLevel(v dataaccessauditlog.SensitiveLevel) *DataAccessAuditLogUpsert {
+	u.Set(dataaccessauditlog.FieldSensitiveLevel, v)
+	return u
+}
+
+// UpdateSensitiveLevel sets the "sensitive_level" field to the value that was provided on create.
+func (u *DataAccessAuditLogUpsert) UpdateSensitiveLevel() *DataAccessAuditLogUpsert {
+	u.SetExcluded(dataaccessauditlog.FieldSensitiveLevel)
+	return u
+}
+
+// ClearSensitiveLevel clears the value of the "sensitive_level" field.
+func (u *DataAccessAuditLogUpsert) ClearSensitiveLevel() *DataAccessAuditLogUpsert {
+	u.SetNull(dataaccessauditlog.FieldSensitiveLevel)
+	return u
+}
+
+// SetDataMasked sets the "data_masked" field.
+func (u *DataAccessAuditLogUpsert) SetDataMasked(v bool) *DataAccessAuditLogUpsert {
+	u.Set(dataaccessauditlog.FieldDataMasked, v)
+	return u
+}
+
+// UpdateDataMasked sets the "data_masked" field to the value that was provided on create.
+func (u *DataAccessAuditLogUpsert) UpdateDataMasked() *DataAccessAuditLogUpsert {
+	u.SetExcluded(dataaccessauditlog.FieldDataMasked)
+	return u
+}
+
+// ClearDataMasked clears the value of the "data_masked" field.
+func (u *DataAccessAuditLogUpsert) ClearDataMasked() *DataAccessAuditLogUpsert {
+	u.SetNull(dataaccessauditlog.FieldDataMasked)
+	return u
+}
+
+// SetMaskingRules sets the "masking_rules" field.
+func (u *DataAccessAuditLogUpsert) SetMaskingRules(v string) *DataAccessAuditLogUpsert {
+	u.Set(dataaccessauditlog.FieldMaskingRules, v)
+	return u
+}
+
+// UpdateMaskingRules sets the "masking_rules" field to the value that was provided on create.
+func (u *DataAccessAuditLogUpsert) UpdateMaskingRules() *DataAccessAuditLogUpsert {
+	u.SetExcluded(dataaccessauditlog.FieldMaskingRules)
+	return u
+}
+
+// ClearMaskingRules clears the value of the "masking_rules" field.
+func (u *DataAccessAuditLogUpsert) ClearMaskingRules() *DataAccessAuditLogUpsert {
+	u.SetNull(dataaccessauditlog.FieldMaskingRules)
+	return u
+}
+
+// SetBusinessPurpose sets the "business_purpose" field.
+func (u *DataAccessAuditLogUpsert) SetBusinessPurpose(v string) *DataAccessAuditLogUpsert {
+	u.Set(dataaccessauditlog.FieldBusinessPurpose, v)
+	return u
+}
+
+// UpdateBusinessPurpose sets the "business_purpose" field to the value that was provided on create.
+func (u *DataAccessAuditLogUpsert) UpdateBusinessPurpose() *DataAccessAuditLogUpsert {
+	u.SetExcluded(dataaccessauditlog.FieldBusinessPurpose)
+	return u
+}
+
+// ClearBusinessPurpose clears the value of the "business_purpose" field.
+func (u *DataAccessAuditLogUpsert) ClearBusinessPurpose() *DataAccessAuditLogUpsert {
+	u.SetNull(dataaccessauditlog.FieldBusinessPurpose)
+	return u
+}
+
+// SetDataCategory sets the "data_category" field.
+func (u *DataAccessAuditLogUpsert) SetDataCategory(v string) *DataAccessAuditLogUpsert {
+	u.Set(dataaccessauditlog.FieldDataCategory, v)
+	return u
+}
+
+// UpdateDataCategory sets the "data_category" field to the value that was provided on create.
+func (u *DataAccessAuditLogUpsert) UpdateDataCategory() *DataAccessAuditLogUpsert {
+	u.SetExcluded(dataaccessauditlog.FieldDataCategory)
+	return u
+}
+
+// ClearDataCategory clears the value of the "data_category" field.
+func (u *DataAccessAuditLogUpsert) ClearDataCategory() *DataAccessAuditLogUpsert {
+	u.SetNull(dataaccessauditlog.FieldDataCategory)
+	return u
+}
+
+// SetDbUser sets the "db_user" field.
+func (u *DataAccessAuditLogUpsert) SetDbUser(v string) *DataAccessAuditLogUpsert {
+	u.Set(dataaccessauditlog.FieldDbUser, v)
+	return u
+}
+
+// UpdateDbUser sets the "db_user" field to the value that was provided on create.
+func (u *DataAccessAuditLogUpsert) UpdateDbUser() *DataAccessAuditLogUpsert {
+	u.SetExcluded(dataaccessauditlog.FieldDbUser)
+	return u
+}
+
+// ClearDbUser clears the value of the "db_user" field.
+func (u *DataAccessAuditLogUpsert) ClearDbUser() *DataAccessAuditLogUpsert {
+	u.SetNull(dataaccessauditlog.FieldDbUser)
+	return u
+}
+
+// SetLogHash sets the "log_hash" field.
+func (u *DataAccessAuditLogUpsert) SetLogHash(v string) *DataAccessAuditLogUpsert {
+	u.Set(dataaccessauditlog.FieldLogHash, v)
+	return u
+}
+
+// UpdateLogHash sets the "log_hash" field to the value that was provided on create.
+func (u *DataAccessAuditLogUpsert) UpdateLogHash() *DataAccessAuditLogUpsert {
+	u.SetExcluded(dataaccessauditlog.FieldLogHash)
+	return u
+}
+
+// ClearLogHash clears the value of the "log_hash" field.
+func (u *DataAccessAuditLogUpsert) ClearLogHash() *DataAccessAuditLogUpsert {
+	u.SetNull(dataaccessauditlog.FieldLogHash)
+	return u
+}
+
+// SetSignature sets the "signature" field.
+func (u *DataAccessAuditLogUpsert) SetSignature(v []byte) *DataAccessAuditLogUpsert {
+	u.Set(dataaccessauditlog.FieldSignature, v)
+	return u
+}
+
+// UpdateSignature sets the "signature" field to the value that was provided on create.
+func (u *DataAccessAuditLogUpsert) UpdateSignature() *DataAccessAuditLogUpsert {
+	u.SetExcluded(dataaccessauditlog.FieldSignature)
+	return u
+}
+
+// ClearSignature clears the value of the "signature" field.
+func (u *DataAccessAuditLogUpsert) ClearSignature() *DataAccessAuditLogUpsert {
+	u.SetNull(dataaccessauditlog.FieldSignature)
 	return u
 }
 
@@ -741,118 +1133,6 @@ func (u *DataAccessAuditLogUpsertOne) Update(set func(*DataAccessAuditLogUpsert)
 	return u
 }
 
-// SetUpdatedAt sets the "updated_at" field.
-func (u *DataAccessAuditLogUpsertOne) SetUpdatedAt(v time.Time) *DataAccessAuditLogUpsertOne {
-	return u.Update(func(s *DataAccessAuditLogUpsert) {
-		s.SetUpdatedAt(v)
-	})
-}
-
-// UpdateUpdatedAt sets the "updated_at" field to the value that was provided on create.
-func (u *DataAccessAuditLogUpsertOne) UpdateUpdatedAt() *DataAccessAuditLogUpsertOne {
-	return u.Update(func(s *DataAccessAuditLogUpsert) {
-		s.UpdateUpdatedAt()
-	})
-}
-
-// ClearUpdatedAt clears the value of the "updated_at" field.
-func (u *DataAccessAuditLogUpsertOne) ClearUpdatedAt() *DataAccessAuditLogUpsertOne {
-	return u.Update(func(s *DataAccessAuditLogUpsert) {
-		s.ClearUpdatedAt()
-	})
-}
-
-// SetDeletedAt sets the "deleted_at" field.
-func (u *DataAccessAuditLogUpsertOne) SetDeletedAt(v time.Time) *DataAccessAuditLogUpsertOne {
-	return u.Update(func(s *DataAccessAuditLogUpsert) {
-		s.SetDeletedAt(v)
-	})
-}
-
-// UpdateDeletedAt sets the "deleted_at" field to the value that was provided on create.
-func (u *DataAccessAuditLogUpsertOne) UpdateDeletedAt() *DataAccessAuditLogUpsertOne {
-	return u.Update(func(s *DataAccessAuditLogUpsert) {
-		s.UpdateDeletedAt()
-	})
-}
-
-// ClearDeletedAt clears the value of the "deleted_at" field.
-func (u *DataAccessAuditLogUpsertOne) ClearDeletedAt() *DataAccessAuditLogUpsertOne {
-	return u.Update(func(s *DataAccessAuditLogUpsert) {
-		s.ClearDeletedAt()
-	})
-}
-
-// SetOperatorID sets the "operator_id" field.
-func (u *DataAccessAuditLogUpsertOne) SetOperatorID(v uint32) *DataAccessAuditLogUpsertOne {
-	return u.Update(func(s *DataAccessAuditLogUpsert) {
-		s.SetOperatorID(v)
-	})
-}
-
-// AddOperatorID adds v to the "operator_id" field.
-func (u *DataAccessAuditLogUpsertOne) AddOperatorID(v uint32) *DataAccessAuditLogUpsertOne {
-	return u.Update(func(s *DataAccessAuditLogUpsert) {
-		s.AddOperatorID(v)
-	})
-}
-
-// UpdateOperatorID sets the "operator_id" field to the value that was provided on create.
-func (u *DataAccessAuditLogUpsertOne) UpdateOperatorID() *DataAccessAuditLogUpsertOne {
-	return u.Update(func(s *DataAccessAuditLogUpsert) {
-		s.UpdateOperatorID()
-	})
-}
-
-// ClearOperatorID clears the value of the "operator_id" field.
-func (u *DataAccessAuditLogUpsertOne) ClearOperatorID() *DataAccessAuditLogUpsertOne {
-	return u.Update(func(s *DataAccessAuditLogUpsert) {
-		s.ClearOperatorID()
-	})
-}
-
-// SetResource sets the "resource" field.
-func (u *DataAccessAuditLogUpsertOne) SetResource(v string) *DataAccessAuditLogUpsertOne {
-	return u.Update(func(s *DataAccessAuditLogUpsert) {
-		s.SetResource(v)
-	})
-}
-
-// UpdateResource sets the "resource" field to the value that was provided on create.
-func (u *DataAccessAuditLogUpsertOne) UpdateResource() *DataAccessAuditLogUpsertOne {
-	return u.Update(func(s *DataAccessAuditLogUpsert) {
-		s.UpdateResource()
-	})
-}
-
-// ClearResource clears the value of the "resource" field.
-func (u *DataAccessAuditLogUpsertOne) ClearResource() *DataAccessAuditLogUpsertOne {
-	return u.Update(func(s *DataAccessAuditLogUpsert) {
-		s.ClearResource()
-	})
-}
-
-// SetAction sets the "action" field.
-func (u *DataAccessAuditLogUpsertOne) SetAction(v string) *DataAccessAuditLogUpsertOne {
-	return u.Update(func(s *DataAccessAuditLogUpsert) {
-		s.SetAction(v)
-	})
-}
-
-// UpdateAction sets the "action" field to the value that was provided on create.
-func (u *DataAccessAuditLogUpsertOne) UpdateAction() *DataAccessAuditLogUpsertOne {
-	return u.Update(func(s *DataAccessAuditLogUpsert) {
-		s.UpdateAction()
-	})
-}
-
-// ClearAction clears the value of the "action" field.
-func (u *DataAccessAuditLogUpsertOne) ClearAction() *DataAccessAuditLogUpsertOne {
-	return u.Update(func(s *DataAccessAuditLogUpsert) {
-		s.ClearAction()
-	})
-}
-
 // SetUserID sets the "user_id" field.
 func (u *DataAccessAuditLogUpsertOne) SetUserID(v uint32) *DataAccessAuditLogUpsertOne {
 	return u.Update(func(s *DataAccessAuditLogUpsert) {
@@ -902,48 +1182,6 @@ func (u *DataAccessAuditLogUpsertOne) ClearUsername() *DataAccessAuditLogUpsertO
 	})
 }
 
-// SetAccessType sets the "access_type" field.
-func (u *DataAccessAuditLogUpsertOne) SetAccessType(v dataaccessauditlog.AccessType) *DataAccessAuditLogUpsertOne {
-	return u.Update(func(s *DataAccessAuditLogUpsert) {
-		s.SetAccessType(v)
-	})
-}
-
-// UpdateAccessType sets the "access_type" field to the value that was provided on create.
-func (u *DataAccessAuditLogUpsertOne) UpdateAccessType() *DataAccessAuditLogUpsertOne {
-	return u.Update(func(s *DataAccessAuditLogUpsert) {
-		s.UpdateAccessType()
-	})
-}
-
-// ClearAccessType clears the value of the "access_type" field.
-func (u *DataAccessAuditLogUpsertOne) ClearAccessType() *DataAccessAuditLogUpsertOne {
-	return u.Update(func(s *DataAccessAuditLogUpsert) {
-		s.ClearAccessType()
-	})
-}
-
-// SetSensitiveLevel sets the "sensitive_level" field.
-func (u *DataAccessAuditLogUpsertOne) SetSensitiveLevel(v dataaccessauditlog.SensitiveLevel) *DataAccessAuditLogUpsertOne {
-	return u.Update(func(s *DataAccessAuditLogUpsert) {
-		s.SetSensitiveLevel(v)
-	})
-}
-
-// UpdateSensitiveLevel sets the "sensitive_level" field to the value that was provided on create.
-func (u *DataAccessAuditLogUpsertOne) UpdateSensitiveLevel() *DataAccessAuditLogUpsertOne {
-	return u.Update(func(s *DataAccessAuditLogUpsert) {
-		s.UpdateSensitiveLevel()
-	})
-}
-
-// ClearSensitiveLevel clears the value of the "sensitive_level" field.
-func (u *DataAccessAuditLogUpsertOne) ClearSensitiveLevel() *DataAccessAuditLogUpsertOne {
-	return u.Update(func(s *DataAccessAuditLogUpsert) {
-		s.ClearSensitiveLevel()
-	})
-}
-
 // SetIPAddress sets the "ip_address" field.
 func (u *DataAccessAuditLogUpsertOne) SetIPAddress(v string) *DataAccessAuditLogUpsertOne {
 	return u.Update(func(s *DataAccessAuditLogUpsert) {
@@ -962,6 +1200,90 @@ func (u *DataAccessAuditLogUpsertOne) UpdateIPAddress() *DataAccessAuditLogUpser
 func (u *DataAccessAuditLogUpsertOne) ClearIPAddress() *DataAccessAuditLogUpsertOne {
 	return u.Update(func(s *DataAccessAuditLogUpsert) {
 		s.ClearIPAddress()
+	})
+}
+
+// SetGeoLocation sets the "geo_location" field.
+func (u *DataAccessAuditLogUpsertOne) SetGeoLocation(v *auditpb.GeoLocation) *DataAccessAuditLogUpsertOne {
+	return u.Update(func(s *DataAccessAuditLogUpsert) {
+		s.SetGeoLocation(v)
+	})
+}
+
+// UpdateGeoLocation sets the "geo_location" field to the value that was provided on create.
+func (u *DataAccessAuditLogUpsertOne) UpdateGeoLocation() *DataAccessAuditLogUpsertOne {
+	return u.Update(func(s *DataAccessAuditLogUpsert) {
+		s.UpdateGeoLocation()
+	})
+}
+
+// ClearGeoLocation clears the value of the "geo_location" field.
+func (u *DataAccessAuditLogUpsertOne) ClearGeoLocation() *DataAccessAuditLogUpsertOne {
+	return u.Update(func(s *DataAccessAuditLogUpsert) {
+		s.ClearGeoLocation()
+	})
+}
+
+// SetDeviceInfo sets the "device_info" field.
+func (u *DataAccessAuditLogUpsertOne) SetDeviceInfo(v *auditpb.DeviceInfo) *DataAccessAuditLogUpsertOne {
+	return u.Update(func(s *DataAccessAuditLogUpsert) {
+		s.SetDeviceInfo(v)
+	})
+}
+
+// UpdateDeviceInfo sets the "device_info" field to the value that was provided on create.
+func (u *DataAccessAuditLogUpsertOne) UpdateDeviceInfo() *DataAccessAuditLogUpsertOne {
+	return u.Update(func(s *DataAccessAuditLogUpsert) {
+		s.UpdateDeviceInfo()
+	})
+}
+
+// ClearDeviceInfo clears the value of the "device_info" field.
+func (u *DataAccessAuditLogUpsertOne) ClearDeviceInfo() *DataAccessAuditLogUpsertOne {
+	return u.Update(func(s *DataAccessAuditLogUpsert) {
+		s.ClearDeviceInfo()
+	})
+}
+
+// SetRequestID sets the "request_id" field.
+func (u *DataAccessAuditLogUpsertOne) SetRequestID(v string) *DataAccessAuditLogUpsertOne {
+	return u.Update(func(s *DataAccessAuditLogUpsert) {
+		s.SetRequestID(v)
+	})
+}
+
+// UpdateRequestID sets the "request_id" field to the value that was provided on create.
+func (u *DataAccessAuditLogUpsertOne) UpdateRequestID() *DataAccessAuditLogUpsertOne {
+	return u.Update(func(s *DataAccessAuditLogUpsert) {
+		s.UpdateRequestID()
+	})
+}
+
+// ClearRequestID clears the value of the "request_id" field.
+func (u *DataAccessAuditLogUpsertOne) ClearRequestID() *DataAccessAuditLogUpsertOne {
+	return u.Update(func(s *DataAccessAuditLogUpsert) {
+		s.ClearRequestID()
+	})
+}
+
+// SetTraceID sets the "trace_id" field.
+func (u *DataAccessAuditLogUpsertOne) SetTraceID(v string) *DataAccessAuditLogUpsertOne {
+	return u.Update(func(s *DataAccessAuditLogUpsert) {
+		s.SetTraceID(v)
+	})
+}
+
+// UpdateTraceID sets the "trace_id" field to the value that was provided on create.
+func (u *DataAccessAuditLogUpsertOne) UpdateTraceID() *DataAccessAuditLogUpsertOne {
+	return u.Update(func(s *DataAccessAuditLogUpsert) {
+		s.UpdateTraceID()
+	})
+}
+
+// ClearTraceID clears the value of the "trace_id" field.
+func (u *DataAccessAuditLogUpsertOne) ClearTraceID() *DataAccessAuditLogUpsertOne {
+	return u.Update(func(s *DataAccessAuditLogUpsert) {
+		s.ClearTraceID()
 	})
 }
 
@@ -986,24 +1308,353 @@ func (u *DataAccessAuditLogUpsertOne) ClearDataSource() *DataAccessAuditLogUpser
 	})
 }
 
-// SetAccessedAt sets the "accessed_at" field.
-func (u *DataAccessAuditLogUpsertOne) SetAccessedAt(v time.Time) *DataAccessAuditLogUpsertOne {
+// SetTableName sets the "table_name" field.
+func (u *DataAccessAuditLogUpsertOne) SetTableName(v string) *DataAccessAuditLogUpsertOne {
 	return u.Update(func(s *DataAccessAuditLogUpsert) {
-		s.SetAccessedAt(v)
+		s.SetTableName(v)
 	})
 }
 
-// UpdateAccessedAt sets the "accessed_at" field to the value that was provided on create.
-func (u *DataAccessAuditLogUpsertOne) UpdateAccessedAt() *DataAccessAuditLogUpsertOne {
+// UpdateTableName sets the "table_name" field to the value that was provided on create.
+func (u *DataAccessAuditLogUpsertOne) UpdateTableName() *DataAccessAuditLogUpsertOne {
 	return u.Update(func(s *DataAccessAuditLogUpsert) {
-		s.UpdateAccessedAt()
+		s.UpdateTableName()
 	})
 }
 
-// ClearAccessedAt clears the value of the "accessed_at" field.
-func (u *DataAccessAuditLogUpsertOne) ClearAccessedAt() *DataAccessAuditLogUpsertOne {
+// ClearTableName clears the value of the "table_name" field.
+func (u *DataAccessAuditLogUpsertOne) ClearTableName() *DataAccessAuditLogUpsertOne {
 	return u.Update(func(s *DataAccessAuditLogUpsert) {
-		s.ClearAccessedAt()
+		s.ClearTableName()
+	})
+}
+
+// SetDataID sets the "data_id" field.
+func (u *DataAccessAuditLogUpsertOne) SetDataID(v string) *DataAccessAuditLogUpsertOne {
+	return u.Update(func(s *DataAccessAuditLogUpsert) {
+		s.SetDataID(v)
+	})
+}
+
+// UpdateDataID sets the "data_id" field to the value that was provided on create.
+func (u *DataAccessAuditLogUpsertOne) UpdateDataID() *DataAccessAuditLogUpsertOne {
+	return u.Update(func(s *DataAccessAuditLogUpsert) {
+		s.UpdateDataID()
+	})
+}
+
+// ClearDataID clears the value of the "data_id" field.
+func (u *DataAccessAuditLogUpsertOne) ClearDataID() *DataAccessAuditLogUpsertOne {
+	return u.Update(func(s *DataAccessAuditLogUpsert) {
+		s.ClearDataID()
+	})
+}
+
+// SetAccessType sets the "access_type" field.
+func (u *DataAccessAuditLogUpsertOne) SetAccessType(v dataaccessauditlog.AccessType) *DataAccessAuditLogUpsertOne {
+	return u.Update(func(s *DataAccessAuditLogUpsert) {
+		s.SetAccessType(v)
+	})
+}
+
+// UpdateAccessType sets the "access_type" field to the value that was provided on create.
+func (u *DataAccessAuditLogUpsertOne) UpdateAccessType() *DataAccessAuditLogUpsertOne {
+	return u.Update(func(s *DataAccessAuditLogUpsert) {
+		s.UpdateAccessType()
+	})
+}
+
+// ClearAccessType clears the value of the "access_type" field.
+func (u *DataAccessAuditLogUpsertOne) ClearAccessType() *DataAccessAuditLogUpsertOne {
+	return u.Update(func(s *DataAccessAuditLogUpsert) {
+		s.ClearAccessType()
+	})
+}
+
+// SetSQLDigest sets the "sql_digest" field.
+func (u *DataAccessAuditLogUpsertOne) SetSQLDigest(v string) *DataAccessAuditLogUpsertOne {
+	return u.Update(func(s *DataAccessAuditLogUpsert) {
+		s.SetSQLDigest(v)
+	})
+}
+
+// UpdateSQLDigest sets the "sql_digest" field to the value that was provided on create.
+func (u *DataAccessAuditLogUpsertOne) UpdateSQLDigest() *DataAccessAuditLogUpsertOne {
+	return u.Update(func(s *DataAccessAuditLogUpsert) {
+		s.UpdateSQLDigest()
+	})
+}
+
+// ClearSQLDigest clears the value of the "sql_digest" field.
+func (u *DataAccessAuditLogUpsertOne) ClearSQLDigest() *DataAccessAuditLogUpsertOne {
+	return u.Update(func(s *DataAccessAuditLogUpsert) {
+		s.ClearSQLDigest()
+	})
+}
+
+// SetSQLText sets the "sql_text" field.
+func (u *DataAccessAuditLogUpsertOne) SetSQLText(v string) *DataAccessAuditLogUpsertOne {
+	return u.Update(func(s *DataAccessAuditLogUpsert) {
+		s.SetSQLText(v)
+	})
+}
+
+// UpdateSQLText sets the "sql_text" field to the value that was provided on create.
+func (u *DataAccessAuditLogUpsertOne) UpdateSQLText() *DataAccessAuditLogUpsertOne {
+	return u.Update(func(s *DataAccessAuditLogUpsert) {
+		s.UpdateSQLText()
+	})
+}
+
+// ClearSQLText clears the value of the "sql_text" field.
+func (u *DataAccessAuditLogUpsertOne) ClearSQLText() *DataAccessAuditLogUpsertOne {
+	return u.Update(func(s *DataAccessAuditLogUpsert) {
+		s.ClearSQLText()
+	})
+}
+
+// SetAffectedRows sets the "affected_rows" field.
+func (u *DataAccessAuditLogUpsertOne) SetAffectedRows(v uint32) *DataAccessAuditLogUpsertOne {
+	return u.Update(func(s *DataAccessAuditLogUpsert) {
+		s.SetAffectedRows(v)
+	})
+}
+
+// AddAffectedRows adds v to the "affected_rows" field.
+func (u *DataAccessAuditLogUpsertOne) AddAffectedRows(v uint32) *DataAccessAuditLogUpsertOne {
+	return u.Update(func(s *DataAccessAuditLogUpsert) {
+		s.AddAffectedRows(v)
+	})
+}
+
+// UpdateAffectedRows sets the "affected_rows" field to the value that was provided on create.
+func (u *DataAccessAuditLogUpsertOne) UpdateAffectedRows() *DataAccessAuditLogUpsertOne {
+	return u.Update(func(s *DataAccessAuditLogUpsert) {
+		s.UpdateAffectedRows()
+	})
+}
+
+// ClearAffectedRows clears the value of the "affected_rows" field.
+func (u *DataAccessAuditLogUpsertOne) ClearAffectedRows() *DataAccessAuditLogUpsertOne {
+	return u.Update(func(s *DataAccessAuditLogUpsert) {
+		s.ClearAffectedRows()
+	})
+}
+
+// SetLatencyMs sets the "latency_ms" field.
+func (u *DataAccessAuditLogUpsertOne) SetLatencyMs(v uint32) *DataAccessAuditLogUpsertOne {
+	return u.Update(func(s *DataAccessAuditLogUpsert) {
+		s.SetLatencyMs(v)
+	})
+}
+
+// AddLatencyMs adds v to the "latency_ms" field.
+func (u *DataAccessAuditLogUpsertOne) AddLatencyMs(v uint32) *DataAccessAuditLogUpsertOne {
+	return u.Update(func(s *DataAccessAuditLogUpsert) {
+		s.AddLatencyMs(v)
+	})
+}
+
+// UpdateLatencyMs sets the "latency_ms" field to the value that was provided on create.
+func (u *DataAccessAuditLogUpsertOne) UpdateLatencyMs() *DataAccessAuditLogUpsertOne {
+	return u.Update(func(s *DataAccessAuditLogUpsert) {
+		s.UpdateLatencyMs()
+	})
+}
+
+// ClearLatencyMs clears the value of the "latency_ms" field.
+func (u *DataAccessAuditLogUpsertOne) ClearLatencyMs() *DataAccessAuditLogUpsertOne {
+	return u.Update(func(s *DataAccessAuditLogUpsert) {
+		s.ClearLatencyMs()
+	})
+}
+
+// SetSuccess sets the "success" field.
+func (u *DataAccessAuditLogUpsertOne) SetSuccess(v bool) *DataAccessAuditLogUpsertOne {
+	return u.Update(func(s *DataAccessAuditLogUpsert) {
+		s.SetSuccess(v)
+	})
+}
+
+// UpdateSuccess sets the "success" field to the value that was provided on create.
+func (u *DataAccessAuditLogUpsertOne) UpdateSuccess() *DataAccessAuditLogUpsertOne {
+	return u.Update(func(s *DataAccessAuditLogUpsert) {
+		s.UpdateSuccess()
+	})
+}
+
+// ClearSuccess clears the value of the "success" field.
+func (u *DataAccessAuditLogUpsertOne) ClearSuccess() *DataAccessAuditLogUpsertOne {
+	return u.Update(func(s *DataAccessAuditLogUpsert) {
+		s.ClearSuccess()
+	})
+}
+
+// SetSensitiveLevel sets the "sensitive_level" field.
+func (u *DataAccessAuditLogUpsertOne) SetSensitiveLevel(v dataaccessauditlog.SensitiveLevel) *DataAccessAuditLogUpsertOne {
+	return u.Update(func(s *DataAccessAuditLogUpsert) {
+		s.SetSensitiveLevel(v)
+	})
+}
+
+// UpdateSensitiveLevel sets the "sensitive_level" field to the value that was provided on create.
+func (u *DataAccessAuditLogUpsertOne) UpdateSensitiveLevel() *DataAccessAuditLogUpsertOne {
+	return u.Update(func(s *DataAccessAuditLogUpsert) {
+		s.UpdateSensitiveLevel()
+	})
+}
+
+// ClearSensitiveLevel clears the value of the "sensitive_level" field.
+func (u *DataAccessAuditLogUpsertOne) ClearSensitiveLevel() *DataAccessAuditLogUpsertOne {
+	return u.Update(func(s *DataAccessAuditLogUpsert) {
+		s.ClearSensitiveLevel()
+	})
+}
+
+// SetDataMasked sets the "data_masked" field.
+func (u *DataAccessAuditLogUpsertOne) SetDataMasked(v bool) *DataAccessAuditLogUpsertOne {
+	return u.Update(func(s *DataAccessAuditLogUpsert) {
+		s.SetDataMasked(v)
+	})
+}
+
+// UpdateDataMasked sets the "data_masked" field to the value that was provided on create.
+func (u *DataAccessAuditLogUpsertOne) UpdateDataMasked() *DataAccessAuditLogUpsertOne {
+	return u.Update(func(s *DataAccessAuditLogUpsert) {
+		s.UpdateDataMasked()
+	})
+}
+
+// ClearDataMasked clears the value of the "data_masked" field.
+func (u *DataAccessAuditLogUpsertOne) ClearDataMasked() *DataAccessAuditLogUpsertOne {
+	return u.Update(func(s *DataAccessAuditLogUpsert) {
+		s.ClearDataMasked()
+	})
+}
+
+// SetMaskingRules sets the "masking_rules" field.
+func (u *DataAccessAuditLogUpsertOne) SetMaskingRules(v string) *DataAccessAuditLogUpsertOne {
+	return u.Update(func(s *DataAccessAuditLogUpsert) {
+		s.SetMaskingRules(v)
+	})
+}
+
+// UpdateMaskingRules sets the "masking_rules" field to the value that was provided on create.
+func (u *DataAccessAuditLogUpsertOne) UpdateMaskingRules() *DataAccessAuditLogUpsertOne {
+	return u.Update(func(s *DataAccessAuditLogUpsert) {
+		s.UpdateMaskingRules()
+	})
+}
+
+// ClearMaskingRules clears the value of the "masking_rules" field.
+func (u *DataAccessAuditLogUpsertOne) ClearMaskingRules() *DataAccessAuditLogUpsertOne {
+	return u.Update(func(s *DataAccessAuditLogUpsert) {
+		s.ClearMaskingRules()
+	})
+}
+
+// SetBusinessPurpose sets the "business_purpose" field.
+func (u *DataAccessAuditLogUpsertOne) SetBusinessPurpose(v string) *DataAccessAuditLogUpsertOne {
+	return u.Update(func(s *DataAccessAuditLogUpsert) {
+		s.SetBusinessPurpose(v)
+	})
+}
+
+// UpdateBusinessPurpose sets the "business_purpose" field to the value that was provided on create.
+func (u *DataAccessAuditLogUpsertOne) UpdateBusinessPurpose() *DataAccessAuditLogUpsertOne {
+	return u.Update(func(s *DataAccessAuditLogUpsert) {
+		s.UpdateBusinessPurpose()
+	})
+}
+
+// ClearBusinessPurpose clears the value of the "business_purpose" field.
+func (u *DataAccessAuditLogUpsertOne) ClearBusinessPurpose() *DataAccessAuditLogUpsertOne {
+	return u.Update(func(s *DataAccessAuditLogUpsert) {
+		s.ClearBusinessPurpose()
+	})
+}
+
+// SetDataCategory sets the "data_category" field.
+func (u *DataAccessAuditLogUpsertOne) SetDataCategory(v string) *DataAccessAuditLogUpsertOne {
+	return u.Update(func(s *DataAccessAuditLogUpsert) {
+		s.SetDataCategory(v)
+	})
+}
+
+// UpdateDataCategory sets the "data_category" field to the value that was provided on create.
+func (u *DataAccessAuditLogUpsertOne) UpdateDataCategory() *DataAccessAuditLogUpsertOne {
+	return u.Update(func(s *DataAccessAuditLogUpsert) {
+		s.UpdateDataCategory()
+	})
+}
+
+// ClearDataCategory clears the value of the "data_category" field.
+func (u *DataAccessAuditLogUpsertOne) ClearDataCategory() *DataAccessAuditLogUpsertOne {
+	return u.Update(func(s *DataAccessAuditLogUpsert) {
+		s.ClearDataCategory()
+	})
+}
+
+// SetDbUser sets the "db_user" field.
+func (u *DataAccessAuditLogUpsertOne) SetDbUser(v string) *DataAccessAuditLogUpsertOne {
+	return u.Update(func(s *DataAccessAuditLogUpsert) {
+		s.SetDbUser(v)
+	})
+}
+
+// UpdateDbUser sets the "db_user" field to the value that was provided on create.
+func (u *DataAccessAuditLogUpsertOne) UpdateDbUser() *DataAccessAuditLogUpsertOne {
+	return u.Update(func(s *DataAccessAuditLogUpsert) {
+		s.UpdateDbUser()
+	})
+}
+
+// ClearDbUser clears the value of the "db_user" field.
+func (u *DataAccessAuditLogUpsertOne) ClearDbUser() *DataAccessAuditLogUpsertOne {
+	return u.Update(func(s *DataAccessAuditLogUpsert) {
+		s.ClearDbUser()
+	})
+}
+
+// SetLogHash sets the "log_hash" field.
+func (u *DataAccessAuditLogUpsertOne) SetLogHash(v string) *DataAccessAuditLogUpsertOne {
+	return u.Update(func(s *DataAccessAuditLogUpsert) {
+		s.SetLogHash(v)
+	})
+}
+
+// UpdateLogHash sets the "log_hash" field to the value that was provided on create.
+func (u *DataAccessAuditLogUpsertOne) UpdateLogHash() *DataAccessAuditLogUpsertOne {
+	return u.Update(func(s *DataAccessAuditLogUpsert) {
+		s.UpdateLogHash()
+	})
+}
+
+// ClearLogHash clears the value of the "log_hash" field.
+func (u *DataAccessAuditLogUpsertOne) ClearLogHash() *DataAccessAuditLogUpsertOne {
+	return u.Update(func(s *DataAccessAuditLogUpsert) {
+		s.ClearLogHash()
+	})
+}
+
+// SetSignature sets the "signature" field.
+func (u *DataAccessAuditLogUpsertOne) SetSignature(v []byte) *DataAccessAuditLogUpsertOne {
+	return u.Update(func(s *DataAccessAuditLogUpsert) {
+		s.SetSignature(v)
+	})
+}
+
+// UpdateSignature sets the "signature" field to the value that was provided on create.
+func (u *DataAccessAuditLogUpsertOne) UpdateSignature() *DataAccessAuditLogUpsertOne {
+	return u.Update(func(s *DataAccessAuditLogUpsert) {
+		s.UpdateSignature()
+	})
+}
+
+// ClearSignature clears the value of the "signature" field.
+func (u *DataAccessAuditLogUpsertOne) ClearSignature() *DataAccessAuditLogUpsertOne {
+	return u.Update(func(s *DataAccessAuditLogUpsert) {
+		s.ClearSignature()
 	})
 }
 
@@ -1227,118 +1878,6 @@ func (u *DataAccessAuditLogUpsertBulk) Update(set func(*DataAccessAuditLogUpsert
 	return u
 }
 
-// SetUpdatedAt sets the "updated_at" field.
-func (u *DataAccessAuditLogUpsertBulk) SetUpdatedAt(v time.Time) *DataAccessAuditLogUpsertBulk {
-	return u.Update(func(s *DataAccessAuditLogUpsert) {
-		s.SetUpdatedAt(v)
-	})
-}
-
-// UpdateUpdatedAt sets the "updated_at" field to the value that was provided on create.
-func (u *DataAccessAuditLogUpsertBulk) UpdateUpdatedAt() *DataAccessAuditLogUpsertBulk {
-	return u.Update(func(s *DataAccessAuditLogUpsert) {
-		s.UpdateUpdatedAt()
-	})
-}
-
-// ClearUpdatedAt clears the value of the "updated_at" field.
-func (u *DataAccessAuditLogUpsertBulk) ClearUpdatedAt() *DataAccessAuditLogUpsertBulk {
-	return u.Update(func(s *DataAccessAuditLogUpsert) {
-		s.ClearUpdatedAt()
-	})
-}
-
-// SetDeletedAt sets the "deleted_at" field.
-func (u *DataAccessAuditLogUpsertBulk) SetDeletedAt(v time.Time) *DataAccessAuditLogUpsertBulk {
-	return u.Update(func(s *DataAccessAuditLogUpsert) {
-		s.SetDeletedAt(v)
-	})
-}
-
-// UpdateDeletedAt sets the "deleted_at" field to the value that was provided on create.
-func (u *DataAccessAuditLogUpsertBulk) UpdateDeletedAt() *DataAccessAuditLogUpsertBulk {
-	return u.Update(func(s *DataAccessAuditLogUpsert) {
-		s.UpdateDeletedAt()
-	})
-}
-
-// ClearDeletedAt clears the value of the "deleted_at" field.
-func (u *DataAccessAuditLogUpsertBulk) ClearDeletedAt() *DataAccessAuditLogUpsertBulk {
-	return u.Update(func(s *DataAccessAuditLogUpsert) {
-		s.ClearDeletedAt()
-	})
-}
-
-// SetOperatorID sets the "operator_id" field.
-func (u *DataAccessAuditLogUpsertBulk) SetOperatorID(v uint32) *DataAccessAuditLogUpsertBulk {
-	return u.Update(func(s *DataAccessAuditLogUpsert) {
-		s.SetOperatorID(v)
-	})
-}
-
-// AddOperatorID adds v to the "operator_id" field.
-func (u *DataAccessAuditLogUpsertBulk) AddOperatorID(v uint32) *DataAccessAuditLogUpsertBulk {
-	return u.Update(func(s *DataAccessAuditLogUpsert) {
-		s.AddOperatorID(v)
-	})
-}
-
-// UpdateOperatorID sets the "operator_id" field to the value that was provided on create.
-func (u *DataAccessAuditLogUpsertBulk) UpdateOperatorID() *DataAccessAuditLogUpsertBulk {
-	return u.Update(func(s *DataAccessAuditLogUpsert) {
-		s.UpdateOperatorID()
-	})
-}
-
-// ClearOperatorID clears the value of the "operator_id" field.
-func (u *DataAccessAuditLogUpsertBulk) ClearOperatorID() *DataAccessAuditLogUpsertBulk {
-	return u.Update(func(s *DataAccessAuditLogUpsert) {
-		s.ClearOperatorID()
-	})
-}
-
-// SetResource sets the "resource" field.
-func (u *DataAccessAuditLogUpsertBulk) SetResource(v string) *DataAccessAuditLogUpsertBulk {
-	return u.Update(func(s *DataAccessAuditLogUpsert) {
-		s.SetResource(v)
-	})
-}
-
-// UpdateResource sets the "resource" field to the value that was provided on create.
-func (u *DataAccessAuditLogUpsertBulk) UpdateResource() *DataAccessAuditLogUpsertBulk {
-	return u.Update(func(s *DataAccessAuditLogUpsert) {
-		s.UpdateResource()
-	})
-}
-
-// ClearResource clears the value of the "resource" field.
-func (u *DataAccessAuditLogUpsertBulk) ClearResource() *DataAccessAuditLogUpsertBulk {
-	return u.Update(func(s *DataAccessAuditLogUpsert) {
-		s.ClearResource()
-	})
-}
-
-// SetAction sets the "action" field.
-func (u *DataAccessAuditLogUpsertBulk) SetAction(v string) *DataAccessAuditLogUpsertBulk {
-	return u.Update(func(s *DataAccessAuditLogUpsert) {
-		s.SetAction(v)
-	})
-}
-
-// UpdateAction sets the "action" field to the value that was provided on create.
-func (u *DataAccessAuditLogUpsertBulk) UpdateAction() *DataAccessAuditLogUpsertBulk {
-	return u.Update(func(s *DataAccessAuditLogUpsert) {
-		s.UpdateAction()
-	})
-}
-
-// ClearAction clears the value of the "action" field.
-func (u *DataAccessAuditLogUpsertBulk) ClearAction() *DataAccessAuditLogUpsertBulk {
-	return u.Update(func(s *DataAccessAuditLogUpsert) {
-		s.ClearAction()
-	})
-}
-
 // SetUserID sets the "user_id" field.
 func (u *DataAccessAuditLogUpsertBulk) SetUserID(v uint32) *DataAccessAuditLogUpsertBulk {
 	return u.Update(func(s *DataAccessAuditLogUpsert) {
@@ -1388,48 +1927,6 @@ func (u *DataAccessAuditLogUpsertBulk) ClearUsername() *DataAccessAuditLogUpsert
 	})
 }
 
-// SetAccessType sets the "access_type" field.
-func (u *DataAccessAuditLogUpsertBulk) SetAccessType(v dataaccessauditlog.AccessType) *DataAccessAuditLogUpsertBulk {
-	return u.Update(func(s *DataAccessAuditLogUpsert) {
-		s.SetAccessType(v)
-	})
-}
-
-// UpdateAccessType sets the "access_type" field to the value that was provided on create.
-func (u *DataAccessAuditLogUpsertBulk) UpdateAccessType() *DataAccessAuditLogUpsertBulk {
-	return u.Update(func(s *DataAccessAuditLogUpsert) {
-		s.UpdateAccessType()
-	})
-}
-
-// ClearAccessType clears the value of the "access_type" field.
-func (u *DataAccessAuditLogUpsertBulk) ClearAccessType() *DataAccessAuditLogUpsertBulk {
-	return u.Update(func(s *DataAccessAuditLogUpsert) {
-		s.ClearAccessType()
-	})
-}
-
-// SetSensitiveLevel sets the "sensitive_level" field.
-func (u *DataAccessAuditLogUpsertBulk) SetSensitiveLevel(v dataaccessauditlog.SensitiveLevel) *DataAccessAuditLogUpsertBulk {
-	return u.Update(func(s *DataAccessAuditLogUpsert) {
-		s.SetSensitiveLevel(v)
-	})
-}
-
-// UpdateSensitiveLevel sets the "sensitive_level" field to the value that was provided on create.
-func (u *DataAccessAuditLogUpsertBulk) UpdateSensitiveLevel() *DataAccessAuditLogUpsertBulk {
-	return u.Update(func(s *DataAccessAuditLogUpsert) {
-		s.UpdateSensitiveLevel()
-	})
-}
-
-// ClearSensitiveLevel clears the value of the "sensitive_level" field.
-func (u *DataAccessAuditLogUpsertBulk) ClearSensitiveLevel() *DataAccessAuditLogUpsertBulk {
-	return u.Update(func(s *DataAccessAuditLogUpsert) {
-		s.ClearSensitiveLevel()
-	})
-}
-
 // SetIPAddress sets the "ip_address" field.
 func (u *DataAccessAuditLogUpsertBulk) SetIPAddress(v string) *DataAccessAuditLogUpsertBulk {
 	return u.Update(func(s *DataAccessAuditLogUpsert) {
@@ -1448,6 +1945,90 @@ func (u *DataAccessAuditLogUpsertBulk) UpdateIPAddress() *DataAccessAuditLogUpse
 func (u *DataAccessAuditLogUpsertBulk) ClearIPAddress() *DataAccessAuditLogUpsertBulk {
 	return u.Update(func(s *DataAccessAuditLogUpsert) {
 		s.ClearIPAddress()
+	})
+}
+
+// SetGeoLocation sets the "geo_location" field.
+func (u *DataAccessAuditLogUpsertBulk) SetGeoLocation(v *auditpb.GeoLocation) *DataAccessAuditLogUpsertBulk {
+	return u.Update(func(s *DataAccessAuditLogUpsert) {
+		s.SetGeoLocation(v)
+	})
+}
+
+// UpdateGeoLocation sets the "geo_location" field to the value that was provided on create.
+func (u *DataAccessAuditLogUpsertBulk) UpdateGeoLocation() *DataAccessAuditLogUpsertBulk {
+	return u.Update(func(s *DataAccessAuditLogUpsert) {
+		s.UpdateGeoLocation()
+	})
+}
+
+// ClearGeoLocation clears the value of the "geo_location" field.
+func (u *DataAccessAuditLogUpsertBulk) ClearGeoLocation() *DataAccessAuditLogUpsertBulk {
+	return u.Update(func(s *DataAccessAuditLogUpsert) {
+		s.ClearGeoLocation()
+	})
+}
+
+// SetDeviceInfo sets the "device_info" field.
+func (u *DataAccessAuditLogUpsertBulk) SetDeviceInfo(v *auditpb.DeviceInfo) *DataAccessAuditLogUpsertBulk {
+	return u.Update(func(s *DataAccessAuditLogUpsert) {
+		s.SetDeviceInfo(v)
+	})
+}
+
+// UpdateDeviceInfo sets the "device_info" field to the value that was provided on create.
+func (u *DataAccessAuditLogUpsertBulk) UpdateDeviceInfo() *DataAccessAuditLogUpsertBulk {
+	return u.Update(func(s *DataAccessAuditLogUpsert) {
+		s.UpdateDeviceInfo()
+	})
+}
+
+// ClearDeviceInfo clears the value of the "device_info" field.
+func (u *DataAccessAuditLogUpsertBulk) ClearDeviceInfo() *DataAccessAuditLogUpsertBulk {
+	return u.Update(func(s *DataAccessAuditLogUpsert) {
+		s.ClearDeviceInfo()
+	})
+}
+
+// SetRequestID sets the "request_id" field.
+func (u *DataAccessAuditLogUpsertBulk) SetRequestID(v string) *DataAccessAuditLogUpsertBulk {
+	return u.Update(func(s *DataAccessAuditLogUpsert) {
+		s.SetRequestID(v)
+	})
+}
+
+// UpdateRequestID sets the "request_id" field to the value that was provided on create.
+func (u *DataAccessAuditLogUpsertBulk) UpdateRequestID() *DataAccessAuditLogUpsertBulk {
+	return u.Update(func(s *DataAccessAuditLogUpsert) {
+		s.UpdateRequestID()
+	})
+}
+
+// ClearRequestID clears the value of the "request_id" field.
+func (u *DataAccessAuditLogUpsertBulk) ClearRequestID() *DataAccessAuditLogUpsertBulk {
+	return u.Update(func(s *DataAccessAuditLogUpsert) {
+		s.ClearRequestID()
+	})
+}
+
+// SetTraceID sets the "trace_id" field.
+func (u *DataAccessAuditLogUpsertBulk) SetTraceID(v string) *DataAccessAuditLogUpsertBulk {
+	return u.Update(func(s *DataAccessAuditLogUpsert) {
+		s.SetTraceID(v)
+	})
+}
+
+// UpdateTraceID sets the "trace_id" field to the value that was provided on create.
+func (u *DataAccessAuditLogUpsertBulk) UpdateTraceID() *DataAccessAuditLogUpsertBulk {
+	return u.Update(func(s *DataAccessAuditLogUpsert) {
+		s.UpdateTraceID()
+	})
+}
+
+// ClearTraceID clears the value of the "trace_id" field.
+func (u *DataAccessAuditLogUpsertBulk) ClearTraceID() *DataAccessAuditLogUpsertBulk {
+	return u.Update(func(s *DataAccessAuditLogUpsert) {
+		s.ClearTraceID()
 	})
 }
 
@@ -1472,24 +2053,353 @@ func (u *DataAccessAuditLogUpsertBulk) ClearDataSource() *DataAccessAuditLogUpse
 	})
 }
 
-// SetAccessedAt sets the "accessed_at" field.
-func (u *DataAccessAuditLogUpsertBulk) SetAccessedAt(v time.Time) *DataAccessAuditLogUpsertBulk {
+// SetTableName sets the "table_name" field.
+func (u *DataAccessAuditLogUpsertBulk) SetTableName(v string) *DataAccessAuditLogUpsertBulk {
 	return u.Update(func(s *DataAccessAuditLogUpsert) {
-		s.SetAccessedAt(v)
+		s.SetTableName(v)
 	})
 }
 
-// UpdateAccessedAt sets the "accessed_at" field to the value that was provided on create.
-func (u *DataAccessAuditLogUpsertBulk) UpdateAccessedAt() *DataAccessAuditLogUpsertBulk {
+// UpdateTableName sets the "table_name" field to the value that was provided on create.
+func (u *DataAccessAuditLogUpsertBulk) UpdateTableName() *DataAccessAuditLogUpsertBulk {
 	return u.Update(func(s *DataAccessAuditLogUpsert) {
-		s.UpdateAccessedAt()
+		s.UpdateTableName()
 	})
 }
 
-// ClearAccessedAt clears the value of the "accessed_at" field.
-func (u *DataAccessAuditLogUpsertBulk) ClearAccessedAt() *DataAccessAuditLogUpsertBulk {
+// ClearTableName clears the value of the "table_name" field.
+func (u *DataAccessAuditLogUpsertBulk) ClearTableName() *DataAccessAuditLogUpsertBulk {
 	return u.Update(func(s *DataAccessAuditLogUpsert) {
-		s.ClearAccessedAt()
+		s.ClearTableName()
+	})
+}
+
+// SetDataID sets the "data_id" field.
+func (u *DataAccessAuditLogUpsertBulk) SetDataID(v string) *DataAccessAuditLogUpsertBulk {
+	return u.Update(func(s *DataAccessAuditLogUpsert) {
+		s.SetDataID(v)
+	})
+}
+
+// UpdateDataID sets the "data_id" field to the value that was provided on create.
+func (u *DataAccessAuditLogUpsertBulk) UpdateDataID() *DataAccessAuditLogUpsertBulk {
+	return u.Update(func(s *DataAccessAuditLogUpsert) {
+		s.UpdateDataID()
+	})
+}
+
+// ClearDataID clears the value of the "data_id" field.
+func (u *DataAccessAuditLogUpsertBulk) ClearDataID() *DataAccessAuditLogUpsertBulk {
+	return u.Update(func(s *DataAccessAuditLogUpsert) {
+		s.ClearDataID()
+	})
+}
+
+// SetAccessType sets the "access_type" field.
+func (u *DataAccessAuditLogUpsertBulk) SetAccessType(v dataaccessauditlog.AccessType) *DataAccessAuditLogUpsertBulk {
+	return u.Update(func(s *DataAccessAuditLogUpsert) {
+		s.SetAccessType(v)
+	})
+}
+
+// UpdateAccessType sets the "access_type" field to the value that was provided on create.
+func (u *DataAccessAuditLogUpsertBulk) UpdateAccessType() *DataAccessAuditLogUpsertBulk {
+	return u.Update(func(s *DataAccessAuditLogUpsert) {
+		s.UpdateAccessType()
+	})
+}
+
+// ClearAccessType clears the value of the "access_type" field.
+func (u *DataAccessAuditLogUpsertBulk) ClearAccessType() *DataAccessAuditLogUpsertBulk {
+	return u.Update(func(s *DataAccessAuditLogUpsert) {
+		s.ClearAccessType()
+	})
+}
+
+// SetSQLDigest sets the "sql_digest" field.
+func (u *DataAccessAuditLogUpsertBulk) SetSQLDigest(v string) *DataAccessAuditLogUpsertBulk {
+	return u.Update(func(s *DataAccessAuditLogUpsert) {
+		s.SetSQLDigest(v)
+	})
+}
+
+// UpdateSQLDigest sets the "sql_digest" field to the value that was provided on create.
+func (u *DataAccessAuditLogUpsertBulk) UpdateSQLDigest() *DataAccessAuditLogUpsertBulk {
+	return u.Update(func(s *DataAccessAuditLogUpsert) {
+		s.UpdateSQLDigest()
+	})
+}
+
+// ClearSQLDigest clears the value of the "sql_digest" field.
+func (u *DataAccessAuditLogUpsertBulk) ClearSQLDigest() *DataAccessAuditLogUpsertBulk {
+	return u.Update(func(s *DataAccessAuditLogUpsert) {
+		s.ClearSQLDigest()
+	})
+}
+
+// SetSQLText sets the "sql_text" field.
+func (u *DataAccessAuditLogUpsertBulk) SetSQLText(v string) *DataAccessAuditLogUpsertBulk {
+	return u.Update(func(s *DataAccessAuditLogUpsert) {
+		s.SetSQLText(v)
+	})
+}
+
+// UpdateSQLText sets the "sql_text" field to the value that was provided on create.
+func (u *DataAccessAuditLogUpsertBulk) UpdateSQLText() *DataAccessAuditLogUpsertBulk {
+	return u.Update(func(s *DataAccessAuditLogUpsert) {
+		s.UpdateSQLText()
+	})
+}
+
+// ClearSQLText clears the value of the "sql_text" field.
+func (u *DataAccessAuditLogUpsertBulk) ClearSQLText() *DataAccessAuditLogUpsertBulk {
+	return u.Update(func(s *DataAccessAuditLogUpsert) {
+		s.ClearSQLText()
+	})
+}
+
+// SetAffectedRows sets the "affected_rows" field.
+func (u *DataAccessAuditLogUpsertBulk) SetAffectedRows(v uint32) *DataAccessAuditLogUpsertBulk {
+	return u.Update(func(s *DataAccessAuditLogUpsert) {
+		s.SetAffectedRows(v)
+	})
+}
+
+// AddAffectedRows adds v to the "affected_rows" field.
+func (u *DataAccessAuditLogUpsertBulk) AddAffectedRows(v uint32) *DataAccessAuditLogUpsertBulk {
+	return u.Update(func(s *DataAccessAuditLogUpsert) {
+		s.AddAffectedRows(v)
+	})
+}
+
+// UpdateAffectedRows sets the "affected_rows" field to the value that was provided on create.
+func (u *DataAccessAuditLogUpsertBulk) UpdateAffectedRows() *DataAccessAuditLogUpsertBulk {
+	return u.Update(func(s *DataAccessAuditLogUpsert) {
+		s.UpdateAffectedRows()
+	})
+}
+
+// ClearAffectedRows clears the value of the "affected_rows" field.
+func (u *DataAccessAuditLogUpsertBulk) ClearAffectedRows() *DataAccessAuditLogUpsertBulk {
+	return u.Update(func(s *DataAccessAuditLogUpsert) {
+		s.ClearAffectedRows()
+	})
+}
+
+// SetLatencyMs sets the "latency_ms" field.
+func (u *DataAccessAuditLogUpsertBulk) SetLatencyMs(v uint32) *DataAccessAuditLogUpsertBulk {
+	return u.Update(func(s *DataAccessAuditLogUpsert) {
+		s.SetLatencyMs(v)
+	})
+}
+
+// AddLatencyMs adds v to the "latency_ms" field.
+func (u *DataAccessAuditLogUpsertBulk) AddLatencyMs(v uint32) *DataAccessAuditLogUpsertBulk {
+	return u.Update(func(s *DataAccessAuditLogUpsert) {
+		s.AddLatencyMs(v)
+	})
+}
+
+// UpdateLatencyMs sets the "latency_ms" field to the value that was provided on create.
+func (u *DataAccessAuditLogUpsertBulk) UpdateLatencyMs() *DataAccessAuditLogUpsertBulk {
+	return u.Update(func(s *DataAccessAuditLogUpsert) {
+		s.UpdateLatencyMs()
+	})
+}
+
+// ClearLatencyMs clears the value of the "latency_ms" field.
+func (u *DataAccessAuditLogUpsertBulk) ClearLatencyMs() *DataAccessAuditLogUpsertBulk {
+	return u.Update(func(s *DataAccessAuditLogUpsert) {
+		s.ClearLatencyMs()
+	})
+}
+
+// SetSuccess sets the "success" field.
+func (u *DataAccessAuditLogUpsertBulk) SetSuccess(v bool) *DataAccessAuditLogUpsertBulk {
+	return u.Update(func(s *DataAccessAuditLogUpsert) {
+		s.SetSuccess(v)
+	})
+}
+
+// UpdateSuccess sets the "success" field to the value that was provided on create.
+func (u *DataAccessAuditLogUpsertBulk) UpdateSuccess() *DataAccessAuditLogUpsertBulk {
+	return u.Update(func(s *DataAccessAuditLogUpsert) {
+		s.UpdateSuccess()
+	})
+}
+
+// ClearSuccess clears the value of the "success" field.
+func (u *DataAccessAuditLogUpsertBulk) ClearSuccess() *DataAccessAuditLogUpsertBulk {
+	return u.Update(func(s *DataAccessAuditLogUpsert) {
+		s.ClearSuccess()
+	})
+}
+
+// SetSensitiveLevel sets the "sensitive_level" field.
+func (u *DataAccessAuditLogUpsertBulk) SetSensitiveLevel(v dataaccessauditlog.SensitiveLevel) *DataAccessAuditLogUpsertBulk {
+	return u.Update(func(s *DataAccessAuditLogUpsert) {
+		s.SetSensitiveLevel(v)
+	})
+}
+
+// UpdateSensitiveLevel sets the "sensitive_level" field to the value that was provided on create.
+func (u *DataAccessAuditLogUpsertBulk) UpdateSensitiveLevel() *DataAccessAuditLogUpsertBulk {
+	return u.Update(func(s *DataAccessAuditLogUpsert) {
+		s.UpdateSensitiveLevel()
+	})
+}
+
+// ClearSensitiveLevel clears the value of the "sensitive_level" field.
+func (u *DataAccessAuditLogUpsertBulk) ClearSensitiveLevel() *DataAccessAuditLogUpsertBulk {
+	return u.Update(func(s *DataAccessAuditLogUpsert) {
+		s.ClearSensitiveLevel()
+	})
+}
+
+// SetDataMasked sets the "data_masked" field.
+func (u *DataAccessAuditLogUpsertBulk) SetDataMasked(v bool) *DataAccessAuditLogUpsertBulk {
+	return u.Update(func(s *DataAccessAuditLogUpsert) {
+		s.SetDataMasked(v)
+	})
+}
+
+// UpdateDataMasked sets the "data_masked" field to the value that was provided on create.
+func (u *DataAccessAuditLogUpsertBulk) UpdateDataMasked() *DataAccessAuditLogUpsertBulk {
+	return u.Update(func(s *DataAccessAuditLogUpsert) {
+		s.UpdateDataMasked()
+	})
+}
+
+// ClearDataMasked clears the value of the "data_masked" field.
+func (u *DataAccessAuditLogUpsertBulk) ClearDataMasked() *DataAccessAuditLogUpsertBulk {
+	return u.Update(func(s *DataAccessAuditLogUpsert) {
+		s.ClearDataMasked()
+	})
+}
+
+// SetMaskingRules sets the "masking_rules" field.
+func (u *DataAccessAuditLogUpsertBulk) SetMaskingRules(v string) *DataAccessAuditLogUpsertBulk {
+	return u.Update(func(s *DataAccessAuditLogUpsert) {
+		s.SetMaskingRules(v)
+	})
+}
+
+// UpdateMaskingRules sets the "masking_rules" field to the value that was provided on create.
+func (u *DataAccessAuditLogUpsertBulk) UpdateMaskingRules() *DataAccessAuditLogUpsertBulk {
+	return u.Update(func(s *DataAccessAuditLogUpsert) {
+		s.UpdateMaskingRules()
+	})
+}
+
+// ClearMaskingRules clears the value of the "masking_rules" field.
+func (u *DataAccessAuditLogUpsertBulk) ClearMaskingRules() *DataAccessAuditLogUpsertBulk {
+	return u.Update(func(s *DataAccessAuditLogUpsert) {
+		s.ClearMaskingRules()
+	})
+}
+
+// SetBusinessPurpose sets the "business_purpose" field.
+func (u *DataAccessAuditLogUpsertBulk) SetBusinessPurpose(v string) *DataAccessAuditLogUpsertBulk {
+	return u.Update(func(s *DataAccessAuditLogUpsert) {
+		s.SetBusinessPurpose(v)
+	})
+}
+
+// UpdateBusinessPurpose sets the "business_purpose" field to the value that was provided on create.
+func (u *DataAccessAuditLogUpsertBulk) UpdateBusinessPurpose() *DataAccessAuditLogUpsertBulk {
+	return u.Update(func(s *DataAccessAuditLogUpsert) {
+		s.UpdateBusinessPurpose()
+	})
+}
+
+// ClearBusinessPurpose clears the value of the "business_purpose" field.
+func (u *DataAccessAuditLogUpsertBulk) ClearBusinessPurpose() *DataAccessAuditLogUpsertBulk {
+	return u.Update(func(s *DataAccessAuditLogUpsert) {
+		s.ClearBusinessPurpose()
+	})
+}
+
+// SetDataCategory sets the "data_category" field.
+func (u *DataAccessAuditLogUpsertBulk) SetDataCategory(v string) *DataAccessAuditLogUpsertBulk {
+	return u.Update(func(s *DataAccessAuditLogUpsert) {
+		s.SetDataCategory(v)
+	})
+}
+
+// UpdateDataCategory sets the "data_category" field to the value that was provided on create.
+func (u *DataAccessAuditLogUpsertBulk) UpdateDataCategory() *DataAccessAuditLogUpsertBulk {
+	return u.Update(func(s *DataAccessAuditLogUpsert) {
+		s.UpdateDataCategory()
+	})
+}
+
+// ClearDataCategory clears the value of the "data_category" field.
+func (u *DataAccessAuditLogUpsertBulk) ClearDataCategory() *DataAccessAuditLogUpsertBulk {
+	return u.Update(func(s *DataAccessAuditLogUpsert) {
+		s.ClearDataCategory()
+	})
+}
+
+// SetDbUser sets the "db_user" field.
+func (u *DataAccessAuditLogUpsertBulk) SetDbUser(v string) *DataAccessAuditLogUpsertBulk {
+	return u.Update(func(s *DataAccessAuditLogUpsert) {
+		s.SetDbUser(v)
+	})
+}
+
+// UpdateDbUser sets the "db_user" field to the value that was provided on create.
+func (u *DataAccessAuditLogUpsertBulk) UpdateDbUser() *DataAccessAuditLogUpsertBulk {
+	return u.Update(func(s *DataAccessAuditLogUpsert) {
+		s.UpdateDbUser()
+	})
+}
+
+// ClearDbUser clears the value of the "db_user" field.
+func (u *DataAccessAuditLogUpsertBulk) ClearDbUser() *DataAccessAuditLogUpsertBulk {
+	return u.Update(func(s *DataAccessAuditLogUpsert) {
+		s.ClearDbUser()
+	})
+}
+
+// SetLogHash sets the "log_hash" field.
+func (u *DataAccessAuditLogUpsertBulk) SetLogHash(v string) *DataAccessAuditLogUpsertBulk {
+	return u.Update(func(s *DataAccessAuditLogUpsert) {
+		s.SetLogHash(v)
+	})
+}
+
+// UpdateLogHash sets the "log_hash" field to the value that was provided on create.
+func (u *DataAccessAuditLogUpsertBulk) UpdateLogHash() *DataAccessAuditLogUpsertBulk {
+	return u.Update(func(s *DataAccessAuditLogUpsert) {
+		s.UpdateLogHash()
+	})
+}
+
+// ClearLogHash clears the value of the "log_hash" field.
+func (u *DataAccessAuditLogUpsertBulk) ClearLogHash() *DataAccessAuditLogUpsertBulk {
+	return u.Update(func(s *DataAccessAuditLogUpsert) {
+		s.ClearLogHash()
+	})
+}
+
+// SetSignature sets the "signature" field.
+func (u *DataAccessAuditLogUpsertBulk) SetSignature(v []byte) *DataAccessAuditLogUpsertBulk {
+	return u.Update(func(s *DataAccessAuditLogUpsert) {
+		s.SetSignature(v)
+	})
+}
+
+// UpdateSignature sets the "signature" field to the value that was provided on create.
+func (u *DataAccessAuditLogUpsertBulk) UpdateSignature() *DataAccessAuditLogUpsertBulk {
+	return u.Update(func(s *DataAccessAuditLogUpsert) {
+		s.UpdateSignature()
+	})
+}
+
+// ClearSignature clears the value of the "signature" field.
+func (u *DataAccessAuditLogUpsertBulk) ClearSignature() *DataAccessAuditLogUpsertBulk {
+	return u.Update(func(s *DataAccessAuditLogUpsert) {
+		s.ClearSignature()
 	})
 }
 

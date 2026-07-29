@@ -32,16 +32,20 @@ const (
 	FieldRemark = "remark"
 	// FieldStatus holds the string denoting the status field in the database.
 	FieldStatus = "status"
-	// FieldName holds the string denoting the name field in the database.
-	FieldName = "name"
+	// FieldType holds the string denoting the type field in the database.
+	FieldType = "type"
 	// FieldPath holds the string denoting the path field in the database.
 	FieldPath = "path"
-	// FieldIcon holds the string denoting the icon field in the database.
-	FieldIcon = "icon"
+	// FieldRedirect holds the string denoting the redirect field in the database.
+	FieldRedirect = "redirect"
+	// FieldAlias holds the string denoting the alias field in the database.
+	FieldAlias = "alias"
+	// FieldName holds the string denoting the name field in the database.
+	FieldName = "name"
 	// FieldComponent holds the string denoting the component field in the database.
 	FieldComponent = "component"
-	// FieldSortOrder holds the string denoting the sort_order field in the database.
-	FieldSortOrder = "sort_order"
+	// FieldMeta holds the string denoting the meta field in the database.
+	FieldMeta = "meta"
 	// EdgeParent holds the string denoting the parent edge name in mutations.
 	EdgeParent = "parent"
 	// EdgeChildren holds the string denoting the children edge name in mutations.
@@ -70,11 +74,13 @@ var Columns = []string{
 	FieldParentID,
 	FieldRemark,
 	FieldStatus,
-	FieldName,
+	FieldType,
 	FieldPath,
-	FieldIcon,
+	FieldRedirect,
+	FieldAlias,
+	FieldName,
 	FieldComponent,
-	FieldSortOrder,
+	FieldMeta,
 }
 
 // ValidColumn reports if the column name is valid (part of the table columns).
@@ -88,16 +94,10 @@ func ValidColumn(column string) bool {
 }
 
 var (
-	// NameValidator is a validator for the "name" field. It is called by the builders before save.
-	NameValidator func(string) error
-	// PathValidator is a validator for the "path" field. It is called by the builders before save.
-	PathValidator func(string) error
-	// IconValidator is a validator for the "icon" field. It is called by the builders before save.
-	IconValidator func(string) error
-	// ComponentValidator is a validator for the "component" field. It is called by the builders before save.
-	ComponentValidator func(string) error
-	// DefaultSortOrder holds the default value on creation for the "sort_order" field.
-	DefaultSortOrder uint32
+	// DefaultPath holds the default value on creation for the "path" field.
+	DefaultPath string
+	// DefaultComponent holds the default value on creation for the "component" field.
+	DefaultComponent string
 	// IDValidator is a validator for the "id" field. It is called by the builders before save.
 	IDValidator func(uint32) error
 )
@@ -125,6 +125,35 @@ func StatusValidator(s Status) error {
 		return nil
 	default:
 		return fmt.Errorf("menu: invalid enum value for status field: %q", s)
+	}
+}
+
+// Type defines the type for the "type" enum field.
+type Type string
+
+// TypeMenu is the default value of the Type enum.
+const DefaultType = TypeMenu
+
+// Type values.
+const (
+	TypeCatalog  Type = "CATALOG"
+	TypeMenu     Type = "MENU"
+	TypeButton   Type = "BUTTON"
+	TypeEmbedded Type = "EMBEDDED"
+	TypeLink     Type = "LINK"
+)
+
+func (_type Type) String() string {
+	return string(_type)
+}
+
+// TypeValidator is a validator for the "type" field enum values. It is called by the builders before save.
+func TypeValidator(_type Type) error {
+	switch _type {
+	case TypeCatalog, TypeMenu, TypeButton, TypeEmbedded, TypeLink:
+		return nil
+	default:
+		return fmt.Errorf("menu: invalid enum value for type field: %q", _type)
 	}
 }
 
@@ -181,9 +210,9 @@ func ByStatus(opts ...sql.OrderTermOption) OrderOption {
 	return sql.OrderByField(FieldStatus, opts...).ToFunc()
 }
 
-// ByName orders the results by the name field.
-func ByName(opts ...sql.OrderTermOption) OrderOption {
-	return sql.OrderByField(FieldName, opts...).ToFunc()
+// ByType orders the results by the type field.
+func ByType(opts ...sql.OrderTermOption) OrderOption {
+	return sql.OrderByField(FieldType, opts...).ToFunc()
 }
 
 // ByPath orders the results by the path field.
@@ -191,19 +220,24 @@ func ByPath(opts ...sql.OrderTermOption) OrderOption {
 	return sql.OrderByField(FieldPath, opts...).ToFunc()
 }
 
-// ByIcon orders the results by the icon field.
-func ByIcon(opts ...sql.OrderTermOption) OrderOption {
-	return sql.OrderByField(FieldIcon, opts...).ToFunc()
+// ByRedirect orders the results by the redirect field.
+func ByRedirect(opts ...sql.OrderTermOption) OrderOption {
+	return sql.OrderByField(FieldRedirect, opts...).ToFunc()
+}
+
+// ByAlias orders the results by the alias field.
+func ByAlias(opts ...sql.OrderTermOption) OrderOption {
+	return sql.OrderByField(FieldAlias, opts...).ToFunc()
+}
+
+// ByName orders the results by the name field.
+func ByName(opts ...sql.OrderTermOption) OrderOption {
+	return sql.OrderByField(FieldName, opts...).ToFunc()
 }
 
 // ByComponent orders the results by the component field.
 func ByComponent(opts ...sql.OrderTermOption) OrderOption {
 	return sql.OrderByField(FieldComponent, opts...).ToFunc()
-}
-
-// BySortOrder orders the results by the sort_order field.
-func BySortOrder(opts ...sql.OrderTermOption) OrderOption {
-	return sql.OrderByField(FieldSortOrder, opts...).ToFunc()
 }
 
 // ByParentField orders the results by parent field.

@@ -69,11 +69,6 @@ func DeletedAt(v time.Time) predicate.UserPosition {
 	return predicate.UserPosition(sql.FieldEQ(FieldDeletedAt, v))
 }
 
-// TenantID applies equality check predicate on the "tenant_id" field. It's identical to TenantIDEQ.
-func TenantID(v uint32) predicate.UserPosition {
-	return predicate.UserPosition(sql.FieldEQ(FieldTenantID, v))
-}
-
 // CreatedBy applies equality check predicate on the "created_by" field. It's identical to CreatedByEQ.
 func CreatedBy(v uint32) predicate.UserPosition {
 	return predicate.UserPosition(sql.FieldEQ(FieldCreatedBy, v))
@@ -87,6 +82,26 @@ func UpdatedBy(v uint32) predicate.UserPosition {
 // DeletedBy applies equality check predicate on the "deleted_by" field. It's identical to DeletedByEQ.
 func DeletedBy(v uint32) predicate.UserPosition {
 	return predicate.UserPosition(sql.FieldEQ(FieldDeletedBy, v))
+}
+
+// TenantID applies equality check predicate on the "tenant_id" field. It's identical to TenantIDEQ.
+func TenantID(v uint32) predicate.UserPosition {
+	return predicate.UserPosition(sql.FieldEQ(FieldTenantID, v))
+}
+
+// Remark applies equality check predicate on the "remark" field. It's identical to RemarkEQ.
+func Remark(v string) predicate.UserPosition {
+	return predicate.UserPosition(sql.FieldEQ(FieldRemark, v))
+}
+
+// UserID applies equality check predicate on the "user_id" field. It's identical to UserIDEQ.
+func UserID(v uint32) predicate.UserPosition {
+	return predicate.UserPosition(sql.FieldEQ(FieldUserID, v))
+}
+
+// PositionID applies equality check predicate on the "position_id" field. It's identical to PositionIDEQ.
+func PositionID(v uint32) predicate.UserPosition {
+	return predicate.UserPosition(sql.FieldEQ(FieldPositionID, v))
 }
 
 // IsPrimary applies equality check predicate on the "is_primary" field. It's identical to IsPrimaryEQ.
@@ -104,14 +119,14 @@ func EndAt(v time.Time) predicate.UserPosition {
 	return predicate.UserPosition(sql.FieldEQ(FieldEndAt, v))
 }
 
-// UserID applies equality check predicate on the "user_id" field. It's identical to UserIDEQ.
-func UserID(v uint32) predicate.UserPosition {
-	return predicate.UserPosition(sql.FieldEQ(FieldUserID, v))
+// AssignedAt applies equality check predicate on the "assigned_at" field. It's identical to AssignedAtEQ.
+func AssignedAt(v time.Time) predicate.UserPosition {
+	return predicate.UserPosition(sql.FieldEQ(FieldAssignedAt, v))
 }
 
-// PositionID applies equality check predicate on the "position_id" field. It's identical to PositionIDEQ.
-func PositionID(v uint32) predicate.UserPosition {
-	return predicate.UserPosition(sql.FieldEQ(FieldPositionID, v))
+// AssignedBy applies equality check predicate on the "assigned_by" field. It's identical to AssignedByEQ.
+func AssignedBy(v uint32) predicate.UserPosition {
+	return predicate.UserPosition(sql.FieldEQ(FieldAssignedBy, v))
 }
 
 // CreatedAtEQ applies the EQ predicate on the "created_at" field.
@@ -264,56 +279,6 @@ func DeletedAtNotNil() predicate.UserPosition {
 	return predicate.UserPosition(sql.FieldNotNull(FieldDeletedAt))
 }
 
-// TenantIDEQ applies the EQ predicate on the "tenant_id" field.
-func TenantIDEQ(v uint32) predicate.UserPosition {
-	return predicate.UserPosition(sql.FieldEQ(FieldTenantID, v))
-}
-
-// TenantIDNEQ applies the NEQ predicate on the "tenant_id" field.
-func TenantIDNEQ(v uint32) predicate.UserPosition {
-	return predicate.UserPosition(sql.FieldNEQ(FieldTenantID, v))
-}
-
-// TenantIDIn applies the In predicate on the "tenant_id" field.
-func TenantIDIn(vs ...uint32) predicate.UserPosition {
-	return predicate.UserPosition(sql.FieldIn(FieldTenantID, vs...))
-}
-
-// TenantIDNotIn applies the NotIn predicate on the "tenant_id" field.
-func TenantIDNotIn(vs ...uint32) predicate.UserPosition {
-	return predicate.UserPosition(sql.FieldNotIn(FieldTenantID, vs...))
-}
-
-// TenantIDGT applies the GT predicate on the "tenant_id" field.
-func TenantIDGT(v uint32) predicate.UserPosition {
-	return predicate.UserPosition(sql.FieldGT(FieldTenantID, v))
-}
-
-// TenantIDGTE applies the GTE predicate on the "tenant_id" field.
-func TenantIDGTE(v uint32) predicate.UserPosition {
-	return predicate.UserPosition(sql.FieldGTE(FieldTenantID, v))
-}
-
-// TenantIDLT applies the LT predicate on the "tenant_id" field.
-func TenantIDLT(v uint32) predicate.UserPosition {
-	return predicate.UserPosition(sql.FieldLT(FieldTenantID, v))
-}
-
-// TenantIDLTE applies the LTE predicate on the "tenant_id" field.
-func TenantIDLTE(v uint32) predicate.UserPosition {
-	return predicate.UserPosition(sql.FieldLTE(FieldTenantID, v))
-}
-
-// TenantIDIsNil applies the IsNil predicate on the "tenant_id" field.
-func TenantIDIsNil() predicate.UserPosition {
-	return predicate.UserPosition(sql.FieldIsNull(FieldTenantID))
-}
-
-// TenantIDNotNil applies the NotNil predicate on the "tenant_id" field.
-func TenantIDNotNil() predicate.UserPosition {
-	return predicate.UserPosition(sql.FieldNotNull(FieldTenantID))
-}
-
 // CreatedByEQ applies the EQ predicate on the "created_by" field.
 func CreatedByEQ(v uint32) predicate.UserPosition {
 	return predicate.UserPosition(sql.FieldEQ(FieldCreatedBy, v))
@@ -464,34 +429,209 @@ func DeletedByNotNil() predicate.UserPosition {
 	return predicate.UserPosition(sql.FieldNotNull(FieldDeletedBy))
 }
 
-// StatusEQ applies the EQ predicate on the "status" field.
-func StatusEQ(v Status) predicate.UserPosition {
-	return predicate.UserPosition(sql.FieldEQ(FieldStatus, v))
+// TenantIDEQ applies the EQ predicate on the "tenant_id" field.
+func TenantIDEQ(v uint32) predicate.UserPosition {
+	return predicate.UserPosition(sql.FieldEQ(FieldTenantID, v))
 }
 
-// StatusNEQ applies the NEQ predicate on the "status" field.
-func StatusNEQ(v Status) predicate.UserPosition {
-	return predicate.UserPosition(sql.FieldNEQ(FieldStatus, v))
+// TenantIDNEQ applies the NEQ predicate on the "tenant_id" field.
+func TenantIDNEQ(v uint32) predicate.UserPosition {
+	return predicate.UserPosition(sql.FieldNEQ(FieldTenantID, v))
 }
 
-// StatusIn applies the In predicate on the "status" field.
-func StatusIn(vs ...Status) predicate.UserPosition {
-	return predicate.UserPosition(sql.FieldIn(FieldStatus, vs...))
+// TenantIDIn applies the In predicate on the "tenant_id" field.
+func TenantIDIn(vs ...uint32) predicate.UserPosition {
+	return predicate.UserPosition(sql.FieldIn(FieldTenantID, vs...))
 }
 
-// StatusNotIn applies the NotIn predicate on the "status" field.
-func StatusNotIn(vs ...Status) predicate.UserPosition {
-	return predicate.UserPosition(sql.FieldNotIn(FieldStatus, vs...))
+// TenantIDNotIn applies the NotIn predicate on the "tenant_id" field.
+func TenantIDNotIn(vs ...uint32) predicate.UserPosition {
+	return predicate.UserPosition(sql.FieldNotIn(FieldTenantID, vs...))
 }
 
-// StatusIsNil applies the IsNil predicate on the "status" field.
-func StatusIsNil() predicate.UserPosition {
-	return predicate.UserPosition(sql.FieldIsNull(FieldStatus))
+// TenantIDGT applies the GT predicate on the "tenant_id" field.
+func TenantIDGT(v uint32) predicate.UserPosition {
+	return predicate.UserPosition(sql.FieldGT(FieldTenantID, v))
 }
 
-// StatusNotNil applies the NotNil predicate on the "status" field.
-func StatusNotNil() predicate.UserPosition {
-	return predicate.UserPosition(sql.FieldNotNull(FieldStatus))
+// TenantIDGTE applies the GTE predicate on the "tenant_id" field.
+func TenantIDGTE(v uint32) predicate.UserPosition {
+	return predicate.UserPosition(sql.FieldGTE(FieldTenantID, v))
+}
+
+// TenantIDLT applies the LT predicate on the "tenant_id" field.
+func TenantIDLT(v uint32) predicate.UserPosition {
+	return predicate.UserPosition(sql.FieldLT(FieldTenantID, v))
+}
+
+// TenantIDLTE applies the LTE predicate on the "tenant_id" field.
+func TenantIDLTE(v uint32) predicate.UserPosition {
+	return predicate.UserPosition(sql.FieldLTE(FieldTenantID, v))
+}
+
+// TenantIDIsNil applies the IsNil predicate on the "tenant_id" field.
+func TenantIDIsNil() predicate.UserPosition {
+	return predicate.UserPosition(sql.FieldIsNull(FieldTenantID))
+}
+
+// TenantIDNotNil applies the NotNil predicate on the "tenant_id" field.
+func TenantIDNotNil() predicate.UserPosition {
+	return predicate.UserPosition(sql.FieldNotNull(FieldTenantID))
+}
+
+// RemarkEQ applies the EQ predicate on the "remark" field.
+func RemarkEQ(v string) predicate.UserPosition {
+	return predicate.UserPosition(sql.FieldEQ(FieldRemark, v))
+}
+
+// RemarkNEQ applies the NEQ predicate on the "remark" field.
+func RemarkNEQ(v string) predicate.UserPosition {
+	return predicate.UserPosition(sql.FieldNEQ(FieldRemark, v))
+}
+
+// RemarkIn applies the In predicate on the "remark" field.
+func RemarkIn(vs ...string) predicate.UserPosition {
+	return predicate.UserPosition(sql.FieldIn(FieldRemark, vs...))
+}
+
+// RemarkNotIn applies the NotIn predicate on the "remark" field.
+func RemarkNotIn(vs ...string) predicate.UserPosition {
+	return predicate.UserPosition(sql.FieldNotIn(FieldRemark, vs...))
+}
+
+// RemarkGT applies the GT predicate on the "remark" field.
+func RemarkGT(v string) predicate.UserPosition {
+	return predicate.UserPosition(sql.FieldGT(FieldRemark, v))
+}
+
+// RemarkGTE applies the GTE predicate on the "remark" field.
+func RemarkGTE(v string) predicate.UserPosition {
+	return predicate.UserPosition(sql.FieldGTE(FieldRemark, v))
+}
+
+// RemarkLT applies the LT predicate on the "remark" field.
+func RemarkLT(v string) predicate.UserPosition {
+	return predicate.UserPosition(sql.FieldLT(FieldRemark, v))
+}
+
+// RemarkLTE applies the LTE predicate on the "remark" field.
+func RemarkLTE(v string) predicate.UserPosition {
+	return predicate.UserPosition(sql.FieldLTE(FieldRemark, v))
+}
+
+// RemarkContains applies the Contains predicate on the "remark" field.
+func RemarkContains(v string) predicate.UserPosition {
+	return predicate.UserPosition(sql.FieldContains(FieldRemark, v))
+}
+
+// RemarkHasPrefix applies the HasPrefix predicate on the "remark" field.
+func RemarkHasPrefix(v string) predicate.UserPosition {
+	return predicate.UserPosition(sql.FieldHasPrefix(FieldRemark, v))
+}
+
+// RemarkHasSuffix applies the HasSuffix predicate on the "remark" field.
+func RemarkHasSuffix(v string) predicate.UserPosition {
+	return predicate.UserPosition(sql.FieldHasSuffix(FieldRemark, v))
+}
+
+// RemarkIsNil applies the IsNil predicate on the "remark" field.
+func RemarkIsNil() predicate.UserPosition {
+	return predicate.UserPosition(sql.FieldIsNull(FieldRemark))
+}
+
+// RemarkNotNil applies the NotNil predicate on the "remark" field.
+func RemarkNotNil() predicate.UserPosition {
+	return predicate.UserPosition(sql.FieldNotNull(FieldRemark))
+}
+
+// RemarkEqualFold applies the EqualFold predicate on the "remark" field.
+func RemarkEqualFold(v string) predicate.UserPosition {
+	return predicate.UserPosition(sql.FieldEqualFold(FieldRemark, v))
+}
+
+// RemarkContainsFold applies the ContainsFold predicate on the "remark" field.
+func RemarkContainsFold(v string) predicate.UserPosition {
+	return predicate.UserPosition(sql.FieldContainsFold(FieldRemark, v))
+}
+
+// UserIDEQ applies the EQ predicate on the "user_id" field.
+func UserIDEQ(v uint32) predicate.UserPosition {
+	return predicate.UserPosition(sql.FieldEQ(FieldUserID, v))
+}
+
+// UserIDNEQ applies the NEQ predicate on the "user_id" field.
+func UserIDNEQ(v uint32) predicate.UserPosition {
+	return predicate.UserPosition(sql.FieldNEQ(FieldUserID, v))
+}
+
+// UserIDIn applies the In predicate on the "user_id" field.
+func UserIDIn(vs ...uint32) predicate.UserPosition {
+	return predicate.UserPosition(sql.FieldIn(FieldUserID, vs...))
+}
+
+// UserIDNotIn applies the NotIn predicate on the "user_id" field.
+func UserIDNotIn(vs ...uint32) predicate.UserPosition {
+	return predicate.UserPosition(sql.FieldNotIn(FieldUserID, vs...))
+}
+
+// UserIDGT applies the GT predicate on the "user_id" field.
+func UserIDGT(v uint32) predicate.UserPosition {
+	return predicate.UserPosition(sql.FieldGT(FieldUserID, v))
+}
+
+// UserIDGTE applies the GTE predicate on the "user_id" field.
+func UserIDGTE(v uint32) predicate.UserPosition {
+	return predicate.UserPosition(sql.FieldGTE(FieldUserID, v))
+}
+
+// UserIDLT applies the LT predicate on the "user_id" field.
+func UserIDLT(v uint32) predicate.UserPosition {
+	return predicate.UserPosition(sql.FieldLT(FieldUserID, v))
+}
+
+// UserIDLTE applies the LTE predicate on the "user_id" field.
+func UserIDLTE(v uint32) predicate.UserPosition {
+	return predicate.UserPosition(sql.FieldLTE(FieldUserID, v))
+}
+
+// PositionIDEQ applies the EQ predicate on the "position_id" field.
+func PositionIDEQ(v uint32) predicate.UserPosition {
+	return predicate.UserPosition(sql.FieldEQ(FieldPositionID, v))
+}
+
+// PositionIDNEQ applies the NEQ predicate on the "position_id" field.
+func PositionIDNEQ(v uint32) predicate.UserPosition {
+	return predicate.UserPosition(sql.FieldNEQ(FieldPositionID, v))
+}
+
+// PositionIDIn applies the In predicate on the "position_id" field.
+func PositionIDIn(vs ...uint32) predicate.UserPosition {
+	return predicate.UserPosition(sql.FieldIn(FieldPositionID, vs...))
+}
+
+// PositionIDNotIn applies the NotIn predicate on the "position_id" field.
+func PositionIDNotIn(vs ...uint32) predicate.UserPosition {
+	return predicate.UserPosition(sql.FieldNotIn(FieldPositionID, vs...))
+}
+
+// PositionIDGT applies the GT predicate on the "position_id" field.
+func PositionIDGT(v uint32) predicate.UserPosition {
+	return predicate.UserPosition(sql.FieldGT(FieldPositionID, v))
+}
+
+// PositionIDGTE applies the GTE predicate on the "position_id" field.
+func PositionIDGTE(v uint32) predicate.UserPosition {
+	return predicate.UserPosition(sql.FieldGTE(FieldPositionID, v))
+}
+
+// PositionIDLT applies the LT predicate on the "position_id" field.
+func PositionIDLT(v uint32) predicate.UserPosition {
+	return predicate.UserPosition(sql.FieldLT(FieldPositionID, v))
+}
+
+// PositionIDLTE applies the LTE predicate on the "position_id" field.
+func PositionIDLTE(v uint32) predicate.UserPosition {
+	return predicate.UserPosition(sql.FieldLTE(FieldPositionID, v))
 }
 
 // IsPrimaryEQ applies the EQ predicate on the "is_primary" field.
@@ -614,104 +754,124 @@ func EndAtNotNil() predicate.UserPosition {
 	return predicate.UserPosition(sql.FieldNotNull(FieldEndAt))
 }
 
-// UserIDEQ applies the EQ predicate on the "user_id" field.
-func UserIDEQ(v uint32) predicate.UserPosition {
-	return predicate.UserPosition(sql.FieldEQ(FieldUserID, v))
+// AssignedAtEQ applies the EQ predicate on the "assigned_at" field.
+func AssignedAtEQ(v time.Time) predicate.UserPosition {
+	return predicate.UserPosition(sql.FieldEQ(FieldAssignedAt, v))
 }
 
-// UserIDNEQ applies the NEQ predicate on the "user_id" field.
-func UserIDNEQ(v uint32) predicate.UserPosition {
-	return predicate.UserPosition(sql.FieldNEQ(FieldUserID, v))
+// AssignedAtNEQ applies the NEQ predicate on the "assigned_at" field.
+func AssignedAtNEQ(v time.Time) predicate.UserPosition {
+	return predicate.UserPosition(sql.FieldNEQ(FieldAssignedAt, v))
 }
 
-// UserIDIn applies the In predicate on the "user_id" field.
-func UserIDIn(vs ...uint32) predicate.UserPosition {
-	return predicate.UserPosition(sql.FieldIn(FieldUserID, vs...))
+// AssignedAtIn applies the In predicate on the "assigned_at" field.
+func AssignedAtIn(vs ...time.Time) predicate.UserPosition {
+	return predicate.UserPosition(sql.FieldIn(FieldAssignedAt, vs...))
 }
 
-// UserIDNotIn applies the NotIn predicate on the "user_id" field.
-func UserIDNotIn(vs ...uint32) predicate.UserPosition {
-	return predicate.UserPosition(sql.FieldNotIn(FieldUserID, vs...))
+// AssignedAtNotIn applies the NotIn predicate on the "assigned_at" field.
+func AssignedAtNotIn(vs ...time.Time) predicate.UserPosition {
+	return predicate.UserPosition(sql.FieldNotIn(FieldAssignedAt, vs...))
 }
 
-// UserIDGT applies the GT predicate on the "user_id" field.
-func UserIDGT(v uint32) predicate.UserPosition {
-	return predicate.UserPosition(sql.FieldGT(FieldUserID, v))
+// AssignedAtGT applies the GT predicate on the "assigned_at" field.
+func AssignedAtGT(v time.Time) predicate.UserPosition {
+	return predicate.UserPosition(sql.FieldGT(FieldAssignedAt, v))
 }
 
-// UserIDGTE applies the GTE predicate on the "user_id" field.
-func UserIDGTE(v uint32) predicate.UserPosition {
-	return predicate.UserPosition(sql.FieldGTE(FieldUserID, v))
+// AssignedAtGTE applies the GTE predicate on the "assigned_at" field.
+func AssignedAtGTE(v time.Time) predicate.UserPosition {
+	return predicate.UserPosition(sql.FieldGTE(FieldAssignedAt, v))
 }
 
-// UserIDLT applies the LT predicate on the "user_id" field.
-func UserIDLT(v uint32) predicate.UserPosition {
-	return predicate.UserPosition(sql.FieldLT(FieldUserID, v))
+// AssignedAtLT applies the LT predicate on the "assigned_at" field.
+func AssignedAtLT(v time.Time) predicate.UserPosition {
+	return predicate.UserPosition(sql.FieldLT(FieldAssignedAt, v))
 }
 
-// UserIDLTE applies the LTE predicate on the "user_id" field.
-func UserIDLTE(v uint32) predicate.UserPosition {
-	return predicate.UserPosition(sql.FieldLTE(FieldUserID, v))
+// AssignedAtLTE applies the LTE predicate on the "assigned_at" field.
+func AssignedAtLTE(v time.Time) predicate.UserPosition {
+	return predicate.UserPosition(sql.FieldLTE(FieldAssignedAt, v))
 }
 
-// UserIDIsNil applies the IsNil predicate on the "user_id" field.
-func UserIDIsNil() predicate.UserPosition {
-	return predicate.UserPosition(sql.FieldIsNull(FieldUserID))
+// AssignedAtIsNil applies the IsNil predicate on the "assigned_at" field.
+func AssignedAtIsNil() predicate.UserPosition {
+	return predicate.UserPosition(sql.FieldIsNull(FieldAssignedAt))
 }
 
-// UserIDNotNil applies the NotNil predicate on the "user_id" field.
-func UserIDNotNil() predicate.UserPosition {
-	return predicate.UserPosition(sql.FieldNotNull(FieldUserID))
+// AssignedAtNotNil applies the NotNil predicate on the "assigned_at" field.
+func AssignedAtNotNil() predicate.UserPosition {
+	return predicate.UserPosition(sql.FieldNotNull(FieldAssignedAt))
 }
 
-// PositionIDEQ applies the EQ predicate on the "position_id" field.
-func PositionIDEQ(v uint32) predicate.UserPosition {
-	return predicate.UserPosition(sql.FieldEQ(FieldPositionID, v))
+// AssignedByEQ applies the EQ predicate on the "assigned_by" field.
+func AssignedByEQ(v uint32) predicate.UserPosition {
+	return predicate.UserPosition(sql.FieldEQ(FieldAssignedBy, v))
 }
 
-// PositionIDNEQ applies the NEQ predicate on the "position_id" field.
-func PositionIDNEQ(v uint32) predicate.UserPosition {
-	return predicate.UserPosition(sql.FieldNEQ(FieldPositionID, v))
+// AssignedByNEQ applies the NEQ predicate on the "assigned_by" field.
+func AssignedByNEQ(v uint32) predicate.UserPosition {
+	return predicate.UserPosition(sql.FieldNEQ(FieldAssignedBy, v))
 }
 
-// PositionIDIn applies the In predicate on the "position_id" field.
-func PositionIDIn(vs ...uint32) predicate.UserPosition {
-	return predicate.UserPosition(sql.FieldIn(FieldPositionID, vs...))
+// AssignedByIn applies the In predicate on the "assigned_by" field.
+func AssignedByIn(vs ...uint32) predicate.UserPosition {
+	return predicate.UserPosition(sql.FieldIn(FieldAssignedBy, vs...))
 }
 
-// PositionIDNotIn applies the NotIn predicate on the "position_id" field.
-func PositionIDNotIn(vs ...uint32) predicate.UserPosition {
-	return predicate.UserPosition(sql.FieldNotIn(FieldPositionID, vs...))
+// AssignedByNotIn applies the NotIn predicate on the "assigned_by" field.
+func AssignedByNotIn(vs ...uint32) predicate.UserPosition {
+	return predicate.UserPosition(sql.FieldNotIn(FieldAssignedBy, vs...))
 }
 
-// PositionIDGT applies the GT predicate on the "position_id" field.
-func PositionIDGT(v uint32) predicate.UserPosition {
-	return predicate.UserPosition(sql.FieldGT(FieldPositionID, v))
+// AssignedByGT applies the GT predicate on the "assigned_by" field.
+func AssignedByGT(v uint32) predicate.UserPosition {
+	return predicate.UserPosition(sql.FieldGT(FieldAssignedBy, v))
 }
 
-// PositionIDGTE applies the GTE predicate on the "position_id" field.
-func PositionIDGTE(v uint32) predicate.UserPosition {
-	return predicate.UserPosition(sql.FieldGTE(FieldPositionID, v))
+// AssignedByGTE applies the GTE predicate on the "assigned_by" field.
+func AssignedByGTE(v uint32) predicate.UserPosition {
+	return predicate.UserPosition(sql.FieldGTE(FieldAssignedBy, v))
 }
 
-// PositionIDLT applies the LT predicate on the "position_id" field.
-func PositionIDLT(v uint32) predicate.UserPosition {
-	return predicate.UserPosition(sql.FieldLT(FieldPositionID, v))
+// AssignedByLT applies the LT predicate on the "assigned_by" field.
+func AssignedByLT(v uint32) predicate.UserPosition {
+	return predicate.UserPosition(sql.FieldLT(FieldAssignedBy, v))
 }
 
-// PositionIDLTE applies the LTE predicate on the "position_id" field.
-func PositionIDLTE(v uint32) predicate.UserPosition {
-	return predicate.UserPosition(sql.FieldLTE(FieldPositionID, v))
+// AssignedByLTE applies the LTE predicate on the "assigned_by" field.
+func AssignedByLTE(v uint32) predicate.UserPosition {
+	return predicate.UserPosition(sql.FieldLTE(FieldAssignedBy, v))
 }
 
-// PositionIDIsNil applies the IsNil predicate on the "position_id" field.
-func PositionIDIsNil() predicate.UserPosition {
-	return predicate.UserPosition(sql.FieldIsNull(FieldPositionID))
+// AssignedByIsNil applies the IsNil predicate on the "assigned_by" field.
+func AssignedByIsNil() predicate.UserPosition {
+	return predicate.UserPosition(sql.FieldIsNull(FieldAssignedBy))
 }
 
-// PositionIDNotNil applies the NotNil predicate on the "position_id" field.
-func PositionIDNotNil() predicate.UserPosition {
-	return predicate.UserPosition(sql.FieldNotNull(FieldPositionID))
+// AssignedByNotNil applies the NotNil predicate on the "assigned_by" field.
+func AssignedByNotNil() predicate.UserPosition {
+	return predicate.UserPosition(sql.FieldNotNull(FieldAssignedBy))
+}
+
+// StatusEQ applies the EQ predicate on the "status" field.
+func StatusEQ(v Status) predicate.UserPosition {
+	return predicate.UserPosition(sql.FieldEQ(FieldStatus, v))
+}
+
+// StatusNEQ applies the NEQ predicate on the "status" field.
+func StatusNEQ(v Status) predicate.UserPosition {
+	return predicate.UserPosition(sql.FieldNEQ(FieldStatus, v))
+}
+
+// StatusIn applies the In predicate on the "status" field.
+func StatusIn(vs ...Status) predicate.UserPosition {
+	return predicate.UserPosition(sql.FieldIn(FieldStatus, vs...))
+}
+
+// StatusNotIn applies the NotIn predicate on the "status" field.
+func StatusNotIn(vs ...Status) predicate.UserPosition {
+	return predicate.UserPosition(sql.FieldNotIn(FieldStatus, vs...))
 }
 
 // And groups predicates with the AND operator between them.

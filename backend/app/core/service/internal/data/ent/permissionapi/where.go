@@ -69,14 +69,29 @@ func DeletedAt(v time.Time) predicate.PermissionApi {
 	return predicate.PermissionApi(sql.FieldEQ(FieldDeletedAt, v))
 }
 
+// CreatedBy applies equality check predicate on the "created_by" field. It's identical to CreatedByEQ.
+func CreatedBy(v uint32) predicate.PermissionApi {
+	return predicate.PermissionApi(sql.FieldEQ(FieldCreatedBy, v))
+}
+
+// UpdatedBy applies equality check predicate on the "updated_by" field. It's identical to UpdatedByEQ.
+func UpdatedBy(v uint32) predicate.PermissionApi {
+	return predicate.PermissionApi(sql.FieldEQ(FieldUpdatedBy, v))
+}
+
+// DeletedBy applies equality check predicate on the "deleted_by" field. It's identical to DeletedByEQ.
+func DeletedBy(v uint32) predicate.PermissionApi {
+	return predicate.PermissionApi(sql.FieldEQ(FieldDeletedBy, v))
+}
+
 // PermissionID applies equality check predicate on the "permission_id" field. It's identical to PermissionIDEQ.
 func PermissionID(v uint32) predicate.PermissionApi {
 	return predicate.PermissionApi(sql.FieldEQ(FieldPermissionID, v))
 }
 
-// TargetID applies equality check predicate on the "target_id" field. It's identical to TargetIDEQ.
-func TargetID(v uint32) predicate.PermissionApi {
-	return predicate.PermissionApi(sql.FieldEQ(FieldTargetID, v))
+// APIID applies equality check predicate on the "api_id" field. It's identical to APIIDEQ.
+func APIID(v uint32) predicate.PermissionApi {
+	return predicate.PermissionApi(sql.FieldEQ(FieldAPIID, v))
 }
 
 // CreatedAtEQ applies the EQ predicate on the "created_at" field.
@@ -229,6 +244,156 @@ func DeletedAtNotNil() predicate.PermissionApi {
 	return predicate.PermissionApi(sql.FieldNotNull(FieldDeletedAt))
 }
 
+// CreatedByEQ applies the EQ predicate on the "created_by" field.
+func CreatedByEQ(v uint32) predicate.PermissionApi {
+	return predicate.PermissionApi(sql.FieldEQ(FieldCreatedBy, v))
+}
+
+// CreatedByNEQ applies the NEQ predicate on the "created_by" field.
+func CreatedByNEQ(v uint32) predicate.PermissionApi {
+	return predicate.PermissionApi(sql.FieldNEQ(FieldCreatedBy, v))
+}
+
+// CreatedByIn applies the In predicate on the "created_by" field.
+func CreatedByIn(vs ...uint32) predicate.PermissionApi {
+	return predicate.PermissionApi(sql.FieldIn(FieldCreatedBy, vs...))
+}
+
+// CreatedByNotIn applies the NotIn predicate on the "created_by" field.
+func CreatedByNotIn(vs ...uint32) predicate.PermissionApi {
+	return predicate.PermissionApi(sql.FieldNotIn(FieldCreatedBy, vs...))
+}
+
+// CreatedByGT applies the GT predicate on the "created_by" field.
+func CreatedByGT(v uint32) predicate.PermissionApi {
+	return predicate.PermissionApi(sql.FieldGT(FieldCreatedBy, v))
+}
+
+// CreatedByGTE applies the GTE predicate on the "created_by" field.
+func CreatedByGTE(v uint32) predicate.PermissionApi {
+	return predicate.PermissionApi(sql.FieldGTE(FieldCreatedBy, v))
+}
+
+// CreatedByLT applies the LT predicate on the "created_by" field.
+func CreatedByLT(v uint32) predicate.PermissionApi {
+	return predicate.PermissionApi(sql.FieldLT(FieldCreatedBy, v))
+}
+
+// CreatedByLTE applies the LTE predicate on the "created_by" field.
+func CreatedByLTE(v uint32) predicate.PermissionApi {
+	return predicate.PermissionApi(sql.FieldLTE(FieldCreatedBy, v))
+}
+
+// CreatedByIsNil applies the IsNil predicate on the "created_by" field.
+func CreatedByIsNil() predicate.PermissionApi {
+	return predicate.PermissionApi(sql.FieldIsNull(FieldCreatedBy))
+}
+
+// CreatedByNotNil applies the NotNil predicate on the "created_by" field.
+func CreatedByNotNil() predicate.PermissionApi {
+	return predicate.PermissionApi(sql.FieldNotNull(FieldCreatedBy))
+}
+
+// UpdatedByEQ applies the EQ predicate on the "updated_by" field.
+func UpdatedByEQ(v uint32) predicate.PermissionApi {
+	return predicate.PermissionApi(sql.FieldEQ(FieldUpdatedBy, v))
+}
+
+// UpdatedByNEQ applies the NEQ predicate on the "updated_by" field.
+func UpdatedByNEQ(v uint32) predicate.PermissionApi {
+	return predicate.PermissionApi(sql.FieldNEQ(FieldUpdatedBy, v))
+}
+
+// UpdatedByIn applies the In predicate on the "updated_by" field.
+func UpdatedByIn(vs ...uint32) predicate.PermissionApi {
+	return predicate.PermissionApi(sql.FieldIn(FieldUpdatedBy, vs...))
+}
+
+// UpdatedByNotIn applies the NotIn predicate on the "updated_by" field.
+func UpdatedByNotIn(vs ...uint32) predicate.PermissionApi {
+	return predicate.PermissionApi(sql.FieldNotIn(FieldUpdatedBy, vs...))
+}
+
+// UpdatedByGT applies the GT predicate on the "updated_by" field.
+func UpdatedByGT(v uint32) predicate.PermissionApi {
+	return predicate.PermissionApi(sql.FieldGT(FieldUpdatedBy, v))
+}
+
+// UpdatedByGTE applies the GTE predicate on the "updated_by" field.
+func UpdatedByGTE(v uint32) predicate.PermissionApi {
+	return predicate.PermissionApi(sql.FieldGTE(FieldUpdatedBy, v))
+}
+
+// UpdatedByLT applies the LT predicate on the "updated_by" field.
+func UpdatedByLT(v uint32) predicate.PermissionApi {
+	return predicate.PermissionApi(sql.FieldLT(FieldUpdatedBy, v))
+}
+
+// UpdatedByLTE applies the LTE predicate on the "updated_by" field.
+func UpdatedByLTE(v uint32) predicate.PermissionApi {
+	return predicate.PermissionApi(sql.FieldLTE(FieldUpdatedBy, v))
+}
+
+// UpdatedByIsNil applies the IsNil predicate on the "updated_by" field.
+func UpdatedByIsNil() predicate.PermissionApi {
+	return predicate.PermissionApi(sql.FieldIsNull(FieldUpdatedBy))
+}
+
+// UpdatedByNotNil applies the NotNil predicate on the "updated_by" field.
+func UpdatedByNotNil() predicate.PermissionApi {
+	return predicate.PermissionApi(sql.FieldNotNull(FieldUpdatedBy))
+}
+
+// DeletedByEQ applies the EQ predicate on the "deleted_by" field.
+func DeletedByEQ(v uint32) predicate.PermissionApi {
+	return predicate.PermissionApi(sql.FieldEQ(FieldDeletedBy, v))
+}
+
+// DeletedByNEQ applies the NEQ predicate on the "deleted_by" field.
+func DeletedByNEQ(v uint32) predicate.PermissionApi {
+	return predicate.PermissionApi(sql.FieldNEQ(FieldDeletedBy, v))
+}
+
+// DeletedByIn applies the In predicate on the "deleted_by" field.
+func DeletedByIn(vs ...uint32) predicate.PermissionApi {
+	return predicate.PermissionApi(sql.FieldIn(FieldDeletedBy, vs...))
+}
+
+// DeletedByNotIn applies the NotIn predicate on the "deleted_by" field.
+func DeletedByNotIn(vs ...uint32) predicate.PermissionApi {
+	return predicate.PermissionApi(sql.FieldNotIn(FieldDeletedBy, vs...))
+}
+
+// DeletedByGT applies the GT predicate on the "deleted_by" field.
+func DeletedByGT(v uint32) predicate.PermissionApi {
+	return predicate.PermissionApi(sql.FieldGT(FieldDeletedBy, v))
+}
+
+// DeletedByGTE applies the GTE predicate on the "deleted_by" field.
+func DeletedByGTE(v uint32) predicate.PermissionApi {
+	return predicate.PermissionApi(sql.FieldGTE(FieldDeletedBy, v))
+}
+
+// DeletedByLT applies the LT predicate on the "deleted_by" field.
+func DeletedByLT(v uint32) predicate.PermissionApi {
+	return predicate.PermissionApi(sql.FieldLT(FieldDeletedBy, v))
+}
+
+// DeletedByLTE applies the LTE predicate on the "deleted_by" field.
+func DeletedByLTE(v uint32) predicate.PermissionApi {
+	return predicate.PermissionApi(sql.FieldLTE(FieldDeletedBy, v))
+}
+
+// DeletedByIsNil applies the IsNil predicate on the "deleted_by" field.
+func DeletedByIsNil() predicate.PermissionApi {
+	return predicate.PermissionApi(sql.FieldIsNull(FieldDeletedBy))
+}
+
+// DeletedByNotNil applies the NotNil predicate on the "deleted_by" field.
+func DeletedByNotNil() predicate.PermissionApi {
+	return predicate.PermissionApi(sql.FieldNotNull(FieldDeletedBy))
+}
+
 // PermissionIDEQ applies the EQ predicate on the "permission_id" field.
 func PermissionIDEQ(v uint32) predicate.PermissionApi {
 	return predicate.PermissionApi(sql.FieldEQ(FieldPermissionID, v))
@@ -269,64 +434,44 @@ func PermissionIDLTE(v uint32) predicate.PermissionApi {
 	return predicate.PermissionApi(sql.FieldLTE(FieldPermissionID, v))
 }
 
-// PermissionIDIsNil applies the IsNil predicate on the "permission_id" field.
-func PermissionIDIsNil() predicate.PermissionApi {
-	return predicate.PermissionApi(sql.FieldIsNull(FieldPermissionID))
+// APIIDEQ applies the EQ predicate on the "api_id" field.
+func APIIDEQ(v uint32) predicate.PermissionApi {
+	return predicate.PermissionApi(sql.FieldEQ(FieldAPIID, v))
 }
 
-// PermissionIDNotNil applies the NotNil predicate on the "permission_id" field.
-func PermissionIDNotNil() predicate.PermissionApi {
-	return predicate.PermissionApi(sql.FieldNotNull(FieldPermissionID))
+// APIIDNEQ applies the NEQ predicate on the "api_id" field.
+func APIIDNEQ(v uint32) predicate.PermissionApi {
+	return predicate.PermissionApi(sql.FieldNEQ(FieldAPIID, v))
 }
 
-// TargetIDEQ applies the EQ predicate on the "target_id" field.
-func TargetIDEQ(v uint32) predicate.PermissionApi {
-	return predicate.PermissionApi(sql.FieldEQ(FieldTargetID, v))
+// APIIDIn applies the In predicate on the "api_id" field.
+func APIIDIn(vs ...uint32) predicate.PermissionApi {
+	return predicate.PermissionApi(sql.FieldIn(FieldAPIID, vs...))
 }
 
-// TargetIDNEQ applies the NEQ predicate on the "target_id" field.
-func TargetIDNEQ(v uint32) predicate.PermissionApi {
-	return predicate.PermissionApi(sql.FieldNEQ(FieldTargetID, v))
+// APIIDNotIn applies the NotIn predicate on the "api_id" field.
+func APIIDNotIn(vs ...uint32) predicate.PermissionApi {
+	return predicate.PermissionApi(sql.FieldNotIn(FieldAPIID, vs...))
 }
 
-// TargetIDIn applies the In predicate on the "target_id" field.
-func TargetIDIn(vs ...uint32) predicate.PermissionApi {
-	return predicate.PermissionApi(sql.FieldIn(FieldTargetID, vs...))
+// APIIDGT applies the GT predicate on the "api_id" field.
+func APIIDGT(v uint32) predicate.PermissionApi {
+	return predicate.PermissionApi(sql.FieldGT(FieldAPIID, v))
 }
 
-// TargetIDNotIn applies the NotIn predicate on the "target_id" field.
-func TargetIDNotIn(vs ...uint32) predicate.PermissionApi {
-	return predicate.PermissionApi(sql.FieldNotIn(FieldTargetID, vs...))
+// APIIDGTE applies the GTE predicate on the "api_id" field.
+func APIIDGTE(v uint32) predicate.PermissionApi {
+	return predicate.PermissionApi(sql.FieldGTE(FieldAPIID, v))
 }
 
-// TargetIDGT applies the GT predicate on the "target_id" field.
-func TargetIDGT(v uint32) predicate.PermissionApi {
-	return predicate.PermissionApi(sql.FieldGT(FieldTargetID, v))
+// APIIDLT applies the LT predicate on the "api_id" field.
+func APIIDLT(v uint32) predicate.PermissionApi {
+	return predicate.PermissionApi(sql.FieldLT(FieldAPIID, v))
 }
 
-// TargetIDGTE applies the GTE predicate on the "target_id" field.
-func TargetIDGTE(v uint32) predicate.PermissionApi {
-	return predicate.PermissionApi(sql.FieldGTE(FieldTargetID, v))
-}
-
-// TargetIDLT applies the LT predicate on the "target_id" field.
-func TargetIDLT(v uint32) predicate.PermissionApi {
-	return predicate.PermissionApi(sql.FieldLT(FieldTargetID, v))
-}
-
-// TargetIDLTE applies the LTE predicate on the "target_id" field.
-func TargetIDLTE(v uint32) predicate.PermissionApi {
-	return predicate.PermissionApi(sql.FieldLTE(FieldTargetID, v))
-}
-
-// TargetIDIsNil applies the IsNil predicate on the "target_id" field.
-func TargetIDIsNil() predicate.PermissionApi {
-	return predicate.PermissionApi(sql.FieldIsNull(FieldTargetID))
-}
-
-// TargetIDNotNil applies the NotNil predicate on the "target_id" field.
-func TargetIDNotNil() predicate.PermissionApi {
-	return predicate.PermissionApi(sql.FieldNotNull(FieldTargetID))
+// APIIDLTE applies the LTE predicate on the "api_id" field.
+func APIIDLTE(v uint32) predicate.PermissionApi {
+	return predicate.PermissionApi(sql.FieldLTE(FieldAPIID, v))
 }
 
 // And groups predicates with the AND operator between them.

@@ -6,6 +6,7 @@ import (
 	"context"
 	"errors"
 	"fmt"
+	permissionpb "go-wind-ledger/api/gen/go/permission/service/v1"
 	"go-wind-ledger/app/core/service/internal/data/ent/predicate"
 	"go-wind-ledger/app/core/service/internal/data/ent/rolemetadata"
 	"time"
@@ -69,6 +70,87 @@ func (_u *RoleMetadataUpdate) ClearDeletedAt() *RoleMetadataUpdate {
 	return _u
 }
 
+// SetCreatedBy sets the "created_by" field.
+func (_u *RoleMetadataUpdate) SetCreatedBy(v uint32) *RoleMetadataUpdate {
+	_u.mutation.ResetCreatedBy()
+	_u.mutation.SetCreatedBy(v)
+	return _u
+}
+
+// SetNillableCreatedBy sets the "created_by" field if the given value is not nil.
+func (_u *RoleMetadataUpdate) SetNillableCreatedBy(v *uint32) *RoleMetadataUpdate {
+	if v != nil {
+		_u.SetCreatedBy(*v)
+	}
+	return _u
+}
+
+// AddCreatedBy adds value to the "created_by" field.
+func (_u *RoleMetadataUpdate) AddCreatedBy(v int32) *RoleMetadataUpdate {
+	_u.mutation.AddCreatedBy(v)
+	return _u
+}
+
+// ClearCreatedBy clears the value of the "created_by" field.
+func (_u *RoleMetadataUpdate) ClearCreatedBy() *RoleMetadataUpdate {
+	_u.mutation.ClearCreatedBy()
+	return _u
+}
+
+// SetUpdatedBy sets the "updated_by" field.
+func (_u *RoleMetadataUpdate) SetUpdatedBy(v uint32) *RoleMetadataUpdate {
+	_u.mutation.ResetUpdatedBy()
+	_u.mutation.SetUpdatedBy(v)
+	return _u
+}
+
+// SetNillableUpdatedBy sets the "updated_by" field if the given value is not nil.
+func (_u *RoleMetadataUpdate) SetNillableUpdatedBy(v *uint32) *RoleMetadataUpdate {
+	if v != nil {
+		_u.SetUpdatedBy(*v)
+	}
+	return _u
+}
+
+// AddUpdatedBy adds value to the "updated_by" field.
+func (_u *RoleMetadataUpdate) AddUpdatedBy(v int32) *RoleMetadataUpdate {
+	_u.mutation.AddUpdatedBy(v)
+	return _u
+}
+
+// ClearUpdatedBy clears the value of the "updated_by" field.
+func (_u *RoleMetadataUpdate) ClearUpdatedBy() *RoleMetadataUpdate {
+	_u.mutation.ClearUpdatedBy()
+	return _u
+}
+
+// SetDeletedBy sets the "deleted_by" field.
+func (_u *RoleMetadataUpdate) SetDeletedBy(v uint32) *RoleMetadataUpdate {
+	_u.mutation.ResetDeletedBy()
+	_u.mutation.SetDeletedBy(v)
+	return _u
+}
+
+// SetNillableDeletedBy sets the "deleted_by" field if the given value is not nil.
+func (_u *RoleMetadataUpdate) SetNillableDeletedBy(v *uint32) *RoleMetadataUpdate {
+	if v != nil {
+		_u.SetDeletedBy(*v)
+	}
+	return _u
+}
+
+// AddDeletedBy adds value to the "deleted_by" field.
+func (_u *RoleMetadataUpdate) AddDeletedBy(v int32) *RoleMetadataUpdate {
+	_u.mutation.AddDeletedBy(v)
+	return _u
+}
+
+// ClearDeletedBy clears the value of the "deleted_by" field.
+func (_u *RoleMetadataUpdate) ClearDeletedBy() *RoleMetadataUpdate {
+	_u.mutation.ClearDeletedBy()
+	return _u
+}
+
 // SetRoleID sets the "role_id" field.
 func (_u *RoleMetadataUpdate) SetRoleID(v uint32) *RoleMetadataUpdate {
 	_u.mutation.ResetRoleID()
@@ -93,6 +175,26 @@ func (_u *RoleMetadataUpdate) AddRoleID(v int32) *RoleMetadataUpdate {
 // ClearRoleID clears the value of the "role_id" field.
 func (_u *RoleMetadataUpdate) ClearRoleID() *RoleMetadataUpdate {
 	_u.mutation.ClearRoleID()
+	return _u
+}
+
+// SetIsTemplate sets the "is_template" field.
+func (_u *RoleMetadataUpdate) SetIsTemplate(v bool) *RoleMetadataUpdate {
+	_u.mutation.SetIsTemplate(v)
+	return _u
+}
+
+// SetNillableIsTemplate sets the "is_template" field if the given value is not nil.
+func (_u *RoleMetadataUpdate) SetNillableIsTemplate(v *bool) *RoleMetadataUpdate {
+	if v != nil {
+		_u.SetIsTemplate(*v)
+	}
+	return _u
+}
+
+// ClearIsTemplate clears the value of the "is_template" field.
+func (_u *RoleMetadataUpdate) ClearIsTemplate() *RoleMetadataUpdate {
+	_u.mutation.ClearIsTemplate()
 	return _u
 }
 
@@ -143,26 +245,6 @@ func (_u *RoleMetadataUpdate) ClearTemplateVersion() *RoleMetadataUpdate {
 	return _u
 }
 
-// SetLastSyncedAt sets the "last_synced_at" field.
-func (_u *RoleMetadataUpdate) SetLastSyncedAt(v time.Time) *RoleMetadataUpdate {
-	_u.mutation.SetLastSyncedAt(v)
-	return _u
-}
-
-// SetNillableLastSyncedAt sets the "last_synced_at" field if the given value is not nil.
-func (_u *RoleMetadataUpdate) SetNillableLastSyncedAt(v *time.Time) *RoleMetadataUpdate {
-	if v != nil {
-		_u.SetLastSyncedAt(*v)
-	}
-	return _u
-}
-
-// ClearLastSyncedAt clears the value of the "last_synced_at" field.
-func (_u *RoleMetadataUpdate) ClearLastSyncedAt() *RoleMetadataUpdate {
-	_u.mutation.ClearLastSyncedAt()
-	return _u
-}
-
 // SetLastSyncedVersion sets the "last_synced_version" field.
 func (_u *RoleMetadataUpdate) SetLastSyncedVersion(v int32) *RoleMetadataUpdate {
 	_u.mutation.ResetLastSyncedVersion()
@@ -190,63 +272,69 @@ func (_u *RoleMetadataUpdate) ClearLastSyncedVersion() *RoleMetadataUpdate {
 	return _u
 }
 
-// SetIsTemplate sets the "is_template" field.
-func (_u *RoleMetadataUpdate) SetIsTemplate(v bool) *RoleMetadataUpdate {
-	_u.mutation.SetIsTemplate(v)
+// SetLastSyncedAt sets the "last_synced_at" field.
+func (_u *RoleMetadataUpdate) SetLastSyncedAt(v time.Time) *RoleMetadataUpdate {
+	_u.mutation.SetLastSyncedAt(v)
 	return _u
 }
 
-// SetNillableIsTemplate sets the "is_template" field if the given value is not nil.
-func (_u *RoleMetadataUpdate) SetNillableIsTemplate(v *bool) *RoleMetadataUpdate {
+// SetNillableLastSyncedAt sets the "last_synced_at" field if the given value is not nil.
+func (_u *RoleMetadataUpdate) SetNillableLastSyncedAt(v *time.Time) *RoleMetadataUpdate {
 	if v != nil {
-		_u.SetIsTemplate(*v)
+		_u.SetLastSyncedAt(*v)
 	}
 	return _u
 }
 
-// ClearIsTemplate clears the value of the "is_template" field.
-func (_u *RoleMetadataUpdate) ClearIsTemplate() *RoleMetadataUpdate {
-	_u.mutation.ClearIsTemplate()
+// ClearLastSyncedAt clears the value of the "last_synced_at" field.
+func (_u *RoleMetadataUpdate) ClearLastSyncedAt() *RoleMetadataUpdate {
+	_u.mutation.ClearLastSyncedAt()
 	return _u
 }
 
-// SetKey sets the "key" field.
-func (_u *RoleMetadataUpdate) SetKey(v string) *RoleMetadataUpdate {
-	_u.mutation.SetKey(v)
+// SetSyncPolicy sets the "sync_policy" field.
+func (_u *RoleMetadataUpdate) SetSyncPolicy(v rolemetadata.SyncPolicy) *RoleMetadataUpdate {
+	_u.mutation.SetSyncPolicy(v)
 	return _u
 }
 
-// SetNillableKey sets the "key" field if the given value is not nil.
-func (_u *RoleMetadataUpdate) SetNillableKey(v *string) *RoleMetadataUpdate {
+// SetNillableSyncPolicy sets the "sync_policy" field if the given value is not nil.
+func (_u *RoleMetadataUpdate) SetNillableSyncPolicy(v *rolemetadata.SyncPolicy) *RoleMetadataUpdate {
 	if v != nil {
-		_u.SetKey(*v)
+		_u.SetSyncPolicy(*v)
 	}
 	return _u
 }
 
-// ClearKey clears the value of the "key" field.
-func (_u *RoleMetadataUpdate) ClearKey() *RoleMetadataUpdate {
-	_u.mutation.ClearKey()
+// ClearSyncPolicy clears the value of the "sync_policy" field.
+func (_u *RoleMetadataUpdate) ClearSyncPolicy() *RoleMetadataUpdate {
+	_u.mutation.ClearSyncPolicy()
 	return _u
 }
 
-// SetValue sets the "value" field.
-func (_u *RoleMetadataUpdate) SetValue(v string) *RoleMetadataUpdate {
-	_u.mutation.SetValue(v)
+// SetScope sets the "scope" field.
+func (_u *RoleMetadataUpdate) SetScope(v rolemetadata.Scope) *RoleMetadataUpdate {
+	_u.mutation.SetScope(v)
 	return _u
 }
 
-// SetNillableValue sets the "value" field if the given value is not nil.
-func (_u *RoleMetadataUpdate) SetNillableValue(v *string) *RoleMetadataUpdate {
+// SetNillableScope sets the "scope" field if the given value is not nil.
+func (_u *RoleMetadataUpdate) SetNillableScope(v *rolemetadata.Scope) *RoleMetadataUpdate {
 	if v != nil {
-		_u.SetValue(*v)
+		_u.SetScope(*v)
 	}
 	return _u
 }
 
-// ClearValue clears the value of the "value" field.
-func (_u *RoleMetadataUpdate) ClearValue() *RoleMetadataUpdate {
-	_u.mutation.ClearValue()
+// ClearScope clears the value of the "scope" field.
+func (_u *RoleMetadataUpdate) ClearScope() *RoleMetadataUpdate {
+	_u.mutation.ClearScope()
+	return _u
+}
+
+// SetCustomOverrides sets the "custom_overrides" field.
+func (_u *RoleMetadataUpdate) SetCustomOverrides(v *permissionpb.RoleOverride) *RoleMetadataUpdate {
+	_u.mutation.SetCustomOverrides(v)
 	return _u
 }
 
@@ -284,19 +372,19 @@ func (_u *RoleMetadataUpdate) ExecX(ctx context.Context) {
 
 // check runs all checks and user-defined validators on the builder.
 func (_u *RoleMetadataUpdate) check() error {
-	if v, ok := _u.mutation.TemplateFor(); ok {
-		if err := rolemetadata.TemplateForValidator(v); err != nil {
-			return &ValidationError{Name: "template_for", err: fmt.Errorf(`ent: validator failed for field "RoleMetadata.template_for": %w`, err)}
+	if v, ok := _u.mutation.SyncPolicy(); ok {
+		if err := rolemetadata.SyncPolicyValidator(v); err != nil {
+			return &ValidationError{Name: "sync_policy", err: fmt.Errorf(`ent: validator failed for field "RoleMetadata.sync_policy": %w`, err)}
 		}
 	}
-	if v, ok := _u.mutation.Key(); ok {
-		if err := rolemetadata.KeyValidator(v); err != nil {
-			return &ValidationError{Name: "key", err: fmt.Errorf(`ent: validator failed for field "RoleMetadata.key": %w`, err)}
+	if v, ok := _u.mutation.Scope(); ok {
+		if err := rolemetadata.ScopeValidator(v); err != nil {
+			return &ValidationError{Name: "scope", err: fmt.Errorf(`ent: validator failed for field "RoleMetadata.scope": %w`, err)}
 		}
 	}
-	if v, ok := _u.mutation.Value(); ok {
-		if err := rolemetadata.ValueValidator(v); err != nil {
-			return &ValidationError{Name: "value", err: fmt.Errorf(`ent: validator failed for field "RoleMetadata.value": %w`, err)}
+	if v, ok := _u.mutation.CustomOverrides(); ok {
+		if err := v.Validate(); err != nil {
+			return &ValidationError{Name: "custom_overrides", err: fmt.Errorf(`ent: validator failed for field "RoleMetadata.custom_overrides": %w`, err)}
 		}
 	}
 	return nil
@@ -335,6 +423,33 @@ func (_u *RoleMetadataUpdate) sqlSave(ctx context.Context) (_node int, err error
 	if _u.mutation.DeletedAtCleared() {
 		_spec.ClearField(rolemetadata.FieldDeletedAt, field.TypeTime)
 	}
+	if value, ok := _u.mutation.CreatedBy(); ok {
+		_spec.SetField(rolemetadata.FieldCreatedBy, field.TypeUint32, value)
+	}
+	if value, ok := _u.mutation.AddedCreatedBy(); ok {
+		_spec.AddField(rolemetadata.FieldCreatedBy, field.TypeUint32, value)
+	}
+	if _u.mutation.CreatedByCleared() {
+		_spec.ClearField(rolemetadata.FieldCreatedBy, field.TypeUint32)
+	}
+	if value, ok := _u.mutation.UpdatedBy(); ok {
+		_spec.SetField(rolemetadata.FieldUpdatedBy, field.TypeUint32, value)
+	}
+	if value, ok := _u.mutation.AddedUpdatedBy(); ok {
+		_spec.AddField(rolemetadata.FieldUpdatedBy, field.TypeUint32, value)
+	}
+	if _u.mutation.UpdatedByCleared() {
+		_spec.ClearField(rolemetadata.FieldUpdatedBy, field.TypeUint32)
+	}
+	if value, ok := _u.mutation.DeletedBy(); ok {
+		_spec.SetField(rolemetadata.FieldDeletedBy, field.TypeUint32, value)
+	}
+	if value, ok := _u.mutation.AddedDeletedBy(); ok {
+		_spec.AddField(rolemetadata.FieldDeletedBy, field.TypeUint32, value)
+	}
+	if _u.mutation.DeletedByCleared() {
+		_spec.ClearField(rolemetadata.FieldDeletedBy, field.TypeUint32)
+	}
 	if _u.mutation.TenantIDCleared() {
 		_spec.ClearField(rolemetadata.FieldTenantID, field.TypeUint32)
 	}
@@ -346,6 +461,12 @@ func (_u *RoleMetadataUpdate) sqlSave(ctx context.Context) (_node int, err error
 	}
 	if _u.mutation.RoleIDCleared() {
 		_spec.ClearField(rolemetadata.FieldRoleID, field.TypeUint32)
+	}
+	if value, ok := _u.mutation.IsTemplate(); ok {
+		_spec.SetField(rolemetadata.FieldIsTemplate, field.TypeBool, value)
+	}
+	if _u.mutation.IsTemplateCleared() {
+		_spec.ClearField(rolemetadata.FieldIsTemplate, field.TypeBool)
 	}
 	if value, ok := _u.mutation.TemplateFor(); ok {
 		_spec.SetField(rolemetadata.FieldTemplateFor, field.TypeString, value)
@@ -362,12 +483,6 @@ func (_u *RoleMetadataUpdate) sqlSave(ctx context.Context) (_node int, err error
 	if _u.mutation.TemplateVersionCleared() {
 		_spec.ClearField(rolemetadata.FieldTemplateVersion, field.TypeInt32)
 	}
-	if value, ok := _u.mutation.LastSyncedAt(); ok {
-		_spec.SetField(rolemetadata.FieldLastSyncedAt, field.TypeTime, value)
-	}
-	if _u.mutation.LastSyncedAtCleared() {
-		_spec.ClearField(rolemetadata.FieldLastSyncedAt, field.TypeTime)
-	}
 	if value, ok := _u.mutation.LastSyncedVersion(); ok {
 		_spec.SetField(rolemetadata.FieldLastSyncedVersion, field.TypeInt32, value)
 	}
@@ -377,23 +492,26 @@ func (_u *RoleMetadataUpdate) sqlSave(ctx context.Context) (_node int, err error
 	if _u.mutation.LastSyncedVersionCleared() {
 		_spec.ClearField(rolemetadata.FieldLastSyncedVersion, field.TypeInt32)
 	}
-	if value, ok := _u.mutation.IsTemplate(); ok {
-		_spec.SetField(rolemetadata.FieldIsTemplate, field.TypeBool, value)
+	if value, ok := _u.mutation.LastSyncedAt(); ok {
+		_spec.SetField(rolemetadata.FieldLastSyncedAt, field.TypeTime, value)
 	}
-	if _u.mutation.IsTemplateCleared() {
-		_spec.ClearField(rolemetadata.FieldIsTemplate, field.TypeBool)
+	if _u.mutation.LastSyncedAtCleared() {
+		_spec.ClearField(rolemetadata.FieldLastSyncedAt, field.TypeTime)
 	}
-	if value, ok := _u.mutation.Key(); ok {
-		_spec.SetField(rolemetadata.FieldKey, field.TypeString, value)
+	if value, ok := _u.mutation.SyncPolicy(); ok {
+		_spec.SetField(rolemetadata.FieldSyncPolicy, field.TypeEnum, value)
 	}
-	if _u.mutation.KeyCleared() {
-		_spec.ClearField(rolemetadata.FieldKey, field.TypeString)
+	if _u.mutation.SyncPolicyCleared() {
+		_spec.ClearField(rolemetadata.FieldSyncPolicy, field.TypeEnum)
 	}
-	if value, ok := _u.mutation.Value(); ok {
-		_spec.SetField(rolemetadata.FieldValue, field.TypeString, value)
+	if value, ok := _u.mutation.Scope(); ok {
+		_spec.SetField(rolemetadata.FieldScope, field.TypeEnum, value)
 	}
-	if _u.mutation.ValueCleared() {
-		_spec.ClearField(rolemetadata.FieldValue, field.TypeString)
+	if _u.mutation.ScopeCleared() {
+		_spec.ClearField(rolemetadata.FieldScope, field.TypeEnum)
+	}
+	if value, ok := _u.mutation.CustomOverrides(); ok {
+		_spec.SetField(rolemetadata.FieldCustomOverrides, field.TypeJSON, value)
 	}
 	_spec.AddModifiers(_u.modifiers...)
 	if _node, err = sqlgraph.UpdateNodes(ctx, _u.driver, _spec); err != nil {
@@ -457,6 +575,87 @@ func (_u *RoleMetadataUpdateOne) ClearDeletedAt() *RoleMetadataUpdateOne {
 	return _u
 }
 
+// SetCreatedBy sets the "created_by" field.
+func (_u *RoleMetadataUpdateOne) SetCreatedBy(v uint32) *RoleMetadataUpdateOne {
+	_u.mutation.ResetCreatedBy()
+	_u.mutation.SetCreatedBy(v)
+	return _u
+}
+
+// SetNillableCreatedBy sets the "created_by" field if the given value is not nil.
+func (_u *RoleMetadataUpdateOne) SetNillableCreatedBy(v *uint32) *RoleMetadataUpdateOne {
+	if v != nil {
+		_u.SetCreatedBy(*v)
+	}
+	return _u
+}
+
+// AddCreatedBy adds value to the "created_by" field.
+func (_u *RoleMetadataUpdateOne) AddCreatedBy(v int32) *RoleMetadataUpdateOne {
+	_u.mutation.AddCreatedBy(v)
+	return _u
+}
+
+// ClearCreatedBy clears the value of the "created_by" field.
+func (_u *RoleMetadataUpdateOne) ClearCreatedBy() *RoleMetadataUpdateOne {
+	_u.mutation.ClearCreatedBy()
+	return _u
+}
+
+// SetUpdatedBy sets the "updated_by" field.
+func (_u *RoleMetadataUpdateOne) SetUpdatedBy(v uint32) *RoleMetadataUpdateOne {
+	_u.mutation.ResetUpdatedBy()
+	_u.mutation.SetUpdatedBy(v)
+	return _u
+}
+
+// SetNillableUpdatedBy sets the "updated_by" field if the given value is not nil.
+func (_u *RoleMetadataUpdateOne) SetNillableUpdatedBy(v *uint32) *RoleMetadataUpdateOne {
+	if v != nil {
+		_u.SetUpdatedBy(*v)
+	}
+	return _u
+}
+
+// AddUpdatedBy adds value to the "updated_by" field.
+func (_u *RoleMetadataUpdateOne) AddUpdatedBy(v int32) *RoleMetadataUpdateOne {
+	_u.mutation.AddUpdatedBy(v)
+	return _u
+}
+
+// ClearUpdatedBy clears the value of the "updated_by" field.
+func (_u *RoleMetadataUpdateOne) ClearUpdatedBy() *RoleMetadataUpdateOne {
+	_u.mutation.ClearUpdatedBy()
+	return _u
+}
+
+// SetDeletedBy sets the "deleted_by" field.
+func (_u *RoleMetadataUpdateOne) SetDeletedBy(v uint32) *RoleMetadataUpdateOne {
+	_u.mutation.ResetDeletedBy()
+	_u.mutation.SetDeletedBy(v)
+	return _u
+}
+
+// SetNillableDeletedBy sets the "deleted_by" field if the given value is not nil.
+func (_u *RoleMetadataUpdateOne) SetNillableDeletedBy(v *uint32) *RoleMetadataUpdateOne {
+	if v != nil {
+		_u.SetDeletedBy(*v)
+	}
+	return _u
+}
+
+// AddDeletedBy adds value to the "deleted_by" field.
+func (_u *RoleMetadataUpdateOne) AddDeletedBy(v int32) *RoleMetadataUpdateOne {
+	_u.mutation.AddDeletedBy(v)
+	return _u
+}
+
+// ClearDeletedBy clears the value of the "deleted_by" field.
+func (_u *RoleMetadataUpdateOne) ClearDeletedBy() *RoleMetadataUpdateOne {
+	_u.mutation.ClearDeletedBy()
+	return _u
+}
+
 // SetRoleID sets the "role_id" field.
 func (_u *RoleMetadataUpdateOne) SetRoleID(v uint32) *RoleMetadataUpdateOne {
 	_u.mutation.ResetRoleID()
@@ -481,6 +680,26 @@ func (_u *RoleMetadataUpdateOne) AddRoleID(v int32) *RoleMetadataUpdateOne {
 // ClearRoleID clears the value of the "role_id" field.
 func (_u *RoleMetadataUpdateOne) ClearRoleID() *RoleMetadataUpdateOne {
 	_u.mutation.ClearRoleID()
+	return _u
+}
+
+// SetIsTemplate sets the "is_template" field.
+func (_u *RoleMetadataUpdateOne) SetIsTemplate(v bool) *RoleMetadataUpdateOne {
+	_u.mutation.SetIsTemplate(v)
+	return _u
+}
+
+// SetNillableIsTemplate sets the "is_template" field if the given value is not nil.
+func (_u *RoleMetadataUpdateOne) SetNillableIsTemplate(v *bool) *RoleMetadataUpdateOne {
+	if v != nil {
+		_u.SetIsTemplate(*v)
+	}
+	return _u
+}
+
+// ClearIsTemplate clears the value of the "is_template" field.
+func (_u *RoleMetadataUpdateOne) ClearIsTemplate() *RoleMetadataUpdateOne {
+	_u.mutation.ClearIsTemplate()
 	return _u
 }
 
@@ -531,26 +750,6 @@ func (_u *RoleMetadataUpdateOne) ClearTemplateVersion() *RoleMetadataUpdateOne {
 	return _u
 }
 
-// SetLastSyncedAt sets the "last_synced_at" field.
-func (_u *RoleMetadataUpdateOne) SetLastSyncedAt(v time.Time) *RoleMetadataUpdateOne {
-	_u.mutation.SetLastSyncedAt(v)
-	return _u
-}
-
-// SetNillableLastSyncedAt sets the "last_synced_at" field if the given value is not nil.
-func (_u *RoleMetadataUpdateOne) SetNillableLastSyncedAt(v *time.Time) *RoleMetadataUpdateOne {
-	if v != nil {
-		_u.SetLastSyncedAt(*v)
-	}
-	return _u
-}
-
-// ClearLastSyncedAt clears the value of the "last_synced_at" field.
-func (_u *RoleMetadataUpdateOne) ClearLastSyncedAt() *RoleMetadataUpdateOne {
-	_u.mutation.ClearLastSyncedAt()
-	return _u
-}
-
 // SetLastSyncedVersion sets the "last_synced_version" field.
 func (_u *RoleMetadataUpdateOne) SetLastSyncedVersion(v int32) *RoleMetadataUpdateOne {
 	_u.mutation.ResetLastSyncedVersion()
@@ -578,63 +777,69 @@ func (_u *RoleMetadataUpdateOne) ClearLastSyncedVersion() *RoleMetadataUpdateOne
 	return _u
 }
 
-// SetIsTemplate sets the "is_template" field.
-func (_u *RoleMetadataUpdateOne) SetIsTemplate(v bool) *RoleMetadataUpdateOne {
-	_u.mutation.SetIsTemplate(v)
+// SetLastSyncedAt sets the "last_synced_at" field.
+func (_u *RoleMetadataUpdateOne) SetLastSyncedAt(v time.Time) *RoleMetadataUpdateOne {
+	_u.mutation.SetLastSyncedAt(v)
 	return _u
 }
 
-// SetNillableIsTemplate sets the "is_template" field if the given value is not nil.
-func (_u *RoleMetadataUpdateOne) SetNillableIsTemplate(v *bool) *RoleMetadataUpdateOne {
+// SetNillableLastSyncedAt sets the "last_synced_at" field if the given value is not nil.
+func (_u *RoleMetadataUpdateOne) SetNillableLastSyncedAt(v *time.Time) *RoleMetadataUpdateOne {
 	if v != nil {
-		_u.SetIsTemplate(*v)
+		_u.SetLastSyncedAt(*v)
 	}
 	return _u
 }
 
-// ClearIsTemplate clears the value of the "is_template" field.
-func (_u *RoleMetadataUpdateOne) ClearIsTemplate() *RoleMetadataUpdateOne {
-	_u.mutation.ClearIsTemplate()
+// ClearLastSyncedAt clears the value of the "last_synced_at" field.
+func (_u *RoleMetadataUpdateOne) ClearLastSyncedAt() *RoleMetadataUpdateOne {
+	_u.mutation.ClearLastSyncedAt()
 	return _u
 }
 
-// SetKey sets the "key" field.
-func (_u *RoleMetadataUpdateOne) SetKey(v string) *RoleMetadataUpdateOne {
-	_u.mutation.SetKey(v)
+// SetSyncPolicy sets the "sync_policy" field.
+func (_u *RoleMetadataUpdateOne) SetSyncPolicy(v rolemetadata.SyncPolicy) *RoleMetadataUpdateOne {
+	_u.mutation.SetSyncPolicy(v)
 	return _u
 }
 
-// SetNillableKey sets the "key" field if the given value is not nil.
-func (_u *RoleMetadataUpdateOne) SetNillableKey(v *string) *RoleMetadataUpdateOne {
+// SetNillableSyncPolicy sets the "sync_policy" field if the given value is not nil.
+func (_u *RoleMetadataUpdateOne) SetNillableSyncPolicy(v *rolemetadata.SyncPolicy) *RoleMetadataUpdateOne {
 	if v != nil {
-		_u.SetKey(*v)
+		_u.SetSyncPolicy(*v)
 	}
 	return _u
 }
 
-// ClearKey clears the value of the "key" field.
-func (_u *RoleMetadataUpdateOne) ClearKey() *RoleMetadataUpdateOne {
-	_u.mutation.ClearKey()
+// ClearSyncPolicy clears the value of the "sync_policy" field.
+func (_u *RoleMetadataUpdateOne) ClearSyncPolicy() *RoleMetadataUpdateOne {
+	_u.mutation.ClearSyncPolicy()
 	return _u
 }
 
-// SetValue sets the "value" field.
-func (_u *RoleMetadataUpdateOne) SetValue(v string) *RoleMetadataUpdateOne {
-	_u.mutation.SetValue(v)
+// SetScope sets the "scope" field.
+func (_u *RoleMetadataUpdateOne) SetScope(v rolemetadata.Scope) *RoleMetadataUpdateOne {
+	_u.mutation.SetScope(v)
 	return _u
 }
 
-// SetNillableValue sets the "value" field if the given value is not nil.
-func (_u *RoleMetadataUpdateOne) SetNillableValue(v *string) *RoleMetadataUpdateOne {
+// SetNillableScope sets the "scope" field if the given value is not nil.
+func (_u *RoleMetadataUpdateOne) SetNillableScope(v *rolemetadata.Scope) *RoleMetadataUpdateOne {
 	if v != nil {
-		_u.SetValue(*v)
+		_u.SetScope(*v)
 	}
 	return _u
 }
 
-// ClearValue clears the value of the "value" field.
-func (_u *RoleMetadataUpdateOne) ClearValue() *RoleMetadataUpdateOne {
-	_u.mutation.ClearValue()
+// ClearScope clears the value of the "scope" field.
+func (_u *RoleMetadataUpdateOne) ClearScope() *RoleMetadataUpdateOne {
+	_u.mutation.ClearScope()
+	return _u
+}
+
+// SetCustomOverrides sets the "custom_overrides" field.
+func (_u *RoleMetadataUpdateOne) SetCustomOverrides(v *permissionpb.RoleOverride) *RoleMetadataUpdateOne {
+	_u.mutation.SetCustomOverrides(v)
 	return _u
 }
 
@@ -685,19 +890,19 @@ func (_u *RoleMetadataUpdateOne) ExecX(ctx context.Context) {
 
 // check runs all checks and user-defined validators on the builder.
 func (_u *RoleMetadataUpdateOne) check() error {
-	if v, ok := _u.mutation.TemplateFor(); ok {
-		if err := rolemetadata.TemplateForValidator(v); err != nil {
-			return &ValidationError{Name: "template_for", err: fmt.Errorf(`ent: validator failed for field "RoleMetadata.template_for": %w`, err)}
+	if v, ok := _u.mutation.SyncPolicy(); ok {
+		if err := rolemetadata.SyncPolicyValidator(v); err != nil {
+			return &ValidationError{Name: "sync_policy", err: fmt.Errorf(`ent: validator failed for field "RoleMetadata.sync_policy": %w`, err)}
 		}
 	}
-	if v, ok := _u.mutation.Key(); ok {
-		if err := rolemetadata.KeyValidator(v); err != nil {
-			return &ValidationError{Name: "key", err: fmt.Errorf(`ent: validator failed for field "RoleMetadata.key": %w`, err)}
+	if v, ok := _u.mutation.Scope(); ok {
+		if err := rolemetadata.ScopeValidator(v); err != nil {
+			return &ValidationError{Name: "scope", err: fmt.Errorf(`ent: validator failed for field "RoleMetadata.scope": %w`, err)}
 		}
 	}
-	if v, ok := _u.mutation.Value(); ok {
-		if err := rolemetadata.ValueValidator(v); err != nil {
-			return &ValidationError{Name: "value", err: fmt.Errorf(`ent: validator failed for field "RoleMetadata.value": %w`, err)}
+	if v, ok := _u.mutation.CustomOverrides(); ok {
+		if err := v.Validate(); err != nil {
+			return &ValidationError{Name: "custom_overrides", err: fmt.Errorf(`ent: validator failed for field "RoleMetadata.custom_overrides": %w`, err)}
 		}
 	}
 	return nil
@@ -753,6 +958,33 @@ func (_u *RoleMetadataUpdateOne) sqlSave(ctx context.Context) (_node *RoleMetada
 	if _u.mutation.DeletedAtCleared() {
 		_spec.ClearField(rolemetadata.FieldDeletedAt, field.TypeTime)
 	}
+	if value, ok := _u.mutation.CreatedBy(); ok {
+		_spec.SetField(rolemetadata.FieldCreatedBy, field.TypeUint32, value)
+	}
+	if value, ok := _u.mutation.AddedCreatedBy(); ok {
+		_spec.AddField(rolemetadata.FieldCreatedBy, field.TypeUint32, value)
+	}
+	if _u.mutation.CreatedByCleared() {
+		_spec.ClearField(rolemetadata.FieldCreatedBy, field.TypeUint32)
+	}
+	if value, ok := _u.mutation.UpdatedBy(); ok {
+		_spec.SetField(rolemetadata.FieldUpdatedBy, field.TypeUint32, value)
+	}
+	if value, ok := _u.mutation.AddedUpdatedBy(); ok {
+		_spec.AddField(rolemetadata.FieldUpdatedBy, field.TypeUint32, value)
+	}
+	if _u.mutation.UpdatedByCleared() {
+		_spec.ClearField(rolemetadata.FieldUpdatedBy, field.TypeUint32)
+	}
+	if value, ok := _u.mutation.DeletedBy(); ok {
+		_spec.SetField(rolemetadata.FieldDeletedBy, field.TypeUint32, value)
+	}
+	if value, ok := _u.mutation.AddedDeletedBy(); ok {
+		_spec.AddField(rolemetadata.FieldDeletedBy, field.TypeUint32, value)
+	}
+	if _u.mutation.DeletedByCleared() {
+		_spec.ClearField(rolemetadata.FieldDeletedBy, field.TypeUint32)
+	}
 	if _u.mutation.TenantIDCleared() {
 		_spec.ClearField(rolemetadata.FieldTenantID, field.TypeUint32)
 	}
@@ -764,6 +996,12 @@ func (_u *RoleMetadataUpdateOne) sqlSave(ctx context.Context) (_node *RoleMetada
 	}
 	if _u.mutation.RoleIDCleared() {
 		_spec.ClearField(rolemetadata.FieldRoleID, field.TypeUint32)
+	}
+	if value, ok := _u.mutation.IsTemplate(); ok {
+		_spec.SetField(rolemetadata.FieldIsTemplate, field.TypeBool, value)
+	}
+	if _u.mutation.IsTemplateCleared() {
+		_spec.ClearField(rolemetadata.FieldIsTemplate, field.TypeBool)
 	}
 	if value, ok := _u.mutation.TemplateFor(); ok {
 		_spec.SetField(rolemetadata.FieldTemplateFor, field.TypeString, value)
@@ -780,12 +1018,6 @@ func (_u *RoleMetadataUpdateOne) sqlSave(ctx context.Context) (_node *RoleMetada
 	if _u.mutation.TemplateVersionCleared() {
 		_spec.ClearField(rolemetadata.FieldTemplateVersion, field.TypeInt32)
 	}
-	if value, ok := _u.mutation.LastSyncedAt(); ok {
-		_spec.SetField(rolemetadata.FieldLastSyncedAt, field.TypeTime, value)
-	}
-	if _u.mutation.LastSyncedAtCleared() {
-		_spec.ClearField(rolemetadata.FieldLastSyncedAt, field.TypeTime)
-	}
 	if value, ok := _u.mutation.LastSyncedVersion(); ok {
 		_spec.SetField(rolemetadata.FieldLastSyncedVersion, field.TypeInt32, value)
 	}
@@ -795,23 +1027,26 @@ func (_u *RoleMetadataUpdateOne) sqlSave(ctx context.Context) (_node *RoleMetada
 	if _u.mutation.LastSyncedVersionCleared() {
 		_spec.ClearField(rolemetadata.FieldLastSyncedVersion, field.TypeInt32)
 	}
-	if value, ok := _u.mutation.IsTemplate(); ok {
-		_spec.SetField(rolemetadata.FieldIsTemplate, field.TypeBool, value)
+	if value, ok := _u.mutation.LastSyncedAt(); ok {
+		_spec.SetField(rolemetadata.FieldLastSyncedAt, field.TypeTime, value)
 	}
-	if _u.mutation.IsTemplateCleared() {
-		_spec.ClearField(rolemetadata.FieldIsTemplate, field.TypeBool)
+	if _u.mutation.LastSyncedAtCleared() {
+		_spec.ClearField(rolemetadata.FieldLastSyncedAt, field.TypeTime)
 	}
-	if value, ok := _u.mutation.Key(); ok {
-		_spec.SetField(rolemetadata.FieldKey, field.TypeString, value)
+	if value, ok := _u.mutation.SyncPolicy(); ok {
+		_spec.SetField(rolemetadata.FieldSyncPolicy, field.TypeEnum, value)
 	}
-	if _u.mutation.KeyCleared() {
-		_spec.ClearField(rolemetadata.FieldKey, field.TypeString)
+	if _u.mutation.SyncPolicyCleared() {
+		_spec.ClearField(rolemetadata.FieldSyncPolicy, field.TypeEnum)
 	}
-	if value, ok := _u.mutation.Value(); ok {
-		_spec.SetField(rolemetadata.FieldValue, field.TypeString, value)
+	if value, ok := _u.mutation.Scope(); ok {
+		_spec.SetField(rolemetadata.FieldScope, field.TypeEnum, value)
 	}
-	if _u.mutation.ValueCleared() {
-		_spec.ClearField(rolemetadata.FieldValue, field.TypeString)
+	if _u.mutation.ScopeCleared() {
+		_spec.ClearField(rolemetadata.FieldScope, field.TypeEnum)
+	}
+	if value, ok := _u.mutation.CustomOverrides(); ok {
+		_spec.SetField(rolemetadata.FieldCustomOverrides, field.TypeJSON, value)
 	}
 	_spec.AddModifiers(_u.modifiers...)
 	_node = &RoleMetadata{config: _u.config}

@@ -14,53 +14,92 @@ const (
 	FieldID = "id"
 	// FieldCreatedAt holds the string denoting the created_at field in the database.
 	FieldCreatedAt = "created_at"
-	// FieldUpdatedAt holds the string denoting the updated_at field in the database.
-	FieldUpdatedAt = "updated_at"
-	// FieldDeletedAt holds the string denoting the deleted_at field in the database.
-	FieldDeletedAt = "deleted_at"
 	// FieldTenantID holds the string denoting the tenant_id field in the database.
 	FieldTenantID = "tenant_id"
-	// FieldOperatorID holds the string denoting the operator_id field in the database.
-	FieldOperatorID = "operator_id"
-	// FieldOperatorName holds the string denoting the operator_name field in the database.
-	FieldOperatorName = "operator_name"
-	// FieldPath holds the string denoting the path field in the database.
-	FieldPath = "path"
-	// FieldMethod holds the string denoting the method field in the database.
-	FieldMethod = "method"
-	// FieldDetail holds the string denoting the detail field in the database.
-	FieldDetail = "detail"
 	// FieldUserID holds the string denoting the user_id field in the database.
 	FieldUserID = "user_id"
 	// FieldUsername holds the string denoting the username field in the database.
 	FieldUsername = "username"
 	// FieldIPAddress holds the string denoting the ip_address field in the database.
 	FieldIPAddress = "ip_address"
+	// FieldGeoLocation holds the string denoting the geo_location field in the database.
+	FieldGeoLocation = "geo_location"
 	// FieldDeviceInfo holds the string denoting the device_info field in the database.
 	FieldDeviceInfo = "device_info"
-	// FieldOperatedAt holds the string denoting the operated_at field in the database.
-	FieldOperatedAt = "operated_at"
+	// FieldReferer holds the string denoting the referer field in the database.
+	FieldReferer = "referer"
+	// FieldAppVersion holds the string denoting the app_version field in the database.
+	FieldAppVersion = "app_version"
+	// FieldHTTPMethod holds the string denoting the http_method field in the database.
+	FieldHTTPMethod = "http_method"
+	// FieldPath holds the string denoting the path field in the database.
+	FieldPath = "path"
+	// FieldRequestURI holds the string denoting the request_uri field in the database.
+	FieldRequestURI = "request_uri"
+	// FieldAPIModule holds the string denoting the api_module field in the database.
+	FieldAPIModule = "api_module"
+	// FieldAPIOperation holds the string denoting the api_operation field in the database.
+	FieldAPIOperation = "api_operation"
+	// FieldAPIDescription holds the string denoting the api_description field in the database.
+	FieldAPIDescription = "api_description"
+	// FieldRequestID holds the string denoting the request_id field in the database.
+	FieldRequestID = "request_id"
+	// FieldTraceID holds the string denoting the trace_id field in the database.
+	FieldTraceID = "trace_id"
+	// FieldSpanID holds the string denoting the span_id field in the database.
+	FieldSpanID = "span_id"
+	// FieldLatencyMs holds the string denoting the latency_ms field in the database.
+	FieldLatencyMs = "latency_ms"
+	// FieldSuccess holds the string denoting the success field in the database.
+	FieldSuccess = "success"
+	// FieldStatusCode holds the string denoting the status_code field in the database.
+	FieldStatusCode = "status_code"
+	// FieldReason holds the string denoting the reason field in the database.
+	FieldReason = "reason"
+	// FieldRequestHeader holds the string denoting the request_header field in the database.
+	FieldRequestHeader = "request_header"
+	// FieldRequestBody holds the string denoting the request_body field in the database.
+	FieldRequestBody = "request_body"
+	// FieldResponse holds the string denoting the response field in the database.
+	FieldResponse = "response"
+	// FieldLogHash holds the string denoting the log_hash field in the database.
+	FieldLogHash = "log_hash"
+	// FieldSignature holds the string denoting the signature field in the database.
+	FieldSignature = "signature"
 	// Table holds the table name of the apiauditlog in the database.
-	Table = "api_audit_logs"
+	Table = "sys_api_audit_logs"
 )
 
 // Columns holds all SQL columns for apiauditlog fields.
 var Columns = []string{
 	FieldID,
 	FieldCreatedAt,
-	FieldUpdatedAt,
-	FieldDeletedAt,
 	FieldTenantID,
-	FieldOperatorID,
-	FieldOperatorName,
-	FieldPath,
-	FieldMethod,
-	FieldDetail,
 	FieldUserID,
 	FieldUsername,
 	FieldIPAddress,
+	FieldGeoLocation,
 	FieldDeviceInfo,
-	FieldOperatedAt,
+	FieldReferer,
+	FieldAppVersion,
+	FieldHTTPMethod,
+	FieldPath,
+	FieldRequestURI,
+	FieldAPIModule,
+	FieldAPIOperation,
+	FieldAPIDescription,
+	FieldRequestID,
+	FieldTraceID,
+	FieldSpanID,
+	FieldLatencyMs,
+	FieldSuccess,
+	FieldStatusCode,
+	FieldReason,
+	FieldRequestHeader,
+	FieldRequestBody,
+	FieldResponse,
+	FieldLogHash,
+	FieldSignature,
 }
 
 // ValidColumn reports if the column name is valid (part of the table columns).
@@ -83,20 +122,6 @@ var (
 	Policy ent.Policy
 	// DefaultTenantID holds the default value on creation for the "tenant_id" field.
 	DefaultTenantID uint32
-	// OperatorNameValidator is a validator for the "operator_name" field. It is called by the builders before save.
-	OperatorNameValidator func(string) error
-	// PathValidator is a validator for the "path" field. It is called by the builders before save.
-	PathValidator func(string) error
-	// MethodValidator is a validator for the "method" field. It is called by the builders before save.
-	MethodValidator func(string) error
-	// DetailValidator is a validator for the "detail" field. It is called by the builders before save.
-	DetailValidator func(string) error
-	// UsernameValidator is a validator for the "username" field. It is called by the builders before save.
-	UsernameValidator func(string) error
-	// IPAddressValidator is a validator for the "ip_address" field. It is called by the builders before save.
-	IPAddressValidator func(string) error
-	// DeviceInfoValidator is a validator for the "device_info" field. It is called by the builders before save.
-	DeviceInfoValidator func(string) error
 	// IDValidator is a validator for the "id" field. It is called by the builders before save.
 	IDValidator func(uint32) error
 )
@@ -114,44 +139,9 @@ func ByCreatedAt(opts ...sql.OrderTermOption) OrderOption {
 	return sql.OrderByField(FieldCreatedAt, opts...).ToFunc()
 }
 
-// ByUpdatedAt orders the results by the updated_at field.
-func ByUpdatedAt(opts ...sql.OrderTermOption) OrderOption {
-	return sql.OrderByField(FieldUpdatedAt, opts...).ToFunc()
-}
-
-// ByDeletedAt orders the results by the deleted_at field.
-func ByDeletedAt(opts ...sql.OrderTermOption) OrderOption {
-	return sql.OrderByField(FieldDeletedAt, opts...).ToFunc()
-}
-
 // ByTenantID orders the results by the tenant_id field.
 func ByTenantID(opts ...sql.OrderTermOption) OrderOption {
 	return sql.OrderByField(FieldTenantID, opts...).ToFunc()
-}
-
-// ByOperatorID orders the results by the operator_id field.
-func ByOperatorID(opts ...sql.OrderTermOption) OrderOption {
-	return sql.OrderByField(FieldOperatorID, opts...).ToFunc()
-}
-
-// ByOperatorName orders the results by the operator_name field.
-func ByOperatorName(opts ...sql.OrderTermOption) OrderOption {
-	return sql.OrderByField(FieldOperatorName, opts...).ToFunc()
-}
-
-// ByPath orders the results by the path field.
-func ByPath(opts ...sql.OrderTermOption) OrderOption {
-	return sql.OrderByField(FieldPath, opts...).ToFunc()
-}
-
-// ByMethod orders the results by the method field.
-func ByMethod(opts ...sql.OrderTermOption) OrderOption {
-	return sql.OrderByField(FieldMethod, opts...).ToFunc()
-}
-
-// ByDetail orders the results by the detail field.
-func ByDetail(opts ...sql.OrderTermOption) OrderOption {
-	return sql.OrderByField(FieldDetail, opts...).ToFunc()
 }
 
 // ByUserID orders the results by the user_id field.
@@ -169,12 +159,97 @@ func ByIPAddress(opts ...sql.OrderTermOption) OrderOption {
 	return sql.OrderByField(FieldIPAddress, opts...).ToFunc()
 }
 
-// ByDeviceInfo orders the results by the device_info field.
-func ByDeviceInfo(opts ...sql.OrderTermOption) OrderOption {
-	return sql.OrderByField(FieldDeviceInfo, opts...).ToFunc()
+// ByReferer orders the results by the referer field.
+func ByReferer(opts ...sql.OrderTermOption) OrderOption {
+	return sql.OrderByField(FieldReferer, opts...).ToFunc()
 }
 
-// ByOperatedAt orders the results by the operated_at field.
-func ByOperatedAt(opts ...sql.OrderTermOption) OrderOption {
-	return sql.OrderByField(FieldOperatedAt, opts...).ToFunc()
+// ByAppVersion orders the results by the app_version field.
+func ByAppVersion(opts ...sql.OrderTermOption) OrderOption {
+	return sql.OrderByField(FieldAppVersion, opts...).ToFunc()
+}
+
+// ByHTTPMethod orders the results by the http_method field.
+func ByHTTPMethod(opts ...sql.OrderTermOption) OrderOption {
+	return sql.OrderByField(FieldHTTPMethod, opts...).ToFunc()
+}
+
+// ByPath orders the results by the path field.
+func ByPath(opts ...sql.OrderTermOption) OrderOption {
+	return sql.OrderByField(FieldPath, opts...).ToFunc()
+}
+
+// ByRequestURI orders the results by the request_uri field.
+func ByRequestURI(opts ...sql.OrderTermOption) OrderOption {
+	return sql.OrderByField(FieldRequestURI, opts...).ToFunc()
+}
+
+// ByAPIModule orders the results by the api_module field.
+func ByAPIModule(opts ...sql.OrderTermOption) OrderOption {
+	return sql.OrderByField(FieldAPIModule, opts...).ToFunc()
+}
+
+// ByAPIOperation orders the results by the api_operation field.
+func ByAPIOperation(opts ...sql.OrderTermOption) OrderOption {
+	return sql.OrderByField(FieldAPIOperation, opts...).ToFunc()
+}
+
+// ByAPIDescription orders the results by the api_description field.
+func ByAPIDescription(opts ...sql.OrderTermOption) OrderOption {
+	return sql.OrderByField(FieldAPIDescription, opts...).ToFunc()
+}
+
+// ByRequestID orders the results by the request_id field.
+func ByRequestID(opts ...sql.OrderTermOption) OrderOption {
+	return sql.OrderByField(FieldRequestID, opts...).ToFunc()
+}
+
+// ByTraceID orders the results by the trace_id field.
+func ByTraceID(opts ...sql.OrderTermOption) OrderOption {
+	return sql.OrderByField(FieldTraceID, opts...).ToFunc()
+}
+
+// BySpanID orders the results by the span_id field.
+func BySpanID(opts ...sql.OrderTermOption) OrderOption {
+	return sql.OrderByField(FieldSpanID, opts...).ToFunc()
+}
+
+// ByLatencyMs orders the results by the latency_ms field.
+func ByLatencyMs(opts ...sql.OrderTermOption) OrderOption {
+	return sql.OrderByField(FieldLatencyMs, opts...).ToFunc()
+}
+
+// BySuccess orders the results by the success field.
+func BySuccess(opts ...sql.OrderTermOption) OrderOption {
+	return sql.OrderByField(FieldSuccess, opts...).ToFunc()
+}
+
+// ByStatusCode orders the results by the status_code field.
+func ByStatusCode(opts ...sql.OrderTermOption) OrderOption {
+	return sql.OrderByField(FieldStatusCode, opts...).ToFunc()
+}
+
+// ByReason orders the results by the reason field.
+func ByReason(opts ...sql.OrderTermOption) OrderOption {
+	return sql.OrderByField(FieldReason, opts...).ToFunc()
+}
+
+// ByRequestHeader orders the results by the request_header field.
+func ByRequestHeader(opts ...sql.OrderTermOption) OrderOption {
+	return sql.OrderByField(FieldRequestHeader, opts...).ToFunc()
+}
+
+// ByRequestBody orders the results by the request_body field.
+func ByRequestBody(opts ...sql.OrderTermOption) OrderOption {
+	return sql.OrderByField(FieldRequestBody, opts...).ToFunc()
+}
+
+// ByResponse orders the results by the response field.
+func ByResponse(opts ...sql.OrderTermOption) OrderOption {
+	return sql.OrderByField(FieldResponse, opts...).ToFunc()
+}
+
+// ByLogHash orders the results by the log_hash field.
+func ByLogHash(opts ...sql.OrderTermOption) OrderOption {
+	return sql.OrderByField(FieldLogHash, opts...).ToFunc()
 }

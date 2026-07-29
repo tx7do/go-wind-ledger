@@ -6,6 +6,7 @@ import (
 	"context"
 	"errors"
 	"fmt"
+	auditpb "go-wind-ledger/api/gen/go/audit/service/v1"
 	"go-wind-ledger/app/core/service/internal/data/ent/operationauditlog"
 	"time"
 
@@ -36,34 +37,6 @@ func (_c *OperationAuditLogCreate) SetNillableCreatedAt(v *time.Time) *Operation
 	return _c
 }
 
-// SetUpdatedAt sets the "updated_at" field.
-func (_c *OperationAuditLogCreate) SetUpdatedAt(v time.Time) *OperationAuditLogCreate {
-	_c.mutation.SetUpdatedAt(v)
-	return _c
-}
-
-// SetNillableUpdatedAt sets the "updated_at" field if the given value is not nil.
-func (_c *OperationAuditLogCreate) SetNillableUpdatedAt(v *time.Time) *OperationAuditLogCreate {
-	if v != nil {
-		_c.SetUpdatedAt(*v)
-	}
-	return _c
-}
-
-// SetDeletedAt sets the "deleted_at" field.
-func (_c *OperationAuditLogCreate) SetDeletedAt(v time.Time) *OperationAuditLogCreate {
-	_c.mutation.SetDeletedAt(v)
-	return _c
-}
-
-// SetNillableDeletedAt sets the "deleted_at" field if the given value is not nil.
-func (_c *OperationAuditLogCreate) SetNillableDeletedAt(v *time.Time) *OperationAuditLogCreate {
-	if v != nil {
-		_c.SetDeletedAt(*v)
-	}
-	return _c
-}
-
 // SetTenantID sets the "tenant_id" field.
 func (_c *OperationAuditLogCreate) SetTenantID(v uint32) *OperationAuditLogCreate {
 	_c.mutation.SetTenantID(v)
@@ -78,57 +51,217 @@ func (_c *OperationAuditLogCreate) SetNillableTenantID(v *uint32) *OperationAudi
 	return _c
 }
 
-// SetOperatorID sets the "operator_id" field.
-func (_c *OperationAuditLogCreate) SetOperatorID(v uint32) *OperationAuditLogCreate {
-	_c.mutation.SetOperatorID(v)
+// SetUserID sets the "user_id" field.
+func (_c *OperationAuditLogCreate) SetUserID(v uint32) *OperationAuditLogCreate {
+	_c.mutation.SetUserID(v)
 	return _c
 }
 
-// SetNillableOperatorID sets the "operator_id" field if the given value is not nil.
-func (_c *OperationAuditLogCreate) SetNillableOperatorID(v *uint32) *OperationAuditLogCreate {
+// SetNillableUserID sets the "user_id" field if the given value is not nil.
+func (_c *OperationAuditLogCreate) SetNillableUserID(v *uint32) *OperationAuditLogCreate {
 	if v != nil {
-		_c.SetOperatorID(*v)
+		_c.SetUserID(*v)
+	}
+	return _c
+}
+
+// SetUsername sets the "username" field.
+func (_c *OperationAuditLogCreate) SetUsername(v string) *OperationAuditLogCreate {
+	_c.mutation.SetUsername(v)
+	return _c
+}
+
+// SetNillableUsername sets the "username" field if the given value is not nil.
+func (_c *OperationAuditLogCreate) SetNillableUsername(v *string) *OperationAuditLogCreate {
+	if v != nil {
+		_c.SetUsername(*v)
+	}
+	return _c
+}
+
+// SetResourceType sets the "resource_type" field.
+func (_c *OperationAuditLogCreate) SetResourceType(v string) *OperationAuditLogCreate {
+	_c.mutation.SetResourceType(v)
+	return _c
+}
+
+// SetNillableResourceType sets the "resource_type" field if the given value is not nil.
+func (_c *OperationAuditLogCreate) SetNillableResourceType(v *string) *OperationAuditLogCreate {
+	if v != nil {
+		_c.SetResourceType(*v)
+	}
+	return _c
+}
+
+// SetResourceID sets the "resource_id" field.
+func (_c *OperationAuditLogCreate) SetResourceID(v string) *OperationAuditLogCreate {
+	_c.mutation.SetResourceID(v)
+	return _c
+}
+
+// SetNillableResourceID sets the "resource_id" field if the given value is not nil.
+func (_c *OperationAuditLogCreate) SetNillableResourceID(v *string) *OperationAuditLogCreate {
+	if v != nil {
+		_c.SetResourceID(*v)
 	}
 	return _c
 }
 
 // SetAction sets the "action" field.
-func (_c *OperationAuditLogCreate) SetAction(v string) *OperationAuditLogCreate {
+func (_c *OperationAuditLogCreate) SetAction(v operationauditlog.Action) *OperationAuditLogCreate {
 	_c.mutation.SetAction(v)
 	return _c
 }
 
 // SetNillableAction sets the "action" field if the given value is not nil.
-func (_c *OperationAuditLogCreate) SetNillableAction(v *string) *OperationAuditLogCreate {
+func (_c *OperationAuditLogCreate) SetNillableAction(v *operationauditlog.Action) *OperationAuditLogCreate {
 	if v != nil {
 		_c.SetAction(*v)
 	}
 	return _c
 }
 
-// SetOldData sets the "old_data" field.
-func (_c *OperationAuditLogCreate) SetOldData(v map[string]interface{}) *OperationAuditLogCreate {
-	_c.mutation.SetOldData(v)
+// SetBeforeData sets the "before_data" field.
+func (_c *OperationAuditLogCreate) SetBeforeData(v string) *OperationAuditLogCreate {
+	_c.mutation.SetBeforeData(v)
 	return _c
 }
 
-// SetNewData sets the "new_data" field.
-func (_c *OperationAuditLogCreate) SetNewData(v map[string]interface{}) *OperationAuditLogCreate {
-	_c.mutation.SetNewData(v)
-	return _c
-}
-
-// SetOperatedAt sets the "operated_at" field.
-func (_c *OperationAuditLogCreate) SetOperatedAt(v time.Time) *OperationAuditLogCreate {
-	_c.mutation.SetOperatedAt(v)
-	return _c
-}
-
-// SetNillableOperatedAt sets the "operated_at" field if the given value is not nil.
-func (_c *OperationAuditLogCreate) SetNillableOperatedAt(v *time.Time) *OperationAuditLogCreate {
+// SetNillableBeforeData sets the "before_data" field if the given value is not nil.
+func (_c *OperationAuditLogCreate) SetNillableBeforeData(v *string) *OperationAuditLogCreate {
 	if v != nil {
-		_c.SetOperatedAt(*v)
+		_c.SetBeforeData(*v)
 	}
+	return _c
+}
+
+// SetAfterData sets the "after_data" field.
+func (_c *OperationAuditLogCreate) SetAfterData(v string) *OperationAuditLogCreate {
+	_c.mutation.SetAfterData(v)
+	return _c
+}
+
+// SetNillableAfterData sets the "after_data" field if the given value is not nil.
+func (_c *OperationAuditLogCreate) SetNillableAfterData(v *string) *OperationAuditLogCreate {
+	if v != nil {
+		_c.SetAfterData(*v)
+	}
+	return _c
+}
+
+// SetSensitiveLevel sets the "sensitive_level" field.
+func (_c *OperationAuditLogCreate) SetSensitiveLevel(v operationauditlog.SensitiveLevel) *OperationAuditLogCreate {
+	_c.mutation.SetSensitiveLevel(v)
+	return _c
+}
+
+// SetNillableSensitiveLevel sets the "sensitive_level" field if the given value is not nil.
+func (_c *OperationAuditLogCreate) SetNillableSensitiveLevel(v *operationauditlog.SensitiveLevel) *OperationAuditLogCreate {
+	if v != nil {
+		_c.SetSensitiveLevel(*v)
+	}
+	return _c
+}
+
+// SetRequestID sets the "request_id" field.
+func (_c *OperationAuditLogCreate) SetRequestID(v string) *OperationAuditLogCreate {
+	_c.mutation.SetRequestID(v)
+	return _c
+}
+
+// SetNillableRequestID sets the "request_id" field if the given value is not nil.
+func (_c *OperationAuditLogCreate) SetNillableRequestID(v *string) *OperationAuditLogCreate {
+	if v != nil {
+		_c.SetRequestID(*v)
+	}
+	return _c
+}
+
+// SetTraceID sets the "trace_id" field.
+func (_c *OperationAuditLogCreate) SetTraceID(v string) *OperationAuditLogCreate {
+	_c.mutation.SetTraceID(v)
+	return _c
+}
+
+// SetNillableTraceID sets the "trace_id" field if the given value is not nil.
+func (_c *OperationAuditLogCreate) SetNillableTraceID(v *string) *OperationAuditLogCreate {
+	if v != nil {
+		_c.SetTraceID(*v)
+	}
+	return _c
+}
+
+// SetSuccess sets the "success" field.
+func (_c *OperationAuditLogCreate) SetSuccess(v bool) *OperationAuditLogCreate {
+	_c.mutation.SetSuccess(v)
+	return _c
+}
+
+// SetNillableSuccess sets the "success" field if the given value is not nil.
+func (_c *OperationAuditLogCreate) SetNillableSuccess(v *bool) *OperationAuditLogCreate {
+	if v != nil {
+		_c.SetSuccess(*v)
+	}
+	return _c
+}
+
+// SetFailureReason sets the "failure_reason" field.
+func (_c *OperationAuditLogCreate) SetFailureReason(v string) *OperationAuditLogCreate {
+	_c.mutation.SetFailureReason(v)
+	return _c
+}
+
+// SetNillableFailureReason sets the "failure_reason" field if the given value is not nil.
+func (_c *OperationAuditLogCreate) SetNillableFailureReason(v *string) *OperationAuditLogCreate {
+	if v != nil {
+		_c.SetFailureReason(*v)
+	}
+	return _c
+}
+
+// SetIPAddress sets the "ip_address" field.
+func (_c *OperationAuditLogCreate) SetIPAddress(v string) *OperationAuditLogCreate {
+	_c.mutation.SetIPAddress(v)
+	return _c
+}
+
+// SetNillableIPAddress sets the "ip_address" field if the given value is not nil.
+func (_c *OperationAuditLogCreate) SetNillableIPAddress(v *string) *OperationAuditLogCreate {
+	if v != nil {
+		_c.SetIPAddress(*v)
+	}
+	return _c
+}
+
+// SetGeoLocation sets the "geo_location" field.
+func (_c *OperationAuditLogCreate) SetGeoLocation(v *auditpb.GeoLocation) *OperationAuditLogCreate {
+	_c.mutation.SetGeoLocation(v)
+	return _c
+}
+
+// SetDeviceInfo sets the "device_info" field.
+func (_c *OperationAuditLogCreate) SetDeviceInfo(v *auditpb.DeviceInfo) *OperationAuditLogCreate {
+	_c.mutation.SetDeviceInfo(v)
+	return _c
+}
+
+// SetLogHash sets the "log_hash" field.
+func (_c *OperationAuditLogCreate) SetLogHash(v string) *OperationAuditLogCreate {
+	_c.mutation.SetLogHash(v)
+	return _c
+}
+
+// SetNillableLogHash sets the "log_hash" field if the given value is not nil.
+func (_c *OperationAuditLogCreate) SetNillableLogHash(v *string) *OperationAuditLogCreate {
+	if v != nil {
+		_c.SetLogHash(*v)
+	}
+	return _c
+}
+
+// SetSignature sets the "signature" field.
+func (_c *OperationAuditLogCreate) SetSignature(v []byte) *OperationAuditLogCreate {
+	_c.mutation.SetSignature(v)
 	return _c
 }
 
@@ -189,6 +322,21 @@ func (_c *OperationAuditLogCreate) check() error {
 			return &ValidationError{Name: "action", err: fmt.Errorf(`ent: validator failed for field "OperationAuditLog.action": %w`, err)}
 		}
 	}
+	if v, ok := _c.mutation.SensitiveLevel(); ok {
+		if err := operationauditlog.SensitiveLevelValidator(v); err != nil {
+			return &ValidationError{Name: "sensitive_level", err: fmt.Errorf(`ent: validator failed for field "OperationAuditLog.sensitive_level": %w`, err)}
+		}
+	}
+	if v, ok := _c.mutation.GeoLocation(); ok {
+		if err := v.Validate(); err != nil {
+			return &ValidationError{Name: "geo_location", err: fmt.Errorf(`ent: validator failed for field "OperationAuditLog.geo_location": %w`, err)}
+		}
+	}
+	if v, ok := _c.mutation.DeviceInfo(); ok {
+		if err := v.Validate(); err != nil {
+			return &ValidationError{Name: "device_info", err: fmt.Errorf(`ent: validator failed for field "OperationAuditLog.device_info": %w`, err)}
+		}
+	}
 	if v, ok := _c.mutation.ID(); ok {
 		if err := operationauditlog.IDValidator(v); err != nil {
 			return &ValidationError{Name: "id", err: fmt.Errorf(`ent: validator failed for field "OperationAuditLog.id": %w`, err)}
@@ -231,37 +379,77 @@ func (_c *OperationAuditLogCreate) createSpec() (*OperationAuditLog, *sqlgraph.C
 		_spec.SetField(operationauditlog.FieldCreatedAt, field.TypeTime, value)
 		_node.CreatedAt = &value
 	}
-	if value, ok := _c.mutation.UpdatedAt(); ok {
-		_spec.SetField(operationauditlog.FieldUpdatedAt, field.TypeTime, value)
-		_node.UpdatedAt = &value
-	}
-	if value, ok := _c.mutation.DeletedAt(); ok {
-		_spec.SetField(operationauditlog.FieldDeletedAt, field.TypeTime, value)
-		_node.DeletedAt = &value
-	}
 	if value, ok := _c.mutation.TenantID(); ok {
 		_spec.SetField(operationauditlog.FieldTenantID, field.TypeUint32, value)
 		_node.TenantID = &value
 	}
-	if value, ok := _c.mutation.OperatorID(); ok {
-		_spec.SetField(operationauditlog.FieldOperatorID, field.TypeUint32, value)
-		_node.OperatorID = &value
+	if value, ok := _c.mutation.UserID(); ok {
+		_spec.SetField(operationauditlog.FieldUserID, field.TypeUint32, value)
+		_node.UserID = &value
+	}
+	if value, ok := _c.mutation.Username(); ok {
+		_spec.SetField(operationauditlog.FieldUsername, field.TypeString, value)
+		_node.Username = &value
+	}
+	if value, ok := _c.mutation.ResourceType(); ok {
+		_spec.SetField(operationauditlog.FieldResourceType, field.TypeString, value)
+		_node.ResourceType = &value
+	}
+	if value, ok := _c.mutation.ResourceID(); ok {
+		_spec.SetField(operationauditlog.FieldResourceID, field.TypeString, value)
+		_node.ResourceID = &value
 	}
 	if value, ok := _c.mutation.Action(); ok {
-		_spec.SetField(operationauditlog.FieldAction, field.TypeString, value)
+		_spec.SetField(operationauditlog.FieldAction, field.TypeEnum, value)
 		_node.Action = &value
 	}
-	if value, ok := _c.mutation.OldData(); ok {
-		_spec.SetField(operationauditlog.FieldOldData, field.TypeJSON, value)
-		_node.OldData = value
+	if value, ok := _c.mutation.BeforeData(); ok {
+		_spec.SetField(operationauditlog.FieldBeforeData, field.TypeString, value)
+		_node.BeforeData = &value
 	}
-	if value, ok := _c.mutation.NewData(); ok {
-		_spec.SetField(operationauditlog.FieldNewData, field.TypeJSON, value)
-		_node.NewData = value
+	if value, ok := _c.mutation.AfterData(); ok {
+		_spec.SetField(operationauditlog.FieldAfterData, field.TypeString, value)
+		_node.AfterData = &value
 	}
-	if value, ok := _c.mutation.OperatedAt(); ok {
-		_spec.SetField(operationauditlog.FieldOperatedAt, field.TypeTime, value)
-		_node.OperatedAt = &value
+	if value, ok := _c.mutation.SensitiveLevel(); ok {
+		_spec.SetField(operationauditlog.FieldSensitiveLevel, field.TypeEnum, value)
+		_node.SensitiveLevel = &value
+	}
+	if value, ok := _c.mutation.RequestID(); ok {
+		_spec.SetField(operationauditlog.FieldRequestID, field.TypeString, value)
+		_node.RequestID = &value
+	}
+	if value, ok := _c.mutation.TraceID(); ok {
+		_spec.SetField(operationauditlog.FieldTraceID, field.TypeString, value)
+		_node.TraceID = &value
+	}
+	if value, ok := _c.mutation.Success(); ok {
+		_spec.SetField(operationauditlog.FieldSuccess, field.TypeBool, value)
+		_node.Success = &value
+	}
+	if value, ok := _c.mutation.FailureReason(); ok {
+		_spec.SetField(operationauditlog.FieldFailureReason, field.TypeString, value)
+		_node.FailureReason = &value
+	}
+	if value, ok := _c.mutation.IPAddress(); ok {
+		_spec.SetField(operationauditlog.FieldIPAddress, field.TypeString, value)
+		_node.IPAddress = &value
+	}
+	if value, ok := _c.mutation.GeoLocation(); ok {
+		_spec.SetField(operationauditlog.FieldGeoLocation, field.TypeJSON, value)
+		_node.GeoLocation = value
+	}
+	if value, ok := _c.mutation.DeviceInfo(); ok {
+		_spec.SetField(operationauditlog.FieldDeviceInfo, field.TypeJSON, value)
+		_node.DeviceInfo = value
+	}
+	if value, ok := _c.mutation.LogHash(); ok {
+		_spec.SetField(operationauditlog.FieldLogHash, field.TypeString, value)
+		_node.LogHash = &value
+	}
+	if value, ok := _c.mutation.Signature(); ok {
+		_spec.SetField(operationauditlog.FieldSignature, field.TypeBytes, value)
+		_node.Signature = &value
 	}
 	return _node, _spec
 }
@@ -315,68 +503,86 @@ type (
 	}
 )
 
-// SetUpdatedAt sets the "updated_at" field.
-func (u *OperationAuditLogUpsert) SetUpdatedAt(v time.Time) *OperationAuditLogUpsert {
-	u.Set(operationauditlog.FieldUpdatedAt, v)
+// SetUserID sets the "user_id" field.
+func (u *OperationAuditLogUpsert) SetUserID(v uint32) *OperationAuditLogUpsert {
+	u.Set(operationauditlog.FieldUserID, v)
 	return u
 }
 
-// UpdateUpdatedAt sets the "updated_at" field to the value that was provided on create.
-func (u *OperationAuditLogUpsert) UpdateUpdatedAt() *OperationAuditLogUpsert {
-	u.SetExcluded(operationauditlog.FieldUpdatedAt)
+// UpdateUserID sets the "user_id" field to the value that was provided on create.
+func (u *OperationAuditLogUpsert) UpdateUserID() *OperationAuditLogUpsert {
+	u.SetExcluded(operationauditlog.FieldUserID)
 	return u
 }
 
-// ClearUpdatedAt clears the value of the "updated_at" field.
-func (u *OperationAuditLogUpsert) ClearUpdatedAt() *OperationAuditLogUpsert {
-	u.SetNull(operationauditlog.FieldUpdatedAt)
+// AddUserID adds v to the "user_id" field.
+func (u *OperationAuditLogUpsert) AddUserID(v uint32) *OperationAuditLogUpsert {
+	u.Add(operationauditlog.FieldUserID, v)
 	return u
 }
 
-// SetDeletedAt sets the "deleted_at" field.
-func (u *OperationAuditLogUpsert) SetDeletedAt(v time.Time) *OperationAuditLogUpsert {
-	u.Set(operationauditlog.FieldDeletedAt, v)
+// ClearUserID clears the value of the "user_id" field.
+func (u *OperationAuditLogUpsert) ClearUserID() *OperationAuditLogUpsert {
+	u.SetNull(operationauditlog.FieldUserID)
 	return u
 }
 
-// UpdateDeletedAt sets the "deleted_at" field to the value that was provided on create.
-func (u *OperationAuditLogUpsert) UpdateDeletedAt() *OperationAuditLogUpsert {
-	u.SetExcluded(operationauditlog.FieldDeletedAt)
+// SetUsername sets the "username" field.
+func (u *OperationAuditLogUpsert) SetUsername(v string) *OperationAuditLogUpsert {
+	u.Set(operationauditlog.FieldUsername, v)
 	return u
 }
 
-// ClearDeletedAt clears the value of the "deleted_at" field.
-func (u *OperationAuditLogUpsert) ClearDeletedAt() *OperationAuditLogUpsert {
-	u.SetNull(operationauditlog.FieldDeletedAt)
+// UpdateUsername sets the "username" field to the value that was provided on create.
+func (u *OperationAuditLogUpsert) UpdateUsername() *OperationAuditLogUpsert {
+	u.SetExcluded(operationauditlog.FieldUsername)
 	return u
 }
 
-// SetOperatorID sets the "operator_id" field.
-func (u *OperationAuditLogUpsert) SetOperatorID(v uint32) *OperationAuditLogUpsert {
-	u.Set(operationauditlog.FieldOperatorID, v)
+// ClearUsername clears the value of the "username" field.
+func (u *OperationAuditLogUpsert) ClearUsername() *OperationAuditLogUpsert {
+	u.SetNull(operationauditlog.FieldUsername)
 	return u
 }
 
-// UpdateOperatorID sets the "operator_id" field to the value that was provided on create.
-func (u *OperationAuditLogUpsert) UpdateOperatorID() *OperationAuditLogUpsert {
-	u.SetExcluded(operationauditlog.FieldOperatorID)
+// SetResourceType sets the "resource_type" field.
+func (u *OperationAuditLogUpsert) SetResourceType(v string) *OperationAuditLogUpsert {
+	u.Set(operationauditlog.FieldResourceType, v)
 	return u
 }
 
-// AddOperatorID adds v to the "operator_id" field.
-func (u *OperationAuditLogUpsert) AddOperatorID(v uint32) *OperationAuditLogUpsert {
-	u.Add(operationauditlog.FieldOperatorID, v)
+// UpdateResourceType sets the "resource_type" field to the value that was provided on create.
+func (u *OperationAuditLogUpsert) UpdateResourceType() *OperationAuditLogUpsert {
+	u.SetExcluded(operationauditlog.FieldResourceType)
 	return u
 }
 
-// ClearOperatorID clears the value of the "operator_id" field.
-func (u *OperationAuditLogUpsert) ClearOperatorID() *OperationAuditLogUpsert {
-	u.SetNull(operationauditlog.FieldOperatorID)
+// ClearResourceType clears the value of the "resource_type" field.
+func (u *OperationAuditLogUpsert) ClearResourceType() *OperationAuditLogUpsert {
+	u.SetNull(operationauditlog.FieldResourceType)
+	return u
+}
+
+// SetResourceID sets the "resource_id" field.
+func (u *OperationAuditLogUpsert) SetResourceID(v string) *OperationAuditLogUpsert {
+	u.Set(operationauditlog.FieldResourceID, v)
+	return u
+}
+
+// UpdateResourceID sets the "resource_id" field to the value that was provided on create.
+func (u *OperationAuditLogUpsert) UpdateResourceID() *OperationAuditLogUpsert {
+	u.SetExcluded(operationauditlog.FieldResourceID)
+	return u
+}
+
+// ClearResourceID clears the value of the "resource_id" field.
+func (u *OperationAuditLogUpsert) ClearResourceID() *OperationAuditLogUpsert {
+	u.SetNull(operationauditlog.FieldResourceID)
 	return u
 }
 
 // SetAction sets the "action" field.
-func (u *OperationAuditLogUpsert) SetAction(v string) *OperationAuditLogUpsert {
+func (u *OperationAuditLogUpsert) SetAction(v operationauditlog.Action) *OperationAuditLogUpsert {
 	u.Set(operationauditlog.FieldAction, v)
 	return u
 }
@@ -393,57 +599,219 @@ func (u *OperationAuditLogUpsert) ClearAction() *OperationAuditLogUpsert {
 	return u
 }
 
-// SetOldData sets the "old_data" field.
-func (u *OperationAuditLogUpsert) SetOldData(v map[string]interface{}) *OperationAuditLogUpsert {
-	u.Set(operationauditlog.FieldOldData, v)
+// SetBeforeData sets the "before_data" field.
+func (u *OperationAuditLogUpsert) SetBeforeData(v string) *OperationAuditLogUpsert {
+	u.Set(operationauditlog.FieldBeforeData, v)
 	return u
 }
 
-// UpdateOldData sets the "old_data" field to the value that was provided on create.
-func (u *OperationAuditLogUpsert) UpdateOldData() *OperationAuditLogUpsert {
-	u.SetExcluded(operationauditlog.FieldOldData)
+// UpdateBeforeData sets the "before_data" field to the value that was provided on create.
+func (u *OperationAuditLogUpsert) UpdateBeforeData() *OperationAuditLogUpsert {
+	u.SetExcluded(operationauditlog.FieldBeforeData)
 	return u
 }
 
-// ClearOldData clears the value of the "old_data" field.
-func (u *OperationAuditLogUpsert) ClearOldData() *OperationAuditLogUpsert {
-	u.SetNull(operationauditlog.FieldOldData)
+// ClearBeforeData clears the value of the "before_data" field.
+func (u *OperationAuditLogUpsert) ClearBeforeData() *OperationAuditLogUpsert {
+	u.SetNull(operationauditlog.FieldBeforeData)
 	return u
 }
 
-// SetNewData sets the "new_data" field.
-func (u *OperationAuditLogUpsert) SetNewData(v map[string]interface{}) *OperationAuditLogUpsert {
-	u.Set(operationauditlog.FieldNewData, v)
+// SetAfterData sets the "after_data" field.
+func (u *OperationAuditLogUpsert) SetAfterData(v string) *OperationAuditLogUpsert {
+	u.Set(operationauditlog.FieldAfterData, v)
 	return u
 }
 
-// UpdateNewData sets the "new_data" field to the value that was provided on create.
-func (u *OperationAuditLogUpsert) UpdateNewData() *OperationAuditLogUpsert {
-	u.SetExcluded(operationauditlog.FieldNewData)
+// UpdateAfterData sets the "after_data" field to the value that was provided on create.
+func (u *OperationAuditLogUpsert) UpdateAfterData() *OperationAuditLogUpsert {
+	u.SetExcluded(operationauditlog.FieldAfterData)
 	return u
 }
 
-// ClearNewData clears the value of the "new_data" field.
-func (u *OperationAuditLogUpsert) ClearNewData() *OperationAuditLogUpsert {
-	u.SetNull(operationauditlog.FieldNewData)
+// ClearAfterData clears the value of the "after_data" field.
+func (u *OperationAuditLogUpsert) ClearAfterData() *OperationAuditLogUpsert {
+	u.SetNull(operationauditlog.FieldAfterData)
 	return u
 }
 
-// SetOperatedAt sets the "operated_at" field.
-func (u *OperationAuditLogUpsert) SetOperatedAt(v time.Time) *OperationAuditLogUpsert {
-	u.Set(operationauditlog.FieldOperatedAt, v)
+// SetSensitiveLevel sets the "sensitive_level" field.
+func (u *OperationAuditLogUpsert) SetSensitiveLevel(v operationauditlog.SensitiveLevel) *OperationAuditLogUpsert {
+	u.Set(operationauditlog.FieldSensitiveLevel, v)
 	return u
 }
 
-// UpdateOperatedAt sets the "operated_at" field to the value that was provided on create.
-func (u *OperationAuditLogUpsert) UpdateOperatedAt() *OperationAuditLogUpsert {
-	u.SetExcluded(operationauditlog.FieldOperatedAt)
+// UpdateSensitiveLevel sets the "sensitive_level" field to the value that was provided on create.
+func (u *OperationAuditLogUpsert) UpdateSensitiveLevel() *OperationAuditLogUpsert {
+	u.SetExcluded(operationauditlog.FieldSensitiveLevel)
 	return u
 }
 
-// ClearOperatedAt clears the value of the "operated_at" field.
-func (u *OperationAuditLogUpsert) ClearOperatedAt() *OperationAuditLogUpsert {
-	u.SetNull(operationauditlog.FieldOperatedAt)
+// ClearSensitiveLevel clears the value of the "sensitive_level" field.
+func (u *OperationAuditLogUpsert) ClearSensitiveLevel() *OperationAuditLogUpsert {
+	u.SetNull(operationauditlog.FieldSensitiveLevel)
+	return u
+}
+
+// SetRequestID sets the "request_id" field.
+func (u *OperationAuditLogUpsert) SetRequestID(v string) *OperationAuditLogUpsert {
+	u.Set(operationauditlog.FieldRequestID, v)
+	return u
+}
+
+// UpdateRequestID sets the "request_id" field to the value that was provided on create.
+func (u *OperationAuditLogUpsert) UpdateRequestID() *OperationAuditLogUpsert {
+	u.SetExcluded(operationauditlog.FieldRequestID)
+	return u
+}
+
+// ClearRequestID clears the value of the "request_id" field.
+func (u *OperationAuditLogUpsert) ClearRequestID() *OperationAuditLogUpsert {
+	u.SetNull(operationauditlog.FieldRequestID)
+	return u
+}
+
+// SetTraceID sets the "trace_id" field.
+func (u *OperationAuditLogUpsert) SetTraceID(v string) *OperationAuditLogUpsert {
+	u.Set(operationauditlog.FieldTraceID, v)
+	return u
+}
+
+// UpdateTraceID sets the "trace_id" field to the value that was provided on create.
+func (u *OperationAuditLogUpsert) UpdateTraceID() *OperationAuditLogUpsert {
+	u.SetExcluded(operationauditlog.FieldTraceID)
+	return u
+}
+
+// ClearTraceID clears the value of the "trace_id" field.
+func (u *OperationAuditLogUpsert) ClearTraceID() *OperationAuditLogUpsert {
+	u.SetNull(operationauditlog.FieldTraceID)
+	return u
+}
+
+// SetSuccess sets the "success" field.
+func (u *OperationAuditLogUpsert) SetSuccess(v bool) *OperationAuditLogUpsert {
+	u.Set(operationauditlog.FieldSuccess, v)
+	return u
+}
+
+// UpdateSuccess sets the "success" field to the value that was provided on create.
+func (u *OperationAuditLogUpsert) UpdateSuccess() *OperationAuditLogUpsert {
+	u.SetExcluded(operationauditlog.FieldSuccess)
+	return u
+}
+
+// ClearSuccess clears the value of the "success" field.
+func (u *OperationAuditLogUpsert) ClearSuccess() *OperationAuditLogUpsert {
+	u.SetNull(operationauditlog.FieldSuccess)
+	return u
+}
+
+// SetFailureReason sets the "failure_reason" field.
+func (u *OperationAuditLogUpsert) SetFailureReason(v string) *OperationAuditLogUpsert {
+	u.Set(operationauditlog.FieldFailureReason, v)
+	return u
+}
+
+// UpdateFailureReason sets the "failure_reason" field to the value that was provided on create.
+func (u *OperationAuditLogUpsert) UpdateFailureReason() *OperationAuditLogUpsert {
+	u.SetExcluded(operationauditlog.FieldFailureReason)
+	return u
+}
+
+// ClearFailureReason clears the value of the "failure_reason" field.
+func (u *OperationAuditLogUpsert) ClearFailureReason() *OperationAuditLogUpsert {
+	u.SetNull(operationauditlog.FieldFailureReason)
+	return u
+}
+
+// SetIPAddress sets the "ip_address" field.
+func (u *OperationAuditLogUpsert) SetIPAddress(v string) *OperationAuditLogUpsert {
+	u.Set(operationauditlog.FieldIPAddress, v)
+	return u
+}
+
+// UpdateIPAddress sets the "ip_address" field to the value that was provided on create.
+func (u *OperationAuditLogUpsert) UpdateIPAddress() *OperationAuditLogUpsert {
+	u.SetExcluded(operationauditlog.FieldIPAddress)
+	return u
+}
+
+// ClearIPAddress clears the value of the "ip_address" field.
+func (u *OperationAuditLogUpsert) ClearIPAddress() *OperationAuditLogUpsert {
+	u.SetNull(operationauditlog.FieldIPAddress)
+	return u
+}
+
+// SetGeoLocation sets the "geo_location" field.
+func (u *OperationAuditLogUpsert) SetGeoLocation(v *auditpb.GeoLocation) *OperationAuditLogUpsert {
+	u.Set(operationauditlog.FieldGeoLocation, v)
+	return u
+}
+
+// UpdateGeoLocation sets the "geo_location" field to the value that was provided on create.
+func (u *OperationAuditLogUpsert) UpdateGeoLocation() *OperationAuditLogUpsert {
+	u.SetExcluded(operationauditlog.FieldGeoLocation)
+	return u
+}
+
+// ClearGeoLocation clears the value of the "geo_location" field.
+func (u *OperationAuditLogUpsert) ClearGeoLocation() *OperationAuditLogUpsert {
+	u.SetNull(operationauditlog.FieldGeoLocation)
+	return u
+}
+
+// SetDeviceInfo sets the "device_info" field.
+func (u *OperationAuditLogUpsert) SetDeviceInfo(v *auditpb.DeviceInfo) *OperationAuditLogUpsert {
+	u.Set(operationauditlog.FieldDeviceInfo, v)
+	return u
+}
+
+// UpdateDeviceInfo sets the "device_info" field to the value that was provided on create.
+func (u *OperationAuditLogUpsert) UpdateDeviceInfo() *OperationAuditLogUpsert {
+	u.SetExcluded(operationauditlog.FieldDeviceInfo)
+	return u
+}
+
+// ClearDeviceInfo clears the value of the "device_info" field.
+func (u *OperationAuditLogUpsert) ClearDeviceInfo() *OperationAuditLogUpsert {
+	u.SetNull(operationauditlog.FieldDeviceInfo)
+	return u
+}
+
+// SetLogHash sets the "log_hash" field.
+func (u *OperationAuditLogUpsert) SetLogHash(v string) *OperationAuditLogUpsert {
+	u.Set(operationauditlog.FieldLogHash, v)
+	return u
+}
+
+// UpdateLogHash sets the "log_hash" field to the value that was provided on create.
+func (u *OperationAuditLogUpsert) UpdateLogHash() *OperationAuditLogUpsert {
+	u.SetExcluded(operationauditlog.FieldLogHash)
+	return u
+}
+
+// ClearLogHash clears the value of the "log_hash" field.
+func (u *OperationAuditLogUpsert) ClearLogHash() *OperationAuditLogUpsert {
+	u.SetNull(operationauditlog.FieldLogHash)
+	return u
+}
+
+// SetSignature sets the "signature" field.
+func (u *OperationAuditLogUpsert) SetSignature(v []byte) *OperationAuditLogUpsert {
+	u.Set(operationauditlog.FieldSignature, v)
+	return u
+}
+
+// UpdateSignature sets the "signature" field to the value that was provided on create.
+func (u *OperationAuditLogUpsert) UpdateSignature() *OperationAuditLogUpsert {
+	u.SetExcluded(operationauditlog.FieldSignature)
+	return u
+}
+
+// ClearSignature clears the value of the "signature" field.
+func (u *OperationAuditLogUpsert) ClearSignature() *OperationAuditLogUpsert {
+	u.SetNull(operationauditlog.FieldSignature)
 	return u
 }
 
@@ -501,78 +869,99 @@ func (u *OperationAuditLogUpsertOne) Update(set func(*OperationAuditLogUpsert)) 
 	return u
 }
 
-// SetUpdatedAt sets the "updated_at" field.
-func (u *OperationAuditLogUpsertOne) SetUpdatedAt(v time.Time) *OperationAuditLogUpsertOne {
+// SetUserID sets the "user_id" field.
+func (u *OperationAuditLogUpsertOne) SetUserID(v uint32) *OperationAuditLogUpsertOne {
 	return u.Update(func(s *OperationAuditLogUpsert) {
-		s.SetUpdatedAt(v)
+		s.SetUserID(v)
 	})
 }
 
-// UpdateUpdatedAt sets the "updated_at" field to the value that was provided on create.
-func (u *OperationAuditLogUpsertOne) UpdateUpdatedAt() *OperationAuditLogUpsertOne {
+// AddUserID adds v to the "user_id" field.
+func (u *OperationAuditLogUpsertOne) AddUserID(v uint32) *OperationAuditLogUpsertOne {
 	return u.Update(func(s *OperationAuditLogUpsert) {
-		s.UpdateUpdatedAt()
+		s.AddUserID(v)
 	})
 }
 
-// ClearUpdatedAt clears the value of the "updated_at" field.
-func (u *OperationAuditLogUpsertOne) ClearUpdatedAt() *OperationAuditLogUpsertOne {
+// UpdateUserID sets the "user_id" field to the value that was provided on create.
+func (u *OperationAuditLogUpsertOne) UpdateUserID() *OperationAuditLogUpsertOne {
 	return u.Update(func(s *OperationAuditLogUpsert) {
-		s.ClearUpdatedAt()
+		s.UpdateUserID()
 	})
 }
 
-// SetDeletedAt sets the "deleted_at" field.
-func (u *OperationAuditLogUpsertOne) SetDeletedAt(v time.Time) *OperationAuditLogUpsertOne {
+// ClearUserID clears the value of the "user_id" field.
+func (u *OperationAuditLogUpsertOne) ClearUserID() *OperationAuditLogUpsertOne {
 	return u.Update(func(s *OperationAuditLogUpsert) {
-		s.SetDeletedAt(v)
+		s.ClearUserID()
 	})
 }
 
-// UpdateDeletedAt sets the "deleted_at" field to the value that was provided on create.
-func (u *OperationAuditLogUpsertOne) UpdateDeletedAt() *OperationAuditLogUpsertOne {
+// SetUsername sets the "username" field.
+func (u *OperationAuditLogUpsertOne) SetUsername(v string) *OperationAuditLogUpsertOne {
 	return u.Update(func(s *OperationAuditLogUpsert) {
-		s.UpdateDeletedAt()
+		s.SetUsername(v)
 	})
 }
 
-// ClearDeletedAt clears the value of the "deleted_at" field.
-func (u *OperationAuditLogUpsertOne) ClearDeletedAt() *OperationAuditLogUpsertOne {
+// UpdateUsername sets the "username" field to the value that was provided on create.
+func (u *OperationAuditLogUpsertOne) UpdateUsername() *OperationAuditLogUpsertOne {
 	return u.Update(func(s *OperationAuditLogUpsert) {
-		s.ClearDeletedAt()
+		s.UpdateUsername()
 	})
 }
 
-// SetOperatorID sets the "operator_id" field.
-func (u *OperationAuditLogUpsertOne) SetOperatorID(v uint32) *OperationAuditLogUpsertOne {
+// ClearUsername clears the value of the "username" field.
+func (u *OperationAuditLogUpsertOne) ClearUsername() *OperationAuditLogUpsertOne {
 	return u.Update(func(s *OperationAuditLogUpsert) {
-		s.SetOperatorID(v)
+		s.ClearUsername()
 	})
 }
 
-// AddOperatorID adds v to the "operator_id" field.
-func (u *OperationAuditLogUpsertOne) AddOperatorID(v uint32) *OperationAuditLogUpsertOne {
+// SetResourceType sets the "resource_type" field.
+func (u *OperationAuditLogUpsertOne) SetResourceType(v string) *OperationAuditLogUpsertOne {
 	return u.Update(func(s *OperationAuditLogUpsert) {
-		s.AddOperatorID(v)
+		s.SetResourceType(v)
 	})
 }
 
-// UpdateOperatorID sets the "operator_id" field to the value that was provided on create.
-func (u *OperationAuditLogUpsertOne) UpdateOperatorID() *OperationAuditLogUpsertOne {
+// UpdateResourceType sets the "resource_type" field to the value that was provided on create.
+func (u *OperationAuditLogUpsertOne) UpdateResourceType() *OperationAuditLogUpsertOne {
 	return u.Update(func(s *OperationAuditLogUpsert) {
-		s.UpdateOperatorID()
+		s.UpdateResourceType()
 	})
 }
 
-// ClearOperatorID clears the value of the "operator_id" field.
-func (u *OperationAuditLogUpsertOne) ClearOperatorID() *OperationAuditLogUpsertOne {
+// ClearResourceType clears the value of the "resource_type" field.
+func (u *OperationAuditLogUpsertOne) ClearResourceType() *OperationAuditLogUpsertOne {
 	return u.Update(func(s *OperationAuditLogUpsert) {
-		s.ClearOperatorID()
+		s.ClearResourceType()
+	})
+}
+
+// SetResourceID sets the "resource_id" field.
+func (u *OperationAuditLogUpsertOne) SetResourceID(v string) *OperationAuditLogUpsertOne {
+	return u.Update(func(s *OperationAuditLogUpsert) {
+		s.SetResourceID(v)
+	})
+}
+
+// UpdateResourceID sets the "resource_id" field to the value that was provided on create.
+func (u *OperationAuditLogUpsertOne) UpdateResourceID() *OperationAuditLogUpsertOne {
+	return u.Update(func(s *OperationAuditLogUpsert) {
+		s.UpdateResourceID()
+	})
+}
+
+// ClearResourceID clears the value of the "resource_id" field.
+func (u *OperationAuditLogUpsertOne) ClearResourceID() *OperationAuditLogUpsertOne {
+	return u.Update(func(s *OperationAuditLogUpsert) {
+		s.ClearResourceID()
 	})
 }
 
 // SetAction sets the "action" field.
-func (u *OperationAuditLogUpsertOne) SetAction(v string) *OperationAuditLogUpsertOne {
+func (u *OperationAuditLogUpsertOne) SetAction(v operationauditlog.Action) *OperationAuditLogUpsertOne {
 	return u.Update(func(s *OperationAuditLogUpsert) {
 		s.SetAction(v)
 	})
@@ -592,66 +981,255 @@ func (u *OperationAuditLogUpsertOne) ClearAction() *OperationAuditLogUpsertOne {
 	})
 }
 
-// SetOldData sets the "old_data" field.
-func (u *OperationAuditLogUpsertOne) SetOldData(v map[string]interface{}) *OperationAuditLogUpsertOne {
+// SetBeforeData sets the "before_data" field.
+func (u *OperationAuditLogUpsertOne) SetBeforeData(v string) *OperationAuditLogUpsertOne {
 	return u.Update(func(s *OperationAuditLogUpsert) {
-		s.SetOldData(v)
+		s.SetBeforeData(v)
 	})
 }
 
-// UpdateOldData sets the "old_data" field to the value that was provided on create.
-func (u *OperationAuditLogUpsertOne) UpdateOldData() *OperationAuditLogUpsertOne {
+// UpdateBeforeData sets the "before_data" field to the value that was provided on create.
+func (u *OperationAuditLogUpsertOne) UpdateBeforeData() *OperationAuditLogUpsertOne {
 	return u.Update(func(s *OperationAuditLogUpsert) {
-		s.UpdateOldData()
+		s.UpdateBeforeData()
 	})
 }
 
-// ClearOldData clears the value of the "old_data" field.
-func (u *OperationAuditLogUpsertOne) ClearOldData() *OperationAuditLogUpsertOne {
+// ClearBeforeData clears the value of the "before_data" field.
+func (u *OperationAuditLogUpsertOne) ClearBeforeData() *OperationAuditLogUpsertOne {
 	return u.Update(func(s *OperationAuditLogUpsert) {
-		s.ClearOldData()
+		s.ClearBeforeData()
 	})
 }
 
-// SetNewData sets the "new_data" field.
-func (u *OperationAuditLogUpsertOne) SetNewData(v map[string]interface{}) *OperationAuditLogUpsertOne {
+// SetAfterData sets the "after_data" field.
+func (u *OperationAuditLogUpsertOne) SetAfterData(v string) *OperationAuditLogUpsertOne {
 	return u.Update(func(s *OperationAuditLogUpsert) {
-		s.SetNewData(v)
+		s.SetAfterData(v)
 	})
 }
 
-// UpdateNewData sets the "new_data" field to the value that was provided on create.
-func (u *OperationAuditLogUpsertOne) UpdateNewData() *OperationAuditLogUpsertOne {
+// UpdateAfterData sets the "after_data" field to the value that was provided on create.
+func (u *OperationAuditLogUpsertOne) UpdateAfterData() *OperationAuditLogUpsertOne {
 	return u.Update(func(s *OperationAuditLogUpsert) {
-		s.UpdateNewData()
+		s.UpdateAfterData()
 	})
 }
 
-// ClearNewData clears the value of the "new_data" field.
-func (u *OperationAuditLogUpsertOne) ClearNewData() *OperationAuditLogUpsertOne {
+// ClearAfterData clears the value of the "after_data" field.
+func (u *OperationAuditLogUpsertOne) ClearAfterData() *OperationAuditLogUpsertOne {
 	return u.Update(func(s *OperationAuditLogUpsert) {
-		s.ClearNewData()
+		s.ClearAfterData()
 	})
 }
 
-// SetOperatedAt sets the "operated_at" field.
-func (u *OperationAuditLogUpsertOne) SetOperatedAt(v time.Time) *OperationAuditLogUpsertOne {
+// SetSensitiveLevel sets the "sensitive_level" field.
+func (u *OperationAuditLogUpsertOne) SetSensitiveLevel(v operationauditlog.SensitiveLevel) *OperationAuditLogUpsertOne {
 	return u.Update(func(s *OperationAuditLogUpsert) {
-		s.SetOperatedAt(v)
+		s.SetSensitiveLevel(v)
 	})
 }
 
-// UpdateOperatedAt sets the "operated_at" field to the value that was provided on create.
-func (u *OperationAuditLogUpsertOne) UpdateOperatedAt() *OperationAuditLogUpsertOne {
+// UpdateSensitiveLevel sets the "sensitive_level" field to the value that was provided on create.
+func (u *OperationAuditLogUpsertOne) UpdateSensitiveLevel() *OperationAuditLogUpsertOne {
 	return u.Update(func(s *OperationAuditLogUpsert) {
-		s.UpdateOperatedAt()
+		s.UpdateSensitiveLevel()
 	})
 }
 
-// ClearOperatedAt clears the value of the "operated_at" field.
-func (u *OperationAuditLogUpsertOne) ClearOperatedAt() *OperationAuditLogUpsertOne {
+// ClearSensitiveLevel clears the value of the "sensitive_level" field.
+func (u *OperationAuditLogUpsertOne) ClearSensitiveLevel() *OperationAuditLogUpsertOne {
 	return u.Update(func(s *OperationAuditLogUpsert) {
-		s.ClearOperatedAt()
+		s.ClearSensitiveLevel()
+	})
+}
+
+// SetRequestID sets the "request_id" field.
+func (u *OperationAuditLogUpsertOne) SetRequestID(v string) *OperationAuditLogUpsertOne {
+	return u.Update(func(s *OperationAuditLogUpsert) {
+		s.SetRequestID(v)
+	})
+}
+
+// UpdateRequestID sets the "request_id" field to the value that was provided on create.
+func (u *OperationAuditLogUpsertOne) UpdateRequestID() *OperationAuditLogUpsertOne {
+	return u.Update(func(s *OperationAuditLogUpsert) {
+		s.UpdateRequestID()
+	})
+}
+
+// ClearRequestID clears the value of the "request_id" field.
+func (u *OperationAuditLogUpsertOne) ClearRequestID() *OperationAuditLogUpsertOne {
+	return u.Update(func(s *OperationAuditLogUpsert) {
+		s.ClearRequestID()
+	})
+}
+
+// SetTraceID sets the "trace_id" field.
+func (u *OperationAuditLogUpsertOne) SetTraceID(v string) *OperationAuditLogUpsertOne {
+	return u.Update(func(s *OperationAuditLogUpsert) {
+		s.SetTraceID(v)
+	})
+}
+
+// UpdateTraceID sets the "trace_id" field to the value that was provided on create.
+func (u *OperationAuditLogUpsertOne) UpdateTraceID() *OperationAuditLogUpsertOne {
+	return u.Update(func(s *OperationAuditLogUpsert) {
+		s.UpdateTraceID()
+	})
+}
+
+// ClearTraceID clears the value of the "trace_id" field.
+func (u *OperationAuditLogUpsertOne) ClearTraceID() *OperationAuditLogUpsertOne {
+	return u.Update(func(s *OperationAuditLogUpsert) {
+		s.ClearTraceID()
+	})
+}
+
+// SetSuccess sets the "success" field.
+func (u *OperationAuditLogUpsertOne) SetSuccess(v bool) *OperationAuditLogUpsertOne {
+	return u.Update(func(s *OperationAuditLogUpsert) {
+		s.SetSuccess(v)
+	})
+}
+
+// UpdateSuccess sets the "success" field to the value that was provided on create.
+func (u *OperationAuditLogUpsertOne) UpdateSuccess() *OperationAuditLogUpsertOne {
+	return u.Update(func(s *OperationAuditLogUpsert) {
+		s.UpdateSuccess()
+	})
+}
+
+// ClearSuccess clears the value of the "success" field.
+func (u *OperationAuditLogUpsertOne) ClearSuccess() *OperationAuditLogUpsertOne {
+	return u.Update(func(s *OperationAuditLogUpsert) {
+		s.ClearSuccess()
+	})
+}
+
+// SetFailureReason sets the "failure_reason" field.
+func (u *OperationAuditLogUpsertOne) SetFailureReason(v string) *OperationAuditLogUpsertOne {
+	return u.Update(func(s *OperationAuditLogUpsert) {
+		s.SetFailureReason(v)
+	})
+}
+
+// UpdateFailureReason sets the "failure_reason" field to the value that was provided on create.
+func (u *OperationAuditLogUpsertOne) UpdateFailureReason() *OperationAuditLogUpsertOne {
+	return u.Update(func(s *OperationAuditLogUpsert) {
+		s.UpdateFailureReason()
+	})
+}
+
+// ClearFailureReason clears the value of the "failure_reason" field.
+func (u *OperationAuditLogUpsertOne) ClearFailureReason() *OperationAuditLogUpsertOne {
+	return u.Update(func(s *OperationAuditLogUpsert) {
+		s.ClearFailureReason()
+	})
+}
+
+// SetIPAddress sets the "ip_address" field.
+func (u *OperationAuditLogUpsertOne) SetIPAddress(v string) *OperationAuditLogUpsertOne {
+	return u.Update(func(s *OperationAuditLogUpsert) {
+		s.SetIPAddress(v)
+	})
+}
+
+// UpdateIPAddress sets the "ip_address" field to the value that was provided on create.
+func (u *OperationAuditLogUpsertOne) UpdateIPAddress() *OperationAuditLogUpsertOne {
+	return u.Update(func(s *OperationAuditLogUpsert) {
+		s.UpdateIPAddress()
+	})
+}
+
+// ClearIPAddress clears the value of the "ip_address" field.
+func (u *OperationAuditLogUpsertOne) ClearIPAddress() *OperationAuditLogUpsertOne {
+	return u.Update(func(s *OperationAuditLogUpsert) {
+		s.ClearIPAddress()
+	})
+}
+
+// SetGeoLocation sets the "geo_location" field.
+func (u *OperationAuditLogUpsertOne) SetGeoLocation(v *auditpb.GeoLocation) *OperationAuditLogUpsertOne {
+	return u.Update(func(s *OperationAuditLogUpsert) {
+		s.SetGeoLocation(v)
+	})
+}
+
+// UpdateGeoLocation sets the "geo_location" field to the value that was provided on create.
+func (u *OperationAuditLogUpsertOne) UpdateGeoLocation() *OperationAuditLogUpsertOne {
+	return u.Update(func(s *OperationAuditLogUpsert) {
+		s.UpdateGeoLocation()
+	})
+}
+
+// ClearGeoLocation clears the value of the "geo_location" field.
+func (u *OperationAuditLogUpsertOne) ClearGeoLocation() *OperationAuditLogUpsertOne {
+	return u.Update(func(s *OperationAuditLogUpsert) {
+		s.ClearGeoLocation()
+	})
+}
+
+// SetDeviceInfo sets the "device_info" field.
+func (u *OperationAuditLogUpsertOne) SetDeviceInfo(v *auditpb.DeviceInfo) *OperationAuditLogUpsertOne {
+	return u.Update(func(s *OperationAuditLogUpsert) {
+		s.SetDeviceInfo(v)
+	})
+}
+
+// UpdateDeviceInfo sets the "device_info" field to the value that was provided on create.
+func (u *OperationAuditLogUpsertOne) UpdateDeviceInfo() *OperationAuditLogUpsertOne {
+	return u.Update(func(s *OperationAuditLogUpsert) {
+		s.UpdateDeviceInfo()
+	})
+}
+
+// ClearDeviceInfo clears the value of the "device_info" field.
+func (u *OperationAuditLogUpsertOne) ClearDeviceInfo() *OperationAuditLogUpsertOne {
+	return u.Update(func(s *OperationAuditLogUpsert) {
+		s.ClearDeviceInfo()
+	})
+}
+
+// SetLogHash sets the "log_hash" field.
+func (u *OperationAuditLogUpsertOne) SetLogHash(v string) *OperationAuditLogUpsertOne {
+	return u.Update(func(s *OperationAuditLogUpsert) {
+		s.SetLogHash(v)
+	})
+}
+
+// UpdateLogHash sets the "log_hash" field to the value that was provided on create.
+func (u *OperationAuditLogUpsertOne) UpdateLogHash() *OperationAuditLogUpsertOne {
+	return u.Update(func(s *OperationAuditLogUpsert) {
+		s.UpdateLogHash()
+	})
+}
+
+// ClearLogHash clears the value of the "log_hash" field.
+func (u *OperationAuditLogUpsertOne) ClearLogHash() *OperationAuditLogUpsertOne {
+	return u.Update(func(s *OperationAuditLogUpsert) {
+		s.ClearLogHash()
+	})
+}
+
+// SetSignature sets the "signature" field.
+func (u *OperationAuditLogUpsertOne) SetSignature(v []byte) *OperationAuditLogUpsertOne {
+	return u.Update(func(s *OperationAuditLogUpsert) {
+		s.SetSignature(v)
+	})
+}
+
+// UpdateSignature sets the "signature" field to the value that was provided on create.
+func (u *OperationAuditLogUpsertOne) UpdateSignature() *OperationAuditLogUpsertOne {
+	return u.Update(func(s *OperationAuditLogUpsert) {
+		s.UpdateSignature()
+	})
+}
+
+// ClearSignature clears the value of the "signature" field.
+func (u *OperationAuditLogUpsertOne) ClearSignature() *OperationAuditLogUpsertOne {
+	return u.Update(func(s *OperationAuditLogUpsert) {
+		s.ClearSignature()
 	})
 }
 
@@ -875,78 +1453,99 @@ func (u *OperationAuditLogUpsertBulk) Update(set func(*OperationAuditLogUpsert))
 	return u
 }
 
-// SetUpdatedAt sets the "updated_at" field.
-func (u *OperationAuditLogUpsertBulk) SetUpdatedAt(v time.Time) *OperationAuditLogUpsertBulk {
+// SetUserID sets the "user_id" field.
+func (u *OperationAuditLogUpsertBulk) SetUserID(v uint32) *OperationAuditLogUpsertBulk {
 	return u.Update(func(s *OperationAuditLogUpsert) {
-		s.SetUpdatedAt(v)
+		s.SetUserID(v)
 	})
 }
 
-// UpdateUpdatedAt sets the "updated_at" field to the value that was provided on create.
-func (u *OperationAuditLogUpsertBulk) UpdateUpdatedAt() *OperationAuditLogUpsertBulk {
+// AddUserID adds v to the "user_id" field.
+func (u *OperationAuditLogUpsertBulk) AddUserID(v uint32) *OperationAuditLogUpsertBulk {
 	return u.Update(func(s *OperationAuditLogUpsert) {
-		s.UpdateUpdatedAt()
+		s.AddUserID(v)
 	})
 }
 
-// ClearUpdatedAt clears the value of the "updated_at" field.
-func (u *OperationAuditLogUpsertBulk) ClearUpdatedAt() *OperationAuditLogUpsertBulk {
+// UpdateUserID sets the "user_id" field to the value that was provided on create.
+func (u *OperationAuditLogUpsertBulk) UpdateUserID() *OperationAuditLogUpsertBulk {
 	return u.Update(func(s *OperationAuditLogUpsert) {
-		s.ClearUpdatedAt()
+		s.UpdateUserID()
 	})
 }
 
-// SetDeletedAt sets the "deleted_at" field.
-func (u *OperationAuditLogUpsertBulk) SetDeletedAt(v time.Time) *OperationAuditLogUpsertBulk {
+// ClearUserID clears the value of the "user_id" field.
+func (u *OperationAuditLogUpsertBulk) ClearUserID() *OperationAuditLogUpsertBulk {
 	return u.Update(func(s *OperationAuditLogUpsert) {
-		s.SetDeletedAt(v)
+		s.ClearUserID()
 	})
 }
 
-// UpdateDeletedAt sets the "deleted_at" field to the value that was provided on create.
-func (u *OperationAuditLogUpsertBulk) UpdateDeletedAt() *OperationAuditLogUpsertBulk {
+// SetUsername sets the "username" field.
+func (u *OperationAuditLogUpsertBulk) SetUsername(v string) *OperationAuditLogUpsertBulk {
 	return u.Update(func(s *OperationAuditLogUpsert) {
-		s.UpdateDeletedAt()
+		s.SetUsername(v)
 	})
 }
 
-// ClearDeletedAt clears the value of the "deleted_at" field.
-func (u *OperationAuditLogUpsertBulk) ClearDeletedAt() *OperationAuditLogUpsertBulk {
+// UpdateUsername sets the "username" field to the value that was provided on create.
+func (u *OperationAuditLogUpsertBulk) UpdateUsername() *OperationAuditLogUpsertBulk {
 	return u.Update(func(s *OperationAuditLogUpsert) {
-		s.ClearDeletedAt()
+		s.UpdateUsername()
 	})
 }
 
-// SetOperatorID sets the "operator_id" field.
-func (u *OperationAuditLogUpsertBulk) SetOperatorID(v uint32) *OperationAuditLogUpsertBulk {
+// ClearUsername clears the value of the "username" field.
+func (u *OperationAuditLogUpsertBulk) ClearUsername() *OperationAuditLogUpsertBulk {
 	return u.Update(func(s *OperationAuditLogUpsert) {
-		s.SetOperatorID(v)
+		s.ClearUsername()
 	})
 }
 
-// AddOperatorID adds v to the "operator_id" field.
-func (u *OperationAuditLogUpsertBulk) AddOperatorID(v uint32) *OperationAuditLogUpsertBulk {
+// SetResourceType sets the "resource_type" field.
+func (u *OperationAuditLogUpsertBulk) SetResourceType(v string) *OperationAuditLogUpsertBulk {
 	return u.Update(func(s *OperationAuditLogUpsert) {
-		s.AddOperatorID(v)
+		s.SetResourceType(v)
 	})
 }
 
-// UpdateOperatorID sets the "operator_id" field to the value that was provided on create.
-func (u *OperationAuditLogUpsertBulk) UpdateOperatorID() *OperationAuditLogUpsertBulk {
+// UpdateResourceType sets the "resource_type" field to the value that was provided on create.
+func (u *OperationAuditLogUpsertBulk) UpdateResourceType() *OperationAuditLogUpsertBulk {
 	return u.Update(func(s *OperationAuditLogUpsert) {
-		s.UpdateOperatorID()
+		s.UpdateResourceType()
 	})
 }
 
-// ClearOperatorID clears the value of the "operator_id" field.
-func (u *OperationAuditLogUpsertBulk) ClearOperatorID() *OperationAuditLogUpsertBulk {
+// ClearResourceType clears the value of the "resource_type" field.
+func (u *OperationAuditLogUpsertBulk) ClearResourceType() *OperationAuditLogUpsertBulk {
 	return u.Update(func(s *OperationAuditLogUpsert) {
-		s.ClearOperatorID()
+		s.ClearResourceType()
+	})
+}
+
+// SetResourceID sets the "resource_id" field.
+func (u *OperationAuditLogUpsertBulk) SetResourceID(v string) *OperationAuditLogUpsertBulk {
+	return u.Update(func(s *OperationAuditLogUpsert) {
+		s.SetResourceID(v)
+	})
+}
+
+// UpdateResourceID sets the "resource_id" field to the value that was provided on create.
+func (u *OperationAuditLogUpsertBulk) UpdateResourceID() *OperationAuditLogUpsertBulk {
+	return u.Update(func(s *OperationAuditLogUpsert) {
+		s.UpdateResourceID()
+	})
+}
+
+// ClearResourceID clears the value of the "resource_id" field.
+func (u *OperationAuditLogUpsertBulk) ClearResourceID() *OperationAuditLogUpsertBulk {
+	return u.Update(func(s *OperationAuditLogUpsert) {
+		s.ClearResourceID()
 	})
 }
 
 // SetAction sets the "action" field.
-func (u *OperationAuditLogUpsertBulk) SetAction(v string) *OperationAuditLogUpsertBulk {
+func (u *OperationAuditLogUpsertBulk) SetAction(v operationauditlog.Action) *OperationAuditLogUpsertBulk {
 	return u.Update(func(s *OperationAuditLogUpsert) {
 		s.SetAction(v)
 	})
@@ -966,66 +1565,255 @@ func (u *OperationAuditLogUpsertBulk) ClearAction() *OperationAuditLogUpsertBulk
 	})
 }
 
-// SetOldData sets the "old_data" field.
-func (u *OperationAuditLogUpsertBulk) SetOldData(v map[string]interface{}) *OperationAuditLogUpsertBulk {
+// SetBeforeData sets the "before_data" field.
+func (u *OperationAuditLogUpsertBulk) SetBeforeData(v string) *OperationAuditLogUpsertBulk {
 	return u.Update(func(s *OperationAuditLogUpsert) {
-		s.SetOldData(v)
+		s.SetBeforeData(v)
 	})
 }
 
-// UpdateOldData sets the "old_data" field to the value that was provided on create.
-func (u *OperationAuditLogUpsertBulk) UpdateOldData() *OperationAuditLogUpsertBulk {
+// UpdateBeforeData sets the "before_data" field to the value that was provided on create.
+func (u *OperationAuditLogUpsertBulk) UpdateBeforeData() *OperationAuditLogUpsertBulk {
 	return u.Update(func(s *OperationAuditLogUpsert) {
-		s.UpdateOldData()
+		s.UpdateBeforeData()
 	})
 }
 
-// ClearOldData clears the value of the "old_data" field.
-func (u *OperationAuditLogUpsertBulk) ClearOldData() *OperationAuditLogUpsertBulk {
+// ClearBeforeData clears the value of the "before_data" field.
+func (u *OperationAuditLogUpsertBulk) ClearBeforeData() *OperationAuditLogUpsertBulk {
 	return u.Update(func(s *OperationAuditLogUpsert) {
-		s.ClearOldData()
+		s.ClearBeforeData()
 	})
 }
 
-// SetNewData sets the "new_data" field.
-func (u *OperationAuditLogUpsertBulk) SetNewData(v map[string]interface{}) *OperationAuditLogUpsertBulk {
+// SetAfterData sets the "after_data" field.
+func (u *OperationAuditLogUpsertBulk) SetAfterData(v string) *OperationAuditLogUpsertBulk {
 	return u.Update(func(s *OperationAuditLogUpsert) {
-		s.SetNewData(v)
+		s.SetAfterData(v)
 	})
 }
 
-// UpdateNewData sets the "new_data" field to the value that was provided on create.
-func (u *OperationAuditLogUpsertBulk) UpdateNewData() *OperationAuditLogUpsertBulk {
+// UpdateAfterData sets the "after_data" field to the value that was provided on create.
+func (u *OperationAuditLogUpsertBulk) UpdateAfterData() *OperationAuditLogUpsertBulk {
 	return u.Update(func(s *OperationAuditLogUpsert) {
-		s.UpdateNewData()
+		s.UpdateAfterData()
 	})
 }
 
-// ClearNewData clears the value of the "new_data" field.
-func (u *OperationAuditLogUpsertBulk) ClearNewData() *OperationAuditLogUpsertBulk {
+// ClearAfterData clears the value of the "after_data" field.
+func (u *OperationAuditLogUpsertBulk) ClearAfterData() *OperationAuditLogUpsertBulk {
 	return u.Update(func(s *OperationAuditLogUpsert) {
-		s.ClearNewData()
+		s.ClearAfterData()
 	})
 }
 
-// SetOperatedAt sets the "operated_at" field.
-func (u *OperationAuditLogUpsertBulk) SetOperatedAt(v time.Time) *OperationAuditLogUpsertBulk {
+// SetSensitiveLevel sets the "sensitive_level" field.
+func (u *OperationAuditLogUpsertBulk) SetSensitiveLevel(v operationauditlog.SensitiveLevel) *OperationAuditLogUpsertBulk {
 	return u.Update(func(s *OperationAuditLogUpsert) {
-		s.SetOperatedAt(v)
+		s.SetSensitiveLevel(v)
 	})
 }
 
-// UpdateOperatedAt sets the "operated_at" field to the value that was provided on create.
-func (u *OperationAuditLogUpsertBulk) UpdateOperatedAt() *OperationAuditLogUpsertBulk {
+// UpdateSensitiveLevel sets the "sensitive_level" field to the value that was provided on create.
+func (u *OperationAuditLogUpsertBulk) UpdateSensitiveLevel() *OperationAuditLogUpsertBulk {
 	return u.Update(func(s *OperationAuditLogUpsert) {
-		s.UpdateOperatedAt()
+		s.UpdateSensitiveLevel()
 	})
 }
 
-// ClearOperatedAt clears the value of the "operated_at" field.
-func (u *OperationAuditLogUpsertBulk) ClearOperatedAt() *OperationAuditLogUpsertBulk {
+// ClearSensitiveLevel clears the value of the "sensitive_level" field.
+func (u *OperationAuditLogUpsertBulk) ClearSensitiveLevel() *OperationAuditLogUpsertBulk {
 	return u.Update(func(s *OperationAuditLogUpsert) {
-		s.ClearOperatedAt()
+		s.ClearSensitiveLevel()
+	})
+}
+
+// SetRequestID sets the "request_id" field.
+func (u *OperationAuditLogUpsertBulk) SetRequestID(v string) *OperationAuditLogUpsertBulk {
+	return u.Update(func(s *OperationAuditLogUpsert) {
+		s.SetRequestID(v)
+	})
+}
+
+// UpdateRequestID sets the "request_id" field to the value that was provided on create.
+func (u *OperationAuditLogUpsertBulk) UpdateRequestID() *OperationAuditLogUpsertBulk {
+	return u.Update(func(s *OperationAuditLogUpsert) {
+		s.UpdateRequestID()
+	})
+}
+
+// ClearRequestID clears the value of the "request_id" field.
+func (u *OperationAuditLogUpsertBulk) ClearRequestID() *OperationAuditLogUpsertBulk {
+	return u.Update(func(s *OperationAuditLogUpsert) {
+		s.ClearRequestID()
+	})
+}
+
+// SetTraceID sets the "trace_id" field.
+func (u *OperationAuditLogUpsertBulk) SetTraceID(v string) *OperationAuditLogUpsertBulk {
+	return u.Update(func(s *OperationAuditLogUpsert) {
+		s.SetTraceID(v)
+	})
+}
+
+// UpdateTraceID sets the "trace_id" field to the value that was provided on create.
+func (u *OperationAuditLogUpsertBulk) UpdateTraceID() *OperationAuditLogUpsertBulk {
+	return u.Update(func(s *OperationAuditLogUpsert) {
+		s.UpdateTraceID()
+	})
+}
+
+// ClearTraceID clears the value of the "trace_id" field.
+func (u *OperationAuditLogUpsertBulk) ClearTraceID() *OperationAuditLogUpsertBulk {
+	return u.Update(func(s *OperationAuditLogUpsert) {
+		s.ClearTraceID()
+	})
+}
+
+// SetSuccess sets the "success" field.
+func (u *OperationAuditLogUpsertBulk) SetSuccess(v bool) *OperationAuditLogUpsertBulk {
+	return u.Update(func(s *OperationAuditLogUpsert) {
+		s.SetSuccess(v)
+	})
+}
+
+// UpdateSuccess sets the "success" field to the value that was provided on create.
+func (u *OperationAuditLogUpsertBulk) UpdateSuccess() *OperationAuditLogUpsertBulk {
+	return u.Update(func(s *OperationAuditLogUpsert) {
+		s.UpdateSuccess()
+	})
+}
+
+// ClearSuccess clears the value of the "success" field.
+func (u *OperationAuditLogUpsertBulk) ClearSuccess() *OperationAuditLogUpsertBulk {
+	return u.Update(func(s *OperationAuditLogUpsert) {
+		s.ClearSuccess()
+	})
+}
+
+// SetFailureReason sets the "failure_reason" field.
+func (u *OperationAuditLogUpsertBulk) SetFailureReason(v string) *OperationAuditLogUpsertBulk {
+	return u.Update(func(s *OperationAuditLogUpsert) {
+		s.SetFailureReason(v)
+	})
+}
+
+// UpdateFailureReason sets the "failure_reason" field to the value that was provided on create.
+func (u *OperationAuditLogUpsertBulk) UpdateFailureReason() *OperationAuditLogUpsertBulk {
+	return u.Update(func(s *OperationAuditLogUpsert) {
+		s.UpdateFailureReason()
+	})
+}
+
+// ClearFailureReason clears the value of the "failure_reason" field.
+func (u *OperationAuditLogUpsertBulk) ClearFailureReason() *OperationAuditLogUpsertBulk {
+	return u.Update(func(s *OperationAuditLogUpsert) {
+		s.ClearFailureReason()
+	})
+}
+
+// SetIPAddress sets the "ip_address" field.
+func (u *OperationAuditLogUpsertBulk) SetIPAddress(v string) *OperationAuditLogUpsertBulk {
+	return u.Update(func(s *OperationAuditLogUpsert) {
+		s.SetIPAddress(v)
+	})
+}
+
+// UpdateIPAddress sets the "ip_address" field to the value that was provided on create.
+func (u *OperationAuditLogUpsertBulk) UpdateIPAddress() *OperationAuditLogUpsertBulk {
+	return u.Update(func(s *OperationAuditLogUpsert) {
+		s.UpdateIPAddress()
+	})
+}
+
+// ClearIPAddress clears the value of the "ip_address" field.
+func (u *OperationAuditLogUpsertBulk) ClearIPAddress() *OperationAuditLogUpsertBulk {
+	return u.Update(func(s *OperationAuditLogUpsert) {
+		s.ClearIPAddress()
+	})
+}
+
+// SetGeoLocation sets the "geo_location" field.
+func (u *OperationAuditLogUpsertBulk) SetGeoLocation(v *auditpb.GeoLocation) *OperationAuditLogUpsertBulk {
+	return u.Update(func(s *OperationAuditLogUpsert) {
+		s.SetGeoLocation(v)
+	})
+}
+
+// UpdateGeoLocation sets the "geo_location" field to the value that was provided on create.
+func (u *OperationAuditLogUpsertBulk) UpdateGeoLocation() *OperationAuditLogUpsertBulk {
+	return u.Update(func(s *OperationAuditLogUpsert) {
+		s.UpdateGeoLocation()
+	})
+}
+
+// ClearGeoLocation clears the value of the "geo_location" field.
+func (u *OperationAuditLogUpsertBulk) ClearGeoLocation() *OperationAuditLogUpsertBulk {
+	return u.Update(func(s *OperationAuditLogUpsert) {
+		s.ClearGeoLocation()
+	})
+}
+
+// SetDeviceInfo sets the "device_info" field.
+func (u *OperationAuditLogUpsertBulk) SetDeviceInfo(v *auditpb.DeviceInfo) *OperationAuditLogUpsertBulk {
+	return u.Update(func(s *OperationAuditLogUpsert) {
+		s.SetDeviceInfo(v)
+	})
+}
+
+// UpdateDeviceInfo sets the "device_info" field to the value that was provided on create.
+func (u *OperationAuditLogUpsertBulk) UpdateDeviceInfo() *OperationAuditLogUpsertBulk {
+	return u.Update(func(s *OperationAuditLogUpsert) {
+		s.UpdateDeviceInfo()
+	})
+}
+
+// ClearDeviceInfo clears the value of the "device_info" field.
+func (u *OperationAuditLogUpsertBulk) ClearDeviceInfo() *OperationAuditLogUpsertBulk {
+	return u.Update(func(s *OperationAuditLogUpsert) {
+		s.ClearDeviceInfo()
+	})
+}
+
+// SetLogHash sets the "log_hash" field.
+func (u *OperationAuditLogUpsertBulk) SetLogHash(v string) *OperationAuditLogUpsertBulk {
+	return u.Update(func(s *OperationAuditLogUpsert) {
+		s.SetLogHash(v)
+	})
+}
+
+// UpdateLogHash sets the "log_hash" field to the value that was provided on create.
+func (u *OperationAuditLogUpsertBulk) UpdateLogHash() *OperationAuditLogUpsertBulk {
+	return u.Update(func(s *OperationAuditLogUpsert) {
+		s.UpdateLogHash()
+	})
+}
+
+// ClearLogHash clears the value of the "log_hash" field.
+func (u *OperationAuditLogUpsertBulk) ClearLogHash() *OperationAuditLogUpsertBulk {
+	return u.Update(func(s *OperationAuditLogUpsert) {
+		s.ClearLogHash()
+	})
+}
+
+// SetSignature sets the "signature" field.
+func (u *OperationAuditLogUpsertBulk) SetSignature(v []byte) *OperationAuditLogUpsertBulk {
+	return u.Update(func(s *OperationAuditLogUpsert) {
+		s.SetSignature(v)
+	})
+}
+
+// UpdateSignature sets the "signature" field to the value that was provided on create.
+func (u *OperationAuditLogUpsertBulk) UpdateSignature() *OperationAuditLogUpsertBulk {
+	return u.Update(func(s *OperationAuditLogUpsert) {
+		s.UpdateSignature()
+	})
+}
+
+// ClearSignature clears the value of the "signature" field.
+func (u *OperationAuditLogUpsertBulk) ClearSignature() *OperationAuditLogUpsertBulk {
+	return u.Update(func(s *OperationAuditLogUpsert) {
+		s.ClearSignature()
 	})
 }
 

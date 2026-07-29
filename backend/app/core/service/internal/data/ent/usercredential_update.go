@@ -69,87 +69,6 @@ func (_u *UserCredentialUpdate) ClearDeletedAt() *UserCredentialUpdate {
 	return _u
 }
 
-// SetCreatedBy sets the "created_by" field.
-func (_u *UserCredentialUpdate) SetCreatedBy(v uint32) *UserCredentialUpdate {
-	_u.mutation.ResetCreatedBy()
-	_u.mutation.SetCreatedBy(v)
-	return _u
-}
-
-// SetNillableCreatedBy sets the "created_by" field if the given value is not nil.
-func (_u *UserCredentialUpdate) SetNillableCreatedBy(v *uint32) *UserCredentialUpdate {
-	if v != nil {
-		_u.SetCreatedBy(*v)
-	}
-	return _u
-}
-
-// AddCreatedBy adds value to the "created_by" field.
-func (_u *UserCredentialUpdate) AddCreatedBy(v int32) *UserCredentialUpdate {
-	_u.mutation.AddCreatedBy(v)
-	return _u
-}
-
-// ClearCreatedBy clears the value of the "created_by" field.
-func (_u *UserCredentialUpdate) ClearCreatedBy() *UserCredentialUpdate {
-	_u.mutation.ClearCreatedBy()
-	return _u
-}
-
-// SetUpdatedBy sets the "updated_by" field.
-func (_u *UserCredentialUpdate) SetUpdatedBy(v uint32) *UserCredentialUpdate {
-	_u.mutation.ResetUpdatedBy()
-	_u.mutation.SetUpdatedBy(v)
-	return _u
-}
-
-// SetNillableUpdatedBy sets the "updated_by" field if the given value is not nil.
-func (_u *UserCredentialUpdate) SetNillableUpdatedBy(v *uint32) *UserCredentialUpdate {
-	if v != nil {
-		_u.SetUpdatedBy(*v)
-	}
-	return _u
-}
-
-// AddUpdatedBy adds value to the "updated_by" field.
-func (_u *UserCredentialUpdate) AddUpdatedBy(v int32) *UserCredentialUpdate {
-	_u.mutation.AddUpdatedBy(v)
-	return _u
-}
-
-// ClearUpdatedBy clears the value of the "updated_by" field.
-func (_u *UserCredentialUpdate) ClearUpdatedBy() *UserCredentialUpdate {
-	_u.mutation.ClearUpdatedBy()
-	return _u
-}
-
-// SetDeletedBy sets the "deleted_by" field.
-func (_u *UserCredentialUpdate) SetDeletedBy(v uint32) *UserCredentialUpdate {
-	_u.mutation.ResetDeletedBy()
-	_u.mutation.SetDeletedBy(v)
-	return _u
-}
-
-// SetNillableDeletedBy sets the "deleted_by" field if the given value is not nil.
-func (_u *UserCredentialUpdate) SetNillableDeletedBy(v *uint32) *UserCredentialUpdate {
-	if v != nil {
-		_u.SetDeletedBy(*v)
-	}
-	return _u
-}
-
-// AddDeletedBy adds value to the "deleted_by" field.
-func (_u *UserCredentialUpdate) AddDeletedBy(v int32) *UserCredentialUpdate {
-	_u.mutation.AddDeletedBy(v)
-	return _u
-}
-
-// ClearDeletedBy clears the value of the "deleted_by" field.
-func (_u *UserCredentialUpdate) ClearDeletedBy() *UserCredentialUpdate {
-	_u.mutation.ClearDeletedBy()
-	return _u
-}
-
 // SetUserID sets the "user_id" field.
 func (_u *UserCredentialUpdate) SetUserID(v uint32) *UserCredentialUpdate {
 	_u.mutation.ResetUserID()
@@ -177,6 +96,26 @@ func (_u *UserCredentialUpdate) ClearUserID() *UserCredentialUpdate {
 	return _u
 }
 
+// SetIdentityType sets the "identity_type" field.
+func (_u *UserCredentialUpdate) SetIdentityType(v usercredential.IdentityType) *UserCredentialUpdate {
+	_u.mutation.SetIdentityType(v)
+	return _u
+}
+
+// SetNillableIdentityType sets the "identity_type" field if the given value is not nil.
+func (_u *UserCredentialUpdate) SetNillableIdentityType(v *usercredential.IdentityType) *UserCredentialUpdate {
+	if v != nil {
+		_u.SetIdentityType(*v)
+	}
+	return _u
+}
+
+// ClearIdentityType clears the value of the "identity_type" field.
+func (_u *UserCredentialUpdate) ClearIdentityType() *UserCredentialUpdate {
+	_u.mutation.ClearIdentityType()
+	return _u
+}
+
 // SetIdentifier sets the "identifier" field.
 func (_u *UserCredentialUpdate) SetIdentifier(v string) *UserCredentialUpdate {
 	_u.mutation.SetIdentifier(v)
@@ -197,34 +136,14 @@ func (_u *UserCredentialUpdate) ClearIdentifier() *UserCredentialUpdate {
 	return _u
 }
 
-// SetIdentityType sets the "identity_type" field.
-func (_u *UserCredentialUpdate) SetIdentityType(v string) *UserCredentialUpdate {
-	_u.mutation.SetIdentityType(v)
-	return _u
-}
-
-// SetNillableIdentityType sets the "identity_type" field if the given value is not nil.
-func (_u *UserCredentialUpdate) SetNillableIdentityType(v *string) *UserCredentialUpdate {
-	if v != nil {
-		_u.SetIdentityType(*v)
-	}
-	return _u
-}
-
-// ClearIdentityType clears the value of the "identity_type" field.
-func (_u *UserCredentialUpdate) ClearIdentityType() *UserCredentialUpdate {
-	_u.mutation.ClearIdentityType()
-	return _u
-}
-
 // SetCredentialType sets the "credential_type" field.
-func (_u *UserCredentialUpdate) SetCredentialType(v string) *UserCredentialUpdate {
+func (_u *UserCredentialUpdate) SetCredentialType(v usercredential.CredentialType) *UserCredentialUpdate {
 	_u.mutation.SetCredentialType(v)
 	return _u
 }
 
 // SetNillableCredentialType sets the "credential_type" field if the given value is not nil.
-func (_u *UserCredentialUpdate) SetNillableCredentialType(v *string) *UserCredentialUpdate {
+func (_u *UserCredentialUpdate) SetNillableCredentialType(v *usercredential.CredentialType) *UserCredentialUpdate {
 	if v != nil {
 		_u.SetCredentialType(*v)
 	}
@@ -254,66 +173,6 @@ func (_u *UserCredentialUpdate) SetNillableCredential(v *string) *UserCredential
 // ClearCredential clears the value of the "credential" field.
 func (_u *UserCredentialUpdate) ClearCredential() *UserCredentialUpdate {
 	_u.mutation.ClearCredential()
-	return _u
-}
-
-// SetProviderAccountID sets the "provider_account_id" field.
-func (_u *UserCredentialUpdate) SetProviderAccountID(v string) *UserCredentialUpdate {
-	_u.mutation.SetProviderAccountID(v)
-	return _u
-}
-
-// SetNillableProviderAccountID sets the "provider_account_id" field if the given value is not nil.
-func (_u *UserCredentialUpdate) SetNillableProviderAccountID(v *string) *UserCredentialUpdate {
-	if v != nil {
-		_u.SetProviderAccountID(*v)
-	}
-	return _u
-}
-
-// ClearProviderAccountID clears the value of the "provider_account_id" field.
-func (_u *UserCredentialUpdate) ClearProviderAccountID() *UserCredentialUpdate {
-	_u.mutation.ClearProviderAccountID()
-	return _u
-}
-
-// SetProvider sets the "provider" field.
-func (_u *UserCredentialUpdate) SetProvider(v string) *UserCredentialUpdate {
-	_u.mutation.SetProvider(v)
-	return _u
-}
-
-// SetNillableProvider sets the "provider" field if the given value is not nil.
-func (_u *UserCredentialUpdate) SetNillableProvider(v *string) *UserCredentialUpdate {
-	if v != nil {
-		_u.SetProvider(*v)
-	}
-	return _u
-}
-
-// ClearProvider clears the value of the "provider" field.
-func (_u *UserCredentialUpdate) ClearProvider() *UserCredentialUpdate {
-	_u.mutation.ClearProvider()
-	return _u
-}
-
-// SetExtraInfo sets the "extra_info" field.
-func (_u *UserCredentialUpdate) SetExtraInfo(v string) *UserCredentialUpdate {
-	_u.mutation.SetExtraInfo(v)
-	return _u
-}
-
-// SetNillableExtraInfo sets the "extra_info" field if the given value is not nil.
-func (_u *UserCredentialUpdate) SetNillableExtraInfo(v *string) *UserCredentialUpdate {
-	if v != nil {
-		_u.SetExtraInfo(*v)
-	}
-	return _u
-}
-
-// ClearExtraInfo clears the value of the "extra_info" field.
-func (_u *UserCredentialUpdate) ClearExtraInfo() *UserCredentialUpdate {
-	_u.mutation.ClearExtraInfo()
 	return _u
 }
 
@@ -357,23 +216,183 @@ func (_u *UserCredentialUpdate) ClearStatus() *UserCredentialUpdate {
 	return _u
 }
 
-// SetVerified sets the "verified" field.
-func (_u *UserCredentialUpdate) SetVerified(v bool) *UserCredentialUpdate {
-	_u.mutation.SetVerified(v)
+// SetExtraInfo sets the "extra_info" field.
+func (_u *UserCredentialUpdate) SetExtraInfo(v string) *UserCredentialUpdate {
+	_u.mutation.SetExtraInfo(v)
 	return _u
 }
 
-// SetNillableVerified sets the "verified" field if the given value is not nil.
-func (_u *UserCredentialUpdate) SetNillableVerified(v *bool) *UserCredentialUpdate {
+// SetNillableExtraInfo sets the "extra_info" field if the given value is not nil.
+func (_u *UserCredentialUpdate) SetNillableExtraInfo(v *string) *UserCredentialUpdate {
 	if v != nil {
-		_u.SetVerified(*v)
+		_u.SetExtraInfo(*v)
 	}
 	return _u
 }
 
-// ClearVerified clears the value of the "verified" field.
-func (_u *UserCredentialUpdate) ClearVerified() *UserCredentialUpdate {
-	_u.mutation.ClearVerified()
+// ClearExtraInfo clears the value of the "extra_info" field.
+func (_u *UserCredentialUpdate) ClearExtraInfo() *UserCredentialUpdate {
+	_u.mutation.ClearExtraInfo()
+	return _u
+}
+
+// SetProvider sets the "provider" field.
+func (_u *UserCredentialUpdate) SetProvider(v string) *UserCredentialUpdate {
+	_u.mutation.SetProvider(v)
+	return _u
+}
+
+// SetNillableProvider sets the "provider" field if the given value is not nil.
+func (_u *UserCredentialUpdate) SetNillableProvider(v *string) *UserCredentialUpdate {
+	if v != nil {
+		_u.SetProvider(*v)
+	}
+	return _u
+}
+
+// ClearProvider clears the value of the "provider" field.
+func (_u *UserCredentialUpdate) ClearProvider() *UserCredentialUpdate {
+	_u.mutation.ClearProvider()
+	return _u
+}
+
+// SetProviderAccountID sets the "provider_account_id" field.
+func (_u *UserCredentialUpdate) SetProviderAccountID(v string) *UserCredentialUpdate {
+	_u.mutation.SetProviderAccountID(v)
+	return _u
+}
+
+// SetNillableProviderAccountID sets the "provider_account_id" field if the given value is not nil.
+func (_u *UserCredentialUpdate) SetNillableProviderAccountID(v *string) *UserCredentialUpdate {
+	if v != nil {
+		_u.SetProviderAccountID(*v)
+	}
+	return _u
+}
+
+// ClearProviderAccountID clears the value of the "provider_account_id" field.
+func (_u *UserCredentialUpdate) ClearProviderAccountID() *UserCredentialUpdate {
+	_u.mutation.ClearProviderAccountID()
+	return _u
+}
+
+// SetActivateTokenHash sets the "activate_token_hash" field.
+func (_u *UserCredentialUpdate) SetActivateTokenHash(v string) *UserCredentialUpdate {
+	_u.mutation.SetActivateTokenHash(v)
+	return _u
+}
+
+// SetNillableActivateTokenHash sets the "activate_token_hash" field if the given value is not nil.
+func (_u *UserCredentialUpdate) SetNillableActivateTokenHash(v *string) *UserCredentialUpdate {
+	if v != nil {
+		_u.SetActivateTokenHash(*v)
+	}
+	return _u
+}
+
+// ClearActivateTokenHash clears the value of the "activate_token_hash" field.
+func (_u *UserCredentialUpdate) ClearActivateTokenHash() *UserCredentialUpdate {
+	_u.mutation.ClearActivateTokenHash()
+	return _u
+}
+
+// SetActivateTokenExpiresAt sets the "activate_token_expires_at" field.
+func (_u *UserCredentialUpdate) SetActivateTokenExpiresAt(v time.Time) *UserCredentialUpdate {
+	_u.mutation.SetActivateTokenExpiresAt(v)
+	return _u
+}
+
+// SetNillableActivateTokenExpiresAt sets the "activate_token_expires_at" field if the given value is not nil.
+func (_u *UserCredentialUpdate) SetNillableActivateTokenExpiresAt(v *time.Time) *UserCredentialUpdate {
+	if v != nil {
+		_u.SetActivateTokenExpiresAt(*v)
+	}
+	return _u
+}
+
+// ClearActivateTokenExpiresAt clears the value of the "activate_token_expires_at" field.
+func (_u *UserCredentialUpdate) ClearActivateTokenExpiresAt() *UserCredentialUpdate {
+	_u.mutation.ClearActivateTokenExpiresAt()
+	return _u
+}
+
+// SetActivateTokenUsedAt sets the "activate_token_used_at" field.
+func (_u *UserCredentialUpdate) SetActivateTokenUsedAt(v time.Time) *UserCredentialUpdate {
+	_u.mutation.SetActivateTokenUsedAt(v)
+	return _u
+}
+
+// SetNillableActivateTokenUsedAt sets the "activate_token_used_at" field if the given value is not nil.
+func (_u *UserCredentialUpdate) SetNillableActivateTokenUsedAt(v *time.Time) *UserCredentialUpdate {
+	if v != nil {
+		_u.SetActivateTokenUsedAt(*v)
+	}
+	return _u
+}
+
+// ClearActivateTokenUsedAt clears the value of the "activate_token_used_at" field.
+func (_u *UserCredentialUpdate) ClearActivateTokenUsedAt() *UserCredentialUpdate {
+	_u.mutation.ClearActivateTokenUsedAt()
+	return _u
+}
+
+// SetResetTokenHash sets the "reset_token_hash" field.
+func (_u *UserCredentialUpdate) SetResetTokenHash(v string) *UserCredentialUpdate {
+	_u.mutation.SetResetTokenHash(v)
+	return _u
+}
+
+// SetNillableResetTokenHash sets the "reset_token_hash" field if the given value is not nil.
+func (_u *UserCredentialUpdate) SetNillableResetTokenHash(v *string) *UserCredentialUpdate {
+	if v != nil {
+		_u.SetResetTokenHash(*v)
+	}
+	return _u
+}
+
+// ClearResetTokenHash clears the value of the "reset_token_hash" field.
+func (_u *UserCredentialUpdate) ClearResetTokenHash() *UserCredentialUpdate {
+	_u.mutation.ClearResetTokenHash()
+	return _u
+}
+
+// SetResetTokenExpiresAt sets the "reset_token_expires_at" field.
+func (_u *UserCredentialUpdate) SetResetTokenExpiresAt(v time.Time) *UserCredentialUpdate {
+	_u.mutation.SetResetTokenExpiresAt(v)
+	return _u
+}
+
+// SetNillableResetTokenExpiresAt sets the "reset_token_expires_at" field if the given value is not nil.
+func (_u *UserCredentialUpdate) SetNillableResetTokenExpiresAt(v *time.Time) *UserCredentialUpdate {
+	if v != nil {
+		_u.SetResetTokenExpiresAt(*v)
+	}
+	return _u
+}
+
+// ClearResetTokenExpiresAt clears the value of the "reset_token_expires_at" field.
+func (_u *UserCredentialUpdate) ClearResetTokenExpiresAt() *UserCredentialUpdate {
+	_u.mutation.ClearResetTokenExpiresAt()
+	return _u
+}
+
+// SetResetTokenUsedAt sets the "reset_token_used_at" field.
+func (_u *UserCredentialUpdate) SetResetTokenUsedAt(v time.Time) *UserCredentialUpdate {
+	_u.mutation.SetResetTokenUsedAt(v)
+	return _u
+}
+
+// SetNillableResetTokenUsedAt sets the "reset_token_used_at" field if the given value is not nil.
+func (_u *UserCredentialUpdate) SetNillableResetTokenUsedAt(v *time.Time) *UserCredentialUpdate {
+	if v != nil {
+		_u.SetResetTokenUsedAt(*v)
+	}
+	return _u
+}
+
+// ClearResetTokenUsedAt clears the value of the "reset_token_used_at" field.
+func (_u *UserCredentialUpdate) ClearResetTokenUsedAt() *UserCredentialUpdate {
+	_u.mutation.ClearResetTokenUsedAt()
 	return _u
 }
 
@@ -411,14 +430,14 @@ func (_u *UserCredentialUpdate) ExecX(ctx context.Context) {
 
 // check runs all checks and user-defined validators on the builder.
 func (_u *UserCredentialUpdate) check() error {
-	if v, ok := _u.mutation.Identifier(); ok {
-		if err := usercredential.IdentifierValidator(v); err != nil {
-			return &ValidationError{Name: "identifier", err: fmt.Errorf(`ent: validator failed for field "UserCredential.identifier": %w`, err)}
-		}
-	}
 	if v, ok := _u.mutation.IdentityType(); ok {
 		if err := usercredential.IdentityTypeValidator(v); err != nil {
 			return &ValidationError{Name: "identity_type", err: fmt.Errorf(`ent: validator failed for field "UserCredential.identity_type": %w`, err)}
+		}
+	}
+	if v, ok := _u.mutation.Identifier(); ok {
+		if err := usercredential.IdentifierValidator(v); err != nil {
+			return &ValidationError{Name: "identifier", err: fmt.Errorf(`ent: validator failed for field "UserCredential.identifier": %w`, err)}
 		}
 	}
 	if v, ok := _u.mutation.CredentialType(); ok {
@@ -431,24 +450,19 @@ func (_u *UserCredentialUpdate) check() error {
 			return &ValidationError{Name: "credential", err: fmt.Errorf(`ent: validator failed for field "UserCredential.credential": %w`, err)}
 		}
 	}
-	if v, ok := _u.mutation.ProviderAccountID(); ok {
-		if err := usercredential.ProviderAccountIDValidator(v); err != nil {
-			return &ValidationError{Name: "provider_account_id", err: fmt.Errorf(`ent: validator failed for field "UserCredential.provider_account_id": %w`, err)}
-		}
-	}
-	if v, ok := _u.mutation.Provider(); ok {
-		if err := usercredential.ProviderValidator(v); err != nil {
-			return &ValidationError{Name: "provider", err: fmt.Errorf(`ent: validator failed for field "UserCredential.provider": %w`, err)}
-		}
-	}
-	if v, ok := _u.mutation.ExtraInfo(); ok {
-		if err := usercredential.ExtraInfoValidator(v); err != nil {
-			return &ValidationError{Name: "extra_info", err: fmt.Errorf(`ent: validator failed for field "UserCredential.extra_info": %w`, err)}
-		}
-	}
 	if v, ok := _u.mutation.Status(); ok {
 		if err := usercredential.StatusValidator(v); err != nil {
 			return &ValidationError{Name: "status", err: fmt.Errorf(`ent: validator failed for field "UserCredential.status": %w`, err)}
+		}
+	}
+	if v, ok := _u.mutation.ActivateTokenHash(); ok {
+		if err := usercredential.ActivateTokenHashValidator(v); err != nil {
+			return &ValidationError{Name: "activate_token_hash", err: fmt.Errorf(`ent: validator failed for field "UserCredential.activate_token_hash": %w`, err)}
+		}
+	}
+	if v, ok := _u.mutation.ResetTokenHash(); ok {
+		if err := usercredential.ResetTokenHashValidator(v); err != nil {
+			return &ValidationError{Name: "reset_token_hash", err: fmt.Errorf(`ent: validator failed for field "UserCredential.reset_token_hash": %w`, err)}
 		}
 	}
 	return nil
@@ -490,33 +504,6 @@ func (_u *UserCredentialUpdate) sqlSave(ctx context.Context) (_node int, err err
 	if _u.mutation.TenantIDCleared() {
 		_spec.ClearField(usercredential.FieldTenantID, field.TypeUint32)
 	}
-	if value, ok := _u.mutation.CreatedBy(); ok {
-		_spec.SetField(usercredential.FieldCreatedBy, field.TypeUint32, value)
-	}
-	if value, ok := _u.mutation.AddedCreatedBy(); ok {
-		_spec.AddField(usercredential.FieldCreatedBy, field.TypeUint32, value)
-	}
-	if _u.mutation.CreatedByCleared() {
-		_spec.ClearField(usercredential.FieldCreatedBy, field.TypeUint32)
-	}
-	if value, ok := _u.mutation.UpdatedBy(); ok {
-		_spec.SetField(usercredential.FieldUpdatedBy, field.TypeUint32, value)
-	}
-	if value, ok := _u.mutation.AddedUpdatedBy(); ok {
-		_spec.AddField(usercredential.FieldUpdatedBy, field.TypeUint32, value)
-	}
-	if _u.mutation.UpdatedByCleared() {
-		_spec.ClearField(usercredential.FieldUpdatedBy, field.TypeUint32)
-	}
-	if value, ok := _u.mutation.DeletedBy(); ok {
-		_spec.SetField(usercredential.FieldDeletedBy, field.TypeUint32, value)
-	}
-	if value, ok := _u.mutation.AddedDeletedBy(); ok {
-		_spec.AddField(usercredential.FieldDeletedBy, field.TypeUint32, value)
-	}
-	if _u.mutation.DeletedByCleared() {
-		_spec.ClearField(usercredential.FieldDeletedBy, field.TypeUint32)
-	}
 	if value, ok := _u.mutation.UserID(); ok {
 		_spec.SetField(usercredential.FieldUserID, field.TypeUint32, value)
 	}
@@ -526,47 +513,29 @@ func (_u *UserCredentialUpdate) sqlSave(ctx context.Context) (_node int, err err
 	if _u.mutation.UserIDCleared() {
 		_spec.ClearField(usercredential.FieldUserID, field.TypeUint32)
 	}
+	if value, ok := _u.mutation.IdentityType(); ok {
+		_spec.SetField(usercredential.FieldIdentityType, field.TypeEnum, value)
+	}
+	if _u.mutation.IdentityTypeCleared() {
+		_spec.ClearField(usercredential.FieldIdentityType, field.TypeEnum)
+	}
 	if value, ok := _u.mutation.Identifier(); ok {
 		_spec.SetField(usercredential.FieldIdentifier, field.TypeString, value)
 	}
 	if _u.mutation.IdentifierCleared() {
 		_spec.ClearField(usercredential.FieldIdentifier, field.TypeString)
 	}
-	if value, ok := _u.mutation.IdentityType(); ok {
-		_spec.SetField(usercredential.FieldIdentityType, field.TypeString, value)
-	}
-	if _u.mutation.IdentityTypeCleared() {
-		_spec.ClearField(usercredential.FieldIdentityType, field.TypeString)
-	}
 	if value, ok := _u.mutation.CredentialType(); ok {
-		_spec.SetField(usercredential.FieldCredentialType, field.TypeString, value)
+		_spec.SetField(usercredential.FieldCredentialType, field.TypeEnum, value)
 	}
 	if _u.mutation.CredentialTypeCleared() {
-		_spec.ClearField(usercredential.FieldCredentialType, field.TypeString)
+		_spec.ClearField(usercredential.FieldCredentialType, field.TypeEnum)
 	}
 	if value, ok := _u.mutation.Credential(); ok {
 		_spec.SetField(usercredential.FieldCredential, field.TypeString, value)
 	}
 	if _u.mutation.CredentialCleared() {
 		_spec.ClearField(usercredential.FieldCredential, field.TypeString)
-	}
-	if value, ok := _u.mutation.ProviderAccountID(); ok {
-		_spec.SetField(usercredential.FieldProviderAccountID, field.TypeString, value)
-	}
-	if _u.mutation.ProviderAccountIDCleared() {
-		_spec.ClearField(usercredential.FieldProviderAccountID, field.TypeString)
-	}
-	if value, ok := _u.mutation.Provider(); ok {
-		_spec.SetField(usercredential.FieldProvider, field.TypeString, value)
-	}
-	if _u.mutation.ProviderCleared() {
-		_spec.ClearField(usercredential.FieldProvider, field.TypeString)
-	}
-	if value, ok := _u.mutation.ExtraInfo(); ok {
-		_spec.SetField(usercredential.FieldExtraInfo, field.TypeString, value)
-	}
-	if _u.mutation.ExtraInfoCleared() {
-		_spec.ClearField(usercredential.FieldExtraInfo, field.TypeString)
 	}
 	if value, ok := _u.mutation.IsPrimary(); ok {
 		_spec.SetField(usercredential.FieldIsPrimary, field.TypeBool, value)
@@ -580,11 +549,59 @@ func (_u *UserCredentialUpdate) sqlSave(ctx context.Context) (_node int, err err
 	if _u.mutation.StatusCleared() {
 		_spec.ClearField(usercredential.FieldStatus, field.TypeEnum)
 	}
-	if value, ok := _u.mutation.Verified(); ok {
-		_spec.SetField(usercredential.FieldVerified, field.TypeBool, value)
+	if value, ok := _u.mutation.ExtraInfo(); ok {
+		_spec.SetField(usercredential.FieldExtraInfo, field.TypeString, value)
 	}
-	if _u.mutation.VerifiedCleared() {
-		_spec.ClearField(usercredential.FieldVerified, field.TypeBool)
+	if _u.mutation.ExtraInfoCleared() {
+		_spec.ClearField(usercredential.FieldExtraInfo, field.TypeString)
+	}
+	if value, ok := _u.mutation.Provider(); ok {
+		_spec.SetField(usercredential.FieldProvider, field.TypeString, value)
+	}
+	if _u.mutation.ProviderCleared() {
+		_spec.ClearField(usercredential.FieldProvider, field.TypeString)
+	}
+	if value, ok := _u.mutation.ProviderAccountID(); ok {
+		_spec.SetField(usercredential.FieldProviderAccountID, field.TypeString, value)
+	}
+	if _u.mutation.ProviderAccountIDCleared() {
+		_spec.ClearField(usercredential.FieldProviderAccountID, field.TypeString)
+	}
+	if value, ok := _u.mutation.ActivateTokenHash(); ok {
+		_spec.SetField(usercredential.FieldActivateTokenHash, field.TypeString, value)
+	}
+	if _u.mutation.ActivateTokenHashCleared() {
+		_spec.ClearField(usercredential.FieldActivateTokenHash, field.TypeString)
+	}
+	if value, ok := _u.mutation.ActivateTokenExpiresAt(); ok {
+		_spec.SetField(usercredential.FieldActivateTokenExpiresAt, field.TypeTime, value)
+	}
+	if _u.mutation.ActivateTokenExpiresAtCleared() {
+		_spec.ClearField(usercredential.FieldActivateTokenExpiresAt, field.TypeTime)
+	}
+	if value, ok := _u.mutation.ActivateTokenUsedAt(); ok {
+		_spec.SetField(usercredential.FieldActivateTokenUsedAt, field.TypeTime, value)
+	}
+	if _u.mutation.ActivateTokenUsedAtCleared() {
+		_spec.ClearField(usercredential.FieldActivateTokenUsedAt, field.TypeTime)
+	}
+	if value, ok := _u.mutation.ResetTokenHash(); ok {
+		_spec.SetField(usercredential.FieldResetTokenHash, field.TypeString, value)
+	}
+	if _u.mutation.ResetTokenHashCleared() {
+		_spec.ClearField(usercredential.FieldResetTokenHash, field.TypeString)
+	}
+	if value, ok := _u.mutation.ResetTokenExpiresAt(); ok {
+		_spec.SetField(usercredential.FieldResetTokenExpiresAt, field.TypeTime, value)
+	}
+	if _u.mutation.ResetTokenExpiresAtCleared() {
+		_spec.ClearField(usercredential.FieldResetTokenExpiresAt, field.TypeTime)
+	}
+	if value, ok := _u.mutation.ResetTokenUsedAt(); ok {
+		_spec.SetField(usercredential.FieldResetTokenUsedAt, field.TypeTime, value)
+	}
+	if _u.mutation.ResetTokenUsedAtCleared() {
+		_spec.ClearField(usercredential.FieldResetTokenUsedAt, field.TypeTime)
 	}
 	_spec.AddModifiers(_u.modifiers...)
 	if _node, err = sqlgraph.UpdateNodes(ctx, _u.driver, _spec); err != nil {
@@ -648,87 +665,6 @@ func (_u *UserCredentialUpdateOne) ClearDeletedAt() *UserCredentialUpdateOne {
 	return _u
 }
 
-// SetCreatedBy sets the "created_by" field.
-func (_u *UserCredentialUpdateOne) SetCreatedBy(v uint32) *UserCredentialUpdateOne {
-	_u.mutation.ResetCreatedBy()
-	_u.mutation.SetCreatedBy(v)
-	return _u
-}
-
-// SetNillableCreatedBy sets the "created_by" field if the given value is not nil.
-func (_u *UserCredentialUpdateOne) SetNillableCreatedBy(v *uint32) *UserCredentialUpdateOne {
-	if v != nil {
-		_u.SetCreatedBy(*v)
-	}
-	return _u
-}
-
-// AddCreatedBy adds value to the "created_by" field.
-func (_u *UserCredentialUpdateOne) AddCreatedBy(v int32) *UserCredentialUpdateOne {
-	_u.mutation.AddCreatedBy(v)
-	return _u
-}
-
-// ClearCreatedBy clears the value of the "created_by" field.
-func (_u *UserCredentialUpdateOne) ClearCreatedBy() *UserCredentialUpdateOne {
-	_u.mutation.ClearCreatedBy()
-	return _u
-}
-
-// SetUpdatedBy sets the "updated_by" field.
-func (_u *UserCredentialUpdateOne) SetUpdatedBy(v uint32) *UserCredentialUpdateOne {
-	_u.mutation.ResetUpdatedBy()
-	_u.mutation.SetUpdatedBy(v)
-	return _u
-}
-
-// SetNillableUpdatedBy sets the "updated_by" field if the given value is not nil.
-func (_u *UserCredentialUpdateOne) SetNillableUpdatedBy(v *uint32) *UserCredentialUpdateOne {
-	if v != nil {
-		_u.SetUpdatedBy(*v)
-	}
-	return _u
-}
-
-// AddUpdatedBy adds value to the "updated_by" field.
-func (_u *UserCredentialUpdateOne) AddUpdatedBy(v int32) *UserCredentialUpdateOne {
-	_u.mutation.AddUpdatedBy(v)
-	return _u
-}
-
-// ClearUpdatedBy clears the value of the "updated_by" field.
-func (_u *UserCredentialUpdateOne) ClearUpdatedBy() *UserCredentialUpdateOne {
-	_u.mutation.ClearUpdatedBy()
-	return _u
-}
-
-// SetDeletedBy sets the "deleted_by" field.
-func (_u *UserCredentialUpdateOne) SetDeletedBy(v uint32) *UserCredentialUpdateOne {
-	_u.mutation.ResetDeletedBy()
-	_u.mutation.SetDeletedBy(v)
-	return _u
-}
-
-// SetNillableDeletedBy sets the "deleted_by" field if the given value is not nil.
-func (_u *UserCredentialUpdateOne) SetNillableDeletedBy(v *uint32) *UserCredentialUpdateOne {
-	if v != nil {
-		_u.SetDeletedBy(*v)
-	}
-	return _u
-}
-
-// AddDeletedBy adds value to the "deleted_by" field.
-func (_u *UserCredentialUpdateOne) AddDeletedBy(v int32) *UserCredentialUpdateOne {
-	_u.mutation.AddDeletedBy(v)
-	return _u
-}
-
-// ClearDeletedBy clears the value of the "deleted_by" field.
-func (_u *UserCredentialUpdateOne) ClearDeletedBy() *UserCredentialUpdateOne {
-	_u.mutation.ClearDeletedBy()
-	return _u
-}
-
 // SetUserID sets the "user_id" field.
 func (_u *UserCredentialUpdateOne) SetUserID(v uint32) *UserCredentialUpdateOne {
 	_u.mutation.ResetUserID()
@@ -756,6 +692,26 @@ func (_u *UserCredentialUpdateOne) ClearUserID() *UserCredentialUpdateOne {
 	return _u
 }
 
+// SetIdentityType sets the "identity_type" field.
+func (_u *UserCredentialUpdateOne) SetIdentityType(v usercredential.IdentityType) *UserCredentialUpdateOne {
+	_u.mutation.SetIdentityType(v)
+	return _u
+}
+
+// SetNillableIdentityType sets the "identity_type" field if the given value is not nil.
+func (_u *UserCredentialUpdateOne) SetNillableIdentityType(v *usercredential.IdentityType) *UserCredentialUpdateOne {
+	if v != nil {
+		_u.SetIdentityType(*v)
+	}
+	return _u
+}
+
+// ClearIdentityType clears the value of the "identity_type" field.
+func (_u *UserCredentialUpdateOne) ClearIdentityType() *UserCredentialUpdateOne {
+	_u.mutation.ClearIdentityType()
+	return _u
+}
+
 // SetIdentifier sets the "identifier" field.
 func (_u *UserCredentialUpdateOne) SetIdentifier(v string) *UserCredentialUpdateOne {
 	_u.mutation.SetIdentifier(v)
@@ -776,34 +732,14 @@ func (_u *UserCredentialUpdateOne) ClearIdentifier() *UserCredentialUpdateOne {
 	return _u
 }
 
-// SetIdentityType sets the "identity_type" field.
-func (_u *UserCredentialUpdateOne) SetIdentityType(v string) *UserCredentialUpdateOne {
-	_u.mutation.SetIdentityType(v)
-	return _u
-}
-
-// SetNillableIdentityType sets the "identity_type" field if the given value is not nil.
-func (_u *UserCredentialUpdateOne) SetNillableIdentityType(v *string) *UserCredentialUpdateOne {
-	if v != nil {
-		_u.SetIdentityType(*v)
-	}
-	return _u
-}
-
-// ClearIdentityType clears the value of the "identity_type" field.
-func (_u *UserCredentialUpdateOne) ClearIdentityType() *UserCredentialUpdateOne {
-	_u.mutation.ClearIdentityType()
-	return _u
-}
-
 // SetCredentialType sets the "credential_type" field.
-func (_u *UserCredentialUpdateOne) SetCredentialType(v string) *UserCredentialUpdateOne {
+func (_u *UserCredentialUpdateOne) SetCredentialType(v usercredential.CredentialType) *UserCredentialUpdateOne {
 	_u.mutation.SetCredentialType(v)
 	return _u
 }
 
 // SetNillableCredentialType sets the "credential_type" field if the given value is not nil.
-func (_u *UserCredentialUpdateOne) SetNillableCredentialType(v *string) *UserCredentialUpdateOne {
+func (_u *UserCredentialUpdateOne) SetNillableCredentialType(v *usercredential.CredentialType) *UserCredentialUpdateOne {
 	if v != nil {
 		_u.SetCredentialType(*v)
 	}
@@ -833,66 +769,6 @@ func (_u *UserCredentialUpdateOne) SetNillableCredential(v *string) *UserCredent
 // ClearCredential clears the value of the "credential" field.
 func (_u *UserCredentialUpdateOne) ClearCredential() *UserCredentialUpdateOne {
 	_u.mutation.ClearCredential()
-	return _u
-}
-
-// SetProviderAccountID sets the "provider_account_id" field.
-func (_u *UserCredentialUpdateOne) SetProviderAccountID(v string) *UserCredentialUpdateOne {
-	_u.mutation.SetProviderAccountID(v)
-	return _u
-}
-
-// SetNillableProviderAccountID sets the "provider_account_id" field if the given value is not nil.
-func (_u *UserCredentialUpdateOne) SetNillableProviderAccountID(v *string) *UserCredentialUpdateOne {
-	if v != nil {
-		_u.SetProviderAccountID(*v)
-	}
-	return _u
-}
-
-// ClearProviderAccountID clears the value of the "provider_account_id" field.
-func (_u *UserCredentialUpdateOne) ClearProviderAccountID() *UserCredentialUpdateOne {
-	_u.mutation.ClearProviderAccountID()
-	return _u
-}
-
-// SetProvider sets the "provider" field.
-func (_u *UserCredentialUpdateOne) SetProvider(v string) *UserCredentialUpdateOne {
-	_u.mutation.SetProvider(v)
-	return _u
-}
-
-// SetNillableProvider sets the "provider" field if the given value is not nil.
-func (_u *UserCredentialUpdateOne) SetNillableProvider(v *string) *UserCredentialUpdateOne {
-	if v != nil {
-		_u.SetProvider(*v)
-	}
-	return _u
-}
-
-// ClearProvider clears the value of the "provider" field.
-func (_u *UserCredentialUpdateOne) ClearProvider() *UserCredentialUpdateOne {
-	_u.mutation.ClearProvider()
-	return _u
-}
-
-// SetExtraInfo sets the "extra_info" field.
-func (_u *UserCredentialUpdateOne) SetExtraInfo(v string) *UserCredentialUpdateOne {
-	_u.mutation.SetExtraInfo(v)
-	return _u
-}
-
-// SetNillableExtraInfo sets the "extra_info" field if the given value is not nil.
-func (_u *UserCredentialUpdateOne) SetNillableExtraInfo(v *string) *UserCredentialUpdateOne {
-	if v != nil {
-		_u.SetExtraInfo(*v)
-	}
-	return _u
-}
-
-// ClearExtraInfo clears the value of the "extra_info" field.
-func (_u *UserCredentialUpdateOne) ClearExtraInfo() *UserCredentialUpdateOne {
-	_u.mutation.ClearExtraInfo()
 	return _u
 }
 
@@ -936,23 +812,183 @@ func (_u *UserCredentialUpdateOne) ClearStatus() *UserCredentialUpdateOne {
 	return _u
 }
 
-// SetVerified sets the "verified" field.
-func (_u *UserCredentialUpdateOne) SetVerified(v bool) *UserCredentialUpdateOne {
-	_u.mutation.SetVerified(v)
+// SetExtraInfo sets the "extra_info" field.
+func (_u *UserCredentialUpdateOne) SetExtraInfo(v string) *UserCredentialUpdateOne {
+	_u.mutation.SetExtraInfo(v)
 	return _u
 }
 
-// SetNillableVerified sets the "verified" field if the given value is not nil.
-func (_u *UserCredentialUpdateOne) SetNillableVerified(v *bool) *UserCredentialUpdateOne {
+// SetNillableExtraInfo sets the "extra_info" field if the given value is not nil.
+func (_u *UserCredentialUpdateOne) SetNillableExtraInfo(v *string) *UserCredentialUpdateOne {
 	if v != nil {
-		_u.SetVerified(*v)
+		_u.SetExtraInfo(*v)
 	}
 	return _u
 }
 
-// ClearVerified clears the value of the "verified" field.
-func (_u *UserCredentialUpdateOne) ClearVerified() *UserCredentialUpdateOne {
-	_u.mutation.ClearVerified()
+// ClearExtraInfo clears the value of the "extra_info" field.
+func (_u *UserCredentialUpdateOne) ClearExtraInfo() *UserCredentialUpdateOne {
+	_u.mutation.ClearExtraInfo()
+	return _u
+}
+
+// SetProvider sets the "provider" field.
+func (_u *UserCredentialUpdateOne) SetProvider(v string) *UserCredentialUpdateOne {
+	_u.mutation.SetProvider(v)
+	return _u
+}
+
+// SetNillableProvider sets the "provider" field if the given value is not nil.
+func (_u *UserCredentialUpdateOne) SetNillableProvider(v *string) *UserCredentialUpdateOne {
+	if v != nil {
+		_u.SetProvider(*v)
+	}
+	return _u
+}
+
+// ClearProvider clears the value of the "provider" field.
+func (_u *UserCredentialUpdateOne) ClearProvider() *UserCredentialUpdateOne {
+	_u.mutation.ClearProvider()
+	return _u
+}
+
+// SetProviderAccountID sets the "provider_account_id" field.
+func (_u *UserCredentialUpdateOne) SetProviderAccountID(v string) *UserCredentialUpdateOne {
+	_u.mutation.SetProviderAccountID(v)
+	return _u
+}
+
+// SetNillableProviderAccountID sets the "provider_account_id" field if the given value is not nil.
+func (_u *UserCredentialUpdateOne) SetNillableProviderAccountID(v *string) *UserCredentialUpdateOne {
+	if v != nil {
+		_u.SetProviderAccountID(*v)
+	}
+	return _u
+}
+
+// ClearProviderAccountID clears the value of the "provider_account_id" field.
+func (_u *UserCredentialUpdateOne) ClearProviderAccountID() *UserCredentialUpdateOne {
+	_u.mutation.ClearProviderAccountID()
+	return _u
+}
+
+// SetActivateTokenHash sets the "activate_token_hash" field.
+func (_u *UserCredentialUpdateOne) SetActivateTokenHash(v string) *UserCredentialUpdateOne {
+	_u.mutation.SetActivateTokenHash(v)
+	return _u
+}
+
+// SetNillableActivateTokenHash sets the "activate_token_hash" field if the given value is not nil.
+func (_u *UserCredentialUpdateOne) SetNillableActivateTokenHash(v *string) *UserCredentialUpdateOne {
+	if v != nil {
+		_u.SetActivateTokenHash(*v)
+	}
+	return _u
+}
+
+// ClearActivateTokenHash clears the value of the "activate_token_hash" field.
+func (_u *UserCredentialUpdateOne) ClearActivateTokenHash() *UserCredentialUpdateOne {
+	_u.mutation.ClearActivateTokenHash()
+	return _u
+}
+
+// SetActivateTokenExpiresAt sets the "activate_token_expires_at" field.
+func (_u *UserCredentialUpdateOne) SetActivateTokenExpiresAt(v time.Time) *UserCredentialUpdateOne {
+	_u.mutation.SetActivateTokenExpiresAt(v)
+	return _u
+}
+
+// SetNillableActivateTokenExpiresAt sets the "activate_token_expires_at" field if the given value is not nil.
+func (_u *UserCredentialUpdateOne) SetNillableActivateTokenExpiresAt(v *time.Time) *UserCredentialUpdateOne {
+	if v != nil {
+		_u.SetActivateTokenExpiresAt(*v)
+	}
+	return _u
+}
+
+// ClearActivateTokenExpiresAt clears the value of the "activate_token_expires_at" field.
+func (_u *UserCredentialUpdateOne) ClearActivateTokenExpiresAt() *UserCredentialUpdateOne {
+	_u.mutation.ClearActivateTokenExpiresAt()
+	return _u
+}
+
+// SetActivateTokenUsedAt sets the "activate_token_used_at" field.
+func (_u *UserCredentialUpdateOne) SetActivateTokenUsedAt(v time.Time) *UserCredentialUpdateOne {
+	_u.mutation.SetActivateTokenUsedAt(v)
+	return _u
+}
+
+// SetNillableActivateTokenUsedAt sets the "activate_token_used_at" field if the given value is not nil.
+func (_u *UserCredentialUpdateOne) SetNillableActivateTokenUsedAt(v *time.Time) *UserCredentialUpdateOne {
+	if v != nil {
+		_u.SetActivateTokenUsedAt(*v)
+	}
+	return _u
+}
+
+// ClearActivateTokenUsedAt clears the value of the "activate_token_used_at" field.
+func (_u *UserCredentialUpdateOne) ClearActivateTokenUsedAt() *UserCredentialUpdateOne {
+	_u.mutation.ClearActivateTokenUsedAt()
+	return _u
+}
+
+// SetResetTokenHash sets the "reset_token_hash" field.
+func (_u *UserCredentialUpdateOne) SetResetTokenHash(v string) *UserCredentialUpdateOne {
+	_u.mutation.SetResetTokenHash(v)
+	return _u
+}
+
+// SetNillableResetTokenHash sets the "reset_token_hash" field if the given value is not nil.
+func (_u *UserCredentialUpdateOne) SetNillableResetTokenHash(v *string) *UserCredentialUpdateOne {
+	if v != nil {
+		_u.SetResetTokenHash(*v)
+	}
+	return _u
+}
+
+// ClearResetTokenHash clears the value of the "reset_token_hash" field.
+func (_u *UserCredentialUpdateOne) ClearResetTokenHash() *UserCredentialUpdateOne {
+	_u.mutation.ClearResetTokenHash()
+	return _u
+}
+
+// SetResetTokenExpiresAt sets the "reset_token_expires_at" field.
+func (_u *UserCredentialUpdateOne) SetResetTokenExpiresAt(v time.Time) *UserCredentialUpdateOne {
+	_u.mutation.SetResetTokenExpiresAt(v)
+	return _u
+}
+
+// SetNillableResetTokenExpiresAt sets the "reset_token_expires_at" field if the given value is not nil.
+func (_u *UserCredentialUpdateOne) SetNillableResetTokenExpiresAt(v *time.Time) *UserCredentialUpdateOne {
+	if v != nil {
+		_u.SetResetTokenExpiresAt(*v)
+	}
+	return _u
+}
+
+// ClearResetTokenExpiresAt clears the value of the "reset_token_expires_at" field.
+func (_u *UserCredentialUpdateOne) ClearResetTokenExpiresAt() *UserCredentialUpdateOne {
+	_u.mutation.ClearResetTokenExpiresAt()
+	return _u
+}
+
+// SetResetTokenUsedAt sets the "reset_token_used_at" field.
+func (_u *UserCredentialUpdateOne) SetResetTokenUsedAt(v time.Time) *UserCredentialUpdateOne {
+	_u.mutation.SetResetTokenUsedAt(v)
+	return _u
+}
+
+// SetNillableResetTokenUsedAt sets the "reset_token_used_at" field if the given value is not nil.
+func (_u *UserCredentialUpdateOne) SetNillableResetTokenUsedAt(v *time.Time) *UserCredentialUpdateOne {
+	if v != nil {
+		_u.SetResetTokenUsedAt(*v)
+	}
+	return _u
+}
+
+// ClearResetTokenUsedAt clears the value of the "reset_token_used_at" field.
+func (_u *UserCredentialUpdateOne) ClearResetTokenUsedAt() *UserCredentialUpdateOne {
+	_u.mutation.ClearResetTokenUsedAt()
 	return _u
 }
 
@@ -1003,14 +1039,14 @@ func (_u *UserCredentialUpdateOne) ExecX(ctx context.Context) {
 
 // check runs all checks and user-defined validators on the builder.
 func (_u *UserCredentialUpdateOne) check() error {
-	if v, ok := _u.mutation.Identifier(); ok {
-		if err := usercredential.IdentifierValidator(v); err != nil {
-			return &ValidationError{Name: "identifier", err: fmt.Errorf(`ent: validator failed for field "UserCredential.identifier": %w`, err)}
-		}
-	}
 	if v, ok := _u.mutation.IdentityType(); ok {
 		if err := usercredential.IdentityTypeValidator(v); err != nil {
 			return &ValidationError{Name: "identity_type", err: fmt.Errorf(`ent: validator failed for field "UserCredential.identity_type": %w`, err)}
+		}
+	}
+	if v, ok := _u.mutation.Identifier(); ok {
+		if err := usercredential.IdentifierValidator(v); err != nil {
+			return &ValidationError{Name: "identifier", err: fmt.Errorf(`ent: validator failed for field "UserCredential.identifier": %w`, err)}
 		}
 	}
 	if v, ok := _u.mutation.CredentialType(); ok {
@@ -1023,24 +1059,19 @@ func (_u *UserCredentialUpdateOne) check() error {
 			return &ValidationError{Name: "credential", err: fmt.Errorf(`ent: validator failed for field "UserCredential.credential": %w`, err)}
 		}
 	}
-	if v, ok := _u.mutation.ProviderAccountID(); ok {
-		if err := usercredential.ProviderAccountIDValidator(v); err != nil {
-			return &ValidationError{Name: "provider_account_id", err: fmt.Errorf(`ent: validator failed for field "UserCredential.provider_account_id": %w`, err)}
-		}
-	}
-	if v, ok := _u.mutation.Provider(); ok {
-		if err := usercredential.ProviderValidator(v); err != nil {
-			return &ValidationError{Name: "provider", err: fmt.Errorf(`ent: validator failed for field "UserCredential.provider": %w`, err)}
-		}
-	}
-	if v, ok := _u.mutation.ExtraInfo(); ok {
-		if err := usercredential.ExtraInfoValidator(v); err != nil {
-			return &ValidationError{Name: "extra_info", err: fmt.Errorf(`ent: validator failed for field "UserCredential.extra_info": %w`, err)}
-		}
-	}
 	if v, ok := _u.mutation.Status(); ok {
 		if err := usercredential.StatusValidator(v); err != nil {
 			return &ValidationError{Name: "status", err: fmt.Errorf(`ent: validator failed for field "UserCredential.status": %w`, err)}
+		}
+	}
+	if v, ok := _u.mutation.ActivateTokenHash(); ok {
+		if err := usercredential.ActivateTokenHashValidator(v); err != nil {
+			return &ValidationError{Name: "activate_token_hash", err: fmt.Errorf(`ent: validator failed for field "UserCredential.activate_token_hash": %w`, err)}
+		}
+	}
+	if v, ok := _u.mutation.ResetTokenHash(); ok {
+		if err := usercredential.ResetTokenHashValidator(v); err != nil {
+			return &ValidationError{Name: "reset_token_hash", err: fmt.Errorf(`ent: validator failed for field "UserCredential.reset_token_hash": %w`, err)}
 		}
 	}
 	return nil
@@ -1099,33 +1130,6 @@ func (_u *UserCredentialUpdateOne) sqlSave(ctx context.Context) (_node *UserCred
 	if _u.mutation.TenantIDCleared() {
 		_spec.ClearField(usercredential.FieldTenantID, field.TypeUint32)
 	}
-	if value, ok := _u.mutation.CreatedBy(); ok {
-		_spec.SetField(usercredential.FieldCreatedBy, field.TypeUint32, value)
-	}
-	if value, ok := _u.mutation.AddedCreatedBy(); ok {
-		_spec.AddField(usercredential.FieldCreatedBy, field.TypeUint32, value)
-	}
-	if _u.mutation.CreatedByCleared() {
-		_spec.ClearField(usercredential.FieldCreatedBy, field.TypeUint32)
-	}
-	if value, ok := _u.mutation.UpdatedBy(); ok {
-		_spec.SetField(usercredential.FieldUpdatedBy, field.TypeUint32, value)
-	}
-	if value, ok := _u.mutation.AddedUpdatedBy(); ok {
-		_spec.AddField(usercredential.FieldUpdatedBy, field.TypeUint32, value)
-	}
-	if _u.mutation.UpdatedByCleared() {
-		_spec.ClearField(usercredential.FieldUpdatedBy, field.TypeUint32)
-	}
-	if value, ok := _u.mutation.DeletedBy(); ok {
-		_spec.SetField(usercredential.FieldDeletedBy, field.TypeUint32, value)
-	}
-	if value, ok := _u.mutation.AddedDeletedBy(); ok {
-		_spec.AddField(usercredential.FieldDeletedBy, field.TypeUint32, value)
-	}
-	if _u.mutation.DeletedByCleared() {
-		_spec.ClearField(usercredential.FieldDeletedBy, field.TypeUint32)
-	}
 	if value, ok := _u.mutation.UserID(); ok {
 		_spec.SetField(usercredential.FieldUserID, field.TypeUint32, value)
 	}
@@ -1135,47 +1139,29 @@ func (_u *UserCredentialUpdateOne) sqlSave(ctx context.Context) (_node *UserCred
 	if _u.mutation.UserIDCleared() {
 		_spec.ClearField(usercredential.FieldUserID, field.TypeUint32)
 	}
+	if value, ok := _u.mutation.IdentityType(); ok {
+		_spec.SetField(usercredential.FieldIdentityType, field.TypeEnum, value)
+	}
+	if _u.mutation.IdentityTypeCleared() {
+		_spec.ClearField(usercredential.FieldIdentityType, field.TypeEnum)
+	}
 	if value, ok := _u.mutation.Identifier(); ok {
 		_spec.SetField(usercredential.FieldIdentifier, field.TypeString, value)
 	}
 	if _u.mutation.IdentifierCleared() {
 		_spec.ClearField(usercredential.FieldIdentifier, field.TypeString)
 	}
-	if value, ok := _u.mutation.IdentityType(); ok {
-		_spec.SetField(usercredential.FieldIdentityType, field.TypeString, value)
-	}
-	if _u.mutation.IdentityTypeCleared() {
-		_spec.ClearField(usercredential.FieldIdentityType, field.TypeString)
-	}
 	if value, ok := _u.mutation.CredentialType(); ok {
-		_spec.SetField(usercredential.FieldCredentialType, field.TypeString, value)
+		_spec.SetField(usercredential.FieldCredentialType, field.TypeEnum, value)
 	}
 	if _u.mutation.CredentialTypeCleared() {
-		_spec.ClearField(usercredential.FieldCredentialType, field.TypeString)
+		_spec.ClearField(usercredential.FieldCredentialType, field.TypeEnum)
 	}
 	if value, ok := _u.mutation.Credential(); ok {
 		_spec.SetField(usercredential.FieldCredential, field.TypeString, value)
 	}
 	if _u.mutation.CredentialCleared() {
 		_spec.ClearField(usercredential.FieldCredential, field.TypeString)
-	}
-	if value, ok := _u.mutation.ProviderAccountID(); ok {
-		_spec.SetField(usercredential.FieldProviderAccountID, field.TypeString, value)
-	}
-	if _u.mutation.ProviderAccountIDCleared() {
-		_spec.ClearField(usercredential.FieldProviderAccountID, field.TypeString)
-	}
-	if value, ok := _u.mutation.Provider(); ok {
-		_spec.SetField(usercredential.FieldProvider, field.TypeString, value)
-	}
-	if _u.mutation.ProviderCleared() {
-		_spec.ClearField(usercredential.FieldProvider, field.TypeString)
-	}
-	if value, ok := _u.mutation.ExtraInfo(); ok {
-		_spec.SetField(usercredential.FieldExtraInfo, field.TypeString, value)
-	}
-	if _u.mutation.ExtraInfoCleared() {
-		_spec.ClearField(usercredential.FieldExtraInfo, field.TypeString)
 	}
 	if value, ok := _u.mutation.IsPrimary(); ok {
 		_spec.SetField(usercredential.FieldIsPrimary, field.TypeBool, value)
@@ -1189,11 +1175,59 @@ func (_u *UserCredentialUpdateOne) sqlSave(ctx context.Context) (_node *UserCred
 	if _u.mutation.StatusCleared() {
 		_spec.ClearField(usercredential.FieldStatus, field.TypeEnum)
 	}
-	if value, ok := _u.mutation.Verified(); ok {
-		_spec.SetField(usercredential.FieldVerified, field.TypeBool, value)
+	if value, ok := _u.mutation.ExtraInfo(); ok {
+		_spec.SetField(usercredential.FieldExtraInfo, field.TypeString, value)
 	}
-	if _u.mutation.VerifiedCleared() {
-		_spec.ClearField(usercredential.FieldVerified, field.TypeBool)
+	if _u.mutation.ExtraInfoCleared() {
+		_spec.ClearField(usercredential.FieldExtraInfo, field.TypeString)
+	}
+	if value, ok := _u.mutation.Provider(); ok {
+		_spec.SetField(usercredential.FieldProvider, field.TypeString, value)
+	}
+	if _u.mutation.ProviderCleared() {
+		_spec.ClearField(usercredential.FieldProvider, field.TypeString)
+	}
+	if value, ok := _u.mutation.ProviderAccountID(); ok {
+		_spec.SetField(usercredential.FieldProviderAccountID, field.TypeString, value)
+	}
+	if _u.mutation.ProviderAccountIDCleared() {
+		_spec.ClearField(usercredential.FieldProviderAccountID, field.TypeString)
+	}
+	if value, ok := _u.mutation.ActivateTokenHash(); ok {
+		_spec.SetField(usercredential.FieldActivateTokenHash, field.TypeString, value)
+	}
+	if _u.mutation.ActivateTokenHashCleared() {
+		_spec.ClearField(usercredential.FieldActivateTokenHash, field.TypeString)
+	}
+	if value, ok := _u.mutation.ActivateTokenExpiresAt(); ok {
+		_spec.SetField(usercredential.FieldActivateTokenExpiresAt, field.TypeTime, value)
+	}
+	if _u.mutation.ActivateTokenExpiresAtCleared() {
+		_spec.ClearField(usercredential.FieldActivateTokenExpiresAt, field.TypeTime)
+	}
+	if value, ok := _u.mutation.ActivateTokenUsedAt(); ok {
+		_spec.SetField(usercredential.FieldActivateTokenUsedAt, field.TypeTime, value)
+	}
+	if _u.mutation.ActivateTokenUsedAtCleared() {
+		_spec.ClearField(usercredential.FieldActivateTokenUsedAt, field.TypeTime)
+	}
+	if value, ok := _u.mutation.ResetTokenHash(); ok {
+		_spec.SetField(usercredential.FieldResetTokenHash, field.TypeString, value)
+	}
+	if _u.mutation.ResetTokenHashCleared() {
+		_spec.ClearField(usercredential.FieldResetTokenHash, field.TypeString)
+	}
+	if value, ok := _u.mutation.ResetTokenExpiresAt(); ok {
+		_spec.SetField(usercredential.FieldResetTokenExpiresAt, field.TypeTime, value)
+	}
+	if _u.mutation.ResetTokenExpiresAtCleared() {
+		_spec.ClearField(usercredential.FieldResetTokenExpiresAt, field.TypeTime)
+	}
+	if value, ok := _u.mutation.ResetTokenUsedAt(); ok {
+		_spec.SetField(usercredential.FieldResetTokenUsedAt, field.TypeTime, value)
+	}
+	if _u.mutation.ResetTokenUsedAtCleared() {
+		_spec.ClearField(usercredential.FieldResetTokenUsedAt, field.TypeTime)
 	}
 	_spec.AddModifiers(_u.modifiers...)
 	_node = &UserCredential{config: _u.config}

@@ -64,34 +64,6 @@ func (_c *RolePermissionCreate) SetNillableDeletedAt(v *time.Time) *RolePermissi
 	return _c
 }
 
-// SetTenantID sets the "tenant_id" field.
-func (_c *RolePermissionCreate) SetTenantID(v uint32) *RolePermissionCreate {
-	_c.mutation.SetTenantID(v)
-	return _c
-}
-
-// SetNillableTenantID sets the "tenant_id" field if the given value is not nil.
-func (_c *RolePermissionCreate) SetNillableTenantID(v *uint32) *RolePermissionCreate {
-	if v != nil {
-		_c.SetTenantID(*v)
-	}
-	return _c
-}
-
-// SetStatus sets the "status" field.
-func (_c *RolePermissionCreate) SetStatus(v rolepermission.Status) *RolePermissionCreate {
-	_c.mutation.SetStatus(v)
-	return _c
-}
-
-// SetNillableStatus sets the "status" field if the given value is not nil.
-func (_c *RolePermissionCreate) SetNillableStatus(v *rolepermission.Status) *RolePermissionCreate {
-	if v != nil {
-		_c.SetStatus(*v)
-	}
-	return _c
-}
-
 // SetCreatedBy sets the "created_by" field.
 func (_c *RolePermissionCreate) SetCreatedBy(v uint32) *RolePermissionCreate {
 	_c.mutation.SetCreatedBy(v)
@@ -134,16 +106,30 @@ func (_c *RolePermissionCreate) SetNillableDeletedBy(v *uint32) *RolePermissionC
 	return _c
 }
 
-// SetEffect sets the "effect" field.
-func (_c *RolePermissionCreate) SetEffect(v string) *RolePermissionCreate {
-	_c.mutation.SetEffect(v)
+// SetTenantID sets the "tenant_id" field.
+func (_c *RolePermissionCreate) SetTenantID(v uint32) *RolePermissionCreate {
+	_c.mutation.SetTenantID(v)
 	return _c
 }
 
-// SetNillableEffect sets the "effect" field if the given value is not nil.
-func (_c *RolePermissionCreate) SetNillableEffect(v *string) *RolePermissionCreate {
+// SetNillableTenantID sets the "tenant_id" field if the given value is not nil.
+func (_c *RolePermissionCreate) SetNillableTenantID(v *uint32) *RolePermissionCreate {
 	if v != nil {
-		_c.SetEffect(*v)
+		_c.SetTenantID(*v)
+	}
+	return _c
+}
+
+// SetStatus sets the "status" field.
+func (_c *RolePermissionCreate) SetStatus(v rolepermission.Status) *RolePermissionCreate {
+	_c.mutation.SetStatus(v)
+	return _c
+}
+
+// SetNillableStatus sets the "status" field if the given value is not nil.
+func (_c *RolePermissionCreate) SetNillableStatus(v *rolepermission.Status) *RolePermissionCreate {
+	if v != nil {
+		_c.SetStatus(*v)
 	}
 	return _c
 }
@@ -154,24 +140,36 @@ func (_c *RolePermissionCreate) SetRoleID(v uint32) *RolePermissionCreate {
 	return _c
 }
 
-// SetNillableRoleID sets the "role_id" field if the given value is not nil.
-func (_c *RolePermissionCreate) SetNillableRoleID(v *uint32) *RolePermissionCreate {
-	if v != nil {
-		_c.SetRoleID(*v)
-	}
-	return _c
-}
-
 // SetPermissionID sets the "permission_id" field.
 func (_c *RolePermissionCreate) SetPermissionID(v uint32) *RolePermissionCreate {
 	_c.mutation.SetPermissionID(v)
 	return _c
 }
 
-// SetNillablePermissionID sets the "permission_id" field if the given value is not nil.
-func (_c *RolePermissionCreate) SetNillablePermissionID(v *uint32) *RolePermissionCreate {
+// SetEffect sets the "effect" field.
+func (_c *RolePermissionCreate) SetEffect(v rolepermission.Effect) *RolePermissionCreate {
+	_c.mutation.SetEffect(v)
+	return _c
+}
+
+// SetNillableEffect sets the "effect" field if the given value is not nil.
+func (_c *RolePermissionCreate) SetNillableEffect(v *rolepermission.Effect) *RolePermissionCreate {
 	if v != nil {
-		_c.SetPermissionID(*v)
+		_c.SetEffect(*v)
+	}
+	return _c
+}
+
+// SetPriority sets the "priority" field.
+func (_c *RolePermissionCreate) SetPriority(v int32) *RolePermissionCreate {
+	_c.mutation.SetPriority(v)
+	return _c
+}
+
+// SetNillablePriority sets the "priority" field if the given value is not nil.
+func (_c *RolePermissionCreate) SetNillablePriority(v *int32) *RolePermissionCreate {
+	if v != nil {
+		_c.SetPriority(*v)
 	}
 	return _c
 }
@@ -231,6 +229,10 @@ func (_c *RolePermissionCreate) defaults() error {
 		v := rolepermission.DefaultEffect
 		_c.mutation.SetEffect(v)
 	}
+	if _, ok := _c.mutation.Priority(); !ok {
+		v := rolepermission.DefaultPriority
+		_c.mutation.SetPriority(v)
+	}
 	return nil
 }
 
@@ -243,6 +245,12 @@ func (_c *RolePermissionCreate) check() error {
 		if err := rolepermission.StatusValidator(v); err != nil {
 			return &ValidationError{Name: "status", err: fmt.Errorf(`ent: validator failed for field "RolePermission.status": %w`, err)}
 		}
+	}
+	if _, ok := _c.mutation.RoleID(); !ok {
+		return &ValidationError{Name: "role_id", err: errors.New(`ent: missing required field "RolePermission.role_id"`)}
+	}
+	if _, ok := _c.mutation.PermissionID(); !ok {
+		return &ValidationError{Name: "permission_id", err: errors.New(`ent: missing required field "RolePermission.permission_id"`)}
 	}
 	if v, ok := _c.mutation.Effect(); ok {
 		if err := rolepermission.EffectValidator(v); err != nil {
@@ -299,14 +307,6 @@ func (_c *RolePermissionCreate) createSpec() (*RolePermission, *sqlgraph.CreateS
 		_spec.SetField(rolepermission.FieldDeletedAt, field.TypeTime, value)
 		_node.DeletedAt = &value
 	}
-	if value, ok := _c.mutation.TenantID(); ok {
-		_spec.SetField(rolepermission.FieldTenantID, field.TypeUint32, value)
-		_node.TenantID = &value
-	}
-	if value, ok := _c.mutation.Status(); ok {
-		_spec.SetField(rolepermission.FieldStatus, field.TypeEnum, value)
-		_node.Status = &value
-	}
 	if value, ok := _c.mutation.CreatedBy(); ok {
 		_spec.SetField(rolepermission.FieldCreatedBy, field.TypeUint32, value)
 		_node.CreatedBy = &value
@@ -319,9 +319,13 @@ func (_c *RolePermissionCreate) createSpec() (*RolePermission, *sqlgraph.CreateS
 		_spec.SetField(rolepermission.FieldDeletedBy, field.TypeUint32, value)
 		_node.DeletedBy = &value
 	}
-	if value, ok := _c.mutation.Effect(); ok {
-		_spec.SetField(rolepermission.FieldEffect, field.TypeString, value)
-		_node.Effect = &value
+	if value, ok := _c.mutation.TenantID(); ok {
+		_spec.SetField(rolepermission.FieldTenantID, field.TypeUint32, value)
+		_node.TenantID = &value
+	}
+	if value, ok := _c.mutation.Status(); ok {
+		_spec.SetField(rolepermission.FieldStatus, field.TypeEnum, value)
+		_node.Status = &value
 	}
 	if value, ok := _c.mutation.RoleID(); ok {
 		_spec.SetField(rolepermission.FieldRoleID, field.TypeUint32, value)
@@ -330,6 +334,14 @@ func (_c *RolePermissionCreate) createSpec() (*RolePermission, *sqlgraph.CreateS
 	if value, ok := _c.mutation.PermissionID(); ok {
 		_spec.SetField(rolepermission.FieldPermissionID, field.TypeUint32, value)
 		_node.PermissionID = &value
+	}
+	if value, ok := _c.mutation.Effect(); ok {
+		_spec.SetField(rolepermission.FieldEffect, field.TypeEnum, value)
+		_node.Effect = &value
+	}
+	if value, ok := _c.mutation.Priority(); ok {
+		_spec.SetField(rolepermission.FieldPriority, field.TypeInt32, value)
+		_node.Priority = &value
 	}
 	return _node, _spec
 }
@@ -419,18 +431,6 @@ func (u *RolePermissionUpsert) ClearDeletedAt() *RolePermissionUpsert {
 	return u
 }
 
-// SetStatus sets the "status" field.
-func (u *RolePermissionUpsert) SetStatus(v rolepermission.Status) *RolePermissionUpsert {
-	u.Set(rolepermission.FieldStatus, v)
-	return u
-}
-
-// UpdateStatus sets the "status" field to the value that was provided on create.
-func (u *RolePermissionUpsert) UpdateStatus() *RolePermissionUpsert {
-	u.SetExcluded(rolepermission.FieldStatus)
-	return u
-}
-
 // SetCreatedBy sets the "created_by" field.
 func (u *RolePermissionUpsert) SetCreatedBy(v uint32) *RolePermissionUpsert {
 	u.Set(rolepermission.FieldCreatedBy, v)
@@ -503,21 +503,15 @@ func (u *RolePermissionUpsert) ClearDeletedBy() *RolePermissionUpsert {
 	return u
 }
 
-// SetEffect sets the "effect" field.
-func (u *RolePermissionUpsert) SetEffect(v string) *RolePermissionUpsert {
-	u.Set(rolepermission.FieldEffect, v)
+// SetStatus sets the "status" field.
+func (u *RolePermissionUpsert) SetStatus(v rolepermission.Status) *RolePermissionUpsert {
+	u.Set(rolepermission.FieldStatus, v)
 	return u
 }
 
-// UpdateEffect sets the "effect" field to the value that was provided on create.
-func (u *RolePermissionUpsert) UpdateEffect() *RolePermissionUpsert {
-	u.SetExcluded(rolepermission.FieldEffect)
-	return u
-}
-
-// ClearEffect clears the value of the "effect" field.
-func (u *RolePermissionUpsert) ClearEffect() *RolePermissionUpsert {
-	u.SetNull(rolepermission.FieldEffect)
+// UpdateStatus sets the "status" field to the value that was provided on create.
+func (u *RolePermissionUpsert) UpdateStatus() *RolePermissionUpsert {
+	u.SetExcluded(rolepermission.FieldStatus)
 	return u
 }
 
@@ -539,12 +533,6 @@ func (u *RolePermissionUpsert) AddRoleID(v uint32) *RolePermissionUpsert {
 	return u
 }
 
-// ClearRoleID clears the value of the "role_id" field.
-func (u *RolePermissionUpsert) ClearRoleID() *RolePermissionUpsert {
-	u.SetNull(rolepermission.FieldRoleID)
-	return u
-}
-
 // SetPermissionID sets the "permission_id" field.
 func (u *RolePermissionUpsert) SetPermissionID(v uint32) *RolePermissionUpsert {
 	u.Set(rolepermission.FieldPermissionID, v)
@@ -563,9 +551,45 @@ func (u *RolePermissionUpsert) AddPermissionID(v uint32) *RolePermissionUpsert {
 	return u
 }
 
-// ClearPermissionID clears the value of the "permission_id" field.
-func (u *RolePermissionUpsert) ClearPermissionID() *RolePermissionUpsert {
-	u.SetNull(rolepermission.FieldPermissionID)
+// SetEffect sets the "effect" field.
+func (u *RolePermissionUpsert) SetEffect(v rolepermission.Effect) *RolePermissionUpsert {
+	u.Set(rolepermission.FieldEffect, v)
+	return u
+}
+
+// UpdateEffect sets the "effect" field to the value that was provided on create.
+func (u *RolePermissionUpsert) UpdateEffect() *RolePermissionUpsert {
+	u.SetExcluded(rolepermission.FieldEffect)
+	return u
+}
+
+// ClearEffect clears the value of the "effect" field.
+func (u *RolePermissionUpsert) ClearEffect() *RolePermissionUpsert {
+	u.SetNull(rolepermission.FieldEffect)
+	return u
+}
+
+// SetPriority sets the "priority" field.
+func (u *RolePermissionUpsert) SetPriority(v int32) *RolePermissionUpsert {
+	u.Set(rolepermission.FieldPriority, v)
+	return u
+}
+
+// UpdatePriority sets the "priority" field to the value that was provided on create.
+func (u *RolePermissionUpsert) UpdatePriority() *RolePermissionUpsert {
+	u.SetExcluded(rolepermission.FieldPriority)
+	return u
+}
+
+// AddPriority adds v to the "priority" field.
+func (u *RolePermissionUpsert) AddPriority(v int32) *RolePermissionUpsert {
+	u.Add(rolepermission.FieldPriority, v)
+	return u
+}
+
+// ClearPriority clears the value of the "priority" field.
+func (u *RolePermissionUpsert) ClearPriority() *RolePermissionUpsert {
+	u.SetNull(rolepermission.FieldPriority)
 	return u
 }
 
@@ -665,20 +689,6 @@ func (u *RolePermissionUpsertOne) ClearDeletedAt() *RolePermissionUpsertOne {
 	})
 }
 
-// SetStatus sets the "status" field.
-func (u *RolePermissionUpsertOne) SetStatus(v rolepermission.Status) *RolePermissionUpsertOne {
-	return u.Update(func(s *RolePermissionUpsert) {
-		s.SetStatus(v)
-	})
-}
-
-// UpdateStatus sets the "status" field to the value that was provided on create.
-func (u *RolePermissionUpsertOne) UpdateStatus() *RolePermissionUpsertOne {
-	return u.Update(func(s *RolePermissionUpsert) {
-		s.UpdateStatus()
-	})
-}
-
 // SetCreatedBy sets the "created_by" field.
 func (u *RolePermissionUpsertOne) SetCreatedBy(v uint32) *RolePermissionUpsertOne {
 	return u.Update(func(s *RolePermissionUpsert) {
@@ -763,24 +773,17 @@ func (u *RolePermissionUpsertOne) ClearDeletedBy() *RolePermissionUpsertOne {
 	})
 }
 
-// SetEffect sets the "effect" field.
-func (u *RolePermissionUpsertOne) SetEffect(v string) *RolePermissionUpsertOne {
+// SetStatus sets the "status" field.
+func (u *RolePermissionUpsertOne) SetStatus(v rolepermission.Status) *RolePermissionUpsertOne {
 	return u.Update(func(s *RolePermissionUpsert) {
-		s.SetEffect(v)
+		s.SetStatus(v)
 	})
 }
 
-// UpdateEffect sets the "effect" field to the value that was provided on create.
-func (u *RolePermissionUpsertOne) UpdateEffect() *RolePermissionUpsertOne {
+// UpdateStatus sets the "status" field to the value that was provided on create.
+func (u *RolePermissionUpsertOne) UpdateStatus() *RolePermissionUpsertOne {
 	return u.Update(func(s *RolePermissionUpsert) {
-		s.UpdateEffect()
-	})
-}
-
-// ClearEffect clears the value of the "effect" field.
-func (u *RolePermissionUpsertOne) ClearEffect() *RolePermissionUpsertOne {
-	return u.Update(func(s *RolePermissionUpsert) {
-		s.ClearEffect()
+		s.UpdateStatus()
 	})
 }
 
@@ -805,13 +808,6 @@ func (u *RolePermissionUpsertOne) UpdateRoleID() *RolePermissionUpsertOne {
 	})
 }
 
-// ClearRoleID clears the value of the "role_id" field.
-func (u *RolePermissionUpsertOne) ClearRoleID() *RolePermissionUpsertOne {
-	return u.Update(func(s *RolePermissionUpsert) {
-		s.ClearRoleID()
-	})
-}
-
 // SetPermissionID sets the "permission_id" field.
 func (u *RolePermissionUpsertOne) SetPermissionID(v uint32) *RolePermissionUpsertOne {
 	return u.Update(func(s *RolePermissionUpsert) {
@@ -833,10 +829,52 @@ func (u *RolePermissionUpsertOne) UpdatePermissionID() *RolePermissionUpsertOne 
 	})
 }
 
-// ClearPermissionID clears the value of the "permission_id" field.
-func (u *RolePermissionUpsertOne) ClearPermissionID() *RolePermissionUpsertOne {
+// SetEffect sets the "effect" field.
+func (u *RolePermissionUpsertOne) SetEffect(v rolepermission.Effect) *RolePermissionUpsertOne {
 	return u.Update(func(s *RolePermissionUpsert) {
-		s.ClearPermissionID()
+		s.SetEffect(v)
+	})
+}
+
+// UpdateEffect sets the "effect" field to the value that was provided on create.
+func (u *RolePermissionUpsertOne) UpdateEffect() *RolePermissionUpsertOne {
+	return u.Update(func(s *RolePermissionUpsert) {
+		s.UpdateEffect()
+	})
+}
+
+// ClearEffect clears the value of the "effect" field.
+func (u *RolePermissionUpsertOne) ClearEffect() *RolePermissionUpsertOne {
+	return u.Update(func(s *RolePermissionUpsert) {
+		s.ClearEffect()
+	})
+}
+
+// SetPriority sets the "priority" field.
+func (u *RolePermissionUpsertOne) SetPriority(v int32) *RolePermissionUpsertOne {
+	return u.Update(func(s *RolePermissionUpsert) {
+		s.SetPriority(v)
+	})
+}
+
+// AddPriority adds v to the "priority" field.
+func (u *RolePermissionUpsertOne) AddPriority(v int32) *RolePermissionUpsertOne {
+	return u.Update(func(s *RolePermissionUpsert) {
+		s.AddPriority(v)
+	})
+}
+
+// UpdatePriority sets the "priority" field to the value that was provided on create.
+func (u *RolePermissionUpsertOne) UpdatePriority() *RolePermissionUpsertOne {
+	return u.Update(func(s *RolePermissionUpsert) {
+		s.UpdatePriority()
+	})
+}
+
+// ClearPriority clears the value of the "priority" field.
+func (u *RolePermissionUpsertOne) ClearPriority() *RolePermissionUpsertOne {
+	return u.Update(func(s *RolePermissionUpsert) {
+		s.ClearPriority()
 	})
 }
 
@@ -1102,20 +1140,6 @@ func (u *RolePermissionUpsertBulk) ClearDeletedAt() *RolePermissionUpsertBulk {
 	})
 }
 
-// SetStatus sets the "status" field.
-func (u *RolePermissionUpsertBulk) SetStatus(v rolepermission.Status) *RolePermissionUpsertBulk {
-	return u.Update(func(s *RolePermissionUpsert) {
-		s.SetStatus(v)
-	})
-}
-
-// UpdateStatus sets the "status" field to the value that was provided on create.
-func (u *RolePermissionUpsertBulk) UpdateStatus() *RolePermissionUpsertBulk {
-	return u.Update(func(s *RolePermissionUpsert) {
-		s.UpdateStatus()
-	})
-}
-
 // SetCreatedBy sets the "created_by" field.
 func (u *RolePermissionUpsertBulk) SetCreatedBy(v uint32) *RolePermissionUpsertBulk {
 	return u.Update(func(s *RolePermissionUpsert) {
@@ -1200,24 +1224,17 @@ func (u *RolePermissionUpsertBulk) ClearDeletedBy() *RolePermissionUpsertBulk {
 	})
 }
 
-// SetEffect sets the "effect" field.
-func (u *RolePermissionUpsertBulk) SetEffect(v string) *RolePermissionUpsertBulk {
+// SetStatus sets the "status" field.
+func (u *RolePermissionUpsertBulk) SetStatus(v rolepermission.Status) *RolePermissionUpsertBulk {
 	return u.Update(func(s *RolePermissionUpsert) {
-		s.SetEffect(v)
+		s.SetStatus(v)
 	})
 }
 
-// UpdateEffect sets the "effect" field to the value that was provided on create.
-func (u *RolePermissionUpsertBulk) UpdateEffect() *RolePermissionUpsertBulk {
+// UpdateStatus sets the "status" field to the value that was provided on create.
+func (u *RolePermissionUpsertBulk) UpdateStatus() *RolePermissionUpsertBulk {
 	return u.Update(func(s *RolePermissionUpsert) {
-		s.UpdateEffect()
-	})
-}
-
-// ClearEffect clears the value of the "effect" field.
-func (u *RolePermissionUpsertBulk) ClearEffect() *RolePermissionUpsertBulk {
-	return u.Update(func(s *RolePermissionUpsert) {
-		s.ClearEffect()
+		s.UpdateStatus()
 	})
 }
 
@@ -1242,13 +1259,6 @@ func (u *RolePermissionUpsertBulk) UpdateRoleID() *RolePermissionUpsertBulk {
 	})
 }
 
-// ClearRoleID clears the value of the "role_id" field.
-func (u *RolePermissionUpsertBulk) ClearRoleID() *RolePermissionUpsertBulk {
-	return u.Update(func(s *RolePermissionUpsert) {
-		s.ClearRoleID()
-	})
-}
-
 // SetPermissionID sets the "permission_id" field.
 func (u *RolePermissionUpsertBulk) SetPermissionID(v uint32) *RolePermissionUpsertBulk {
 	return u.Update(func(s *RolePermissionUpsert) {
@@ -1270,10 +1280,52 @@ func (u *RolePermissionUpsertBulk) UpdatePermissionID() *RolePermissionUpsertBul
 	})
 }
 
-// ClearPermissionID clears the value of the "permission_id" field.
-func (u *RolePermissionUpsertBulk) ClearPermissionID() *RolePermissionUpsertBulk {
+// SetEffect sets the "effect" field.
+func (u *RolePermissionUpsertBulk) SetEffect(v rolepermission.Effect) *RolePermissionUpsertBulk {
 	return u.Update(func(s *RolePermissionUpsert) {
-		s.ClearPermissionID()
+		s.SetEffect(v)
+	})
+}
+
+// UpdateEffect sets the "effect" field to the value that was provided on create.
+func (u *RolePermissionUpsertBulk) UpdateEffect() *RolePermissionUpsertBulk {
+	return u.Update(func(s *RolePermissionUpsert) {
+		s.UpdateEffect()
+	})
+}
+
+// ClearEffect clears the value of the "effect" field.
+func (u *RolePermissionUpsertBulk) ClearEffect() *RolePermissionUpsertBulk {
+	return u.Update(func(s *RolePermissionUpsert) {
+		s.ClearEffect()
+	})
+}
+
+// SetPriority sets the "priority" field.
+func (u *RolePermissionUpsertBulk) SetPriority(v int32) *RolePermissionUpsertBulk {
+	return u.Update(func(s *RolePermissionUpsert) {
+		s.SetPriority(v)
+	})
+}
+
+// AddPriority adds v to the "priority" field.
+func (u *RolePermissionUpsertBulk) AddPriority(v int32) *RolePermissionUpsertBulk {
+	return u.Update(func(s *RolePermissionUpsert) {
+		s.AddPriority(v)
+	})
+}
+
+// UpdatePriority sets the "priority" field to the value that was provided on create.
+func (u *RolePermissionUpsertBulk) UpdatePriority() *RolePermissionUpsertBulk {
+	return u.Update(func(s *RolePermissionUpsert) {
+		s.UpdatePriority()
+	})
+}
+
+// ClearPriority clears the value of the "priority" field.
+func (u *RolePermissionUpsertBulk) ClearPriority() *RolePermissionUpsertBulk {
+	return u.Update(func(s *RolePermissionUpsert) {
+		s.ClearPriority()
 	})
 }
 

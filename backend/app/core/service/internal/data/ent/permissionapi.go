@@ -12,7 +12,7 @@ import (
 	"entgo.io/ent/dialect/sql"
 )
 
-// PermissionApi is the model entity for the PermissionApi schema.
+// 权限点与API接口关联表
 type PermissionApi struct {
 	config `json:"-"`
 	// ID of the ent.
@@ -24,10 +24,16 @@ type PermissionApi struct {
 	UpdatedAt *time.Time `json:"updated_at,omitempty"`
 	// 删除时间
 	DeletedAt *time.Time `json:"deleted_at,omitempty"`
-	// 权限ID
+	// 创建者ID
+	CreatedBy *uint32 `json:"created_by,omitempty"`
+	// 更新者ID
+	UpdatedBy *uint32 `json:"updated_by,omitempty"`
+	// 删除者ID
+	DeletedBy *uint32 `json:"deleted_by,omitempty"`
+	// 权限ID（关联sys_permissions.id）
 	PermissionID *uint32 `json:"permission_id,omitempty"`
-	// 目标ID
-	TargetID     *uint32 `json:"target_id,omitempty"`
+	// API资源ID（关联sys_apis.id）
+	APIID        *uint32 `json:"api_id,omitempty"`
 	selectValues sql.SelectValues
 }
 
@@ -36,7 +42,7 @@ func (*PermissionApi) scanValues(columns []string) ([]any, error) {
 	values := make([]any, len(columns))
 	for i := range columns {
 		switch columns[i] {
-		case permissionapi.FieldID, permissionapi.FieldPermissionID, permissionapi.FieldTargetID:
+		case permissionapi.FieldID, permissionapi.FieldCreatedBy, permissionapi.FieldUpdatedBy, permissionapi.FieldDeletedBy, permissionapi.FieldPermissionID, permissionapi.FieldAPIID:
 			values[i] = new(sql.NullInt64)
 		case permissionapi.FieldCreatedAt, permissionapi.FieldUpdatedAt, permissionapi.FieldDeletedAt:
 			values[i] = new(sql.NullTime)
@@ -82,6 +88,27 @@ func (_m *PermissionApi) assignValues(columns []string, values []any) error {
 				_m.DeletedAt = new(time.Time)
 				*_m.DeletedAt = value.Time
 			}
+		case permissionapi.FieldCreatedBy:
+			if value, ok := values[i].(*sql.NullInt64); !ok {
+				return fmt.Errorf("unexpected type %T for field created_by", values[i])
+			} else if value.Valid {
+				_m.CreatedBy = new(uint32)
+				*_m.CreatedBy = uint32(value.Int64)
+			}
+		case permissionapi.FieldUpdatedBy:
+			if value, ok := values[i].(*sql.NullInt64); !ok {
+				return fmt.Errorf("unexpected type %T for field updated_by", values[i])
+			} else if value.Valid {
+				_m.UpdatedBy = new(uint32)
+				*_m.UpdatedBy = uint32(value.Int64)
+			}
+		case permissionapi.FieldDeletedBy:
+			if value, ok := values[i].(*sql.NullInt64); !ok {
+				return fmt.Errorf("unexpected type %T for field deleted_by", values[i])
+			} else if value.Valid {
+				_m.DeletedBy = new(uint32)
+				*_m.DeletedBy = uint32(value.Int64)
+			}
 		case permissionapi.FieldPermissionID:
 			if value, ok := values[i].(*sql.NullInt64); !ok {
 				return fmt.Errorf("unexpected type %T for field permission_id", values[i])
@@ -89,12 +116,12 @@ func (_m *PermissionApi) assignValues(columns []string, values []any) error {
 				_m.PermissionID = new(uint32)
 				*_m.PermissionID = uint32(value.Int64)
 			}
-		case permissionapi.FieldTargetID:
+		case permissionapi.FieldAPIID:
 			if value, ok := values[i].(*sql.NullInt64); !ok {
-				return fmt.Errorf("unexpected type %T for field target_id", values[i])
+				return fmt.Errorf("unexpected type %T for field api_id", values[i])
 			} else if value.Valid {
-				_m.TargetID = new(uint32)
-				*_m.TargetID = uint32(value.Int64)
+				_m.APIID = new(uint32)
+				*_m.APIID = uint32(value.Int64)
 			}
 		default:
 			_m.selectValues.Set(columns[i], values[i])
@@ -147,13 +174,28 @@ func (_m *PermissionApi) String() string {
 		builder.WriteString(v.Format(time.ANSIC))
 	}
 	builder.WriteString(", ")
+	if v := _m.CreatedBy; v != nil {
+		builder.WriteString("created_by=")
+		builder.WriteString(fmt.Sprintf("%v", *v))
+	}
+	builder.WriteString(", ")
+	if v := _m.UpdatedBy; v != nil {
+		builder.WriteString("updated_by=")
+		builder.WriteString(fmt.Sprintf("%v", *v))
+	}
+	builder.WriteString(", ")
+	if v := _m.DeletedBy; v != nil {
+		builder.WriteString("deleted_by=")
+		builder.WriteString(fmt.Sprintf("%v", *v))
+	}
+	builder.WriteString(", ")
 	if v := _m.PermissionID; v != nil {
 		builder.WriteString("permission_id=")
 		builder.WriteString(fmt.Sprintf("%v", *v))
 	}
 	builder.WriteString(", ")
-	if v := _m.TargetID; v != nil {
-		builder.WriteString("target_id=")
+	if v := _m.APIID; v != nil {
+		builder.WriteString("api_id=")
 		builder.WriteString(fmt.Sprintf("%v", *v))
 	}
 	builder.WriteByte(')')

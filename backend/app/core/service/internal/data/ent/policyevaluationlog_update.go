@@ -8,7 +8,6 @@ import (
 	"fmt"
 	"go-wind-ledger/app/core/service/internal/data/ent/policyevaluationlog"
 	"go-wind-ledger/app/core/service/internal/data/ent/predicate"
-	"time"
 
 	"entgo.io/ent/dialect/sql"
 	"entgo.io/ent/dialect/sql/sqlgraph"
@@ -29,130 +28,279 @@ func (_u *PolicyEvaluationLogUpdate) Where(ps ...predicate.PolicyEvaluationLog) 
 	return _u
 }
 
-// SetUpdatedAt sets the "updated_at" field.
-func (_u *PolicyEvaluationLogUpdate) SetUpdatedAt(v time.Time) *PolicyEvaluationLogUpdate {
-	_u.mutation.SetUpdatedAt(v)
+// SetUserID sets the "user_id" field.
+func (_u *PolicyEvaluationLogUpdate) SetUserID(v uint32) *PolicyEvaluationLogUpdate {
+	_u.mutation.ResetUserID()
+	_u.mutation.SetUserID(v)
 	return _u
 }
 
-// SetNillableUpdatedAt sets the "updated_at" field if the given value is not nil.
-func (_u *PolicyEvaluationLogUpdate) SetNillableUpdatedAt(v *time.Time) *PolicyEvaluationLogUpdate {
+// SetNillableUserID sets the "user_id" field if the given value is not nil.
+func (_u *PolicyEvaluationLogUpdate) SetNillableUserID(v *uint32) *PolicyEvaluationLogUpdate {
 	if v != nil {
-		_u.SetUpdatedAt(*v)
+		_u.SetUserID(*v)
 	}
 	return _u
 }
 
-// ClearUpdatedAt clears the value of the "updated_at" field.
-func (_u *PolicyEvaluationLogUpdate) ClearUpdatedAt() *PolicyEvaluationLogUpdate {
-	_u.mutation.ClearUpdatedAt()
+// AddUserID adds value to the "user_id" field.
+func (_u *PolicyEvaluationLogUpdate) AddUserID(v int32) *PolicyEvaluationLogUpdate {
+	_u.mutation.AddUserID(v)
 	return _u
 }
 
-// SetDeletedAt sets the "deleted_at" field.
-func (_u *PolicyEvaluationLogUpdate) SetDeletedAt(v time.Time) *PolicyEvaluationLogUpdate {
-	_u.mutation.SetDeletedAt(v)
+// SetMembershipID sets the "membership_id" field.
+func (_u *PolicyEvaluationLogUpdate) SetMembershipID(v uint32) *PolicyEvaluationLogUpdate {
+	_u.mutation.ResetMembershipID()
+	_u.mutation.SetMembershipID(v)
 	return _u
 }
 
-// SetNillableDeletedAt sets the "deleted_at" field if the given value is not nil.
-func (_u *PolicyEvaluationLogUpdate) SetNillableDeletedAt(v *time.Time) *PolicyEvaluationLogUpdate {
+// SetNillableMembershipID sets the "membership_id" field if the given value is not nil.
+func (_u *PolicyEvaluationLogUpdate) SetNillableMembershipID(v *uint32) *PolicyEvaluationLogUpdate {
 	if v != nil {
-		_u.SetDeletedAt(*v)
+		_u.SetMembershipID(*v)
 	}
 	return _u
 }
 
-// ClearDeletedAt clears the value of the "deleted_at" field.
-func (_u *PolicyEvaluationLogUpdate) ClearDeletedAt() *PolicyEvaluationLogUpdate {
-	_u.mutation.ClearDeletedAt()
+// AddMembershipID adds value to the "membership_id" field.
+func (_u *PolicyEvaluationLogUpdate) AddMembershipID(v int32) *PolicyEvaluationLogUpdate {
+	_u.mutation.AddMembershipID(v)
 	return _u
 }
 
-// SetOperatorID sets the "operator_id" field.
-func (_u *PolicyEvaluationLogUpdate) SetOperatorID(v uint32) *PolicyEvaluationLogUpdate {
-	_u.mutation.ResetOperatorID()
-	_u.mutation.SetOperatorID(v)
+// SetPermissionID sets the "permission_id" field.
+func (_u *PolicyEvaluationLogUpdate) SetPermissionID(v uint32) *PolicyEvaluationLogUpdate {
+	_u.mutation.ResetPermissionID()
+	_u.mutation.SetPermissionID(v)
 	return _u
 }
 
-// SetNillableOperatorID sets the "operator_id" field if the given value is not nil.
-func (_u *PolicyEvaluationLogUpdate) SetNillableOperatorID(v *uint32) *PolicyEvaluationLogUpdate {
+// SetNillablePermissionID sets the "permission_id" field if the given value is not nil.
+func (_u *PolicyEvaluationLogUpdate) SetNillablePermissionID(v *uint32) *PolicyEvaluationLogUpdate {
 	if v != nil {
-		_u.SetOperatorID(*v)
+		_u.SetPermissionID(*v)
 	}
 	return _u
 }
 
-// AddOperatorID adds value to the "operator_id" field.
-func (_u *PolicyEvaluationLogUpdate) AddOperatorID(v int32) *PolicyEvaluationLogUpdate {
-	_u.mutation.AddOperatorID(v)
+// AddPermissionID adds value to the "permission_id" field.
+func (_u *PolicyEvaluationLogUpdate) AddPermissionID(v int32) *PolicyEvaluationLogUpdate {
+	_u.mutation.AddPermissionID(v)
 	return _u
 }
 
-// ClearOperatorID clears the value of the "operator_id" field.
-func (_u *PolicyEvaluationLogUpdate) ClearOperatorID() *PolicyEvaluationLogUpdate {
-	_u.mutation.ClearOperatorID()
+// SetPolicyID sets the "policy_id" field.
+func (_u *PolicyEvaluationLogUpdate) SetPolicyID(v uint32) *PolicyEvaluationLogUpdate {
+	_u.mutation.ResetPolicyID()
+	_u.mutation.SetPolicyID(v)
 	return _u
 }
 
-// SetPolicy sets the "policy" field.
-func (_u *PolicyEvaluationLogUpdate) SetPolicy(v string) *PolicyEvaluationLogUpdate {
-	_u.mutation.SetPolicy(v)
-	return _u
-}
-
-// SetNillablePolicy sets the "policy" field if the given value is not nil.
-func (_u *PolicyEvaluationLogUpdate) SetNillablePolicy(v *string) *PolicyEvaluationLogUpdate {
+// SetNillablePolicyID sets the "policy_id" field if the given value is not nil.
+func (_u *PolicyEvaluationLogUpdate) SetNillablePolicyID(v *uint32) *PolicyEvaluationLogUpdate {
 	if v != nil {
-		_u.SetPolicy(*v)
+		_u.SetPolicyID(*v)
 	}
 	return _u
 }
 
-// ClearPolicy clears the value of the "policy" field.
-func (_u *PolicyEvaluationLogUpdate) ClearPolicy() *PolicyEvaluationLogUpdate {
-	_u.mutation.ClearPolicy()
+// AddPolicyID adds value to the "policy_id" field.
+func (_u *PolicyEvaluationLogUpdate) AddPolicyID(v int32) *PolicyEvaluationLogUpdate {
+	_u.mutation.AddPolicyID(v)
+	return _u
+}
+
+// ClearPolicyID clears the value of the "policy_id" field.
+func (_u *PolicyEvaluationLogUpdate) ClearPolicyID() *PolicyEvaluationLogUpdate {
+	_u.mutation.ClearPolicyID()
+	return _u
+}
+
+// SetRequestPath sets the "request_path" field.
+func (_u *PolicyEvaluationLogUpdate) SetRequestPath(v string) *PolicyEvaluationLogUpdate {
+	_u.mutation.SetRequestPath(v)
+	return _u
+}
+
+// SetNillableRequestPath sets the "request_path" field if the given value is not nil.
+func (_u *PolicyEvaluationLogUpdate) SetNillableRequestPath(v *string) *PolicyEvaluationLogUpdate {
+	if v != nil {
+		_u.SetRequestPath(*v)
+	}
+	return _u
+}
+
+// ClearRequestPath clears the value of the "request_path" field.
+func (_u *PolicyEvaluationLogUpdate) ClearRequestPath() *PolicyEvaluationLogUpdate {
+	_u.mutation.ClearRequestPath()
+	return _u
+}
+
+// SetRequestMethod sets the "request_method" field.
+func (_u *PolicyEvaluationLogUpdate) SetRequestMethod(v string) *PolicyEvaluationLogUpdate {
+	_u.mutation.SetRequestMethod(v)
+	return _u
+}
+
+// SetNillableRequestMethod sets the "request_method" field if the given value is not nil.
+func (_u *PolicyEvaluationLogUpdate) SetNillableRequestMethod(v *string) *PolicyEvaluationLogUpdate {
+	if v != nil {
+		_u.SetRequestMethod(*v)
+	}
+	return _u
+}
+
+// ClearRequestMethod clears the value of the "request_method" field.
+func (_u *PolicyEvaluationLogUpdate) ClearRequestMethod() *PolicyEvaluationLogUpdate {
+	_u.mutation.ClearRequestMethod()
 	return _u
 }
 
 // SetResult sets the "result" field.
-func (_u *PolicyEvaluationLogUpdate) SetResult(v string) *PolicyEvaluationLogUpdate {
+func (_u *PolicyEvaluationLogUpdate) SetResult(v bool) *PolicyEvaluationLogUpdate {
 	_u.mutation.SetResult(v)
 	return _u
 }
 
 // SetNillableResult sets the "result" field if the given value is not nil.
-func (_u *PolicyEvaluationLogUpdate) SetNillableResult(v *string) *PolicyEvaluationLogUpdate {
+func (_u *PolicyEvaluationLogUpdate) SetNillableResult(v *bool) *PolicyEvaluationLogUpdate {
 	if v != nil {
 		_u.SetResult(*v)
 	}
 	return _u
 }
 
-// ClearResult clears the value of the "result" field.
-func (_u *PolicyEvaluationLogUpdate) ClearResult() *PolicyEvaluationLogUpdate {
-	_u.mutation.ClearResult()
+// SetEffectDetails sets the "effect_details" field.
+func (_u *PolicyEvaluationLogUpdate) SetEffectDetails(v string) *PolicyEvaluationLogUpdate {
+	_u.mutation.SetEffectDetails(v)
 	return _u
 }
 
-// SetEvaluatedAt sets the "evaluated_at" field.
-func (_u *PolicyEvaluationLogUpdate) SetEvaluatedAt(v time.Time) *PolicyEvaluationLogUpdate {
-	_u.mutation.SetEvaluatedAt(v)
-	return _u
-}
-
-// SetNillableEvaluatedAt sets the "evaluated_at" field if the given value is not nil.
-func (_u *PolicyEvaluationLogUpdate) SetNillableEvaluatedAt(v *time.Time) *PolicyEvaluationLogUpdate {
+// SetNillableEffectDetails sets the "effect_details" field if the given value is not nil.
+func (_u *PolicyEvaluationLogUpdate) SetNillableEffectDetails(v *string) *PolicyEvaluationLogUpdate {
 	if v != nil {
-		_u.SetEvaluatedAt(*v)
+		_u.SetEffectDetails(*v)
 	}
 	return _u
 }
 
-// ClearEvaluatedAt clears the value of the "evaluated_at" field.
-func (_u *PolicyEvaluationLogUpdate) ClearEvaluatedAt() *PolicyEvaluationLogUpdate {
-	_u.mutation.ClearEvaluatedAt()
+// ClearEffectDetails clears the value of the "effect_details" field.
+func (_u *PolicyEvaluationLogUpdate) ClearEffectDetails() *PolicyEvaluationLogUpdate {
+	_u.mutation.ClearEffectDetails()
+	return _u
+}
+
+// SetScopeSQL sets the "scope_sql" field.
+func (_u *PolicyEvaluationLogUpdate) SetScopeSQL(v string) *PolicyEvaluationLogUpdate {
+	_u.mutation.SetScopeSQL(v)
+	return _u
+}
+
+// SetNillableScopeSQL sets the "scope_sql" field if the given value is not nil.
+func (_u *PolicyEvaluationLogUpdate) SetNillableScopeSQL(v *string) *PolicyEvaluationLogUpdate {
+	if v != nil {
+		_u.SetScopeSQL(*v)
+	}
+	return _u
+}
+
+// ClearScopeSQL clears the value of the "scope_sql" field.
+func (_u *PolicyEvaluationLogUpdate) ClearScopeSQL() *PolicyEvaluationLogUpdate {
+	_u.mutation.ClearScopeSQL()
+	return _u
+}
+
+// SetIPAddress sets the "ip_address" field.
+func (_u *PolicyEvaluationLogUpdate) SetIPAddress(v string) *PolicyEvaluationLogUpdate {
+	_u.mutation.SetIPAddress(v)
+	return _u
+}
+
+// SetNillableIPAddress sets the "ip_address" field if the given value is not nil.
+func (_u *PolicyEvaluationLogUpdate) SetNillableIPAddress(v *string) *PolicyEvaluationLogUpdate {
+	if v != nil {
+		_u.SetIPAddress(*v)
+	}
+	return _u
+}
+
+// ClearIPAddress clears the value of the "ip_address" field.
+func (_u *PolicyEvaluationLogUpdate) ClearIPAddress() *PolicyEvaluationLogUpdate {
+	_u.mutation.ClearIPAddress()
+	return _u
+}
+
+// SetTraceID sets the "trace_id" field.
+func (_u *PolicyEvaluationLogUpdate) SetTraceID(v string) *PolicyEvaluationLogUpdate {
+	_u.mutation.SetTraceID(v)
+	return _u
+}
+
+// SetNillableTraceID sets the "trace_id" field if the given value is not nil.
+func (_u *PolicyEvaluationLogUpdate) SetNillableTraceID(v *string) *PolicyEvaluationLogUpdate {
+	if v != nil {
+		_u.SetTraceID(*v)
+	}
+	return _u
+}
+
+// ClearTraceID clears the value of the "trace_id" field.
+func (_u *PolicyEvaluationLogUpdate) ClearTraceID() *PolicyEvaluationLogUpdate {
+	_u.mutation.ClearTraceID()
+	return _u
+}
+
+// SetEvaluationContext sets the "evaluation_context" field.
+func (_u *PolicyEvaluationLogUpdate) SetEvaluationContext(v string) *PolicyEvaluationLogUpdate {
+	_u.mutation.SetEvaluationContext(v)
+	return _u
+}
+
+// SetNillableEvaluationContext sets the "evaluation_context" field if the given value is not nil.
+func (_u *PolicyEvaluationLogUpdate) SetNillableEvaluationContext(v *string) *PolicyEvaluationLogUpdate {
+	if v != nil {
+		_u.SetEvaluationContext(*v)
+	}
+	return _u
+}
+
+// ClearEvaluationContext clears the value of the "evaluation_context" field.
+func (_u *PolicyEvaluationLogUpdate) ClearEvaluationContext() *PolicyEvaluationLogUpdate {
+	_u.mutation.ClearEvaluationContext()
+	return _u
+}
+
+// SetLogHash sets the "log_hash" field.
+func (_u *PolicyEvaluationLogUpdate) SetLogHash(v string) *PolicyEvaluationLogUpdate {
+	_u.mutation.SetLogHash(v)
+	return _u
+}
+
+// SetNillableLogHash sets the "log_hash" field if the given value is not nil.
+func (_u *PolicyEvaluationLogUpdate) SetNillableLogHash(v *string) *PolicyEvaluationLogUpdate {
+	if v != nil {
+		_u.SetLogHash(*v)
+	}
+	return _u
+}
+
+// ClearLogHash clears the value of the "log_hash" field.
+func (_u *PolicyEvaluationLogUpdate) ClearLogHash() *PolicyEvaluationLogUpdate {
+	_u.mutation.ClearLogHash()
+	return _u
+}
+
+// SetSignature sets the "signature" field.
+func (_u *PolicyEvaluationLogUpdate) SetSignature(v []byte) *PolicyEvaluationLogUpdate {
+	_u.mutation.SetSignature(v)
+	return _u
+}
+
+// ClearSignature clears the value of the "signature" field.
+func (_u *PolicyEvaluationLogUpdate) ClearSignature() *PolicyEvaluationLogUpdate {
+	_u.mutation.ClearSignature()
 	return _u
 }
 
@@ -188,21 +336,6 @@ func (_u *PolicyEvaluationLogUpdate) ExecX(ctx context.Context) {
 	}
 }
 
-// check runs all checks and user-defined validators on the builder.
-func (_u *PolicyEvaluationLogUpdate) check() error {
-	if v, ok := _u.mutation.Policy(); ok {
-		if err := policyevaluationlog.PolicyValidator(v); err != nil {
-			return &ValidationError{Name: "policy", err: fmt.Errorf(`ent: validator failed for field "PolicyEvaluationLog.policy": %w`, err)}
-		}
-	}
-	if v, ok := _u.mutation.Result(); ok {
-		if err := policyevaluationlog.ResultValidator(v); err != nil {
-			return &ValidationError{Name: "result", err: fmt.Errorf(`ent: validator failed for field "PolicyEvaluationLog.result": %w`, err)}
-		}
-	}
-	return nil
-}
-
 // Modify adds a statement modifier for attaching custom logic to the UPDATE statement.
 func (_u *PolicyEvaluationLogUpdate) Modify(modifiers ...func(u *sql.UpdateBuilder)) *PolicyEvaluationLogUpdate {
 	_u.modifiers = append(_u.modifiers, modifiers...)
@@ -210,9 +343,6 @@ func (_u *PolicyEvaluationLogUpdate) Modify(modifiers ...func(u *sql.UpdateBuild
 }
 
 func (_u *PolicyEvaluationLogUpdate) sqlSave(ctx context.Context) (_node int, err error) {
-	if err := _u.check(); err != nil {
-		return _node, err
-	}
 	_spec := sqlgraph.NewUpdateSpec(policyevaluationlog.Table, policyevaluationlog.Columns, sqlgraph.NewFieldSpec(policyevaluationlog.FieldID, field.TypeUint32))
 	if ps := _u.mutation.predicates; len(ps) > 0 {
 		_spec.Predicate = func(selector *sql.Selector) {
@@ -224,47 +354,92 @@ func (_u *PolicyEvaluationLogUpdate) sqlSave(ctx context.Context) (_node int, er
 	if _u.mutation.CreatedAtCleared() {
 		_spec.ClearField(policyevaluationlog.FieldCreatedAt, field.TypeTime)
 	}
-	if value, ok := _u.mutation.UpdatedAt(); ok {
-		_spec.SetField(policyevaluationlog.FieldUpdatedAt, field.TypeTime, value)
-	}
-	if _u.mutation.UpdatedAtCleared() {
-		_spec.ClearField(policyevaluationlog.FieldUpdatedAt, field.TypeTime)
-	}
-	if value, ok := _u.mutation.DeletedAt(); ok {
-		_spec.SetField(policyevaluationlog.FieldDeletedAt, field.TypeTime, value)
-	}
-	if _u.mutation.DeletedAtCleared() {
-		_spec.ClearField(policyevaluationlog.FieldDeletedAt, field.TypeTime)
-	}
 	if _u.mutation.TenantIDCleared() {
 		_spec.ClearField(policyevaluationlog.FieldTenantID, field.TypeUint32)
 	}
-	if value, ok := _u.mutation.OperatorID(); ok {
-		_spec.SetField(policyevaluationlog.FieldOperatorID, field.TypeUint32, value)
+	if value, ok := _u.mutation.UserID(); ok {
+		_spec.SetField(policyevaluationlog.FieldUserID, field.TypeUint32, value)
 	}
-	if value, ok := _u.mutation.AddedOperatorID(); ok {
-		_spec.AddField(policyevaluationlog.FieldOperatorID, field.TypeUint32, value)
+	if value, ok := _u.mutation.AddedUserID(); ok {
+		_spec.AddField(policyevaluationlog.FieldUserID, field.TypeUint32, value)
 	}
-	if _u.mutation.OperatorIDCleared() {
-		_spec.ClearField(policyevaluationlog.FieldOperatorID, field.TypeUint32)
+	if value, ok := _u.mutation.MembershipID(); ok {
+		_spec.SetField(policyevaluationlog.FieldMembershipID, field.TypeUint32, value)
 	}
-	if value, ok := _u.mutation.Policy(); ok {
-		_spec.SetField(policyevaluationlog.FieldPolicy, field.TypeString, value)
+	if value, ok := _u.mutation.AddedMembershipID(); ok {
+		_spec.AddField(policyevaluationlog.FieldMembershipID, field.TypeUint32, value)
 	}
-	if _u.mutation.PolicyCleared() {
-		_spec.ClearField(policyevaluationlog.FieldPolicy, field.TypeString)
+	if value, ok := _u.mutation.PermissionID(); ok {
+		_spec.SetField(policyevaluationlog.FieldPermissionID, field.TypeUint32, value)
+	}
+	if value, ok := _u.mutation.AddedPermissionID(); ok {
+		_spec.AddField(policyevaluationlog.FieldPermissionID, field.TypeUint32, value)
+	}
+	if value, ok := _u.mutation.PolicyID(); ok {
+		_spec.SetField(policyevaluationlog.FieldPolicyID, field.TypeUint32, value)
+	}
+	if value, ok := _u.mutation.AddedPolicyID(); ok {
+		_spec.AddField(policyevaluationlog.FieldPolicyID, field.TypeUint32, value)
+	}
+	if _u.mutation.PolicyIDCleared() {
+		_spec.ClearField(policyevaluationlog.FieldPolicyID, field.TypeUint32)
+	}
+	if value, ok := _u.mutation.RequestPath(); ok {
+		_spec.SetField(policyevaluationlog.FieldRequestPath, field.TypeString, value)
+	}
+	if _u.mutation.RequestPathCleared() {
+		_spec.ClearField(policyevaluationlog.FieldRequestPath, field.TypeString)
+	}
+	if value, ok := _u.mutation.RequestMethod(); ok {
+		_spec.SetField(policyevaluationlog.FieldRequestMethod, field.TypeString, value)
+	}
+	if _u.mutation.RequestMethodCleared() {
+		_spec.ClearField(policyevaluationlog.FieldRequestMethod, field.TypeString)
 	}
 	if value, ok := _u.mutation.Result(); ok {
-		_spec.SetField(policyevaluationlog.FieldResult, field.TypeString, value)
+		_spec.SetField(policyevaluationlog.FieldResult, field.TypeBool, value)
 	}
-	if _u.mutation.ResultCleared() {
-		_spec.ClearField(policyevaluationlog.FieldResult, field.TypeString)
+	if value, ok := _u.mutation.EffectDetails(); ok {
+		_spec.SetField(policyevaluationlog.FieldEffectDetails, field.TypeString, value)
 	}
-	if value, ok := _u.mutation.EvaluatedAt(); ok {
-		_spec.SetField(policyevaluationlog.FieldEvaluatedAt, field.TypeTime, value)
+	if _u.mutation.EffectDetailsCleared() {
+		_spec.ClearField(policyevaluationlog.FieldEffectDetails, field.TypeString)
 	}
-	if _u.mutation.EvaluatedAtCleared() {
-		_spec.ClearField(policyevaluationlog.FieldEvaluatedAt, field.TypeTime)
+	if value, ok := _u.mutation.ScopeSQL(); ok {
+		_spec.SetField(policyevaluationlog.FieldScopeSQL, field.TypeString, value)
+	}
+	if _u.mutation.ScopeSQLCleared() {
+		_spec.ClearField(policyevaluationlog.FieldScopeSQL, field.TypeString)
+	}
+	if value, ok := _u.mutation.IPAddress(); ok {
+		_spec.SetField(policyevaluationlog.FieldIPAddress, field.TypeString, value)
+	}
+	if _u.mutation.IPAddressCleared() {
+		_spec.ClearField(policyevaluationlog.FieldIPAddress, field.TypeString)
+	}
+	if value, ok := _u.mutation.TraceID(); ok {
+		_spec.SetField(policyevaluationlog.FieldTraceID, field.TypeString, value)
+	}
+	if _u.mutation.TraceIDCleared() {
+		_spec.ClearField(policyevaluationlog.FieldTraceID, field.TypeString)
+	}
+	if value, ok := _u.mutation.EvaluationContext(); ok {
+		_spec.SetField(policyevaluationlog.FieldEvaluationContext, field.TypeString, value)
+	}
+	if _u.mutation.EvaluationContextCleared() {
+		_spec.ClearField(policyevaluationlog.FieldEvaluationContext, field.TypeString)
+	}
+	if value, ok := _u.mutation.LogHash(); ok {
+		_spec.SetField(policyevaluationlog.FieldLogHash, field.TypeString, value)
+	}
+	if _u.mutation.LogHashCleared() {
+		_spec.ClearField(policyevaluationlog.FieldLogHash, field.TypeString)
+	}
+	if value, ok := _u.mutation.Signature(); ok {
+		_spec.SetField(policyevaluationlog.FieldSignature, field.TypeBytes, value)
+	}
+	if _u.mutation.SignatureCleared() {
+		_spec.ClearField(policyevaluationlog.FieldSignature, field.TypeBytes)
 	}
 	_spec.AddModifiers(_u.modifiers...)
 	if _node, err = sqlgraph.UpdateNodes(ctx, _u.driver, _spec); err != nil {
@@ -288,130 +463,279 @@ type PolicyEvaluationLogUpdateOne struct {
 	modifiers []func(*sql.UpdateBuilder)
 }
 
-// SetUpdatedAt sets the "updated_at" field.
-func (_u *PolicyEvaluationLogUpdateOne) SetUpdatedAt(v time.Time) *PolicyEvaluationLogUpdateOne {
-	_u.mutation.SetUpdatedAt(v)
+// SetUserID sets the "user_id" field.
+func (_u *PolicyEvaluationLogUpdateOne) SetUserID(v uint32) *PolicyEvaluationLogUpdateOne {
+	_u.mutation.ResetUserID()
+	_u.mutation.SetUserID(v)
 	return _u
 }
 
-// SetNillableUpdatedAt sets the "updated_at" field if the given value is not nil.
-func (_u *PolicyEvaluationLogUpdateOne) SetNillableUpdatedAt(v *time.Time) *PolicyEvaluationLogUpdateOne {
+// SetNillableUserID sets the "user_id" field if the given value is not nil.
+func (_u *PolicyEvaluationLogUpdateOne) SetNillableUserID(v *uint32) *PolicyEvaluationLogUpdateOne {
 	if v != nil {
-		_u.SetUpdatedAt(*v)
+		_u.SetUserID(*v)
 	}
 	return _u
 }
 
-// ClearUpdatedAt clears the value of the "updated_at" field.
-func (_u *PolicyEvaluationLogUpdateOne) ClearUpdatedAt() *PolicyEvaluationLogUpdateOne {
-	_u.mutation.ClearUpdatedAt()
+// AddUserID adds value to the "user_id" field.
+func (_u *PolicyEvaluationLogUpdateOne) AddUserID(v int32) *PolicyEvaluationLogUpdateOne {
+	_u.mutation.AddUserID(v)
 	return _u
 }
 
-// SetDeletedAt sets the "deleted_at" field.
-func (_u *PolicyEvaluationLogUpdateOne) SetDeletedAt(v time.Time) *PolicyEvaluationLogUpdateOne {
-	_u.mutation.SetDeletedAt(v)
+// SetMembershipID sets the "membership_id" field.
+func (_u *PolicyEvaluationLogUpdateOne) SetMembershipID(v uint32) *PolicyEvaluationLogUpdateOne {
+	_u.mutation.ResetMembershipID()
+	_u.mutation.SetMembershipID(v)
 	return _u
 }
 
-// SetNillableDeletedAt sets the "deleted_at" field if the given value is not nil.
-func (_u *PolicyEvaluationLogUpdateOne) SetNillableDeletedAt(v *time.Time) *PolicyEvaluationLogUpdateOne {
+// SetNillableMembershipID sets the "membership_id" field if the given value is not nil.
+func (_u *PolicyEvaluationLogUpdateOne) SetNillableMembershipID(v *uint32) *PolicyEvaluationLogUpdateOne {
 	if v != nil {
-		_u.SetDeletedAt(*v)
+		_u.SetMembershipID(*v)
 	}
 	return _u
 }
 
-// ClearDeletedAt clears the value of the "deleted_at" field.
-func (_u *PolicyEvaluationLogUpdateOne) ClearDeletedAt() *PolicyEvaluationLogUpdateOne {
-	_u.mutation.ClearDeletedAt()
+// AddMembershipID adds value to the "membership_id" field.
+func (_u *PolicyEvaluationLogUpdateOne) AddMembershipID(v int32) *PolicyEvaluationLogUpdateOne {
+	_u.mutation.AddMembershipID(v)
 	return _u
 }
 
-// SetOperatorID sets the "operator_id" field.
-func (_u *PolicyEvaluationLogUpdateOne) SetOperatorID(v uint32) *PolicyEvaluationLogUpdateOne {
-	_u.mutation.ResetOperatorID()
-	_u.mutation.SetOperatorID(v)
+// SetPermissionID sets the "permission_id" field.
+func (_u *PolicyEvaluationLogUpdateOne) SetPermissionID(v uint32) *PolicyEvaluationLogUpdateOne {
+	_u.mutation.ResetPermissionID()
+	_u.mutation.SetPermissionID(v)
 	return _u
 }
 
-// SetNillableOperatorID sets the "operator_id" field if the given value is not nil.
-func (_u *PolicyEvaluationLogUpdateOne) SetNillableOperatorID(v *uint32) *PolicyEvaluationLogUpdateOne {
+// SetNillablePermissionID sets the "permission_id" field if the given value is not nil.
+func (_u *PolicyEvaluationLogUpdateOne) SetNillablePermissionID(v *uint32) *PolicyEvaluationLogUpdateOne {
 	if v != nil {
-		_u.SetOperatorID(*v)
+		_u.SetPermissionID(*v)
 	}
 	return _u
 }
 
-// AddOperatorID adds value to the "operator_id" field.
-func (_u *PolicyEvaluationLogUpdateOne) AddOperatorID(v int32) *PolicyEvaluationLogUpdateOne {
-	_u.mutation.AddOperatorID(v)
+// AddPermissionID adds value to the "permission_id" field.
+func (_u *PolicyEvaluationLogUpdateOne) AddPermissionID(v int32) *PolicyEvaluationLogUpdateOne {
+	_u.mutation.AddPermissionID(v)
 	return _u
 }
 
-// ClearOperatorID clears the value of the "operator_id" field.
-func (_u *PolicyEvaluationLogUpdateOne) ClearOperatorID() *PolicyEvaluationLogUpdateOne {
-	_u.mutation.ClearOperatorID()
+// SetPolicyID sets the "policy_id" field.
+func (_u *PolicyEvaluationLogUpdateOne) SetPolicyID(v uint32) *PolicyEvaluationLogUpdateOne {
+	_u.mutation.ResetPolicyID()
+	_u.mutation.SetPolicyID(v)
 	return _u
 }
 
-// SetPolicy sets the "policy" field.
-func (_u *PolicyEvaluationLogUpdateOne) SetPolicy(v string) *PolicyEvaluationLogUpdateOne {
-	_u.mutation.SetPolicy(v)
-	return _u
-}
-
-// SetNillablePolicy sets the "policy" field if the given value is not nil.
-func (_u *PolicyEvaluationLogUpdateOne) SetNillablePolicy(v *string) *PolicyEvaluationLogUpdateOne {
+// SetNillablePolicyID sets the "policy_id" field if the given value is not nil.
+func (_u *PolicyEvaluationLogUpdateOne) SetNillablePolicyID(v *uint32) *PolicyEvaluationLogUpdateOne {
 	if v != nil {
-		_u.SetPolicy(*v)
+		_u.SetPolicyID(*v)
 	}
 	return _u
 }
 
-// ClearPolicy clears the value of the "policy" field.
-func (_u *PolicyEvaluationLogUpdateOne) ClearPolicy() *PolicyEvaluationLogUpdateOne {
-	_u.mutation.ClearPolicy()
+// AddPolicyID adds value to the "policy_id" field.
+func (_u *PolicyEvaluationLogUpdateOne) AddPolicyID(v int32) *PolicyEvaluationLogUpdateOne {
+	_u.mutation.AddPolicyID(v)
+	return _u
+}
+
+// ClearPolicyID clears the value of the "policy_id" field.
+func (_u *PolicyEvaluationLogUpdateOne) ClearPolicyID() *PolicyEvaluationLogUpdateOne {
+	_u.mutation.ClearPolicyID()
+	return _u
+}
+
+// SetRequestPath sets the "request_path" field.
+func (_u *PolicyEvaluationLogUpdateOne) SetRequestPath(v string) *PolicyEvaluationLogUpdateOne {
+	_u.mutation.SetRequestPath(v)
+	return _u
+}
+
+// SetNillableRequestPath sets the "request_path" field if the given value is not nil.
+func (_u *PolicyEvaluationLogUpdateOne) SetNillableRequestPath(v *string) *PolicyEvaluationLogUpdateOne {
+	if v != nil {
+		_u.SetRequestPath(*v)
+	}
+	return _u
+}
+
+// ClearRequestPath clears the value of the "request_path" field.
+func (_u *PolicyEvaluationLogUpdateOne) ClearRequestPath() *PolicyEvaluationLogUpdateOne {
+	_u.mutation.ClearRequestPath()
+	return _u
+}
+
+// SetRequestMethod sets the "request_method" field.
+func (_u *PolicyEvaluationLogUpdateOne) SetRequestMethod(v string) *PolicyEvaluationLogUpdateOne {
+	_u.mutation.SetRequestMethod(v)
+	return _u
+}
+
+// SetNillableRequestMethod sets the "request_method" field if the given value is not nil.
+func (_u *PolicyEvaluationLogUpdateOne) SetNillableRequestMethod(v *string) *PolicyEvaluationLogUpdateOne {
+	if v != nil {
+		_u.SetRequestMethod(*v)
+	}
+	return _u
+}
+
+// ClearRequestMethod clears the value of the "request_method" field.
+func (_u *PolicyEvaluationLogUpdateOne) ClearRequestMethod() *PolicyEvaluationLogUpdateOne {
+	_u.mutation.ClearRequestMethod()
 	return _u
 }
 
 // SetResult sets the "result" field.
-func (_u *PolicyEvaluationLogUpdateOne) SetResult(v string) *PolicyEvaluationLogUpdateOne {
+func (_u *PolicyEvaluationLogUpdateOne) SetResult(v bool) *PolicyEvaluationLogUpdateOne {
 	_u.mutation.SetResult(v)
 	return _u
 }
 
 // SetNillableResult sets the "result" field if the given value is not nil.
-func (_u *PolicyEvaluationLogUpdateOne) SetNillableResult(v *string) *PolicyEvaluationLogUpdateOne {
+func (_u *PolicyEvaluationLogUpdateOne) SetNillableResult(v *bool) *PolicyEvaluationLogUpdateOne {
 	if v != nil {
 		_u.SetResult(*v)
 	}
 	return _u
 }
 
-// ClearResult clears the value of the "result" field.
-func (_u *PolicyEvaluationLogUpdateOne) ClearResult() *PolicyEvaluationLogUpdateOne {
-	_u.mutation.ClearResult()
+// SetEffectDetails sets the "effect_details" field.
+func (_u *PolicyEvaluationLogUpdateOne) SetEffectDetails(v string) *PolicyEvaluationLogUpdateOne {
+	_u.mutation.SetEffectDetails(v)
 	return _u
 }
 
-// SetEvaluatedAt sets the "evaluated_at" field.
-func (_u *PolicyEvaluationLogUpdateOne) SetEvaluatedAt(v time.Time) *PolicyEvaluationLogUpdateOne {
-	_u.mutation.SetEvaluatedAt(v)
-	return _u
-}
-
-// SetNillableEvaluatedAt sets the "evaluated_at" field if the given value is not nil.
-func (_u *PolicyEvaluationLogUpdateOne) SetNillableEvaluatedAt(v *time.Time) *PolicyEvaluationLogUpdateOne {
+// SetNillableEffectDetails sets the "effect_details" field if the given value is not nil.
+func (_u *PolicyEvaluationLogUpdateOne) SetNillableEffectDetails(v *string) *PolicyEvaluationLogUpdateOne {
 	if v != nil {
-		_u.SetEvaluatedAt(*v)
+		_u.SetEffectDetails(*v)
 	}
 	return _u
 }
 
-// ClearEvaluatedAt clears the value of the "evaluated_at" field.
-func (_u *PolicyEvaluationLogUpdateOne) ClearEvaluatedAt() *PolicyEvaluationLogUpdateOne {
-	_u.mutation.ClearEvaluatedAt()
+// ClearEffectDetails clears the value of the "effect_details" field.
+func (_u *PolicyEvaluationLogUpdateOne) ClearEffectDetails() *PolicyEvaluationLogUpdateOne {
+	_u.mutation.ClearEffectDetails()
+	return _u
+}
+
+// SetScopeSQL sets the "scope_sql" field.
+func (_u *PolicyEvaluationLogUpdateOne) SetScopeSQL(v string) *PolicyEvaluationLogUpdateOne {
+	_u.mutation.SetScopeSQL(v)
+	return _u
+}
+
+// SetNillableScopeSQL sets the "scope_sql" field if the given value is not nil.
+func (_u *PolicyEvaluationLogUpdateOne) SetNillableScopeSQL(v *string) *PolicyEvaluationLogUpdateOne {
+	if v != nil {
+		_u.SetScopeSQL(*v)
+	}
+	return _u
+}
+
+// ClearScopeSQL clears the value of the "scope_sql" field.
+func (_u *PolicyEvaluationLogUpdateOne) ClearScopeSQL() *PolicyEvaluationLogUpdateOne {
+	_u.mutation.ClearScopeSQL()
+	return _u
+}
+
+// SetIPAddress sets the "ip_address" field.
+func (_u *PolicyEvaluationLogUpdateOne) SetIPAddress(v string) *PolicyEvaluationLogUpdateOne {
+	_u.mutation.SetIPAddress(v)
+	return _u
+}
+
+// SetNillableIPAddress sets the "ip_address" field if the given value is not nil.
+func (_u *PolicyEvaluationLogUpdateOne) SetNillableIPAddress(v *string) *PolicyEvaluationLogUpdateOne {
+	if v != nil {
+		_u.SetIPAddress(*v)
+	}
+	return _u
+}
+
+// ClearIPAddress clears the value of the "ip_address" field.
+func (_u *PolicyEvaluationLogUpdateOne) ClearIPAddress() *PolicyEvaluationLogUpdateOne {
+	_u.mutation.ClearIPAddress()
+	return _u
+}
+
+// SetTraceID sets the "trace_id" field.
+func (_u *PolicyEvaluationLogUpdateOne) SetTraceID(v string) *PolicyEvaluationLogUpdateOne {
+	_u.mutation.SetTraceID(v)
+	return _u
+}
+
+// SetNillableTraceID sets the "trace_id" field if the given value is not nil.
+func (_u *PolicyEvaluationLogUpdateOne) SetNillableTraceID(v *string) *PolicyEvaluationLogUpdateOne {
+	if v != nil {
+		_u.SetTraceID(*v)
+	}
+	return _u
+}
+
+// ClearTraceID clears the value of the "trace_id" field.
+func (_u *PolicyEvaluationLogUpdateOne) ClearTraceID() *PolicyEvaluationLogUpdateOne {
+	_u.mutation.ClearTraceID()
+	return _u
+}
+
+// SetEvaluationContext sets the "evaluation_context" field.
+func (_u *PolicyEvaluationLogUpdateOne) SetEvaluationContext(v string) *PolicyEvaluationLogUpdateOne {
+	_u.mutation.SetEvaluationContext(v)
+	return _u
+}
+
+// SetNillableEvaluationContext sets the "evaluation_context" field if the given value is not nil.
+func (_u *PolicyEvaluationLogUpdateOne) SetNillableEvaluationContext(v *string) *PolicyEvaluationLogUpdateOne {
+	if v != nil {
+		_u.SetEvaluationContext(*v)
+	}
+	return _u
+}
+
+// ClearEvaluationContext clears the value of the "evaluation_context" field.
+func (_u *PolicyEvaluationLogUpdateOne) ClearEvaluationContext() *PolicyEvaluationLogUpdateOne {
+	_u.mutation.ClearEvaluationContext()
+	return _u
+}
+
+// SetLogHash sets the "log_hash" field.
+func (_u *PolicyEvaluationLogUpdateOne) SetLogHash(v string) *PolicyEvaluationLogUpdateOne {
+	_u.mutation.SetLogHash(v)
+	return _u
+}
+
+// SetNillableLogHash sets the "log_hash" field if the given value is not nil.
+func (_u *PolicyEvaluationLogUpdateOne) SetNillableLogHash(v *string) *PolicyEvaluationLogUpdateOne {
+	if v != nil {
+		_u.SetLogHash(*v)
+	}
+	return _u
+}
+
+// ClearLogHash clears the value of the "log_hash" field.
+func (_u *PolicyEvaluationLogUpdateOne) ClearLogHash() *PolicyEvaluationLogUpdateOne {
+	_u.mutation.ClearLogHash()
+	return _u
+}
+
+// SetSignature sets the "signature" field.
+func (_u *PolicyEvaluationLogUpdateOne) SetSignature(v []byte) *PolicyEvaluationLogUpdateOne {
+	_u.mutation.SetSignature(v)
+	return _u
+}
+
+// ClearSignature clears the value of the "signature" field.
+func (_u *PolicyEvaluationLogUpdateOne) ClearSignature() *PolicyEvaluationLogUpdateOne {
+	_u.mutation.ClearSignature()
 	return _u
 }
 
@@ -460,21 +784,6 @@ func (_u *PolicyEvaluationLogUpdateOne) ExecX(ctx context.Context) {
 	}
 }
 
-// check runs all checks and user-defined validators on the builder.
-func (_u *PolicyEvaluationLogUpdateOne) check() error {
-	if v, ok := _u.mutation.Policy(); ok {
-		if err := policyevaluationlog.PolicyValidator(v); err != nil {
-			return &ValidationError{Name: "policy", err: fmt.Errorf(`ent: validator failed for field "PolicyEvaluationLog.policy": %w`, err)}
-		}
-	}
-	if v, ok := _u.mutation.Result(); ok {
-		if err := policyevaluationlog.ResultValidator(v); err != nil {
-			return &ValidationError{Name: "result", err: fmt.Errorf(`ent: validator failed for field "PolicyEvaluationLog.result": %w`, err)}
-		}
-	}
-	return nil
-}
-
 // Modify adds a statement modifier for attaching custom logic to the UPDATE statement.
 func (_u *PolicyEvaluationLogUpdateOne) Modify(modifiers ...func(u *sql.UpdateBuilder)) *PolicyEvaluationLogUpdateOne {
 	_u.modifiers = append(_u.modifiers, modifiers...)
@@ -482,9 +791,6 @@ func (_u *PolicyEvaluationLogUpdateOne) Modify(modifiers ...func(u *sql.UpdateBu
 }
 
 func (_u *PolicyEvaluationLogUpdateOne) sqlSave(ctx context.Context) (_node *PolicyEvaluationLog, err error) {
-	if err := _u.check(); err != nil {
-		return _node, err
-	}
 	_spec := sqlgraph.NewUpdateSpec(policyevaluationlog.Table, policyevaluationlog.Columns, sqlgraph.NewFieldSpec(policyevaluationlog.FieldID, field.TypeUint32))
 	id, ok := _u.mutation.ID()
 	if !ok {
@@ -513,47 +819,92 @@ func (_u *PolicyEvaluationLogUpdateOne) sqlSave(ctx context.Context) (_node *Pol
 	if _u.mutation.CreatedAtCleared() {
 		_spec.ClearField(policyevaluationlog.FieldCreatedAt, field.TypeTime)
 	}
-	if value, ok := _u.mutation.UpdatedAt(); ok {
-		_spec.SetField(policyevaluationlog.FieldUpdatedAt, field.TypeTime, value)
-	}
-	if _u.mutation.UpdatedAtCleared() {
-		_spec.ClearField(policyevaluationlog.FieldUpdatedAt, field.TypeTime)
-	}
-	if value, ok := _u.mutation.DeletedAt(); ok {
-		_spec.SetField(policyevaluationlog.FieldDeletedAt, field.TypeTime, value)
-	}
-	if _u.mutation.DeletedAtCleared() {
-		_spec.ClearField(policyevaluationlog.FieldDeletedAt, field.TypeTime)
-	}
 	if _u.mutation.TenantIDCleared() {
 		_spec.ClearField(policyevaluationlog.FieldTenantID, field.TypeUint32)
 	}
-	if value, ok := _u.mutation.OperatorID(); ok {
-		_spec.SetField(policyevaluationlog.FieldOperatorID, field.TypeUint32, value)
+	if value, ok := _u.mutation.UserID(); ok {
+		_spec.SetField(policyevaluationlog.FieldUserID, field.TypeUint32, value)
 	}
-	if value, ok := _u.mutation.AddedOperatorID(); ok {
-		_spec.AddField(policyevaluationlog.FieldOperatorID, field.TypeUint32, value)
+	if value, ok := _u.mutation.AddedUserID(); ok {
+		_spec.AddField(policyevaluationlog.FieldUserID, field.TypeUint32, value)
 	}
-	if _u.mutation.OperatorIDCleared() {
-		_spec.ClearField(policyevaluationlog.FieldOperatorID, field.TypeUint32)
+	if value, ok := _u.mutation.MembershipID(); ok {
+		_spec.SetField(policyevaluationlog.FieldMembershipID, field.TypeUint32, value)
 	}
-	if value, ok := _u.mutation.Policy(); ok {
-		_spec.SetField(policyevaluationlog.FieldPolicy, field.TypeString, value)
+	if value, ok := _u.mutation.AddedMembershipID(); ok {
+		_spec.AddField(policyevaluationlog.FieldMembershipID, field.TypeUint32, value)
 	}
-	if _u.mutation.PolicyCleared() {
-		_spec.ClearField(policyevaluationlog.FieldPolicy, field.TypeString)
+	if value, ok := _u.mutation.PermissionID(); ok {
+		_spec.SetField(policyevaluationlog.FieldPermissionID, field.TypeUint32, value)
+	}
+	if value, ok := _u.mutation.AddedPermissionID(); ok {
+		_spec.AddField(policyevaluationlog.FieldPermissionID, field.TypeUint32, value)
+	}
+	if value, ok := _u.mutation.PolicyID(); ok {
+		_spec.SetField(policyevaluationlog.FieldPolicyID, field.TypeUint32, value)
+	}
+	if value, ok := _u.mutation.AddedPolicyID(); ok {
+		_spec.AddField(policyevaluationlog.FieldPolicyID, field.TypeUint32, value)
+	}
+	if _u.mutation.PolicyIDCleared() {
+		_spec.ClearField(policyevaluationlog.FieldPolicyID, field.TypeUint32)
+	}
+	if value, ok := _u.mutation.RequestPath(); ok {
+		_spec.SetField(policyevaluationlog.FieldRequestPath, field.TypeString, value)
+	}
+	if _u.mutation.RequestPathCleared() {
+		_spec.ClearField(policyevaluationlog.FieldRequestPath, field.TypeString)
+	}
+	if value, ok := _u.mutation.RequestMethod(); ok {
+		_spec.SetField(policyevaluationlog.FieldRequestMethod, field.TypeString, value)
+	}
+	if _u.mutation.RequestMethodCleared() {
+		_spec.ClearField(policyevaluationlog.FieldRequestMethod, field.TypeString)
 	}
 	if value, ok := _u.mutation.Result(); ok {
-		_spec.SetField(policyevaluationlog.FieldResult, field.TypeString, value)
+		_spec.SetField(policyevaluationlog.FieldResult, field.TypeBool, value)
 	}
-	if _u.mutation.ResultCleared() {
-		_spec.ClearField(policyevaluationlog.FieldResult, field.TypeString)
+	if value, ok := _u.mutation.EffectDetails(); ok {
+		_spec.SetField(policyevaluationlog.FieldEffectDetails, field.TypeString, value)
 	}
-	if value, ok := _u.mutation.EvaluatedAt(); ok {
-		_spec.SetField(policyevaluationlog.FieldEvaluatedAt, field.TypeTime, value)
+	if _u.mutation.EffectDetailsCleared() {
+		_spec.ClearField(policyevaluationlog.FieldEffectDetails, field.TypeString)
 	}
-	if _u.mutation.EvaluatedAtCleared() {
-		_spec.ClearField(policyevaluationlog.FieldEvaluatedAt, field.TypeTime)
+	if value, ok := _u.mutation.ScopeSQL(); ok {
+		_spec.SetField(policyevaluationlog.FieldScopeSQL, field.TypeString, value)
+	}
+	if _u.mutation.ScopeSQLCleared() {
+		_spec.ClearField(policyevaluationlog.FieldScopeSQL, field.TypeString)
+	}
+	if value, ok := _u.mutation.IPAddress(); ok {
+		_spec.SetField(policyevaluationlog.FieldIPAddress, field.TypeString, value)
+	}
+	if _u.mutation.IPAddressCleared() {
+		_spec.ClearField(policyevaluationlog.FieldIPAddress, field.TypeString)
+	}
+	if value, ok := _u.mutation.TraceID(); ok {
+		_spec.SetField(policyevaluationlog.FieldTraceID, field.TypeString, value)
+	}
+	if _u.mutation.TraceIDCleared() {
+		_spec.ClearField(policyevaluationlog.FieldTraceID, field.TypeString)
+	}
+	if value, ok := _u.mutation.EvaluationContext(); ok {
+		_spec.SetField(policyevaluationlog.FieldEvaluationContext, field.TypeString, value)
+	}
+	if _u.mutation.EvaluationContextCleared() {
+		_spec.ClearField(policyevaluationlog.FieldEvaluationContext, field.TypeString)
+	}
+	if value, ok := _u.mutation.LogHash(); ok {
+		_spec.SetField(policyevaluationlog.FieldLogHash, field.TypeString, value)
+	}
+	if _u.mutation.LogHashCleared() {
+		_spec.ClearField(policyevaluationlog.FieldLogHash, field.TypeString)
+	}
+	if value, ok := _u.mutation.Signature(); ok {
+		_spec.SetField(policyevaluationlog.FieldSignature, field.TypeBytes, value)
+	}
+	if _u.mutation.SignatureCleared() {
+		_spec.ClearField(policyevaluationlog.FieldSignature, field.TypeBytes)
 	}
 	_spec.AddModifiers(_u.modifiers...)
 	_node = &PolicyEvaluationLog{config: _u.config}

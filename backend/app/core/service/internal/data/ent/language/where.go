@@ -84,19 +84,34 @@ func DeletedBy(v uint32) predicate.Language {
 	return predicate.Language(sql.FieldEQ(FieldDeletedBy, v))
 }
 
-// Code applies equality check predicate on the "code" field. It's identical to CodeEQ.
-func Code(v string) predicate.Language {
-	return predicate.Language(sql.FieldEQ(FieldCode, v))
+// SortOrder applies equality check predicate on the "sort_order" field. It's identical to SortOrderEQ.
+func SortOrder(v uint32) predicate.Language {
+	return predicate.Language(sql.FieldEQ(FieldSortOrder, v))
 }
 
-// Name applies equality check predicate on the "name" field. It's identical to NameEQ.
-func Name(v string) predicate.Language {
-	return predicate.Language(sql.FieldEQ(FieldName, v))
+// IsEnabled applies equality check predicate on the "is_enabled" field. It's identical to IsEnabledEQ.
+func IsEnabled(v bool) predicate.Language {
+	return predicate.Language(sql.FieldEQ(FieldIsEnabled, v))
 }
 
-// Enable applies equality check predicate on the "enable" field. It's identical to EnableEQ.
-func Enable(v bool) predicate.Language {
-	return predicate.Language(sql.FieldEQ(FieldEnable, v))
+// LanguageCode applies equality check predicate on the "language_code" field. It's identical to LanguageCodeEQ.
+func LanguageCode(v string) predicate.Language {
+	return predicate.Language(sql.FieldEQ(FieldLanguageCode, v))
+}
+
+// LanguageName applies equality check predicate on the "language_name" field. It's identical to LanguageNameEQ.
+func LanguageName(v string) predicate.Language {
+	return predicate.Language(sql.FieldEQ(FieldLanguageName, v))
+}
+
+// NativeName applies equality check predicate on the "native_name" field. It's identical to NativeNameEQ.
+func NativeName(v string) predicate.Language {
+	return predicate.Language(sql.FieldEQ(FieldNativeName, v))
+}
+
+// IsDefault applies equality check predicate on the "is_default" field. It's identical to IsDefaultEQ.
+func IsDefault(v bool) predicate.Language {
+	return predicate.Language(sql.FieldEQ(FieldIsDefault, v))
 }
 
 // CreatedAtEQ applies the EQ predicate on the "created_at" field.
@@ -399,174 +414,319 @@ func DeletedByNotNil() predicate.Language {
 	return predicate.Language(sql.FieldNotNull(FieldDeletedBy))
 }
 
-// CodeEQ applies the EQ predicate on the "code" field.
-func CodeEQ(v string) predicate.Language {
-	return predicate.Language(sql.FieldEQ(FieldCode, v))
+// SortOrderEQ applies the EQ predicate on the "sort_order" field.
+func SortOrderEQ(v uint32) predicate.Language {
+	return predicate.Language(sql.FieldEQ(FieldSortOrder, v))
 }
 
-// CodeNEQ applies the NEQ predicate on the "code" field.
-func CodeNEQ(v string) predicate.Language {
-	return predicate.Language(sql.FieldNEQ(FieldCode, v))
+// SortOrderNEQ applies the NEQ predicate on the "sort_order" field.
+func SortOrderNEQ(v uint32) predicate.Language {
+	return predicate.Language(sql.FieldNEQ(FieldSortOrder, v))
 }
 
-// CodeIn applies the In predicate on the "code" field.
-func CodeIn(vs ...string) predicate.Language {
-	return predicate.Language(sql.FieldIn(FieldCode, vs...))
+// SortOrderIn applies the In predicate on the "sort_order" field.
+func SortOrderIn(vs ...uint32) predicate.Language {
+	return predicate.Language(sql.FieldIn(FieldSortOrder, vs...))
 }
 
-// CodeNotIn applies the NotIn predicate on the "code" field.
-func CodeNotIn(vs ...string) predicate.Language {
-	return predicate.Language(sql.FieldNotIn(FieldCode, vs...))
+// SortOrderNotIn applies the NotIn predicate on the "sort_order" field.
+func SortOrderNotIn(vs ...uint32) predicate.Language {
+	return predicate.Language(sql.FieldNotIn(FieldSortOrder, vs...))
 }
 
-// CodeGT applies the GT predicate on the "code" field.
-func CodeGT(v string) predicate.Language {
-	return predicate.Language(sql.FieldGT(FieldCode, v))
+// SortOrderGT applies the GT predicate on the "sort_order" field.
+func SortOrderGT(v uint32) predicate.Language {
+	return predicate.Language(sql.FieldGT(FieldSortOrder, v))
 }
 
-// CodeGTE applies the GTE predicate on the "code" field.
-func CodeGTE(v string) predicate.Language {
-	return predicate.Language(sql.FieldGTE(FieldCode, v))
+// SortOrderGTE applies the GTE predicate on the "sort_order" field.
+func SortOrderGTE(v uint32) predicate.Language {
+	return predicate.Language(sql.FieldGTE(FieldSortOrder, v))
 }
 
-// CodeLT applies the LT predicate on the "code" field.
-func CodeLT(v string) predicate.Language {
-	return predicate.Language(sql.FieldLT(FieldCode, v))
+// SortOrderLT applies the LT predicate on the "sort_order" field.
+func SortOrderLT(v uint32) predicate.Language {
+	return predicate.Language(sql.FieldLT(FieldSortOrder, v))
 }
 
-// CodeLTE applies the LTE predicate on the "code" field.
-func CodeLTE(v string) predicate.Language {
-	return predicate.Language(sql.FieldLTE(FieldCode, v))
+// SortOrderLTE applies the LTE predicate on the "sort_order" field.
+func SortOrderLTE(v uint32) predicate.Language {
+	return predicate.Language(sql.FieldLTE(FieldSortOrder, v))
 }
 
-// CodeContains applies the Contains predicate on the "code" field.
-func CodeContains(v string) predicate.Language {
-	return predicate.Language(sql.FieldContains(FieldCode, v))
+// SortOrderIsNil applies the IsNil predicate on the "sort_order" field.
+func SortOrderIsNil() predicate.Language {
+	return predicate.Language(sql.FieldIsNull(FieldSortOrder))
 }
 
-// CodeHasPrefix applies the HasPrefix predicate on the "code" field.
-func CodeHasPrefix(v string) predicate.Language {
-	return predicate.Language(sql.FieldHasPrefix(FieldCode, v))
+// SortOrderNotNil applies the NotNil predicate on the "sort_order" field.
+func SortOrderNotNil() predicate.Language {
+	return predicate.Language(sql.FieldNotNull(FieldSortOrder))
 }
 
-// CodeHasSuffix applies the HasSuffix predicate on the "code" field.
-func CodeHasSuffix(v string) predicate.Language {
-	return predicate.Language(sql.FieldHasSuffix(FieldCode, v))
+// IsEnabledEQ applies the EQ predicate on the "is_enabled" field.
+func IsEnabledEQ(v bool) predicate.Language {
+	return predicate.Language(sql.FieldEQ(FieldIsEnabled, v))
 }
 
-// CodeIsNil applies the IsNil predicate on the "code" field.
-func CodeIsNil() predicate.Language {
-	return predicate.Language(sql.FieldIsNull(FieldCode))
+// IsEnabledNEQ applies the NEQ predicate on the "is_enabled" field.
+func IsEnabledNEQ(v bool) predicate.Language {
+	return predicate.Language(sql.FieldNEQ(FieldIsEnabled, v))
 }
 
-// CodeNotNil applies the NotNil predicate on the "code" field.
-func CodeNotNil() predicate.Language {
-	return predicate.Language(sql.FieldNotNull(FieldCode))
+// IsEnabledIsNil applies the IsNil predicate on the "is_enabled" field.
+func IsEnabledIsNil() predicate.Language {
+	return predicate.Language(sql.FieldIsNull(FieldIsEnabled))
 }
 
-// CodeEqualFold applies the EqualFold predicate on the "code" field.
-func CodeEqualFold(v string) predicate.Language {
-	return predicate.Language(sql.FieldEqualFold(FieldCode, v))
+// IsEnabledNotNil applies the NotNil predicate on the "is_enabled" field.
+func IsEnabledNotNil() predicate.Language {
+	return predicate.Language(sql.FieldNotNull(FieldIsEnabled))
 }
 
-// CodeContainsFold applies the ContainsFold predicate on the "code" field.
-func CodeContainsFold(v string) predicate.Language {
-	return predicate.Language(sql.FieldContainsFold(FieldCode, v))
+// LanguageCodeEQ applies the EQ predicate on the "language_code" field.
+func LanguageCodeEQ(v string) predicate.Language {
+	return predicate.Language(sql.FieldEQ(FieldLanguageCode, v))
 }
 
-// NameEQ applies the EQ predicate on the "name" field.
-func NameEQ(v string) predicate.Language {
-	return predicate.Language(sql.FieldEQ(FieldName, v))
+// LanguageCodeNEQ applies the NEQ predicate on the "language_code" field.
+func LanguageCodeNEQ(v string) predicate.Language {
+	return predicate.Language(sql.FieldNEQ(FieldLanguageCode, v))
 }
 
-// NameNEQ applies the NEQ predicate on the "name" field.
-func NameNEQ(v string) predicate.Language {
-	return predicate.Language(sql.FieldNEQ(FieldName, v))
+// LanguageCodeIn applies the In predicate on the "language_code" field.
+func LanguageCodeIn(vs ...string) predicate.Language {
+	return predicate.Language(sql.FieldIn(FieldLanguageCode, vs...))
 }
 
-// NameIn applies the In predicate on the "name" field.
-func NameIn(vs ...string) predicate.Language {
-	return predicate.Language(sql.FieldIn(FieldName, vs...))
+// LanguageCodeNotIn applies the NotIn predicate on the "language_code" field.
+func LanguageCodeNotIn(vs ...string) predicate.Language {
+	return predicate.Language(sql.FieldNotIn(FieldLanguageCode, vs...))
 }
 
-// NameNotIn applies the NotIn predicate on the "name" field.
-func NameNotIn(vs ...string) predicate.Language {
-	return predicate.Language(sql.FieldNotIn(FieldName, vs...))
+// LanguageCodeGT applies the GT predicate on the "language_code" field.
+func LanguageCodeGT(v string) predicate.Language {
+	return predicate.Language(sql.FieldGT(FieldLanguageCode, v))
 }
 
-// NameGT applies the GT predicate on the "name" field.
-func NameGT(v string) predicate.Language {
-	return predicate.Language(sql.FieldGT(FieldName, v))
+// LanguageCodeGTE applies the GTE predicate on the "language_code" field.
+func LanguageCodeGTE(v string) predicate.Language {
+	return predicate.Language(sql.FieldGTE(FieldLanguageCode, v))
 }
 
-// NameGTE applies the GTE predicate on the "name" field.
-func NameGTE(v string) predicate.Language {
-	return predicate.Language(sql.FieldGTE(FieldName, v))
+// LanguageCodeLT applies the LT predicate on the "language_code" field.
+func LanguageCodeLT(v string) predicate.Language {
+	return predicate.Language(sql.FieldLT(FieldLanguageCode, v))
 }
 
-// NameLT applies the LT predicate on the "name" field.
-func NameLT(v string) predicate.Language {
-	return predicate.Language(sql.FieldLT(FieldName, v))
+// LanguageCodeLTE applies the LTE predicate on the "language_code" field.
+func LanguageCodeLTE(v string) predicate.Language {
+	return predicate.Language(sql.FieldLTE(FieldLanguageCode, v))
 }
 
-// NameLTE applies the LTE predicate on the "name" field.
-func NameLTE(v string) predicate.Language {
-	return predicate.Language(sql.FieldLTE(FieldName, v))
+// LanguageCodeContains applies the Contains predicate on the "language_code" field.
+func LanguageCodeContains(v string) predicate.Language {
+	return predicate.Language(sql.FieldContains(FieldLanguageCode, v))
 }
 
-// NameContains applies the Contains predicate on the "name" field.
-func NameContains(v string) predicate.Language {
-	return predicate.Language(sql.FieldContains(FieldName, v))
+// LanguageCodeHasPrefix applies the HasPrefix predicate on the "language_code" field.
+func LanguageCodeHasPrefix(v string) predicate.Language {
+	return predicate.Language(sql.FieldHasPrefix(FieldLanguageCode, v))
 }
 
-// NameHasPrefix applies the HasPrefix predicate on the "name" field.
-func NameHasPrefix(v string) predicate.Language {
-	return predicate.Language(sql.FieldHasPrefix(FieldName, v))
+// LanguageCodeHasSuffix applies the HasSuffix predicate on the "language_code" field.
+func LanguageCodeHasSuffix(v string) predicate.Language {
+	return predicate.Language(sql.FieldHasSuffix(FieldLanguageCode, v))
 }
 
-// NameHasSuffix applies the HasSuffix predicate on the "name" field.
-func NameHasSuffix(v string) predicate.Language {
-	return predicate.Language(sql.FieldHasSuffix(FieldName, v))
+// LanguageCodeIsNil applies the IsNil predicate on the "language_code" field.
+func LanguageCodeIsNil() predicate.Language {
+	return predicate.Language(sql.FieldIsNull(FieldLanguageCode))
 }
 
-// NameIsNil applies the IsNil predicate on the "name" field.
-func NameIsNil() predicate.Language {
-	return predicate.Language(sql.FieldIsNull(FieldName))
+// LanguageCodeNotNil applies the NotNil predicate on the "language_code" field.
+func LanguageCodeNotNil() predicate.Language {
+	return predicate.Language(sql.FieldNotNull(FieldLanguageCode))
 }
 
-// NameNotNil applies the NotNil predicate on the "name" field.
-func NameNotNil() predicate.Language {
-	return predicate.Language(sql.FieldNotNull(FieldName))
+// LanguageCodeEqualFold applies the EqualFold predicate on the "language_code" field.
+func LanguageCodeEqualFold(v string) predicate.Language {
+	return predicate.Language(sql.FieldEqualFold(FieldLanguageCode, v))
 }
 
-// NameEqualFold applies the EqualFold predicate on the "name" field.
-func NameEqualFold(v string) predicate.Language {
-	return predicate.Language(sql.FieldEqualFold(FieldName, v))
+// LanguageCodeContainsFold applies the ContainsFold predicate on the "language_code" field.
+func LanguageCodeContainsFold(v string) predicate.Language {
+	return predicate.Language(sql.FieldContainsFold(FieldLanguageCode, v))
 }
 
-// NameContainsFold applies the ContainsFold predicate on the "name" field.
-func NameContainsFold(v string) predicate.Language {
-	return predicate.Language(sql.FieldContainsFold(FieldName, v))
+// LanguageNameEQ applies the EQ predicate on the "language_name" field.
+func LanguageNameEQ(v string) predicate.Language {
+	return predicate.Language(sql.FieldEQ(FieldLanguageName, v))
 }
 
-// EnableEQ applies the EQ predicate on the "enable" field.
-func EnableEQ(v bool) predicate.Language {
-	return predicate.Language(sql.FieldEQ(FieldEnable, v))
+// LanguageNameNEQ applies the NEQ predicate on the "language_name" field.
+func LanguageNameNEQ(v string) predicate.Language {
+	return predicate.Language(sql.FieldNEQ(FieldLanguageName, v))
 }
 
-// EnableNEQ applies the NEQ predicate on the "enable" field.
-func EnableNEQ(v bool) predicate.Language {
-	return predicate.Language(sql.FieldNEQ(FieldEnable, v))
+// LanguageNameIn applies the In predicate on the "language_name" field.
+func LanguageNameIn(vs ...string) predicate.Language {
+	return predicate.Language(sql.FieldIn(FieldLanguageName, vs...))
 }
 
-// EnableIsNil applies the IsNil predicate on the "enable" field.
-func EnableIsNil() predicate.Language {
-	return predicate.Language(sql.FieldIsNull(FieldEnable))
+// LanguageNameNotIn applies the NotIn predicate on the "language_name" field.
+func LanguageNameNotIn(vs ...string) predicate.Language {
+	return predicate.Language(sql.FieldNotIn(FieldLanguageName, vs...))
 }
 
-// EnableNotNil applies the NotNil predicate on the "enable" field.
-func EnableNotNil() predicate.Language {
-	return predicate.Language(sql.FieldNotNull(FieldEnable))
+// LanguageNameGT applies the GT predicate on the "language_name" field.
+func LanguageNameGT(v string) predicate.Language {
+	return predicate.Language(sql.FieldGT(FieldLanguageName, v))
+}
+
+// LanguageNameGTE applies the GTE predicate on the "language_name" field.
+func LanguageNameGTE(v string) predicate.Language {
+	return predicate.Language(sql.FieldGTE(FieldLanguageName, v))
+}
+
+// LanguageNameLT applies the LT predicate on the "language_name" field.
+func LanguageNameLT(v string) predicate.Language {
+	return predicate.Language(sql.FieldLT(FieldLanguageName, v))
+}
+
+// LanguageNameLTE applies the LTE predicate on the "language_name" field.
+func LanguageNameLTE(v string) predicate.Language {
+	return predicate.Language(sql.FieldLTE(FieldLanguageName, v))
+}
+
+// LanguageNameContains applies the Contains predicate on the "language_name" field.
+func LanguageNameContains(v string) predicate.Language {
+	return predicate.Language(sql.FieldContains(FieldLanguageName, v))
+}
+
+// LanguageNameHasPrefix applies the HasPrefix predicate on the "language_name" field.
+func LanguageNameHasPrefix(v string) predicate.Language {
+	return predicate.Language(sql.FieldHasPrefix(FieldLanguageName, v))
+}
+
+// LanguageNameHasSuffix applies the HasSuffix predicate on the "language_name" field.
+func LanguageNameHasSuffix(v string) predicate.Language {
+	return predicate.Language(sql.FieldHasSuffix(FieldLanguageName, v))
+}
+
+// LanguageNameIsNil applies the IsNil predicate on the "language_name" field.
+func LanguageNameIsNil() predicate.Language {
+	return predicate.Language(sql.FieldIsNull(FieldLanguageName))
+}
+
+// LanguageNameNotNil applies the NotNil predicate on the "language_name" field.
+func LanguageNameNotNil() predicate.Language {
+	return predicate.Language(sql.FieldNotNull(FieldLanguageName))
+}
+
+// LanguageNameEqualFold applies the EqualFold predicate on the "language_name" field.
+func LanguageNameEqualFold(v string) predicate.Language {
+	return predicate.Language(sql.FieldEqualFold(FieldLanguageName, v))
+}
+
+// LanguageNameContainsFold applies the ContainsFold predicate on the "language_name" field.
+func LanguageNameContainsFold(v string) predicate.Language {
+	return predicate.Language(sql.FieldContainsFold(FieldLanguageName, v))
+}
+
+// NativeNameEQ applies the EQ predicate on the "native_name" field.
+func NativeNameEQ(v string) predicate.Language {
+	return predicate.Language(sql.FieldEQ(FieldNativeName, v))
+}
+
+// NativeNameNEQ applies the NEQ predicate on the "native_name" field.
+func NativeNameNEQ(v string) predicate.Language {
+	return predicate.Language(sql.FieldNEQ(FieldNativeName, v))
+}
+
+// NativeNameIn applies the In predicate on the "native_name" field.
+func NativeNameIn(vs ...string) predicate.Language {
+	return predicate.Language(sql.FieldIn(FieldNativeName, vs...))
+}
+
+// NativeNameNotIn applies the NotIn predicate on the "native_name" field.
+func NativeNameNotIn(vs ...string) predicate.Language {
+	return predicate.Language(sql.FieldNotIn(FieldNativeName, vs...))
+}
+
+// NativeNameGT applies the GT predicate on the "native_name" field.
+func NativeNameGT(v string) predicate.Language {
+	return predicate.Language(sql.FieldGT(FieldNativeName, v))
+}
+
+// NativeNameGTE applies the GTE predicate on the "native_name" field.
+func NativeNameGTE(v string) predicate.Language {
+	return predicate.Language(sql.FieldGTE(FieldNativeName, v))
+}
+
+// NativeNameLT applies the LT predicate on the "native_name" field.
+func NativeNameLT(v string) predicate.Language {
+	return predicate.Language(sql.FieldLT(FieldNativeName, v))
+}
+
+// NativeNameLTE applies the LTE predicate on the "native_name" field.
+func NativeNameLTE(v string) predicate.Language {
+	return predicate.Language(sql.FieldLTE(FieldNativeName, v))
+}
+
+// NativeNameContains applies the Contains predicate on the "native_name" field.
+func NativeNameContains(v string) predicate.Language {
+	return predicate.Language(sql.FieldContains(FieldNativeName, v))
+}
+
+// NativeNameHasPrefix applies the HasPrefix predicate on the "native_name" field.
+func NativeNameHasPrefix(v string) predicate.Language {
+	return predicate.Language(sql.FieldHasPrefix(FieldNativeName, v))
+}
+
+// NativeNameHasSuffix applies the HasSuffix predicate on the "native_name" field.
+func NativeNameHasSuffix(v string) predicate.Language {
+	return predicate.Language(sql.FieldHasSuffix(FieldNativeName, v))
+}
+
+// NativeNameIsNil applies the IsNil predicate on the "native_name" field.
+func NativeNameIsNil() predicate.Language {
+	return predicate.Language(sql.FieldIsNull(FieldNativeName))
+}
+
+// NativeNameNotNil applies the NotNil predicate on the "native_name" field.
+func NativeNameNotNil() predicate.Language {
+	return predicate.Language(sql.FieldNotNull(FieldNativeName))
+}
+
+// NativeNameEqualFold applies the EqualFold predicate on the "native_name" field.
+func NativeNameEqualFold(v string) predicate.Language {
+	return predicate.Language(sql.FieldEqualFold(FieldNativeName, v))
+}
+
+// NativeNameContainsFold applies the ContainsFold predicate on the "native_name" field.
+func NativeNameContainsFold(v string) predicate.Language {
+	return predicate.Language(sql.FieldContainsFold(FieldNativeName, v))
+}
+
+// IsDefaultEQ applies the EQ predicate on the "is_default" field.
+func IsDefaultEQ(v bool) predicate.Language {
+	return predicate.Language(sql.FieldEQ(FieldIsDefault, v))
+}
+
+// IsDefaultNEQ applies the NEQ predicate on the "is_default" field.
+func IsDefaultNEQ(v bool) predicate.Language {
+	return predicate.Language(sql.FieldNEQ(FieldIsDefault, v))
+}
+
+// IsDefaultIsNil applies the IsNil predicate on the "is_default" field.
+func IsDefaultIsNil() predicate.Language {
+	return predicate.Language(sql.FieldIsNull(FieldIsDefault))
+}
+
+// IsDefaultNotNil applies the NotNil predicate on the "is_default" field.
+func IsDefaultNotNil() predicate.Language {
+	return predicate.Language(sql.FieldNotNull(FieldIsDefault))
 }
 
 // And groups predicates with the AND operator between them.

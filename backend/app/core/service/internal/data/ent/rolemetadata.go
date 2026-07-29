@@ -3,7 +3,9 @@
 package ent
 
 import (
+	"encoding/json"
 	"fmt"
+	permissionpb "go-wind-ledger/api/gen/go/permission/service/v1"
 	"go-wind-ledger/app/core/service/internal/data/ent/rolemetadata"
 	"strings"
 	"time"
@@ -12,7 +14,7 @@ import (
 	"entgo.io/ent/dialect/sql"
 )
 
-// 角色元数据表
+// 角色元数据
 type RoleMetadata struct {
 	config `json:"-"`
 	// ID of the ent.
@@ -24,25 +26,33 @@ type RoleMetadata struct {
 	UpdatedAt *time.Time `json:"updated_at,omitempty"`
 	// 删除时间
 	DeletedAt *time.Time `json:"deleted_at,omitempty"`
+	// 创建者ID
+	CreatedBy *uint32 `json:"created_by,omitempty"`
+	// 更新者ID
+	UpdatedBy *uint32 `json:"updated_by,omitempty"`
+	// 删除者ID
+	DeletedBy *uint32 `json:"deleted_by,omitempty"`
 	// 租户ID
 	TenantID *uint32 `json:"tenant_id,omitempty"`
 	// 角色ID
 	RoleID *uint32 `json:"role_id,omitempty"`
-	// TemplateFor holds the value of the "template_for" field.
-	TemplateFor *string `json:"template_for,omitempty"`
-	// TemplateVersion holds the value of the "template_version" field.
-	TemplateVersion *int32 `json:"template_version,omitempty"`
-	// LastSyncedAt holds the value of the "last_synced_at" field.
-	LastSyncedAt *time.Time `json:"last_synced_at,omitempty"`
-	// LastSyncedVersion holds the value of the "last_synced_version" field.
-	LastSyncedVersion *int32 `json:"last_synced_version,omitempty"`
-	// IsTemplate holds the value of the "is_template" field.
+	// 是否是模版
 	IsTemplate *bool `json:"is_template,omitempty"`
-	// 键
-	Key *string `json:"key,omitempty"`
-	// 值
-	Value        *string `json:"value,omitempty"`
-	selectValues sql.SelectValues
+	// 模板适用对象
+	TemplateFor *string `json:"template_for,omitempty"`
+	// 模板版本号
+	TemplateVersion *int32 `json:"template_version,omitempty"`
+	// 上次同步的版本号
+	LastSyncedVersion *int32 `json:"last_synced_version,omitempty"`
+	// 最后同步时间
+	LastSyncedAt *time.Time `json:"last_synced_at,omitempty"`
+	// 同步策略
+	SyncPolicy *rolemetadata.SyncPolicy `json:"sync_policy,omitempty"`
+	// 作用域
+	Scope *rolemetadata.Scope `json:"scope,omitempty"`
+	// 租户自定义覆盖项
+	CustomOverrides *permissionpb.RoleOverride `json:"custom_overrides,omitempty"`
+	selectValues    sql.SelectValues
 }
 
 // scanValues returns the types for scanning values from sql.Rows.
@@ -50,11 +60,13 @@ func (*RoleMetadata) scanValues(columns []string) ([]any, error) {
 	values := make([]any, len(columns))
 	for i := range columns {
 		switch columns[i] {
+		case rolemetadata.FieldCustomOverrides:
+			values[i] = new([]byte)
 		case rolemetadata.FieldIsTemplate:
 			values[i] = new(sql.NullBool)
-		case rolemetadata.FieldID, rolemetadata.FieldTenantID, rolemetadata.FieldRoleID, rolemetadata.FieldTemplateVersion, rolemetadata.FieldLastSyncedVersion:
+		case rolemetadata.FieldID, rolemetadata.FieldCreatedBy, rolemetadata.FieldUpdatedBy, rolemetadata.FieldDeletedBy, rolemetadata.FieldTenantID, rolemetadata.FieldRoleID, rolemetadata.FieldTemplateVersion, rolemetadata.FieldLastSyncedVersion:
 			values[i] = new(sql.NullInt64)
-		case rolemetadata.FieldTemplateFor, rolemetadata.FieldKey, rolemetadata.FieldValue:
+		case rolemetadata.FieldTemplateFor, rolemetadata.FieldSyncPolicy, rolemetadata.FieldScope:
 			values[i] = new(sql.NullString)
 		case rolemetadata.FieldCreatedAt, rolemetadata.FieldUpdatedAt, rolemetadata.FieldDeletedAt, rolemetadata.FieldLastSyncedAt:
 			values[i] = new(sql.NullTime)
@@ -100,6 +112,27 @@ func (_m *RoleMetadata) assignValues(columns []string, values []any) error {
 				_m.DeletedAt = new(time.Time)
 				*_m.DeletedAt = value.Time
 			}
+		case rolemetadata.FieldCreatedBy:
+			if value, ok := values[i].(*sql.NullInt64); !ok {
+				return fmt.Errorf("unexpected type %T for field created_by", values[i])
+			} else if value.Valid {
+				_m.CreatedBy = new(uint32)
+				*_m.CreatedBy = uint32(value.Int64)
+			}
+		case rolemetadata.FieldUpdatedBy:
+			if value, ok := values[i].(*sql.NullInt64); !ok {
+				return fmt.Errorf("unexpected type %T for field updated_by", values[i])
+			} else if value.Valid {
+				_m.UpdatedBy = new(uint32)
+				*_m.UpdatedBy = uint32(value.Int64)
+			}
+		case rolemetadata.FieldDeletedBy:
+			if value, ok := values[i].(*sql.NullInt64); !ok {
+				return fmt.Errorf("unexpected type %T for field deleted_by", values[i])
+			} else if value.Valid {
+				_m.DeletedBy = new(uint32)
+				*_m.DeletedBy = uint32(value.Int64)
+			}
 		case rolemetadata.FieldTenantID:
 			if value, ok := values[i].(*sql.NullInt64); !ok {
 				return fmt.Errorf("unexpected type %T for field tenant_id", values[i])
@@ -113,6 +146,13 @@ func (_m *RoleMetadata) assignValues(columns []string, values []any) error {
 			} else if value.Valid {
 				_m.RoleID = new(uint32)
 				*_m.RoleID = uint32(value.Int64)
+			}
+		case rolemetadata.FieldIsTemplate:
+			if value, ok := values[i].(*sql.NullBool); !ok {
+				return fmt.Errorf("unexpected type %T for field is_template", values[i])
+			} else if value.Valid {
+				_m.IsTemplate = new(bool)
+				*_m.IsTemplate = value.Bool
 			}
 		case rolemetadata.FieldTemplateFor:
 			if value, ok := values[i].(*sql.NullString); !ok {
@@ -128,13 +168,6 @@ func (_m *RoleMetadata) assignValues(columns []string, values []any) error {
 				_m.TemplateVersion = new(int32)
 				*_m.TemplateVersion = int32(value.Int64)
 			}
-		case rolemetadata.FieldLastSyncedAt:
-			if value, ok := values[i].(*sql.NullTime); !ok {
-				return fmt.Errorf("unexpected type %T for field last_synced_at", values[i])
-			} else if value.Valid {
-				_m.LastSyncedAt = new(time.Time)
-				*_m.LastSyncedAt = value.Time
-			}
 		case rolemetadata.FieldLastSyncedVersion:
 			if value, ok := values[i].(*sql.NullInt64); !ok {
 				return fmt.Errorf("unexpected type %T for field last_synced_version", values[i])
@@ -142,26 +175,34 @@ func (_m *RoleMetadata) assignValues(columns []string, values []any) error {
 				_m.LastSyncedVersion = new(int32)
 				*_m.LastSyncedVersion = int32(value.Int64)
 			}
-		case rolemetadata.FieldIsTemplate:
-			if value, ok := values[i].(*sql.NullBool); !ok {
-				return fmt.Errorf("unexpected type %T for field is_template", values[i])
+		case rolemetadata.FieldLastSyncedAt:
+			if value, ok := values[i].(*sql.NullTime); !ok {
+				return fmt.Errorf("unexpected type %T for field last_synced_at", values[i])
 			} else if value.Valid {
-				_m.IsTemplate = new(bool)
-				*_m.IsTemplate = value.Bool
+				_m.LastSyncedAt = new(time.Time)
+				*_m.LastSyncedAt = value.Time
 			}
-		case rolemetadata.FieldKey:
+		case rolemetadata.FieldSyncPolicy:
 			if value, ok := values[i].(*sql.NullString); !ok {
-				return fmt.Errorf("unexpected type %T for field key", values[i])
+				return fmt.Errorf("unexpected type %T for field sync_policy", values[i])
 			} else if value.Valid {
-				_m.Key = new(string)
-				*_m.Key = value.String
+				_m.SyncPolicy = new(rolemetadata.SyncPolicy)
+				*_m.SyncPolicy = rolemetadata.SyncPolicy(value.String)
 			}
-		case rolemetadata.FieldValue:
+		case rolemetadata.FieldScope:
 			if value, ok := values[i].(*sql.NullString); !ok {
-				return fmt.Errorf("unexpected type %T for field value", values[i])
+				return fmt.Errorf("unexpected type %T for field scope", values[i])
 			} else if value.Valid {
-				_m.Value = new(string)
-				*_m.Value = value.String
+				_m.Scope = new(rolemetadata.Scope)
+				*_m.Scope = rolemetadata.Scope(value.String)
+			}
+		case rolemetadata.FieldCustomOverrides:
+			if value, ok := values[i].(*[]byte); !ok {
+				return fmt.Errorf("unexpected type %T for field custom_overrides", values[i])
+			} else if value != nil && len(*value) > 0 {
+				if err := json.Unmarshal(*value, &_m.CustomOverrides); err != nil {
+					return fmt.Errorf("unmarshal field custom_overrides: %w", err)
+				}
 			}
 		default:
 			_m.selectValues.Set(columns[i], values[i])
@@ -170,9 +211,9 @@ func (_m *RoleMetadata) assignValues(columns []string, values []any) error {
 	return nil
 }
 
-// GetValue returns the ent.Value that was dynamically selected and assigned to the RoleMetadata.
+// Value returns the ent.Value that was dynamically selected and assigned to the RoleMetadata.
 // This includes values selected through modifiers, order, etc.
-func (_m *RoleMetadata) GetValue(name string) (ent.Value, error) {
+func (_m *RoleMetadata) Value(name string) (ent.Value, error) {
 	return _m.selectValues.Get(name)
 }
 
@@ -214,6 +255,21 @@ func (_m *RoleMetadata) String() string {
 		builder.WriteString(v.Format(time.ANSIC))
 	}
 	builder.WriteString(", ")
+	if v := _m.CreatedBy; v != nil {
+		builder.WriteString("created_by=")
+		builder.WriteString(fmt.Sprintf("%v", *v))
+	}
+	builder.WriteString(", ")
+	if v := _m.UpdatedBy; v != nil {
+		builder.WriteString("updated_by=")
+		builder.WriteString(fmt.Sprintf("%v", *v))
+	}
+	builder.WriteString(", ")
+	if v := _m.DeletedBy; v != nil {
+		builder.WriteString("deleted_by=")
+		builder.WriteString(fmt.Sprintf("%v", *v))
+	}
+	builder.WriteString(", ")
 	if v := _m.TenantID; v != nil {
 		builder.WriteString("tenant_id=")
 		builder.WriteString(fmt.Sprintf("%v", *v))
@@ -221,6 +277,11 @@ func (_m *RoleMetadata) String() string {
 	builder.WriteString(", ")
 	if v := _m.RoleID; v != nil {
 		builder.WriteString("role_id=")
+		builder.WriteString(fmt.Sprintf("%v", *v))
+	}
+	builder.WriteString(", ")
+	if v := _m.IsTemplate; v != nil {
+		builder.WriteString("is_template=")
 		builder.WriteString(fmt.Sprintf("%v", *v))
 	}
 	builder.WriteString(", ")
@@ -234,30 +295,28 @@ func (_m *RoleMetadata) String() string {
 		builder.WriteString(fmt.Sprintf("%v", *v))
 	}
 	builder.WriteString(", ")
-	if v := _m.LastSyncedAt; v != nil {
-		builder.WriteString("last_synced_at=")
-		builder.WriteString(v.Format(time.ANSIC))
-	}
-	builder.WriteString(", ")
 	if v := _m.LastSyncedVersion; v != nil {
 		builder.WriteString("last_synced_version=")
 		builder.WriteString(fmt.Sprintf("%v", *v))
 	}
 	builder.WriteString(", ")
-	if v := _m.IsTemplate; v != nil {
-		builder.WriteString("is_template=")
+	if v := _m.LastSyncedAt; v != nil {
+		builder.WriteString("last_synced_at=")
+		builder.WriteString(v.Format(time.ANSIC))
+	}
+	builder.WriteString(", ")
+	if v := _m.SyncPolicy; v != nil {
+		builder.WriteString("sync_policy=")
 		builder.WriteString(fmt.Sprintf("%v", *v))
 	}
 	builder.WriteString(", ")
-	if v := _m.Key; v != nil {
-		builder.WriteString("key=")
-		builder.WriteString(*v)
+	if v := _m.Scope; v != nil {
+		builder.WriteString("scope=")
+		builder.WriteString(fmt.Sprintf("%v", *v))
 	}
 	builder.WriteString(", ")
-	if v := _m.Value; v != nil {
-		builder.WriteString("value=")
-		builder.WriteString(*v)
-	}
+	builder.WriteString("custom_overrides=")
+	builder.WriteString(fmt.Sprintf("%v", _m.CustomOverrides))
 	builder.WriteByte(')')
 	return builder.String()
 }

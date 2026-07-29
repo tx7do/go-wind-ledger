@@ -36,34 +36,6 @@ func (_c *PermissionAuditLogCreate) SetNillableCreatedAt(v *time.Time) *Permissi
 	return _c
 }
 
-// SetUpdatedAt sets the "updated_at" field.
-func (_c *PermissionAuditLogCreate) SetUpdatedAt(v time.Time) *PermissionAuditLogCreate {
-	_c.mutation.SetUpdatedAt(v)
-	return _c
-}
-
-// SetNillableUpdatedAt sets the "updated_at" field if the given value is not nil.
-func (_c *PermissionAuditLogCreate) SetNillableUpdatedAt(v *time.Time) *PermissionAuditLogCreate {
-	if v != nil {
-		_c.SetUpdatedAt(*v)
-	}
-	return _c
-}
-
-// SetDeletedAt sets the "deleted_at" field.
-func (_c *PermissionAuditLogCreate) SetDeletedAt(v time.Time) *PermissionAuditLogCreate {
-	_c.mutation.SetDeletedAt(v)
-	return _c
-}
-
-// SetNillableDeletedAt sets the "deleted_at" field if the given value is not nil.
-func (_c *PermissionAuditLogCreate) SetNillableDeletedAt(v *time.Time) *PermissionAuditLogCreate {
-	if v != nil {
-		_c.SetDeletedAt(*v)
-	}
-	return _c
-}
-
 // SetTenantID sets the "tenant_id" field.
 func (_c *PermissionAuditLogCreate) SetTenantID(v uint32) *PermissionAuditLogCreate {
 	_c.mutation.SetTenantID(v)
@@ -92,31 +64,111 @@ func (_c *PermissionAuditLogCreate) SetNillableOperatorID(v *uint32) *Permission
 	return _c
 }
 
+// SetTargetType sets the "target_type" field.
+func (_c *PermissionAuditLogCreate) SetTargetType(v string) *PermissionAuditLogCreate {
+	_c.mutation.SetTargetType(v)
+	return _c
+}
+
+// SetNillableTargetType sets the "target_type" field if the given value is not nil.
+func (_c *PermissionAuditLogCreate) SetNillableTargetType(v *string) *PermissionAuditLogCreate {
+	if v != nil {
+		_c.SetTargetType(*v)
+	}
+	return _c
+}
+
+// SetTargetID sets the "target_id" field.
+func (_c *PermissionAuditLogCreate) SetTargetID(v string) *PermissionAuditLogCreate {
+	_c.mutation.SetTargetID(v)
+	return _c
+}
+
+// SetNillableTargetID sets the "target_id" field if the given value is not nil.
+func (_c *PermissionAuditLogCreate) SetNillableTargetID(v *string) *PermissionAuditLogCreate {
+	if v != nil {
+		_c.SetTargetID(*v)
+	}
+	return _c
+}
+
 // SetAction sets the "action" field.
-func (_c *PermissionAuditLogCreate) SetAction(v string) *PermissionAuditLogCreate {
+func (_c *PermissionAuditLogCreate) SetAction(v permissionauditlog.Action) *PermissionAuditLogCreate {
 	_c.mutation.SetAction(v)
 	return _c
 }
 
 // SetNillableAction sets the "action" field if the given value is not nil.
-func (_c *PermissionAuditLogCreate) SetNillableAction(v *string) *PermissionAuditLogCreate {
+func (_c *PermissionAuditLogCreate) SetNillableAction(v *permissionauditlog.Action) *PermissionAuditLogCreate {
 	if v != nil {
 		_c.SetAction(*v)
 	}
 	return _c
 }
 
-// SetOperatedAt sets the "operated_at" field.
-func (_c *PermissionAuditLogCreate) SetOperatedAt(v time.Time) *PermissionAuditLogCreate {
-	_c.mutation.SetOperatedAt(v)
+// SetOldValue sets the "old_value" field.
+func (_c *PermissionAuditLogCreate) SetOldValue(v string) *PermissionAuditLogCreate {
+	_c.mutation.SetOldValue(v)
 	return _c
 }
 
-// SetNillableOperatedAt sets the "operated_at" field if the given value is not nil.
-func (_c *PermissionAuditLogCreate) SetNillableOperatedAt(v *time.Time) *PermissionAuditLogCreate {
+// SetNillableOldValue sets the "old_value" field if the given value is not nil.
+func (_c *PermissionAuditLogCreate) SetNillableOldValue(v *string) *PermissionAuditLogCreate {
 	if v != nil {
-		_c.SetOperatedAt(*v)
+		_c.SetOldValue(*v)
 	}
+	return _c
+}
+
+// SetNewValue sets the "new_value" field.
+func (_c *PermissionAuditLogCreate) SetNewValue(v string) *PermissionAuditLogCreate {
+	_c.mutation.SetNewValue(v)
+	return _c
+}
+
+// SetNillableNewValue sets the "new_value" field if the given value is not nil.
+func (_c *PermissionAuditLogCreate) SetNillableNewValue(v *string) *PermissionAuditLogCreate {
+	if v != nil {
+		_c.SetNewValue(*v)
+	}
+	return _c
+}
+
+// SetIPAddress sets the "ip_address" field.
+func (_c *PermissionAuditLogCreate) SetIPAddress(v string) *PermissionAuditLogCreate {
+	_c.mutation.SetIPAddress(v)
+	return _c
+}
+
+// SetRequestID sets the "request_id" field.
+func (_c *PermissionAuditLogCreate) SetRequestID(v string) *PermissionAuditLogCreate {
+	_c.mutation.SetRequestID(v)
+	return _c
+}
+
+// SetReason sets the "reason" field.
+func (_c *PermissionAuditLogCreate) SetReason(v string) *PermissionAuditLogCreate {
+	_c.mutation.SetReason(v)
+	return _c
+}
+
+// SetLogHash sets the "log_hash" field.
+func (_c *PermissionAuditLogCreate) SetLogHash(v string) *PermissionAuditLogCreate {
+	_c.mutation.SetLogHash(v)
+	return _c
+}
+
+// SetNillableLogHash sets the "log_hash" field if the given value is not nil.
+func (_c *PermissionAuditLogCreate) SetNillableLogHash(v *string) *PermissionAuditLogCreate {
+	if v != nil {
+		_c.SetLogHash(*v)
+	}
+	return _c
+}
+
+// SetSignature sets the "signature" field.
+func (_c *PermissionAuditLogCreate) SetSignature(v []byte) *PermissionAuditLogCreate {
+	_c.mutation.SetSignature(v)
 	return _c
 }
 
@@ -177,6 +229,15 @@ func (_c *PermissionAuditLogCreate) check() error {
 			return &ValidationError{Name: "action", err: fmt.Errorf(`ent: validator failed for field "PermissionAuditLog.action": %w`, err)}
 		}
 	}
+	if _, ok := _c.mutation.IPAddress(); !ok {
+		return &ValidationError{Name: "ip_address", err: errors.New(`ent: missing required field "PermissionAuditLog.ip_address"`)}
+	}
+	if _, ok := _c.mutation.RequestID(); !ok {
+		return &ValidationError{Name: "request_id", err: errors.New(`ent: missing required field "PermissionAuditLog.request_id"`)}
+	}
+	if _, ok := _c.mutation.Reason(); !ok {
+		return &ValidationError{Name: "reason", err: errors.New(`ent: missing required field "PermissionAuditLog.reason"`)}
+	}
 	if v, ok := _c.mutation.ID(); ok {
 		if err := permissionauditlog.IDValidator(v); err != nil {
 			return &ValidationError{Name: "id", err: fmt.Errorf(`ent: validator failed for field "PermissionAuditLog.id": %w`, err)}
@@ -219,14 +280,6 @@ func (_c *PermissionAuditLogCreate) createSpec() (*PermissionAuditLog, *sqlgraph
 		_spec.SetField(permissionauditlog.FieldCreatedAt, field.TypeTime, value)
 		_node.CreatedAt = &value
 	}
-	if value, ok := _c.mutation.UpdatedAt(); ok {
-		_spec.SetField(permissionauditlog.FieldUpdatedAt, field.TypeTime, value)
-		_node.UpdatedAt = &value
-	}
-	if value, ok := _c.mutation.DeletedAt(); ok {
-		_spec.SetField(permissionauditlog.FieldDeletedAt, field.TypeTime, value)
-		_node.DeletedAt = &value
-	}
 	if value, ok := _c.mutation.TenantID(); ok {
 		_spec.SetField(permissionauditlog.FieldTenantID, field.TypeUint32, value)
 		_node.TenantID = &value
@@ -235,13 +288,45 @@ func (_c *PermissionAuditLogCreate) createSpec() (*PermissionAuditLog, *sqlgraph
 		_spec.SetField(permissionauditlog.FieldOperatorID, field.TypeUint32, value)
 		_node.OperatorID = &value
 	}
+	if value, ok := _c.mutation.TargetType(); ok {
+		_spec.SetField(permissionauditlog.FieldTargetType, field.TypeString, value)
+		_node.TargetType = &value
+	}
+	if value, ok := _c.mutation.TargetID(); ok {
+		_spec.SetField(permissionauditlog.FieldTargetID, field.TypeString, value)
+		_node.TargetID = &value
+	}
 	if value, ok := _c.mutation.Action(); ok {
-		_spec.SetField(permissionauditlog.FieldAction, field.TypeString, value)
+		_spec.SetField(permissionauditlog.FieldAction, field.TypeEnum, value)
 		_node.Action = &value
 	}
-	if value, ok := _c.mutation.OperatedAt(); ok {
-		_spec.SetField(permissionauditlog.FieldOperatedAt, field.TypeTime, value)
-		_node.OperatedAt = &value
+	if value, ok := _c.mutation.OldValue(); ok {
+		_spec.SetField(permissionauditlog.FieldOldValue, field.TypeString, value)
+		_node.OldValue = &value
+	}
+	if value, ok := _c.mutation.NewValue(); ok {
+		_spec.SetField(permissionauditlog.FieldNewValue, field.TypeString, value)
+		_node.NewValue = &value
+	}
+	if value, ok := _c.mutation.IPAddress(); ok {
+		_spec.SetField(permissionauditlog.FieldIPAddress, field.TypeString, value)
+		_node.IPAddress = &value
+	}
+	if value, ok := _c.mutation.RequestID(); ok {
+		_spec.SetField(permissionauditlog.FieldRequestID, field.TypeString, value)
+		_node.RequestID = &value
+	}
+	if value, ok := _c.mutation.Reason(); ok {
+		_spec.SetField(permissionauditlog.FieldReason, field.TypeString, value)
+		_node.Reason = &value
+	}
+	if value, ok := _c.mutation.LogHash(); ok {
+		_spec.SetField(permissionauditlog.FieldLogHash, field.TypeString, value)
+		_node.LogHash = &value
+	}
+	if value, ok := _c.mutation.Signature(); ok {
+		_spec.SetField(permissionauditlog.FieldSignature, field.TypeBytes, value)
+		_node.Signature = &value
 	}
 	return _node, _spec
 }
@@ -295,42 +380,6 @@ type (
 	}
 )
 
-// SetUpdatedAt sets the "updated_at" field.
-func (u *PermissionAuditLogUpsert) SetUpdatedAt(v time.Time) *PermissionAuditLogUpsert {
-	u.Set(permissionauditlog.FieldUpdatedAt, v)
-	return u
-}
-
-// UpdateUpdatedAt sets the "updated_at" field to the value that was provided on create.
-func (u *PermissionAuditLogUpsert) UpdateUpdatedAt() *PermissionAuditLogUpsert {
-	u.SetExcluded(permissionauditlog.FieldUpdatedAt)
-	return u
-}
-
-// ClearUpdatedAt clears the value of the "updated_at" field.
-func (u *PermissionAuditLogUpsert) ClearUpdatedAt() *PermissionAuditLogUpsert {
-	u.SetNull(permissionauditlog.FieldUpdatedAt)
-	return u
-}
-
-// SetDeletedAt sets the "deleted_at" field.
-func (u *PermissionAuditLogUpsert) SetDeletedAt(v time.Time) *PermissionAuditLogUpsert {
-	u.Set(permissionauditlog.FieldDeletedAt, v)
-	return u
-}
-
-// UpdateDeletedAt sets the "deleted_at" field to the value that was provided on create.
-func (u *PermissionAuditLogUpsert) UpdateDeletedAt() *PermissionAuditLogUpsert {
-	u.SetExcluded(permissionauditlog.FieldDeletedAt)
-	return u
-}
-
-// ClearDeletedAt clears the value of the "deleted_at" field.
-func (u *PermissionAuditLogUpsert) ClearDeletedAt() *PermissionAuditLogUpsert {
-	u.SetNull(permissionauditlog.FieldDeletedAt)
-	return u
-}
-
 // SetOperatorID sets the "operator_id" field.
 func (u *PermissionAuditLogUpsert) SetOperatorID(v uint32) *PermissionAuditLogUpsert {
 	u.Set(permissionauditlog.FieldOperatorID, v)
@@ -355,8 +404,44 @@ func (u *PermissionAuditLogUpsert) ClearOperatorID() *PermissionAuditLogUpsert {
 	return u
 }
 
+// SetTargetType sets the "target_type" field.
+func (u *PermissionAuditLogUpsert) SetTargetType(v string) *PermissionAuditLogUpsert {
+	u.Set(permissionauditlog.FieldTargetType, v)
+	return u
+}
+
+// UpdateTargetType sets the "target_type" field to the value that was provided on create.
+func (u *PermissionAuditLogUpsert) UpdateTargetType() *PermissionAuditLogUpsert {
+	u.SetExcluded(permissionauditlog.FieldTargetType)
+	return u
+}
+
+// ClearTargetType clears the value of the "target_type" field.
+func (u *PermissionAuditLogUpsert) ClearTargetType() *PermissionAuditLogUpsert {
+	u.SetNull(permissionauditlog.FieldTargetType)
+	return u
+}
+
+// SetTargetID sets the "target_id" field.
+func (u *PermissionAuditLogUpsert) SetTargetID(v string) *PermissionAuditLogUpsert {
+	u.Set(permissionauditlog.FieldTargetID, v)
+	return u
+}
+
+// UpdateTargetID sets the "target_id" field to the value that was provided on create.
+func (u *PermissionAuditLogUpsert) UpdateTargetID() *PermissionAuditLogUpsert {
+	u.SetExcluded(permissionauditlog.FieldTargetID)
+	return u
+}
+
+// ClearTargetID clears the value of the "target_id" field.
+func (u *PermissionAuditLogUpsert) ClearTargetID() *PermissionAuditLogUpsert {
+	u.SetNull(permissionauditlog.FieldTargetID)
+	return u
+}
+
 // SetAction sets the "action" field.
-func (u *PermissionAuditLogUpsert) SetAction(v string) *PermissionAuditLogUpsert {
+func (u *PermissionAuditLogUpsert) SetAction(v permissionauditlog.Action) *PermissionAuditLogUpsert {
 	u.Set(permissionauditlog.FieldAction, v)
 	return u
 }
@@ -373,21 +458,111 @@ func (u *PermissionAuditLogUpsert) ClearAction() *PermissionAuditLogUpsert {
 	return u
 }
 
-// SetOperatedAt sets the "operated_at" field.
-func (u *PermissionAuditLogUpsert) SetOperatedAt(v time.Time) *PermissionAuditLogUpsert {
-	u.Set(permissionauditlog.FieldOperatedAt, v)
+// SetOldValue sets the "old_value" field.
+func (u *PermissionAuditLogUpsert) SetOldValue(v string) *PermissionAuditLogUpsert {
+	u.Set(permissionauditlog.FieldOldValue, v)
 	return u
 }
 
-// UpdateOperatedAt sets the "operated_at" field to the value that was provided on create.
-func (u *PermissionAuditLogUpsert) UpdateOperatedAt() *PermissionAuditLogUpsert {
-	u.SetExcluded(permissionauditlog.FieldOperatedAt)
+// UpdateOldValue sets the "old_value" field to the value that was provided on create.
+func (u *PermissionAuditLogUpsert) UpdateOldValue() *PermissionAuditLogUpsert {
+	u.SetExcluded(permissionauditlog.FieldOldValue)
 	return u
 }
 
-// ClearOperatedAt clears the value of the "operated_at" field.
-func (u *PermissionAuditLogUpsert) ClearOperatedAt() *PermissionAuditLogUpsert {
-	u.SetNull(permissionauditlog.FieldOperatedAt)
+// ClearOldValue clears the value of the "old_value" field.
+func (u *PermissionAuditLogUpsert) ClearOldValue() *PermissionAuditLogUpsert {
+	u.SetNull(permissionauditlog.FieldOldValue)
+	return u
+}
+
+// SetNewValue sets the "new_value" field.
+func (u *PermissionAuditLogUpsert) SetNewValue(v string) *PermissionAuditLogUpsert {
+	u.Set(permissionauditlog.FieldNewValue, v)
+	return u
+}
+
+// UpdateNewValue sets the "new_value" field to the value that was provided on create.
+func (u *PermissionAuditLogUpsert) UpdateNewValue() *PermissionAuditLogUpsert {
+	u.SetExcluded(permissionauditlog.FieldNewValue)
+	return u
+}
+
+// ClearNewValue clears the value of the "new_value" field.
+func (u *PermissionAuditLogUpsert) ClearNewValue() *PermissionAuditLogUpsert {
+	u.SetNull(permissionauditlog.FieldNewValue)
+	return u
+}
+
+// SetIPAddress sets the "ip_address" field.
+func (u *PermissionAuditLogUpsert) SetIPAddress(v string) *PermissionAuditLogUpsert {
+	u.Set(permissionauditlog.FieldIPAddress, v)
+	return u
+}
+
+// UpdateIPAddress sets the "ip_address" field to the value that was provided on create.
+func (u *PermissionAuditLogUpsert) UpdateIPAddress() *PermissionAuditLogUpsert {
+	u.SetExcluded(permissionauditlog.FieldIPAddress)
+	return u
+}
+
+// SetRequestID sets the "request_id" field.
+func (u *PermissionAuditLogUpsert) SetRequestID(v string) *PermissionAuditLogUpsert {
+	u.Set(permissionauditlog.FieldRequestID, v)
+	return u
+}
+
+// UpdateRequestID sets the "request_id" field to the value that was provided on create.
+func (u *PermissionAuditLogUpsert) UpdateRequestID() *PermissionAuditLogUpsert {
+	u.SetExcluded(permissionauditlog.FieldRequestID)
+	return u
+}
+
+// SetReason sets the "reason" field.
+func (u *PermissionAuditLogUpsert) SetReason(v string) *PermissionAuditLogUpsert {
+	u.Set(permissionauditlog.FieldReason, v)
+	return u
+}
+
+// UpdateReason sets the "reason" field to the value that was provided on create.
+func (u *PermissionAuditLogUpsert) UpdateReason() *PermissionAuditLogUpsert {
+	u.SetExcluded(permissionauditlog.FieldReason)
+	return u
+}
+
+// SetLogHash sets the "log_hash" field.
+func (u *PermissionAuditLogUpsert) SetLogHash(v string) *PermissionAuditLogUpsert {
+	u.Set(permissionauditlog.FieldLogHash, v)
+	return u
+}
+
+// UpdateLogHash sets the "log_hash" field to the value that was provided on create.
+func (u *PermissionAuditLogUpsert) UpdateLogHash() *PermissionAuditLogUpsert {
+	u.SetExcluded(permissionauditlog.FieldLogHash)
+	return u
+}
+
+// ClearLogHash clears the value of the "log_hash" field.
+func (u *PermissionAuditLogUpsert) ClearLogHash() *PermissionAuditLogUpsert {
+	u.SetNull(permissionauditlog.FieldLogHash)
+	return u
+}
+
+// SetSignature sets the "signature" field.
+func (u *PermissionAuditLogUpsert) SetSignature(v []byte) *PermissionAuditLogUpsert {
+	u.Set(permissionauditlog.FieldSignature, v)
+	return u
+}
+
+// UpdateSignature sets the "signature" field to the value that was provided on create.
+func (u *PermissionAuditLogUpsert) UpdateSignature() *PermissionAuditLogUpsert {
+	u.SetExcluded(permissionauditlog.FieldSignature)
+	return u
+}
+
+// ClearSignature clears the value of the "signature" field.
+func (u *PermissionAuditLogUpsert) ClearSignature() *PermissionAuditLogUpsert {
+	u.SetNull(permissionauditlog.FieldSignature)
 	return u
 }
 
@@ -445,48 +620,6 @@ func (u *PermissionAuditLogUpsertOne) Update(set func(*PermissionAuditLogUpsert)
 	return u
 }
 
-// SetUpdatedAt sets the "updated_at" field.
-func (u *PermissionAuditLogUpsertOne) SetUpdatedAt(v time.Time) *PermissionAuditLogUpsertOne {
-	return u.Update(func(s *PermissionAuditLogUpsert) {
-		s.SetUpdatedAt(v)
-	})
-}
-
-// UpdateUpdatedAt sets the "updated_at" field to the value that was provided on create.
-func (u *PermissionAuditLogUpsertOne) UpdateUpdatedAt() *PermissionAuditLogUpsertOne {
-	return u.Update(func(s *PermissionAuditLogUpsert) {
-		s.UpdateUpdatedAt()
-	})
-}
-
-// ClearUpdatedAt clears the value of the "updated_at" field.
-func (u *PermissionAuditLogUpsertOne) ClearUpdatedAt() *PermissionAuditLogUpsertOne {
-	return u.Update(func(s *PermissionAuditLogUpsert) {
-		s.ClearUpdatedAt()
-	})
-}
-
-// SetDeletedAt sets the "deleted_at" field.
-func (u *PermissionAuditLogUpsertOne) SetDeletedAt(v time.Time) *PermissionAuditLogUpsertOne {
-	return u.Update(func(s *PermissionAuditLogUpsert) {
-		s.SetDeletedAt(v)
-	})
-}
-
-// UpdateDeletedAt sets the "deleted_at" field to the value that was provided on create.
-func (u *PermissionAuditLogUpsertOne) UpdateDeletedAt() *PermissionAuditLogUpsertOne {
-	return u.Update(func(s *PermissionAuditLogUpsert) {
-		s.UpdateDeletedAt()
-	})
-}
-
-// ClearDeletedAt clears the value of the "deleted_at" field.
-func (u *PermissionAuditLogUpsertOne) ClearDeletedAt() *PermissionAuditLogUpsertOne {
-	return u.Update(func(s *PermissionAuditLogUpsert) {
-		s.ClearDeletedAt()
-	})
-}
-
 // SetOperatorID sets the "operator_id" field.
 func (u *PermissionAuditLogUpsertOne) SetOperatorID(v uint32) *PermissionAuditLogUpsertOne {
 	return u.Update(func(s *PermissionAuditLogUpsert) {
@@ -515,8 +648,50 @@ func (u *PermissionAuditLogUpsertOne) ClearOperatorID() *PermissionAuditLogUpser
 	})
 }
 
+// SetTargetType sets the "target_type" field.
+func (u *PermissionAuditLogUpsertOne) SetTargetType(v string) *PermissionAuditLogUpsertOne {
+	return u.Update(func(s *PermissionAuditLogUpsert) {
+		s.SetTargetType(v)
+	})
+}
+
+// UpdateTargetType sets the "target_type" field to the value that was provided on create.
+func (u *PermissionAuditLogUpsertOne) UpdateTargetType() *PermissionAuditLogUpsertOne {
+	return u.Update(func(s *PermissionAuditLogUpsert) {
+		s.UpdateTargetType()
+	})
+}
+
+// ClearTargetType clears the value of the "target_type" field.
+func (u *PermissionAuditLogUpsertOne) ClearTargetType() *PermissionAuditLogUpsertOne {
+	return u.Update(func(s *PermissionAuditLogUpsert) {
+		s.ClearTargetType()
+	})
+}
+
+// SetTargetID sets the "target_id" field.
+func (u *PermissionAuditLogUpsertOne) SetTargetID(v string) *PermissionAuditLogUpsertOne {
+	return u.Update(func(s *PermissionAuditLogUpsert) {
+		s.SetTargetID(v)
+	})
+}
+
+// UpdateTargetID sets the "target_id" field to the value that was provided on create.
+func (u *PermissionAuditLogUpsertOne) UpdateTargetID() *PermissionAuditLogUpsertOne {
+	return u.Update(func(s *PermissionAuditLogUpsert) {
+		s.UpdateTargetID()
+	})
+}
+
+// ClearTargetID clears the value of the "target_id" field.
+func (u *PermissionAuditLogUpsertOne) ClearTargetID() *PermissionAuditLogUpsertOne {
+	return u.Update(func(s *PermissionAuditLogUpsert) {
+		s.ClearTargetID()
+	})
+}
+
 // SetAction sets the "action" field.
-func (u *PermissionAuditLogUpsertOne) SetAction(v string) *PermissionAuditLogUpsertOne {
+func (u *PermissionAuditLogUpsertOne) SetAction(v permissionauditlog.Action) *PermissionAuditLogUpsertOne {
 	return u.Update(func(s *PermissionAuditLogUpsert) {
 		s.SetAction(v)
 	})
@@ -536,24 +711,129 @@ func (u *PermissionAuditLogUpsertOne) ClearAction() *PermissionAuditLogUpsertOne
 	})
 }
 
-// SetOperatedAt sets the "operated_at" field.
-func (u *PermissionAuditLogUpsertOne) SetOperatedAt(v time.Time) *PermissionAuditLogUpsertOne {
+// SetOldValue sets the "old_value" field.
+func (u *PermissionAuditLogUpsertOne) SetOldValue(v string) *PermissionAuditLogUpsertOne {
 	return u.Update(func(s *PermissionAuditLogUpsert) {
-		s.SetOperatedAt(v)
+		s.SetOldValue(v)
 	})
 }
 
-// UpdateOperatedAt sets the "operated_at" field to the value that was provided on create.
-func (u *PermissionAuditLogUpsertOne) UpdateOperatedAt() *PermissionAuditLogUpsertOne {
+// UpdateOldValue sets the "old_value" field to the value that was provided on create.
+func (u *PermissionAuditLogUpsertOne) UpdateOldValue() *PermissionAuditLogUpsertOne {
 	return u.Update(func(s *PermissionAuditLogUpsert) {
-		s.UpdateOperatedAt()
+		s.UpdateOldValue()
 	})
 }
 
-// ClearOperatedAt clears the value of the "operated_at" field.
-func (u *PermissionAuditLogUpsertOne) ClearOperatedAt() *PermissionAuditLogUpsertOne {
+// ClearOldValue clears the value of the "old_value" field.
+func (u *PermissionAuditLogUpsertOne) ClearOldValue() *PermissionAuditLogUpsertOne {
 	return u.Update(func(s *PermissionAuditLogUpsert) {
-		s.ClearOperatedAt()
+		s.ClearOldValue()
+	})
+}
+
+// SetNewValue sets the "new_value" field.
+func (u *PermissionAuditLogUpsertOne) SetNewValue(v string) *PermissionAuditLogUpsertOne {
+	return u.Update(func(s *PermissionAuditLogUpsert) {
+		s.SetNewValue(v)
+	})
+}
+
+// UpdateNewValue sets the "new_value" field to the value that was provided on create.
+func (u *PermissionAuditLogUpsertOne) UpdateNewValue() *PermissionAuditLogUpsertOne {
+	return u.Update(func(s *PermissionAuditLogUpsert) {
+		s.UpdateNewValue()
+	})
+}
+
+// ClearNewValue clears the value of the "new_value" field.
+func (u *PermissionAuditLogUpsertOne) ClearNewValue() *PermissionAuditLogUpsertOne {
+	return u.Update(func(s *PermissionAuditLogUpsert) {
+		s.ClearNewValue()
+	})
+}
+
+// SetIPAddress sets the "ip_address" field.
+func (u *PermissionAuditLogUpsertOne) SetIPAddress(v string) *PermissionAuditLogUpsertOne {
+	return u.Update(func(s *PermissionAuditLogUpsert) {
+		s.SetIPAddress(v)
+	})
+}
+
+// UpdateIPAddress sets the "ip_address" field to the value that was provided on create.
+func (u *PermissionAuditLogUpsertOne) UpdateIPAddress() *PermissionAuditLogUpsertOne {
+	return u.Update(func(s *PermissionAuditLogUpsert) {
+		s.UpdateIPAddress()
+	})
+}
+
+// SetRequestID sets the "request_id" field.
+func (u *PermissionAuditLogUpsertOne) SetRequestID(v string) *PermissionAuditLogUpsertOne {
+	return u.Update(func(s *PermissionAuditLogUpsert) {
+		s.SetRequestID(v)
+	})
+}
+
+// UpdateRequestID sets the "request_id" field to the value that was provided on create.
+func (u *PermissionAuditLogUpsertOne) UpdateRequestID() *PermissionAuditLogUpsertOne {
+	return u.Update(func(s *PermissionAuditLogUpsert) {
+		s.UpdateRequestID()
+	})
+}
+
+// SetReason sets the "reason" field.
+func (u *PermissionAuditLogUpsertOne) SetReason(v string) *PermissionAuditLogUpsertOne {
+	return u.Update(func(s *PermissionAuditLogUpsert) {
+		s.SetReason(v)
+	})
+}
+
+// UpdateReason sets the "reason" field to the value that was provided on create.
+func (u *PermissionAuditLogUpsertOne) UpdateReason() *PermissionAuditLogUpsertOne {
+	return u.Update(func(s *PermissionAuditLogUpsert) {
+		s.UpdateReason()
+	})
+}
+
+// SetLogHash sets the "log_hash" field.
+func (u *PermissionAuditLogUpsertOne) SetLogHash(v string) *PermissionAuditLogUpsertOne {
+	return u.Update(func(s *PermissionAuditLogUpsert) {
+		s.SetLogHash(v)
+	})
+}
+
+// UpdateLogHash sets the "log_hash" field to the value that was provided on create.
+func (u *PermissionAuditLogUpsertOne) UpdateLogHash() *PermissionAuditLogUpsertOne {
+	return u.Update(func(s *PermissionAuditLogUpsert) {
+		s.UpdateLogHash()
+	})
+}
+
+// ClearLogHash clears the value of the "log_hash" field.
+func (u *PermissionAuditLogUpsertOne) ClearLogHash() *PermissionAuditLogUpsertOne {
+	return u.Update(func(s *PermissionAuditLogUpsert) {
+		s.ClearLogHash()
+	})
+}
+
+// SetSignature sets the "signature" field.
+func (u *PermissionAuditLogUpsertOne) SetSignature(v []byte) *PermissionAuditLogUpsertOne {
+	return u.Update(func(s *PermissionAuditLogUpsert) {
+		s.SetSignature(v)
+	})
+}
+
+// UpdateSignature sets the "signature" field to the value that was provided on create.
+func (u *PermissionAuditLogUpsertOne) UpdateSignature() *PermissionAuditLogUpsertOne {
+	return u.Update(func(s *PermissionAuditLogUpsert) {
+		s.UpdateSignature()
+	})
+}
+
+// ClearSignature clears the value of the "signature" field.
+func (u *PermissionAuditLogUpsertOne) ClearSignature() *PermissionAuditLogUpsertOne {
+	return u.Update(func(s *PermissionAuditLogUpsert) {
+		s.ClearSignature()
 	})
 }
 
@@ -777,48 +1057,6 @@ func (u *PermissionAuditLogUpsertBulk) Update(set func(*PermissionAuditLogUpsert
 	return u
 }
 
-// SetUpdatedAt sets the "updated_at" field.
-func (u *PermissionAuditLogUpsertBulk) SetUpdatedAt(v time.Time) *PermissionAuditLogUpsertBulk {
-	return u.Update(func(s *PermissionAuditLogUpsert) {
-		s.SetUpdatedAt(v)
-	})
-}
-
-// UpdateUpdatedAt sets the "updated_at" field to the value that was provided on create.
-func (u *PermissionAuditLogUpsertBulk) UpdateUpdatedAt() *PermissionAuditLogUpsertBulk {
-	return u.Update(func(s *PermissionAuditLogUpsert) {
-		s.UpdateUpdatedAt()
-	})
-}
-
-// ClearUpdatedAt clears the value of the "updated_at" field.
-func (u *PermissionAuditLogUpsertBulk) ClearUpdatedAt() *PermissionAuditLogUpsertBulk {
-	return u.Update(func(s *PermissionAuditLogUpsert) {
-		s.ClearUpdatedAt()
-	})
-}
-
-// SetDeletedAt sets the "deleted_at" field.
-func (u *PermissionAuditLogUpsertBulk) SetDeletedAt(v time.Time) *PermissionAuditLogUpsertBulk {
-	return u.Update(func(s *PermissionAuditLogUpsert) {
-		s.SetDeletedAt(v)
-	})
-}
-
-// UpdateDeletedAt sets the "deleted_at" field to the value that was provided on create.
-func (u *PermissionAuditLogUpsertBulk) UpdateDeletedAt() *PermissionAuditLogUpsertBulk {
-	return u.Update(func(s *PermissionAuditLogUpsert) {
-		s.UpdateDeletedAt()
-	})
-}
-
-// ClearDeletedAt clears the value of the "deleted_at" field.
-func (u *PermissionAuditLogUpsertBulk) ClearDeletedAt() *PermissionAuditLogUpsertBulk {
-	return u.Update(func(s *PermissionAuditLogUpsert) {
-		s.ClearDeletedAt()
-	})
-}
-
 // SetOperatorID sets the "operator_id" field.
 func (u *PermissionAuditLogUpsertBulk) SetOperatorID(v uint32) *PermissionAuditLogUpsertBulk {
 	return u.Update(func(s *PermissionAuditLogUpsert) {
@@ -847,8 +1085,50 @@ func (u *PermissionAuditLogUpsertBulk) ClearOperatorID() *PermissionAuditLogUpse
 	})
 }
 
+// SetTargetType sets the "target_type" field.
+func (u *PermissionAuditLogUpsertBulk) SetTargetType(v string) *PermissionAuditLogUpsertBulk {
+	return u.Update(func(s *PermissionAuditLogUpsert) {
+		s.SetTargetType(v)
+	})
+}
+
+// UpdateTargetType sets the "target_type" field to the value that was provided on create.
+func (u *PermissionAuditLogUpsertBulk) UpdateTargetType() *PermissionAuditLogUpsertBulk {
+	return u.Update(func(s *PermissionAuditLogUpsert) {
+		s.UpdateTargetType()
+	})
+}
+
+// ClearTargetType clears the value of the "target_type" field.
+func (u *PermissionAuditLogUpsertBulk) ClearTargetType() *PermissionAuditLogUpsertBulk {
+	return u.Update(func(s *PermissionAuditLogUpsert) {
+		s.ClearTargetType()
+	})
+}
+
+// SetTargetID sets the "target_id" field.
+func (u *PermissionAuditLogUpsertBulk) SetTargetID(v string) *PermissionAuditLogUpsertBulk {
+	return u.Update(func(s *PermissionAuditLogUpsert) {
+		s.SetTargetID(v)
+	})
+}
+
+// UpdateTargetID sets the "target_id" field to the value that was provided on create.
+func (u *PermissionAuditLogUpsertBulk) UpdateTargetID() *PermissionAuditLogUpsertBulk {
+	return u.Update(func(s *PermissionAuditLogUpsert) {
+		s.UpdateTargetID()
+	})
+}
+
+// ClearTargetID clears the value of the "target_id" field.
+func (u *PermissionAuditLogUpsertBulk) ClearTargetID() *PermissionAuditLogUpsertBulk {
+	return u.Update(func(s *PermissionAuditLogUpsert) {
+		s.ClearTargetID()
+	})
+}
+
 // SetAction sets the "action" field.
-func (u *PermissionAuditLogUpsertBulk) SetAction(v string) *PermissionAuditLogUpsertBulk {
+func (u *PermissionAuditLogUpsertBulk) SetAction(v permissionauditlog.Action) *PermissionAuditLogUpsertBulk {
 	return u.Update(func(s *PermissionAuditLogUpsert) {
 		s.SetAction(v)
 	})
@@ -868,24 +1148,129 @@ func (u *PermissionAuditLogUpsertBulk) ClearAction() *PermissionAuditLogUpsertBu
 	})
 }
 
-// SetOperatedAt sets the "operated_at" field.
-func (u *PermissionAuditLogUpsertBulk) SetOperatedAt(v time.Time) *PermissionAuditLogUpsertBulk {
+// SetOldValue sets the "old_value" field.
+func (u *PermissionAuditLogUpsertBulk) SetOldValue(v string) *PermissionAuditLogUpsertBulk {
 	return u.Update(func(s *PermissionAuditLogUpsert) {
-		s.SetOperatedAt(v)
+		s.SetOldValue(v)
 	})
 }
 
-// UpdateOperatedAt sets the "operated_at" field to the value that was provided on create.
-func (u *PermissionAuditLogUpsertBulk) UpdateOperatedAt() *PermissionAuditLogUpsertBulk {
+// UpdateOldValue sets the "old_value" field to the value that was provided on create.
+func (u *PermissionAuditLogUpsertBulk) UpdateOldValue() *PermissionAuditLogUpsertBulk {
 	return u.Update(func(s *PermissionAuditLogUpsert) {
-		s.UpdateOperatedAt()
+		s.UpdateOldValue()
 	})
 }
 
-// ClearOperatedAt clears the value of the "operated_at" field.
-func (u *PermissionAuditLogUpsertBulk) ClearOperatedAt() *PermissionAuditLogUpsertBulk {
+// ClearOldValue clears the value of the "old_value" field.
+func (u *PermissionAuditLogUpsertBulk) ClearOldValue() *PermissionAuditLogUpsertBulk {
 	return u.Update(func(s *PermissionAuditLogUpsert) {
-		s.ClearOperatedAt()
+		s.ClearOldValue()
+	})
+}
+
+// SetNewValue sets the "new_value" field.
+func (u *PermissionAuditLogUpsertBulk) SetNewValue(v string) *PermissionAuditLogUpsertBulk {
+	return u.Update(func(s *PermissionAuditLogUpsert) {
+		s.SetNewValue(v)
+	})
+}
+
+// UpdateNewValue sets the "new_value" field to the value that was provided on create.
+func (u *PermissionAuditLogUpsertBulk) UpdateNewValue() *PermissionAuditLogUpsertBulk {
+	return u.Update(func(s *PermissionAuditLogUpsert) {
+		s.UpdateNewValue()
+	})
+}
+
+// ClearNewValue clears the value of the "new_value" field.
+func (u *PermissionAuditLogUpsertBulk) ClearNewValue() *PermissionAuditLogUpsertBulk {
+	return u.Update(func(s *PermissionAuditLogUpsert) {
+		s.ClearNewValue()
+	})
+}
+
+// SetIPAddress sets the "ip_address" field.
+func (u *PermissionAuditLogUpsertBulk) SetIPAddress(v string) *PermissionAuditLogUpsertBulk {
+	return u.Update(func(s *PermissionAuditLogUpsert) {
+		s.SetIPAddress(v)
+	})
+}
+
+// UpdateIPAddress sets the "ip_address" field to the value that was provided on create.
+func (u *PermissionAuditLogUpsertBulk) UpdateIPAddress() *PermissionAuditLogUpsertBulk {
+	return u.Update(func(s *PermissionAuditLogUpsert) {
+		s.UpdateIPAddress()
+	})
+}
+
+// SetRequestID sets the "request_id" field.
+func (u *PermissionAuditLogUpsertBulk) SetRequestID(v string) *PermissionAuditLogUpsertBulk {
+	return u.Update(func(s *PermissionAuditLogUpsert) {
+		s.SetRequestID(v)
+	})
+}
+
+// UpdateRequestID sets the "request_id" field to the value that was provided on create.
+func (u *PermissionAuditLogUpsertBulk) UpdateRequestID() *PermissionAuditLogUpsertBulk {
+	return u.Update(func(s *PermissionAuditLogUpsert) {
+		s.UpdateRequestID()
+	})
+}
+
+// SetReason sets the "reason" field.
+func (u *PermissionAuditLogUpsertBulk) SetReason(v string) *PermissionAuditLogUpsertBulk {
+	return u.Update(func(s *PermissionAuditLogUpsert) {
+		s.SetReason(v)
+	})
+}
+
+// UpdateReason sets the "reason" field to the value that was provided on create.
+func (u *PermissionAuditLogUpsertBulk) UpdateReason() *PermissionAuditLogUpsertBulk {
+	return u.Update(func(s *PermissionAuditLogUpsert) {
+		s.UpdateReason()
+	})
+}
+
+// SetLogHash sets the "log_hash" field.
+func (u *PermissionAuditLogUpsertBulk) SetLogHash(v string) *PermissionAuditLogUpsertBulk {
+	return u.Update(func(s *PermissionAuditLogUpsert) {
+		s.SetLogHash(v)
+	})
+}
+
+// UpdateLogHash sets the "log_hash" field to the value that was provided on create.
+func (u *PermissionAuditLogUpsertBulk) UpdateLogHash() *PermissionAuditLogUpsertBulk {
+	return u.Update(func(s *PermissionAuditLogUpsert) {
+		s.UpdateLogHash()
+	})
+}
+
+// ClearLogHash clears the value of the "log_hash" field.
+func (u *PermissionAuditLogUpsertBulk) ClearLogHash() *PermissionAuditLogUpsertBulk {
+	return u.Update(func(s *PermissionAuditLogUpsert) {
+		s.ClearLogHash()
+	})
+}
+
+// SetSignature sets the "signature" field.
+func (u *PermissionAuditLogUpsertBulk) SetSignature(v []byte) *PermissionAuditLogUpsertBulk {
+	return u.Update(func(s *PermissionAuditLogUpsert) {
+		s.SetSignature(v)
+	})
+}
+
+// UpdateSignature sets the "signature" field to the value that was provided on create.
+func (u *PermissionAuditLogUpsertBulk) UpdateSignature() *PermissionAuditLogUpsertBulk {
+	return u.Update(func(s *PermissionAuditLogUpsert) {
+		s.UpdateSignature()
+	})
+}
+
+// ClearSignature clears the value of the "signature" field.
+func (u *PermissionAuditLogUpsertBulk) ClearSignature() *PermissionAuditLogUpsertBulk {
+	return u.Update(func(s *PermissionAuditLogUpsert) {
+		s.ClearSignature()
 	})
 }
 

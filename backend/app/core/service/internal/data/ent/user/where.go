@@ -109,16 +109,6 @@ func Realname(v string) predicate.User {
 	return predicate.User(sql.FieldEQ(FieldRealname, v))
 }
 
-// Password applies equality check predicate on the "password" field. It's identical to PasswordEQ.
-func Password(v string) predicate.User {
-	return predicate.User(sql.FieldEQ(FieldPassword, v))
-}
-
-// Avatar applies equality check predicate on the "avatar" field. It's identical to AvatarEQ.
-func Avatar(v string) predicate.User {
-	return predicate.User(sql.FieldEQ(FieldAvatar, v))
-}
-
 // Email applies equality check predicate on the "email" field. It's identical to EmailEQ.
 func Email(v string) predicate.User {
 	return predicate.User(sql.FieldEQ(FieldEmail, v))
@@ -132,6 +122,11 @@ func Mobile(v string) predicate.User {
 // Telephone applies equality check predicate on the "telephone" field. It's identical to TelephoneEQ.
 func Telephone(v string) predicate.User {
 	return predicate.User(sql.FieldEQ(FieldTelephone, v))
+}
+
+// Avatar applies equality check predicate on the "avatar" field. It's identical to AvatarEQ.
+func Avatar(v string) predicate.User {
+	return predicate.User(sql.FieldEQ(FieldAvatar, v))
 }
 
 // Address applies equality check predicate on the "address" field. It's identical to AddressEQ.
@@ -162,31 +157,6 @@ func LastLoginIP(v string) predicate.User {
 // LockedUntil applies equality check predicate on the "locked_until" field. It's identical to LockedUntilEQ.
 func LockedUntil(v time.Time) predicate.User {
 	return predicate.User(sql.FieldEQ(FieldLockedUntil, v))
-}
-
-// Followers applies equality check predicate on the "followers" field. It's identical to FollowersEQ.
-func Followers(v uint64) predicate.User {
-	return predicate.User(sql.FieldEQ(FieldFollowers, v))
-}
-
-// Following applies equality check predicate on the "following" field. It's identical to FollowingEQ.
-func Following(v uint64) predicate.User {
-	return predicate.User(sql.FieldEQ(FieldFollowing, v))
-}
-
-// PostCount applies equality check predicate on the "post_count" field. It's identical to PostCountEQ.
-func PostCount(v uint64) predicate.User {
-	return predicate.User(sql.FieldEQ(FieldPostCount, v))
-}
-
-// CommentCount applies equality check predicate on the "comment_count" field. It's identical to CommentCountEQ.
-func CommentCount(v uint64) predicate.User {
-	return predicate.User(sql.FieldEQ(FieldCommentCount, v))
-}
-
-// LikeCount applies equality check predicate on the "like_count" field. It's identical to LikeCountEQ.
-func LikeCount(v uint64) predicate.User {
-	return predicate.User(sql.FieldEQ(FieldLikeCount, v))
 }
 
 // DefaultGroupID applies equality check predicate on the "default_group_id" field. It's identical to DefaultGroupIDEQ.
@@ -849,156 +819,6 @@ func RealnameContainsFold(v string) predicate.User {
 	return predicate.User(sql.FieldContainsFold(FieldRealname, v))
 }
 
-// PasswordEQ applies the EQ predicate on the "password" field.
-func PasswordEQ(v string) predicate.User {
-	return predicate.User(sql.FieldEQ(FieldPassword, v))
-}
-
-// PasswordNEQ applies the NEQ predicate on the "password" field.
-func PasswordNEQ(v string) predicate.User {
-	return predicate.User(sql.FieldNEQ(FieldPassword, v))
-}
-
-// PasswordIn applies the In predicate on the "password" field.
-func PasswordIn(vs ...string) predicate.User {
-	return predicate.User(sql.FieldIn(FieldPassword, vs...))
-}
-
-// PasswordNotIn applies the NotIn predicate on the "password" field.
-func PasswordNotIn(vs ...string) predicate.User {
-	return predicate.User(sql.FieldNotIn(FieldPassword, vs...))
-}
-
-// PasswordGT applies the GT predicate on the "password" field.
-func PasswordGT(v string) predicate.User {
-	return predicate.User(sql.FieldGT(FieldPassword, v))
-}
-
-// PasswordGTE applies the GTE predicate on the "password" field.
-func PasswordGTE(v string) predicate.User {
-	return predicate.User(sql.FieldGTE(FieldPassword, v))
-}
-
-// PasswordLT applies the LT predicate on the "password" field.
-func PasswordLT(v string) predicate.User {
-	return predicate.User(sql.FieldLT(FieldPassword, v))
-}
-
-// PasswordLTE applies the LTE predicate on the "password" field.
-func PasswordLTE(v string) predicate.User {
-	return predicate.User(sql.FieldLTE(FieldPassword, v))
-}
-
-// PasswordContains applies the Contains predicate on the "password" field.
-func PasswordContains(v string) predicate.User {
-	return predicate.User(sql.FieldContains(FieldPassword, v))
-}
-
-// PasswordHasPrefix applies the HasPrefix predicate on the "password" field.
-func PasswordHasPrefix(v string) predicate.User {
-	return predicate.User(sql.FieldHasPrefix(FieldPassword, v))
-}
-
-// PasswordHasSuffix applies the HasSuffix predicate on the "password" field.
-func PasswordHasSuffix(v string) predicate.User {
-	return predicate.User(sql.FieldHasSuffix(FieldPassword, v))
-}
-
-// PasswordIsNil applies the IsNil predicate on the "password" field.
-func PasswordIsNil() predicate.User {
-	return predicate.User(sql.FieldIsNull(FieldPassword))
-}
-
-// PasswordNotNil applies the NotNil predicate on the "password" field.
-func PasswordNotNil() predicate.User {
-	return predicate.User(sql.FieldNotNull(FieldPassword))
-}
-
-// PasswordEqualFold applies the EqualFold predicate on the "password" field.
-func PasswordEqualFold(v string) predicate.User {
-	return predicate.User(sql.FieldEqualFold(FieldPassword, v))
-}
-
-// PasswordContainsFold applies the ContainsFold predicate on the "password" field.
-func PasswordContainsFold(v string) predicate.User {
-	return predicate.User(sql.FieldContainsFold(FieldPassword, v))
-}
-
-// AvatarEQ applies the EQ predicate on the "avatar" field.
-func AvatarEQ(v string) predicate.User {
-	return predicate.User(sql.FieldEQ(FieldAvatar, v))
-}
-
-// AvatarNEQ applies the NEQ predicate on the "avatar" field.
-func AvatarNEQ(v string) predicate.User {
-	return predicate.User(sql.FieldNEQ(FieldAvatar, v))
-}
-
-// AvatarIn applies the In predicate on the "avatar" field.
-func AvatarIn(vs ...string) predicate.User {
-	return predicate.User(sql.FieldIn(FieldAvatar, vs...))
-}
-
-// AvatarNotIn applies the NotIn predicate on the "avatar" field.
-func AvatarNotIn(vs ...string) predicate.User {
-	return predicate.User(sql.FieldNotIn(FieldAvatar, vs...))
-}
-
-// AvatarGT applies the GT predicate on the "avatar" field.
-func AvatarGT(v string) predicate.User {
-	return predicate.User(sql.FieldGT(FieldAvatar, v))
-}
-
-// AvatarGTE applies the GTE predicate on the "avatar" field.
-func AvatarGTE(v string) predicate.User {
-	return predicate.User(sql.FieldGTE(FieldAvatar, v))
-}
-
-// AvatarLT applies the LT predicate on the "avatar" field.
-func AvatarLT(v string) predicate.User {
-	return predicate.User(sql.FieldLT(FieldAvatar, v))
-}
-
-// AvatarLTE applies the LTE predicate on the "avatar" field.
-func AvatarLTE(v string) predicate.User {
-	return predicate.User(sql.FieldLTE(FieldAvatar, v))
-}
-
-// AvatarContains applies the Contains predicate on the "avatar" field.
-func AvatarContains(v string) predicate.User {
-	return predicate.User(sql.FieldContains(FieldAvatar, v))
-}
-
-// AvatarHasPrefix applies the HasPrefix predicate on the "avatar" field.
-func AvatarHasPrefix(v string) predicate.User {
-	return predicate.User(sql.FieldHasPrefix(FieldAvatar, v))
-}
-
-// AvatarHasSuffix applies the HasSuffix predicate on the "avatar" field.
-func AvatarHasSuffix(v string) predicate.User {
-	return predicate.User(sql.FieldHasSuffix(FieldAvatar, v))
-}
-
-// AvatarIsNil applies the IsNil predicate on the "avatar" field.
-func AvatarIsNil() predicate.User {
-	return predicate.User(sql.FieldIsNull(FieldAvatar))
-}
-
-// AvatarNotNil applies the NotNil predicate on the "avatar" field.
-func AvatarNotNil() predicate.User {
-	return predicate.User(sql.FieldNotNull(FieldAvatar))
-}
-
-// AvatarEqualFold applies the EqualFold predicate on the "avatar" field.
-func AvatarEqualFold(v string) predicate.User {
-	return predicate.User(sql.FieldEqualFold(FieldAvatar, v))
-}
-
-// AvatarContainsFold applies the ContainsFold predicate on the "avatar" field.
-func AvatarContainsFold(v string) predicate.User {
-	return predicate.User(sql.FieldContainsFold(FieldAvatar, v))
-}
-
 // EmailEQ applies the EQ predicate on the "email" field.
 func EmailEQ(v string) predicate.User {
 	return predicate.User(sql.FieldEQ(FieldEmail, v))
@@ -1224,34 +1044,79 @@ func TelephoneContainsFold(v string) predicate.User {
 	return predicate.User(sql.FieldContainsFold(FieldTelephone, v))
 }
 
-// GenderEQ applies the EQ predicate on the "gender" field.
-func GenderEQ(v Gender) predicate.User {
-	return predicate.User(sql.FieldEQ(FieldGender, v))
+// AvatarEQ applies the EQ predicate on the "avatar" field.
+func AvatarEQ(v string) predicate.User {
+	return predicate.User(sql.FieldEQ(FieldAvatar, v))
 }
 
-// GenderNEQ applies the NEQ predicate on the "gender" field.
-func GenderNEQ(v Gender) predicate.User {
-	return predicate.User(sql.FieldNEQ(FieldGender, v))
+// AvatarNEQ applies the NEQ predicate on the "avatar" field.
+func AvatarNEQ(v string) predicate.User {
+	return predicate.User(sql.FieldNEQ(FieldAvatar, v))
 }
 
-// GenderIn applies the In predicate on the "gender" field.
-func GenderIn(vs ...Gender) predicate.User {
-	return predicate.User(sql.FieldIn(FieldGender, vs...))
+// AvatarIn applies the In predicate on the "avatar" field.
+func AvatarIn(vs ...string) predicate.User {
+	return predicate.User(sql.FieldIn(FieldAvatar, vs...))
 }
 
-// GenderNotIn applies the NotIn predicate on the "gender" field.
-func GenderNotIn(vs ...Gender) predicate.User {
-	return predicate.User(sql.FieldNotIn(FieldGender, vs...))
+// AvatarNotIn applies the NotIn predicate on the "avatar" field.
+func AvatarNotIn(vs ...string) predicate.User {
+	return predicate.User(sql.FieldNotIn(FieldAvatar, vs...))
 }
 
-// GenderIsNil applies the IsNil predicate on the "gender" field.
-func GenderIsNil() predicate.User {
-	return predicate.User(sql.FieldIsNull(FieldGender))
+// AvatarGT applies the GT predicate on the "avatar" field.
+func AvatarGT(v string) predicate.User {
+	return predicate.User(sql.FieldGT(FieldAvatar, v))
 }
 
-// GenderNotNil applies the NotNil predicate on the "gender" field.
-func GenderNotNil() predicate.User {
-	return predicate.User(sql.FieldNotNull(FieldGender))
+// AvatarGTE applies the GTE predicate on the "avatar" field.
+func AvatarGTE(v string) predicate.User {
+	return predicate.User(sql.FieldGTE(FieldAvatar, v))
+}
+
+// AvatarLT applies the LT predicate on the "avatar" field.
+func AvatarLT(v string) predicate.User {
+	return predicate.User(sql.FieldLT(FieldAvatar, v))
+}
+
+// AvatarLTE applies the LTE predicate on the "avatar" field.
+func AvatarLTE(v string) predicate.User {
+	return predicate.User(sql.FieldLTE(FieldAvatar, v))
+}
+
+// AvatarContains applies the Contains predicate on the "avatar" field.
+func AvatarContains(v string) predicate.User {
+	return predicate.User(sql.FieldContains(FieldAvatar, v))
+}
+
+// AvatarHasPrefix applies the HasPrefix predicate on the "avatar" field.
+func AvatarHasPrefix(v string) predicate.User {
+	return predicate.User(sql.FieldHasPrefix(FieldAvatar, v))
+}
+
+// AvatarHasSuffix applies the HasSuffix predicate on the "avatar" field.
+func AvatarHasSuffix(v string) predicate.User {
+	return predicate.User(sql.FieldHasSuffix(FieldAvatar, v))
+}
+
+// AvatarIsNil applies the IsNil predicate on the "avatar" field.
+func AvatarIsNil() predicate.User {
+	return predicate.User(sql.FieldIsNull(FieldAvatar))
+}
+
+// AvatarNotNil applies the NotNil predicate on the "avatar" field.
+func AvatarNotNil() predicate.User {
+	return predicate.User(sql.FieldNotNull(FieldAvatar))
+}
+
+// AvatarEqualFold applies the EqualFold predicate on the "avatar" field.
+func AvatarEqualFold(v string) predicate.User {
+	return predicate.User(sql.FieldEqualFold(FieldAvatar, v))
+}
+
+// AvatarContainsFold applies the ContainsFold predicate on the "avatar" field.
+func AvatarContainsFold(v string) predicate.User {
+	return predicate.User(sql.FieldContainsFold(FieldAvatar, v))
 }
 
 // AddressEQ applies the EQ predicate on the "address" field.
@@ -1479,34 +1344,34 @@ func DescriptionContainsFold(v string) predicate.User {
 	return predicate.User(sql.FieldContainsFold(FieldDescription, v))
 }
 
-// StatusEQ applies the EQ predicate on the "status" field.
-func StatusEQ(v Status) predicate.User {
-	return predicate.User(sql.FieldEQ(FieldStatus, v))
+// GenderEQ applies the EQ predicate on the "gender" field.
+func GenderEQ(v Gender) predicate.User {
+	return predicate.User(sql.FieldEQ(FieldGender, v))
 }
 
-// StatusNEQ applies the NEQ predicate on the "status" field.
-func StatusNEQ(v Status) predicate.User {
-	return predicate.User(sql.FieldNEQ(FieldStatus, v))
+// GenderNEQ applies the NEQ predicate on the "gender" field.
+func GenderNEQ(v Gender) predicate.User {
+	return predicate.User(sql.FieldNEQ(FieldGender, v))
 }
 
-// StatusIn applies the In predicate on the "status" field.
-func StatusIn(vs ...Status) predicate.User {
-	return predicate.User(sql.FieldIn(FieldStatus, vs...))
+// GenderIn applies the In predicate on the "gender" field.
+func GenderIn(vs ...Gender) predicate.User {
+	return predicate.User(sql.FieldIn(FieldGender, vs...))
 }
 
-// StatusNotIn applies the NotIn predicate on the "status" field.
-func StatusNotIn(vs ...Status) predicate.User {
-	return predicate.User(sql.FieldNotIn(FieldStatus, vs...))
+// GenderNotIn applies the NotIn predicate on the "gender" field.
+func GenderNotIn(vs ...Gender) predicate.User {
+	return predicate.User(sql.FieldNotIn(FieldGender, vs...))
 }
 
-// StatusIsNil applies the IsNil predicate on the "status" field.
-func StatusIsNil() predicate.User {
-	return predicate.User(sql.FieldIsNull(FieldStatus))
+// GenderIsNil applies the IsNil predicate on the "gender" field.
+func GenderIsNil() predicate.User {
+	return predicate.User(sql.FieldIsNull(FieldGender))
 }
 
-// StatusNotNil applies the NotNil predicate on the "status" field.
-func StatusNotNil() predicate.User {
-	return predicate.User(sql.FieldNotNull(FieldStatus))
+// GenderNotNil applies the NotNil predicate on the "gender" field.
+func GenderNotNil() predicate.User {
+	return predicate.User(sql.FieldNotNull(FieldGender))
 }
 
 // LastLoginAtEQ applies the EQ predicate on the "last_login_at" field.
@@ -1684,256 +1549,6 @@ func LockedUntilNotNil() predicate.User {
 	return predicate.User(sql.FieldNotNull(FieldLockedUntil))
 }
 
-// FollowersEQ applies the EQ predicate on the "followers" field.
-func FollowersEQ(v uint64) predicate.User {
-	return predicate.User(sql.FieldEQ(FieldFollowers, v))
-}
-
-// FollowersNEQ applies the NEQ predicate on the "followers" field.
-func FollowersNEQ(v uint64) predicate.User {
-	return predicate.User(sql.FieldNEQ(FieldFollowers, v))
-}
-
-// FollowersIn applies the In predicate on the "followers" field.
-func FollowersIn(vs ...uint64) predicate.User {
-	return predicate.User(sql.FieldIn(FieldFollowers, vs...))
-}
-
-// FollowersNotIn applies the NotIn predicate on the "followers" field.
-func FollowersNotIn(vs ...uint64) predicate.User {
-	return predicate.User(sql.FieldNotIn(FieldFollowers, vs...))
-}
-
-// FollowersGT applies the GT predicate on the "followers" field.
-func FollowersGT(v uint64) predicate.User {
-	return predicate.User(sql.FieldGT(FieldFollowers, v))
-}
-
-// FollowersGTE applies the GTE predicate on the "followers" field.
-func FollowersGTE(v uint64) predicate.User {
-	return predicate.User(sql.FieldGTE(FieldFollowers, v))
-}
-
-// FollowersLT applies the LT predicate on the "followers" field.
-func FollowersLT(v uint64) predicate.User {
-	return predicate.User(sql.FieldLT(FieldFollowers, v))
-}
-
-// FollowersLTE applies the LTE predicate on the "followers" field.
-func FollowersLTE(v uint64) predicate.User {
-	return predicate.User(sql.FieldLTE(FieldFollowers, v))
-}
-
-// FollowersIsNil applies the IsNil predicate on the "followers" field.
-func FollowersIsNil() predicate.User {
-	return predicate.User(sql.FieldIsNull(FieldFollowers))
-}
-
-// FollowersNotNil applies the NotNil predicate on the "followers" field.
-func FollowersNotNil() predicate.User {
-	return predicate.User(sql.FieldNotNull(FieldFollowers))
-}
-
-// FollowingEQ applies the EQ predicate on the "following" field.
-func FollowingEQ(v uint64) predicate.User {
-	return predicate.User(sql.FieldEQ(FieldFollowing, v))
-}
-
-// FollowingNEQ applies the NEQ predicate on the "following" field.
-func FollowingNEQ(v uint64) predicate.User {
-	return predicate.User(sql.FieldNEQ(FieldFollowing, v))
-}
-
-// FollowingIn applies the In predicate on the "following" field.
-func FollowingIn(vs ...uint64) predicate.User {
-	return predicate.User(sql.FieldIn(FieldFollowing, vs...))
-}
-
-// FollowingNotIn applies the NotIn predicate on the "following" field.
-func FollowingNotIn(vs ...uint64) predicate.User {
-	return predicate.User(sql.FieldNotIn(FieldFollowing, vs...))
-}
-
-// FollowingGT applies the GT predicate on the "following" field.
-func FollowingGT(v uint64) predicate.User {
-	return predicate.User(sql.FieldGT(FieldFollowing, v))
-}
-
-// FollowingGTE applies the GTE predicate on the "following" field.
-func FollowingGTE(v uint64) predicate.User {
-	return predicate.User(sql.FieldGTE(FieldFollowing, v))
-}
-
-// FollowingLT applies the LT predicate on the "following" field.
-func FollowingLT(v uint64) predicate.User {
-	return predicate.User(sql.FieldLT(FieldFollowing, v))
-}
-
-// FollowingLTE applies the LTE predicate on the "following" field.
-func FollowingLTE(v uint64) predicate.User {
-	return predicate.User(sql.FieldLTE(FieldFollowing, v))
-}
-
-// FollowingIsNil applies the IsNil predicate on the "following" field.
-func FollowingIsNil() predicate.User {
-	return predicate.User(sql.FieldIsNull(FieldFollowing))
-}
-
-// FollowingNotNil applies the NotNil predicate on the "following" field.
-func FollowingNotNil() predicate.User {
-	return predicate.User(sql.FieldNotNull(FieldFollowing))
-}
-
-// PostCountEQ applies the EQ predicate on the "post_count" field.
-func PostCountEQ(v uint64) predicate.User {
-	return predicate.User(sql.FieldEQ(FieldPostCount, v))
-}
-
-// PostCountNEQ applies the NEQ predicate on the "post_count" field.
-func PostCountNEQ(v uint64) predicate.User {
-	return predicate.User(sql.FieldNEQ(FieldPostCount, v))
-}
-
-// PostCountIn applies the In predicate on the "post_count" field.
-func PostCountIn(vs ...uint64) predicate.User {
-	return predicate.User(sql.FieldIn(FieldPostCount, vs...))
-}
-
-// PostCountNotIn applies the NotIn predicate on the "post_count" field.
-func PostCountNotIn(vs ...uint64) predicate.User {
-	return predicate.User(sql.FieldNotIn(FieldPostCount, vs...))
-}
-
-// PostCountGT applies the GT predicate on the "post_count" field.
-func PostCountGT(v uint64) predicate.User {
-	return predicate.User(sql.FieldGT(FieldPostCount, v))
-}
-
-// PostCountGTE applies the GTE predicate on the "post_count" field.
-func PostCountGTE(v uint64) predicate.User {
-	return predicate.User(sql.FieldGTE(FieldPostCount, v))
-}
-
-// PostCountLT applies the LT predicate on the "post_count" field.
-func PostCountLT(v uint64) predicate.User {
-	return predicate.User(sql.FieldLT(FieldPostCount, v))
-}
-
-// PostCountLTE applies the LTE predicate on the "post_count" field.
-func PostCountLTE(v uint64) predicate.User {
-	return predicate.User(sql.FieldLTE(FieldPostCount, v))
-}
-
-// PostCountIsNil applies the IsNil predicate on the "post_count" field.
-func PostCountIsNil() predicate.User {
-	return predicate.User(sql.FieldIsNull(FieldPostCount))
-}
-
-// PostCountNotNil applies the NotNil predicate on the "post_count" field.
-func PostCountNotNil() predicate.User {
-	return predicate.User(sql.FieldNotNull(FieldPostCount))
-}
-
-// CommentCountEQ applies the EQ predicate on the "comment_count" field.
-func CommentCountEQ(v uint64) predicate.User {
-	return predicate.User(sql.FieldEQ(FieldCommentCount, v))
-}
-
-// CommentCountNEQ applies the NEQ predicate on the "comment_count" field.
-func CommentCountNEQ(v uint64) predicate.User {
-	return predicate.User(sql.FieldNEQ(FieldCommentCount, v))
-}
-
-// CommentCountIn applies the In predicate on the "comment_count" field.
-func CommentCountIn(vs ...uint64) predicate.User {
-	return predicate.User(sql.FieldIn(FieldCommentCount, vs...))
-}
-
-// CommentCountNotIn applies the NotIn predicate on the "comment_count" field.
-func CommentCountNotIn(vs ...uint64) predicate.User {
-	return predicate.User(sql.FieldNotIn(FieldCommentCount, vs...))
-}
-
-// CommentCountGT applies the GT predicate on the "comment_count" field.
-func CommentCountGT(v uint64) predicate.User {
-	return predicate.User(sql.FieldGT(FieldCommentCount, v))
-}
-
-// CommentCountGTE applies the GTE predicate on the "comment_count" field.
-func CommentCountGTE(v uint64) predicate.User {
-	return predicate.User(sql.FieldGTE(FieldCommentCount, v))
-}
-
-// CommentCountLT applies the LT predicate on the "comment_count" field.
-func CommentCountLT(v uint64) predicate.User {
-	return predicate.User(sql.FieldLT(FieldCommentCount, v))
-}
-
-// CommentCountLTE applies the LTE predicate on the "comment_count" field.
-func CommentCountLTE(v uint64) predicate.User {
-	return predicate.User(sql.FieldLTE(FieldCommentCount, v))
-}
-
-// CommentCountIsNil applies the IsNil predicate on the "comment_count" field.
-func CommentCountIsNil() predicate.User {
-	return predicate.User(sql.FieldIsNull(FieldCommentCount))
-}
-
-// CommentCountNotNil applies the NotNil predicate on the "comment_count" field.
-func CommentCountNotNil() predicate.User {
-	return predicate.User(sql.FieldNotNull(FieldCommentCount))
-}
-
-// LikeCountEQ applies the EQ predicate on the "like_count" field.
-func LikeCountEQ(v uint64) predicate.User {
-	return predicate.User(sql.FieldEQ(FieldLikeCount, v))
-}
-
-// LikeCountNEQ applies the NEQ predicate on the "like_count" field.
-func LikeCountNEQ(v uint64) predicate.User {
-	return predicate.User(sql.FieldNEQ(FieldLikeCount, v))
-}
-
-// LikeCountIn applies the In predicate on the "like_count" field.
-func LikeCountIn(vs ...uint64) predicate.User {
-	return predicate.User(sql.FieldIn(FieldLikeCount, vs...))
-}
-
-// LikeCountNotIn applies the NotIn predicate on the "like_count" field.
-func LikeCountNotIn(vs ...uint64) predicate.User {
-	return predicate.User(sql.FieldNotIn(FieldLikeCount, vs...))
-}
-
-// LikeCountGT applies the GT predicate on the "like_count" field.
-func LikeCountGT(v uint64) predicate.User {
-	return predicate.User(sql.FieldGT(FieldLikeCount, v))
-}
-
-// LikeCountGTE applies the GTE predicate on the "like_count" field.
-func LikeCountGTE(v uint64) predicate.User {
-	return predicate.User(sql.FieldGTE(FieldLikeCount, v))
-}
-
-// LikeCountLT applies the LT predicate on the "like_count" field.
-func LikeCountLT(v uint64) predicate.User {
-	return predicate.User(sql.FieldLT(FieldLikeCount, v))
-}
-
-// LikeCountLTE applies the LTE predicate on the "like_count" field.
-func LikeCountLTE(v uint64) predicate.User {
-	return predicate.User(sql.FieldLTE(FieldLikeCount, v))
-}
-
-// LikeCountIsNil applies the IsNil predicate on the "like_count" field.
-func LikeCountIsNil() predicate.User {
-	return predicate.User(sql.FieldIsNull(FieldLikeCount))
-}
-
-// LikeCountNotNil applies the NotNil predicate on the "like_count" field.
-func LikeCountNotNil() predicate.User {
-	return predicate.User(sql.FieldNotNull(FieldLikeCount))
-}
-
 // DefaultGroupIDEQ applies the EQ predicate on the "default_group_id" field.
 func DefaultGroupIDEQ(v uint32) predicate.User {
 	return predicate.User(sql.FieldEQ(FieldDefaultGroupID, v))
@@ -2032,6 +1647,36 @@ func DefaultBookIDIsNil() predicate.User {
 // DefaultBookIDNotNil applies the NotNil predicate on the "default_book_id" field.
 func DefaultBookIDNotNil() predicate.User {
 	return predicate.User(sql.FieldNotNull(FieldDefaultBookID))
+}
+
+// StatusEQ applies the EQ predicate on the "status" field.
+func StatusEQ(v Status) predicate.User {
+	return predicate.User(sql.FieldEQ(FieldStatus, v))
+}
+
+// StatusNEQ applies the NEQ predicate on the "status" field.
+func StatusNEQ(v Status) predicate.User {
+	return predicate.User(sql.FieldNEQ(FieldStatus, v))
+}
+
+// StatusIn applies the In predicate on the "status" field.
+func StatusIn(vs ...Status) predicate.User {
+	return predicate.User(sql.FieldIn(FieldStatus, vs...))
+}
+
+// StatusNotIn applies the NotIn predicate on the "status" field.
+func StatusNotIn(vs ...Status) predicate.User {
+	return predicate.User(sql.FieldNotIn(FieldStatus, vs...))
+}
+
+// StatusIsNil applies the IsNil predicate on the "status" field.
+func StatusIsNil() predicate.User {
+	return predicate.User(sql.FieldIsNull(FieldStatus))
+}
+
+// StatusNotNil applies the NotNil predicate on the "status" field.
+func StatusNotNil() predicate.User {
+	return predicate.User(sql.FieldNotNull(FieldStatus))
 }
 
 // And groups predicates with the AND operator between them.

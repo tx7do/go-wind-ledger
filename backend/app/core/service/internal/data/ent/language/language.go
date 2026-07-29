@@ -23,12 +23,18 @@ const (
 	FieldUpdatedBy = "updated_by"
 	// FieldDeletedBy holds the string denoting the deleted_by field in the database.
 	FieldDeletedBy = "deleted_by"
-	// FieldCode holds the string denoting the code field in the database.
-	FieldCode = "code"
-	// FieldName holds the string denoting the name field in the database.
-	FieldName = "name"
-	// FieldEnable holds the string denoting the enable field in the database.
-	FieldEnable = "enable"
+	// FieldSortOrder holds the string denoting the sort_order field in the database.
+	FieldSortOrder = "sort_order"
+	// FieldIsEnabled holds the string denoting the is_enabled field in the database.
+	FieldIsEnabled = "is_enabled"
+	// FieldLanguageCode holds the string denoting the language_code field in the database.
+	FieldLanguageCode = "language_code"
+	// FieldLanguageName holds the string denoting the language_name field in the database.
+	FieldLanguageName = "language_name"
+	// FieldNativeName holds the string denoting the native_name field in the database.
+	FieldNativeName = "native_name"
+	// FieldIsDefault holds the string denoting the is_default field in the database.
+	FieldIsDefault = "is_default"
 	// Table holds the table name of the language in the database.
 	Table = "sys_languages"
 )
@@ -42,9 +48,12 @@ var Columns = []string{
 	FieldCreatedBy,
 	FieldUpdatedBy,
 	FieldDeletedBy,
-	FieldCode,
-	FieldName,
-	FieldEnable,
+	FieldSortOrder,
+	FieldIsEnabled,
+	FieldLanguageCode,
+	FieldLanguageName,
+	FieldNativeName,
+	FieldIsDefault,
 }
 
 // ValidColumn reports if the column name is valid (part of the table columns).
@@ -58,12 +67,18 @@ func ValidColumn(column string) bool {
 }
 
 var (
-	// CodeValidator is a validator for the "code" field. It is called by the builders before save.
-	CodeValidator func(string) error
-	// NameValidator is a validator for the "name" field. It is called by the builders before save.
-	NameValidator func(string) error
-	// DefaultEnable holds the default value on creation for the "enable" field.
-	DefaultEnable bool
+	// DefaultSortOrder holds the default value on creation for the "sort_order" field.
+	DefaultSortOrder uint32
+	// DefaultIsEnabled holds the default value on creation for the "is_enabled" field.
+	DefaultIsEnabled bool
+	// LanguageCodeValidator is a validator for the "language_code" field. It is called by the builders before save.
+	LanguageCodeValidator func(string) error
+	// LanguageNameValidator is a validator for the "language_name" field. It is called by the builders before save.
+	LanguageNameValidator func(string) error
+	// NativeNameValidator is a validator for the "native_name" field. It is called by the builders before save.
+	NativeNameValidator func(string) error
+	// DefaultIsDefault holds the default value on creation for the "is_default" field.
+	DefaultIsDefault bool
 	// IDValidator is a validator for the "id" field. It is called by the builders before save.
 	IDValidator func(uint32) error
 )
@@ -106,17 +121,32 @@ func ByDeletedBy(opts ...sql.OrderTermOption) OrderOption {
 	return sql.OrderByField(FieldDeletedBy, opts...).ToFunc()
 }
 
-// ByCode orders the results by the code field.
-func ByCode(opts ...sql.OrderTermOption) OrderOption {
-	return sql.OrderByField(FieldCode, opts...).ToFunc()
+// BySortOrder orders the results by the sort_order field.
+func BySortOrder(opts ...sql.OrderTermOption) OrderOption {
+	return sql.OrderByField(FieldSortOrder, opts...).ToFunc()
 }
 
-// ByName orders the results by the name field.
-func ByName(opts ...sql.OrderTermOption) OrderOption {
-	return sql.OrderByField(FieldName, opts...).ToFunc()
+// ByIsEnabled orders the results by the is_enabled field.
+func ByIsEnabled(opts ...sql.OrderTermOption) OrderOption {
+	return sql.OrderByField(FieldIsEnabled, opts...).ToFunc()
 }
 
-// ByEnable orders the results by the enable field.
-func ByEnable(opts ...sql.OrderTermOption) OrderOption {
-	return sql.OrderByField(FieldEnable, opts...).ToFunc()
+// ByLanguageCode orders the results by the language_code field.
+func ByLanguageCode(opts ...sql.OrderTermOption) OrderOption {
+	return sql.OrderByField(FieldLanguageCode, opts...).ToFunc()
+}
+
+// ByLanguageName orders the results by the language_name field.
+func ByLanguageName(opts ...sql.OrderTermOption) OrderOption {
+	return sql.OrderByField(FieldLanguageName, opts...).ToFunc()
+}
+
+// ByNativeName orders the results by the native_name field.
+func ByNativeName(opts ...sql.OrderTermOption) OrderOption {
+	return sql.OrderByField(FieldNativeName, opts...).ToFunc()
+}
+
+// ByIsDefault orders the results by the is_default field.
+func ByIsDefault(opts ...sql.OrderTermOption) OrderOption {
+	return sql.OrderByField(FieldIsDefault, opts...).ToFunc()
 }

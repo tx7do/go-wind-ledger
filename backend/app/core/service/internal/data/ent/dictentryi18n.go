@@ -4,6 +4,7 @@ package ent
 
 import (
 	"fmt"
+	"go-wind-ledger/app/core/service/internal/data/ent/dictentry"
 	"go-wind-ledger/app/core/service/internal/data/ent/dictentryi18n"
 	"strings"
 	"time"
@@ -12,7 +13,7 @@ import (
 	"entgo.io/ent/dialect/sql"
 )
 
-// 字典项国际化表
+// 字典项翻译表
 type DictEntryI18n struct {
 	config `json:"-"`
 	// ID of the ent.
@@ -24,21 +25,47 @@ type DictEntryI18n struct {
 	UpdatedAt *time.Time `json:"updated_at,omitempty"`
 	// 删除时间
 	DeletedAt *time.Time `json:"deleted_at,omitempty"`
-	// 租户ID
-	TenantID *uint32 `json:"tenant_id,omitempty"`
 	// 创建者ID
 	CreatedBy *uint32 `json:"created_by,omitempty"`
 	// 更新者ID
 	UpdatedBy *uint32 `json:"updated_by,omitempty"`
 	// 删除者ID
 	DeletedBy *uint32 `json:"deleted_by,omitempty"`
-	// 字典项ID
-	DictEntryID *uint32 `json:"dict_entry_id,omitempty"`
+	// 描述
+	Description *string `json:"description,omitempty"`
+	// 排序值（越小越靠前）
+	SortOrder *uint32 `json:"sort_order,omitempty"`
+	// 租户ID
+	TenantID *uint32 `json:"tenant_id,omitempty"`
 	// 语言代码
 	LanguageCode *string `json:"language_code,omitempty"`
-	// 名称
-	Name         *string `json:"name,omitempty"`
+	// 字典项的显示标签
+	EntryLabel *string `json:"entry_label,omitempty"`
+	// Edges holds the relations/edges for other nodes in the graph.
+	// The values are being populated by the DictEntryI18nQuery when eager-loading is set.
+	Edges        DictEntryI18nEdges `json:"edges"`
+	entry_id     *uint32
 	selectValues sql.SelectValues
+}
+
+// DictEntryI18nEdges holds the relations/edges for other nodes in the graph.
+type DictEntryI18nEdges struct {
+	// DictEntry holds the value of the dict_entry edge.
+	DictEntry *DictEntry `json:"dict_entry,omitempty"`
+	// loadedTypes holds the information for reporting if a
+	// type was loaded (or requested) in eager-loading or not.
+	loadedTypes [1]bool
+}
+
+// DictEntryOrErr returns the DictEntry value or an error if the edge
+// was not loaded in eager-loading, or loaded but was not found.
+func (e DictEntryI18nEdges) DictEntryOrErr() (*DictEntry, error) {
+	if e.DictEntry != nil {
+		return e.DictEntry, nil
+	} else if e.loadedTypes[0] {
+		return nil, &NotFoundError{label: dictentry.Label}
+	}
+	return nil, &NotLoadedError{edge: "dict_entry"}
 }
 
 // scanValues returns the types for scanning values from sql.Rows.
@@ -46,12 +73,14 @@ func (*DictEntryI18n) scanValues(columns []string) ([]any, error) {
 	values := make([]any, len(columns))
 	for i := range columns {
 		switch columns[i] {
-		case dictentryi18n.FieldID, dictentryi18n.FieldTenantID, dictentryi18n.FieldCreatedBy, dictentryi18n.FieldUpdatedBy, dictentryi18n.FieldDeletedBy, dictentryi18n.FieldDictEntryID:
+		case dictentryi18n.FieldID, dictentryi18n.FieldCreatedBy, dictentryi18n.FieldUpdatedBy, dictentryi18n.FieldDeletedBy, dictentryi18n.FieldSortOrder, dictentryi18n.FieldTenantID:
 			values[i] = new(sql.NullInt64)
-		case dictentryi18n.FieldLanguageCode, dictentryi18n.FieldName:
+		case dictentryi18n.FieldDescription, dictentryi18n.FieldLanguageCode, dictentryi18n.FieldEntryLabel:
 			values[i] = new(sql.NullString)
 		case dictentryi18n.FieldCreatedAt, dictentryi18n.FieldUpdatedAt, dictentryi18n.FieldDeletedAt:
 			values[i] = new(sql.NullTime)
+		case dictentryi18n.ForeignKeys[0]: // entry_id
+			values[i] = new(sql.NullInt64)
 		default:
 			values[i] = new(sql.UnknownType)
 		}
@@ -94,13 +123,6 @@ func (_m *DictEntryI18n) assignValues(columns []string, values []any) error {
 				_m.DeletedAt = new(time.Time)
 				*_m.DeletedAt = value.Time
 			}
-		case dictentryi18n.FieldTenantID:
-			if value, ok := values[i].(*sql.NullInt64); !ok {
-				return fmt.Errorf("unexpected type %T for field tenant_id", values[i])
-			} else if value.Valid {
-				_m.TenantID = new(uint32)
-				*_m.TenantID = uint32(value.Int64)
-			}
 		case dictentryi18n.FieldCreatedBy:
 			if value, ok := values[i].(*sql.NullInt64); !ok {
 				return fmt.Errorf("unexpected type %T for field created_by", values[i])
@@ -122,12 +144,26 @@ func (_m *DictEntryI18n) assignValues(columns []string, values []any) error {
 				_m.DeletedBy = new(uint32)
 				*_m.DeletedBy = uint32(value.Int64)
 			}
-		case dictentryi18n.FieldDictEntryID:
-			if value, ok := values[i].(*sql.NullInt64); !ok {
-				return fmt.Errorf("unexpected type %T for field dict_entry_id", values[i])
+		case dictentryi18n.FieldDescription:
+			if value, ok := values[i].(*sql.NullString); !ok {
+				return fmt.Errorf("unexpected type %T for field description", values[i])
 			} else if value.Valid {
-				_m.DictEntryID = new(uint32)
-				*_m.DictEntryID = uint32(value.Int64)
+				_m.Description = new(string)
+				*_m.Description = value.String
+			}
+		case dictentryi18n.FieldSortOrder:
+			if value, ok := values[i].(*sql.NullInt64); !ok {
+				return fmt.Errorf("unexpected type %T for field sort_order", values[i])
+			} else if value.Valid {
+				_m.SortOrder = new(uint32)
+				*_m.SortOrder = uint32(value.Int64)
+			}
+		case dictentryi18n.FieldTenantID:
+			if value, ok := values[i].(*sql.NullInt64); !ok {
+				return fmt.Errorf("unexpected type %T for field tenant_id", values[i])
+			} else if value.Valid {
+				_m.TenantID = new(uint32)
+				*_m.TenantID = uint32(value.Int64)
 			}
 		case dictentryi18n.FieldLanguageCode:
 			if value, ok := values[i].(*sql.NullString); !ok {
@@ -136,12 +172,19 @@ func (_m *DictEntryI18n) assignValues(columns []string, values []any) error {
 				_m.LanguageCode = new(string)
 				*_m.LanguageCode = value.String
 			}
-		case dictentryi18n.FieldName:
+		case dictentryi18n.FieldEntryLabel:
 			if value, ok := values[i].(*sql.NullString); !ok {
-				return fmt.Errorf("unexpected type %T for field name", values[i])
+				return fmt.Errorf("unexpected type %T for field entry_label", values[i])
 			} else if value.Valid {
-				_m.Name = new(string)
-				*_m.Name = value.String
+				_m.EntryLabel = new(string)
+				*_m.EntryLabel = value.String
+			}
+		case dictentryi18n.ForeignKeys[0]:
+			if value, ok := values[i].(*sql.NullInt64); !ok {
+				return fmt.Errorf("unexpected type %T for edge-field entry_id", value)
+			} else if value.Valid {
+				_m.entry_id = new(uint32)
+				*_m.entry_id = uint32(value.Int64)
 			}
 		default:
 			_m.selectValues.Set(columns[i], values[i])
@@ -154,6 +197,11 @@ func (_m *DictEntryI18n) assignValues(columns []string, values []any) error {
 // This includes values selected through modifiers, order, etc.
 func (_m *DictEntryI18n) Value(name string) (ent.Value, error) {
 	return _m.selectValues.Get(name)
+}
+
+// QueryDictEntry queries the "dict_entry" edge of the DictEntryI18n entity.
+func (_m *DictEntryI18n) QueryDictEntry() *DictEntryQuery {
+	return NewDictEntryI18nClient(_m.config).QueryDictEntry(_m)
 }
 
 // Update returns a builder for updating this DictEntryI18n.
@@ -194,11 +242,6 @@ func (_m *DictEntryI18n) String() string {
 		builder.WriteString(v.Format(time.ANSIC))
 	}
 	builder.WriteString(", ")
-	if v := _m.TenantID; v != nil {
-		builder.WriteString("tenant_id=")
-		builder.WriteString(fmt.Sprintf("%v", *v))
-	}
-	builder.WriteString(", ")
 	if v := _m.CreatedBy; v != nil {
 		builder.WriteString("created_by=")
 		builder.WriteString(fmt.Sprintf("%v", *v))
@@ -214,8 +257,18 @@ func (_m *DictEntryI18n) String() string {
 		builder.WriteString(fmt.Sprintf("%v", *v))
 	}
 	builder.WriteString(", ")
-	if v := _m.DictEntryID; v != nil {
-		builder.WriteString("dict_entry_id=")
+	if v := _m.Description; v != nil {
+		builder.WriteString("description=")
+		builder.WriteString(*v)
+	}
+	builder.WriteString(", ")
+	if v := _m.SortOrder; v != nil {
+		builder.WriteString("sort_order=")
+		builder.WriteString(fmt.Sprintf("%v", *v))
+	}
+	builder.WriteString(", ")
+	if v := _m.TenantID; v != nil {
+		builder.WriteString("tenant_id=")
 		builder.WriteString(fmt.Sprintf("%v", *v))
 	}
 	builder.WriteString(", ")
@@ -224,8 +277,8 @@ func (_m *DictEntryI18n) String() string {
 		builder.WriteString(*v)
 	}
 	builder.WriteString(", ")
-	if v := _m.Name; v != nil {
-		builder.WriteString("name=")
+	if v := _m.EntryLabel; v != nil {
+		builder.WriteString("entry_label=")
 		builder.WriteString(*v)
 	}
 	builder.WriteByte(')')

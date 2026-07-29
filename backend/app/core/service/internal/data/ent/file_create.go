@@ -106,6 +106,20 @@ func (_c *FileCreate) SetNillableDeletedBy(v *uint32) *FileCreate {
 	return _c
 }
 
+// SetRemark sets the "remark" field.
+func (_c *FileCreate) SetRemark(v string) *FileCreate {
+	_c.mutation.SetRemark(v)
+	return _c
+}
+
+// SetNillableRemark sets the "remark" field if the given value is not nil.
+func (_c *FileCreate) SetNillableRemark(v *string) *FileCreate {
+	if v != nil {
+		_c.SetRemark(*v)
+	}
+	return _c
+}
+
 // SetTenantID sets the "tenant_id" field.
 func (_c *FileCreate) SetTenantID(v uint32) *FileCreate {
 	_c.mutation.SetTenantID(v)
@@ -116,90 +130,6 @@ func (_c *FileCreate) SetTenantID(v uint32) *FileCreate {
 func (_c *FileCreate) SetNillableTenantID(v *uint32) *FileCreate {
 	if v != nil {
 		_c.SetTenantID(*v)
-	}
-	return _c
-}
-
-// SetName sets the "name" field.
-func (_c *FileCreate) SetName(v string) *FileCreate {
-	_c.mutation.SetName(v)
-	return _c
-}
-
-// SetNillableName sets the "name" field if the given value is not nil.
-func (_c *FileCreate) SetNillableName(v *string) *FileCreate {
-	if v != nil {
-		_c.SetName(*v)
-	}
-	return _c
-}
-
-// SetOriginalName sets the "original_name" field.
-func (_c *FileCreate) SetOriginalName(v string) *FileCreate {
-	_c.mutation.SetOriginalName(v)
-	return _c
-}
-
-// SetNillableOriginalName sets the "original_name" field if the given value is not nil.
-func (_c *FileCreate) SetNillableOriginalName(v *string) *FileCreate {
-	if v != nil {
-		_c.SetOriginalName(*v)
-	}
-	return _c
-}
-
-// SetContentType sets the "content_type" field.
-func (_c *FileCreate) SetContentType(v string) *FileCreate {
-	_c.mutation.SetContentType(v)
-	return _c
-}
-
-// SetNillableContentType sets the "content_type" field if the given value is not nil.
-func (_c *FileCreate) SetNillableContentType(v *string) *FileCreate {
-	if v != nil {
-		_c.SetContentType(*v)
-	}
-	return _c
-}
-
-// SetSize sets the "size" field.
-func (_c *FileCreate) SetSize(v int64) *FileCreate {
-	_c.mutation.SetSize(v)
-	return _c
-}
-
-// SetNillableSize sets the "size" field if the given value is not nil.
-func (_c *FileCreate) SetNillableSize(v *int64) *FileCreate {
-	if v != nil {
-		_c.SetSize(*v)
-	}
-	return _c
-}
-
-// SetPath sets the "path" field.
-func (_c *FileCreate) SetPath(v string) *FileCreate {
-	_c.mutation.SetPath(v)
-	return _c
-}
-
-// SetNillablePath sets the "path" field if the given value is not nil.
-func (_c *FileCreate) SetNillablePath(v *string) *FileCreate {
-	if v != nil {
-		_c.SetPath(*v)
-	}
-	return _c
-}
-
-// SetURL sets the "url" field.
-func (_c *FileCreate) SetURL(v string) *FileCreate {
-	_c.mutation.SetURL(v)
-	return _c
-}
-
-// SetNillableURL sets the "url" field if the given value is not nil.
-func (_c *FileCreate) SetNillableURL(v *string) *FileCreate {
-	if v != nil {
-		_c.SetURL(*v)
 	}
 	return _c
 }
@@ -218,16 +148,142 @@ func (_c *FileCreate) SetNillableProvider(v *file.Provider) *FileCreate {
 	return _c
 }
 
-// SetObjectKey sets the "object_key" field.
-func (_c *FileCreate) SetObjectKey(v string) *FileCreate {
-	_c.mutation.SetObjectKey(v)
+// SetBucketName sets the "bucket_name" field.
+func (_c *FileCreate) SetBucketName(v string) *FileCreate {
+	_c.mutation.SetBucketName(v)
 	return _c
 }
 
-// SetNillableObjectKey sets the "object_key" field if the given value is not nil.
-func (_c *FileCreate) SetNillableObjectKey(v *string) *FileCreate {
+// SetNillableBucketName sets the "bucket_name" field if the given value is not nil.
+func (_c *FileCreate) SetNillableBucketName(v *string) *FileCreate {
 	if v != nil {
-		_c.SetObjectKey(*v)
+		_c.SetBucketName(*v)
+	}
+	return _c
+}
+
+// SetFileDirectory sets the "file_directory" field.
+func (_c *FileCreate) SetFileDirectory(v string) *FileCreate {
+	_c.mutation.SetFileDirectory(v)
+	return _c
+}
+
+// SetNillableFileDirectory sets the "file_directory" field if the given value is not nil.
+func (_c *FileCreate) SetNillableFileDirectory(v *string) *FileCreate {
+	if v != nil {
+		_c.SetFileDirectory(*v)
+	}
+	return _c
+}
+
+// SetFileGUID sets the "file_guid" field.
+func (_c *FileCreate) SetFileGUID(v string) *FileCreate {
+	_c.mutation.SetFileGUID(v)
+	return _c
+}
+
+// SetNillableFileGUID sets the "file_guid" field if the given value is not nil.
+func (_c *FileCreate) SetNillableFileGUID(v *string) *FileCreate {
+	if v != nil {
+		_c.SetFileGUID(*v)
+	}
+	return _c
+}
+
+// SetSaveFileName sets the "save_file_name" field.
+func (_c *FileCreate) SetSaveFileName(v string) *FileCreate {
+	_c.mutation.SetSaveFileName(v)
+	return _c
+}
+
+// SetNillableSaveFileName sets the "save_file_name" field if the given value is not nil.
+func (_c *FileCreate) SetNillableSaveFileName(v *string) *FileCreate {
+	if v != nil {
+		_c.SetSaveFileName(*v)
+	}
+	return _c
+}
+
+// SetFileName sets the "file_name" field.
+func (_c *FileCreate) SetFileName(v string) *FileCreate {
+	_c.mutation.SetFileName(v)
+	return _c
+}
+
+// SetNillableFileName sets the "file_name" field if the given value is not nil.
+func (_c *FileCreate) SetNillableFileName(v *string) *FileCreate {
+	if v != nil {
+		_c.SetFileName(*v)
+	}
+	return _c
+}
+
+// SetExtension sets the "extension" field.
+func (_c *FileCreate) SetExtension(v string) *FileCreate {
+	_c.mutation.SetExtension(v)
+	return _c
+}
+
+// SetNillableExtension sets the "extension" field if the given value is not nil.
+func (_c *FileCreate) SetNillableExtension(v *string) *FileCreate {
+	if v != nil {
+		_c.SetExtension(*v)
+	}
+	return _c
+}
+
+// SetSize sets the "size" field.
+func (_c *FileCreate) SetSize(v uint64) *FileCreate {
+	_c.mutation.SetSize(v)
+	return _c
+}
+
+// SetNillableSize sets the "size" field if the given value is not nil.
+func (_c *FileCreate) SetNillableSize(v *uint64) *FileCreate {
+	if v != nil {
+		_c.SetSize(*v)
+	}
+	return _c
+}
+
+// SetSizeFormat sets the "size_format" field.
+func (_c *FileCreate) SetSizeFormat(v string) *FileCreate {
+	_c.mutation.SetSizeFormat(v)
+	return _c
+}
+
+// SetNillableSizeFormat sets the "size_format" field if the given value is not nil.
+func (_c *FileCreate) SetNillableSizeFormat(v *string) *FileCreate {
+	if v != nil {
+		_c.SetSizeFormat(*v)
+	}
+	return _c
+}
+
+// SetLinkURL sets the "link_url" field.
+func (_c *FileCreate) SetLinkURL(v string) *FileCreate {
+	_c.mutation.SetLinkURL(v)
+	return _c
+}
+
+// SetNillableLinkURL sets the "link_url" field if the given value is not nil.
+func (_c *FileCreate) SetNillableLinkURL(v *string) *FileCreate {
+	if v != nil {
+		_c.SetLinkURL(*v)
+	}
+	return _c
+}
+
+// SetContentHash sets the "content_hash" field.
+func (_c *FileCreate) SetContentHash(v string) *FileCreate {
+	_c.mutation.SetContentHash(v)
+	return _c
+}
+
+// SetNillableContentHash sets the "content_hash" field if the given value is not nil.
+func (_c *FileCreate) SetNillableContentHash(v *string) *FileCreate {
+	if v != nil {
+		_c.SetContentHash(*v)
 	}
 	return _c
 }
@@ -288,39 +344,9 @@ func (_c *FileCreate) defaults() error {
 
 // check runs all checks and user-defined validators on the builder.
 func (_c *FileCreate) check() error {
-	if v, ok := _c.mutation.Name(); ok {
-		if err := file.NameValidator(v); err != nil {
-			return &ValidationError{Name: "name", err: fmt.Errorf(`ent: validator failed for field "File.name": %w`, err)}
-		}
-	}
-	if v, ok := _c.mutation.OriginalName(); ok {
-		if err := file.OriginalNameValidator(v); err != nil {
-			return &ValidationError{Name: "original_name", err: fmt.Errorf(`ent: validator failed for field "File.original_name": %w`, err)}
-		}
-	}
-	if v, ok := _c.mutation.ContentType(); ok {
-		if err := file.ContentTypeValidator(v); err != nil {
-			return &ValidationError{Name: "content_type", err: fmt.Errorf(`ent: validator failed for field "File.content_type": %w`, err)}
-		}
-	}
-	if v, ok := _c.mutation.Path(); ok {
-		if err := file.PathValidator(v); err != nil {
-			return &ValidationError{Name: "path", err: fmt.Errorf(`ent: validator failed for field "File.path": %w`, err)}
-		}
-	}
-	if v, ok := _c.mutation.URL(); ok {
-		if err := file.URLValidator(v); err != nil {
-			return &ValidationError{Name: "url", err: fmt.Errorf(`ent: validator failed for field "File.url": %w`, err)}
-		}
-	}
 	if v, ok := _c.mutation.Provider(); ok {
 		if err := file.ProviderValidator(v); err != nil {
 			return &ValidationError{Name: "provider", err: fmt.Errorf(`ent: validator failed for field "File.provider": %w`, err)}
-		}
-	}
-	if v, ok := _c.mutation.ObjectKey(); ok {
-		if err := file.ObjectKeyValidator(v); err != nil {
-			return &ValidationError{Name: "object_key", err: fmt.Errorf(`ent: validator failed for field "File.object_key": %w`, err)}
 		}
 	}
 	if v, ok := _c.mutation.ID(); ok {
@@ -385,41 +411,57 @@ func (_c *FileCreate) createSpec() (*File, *sqlgraph.CreateSpec) {
 		_spec.SetField(file.FieldDeletedBy, field.TypeUint32, value)
 		_node.DeletedBy = &value
 	}
+	if value, ok := _c.mutation.Remark(); ok {
+		_spec.SetField(file.FieldRemark, field.TypeString, value)
+		_node.Remark = &value
+	}
 	if value, ok := _c.mutation.TenantID(); ok {
 		_spec.SetField(file.FieldTenantID, field.TypeUint32, value)
 		_node.TenantID = &value
-	}
-	if value, ok := _c.mutation.Name(); ok {
-		_spec.SetField(file.FieldName, field.TypeString, value)
-		_node.Name = &value
-	}
-	if value, ok := _c.mutation.OriginalName(); ok {
-		_spec.SetField(file.FieldOriginalName, field.TypeString, value)
-		_node.OriginalName = &value
-	}
-	if value, ok := _c.mutation.ContentType(); ok {
-		_spec.SetField(file.FieldContentType, field.TypeString, value)
-		_node.ContentType = &value
-	}
-	if value, ok := _c.mutation.Size(); ok {
-		_spec.SetField(file.FieldSize, field.TypeInt64, value)
-		_node.Size = &value
-	}
-	if value, ok := _c.mutation.Path(); ok {
-		_spec.SetField(file.FieldPath, field.TypeString, value)
-		_node.Path = &value
-	}
-	if value, ok := _c.mutation.URL(); ok {
-		_spec.SetField(file.FieldURL, field.TypeString, value)
-		_node.URL = &value
 	}
 	if value, ok := _c.mutation.Provider(); ok {
 		_spec.SetField(file.FieldProvider, field.TypeEnum, value)
 		_node.Provider = &value
 	}
-	if value, ok := _c.mutation.ObjectKey(); ok {
-		_spec.SetField(file.FieldObjectKey, field.TypeString, value)
-		_node.ObjectKey = &value
+	if value, ok := _c.mutation.BucketName(); ok {
+		_spec.SetField(file.FieldBucketName, field.TypeString, value)
+		_node.BucketName = &value
+	}
+	if value, ok := _c.mutation.FileDirectory(); ok {
+		_spec.SetField(file.FieldFileDirectory, field.TypeString, value)
+		_node.FileDirectory = &value
+	}
+	if value, ok := _c.mutation.FileGUID(); ok {
+		_spec.SetField(file.FieldFileGUID, field.TypeString, value)
+		_node.FileGUID = &value
+	}
+	if value, ok := _c.mutation.SaveFileName(); ok {
+		_spec.SetField(file.FieldSaveFileName, field.TypeString, value)
+		_node.SaveFileName = &value
+	}
+	if value, ok := _c.mutation.FileName(); ok {
+		_spec.SetField(file.FieldFileName, field.TypeString, value)
+		_node.FileName = &value
+	}
+	if value, ok := _c.mutation.Extension(); ok {
+		_spec.SetField(file.FieldExtension, field.TypeString, value)
+		_node.Extension = &value
+	}
+	if value, ok := _c.mutation.Size(); ok {
+		_spec.SetField(file.FieldSize, field.TypeUint64, value)
+		_node.Size = &value
+	}
+	if value, ok := _c.mutation.SizeFormat(); ok {
+		_spec.SetField(file.FieldSizeFormat, field.TypeString, value)
+		_node.SizeFormat = &value
+	}
+	if value, ok := _c.mutation.LinkURL(); ok {
+		_spec.SetField(file.FieldLinkURL, field.TypeString, value)
+		_node.LinkURL = &value
+	}
+	if value, ok := _c.mutation.ContentHash(); ok {
+		_spec.SetField(file.FieldContentHash, field.TypeString, value)
+		_node.ContentHash = &value
 	}
 	return _node, _spec
 }
@@ -581,117 +623,21 @@ func (u *FileUpsert) ClearDeletedBy() *FileUpsert {
 	return u
 }
 
-// SetName sets the "name" field.
-func (u *FileUpsert) SetName(v string) *FileUpsert {
-	u.Set(file.FieldName, v)
+// SetRemark sets the "remark" field.
+func (u *FileUpsert) SetRemark(v string) *FileUpsert {
+	u.Set(file.FieldRemark, v)
 	return u
 }
 
-// UpdateName sets the "name" field to the value that was provided on create.
-func (u *FileUpsert) UpdateName() *FileUpsert {
-	u.SetExcluded(file.FieldName)
+// UpdateRemark sets the "remark" field to the value that was provided on create.
+func (u *FileUpsert) UpdateRemark() *FileUpsert {
+	u.SetExcluded(file.FieldRemark)
 	return u
 }
 
-// ClearName clears the value of the "name" field.
-func (u *FileUpsert) ClearName() *FileUpsert {
-	u.SetNull(file.FieldName)
-	return u
-}
-
-// SetOriginalName sets the "original_name" field.
-func (u *FileUpsert) SetOriginalName(v string) *FileUpsert {
-	u.Set(file.FieldOriginalName, v)
-	return u
-}
-
-// UpdateOriginalName sets the "original_name" field to the value that was provided on create.
-func (u *FileUpsert) UpdateOriginalName() *FileUpsert {
-	u.SetExcluded(file.FieldOriginalName)
-	return u
-}
-
-// ClearOriginalName clears the value of the "original_name" field.
-func (u *FileUpsert) ClearOriginalName() *FileUpsert {
-	u.SetNull(file.FieldOriginalName)
-	return u
-}
-
-// SetContentType sets the "content_type" field.
-func (u *FileUpsert) SetContentType(v string) *FileUpsert {
-	u.Set(file.FieldContentType, v)
-	return u
-}
-
-// UpdateContentType sets the "content_type" field to the value that was provided on create.
-func (u *FileUpsert) UpdateContentType() *FileUpsert {
-	u.SetExcluded(file.FieldContentType)
-	return u
-}
-
-// ClearContentType clears the value of the "content_type" field.
-func (u *FileUpsert) ClearContentType() *FileUpsert {
-	u.SetNull(file.FieldContentType)
-	return u
-}
-
-// SetSize sets the "size" field.
-func (u *FileUpsert) SetSize(v int64) *FileUpsert {
-	u.Set(file.FieldSize, v)
-	return u
-}
-
-// UpdateSize sets the "size" field to the value that was provided on create.
-func (u *FileUpsert) UpdateSize() *FileUpsert {
-	u.SetExcluded(file.FieldSize)
-	return u
-}
-
-// AddSize adds v to the "size" field.
-func (u *FileUpsert) AddSize(v int64) *FileUpsert {
-	u.Add(file.FieldSize, v)
-	return u
-}
-
-// ClearSize clears the value of the "size" field.
-func (u *FileUpsert) ClearSize() *FileUpsert {
-	u.SetNull(file.FieldSize)
-	return u
-}
-
-// SetPath sets the "path" field.
-func (u *FileUpsert) SetPath(v string) *FileUpsert {
-	u.Set(file.FieldPath, v)
-	return u
-}
-
-// UpdatePath sets the "path" field to the value that was provided on create.
-func (u *FileUpsert) UpdatePath() *FileUpsert {
-	u.SetExcluded(file.FieldPath)
-	return u
-}
-
-// ClearPath clears the value of the "path" field.
-func (u *FileUpsert) ClearPath() *FileUpsert {
-	u.SetNull(file.FieldPath)
-	return u
-}
-
-// SetURL sets the "url" field.
-func (u *FileUpsert) SetURL(v string) *FileUpsert {
-	u.Set(file.FieldURL, v)
-	return u
-}
-
-// UpdateURL sets the "url" field to the value that was provided on create.
-func (u *FileUpsert) UpdateURL() *FileUpsert {
-	u.SetExcluded(file.FieldURL)
-	return u
-}
-
-// ClearURL clears the value of the "url" field.
-func (u *FileUpsert) ClearURL() *FileUpsert {
-	u.SetNull(file.FieldURL)
+// ClearRemark clears the value of the "remark" field.
+func (u *FileUpsert) ClearRemark() *FileUpsert {
+	u.SetNull(file.FieldRemark)
 	return u
 }
 
@@ -713,21 +659,189 @@ func (u *FileUpsert) ClearProvider() *FileUpsert {
 	return u
 }
 
-// SetObjectKey sets the "object_key" field.
-func (u *FileUpsert) SetObjectKey(v string) *FileUpsert {
-	u.Set(file.FieldObjectKey, v)
+// SetBucketName sets the "bucket_name" field.
+func (u *FileUpsert) SetBucketName(v string) *FileUpsert {
+	u.Set(file.FieldBucketName, v)
 	return u
 }
 
-// UpdateObjectKey sets the "object_key" field to the value that was provided on create.
-func (u *FileUpsert) UpdateObjectKey() *FileUpsert {
-	u.SetExcluded(file.FieldObjectKey)
+// UpdateBucketName sets the "bucket_name" field to the value that was provided on create.
+func (u *FileUpsert) UpdateBucketName() *FileUpsert {
+	u.SetExcluded(file.FieldBucketName)
 	return u
 }
 
-// ClearObjectKey clears the value of the "object_key" field.
-func (u *FileUpsert) ClearObjectKey() *FileUpsert {
-	u.SetNull(file.FieldObjectKey)
+// ClearBucketName clears the value of the "bucket_name" field.
+func (u *FileUpsert) ClearBucketName() *FileUpsert {
+	u.SetNull(file.FieldBucketName)
+	return u
+}
+
+// SetFileDirectory sets the "file_directory" field.
+func (u *FileUpsert) SetFileDirectory(v string) *FileUpsert {
+	u.Set(file.FieldFileDirectory, v)
+	return u
+}
+
+// UpdateFileDirectory sets the "file_directory" field to the value that was provided on create.
+func (u *FileUpsert) UpdateFileDirectory() *FileUpsert {
+	u.SetExcluded(file.FieldFileDirectory)
+	return u
+}
+
+// ClearFileDirectory clears the value of the "file_directory" field.
+func (u *FileUpsert) ClearFileDirectory() *FileUpsert {
+	u.SetNull(file.FieldFileDirectory)
+	return u
+}
+
+// SetFileGUID sets the "file_guid" field.
+func (u *FileUpsert) SetFileGUID(v string) *FileUpsert {
+	u.Set(file.FieldFileGUID, v)
+	return u
+}
+
+// UpdateFileGUID sets the "file_guid" field to the value that was provided on create.
+func (u *FileUpsert) UpdateFileGUID() *FileUpsert {
+	u.SetExcluded(file.FieldFileGUID)
+	return u
+}
+
+// ClearFileGUID clears the value of the "file_guid" field.
+func (u *FileUpsert) ClearFileGUID() *FileUpsert {
+	u.SetNull(file.FieldFileGUID)
+	return u
+}
+
+// SetSaveFileName sets the "save_file_name" field.
+func (u *FileUpsert) SetSaveFileName(v string) *FileUpsert {
+	u.Set(file.FieldSaveFileName, v)
+	return u
+}
+
+// UpdateSaveFileName sets the "save_file_name" field to the value that was provided on create.
+func (u *FileUpsert) UpdateSaveFileName() *FileUpsert {
+	u.SetExcluded(file.FieldSaveFileName)
+	return u
+}
+
+// ClearSaveFileName clears the value of the "save_file_name" field.
+func (u *FileUpsert) ClearSaveFileName() *FileUpsert {
+	u.SetNull(file.FieldSaveFileName)
+	return u
+}
+
+// SetFileName sets the "file_name" field.
+func (u *FileUpsert) SetFileName(v string) *FileUpsert {
+	u.Set(file.FieldFileName, v)
+	return u
+}
+
+// UpdateFileName sets the "file_name" field to the value that was provided on create.
+func (u *FileUpsert) UpdateFileName() *FileUpsert {
+	u.SetExcluded(file.FieldFileName)
+	return u
+}
+
+// ClearFileName clears the value of the "file_name" field.
+func (u *FileUpsert) ClearFileName() *FileUpsert {
+	u.SetNull(file.FieldFileName)
+	return u
+}
+
+// SetExtension sets the "extension" field.
+func (u *FileUpsert) SetExtension(v string) *FileUpsert {
+	u.Set(file.FieldExtension, v)
+	return u
+}
+
+// UpdateExtension sets the "extension" field to the value that was provided on create.
+func (u *FileUpsert) UpdateExtension() *FileUpsert {
+	u.SetExcluded(file.FieldExtension)
+	return u
+}
+
+// ClearExtension clears the value of the "extension" field.
+func (u *FileUpsert) ClearExtension() *FileUpsert {
+	u.SetNull(file.FieldExtension)
+	return u
+}
+
+// SetSize sets the "size" field.
+func (u *FileUpsert) SetSize(v uint64) *FileUpsert {
+	u.Set(file.FieldSize, v)
+	return u
+}
+
+// UpdateSize sets the "size" field to the value that was provided on create.
+func (u *FileUpsert) UpdateSize() *FileUpsert {
+	u.SetExcluded(file.FieldSize)
+	return u
+}
+
+// AddSize adds v to the "size" field.
+func (u *FileUpsert) AddSize(v uint64) *FileUpsert {
+	u.Add(file.FieldSize, v)
+	return u
+}
+
+// ClearSize clears the value of the "size" field.
+func (u *FileUpsert) ClearSize() *FileUpsert {
+	u.SetNull(file.FieldSize)
+	return u
+}
+
+// SetSizeFormat sets the "size_format" field.
+func (u *FileUpsert) SetSizeFormat(v string) *FileUpsert {
+	u.Set(file.FieldSizeFormat, v)
+	return u
+}
+
+// UpdateSizeFormat sets the "size_format" field to the value that was provided on create.
+func (u *FileUpsert) UpdateSizeFormat() *FileUpsert {
+	u.SetExcluded(file.FieldSizeFormat)
+	return u
+}
+
+// ClearSizeFormat clears the value of the "size_format" field.
+func (u *FileUpsert) ClearSizeFormat() *FileUpsert {
+	u.SetNull(file.FieldSizeFormat)
+	return u
+}
+
+// SetLinkURL sets the "link_url" field.
+func (u *FileUpsert) SetLinkURL(v string) *FileUpsert {
+	u.Set(file.FieldLinkURL, v)
+	return u
+}
+
+// UpdateLinkURL sets the "link_url" field to the value that was provided on create.
+func (u *FileUpsert) UpdateLinkURL() *FileUpsert {
+	u.SetExcluded(file.FieldLinkURL)
+	return u
+}
+
+// ClearLinkURL clears the value of the "link_url" field.
+func (u *FileUpsert) ClearLinkURL() *FileUpsert {
+	u.SetNull(file.FieldLinkURL)
+	return u
+}
+
+// SetContentHash sets the "content_hash" field.
+func (u *FileUpsert) SetContentHash(v string) *FileUpsert {
+	u.Set(file.FieldContentHash, v)
+	return u
+}
+
+// UpdateContentHash sets the "content_hash" field to the value that was provided on create.
+func (u *FileUpsert) UpdateContentHash() *FileUpsert {
+	u.SetExcluded(file.FieldContentHash)
+	return u
+}
+
+// ClearContentHash clears the value of the "content_hash" field.
+func (u *FileUpsert) ClearContentHash() *FileUpsert {
+	u.SetNull(file.FieldContentHash)
 	return u
 }
 
@@ -911,136 +1025,24 @@ func (u *FileUpsertOne) ClearDeletedBy() *FileUpsertOne {
 	})
 }
 
-// SetName sets the "name" field.
-func (u *FileUpsertOne) SetName(v string) *FileUpsertOne {
+// SetRemark sets the "remark" field.
+func (u *FileUpsertOne) SetRemark(v string) *FileUpsertOne {
 	return u.Update(func(s *FileUpsert) {
-		s.SetName(v)
+		s.SetRemark(v)
 	})
 }
 
-// UpdateName sets the "name" field to the value that was provided on create.
-func (u *FileUpsertOne) UpdateName() *FileUpsertOne {
+// UpdateRemark sets the "remark" field to the value that was provided on create.
+func (u *FileUpsertOne) UpdateRemark() *FileUpsertOne {
 	return u.Update(func(s *FileUpsert) {
-		s.UpdateName()
+		s.UpdateRemark()
 	})
 }
 
-// ClearName clears the value of the "name" field.
-func (u *FileUpsertOne) ClearName() *FileUpsertOne {
+// ClearRemark clears the value of the "remark" field.
+func (u *FileUpsertOne) ClearRemark() *FileUpsertOne {
 	return u.Update(func(s *FileUpsert) {
-		s.ClearName()
-	})
-}
-
-// SetOriginalName sets the "original_name" field.
-func (u *FileUpsertOne) SetOriginalName(v string) *FileUpsertOne {
-	return u.Update(func(s *FileUpsert) {
-		s.SetOriginalName(v)
-	})
-}
-
-// UpdateOriginalName sets the "original_name" field to the value that was provided on create.
-func (u *FileUpsertOne) UpdateOriginalName() *FileUpsertOne {
-	return u.Update(func(s *FileUpsert) {
-		s.UpdateOriginalName()
-	})
-}
-
-// ClearOriginalName clears the value of the "original_name" field.
-func (u *FileUpsertOne) ClearOriginalName() *FileUpsertOne {
-	return u.Update(func(s *FileUpsert) {
-		s.ClearOriginalName()
-	})
-}
-
-// SetContentType sets the "content_type" field.
-func (u *FileUpsertOne) SetContentType(v string) *FileUpsertOne {
-	return u.Update(func(s *FileUpsert) {
-		s.SetContentType(v)
-	})
-}
-
-// UpdateContentType sets the "content_type" field to the value that was provided on create.
-func (u *FileUpsertOne) UpdateContentType() *FileUpsertOne {
-	return u.Update(func(s *FileUpsert) {
-		s.UpdateContentType()
-	})
-}
-
-// ClearContentType clears the value of the "content_type" field.
-func (u *FileUpsertOne) ClearContentType() *FileUpsertOne {
-	return u.Update(func(s *FileUpsert) {
-		s.ClearContentType()
-	})
-}
-
-// SetSize sets the "size" field.
-func (u *FileUpsertOne) SetSize(v int64) *FileUpsertOne {
-	return u.Update(func(s *FileUpsert) {
-		s.SetSize(v)
-	})
-}
-
-// AddSize adds v to the "size" field.
-func (u *FileUpsertOne) AddSize(v int64) *FileUpsertOne {
-	return u.Update(func(s *FileUpsert) {
-		s.AddSize(v)
-	})
-}
-
-// UpdateSize sets the "size" field to the value that was provided on create.
-func (u *FileUpsertOne) UpdateSize() *FileUpsertOne {
-	return u.Update(func(s *FileUpsert) {
-		s.UpdateSize()
-	})
-}
-
-// ClearSize clears the value of the "size" field.
-func (u *FileUpsertOne) ClearSize() *FileUpsertOne {
-	return u.Update(func(s *FileUpsert) {
-		s.ClearSize()
-	})
-}
-
-// SetPath sets the "path" field.
-func (u *FileUpsertOne) SetPath(v string) *FileUpsertOne {
-	return u.Update(func(s *FileUpsert) {
-		s.SetPath(v)
-	})
-}
-
-// UpdatePath sets the "path" field to the value that was provided on create.
-func (u *FileUpsertOne) UpdatePath() *FileUpsertOne {
-	return u.Update(func(s *FileUpsert) {
-		s.UpdatePath()
-	})
-}
-
-// ClearPath clears the value of the "path" field.
-func (u *FileUpsertOne) ClearPath() *FileUpsertOne {
-	return u.Update(func(s *FileUpsert) {
-		s.ClearPath()
-	})
-}
-
-// SetURL sets the "url" field.
-func (u *FileUpsertOne) SetURL(v string) *FileUpsertOne {
-	return u.Update(func(s *FileUpsert) {
-		s.SetURL(v)
-	})
-}
-
-// UpdateURL sets the "url" field to the value that was provided on create.
-func (u *FileUpsertOne) UpdateURL() *FileUpsertOne {
-	return u.Update(func(s *FileUpsert) {
-		s.UpdateURL()
-	})
-}
-
-// ClearURL clears the value of the "url" field.
-func (u *FileUpsertOne) ClearURL() *FileUpsertOne {
-	return u.Update(func(s *FileUpsert) {
-		s.ClearURL()
+		s.ClearRemark()
 	})
 }
 
@@ -1065,24 +1067,220 @@ func (u *FileUpsertOne) ClearProvider() *FileUpsertOne {
 	})
 }
 
-// SetObjectKey sets the "object_key" field.
-func (u *FileUpsertOne) SetObjectKey(v string) *FileUpsertOne {
+// SetBucketName sets the "bucket_name" field.
+func (u *FileUpsertOne) SetBucketName(v string) *FileUpsertOne {
 	return u.Update(func(s *FileUpsert) {
-		s.SetObjectKey(v)
+		s.SetBucketName(v)
 	})
 }
 
-// UpdateObjectKey sets the "object_key" field to the value that was provided on create.
-func (u *FileUpsertOne) UpdateObjectKey() *FileUpsertOne {
+// UpdateBucketName sets the "bucket_name" field to the value that was provided on create.
+func (u *FileUpsertOne) UpdateBucketName() *FileUpsertOne {
 	return u.Update(func(s *FileUpsert) {
-		s.UpdateObjectKey()
+		s.UpdateBucketName()
 	})
 }
 
-// ClearObjectKey clears the value of the "object_key" field.
-func (u *FileUpsertOne) ClearObjectKey() *FileUpsertOne {
+// ClearBucketName clears the value of the "bucket_name" field.
+func (u *FileUpsertOne) ClearBucketName() *FileUpsertOne {
 	return u.Update(func(s *FileUpsert) {
-		s.ClearObjectKey()
+		s.ClearBucketName()
+	})
+}
+
+// SetFileDirectory sets the "file_directory" field.
+func (u *FileUpsertOne) SetFileDirectory(v string) *FileUpsertOne {
+	return u.Update(func(s *FileUpsert) {
+		s.SetFileDirectory(v)
+	})
+}
+
+// UpdateFileDirectory sets the "file_directory" field to the value that was provided on create.
+func (u *FileUpsertOne) UpdateFileDirectory() *FileUpsertOne {
+	return u.Update(func(s *FileUpsert) {
+		s.UpdateFileDirectory()
+	})
+}
+
+// ClearFileDirectory clears the value of the "file_directory" field.
+func (u *FileUpsertOne) ClearFileDirectory() *FileUpsertOne {
+	return u.Update(func(s *FileUpsert) {
+		s.ClearFileDirectory()
+	})
+}
+
+// SetFileGUID sets the "file_guid" field.
+func (u *FileUpsertOne) SetFileGUID(v string) *FileUpsertOne {
+	return u.Update(func(s *FileUpsert) {
+		s.SetFileGUID(v)
+	})
+}
+
+// UpdateFileGUID sets the "file_guid" field to the value that was provided on create.
+func (u *FileUpsertOne) UpdateFileGUID() *FileUpsertOne {
+	return u.Update(func(s *FileUpsert) {
+		s.UpdateFileGUID()
+	})
+}
+
+// ClearFileGUID clears the value of the "file_guid" field.
+func (u *FileUpsertOne) ClearFileGUID() *FileUpsertOne {
+	return u.Update(func(s *FileUpsert) {
+		s.ClearFileGUID()
+	})
+}
+
+// SetSaveFileName sets the "save_file_name" field.
+func (u *FileUpsertOne) SetSaveFileName(v string) *FileUpsertOne {
+	return u.Update(func(s *FileUpsert) {
+		s.SetSaveFileName(v)
+	})
+}
+
+// UpdateSaveFileName sets the "save_file_name" field to the value that was provided on create.
+func (u *FileUpsertOne) UpdateSaveFileName() *FileUpsertOne {
+	return u.Update(func(s *FileUpsert) {
+		s.UpdateSaveFileName()
+	})
+}
+
+// ClearSaveFileName clears the value of the "save_file_name" field.
+func (u *FileUpsertOne) ClearSaveFileName() *FileUpsertOne {
+	return u.Update(func(s *FileUpsert) {
+		s.ClearSaveFileName()
+	})
+}
+
+// SetFileName sets the "file_name" field.
+func (u *FileUpsertOne) SetFileName(v string) *FileUpsertOne {
+	return u.Update(func(s *FileUpsert) {
+		s.SetFileName(v)
+	})
+}
+
+// UpdateFileName sets the "file_name" field to the value that was provided on create.
+func (u *FileUpsertOne) UpdateFileName() *FileUpsertOne {
+	return u.Update(func(s *FileUpsert) {
+		s.UpdateFileName()
+	})
+}
+
+// ClearFileName clears the value of the "file_name" field.
+func (u *FileUpsertOne) ClearFileName() *FileUpsertOne {
+	return u.Update(func(s *FileUpsert) {
+		s.ClearFileName()
+	})
+}
+
+// SetExtension sets the "extension" field.
+func (u *FileUpsertOne) SetExtension(v string) *FileUpsertOne {
+	return u.Update(func(s *FileUpsert) {
+		s.SetExtension(v)
+	})
+}
+
+// UpdateExtension sets the "extension" field to the value that was provided on create.
+func (u *FileUpsertOne) UpdateExtension() *FileUpsertOne {
+	return u.Update(func(s *FileUpsert) {
+		s.UpdateExtension()
+	})
+}
+
+// ClearExtension clears the value of the "extension" field.
+func (u *FileUpsertOne) ClearExtension() *FileUpsertOne {
+	return u.Update(func(s *FileUpsert) {
+		s.ClearExtension()
+	})
+}
+
+// SetSize sets the "size" field.
+func (u *FileUpsertOne) SetSize(v uint64) *FileUpsertOne {
+	return u.Update(func(s *FileUpsert) {
+		s.SetSize(v)
+	})
+}
+
+// AddSize adds v to the "size" field.
+func (u *FileUpsertOne) AddSize(v uint64) *FileUpsertOne {
+	return u.Update(func(s *FileUpsert) {
+		s.AddSize(v)
+	})
+}
+
+// UpdateSize sets the "size" field to the value that was provided on create.
+func (u *FileUpsertOne) UpdateSize() *FileUpsertOne {
+	return u.Update(func(s *FileUpsert) {
+		s.UpdateSize()
+	})
+}
+
+// ClearSize clears the value of the "size" field.
+func (u *FileUpsertOne) ClearSize() *FileUpsertOne {
+	return u.Update(func(s *FileUpsert) {
+		s.ClearSize()
+	})
+}
+
+// SetSizeFormat sets the "size_format" field.
+func (u *FileUpsertOne) SetSizeFormat(v string) *FileUpsertOne {
+	return u.Update(func(s *FileUpsert) {
+		s.SetSizeFormat(v)
+	})
+}
+
+// UpdateSizeFormat sets the "size_format" field to the value that was provided on create.
+func (u *FileUpsertOne) UpdateSizeFormat() *FileUpsertOne {
+	return u.Update(func(s *FileUpsert) {
+		s.UpdateSizeFormat()
+	})
+}
+
+// ClearSizeFormat clears the value of the "size_format" field.
+func (u *FileUpsertOne) ClearSizeFormat() *FileUpsertOne {
+	return u.Update(func(s *FileUpsert) {
+		s.ClearSizeFormat()
+	})
+}
+
+// SetLinkURL sets the "link_url" field.
+func (u *FileUpsertOne) SetLinkURL(v string) *FileUpsertOne {
+	return u.Update(func(s *FileUpsert) {
+		s.SetLinkURL(v)
+	})
+}
+
+// UpdateLinkURL sets the "link_url" field to the value that was provided on create.
+func (u *FileUpsertOne) UpdateLinkURL() *FileUpsertOne {
+	return u.Update(func(s *FileUpsert) {
+		s.UpdateLinkURL()
+	})
+}
+
+// ClearLinkURL clears the value of the "link_url" field.
+func (u *FileUpsertOne) ClearLinkURL() *FileUpsertOne {
+	return u.Update(func(s *FileUpsert) {
+		s.ClearLinkURL()
+	})
+}
+
+// SetContentHash sets the "content_hash" field.
+func (u *FileUpsertOne) SetContentHash(v string) *FileUpsertOne {
+	return u.Update(func(s *FileUpsert) {
+		s.SetContentHash(v)
+	})
+}
+
+// UpdateContentHash sets the "content_hash" field to the value that was provided on create.
+func (u *FileUpsertOne) UpdateContentHash() *FileUpsertOne {
+	return u.Update(func(s *FileUpsert) {
+		s.UpdateContentHash()
+	})
+}
+
+// ClearContentHash clears the value of the "content_hash" field.
+func (u *FileUpsertOne) ClearContentHash() *FileUpsertOne {
+	return u.Update(func(s *FileUpsert) {
+		s.ClearContentHash()
 	})
 }
 
@@ -1432,136 +1630,24 @@ func (u *FileUpsertBulk) ClearDeletedBy() *FileUpsertBulk {
 	})
 }
 
-// SetName sets the "name" field.
-func (u *FileUpsertBulk) SetName(v string) *FileUpsertBulk {
+// SetRemark sets the "remark" field.
+func (u *FileUpsertBulk) SetRemark(v string) *FileUpsertBulk {
 	return u.Update(func(s *FileUpsert) {
-		s.SetName(v)
+		s.SetRemark(v)
 	})
 }
 
-// UpdateName sets the "name" field to the value that was provided on create.
-func (u *FileUpsertBulk) UpdateName() *FileUpsertBulk {
+// UpdateRemark sets the "remark" field to the value that was provided on create.
+func (u *FileUpsertBulk) UpdateRemark() *FileUpsertBulk {
 	return u.Update(func(s *FileUpsert) {
-		s.UpdateName()
+		s.UpdateRemark()
 	})
 }
 
-// ClearName clears the value of the "name" field.
-func (u *FileUpsertBulk) ClearName() *FileUpsertBulk {
+// ClearRemark clears the value of the "remark" field.
+func (u *FileUpsertBulk) ClearRemark() *FileUpsertBulk {
 	return u.Update(func(s *FileUpsert) {
-		s.ClearName()
-	})
-}
-
-// SetOriginalName sets the "original_name" field.
-func (u *FileUpsertBulk) SetOriginalName(v string) *FileUpsertBulk {
-	return u.Update(func(s *FileUpsert) {
-		s.SetOriginalName(v)
-	})
-}
-
-// UpdateOriginalName sets the "original_name" field to the value that was provided on create.
-func (u *FileUpsertBulk) UpdateOriginalName() *FileUpsertBulk {
-	return u.Update(func(s *FileUpsert) {
-		s.UpdateOriginalName()
-	})
-}
-
-// ClearOriginalName clears the value of the "original_name" field.
-func (u *FileUpsertBulk) ClearOriginalName() *FileUpsertBulk {
-	return u.Update(func(s *FileUpsert) {
-		s.ClearOriginalName()
-	})
-}
-
-// SetContentType sets the "content_type" field.
-func (u *FileUpsertBulk) SetContentType(v string) *FileUpsertBulk {
-	return u.Update(func(s *FileUpsert) {
-		s.SetContentType(v)
-	})
-}
-
-// UpdateContentType sets the "content_type" field to the value that was provided on create.
-func (u *FileUpsertBulk) UpdateContentType() *FileUpsertBulk {
-	return u.Update(func(s *FileUpsert) {
-		s.UpdateContentType()
-	})
-}
-
-// ClearContentType clears the value of the "content_type" field.
-func (u *FileUpsertBulk) ClearContentType() *FileUpsertBulk {
-	return u.Update(func(s *FileUpsert) {
-		s.ClearContentType()
-	})
-}
-
-// SetSize sets the "size" field.
-func (u *FileUpsertBulk) SetSize(v int64) *FileUpsertBulk {
-	return u.Update(func(s *FileUpsert) {
-		s.SetSize(v)
-	})
-}
-
-// AddSize adds v to the "size" field.
-func (u *FileUpsertBulk) AddSize(v int64) *FileUpsertBulk {
-	return u.Update(func(s *FileUpsert) {
-		s.AddSize(v)
-	})
-}
-
-// UpdateSize sets the "size" field to the value that was provided on create.
-func (u *FileUpsertBulk) UpdateSize() *FileUpsertBulk {
-	return u.Update(func(s *FileUpsert) {
-		s.UpdateSize()
-	})
-}
-
-// ClearSize clears the value of the "size" field.
-func (u *FileUpsertBulk) ClearSize() *FileUpsertBulk {
-	return u.Update(func(s *FileUpsert) {
-		s.ClearSize()
-	})
-}
-
-// SetPath sets the "path" field.
-func (u *FileUpsertBulk) SetPath(v string) *FileUpsertBulk {
-	return u.Update(func(s *FileUpsert) {
-		s.SetPath(v)
-	})
-}
-
-// UpdatePath sets the "path" field to the value that was provided on create.
-func (u *FileUpsertBulk) UpdatePath() *FileUpsertBulk {
-	return u.Update(func(s *FileUpsert) {
-		s.UpdatePath()
-	})
-}
-
-// ClearPath clears the value of the "path" field.
-func (u *FileUpsertBulk) ClearPath() *FileUpsertBulk {
-	return u.Update(func(s *FileUpsert) {
-		s.ClearPath()
-	})
-}
-
-// SetURL sets the "url" field.
-func (u *FileUpsertBulk) SetURL(v string) *FileUpsertBulk {
-	return u.Update(func(s *FileUpsert) {
-		s.SetURL(v)
-	})
-}
-
-// UpdateURL sets the "url" field to the value that was provided on create.
-func (u *FileUpsertBulk) UpdateURL() *FileUpsertBulk {
-	return u.Update(func(s *FileUpsert) {
-		s.UpdateURL()
-	})
-}
-
-// ClearURL clears the value of the "url" field.
-func (u *FileUpsertBulk) ClearURL() *FileUpsertBulk {
-	return u.Update(func(s *FileUpsert) {
-		s.ClearURL()
+		s.ClearRemark()
 	})
 }
 
@@ -1586,24 +1672,220 @@ func (u *FileUpsertBulk) ClearProvider() *FileUpsertBulk {
 	})
 }
 
-// SetObjectKey sets the "object_key" field.
-func (u *FileUpsertBulk) SetObjectKey(v string) *FileUpsertBulk {
+// SetBucketName sets the "bucket_name" field.
+func (u *FileUpsertBulk) SetBucketName(v string) *FileUpsertBulk {
 	return u.Update(func(s *FileUpsert) {
-		s.SetObjectKey(v)
+		s.SetBucketName(v)
 	})
 }
 
-// UpdateObjectKey sets the "object_key" field to the value that was provided on create.
-func (u *FileUpsertBulk) UpdateObjectKey() *FileUpsertBulk {
+// UpdateBucketName sets the "bucket_name" field to the value that was provided on create.
+func (u *FileUpsertBulk) UpdateBucketName() *FileUpsertBulk {
 	return u.Update(func(s *FileUpsert) {
-		s.UpdateObjectKey()
+		s.UpdateBucketName()
 	})
 }
 
-// ClearObjectKey clears the value of the "object_key" field.
-func (u *FileUpsertBulk) ClearObjectKey() *FileUpsertBulk {
+// ClearBucketName clears the value of the "bucket_name" field.
+func (u *FileUpsertBulk) ClearBucketName() *FileUpsertBulk {
 	return u.Update(func(s *FileUpsert) {
-		s.ClearObjectKey()
+		s.ClearBucketName()
+	})
+}
+
+// SetFileDirectory sets the "file_directory" field.
+func (u *FileUpsertBulk) SetFileDirectory(v string) *FileUpsertBulk {
+	return u.Update(func(s *FileUpsert) {
+		s.SetFileDirectory(v)
+	})
+}
+
+// UpdateFileDirectory sets the "file_directory" field to the value that was provided on create.
+func (u *FileUpsertBulk) UpdateFileDirectory() *FileUpsertBulk {
+	return u.Update(func(s *FileUpsert) {
+		s.UpdateFileDirectory()
+	})
+}
+
+// ClearFileDirectory clears the value of the "file_directory" field.
+func (u *FileUpsertBulk) ClearFileDirectory() *FileUpsertBulk {
+	return u.Update(func(s *FileUpsert) {
+		s.ClearFileDirectory()
+	})
+}
+
+// SetFileGUID sets the "file_guid" field.
+func (u *FileUpsertBulk) SetFileGUID(v string) *FileUpsertBulk {
+	return u.Update(func(s *FileUpsert) {
+		s.SetFileGUID(v)
+	})
+}
+
+// UpdateFileGUID sets the "file_guid" field to the value that was provided on create.
+func (u *FileUpsertBulk) UpdateFileGUID() *FileUpsertBulk {
+	return u.Update(func(s *FileUpsert) {
+		s.UpdateFileGUID()
+	})
+}
+
+// ClearFileGUID clears the value of the "file_guid" field.
+func (u *FileUpsertBulk) ClearFileGUID() *FileUpsertBulk {
+	return u.Update(func(s *FileUpsert) {
+		s.ClearFileGUID()
+	})
+}
+
+// SetSaveFileName sets the "save_file_name" field.
+func (u *FileUpsertBulk) SetSaveFileName(v string) *FileUpsertBulk {
+	return u.Update(func(s *FileUpsert) {
+		s.SetSaveFileName(v)
+	})
+}
+
+// UpdateSaveFileName sets the "save_file_name" field to the value that was provided on create.
+func (u *FileUpsertBulk) UpdateSaveFileName() *FileUpsertBulk {
+	return u.Update(func(s *FileUpsert) {
+		s.UpdateSaveFileName()
+	})
+}
+
+// ClearSaveFileName clears the value of the "save_file_name" field.
+func (u *FileUpsertBulk) ClearSaveFileName() *FileUpsertBulk {
+	return u.Update(func(s *FileUpsert) {
+		s.ClearSaveFileName()
+	})
+}
+
+// SetFileName sets the "file_name" field.
+func (u *FileUpsertBulk) SetFileName(v string) *FileUpsertBulk {
+	return u.Update(func(s *FileUpsert) {
+		s.SetFileName(v)
+	})
+}
+
+// UpdateFileName sets the "file_name" field to the value that was provided on create.
+func (u *FileUpsertBulk) UpdateFileName() *FileUpsertBulk {
+	return u.Update(func(s *FileUpsert) {
+		s.UpdateFileName()
+	})
+}
+
+// ClearFileName clears the value of the "file_name" field.
+func (u *FileUpsertBulk) ClearFileName() *FileUpsertBulk {
+	return u.Update(func(s *FileUpsert) {
+		s.ClearFileName()
+	})
+}
+
+// SetExtension sets the "extension" field.
+func (u *FileUpsertBulk) SetExtension(v string) *FileUpsertBulk {
+	return u.Update(func(s *FileUpsert) {
+		s.SetExtension(v)
+	})
+}
+
+// UpdateExtension sets the "extension" field to the value that was provided on create.
+func (u *FileUpsertBulk) UpdateExtension() *FileUpsertBulk {
+	return u.Update(func(s *FileUpsert) {
+		s.UpdateExtension()
+	})
+}
+
+// ClearExtension clears the value of the "extension" field.
+func (u *FileUpsertBulk) ClearExtension() *FileUpsertBulk {
+	return u.Update(func(s *FileUpsert) {
+		s.ClearExtension()
+	})
+}
+
+// SetSize sets the "size" field.
+func (u *FileUpsertBulk) SetSize(v uint64) *FileUpsertBulk {
+	return u.Update(func(s *FileUpsert) {
+		s.SetSize(v)
+	})
+}
+
+// AddSize adds v to the "size" field.
+func (u *FileUpsertBulk) AddSize(v uint64) *FileUpsertBulk {
+	return u.Update(func(s *FileUpsert) {
+		s.AddSize(v)
+	})
+}
+
+// UpdateSize sets the "size" field to the value that was provided on create.
+func (u *FileUpsertBulk) UpdateSize() *FileUpsertBulk {
+	return u.Update(func(s *FileUpsert) {
+		s.UpdateSize()
+	})
+}
+
+// ClearSize clears the value of the "size" field.
+func (u *FileUpsertBulk) ClearSize() *FileUpsertBulk {
+	return u.Update(func(s *FileUpsert) {
+		s.ClearSize()
+	})
+}
+
+// SetSizeFormat sets the "size_format" field.
+func (u *FileUpsertBulk) SetSizeFormat(v string) *FileUpsertBulk {
+	return u.Update(func(s *FileUpsert) {
+		s.SetSizeFormat(v)
+	})
+}
+
+// UpdateSizeFormat sets the "size_format" field to the value that was provided on create.
+func (u *FileUpsertBulk) UpdateSizeFormat() *FileUpsertBulk {
+	return u.Update(func(s *FileUpsert) {
+		s.UpdateSizeFormat()
+	})
+}
+
+// ClearSizeFormat clears the value of the "size_format" field.
+func (u *FileUpsertBulk) ClearSizeFormat() *FileUpsertBulk {
+	return u.Update(func(s *FileUpsert) {
+		s.ClearSizeFormat()
+	})
+}
+
+// SetLinkURL sets the "link_url" field.
+func (u *FileUpsertBulk) SetLinkURL(v string) *FileUpsertBulk {
+	return u.Update(func(s *FileUpsert) {
+		s.SetLinkURL(v)
+	})
+}
+
+// UpdateLinkURL sets the "link_url" field to the value that was provided on create.
+func (u *FileUpsertBulk) UpdateLinkURL() *FileUpsertBulk {
+	return u.Update(func(s *FileUpsert) {
+		s.UpdateLinkURL()
+	})
+}
+
+// ClearLinkURL clears the value of the "link_url" field.
+func (u *FileUpsertBulk) ClearLinkURL() *FileUpsertBulk {
+	return u.Update(func(s *FileUpsert) {
+		s.ClearLinkURL()
+	})
+}
+
+// SetContentHash sets the "content_hash" field.
+func (u *FileUpsertBulk) SetContentHash(v string) *FileUpsertBulk {
+	return u.Update(func(s *FileUpsert) {
+		s.SetContentHash(v)
+	})
+}
+
+// UpdateContentHash sets the "content_hash" field to the value that was provided on create.
+func (u *FileUpsertBulk) UpdateContentHash() *FileUpsertBulk {
+	return u.Update(func(s *FileUpsert) {
+		s.UpdateContentHash()
+	})
+}
+
+// ClearContentHash clears the value of the "content_hash" field.
+func (u *FileUpsertBulk) ClearContentHash() *FileUpsertBulk {
+	return u.Update(func(s *FileUpsert) {
+		s.ClearContentHash()
 	})
 }
 

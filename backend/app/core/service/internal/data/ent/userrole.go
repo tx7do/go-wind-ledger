@@ -12,7 +12,7 @@ import (
 	"entgo.io/ent/dialect/sql"
 )
 
-// 用户角色关联表
+// 用户与角色关联表
 type UserRole struct {
 	config `json:"-"`
 	// ID of the ent.
@@ -24,26 +24,30 @@ type UserRole struct {
 	UpdatedAt *time.Time `json:"updated_at,omitempty"`
 	// 删除时间
 	DeletedAt *time.Time `json:"deleted_at,omitempty"`
-	// 租户ID
-	TenantID *uint32 `json:"tenant_id,omitempty"`
 	// 创建者ID
 	CreatedBy *uint32 `json:"created_by,omitempty"`
 	// 更新者ID
 	UpdatedBy *uint32 `json:"updated_by,omitempty"`
 	// 删除者ID
 	DeletedBy *uint32 `json:"deleted_by,omitempty"`
-	// Status holds the value of the "status" field.
-	Status *userrole.Status `json:"status,omitempty"`
-	// IsPrimary holds the value of the "is_primary" field.
-	IsPrimary *bool `json:"is_primary,omitempty"`
-	// StartAt holds the value of the "start_at" field.
-	StartAt *time.Time `json:"start_at,omitempty"`
-	// EndAt holds the value of the "end_at" field.
-	EndAt *time.Time `json:"end_at,omitempty"`
+	// 租户ID
+	TenantID *uint32 `json:"tenant_id,omitempty"`
 	// 用户ID
 	UserID *uint32 `json:"user_id,omitempty"`
 	// 角色ID
-	RoleID       *uint32 `json:"role_id,omitempty"`
+	RoleID *uint32 `json:"role_id,omitempty"`
+	// 生效时间（UTC）
+	StartAt *time.Time `json:"start_at,omitempty"`
+	// 失效时间（UTC）
+	EndAt *time.Time `json:"end_at,omitempty"`
+	// 分配时间（UTC）
+	AssignedAt *time.Time `json:"assigned_at,omitempty"`
+	// 分配者用户ID
+	AssignedBy *uint32 `json:"assigned_by,omitempty"`
+	// 是否为主角色
+	IsPrimary *bool `json:"is_primary,omitempty"`
+	// 岗位状态
+	Status       userrole.Status `json:"status,omitempty"`
 	selectValues sql.SelectValues
 }
 
@@ -54,11 +58,11 @@ func (*UserRole) scanValues(columns []string) ([]any, error) {
 		switch columns[i] {
 		case userrole.FieldIsPrimary:
 			values[i] = new(sql.NullBool)
-		case userrole.FieldID, userrole.FieldTenantID, userrole.FieldCreatedBy, userrole.FieldUpdatedBy, userrole.FieldDeletedBy, userrole.FieldUserID, userrole.FieldRoleID:
+		case userrole.FieldID, userrole.FieldCreatedBy, userrole.FieldUpdatedBy, userrole.FieldDeletedBy, userrole.FieldTenantID, userrole.FieldUserID, userrole.FieldRoleID, userrole.FieldAssignedBy:
 			values[i] = new(sql.NullInt64)
 		case userrole.FieldStatus:
 			values[i] = new(sql.NullString)
-		case userrole.FieldCreatedAt, userrole.FieldUpdatedAt, userrole.FieldDeletedAt, userrole.FieldStartAt, userrole.FieldEndAt:
+		case userrole.FieldCreatedAt, userrole.FieldUpdatedAt, userrole.FieldDeletedAt, userrole.FieldStartAt, userrole.FieldEndAt, userrole.FieldAssignedAt:
 			values[i] = new(sql.NullTime)
 		default:
 			values[i] = new(sql.UnknownType)
@@ -102,13 +106,6 @@ func (_m *UserRole) assignValues(columns []string, values []any) error {
 				_m.DeletedAt = new(time.Time)
 				*_m.DeletedAt = value.Time
 			}
-		case userrole.FieldTenantID:
-			if value, ok := values[i].(*sql.NullInt64); !ok {
-				return fmt.Errorf("unexpected type %T for field tenant_id", values[i])
-			} else if value.Valid {
-				_m.TenantID = new(uint32)
-				*_m.TenantID = uint32(value.Int64)
-			}
 		case userrole.FieldCreatedBy:
 			if value, ok := values[i].(*sql.NullInt64); !ok {
 				return fmt.Errorf("unexpected type %T for field created_by", values[i])
@@ -130,19 +127,26 @@ func (_m *UserRole) assignValues(columns []string, values []any) error {
 				_m.DeletedBy = new(uint32)
 				*_m.DeletedBy = uint32(value.Int64)
 			}
-		case userrole.FieldStatus:
-			if value, ok := values[i].(*sql.NullString); !ok {
-				return fmt.Errorf("unexpected type %T for field status", values[i])
+		case userrole.FieldTenantID:
+			if value, ok := values[i].(*sql.NullInt64); !ok {
+				return fmt.Errorf("unexpected type %T for field tenant_id", values[i])
 			} else if value.Valid {
-				_m.Status = new(userrole.Status)
-				*_m.Status = userrole.Status(value.String)
+				_m.TenantID = new(uint32)
+				*_m.TenantID = uint32(value.Int64)
 			}
-		case userrole.FieldIsPrimary:
-			if value, ok := values[i].(*sql.NullBool); !ok {
-				return fmt.Errorf("unexpected type %T for field is_primary", values[i])
+		case userrole.FieldUserID:
+			if value, ok := values[i].(*sql.NullInt64); !ok {
+				return fmt.Errorf("unexpected type %T for field user_id", values[i])
 			} else if value.Valid {
-				_m.IsPrimary = new(bool)
-				*_m.IsPrimary = value.Bool
+				_m.UserID = new(uint32)
+				*_m.UserID = uint32(value.Int64)
+			}
+		case userrole.FieldRoleID:
+			if value, ok := values[i].(*sql.NullInt64); !ok {
+				return fmt.Errorf("unexpected type %T for field role_id", values[i])
+			} else if value.Valid {
+				_m.RoleID = new(uint32)
+				*_m.RoleID = uint32(value.Int64)
 			}
 		case userrole.FieldStartAt:
 			if value, ok := values[i].(*sql.NullTime); !ok {
@@ -158,19 +162,32 @@ func (_m *UserRole) assignValues(columns []string, values []any) error {
 				_m.EndAt = new(time.Time)
 				*_m.EndAt = value.Time
 			}
-		case userrole.FieldUserID:
-			if value, ok := values[i].(*sql.NullInt64); !ok {
-				return fmt.Errorf("unexpected type %T for field user_id", values[i])
+		case userrole.FieldAssignedAt:
+			if value, ok := values[i].(*sql.NullTime); !ok {
+				return fmt.Errorf("unexpected type %T for field assigned_at", values[i])
 			} else if value.Valid {
-				_m.UserID = new(uint32)
-				*_m.UserID = uint32(value.Int64)
+				_m.AssignedAt = new(time.Time)
+				*_m.AssignedAt = value.Time
 			}
-		case userrole.FieldRoleID:
+		case userrole.FieldAssignedBy:
 			if value, ok := values[i].(*sql.NullInt64); !ok {
-				return fmt.Errorf("unexpected type %T for field role_id", values[i])
+				return fmt.Errorf("unexpected type %T for field assigned_by", values[i])
 			} else if value.Valid {
-				_m.RoleID = new(uint32)
-				*_m.RoleID = uint32(value.Int64)
+				_m.AssignedBy = new(uint32)
+				*_m.AssignedBy = uint32(value.Int64)
+			}
+		case userrole.FieldIsPrimary:
+			if value, ok := values[i].(*sql.NullBool); !ok {
+				return fmt.Errorf("unexpected type %T for field is_primary", values[i])
+			} else if value.Valid {
+				_m.IsPrimary = new(bool)
+				*_m.IsPrimary = value.Bool
+			}
+		case userrole.FieldStatus:
+			if value, ok := values[i].(*sql.NullString); !ok {
+				return fmt.Errorf("unexpected type %T for field status", values[i])
+			} else if value.Valid {
+				_m.Status = userrole.Status(value.String)
 			}
 		default:
 			_m.selectValues.Set(columns[i], values[i])
@@ -223,11 +240,6 @@ func (_m *UserRole) String() string {
 		builder.WriteString(v.Format(time.ANSIC))
 	}
 	builder.WriteString(", ")
-	if v := _m.TenantID; v != nil {
-		builder.WriteString("tenant_id=")
-		builder.WriteString(fmt.Sprintf("%v", *v))
-	}
-	builder.WriteString(", ")
 	if v := _m.CreatedBy; v != nil {
 		builder.WriteString("created_by=")
 		builder.WriteString(fmt.Sprintf("%v", *v))
@@ -243,13 +255,18 @@ func (_m *UserRole) String() string {
 		builder.WriteString(fmt.Sprintf("%v", *v))
 	}
 	builder.WriteString(", ")
-	if v := _m.Status; v != nil {
-		builder.WriteString("status=")
+	if v := _m.TenantID; v != nil {
+		builder.WriteString("tenant_id=")
 		builder.WriteString(fmt.Sprintf("%v", *v))
 	}
 	builder.WriteString(", ")
-	if v := _m.IsPrimary; v != nil {
-		builder.WriteString("is_primary=")
+	if v := _m.UserID; v != nil {
+		builder.WriteString("user_id=")
+		builder.WriteString(fmt.Sprintf("%v", *v))
+	}
+	builder.WriteString(", ")
+	if v := _m.RoleID; v != nil {
+		builder.WriteString("role_id=")
 		builder.WriteString(fmt.Sprintf("%v", *v))
 	}
 	builder.WriteString(", ")
@@ -263,15 +280,23 @@ func (_m *UserRole) String() string {
 		builder.WriteString(v.Format(time.ANSIC))
 	}
 	builder.WriteString(", ")
-	if v := _m.UserID; v != nil {
-		builder.WriteString("user_id=")
+	if v := _m.AssignedAt; v != nil {
+		builder.WriteString("assigned_at=")
+		builder.WriteString(v.Format(time.ANSIC))
+	}
+	builder.WriteString(", ")
+	if v := _m.AssignedBy; v != nil {
+		builder.WriteString("assigned_by=")
 		builder.WriteString(fmt.Sprintf("%v", *v))
 	}
 	builder.WriteString(", ")
-	if v := _m.RoleID; v != nil {
-		builder.WriteString("role_id=")
+	if v := _m.IsPrimary; v != nil {
+		builder.WriteString("is_primary=")
 		builder.WriteString(fmt.Sprintf("%v", *v))
 	}
+	builder.WriteString(", ")
+	builder.WriteString("status=")
+	builder.WriteString(fmt.Sprintf("%v", _m.Status))
 	builder.WriteByte(')')
 	return builder.String()
 }

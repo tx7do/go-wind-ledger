@@ -20,26 +20,32 @@ const (
 	FieldUpdatedAt = "updated_at"
 	// FieldDeletedAt holds the string denoting the deleted_at field in the database.
 	FieldDeletedAt = "deleted_at"
-	// FieldTenantID holds the string denoting the tenant_id field in the database.
-	FieldTenantID = "tenant_id"
 	// FieldCreatedBy holds the string denoting the created_by field in the database.
 	FieldCreatedBy = "created_by"
 	// FieldUpdatedBy holds the string denoting the updated_by field in the database.
 	FieldUpdatedBy = "updated_by"
 	// FieldDeletedBy holds the string denoting the deleted_by field in the database.
 	FieldDeletedBy = "deleted_by"
-	// FieldStatus holds the string denoting the status field in the database.
-	FieldStatus = "status"
+	// FieldTenantID holds the string denoting the tenant_id field in the database.
+	FieldTenantID = "tenant_id"
+	// FieldRemark holds the string denoting the remark field in the database.
+	FieldRemark = "remark"
+	// FieldUserID holds the string denoting the user_id field in the database.
+	FieldUserID = "user_id"
+	// FieldPositionID holds the string denoting the position_id field in the database.
+	FieldPositionID = "position_id"
 	// FieldIsPrimary holds the string denoting the is_primary field in the database.
 	FieldIsPrimary = "is_primary"
 	// FieldStartAt holds the string denoting the start_at field in the database.
 	FieldStartAt = "start_at"
 	// FieldEndAt holds the string denoting the end_at field in the database.
 	FieldEndAt = "end_at"
-	// FieldUserID holds the string denoting the user_id field in the database.
-	FieldUserID = "user_id"
-	// FieldPositionID holds the string denoting the position_id field in the database.
-	FieldPositionID = "position_id"
+	// FieldAssignedAt holds the string denoting the assigned_at field in the database.
+	FieldAssignedAt = "assigned_at"
+	// FieldAssignedBy holds the string denoting the assigned_by field in the database.
+	FieldAssignedBy = "assigned_by"
+	// FieldStatus holds the string denoting the status field in the database.
+	FieldStatus = "status"
 	// Table holds the table name of the userposition in the database.
 	Table = "sys_user_positions"
 )
@@ -50,16 +56,19 @@ var Columns = []string{
 	FieldCreatedAt,
 	FieldUpdatedAt,
 	FieldDeletedAt,
-	FieldTenantID,
 	FieldCreatedBy,
 	FieldUpdatedBy,
 	FieldDeletedBy,
-	FieldStatus,
+	FieldTenantID,
+	FieldRemark,
+	FieldUserID,
+	FieldPositionID,
 	FieldIsPrimary,
 	FieldStartAt,
 	FieldEndAt,
-	FieldUserID,
-	FieldPositionID,
+	FieldAssignedAt,
+	FieldAssignedBy,
+	FieldStatus,
 }
 
 // ValidColumn reports if the column name is valid (part of the table columns).
@@ -99,7 +108,6 @@ const (
 	StatusProbation  Status = "PROBATION"
 	StatusActive     Status = "ACTIVE"
 	StatusLeave      Status = "LEAVE"
-	StatusResigned   Status = "RESIGNED"
 	StatusTerminated Status = "TERMINATED"
 	StatusExpired    Status = "EXPIRED"
 )
@@ -111,7 +119,7 @@ func (s Status) String() string {
 // StatusValidator is a validator for the "status" field enum values. It is called by the builders before save.
 func StatusValidator(s Status) error {
 	switch s {
-	case StatusProbation, StatusActive, StatusLeave, StatusResigned, StatusTerminated, StatusExpired:
+	case StatusProbation, StatusActive, StatusLeave, StatusTerminated, StatusExpired:
 		return nil
 	default:
 		return fmt.Errorf("userposition: invalid enum value for status field: %q", s)
@@ -141,11 +149,6 @@ func ByDeletedAt(opts ...sql.OrderTermOption) OrderOption {
 	return sql.OrderByField(FieldDeletedAt, opts...).ToFunc()
 }
 
-// ByTenantID orders the results by the tenant_id field.
-func ByTenantID(opts ...sql.OrderTermOption) OrderOption {
-	return sql.OrderByField(FieldTenantID, opts...).ToFunc()
-}
-
 // ByCreatedBy orders the results by the created_by field.
 func ByCreatedBy(opts ...sql.OrderTermOption) OrderOption {
 	return sql.OrderByField(FieldCreatedBy, opts...).ToFunc()
@@ -161,9 +164,24 @@ func ByDeletedBy(opts ...sql.OrderTermOption) OrderOption {
 	return sql.OrderByField(FieldDeletedBy, opts...).ToFunc()
 }
 
-// ByStatus orders the results by the status field.
-func ByStatus(opts ...sql.OrderTermOption) OrderOption {
-	return sql.OrderByField(FieldStatus, opts...).ToFunc()
+// ByTenantID orders the results by the tenant_id field.
+func ByTenantID(opts ...sql.OrderTermOption) OrderOption {
+	return sql.OrderByField(FieldTenantID, opts...).ToFunc()
+}
+
+// ByRemark orders the results by the remark field.
+func ByRemark(opts ...sql.OrderTermOption) OrderOption {
+	return sql.OrderByField(FieldRemark, opts...).ToFunc()
+}
+
+// ByUserID orders the results by the user_id field.
+func ByUserID(opts ...sql.OrderTermOption) OrderOption {
+	return sql.OrderByField(FieldUserID, opts...).ToFunc()
+}
+
+// ByPositionID orders the results by the position_id field.
+func ByPositionID(opts ...sql.OrderTermOption) OrderOption {
+	return sql.OrderByField(FieldPositionID, opts...).ToFunc()
 }
 
 // ByIsPrimary orders the results by the is_primary field.
@@ -181,12 +199,17 @@ func ByEndAt(opts ...sql.OrderTermOption) OrderOption {
 	return sql.OrderByField(FieldEndAt, opts...).ToFunc()
 }
 
-// ByUserID orders the results by the user_id field.
-func ByUserID(opts ...sql.OrderTermOption) OrderOption {
-	return sql.OrderByField(FieldUserID, opts...).ToFunc()
+// ByAssignedAt orders the results by the assigned_at field.
+func ByAssignedAt(opts ...sql.OrderTermOption) OrderOption {
+	return sql.OrderByField(FieldAssignedAt, opts...).ToFunc()
 }
 
-// ByPositionID orders the results by the position_id field.
-func ByPositionID(opts ...sql.OrderTermOption) OrderOption {
-	return sql.OrderByField(FieldPositionID, opts...).ToFunc()
+// ByAssignedBy orders the results by the assigned_by field.
+func ByAssignedBy(opts ...sql.OrderTermOption) OrderOption {
+	return sql.OrderByField(FieldAssignedBy, opts...).ToFunc()
+}
+
+// ByStatus orders the results by the status field.
+func ByStatus(opts ...sql.OrderTermOption) OrderOption {
+	return sql.OrderByField(FieldStatus, opts...).ToFunc()
 }

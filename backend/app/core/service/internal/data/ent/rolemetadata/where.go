@@ -69,6 +69,21 @@ func DeletedAt(v time.Time) predicate.RoleMetadata {
 	return predicate.RoleMetadata(sql.FieldEQ(FieldDeletedAt, v))
 }
 
+// CreatedBy applies equality check predicate on the "created_by" field. It's identical to CreatedByEQ.
+func CreatedBy(v uint32) predicate.RoleMetadata {
+	return predicate.RoleMetadata(sql.FieldEQ(FieldCreatedBy, v))
+}
+
+// UpdatedBy applies equality check predicate on the "updated_by" field. It's identical to UpdatedByEQ.
+func UpdatedBy(v uint32) predicate.RoleMetadata {
+	return predicate.RoleMetadata(sql.FieldEQ(FieldUpdatedBy, v))
+}
+
+// DeletedBy applies equality check predicate on the "deleted_by" field. It's identical to DeletedByEQ.
+func DeletedBy(v uint32) predicate.RoleMetadata {
+	return predicate.RoleMetadata(sql.FieldEQ(FieldDeletedBy, v))
+}
+
 // TenantID applies equality check predicate on the "tenant_id" field. It's identical to TenantIDEQ.
 func TenantID(v uint32) predicate.RoleMetadata {
 	return predicate.RoleMetadata(sql.FieldEQ(FieldTenantID, v))
@@ -77,6 +92,11 @@ func TenantID(v uint32) predicate.RoleMetadata {
 // RoleID applies equality check predicate on the "role_id" field. It's identical to RoleIDEQ.
 func RoleID(v uint32) predicate.RoleMetadata {
 	return predicate.RoleMetadata(sql.FieldEQ(FieldRoleID, v))
+}
+
+// IsTemplate applies equality check predicate on the "is_template" field. It's identical to IsTemplateEQ.
+func IsTemplate(v bool) predicate.RoleMetadata {
+	return predicate.RoleMetadata(sql.FieldEQ(FieldIsTemplate, v))
 }
 
 // TemplateFor applies equality check predicate on the "template_for" field. It's identical to TemplateForEQ.
@@ -89,29 +109,14 @@ func TemplateVersion(v int32) predicate.RoleMetadata {
 	return predicate.RoleMetadata(sql.FieldEQ(FieldTemplateVersion, v))
 }
 
-// LastSyncedAt applies equality check predicate on the "last_synced_at" field. It's identical to LastSyncedAtEQ.
-func LastSyncedAt(v time.Time) predicate.RoleMetadata {
-	return predicate.RoleMetadata(sql.FieldEQ(FieldLastSyncedAt, v))
-}
-
 // LastSyncedVersion applies equality check predicate on the "last_synced_version" field. It's identical to LastSyncedVersionEQ.
 func LastSyncedVersion(v int32) predicate.RoleMetadata {
 	return predicate.RoleMetadata(sql.FieldEQ(FieldLastSyncedVersion, v))
 }
 
-// IsTemplate applies equality check predicate on the "is_template" field. It's identical to IsTemplateEQ.
-func IsTemplate(v bool) predicate.RoleMetadata {
-	return predicate.RoleMetadata(sql.FieldEQ(FieldIsTemplate, v))
-}
-
-// Key applies equality check predicate on the "key" field. It's identical to KeyEQ.
-func Key(v string) predicate.RoleMetadata {
-	return predicate.RoleMetadata(sql.FieldEQ(FieldKey, v))
-}
-
-// Value applies equality check predicate on the "value" field. It's identical to ValueEQ.
-func Value(v string) predicate.RoleMetadata {
-	return predicate.RoleMetadata(sql.FieldEQ(FieldValue, v))
+// LastSyncedAt applies equality check predicate on the "last_synced_at" field. It's identical to LastSyncedAtEQ.
+func LastSyncedAt(v time.Time) predicate.RoleMetadata {
+	return predicate.RoleMetadata(sql.FieldEQ(FieldLastSyncedAt, v))
 }
 
 // CreatedAtEQ applies the EQ predicate on the "created_at" field.
@@ -264,6 +269,156 @@ func DeletedAtNotNil() predicate.RoleMetadata {
 	return predicate.RoleMetadata(sql.FieldNotNull(FieldDeletedAt))
 }
 
+// CreatedByEQ applies the EQ predicate on the "created_by" field.
+func CreatedByEQ(v uint32) predicate.RoleMetadata {
+	return predicate.RoleMetadata(sql.FieldEQ(FieldCreatedBy, v))
+}
+
+// CreatedByNEQ applies the NEQ predicate on the "created_by" field.
+func CreatedByNEQ(v uint32) predicate.RoleMetadata {
+	return predicate.RoleMetadata(sql.FieldNEQ(FieldCreatedBy, v))
+}
+
+// CreatedByIn applies the In predicate on the "created_by" field.
+func CreatedByIn(vs ...uint32) predicate.RoleMetadata {
+	return predicate.RoleMetadata(sql.FieldIn(FieldCreatedBy, vs...))
+}
+
+// CreatedByNotIn applies the NotIn predicate on the "created_by" field.
+func CreatedByNotIn(vs ...uint32) predicate.RoleMetadata {
+	return predicate.RoleMetadata(sql.FieldNotIn(FieldCreatedBy, vs...))
+}
+
+// CreatedByGT applies the GT predicate on the "created_by" field.
+func CreatedByGT(v uint32) predicate.RoleMetadata {
+	return predicate.RoleMetadata(sql.FieldGT(FieldCreatedBy, v))
+}
+
+// CreatedByGTE applies the GTE predicate on the "created_by" field.
+func CreatedByGTE(v uint32) predicate.RoleMetadata {
+	return predicate.RoleMetadata(sql.FieldGTE(FieldCreatedBy, v))
+}
+
+// CreatedByLT applies the LT predicate on the "created_by" field.
+func CreatedByLT(v uint32) predicate.RoleMetadata {
+	return predicate.RoleMetadata(sql.FieldLT(FieldCreatedBy, v))
+}
+
+// CreatedByLTE applies the LTE predicate on the "created_by" field.
+func CreatedByLTE(v uint32) predicate.RoleMetadata {
+	return predicate.RoleMetadata(sql.FieldLTE(FieldCreatedBy, v))
+}
+
+// CreatedByIsNil applies the IsNil predicate on the "created_by" field.
+func CreatedByIsNil() predicate.RoleMetadata {
+	return predicate.RoleMetadata(sql.FieldIsNull(FieldCreatedBy))
+}
+
+// CreatedByNotNil applies the NotNil predicate on the "created_by" field.
+func CreatedByNotNil() predicate.RoleMetadata {
+	return predicate.RoleMetadata(sql.FieldNotNull(FieldCreatedBy))
+}
+
+// UpdatedByEQ applies the EQ predicate on the "updated_by" field.
+func UpdatedByEQ(v uint32) predicate.RoleMetadata {
+	return predicate.RoleMetadata(sql.FieldEQ(FieldUpdatedBy, v))
+}
+
+// UpdatedByNEQ applies the NEQ predicate on the "updated_by" field.
+func UpdatedByNEQ(v uint32) predicate.RoleMetadata {
+	return predicate.RoleMetadata(sql.FieldNEQ(FieldUpdatedBy, v))
+}
+
+// UpdatedByIn applies the In predicate on the "updated_by" field.
+func UpdatedByIn(vs ...uint32) predicate.RoleMetadata {
+	return predicate.RoleMetadata(sql.FieldIn(FieldUpdatedBy, vs...))
+}
+
+// UpdatedByNotIn applies the NotIn predicate on the "updated_by" field.
+func UpdatedByNotIn(vs ...uint32) predicate.RoleMetadata {
+	return predicate.RoleMetadata(sql.FieldNotIn(FieldUpdatedBy, vs...))
+}
+
+// UpdatedByGT applies the GT predicate on the "updated_by" field.
+func UpdatedByGT(v uint32) predicate.RoleMetadata {
+	return predicate.RoleMetadata(sql.FieldGT(FieldUpdatedBy, v))
+}
+
+// UpdatedByGTE applies the GTE predicate on the "updated_by" field.
+func UpdatedByGTE(v uint32) predicate.RoleMetadata {
+	return predicate.RoleMetadata(sql.FieldGTE(FieldUpdatedBy, v))
+}
+
+// UpdatedByLT applies the LT predicate on the "updated_by" field.
+func UpdatedByLT(v uint32) predicate.RoleMetadata {
+	return predicate.RoleMetadata(sql.FieldLT(FieldUpdatedBy, v))
+}
+
+// UpdatedByLTE applies the LTE predicate on the "updated_by" field.
+func UpdatedByLTE(v uint32) predicate.RoleMetadata {
+	return predicate.RoleMetadata(sql.FieldLTE(FieldUpdatedBy, v))
+}
+
+// UpdatedByIsNil applies the IsNil predicate on the "updated_by" field.
+func UpdatedByIsNil() predicate.RoleMetadata {
+	return predicate.RoleMetadata(sql.FieldIsNull(FieldUpdatedBy))
+}
+
+// UpdatedByNotNil applies the NotNil predicate on the "updated_by" field.
+func UpdatedByNotNil() predicate.RoleMetadata {
+	return predicate.RoleMetadata(sql.FieldNotNull(FieldUpdatedBy))
+}
+
+// DeletedByEQ applies the EQ predicate on the "deleted_by" field.
+func DeletedByEQ(v uint32) predicate.RoleMetadata {
+	return predicate.RoleMetadata(sql.FieldEQ(FieldDeletedBy, v))
+}
+
+// DeletedByNEQ applies the NEQ predicate on the "deleted_by" field.
+func DeletedByNEQ(v uint32) predicate.RoleMetadata {
+	return predicate.RoleMetadata(sql.FieldNEQ(FieldDeletedBy, v))
+}
+
+// DeletedByIn applies the In predicate on the "deleted_by" field.
+func DeletedByIn(vs ...uint32) predicate.RoleMetadata {
+	return predicate.RoleMetadata(sql.FieldIn(FieldDeletedBy, vs...))
+}
+
+// DeletedByNotIn applies the NotIn predicate on the "deleted_by" field.
+func DeletedByNotIn(vs ...uint32) predicate.RoleMetadata {
+	return predicate.RoleMetadata(sql.FieldNotIn(FieldDeletedBy, vs...))
+}
+
+// DeletedByGT applies the GT predicate on the "deleted_by" field.
+func DeletedByGT(v uint32) predicate.RoleMetadata {
+	return predicate.RoleMetadata(sql.FieldGT(FieldDeletedBy, v))
+}
+
+// DeletedByGTE applies the GTE predicate on the "deleted_by" field.
+func DeletedByGTE(v uint32) predicate.RoleMetadata {
+	return predicate.RoleMetadata(sql.FieldGTE(FieldDeletedBy, v))
+}
+
+// DeletedByLT applies the LT predicate on the "deleted_by" field.
+func DeletedByLT(v uint32) predicate.RoleMetadata {
+	return predicate.RoleMetadata(sql.FieldLT(FieldDeletedBy, v))
+}
+
+// DeletedByLTE applies the LTE predicate on the "deleted_by" field.
+func DeletedByLTE(v uint32) predicate.RoleMetadata {
+	return predicate.RoleMetadata(sql.FieldLTE(FieldDeletedBy, v))
+}
+
+// DeletedByIsNil applies the IsNil predicate on the "deleted_by" field.
+func DeletedByIsNil() predicate.RoleMetadata {
+	return predicate.RoleMetadata(sql.FieldIsNull(FieldDeletedBy))
+}
+
+// DeletedByNotNil applies the NotNil predicate on the "deleted_by" field.
+func DeletedByNotNil() predicate.RoleMetadata {
+	return predicate.RoleMetadata(sql.FieldNotNull(FieldDeletedBy))
+}
+
 // TenantIDEQ applies the EQ predicate on the "tenant_id" field.
 func TenantIDEQ(v uint32) predicate.RoleMetadata {
 	return predicate.RoleMetadata(sql.FieldEQ(FieldTenantID, v))
@@ -362,6 +517,26 @@ func RoleIDIsNil() predicate.RoleMetadata {
 // RoleIDNotNil applies the NotNil predicate on the "role_id" field.
 func RoleIDNotNil() predicate.RoleMetadata {
 	return predicate.RoleMetadata(sql.FieldNotNull(FieldRoleID))
+}
+
+// IsTemplateEQ applies the EQ predicate on the "is_template" field.
+func IsTemplateEQ(v bool) predicate.RoleMetadata {
+	return predicate.RoleMetadata(sql.FieldEQ(FieldIsTemplate, v))
+}
+
+// IsTemplateNEQ applies the NEQ predicate on the "is_template" field.
+func IsTemplateNEQ(v bool) predicate.RoleMetadata {
+	return predicate.RoleMetadata(sql.FieldNEQ(FieldIsTemplate, v))
+}
+
+// IsTemplateIsNil applies the IsNil predicate on the "is_template" field.
+func IsTemplateIsNil() predicate.RoleMetadata {
+	return predicate.RoleMetadata(sql.FieldIsNull(FieldIsTemplate))
+}
+
+// IsTemplateNotNil applies the NotNil predicate on the "is_template" field.
+func IsTemplateNotNil() predicate.RoleMetadata {
+	return predicate.RoleMetadata(sql.FieldNotNull(FieldIsTemplate))
 }
 
 // TemplateForEQ applies the EQ predicate on the "template_for" field.
@@ -489,56 +664,6 @@ func TemplateVersionNotNil() predicate.RoleMetadata {
 	return predicate.RoleMetadata(sql.FieldNotNull(FieldTemplateVersion))
 }
 
-// LastSyncedAtEQ applies the EQ predicate on the "last_synced_at" field.
-func LastSyncedAtEQ(v time.Time) predicate.RoleMetadata {
-	return predicate.RoleMetadata(sql.FieldEQ(FieldLastSyncedAt, v))
-}
-
-// LastSyncedAtNEQ applies the NEQ predicate on the "last_synced_at" field.
-func LastSyncedAtNEQ(v time.Time) predicate.RoleMetadata {
-	return predicate.RoleMetadata(sql.FieldNEQ(FieldLastSyncedAt, v))
-}
-
-// LastSyncedAtIn applies the In predicate on the "last_synced_at" field.
-func LastSyncedAtIn(vs ...time.Time) predicate.RoleMetadata {
-	return predicate.RoleMetadata(sql.FieldIn(FieldLastSyncedAt, vs...))
-}
-
-// LastSyncedAtNotIn applies the NotIn predicate on the "last_synced_at" field.
-func LastSyncedAtNotIn(vs ...time.Time) predicate.RoleMetadata {
-	return predicate.RoleMetadata(sql.FieldNotIn(FieldLastSyncedAt, vs...))
-}
-
-// LastSyncedAtGT applies the GT predicate on the "last_synced_at" field.
-func LastSyncedAtGT(v time.Time) predicate.RoleMetadata {
-	return predicate.RoleMetadata(sql.FieldGT(FieldLastSyncedAt, v))
-}
-
-// LastSyncedAtGTE applies the GTE predicate on the "last_synced_at" field.
-func LastSyncedAtGTE(v time.Time) predicate.RoleMetadata {
-	return predicate.RoleMetadata(sql.FieldGTE(FieldLastSyncedAt, v))
-}
-
-// LastSyncedAtLT applies the LT predicate on the "last_synced_at" field.
-func LastSyncedAtLT(v time.Time) predicate.RoleMetadata {
-	return predicate.RoleMetadata(sql.FieldLT(FieldLastSyncedAt, v))
-}
-
-// LastSyncedAtLTE applies the LTE predicate on the "last_synced_at" field.
-func LastSyncedAtLTE(v time.Time) predicate.RoleMetadata {
-	return predicate.RoleMetadata(sql.FieldLTE(FieldLastSyncedAt, v))
-}
-
-// LastSyncedAtIsNil applies the IsNil predicate on the "last_synced_at" field.
-func LastSyncedAtIsNil() predicate.RoleMetadata {
-	return predicate.RoleMetadata(sql.FieldIsNull(FieldLastSyncedAt))
-}
-
-// LastSyncedAtNotNil applies the NotNil predicate on the "last_synced_at" field.
-func LastSyncedAtNotNil() predicate.RoleMetadata {
-	return predicate.RoleMetadata(sql.FieldNotNull(FieldLastSyncedAt))
-}
-
 // LastSyncedVersionEQ applies the EQ predicate on the "last_synced_version" field.
 func LastSyncedVersionEQ(v int32) predicate.RoleMetadata {
 	return predicate.RoleMetadata(sql.FieldEQ(FieldLastSyncedVersion, v))
@@ -589,174 +714,114 @@ func LastSyncedVersionNotNil() predicate.RoleMetadata {
 	return predicate.RoleMetadata(sql.FieldNotNull(FieldLastSyncedVersion))
 }
 
-// IsTemplateEQ applies the EQ predicate on the "is_template" field.
-func IsTemplateEQ(v bool) predicate.RoleMetadata {
-	return predicate.RoleMetadata(sql.FieldEQ(FieldIsTemplate, v))
+// LastSyncedAtEQ applies the EQ predicate on the "last_synced_at" field.
+func LastSyncedAtEQ(v time.Time) predicate.RoleMetadata {
+	return predicate.RoleMetadata(sql.FieldEQ(FieldLastSyncedAt, v))
 }
 
-// IsTemplateNEQ applies the NEQ predicate on the "is_template" field.
-func IsTemplateNEQ(v bool) predicate.RoleMetadata {
-	return predicate.RoleMetadata(sql.FieldNEQ(FieldIsTemplate, v))
+// LastSyncedAtNEQ applies the NEQ predicate on the "last_synced_at" field.
+func LastSyncedAtNEQ(v time.Time) predicate.RoleMetadata {
+	return predicate.RoleMetadata(sql.FieldNEQ(FieldLastSyncedAt, v))
 }
 
-// IsTemplateIsNil applies the IsNil predicate on the "is_template" field.
-func IsTemplateIsNil() predicate.RoleMetadata {
-	return predicate.RoleMetadata(sql.FieldIsNull(FieldIsTemplate))
+// LastSyncedAtIn applies the In predicate on the "last_synced_at" field.
+func LastSyncedAtIn(vs ...time.Time) predicate.RoleMetadata {
+	return predicate.RoleMetadata(sql.FieldIn(FieldLastSyncedAt, vs...))
 }
 
-// IsTemplateNotNil applies the NotNil predicate on the "is_template" field.
-func IsTemplateNotNil() predicate.RoleMetadata {
-	return predicate.RoleMetadata(sql.FieldNotNull(FieldIsTemplate))
+// LastSyncedAtNotIn applies the NotIn predicate on the "last_synced_at" field.
+func LastSyncedAtNotIn(vs ...time.Time) predicate.RoleMetadata {
+	return predicate.RoleMetadata(sql.FieldNotIn(FieldLastSyncedAt, vs...))
 }
 
-// KeyEQ applies the EQ predicate on the "key" field.
-func KeyEQ(v string) predicate.RoleMetadata {
-	return predicate.RoleMetadata(sql.FieldEQ(FieldKey, v))
+// LastSyncedAtGT applies the GT predicate on the "last_synced_at" field.
+func LastSyncedAtGT(v time.Time) predicate.RoleMetadata {
+	return predicate.RoleMetadata(sql.FieldGT(FieldLastSyncedAt, v))
 }
 
-// KeyNEQ applies the NEQ predicate on the "key" field.
-func KeyNEQ(v string) predicate.RoleMetadata {
-	return predicate.RoleMetadata(sql.FieldNEQ(FieldKey, v))
+// LastSyncedAtGTE applies the GTE predicate on the "last_synced_at" field.
+func LastSyncedAtGTE(v time.Time) predicate.RoleMetadata {
+	return predicate.RoleMetadata(sql.FieldGTE(FieldLastSyncedAt, v))
 }
 
-// KeyIn applies the In predicate on the "key" field.
-func KeyIn(vs ...string) predicate.RoleMetadata {
-	return predicate.RoleMetadata(sql.FieldIn(FieldKey, vs...))
+// LastSyncedAtLT applies the LT predicate on the "last_synced_at" field.
+func LastSyncedAtLT(v time.Time) predicate.RoleMetadata {
+	return predicate.RoleMetadata(sql.FieldLT(FieldLastSyncedAt, v))
 }
 
-// KeyNotIn applies the NotIn predicate on the "key" field.
-func KeyNotIn(vs ...string) predicate.RoleMetadata {
-	return predicate.RoleMetadata(sql.FieldNotIn(FieldKey, vs...))
+// LastSyncedAtLTE applies the LTE predicate on the "last_synced_at" field.
+func LastSyncedAtLTE(v time.Time) predicate.RoleMetadata {
+	return predicate.RoleMetadata(sql.FieldLTE(FieldLastSyncedAt, v))
 }
 
-// KeyGT applies the GT predicate on the "key" field.
-func KeyGT(v string) predicate.RoleMetadata {
-	return predicate.RoleMetadata(sql.FieldGT(FieldKey, v))
+// LastSyncedAtIsNil applies the IsNil predicate on the "last_synced_at" field.
+func LastSyncedAtIsNil() predicate.RoleMetadata {
+	return predicate.RoleMetadata(sql.FieldIsNull(FieldLastSyncedAt))
 }
 
-// KeyGTE applies the GTE predicate on the "key" field.
-func KeyGTE(v string) predicate.RoleMetadata {
-	return predicate.RoleMetadata(sql.FieldGTE(FieldKey, v))
+// LastSyncedAtNotNil applies the NotNil predicate on the "last_synced_at" field.
+func LastSyncedAtNotNil() predicate.RoleMetadata {
+	return predicate.RoleMetadata(sql.FieldNotNull(FieldLastSyncedAt))
 }
 
-// KeyLT applies the LT predicate on the "key" field.
-func KeyLT(v string) predicate.RoleMetadata {
-	return predicate.RoleMetadata(sql.FieldLT(FieldKey, v))
+// SyncPolicyEQ applies the EQ predicate on the "sync_policy" field.
+func SyncPolicyEQ(v SyncPolicy) predicate.RoleMetadata {
+	return predicate.RoleMetadata(sql.FieldEQ(FieldSyncPolicy, v))
 }
 
-// KeyLTE applies the LTE predicate on the "key" field.
-func KeyLTE(v string) predicate.RoleMetadata {
-	return predicate.RoleMetadata(sql.FieldLTE(FieldKey, v))
+// SyncPolicyNEQ applies the NEQ predicate on the "sync_policy" field.
+func SyncPolicyNEQ(v SyncPolicy) predicate.RoleMetadata {
+	return predicate.RoleMetadata(sql.FieldNEQ(FieldSyncPolicy, v))
 }
 
-// KeyContains applies the Contains predicate on the "key" field.
-func KeyContains(v string) predicate.RoleMetadata {
-	return predicate.RoleMetadata(sql.FieldContains(FieldKey, v))
+// SyncPolicyIn applies the In predicate on the "sync_policy" field.
+func SyncPolicyIn(vs ...SyncPolicy) predicate.RoleMetadata {
+	return predicate.RoleMetadata(sql.FieldIn(FieldSyncPolicy, vs...))
 }
 
-// KeyHasPrefix applies the HasPrefix predicate on the "key" field.
-func KeyHasPrefix(v string) predicate.RoleMetadata {
-	return predicate.RoleMetadata(sql.FieldHasPrefix(FieldKey, v))
+// SyncPolicyNotIn applies the NotIn predicate on the "sync_policy" field.
+func SyncPolicyNotIn(vs ...SyncPolicy) predicate.RoleMetadata {
+	return predicate.RoleMetadata(sql.FieldNotIn(FieldSyncPolicy, vs...))
 }
 
-// KeyHasSuffix applies the HasSuffix predicate on the "key" field.
-func KeyHasSuffix(v string) predicate.RoleMetadata {
-	return predicate.RoleMetadata(sql.FieldHasSuffix(FieldKey, v))
+// SyncPolicyIsNil applies the IsNil predicate on the "sync_policy" field.
+func SyncPolicyIsNil() predicate.RoleMetadata {
+	return predicate.RoleMetadata(sql.FieldIsNull(FieldSyncPolicy))
 }
 
-// KeyIsNil applies the IsNil predicate on the "key" field.
-func KeyIsNil() predicate.RoleMetadata {
-	return predicate.RoleMetadata(sql.FieldIsNull(FieldKey))
+// SyncPolicyNotNil applies the NotNil predicate on the "sync_policy" field.
+func SyncPolicyNotNil() predicate.RoleMetadata {
+	return predicate.RoleMetadata(sql.FieldNotNull(FieldSyncPolicy))
 }
 
-// KeyNotNil applies the NotNil predicate on the "key" field.
-func KeyNotNil() predicate.RoleMetadata {
-	return predicate.RoleMetadata(sql.FieldNotNull(FieldKey))
+// ScopeEQ applies the EQ predicate on the "scope" field.
+func ScopeEQ(v Scope) predicate.RoleMetadata {
+	return predicate.RoleMetadata(sql.FieldEQ(FieldScope, v))
 }
 
-// KeyEqualFold applies the EqualFold predicate on the "key" field.
-func KeyEqualFold(v string) predicate.RoleMetadata {
-	return predicate.RoleMetadata(sql.FieldEqualFold(FieldKey, v))
+// ScopeNEQ applies the NEQ predicate on the "scope" field.
+func ScopeNEQ(v Scope) predicate.RoleMetadata {
+	return predicate.RoleMetadata(sql.FieldNEQ(FieldScope, v))
 }
 
-// KeyContainsFold applies the ContainsFold predicate on the "key" field.
-func KeyContainsFold(v string) predicate.RoleMetadata {
-	return predicate.RoleMetadata(sql.FieldContainsFold(FieldKey, v))
+// ScopeIn applies the In predicate on the "scope" field.
+func ScopeIn(vs ...Scope) predicate.RoleMetadata {
+	return predicate.RoleMetadata(sql.FieldIn(FieldScope, vs...))
 }
 
-// ValueEQ applies the EQ predicate on the "value" field.
-func ValueEQ(v string) predicate.RoleMetadata {
-	return predicate.RoleMetadata(sql.FieldEQ(FieldValue, v))
+// ScopeNotIn applies the NotIn predicate on the "scope" field.
+func ScopeNotIn(vs ...Scope) predicate.RoleMetadata {
+	return predicate.RoleMetadata(sql.FieldNotIn(FieldScope, vs...))
 }
 
-// ValueNEQ applies the NEQ predicate on the "value" field.
-func ValueNEQ(v string) predicate.RoleMetadata {
-	return predicate.RoleMetadata(sql.FieldNEQ(FieldValue, v))
+// ScopeIsNil applies the IsNil predicate on the "scope" field.
+func ScopeIsNil() predicate.RoleMetadata {
+	return predicate.RoleMetadata(sql.FieldIsNull(FieldScope))
 }
 
-// ValueIn applies the In predicate on the "value" field.
-func ValueIn(vs ...string) predicate.RoleMetadata {
-	return predicate.RoleMetadata(sql.FieldIn(FieldValue, vs...))
-}
-
-// ValueNotIn applies the NotIn predicate on the "value" field.
-func ValueNotIn(vs ...string) predicate.RoleMetadata {
-	return predicate.RoleMetadata(sql.FieldNotIn(FieldValue, vs...))
-}
-
-// ValueGT applies the GT predicate on the "value" field.
-func ValueGT(v string) predicate.RoleMetadata {
-	return predicate.RoleMetadata(sql.FieldGT(FieldValue, v))
-}
-
-// ValueGTE applies the GTE predicate on the "value" field.
-func ValueGTE(v string) predicate.RoleMetadata {
-	return predicate.RoleMetadata(sql.FieldGTE(FieldValue, v))
-}
-
-// ValueLT applies the LT predicate on the "value" field.
-func ValueLT(v string) predicate.RoleMetadata {
-	return predicate.RoleMetadata(sql.FieldLT(FieldValue, v))
-}
-
-// ValueLTE applies the LTE predicate on the "value" field.
-func ValueLTE(v string) predicate.RoleMetadata {
-	return predicate.RoleMetadata(sql.FieldLTE(FieldValue, v))
-}
-
-// ValueContains applies the Contains predicate on the "value" field.
-func ValueContains(v string) predicate.RoleMetadata {
-	return predicate.RoleMetadata(sql.FieldContains(FieldValue, v))
-}
-
-// ValueHasPrefix applies the HasPrefix predicate on the "value" field.
-func ValueHasPrefix(v string) predicate.RoleMetadata {
-	return predicate.RoleMetadata(sql.FieldHasPrefix(FieldValue, v))
-}
-
-// ValueHasSuffix applies the HasSuffix predicate on the "value" field.
-func ValueHasSuffix(v string) predicate.RoleMetadata {
-	return predicate.RoleMetadata(sql.FieldHasSuffix(FieldValue, v))
-}
-
-// ValueIsNil applies the IsNil predicate on the "value" field.
-func ValueIsNil() predicate.RoleMetadata {
-	return predicate.RoleMetadata(sql.FieldIsNull(FieldValue))
-}
-
-// ValueNotNil applies the NotNil predicate on the "value" field.
-func ValueNotNil() predicate.RoleMetadata {
-	return predicate.RoleMetadata(sql.FieldNotNull(FieldValue))
-}
-
-// ValueEqualFold applies the EqualFold predicate on the "value" field.
-func ValueEqualFold(v string) predicate.RoleMetadata {
-	return predicate.RoleMetadata(sql.FieldEqualFold(FieldValue, v))
-}
-
-// ValueContainsFold applies the ContainsFold predicate on the "value" field.
-func ValueContainsFold(v string) predicate.RoleMetadata {
-	return predicate.RoleMetadata(sql.FieldContainsFold(FieldValue, v))
+// ScopeNotNil applies the NotNil predicate on the "scope" field.
+func ScopeNotNil() predicate.RoleMetadata {
+	return predicate.RoleMetadata(sql.FieldNotNull(FieldScope))
 }
 
 // And groups predicates with the AND operator between them.

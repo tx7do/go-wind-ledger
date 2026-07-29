@@ -34,45 +34,35 @@ type Tenant struct {
 	Remark *string `json:"remark,omitempty"`
 	// 租户名称
 	Name *string `json:"name,omitempty"`
-	// Code holds the value of the "code" field.
+	// 租户编号
 	Code *string `json:"code,omitempty"`
-	// Domain holds the value of the "domain" field.
-	Domain *string `json:"domain,omitempty"`
-	// LogoURL holds the value of the "logo_url" field.
+	// 租户logo地址
 	LogoURL *string `json:"logo_url,omitempty"`
-	// Logo holds the value of the "logo" field.
-	Logo *string `json:"logo,omitempty"`
-	// Website holds the value of the "website" field.
-	Website *string `json:"website,omitempty"`
-	// Industry holds the value of the "industry" field.
+	// 租户专属域名
+	Domain *string `json:"domain,omitempty"`
+	// 所属行业
 	Industry *string `json:"industry,omitempty"`
-	// AdminUserID holds the value of the "admin_user_id" field.
+	// 管理员用户ID
 	AdminUserID *uint32 `json:"admin_user_id,omitempty"`
-	// ContactName holds the value of the "contact_name" field.
-	ContactName *string `json:"contact_name,omitempty"`
-	// ContactEmail holds the value of the "contact_email" field.
-	ContactEmail *string `json:"contact_email,omitempty"`
-	// ContactPhone holds the value of the "contact_phone" field.
-	ContactPhone *string `json:"contact_phone,omitempty"`
 	// 租户状态
 	Status *tenant.Status `json:"status,omitempty"`
 	// 租户类型
 	Type *tenant.Type `json:"type,omitempty"`
-	// AuditStatus holds the value of the "audit_status" field.
+	// 审核状态
 	AuditStatus *tenant.AuditStatus `json:"audit_status,omitempty"`
-	// SubscriptionPlan holds the value of the "subscription_plan" field.
-	SubscriptionPlan *string `json:"subscription_plan,omitempty"`
-	// UnsubscribeAt holds the value of the "unsubscribe_at" field.
-	UnsubscribeAt *time.Time `json:"unsubscribe_at,omitempty"`
-	// SubscriptionAt holds the value of the "subscription_at" field.
+	// 订阅时间
 	SubscriptionAt *time.Time `json:"subscription_at,omitempty"`
-	// ExpiredAt holds the value of the "expired_at" field.
-	ExpiredAt *time.Time `json:"expired_at,omitempty"`
-	// DefaultCurrencyCode holds the value of the "default_currency_code" field.
+	// 取消订阅时间
+	UnsubscribeAt *time.Time `json:"unsubscribe_at,omitempty"`
+	// 订阅套餐
+	SubscriptionPlan *string `json:"subscription_plan,omitempty"`
+	// 默认币种代码
 	DefaultCurrencyCode *string `json:"default_currency_code,omitempty"`
-	// DefaultBookID holds the value of the "default_book_id" field.
+	// 默认账本ID
 	DefaultBookID *uint32 `json:"default_book_id,omitempty"`
-	selectValues  sql.SelectValues
+	// 租户有效期
+	ExpiredAt    *time.Time `json:"expired_at,omitempty"`
+	selectValues sql.SelectValues
 }
 
 // scanValues returns the types for scanning values from sql.Rows.
@@ -82,9 +72,9 @@ func (*Tenant) scanValues(columns []string) ([]any, error) {
 		switch columns[i] {
 		case tenant.FieldID, tenant.FieldCreatedBy, tenant.FieldUpdatedBy, tenant.FieldDeletedBy, tenant.FieldAdminUserID, tenant.FieldDefaultBookID:
 			values[i] = new(sql.NullInt64)
-		case tenant.FieldRemark, tenant.FieldName, tenant.FieldCode, tenant.FieldDomain, tenant.FieldLogoURL, tenant.FieldLogo, tenant.FieldWebsite, tenant.FieldIndustry, tenant.FieldContactName, tenant.FieldContactEmail, tenant.FieldContactPhone, tenant.FieldStatus, tenant.FieldType, tenant.FieldAuditStatus, tenant.FieldSubscriptionPlan, tenant.FieldDefaultCurrencyCode:
+		case tenant.FieldRemark, tenant.FieldName, tenant.FieldCode, tenant.FieldLogoURL, tenant.FieldDomain, tenant.FieldIndustry, tenant.FieldStatus, tenant.FieldType, tenant.FieldAuditStatus, tenant.FieldSubscriptionPlan, tenant.FieldDefaultCurrencyCode:
 			values[i] = new(sql.NullString)
-		case tenant.FieldCreatedAt, tenant.FieldUpdatedAt, tenant.FieldDeletedAt, tenant.FieldUnsubscribeAt, tenant.FieldSubscriptionAt, tenant.FieldExpiredAt:
+		case tenant.FieldCreatedAt, tenant.FieldUpdatedAt, tenant.FieldDeletedAt, tenant.FieldSubscriptionAt, tenant.FieldUnsubscribeAt, tenant.FieldExpiredAt:
 			values[i] = new(sql.NullTime)
 		default:
 			values[i] = new(sql.UnknownType)
@@ -170,13 +160,6 @@ func (_m *Tenant) assignValues(columns []string, values []any) error {
 				_m.Code = new(string)
 				*_m.Code = value.String
 			}
-		case tenant.FieldDomain:
-			if value, ok := values[i].(*sql.NullString); !ok {
-				return fmt.Errorf("unexpected type %T for field domain", values[i])
-			} else if value.Valid {
-				_m.Domain = new(string)
-				*_m.Domain = value.String
-			}
 		case tenant.FieldLogoURL:
 			if value, ok := values[i].(*sql.NullString); !ok {
 				return fmt.Errorf("unexpected type %T for field logo_url", values[i])
@@ -184,19 +167,12 @@ func (_m *Tenant) assignValues(columns []string, values []any) error {
 				_m.LogoURL = new(string)
 				*_m.LogoURL = value.String
 			}
-		case tenant.FieldLogo:
+		case tenant.FieldDomain:
 			if value, ok := values[i].(*sql.NullString); !ok {
-				return fmt.Errorf("unexpected type %T for field logo", values[i])
+				return fmt.Errorf("unexpected type %T for field domain", values[i])
 			} else if value.Valid {
-				_m.Logo = new(string)
-				*_m.Logo = value.String
-			}
-		case tenant.FieldWebsite:
-			if value, ok := values[i].(*sql.NullString); !ok {
-				return fmt.Errorf("unexpected type %T for field website", values[i])
-			} else if value.Valid {
-				_m.Website = new(string)
-				*_m.Website = value.String
+				_m.Domain = new(string)
+				*_m.Domain = value.String
 			}
 		case tenant.FieldIndustry:
 			if value, ok := values[i].(*sql.NullString); !ok {
@@ -211,27 +187,6 @@ func (_m *Tenant) assignValues(columns []string, values []any) error {
 			} else if value.Valid {
 				_m.AdminUserID = new(uint32)
 				*_m.AdminUserID = uint32(value.Int64)
-			}
-		case tenant.FieldContactName:
-			if value, ok := values[i].(*sql.NullString); !ok {
-				return fmt.Errorf("unexpected type %T for field contact_name", values[i])
-			} else if value.Valid {
-				_m.ContactName = new(string)
-				*_m.ContactName = value.String
-			}
-		case tenant.FieldContactEmail:
-			if value, ok := values[i].(*sql.NullString); !ok {
-				return fmt.Errorf("unexpected type %T for field contact_email", values[i])
-			} else if value.Valid {
-				_m.ContactEmail = new(string)
-				*_m.ContactEmail = value.String
-			}
-		case tenant.FieldContactPhone:
-			if value, ok := values[i].(*sql.NullString); !ok {
-				return fmt.Errorf("unexpected type %T for field contact_phone", values[i])
-			} else if value.Valid {
-				_m.ContactPhone = new(string)
-				*_m.ContactPhone = value.String
 			}
 		case tenant.FieldStatus:
 			if value, ok := values[i].(*sql.NullString); !ok {
@@ -254,12 +209,12 @@ func (_m *Tenant) assignValues(columns []string, values []any) error {
 				_m.AuditStatus = new(tenant.AuditStatus)
 				*_m.AuditStatus = tenant.AuditStatus(value.String)
 			}
-		case tenant.FieldSubscriptionPlan:
-			if value, ok := values[i].(*sql.NullString); !ok {
-				return fmt.Errorf("unexpected type %T for field subscription_plan", values[i])
+		case tenant.FieldSubscriptionAt:
+			if value, ok := values[i].(*sql.NullTime); !ok {
+				return fmt.Errorf("unexpected type %T for field subscription_at", values[i])
 			} else if value.Valid {
-				_m.SubscriptionPlan = new(string)
-				*_m.SubscriptionPlan = value.String
+				_m.SubscriptionAt = new(time.Time)
+				*_m.SubscriptionAt = value.Time
 			}
 		case tenant.FieldUnsubscribeAt:
 			if value, ok := values[i].(*sql.NullTime); !ok {
@@ -268,19 +223,12 @@ func (_m *Tenant) assignValues(columns []string, values []any) error {
 				_m.UnsubscribeAt = new(time.Time)
 				*_m.UnsubscribeAt = value.Time
 			}
-		case tenant.FieldSubscriptionAt:
-			if value, ok := values[i].(*sql.NullTime); !ok {
-				return fmt.Errorf("unexpected type %T for field subscription_at", values[i])
+		case tenant.FieldSubscriptionPlan:
+			if value, ok := values[i].(*sql.NullString); !ok {
+				return fmt.Errorf("unexpected type %T for field subscription_plan", values[i])
 			} else if value.Valid {
-				_m.SubscriptionAt = new(time.Time)
-				*_m.SubscriptionAt = value.Time
-			}
-		case tenant.FieldExpiredAt:
-			if value, ok := values[i].(*sql.NullTime); !ok {
-				return fmt.Errorf("unexpected type %T for field expired_at", values[i])
-			} else if value.Valid {
-				_m.ExpiredAt = new(time.Time)
-				*_m.ExpiredAt = value.Time
+				_m.SubscriptionPlan = new(string)
+				*_m.SubscriptionPlan = value.String
 			}
 		case tenant.FieldDefaultCurrencyCode:
 			if value, ok := values[i].(*sql.NullString); !ok {
@@ -295,6 +243,13 @@ func (_m *Tenant) assignValues(columns []string, values []any) error {
 			} else if value.Valid {
 				_m.DefaultBookID = new(uint32)
 				*_m.DefaultBookID = uint32(value.Int64)
+			}
+		case tenant.FieldExpiredAt:
+			if value, ok := values[i].(*sql.NullTime); !ok {
+				return fmt.Errorf("unexpected type %T for field expired_at", values[i])
+			} else if value.Valid {
+				_m.ExpiredAt = new(time.Time)
+				*_m.ExpiredAt = value.Time
 			}
 		default:
 			_m.selectValues.Set(columns[i], values[i])
@@ -377,23 +332,13 @@ func (_m *Tenant) String() string {
 		builder.WriteString(*v)
 	}
 	builder.WriteString(", ")
-	if v := _m.Domain; v != nil {
-		builder.WriteString("domain=")
-		builder.WriteString(*v)
-	}
-	builder.WriteString(", ")
 	if v := _m.LogoURL; v != nil {
 		builder.WriteString("logo_url=")
 		builder.WriteString(*v)
 	}
 	builder.WriteString(", ")
-	if v := _m.Logo; v != nil {
-		builder.WriteString("logo=")
-		builder.WriteString(*v)
-	}
-	builder.WriteString(", ")
-	if v := _m.Website; v != nil {
-		builder.WriteString("website=")
+	if v := _m.Domain; v != nil {
+		builder.WriteString("domain=")
 		builder.WriteString(*v)
 	}
 	builder.WriteString(", ")
@@ -405,21 +350,6 @@ func (_m *Tenant) String() string {
 	if v := _m.AdminUserID; v != nil {
 		builder.WriteString("admin_user_id=")
 		builder.WriteString(fmt.Sprintf("%v", *v))
-	}
-	builder.WriteString(", ")
-	if v := _m.ContactName; v != nil {
-		builder.WriteString("contact_name=")
-		builder.WriteString(*v)
-	}
-	builder.WriteString(", ")
-	if v := _m.ContactEmail; v != nil {
-		builder.WriteString("contact_email=")
-		builder.WriteString(*v)
-	}
-	builder.WriteString(", ")
-	if v := _m.ContactPhone; v != nil {
-		builder.WriteString("contact_phone=")
-		builder.WriteString(*v)
 	}
 	builder.WriteString(", ")
 	if v := _m.Status; v != nil {
@@ -437,9 +367,9 @@ func (_m *Tenant) String() string {
 		builder.WriteString(fmt.Sprintf("%v", *v))
 	}
 	builder.WriteString(", ")
-	if v := _m.SubscriptionPlan; v != nil {
-		builder.WriteString("subscription_plan=")
-		builder.WriteString(*v)
+	if v := _m.SubscriptionAt; v != nil {
+		builder.WriteString("subscription_at=")
+		builder.WriteString(v.Format(time.ANSIC))
 	}
 	builder.WriteString(", ")
 	if v := _m.UnsubscribeAt; v != nil {
@@ -447,14 +377,9 @@ func (_m *Tenant) String() string {
 		builder.WriteString(v.Format(time.ANSIC))
 	}
 	builder.WriteString(", ")
-	if v := _m.SubscriptionAt; v != nil {
-		builder.WriteString("subscription_at=")
-		builder.WriteString(v.Format(time.ANSIC))
-	}
-	builder.WriteString(", ")
-	if v := _m.ExpiredAt; v != nil {
-		builder.WriteString("expired_at=")
-		builder.WriteString(v.Format(time.ANSIC))
+	if v := _m.SubscriptionPlan; v != nil {
+		builder.WriteString("subscription_plan=")
+		builder.WriteString(*v)
 	}
 	builder.WriteString(", ")
 	if v := _m.DefaultCurrencyCode; v != nil {
@@ -465,6 +390,11 @@ func (_m *Tenant) String() string {
 	if v := _m.DefaultBookID; v != nil {
 		builder.WriteString("default_book_id=")
 		builder.WriteString(fmt.Sprintf("%v", *v))
+	}
+	builder.WriteString(", ")
+	if v := _m.ExpiredAt; v != nil {
+		builder.WriteString("expired_at=")
+		builder.WriteString(v.Format(time.ANSIC))
 	}
 	builder.WriteByte(')')
 	return builder.String()

@@ -89,24 +89,19 @@ func TenantID(v uint32) predicate.LoginPolicy {
 	return predicate.LoginPolicy(sql.FieldEQ(FieldTenantID, v))
 }
 
-// Remark applies equality check predicate on the "remark" field. It's identical to RemarkEQ.
-func Remark(v string) predicate.LoginPolicy {
-	return predicate.LoginPolicy(sql.FieldEQ(FieldRemark, v))
+// TargetID applies equality check predicate on the "target_id" field. It's identical to TargetIDEQ.
+func TargetID(v uint32) predicate.LoginPolicy {
+	return predicate.LoginPolicy(sql.FieldEQ(FieldTargetID, v))
 }
 
-// Name applies equality check predicate on the "name" field. It's identical to NameEQ.
-func Name(v string) predicate.LoginPolicy {
-	return predicate.LoginPolicy(sql.FieldEQ(FieldName, v))
+// Value applies equality check predicate on the "value" field. It's identical to ValueEQ.
+func Value(v string) predicate.LoginPolicy {
+	return predicate.LoginPolicy(sql.FieldEQ(FieldValue, v))
 }
 
-// Config applies equality check predicate on the "config" field. It's identical to ConfigEQ.
-func Config(v string) predicate.LoginPolicy {
-	return predicate.LoginPolicy(sql.FieldEQ(FieldConfig, v))
-}
-
-// Enable applies equality check predicate on the "enable" field. It's identical to EnableEQ.
-func Enable(v bool) predicate.LoginPolicy {
-	return predicate.LoginPolicy(sql.FieldEQ(FieldEnable, v))
+// Reason applies equality check predicate on the "reason" field. It's identical to ReasonEQ.
+func Reason(v string) predicate.LoginPolicy {
+	return predicate.LoginPolicy(sql.FieldEQ(FieldReason, v))
 }
 
 // CreatedAtEQ applies the EQ predicate on the "created_at" field.
@@ -459,154 +454,204 @@ func TenantIDNotNil() predicate.LoginPolicy {
 	return predicate.LoginPolicy(sql.FieldNotNull(FieldTenantID))
 }
 
-// RemarkEQ applies the EQ predicate on the "remark" field.
-func RemarkEQ(v string) predicate.LoginPolicy {
-	return predicate.LoginPolicy(sql.FieldEQ(FieldRemark, v))
+// TargetIDEQ applies the EQ predicate on the "target_id" field.
+func TargetIDEQ(v uint32) predicate.LoginPolicy {
+	return predicate.LoginPolicy(sql.FieldEQ(FieldTargetID, v))
 }
 
-// RemarkNEQ applies the NEQ predicate on the "remark" field.
-func RemarkNEQ(v string) predicate.LoginPolicy {
-	return predicate.LoginPolicy(sql.FieldNEQ(FieldRemark, v))
+// TargetIDNEQ applies the NEQ predicate on the "target_id" field.
+func TargetIDNEQ(v uint32) predicate.LoginPolicy {
+	return predicate.LoginPolicy(sql.FieldNEQ(FieldTargetID, v))
 }
 
-// RemarkIn applies the In predicate on the "remark" field.
-func RemarkIn(vs ...string) predicate.LoginPolicy {
-	return predicate.LoginPolicy(sql.FieldIn(FieldRemark, vs...))
+// TargetIDIn applies the In predicate on the "target_id" field.
+func TargetIDIn(vs ...uint32) predicate.LoginPolicy {
+	return predicate.LoginPolicy(sql.FieldIn(FieldTargetID, vs...))
 }
 
-// RemarkNotIn applies the NotIn predicate on the "remark" field.
-func RemarkNotIn(vs ...string) predicate.LoginPolicy {
-	return predicate.LoginPolicy(sql.FieldNotIn(FieldRemark, vs...))
+// TargetIDNotIn applies the NotIn predicate on the "target_id" field.
+func TargetIDNotIn(vs ...uint32) predicate.LoginPolicy {
+	return predicate.LoginPolicy(sql.FieldNotIn(FieldTargetID, vs...))
 }
 
-// RemarkGT applies the GT predicate on the "remark" field.
-func RemarkGT(v string) predicate.LoginPolicy {
-	return predicate.LoginPolicy(sql.FieldGT(FieldRemark, v))
+// TargetIDGT applies the GT predicate on the "target_id" field.
+func TargetIDGT(v uint32) predicate.LoginPolicy {
+	return predicate.LoginPolicy(sql.FieldGT(FieldTargetID, v))
 }
 
-// RemarkGTE applies the GTE predicate on the "remark" field.
-func RemarkGTE(v string) predicate.LoginPolicy {
-	return predicate.LoginPolicy(sql.FieldGTE(FieldRemark, v))
+// TargetIDGTE applies the GTE predicate on the "target_id" field.
+func TargetIDGTE(v uint32) predicate.LoginPolicy {
+	return predicate.LoginPolicy(sql.FieldGTE(FieldTargetID, v))
 }
 
-// RemarkLT applies the LT predicate on the "remark" field.
-func RemarkLT(v string) predicate.LoginPolicy {
-	return predicate.LoginPolicy(sql.FieldLT(FieldRemark, v))
+// TargetIDLT applies the LT predicate on the "target_id" field.
+func TargetIDLT(v uint32) predicate.LoginPolicy {
+	return predicate.LoginPolicy(sql.FieldLT(FieldTargetID, v))
 }
 
-// RemarkLTE applies the LTE predicate on the "remark" field.
-func RemarkLTE(v string) predicate.LoginPolicy {
-	return predicate.LoginPolicy(sql.FieldLTE(FieldRemark, v))
+// TargetIDLTE applies the LTE predicate on the "target_id" field.
+func TargetIDLTE(v uint32) predicate.LoginPolicy {
+	return predicate.LoginPolicy(sql.FieldLTE(FieldTargetID, v))
 }
 
-// RemarkContains applies the Contains predicate on the "remark" field.
-func RemarkContains(v string) predicate.LoginPolicy {
-	return predicate.LoginPolicy(sql.FieldContains(FieldRemark, v))
+// TargetIDIsNil applies the IsNil predicate on the "target_id" field.
+func TargetIDIsNil() predicate.LoginPolicy {
+	return predicate.LoginPolicy(sql.FieldIsNull(FieldTargetID))
 }
 
-// RemarkHasPrefix applies the HasPrefix predicate on the "remark" field.
-func RemarkHasPrefix(v string) predicate.LoginPolicy {
-	return predicate.LoginPolicy(sql.FieldHasPrefix(FieldRemark, v))
+// TargetIDNotNil applies the NotNil predicate on the "target_id" field.
+func TargetIDNotNil() predicate.LoginPolicy {
+	return predicate.LoginPolicy(sql.FieldNotNull(FieldTargetID))
 }
 
-// RemarkHasSuffix applies the HasSuffix predicate on the "remark" field.
-func RemarkHasSuffix(v string) predicate.LoginPolicy {
-	return predicate.LoginPolicy(sql.FieldHasSuffix(FieldRemark, v))
+// ValueEQ applies the EQ predicate on the "value" field.
+func ValueEQ(v string) predicate.LoginPolicy {
+	return predicate.LoginPolicy(sql.FieldEQ(FieldValue, v))
 }
 
-// RemarkIsNil applies the IsNil predicate on the "remark" field.
-func RemarkIsNil() predicate.LoginPolicy {
-	return predicate.LoginPolicy(sql.FieldIsNull(FieldRemark))
+// ValueNEQ applies the NEQ predicate on the "value" field.
+func ValueNEQ(v string) predicate.LoginPolicy {
+	return predicate.LoginPolicy(sql.FieldNEQ(FieldValue, v))
 }
 
-// RemarkNotNil applies the NotNil predicate on the "remark" field.
-func RemarkNotNil() predicate.LoginPolicy {
-	return predicate.LoginPolicy(sql.FieldNotNull(FieldRemark))
+// ValueIn applies the In predicate on the "value" field.
+func ValueIn(vs ...string) predicate.LoginPolicy {
+	return predicate.LoginPolicy(sql.FieldIn(FieldValue, vs...))
 }
 
-// RemarkEqualFold applies the EqualFold predicate on the "remark" field.
-func RemarkEqualFold(v string) predicate.LoginPolicy {
-	return predicate.LoginPolicy(sql.FieldEqualFold(FieldRemark, v))
+// ValueNotIn applies the NotIn predicate on the "value" field.
+func ValueNotIn(vs ...string) predicate.LoginPolicy {
+	return predicate.LoginPolicy(sql.FieldNotIn(FieldValue, vs...))
 }
 
-// RemarkContainsFold applies the ContainsFold predicate on the "remark" field.
-func RemarkContainsFold(v string) predicate.LoginPolicy {
-	return predicate.LoginPolicy(sql.FieldContainsFold(FieldRemark, v))
+// ValueGT applies the GT predicate on the "value" field.
+func ValueGT(v string) predicate.LoginPolicy {
+	return predicate.LoginPolicy(sql.FieldGT(FieldValue, v))
 }
 
-// NameEQ applies the EQ predicate on the "name" field.
-func NameEQ(v string) predicate.LoginPolicy {
-	return predicate.LoginPolicy(sql.FieldEQ(FieldName, v))
+// ValueGTE applies the GTE predicate on the "value" field.
+func ValueGTE(v string) predicate.LoginPolicy {
+	return predicate.LoginPolicy(sql.FieldGTE(FieldValue, v))
 }
 
-// NameNEQ applies the NEQ predicate on the "name" field.
-func NameNEQ(v string) predicate.LoginPolicy {
-	return predicate.LoginPolicy(sql.FieldNEQ(FieldName, v))
+// ValueLT applies the LT predicate on the "value" field.
+func ValueLT(v string) predicate.LoginPolicy {
+	return predicate.LoginPolicy(sql.FieldLT(FieldValue, v))
 }
 
-// NameIn applies the In predicate on the "name" field.
-func NameIn(vs ...string) predicate.LoginPolicy {
-	return predicate.LoginPolicy(sql.FieldIn(FieldName, vs...))
+// ValueLTE applies the LTE predicate on the "value" field.
+func ValueLTE(v string) predicate.LoginPolicy {
+	return predicate.LoginPolicy(sql.FieldLTE(FieldValue, v))
 }
 
-// NameNotIn applies the NotIn predicate on the "name" field.
-func NameNotIn(vs ...string) predicate.LoginPolicy {
-	return predicate.LoginPolicy(sql.FieldNotIn(FieldName, vs...))
+// ValueContains applies the Contains predicate on the "value" field.
+func ValueContains(v string) predicate.LoginPolicy {
+	return predicate.LoginPolicy(sql.FieldContains(FieldValue, v))
 }
 
-// NameGT applies the GT predicate on the "name" field.
-func NameGT(v string) predicate.LoginPolicy {
-	return predicate.LoginPolicy(sql.FieldGT(FieldName, v))
+// ValueHasPrefix applies the HasPrefix predicate on the "value" field.
+func ValueHasPrefix(v string) predicate.LoginPolicy {
+	return predicate.LoginPolicy(sql.FieldHasPrefix(FieldValue, v))
 }
 
-// NameGTE applies the GTE predicate on the "name" field.
-func NameGTE(v string) predicate.LoginPolicy {
-	return predicate.LoginPolicy(sql.FieldGTE(FieldName, v))
+// ValueHasSuffix applies the HasSuffix predicate on the "value" field.
+func ValueHasSuffix(v string) predicate.LoginPolicy {
+	return predicate.LoginPolicy(sql.FieldHasSuffix(FieldValue, v))
 }
 
-// NameLT applies the LT predicate on the "name" field.
-func NameLT(v string) predicate.LoginPolicy {
-	return predicate.LoginPolicy(sql.FieldLT(FieldName, v))
+// ValueIsNil applies the IsNil predicate on the "value" field.
+func ValueIsNil() predicate.LoginPolicy {
+	return predicate.LoginPolicy(sql.FieldIsNull(FieldValue))
 }
 
-// NameLTE applies the LTE predicate on the "name" field.
-func NameLTE(v string) predicate.LoginPolicy {
-	return predicate.LoginPolicy(sql.FieldLTE(FieldName, v))
+// ValueNotNil applies the NotNil predicate on the "value" field.
+func ValueNotNil() predicate.LoginPolicy {
+	return predicate.LoginPolicy(sql.FieldNotNull(FieldValue))
 }
 
-// NameContains applies the Contains predicate on the "name" field.
-func NameContains(v string) predicate.LoginPolicy {
-	return predicate.LoginPolicy(sql.FieldContains(FieldName, v))
+// ValueEqualFold applies the EqualFold predicate on the "value" field.
+func ValueEqualFold(v string) predicate.LoginPolicy {
+	return predicate.LoginPolicy(sql.FieldEqualFold(FieldValue, v))
 }
 
-// NameHasPrefix applies the HasPrefix predicate on the "name" field.
-func NameHasPrefix(v string) predicate.LoginPolicy {
-	return predicate.LoginPolicy(sql.FieldHasPrefix(FieldName, v))
+// ValueContainsFold applies the ContainsFold predicate on the "value" field.
+func ValueContainsFold(v string) predicate.LoginPolicy {
+	return predicate.LoginPolicy(sql.FieldContainsFold(FieldValue, v))
 }
 
-// NameHasSuffix applies the HasSuffix predicate on the "name" field.
-func NameHasSuffix(v string) predicate.LoginPolicy {
-	return predicate.LoginPolicy(sql.FieldHasSuffix(FieldName, v))
+// ReasonEQ applies the EQ predicate on the "reason" field.
+func ReasonEQ(v string) predicate.LoginPolicy {
+	return predicate.LoginPolicy(sql.FieldEQ(FieldReason, v))
 }
 
-// NameIsNil applies the IsNil predicate on the "name" field.
-func NameIsNil() predicate.LoginPolicy {
-	return predicate.LoginPolicy(sql.FieldIsNull(FieldName))
+// ReasonNEQ applies the NEQ predicate on the "reason" field.
+func ReasonNEQ(v string) predicate.LoginPolicy {
+	return predicate.LoginPolicy(sql.FieldNEQ(FieldReason, v))
 }
 
-// NameNotNil applies the NotNil predicate on the "name" field.
-func NameNotNil() predicate.LoginPolicy {
-	return predicate.LoginPolicy(sql.FieldNotNull(FieldName))
+// ReasonIn applies the In predicate on the "reason" field.
+func ReasonIn(vs ...string) predicate.LoginPolicy {
+	return predicate.LoginPolicy(sql.FieldIn(FieldReason, vs...))
 }
 
-// NameEqualFold applies the EqualFold predicate on the "name" field.
-func NameEqualFold(v string) predicate.LoginPolicy {
-	return predicate.LoginPolicy(sql.FieldEqualFold(FieldName, v))
+// ReasonNotIn applies the NotIn predicate on the "reason" field.
+func ReasonNotIn(vs ...string) predicate.LoginPolicy {
+	return predicate.LoginPolicy(sql.FieldNotIn(FieldReason, vs...))
 }
 
-// NameContainsFold applies the ContainsFold predicate on the "name" field.
-func NameContainsFold(v string) predicate.LoginPolicy {
-	return predicate.LoginPolicy(sql.FieldContainsFold(FieldName, v))
+// ReasonGT applies the GT predicate on the "reason" field.
+func ReasonGT(v string) predicate.LoginPolicy {
+	return predicate.LoginPolicy(sql.FieldGT(FieldReason, v))
+}
+
+// ReasonGTE applies the GTE predicate on the "reason" field.
+func ReasonGTE(v string) predicate.LoginPolicy {
+	return predicate.LoginPolicy(sql.FieldGTE(FieldReason, v))
+}
+
+// ReasonLT applies the LT predicate on the "reason" field.
+func ReasonLT(v string) predicate.LoginPolicy {
+	return predicate.LoginPolicy(sql.FieldLT(FieldReason, v))
+}
+
+// ReasonLTE applies the LTE predicate on the "reason" field.
+func ReasonLTE(v string) predicate.LoginPolicy {
+	return predicate.LoginPolicy(sql.FieldLTE(FieldReason, v))
+}
+
+// ReasonContains applies the Contains predicate on the "reason" field.
+func ReasonContains(v string) predicate.LoginPolicy {
+	return predicate.LoginPolicy(sql.FieldContains(FieldReason, v))
+}
+
+// ReasonHasPrefix applies the HasPrefix predicate on the "reason" field.
+func ReasonHasPrefix(v string) predicate.LoginPolicy {
+	return predicate.LoginPolicy(sql.FieldHasPrefix(FieldReason, v))
+}
+
+// ReasonHasSuffix applies the HasSuffix predicate on the "reason" field.
+func ReasonHasSuffix(v string) predicate.LoginPolicy {
+	return predicate.LoginPolicy(sql.FieldHasSuffix(FieldReason, v))
+}
+
+// ReasonIsNil applies the IsNil predicate on the "reason" field.
+func ReasonIsNil() predicate.LoginPolicy {
+	return predicate.LoginPolicy(sql.FieldIsNull(FieldReason))
+}
+
+// ReasonNotNil applies the NotNil predicate on the "reason" field.
+func ReasonNotNil() predicate.LoginPolicy {
+	return predicate.LoginPolicy(sql.FieldNotNull(FieldReason))
+}
+
+// ReasonEqualFold applies the EqualFold predicate on the "reason" field.
+func ReasonEqualFold(v string) predicate.LoginPolicy {
+	return predicate.LoginPolicy(sql.FieldEqualFold(FieldReason, v))
+}
+
+// ReasonContainsFold applies the ContainsFold predicate on the "reason" field.
+func ReasonContainsFold(v string) predicate.LoginPolicy {
+	return predicate.LoginPolicy(sql.FieldContainsFold(FieldReason, v))
 }
 
 // TypeEQ applies the EQ predicate on the "type" field.
@@ -639,81 +684,6 @@ func TypeNotNil() predicate.LoginPolicy {
 	return predicate.LoginPolicy(sql.FieldNotNull(FieldType))
 }
 
-// ConfigEQ applies the EQ predicate on the "config" field.
-func ConfigEQ(v string) predicate.LoginPolicy {
-	return predicate.LoginPolicy(sql.FieldEQ(FieldConfig, v))
-}
-
-// ConfigNEQ applies the NEQ predicate on the "config" field.
-func ConfigNEQ(v string) predicate.LoginPolicy {
-	return predicate.LoginPolicy(sql.FieldNEQ(FieldConfig, v))
-}
-
-// ConfigIn applies the In predicate on the "config" field.
-func ConfigIn(vs ...string) predicate.LoginPolicy {
-	return predicate.LoginPolicy(sql.FieldIn(FieldConfig, vs...))
-}
-
-// ConfigNotIn applies the NotIn predicate on the "config" field.
-func ConfigNotIn(vs ...string) predicate.LoginPolicy {
-	return predicate.LoginPolicy(sql.FieldNotIn(FieldConfig, vs...))
-}
-
-// ConfigGT applies the GT predicate on the "config" field.
-func ConfigGT(v string) predicate.LoginPolicy {
-	return predicate.LoginPolicy(sql.FieldGT(FieldConfig, v))
-}
-
-// ConfigGTE applies the GTE predicate on the "config" field.
-func ConfigGTE(v string) predicate.LoginPolicy {
-	return predicate.LoginPolicy(sql.FieldGTE(FieldConfig, v))
-}
-
-// ConfigLT applies the LT predicate on the "config" field.
-func ConfigLT(v string) predicate.LoginPolicy {
-	return predicate.LoginPolicy(sql.FieldLT(FieldConfig, v))
-}
-
-// ConfigLTE applies the LTE predicate on the "config" field.
-func ConfigLTE(v string) predicate.LoginPolicy {
-	return predicate.LoginPolicy(sql.FieldLTE(FieldConfig, v))
-}
-
-// ConfigContains applies the Contains predicate on the "config" field.
-func ConfigContains(v string) predicate.LoginPolicy {
-	return predicate.LoginPolicy(sql.FieldContains(FieldConfig, v))
-}
-
-// ConfigHasPrefix applies the HasPrefix predicate on the "config" field.
-func ConfigHasPrefix(v string) predicate.LoginPolicy {
-	return predicate.LoginPolicy(sql.FieldHasPrefix(FieldConfig, v))
-}
-
-// ConfigHasSuffix applies the HasSuffix predicate on the "config" field.
-func ConfigHasSuffix(v string) predicate.LoginPolicy {
-	return predicate.LoginPolicy(sql.FieldHasSuffix(FieldConfig, v))
-}
-
-// ConfigIsNil applies the IsNil predicate on the "config" field.
-func ConfigIsNil() predicate.LoginPolicy {
-	return predicate.LoginPolicy(sql.FieldIsNull(FieldConfig))
-}
-
-// ConfigNotNil applies the NotNil predicate on the "config" field.
-func ConfigNotNil() predicate.LoginPolicy {
-	return predicate.LoginPolicy(sql.FieldNotNull(FieldConfig))
-}
-
-// ConfigEqualFold applies the EqualFold predicate on the "config" field.
-func ConfigEqualFold(v string) predicate.LoginPolicy {
-	return predicate.LoginPolicy(sql.FieldEqualFold(FieldConfig, v))
-}
-
-// ConfigContainsFold applies the ContainsFold predicate on the "config" field.
-func ConfigContainsFold(v string) predicate.LoginPolicy {
-	return predicate.LoginPolicy(sql.FieldContainsFold(FieldConfig, v))
-}
-
 // MethodEQ applies the EQ predicate on the "method" field.
 func MethodEQ(v Method) predicate.LoginPolicy {
 	return predicate.LoginPolicy(sql.FieldEQ(FieldMethod, v))
@@ -742,26 +712,6 @@ func MethodIsNil() predicate.LoginPolicy {
 // MethodNotNil applies the NotNil predicate on the "method" field.
 func MethodNotNil() predicate.LoginPolicy {
 	return predicate.LoginPolicy(sql.FieldNotNull(FieldMethod))
-}
-
-// EnableEQ applies the EQ predicate on the "enable" field.
-func EnableEQ(v bool) predicate.LoginPolicy {
-	return predicate.LoginPolicy(sql.FieldEQ(FieldEnable, v))
-}
-
-// EnableNEQ applies the NEQ predicate on the "enable" field.
-func EnableNEQ(v bool) predicate.LoginPolicy {
-	return predicate.LoginPolicy(sql.FieldNEQ(FieldEnable, v))
-}
-
-// EnableIsNil applies the IsNil predicate on the "enable" field.
-func EnableIsNil() predicate.LoginPolicy {
-	return predicate.LoginPolicy(sql.FieldIsNull(FieldEnable))
-}
-
-// EnableNotNil applies the NotNil predicate on the "enable" field.
-func EnableNotNil() predicate.LoginPolicy {
-	return predicate.LoginPolicy(sql.FieldNotNull(FieldEnable))
 }
 
 // And groups predicates with the AND operator between them.

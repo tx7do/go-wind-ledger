@@ -8,7 +8,6 @@ import (
 	"fmt"
 	"go-wind-ledger/app/core/service/internal/data/ent/permissionauditlog"
 	"go-wind-ledger/app/core/service/internal/data/ent/predicate"
-	"time"
 
 	"entgo.io/ent/dialect/sql"
 	"entgo.io/ent/dialect/sql/sqlgraph"
@@ -26,46 +25,6 @@ type PermissionAuditLogUpdate struct {
 // Where appends a list predicates to the PermissionAuditLogUpdate builder.
 func (_u *PermissionAuditLogUpdate) Where(ps ...predicate.PermissionAuditLog) *PermissionAuditLogUpdate {
 	_u.mutation.Where(ps...)
-	return _u
-}
-
-// SetUpdatedAt sets the "updated_at" field.
-func (_u *PermissionAuditLogUpdate) SetUpdatedAt(v time.Time) *PermissionAuditLogUpdate {
-	_u.mutation.SetUpdatedAt(v)
-	return _u
-}
-
-// SetNillableUpdatedAt sets the "updated_at" field if the given value is not nil.
-func (_u *PermissionAuditLogUpdate) SetNillableUpdatedAt(v *time.Time) *PermissionAuditLogUpdate {
-	if v != nil {
-		_u.SetUpdatedAt(*v)
-	}
-	return _u
-}
-
-// ClearUpdatedAt clears the value of the "updated_at" field.
-func (_u *PermissionAuditLogUpdate) ClearUpdatedAt() *PermissionAuditLogUpdate {
-	_u.mutation.ClearUpdatedAt()
-	return _u
-}
-
-// SetDeletedAt sets the "deleted_at" field.
-func (_u *PermissionAuditLogUpdate) SetDeletedAt(v time.Time) *PermissionAuditLogUpdate {
-	_u.mutation.SetDeletedAt(v)
-	return _u
-}
-
-// SetNillableDeletedAt sets the "deleted_at" field if the given value is not nil.
-func (_u *PermissionAuditLogUpdate) SetNillableDeletedAt(v *time.Time) *PermissionAuditLogUpdate {
-	if v != nil {
-		_u.SetDeletedAt(*v)
-	}
-	return _u
-}
-
-// ClearDeletedAt clears the value of the "deleted_at" field.
-func (_u *PermissionAuditLogUpdate) ClearDeletedAt() *PermissionAuditLogUpdate {
-	_u.mutation.ClearDeletedAt()
 	return _u
 }
 
@@ -96,14 +55,54 @@ func (_u *PermissionAuditLogUpdate) ClearOperatorID() *PermissionAuditLogUpdate 
 	return _u
 }
 
+// SetTargetType sets the "target_type" field.
+func (_u *PermissionAuditLogUpdate) SetTargetType(v string) *PermissionAuditLogUpdate {
+	_u.mutation.SetTargetType(v)
+	return _u
+}
+
+// SetNillableTargetType sets the "target_type" field if the given value is not nil.
+func (_u *PermissionAuditLogUpdate) SetNillableTargetType(v *string) *PermissionAuditLogUpdate {
+	if v != nil {
+		_u.SetTargetType(*v)
+	}
+	return _u
+}
+
+// ClearTargetType clears the value of the "target_type" field.
+func (_u *PermissionAuditLogUpdate) ClearTargetType() *PermissionAuditLogUpdate {
+	_u.mutation.ClearTargetType()
+	return _u
+}
+
+// SetTargetID sets the "target_id" field.
+func (_u *PermissionAuditLogUpdate) SetTargetID(v string) *PermissionAuditLogUpdate {
+	_u.mutation.SetTargetID(v)
+	return _u
+}
+
+// SetNillableTargetID sets the "target_id" field if the given value is not nil.
+func (_u *PermissionAuditLogUpdate) SetNillableTargetID(v *string) *PermissionAuditLogUpdate {
+	if v != nil {
+		_u.SetTargetID(*v)
+	}
+	return _u
+}
+
+// ClearTargetID clears the value of the "target_id" field.
+func (_u *PermissionAuditLogUpdate) ClearTargetID() *PermissionAuditLogUpdate {
+	_u.mutation.ClearTargetID()
+	return _u
+}
+
 // SetAction sets the "action" field.
-func (_u *PermissionAuditLogUpdate) SetAction(v string) *PermissionAuditLogUpdate {
+func (_u *PermissionAuditLogUpdate) SetAction(v permissionauditlog.Action) *PermissionAuditLogUpdate {
 	_u.mutation.SetAction(v)
 	return _u
 }
 
 // SetNillableAction sets the "action" field if the given value is not nil.
-func (_u *PermissionAuditLogUpdate) SetNillableAction(v *string) *PermissionAuditLogUpdate {
+func (_u *PermissionAuditLogUpdate) SetNillableAction(v *permissionauditlog.Action) *PermissionAuditLogUpdate {
 	if v != nil {
 		_u.SetAction(*v)
 	}
@@ -116,23 +115,117 @@ func (_u *PermissionAuditLogUpdate) ClearAction() *PermissionAuditLogUpdate {
 	return _u
 }
 
-// SetOperatedAt sets the "operated_at" field.
-func (_u *PermissionAuditLogUpdate) SetOperatedAt(v time.Time) *PermissionAuditLogUpdate {
-	_u.mutation.SetOperatedAt(v)
+// SetOldValue sets the "old_value" field.
+func (_u *PermissionAuditLogUpdate) SetOldValue(v string) *PermissionAuditLogUpdate {
+	_u.mutation.SetOldValue(v)
 	return _u
 }
 
-// SetNillableOperatedAt sets the "operated_at" field if the given value is not nil.
-func (_u *PermissionAuditLogUpdate) SetNillableOperatedAt(v *time.Time) *PermissionAuditLogUpdate {
+// SetNillableOldValue sets the "old_value" field if the given value is not nil.
+func (_u *PermissionAuditLogUpdate) SetNillableOldValue(v *string) *PermissionAuditLogUpdate {
 	if v != nil {
-		_u.SetOperatedAt(*v)
+		_u.SetOldValue(*v)
 	}
 	return _u
 }
 
-// ClearOperatedAt clears the value of the "operated_at" field.
-func (_u *PermissionAuditLogUpdate) ClearOperatedAt() *PermissionAuditLogUpdate {
-	_u.mutation.ClearOperatedAt()
+// ClearOldValue clears the value of the "old_value" field.
+func (_u *PermissionAuditLogUpdate) ClearOldValue() *PermissionAuditLogUpdate {
+	_u.mutation.ClearOldValue()
+	return _u
+}
+
+// SetNewValue sets the "new_value" field.
+func (_u *PermissionAuditLogUpdate) SetNewValue(v string) *PermissionAuditLogUpdate {
+	_u.mutation.SetNewValue(v)
+	return _u
+}
+
+// SetNillableNewValue sets the "new_value" field if the given value is not nil.
+func (_u *PermissionAuditLogUpdate) SetNillableNewValue(v *string) *PermissionAuditLogUpdate {
+	if v != nil {
+		_u.SetNewValue(*v)
+	}
+	return _u
+}
+
+// ClearNewValue clears the value of the "new_value" field.
+func (_u *PermissionAuditLogUpdate) ClearNewValue() *PermissionAuditLogUpdate {
+	_u.mutation.ClearNewValue()
+	return _u
+}
+
+// SetIPAddress sets the "ip_address" field.
+func (_u *PermissionAuditLogUpdate) SetIPAddress(v string) *PermissionAuditLogUpdate {
+	_u.mutation.SetIPAddress(v)
+	return _u
+}
+
+// SetNillableIPAddress sets the "ip_address" field if the given value is not nil.
+func (_u *PermissionAuditLogUpdate) SetNillableIPAddress(v *string) *PermissionAuditLogUpdate {
+	if v != nil {
+		_u.SetIPAddress(*v)
+	}
+	return _u
+}
+
+// SetRequestID sets the "request_id" field.
+func (_u *PermissionAuditLogUpdate) SetRequestID(v string) *PermissionAuditLogUpdate {
+	_u.mutation.SetRequestID(v)
+	return _u
+}
+
+// SetNillableRequestID sets the "request_id" field if the given value is not nil.
+func (_u *PermissionAuditLogUpdate) SetNillableRequestID(v *string) *PermissionAuditLogUpdate {
+	if v != nil {
+		_u.SetRequestID(*v)
+	}
+	return _u
+}
+
+// SetReason sets the "reason" field.
+func (_u *PermissionAuditLogUpdate) SetReason(v string) *PermissionAuditLogUpdate {
+	_u.mutation.SetReason(v)
+	return _u
+}
+
+// SetNillableReason sets the "reason" field if the given value is not nil.
+func (_u *PermissionAuditLogUpdate) SetNillableReason(v *string) *PermissionAuditLogUpdate {
+	if v != nil {
+		_u.SetReason(*v)
+	}
+	return _u
+}
+
+// SetLogHash sets the "log_hash" field.
+func (_u *PermissionAuditLogUpdate) SetLogHash(v string) *PermissionAuditLogUpdate {
+	_u.mutation.SetLogHash(v)
+	return _u
+}
+
+// SetNillableLogHash sets the "log_hash" field if the given value is not nil.
+func (_u *PermissionAuditLogUpdate) SetNillableLogHash(v *string) *PermissionAuditLogUpdate {
+	if v != nil {
+		_u.SetLogHash(*v)
+	}
+	return _u
+}
+
+// ClearLogHash clears the value of the "log_hash" field.
+func (_u *PermissionAuditLogUpdate) ClearLogHash() *PermissionAuditLogUpdate {
+	_u.mutation.ClearLogHash()
+	return _u
+}
+
+// SetSignature sets the "signature" field.
+func (_u *PermissionAuditLogUpdate) SetSignature(v []byte) *PermissionAuditLogUpdate {
+	_u.mutation.SetSignature(v)
+	return _u
+}
+
+// ClearSignature clears the value of the "signature" field.
+func (_u *PermissionAuditLogUpdate) ClearSignature() *PermissionAuditLogUpdate {
+	_u.mutation.ClearSignature()
 	return _u
 }
 
@@ -199,18 +292,6 @@ func (_u *PermissionAuditLogUpdate) sqlSave(ctx context.Context) (_node int, err
 	if _u.mutation.CreatedAtCleared() {
 		_spec.ClearField(permissionauditlog.FieldCreatedAt, field.TypeTime)
 	}
-	if value, ok := _u.mutation.UpdatedAt(); ok {
-		_spec.SetField(permissionauditlog.FieldUpdatedAt, field.TypeTime, value)
-	}
-	if _u.mutation.UpdatedAtCleared() {
-		_spec.ClearField(permissionauditlog.FieldUpdatedAt, field.TypeTime)
-	}
-	if value, ok := _u.mutation.DeletedAt(); ok {
-		_spec.SetField(permissionauditlog.FieldDeletedAt, field.TypeTime, value)
-	}
-	if _u.mutation.DeletedAtCleared() {
-		_spec.ClearField(permissionauditlog.FieldDeletedAt, field.TypeTime)
-	}
 	if _u.mutation.TenantIDCleared() {
 		_spec.ClearField(permissionauditlog.FieldTenantID, field.TypeUint32)
 	}
@@ -223,17 +304,56 @@ func (_u *PermissionAuditLogUpdate) sqlSave(ctx context.Context) (_node int, err
 	if _u.mutation.OperatorIDCleared() {
 		_spec.ClearField(permissionauditlog.FieldOperatorID, field.TypeUint32)
 	}
+	if value, ok := _u.mutation.TargetType(); ok {
+		_spec.SetField(permissionauditlog.FieldTargetType, field.TypeString, value)
+	}
+	if _u.mutation.TargetTypeCleared() {
+		_spec.ClearField(permissionauditlog.FieldTargetType, field.TypeString)
+	}
+	if value, ok := _u.mutation.TargetID(); ok {
+		_spec.SetField(permissionauditlog.FieldTargetID, field.TypeString, value)
+	}
+	if _u.mutation.TargetIDCleared() {
+		_spec.ClearField(permissionauditlog.FieldTargetID, field.TypeString)
+	}
 	if value, ok := _u.mutation.Action(); ok {
-		_spec.SetField(permissionauditlog.FieldAction, field.TypeString, value)
+		_spec.SetField(permissionauditlog.FieldAction, field.TypeEnum, value)
 	}
 	if _u.mutation.ActionCleared() {
-		_spec.ClearField(permissionauditlog.FieldAction, field.TypeString)
+		_spec.ClearField(permissionauditlog.FieldAction, field.TypeEnum)
 	}
-	if value, ok := _u.mutation.OperatedAt(); ok {
-		_spec.SetField(permissionauditlog.FieldOperatedAt, field.TypeTime, value)
+	if value, ok := _u.mutation.OldValue(); ok {
+		_spec.SetField(permissionauditlog.FieldOldValue, field.TypeString, value)
 	}
-	if _u.mutation.OperatedAtCleared() {
-		_spec.ClearField(permissionauditlog.FieldOperatedAt, field.TypeTime)
+	if _u.mutation.OldValueCleared() {
+		_spec.ClearField(permissionauditlog.FieldOldValue, field.TypeString)
+	}
+	if value, ok := _u.mutation.NewValue(); ok {
+		_spec.SetField(permissionauditlog.FieldNewValue, field.TypeString, value)
+	}
+	if _u.mutation.NewValueCleared() {
+		_spec.ClearField(permissionauditlog.FieldNewValue, field.TypeString)
+	}
+	if value, ok := _u.mutation.IPAddress(); ok {
+		_spec.SetField(permissionauditlog.FieldIPAddress, field.TypeString, value)
+	}
+	if value, ok := _u.mutation.RequestID(); ok {
+		_spec.SetField(permissionauditlog.FieldRequestID, field.TypeString, value)
+	}
+	if value, ok := _u.mutation.Reason(); ok {
+		_spec.SetField(permissionauditlog.FieldReason, field.TypeString, value)
+	}
+	if value, ok := _u.mutation.LogHash(); ok {
+		_spec.SetField(permissionauditlog.FieldLogHash, field.TypeString, value)
+	}
+	if _u.mutation.LogHashCleared() {
+		_spec.ClearField(permissionauditlog.FieldLogHash, field.TypeString)
+	}
+	if value, ok := _u.mutation.Signature(); ok {
+		_spec.SetField(permissionauditlog.FieldSignature, field.TypeBytes, value)
+	}
+	if _u.mutation.SignatureCleared() {
+		_spec.ClearField(permissionauditlog.FieldSignature, field.TypeBytes)
 	}
 	_spec.AddModifiers(_u.modifiers...)
 	if _node, err = sqlgraph.UpdateNodes(ctx, _u.driver, _spec); err != nil {
@@ -255,46 +375,6 @@ type PermissionAuditLogUpdateOne struct {
 	hooks     []Hook
 	mutation  *PermissionAuditLogMutation
 	modifiers []func(*sql.UpdateBuilder)
-}
-
-// SetUpdatedAt sets the "updated_at" field.
-func (_u *PermissionAuditLogUpdateOne) SetUpdatedAt(v time.Time) *PermissionAuditLogUpdateOne {
-	_u.mutation.SetUpdatedAt(v)
-	return _u
-}
-
-// SetNillableUpdatedAt sets the "updated_at" field if the given value is not nil.
-func (_u *PermissionAuditLogUpdateOne) SetNillableUpdatedAt(v *time.Time) *PermissionAuditLogUpdateOne {
-	if v != nil {
-		_u.SetUpdatedAt(*v)
-	}
-	return _u
-}
-
-// ClearUpdatedAt clears the value of the "updated_at" field.
-func (_u *PermissionAuditLogUpdateOne) ClearUpdatedAt() *PermissionAuditLogUpdateOne {
-	_u.mutation.ClearUpdatedAt()
-	return _u
-}
-
-// SetDeletedAt sets the "deleted_at" field.
-func (_u *PermissionAuditLogUpdateOne) SetDeletedAt(v time.Time) *PermissionAuditLogUpdateOne {
-	_u.mutation.SetDeletedAt(v)
-	return _u
-}
-
-// SetNillableDeletedAt sets the "deleted_at" field if the given value is not nil.
-func (_u *PermissionAuditLogUpdateOne) SetNillableDeletedAt(v *time.Time) *PermissionAuditLogUpdateOne {
-	if v != nil {
-		_u.SetDeletedAt(*v)
-	}
-	return _u
-}
-
-// ClearDeletedAt clears the value of the "deleted_at" field.
-func (_u *PermissionAuditLogUpdateOne) ClearDeletedAt() *PermissionAuditLogUpdateOne {
-	_u.mutation.ClearDeletedAt()
-	return _u
 }
 
 // SetOperatorID sets the "operator_id" field.
@@ -324,14 +404,54 @@ func (_u *PermissionAuditLogUpdateOne) ClearOperatorID() *PermissionAuditLogUpda
 	return _u
 }
 
+// SetTargetType sets the "target_type" field.
+func (_u *PermissionAuditLogUpdateOne) SetTargetType(v string) *PermissionAuditLogUpdateOne {
+	_u.mutation.SetTargetType(v)
+	return _u
+}
+
+// SetNillableTargetType sets the "target_type" field if the given value is not nil.
+func (_u *PermissionAuditLogUpdateOne) SetNillableTargetType(v *string) *PermissionAuditLogUpdateOne {
+	if v != nil {
+		_u.SetTargetType(*v)
+	}
+	return _u
+}
+
+// ClearTargetType clears the value of the "target_type" field.
+func (_u *PermissionAuditLogUpdateOne) ClearTargetType() *PermissionAuditLogUpdateOne {
+	_u.mutation.ClearTargetType()
+	return _u
+}
+
+// SetTargetID sets the "target_id" field.
+func (_u *PermissionAuditLogUpdateOne) SetTargetID(v string) *PermissionAuditLogUpdateOne {
+	_u.mutation.SetTargetID(v)
+	return _u
+}
+
+// SetNillableTargetID sets the "target_id" field if the given value is not nil.
+func (_u *PermissionAuditLogUpdateOne) SetNillableTargetID(v *string) *PermissionAuditLogUpdateOne {
+	if v != nil {
+		_u.SetTargetID(*v)
+	}
+	return _u
+}
+
+// ClearTargetID clears the value of the "target_id" field.
+func (_u *PermissionAuditLogUpdateOne) ClearTargetID() *PermissionAuditLogUpdateOne {
+	_u.mutation.ClearTargetID()
+	return _u
+}
+
 // SetAction sets the "action" field.
-func (_u *PermissionAuditLogUpdateOne) SetAction(v string) *PermissionAuditLogUpdateOne {
+func (_u *PermissionAuditLogUpdateOne) SetAction(v permissionauditlog.Action) *PermissionAuditLogUpdateOne {
 	_u.mutation.SetAction(v)
 	return _u
 }
 
 // SetNillableAction sets the "action" field if the given value is not nil.
-func (_u *PermissionAuditLogUpdateOne) SetNillableAction(v *string) *PermissionAuditLogUpdateOne {
+func (_u *PermissionAuditLogUpdateOne) SetNillableAction(v *permissionauditlog.Action) *PermissionAuditLogUpdateOne {
 	if v != nil {
 		_u.SetAction(*v)
 	}
@@ -344,23 +464,117 @@ func (_u *PermissionAuditLogUpdateOne) ClearAction() *PermissionAuditLogUpdateOn
 	return _u
 }
 
-// SetOperatedAt sets the "operated_at" field.
-func (_u *PermissionAuditLogUpdateOne) SetOperatedAt(v time.Time) *PermissionAuditLogUpdateOne {
-	_u.mutation.SetOperatedAt(v)
+// SetOldValue sets the "old_value" field.
+func (_u *PermissionAuditLogUpdateOne) SetOldValue(v string) *PermissionAuditLogUpdateOne {
+	_u.mutation.SetOldValue(v)
 	return _u
 }
 
-// SetNillableOperatedAt sets the "operated_at" field if the given value is not nil.
-func (_u *PermissionAuditLogUpdateOne) SetNillableOperatedAt(v *time.Time) *PermissionAuditLogUpdateOne {
+// SetNillableOldValue sets the "old_value" field if the given value is not nil.
+func (_u *PermissionAuditLogUpdateOne) SetNillableOldValue(v *string) *PermissionAuditLogUpdateOne {
 	if v != nil {
-		_u.SetOperatedAt(*v)
+		_u.SetOldValue(*v)
 	}
 	return _u
 }
 
-// ClearOperatedAt clears the value of the "operated_at" field.
-func (_u *PermissionAuditLogUpdateOne) ClearOperatedAt() *PermissionAuditLogUpdateOne {
-	_u.mutation.ClearOperatedAt()
+// ClearOldValue clears the value of the "old_value" field.
+func (_u *PermissionAuditLogUpdateOne) ClearOldValue() *PermissionAuditLogUpdateOne {
+	_u.mutation.ClearOldValue()
+	return _u
+}
+
+// SetNewValue sets the "new_value" field.
+func (_u *PermissionAuditLogUpdateOne) SetNewValue(v string) *PermissionAuditLogUpdateOne {
+	_u.mutation.SetNewValue(v)
+	return _u
+}
+
+// SetNillableNewValue sets the "new_value" field if the given value is not nil.
+func (_u *PermissionAuditLogUpdateOne) SetNillableNewValue(v *string) *PermissionAuditLogUpdateOne {
+	if v != nil {
+		_u.SetNewValue(*v)
+	}
+	return _u
+}
+
+// ClearNewValue clears the value of the "new_value" field.
+func (_u *PermissionAuditLogUpdateOne) ClearNewValue() *PermissionAuditLogUpdateOne {
+	_u.mutation.ClearNewValue()
+	return _u
+}
+
+// SetIPAddress sets the "ip_address" field.
+func (_u *PermissionAuditLogUpdateOne) SetIPAddress(v string) *PermissionAuditLogUpdateOne {
+	_u.mutation.SetIPAddress(v)
+	return _u
+}
+
+// SetNillableIPAddress sets the "ip_address" field if the given value is not nil.
+func (_u *PermissionAuditLogUpdateOne) SetNillableIPAddress(v *string) *PermissionAuditLogUpdateOne {
+	if v != nil {
+		_u.SetIPAddress(*v)
+	}
+	return _u
+}
+
+// SetRequestID sets the "request_id" field.
+func (_u *PermissionAuditLogUpdateOne) SetRequestID(v string) *PermissionAuditLogUpdateOne {
+	_u.mutation.SetRequestID(v)
+	return _u
+}
+
+// SetNillableRequestID sets the "request_id" field if the given value is not nil.
+func (_u *PermissionAuditLogUpdateOne) SetNillableRequestID(v *string) *PermissionAuditLogUpdateOne {
+	if v != nil {
+		_u.SetRequestID(*v)
+	}
+	return _u
+}
+
+// SetReason sets the "reason" field.
+func (_u *PermissionAuditLogUpdateOne) SetReason(v string) *PermissionAuditLogUpdateOne {
+	_u.mutation.SetReason(v)
+	return _u
+}
+
+// SetNillableReason sets the "reason" field if the given value is not nil.
+func (_u *PermissionAuditLogUpdateOne) SetNillableReason(v *string) *PermissionAuditLogUpdateOne {
+	if v != nil {
+		_u.SetReason(*v)
+	}
+	return _u
+}
+
+// SetLogHash sets the "log_hash" field.
+func (_u *PermissionAuditLogUpdateOne) SetLogHash(v string) *PermissionAuditLogUpdateOne {
+	_u.mutation.SetLogHash(v)
+	return _u
+}
+
+// SetNillableLogHash sets the "log_hash" field if the given value is not nil.
+func (_u *PermissionAuditLogUpdateOne) SetNillableLogHash(v *string) *PermissionAuditLogUpdateOne {
+	if v != nil {
+		_u.SetLogHash(*v)
+	}
+	return _u
+}
+
+// ClearLogHash clears the value of the "log_hash" field.
+func (_u *PermissionAuditLogUpdateOne) ClearLogHash() *PermissionAuditLogUpdateOne {
+	_u.mutation.ClearLogHash()
+	return _u
+}
+
+// SetSignature sets the "signature" field.
+func (_u *PermissionAuditLogUpdateOne) SetSignature(v []byte) *PermissionAuditLogUpdateOne {
+	_u.mutation.SetSignature(v)
+	return _u
+}
+
+// ClearSignature clears the value of the "signature" field.
+func (_u *PermissionAuditLogUpdateOne) ClearSignature() *PermissionAuditLogUpdateOne {
+	_u.mutation.ClearSignature()
 	return _u
 }
 
@@ -457,18 +671,6 @@ func (_u *PermissionAuditLogUpdateOne) sqlSave(ctx context.Context) (_node *Perm
 	if _u.mutation.CreatedAtCleared() {
 		_spec.ClearField(permissionauditlog.FieldCreatedAt, field.TypeTime)
 	}
-	if value, ok := _u.mutation.UpdatedAt(); ok {
-		_spec.SetField(permissionauditlog.FieldUpdatedAt, field.TypeTime, value)
-	}
-	if _u.mutation.UpdatedAtCleared() {
-		_spec.ClearField(permissionauditlog.FieldUpdatedAt, field.TypeTime)
-	}
-	if value, ok := _u.mutation.DeletedAt(); ok {
-		_spec.SetField(permissionauditlog.FieldDeletedAt, field.TypeTime, value)
-	}
-	if _u.mutation.DeletedAtCleared() {
-		_spec.ClearField(permissionauditlog.FieldDeletedAt, field.TypeTime)
-	}
 	if _u.mutation.TenantIDCleared() {
 		_spec.ClearField(permissionauditlog.FieldTenantID, field.TypeUint32)
 	}
@@ -481,17 +683,56 @@ func (_u *PermissionAuditLogUpdateOne) sqlSave(ctx context.Context) (_node *Perm
 	if _u.mutation.OperatorIDCleared() {
 		_spec.ClearField(permissionauditlog.FieldOperatorID, field.TypeUint32)
 	}
+	if value, ok := _u.mutation.TargetType(); ok {
+		_spec.SetField(permissionauditlog.FieldTargetType, field.TypeString, value)
+	}
+	if _u.mutation.TargetTypeCleared() {
+		_spec.ClearField(permissionauditlog.FieldTargetType, field.TypeString)
+	}
+	if value, ok := _u.mutation.TargetID(); ok {
+		_spec.SetField(permissionauditlog.FieldTargetID, field.TypeString, value)
+	}
+	if _u.mutation.TargetIDCleared() {
+		_spec.ClearField(permissionauditlog.FieldTargetID, field.TypeString)
+	}
 	if value, ok := _u.mutation.Action(); ok {
-		_spec.SetField(permissionauditlog.FieldAction, field.TypeString, value)
+		_spec.SetField(permissionauditlog.FieldAction, field.TypeEnum, value)
 	}
 	if _u.mutation.ActionCleared() {
-		_spec.ClearField(permissionauditlog.FieldAction, field.TypeString)
+		_spec.ClearField(permissionauditlog.FieldAction, field.TypeEnum)
 	}
-	if value, ok := _u.mutation.OperatedAt(); ok {
-		_spec.SetField(permissionauditlog.FieldOperatedAt, field.TypeTime, value)
+	if value, ok := _u.mutation.OldValue(); ok {
+		_spec.SetField(permissionauditlog.FieldOldValue, field.TypeString, value)
 	}
-	if _u.mutation.OperatedAtCleared() {
-		_spec.ClearField(permissionauditlog.FieldOperatedAt, field.TypeTime)
+	if _u.mutation.OldValueCleared() {
+		_spec.ClearField(permissionauditlog.FieldOldValue, field.TypeString)
+	}
+	if value, ok := _u.mutation.NewValue(); ok {
+		_spec.SetField(permissionauditlog.FieldNewValue, field.TypeString, value)
+	}
+	if _u.mutation.NewValueCleared() {
+		_spec.ClearField(permissionauditlog.FieldNewValue, field.TypeString)
+	}
+	if value, ok := _u.mutation.IPAddress(); ok {
+		_spec.SetField(permissionauditlog.FieldIPAddress, field.TypeString, value)
+	}
+	if value, ok := _u.mutation.RequestID(); ok {
+		_spec.SetField(permissionauditlog.FieldRequestID, field.TypeString, value)
+	}
+	if value, ok := _u.mutation.Reason(); ok {
+		_spec.SetField(permissionauditlog.FieldReason, field.TypeString, value)
+	}
+	if value, ok := _u.mutation.LogHash(); ok {
+		_spec.SetField(permissionauditlog.FieldLogHash, field.TypeString, value)
+	}
+	if _u.mutation.LogHashCleared() {
+		_spec.ClearField(permissionauditlog.FieldLogHash, field.TypeString)
+	}
+	if value, ok := _u.mutation.Signature(); ok {
+		_spec.SetField(permissionauditlog.FieldSignature, field.TypeBytes, value)
+	}
+	if _u.mutation.SignatureCleared() {
+		_spec.ClearField(permissionauditlog.FieldSignature, field.TypeBytes)
 	}
 	_spec.AddModifiers(_u.modifiers...)
 	_node = &PermissionAuditLog{config: _u.config}

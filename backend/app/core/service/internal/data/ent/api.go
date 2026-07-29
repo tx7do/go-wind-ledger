@@ -12,7 +12,7 @@ import (
 	"entgo.io/ent/dialect/sql"
 )
 
-// Api is the model entity for the Api schema.
+// API资源表
 type Api struct {
 	config `json:"-"`
 	// ID of the ent.
@@ -30,15 +30,21 @@ type Api struct {
 	UpdatedBy *uint32 `json:"updated_by,omitempty"`
 	// 删除者ID
 	DeletedBy *uint32 `json:"deleted_by,omitempty"`
-	// 租户ID
-	TenantID *uint32 `json:"tenant_id,omitempty"`
-	// Path holds the value of the "path" field.
-	Path *string `json:"path,omitempty"`
-	// Method holds the value of the "method" field.
-	Method *string `json:"method,omitempty"`
-	// Description holds the value of the "description" field.
+	// 状态
+	Status *api.Status `json:"status,omitempty"`
+	// 描述
 	Description *string `json:"description,omitempty"`
-	// Scope holds the value of the "scope" field.
+	// 所属业务模块
+	Module *string `json:"module,omitempty"`
+	// 业务模块描述
+	ModuleDescription *string `json:"module_description,omitempty"`
+	// 接口操作名
+	Operation *string `json:"operation,omitempty"`
+	// 接口路径
+	Path *string `json:"path,omitempty"`
+	// 请求方法
+	Method *string `json:"method,omitempty"`
+	// 作用域
 	Scope        *api.Scope `json:"scope,omitempty"`
 	selectValues sql.SelectValues
 }
@@ -48,9 +54,9 @@ func (*Api) scanValues(columns []string) ([]any, error) {
 	values := make([]any, len(columns))
 	for i := range columns {
 		switch columns[i] {
-		case api.FieldID, api.FieldCreatedBy, api.FieldUpdatedBy, api.FieldDeletedBy, api.FieldTenantID:
+		case api.FieldID, api.FieldCreatedBy, api.FieldUpdatedBy, api.FieldDeletedBy:
 			values[i] = new(sql.NullInt64)
-		case api.FieldPath, api.FieldMethod, api.FieldDescription, api.FieldScope:
+		case api.FieldStatus, api.FieldDescription, api.FieldModule, api.FieldModuleDescription, api.FieldOperation, api.FieldPath, api.FieldMethod, api.FieldScope:
 			values[i] = new(sql.NullString)
 		case api.FieldCreatedAt, api.FieldUpdatedAt, api.FieldDeletedAt:
 			values[i] = new(sql.NullTime)
@@ -117,12 +123,40 @@ func (_m *Api) assignValues(columns []string, values []any) error {
 				_m.DeletedBy = new(uint32)
 				*_m.DeletedBy = uint32(value.Int64)
 			}
-		case api.FieldTenantID:
-			if value, ok := values[i].(*sql.NullInt64); !ok {
-				return fmt.Errorf("unexpected type %T for field tenant_id", values[i])
+		case api.FieldStatus:
+			if value, ok := values[i].(*sql.NullString); !ok {
+				return fmt.Errorf("unexpected type %T for field status", values[i])
 			} else if value.Valid {
-				_m.TenantID = new(uint32)
-				*_m.TenantID = uint32(value.Int64)
+				_m.Status = new(api.Status)
+				*_m.Status = api.Status(value.String)
+			}
+		case api.FieldDescription:
+			if value, ok := values[i].(*sql.NullString); !ok {
+				return fmt.Errorf("unexpected type %T for field description", values[i])
+			} else if value.Valid {
+				_m.Description = new(string)
+				*_m.Description = value.String
+			}
+		case api.FieldModule:
+			if value, ok := values[i].(*sql.NullString); !ok {
+				return fmt.Errorf("unexpected type %T for field module", values[i])
+			} else if value.Valid {
+				_m.Module = new(string)
+				*_m.Module = value.String
+			}
+		case api.FieldModuleDescription:
+			if value, ok := values[i].(*sql.NullString); !ok {
+				return fmt.Errorf("unexpected type %T for field module_description", values[i])
+			} else if value.Valid {
+				_m.ModuleDescription = new(string)
+				*_m.ModuleDescription = value.String
+			}
+		case api.FieldOperation:
+			if value, ok := values[i].(*sql.NullString); !ok {
+				return fmt.Errorf("unexpected type %T for field operation", values[i])
+			} else if value.Valid {
+				_m.Operation = new(string)
+				*_m.Operation = value.String
 			}
 		case api.FieldPath:
 			if value, ok := values[i].(*sql.NullString); !ok {
@@ -137,13 +171,6 @@ func (_m *Api) assignValues(columns []string, values []any) error {
 			} else if value.Valid {
 				_m.Method = new(string)
 				*_m.Method = value.String
-			}
-		case api.FieldDescription:
-			if value, ok := values[i].(*sql.NullString); !ok {
-				return fmt.Errorf("unexpected type %T for field description", values[i])
-			} else if value.Valid {
-				_m.Description = new(string)
-				*_m.Description = value.String
 			}
 		case api.FieldScope:
 			if value, ok := values[i].(*sql.NullString); !ok {
@@ -218,9 +245,29 @@ func (_m *Api) String() string {
 		builder.WriteString(fmt.Sprintf("%v", *v))
 	}
 	builder.WriteString(", ")
-	if v := _m.TenantID; v != nil {
-		builder.WriteString("tenant_id=")
+	if v := _m.Status; v != nil {
+		builder.WriteString("status=")
 		builder.WriteString(fmt.Sprintf("%v", *v))
+	}
+	builder.WriteString(", ")
+	if v := _m.Description; v != nil {
+		builder.WriteString("description=")
+		builder.WriteString(*v)
+	}
+	builder.WriteString(", ")
+	if v := _m.Module; v != nil {
+		builder.WriteString("module=")
+		builder.WriteString(*v)
+	}
+	builder.WriteString(", ")
+	if v := _m.ModuleDescription; v != nil {
+		builder.WriteString("module_description=")
+		builder.WriteString(*v)
+	}
+	builder.WriteString(", ")
+	if v := _m.Operation; v != nil {
+		builder.WriteString("operation=")
+		builder.WriteString(*v)
 	}
 	builder.WriteString(", ")
 	if v := _m.Path; v != nil {
@@ -230,11 +277,6 @@ func (_m *Api) String() string {
 	builder.WriteString(", ")
 	if v := _m.Method; v != nil {
 		builder.WriteString("method=")
-		builder.WriteString(*v)
-	}
-	builder.WriteString(", ")
-	if v := _m.Description; v != nil {
-		builder.WriteString("description=")
 		builder.WriteString(*v)
 	}
 	builder.WriteString(", ")

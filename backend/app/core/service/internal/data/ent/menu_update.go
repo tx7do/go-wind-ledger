@@ -6,6 +6,7 @@ import (
 	"context"
 	"errors"
 	"fmt"
+	permissionpb "go-wind-ledger/api/gen/go/permission/service/v1"
 	"go-wind-ledger/app/core/service/internal/data/ent/menu"
 	"go-wind-ledger/app/core/service/internal/data/ent/predicate"
 	"time"
@@ -204,23 +205,23 @@ func (_u *MenuUpdate) SetNillableStatus(v *menu.Status) *MenuUpdate {
 	return _u
 }
 
-// SetName sets the "name" field.
-func (_u *MenuUpdate) SetName(v string) *MenuUpdate {
-	_u.mutation.SetName(v)
+// SetType sets the "type" field.
+func (_u *MenuUpdate) SetType(v menu.Type) *MenuUpdate {
+	_u.mutation.SetType(v)
 	return _u
 }
 
-// SetNillableName sets the "name" field if the given value is not nil.
-func (_u *MenuUpdate) SetNillableName(v *string) *MenuUpdate {
+// SetNillableType sets the "type" field if the given value is not nil.
+func (_u *MenuUpdate) SetNillableType(v *menu.Type) *MenuUpdate {
 	if v != nil {
-		_u.SetName(*v)
+		_u.SetType(*v)
 	}
 	return _u
 }
 
-// ClearName clears the value of the "name" field.
-func (_u *MenuUpdate) ClearName() *MenuUpdate {
-	_u.mutation.ClearName()
+// ClearType clears the value of the "type" field.
+func (_u *MenuUpdate) ClearType() *MenuUpdate {
+	_u.mutation.ClearType()
 	return _u
 }
 
@@ -244,23 +245,63 @@ func (_u *MenuUpdate) ClearPath() *MenuUpdate {
 	return _u
 }
 
-// SetIcon sets the "icon" field.
-func (_u *MenuUpdate) SetIcon(v string) *MenuUpdate {
-	_u.mutation.SetIcon(v)
+// SetRedirect sets the "redirect" field.
+func (_u *MenuUpdate) SetRedirect(v string) *MenuUpdate {
+	_u.mutation.SetRedirect(v)
 	return _u
 }
 
-// SetNillableIcon sets the "icon" field if the given value is not nil.
-func (_u *MenuUpdate) SetNillableIcon(v *string) *MenuUpdate {
+// SetNillableRedirect sets the "redirect" field if the given value is not nil.
+func (_u *MenuUpdate) SetNillableRedirect(v *string) *MenuUpdate {
 	if v != nil {
-		_u.SetIcon(*v)
+		_u.SetRedirect(*v)
 	}
 	return _u
 }
 
-// ClearIcon clears the value of the "icon" field.
-func (_u *MenuUpdate) ClearIcon() *MenuUpdate {
-	_u.mutation.ClearIcon()
+// ClearRedirect clears the value of the "redirect" field.
+func (_u *MenuUpdate) ClearRedirect() *MenuUpdate {
+	_u.mutation.ClearRedirect()
+	return _u
+}
+
+// SetAlias sets the "alias" field.
+func (_u *MenuUpdate) SetAlias(v string) *MenuUpdate {
+	_u.mutation.SetAlias(v)
+	return _u
+}
+
+// SetNillableAlias sets the "alias" field if the given value is not nil.
+func (_u *MenuUpdate) SetNillableAlias(v *string) *MenuUpdate {
+	if v != nil {
+		_u.SetAlias(*v)
+	}
+	return _u
+}
+
+// ClearAlias clears the value of the "alias" field.
+func (_u *MenuUpdate) ClearAlias() *MenuUpdate {
+	_u.mutation.ClearAlias()
+	return _u
+}
+
+// SetName sets the "name" field.
+func (_u *MenuUpdate) SetName(v string) *MenuUpdate {
+	_u.mutation.SetName(v)
+	return _u
+}
+
+// SetNillableName sets the "name" field if the given value is not nil.
+func (_u *MenuUpdate) SetNillableName(v *string) *MenuUpdate {
+	if v != nil {
+		_u.SetName(*v)
+	}
+	return _u
+}
+
+// ClearName clears the value of the "name" field.
+func (_u *MenuUpdate) ClearName() *MenuUpdate {
+	_u.mutation.ClearName()
 	return _u
 }
 
@@ -284,30 +325,15 @@ func (_u *MenuUpdate) ClearComponent() *MenuUpdate {
 	return _u
 }
 
-// SetSortOrder sets the "sort_order" field.
-func (_u *MenuUpdate) SetSortOrder(v uint32) *MenuUpdate {
-	_u.mutation.ResetSortOrder()
-	_u.mutation.SetSortOrder(v)
+// SetMeta sets the "meta" field.
+func (_u *MenuUpdate) SetMeta(v *permissionpb.MenuMeta) *MenuUpdate {
+	_u.mutation.SetMeta(v)
 	return _u
 }
 
-// SetNillableSortOrder sets the "sort_order" field if the given value is not nil.
-func (_u *MenuUpdate) SetNillableSortOrder(v *uint32) *MenuUpdate {
-	if v != nil {
-		_u.SetSortOrder(*v)
-	}
-	return _u
-}
-
-// AddSortOrder adds value to the "sort_order" field.
-func (_u *MenuUpdate) AddSortOrder(v int32) *MenuUpdate {
-	_u.mutation.AddSortOrder(v)
-	return _u
-}
-
-// ClearSortOrder clears the value of the "sort_order" field.
-func (_u *MenuUpdate) ClearSortOrder() *MenuUpdate {
-	_u.mutation.ClearSortOrder()
+// ClearMeta clears the value of the "meta" field.
+func (_u *MenuUpdate) ClearMeta() *MenuUpdate {
+	_u.mutation.ClearMeta()
 	return _u
 }
 
@@ -397,24 +423,14 @@ func (_u *MenuUpdate) check() error {
 			return &ValidationError{Name: "status", err: fmt.Errorf(`ent: validator failed for field "Menu.status": %w`, err)}
 		}
 	}
-	if v, ok := _u.mutation.Name(); ok {
-		if err := menu.NameValidator(v); err != nil {
-			return &ValidationError{Name: "name", err: fmt.Errorf(`ent: validator failed for field "Menu.name": %w`, err)}
+	if v, ok := _u.mutation.GetType(); ok {
+		if err := menu.TypeValidator(v); err != nil {
+			return &ValidationError{Name: "type", err: fmt.Errorf(`ent: validator failed for field "Menu.type": %w`, err)}
 		}
 	}
-	if v, ok := _u.mutation.Path(); ok {
-		if err := menu.PathValidator(v); err != nil {
-			return &ValidationError{Name: "path", err: fmt.Errorf(`ent: validator failed for field "Menu.path": %w`, err)}
-		}
-	}
-	if v, ok := _u.mutation.Icon(); ok {
-		if err := menu.IconValidator(v); err != nil {
-			return &ValidationError{Name: "icon", err: fmt.Errorf(`ent: validator failed for field "Menu.icon": %w`, err)}
-		}
-	}
-	if v, ok := _u.mutation.Component(); ok {
-		if err := menu.ComponentValidator(v); err != nil {
-			return &ValidationError{Name: "component", err: fmt.Errorf(`ent: validator failed for field "Menu.component": %w`, err)}
+	if v, ok := _u.mutation.Meta(); ok {
+		if err := v.Validate(); err != nil {
+			return &ValidationError{Name: "meta", err: fmt.Errorf(`ent: validator failed for field "Menu.meta": %w`, err)}
 		}
 	}
 	return nil
@@ -489,11 +505,11 @@ func (_u *MenuUpdate) sqlSave(ctx context.Context) (_node int, err error) {
 	if value, ok := _u.mutation.Status(); ok {
 		_spec.SetField(menu.FieldStatus, field.TypeEnum, value)
 	}
-	if value, ok := _u.mutation.Name(); ok {
-		_spec.SetField(menu.FieldName, field.TypeString, value)
+	if value, ok := _u.mutation.GetType(); ok {
+		_spec.SetField(menu.FieldType, field.TypeEnum, value)
 	}
-	if _u.mutation.NameCleared() {
-		_spec.ClearField(menu.FieldName, field.TypeString)
+	if _u.mutation.TypeCleared() {
+		_spec.ClearField(menu.FieldType, field.TypeEnum)
 	}
 	if value, ok := _u.mutation.Path(); ok {
 		_spec.SetField(menu.FieldPath, field.TypeString, value)
@@ -501,11 +517,23 @@ func (_u *MenuUpdate) sqlSave(ctx context.Context) (_node int, err error) {
 	if _u.mutation.PathCleared() {
 		_spec.ClearField(menu.FieldPath, field.TypeString)
 	}
-	if value, ok := _u.mutation.Icon(); ok {
-		_spec.SetField(menu.FieldIcon, field.TypeString, value)
+	if value, ok := _u.mutation.Redirect(); ok {
+		_spec.SetField(menu.FieldRedirect, field.TypeString, value)
 	}
-	if _u.mutation.IconCleared() {
-		_spec.ClearField(menu.FieldIcon, field.TypeString)
+	if _u.mutation.RedirectCleared() {
+		_spec.ClearField(menu.FieldRedirect, field.TypeString)
+	}
+	if value, ok := _u.mutation.Alias(); ok {
+		_spec.SetField(menu.FieldAlias, field.TypeString, value)
+	}
+	if _u.mutation.AliasCleared() {
+		_spec.ClearField(menu.FieldAlias, field.TypeString)
+	}
+	if value, ok := _u.mutation.Name(); ok {
+		_spec.SetField(menu.FieldName, field.TypeString, value)
+	}
+	if _u.mutation.NameCleared() {
+		_spec.ClearField(menu.FieldName, field.TypeString)
 	}
 	if value, ok := _u.mutation.Component(); ok {
 		_spec.SetField(menu.FieldComponent, field.TypeString, value)
@@ -513,14 +541,11 @@ func (_u *MenuUpdate) sqlSave(ctx context.Context) (_node int, err error) {
 	if _u.mutation.ComponentCleared() {
 		_spec.ClearField(menu.FieldComponent, field.TypeString)
 	}
-	if value, ok := _u.mutation.SortOrder(); ok {
-		_spec.SetField(menu.FieldSortOrder, field.TypeUint32, value)
+	if value, ok := _u.mutation.Meta(); ok {
+		_spec.SetField(menu.FieldMeta, field.TypeJSON, value)
 	}
-	if value, ok := _u.mutation.AddedSortOrder(); ok {
-		_spec.AddField(menu.FieldSortOrder, field.TypeUint32, value)
-	}
-	if _u.mutation.SortOrderCleared() {
-		_spec.ClearField(menu.FieldSortOrder, field.TypeUint32)
+	if _u.mutation.MetaCleared() {
+		_spec.ClearField(menu.FieldMeta, field.TypeJSON)
 	}
 	if _u.mutation.ParentCleared() {
 		edge := &sqlgraph.EdgeSpec{
@@ -793,23 +818,23 @@ func (_u *MenuUpdateOne) SetNillableStatus(v *menu.Status) *MenuUpdateOne {
 	return _u
 }
 
-// SetName sets the "name" field.
-func (_u *MenuUpdateOne) SetName(v string) *MenuUpdateOne {
-	_u.mutation.SetName(v)
+// SetType sets the "type" field.
+func (_u *MenuUpdateOne) SetType(v menu.Type) *MenuUpdateOne {
+	_u.mutation.SetType(v)
 	return _u
 }
 
-// SetNillableName sets the "name" field if the given value is not nil.
-func (_u *MenuUpdateOne) SetNillableName(v *string) *MenuUpdateOne {
+// SetNillableType sets the "type" field if the given value is not nil.
+func (_u *MenuUpdateOne) SetNillableType(v *menu.Type) *MenuUpdateOne {
 	if v != nil {
-		_u.SetName(*v)
+		_u.SetType(*v)
 	}
 	return _u
 }
 
-// ClearName clears the value of the "name" field.
-func (_u *MenuUpdateOne) ClearName() *MenuUpdateOne {
-	_u.mutation.ClearName()
+// ClearType clears the value of the "type" field.
+func (_u *MenuUpdateOne) ClearType() *MenuUpdateOne {
+	_u.mutation.ClearType()
 	return _u
 }
 
@@ -833,23 +858,63 @@ func (_u *MenuUpdateOne) ClearPath() *MenuUpdateOne {
 	return _u
 }
 
-// SetIcon sets the "icon" field.
-func (_u *MenuUpdateOne) SetIcon(v string) *MenuUpdateOne {
-	_u.mutation.SetIcon(v)
+// SetRedirect sets the "redirect" field.
+func (_u *MenuUpdateOne) SetRedirect(v string) *MenuUpdateOne {
+	_u.mutation.SetRedirect(v)
 	return _u
 }
 
-// SetNillableIcon sets the "icon" field if the given value is not nil.
-func (_u *MenuUpdateOne) SetNillableIcon(v *string) *MenuUpdateOne {
+// SetNillableRedirect sets the "redirect" field if the given value is not nil.
+func (_u *MenuUpdateOne) SetNillableRedirect(v *string) *MenuUpdateOne {
 	if v != nil {
-		_u.SetIcon(*v)
+		_u.SetRedirect(*v)
 	}
 	return _u
 }
 
-// ClearIcon clears the value of the "icon" field.
-func (_u *MenuUpdateOne) ClearIcon() *MenuUpdateOne {
-	_u.mutation.ClearIcon()
+// ClearRedirect clears the value of the "redirect" field.
+func (_u *MenuUpdateOne) ClearRedirect() *MenuUpdateOne {
+	_u.mutation.ClearRedirect()
+	return _u
+}
+
+// SetAlias sets the "alias" field.
+func (_u *MenuUpdateOne) SetAlias(v string) *MenuUpdateOne {
+	_u.mutation.SetAlias(v)
+	return _u
+}
+
+// SetNillableAlias sets the "alias" field if the given value is not nil.
+func (_u *MenuUpdateOne) SetNillableAlias(v *string) *MenuUpdateOne {
+	if v != nil {
+		_u.SetAlias(*v)
+	}
+	return _u
+}
+
+// ClearAlias clears the value of the "alias" field.
+func (_u *MenuUpdateOne) ClearAlias() *MenuUpdateOne {
+	_u.mutation.ClearAlias()
+	return _u
+}
+
+// SetName sets the "name" field.
+func (_u *MenuUpdateOne) SetName(v string) *MenuUpdateOne {
+	_u.mutation.SetName(v)
+	return _u
+}
+
+// SetNillableName sets the "name" field if the given value is not nil.
+func (_u *MenuUpdateOne) SetNillableName(v *string) *MenuUpdateOne {
+	if v != nil {
+		_u.SetName(*v)
+	}
+	return _u
+}
+
+// ClearName clears the value of the "name" field.
+func (_u *MenuUpdateOne) ClearName() *MenuUpdateOne {
+	_u.mutation.ClearName()
 	return _u
 }
 
@@ -873,30 +938,15 @@ func (_u *MenuUpdateOne) ClearComponent() *MenuUpdateOne {
 	return _u
 }
 
-// SetSortOrder sets the "sort_order" field.
-func (_u *MenuUpdateOne) SetSortOrder(v uint32) *MenuUpdateOne {
-	_u.mutation.ResetSortOrder()
-	_u.mutation.SetSortOrder(v)
+// SetMeta sets the "meta" field.
+func (_u *MenuUpdateOne) SetMeta(v *permissionpb.MenuMeta) *MenuUpdateOne {
+	_u.mutation.SetMeta(v)
 	return _u
 }
 
-// SetNillableSortOrder sets the "sort_order" field if the given value is not nil.
-func (_u *MenuUpdateOne) SetNillableSortOrder(v *uint32) *MenuUpdateOne {
-	if v != nil {
-		_u.SetSortOrder(*v)
-	}
-	return _u
-}
-
-// AddSortOrder adds value to the "sort_order" field.
-func (_u *MenuUpdateOne) AddSortOrder(v int32) *MenuUpdateOne {
-	_u.mutation.AddSortOrder(v)
-	return _u
-}
-
-// ClearSortOrder clears the value of the "sort_order" field.
-func (_u *MenuUpdateOne) ClearSortOrder() *MenuUpdateOne {
-	_u.mutation.ClearSortOrder()
+// ClearMeta clears the value of the "meta" field.
+func (_u *MenuUpdateOne) ClearMeta() *MenuUpdateOne {
+	_u.mutation.ClearMeta()
 	return _u
 }
 
@@ -999,24 +1049,14 @@ func (_u *MenuUpdateOne) check() error {
 			return &ValidationError{Name: "status", err: fmt.Errorf(`ent: validator failed for field "Menu.status": %w`, err)}
 		}
 	}
-	if v, ok := _u.mutation.Name(); ok {
-		if err := menu.NameValidator(v); err != nil {
-			return &ValidationError{Name: "name", err: fmt.Errorf(`ent: validator failed for field "Menu.name": %w`, err)}
+	if v, ok := _u.mutation.GetType(); ok {
+		if err := menu.TypeValidator(v); err != nil {
+			return &ValidationError{Name: "type", err: fmt.Errorf(`ent: validator failed for field "Menu.type": %w`, err)}
 		}
 	}
-	if v, ok := _u.mutation.Path(); ok {
-		if err := menu.PathValidator(v); err != nil {
-			return &ValidationError{Name: "path", err: fmt.Errorf(`ent: validator failed for field "Menu.path": %w`, err)}
-		}
-	}
-	if v, ok := _u.mutation.Icon(); ok {
-		if err := menu.IconValidator(v); err != nil {
-			return &ValidationError{Name: "icon", err: fmt.Errorf(`ent: validator failed for field "Menu.icon": %w`, err)}
-		}
-	}
-	if v, ok := _u.mutation.Component(); ok {
-		if err := menu.ComponentValidator(v); err != nil {
-			return &ValidationError{Name: "component", err: fmt.Errorf(`ent: validator failed for field "Menu.component": %w`, err)}
+	if v, ok := _u.mutation.Meta(); ok {
+		if err := v.Validate(); err != nil {
+			return &ValidationError{Name: "meta", err: fmt.Errorf(`ent: validator failed for field "Menu.meta": %w`, err)}
 		}
 	}
 	return nil
@@ -1108,11 +1148,11 @@ func (_u *MenuUpdateOne) sqlSave(ctx context.Context) (_node *Menu, err error) {
 	if value, ok := _u.mutation.Status(); ok {
 		_spec.SetField(menu.FieldStatus, field.TypeEnum, value)
 	}
-	if value, ok := _u.mutation.Name(); ok {
-		_spec.SetField(menu.FieldName, field.TypeString, value)
+	if value, ok := _u.mutation.GetType(); ok {
+		_spec.SetField(menu.FieldType, field.TypeEnum, value)
 	}
-	if _u.mutation.NameCleared() {
-		_spec.ClearField(menu.FieldName, field.TypeString)
+	if _u.mutation.TypeCleared() {
+		_spec.ClearField(menu.FieldType, field.TypeEnum)
 	}
 	if value, ok := _u.mutation.Path(); ok {
 		_spec.SetField(menu.FieldPath, field.TypeString, value)
@@ -1120,11 +1160,23 @@ func (_u *MenuUpdateOne) sqlSave(ctx context.Context) (_node *Menu, err error) {
 	if _u.mutation.PathCleared() {
 		_spec.ClearField(menu.FieldPath, field.TypeString)
 	}
-	if value, ok := _u.mutation.Icon(); ok {
-		_spec.SetField(menu.FieldIcon, field.TypeString, value)
+	if value, ok := _u.mutation.Redirect(); ok {
+		_spec.SetField(menu.FieldRedirect, field.TypeString, value)
 	}
-	if _u.mutation.IconCleared() {
-		_spec.ClearField(menu.FieldIcon, field.TypeString)
+	if _u.mutation.RedirectCleared() {
+		_spec.ClearField(menu.FieldRedirect, field.TypeString)
+	}
+	if value, ok := _u.mutation.Alias(); ok {
+		_spec.SetField(menu.FieldAlias, field.TypeString, value)
+	}
+	if _u.mutation.AliasCleared() {
+		_spec.ClearField(menu.FieldAlias, field.TypeString)
+	}
+	if value, ok := _u.mutation.Name(); ok {
+		_spec.SetField(menu.FieldName, field.TypeString, value)
+	}
+	if _u.mutation.NameCleared() {
+		_spec.ClearField(menu.FieldName, field.TypeString)
 	}
 	if value, ok := _u.mutation.Component(); ok {
 		_spec.SetField(menu.FieldComponent, field.TypeString, value)
@@ -1132,14 +1184,11 @@ func (_u *MenuUpdateOne) sqlSave(ctx context.Context) (_node *Menu, err error) {
 	if _u.mutation.ComponentCleared() {
 		_spec.ClearField(menu.FieldComponent, field.TypeString)
 	}
-	if value, ok := _u.mutation.SortOrder(); ok {
-		_spec.SetField(menu.FieldSortOrder, field.TypeUint32, value)
+	if value, ok := _u.mutation.Meta(); ok {
+		_spec.SetField(menu.FieldMeta, field.TypeJSON, value)
 	}
-	if value, ok := _u.mutation.AddedSortOrder(); ok {
-		_spec.AddField(menu.FieldSortOrder, field.TypeUint32, value)
-	}
-	if _u.mutation.SortOrderCleared() {
-		_spec.ClearField(menu.FieldSortOrder, field.TypeUint32)
+	if _u.mutation.MetaCleared() {
+		_spec.ClearField(menu.FieldMeta, field.TypeJSON)
 	}
 	if _u.mutation.ParentCleared() {
 		edge := &sqlgraph.EdgeSpec{

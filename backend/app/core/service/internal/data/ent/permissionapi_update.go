@@ -69,6 +69,87 @@ func (_u *PermissionApiUpdate) ClearDeletedAt() *PermissionApiUpdate {
 	return _u
 }
 
+// SetCreatedBy sets the "created_by" field.
+func (_u *PermissionApiUpdate) SetCreatedBy(v uint32) *PermissionApiUpdate {
+	_u.mutation.ResetCreatedBy()
+	_u.mutation.SetCreatedBy(v)
+	return _u
+}
+
+// SetNillableCreatedBy sets the "created_by" field if the given value is not nil.
+func (_u *PermissionApiUpdate) SetNillableCreatedBy(v *uint32) *PermissionApiUpdate {
+	if v != nil {
+		_u.SetCreatedBy(*v)
+	}
+	return _u
+}
+
+// AddCreatedBy adds value to the "created_by" field.
+func (_u *PermissionApiUpdate) AddCreatedBy(v int32) *PermissionApiUpdate {
+	_u.mutation.AddCreatedBy(v)
+	return _u
+}
+
+// ClearCreatedBy clears the value of the "created_by" field.
+func (_u *PermissionApiUpdate) ClearCreatedBy() *PermissionApiUpdate {
+	_u.mutation.ClearCreatedBy()
+	return _u
+}
+
+// SetUpdatedBy sets the "updated_by" field.
+func (_u *PermissionApiUpdate) SetUpdatedBy(v uint32) *PermissionApiUpdate {
+	_u.mutation.ResetUpdatedBy()
+	_u.mutation.SetUpdatedBy(v)
+	return _u
+}
+
+// SetNillableUpdatedBy sets the "updated_by" field if the given value is not nil.
+func (_u *PermissionApiUpdate) SetNillableUpdatedBy(v *uint32) *PermissionApiUpdate {
+	if v != nil {
+		_u.SetUpdatedBy(*v)
+	}
+	return _u
+}
+
+// AddUpdatedBy adds value to the "updated_by" field.
+func (_u *PermissionApiUpdate) AddUpdatedBy(v int32) *PermissionApiUpdate {
+	_u.mutation.AddUpdatedBy(v)
+	return _u
+}
+
+// ClearUpdatedBy clears the value of the "updated_by" field.
+func (_u *PermissionApiUpdate) ClearUpdatedBy() *PermissionApiUpdate {
+	_u.mutation.ClearUpdatedBy()
+	return _u
+}
+
+// SetDeletedBy sets the "deleted_by" field.
+func (_u *PermissionApiUpdate) SetDeletedBy(v uint32) *PermissionApiUpdate {
+	_u.mutation.ResetDeletedBy()
+	_u.mutation.SetDeletedBy(v)
+	return _u
+}
+
+// SetNillableDeletedBy sets the "deleted_by" field if the given value is not nil.
+func (_u *PermissionApiUpdate) SetNillableDeletedBy(v *uint32) *PermissionApiUpdate {
+	if v != nil {
+		_u.SetDeletedBy(*v)
+	}
+	return _u
+}
+
+// AddDeletedBy adds value to the "deleted_by" field.
+func (_u *PermissionApiUpdate) AddDeletedBy(v int32) *PermissionApiUpdate {
+	_u.mutation.AddDeletedBy(v)
+	return _u
+}
+
+// ClearDeletedBy clears the value of the "deleted_by" field.
+func (_u *PermissionApiUpdate) ClearDeletedBy() *PermissionApiUpdate {
+	_u.mutation.ClearDeletedBy()
+	return _u
+}
+
 // SetPermissionID sets the "permission_id" field.
 func (_u *PermissionApiUpdate) SetPermissionID(v uint32) *PermissionApiUpdate {
 	_u.mutation.ResetPermissionID()
@@ -90,36 +171,24 @@ func (_u *PermissionApiUpdate) AddPermissionID(v int32) *PermissionApiUpdate {
 	return _u
 }
 
-// ClearPermissionID clears the value of the "permission_id" field.
-func (_u *PermissionApiUpdate) ClearPermissionID() *PermissionApiUpdate {
-	_u.mutation.ClearPermissionID()
+// SetAPIID sets the "api_id" field.
+func (_u *PermissionApiUpdate) SetAPIID(v uint32) *PermissionApiUpdate {
+	_u.mutation.ResetAPIID()
+	_u.mutation.SetAPIID(v)
 	return _u
 }
 
-// SetTargetID sets the "target_id" field.
-func (_u *PermissionApiUpdate) SetTargetID(v uint32) *PermissionApiUpdate {
-	_u.mutation.ResetTargetID()
-	_u.mutation.SetTargetID(v)
-	return _u
-}
-
-// SetNillableTargetID sets the "target_id" field if the given value is not nil.
-func (_u *PermissionApiUpdate) SetNillableTargetID(v *uint32) *PermissionApiUpdate {
+// SetNillableAPIID sets the "api_id" field if the given value is not nil.
+func (_u *PermissionApiUpdate) SetNillableAPIID(v *uint32) *PermissionApiUpdate {
 	if v != nil {
-		_u.SetTargetID(*v)
+		_u.SetAPIID(*v)
 	}
 	return _u
 }
 
-// AddTargetID adds value to the "target_id" field.
-func (_u *PermissionApiUpdate) AddTargetID(v int32) *PermissionApiUpdate {
-	_u.mutation.AddTargetID(v)
-	return _u
-}
-
-// ClearTargetID clears the value of the "target_id" field.
-func (_u *PermissionApiUpdate) ClearTargetID() *PermissionApiUpdate {
-	_u.mutation.ClearTargetID()
+// AddAPIID adds value to the "api_id" field.
+func (_u *PermissionApiUpdate) AddAPIID(v int32) *PermissionApiUpdate {
+	_u.mutation.AddAPIID(v)
 	return _u
 }
 
@@ -185,23 +254,44 @@ func (_u *PermissionApiUpdate) sqlSave(ctx context.Context) (_node int, err erro
 	if _u.mutation.DeletedAtCleared() {
 		_spec.ClearField(permissionapi.FieldDeletedAt, field.TypeTime)
 	}
+	if value, ok := _u.mutation.CreatedBy(); ok {
+		_spec.SetField(permissionapi.FieldCreatedBy, field.TypeUint32, value)
+	}
+	if value, ok := _u.mutation.AddedCreatedBy(); ok {
+		_spec.AddField(permissionapi.FieldCreatedBy, field.TypeUint32, value)
+	}
+	if _u.mutation.CreatedByCleared() {
+		_spec.ClearField(permissionapi.FieldCreatedBy, field.TypeUint32)
+	}
+	if value, ok := _u.mutation.UpdatedBy(); ok {
+		_spec.SetField(permissionapi.FieldUpdatedBy, field.TypeUint32, value)
+	}
+	if value, ok := _u.mutation.AddedUpdatedBy(); ok {
+		_spec.AddField(permissionapi.FieldUpdatedBy, field.TypeUint32, value)
+	}
+	if _u.mutation.UpdatedByCleared() {
+		_spec.ClearField(permissionapi.FieldUpdatedBy, field.TypeUint32)
+	}
+	if value, ok := _u.mutation.DeletedBy(); ok {
+		_spec.SetField(permissionapi.FieldDeletedBy, field.TypeUint32, value)
+	}
+	if value, ok := _u.mutation.AddedDeletedBy(); ok {
+		_spec.AddField(permissionapi.FieldDeletedBy, field.TypeUint32, value)
+	}
+	if _u.mutation.DeletedByCleared() {
+		_spec.ClearField(permissionapi.FieldDeletedBy, field.TypeUint32)
+	}
 	if value, ok := _u.mutation.PermissionID(); ok {
 		_spec.SetField(permissionapi.FieldPermissionID, field.TypeUint32, value)
 	}
 	if value, ok := _u.mutation.AddedPermissionID(); ok {
 		_spec.AddField(permissionapi.FieldPermissionID, field.TypeUint32, value)
 	}
-	if _u.mutation.PermissionIDCleared() {
-		_spec.ClearField(permissionapi.FieldPermissionID, field.TypeUint32)
+	if value, ok := _u.mutation.APIID(); ok {
+		_spec.SetField(permissionapi.FieldAPIID, field.TypeUint32, value)
 	}
-	if value, ok := _u.mutation.TargetID(); ok {
-		_spec.SetField(permissionapi.FieldTargetID, field.TypeUint32, value)
-	}
-	if value, ok := _u.mutation.AddedTargetID(); ok {
-		_spec.AddField(permissionapi.FieldTargetID, field.TypeUint32, value)
-	}
-	if _u.mutation.TargetIDCleared() {
-		_spec.ClearField(permissionapi.FieldTargetID, field.TypeUint32)
+	if value, ok := _u.mutation.AddedAPIID(); ok {
+		_spec.AddField(permissionapi.FieldAPIID, field.TypeUint32, value)
 	}
 	_spec.AddModifiers(_u.modifiers...)
 	if _node, err = sqlgraph.UpdateNodes(ctx, _u.driver, _spec); err != nil {
@@ -265,6 +355,87 @@ func (_u *PermissionApiUpdateOne) ClearDeletedAt() *PermissionApiUpdateOne {
 	return _u
 }
 
+// SetCreatedBy sets the "created_by" field.
+func (_u *PermissionApiUpdateOne) SetCreatedBy(v uint32) *PermissionApiUpdateOne {
+	_u.mutation.ResetCreatedBy()
+	_u.mutation.SetCreatedBy(v)
+	return _u
+}
+
+// SetNillableCreatedBy sets the "created_by" field if the given value is not nil.
+func (_u *PermissionApiUpdateOne) SetNillableCreatedBy(v *uint32) *PermissionApiUpdateOne {
+	if v != nil {
+		_u.SetCreatedBy(*v)
+	}
+	return _u
+}
+
+// AddCreatedBy adds value to the "created_by" field.
+func (_u *PermissionApiUpdateOne) AddCreatedBy(v int32) *PermissionApiUpdateOne {
+	_u.mutation.AddCreatedBy(v)
+	return _u
+}
+
+// ClearCreatedBy clears the value of the "created_by" field.
+func (_u *PermissionApiUpdateOne) ClearCreatedBy() *PermissionApiUpdateOne {
+	_u.mutation.ClearCreatedBy()
+	return _u
+}
+
+// SetUpdatedBy sets the "updated_by" field.
+func (_u *PermissionApiUpdateOne) SetUpdatedBy(v uint32) *PermissionApiUpdateOne {
+	_u.mutation.ResetUpdatedBy()
+	_u.mutation.SetUpdatedBy(v)
+	return _u
+}
+
+// SetNillableUpdatedBy sets the "updated_by" field if the given value is not nil.
+func (_u *PermissionApiUpdateOne) SetNillableUpdatedBy(v *uint32) *PermissionApiUpdateOne {
+	if v != nil {
+		_u.SetUpdatedBy(*v)
+	}
+	return _u
+}
+
+// AddUpdatedBy adds value to the "updated_by" field.
+func (_u *PermissionApiUpdateOne) AddUpdatedBy(v int32) *PermissionApiUpdateOne {
+	_u.mutation.AddUpdatedBy(v)
+	return _u
+}
+
+// ClearUpdatedBy clears the value of the "updated_by" field.
+func (_u *PermissionApiUpdateOne) ClearUpdatedBy() *PermissionApiUpdateOne {
+	_u.mutation.ClearUpdatedBy()
+	return _u
+}
+
+// SetDeletedBy sets the "deleted_by" field.
+func (_u *PermissionApiUpdateOne) SetDeletedBy(v uint32) *PermissionApiUpdateOne {
+	_u.mutation.ResetDeletedBy()
+	_u.mutation.SetDeletedBy(v)
+	return _u
+}
+
+// SetNillableDeletedBy sets the "deleted_by" field if the given value is not nil.
+func (_u *PermissionApiUpdateOne) SetNillableDeletedBy(v *uint32) *PermissionApiUpdateOne {
+	if v != nil {
+		_u.SetDeletedBy(*v)
+	}
+	return _u
+}
+
+// AddDeletedBy adds value to the "deleted_by" field.
+func (_u *PermissionApiUpdateOne) AddDeletedBy(v int32) *PermissionApiUpdateOne {
+	_u.mutation.AddDeletedBy(v)
+	return _u
+}
+
+// ClearDeletedBy clears the value of the "deleted_by" field.
+func (_u *PermissionApiUpdateOne) ClearDeletedBy() *PermissionApiUpdateOne {
+	_u.mutation.ClearDeletedBy()
+	return _u
+}
+
 // SetPermissionID sets the "permission_id" field.
 func (_u *PermissionApiUpdateOne) SetPermissionID(v uint32) *PermissionApiUpdateOne {
 	_u.mutation.ResetPermissionID()
@@ -286,36 +457,24 @@ func (_u *PermissionApiUpdateOne) AddPermissionID(v int32) *PermissionApiUpdateO
 	return _u
 }
 
-// ClearPermissionID clears the value of the "permission_id" field.
-func (_u *PermissionApiUpdateOne) ClearPermissionID() *PermissionApiUpdateOne {
-	_u.mutation.ClearPermissionID()
+// SetAPIID sets the "api_id" field.
+func (_u *PermissionApiUpdateOne) SetAPIID(v uint32) *PermissionApiUpdateOne {
+	_u.mutation.ResetAPIID()
+	_u.mutation.SetAPIID(v)
 	return _u
 }
 
-// SetTargetID sets the "target_id" field.
-func (_u *PermissionApiUpdateOne) SetTargetID(v uint32) *PermissionApiUpdateOne {
-	_u.mutation.ResetTargetID()
-	_u.mutation.SetTargetID(v)
-	return _u
-}
-
-// SetNillableTargetID sets the "target_id" field if the given value is not nil.
-func (_u *PermissionApiUpdateOne) SetNillableTargetID(v *uint32) *PermissionApiUpdateOne {
+// SetNillableAPIID sets the "api_id" field if the given value is not nil.
+func (_u *PermissionApiUpdateOne) SetNillableAPIID(v *uint32) *PermissionApiUpdateOne {
 	if v != nil {
-		_u.SetTargetID(*v)
+		_u.SetAPIID(*v)
 	}
 	return _u
 }
 
-// AddTargetID adds value to the "target_id" field.
-func (_u *PermissionApiUpdateOne) AddTargetID(v int32) *PermissionApiUpdateOne {
-	_u.mutation.AddTargetID(v)
-	return _u
-}
-
-// ClearTargetID clears the value of the "target_id" field.
-func (_u *PermissionApiUpdateOne) ClearTargetID() *PermissionApiUpdateOne {
-	_u.mutation.ClearTargetID()
+// AddAPIID adds value to the "api_id" field.
+func (_u *PermissionApiUpdateOne) AddAPIID(v int32) *PermissionApiUpdateOne {
+	_u.mutation.AddAPIID(v)
 	return _u
 }
 
@@ -411,23 +570,44 @@ func (_u *PermissionApiUpdateOne) sqlSave(ctx context.Context) (_node *Permissio
 	if _u.mutation.DeletedAtCleared() {
 		_spec.ClearField(permissionapi.FieldDeletedAt, field.TypeTime)
 	}
+	if value, ok := _u.mutation.CreatedBy(); ok {
+		_spec.SetField(permissionapi.FieldCreatedBy, field.TypeUint32, value)
+	}
+	if value, ok := _u.mutation.AddedCreatedBy(); ok {
+		_spec.AddField(permissionapi.FieldCreatedBy, field.TypeUint32, value)
+	}
+	if _u.mutation.CreatedByCleared() {
+		_spec.ClearField(permissionapi.FieldCreatedBy, field.TypeUint32)
+	}
+	if value, ok := _u.mutation.UpdatedBy(); ok {
+		_spec.SetField(permissionapi.FieldUpdatedBy, field.TypeUint32, value)
+	}
+	if value, ok := _u.mutation.AddedUpdatedBy(); ok {
+		_spec.AddField(permissionapi.FieldUpdatedBy, field.TypeUint32, value)
+	}
+	if _u.mutation.UpdatedByCleared() {
+		_spec.ClearField(permissionapi.FieldUpdatedBy, field.TypeUint32)
+	}
+	if value, ok := _u.mutation.DeletedBy(); ok {
+		_spec.SetField(permissionapi.FieldDeletedBy, field.TypeUint32, value)
+	}
+	if value, ok := _u.mutation.AddedDeletedBy(); ok {
+		_spec.AddField(permissionapi.FieldDeletedBy, field.TypeUint32, value)
+	}
+	if _u.mutation.DeletedByCleared() {
+		_spec.ClearField(permissionapi.FieldDeletedBy, field.TypeUint32)
+	}
 	if value, ok := _u.mutation.PermissionID(); ok {
 		_spec.SetField(permissionapi.FieldPermissionID, field.TypeUint32, value)
 	}
 	if value, ok := _u.mutation.AddedPermissionID(); ok {
 		_spec.AddField(permissionapi.FieldPermissionID, field.TypeUint32, value)
 	}
-	if _u.mutation.PermissionIDCleared() {
-		_spec.ClearField(permissionapi.FieldPermissionID, field.TypeUint32)
+	if value, ok := _u.mutation.APIID(); ok {
+		_spec.SetField(permissionapi.FieldAPIID, field.TypeUint32, value)
 	}
-	if value, ok := _u.mutation.TargetID(); ok {
-		_spec.SetField(permissionapi.FieldTargetID, field.TypeUint32, value)
-	}
-	if value, ok := _u.mutation.AddedTargetID(); ok {
-		_spec.AddField(permissionapi.FieldTargetID, field.TypeUint32, value)
-	}
-	if _u.mutation.TargetIDCleared() {
-		_spec.ClearField(permissionapi.FieldTargetID, field.TypeUint32)
+	if value, ok := _u.mutation.AddedAPIID(); ok {
+		_spec.AddField(permissionapi.FieldAPIID, field.TypeUint32, value)
 	}
 	_spec.AddModifiers(_u.modifiers...)
 	_node = &PermissionApi{config: _u.config}

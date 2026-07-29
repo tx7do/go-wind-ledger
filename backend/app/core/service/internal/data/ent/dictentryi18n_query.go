@@ -6,6 +6,7 @@ import (
 	"context"
 	"errors"
 	"fmt"
+	"go-wind-ledger/app/core/service/internal/data/ent/dictentry"
 	"go-wind-ledger/app/core/service/internal/data/ent/dictentryi18n"
 	"go-wind-ledger/app/core/service/internal/data/ent/predicate"
 	"math"
@@ -20,11 +21,13 @@ import (
 // DictEntryI18nQuery is the builder for querying DictEntryI18n entities.
 type DictEntryI18nQuery struct {
 	config
-	ctx        *QueryContext
-	order      []dictentryi18n.OrderOption
-	inters     []Interceptor
-	predicates []predicate.DictEntryI18n
-	modifiers  []func(*sql.Selector)
+	ctx           *QueryContext
+	order         []dictentryi18n.OrderOption
+	inters        []Interceptor
+	predicates    []predicate.DictEntryI18n
+	withDictEntry *DictEntryQuery
+	withFKs       bool
+	modifiers     []func(*sql.Selector)
 	// intermediate query (i.e. traversal path).
 	sql  *sql.Selector
 	path func(context.Context) (*sql.Selector, error)
@@ -59,6 +62,28 @@ func (_q *DictEntryI18nQuery) Unique(unique bool) *DictEntryI18nQuery {
 func (_q *DictEntryI18nQuery) Order(o ...dictentryi18n.OrderOption) *DictEntryI18nQuery {
 	_q.order = append(_q.order, o...)
 	return _q
+}
+
+// QueryDictEntry chains the current query on the "dict_entry" edge.
+func (_q *DictEntryI18nQuery) QueryDictEntry() *DictEntryQuery {
+	query := (&DictEntryClient{config: _q.config}).Query()
+	query.path = func(ctx context.Context) (fromU *sql.Selector, err error) {
+		if err := _q.prepareQuery(ctx); err != nil {
+			return nil, err
+		}
+		selector := _q.sqlQuery(ctx)
+		if err := selector.Err(); err != nil {
+			return nil, err
+		}
+		step := sqlgraph.NewStep(
+			sqlgraph.From(dictentryi18n.Table, dictentryi18n.FieldID, selector),
+			sqlgraph.To(dictentry.Table, dictentry.FieldID),
+			sqlgraph.Edge(sqlgraph.M2O, true, dictentryi18n.DictEntryTable, dictentryi18n.DictEntryColumn),
+		)
+		fromU = sqlgraph.SetNeighbors(_q.driver.Dialect(), step)
+		return fromU, nil
+	}
+	return query
 }
 
 // First returns the first DictEntryI18n entity from the query.
@@ -248,16 +273,28 @@ func (_q *DictEntryI18nQuery) Clone() *DictEntryI18nQuery {
 		return nil
 	}
 	return &DictEntryI18nQuery{
-		config:     _q.config,
-		ctx:        _q.ctx.Clone(),
-		order:      append([]dictentryi18n.OrderOption{}, _q.order...),
-		inters:     append([]Interceptor{}, _q.inters...),
-		predicates: append([]predicate.DictEntryI18n{}, _q.predicates...),
+		config:        _q.config,
+		ctx:           _q.ctx.Clone(),
+		order:         append([]dictentryi18n.OrderOption{}, _q.order...),
+		inters:        append([]Interceptor{}, _q.inters...),
+		predicates:    append([]predicate.DictEntryI18n{}, _q.predicates...),
+		withDictEntry: _q.withDictEntry.Clone(),
 		// clone intermediate query.
 		sql:       _q.sql.Clone(),
 		path:      _q.path,
 		modifiers: append([]func(*sql.Selector){}, _q.modifiers...),
 	}
+}
+
+// WithDictEntry tells the query-builder to eager-load the nodes that are connected to
+// the "dict_entry" edge. The optional arguments are used to configure the query builder of the edge.
+func (_q *DictEntryI18nQuery) WithDictEntry(opts ...func(*DictEntryQuery)) *DictEntryI18nQuery {
+	query := (&DictEntryClient{config: _q.config}).Query()
+	for _, opt := range opts {
+		opt(query)
+	}
+	_q.withDictEntry = query
+	return _q
 }
 
 // GroupBy is used to group vertices by one or more fields/columns.
@@ -342,15 +379,26 @@ func (_q *DictEntryI18nQuery) prepareQuery(ctx context.Context) error {
 
 func (_q *DictEntryI18nQuery) sqlAll(ctx context.Context, hooks ...queryHook) ([]*DictEntryI18n, error) {
 	var (
-		nodes = []*DictEntryI18n{}
-		_spec = _q.querySpec()
+		nodes       = []*DictEntryI18n{}
+		withFKs     = _q.withFKs
+		_spec       = _q.querySpec()
+		loadedTypes = [1]bool{
+			_q.withDictEntry != nil,
+		}
 	)
+	if _q.withDictEntry != nil {
+		withFKs = true
+	}
+	if withFKs {
+		_spec.Node.Columns = append(_spec.Node.Columns, dictentryi18n.ForeignKeys...)
+	}
 	_spec.ScanValues = func(columns []string) ([]any, error) {
 		return (*DictEntryI18n).scanValues(nil, columns)
 	}
 	_spec.Assign = func(columns []string, values []any) error {
 		node := &DictEntryI18n{config: _q.config}
 		nodes = append(nodes, node)
+		node.Edges.loadedTypes = loadedTypes
 		return node.assignValues(columns, values)
 	}
 	if len(_q.modifiers) > 0 {
@@ -365,7 +413,46 @@ func (_q *DictEntryI18nQuery) sqlAll(ctx context.Context, hooks ...queryHook) ([
 	if len(nodes) == 0 {
 		return nodes, nil
 	}
+	if query := _q.withDictEntry; query != nil {
+		if err := _q.loadDictEntry(ctx, query, nodes, nil,
+			func(n *DictEntryI18n, e *DictEntry) { n.Edges.DictEntry = e }); err != nil {
+			return nil, err
+		}
+	}
 	return nodes, nil
+}
+
+func (_q *DictEntryI18nQuery) loadDictEntry(ctx context.Context, query *DictEntryQuery, nodes []*DictEntryI18n, init func(*DictEntryI18n), assign func(*DictEntryI18n, *DictEntry)) error {
+	ids := make([]uint32, 0, len(nodes))
+	nodeids := make(map[uint32][]*DictEntryI18n)
+	for i := range nodes {
+		if nodes[i].entry_id == nil {
+			continue
+		}
+		fk := *nodes[i].entry_id
+		if _, ok := nodeids[fk]; !ok {
+			ids = append(ids, fk)
+		}
+		nodeids[fk] = append(nodeids[fk], nodes[i])
+	}
+	if len(ids) == 0 {
+		return nil
+	}
+	query.Where(dictentry.IDIn(ids...))
+	neighbors, err := query.All(ctx)
+	if err != nil {
+		return err
+	}
+	for _, n := range neighbors {
+		nodes, ok := nodeids[n.ID]
+		if !ok {
+			return fmt.Errorf(`unexpected foreign-key "entry_id" returned %v`, n.ID)
+		}
+		for i := range nodes {
+			assign(nodes[i], n)
+		}
+	}
+	return nil
 }
 
 func (_q *DictEntryI18nQuery) sqlCount(ctx context.Context) (int, error) {

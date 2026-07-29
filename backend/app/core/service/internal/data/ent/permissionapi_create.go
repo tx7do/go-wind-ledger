@@ -64,31 +64,57 @@ func (_c *PermissionApiCreate) SetNillableDeletedAt(v *time.Time) *PermissionApi
 	return _c
 }
 
+// SetCreatedBy sets the "created_by" field.
+func (_c *PermissionApiCreate) SetCreatedBy(v uint32) *PermissionApiCreate {
+	_c.mutation.SetCreatedBy(v)
+	return _c
+}
+
+// SetNillableCreatedBy sets the "created_by" field if the given value is not nil.
+func (_c *PermissionApiCreate) SetNillableCreatedBy(v *uint32) *PermissionApiCreate {
+	if v != nil {
+		_c.SetCreatedBy(*v)
+	}
+	return _c
+}
+
+// SetUpdatedBy sets the "updated_by" field.
+func (_c *PermissionApiCreate) SetUpdatedBy(v uint32) *PermissionApiCreate {
+	_c.mutation.SetUpdatedBy(v)
+	return _c
+}
+
+// SetNillableUpdatedBy sets the "updated_by" field if the given value is not nil.
+func (_c *PermissionApiCreate) SetNillableUpdatedBy(v *uint32) *PermissionApiCreate {
+	if v != nil {
+		_c.SetUpdatedBy(*v)
+	}
+	return _c
+}
+
+// SetDeletedBy sets the "deleted_by" field.
+func (_c *PermissionApiCreate) SetDeletedBy(v uint32) *PermissionApiCreate {
+	_c.mutation.SetDeletedBy(v)
+	return _c
+}
+
+// SetNillableDeletedBy sets the "deleted_by" field if the given value is not nil.
+func (_c *PermissionApiCreate) SetNillableDeletedBy(v *uint32) *PermissionApiCreate {
+	if v != nil {
+		_c.SetDeletedBy(*v)
+	}
+	return _c
+}
+
 // SetPermissionID sets the "permission_id" field.
 func (_c *PermissionApiCreate) SetPermissionID(v uint32) *PermissionApiCreate {
 	_c.mutation.SetPermissionID(v)
 	return _c
 }
 
-// SetNillablePermissionID sets the "permission_id" field if the given value is not nil.
-func (_c *PermissionApiCreate) SetNillablePermissionID(v *uint32) *PermissionApiCreate {
-	if v != nil {
-		_c.SetPermissionID(*v)
-	}
-	return _c
-}
-
-// SetTargetID sets the "target_id" field.
-func (_c *PermissionApiCreate) SetTargetID(v uint32) *PermissionApiCreate {
-	_c.mutation.SetTargetID(v)
-	return _c
-}
-
-// SetNillableTargetID sets the "target_id" field if the given value is not nil.
-func (_c *PermissionApiCreate) SetNillableTargetID(v *uint32) *PermissionApiCreate {
-	if v != nil {
-		_c.SetTargetID(*v)
-	}
+// SetAPIID sets the "api_id" field.
+func (_c *PermissionApiCreate) SetAPIID(v uint32) *PermissionApiCreate {
+	_c.mutation.SetAPIID(v)
 	return _c
 }
 
@@ -132,6 +158,12 @@ func (_c *PermissionApiCreate) ExecX(ctx context.Context) {
 
 // check runs all checks and user-defined validators on the builder.
 func (_c *PermissionApiCreate) check() error {
+	if _, ok := _c.mutation.PermissionID(); !ok {
+		return &ValidationError{Name: "permission_id", err: errors.New(`ent: missing required field "PermissionApi.permission_id"`)}
+	}
+	if _, ok := _c.mutation.APIID(); !ok {
+		return &ValidationError{Name: "api_id", err: errors.New(`ent: missing required field "PermissionApi.api_id"`)}
+	}
 	if v, ok := _c.mutation.ID(); ok {
 		if err := permissionapi.IDValidator(v); err != nil {
 			return &ValidationError{Name: "id", err: fmt.Errorf(`ent: validator failed for field "PermissionApi.id": %w`, err)}
@@ -182,13 +214,25 @@ func (_c *PermissionApiCreate) createSpec() (*PermissionApi, *sqlgraph.CreateSpe
 		_spec.SetField(permissionapi.FieldDeletedAt, field.TypeTime, value)
 		_node.DeletedAt = &value
 	}
+	if value, ok := _c.mutation.CreatedBy(); ok {
+		_spec.SetField(permissionapi.FieldCreatedBy, field.TypeUint32, value)
+		_node.CreatedBy = &value
+	}
+	if value, ok := _c.mutation.UpdatedBy(); ok {
+		_spec.SetField(permissionapi.FieldUpdatedBy, field.TypeUint32, value)
+		_node.UpdatedBy = &value
+	}
+	if value, ok := _c.mutation.DeletedBy(); ok {
+		_spec.SetField(permissionapi.FieldDeletedBy, field.TypeUint32, value)
+		_node.DeletedBy = &value
+	}
 	if value, ok := _c.mutation.PermissionID(); ok {
 		_spec.SetField(permissionapi.FieldPermissionID, field.TypeUint32, value)
 		_node.PermissionID = &value
 	}
-	if value, ok := _c.mutation.TargetID(); ok {
-		_spec.SetField(permissionapi.FieldTargetID, field.TypeUint32, value)
-		_node.TargetID = &value
+	if value, ok := _c.mutation.APIID(); ok {
+		_spec.SetField(permissionapi.FieldAPIID, field.TypeUint32, value)
+		_node.APIID = &value
 	}
 	return _node, _spec
 }
@@ -278,6 +322,78 @@ func (u *PermissionApiUpsert) ClearDeletedAt() *PermissionApiUpsert {
 	return u
 }
 
+// SetCreatedBy sets the "created_by" field.
+func (u *PermissionApiUpsert) SetCreatedBy(v uint32) *PermissionApiUpsert {
+	u.Set(permissionapi.FieldCreatedBy, v)
+	return u
+}
+
+// UpdateCreatedBy sets the "created_by" field to the value that was provided on create.
+func (u *PermissionApiUpsert) UpdateCreatedBy() *PermissionApiUpsert {
+	u.SetExcluded(permissionapi.FieldCreatedBy)
+	return u
+}
+
+// AddCreatedBy adds v to the "created_by" field.
+func (u *PermissionApiUpsert) AddCreatedBy(v uint32) *PermissionApiUpsert {
+	u.Add(permissionapi.FieldCreatedBy, v)
+	return u
+}
+
+// ClearCreatedBy clears the value of the "created_by" field.
+func (u *PermissionApiUpsert) ClearCreatedBy() *PermissionApiUpsert {
+	u.SetNull(permissionapi.FieldCreatedBy)
+	return u
+}
+
+// SetUpdatedBy sets the "updated_by" field.
+func (u *PermissionApiUpsert) SetUpdatedBy(v uint32) *PermissionApiUpsert {
+	u.Set(permissionapi.FieldUpdatedBy, v)
+	return u
+}
+
+// UpdateUpdatedBy sets the "updated_by" field to the value that was provided on create.
+func (u *PermissionApiUpsert) UpdateUpdatedBy() *PermissionApiUpsert {
+	u.SetExcluded(permissionapi.FieldUpdatedBy)
+	return u
+}
+
+// AddUpdatedBy adds v to the "updated_by" field.
+func (u *PermissionApiUpsert) AddUpdatedBy(v uint32) *PermissionApiUpsert {
+	u.Add(permissionapi.FieldUpdatedBy, v)
+	return u
+}
+
+// ClearUpdatedBy clears the value of the "updated_by" field.
+func (u *PermissionApiUpsert) ClearUpdatedBy() *PermissionApiUpsert {
+	u.SetNull(permissionapi.FieldUpdatedBy)
+	return u
+}
+
+// SetDeletedBy sets the "deleted_by" field.
+func (u *PermissionApiUpsert) SetDeletedBy(v uint32) *PermissionApiUpsert {
+	u.Set(permissionapi.FieldDeletedBy, v)
+	return u
+}
+
+// UpdateDeletedBy sets the "deleted_by" field to the value that was provided on create.
+func (u *PermissionApiUpsert) UpdateDeletedBy() *PermissionApiUpsert {
+	u.SetExcluded(permissionapi.FieldDeletedBy)
+	return u
+}
+
+// AddDeletedBy adds v to the "deleted_by" field.
+func (u *PermissionApiUpsert) AddDeletedBy(v uint32) *PermissionApiUpsert {
+	u.Add(permissionapi.FieldDeletedBy, v)
+	return u
+}
+
+// ClearDeletedBy clears the value of the "deleted_by" field.
+func (u *PermissionApiUpsert) ClearDeletedBy() *PermissionApiUpsert {
+	u.SetNull(permissionapi.FieldDeletedBy)
+	return u
+}
+
 // SetPermissionID sets the "permission_id" field.
 func (u *PermissionApiUpsert) SetPermissionID(v uint32) *PermissionApiUpsert {
 	u.Set(permissionapi.FieldPermissionID, v)
@@ -296,33 +412,21 @@ func (u *PermissionApiUpsert) AddPermissionID(v uint32) *PermissionApiUpsert {
 	return u
 }
 
-// ClearPermissionID clears the value of the "permission_id" field.
-func (u *PermissionApiUpsert) ClearPermissionID() *PermissionApiUpsert {
-	u.SetNull(permissionapi.FieldPermissionID)
+// SetAPIID sets the "api_id" field.
+func (u *PermissionApiUpsert) SetAPIID(v uint32) *PermissionApiUpsert {
+	u.Set(permissionapi.FieldAPIID, v)
 	return u
 }
 
-// SetTargetID sets the "target_id" field.
-func (u *PermissionApiUpsert) SetTargetID(v uint32) *PermissionApiUpsert {
-	u.Set(permissionapi.FieldTargetID, v)
+// UpdateAPIID sets the "api_id" field to the value that was provided on create.
+func (u *PermissionApiUpsert) UpdateAPIID() *PermissionApiUpsert {
+	u.SetExcluded(permissionapi.FieldAPIID)
 	return u
 }
 
-// UpdateTargetID sets the "target_id" field to the value that was provided on create.
-func (u *PermissionApiUpsert) UpdateTargetID() *PermissionApiUpsert {
-	u.SetExcluded(permissionapi.FieldTargetID)
-	return u
-}
-
-// AddTargetID adds v to the "target_id" field.
-func (u *PermissionApiUpsert) AddTargetID(v uint32) *PermissionApiUpsert {
-	u.Add(permissionapi.FieldTargetID, v)
-	return u
-}
-
-// ClearTargetID clears the value of the "target_id" field.
-func (u *PermissionApiUpsert) ClearTargetID() *PermissionApiUpsert {
-	u.SetNull(permissionapi.FieldTargetID)
+// AddAPIID adds v to the "api_id" field.
+func (u *PermissionApiUpsert) AddAPIID(v uint32) *PermissionApiUpsert {
+	u.Add(permissionapi.FieldAPIID, v)
 	return u
 }
 
@@ -419,6 +523,90 @@ func (u *PermissionApiUpsertOne) ClearDeletedAt() *PermissionApiUpsertOne {
 	})
 }
 
+// SetCreatedBy sets the "created_by" field.
+func (u *PermissionApiUpsertOne) SetCreatedBy(v uint32) *PermissionApiUpsertOne {
+	return u.Update(func(s *PermissionApiUpsert) {
+		s.SetCreatedBy(v)
+	})
+}
+
+// AddCreatedBy adds v to the "created_by" field.
+func (u *PermissionApiUpsertOne) AddCreatedBy(v uint32) *PermissionApiUpsertOne {
+	return u.Update(func(s *PermissionApiUpsert) {
+		s.AddCreatedBy(v)
+	})
+}
+
+// UpdateCreatedBy sets the "created_by" field to the value that was provided on create.
+func (u *PermissionApiUpsertOne) UpdateCreatedBy() *PermissionApiUpsertOne {
+	return u.Update(func(s *PermissionApiUpsert) {
+		s.UpdateCreatedBy()
+	})
+}
+
+// ClearCreatedBy clears the value of the "created_by" field.
+func (u *PermissionApiUpsertOne) ClearCreatedBy() *PermissionApiUpsertOne {
+	return u.Update(func(s *PermissionApiUpsert) {
+		s.ClearCreatedBy()
+	})
+}
+
+// SetUpdatedBy sets the "updated_by" field.
+func (u *PermissionApiUpsertOne) SetUpdatedBy(v uint32) *PermissionApiUpsertOne {
+	return u.Update(func(s *PermissionApiUpsert) {
+		s.SetUpdatedBy(v)
+	})
+}
+
+// AddUpdatedBy adds v to the "updated_by" field.
+func (u *PermissionApiUpsertOne) AddUpdatedBy(v uint32) *PermissionApiUpsertOne {
+	return u.Update(func(s *PermissionApiUpsert) {
+		s.AddUpdatedBy(v)
+	})
+}
+
+// UpdateUpdatedBy sets the "updated_by" field to the value that was provided on create.
+func (u *PermissionApiUpsertOne) UpdateUpdatedBy() *PermissionApiUpsertOne {
+	return u.Update(func(s *PermissionApiUpsert) {
+		s.UpdateUpdatedBy()
+	})
+}
+
+// ClearUpdatedBy clears the value of the "updated_by" field.
+func (u *PermissionApiUpsertOne) ClearUpdatedBy() *PermissionApiUpsertOne {
+	return u.Update(func(s *PermissionApiUpsert) {
+		s.ClearUpdatedBy()
+	})
+}
+
+// SetDeletedBy sets the "deleted_by" field.
+func (u *PermissionApiUpsertOne) SetDeletedBy(v uint32) *PermissionApiUpsertOne {
+	return u.Update(func(s *PermissionApiUpsert) {
+		s.SetDeletedBy(v)
+	})
+}
+
+// AddDeletedBy adds v to the "deleted_by" field.
+func (u *PermissionApiUpsertOne) AddDeletedBy(v uint32) *PermissionApiUpsertOne {
+	return u.Update(func(s *PermissionApiUpsert) {
+		s.AddDeletedBy(v)
+	})
+}
+
+// UpdateDeletedBy sets the "deleted_by" field to the value that was provided on create.
+func (u *PermissionApiUpsertOne) UpdateDeletedBy() *PermissionApiUpsertOne {
+	return u.Update(func(s *PermissionApiUpsert) {
+		s.UpdateDeletedBy()
+	})
+}
+
+// ClearDeletedBy clears the value of the "deleted_by" field.
+func (u *PermissionApiUpsertOne) ClearDeletedBy() *PermissionApiUpsertOne {
+	return u.Update(func(s *PermissionApiUpsert) {
+		s.ClearDeletedBy()
+	})
+}
+
 // SetPermissionID sets the "permission_id" field.
 func (u *PermissionApiUpsertOne) SetPermissionID(v uint32) *PermissionApiUpsertOne {
 	return u.Update(func(s *PermissionApiUpsert) {
@@ -440,38 +628,24 @@ func (u *PermissionApiUpsertOne) UpdatePermissionID() *PermissionApiUpsertOne {
 	})
 }
 
-// ClearPermissionID clears the value of the "permission_id" field.
-func (u *PermissionApiUpsertOne) ClearPermissionID() *PermissionApiUpsertOne {
+// SetAPIID sets the "api_id" field.
+func (u *PermissionApiUpsertOne) SetAPIID(v uint32) *PermissionApiUpsertOne {
 	return u.Update(func(s *PermissionApiUpsert) {
-		s.ClearPermissionID()
+		s.SetAPIID(v)
 	})
 }
 
-// SetTargetID sets the "target_id" field.
-func (u *PermissionApiUpsertOne) SetTargetID(v uint32) *PermissionApiUpsertOne {
+// AddAPIID adds v to the "api_id" field.
+func (u *PermissionApiUpsertOne) AddAPIID(v uint32) *PermissionApiUpsertOne {
 	return u.Update(func(s *PermissionApiUpsert) {
-		s.SetTargetID(v)
+		s.AddAPIID(v)
 	})
 }
 
-// AddTargetID adds v to the "target_id" field.
-func (u *PermissionApiUpsertOne) AddTargetID(v uint32) *PermissionApiUpsertOne {
+// UpdateAPIID sets the "api_id" field to the value that was provided on create.
+func (u *PermissionApiUpsertOne) UpdateAPIID() *PermissionApiUpsertOne {
 	return u.Update(func(s *PermissionApiUpsert) {
-		s.AddTargetID(v)
-	})
-}
-
-// UpdateTargetID sets the "target_id" field to the value that was provided on create.
-func (u *PermissionApiUpsertOne) UpdateTargetID() *PermissionApiUpsertOne {
-	return u.Update(func(s *PermissionApiUpsert) {
-		s.UpdateTargetID()
-	})
-}
-
-// ClearTargetID clears the value of the "target_id" field.
-func (u *PermissionApiUpsertOne) ClearTargetID() *PermissionApiUpsertOne {
-	return u.Update(func(s *PermissionApiUpsert) {
-		s.ClearTargetID()
+		s.UpdateAPIID()
 	})
 }
 
@@ -733,6 +907,90 @@ func (u *PermissionApiUpsertBulk) ClearDeletedAt() *PermissionApiUpsertBulk {
 	})
 }
 
+// SetCreatedBy sets the "created_by" field.
+func (u *PermissionApiUpsertBulk) SetCreatedBy(v uint32) *PermissionApiUpsertBulk {
+	return u.Update(func(s *PermissionApiUpsert) {
+		s.SetCreatedBy(v)
+	})
+}
+
+// AddCreatedBy adds v to the "created_by" field.
+func (u *PermissionApiUpsertBulk) AddCreatedBy(v uint32) *PermissionApiUpsertBulk {
+	return u.Update(func(s *PermissionApiUpsert) {
+		s.AddCreatedBy(v)
+	})
+}
+
+// UpdateCreatedBy sets the "created_by" field to the value that was provided on create.
+func (u *PermissionApiUpsertBulk) UpdateCreatedBy() *PermissionApiUpsertBulk {
+	return u.Update(func(s *PermissionApiUpsert) {
+		s.UpdateCreatedBy()
+	})
+}
+
+// ClearCreatedBy clears the value of the "created_by" field.
+func (u *PermissionApiUpsertBulk) ClearCreatedBy() *PermissionApiUpsertBulk {
+	return u.Update(func(s *PermissionApiUpsert) {
+		s.ClearCreatedBy()
+	})
+}
+
+// SetUpdatedBy sets the "updated_by" field.
+func (u *PermissionApiUpsertBulk) SetUpdatedBy(v uint32) *PermissionApiUpsertBulk {
+	return u.Update(func(s *PermissionApiUpsert) {
+		s.SetUpdatedBy(v)
+	})
+}
+
+// AddUpdatedBy adds v to the "updated_by" field.
+func (u *PermissionApiUpsertBulk) AddUpdatedBy(v uint32) *PermissionApiUpsertBulk {
+	return u.Update(func(s *PermissionApiUpsert) {
+		s.AddUpdatedBy(v)
+	})
+}
+
+// UpdateUpdatedBy sets the "updated_by" field to the value that was provided on create.
+func (u *PermissionApiUpsertBulk) UpdateUpdatedBy() *PermissionApiUpsertBulk {
+	return u.Update(func(s *PermissionApiUpsert) {
+		s.UpdateUpdatedBy()
+	})
+}
+
+// ClearUpdatedBy clears the value of the "updated_by" field.
+func (u *PermissionApiUpsertBulk) ClearUpdatedBy() *PermissionApiUpsertBulk {
+	return u.Update(func(s *PermissionApiUpsert) {
+		s.ClearUpdatedBy()
+	})
+}
+
+// SetDeletedBy sets the "deleted_by" field.
+func (u *PermissionApiUpsertBulk) SetDeletedBy(v uint32) *PermissionApiUpsertBulk {
+	return u.Update(func(s *PermissionApiUpsert) {
+		s.SetDeletedBy(v)
+	})
+}
+
+// AddDeletedBy adds v to the "deleted_by" field.
+func (u *PermissionApiUpsertBulk) AddDeletedBy(v uint32) *PermissionApiUpsertBulk {
+	return u.Update(func(s *PermissionApiUpsert) {
+		s.AddDeletedBy(v)
+	})
+}
+
+// UpdateDeletedBy sets the "deleted_by" field to the value that was provided on create.
+func (u *PermissionApiUpsertBulk) UpdateDeletedBy() *PermissionApiUpsertBulk {
+	return u.Update(func(s *PermissionApiUpsert) {
+		s.UpdateDeletedBy()
+	})
+}
+
+// ClearDeletedBy clears the value of the "deleted_by" field.
+func (u *PermissionApiUpsertBulk) ClearDeletedBy() *PermissionApiUpsertBulk {
+	return u.Update(func(s *PermissionApiUpsert) {
+		s.ClearDeletedBy()
+	})
+}
+
 // SetPermissionID sets the "permission_id" field.
 func (u *PermissionApiUpsertBulk) SetPermissionID(v uint32) *PermissionApiUpsertBulk {
 	return u.Update(func(s *PermissionApiUpsert) {
@@ -754,38 +1012,24 @@ func (u *PermissionApiUpsertBulk) UpdatePermissionID() *PermissionApiUpsertBulk 
 	})
 }
 
-// ClearPermissionID clears the value of the "permission_id" field.
-func (u *PermissionApiUpsertBulk) ClearPermissionID() *PermissionApiUpsertBulk {
+// SetAPIID sets the "api_id" field.
+func (u *PermissionApiUpsertBulk) SetAPIID(v uint32) *PermissionApiUpsertBulk {
 	return u.Update(func(s *PermissionApiUpsert) {
-		s.ClearPermissionID()
+		s.SetAPIID(v)
 	})
 }
 
-// SetTargetID sets the "target_id" field.
-func (u *PermissionApiUpsertBulk) SetTargetID(v uint32) *PermissionApiUpsertBulk {
+// AddAPIID adds v to the "api_id" field.
+func (u *PermissionApiUpsertBulk) AddAPIID(v uint32) *PermissionApiUpsertBulk {
 	return u.Update(func(s *PermissionApiUpsert) {
-		s.SetTargetID(v)
+		s.AddAPIID(v)
 	})
 }
 
-// AddTargetID adds v to the "target_id" field.
-func (u *PermissionApiUpsertBulk) AddTargetID(v uint32) *PermissionApiUpsertBulk {
+// UpdateAPIID sets the "api_id" field to the value that was provided on create.
+func (u *PermissionApiUpsertBulk) UpdateAPIID() *PermissionApiUpsertBulk {
 	return u.Update(func(s *PermissionApiUpsert) {
-		s.AddTargetID(v)
-	})
-}
-
-// UpdateTargetID sets the "target_id" field to the value that was provided on create.
-func (u *PermissionApiUpsertBulk) UpdateTargetID() *PermissionApiUpsertBulk {
-	return u.Update(func(s *PermissionApiUpsert) {
-		s.UpdateTargetID()
-	})
-}
-
-// ClearTargetID clears the value of the "target_id" field.
-func (u *PermissionApiUpsertBulk) ClearTargetID() *PermissionApiUpsertBulk {
-	return u.Update(func(s *PermissionApiUpsert) {
-		s.ClearTargetID()
+		s.UpdateAPIID()
 	})
 }
 

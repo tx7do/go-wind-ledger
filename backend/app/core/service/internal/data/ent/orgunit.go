@@ -3,6 +3,7 @@
 package ent
 
 import (
+	"encoding/json"
 	"fmt"
 	"go-wind-ledger/app/core/service/internal/data/ent/orgunit"
 	"strings"
@@ -44,54 +45,48 @@ type OrgUnit struct {
 	ParentID *uint32 `json:"parent_id,omitempty"`
 	// 树路径，规范： 根节点: /，非根节点: /1/2/3/（以 / 开头且以 / 结尾）。禁止空字符串（NULL 表示未设置）。
 	Path *string `json:"path,omitempty"`
-	// Code holds the value of the "code" field.
-	Code *string `json:"code,omitempty"`
-	// Name holds the value of the "name" field.
+	// 名称
 	Name *string `json:"name,omitempty"`
-	// Type holds the value of the "type" field.
-	Type *string `json:"type,omitempty"`
-	// IsLegalEntity holds the value of the "is_legal_entity" field.
-	IsLegalEntity *bool `json:"is_legal_entity,omitempty"`
-	// ExternalID holds the value of the "external_id" field.
-	ExternalID *string `json:"external_id,omitempty"`
-	// LegalEntityOrgID holds the value of the "legal_entity_org_id" field.
-	LegalEntityOrgID *uint32 `json:"legal_entity_org_id,omitempty"`
-	// TaxID holds the value of the "tax_id" field.
-	TaxID *string `json:"tax_id,omitempty"`
-	// RegistrationNumber holds the value of the "registration_number" field.
-	RegistrationNumber *string `json:"registration_number,omitempty"`
-	// LeaderID holds the value of the "leader_id" field.
+	// 唯一编码（可用于导入/识别）
+	Code *string `json:"code,omitempty"`
+	// 负责人用户ID
 	LeaderID *uint32 `json:"leader_id,omitempty"`
-	// ContactUserID holds the value of the "contact_user_id" field.
-	ContactUserID *uint32 `json:"contact_user_id,omitempty"`
-	// StartAt holds the value of the "start_at" field.
-	StartAt *time.Time `json:"start_at,omitempty"`
-	// EndAt holds the value of the "end_at" field.
-	EndAt *time.Time `json:"end_at,omitempty"`
-	// Address holds the value of the "address" field.
+	// 组织类型
+	Type *orgunit.Type `json:"type,omitempty"`
+	// 组织的业务范围/服务条线
+	BusinessScopes []string `json:"business_scopes,omitempty"`
+	// 外部系统ID
+	ExternalID *string `json:"external_id,omitempty"`
+	// 是否为法定主体
+	IsLegalEntity *bool `json:"is_legal_entity,omitempty"`
+	// 注册号/统一社会信用代码
+	RegistrationNumber *string `json:"registration_number,omitempty"`
+	// 税号
+	TaxID *string `json:"tax_id,omitempty"`
+	// 关联的法定主体组织ID
+	LegalEntityOrgID *uint32 `json:"legal_entity_org_id,omitempty"`
+	// 详细地址
 	Address *string `json:"address,omitempty"`
-	// Phone holds the value of the "phone" field.
+	// 联系电话
 	Phone *string `json:"phone,omitempty"`
-	// Email holds the value of the "email" field.
+	// 联系邮箱
 	Email *string `json:"email,omitempty"`
-	// Website holds the value of the "website" field.
-	Website *string `json:"website,omitempty"`
-	// Timezone holds the value of the "timezone" field.
+	// 时区
 	Timezone *string `json:"timezone,omitempty"`
-	// Region holds the value of the "region" field.
-	Region *string `json:"region,omitempty"`
-	// Country holds the value of the "country" field.
+	// 国家/地区代码
 	Country *string `json:"country,omitempty"`
-	// City holds the value of the "city" field.
-	City *string `json:"city,omitempty"`
-	// PostalCode holds the value of the "postal_code" field.
-	PostalCode *string `json:"postal_code,omitempty"`
-	// Latitude holds the value of the "latitude" field.
+	// 纬度
 	Latitude *float64 `json:"latitude,omitempty"`
-	// Longitude holds the value of the "longitude" field.
+	// 经度
 	Longitude *float64 `json:"longitude,omitempty"`
-	// Logo holds the value of the "logo" field.
-	Logo *string `json:"logo,omitempty"`
+	// 生效时间（UTC）
+	StartAt *time.Time `json:"start_at,omitempty"`
+	// 结束有效期（UTC）
+	EndAt *time.Time `json:"end_at,omitempty"`
+	// 业务联系人用户ID
+	ContactUserID *uint32 `json:"contact_user_id,omitempty"`
+	// 与权限/角色映射的标签
+	PermissionTags []string `json:"permission_tags,omitempty"`
 	// Edges holds the relations/edges for other nodes in the graph.
 	// The values are being populated by the OrgUnitQuery when eager-loading is set.
 	Edges        OrgUnitEdges `json:"edges"`
@@ -134,13 +129,15 @@ func (*OrgUnit) scanValues(columns []string) ([]any, error) {
 	values := make([]any, len(columns))
 	for i := range columns {
 		switch columns[i] {
+		case orgunit.FieldBusinessScopes, orgunit.FieldPermissionTags:
+			values[i] = new([]byte)
 		case orgunit.FieldIsLegalEntity:
 			values[i] = new(sql.NullBool)
 		case orgunit.FieldLatitude, orgunit.FieldLongitude:
 			values[i] = new(sql.NullFloat64)
-		case orgunit.FieldID, orgunit.FieldCreatedBy, orgunit.FieldUpdatedBy, orgunit.FieldDeletedBy, orgunit.FieldSortOrder, orgunit.FieldTenantID, orgunit.FieldParentID, orgunit.FieldLegalEntityOrgID, orgunit.FieldLeaderID, orgunit.FieldContactUserID:
+		case orgunit.FieldID, orgunit.FieldCreatedBy, orgunit.FieldUpdatedBy, orgunit.FieldDeletedBy, orgunit.FieldSortOrder, orgunit.FieldTenantID, orgunit.FieldParentID, orgunit.FieldLeaderID, orgunit.FieldLegalEntityOrgID, orgunit.FieldContactUserID:
 			values[i] = new(sql.NullInt64)
-		case orgunit.FieldStatus, orgunit.FieldRemark, orgunit.FieldDescription, orgunit.FieldPath, orgunit.FieldCode, orgunit.FieldName, orgunit.FieldType, orgunit.FieldExternalID, orgunit.FieldTaxID, orgunit.FieldRegistrationNumber, orgunit.FieldAddress, orgunit.FieldPhone, orgunit.FieldEmail, orgunit.FieldWebsite, orgunit.FieldTimezone, orgunit.FieldRegion, orgunit.FieldCountry, orgunit.FieldCity, orgunit.FieldPostalCode, orgunit.FieldLogo:
+		case orgunit.FieldStatus, orgunit.FieldRemark, orgunit.FieldDescription, orgunit.FieldPath, orgunit.FieldName, orgunit.FieldCode, orgunit.FieldType, orgunit.FieldExternalID, orgunit.FieldRegistrationNumber, orgunit.FieldTaxID, orgunit.FieldAddress, orgunit.FieldPhone, orgunit.FieldEmail, orgunit.FieldTimezone, orgunit.FieldCountry:
 			values[i] = new(sql.NullString)
 		case orgunit.FieldCreatedAt, orgunit.FieldUpdatedAt, orgunit.FieldDeletedAt, orgunit.FieldStartAt, orgunit.FieldEndAt:
 			values[i] = new(sql.NullTime)
@@ -256,13 +253,6 @@ func (_m *OrgUnit) assignValues(columns []string, values []any) error {
 				_m.Path = new(string)
 				*_m.Path = value.String
 			}
-		case orgunit.FieldCode:
-			if value, ok := values[i].(*sql.NullString); !ok {
-				return fmt.Errorf("unexpected type %T for field code", values[i])
-			} else if value.Valid {
-				_m.Code = new(string)
-				*_m.Code = value.String
-			}
 		case orgunit.FieldName:
 			if value, ok := values[i].(*sql.NullString); !ok {
 				return fmt.Errorf("unexpected type %T for field name", values[i])
@@ -270,47 +260,12 @@ func (_m *OrgUnit) assignValues(columns []string, values []any) error {
 				_m.Name = new(string)
 				*_m.Name = value.String
 			}
-		case orgunit.FieldType:
+		case orgunit.FieldCode:
 			if value, ok := values[i].(*sql.NullString); !ok {
-				return fmt.Errorf("unexpected type %T for field type", values[i])
+				return fmt.Errorf("unexpected type %T for field code", values[i])
 			} else if value.Valid {
-				_m.Type = new(string)
-				*_m.Type = value.String
-			}
-		case orgunit.FieldIsLegalEntity:
-			if value, ok := values[i].(*sql.NullBool); !ok {
-				return fmt.Errorf("unexpected type %T for field is_legal_entity", values[i])
-			} else if value.Valid {
-				_m.IsLegalEntity = new(bool)
-				*_m.IsLegalEntity = value.Bool
-			}
-		case orgunit.FieldExternalID:
-			if value, ok := values[i].(*sql.NullString); !ok {
-				return fmt.Errorf("unexpected type %T for field external_id", values[i])
-			} else if value.Valid {
-				_m.ExternalID = new(string)
-				*_m.ExternalID = value.String
-			}
-		case orgunit.FieldLegalEntityOrgID:
-			if value, ok := values[i].(*sql.NullInt64); !ok {
-				return fmt.Errorf("unexpected type %T for field legal_entity_org_id", values[i])
-			} else if value.Valid {
-				_m.LegalEntityOrgID = new(uint32)
-				*_m.LegalEntityOrgID = uint32(value.Int64)
-			}
-		case orgunit.FieldTaxID:
-			if value, ok := values[i].(*sql.NullString); !ok {
-				return fmt.Errorf("unexpected type %T for field tax_id", values[i])
-			} else if value.Valid {
-				_m.TaxID = new(string)
-				*_m.TaxID = value.String
-			}
-		case orgunit.FieldRegistrationNumber:
-			if value, ok := values[i].(*sql.NullString); !ok {
-				return fmt.Errorf("unexpected type %T for field registration_number", values[i])
-			} else if value.Valid {
-				_m.RegistrationNumber = new(string)
-				*_m.RegistrationNumber = value.String
+				_m.Code = new(string)
+				*_m.Code = value.String
 			}
 		case orgunit.FieldLeaderID:
 			if value, ok := values[i].(*sql.NullInt64); !ok {
@@ -319,26 +274,55 @@ func (_m *OrgUnit) assignValues(columns []string, values []any) error {
 				_m.LeaderID = new(uint32)
 				*_m.LeaderID = uint32(value.Int64)
 			}
-		case orgunit.FieldContactUserID:
+		case orgunit.FieldType:
+			if value, ok := values[i].(*sql.NullString); !ok {
+				return fmt.Errorf("unexpected type %T for field type", values[i])
+			} else if value.Valid {
+				_m.Type = new(orgunit.Type)
+				*_m.Type = orgunit.Type(value.String)
+			}
+		case orgunit.FieldBusinessScopes:
+			if value, ok := values[i].(*[]byte); !ok {
+				return fmt.Errorf("unexpected type %T for field business_scopes", values[i])
+			} else if value != nil && len(*value) > 0 {
+				if err := json.Unmarshal(*value, &_m.BusinessScopes); err != nil {
+					return fmt.Errorf("unmarshal field business_scopes: %w", err)
+				}
+			}
+		case orgunit.FieldExternalID:
+			if value, ok := values[i].(*sql.NullString); !ok {
+				return fmt.Errorf("unexpected type %T for field external_id", values[i])
+			} else if value.Valid {
+				_m.ExternalID = new(string)
+				*_m.ExternalID = value.String
+			}
+		case orgunit.FieldIsLegalEntity:
+			if value, ok := values[i].(*sql.NullBool); !ok {
+				return fmt.Errorf("unexpected type %T for field is_legal_entity", values[i])
+			} else if value.Valid {
+				_m.IsLegalEntity = new(bool)
+				*_m.IsLegalEntity = value.Bool
+			}
+		case orgunit.FieldRegistrationNumber:
+			if value, ok := values[i].(*sql.NullString); !ok {
+				return fmt.Errorf("unexpected type %T for field registration_number", values[i])
+			} else if value.Valid {
+				_m.RegistrationNumber = new(string)
+				*_m.RegistrationNumber = value.String
+			}
+		case orgunit.FieldTaxID:
+			if value, ok := values[i].(*sql.NullString); !ok {
+				return fmt.Errorf("unexpected type %T for field tax_id", values[i])
+			} else if value.Valid {
+				_m.TaxID = new(string)
+				*_m.TaxID = value.String
+			}
+		case orgunit.FieldLegalEntityOrgID:
 			if value, ok := values[i].(*sql.NullInt64); !ok {
-				return fmt.Errorf("unexpected type %T for field contact_user_id", values[i])
+				return fmt.Errorf("unexpected type %T for field legal_entity_org_id", values[i])
 			} else if value.Valid {
-				_m.ContactUserID = new(uint32)
-				*_m.ContactUserID = uint32(value.Int64)
-			}
-		case orgunit.FieldStartAt:
-			if value, ok := values[i].(*sql.NullTime); !ok {
-				return fmt.Errorf("unexpected type %T for field start_at", values[i])
-			} else if value.Valid {
-				_m.StartAt = new(time.Time)
-				*_m.StartAt = value.Time
-			}
-		case orgunit.FieldEndAt:
-			if value, ok := values[i].(*sql.NullTime); !ok {
-				return fmt.Errorf("unexpected type %T for field end_at", values[i])
-			} else if value.Valid {
-				_m.EndAt = new(time.Time)
-				*_m.EndAt = value.Time
+				_m.LegalEntityOrgID = new(uint32)
+				*_m.LegalEntityOrgID = uint32(value.Int64)
 			}
 		case orgunit.FieldAddress:
 			if value, ok := values[i].(*sql.NullString); !ok {
@@ -361,13 +345,6 @@ func (_m *OrgUnit) assignValues(columns []string, values []any) error {
 				_m.Email = new(string)
 				*_m.Email = value.String
 			}
-		case orgunit.FieldWebsite:
-			if value, ok := values[i].(*sql.NullString); !ok {
-				return fmt.Errorf("unexpected type %T for field website", values[i])
-			} else if value.Valid {
-				_m.Website = new(string)
-				*_m.Website = value.String
-			}
 		case orgunit.FieldTimezone:
 			if value, ok := values[i].(*sql.NullString); !ok {
 				return fmt.Errorf("unexpected type %T for field timezone", values[i])
@@ -375,33 +352,12 @@ func (_m *OrgUnit) assignValues(columns []string, values []any) error {
 				_m.Timezone = new(string)
 				*_m.Timezone = value.String
 			}
-		case orgunit.FieldRegion:
-			if value, ok := values[i].(*sql.NullString); !ok {
-				return fmt.Errorf("unexpected type %T for field region", values[i])
-			} else if value.Valid {
-				_m.Region = new(string)
-				*_m.Region = value.String
-			}
 		case orgunit.FieldCountry:
 			if value, ok := values[i].(*sql.NullString); !ok {
 				return fmt.Errorf("unexpected type %T for field country", values[i])
 			} else if value.Valid {
 				_m.Country = new(string)
 				*_m.Country = value.String
-			}
-		case orgunit.FieldCity:
-			if value, ok := values[i].(*sql.NullString); !ok {
-				return fmt.Errorf("unexpected type %T for field city", values[i])
-			} else if value.Valid {
-				_m.City = new(string)
-				*_m.City = value.String
-			}
-		case orgunit.FieldPostalCode:
-			if value, ok := values[i].(*sql.NullString); !ok {
-				return fmt.Errorf("unexpected type %T for field postal_code", values[i])
-			} else if value.Valid {
-				_m.PostalCode = new(string)
-				*_m.PostalCode = value.String
 			}
 		case orgunit.FieldLatitude:
 			if value, ok := values[i].(*sql.NullFloat64); !ok {
@@ -417,12 +373,34 @@ func (_m *OrgUnit) assignValues(columns []string, values []any) error {
 				_m.Longitude = new(float64)
 				*_m.Longitude = value.Float64
 			}
-		case orgunit.FieldLogo:
-			if value, ok := values[i].(*sql.NullString); !ok {
-				return fmt.Errorf("unexpected type %T for field logo", values[i])
+		case orgunit.FieldStartAt:
+			if value, ok := values[i].(*sql.NullTime); !ok {
+				return fmt.Errorf("unexpected type %T for field start_at", values[i])
 			} else if value.Valid {
-				_m.Logo = new(string)
-				*_m.Logo = value.String
+				_m.StartAt = new(time.Time)
+				*_m.StartAt = value.Time
+			}
+		case orgunit.FieldEndAt:
+			if value, ok := values[i].(*sql.NullTime); !ok {
+				return fmt.Errorf("unexpected type %T for field end_at", values[i])
+			} else if value.Valid {
+				_m.EndAt = new(time.Time)
+				*_m.EndAt = value.Time
+			}
+		case orgunit.FieldContactUserID:
+			if value, ok := values[i].(*sql.NullInt64); !ok {
+				return fmt.Errorf("unexpected type %T for field contact_user_id", values[i])
+			} else if value.Valid {
+				_m.ContactUserID = new(uint32)
+				*_m.ContactUserID = uint32(value.Int64)
+			}
+		case orgunit.FieldPermissionTags:
+			if value, ok := values[i].(*[]byte); !ok {
+				return fmt.Errorf("unexpected type %T for field permission_tags", values[i])
+			} else if value != nil && len(*value) > 0 {
+				if err := json.Unmarshal(*value, &_m.PermissionTags); err != nil {
+					return fmt.Errorf("unmarshal field permission_tags: %w", err)
+				}
 			}
 		default:
 			_m.selectValues.Set(columns[i], values[i])
@@ -535,43 +513,13 @@ func (_m *OrgUnit) String() string {
 		builder.WriteString(*v)
 	}
 	builder.WriteString(", ")
-	if v := _m.Code; v != nil {
-		builder.WriteString("code=")
-		builder.WriteString(*v)
-	}
-	builder.WriteString(", ")
 	if v := _m.Name; v != nil {
 		builder.WriteString("name=")
 		builder.WriteString(*v)
 	}
 	builder.WriteString(", ")
-	if v := _m.Type; v != nil {
-		builder.WriteString("type=")
-		builder.WriteString(*v)
-	}
-	builder.WriteString(", ")
-	if v := _m.IsLegalEntity; v != nil {
-		builder.WriteString("is_legal_entity=")
-		builder.WriteString(fmt.Sprintf("%v", *v))
-	}
-	builder.WriteString(", ")
-	if v := _m.ExternalID; v != nil {
-		builder.WriteString("external_id=")
-		builder.WriteString(*v)
-	}
-	builder.WriteString(", ")
-	if v := _m.LegalEntityOrgID; v != nil {
-		builder.WriteString("legal_entity_org_id=")
-		builder.WriteString(fmt.Sprintf("%v", *v))
-	}
-	builder.WriteString(", ")
-	if v := _m.TaxID; v != nil {
-		builder.WriteString("tax_id=")
-		builder.WriteString(*v)
-	}
-	builder.WriteString(", ")
-	if v := _m.RegistrationNumber; v != nil {
-		builder.WriteString("registration_number=")
+	if v := _m.Code; v != nil {
+		builder.WriteString("code=")
 		builder.WriteString(*v)
 	}
 	builder.WriteString(", ")
@@ -580,19 +528,37 @@ func (_m *OrgUnit) String() string {
 		builder.WriteString(fmt.Sprintf("%v", *v))
 	}
 	builder.WriteString(", ")
-	if v := _m.ContactUserID; v != nil {
-		builder.WriteString("contact_user_id=")
+	if v := _m.Type; v != nil {
+		builder.WriteString("type=")
 		builder.WriteString(fmt.Sprintf("%v", *v))
 	}
 	builder.WriteString(", ")
-	if v := _m.StartAt; v != nil {
-		builder.WriteString("start_at=")
-		builder.WriteString(v.Format(time.ANSIC))
+	builder.WriteString("business_scopes=")
+	builder.WriteString(fmt.Sprintf("%v", _m.BusinessScopes))
+	builder.WriteString(", ")
+	if v := _m.ExternalID; v != nil {
+		builder.WriteString("external_id=")
+		builder.WriteString(*v)
 	}
 	builder.WriteString(", ")
-	if v := _m.EndAt; v != nil {
-		builder.WriteString("end_at=")
-		builder.WriteString(v.Format(time.ANSIC))
+	if v := _m.IsLegalEntity; v != nil {
+		builder.WriteString("is_legal_entity=")
+		builder.WriteString(fmt.Sprintf("%v", *v))
+	}
+	builder.WriteString(", ")
+	if v := _m.RegistrationNumber; v != nil {
+		builder.WriteString("registration_number=")
+		builder.WriteString(*v)
+	}
+	builder.WriteString(", ")
+	if v := _m.TaxID; v != nil {
+		builder.WriteString("tax_id=")
+		builder.WriteString(*v)
+	}
+	builder.WriteString(", ")
+	if v := _m.LegalEntityOrgID; v != nil {
+		builder.WriteString("legal_entity_org_id=")
+		builder.WriteString(fmt.Sprintf("%v", *v))
 	}
 	builder.WriteString(", ")
 	if v := _m.Address; v != nil {
@@ -610,33 +576,13 @@ func (_m *OrgUnit) String() string {
 		builder.WriteString(*v)
 	}
 	builder.WriteString(", ")
-	if v := _m.Website; v != nil {
-		builder.WriteString("website=")
-		builder.WriteString(*v)
-	}
-	builder.WriteString(", ")
 	if v := _m.Timezone; v != nil {
 		builder.WriteString("timezone=")
 		builder.WriteString(*v)
 	}
 	builder.WriteString(", ")
-	if v := _m.Region; v != nil {
-		builder.WriteString("region=")
-		builder.WriteString(*v)
-	}
-	builder.WriteString(", ")
 	if v := _m.Country; v != nil {
 		builder.WriteString("country=")
-		builder.WriteString(*v)
-	}
-	builder.WriteString(", ")
-	if v := _m.City; v != nil {
-		builder.WriteString("city=")
-		builder.WriteString(*v)
-	}
-	builder.WriteString(", ")
-	if v := _m.PostalCode; v != nil {
-		builder.WriteString("postal_code=")
 		builder.WriteString(*v)
 	}
 	builder.WriteString(", ")
@@ -650,10 +596,23 @@ func (_m *OrgUnit) String() string {
 		builder.WriteString(fmt.Sprintf("%v", *v))
 	}
 	builder.WriteString(", ")
-	if v := _m.Logo; v != nil {
-		builder.WriteString("logo=")
-		builder.WriteString(*v)
+	if v := _m.StartAt; v != nil {
+		builder.WriteString("start_at=")
+		builder.WriteString(v.Format(time.ANSIC))
 	}
+	builder.WriteString(", ")
+	if v := _m.EndAt; v != nil {
+		builder.WriteString("end_at=")
+		builder.WriteString(v.Format(time.ANSIC))
+	}
+	builder.WriteString(", ")
+	if v := _m.ContactUserID; v != nil {
+		builder.WriteString("contact_user_id=")
+		builder.WriteString(fmt.Sprintf("%v", *v))
+	}
+	builder.WriteString(", ")
+	builder.WriteString("permission_tags=")
+	builder.WriteString(fmt.Sprintf("%v", _m.PermissionTags))
 	builder.WriteByte(')')
 	return builder.String()
 }

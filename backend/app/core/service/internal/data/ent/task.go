@@ -5,6 +5,7 @@ package ent
 import (
 	"encoding/json"
 	"fmt"
+	taskpb "go-wind-ledger/api/gen/go/task/service/v1"
 	"go-wind-ledger/app/core/service/internal/data/ent/task"
 	"strings"
 	"time"
@@ -31,29 +32,21 @@ type Task struct {
 	UpdatedBy *uint32 `json:"updated_by,omitempty"`
 	// 删除者ID
 	DeletedBy *uint32 `json:"deleted_by,omitempty"`
-	// 租户ID
-	TenantID *uint32 `json:"tenant_id,omitempty"`
 	// 备注
 	Remark *string `json:"remark,omitempty"`
-	// Name holds the value of the "name" field.
-	Name *string `json:"name,omitempty"`
-	// TypeName holds the value of the "type_name" field.
-	TypeName *string `json:"type_name,omitempty"`
-	// CronSpec holds the value of the "cron_spec" field.
-	CronSpec *string `json:"cron_spec,omitempty"`
-	// TaskPayload holds the value of the "task_payload" field.
-	TaskPayload *string `json:"task_payload,omitempty"`
-	// TaskOptions holds the value of the "task_options" field.
-	TaskOptions *map[string]string `json:"task_options,omitempty"`
-	// Type holds the value of the "type" field.
+	// 租户ID
+	TenantID *uint32 `json:"tenant_id,omitempty"`
+	// 任务类型
 	Type *task.Type `json:"type,omitempty"`
-	// CronExpr holds the value of the "cron_expr" field.
-	CronExpr *string `json:"cron_expr,omitempty"`
-	// Handler holds the value of the "handler" field.
-	Handler *string `json:"handler,omitempty"`
-	// Params holds the value of the "params" field.
-	Params *map[string]string `json:"params,omitempty"`
-	// Enable holds the value of the "enable" field.
+	// 任务执行类型名
+	TypeName *string `json:"type_name,omitempty"`
+	// 任务数据
+	TaskPayload *string `json:"task_payload,omitempty"`
+	// cron表达式
+	CronSpec *string `json:"cron_spec,omitempty"`
+	// 任务选项
+	TaskOptions *taskpb.TaskOption `json:"task_options,omitempty"`
+	// 启用/禁用任务
 	Enable       *bool `json:"enable,omitempty"`
 	selectValues sql.SelectValues
 }
@@ -63,13 +56,13 @@ func (*Task) scanValues(columns []string) ([]any, error) {
 	values := make([]any, len(columns))
 	for i := range columns {
 		switch columns[i] {
-		case task.FieldTaskOptions, task.FieldParams:
+		case task.FieldTaskOptions:
 			values[i] = new([]byte)
 		case task.FieldEnable:
 			values[i] = new(sql.NullBool)
 		case task.FieldID, task.FieldCreatedBy, task.FieldUpdatedBy, task.FieldDeletedBy, task.FieldTenantID:
 			values[i] = new(sql.NullInt64)
-		case task.FieldRemark, task.FieldName, task.FieldTypeName, task.FieldCronSpec, task.FieldTaskPayload, task.FieldType, task.FieldCronExpr, task.FieldHandler:
+		case task.FieldRemark, task.FieldType, task.FieldTypeName, task.FieldTaskPayload, task.FieldCronSpec:
 			values[i] = new(sql.NullString)
 		case task.FieldCreatedAt, task.FieldUpdatedAt, task.FieldDeletedAt:
 			values[i] = new(sql.NullTime)
@@ -136,13 +129,6 @@ func (_m *Task) assignValues(columns []string, values []any) error {
 				_m.DeletedBy = new(uint32)
 				*_m.DeletedBy = uint32(value.Int64)
 			}
-		case task.FieldTenantID:
-			if value, ok := values[i].(*sql.NullInt64); !ok {
-				return fmt.Errorf("unexpected type %T for field tenant_id", values[i])
-			} else if value.Valid {
-				_m.TenantID = new(uint32)
-				*_m.TenantID = uint32(value.Int64)
-			}
 		case task.FieldRemark:
 			if value, ok := values[i].(*sql.NullString); !ok {
 				return fmt.Errorf("unexpected type %T for field remark", values[i])
@@ -150,41 +136,12 @@ func (_m *Task) assignValues(columns []string, values []any) error {
 				_m.Remark = new(string)
 				*_m.Remark = value.String
 			}
-		case task.FieldName:
-			if value, ok := values[i].(*sql.NullString); !ok {
-				return fmt.Errorf("unexpected type %T for field name", values[i])
+		case task.FieldTenantID:
+			if value, ok := values[i].(*sql.NullInt64); !ok {
+				return fmt.Errorf("unexpected type %T for field tenant_id", values[i])
 			} else if value.Valid {
-				_m.Name = new(string)
-				*_m.Name = value.String
-			}
-		case task.FieldTypeName:
-			if value, ok := values[i].(*sql.NullString); !ok {
-				return fmt.Errorf("unexpected type %T for field type_name", values[i])
-			} else if value.Valid {
-				_m.TypeName = new(string)
-				*_m.TypeName = value.String
-			}
-		case task.FieldCronSpec:
-			if value, ok := values[i].(*sql.NullString); !ok {
-				return fmt.Errorf("unexpected type %T for field cron_spec", values[i])
-			} else if value.Valid {
-				_m.CronSpec = new(string)
-				*_m.CronSpec = value.String
-			}
-		case task.FieldTaskPayload:
-			if value, ok := values[i].(*sql.NullString); !ok {
-				return fmt.Errorf("unexpected type %T for field task_payload", values[i])
-			} else if value.Valid {
-				_m.TaskPayload = new(string)
-				*_m.TaskPayload = value.String
-			}
-		case task.FieldTaskOptions:
-			if value, ok := values[i].(*[]byte); !ok {
-				return fmt.Errorf("unexpected type %T for field task_options", values[i])
-			} else if value != nil && len(*value) > 0 {
-				if err := json.Unmarshal(*value, &_m.TaskOptions); err != nil {
-					return fmt.Errorf("unmarshal field task_options: %w", err)
-				}
+				_m.TenantID = new(uint32)
+				*_m.TenantID = uint32(value.Int64)
 			}
 		case task.FieldType:
 			if value, ok := values[i].(*sql.NullString); !ok {
@@ -193,26 +150,33 @@ func (_m *Task) assignValues(columns []string, values []any) error {
 				_m.Type = new(task.Type)
 				*_m.Type = task.Type(value.String)
 			}
-		case task.FieldCronExpr:
+		case task.FieldTypeName:
 			if value, ok := values[i].(*sql.NullString); !ok {
-				return fmt.Errorf("unexpected type %T for field cron_expr", values[i])
+				return fmt.Errorf("unexpected type %T for field type_name", values[i])
 			} else if value.Valid {
-				_m.CronExpr = new(string)
-				*_m.CronExpr = value.String
+				_m.TypeName = new(string)
+				*_m.TypeName = value.String
 			}
-		case task.FieldHandler:
+		case task.FieldTaskPayload:
 			if value, ok := values[i].(*sql.NullString); !ok {
-				return fmt.Errorf("unexpected type %T for field handler", values[i])
+				return fmt.Errorf("unexpected type %T for field task_payload", values[i])
 			} else if value.Valid {
-				_m.Handler = new(string)
-				*_m.Handler = value.String
+				_m.TaskPayload = new(string)
+				*_m.TaskPayload = value.String
 			}
-		case task.FieldParams:
+		case task.FieldCronSpec:
+			if value, ok := values[i].(*sql.NullString); !ok {
+				return fmt.Errorf("unexpected type %T for field cron_spec", values[i])
+			} else if value.Valid {
+				_m.CronSpec = new(string)
+				*_m.CronSpec = value.String
+			}
+		case task.FieldTaskOptions:
 			if value, ok := values[i].(*[]byte); !ok {
-				return fmt.Errorf("unexpected type %T for field params", values[i])
+				return fmt.Errorf("unexpected type %T for field task_options", values[i])
 			} else if value != nil && len(*value) > 0 {
-				if err := json.Unmarshal(*value, &_m.Params); err != nil {
-					return fmt.Errorf("unmarshal field params: %w", err)
+				if err := json.Unmarshal(*value, &_m.TaskOptions); err != nil {
+					return fmt.Errorf("unmarshal field task_options: %w", err)
 				}
 			}
 		case task.FieldEnable:
@@ -288,28 +252,23 @@ func (_m *Task) String() string {
 		builder.WriteString(fmt.Sprintf("%v", *v))
 	}
 	builder.WriteString(", ")
-	if v := _m.TenantID; v != nil {
-		builder.WriteString("tenant_id=")
-		builder.WriteString(fmt.Sprintf("%v", *v))
-	}
-	builder.WriteString(", ")
 	if v := _m.Remark; v != nil {
 		builder.WriteString("remark=")
 		builder.WriteString(*v)
 	}
 	builder.WriteString(", ")
-	if v := _m.Name; v != nil {
-		builder.WriteString("name=")
-		builder.WriteString(*v)
+	if v := _m.TenantID; v != nil {
+		builder.WriteString("tenant_id=")
+		builder.WriteString(fmt.Sprintf("%v", *v))
+	}
+	builder.WriteString(", ")
+	if v := _m.Type; v != nil {
+		builder.WriteString("type=")
+		builder.WriteString(fmt.Sprintf("%v", *v))
 	}
 	builder.WriteString(", ")
 	if v := _m.TypeName; v != nil {
 		builder.WriteString("type_name=")
-		builder.WriteString(*v)
-	}
-	builder.WriteString(", ")
-	if v := _m.CronSpec; v != nil {
-		builder.WriteString("cron_spec=")
 		builder.WriteString(*v)
 	}
 	builder.WriteString(", ")
@@ -318,26 +277,13 @@ func (_m *Task) String() string {
 		builder.WriteString(*v)
 	}
 	builder.WriteString(", ")
+	if v := _m.CronSpec; v != nil {
+		builder.WriteString("cron_spec=")
+		builder.WriteString(*v)
+	}
+	builder.WriteString(", ")
 	builder.WriteString("task_options=")
 	builder.WriteString(fmt.Sprintf("%v", _m.TaskOptions))
-	builder.WriteString(", ")
-	if v := _m.Type; v != nil {
-		builder.WriteString("type=")
-		builder.WriteString(fmt.Sprintf("%v", *v))
-	}
-	builder.WriteString(", ")
-	if v := _m.CronExpr; v != nil {
-		builder.WriteString("cron_expr=")
-		builder.WriteString(*v)
-	}
-	builder.WriteString(", ")
-	if v := _m.Handler; v != nil {
-		builder.WriteString("handler=")
-		builder.WriteString(*v)
-	}
-	builder.WriteString(", ")
-	builder.WriteString("params=")
-	builder.WriteString(fmt.Sprintf("%v", _m.Params))
 	builder.WriteString(", ")
 	if v := _m.Enable; v != nil {
 		builder.WriteString("enable=")

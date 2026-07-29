@@ -14,35 +14,59 @@ const (
 	FieldID = "id"
 	// FieldCreatedAt holds the string denoting the created_at field in the database.
 	FieldCreatedAt = "created_at"
-	// FieldUpdatedAt holds the string denoting the updated_at field in the database.
-	FieldUpdatedAt = "updated_at"
-	// FieldDeletedAt holds the string denoting the deleted_at field in the database.
-	FieldDeletedAt = "deleted_at"
 	// FieldTenantID holds the string denoting the tenant_id field in the database.
 	FieldTenantID = "tenant_id"
-	// FieldOperatorID holds the string denoting the operator_id field in the database.
-	FieldOperatorID = "operator_id"
-	// FieldPolicy holds the string denoting the policy field in the database.
-	FieldPolicy = "policy"
+	// FieldUserID holds the string denoting the user_id field in the database.
+	FieldUserID = "user_id"
+	// FieldMembershipID holds the string denoting the membership_id field in the database.
+	FieldMembershipID = "membership_id"
+	// FieldPermissionID holds the string denoting the permission_id field in the database.
+	FieldPermissionID = "permission_id"
+	// FieldPolicyID holds the string denoting the policy_id field in the database.
+	FieldPolicyID = "policy_id"
+	// FieldRequestPath holds the string denoting the request_path field in the database.
+	FieldRequestPath = "request_path"
+	// FieldRequestMethod holds the string denoting the request_method field in the database.
+	FieldRequestMethod = "request_method"
 	// FieldResult holds the string denoting the result field in the database.
 	FieldResult = "result"
-	// FieldEvaluatedAt holds the string denoting the evaluated_at field in the database.
-	FieldEvaluatedAt = "evaluated_at"
+	// FieldEffectDetails holds the string denoting the effect_details field in the database.
+	FieldEffectDetails = "effect_details"
+	// FieldScopeSQL holds the string denoting the scope_sql field in the database.
+	FieldScopeSQL = "scope_sql"
+	// FieldIPAddress holds the string denoting the ip_address field in the database.
+	FieldIPAddress = "ip_address"
+	// FieldTraceID holds the string denoting the trace_id field in the database.
+	FieldTraceID = "trace_id"
+	// FieldEvaluationContext holds the string denoting the evaluation_context field in the database.
+	FieldEvaluationContext = "evaluation_context"
+	// FieldLogHash holds the string denoting the log_hash field in the database.
+	FieldLogHash = "log_hash"
+	// FieldSignature holds the string denoting the signature field in the database.
+	FieldSignature = "signature"
 	// Table holds the table name of the policyevaluationlog in the database.
-	Table = "policy_evaluation_logs"
+	Table = "sys_policy_evaluation_logs"
 )
 
 // Columns holds all SQL columns for policyevaluationlog fields.
 var Columns = []string{
 	FieldID,
 	FieldCreatedAt,
-	FieldUpdatedAt,
-	FieldDeletedAt,
 	FieldTenantID,
-	FieldOperatorID,
-	FieldPolicy,
+	FieldUserID,
+	FieldMembershipID,
+	FieldPermissionID,
+	FieldPolicyID,
+	FieldRequestPath,
+	FieldRequestMethod,
 	FieldResult,
-	FieldEvaluatedAt,
+	FieldEffectDetails,
+	FieldScopeSQL,
+	FieldIPAddress,
+	FieldTraceID,
+	FieldEvaluationContext,
+	FieldLogHash,
+	FieldSignature,
 }
 
 // ValidColumn reports if the column name is valid (part of the table columns).
@@ -65,10 +89,8 @@ var (
 	Policy ent.Policy
 	// DefaultTenantID holds the default value on creation for the "tenant_id" field.
 	DefaultTenantID uint32
-	// PolicyValidator is a validator for the "policy" field. It is called by the builders before save.
-	PolicyValidator func(string) error
-	// ResultValidator is a validator for the "result" field. It is called by the builders before save.
-	ResultValidator func(string) error
+	// DefaultResult holds the default value on creation for the "result" field.
+	DefaultResult bool
 	// IDValidator is a validator for the "id" field. It is called by the builders before save.
 	IDValidator func(uint32) error
 )
@@ -86,29 +108,39 @@ func ByCreatedAt(opts ...sql.OrderTermOption) OrderOption {
 	return sql.OrderByField(FieldCreatedAt, opts...).ToFunc()
 }
 
-// ByUpdatedAt orders the results by the updated_at field.
-func ByUpdatedAt(opts ...sql.OrderTermOption) OrderOption {
-	return sql.OrderByField(FieldUpdatedAt, opts...).ToFunc()
-}
-
-// ByDeletedAt orders the results by the deleted_at field.
-func ByDeletedAt(opts ...sql.OrderTermOption) OrderOption {
-	return sql.OrderByField(FieldDeletedAt, opts...).ToFunc()
-}
-
 // ByTenantID orders the results by the tenant_id field.
 func ByTenantID(opts ...sql.OrderTermOption) OrderOption {
 	return sql.OrderByField(FieldTenantID, opts...).ToFunc()
 }
 
-// ByOperatorID orders the results by the operator_id field.
-func ByOperatorID(opts ...sql.OrderTermOption) OrderOption {
-	return sql.OrderByField(FieldOperatorID, opts...).ToFunc()
+// ByUserID orders the results by the user_id field.
+func ByUserID(opts ...sql.OrderTermOption) OrderOption {
+	return sql.OrderByField(FieldUserID, opts...).ToFunc()
 }
 
-// ByPolicy orders the results by the policy field.
-func ByPolicy(opts ...sql.OrderTermOption) OrderOption {
-	return sql.OrderByField(FieldPolicy, opts...).ToFunc()
+// ByMembershipID orders the results by the membership_id field.
+func ByMembershipID(opts ...sql.OrderTermOption) OrderOption {
+	return sql.OrderByField(FieldMembershipID, opts...).ToFunc()
+}
+
+// ByPermissionID orders the results by the permission_id field.
+func ByPermissionID(opts ...sql.OrderTermOption) OrderOption {
+	return sql.OrderByField(FieldPermissionID, opts...).ToFunc()
+}
+
+// ByPolicyID orders the results by the policy_id field.
+func ByPolicyID(opts ...sql.OrderTermOption) OrderOption {
+	return sql.OrderByField(FieldPolicyID, opts...).ToFunc()
+}
+
+// ByRequestPath orders the results by the request_path field.
+func ByRequestPath(opts ...sql.OrderTermOption) OrderOption {
+	return sql.OrderByField(FieldRequestPath, opts...).ToFunc()
+}
+
+// ByRequestMethod orders the results by the request_method field.
+func ByRequestMethod(opts ...sql.OrderTermOption) OrderOption {
+	return sql.OrderByField(FieldRequestMethod, opts...).ToFunc()
 }
 
 // ByResult orders the results by the result field.
@@ -116,7 +148,32 @@ func ByResult(opts ...sql.OrderTermOption) OrderOption {
 	return sql.OrderByField(FieldResult, opts...).ToFunc()
 }
 
-// ByEvaluatedAt orders the results by the evaluated_at field.
-func ByEvaluatedAt(opts ...sql.OrderTermOption) OrderOption {
-	return sql.OrderByField(FieldEvaluatedAt, opts...).ToFunc()
+// ByEffectDetails orders the results by the effect_details field.
+func ByEffectDetails(opts ...sql.OrderTermOption) OrderOption {
+	return sql.OrderByField(FieldEffectDetails, opts...).ToFunc()
+}
+
+// ByScopeSQL orders the results by the scope_sql field.
+func ByScopeSQL(opts ...sql.OrderTermOption) OrderOption {
+	return sql.OrderByField(FieldScopeSQL, opts...).ToFunc()
+}
+
+// ByIPAddress orders the results by the ip_address field.
+func ByIPAddress(opts ...sql.OrderTermOption) OrderOption {
+	return sql.OrderByField(FieldIPAddress, opts...).ToFunc()
+}
+
+// ByTraceID orders the results by the trace_id field.
+func ByTraceID(opts ...sql.OrderTermOption) OrderOption {
+	return sql.OrderByField(FieldTraceID, opts...).ToFunc()
+}
+
+// ByEvaluationContext orders the results by the evaluation_context field.
+func ByEvaluationContext(opts ...sql.OrderTermOption) OrderOption {
+	return sql.OrderByField(FieldEvaluationContext, opts...).ToFunc()
+}
+
+// ByLogHash orders the results by the log_hash field.
+func ByLogHash(opts ...sql.OrderTermOption) OrderOption {
+	return sql.OrderByField(FieldLogHash, opts...).ToFunc()
 }

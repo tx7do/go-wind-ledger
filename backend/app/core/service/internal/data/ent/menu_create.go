@@ -6,6 +6,7 @@ import (
 	"context"
 	"errors"
 	"fmt"
+	permissionpb "go-wind-ledger/api/gen/go/permission/service/v1"
 	"go-wind-ledger/app/core/service/internal/data/ent/menu"
 	"time"
 
@@ -148,16 +149,16 @@ func (_c *MenuCreate) SetNillableStatus(v *menu.Status) *MenuCreate {
 	return _c
 }
 
-// SetName sets the "name" field.
-func (_c *MenuCreate) SetName(v string) *MenuCreate {
-	_c.mutation.SetName(v)
+// SetType sets the "type" field.
+func (_c *MenuCreate) SetType(v menu.Type) *MenuCreate {
+	_c.mutation.SetType(v)
 	return _c
 }
 
-// SetNillableName sets the "name" field if the given value is not nil.
-func (_c *MenuCreate) SetNillableName(v *string) *MenuCreate {
+// SetNillableType sets the "type" field if the given value is not nil.
+func (_c *MenuCreate) SetNillableType(v *menu.Type) *MenuCreate {
 	if v != nil {
-		_c.SetName(*v)
+		_c.SetType(*v)
 	}
 	return _c
 }
@@ -176,16 +177,44 @@ func (_c *MenuCreate) SetNillablePath(v *string) *MenuCreate {
 	return _c
 }
 
-// SetIcon sets the "icon" field.
-func (_c *MenuCreate) SetIcon(v string) *MenuCreate {
-	_c.mutation.SetIcon(v)
+// SetRedirect sets the "redirect" field.
+func (_c *MenuCreate) SetRedirect(v string) *MenuCreate {
+	_c.mutation.SetRedirect(v)
 	return _c
 }
 
-// SetNillableIcon sets the "icon" field if the given value is not nil.
-func (_c *MenuCreate) SetNillableIcon(v *string) *MenuCreate {
+// SetNillableRedirect sets the "redirect" field if the given value is not nil.
+func (_c *MenuCreate) SetNillableRedirect(v *string) *MenuCreate {
 	if v != nil {
-		_c.SetIcon(*v)
+		_c.SetRedirect(*v)
+	}
+	return _c
+}
+
+// SetAlias sets the "alias" field.
+func (_c *MenuCreate) SetAlias(v string) *MenuCreate {
+	_c.mutation.SetAlias(v)
+	return _c
+}
+
+// SetNillableAlias sets the "alias" field if the given value is not nil.
+func (_c *MenuCreate) SetNillableAlias(v *string) *MenuCreate {
+	if v != nil {
+		_c.SetAlias(*v)
+	}
+	return _c
+}
+
+// SetName sets the "name" field.
+func (_c *MenuCreate) SetName(v string) *MenuCreate {
+	_c.mutation.SetName(v)
+	return _c
+}
+
+// SetNillableName sets the "name" field if the given value is not nil.
+func (_c *MenuCreate) SetNillableName(v *string) *MenuCreate {
+	if v != nil {
+		_c.SetName(*v)
 	}
 	return _c
 }
@@ -204,17 +233,9 @@ func (_c *MenuCreate) SetNillableComponent(v *string) *MenuCreate {
 	return _c
 }
 
-// SetSortOrder sets the "sort_order" field.
-func (_c *MenuCreate) SetSortOrder(v uint32) *MenuCreate {
-	_c.mutation.SetSortOrder(v)
-	return _c
-}
-
-// SetNillableSortOrder sets the "sort_order" field if the given value is not nil.
-func (_c *MenuCreate) SetNillableSortOrder(v *uint32) *MenuCreate {
-	if v != nil {
-		_c.SetSortOrder(*v)
-	}
+// SetMeta sets the "meta" field.
+func (_c *MenuCreate) SetMeta(v *permissionpb.MenuMeta) *MenuCreate {
+	_c.mutation.SetMeta(v)
 	return _c
 }
 
@@ -283,9 +304,17 @@ func (_c *MenuCreate) defaults() {
 		v := menu.DefaultStatus
 		_c.mutation.SetStatus(v)
 	}
-	if _, ok := _c.mutation.SortOrder(); !ok {
-		v := menu.DefaultSortOrder
-		_c.mutation.SetSortOrder(v)
+	if _, ok := _c.mutation.GetType(); !ok {
+		v := menu.DefaultType
+		_c.mutation.SetType(v)
+	}
+	if _, ok := _c.mutation.Path(); !ok {
+		v := menu.DefaultPath
+		_c.mutation.SetPath(v)
+	}
+	if _, ok := _c.mutation.Component(); !ok {
+		v := menu.DefaultComponent
+		_c.mutation.SetComponent(v)
 	}
 }
 
@@ -299,24 +328,14 @@ func (_c *MenuCreate) check() error {
 			return &ValidationError{Name: "status", err: fmt.Errorf(`ent: validator failed for field "Menu.status": %w`, err)}
 		}
 	}
-	if v, ok := _c.mutation.Name(); ok {
-		if err := menu.NameValidator(v); err != nil {
-			return &ValidationError{Name: "name", err: fmt.Errorf(`ent: validator failed for field "Menu.name": %w`, err)}
+	if v, ok := _c.mutation.GetType(); ok {
+		if err := menu.TypeValidator(v); err != nil {
+			return &ValidationError{Name: "type", err: fmt.Errorf(`ent: validator failed for field "Menu.type": %w`, err)}
 		}
 	}
-	if v, ok := _c.mutation.Path(); ok {
-		if err := menu.PathValidator(v); err != nil {
-			return &ValidationError{Name: "path", err: fmt.Errorf(`ent: validator failed for field "Menu.path": %w`, err)}
-		}
-	}
-	if v, ok := _c.mutation.Icon(); ok {
-		if err := menu.IconValidator(v); err != nil {
-			return &ValidationError{Name: "icon", err: fmt.Errorf(`ent: validator failed for field "Menu.icon": %w`, err)}
-		}
-	}
-	if v, ok := _c.mutation.Component(); ok {
-		if err := menu.ComponentValidator(v); err != nil {
-			return &ValidationError{Name: "component", err: fmt.Errorf(`ent: validator failed for field "Menu.component": %w`, err)}
+	if v, ok := _c.mutation.Meta(); ok {
+		if err := v.Validate(); err != nil {
+			return &ValidationError{Name: "meta", err: fmt.Errorf(`ent: validator failed for field "Menu.meta": %w`, err)}
 		}
 	}
 	if v, ok := _c.mutation.ID(); ok {
@@ -389,25 +408,33 @@ func (_c *MenuCreate) createSpec() (*Menu, *sqlgraph.CreateSpec) {
 		_spec.SetField(menu.FieldStatus, field.TypeEnum, value)
 		_node.Status = &value
 	}
-	if value, ok := _c.mutation.Name(); ok {
-		_spec.SetField(menu.FieldName, field.TypeString, value)
-		_node.Name = &value
+	if value, ok := _c.mutation.GetType(); ok {
+		_spec.SetField(menu.FieldType, field.TypeEnum, value)
+		_node.Type = &value
 	}
 	if value, ok := _c.mutation.Path(); ok {
 		_spec.SetField(menu.FieldPath, field.TypeString, value)
 		_node.Path = &value
 	}
-	if value, ok := _c.mutation.Icon(); ok {
-		_spec.SetField(menu.FieldIcon, field.TypeString, value)
-		_node.Icon = &value
+	if value, ok := _c.mutation.Redirect(); ok {
+		_spec.SetField(menu.FieldRedirect, field.TypeString, value)
+		_node.Redirect = &value
+	}
+	if value, ok := _c.mutation.Alias(); ok {
+		_spec.SetField(menu.FieldAlias, field.TypeString, value)
+		_node.Alias = &value
+	}
+	if value, ok := _c.mutation.Name(); ok {
+		_spec.SetField(menu.FieldName, field.TypeString, value)
+		_node.Name = &value
 	}
 	if value, ok := _c.mutation.Component(); ok {
 		_spec.SetField(menu.FieldComponent, field.TypeString, value)
 		_node.Component = &value
 	}
-	if value, ok := _c.mutation.SortOrder(); ok {
-		_spec.SetField(menu.FieldSortOrder, field.TypeUint32, value)
-		_node.SortOrder = &value
+	if value, ok := _c.mutation.Meta(); ok {
+		_spec.SetField(menu.FieldMeta, field.TypeJSON, value)
+		_node.Meta = value
 	}
 	if nodes := _c.mutation.ParentIDs(); len(nodes) > 0 {
 		edge := &sqlgraph.EdgeSpec{
@@ -650,21 +677,21 @@ func (u *MenuUpsert) UpdateStatus() *MenuUpsert {
 	return u
 }
 
-// SetName sets the "name" field.
-func (u *MenuUpsert) SetName(v string) *MenuUpsert {
-	u.Set(menu.FieldName, v)
+// SetType sets the "type" field.
+func (u *MenuUpsert) SetType(v menu.Type) *MenuUpsert {
+	u.Set(menu.FieldType, v)
 	return u
 }
 
-// UpdateName sets the "name" field to the value that was provided on create.
-func (u *MenuUpsert) UpdateName() *MenuUpsert {
-	u.SetExcluded(menu.FieldName)
+// UpdateType sets the "type" field to the value that was provided on create.
+func (u *MenuUpsert) UpdateType() *MenuUpsert {
+	u.SetExcluded(menu.FieldType)
 	return u
 }
 
-// ClearName clears the value of the "name" field.
-func (u *MenuUpsert) ClearName() *MenuUpsert {
-	u.SetNull(menu.FieldName)
+// ClearType clears the value of the "type" field.
+func (u *MenuUpsert) ClearType() *MenuUpsert {
+	u.SetNull(menu.FieldType)
 	return u
 }
 
@@ -686,21 +713,57 @@ func (u *MenuUpsert) ClearPath() *MenuUpsert {
 	return u
 }
 
-// SetIcon sets the "icon" field.
-func (u *MenuUpsert) SetIcon(v string) *MenuUpsert {
-	u.Set(menu.FieldIcon, v)
+// SetRedirect sets the "redirect" field.
+func (u *MenuUpsert) SetRedirect(v string) *MenuUpsert {
+	u.Set(menu.FieldRedirect, v)
 	return u
 }
 
-// UpdateIcon sets the "icon" field to the value that was provided on create.
-func (u *MenuUpsert) UpdateIcon() *MenuUpsert {
-	u.SetExcluded(menu.FieldIcon)
+// UpdateRedirect sets the "redirect" field to the value that was provided on create.
+func (u *MenuUpsert) UpdateRedirect() *MenuUpsert {
+	u.SetExcluded(menu.FieldRedirect)
 	return u
 }
 
-// ClearIcon clears the value of the "icon" field.
-func (u *MenuUpsert) ClearIcon() *MenuUpsert {
-	u.SetNull(menu.FieldIcon)
+// ClearRedirect clears the value of the "redirect" field.
+func (u *MenuUpsert) ClearRedirect() *MenuUpsert {
+	u.SetNull(menu.FieldRedirect)
+	return u
+}
+
+// SetAlias sets the "alias" field.
+func (u *MenuUpsert) SetAlias(v string) *MenuUpsert {
+	u.Set(menu.FieldAlias, v)
+	return u
+}
+
+// UpdateAlias sets the "alias" field to the value that was provided on create.
+func (u *MenuUpsert) UpdateAlias() *MenuUpsert {
+	u.SetExcluded(menu.FieldAlias)
+	return u
+}
+
+// ClearAlias clears the value of the "alias" field.
+func (u *MenuUpsert) ClearAlias() *MenuUpsert {
+	u.SetNull(menu.FieldAlias)
+	return u
+}
+
+// SetName sets the "name" field.
+func (u *MenuUpsert) SetName(v string) *MenuUpsert {
+	u.Set(menu.FieldName, v)
+	return u
+}
+
+// UpdateName sets the "name" field to the value that was provided on create.
+func (u *MenuUpsert) UpdateName() *MenuUpsert {
+	u.SetExcluded(menu.FieldName)
+	return u
+}
+
+// ClearName clears the value of the "name" field.
+func (u *MenuUpsert) ClearName() *MenuUpsert {
+	u.SetNull(menu.FieldName)
 	return u
 }
 
@@ -722,27 +785,21 @@ func (u *MenuUpsert) ClearComponent() *MenuUpsert {
 	return u
 }
 
-// SetSortOrder sets the "sort_order" field.
-func (u *MenuUpsert) SetSortOrder(v uint32) *MenuUpsert {
-	u.Set(menu.FieldSortOrder, v)
+// SetMeta sets the "meta" field.
+func (u *MenuUpsert) SetMeta(v *permissionpb.MenuMeta) *MenuUpsert {
+	u.Set(menu.FieldMeta, v)
 	return u
 }
 
-// UpdateSortOrder sets the "sort_order" field to the value that was provided on create.
-func (u *MenuUpsert) UpdateSortOrder() *MenuUpsert {
-	u.SetExcluded(menu.FieldSortOrder)
+// UpdateMeta sets the "meta" field to the value that was provided on create.
+func (u *MenuUpsert) UpdateMeta() *MenuUpsert {
+	u.SetExcluded(menu.FieldMeta)
 	return u
 }
 
-// AddSortOrder adds v to the "sort_order" field.
-func (u *MenuUpsert) AddSortOrder(v uint32) *MenuUpsert {
-	u.Add(menu.FieldSortOrder, v)
-	return u
-}
-
-// ClearSortOrder clears the value of the "sort_order" field.
-func (u *MenuUpsert) ClearSortOrder() *MenuUpsert {
-	u.SetNull(menu.FieldSortOrder)
+// ClearMeta clears the value of the "meta" field.
+func (u *MenuUpsert) ClearMeta() *MenuUpsert {
+	u.SetNull(menu.FieldMeta)
 	return u
 }
 
@@ -979,24 +1036,24 @@ func (u *MenuUpsertOne) UpdateStatus() *MenuUpsertOne {
 	})
 }
 
-// SetName sets the "name" field.
-func (u *MenuUpsertOne) SetName(v string) *MenuUpsertOne {
+// SetType sets the "type" field.
+func (u *MenuUpsertOne) SetType(v menu.Type) *MenuUpsertOne {
 	return u.Update(func(s *MenuUpsert) {
-		s.SetName(v)
+		s.SetType(v)
 	})
 }
 
-// UpdateName sets the "name" field to the value that was provided on create.
-func (u *MenuUpsertOne) UpdateName() *MenuUpsertOne {
+// UpdateType sets the "type" field to the value that was provided on create.
+func (u *MenuUpsertOne) UpdateType() *MenuUpsertOne {
 	return u.Update(func(s *MenuUpsert) {
-		s.UpdateName()
+		s.UpdateType()
 	})
 }
 
-// ClearName clears the value of the "name" field.
-func (u *MenuUpsertOne) ClearName() *MenuUpsertOne {
+// ClearType clears the value of the "type" field.
+func (u *MenuUpsertOne) ClearType() *MenuUpsertOne {
 	return u.Update(func(s *MenuUpsert) {
-		s.ClearName()
+		s.ClearType()
 	})
 }
 
@@ -1021,24 +1078,66 @@ func (u *MenuUpsertOne) ClearPath() *MenuUpsertOne {
 	})
 }
 
-// SetIcon sets the "icon" field.
-func (u *MenuUpsertOne) SetIcon(v string) *MenuUpsertOne {
+// SetRedirect sets the "redirect" field.
+func (u *MenuUpsertOne) SetRedirect(v string) *MenuUpsertOne {
 	return u.Update(func(s *MenuUpsert) {
-		s.SetIcon(v)
+		s.SetRedirect(v)
 	})
 }
 
-// UpdateIcon sets the "icon" field to the value that was provided on create.
-func (u *MenuUpsertOne) UpdateIcon() *MenuUpsertOne {
+// UpdateRedirect sets the "redirect" field to the value that was provided on create.
+func (u *MenuUpsertOne) UpdateRedirect() *MenuUpsertOne {
 	return u.Update(func(s *MenuUpsert) {
-		s.UpdateIcon()
+		s.UpdateRedirect()
 	})
 }
 
-// ClearIcon clears the value of the "icon" field.
-func (u *MenuUpsertOne) ClearIcon() *MenuUpsertOne {
+// ClearRedirect clears the value of the "redirect" field.
+func (u *MenuUpsertOne) ClearRedirect() *MenuUpsertOne {
 	return u.Update(func(s *MenuUpsert) {
-		s.ClearIcon()
+		s.ClearRedirect()
+	})
+}
+
+// SetAlias sets the "alias" field.
+func (u *MenuUpsertOne) SetAlias(v string) *MenuUpsertOne {
+	return u.Update(func(s *MenuUpsert) {
+		s.SetAlias(v)
+	})
+}
+
+// UpdateAlias sets the "alias" field to the value that was provided on create.
+func (u *MenuUpsertOne) UpdateAlias() *MenuUpsertOne {
+	return u.Update(func(s *MenuUpsert) {
+		s.UpdateAlias()
+	})
+}
+
+// ClearAlias clears the value of the "alias" field.
+func (u *MenuUpsertOne) ClearAlias() *MenuUpsertOne {
+	return u.Update(func(s *MenuUpsert) {
+		s.ClearAlias()
+	})
+}
+
+// SetName sets the "name" field.
+func (u *MenuUpsertOne) SetName(v string) *MenuUpsertOne {
+	return u.Update(func(s *MenuUpsert) {
+		s.SetName(v)
+	})
+}
+
+// UpdateName sets the "name" field to the value that was provided on create.
+func (u *MenuUpsertOne) UpdateName() *MenuUpsertOne {
+	return u.Update(func(s *MenuUpsert) {
+		s.UpdateName()
+	})
+}
+
+// ClearName clears the value of the "name" field.
+func (u *MenuUpsertOne) ClearName() *MenuUpsertOne {
+	return u.Update(func(s *MenuUpsert) {
+		s.ClearName()
 	})
 }
 
@@ -1063,31 +1162,24 @@ func (u *MenuUpsertOne) ClearComponent() *MenuUpsertOne {
 	})
 }
 
-// SetSortOrder sets the "sort_order" field.
-func (u *MenuUpsertOne) SetSortOrder(v uint32) *MenuUpsertOne {
+// SetMeta sets the "meta" field.
+func (u *MenuUpsertOne) SetMeta(v *permissionpb.MenuMeta) *MenuUpsertOne {
 	return u.Update(func(s *MenuUpsert) {
-		s.SetSortOrder(v)
+		s.SetMeta(v)
 	})
 }
 
-// AddSortOrder adds v to the "sort_order" field.
-func (u *MenuUpsertOne) AddSortOrder(v uint32) *MenuUpsertOne {
+// UpdateMeta sets the "meta" field to the value that was provided on create.
+func (u *MenuUpsertOne) UpdateMeta() *MenuUpsertOne {
 	return u.Update(func(s *MenuUpsert) {
-		s.AddSortOrder(v)
+		s.UpdateMeta()
 	})
 }
 
-// UpdateSortOrder sets the "sort_order" field to the value that was provided on create.
-func (u *MenuUpsertOne) UpdateSortOrder() *MenuUpsertOne {
+// ClearMeta clears the value of the "meta" field.
+func (u *MenuUpsertOne) ClearMeta() *MenuUpsertOne {
 	return u.Update(func(s *MenuUpsert) {
-		s.UpdateSortOrder()
-	})
-}
-
-// ClearSortOrder clears the value of the "sort_order" field.
-func (u *MenuUpsertOne) ClearSortOrder() *MenuUpsertOne {
-	return u.Update(func(s *MenuUpsert) {
-		s.ClearSortOrder()
+		s.ClearMeta()
 	})
 }
 
@@ -1490,24 +1582,24 @@ func (u *MenuUpsertBulk) UpdateStatus() *MenuUpsertBulk {
 	})
 }
 
-// SetName sets the "name" field.
-func (u *MenuUpsertBulk) SetName(v string) *MenuUpsertBulk {
+// SetType sets the "type" field.
+func (u *MenuUpsertBulk) SetType(v menu.Type) *MenuUpsertBulk {
 	return u.Update(func(s *MenuUpsert) {
-		s.SetName(v)
+		s.SetType(v)
 	})
 }
 
-// UpdateName sets the "name" field to the value that was provided on create.
-func (u *MenuUpsertBulk) UpdateName() *MenuUpsertBulk {
+// UpdateType sets the "type" field to the value that was provided on create.
+func (u *MenuUpsertBulk) UpdateType() *MenuUpsertBulk {
 	return u.Update(func(s *MenuUpsert) {
-		s.UpdateName()
+		s.UpdateType()
 	})
 }
 
-// ClearName clears the value of the "name" field.
-func (u *MenuUpsertBulk) ClearName() *MenuUpsertBulk {
+// ClearType clears the value of the "type" field.
+func (u *MenuUpsertBulk) ClearType() *MenuUpsertBulk {
 	return u.Update(func(s *MenuUpsert) {
-		s.ClearName()
+		s.ClearType()
 	})
 }
 
@@ -1532,24 +1624,66 @@ func (u *MenuUpsertBulk) ClearPath() *MenuUpsertBulk {
 	})
 }
 
-// SetIcon sets the "icon" field.
-func (u *MenuUpsertBulk) SetIcon(v string) *MenuUpsertBulk {
+// SetRedirect sets the "redirect" field.
+func (u *MenuUpsertBulk) SetRedirect(v string) *MenuUpsertBulk {
 	return u.Update(func(s *MenuUpsert) {
-		s.SetIcon(v)
+		s.SetRedirect(v)
 	})
 }
 
-// UpdateIcon sets the "icon" field to the value that was provided on create.
-func (u *MenuUpsertBulk) UpdateIcon() *MenuUpsertBulk {
+// UpdateRedirect sets the "redirect" field to the value that was provided on create.
+func (u *MenuUpsertBulk) UpdateRedirect() *MenuUpsertBulk {
 	return u.Update(func(s *MenuUpsert) {
-		s.UpdateIcon()
+		s.UpdateRedirect()
 	})
 }
 
-// ClearIcon clears the value of the "icon" field.
-func (u *MenuUpsertBulk) ClearIcon() *MenuUpsertBulk {
+// ClearRedirect clears the value of the "redirect" field.
+func (u *MenuUpsertBulk) ClearRedirect() *MenuUpsertBulk {
 	return u.Update(func(s *MenuUpsert) {
-		s.ClearIcon()
+		s.ClearRedirect()
+	})
+}
+
+// SetAlias sets the "alias" field.
+func (u *MenuUpsertBulk) SetAlias(v string) *MenuUpsertBulk {
+	return u.Update(func(s *MenuUpsert) {
+		s.SetAlias(v)
+	})
+}
+
+// UpdateAlias sets the "alias" field to the value that was provided on create.
+func (u *MenuUpsertBulk) UpdateAlias() *MenuUpsertBulk {
+	return u.Update(func(s *MenuUpsert) {
+		s.UpdateAlias()
+	})
+}
+
+// ClearAlias clears the value of the "alias" field.
+func (u *MenuUpsertBulk) ClearAlias() *MenuUpsertBulk {
+	return u.Update(func(s *MenuUpsert) {
+		s.ClearAlias()
+	})
+}
+
+// SetName sets the "name" field.
+func (u *MenuUpsertBulk) SetName(v string) *MenuUpsertBulk {
+	return u.Update(func(s *MenuUpsert) {
+		s.SetName(v)
+	})
+}
+
+// UpdateName sets the "name" field to the value that was provided on create.
+func (u *MenuUpsertBulk) UpdateName() *MenuUpsertBulk {
+	return u.Update(func(s *MenuUpsert) {
+		s.UpdateName()
+	})
+}
+
+// ClearName clears the value of the "name" field.
+func (u *MenuUpsertBulk) ClearName() *MenuUpsertBulk {
+	return u.Update(func(s *MenuUpsert) {
+		s.ClearName()
 	})
 }
 
@@ -1574,31 +1708,24 @@ func (u *MenuUpsertBulk) ClearComponent() *MenuUpsertBulk {
 	})
 }
 
-// SetSortOrder sets the "sort_order" field.
-func (u *MenuUpsertBulk) SetSortOrder(v uint32) *MenuUpsertBulk {
+// SetMeta sets the "meta" field.
+func (u *MenuUpsertBulk) SetMeta(v *permissionpb.MenuMeta) *MenuUpsertBulk {
 	return u.Update(func(s *MenuUpsert) {
-		s.SetSortOrder(v)
+		s.SetMeta(v)
 	})
 }
 
-// AddSortOrder adds v to the "sort_order" field.
-func (u *MenuUpsertBulk) AddSortOrder(v uint32) *MenuUpsertBulk {
+// UpdateMeta sets the "meta" field to the value that was provided on create.
+func (u *MenuUpsertBulk) UpdateMeta() *MenuUpsertBulk {
 	return u.Update(func(s *MenuUpsert) {
-		s.AddSortOrder(v)
+		s.UpdateMeta()
 	})
 }
 
-// UpdateSortOrder sets the "sort_order" field to the value that was provided on create.
-func (u *MenuUpsertBulk) UpdateSortOrder() *MenuUpsertBulk {
+// ClearMeta clears the value of the "meta" field.
+func (u *MenuUpsertBulk) ClearMeta() *MenuUpsertBulk {
 	return u.Update(func(s *MenuUpsert) {
-		s.UpdateSortOrder()
-	})
-}
-
-// ClearSortOrder clears the value of the "sort_order" field.
-func (u *MenuUpsertBulk) ClearSortOrder() *MenuUpsertBulk {
-	return u.Update(func(s *MenuUpsert) {
-		s.ClearSortOrder()
+		s.ClearMeta()
 	})
 }
 

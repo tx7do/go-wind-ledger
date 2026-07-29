@@ -22,34 +22,38 @@ const (
 	FieldDeletedAt = "deleted_at"
 	// FieldTenantID holds the string denoting the tenant_id field in the database.
 	FieldTenantID = "tenant_id"
-	// FieldCreatedBy holds the string denoting the created_by field in the database.
-	FieldCreatedBy = "created_by"
-	// FieldUpdatedBy holds the string denoting the updated_by field in the database.
-	FieldUpdatedBy = "updated_by"
-	// FieldDeletedBy holds the string denoting the deleted_by field in the database.
-	FieldDeletedBy = "deleted_by"
 	// FieldUserID holds the string denoting the user_id field in the database.
 	FieldUserID = "user_id"
-	// FieldIdentifier holds the string denoting the identifier field in the database.
-	FieldIdentifier = "identifier"
 	// FieldIdentityType holds the string denoting the identity_type field in the database.
 	FieldIdentityType = "identity_type"
+	// FieldIdentifier holds the string denoting the identifier field in the database.
+	FieldIdentifier = "identifier"
 	// FieldCredentialType holds the string denoting the credential_type field in the database.
 	FieldCredentialType = "credential_type"
 	// FieldCredential holds the string denoting the credential field in the database.
 	FieldCredential = "credential"
-	// FieldProviderAccountID holds the string denoting the provider_account_id field in the database.
-	FieldProviderAccountID = "provider_account_id"
-	// FieldProvider holds the string denoting the provider field in the database.
-	FieldProvider = "provider"
-	// FieldExtraInfo holds the string denoting the extra_info field in the database.
-	FieldExtraInfo = "extra_info"
 	// FieldIsPrimary holds the string denoting the is_primary field in the database.
 	FieldIsPrimary = "is_primary"
 	// FieldStatus holds the string denoting the status field in the database.
 	FieldStatus = "status"
-	// FieldVerified holds the string denoting the verified field in the database.
-	FieldVerified = "verified"
+	// FieldExtraInfo holds the string denoting the extra_info field in the database.
+	FieldExtraInfo = "extra_info"
+	// FieldProvider holds the string denoting the provider field in the database.
+	FieldProvider = "provider"
+	// FieldProviderAccountID holds the string denoting the provider_account_id field in the database.
+	FieldProviderAccountID = "provider_account_id"
+	// FieldActivateTokenHash holds the string denoting the activate_token_hash field in the database.
+	FieldActivateTokenHash = "activate_token_hash"
+	// FieldActivateTokenExpiresAt holds the string denoting the activate_token_expires_at field in the database.
+	FieldActivateTokenExpiresAt = "activate_token_expires_at"
+	// FieldActivateTokenUsedAt holds the string denoting the activate_token_used_at field in the database.
+	FieldActivateTokenUsedAt = "activate_token_used_at"
+	// FieldResetTokenHash holds the string denoting the reset_token_hash field in the database.
+	FieldResetTokenHash = "reset_token_hash"
+	// FieldResetTokenExpiresAt holds the string denoting the reset_token_expires_at field in the database.
+	FieldResetTokenExpiresAt = "reset_token_expires_at"
+	// FieldResetTokenUsedAt holds the string denoting the reset_token_used_at field in the database.
+	FieldResetTokenUsedAt = "reset_token_used_at"
 	// Table holds the table name of the usercredential in the database.
 	Table = "sys_user_credentials"
 )
@@ -61,20 +65,22 @@ var Columns = []string{
 	FieldUpdatedAt,
 	FieldDeletedAt,
 	FieldTenantID,
-	FieldCreatedBy,
-	FieldUpdatedBy,
-	FieldDeletedBy,
 	FieldUserID,
-	FieldIdentifier,
 	FieldIdentityType,
+	FieldIdentifier,
 	FieldCredentialType,
 	FieldCredential,
-	FieldProviderAccountID,
-	FieldProvider,
-	FieldExtraInfo,
 	FieldIsPrimary,
 	FieldStatus,
-	FieldVerified,
+	FieldExtraInfo,
+	FieldProvider,
+	FieldProviderAccountID,
+	FieldActivateTokenHash,
+	FieldActivateTokenExpiresAt,
+	FieldActivateTokenUsedAt,
+	FieldResetTokenHash,
+	FieldResetTokenExpiresAt,
+	FieldResetTokenUsedAt,
 }
 
 // ValidColumn reports if the column name is valid (part of the table columns).
@@ -99,36 +105,115 @@ var (
 	DefaultTenantID uint32
 	// IdentifierValidator is a validator for the "identifier" field. It is called by the builders before save.
 	IdentifierValidator func(string) error
-	// IdentityTypeValidator is a validator for the "identity_type" field. It is called by the builders before save.
-	IdentityTypeValidator func(string) error
-	// CredentialTypeValidator is a validator for the "credential_type" field. It is called by the builders before save.
-	CredentialTypeValidator func(string) error
 	// CredentialValidator is a validator for the "credential" field. It is called by the builders before save.
 	CredentialValidator func(string) error
-	// ProviderAccountIDValidator is a validator for the "provider_account_id" field. It is called by the builders before save.
-	ProviderAccountIDValidator func(string) error
-	// ProviderValidator is a validator for the "provider" field. It is called by the builders before save.
-	ProviderValidator func(string) error
-	// ExtraInfoValidator is a validator for the "extra_info" field. It is called by the builders before save.
-	ExtraInfoValidator func(string) error
 	// DefaultIsPrimary holds the default value on creation for the "is_primary" field.
 	DefaultIsPrimary bool
-	// DefaultVerified holds the default value on creation for the "verified" field.
-	DefaultVerified bool
+	// ActivateTokenHashValidator is a validator for the "activate_token_hash" field. It is called by the builders before save.
+	ActivateTokenHashValidator func(string) error
+	// ResetTokenHashValidator is a validator for the "reset_token_hash" field. It is called by the builders before save.
+	ResetTokenHashValidator func(string) error
 	// IDValidator is a validator for the "id" field. It is called by the builders before save.
 	IDValidator func(uint32) error
 )
 
+// IdentityType defines the type for the "identity_type" enum field.
+type IdentityType string
+
+// IdentityTypeUsername is the default value of the IdentityType enum.
+const DefaultIdentityType = IdentityTypeUsername
+
+// IdentityType values.
+const (
+	IdentityTypeUsername       IdentityType = "USERNAME"
+	IdentityTypeUserId         IdentityType = "USERID"
+	IdentityTypeEmail          IdentityType = "EMAIL"
+	IdentityTypePhone          IdentityType = "PHONE"
+	IdentityTypeSocialOauth    IdentityType = "SOCIAL_OAUTH"
+	IdentityTypeEnterpriseSso  IdentityType = "ENTERPRISE_SSO"
+	IdentityTypeIdentityApiKey IdentityType = "IDENTITY_API_KEY"
+	IdentityTypeDeviceId       IdentityType = "DEVICE_ID"
+	IdentityTypeCustom         IdentityType = "CUSTOM"
+)
+
+func (it IdentityType) String() string {
+	return string(it)
+}
+
+// IdentityTypeValidator is a validator for the "identity_type" field enum values. It is called by the builders before save.
+func IdentityTypeValidator(it IdentityType) error {
+	switch it {
+	case IdentityTypeUsername, IdentityTypeUserId, IdentityTypeEmail, IdentityTypePhone, IdentityTypeSocialOauth, IdentityTypeEnterpriseSso, IdentityTypeIdentityApiKey, IdentityTypeDeviceId, IdentityTypeCustom:
+		return nil
+	default:
+		return fmt.Errorf("usercredential: invalid enum value for identity_type field: %q", it)
+	}
+}
+
+// CredentialType defines the type for the "credential_type" enum field.
+type CredentialType string
+
+// CredentialTypePasswordHash is the default value of the CredentialType enum.
+const DefaultCredentialType = CredentialTypePasswordHash
+
+// CredentialType values.
+const (
+	CredentialTypePasswordHash           CredentialType = "PASSWORD_HASH"
+	CredentialTypeApiKey                 CredentialType = "API_KEY"
+	CredentialTypeApiSecret              CredentialType = "API_SECRET"
+	CredentialTypeAccessToken            CredentialType = "ACCESS_TOKEN"
+	CredentialTypeRefreshToken           CredentialType = "REFRESH_TOKEN"
+	CredentialTypeJWT                    CredentialType = "JWT"
+	CredentialTypeOauthToken             CredentialType = "OAUTH_TOKEN"
+	CredentialTypeOauthAuthorizationCode CredentialType = "OAUTH_AUTHORIZATION_CODE"
+	CredentialTypeOauthClientCredentials CredentialType = "OAUTH_CLIENT_CREDENTIALS"
+	CredentialTypeOTP                    CredentialType = "OTP"
+	CredentialTypeTOTP                   CredentialType = "TOTP"
+	CredentialTypeSmsOtp                 CredentialType = "SMS_OTP"
+	CredentialTypeEmailOtp               CredentialType = "EMAIL_OTP"
+	CredentialTypeHardwareToken          CredentialType = "HARDWARE_TOKEN"
+	CredentialTypeSoftwareToken          CredentialType = "SOFTWARE_TOKEN"
+	CredentialTypeSecurityQuestion       CredentialType = "SECURITY_QUESTION"
+	CredentialTypeBiometric              CredentialType = "BIOMETRIC"
+	CredentialTypeBiometricToken         CredentialType = "BIOMETRIC_TOKEN"
+	CredentialTypeSsoToken               CredentialType = "SSO_TOKEN"
+	CredentialTypeSamlAssertion          CredentialType = "SAML_ASSERTION"
+	CredentialTypeOpenidConnectIdToken   CredentialType = "OPENID_CONNECT_ID_TOKEN"
+	CredentialTypeSessionCookie          CredentialType = "SESSION_COOKIE"
+	CredentialTypeTemporaryCredential    CredentialType = "TEMPORARY_CREDENTIAL"
+	CredentialTypeCustom                 CredentialType = "CUSTOM"
+	CredentialTypeReservedForFuture      CredentialType = "RESERVED_FOR_FUTURE"
+)
+
+func (ct CredentialType) String() string {
+	return string(ct)
+}
+
+// CredentialTypeValidator is a validator for the "credential_type" field enum values. It is called by the builders before save.
+func CredentialTypeValidator(ct CredentialType) error {
+	switch ct {
+	case CredentialTypePasswordHash, CredentialTypeApiKey, CredentialTypeApiSecret, CredentialTypeAccessToken, CredentialTypeRefreshToken, CredentialTypeJWT, CredentialTypeOauthToken, CredentialTypeOauthAuthorizationCode, CredentialTypeOauthClientCredentials, CredentialTypeOTP, CredentialTypeTOTP, CredentialTypeSmsOtp, CredentialTypeEmailOtp, CredentialTypeHardwareToken, CredentialTypeSoftwareToken, CredentialTypeSecurityQuestion, CredentialTypeBiometric, CredentialTypeBiometricToken, CredentialTypeSsoToken, CredentialTypeSamlAssertion, CredentialTypeOpenidConnectIdToken, CredentialTypeSessionCookie, CredentialTypeTemporaryCredential, CredentialTypeCustom, CredentialTypeReservedForFuture:
+		return nil
+	default:
+		return fmt.Errorf("usercredential: invalid enum value for credential_type field: %q", ct)
+	}
+}
+
 // Status defines the type for the "status" enum field.
 type Status string
 
-// StatusStatusActive is the default value of the Status enum.
-const DefaultStatus = StatusStatusActive
+// StatusEnabled is the default value of the Status enum.
+const DefaultStatus = StatusEnabled
 
 // Status values.
 const (
-	StatusStatusActive   Status = "STATUS_ACTIVE"
-	StatusStatusInactive Status = "STATUS_INACTIVE"
+	StatusDisabled   Status = "DISABLED"
+	StatusEnabled    Status = "ENABLED"
+	StatusExpired    Status = "EXPIRED"
+	StatusUnverified Status = "UNVERIFIED"
+	StatusRemoved    Status = "REMOVED"
+	StatusBlocked    Status = "BLOCKED"
+	StatusTemporary  Status = "TEMPORARY"
 )
 
 func (s Status) String() string {
@@ -138,7 +223,7 @@ func (s Status) String() string {
 // StatusValidator is a validator for the "status" field enum values. It is called by the builders before save.
 func StatusValidator(s Status) error {
 	switch s {
-	case StatusStatusActive, StatusStatusInactive:
+	case StatusDisabled, StatusEnabled, StatusExpired, StatusUnverified, StatusRemoved, StatusBlocked, StatusTemporary:
 		return nil
 	default:
 		return fmt.Errorf("usercredential: invalid enum value for status field: %q", s)
@@ -173,34 +258,19 @@ func ByTenantID(opts ...sql.OrderTermOption) OrderOption {
 	return sql.OrderByField(FieldTenantID, opts...).ToFunc()
 }
 
-// ByCreatedBy orders the results by the created_by field.
-func ByCreatedBy(opts ...sql.OrderTermOption) OrderOption {
-	return sql.OrderByField(FieldCreatedBy, opts...).ToFunc()
-}
-
-// ByUpdatedBy orders the results by the updated_by field.
-func ByUpdatedBy(opts ...sql.OrderTermOption) OrderOption {
-	return sql.OrderByField(FieldUpdatedBy, opts...).ToFunc()
-}
-
-// ByDeletedBy orders the results by the deleted_by field.
-func ByDeletedBy(opts ...sql.OrderTermOption) OrderOption {
-	return sql.OrderByField(FieldDeletedBy, opts...).ToFunc()
-}
-
 // ByUserID orders the results by the user_id field.
 func ByUserID(opts ...sql.OrderTermOption) OrderOption {
 	return sql.OrderByField(FieldUserID, opts...).ToFunc()
 }
 
-// ByIdentifier orders the results by the identifier field.
-func ByIdentifier(opts ...sql.OrderTermOption) OrderOption {
-	return sql.OrderByField(FieldIdentifier, opts...).ToFunc()
-}
-
 // ByIdentityType orders the results by the identity_type field.
 func ByIdentityType(opts ...sql.OrderTermOption) OrderOption {
 	return sql.OrderByField(FieldIdentityType, opts...).ToFunc()
+}
+
+// ByIdentifier orders the results by the identifier field.
+func ByIdentifier(opts ...sql.OrderTermOption) OrderOption {
+	return sql.OrderByField(FieldIdentifier, opts...).ToFunc()
 }
 
 // ByCredentialType orders the results by the credential_type field.
@@ -213,21 +283,6 @@ func ByCredential(opts ...sql.OrderTermOption) OrderOption {
 	return sql.OrderByField(FieldCredential, opts...).ToFunc()
 }
 
-// ByProviderAccountID orders the results by the provider_account_id field.
-func ByProviderAccountID(opts ...sql.OrderTermOption) OrderOption {
-	return sql.OrderByField(FieldProviderAccountID, opts...).ToFunc()
-}
-
-// ByProvider orders the results by the provider field.
-func ByProvider(opts ...sql.OrderTermOption) OrderOption {
-	return sql.OrderByField(FieldProvider, opts...).ToFunc()
-}
-
-// ByExtraInfo orders the results by the extra_info field.
-func ByExtraInfo(opts ...sql.OrderTermOption) OrderOption {
-	return sql.OrderByField(FieldExtraInfo, opts...).ToFunc()
-}
-
 // ByIsPrimary orders the results by the is_primary field.
 func ByIsPrimary(opts ...sql.OrderTermOption) OrderOption {
 	return sql.OrderByField(FieldIsPrimary, opts...).ToFunc()
@@ -238,7 +293,47 @@ func ByStatus(opts ...sql.OrderTermOption) OrderOption {
 	return sql.OrderByField(FieldStatus, opts...).ToFunc()
 }
 
-// ByVerified orders the results by the verified field.
-func ByVerified(opts ...sql.OrderTermOption) OrderOption {
-	return sql.OrderByField(FieldVerified, opts...).ToFunc()
+// ByExtraInfo orders the results by the extra_info field.
+func ByExtraInfo(opts ...sql.OrderTermOption) OrderOption {
+	return sql.OrderByField(FieldExtraInfo, opts...).ToFunc()
+}
+
+// ByProvider orders the results by the provider field.
+func ByProvider(opts ...sql.OrderTermOption) OrderOption {
+	return sql.OrderByField(FieldProvider, opts...).ToFunc()
+}
+
+// ByProviderAccountID orders the results by the provider_account_id field.
+func ByProviderAccountID(opts ...sql.OrderTermOption) OrderOption {
+	return sql.OrderByField(FieldProviderAccountID, opts...).ToFunc()
+}
+
+// ByActivateTokenHash orders the results by the activate_token_hash field.
+func ByActivateTokenHash(opts ...sql.OrderTermOption) OrderOption {
+	return sql.OrderByField(FieldActivateTokenHash, opts...).ToFunc()
+}
+
+// ByActivateTokenExpiresAt orders the results by the activate_token_expires_at field.
+func ByActivateTokenExpiresAt(opts ...sql.OrderTermOption) OrderOption {
+	return sql.OrderByField(FieldActivateTokenExpiresAt, opts...).ToFunc()
+}
+
+// ByActivateTokenUsedAt orders the results by the activate_token_used_at field.
+func ByActivateTokenUsedAt(opts ...sql.OrderTermOption) OrderOption {
+	return sql.OrderByField(FieldActivateTokenUsedAt, opts...).ToFunc()
+}
+
+// ByResetTokenHash orders the results by the reset_token_hash field.
+func ByResetTokenHash(opts ...sql.OrderTermOption) OrderOption {
+	return sql.OrderByField(FieldResetTokenHash, opts...).ToFunc()
+}
+
+// ByResetTokenExpiresAt orders the results by the reset_token_expires_at field.
+func ByResetTokenExpiresAt(opts ...sql.OrderTermOption) OrderOption {
+	return sql.OrderByField(FieldResetTokenExpiresAt, opts...).ToFunc()
+}
+
+// ByResetTokenUsedAt orders the results by the reset_token_used_at field.
+func ByResetTokenUsedAt(opts ...sql.OrderTermOption) OrderOption {
+	return sql.OrderByField(FieldResetTokenUsedAt, opts...).ToFunc()
 }

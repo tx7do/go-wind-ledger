@@ -6,6 +6,7 @@ import (
 	"context"
 	"errors"
 	"fmt"
+	taskpb "go-wind-ledger/api/gen/go/task/service/v1"
 	"go-wind-ledger/app/core/service/internal/data/ent/task"
 	"time"
 
@@ -106,20 +107,6 @@ func (_c *TaskCreate) SetNillableDeletedBy(v *uint32) *TaskCreate {
 	return _c
 }
 
-// SetTenantID sets the "tenant_id" field.
-func (_c *TaskCreate) SetTenantID(v uint32) *TaskCreate {
-	_c.mutation.SetTenantID(v)
-	return _c
-}
-
-// SetNillableTenantID sets the "tenant_id" field if the given value is not nil.
-func (_c *TaskCreate) SetNillableTenantID(v *uint32) *TaskCreate {
-	if v != nil {
-		_c.SetTenantID(*v)
-	}
-	return _c
-}
-
 // SetRemark sets the "remark" field.
 func (_c *TaskCreate) SetRemark(v string) *TaskCreate {
 	_c.mutation.SetRemark(v)
@@ -134,16 +121,30 @@ func (_c *TaskCreate) SetNillableRemark(v *string) *TaskCreate {
 	return _c
 }
 
-// SetName sets the "name" field.
-func (_c *TaskCreate) SetName(v string) *TaskCreate {
-	_c.mutation.SetName(v)
+// SetTenantID sets the "tenant_id" field.
+func (_c *TaskCreate) SetTenantID(v uint32) *TaskCreate {
+	_c.mutation.SetTenantID(v)
 	return _c
 }
 
-// SetNillableName sets the "name" field if the given value is not nil.
-func (_c *TaskCreate) SetNillableName(v *string) *TaskCreate {
+// SetNillableTenantID sets the "tenant_id" field if the given value is not nil.
+func (_c *TaskCreate) SetNillableTenantID(v *uint32) *TaskCreate {
 	if v != nil {
-		_c.SetName(*v)
+		_c.SetTenantID(*v)
+	}
+	return _c
+}
+
+// SetType sets the "type" field.
+func (_c *TaskCreate) SetType(v task.Type) *TaskCreate {
+	_c.mutation.SetType(v)
+	return _c
+}
+
+// SetNillableType sets the "type" field if the given value is not nil.
+func (_c *TaskCreate) SetNillableType(v *task.Type) *TaskCreate {
+	if v != nil {
+		_c.SetType(*v)
 	}
 	return _c
 }
@@ -162,20 +163,6 @@ func (_c *TaskCreate) SetNillableTypeName(v *string) *TaskCreate {
 	return _c
 }
 
-// SetCronSpec sets the "cron_spec" field.
-func (_c *TaskCreate) SetCronSpec(v string) *TaskCreate {
-	_c.mutation.SetCronSpec(v)
-	return _c
-}
-
-// SetNillableCronSpec sets the "cron_spec" field if the given value is not nil.
-func (_c *TaskCreate) SetNillableCronSpec(v *string) *TaskCreate {
-	if v != nil {
-		_c.SetCronSpec(*v)
-	}
-	return _c
-}
-
 // SetTaskPayload sets the "task_payload" field.
 func (_c *TaskCreate) SetTaskPayload(v string) *TaskCreate {
 	_c.mutation.SetTaskPayload(v)
@@ -190,57 +177,23 @@ func (_c *TaskCreate) SetNillableTaskPayload(v *string) *TaskCreate {
 	return _c
 }
 
+// SetCronSpec sets the "cron_spec" field.
+func (_c *TaskCreate) SetCronSpec(v string) *TaskCreate {
+	_c.mutation.SetCronSpec(v)
+	return _c
+}
+
+// SetNillableCronSpec sets the "cron_spec" field if the given value is not nil.
+func (_c *TaskCreate) SetNillableCronSpec(v *string) *TaskCreate {
+	if v != nil {
+		_c.SetCronSpec(*v)
+	}
+	return _c
+}
+
 // SetTaskOptions sets the "task_options" field.
-func (_c *TaskCreate) SetTaskOptions(v *map[string]string) *TaskCreate {
+func (_c *TaskCreate) SetTaskOptions(v *taskpb.TaskOption) *TaskCreate {
 	_c.mutation.SetTaskOptions(v)
-	return _c
-}
-
-// SetType sets the "type" field.
-func (_c *TaskCreate) SetType(v task.Type) *TaskCreate {
-	_c.mutation.SetType(v)
-	return _c
-}
-
-// SetNillableType sets the "type" field if the given value is not nil.
-func (_c *TaskCreate) SetNillableType(v *task.Type) *TaskCreate {
-	if v != nil {
-		_c.SetType(*v)
-	}
-	return _c
-}
-
-// SetCronExpr sets the "cron_expr" field.
-func (_c *TaskCreate) SetCronExpr(v string) *TaskCreate {
-	_c.mutation.SetCronExpr(v)
-	return _c
-}
-
-// SetNillableCronExpr sets the "cron_expr" field if the given value is not nil.
-func (_c *TaskCreate) SetNillableCronExpr(v *string) *TaskCreate {
-	if v != nil {
-		_c.SetCronExpr(*v)
-	}
-	return _c
-}
-
-// SetHandler sets the "handler" field.
-func (_c *TaskCreate) SetHandler(v string) *TaskCreate {
-	_c.mutation.SetHandler(v)
-	return _c
-}
-
-// SetNillableHandler sets the "handler" field if the given value is not nil.
-func (_c *TaskCreate) SetNillableHandler(v *string) *TaskCreate {
-	if v != nil {
-		_c.SetHandler(*v)
-	}
-	return _c
-}
-
-// SetParams sets the "params" field.
-func (_c *TaskCreate) SetParams(v *map[string]string) *TaskCreate {
-	_c.mutation.SetParams(v)
 	return _c
 }
 
@@ -305,6 +258,10 @@ func (_c *TaskCreate) defaults() error {
 		v := task.DefaultTenantID
 		_c.mutation.SetTenantID(v)
 	}
+	if _, ok := _c.mutation.GetType(); !ok {
+		v := task.DefaultType
+		_c.mutation.SetType(v)
+	}
 	if _, ok := _c.mutation.Enable(); !ok {
 		v := task.DefaultEnable
 		_c.mutation.SetEnable(v)
@@ -314,39 +271,14 @@ func (_c *TaskCreate) defaults() error {
 
 // check runs all checks and user-defined validators on the builder.
 func (_c *TaskCreate) check() error {
-	if v, ok := _c.mutation.Name(); ok {
-		if err := task.NameValidator(v); err != nil {
-			return &ValidationError{Name: "name", err: fmt.Errorf(`ent: validator failed for field "Task.name": %w`, err)}
-		}
-	}
-	if v, ok := _c.mutation.TypeName(); ok {
-		if err := task.TypeNameValidator(v); err != nil {
-			return &ValidationError{Name: "type_name", err: fmt.Errorf(`ent: validator failed for field "Task.type_name": %w`, err)}
-		}
-	}
-	if v, ok := _c.mutation.CronSpec(); ok {
-		if err := task.CronSpecValidator(v); err != nil {
-			return &ValidationError{Name: "cron_spec", err: fmt.Errorf(`ent: validator failed for field "Task.cron_spec": %w`, err)}
-		}
-	}
-	if v, ok := _c.mutation.TaskPayload(); ok {
-		if err := task.TaskPayloadValidator(v); err != nil {
-			return &ValidationError{Name: "task_payload", err: fmt.Errorf(`ent: validator failed for field "Task.task_payload": %w`, err)}
-		}
-	}
 	if v, ok := _c.mutation.GetType(); ok {
 		if err := task.TypeValidator(v); err != nil {
 			return &ValidationError{Name: "type", err: fmt.Errorf(`ent: validator failed for field "Task.type": %w`, err)}
 		}
 	}
-	if v, ok := _c.mutation.CronExpr(); ok {
-		if err := task.CronExprValidator(v); err != nil {
-			return &ValidationError{Name: "cron_expr", err: fmt.Errorf(`ent: validator failed for field "Task.cron_expr": %w`, err)}
-		}
-	}
-	if v, ok := _c.mutation.Handler(); ok {
-		if err := task.HandlerValidator(v); err != nil {
-			return &ValidationError{Name: "handler", err: fmt.Errorf(`ent: validator failed for field "Task.handler": %w`, err)}
+	if v, ok := _c.mutation.TaskOptions(); ok {
+		if err := v.Validate(); err != nil {
+			return &ValidationError{Name: "task_options", err: fmt.Errorf(`ent: validator failed for field "Task.task_options": %w`, err)}
 		}
 	}
 	if v, ok := _c.mutation.ID(); ok {
@@ -411,49 +343,33 @@ func (_c *TaskCreate) createSpec() (*Task, *sqlgraph.CreateSpec) {
 		_spec.SetField(task.FieldDeletedBy, field.TypeUint32, value)
 		_node.DeletedBy = &value
 	}
-	if value, ok := _c.mutation.TenantID(); ok {
-		_spec.SetField(task.FieldTenantID, field.TypeUint32, value)
-		_node.TenantID = &value
-	}
 	if value, ok := _c.mutation.Remark(); ok {
 		_spec.SetField(task.FieldRemark, field.TypeString, value)
 		_node.Remark = &value
 	}
-	if value, ok := _c.mutation.Name(); ok {
-		_spec.SetField(task.FieldName, field.TypeString, value)
-		_node.Name = &value
-	}
-	if value, ok := _c.mutation.TypeName(); ok {
-		_spec.SetField(task.FieldTypeName, field.TypeString, value)
-		_node.TypeName = &value
-	}
-	if value, ok := _c.mutation.CronSpec(); ok {
-		_spec.SetField(task.FieldCronSpec, field.TypeString, value)
-		_node.CronSpec = &value
-	}
-	if value, ok := _c.mutation.TaskPayload(); ok {
-		_spec.SetField(task.FieldTaskPayload, field.TypeString, value)
-		_node.TaskPayload = &value
-	}
-	if value, ok := _c.mutation.TaskOptions(); ok {
-		_spec.SetField(task.FieldTaskOptions, field.TypeJSON, value)
-		_node.TaskOptions = value
+	if value, ok := _c.mutation.TenantID(); ok {
+		_spec.SetField(task.FieldTenantID, field.TypeUint32, value)
+		_node.TenantID = &value
 	}
 	if value, ok := _c.mutation.GetType(); ok {
 		_spec.SetField(task.FieldType, field.TypeEnum, value)
 		_node.Type = &value
 	}
-	if value, ok := _c.mutation.CronExpr(); ok {
-		_spec.SetField(task.FieldCronExpr, field.TypeString, value)
-		_node.CronExpr = &value
+	if value, ok := _c.mutation.TypeName(); ok {
+		_spec.SetField(task.FieldTypeName, field.TypeString, value)
+		_node.TypeName = &value
 	}
-	if value, ok := _c.mutation.Handler(); ok {
-		_spec.SetField(task.FieldHandler, field.TypeString, value)
-		_node.Handler = &value
+	if value, ok := _c.mutation.TaskPayload(); ok {
+		_spec.SetField(task.FieldTaskPayload, field.TypeString, value)
+		_node.TaskPayload = &value
 	}
-	if value, ok := _c.mutation.Params(); ok {
-		_spec.SetField(task.FieldParams, field.TypeJSON, value)
-		_node.Params = value
+	if value, ok := _c.mutation.CronSpec(); ok {
+		_spec.SetField(task.FieldCronSpec, field.TypeString, value)
+		_node.CronSpec = &value
+	}
+	if value, ok := _c.mutation.TaskOptions(); ok {
+		_spec.SetField(task.FieldTaskOptions, field.TypeJSON, value)
+		_node.TaskOptions = value
 	}
 	if value, ok := _c.mutation.Enable(); ok {
 		_spec.SetField(task.FieldEnable, field.TypeBool, value)
@@ -637,21 +553,21 @@ func (u *TaskUpsert) ClearRemark() *TaskUpsert {
 	return u
 }
 
-// SetName sets the "name" field.
-func (u *TaskUpsert) SetName(v string) *TaskUpsert {
-	u.Set(task.FieldName, v)
+// SetType sets the "type" field.
+func (u *TaskUpsert) SetType(v task.Type) *TaskUpsert {
+	u.Set(task.FieldType, v)
 	return u
 }
 
-// UpdateName sets the "name" field to the value that was provided on create.
-func (u *TaskUpsert) UpdateName() *TaskUpsert {
-	u.SetExcluded(task.FieldName)
+// UpdateType sets the "type" field to the value that was provided on create.
+func (u *TaskUpsert) UpdateType() *TaskUpsert {
+	u.SetExcluded(task.FieldType)
 	return u
 }
 
-// ClearName clears the value of the "name" field.
-func (u *TaskUpsert) ClearName() *TaskUpsert {
-	u.SetNull(task.FieldName)
+// ClearType clears the value of the "type" field.
+func (u *TaskUpsert) ClearType() *TaskUpsert {
+	u.SetNull(task.FieldType)
 	return u
 }
 
@@ -673,24 +589,6 @@ func (u *TaskUpsert) ClearTypeName() *TaskUpsert {
 	return u
 }
 
-// SetCronSpec sets the "cron_spec" field.
-func (u *TaskUpsert) SetCronSpec(v string) *TaskUpsert {
-	u.Set(task.FieldCronSpec, v)
-	return u
-}
-
-// UpdateCronSpec sets the "cron_spec" field to the value that was provided on create.
-func (u *TaskUpsert) UpdateCronSpec() *TaskUpsert {
-	u.SetExcluded(task.FieldCronSpec)
-	return u
-}
-
-// ClearCronSpec clears the value of the "cron_spec" field.
-func (u *TaskUpsert) ClearCronSpec() *TaskUpsert {
-	u.SetNull(task.FieldCronSpec)
-	return u
-}
-
 // SetTaskPayload sets the "task_payload" field.
 func (u *TaskUpsert) SetTaskPayload(v string) *TaskUpsert {
 	u.Set(task.FieldTaskPayload, v)
@@ -709,8 +607,26 @@ func (u *TaskUpsert) ClearTaskPayload() *TaskUpsert {
 	return u
 }
 
+// SetCronSpec sets the "cron_spec" field.
+func (u *TaskUpsert) SetCronSpec(v string) *TaskUpsert {
+	u.Set(task.FieldCronSpec, v)
+	return u
+}
+
+// UpdateCronSpec sets the "cron_spec" field to the value that was provided on create.
+func (u *TaskUpsert) UpdateCronSpec() *TaskUpsert {
+	u.SetExcluded(task.FieldCronSpec)
+	return u
+}
+
+// ClearCronSpec clears the value of the "cron_spec" field.
+func (u *TaskUpsert) ClearCronSpec() *TaskUpsert {
+	u.SetNull(task.FieldCronSpec)
+	return u
+}
+
 // SetTaskOptions sets the "task_options" field.
-func (u *TaskUpsert) SetTaskOptions(v *map[string]string) *TaskUpsert {
+func (u *TaskUpsert) SetTaskOptions(v *taskpb.TaskOption) *TaskUpsert {
 	u.Set(task.FieldTaskOptions, v)
 	return u
 }
@@ -724,78 +640,6 @@ func (u *TaskUpsert) UpdateTaskOptions() *TaskUpsert {
 // ClearTaskOptions clears the value of the "task_options" field.
 func (u *TaskUpsert) ClearTaskOptions() *TaskUpsert {
 	u.SetNull(task.FieldTaskOptions)
-	return u
-}
-
-// SetType sets the "type" field.
-func (u *TaskUpsert) SetType(v task.Type) *TaskUpsert {
-	u.Set(task.FieldType, v)
-	return u
-}
-
-// UpdateType sets the "type" field to the value that was provided on create.
-func (u *TaskUpsert) UpdateType() *TaskUpsert {
-	u.SetExcluded(task.FieldType)
-	return u
-}
-
-// ClearType clears the value of the "type" field.
-func (u *TaskUpsert) ClearType() *TaskUpsert {
-	u.SetNull(task.FieldType)
-	return u
-}
-
-// SetCronExpr sets the "cron_expr" field.
-func (u *TaskUpsert) SetCronExpr(v string) *TaskUpsert {
-	u.Set(task.FieldCronExpr, v)
-	return u
-}
-
-// UpdateCronExpr sets the "cron_expr" field to the value that was provided on create.
-func (u *TaskUpsert) UpdateCronExpr() *TaskUpsert {
-	u.SetExcluded(task.FieldCronExpr)
-	return u
-}
-
-// ClearCronExpr clears the value of the "cron_expr" field.
-func (u *TaskUpsert) ClearCronExpr() *TaskUpsert {
-	u.SetNull(task.FieldCronExpr)
-	return u
-}
-
-// SetHandler sets the "handler" field.
-func (u *TaskUpsert) SetHandler(v string) *TaskUpsert {
-	u.Set(task.FieldHandler, v)
-	return u
-}
-
-// UpdateHandler sets the "handler" field to the value that was provided on create.
-func (u *TaskUpsert) UpdateHandler() *TaskUpsert {
-	u.SetExcluded(task.FieldHandler)
-	return u
-}
-
-// ClearHandler clears the value of the "handler" field.
-func (u *TaskUpsert) ClearHandler() *TaskUpsert {
-	u.SetNull(task.FieldHandler)
-	return u
-}
-
-// SetParams sets the "params" field.
-func (u *TaskUpsert) SetParams(v *map[string]string) *TaskUpsert {
-	u.Set(task.FieldParams, v)
-	return u
-}
-
-// UpdateParams sets the "params" field to the value that was provided on create.
-func (u *TaskUpsert) UpdateParams() *TaskUpsert {
-	u.SetExcluded(task.FieldParams)
-	return u
-}
-
-// ClearParams clears the value of the "params" field.
-func (u *TaskUpsert) ClearParams() *TaskUpsert {
-	u.SetNull(task.FieldParams)
 	return u
 }
 
@@ -1018,24 +862,24 @@ func (u *TaskUpsertOne) ClearRemark() *TaskUpsertOne {
 	})
 }
 
-// SetName sets the "name" field.
-func (u *TaskUpsertOne) SetName(v string) *TaskUpsertOne {
+// SetType sets the "type" field.
+func (u *TaskUpsertOne) SetType(v task.Type) *TaskUpsertOne {
 	return u.Update(func(s *TaskUpsert) {
-		s.SetName(v)
+		s.SetType(v)
 	})
 }
 
-// UpdateName sets the "name" field to the value that was provided on create.
-func (u *TaskUpsertOne) UpdateName() *TaskUpsertOne {
+// UpdateType sets the "type" field to the value that was provided on create.
+func (u *TaskUpsertOne) UpdateType() *TaskUpsertOne {
 	return u.Update(func(s *TaskUpsert) {
-		s.UpdateName()
+		s.UpdateType()
 	})
 }
 
-// ClearName clears the value of the "name" field.
-func (u *TaskUpsertOne) ClearName() *TaskUpsertOne {
+// ClearType clears the value of the "type" field.
+func (u *TaskUpsertOne) ClearType() *TaskUpsertOne {
 	return u.Update(func(s *TaskUpsert) {
-		s.ClearName()
+		s.ClearType()
 	})
 }
 
@@ -1060,27 +904,6 @@ func (u *TaskUpsertOne) ClearTypeName() *TaskUpsertOne {
 	})
 }
 
-// SetCronSpec sets the "cron_spec" field.
-func (u *TaskUpsertOne) SetCronSpec(v string) *TaskUpsertOne {
-	return u.Update(func(s *TaskUpsert) {
-		s.SetCronSpec(v)
-	})
-}
-
-// UpdateCronSpec sets the "cron_spec" field to the value that was provided on create.
-func (u *TaskUpsertOne) UpdateCronSpec() *TaskUpsertOne {
-	return u.Update(func(s *TaskUpsert) {
-		s.UpdateCronSpec()
-	})
-}
-
-// ClearCronSpec clears the value of the "cron_spec" field.
-func (u *TaskUpsertOne) ClearCronSpec() *TaskUpsertOne {
-	return u.Update(func(s *TaskUpsert) {
-		s.ClearCronSpec()
-	})
-}
-
 // SetTaskPayload sets the "task_payload" field.
 func (u *TaskUpsertOne) SetTaskPayload(v string) *TaskUpsertOne {
 	return u.Update(func(s *TaskUpsert) {
@@ -1102,8 +925,29 @@ func (u *TaskUpsertOne) ClearTaskPayload() *TaskUpsertOne {
 	})
 }
 
+// SetCronSpec sets the "cron_spec" field.
+func (u *TaskUpsertOne) SetCronSpec(v string) *TaskUpsertOne {
+	return u.Update(func(s *TaskUpsert) {
+		s.SetCronSpec(v)
+	})
+}
+
+// UpdateCronSpec sets the "cron_spec" field to the value that was provided on create.
+func (u *TaskUpsertOne) UpdateCronSpec() *TaskUpsertOne {
+	return u.Update(func(s *TaskUpsert) {
+		s.UpdateCronSpec()
+	})
+}
+
+// ClearCronSpec clears the value of the "cron_spec" field.
+func (u *TaskUpsertOne) ClearCronSpec() *TaskUpsertOne {
+	return u.Update(func(s *TaskUpsert) {
+		s.ClearCronSpec()
+	})
+}
+
 // SetTaskOptions sets the "task_options" field.
-func (u *TaskUpsertOne) SetTaskOptions(v *map[string]string) *TaskUpsertOne {
+func (u *TaskUpsertOne) SetTaskOptions(v *taskpb.TaskOption) *TaskUpsertOne {
 	return u.Update(func(s *TaskUpsert) {
 		s.SetTaskOptions(v)
 	})
@@ -1120,90 +964,6 @@ func (u *TaskUpsertOne) UpdateTaskOptions() *TaskUpsertOne {
 func (u *TaskUpsertOne) ClearTaskOptions() *TaskUpsertOne {
 	return u.Update(func(s *TaskUpsert) {
 		s.ClearTaskOptions()
-	})
-}
-
-// SetType sets the "type" field.
-func (u *TaskUpsertOne) SetType(v task.Type) *TaskUpsertOne {
-	return u.Update(func(s *TaskUpsert) {
-		s.SetType(v)
-	})
-}
-
-// UpdateType sets the "type" field to the value that was provided on create.
-func (u *TaskUpsertOne) UpdateType() *TaskUpsertOne {
-	return u.Update(func(s *TaskUpsert) {
-		s.UpdateType()
-	})
-}
-
-// ClearType clears the value of the "type" field.
-func (u *TaskUpsertOne) ClearType() *TaskUpsertOne {
-	return u.Update(func(s *TaskUpsert) {
-		s.ClearType()
-	})
-}
-
-// SetCronExpr sets the "cron_expr" field.
-func (u *TaskUpsertOne) SetCronExpr(v string) *TaskUpsertOne {
-	return u.Update(func(s *TaskUpsert) {
-		s.SetCronExpr(v)
-	})
-}
-
-// UpdateCronExpr sets the "cron_expr" field to the value that was provided on create.
-func (u *TaskUpsertOne) UpdateCronExpr() *TaskUpsertOne {
-	return u.Update(func(s *TaskUpsert) {
-		s.UpdateCronExpr()
-	})
-}
-
-// ClearCronExpr clears the value of the "cron_expr" field.
-func (u *TaskUpsertOne) ClearCronExpr() *TaskUpsertOne {
-	return u.Update(func(s *TaskUpsert) {
-		s.ClearCronExpr()
-	})
-}
-
-// SetHandler sets the "handler" field.
-func (u *TaskUpsertOne) SetHandler(v string) *TaskUpsertOne {
-	return u.Update(func(s *TaskUpsert) {
-		s.SetHandler(v)
-	})
-}
-
-// UpdateHandler sets the "handler" field to the value that was provided on create.
-func (u *TaskUpsertOne) UpdateHandler() *TaskUpsertOne {
-	return u.Update(func(s *TaskUpsert) {
-		s.UpdateHandler()
-	})
-}
-
-// ClearHandler clears the value of the "handler" field.
-func (u *TaskUpsertOne) ClearHandler() *TaskUpsertOne {
-	return u.Update(func(s *TaskUpsert) {
-		s.ClearHandler()
-	})
-}
-
-// SetParams sets the "params" field.
-func (u *TaskUpsertOne) SetParams(v *map[string]string) *TaskUpsertOne {
-	return u.Update(func(s *TaskUpsert) {
-		s.SetParams(v)
-	})
-}
-
-// UpdateParams sets the "params" field to the value that was provided on create.
-func (u *TaskUpsertOne) UpdateParams() *TaskUpsertOne {
-	return u.Update(func(s *TaskUpsert) {
-		s.UpdateParams()
-	})
-}
-
-// ClearParams clears the value of the "params" field.
-func (u *TaskUpsertOne) ClearParams() *TaskUpsertOne {
-	return u.Update(func(s *TaskUpsert) {
-		s.ClearParams()
 	})
 }
 
@@ -1595,24 +1355,24 @@ func (u *TaskUpsertBulk) ClearRemark() *TaskUpsertBulk {
 	})
 }
 
-// SetName sets the "name" field.
-func (u *TaskUpsertBulk) SetName(v string) *TaskUpsertBulk {
+// SetType sets the "type" field.
+func (u *TaskUpsertBulk) SetType(v task.Type) *TaskUpsertBulk {
 	return u.Update(func(s *TaskUpsert) {
-		s.SetName(v)
+		s.SetType(v)
 	})
 }
 
-// UpdateName sets the "name" field to the value that was provided on create.
-func (u *TaskUpsertBulk) UpdateName() *TaskUpsertBulk {
+// UpdateType sets the "type" field to the value that was provided on create.
+func (u *TaskUpsertBulk) UpdateType() *TaskUpsertBulk {
 	return u.Update(func(s *TaskUpsert) {
-		s.UpdateName()
+		s.UpdateType()
 	})
 }
 
-// ClearName clears the value of the "name" field.
-func (u *TaskUpsertBulk) ClearName() *TaskUpsertBulk {
+// ClearType clears the value of the "type" field.
+func (u *TaskUpsertBulk) ClearType() *TaskUpsertBulk {
 	return u.Update(func(s *TaskUpsert) {
-		s.ClearName()
+		s.ClearType()
 	})
 }
 
@@ -1637,27 +1397,6 @@ func (u *TaskUpsertBulk) ClearTypeName() *TaskUpsertBulk {
 	})
 }
 
-// SetCronSpec sets the "cron_spec" field.
-func (u *TaskUpsertBulk) SetCronSpec(v string) *TaskUpsertBulk {
-	return u.Update(func(s *TaskUpsert) {
-		s.SetCronSpec(v)
-	})
-}
-
-// UpdateCronSpec sets the "cron_spec" field to the value that was provided on create.
-func (u *TaskUpsertBulk) UpdateCronSpec() *TaskUpsertBulk {
-	return u.Update(func(s *TaskUpsert) {
-		s.UpdateCronSpec()
-	})
-}
-
-// ClearCronSpec clears the value of the "cron_spec" field.
-func (u *TaskUpsertBulk) ClearCronSpec() *TaskUpsertBulk {
-	return u.Update(func(s *TaskUpsert) {
-		s.ClearCronSpec()
-	})
-}
-
 // SetTaskPayload sets the "task_payload" field.
 func (u *TaskUpsertBulk) SetTaskPayload(v string) *TaskUpsertBulk {
 	return u.Update(func(s *TaskUpsert) {
@@ -1679,8 +1418,29 @@ func (u *TaskUpsertBulk) ClearTaskPayload() *TaskUpsertBulk {
 	})
 }
 
+// SetCronSpec sets the "cron_spec" field.
+func (u *TaskUpsertBulk) SetCronSpec(v string) *TaskUpsertBulk {
+	return u.Update(func(s *TaskUpsert) {
+		s.SetCronSpec(v)
+	})
+}
+
+// UpdateCronSpec sets the "cron_spec" field to the value that was provided on create.
+func (u *TaskUpsertBulk) UpdateCronSpec() *TaskUpsertBulk {
+	return u.Update(func(s *TaskUpsert) {
+		s.UpdateCronSpec()
+	})
+}
+
+// ClearCronSpec clears the value of the "cron_spec" field.
+func (u *TaskUpsertBulk) ClearCronSpec() *TaskUpsertBulk {
+	return u.Update(func(s *TaskUpsert) {
+		s.ClearCronSpec()
+	})
+}
+
 // SetTaskOptions sets the "task_options" field.
-func (u *TaskUpsertBulk) SetTaskOptions(v *map[string]string) *TaskUpsertBulk {
+func (u *TaskUpsertBulk) SetTaskOptions(v *taskpb.TaskOption) *TaskUpsertBulk {
 	return u.Update(func(s *TaskUpsert) {
 		s.SetTaskOptions(v)
 	})
@@ -1697,90 +1457,6 @@ func (u *TaskUpsertBulk) UpdateTaskOptions() *TaskUpsertBulk {
 func (u *TaskUpsertBulk) ClearTaskOptions() *TaskUpsertBulk {
 	return u.Update(func(s *TaskUpsert) {
 		s.ClearTaskOptions()
-	})
-}
-
-// SetType sets the "type" field.
-func (u *TaskUpsertBulk) SetType(v task.Type) *TaskUpsertBulk {
-	return u.Update(func(s *TaskUpsert) {
-		s.SetType(v)
-	})
-}
-
-// UpdateType sets the "type" field to the value that was provided on create.
-func (u *TaskUpsertBulk) UpdateType() *TaskUpsertBulk {
-	return u.Update(func(s *TaskUpsert) {
-		s.UpdateType()
-	})
-}
-
-// ClearType clears the value of the "type" field.
-func (u *TaskUpsertBulk) ClearType() *TaskUpsertBulk {
-	return u.Update(func(s *TaskUpsert) {
-		s.ClearType()
-	})
-}
-
-// SetCronExpr sets the "cron_expr" field.
-func (u *TaskUpsertBulk) SetCronExpr(v string) *TaskUpsertBulk {
-	return u.Update(func(s *TaskUpsert) {
-		s.SetCronExpr(v)
-	})
-}
-
-// UpdateCronExpr sets the "cron_expr" field to the value that was provided on create.
-func (u *TaskUpsertBulk) UpdateCronExpr() *TaskUpsertBulk {
-	return u.Update(func(s *TaskUpsert) {
-		s.UpdateCronExpr()
-	})
-}
-
-// ClearCronExpr clears the value of the "cron_expr" field.
-func (u *TaskUpsertBulk) ClearCronExpr() *TaskUpsertBulk {
-	return u.Update(func(s *TaskUpsert) {
-		s.ClearCronExpr()
-	})
-}
-
-// SetHandler sets the "handler" field.
-func (u *TaskUpsertBulk) SetHandler(v string) *TaskUpsertBulk {
-	return u.Update(func(s *TaskUpsert) {
-		s.SetHandler(v)
-	})
-}
-
-// UpdateHandler sets the "handler" field to the value that was provided on create.
-func (u *TaskUpsertBulk) UpdateHandler() *TaskUpsertBulk {
-	return u.Update(func(s *TaskUpsert) {
-		s.UpdateHandler()
-	})
-}
-
-// ClearHandler clears the value of the "handler" field.
-func (u *TaskUpsertBulk) ClearHandler() *TaskUpsertBulk {
-	return u.Update(func(s *TaskUpsert) {
-		s.ClearHandler()
-	})
-}
-
-// SetParams sets the "params" field.
-func (u *TaskUpsertBulk) SetParams(v *map[string]string) *TaskUpsertBulk {
-	return u.Update(func(s *TaskUpsert) {
-		s.SetParams(v)
-	})
-}
-
-// UpdateParams sets the "params" field to the value that was provided on create.
-func (u *TaskUpsertBulk) UpdateParams() *TaskUpsertBulk {
-	return u.Update(func(s *TaskUpsert) {
-		s.UpdateParams()
-	})
-}
-
-// ClearParams clears the value of the "params" field.
-func (u *TaskUpsertBulk) ClearParams() *TaskUpsertBulk {
-	return u.Update(func(s *TaskUpsert) {
-		s.ClearParams()
 	})
 }
 

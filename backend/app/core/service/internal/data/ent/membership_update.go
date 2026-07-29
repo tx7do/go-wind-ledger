@@ -150,6 +150,26 @@ func (_u *MembershipUpdate) ClearDeletedBy() *MembershipUpdate {
 	return _u
 }
 
+// SetRemark sets the "remark" field.
+func (_u *MembershipUpdate) SetRemark(v string) *MembershipUpdate {
+	_u.mutation.SetRemark(v)
+	return _u
+}
+
+// SetNillableRemark sets the "remark" field if the given value is not nil.
+func (_u *MembershipUpdate) SetNillableRemark(v *string) *MembershipUpdate {
+	if v != nil {
+		_u.SetRemark(*v)
+	}
+	return _u
+}
+
+// ClearRemark clears the value of the "remark" field.
+func (_u *MembershipUpdate) ClearRemark() *MembershipUpdate {
+	_u.mutation.ClearRemark()
+	return _u
+}
+
 // SetUserID sets the "user_id" field.
 func (_u *MembershipUpdate) SetUserID(v uint32) *MembershipUpdate {
 	_u.mutation.ResetUserID()
@@ -171,49 +191,57 @@ func (_u *MembershipUpdate) AddUserID(v int32) *MembershipUpdate {
 	return _u
 }
 
-// ClearUserID clears the value of the "user_id" field.
-func (_u *MembershipUpdate) ClearUserID() *MembershipUpdate {
-	_u.mutation.ClearUserID()
+// SetOrgUnitID sets the "org_unit_id" field.
+func (_u *MembershipUpdate) SetOrgUnitID(v uint32) *MembershipUpdate {
+	_u.mutation.ResetOrgUnitID()
+	_u.mutation.SetOrgUnitID(v)
 	return _u
 }
 
-// SetIsPrimary sets the "is_primary" field.
-func (_u *MembershipUpdate) SetIsPrimary(v bool) *MembershipUpdate {
-	_u.mutation.SetIsPrimary(v)
-	return _u
-}
-
-// SetNillableIsPrimary sets the "is_primary" field if the given value is not nil.
-func (_u *MembershipUpdate) SetNillableIsPrimary(v *bool) *MembershipUpdate {
+// SetNillableOrgUnitID sets the "org_unit_id" field if the given value is not nil.
+func (_u *MembershipUpdate) SetNillableOrgUnitID(v *uint32) *MembershipUpdate {
 	if v != nil {
-		_u.SetIsPrimary(*v)
+		_u.SetOrgUnitID(*v)
 	}
 	return _u
 }
 
-// ClearIsPrimary clears the value of the "is_primary" field.
-func (_u *MembershipUpdate) ClearIsPrimary() *MembershipUpdate {
-	_u.mutation.ClearIsPrimary()
+// AddOrgUnitID adds value to the "org_unit_id" field.
+func (_u *MembershipUpdate) AddOrgUnitID(v int32) *MembershipUpdate {
+	_u.mutation.AddOrgUnitID(v)
 	return _u
 }
 
-// SetStatus sets the "status" field.
-func (_u *MembershipUpdate) SetStatus(v membership.Status) *MembershipUpdate {
-	_u.mutation.SetStatus(v)
+// ClearOrgUnitID clears the value of the "org_unit_id" field.
+func (_u *MembershipUpdate) ClearOrgUnitID() *MembershipUpdate {
+	_u.mutation.ClearOrgUnitID()
 	return _u
 }
 
-// SetNillableStatus sets the "status" field if the given value is not nil.
-func (_u *MembershipUpdate) SetNillableStatus(v *membership.Status) *MembershipUpdate {
+// SetPositionID sets the "position_id" field.
+func (_u *MembershipUpdate) SetPositionID(v uint32) *MembershipUpdate {
+	_u.mutation.ResetPositionID()
+	_u.mutation.SetPositionID(v)
+	return _u
+}
+
+// SetNillablePositionID sets the "position_id" field if the given value is not nil.
+func (_u *MembershipUpdate) SetNillablePositionID(v *uint32) *MembershipUpdate {
 	if v != nil {
-		_u.SetStatus(*v)
+		_u.SetPositionID(*v)
 	}
 	return _u
 }
 
-// ClearStatus clears the value of the "status" field.
-func (_u *MembershipUpdate) ClearStatus() *MembershipUpdate {
-	_u.mutation.ClearStatus()
+// AddPositionID adds value to the "position_id" field.
+func (_u *MembershipUpdate) AddPositionID(v int32) *MembershipUpdate {
+	_u.mutation.AddPositionID(v)
+	return _u
+}
+
+// ClearPositionID clears the value of the "position_id" field.
+func (_u *MembershipUpdate) ClearPositionID() *MembershipUpdate {
+	_u.mutation.ClearPositionID()
 	return _u
 }
 
@@ -244,23 +272,17 @@ func (_u *MembershipUpdate) ClearRoleID() *MembershipUpdate {
 	return _u
 }
 
-// SetJoinedAt sets the "joined_at" field.
-func (_u *MembershipUpdate) SetJoinedAt(v time.Time) *MembershipUpdate {
-	_u.mutation.SetJoinedAt(v)
+// SetIsPrimary sets the "is_primary" field.
+func (_u *MembershipUpdate) SetIsPrimary(v bool) *MembershipUpdate {
+	_u.mutation.SetIsPrimary(v)
 	return _u
 }
 
-// SetNillableJoinedAt sets the "joined_at" field if the given value is not nil.
-func (_u *MembershipUpdate) SetNillableJoinedAt(v *time.Time) *MembershipUpdate {
+// SetNillableIsPrimary sets the "is_primary" field if the given value is not nil.
+func (_u *MembershipUpdate) SetNillableIsPrimary(v *bool) *MembershipUpdate {
 	if v != nil {
-		_u.SetJoinedAt(*v)
+		_u.SetIsPrimary(*v)
 	}
-	return _u
-}
-
-// ClearJoinedAt clears the value of the "joined_at" field.
-func (_u *MembershipUpdate) ClearJoinedAt() *MembershipUpdate {
-	_u.mutation.ClearJoinedAt()
 	return _u
 }
 
@@ -301,6 +323,93 @@ func (_u *MembershipUpdate) SetNillableEndAt(v *time.Time) *MembershipUpdate {
 // ClearEndAt clears the value of the "end_at" field.
 func (_u *MembershipUpdate) ClearEndAt() *MembershipUpdate {
 	_u.mutation.ClearEndAt()
+	return _u
+}
+
+// SetAssignedAt sets the "assigned_at" field.
+func (_u *MembershipUpdate) SetAssignedAt(v time.Time) *MembershipUpdate {
+	_u.mutation.SetAssignedAt(v)
+	return _u
+}
+
+// SetNillableAssignedAt sets the "assigned_at" field if the given value is not nil.
+func (_u *MembershipUpdate) SetNillableAssignedAt(v *time.Time) *MembershipUpdate {
+	if v != nil {
+		_u.SetAssignedAt(*v)
+	}
+	return _u
+}
+
+// ClearAssignedAt clears the value of the "assigned_at" field.
+func (_u *MembershipUpdate) ClearAssignedAt() *MembershipUpdate {
+	_u.mutation.ClearAssignedAt()
+	return _u
+}
+
+// SetAssignedBy sets the "assigned_by" field.
+func (_u *MembershipUpdate) SetAssignedBy(v uint32) *MembershipUpdate {
+	_u.mutation.ResetAssignedBy()
+	_u.mutation.SetAssignedBy(v)
+	return _u
+}
+
+// SetNillableAssignedBy sets the "assigned_by" field if the given value is not nil.
+func (_u *MembershipUpdate) SetNillableAssignedBy(v *uint32) *MembershipUpdate {
+	if v != nil {
+		_u.SetAssignedBy(*v)
+	}
+	return _u
+}
+
+// AddAssignedBy adds value to the "assigned_by" field.
+func (_u *MembershipUpdate) AddAssignedBy(v int32) *MembershipUpdate {
+	_u.mutation.AddAssignedBy(v)
+	return _u
+}
+
+// ClearAssignedBy clears the value of the "assigned_by" field.
+func (_u *MembershipUpdate) ClearAssignedBy() *MembershipUpdate {
+	_u.mutation.ClearAssignedBy()
+	return _u
+}
+
+// SetJoinedAt sets the "joined_at" field.
+func (_u *MembershipUpdate) SetJoinedAt(v time.Time) *MembershipUpdate {
+	_u.mutation.SetJoinedAt(v)
+	return _u
+}
+
+// SetNillableJoinedAt sets the "joined_at" field if the given value is not nil.
+func (_u *MembershipUpdate) SetNillableJoinedAt(v *time.Time) *MembershipUpdate {
+	if v != nil {
+		_u.SetJoinedAt(*v)
+	}
+	return _u
+}
+
+// ClearJoinedAt clears the value of the "joined_at" field.
+func (_u *MembershipUpdate) ClearJoinedAt() *MembershipUpdate {
+	_u.mutation.ClearJoinedAt()
+	return _u
+}
+
+// SetStatus sets the "status" field.
+func (_u *MembershipUpdate) SetStatus(v membership.Status) *MembershipUpdate {
+	_u.mutation.SetStatus(v)
+	return _u
+}
+
+// SetNillableStatus sets the "status" field if the given value is not nil.
+func (_u *MembershipUpdate) SetNillableStatus(v *membership.Status) *MembershipUpdate {
+	if v != nil {
+		_u.SetStatus(*v)
+	}
+	return _u
+}
+
+// ClearStatus clears the value of the "status" field.
+func (_u *MembershipUpdate) ClearStatus() *MembershipUpdate {
+	_u.mutation.ClearStatus()
 	return _u
 }
 
@@ -409,26 +518,35 @@ func (_u *MembershipUpdate) sqlSave(ctx context.Context) (_node int, err error) 
 	if _u.mutation.TenantIDCleared() {
 		_spec.ClearField(membership.FieldTenantID, field.TypeUint32)
 	}
+	if value, ok := _u.mutation.Remark(); ok {
+		_spec.SetField(membership.FieldRemark, field.TypeString, value)
+	}
+	if _u.mutation.RemarkCleared() {
+		_spec.ClearField(membership.FieldRemark, field.TypeString)
+	}
 	if value, ok := _u.mutation.UserID(); ok {
 		_spec.SetField(membership.FieldUserID, field.TypeUint32, value)
 	}
 	if value, ok := _u.mutation.AddedUserID(); ok {
 		_spec.AddField(membership.FieldUserID, field.TypeUint32, value)
 	}
-	if _u.mutation.UserIDCleared() {
-		_spec.ClearField(membership.FieldUserID, field.TypeUint32)
+	if value, ok := _u.mutation.OrgUnitID(); ok {
+		_spec.SetField(membership.FieldOrgUnitID, field.TypeUint32, value)
 	}
-	if value, ok := _u.mutation.IsPrimary(); ok {
-		_spec.SetField(membership.FieldIsPrimary, field.TypeBool, value)
+	if value, ok := _u.mutation.AddedOrgUnitID(); ok {
+		_spec.AddField(membership.FieldOrgUnitID, field.TypeUint32, value)
 	}
-	if _u.mutation.IsPrimaryCleared() {
-		_spec.ClearField(membership.FieldIsPrimary, field.TypeBool)
+	if _u.mutation.OrgUnitIDCleared() {
+		_spec.ClearField(membership.FieldOrgUnitID, field.TypeUint32)
 	}
-	if value, ok := _u.mutation.Status(); ok {
-		_spec.SetField(membership.FieldStatus, field.TypeEnum, value)
+	if value, ok := _u.mutation.PositionID(); ok {
+		_spec.SetField(membership.FieldPositionID, field.TypeUint32, value)
 	}
-	if _u.mutation.StatusCleared() {
-		_spec.ClearField(membership.FieldStatus, field.TypeEnum)
+	if value, ok := _u.mutation.AddedPositionID(); ok {
+		_spec.AddField(membership.FieldPositionID, field.TypeUint32, value)
+	}
+	if _u.mutation.PositionIDCleared() {
+		_spec.ClearField(membership.FieldPositionID, field.TypeUint32)
 	}
 	if value, ok := _u.mutation.RoleID(); ok {
 		_spec.SetField(membership.FieldRoleID, field.TypeUint32, value)
@@ -439,11 +557,8 @@ func (_u *MembershipUpdate) sqlSave(ctx context.Context) (_node int, err error) 
 	if _u.mutation.RoleIDCleared() {
 		_spec.ClearField(membership.FieldRoleID, field.TypeUint32)
 	}
-	if value, ok := _u.mutation.JoinedAt(); ok {
-		_spec.SetField(membership.FieldJoinedAt, field.TypeTime, value)
-	}
-	if _u.mutation.JoinedAtCleared() {
-		_spec.ClearField(membership.FieldJoinedAt, field.TypeTime)
+	if value, ok := _u.mutation.IsPrimary(); ok {
+		_spec.SetField(membership.FieldIsPrimary, field.TypeBool, value)
 	}
 	if value, ok := _u.mutation.StartAt(); ok {
 		_spec.SetField(membership.FieldStartAt, field.TypeTime, value)
@@ -456,6 +571,33 @@ func (_u *MembershipUpdate) sqlSave(ctx context.Context) (_node int, err error) 
 	}
 	if _u.mutation.EndAtCleared() {
 		_spec.ClearField(membership.FieldEndAt, field.TypeTime)
+	}
+	if value, ok := _u.mutation.AssignedAt(); ok {
+		_spec.SetField(membership.FieldAssignedAt, field.TypeTime, value)
+	}
+	if _u.mutation.AssignedAtCleared() {
+		_spec.ClearField(membership.FieldAssignedAt, field.TypeTime)
+	}
+	if value, ok := _u.mutation.AssignedBy(); ok {
+		_spec.SetField(membership.FieldAssignedBy, field.TypeUint32, value)
+	}
+	if value, ok := _u.mutation.AddedAssignedBy(); ok {
+		_spec.AddField(membership.FieldAssignedBy, field.TypeUint32, value)
+	}
+	if _u.mutation.AssignedByCleared() {
+		_spec.ClearField(membership.FieldAssignedBy, field.TypeUint32)
+	}
+	if value, ok := _u.mutation.JoinedAt(); ok {
+		_spec.SetField(membership.FieldJoinedAt, field.TypeTime, value)
+	}
+	if _u.mutation.JoinedAtCleared() {
+		_spec.ClearField(membership.FieldJoinedAt, field.TypeTime)
+	}
+	if value, ok := _u.mutation.Status(); ok {
+		_spec.SetField(membership.FieldStatus, field.TypeEnum, value)
+	}
+	if _u.mutation.StatusCleared() {
+		_spec.ClearField(membership.FieldStatus, field.TypeEnum)
 	}
 	_spec.AddModifiers(_u.modifiers...)
 	if _node, err = sqlgraph.UpdateNodes(ctx, _u.driver, _spec); err != nil {
@@ -600,6 +742,26 @@ func (_u *MembershipUpdateOne) ClearDeletedBy() *MembershipUpdateOne {
 	return _u
 }
 
+// SetRemark sets the "remark" field.
+func (_u *MembershipUpdateOne) SetRemark(v string) *MembershipUpdateOne {
+	_u.mutation.SetRemark(v)
+	return _u
+}
+
+// SetNillableRemark sets the "remark" field if the given value is not nil.
+func (_u *MembershipUpdateOne) SetNillableRemark(v *string) *MembershipUpdateOne {
+	if v != nil {
+		_u.SetRemark(*v)
+	}
+	return _u
+}
+
+// ClearRemark clears the value of the "remark" field.
+func (_u *MembershipUpdateOne) ClearRemark() *MembershipUpdateOne {
+	_u.mutation.ClearRemark()
+	return _u
+}
+
 // SetUserID sets the "user_id" field.
 func (_u *MembershipUpdateOne) SetUserID(v uint32) *MembershipUpdateOne {
 	_u.mutation.ResetUserID()
@@ -621,49 +783,57 @@ func (_u *MembershipUpdateOne) AddUserID(v int32) *MembershipUpdateOne {
 	return _u
 }
 
-// ClearUserID clears the value of the "user_id" field.
-func (_u *MembershipUpdateOne) ClearUserID() *MembershipUpdateOne {
-	_u.mutation.ClearUserID()
+// SetOrgUnitID sets the "org_unit_id" field.
+func (_u *MembershipUpdateOne) SetOrgUnitID(v uint32) *MembershipUpdateOne {
+	_u.mutation.ResetOrgUnitID()
+	_u.mutation.SetOrgUnitID(v)
 	return _u
 }
 
-// SetIsPrimary sets the "is_primary" field.
-func (_u *MembershipUpdateOne) SetIsPrimary(v bool) *MembershipUpdateOne {
-	_u.mutation.SetIsPrimary(v)
-	return _u
-}
-
-// SetNillableIsPrimary sets the "is_primary" field if the given value is not nil.
-func (_u *MembershipUpdateOne) SetNillableIsPrimary(v *bool) *MembershipUpdateOne {
+// SetNillableOrgUnitID sets the "org_unit_id" field if the given value is not nil.
+func (_u *MembershipUpdateOne) SetNillableOrgUnitID(v *uint32) *MembershipUpdateOne {
 	if v != nil {
-		_u.SetIsPrimary(*v)
+		_u.SetOrgUnitID(*v)
 	}
 	return _u
 }
 
-// ClearIsPrimary clears the value of the "is_primary" field.
-func (_u *MembershipUpdateOne) ClearIsPrimary() *MembershipUpdateOne {
-	_u.mutation.ClearIsPrimary()
+// AddOrgUnitID adds value to the "org_unit_id" field.
+func (_u *MembershipUpdateOne) AddOrgUnitID(v int32) *MembershipUpdateOne {
+	_u.mutation.AddOrgUnitID(v)
 	return _u
 }
 
-// SetStatus sets the "status" field.
-func (_u *MembershipUpdateOne) SetStatus(v membership.Status) *MembershipUpdateOne {
-	_u.mutation.SetStatus(v)
+// ClearOrgUnitID clears the value of the "org_unit_id" field.
+func (_u *MembershipUpdateOne) ClearOrgUnitID() *MembershipUpdateOne {
+	_u.mutation.ClearOrgUnitID()
 	return _u
 }
 
-// SetNillableStatus sets the "status" field if the given value is not nil.
-func (_u *MembershipUpdateOne) SetNillableStatus(v *membership.Status) *MembershipUpdateOne {
+// SetPositionID sets the "position_id" field.
+func (_u *MembershipUpdateOne) SetPositionID(v uint32) *MembershipUpdateOne {
+	_u.mutation.ResetPositionID()
+	_u.mutation.SetPositionID(v)
+	return _u
+}
+
+// SetNillablePositionID sets the "position_id" field if the given value is not nil.
+func (_u *MembershipUpdateOne) SetNillablePositionID(v *uint32) *MembershipUpdateOne {
 	if v != nil {
-		_u.SetStatus(*v)
+		_u.SetPositionID(*v)
 	}
 	return _u
 }
 
-// ClearStatus clears the value of the "status" field.
-func (_u *MembershipUpdateOne) ClearStatus() *MembershipUpdateOne {
-	_u.mutation.ClearStatus()
+// AddPositionID adds value to the "position_id" field.
+func (_u *MembershipUpdateOne) AddPositionID(v int32) *MembershipUpdateOne {
+	_u.mutation.AddPositionID(v)
+	return _u
+}
+
+// ClearPositionID clears the value of the "position_id" field.
+func (_u *MembershipUpdateOne) ClearPositionID() *MembershipUpdateOne {
+	_u.mutation.ClearPositionID()
 	return _u
 }
 
@@ -694,23 +864,17 @@ func (_u *MembershipUpdateOne) ClearRoleID() *MembershipUpdateOne {
 	return _u
 }
 
-// SetJoinedAt sets the "joined_at" field.
-func (_u *MembershipUpdateOne) SetJoinedAt(v time.Time) *MembershipUpdateOne {
-	_u.mutation.SetJoinedAt(v)
+// SetIsPrimary sets the "is_primary" field.
+func (_u *MembershipUpdateOne) SetIsPrimary(v bool) *MembershipUpdateOne {
+	_u.mutation.SetIsPrimary(v)
 	return _u
 }
 
-// SetNillableJoinedAt sets the "joined_at" field if the given value is not nil.
-func (_u *MembershipUpdateOne) SetNillableJoinedAt(v *time.Time) *MembershipUpdateOne {
+// SetNillableIsPrimary sets the "is_primary" field if the given value is not nil.
+func (_u *MembershipUpdateOne) SetNillableIsPrimary(v *bool) *MembershipUpdateOne {
 	if v != nil {
-		_u.SetJoinedAt(*v)
+		_u.SetIsPrimary(*v)
 	}
-	return _u
-}
-
-// ClearJoinedAt clears the value of the "joined_at" field.
-func (_u *MembershipUpdateOne) ClearJoinedAt() *MembershipUpdateOne {
-	_u.mutation.ClearJoinedAt()
 	return _u
 }
 
@@ -751,6 +915,93 @@ func (_u *MembershipUpdateOne) SetNillableEndAt(v *time.Time) *MembershipUpdateO
 // ClearEndAt clears the value of the "end_at" field.
 func (_u *MembershipUpdateOne) ClearEndAt() *MembershipUpdateOne {
 	_u.mutation.ClearEndAt()
+	return _u
+}
+
+// SetAssignedAt sets the "assigned_at" field.
+func (_u *MembershipUpdateOne) SetAssignedAt(v time.Time) *MembershipUpdateOne {
+	_u.mutation.SetAssignedAt(v)
+	return _u
+}
+
+// SetNillableAssignedAt sets the "assigned_at" field if the given value is not nil.
+func (_u *MembershipUpdateOne) SetNillableAssignedAt(v *time.Time) *MembershipUpdateOne {
+	if v != nil {
+		_u.SetAssignedAt(*v)
+	}
+	return _u
+}
+
+// ClearAssignedAt clears the value of the "assigned_at" field.
+func (_u *MembershipUpdateOne) ClearAssignedAt() *MembershipUpdateOne {
+	_u.mutation.ClearAssignedAt()
+	return _u
+}
+
+// SetAssignedBy sets the "assigned_by" field.
+func (_u *MembershipUpdateOne) SetAssignedBy(v uint32) *MembershipUpdateOne {
+	_u.mutation.ResetAssignedBy()
+	_u.mutation.SetAssignedBy(v)
+	return _u
+}
+
+// SetNillableAssignedBy sets the "assigned_by" field if the given value is not nil.
+func (_u *MembershipUpdateOne) SetNillableAssignedBy(v *uint32) *MembershipUpdateOne {
+	if v != nil {
+		_u.SetAssignedBy(*v)
+	}
+	return _u
+}
+
+// AddAssignedBy adds value to the "assigned_by" field.
+func (_u *MembershipUpdateOne) AddAssignedBy(v int32) *MembershipUpdateOne {
+	_u.mutation.AddAssignedBy(v)
+	return _u
+}
+
+// ClearAssignedBy clears the value of the "assigned_by" field.
+func (_u *MembershipUpdateOne) ClearAssignedBy() *MembershipUpdateOne {
+	_u.mutation.ClearAssignedBy()
+	return _u
+}
+
+// SetJoinedAt sets the "joined_at" field.
+func (_u *MembershipUpdateOne) SetJoinedAt(v time.Time) *MembershipUpdateOne {
+	_u.mutation.SetJoinedAt(v)
+	return _u
+}
+
+// SetNillableJoinedAt sets the "joined_at" field if the given value is not nil.
+func (_u *MembershipUpdateOne) SetNillableJoinedAt(v *time.Time) *MembershipUpdateOne {
+	if v != nil {
+		_u.SetJoinedAt(*v)
+	}
+	return _u
+}
+
+// ClearJoinedAt clears the value of the "joined_at" field.
+func (_u *MembershipUpdateOne) ClearJoinedAt() *MembershipUpdateOne {
+	_u.mutation.ClearJoinedAt()
+	return _u
+}
+
+// SetStatus sets the "status" field.
+func (_u *MembershipUpdateOne) SetStatus(v membership.Status) *MembershipUpdateOne {
+	_u.mutation.SetStatus(v)
+	return _u
+}
+
+// SetNillableStatus sets the "status" field if the given value is not nil.
+func (_u *MembershipUpdateOne) SetNillableStatus(v *membership.Status) *MembershipUpdateOne {
+	if v != nil {
+		_u.SetStatus(*v)
+	}
+	return _u
+}
+
+// ClearStatus clears the value of the "status" field.
+func (_u *MembershipUpdateOne) ClearStatus() *MembershipUpdateOne {
+	_u.mutation.ClearStatus()
 	return _u
 }
 
@@ -889,26 +1140,35 @@ func (_u *MembershipUpdateOne) sqlSave(ctx context.Context) (_node *Membership, 
 	if _u.mutation.TenantIDCleared() {
 		_spec.ClearField(membership.FieldTenantID, field.TypeUint32)
 	}
+	if value, ok := _u.mutation.Remark(); ok {
+		_spec.SetField(membership.FieldRemark, field.TypeString, value)
+	}
+	if _u.mutation.RemarkCleared() {
+		_spec.ClearField(membership.FieldRemark, field.TypeString)
+	}
 	if value, ok := _u.mutation.UserID(); ok {
 		_spec.SetField(membership.FieldUserID, field.TypeUint32, value)
 	}
 	if value, ok := _u.mutation.AddedUserID(); ok {
 		_spec.AddField(membership.FieldUserID, field.TypeUint32, value)
 	}
-	if _u.mutation.UserIDCleared() {
-		_spec.ClearField(membership.FieldUserID, field.TypeUint32)
+	if value, ok := _u.mutation.OrgUnitID(); ok {
+		_spec.SetField(membership.FieldOrgUnitID, field.TypeUint32, value)
 	}
-	if value, ok := _u.mutation.IsPrimary(); ok {
-		_spec.SetField(membership.FieldIsPrimary, field.TypeBool, value)
+	if value, ok := _u.mutation.AddedOrgUnitID(); ok {
+		_spec.AddField(membership.FieldOrgUnitID, field.TypeUint32, value)
 	}
-	if _u.mutation.IsPrimaryCleared() {
-		_spec.ClearField(membership.FieldIsPrimary, field.TypeBool)
+	if _u.mutation.OrgUnitIDCleared() {
+		_spec.ClearField(membership.FieldOrgUnitID, field.TypeUint32)
 	}
-	if value, ok := _u.mutation.Status(); ok {
-		_spec.SetField(membership.FieldStatus, field.TypeEnum, value)
+	if value, ok := _u.mutation.PositionID(); ok {
+		_spec.SetField(membership.FieldPositionID, field.TypeUint32, value)
 	}
-	if _u.mutation.StatusCleared() {
-		_spec.ClearField(membership.FieldStatus, field.TypeEnum)
+	if value, ok := _u.mutation.AddedPositionID(); ok {
+		_spec.AddField(membership.FieldPositionID, field.TypeUint32, value)
+	}
+	if _u.mutation.PositionIDCleared() {
+		_spec.ClearField(membership.FieldPositionID, field.TypeUint32)
 	}
 	if value, ok := _u.mutation.RoleID(); ok {
 		_spec.SetField(membership.FieldRoleID, field.TypeUint32, value)
@@ -919,11 +1179,8 @@ func (_u *MembershipUpdateOne) sqlSave(ctx context.Context) (_node *Membership, 
 	if _u.mutation.RoleIDCleared() {
 		_spec.ClearField(membership.FieldRoleID, field.TypeUint32)
 	}
-	if value, ok := _u.mutation.JoinedAt(); ok {
-		_spec.SetField(membership.FieldJoinedAt, field.TypeTime, value)
-	}
-	if _u.mutation.JoinedAtCleared() {
-		_spec.ClearField(membership.FieldJoinedAt, field.TypeTime)
+	if value, ok := _u.mutation.IsPrimary(); ok {
+		_spec.SetField(membership.FieldIsPrimary, field.TypeBool, value)
 	}
 	if value, ok := _u.mutation.StartAt(); ok {
 		_spec.SetField(membership.FieldStartAt, field.TypeTime, value)
@@ -936,6 +1193,33 @@ func (_u *MembershipUpdateOne) sqlSave(ctx context.Context) (_node *Membership, 
 	}
 	if _u.mutation.EndAtCleared() {
 		_spec.ClearField(membership.FieldEndAt, field.TypeTime)
+	}
+	if value, ok := _u.mutation.AssignedAt(); ok {
+		_spec.SetField(membership.FieldAssignedAt, field.TypeTime, value)
+	}
+	if _u.mutation.AssignedAtCleared() {
+		_spec.ClearField(membership.FieldAssignedAt, field.TypeTime)
+	}
+	if value, ok := _u.mutation.AssignedBy(); ok {
+		_spec.SetField(membership.FieldAssignedBy, field.TypeUint32, value)
+	}
+	if value, ok := _u.mutation.AddedAssignedBy(); ok {
+		_spec.AddField(membership.FieldAssignedBy, field.TypeUint32, value)
+	}
+	if _u.mutation.AssignedByCleared() {
+		_spec.ClearField(membership.FieldAssignedBy, field.TypeUint32)
+	}
+	if value, ok := _u.mutation.JoinedAt(); ok {
+		_spec.SetField(membership.FieldJoinedAt, field.TypeTime, value)
+	}
+	if _u.mutation.JoinedAtCleared() {
+		_spec.ClearField(membership.FieldJoinedAt, field.TypeTime)
+	}
+	if value, ok := _u.mutation.Status(); ok {
+		_spec.SetField(membership.FieldStatus, field.TypeEnum, value)
+	}
+	if _u.mutation.StatusCleared() {
+		_spec.ClearField(membership.FieldStatus, field.TypeEnum)
 	}
 	_spec.AddModifiers(_u.modifiers...)
 	_node = &Membership{config: _u.config}

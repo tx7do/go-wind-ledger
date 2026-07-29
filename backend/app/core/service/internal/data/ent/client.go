@@ -810,8 +810,7 @@ func (c *APIClient) GetX(ctx context.Context, id uint32) *Api {
 
 // Hooks returns the client hooks.
 func (c *APIClient) Hooks() []Hook {
-	hooks := c.hooks.Api
-	return append(hooks[:len(hooks):len(hooks)], api.Hooks[:]...)
+	return c.hooks.Api
 }
 
 // Interceptors returns the client interceptors.
@@ -2044,6 +2043,38 @@ func (c *DictEntryClient) GetX(ctx context.Context, id uint32) *DictEntry {
 	return obj
 }
 
+// QueryDictType queries the dict_type edge of a DictEntry.
+func (c *DictEntryClient) QueryDictType(_m *DictEntry) *DictTypeQuery {
+	query := (&DictTypeClient{config: c.config}).Query()
+	query.path = func(context.Context) (fromV *sql.Selector, _ error) {
+		id := _m.ID
+		step := sqlgraph.NewStep(
+			sqlgraph.From(dictentry.Table, dictentry.FieldID, id),
+			sqlgraph.To(dicttype.Table, dicttype.FieldID),
+			sqlgraph.Edge(sqlgraph.M2O, true, dictentry.DictTypeTable, dictentry.DictTypeColumn),
+		)
+		fromV = sqlgraph.Neighbors(_m.driver.Dialect(), step)
+		return fromV, nil
+	}
+	return query
+}
+
+// QueryI18ns queries the i18ns edge of a DictEntry.
+func (c *DictEntryClient) QueryI18ns(_m *DictEntry) *DictEntryI18nQuery {
+	query := (&DictEntryI18nClient{config: c.config}).Query()
+	query.path = func(context.Context) (fromV *sql.Selector, _ error) {
+		id := _m.ID
+		step := sqlgraph.NewStep(
+			sqlgraph.From(dictentry.Table, dictentry.FieldID, id),
+			sqlgraph.To(dictentryi18n.Table, dictentryi18n.FieldID),
+			sqlgraph.Edge(sqlgraph.O2M, false, dictentry.I18nsTable, dictentry.I18nsColumn),
+		)
+		fromV = sqlgraph.Neighbors(_m.driver.Dialect(), step)
+		return fromV, nil
+	}
+	return query
+}
+
 // Hooks returns the client hooks.
 func (c *DictEntryClient) Hooks() []Hook {
 	hooks := c.hooks.DictEntry
@@ -2176,6 +2207,22 @@ func (c *DictEntryI18nClient) GetX(ctx context.Context, id uint32) *DictEntryI18
 		panic(err)
 	}
 	return obj
+}
+
+// QueryDictEntry queries the dict_entry edge of a DictEntryI18n.
+func (c *DictEntryI18nClient) QueryDictEntry(_m *DictEntryI18n) *DictEntryQuery {
+	query := (&DictEntryClient{config: c.config}).Query()
+	query.path = func(context.Context) (fromV *sql.Selector, _ error) {
+		id := _m.ID
+		step := sqlgraph.NewStep(
+			sqlgraph.From(dictentryi18n.Table, dictentryi18n.FieldID, id),
+			sqlgraph.To(dictentry.Table, dictentry.FieldID),
+			sqlgraph.Edge(sqlgraph.M2O, true, dictentryi18n.DictEntryTable, dictentryi18n.DictEntryColumn),
+		)
+		fromV = sqlgraph.Neighbors(_m.driver.Dialect(), step)
+		return fromV, nil
+	}
+	return query
 }
 
 // Hooks returns the client hooks.
@@ -2312,9 +2359,26 @@ func (c *DictTypeClient) GetX(ctx context.Context, id uint32) *DictType {
 	return obj
 }
 
+// QueryEntries queries the entries edge of a DictType.
+func (c *DictTypeClient) QueryEntries(_m *DictType) *DictEntryQuery {
+	query := (&DictEntryClient{config: c.config}).Query()
+	query.path = func(context.Context) (fromV *sql.Selector, _ error) {
+		id := _m.ID
+		step := sqlgraph.NewStep(
+			sqlgraph.From(dicttype.Table, dicttype.FieldID, id),
+			sqlgraph.To(dictentry.Table, dictentry.FieldID),
+			sqlgraph.Edge(sqlgraph.O2M, false, dicttype.EntriesTable, dicttype.EntriesColumn),
+		)
+		fromV = sqlgraph.Neighbors(_m.driver.Dialect(), step)
+		return fromV, nil
+	}
+	return query
+}
+
 // Hooks returns the client hooks.
 func (c *DictTypeClient) Hooks() []Hook {
-	return c.hooks.DictType
+	hooks := c.hooks.DictType
+	return append(hooks[:len(hooks):len(hooks)], dicttype.Hooks[:]...)
 }
 
 // Interceptors returns the client interceptors.
@@ -3981,8 +4045,7 @@ func (c *PermissionClient) GetX(ctx context.Context, id uint32) *Permission {
 
 // Hooks returns the client hooks.
 func (c *PermissionClient) Hooks() []Hook {
-	hooks := c.hooks.Permission
-	return append(hooks[:len(hooks):len(hooks)], permission.Hooks[:]...)
+	return c.hooks.Permission
 }
 
 // Interceptors returns the client interceptors.
@@ -4380,10 +4443,41 @@ func (c *PermissionGroupClient) GetX(ctx context.Context, id uint32) *Permission
 	return obj
 }
 
+// QueryParent queries the parent edge of a PermissionGroup.
+func (c *PermissionGroupClient) QueryParent(_m *PermissionGroup) *PermissionGroupQuery {
+	query := (&PermissionGroupClient{config: c.config}).Query()
+	query.path = func(context.Context) (fromV *sql.Selector, _ error) {
+		id := _m.ID
+		step := sqlgraph.NewStep(
+			sqlgraph.From(permissiongroup.Table, permissiongroup.FieldID, id),
+			sqlgraph.To(permissiongroup.Table, permissiongroup.FieldID),
+			sqlgraph.Edge(sqlgraph.M2O, true, permissiongroup.ParentTable, permissiongroup.ParentColumn),
+		)
+		fromV = sqlgraph.Neighbors(_m.driver.Dialect(), step)
+		return fromV, nil
+	}
+	return query
+}
+
+// QueryChildren queries the children edge of a PermissionGroup.
+func (c *PermissionGroupClient) QueryChildren(_m *PermissionGroup) *PermissionGroupQuery {
+	query := (&PermissionGroupClient{config: c.config}).Query()
+	query.path = func(context.Context) (fromV *sql.Selector, _ error) {
+		id := _m.ID
+		step := sqlgraph.NewStep(
+			sqlgraph.From(permissiongroup.Table, permissiongroup.FieldID, id),
+			sqlgraph.To(permissiongroup.Table, permissiongroup.FieldID),
+			sqlgraph.Edge(sqlgraph.O2M, false, permissiongroup.ChildrenTable, permissiongroup.ChildrenColumn),
+		)
+		fromV = sqlgraph.Neighbors(_m.driver.Dialect(), step)
+		return fromV, nil
+	}
+	return query
+}
+
 // Hooks returns the client hooks.
 func (c *PermissionGroupClient) Hooks() []Hook {
-	hooks := c.hooks.PermissionGroup
-	return append(hooks[:len(hooks):len(hooks)], permissiongroup.Hooks[:]...)
+	return c.hooks.PermissionGroup
 }
 
 // Interceptors returns the client interceptors.

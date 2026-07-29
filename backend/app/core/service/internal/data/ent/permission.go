@@ -12,7 +12,7 @@ import (
 	"entgo.io/ent/dialect/sql"
 )
 
-// 权限表
+// 权限点表
 type Permission struct {
 	config `json:"-"`
 	// ID of the ent.
@@ -30,22 +30,16 @@ type Permission struct {
 	UpdatedBy *uint32 `json:"updated_by,omitempty"`
 	// 删除者ID
 	DeletedBy *uint32 `json:"deleted_by,omitempty"`
-	// 租户ID
-	TenantID *uint32 `json:"tenant_id,omitempty"`
-	// 备注
-	Remark *string `json:"remark,omitempty"`
-	// 权限代码
-	Code *string `json:"code,omitempty"`
-	// Status holds the value of the "status" field.
+	// 状态
 	Status *permission.Status `json:"status,omitempty"`
-	// Description holds the value of the "description" field.
+	// 描述
 	Description *string `json:"description,omitempty"`
-	// GroupID holds the value of the "group_id" field.
-	GroupID *uint32 `json:"group_id,omitempty"`
-	// 权限名称
+	// 权限名称（如：删除用户）
 	Name *string `json:"name,omitempty"`
-	// 权限类型
-	Type         *permission.Type `json:"type,omitempty"`
+	// 权限编码（如：opm:user:delete、order:export）
+	Code *string `json:"code,omitempty"`
+	// 关联权限分组 ID
+	GroupID      *uint32 `json:"group_id,omitempty"`
 	selectValues sql.SelectValues
 }
 
@@ -54,9 +48,9 @@ func (*Permission) scanValues(columns []string) ([]any, error) {
 	values := make([]any, len(columns))
 	for i := range columns {
 		switch columns[i] {
-		case permission.FieldID, permission.FieldCreatedBy, permission.FieldUpdatedBy, permission.FieldDeletedBy, permission.FieldTenantID, permission.FieldGroupID:
+		case permission.FieldID, permission.FieldCreatedBy, permission.FieldUpdatedBy, permission.FieldDeletedBy, permission.FieldGroupID:
 			values[i] = new(sql.NullInt64)
-		case permission.FieldRemark, permission.FieldCode, permission.FieldStatus, permission.FieldDescription, permission.FieldName, permission.FieldType:
+		case permission.FieldStatus, permission.FieldDescription, permission.FieldName, permission.FieldCode:
 			values[i] = new(sql.NullString)
 		case permission.FieldCreatedAt, permission.FieldUpdatedAt, permission.FieldDeletedAt:
 			values[i] = new(sql.NullTime)
@@ -123,27 +117,6 @@ func (_m *Permission) assignValues(columns []string, values []any) error {
 				_m.DeletedBy = new(uint32)
 				*_m.DeletedBy = uint32(value.Int64)
 			}
-		case permission.FieldTenantID:
-			if value, ok := values[i].(*sql.NullInt64); !ok {
-				return fmt.Errorf("unexpected type %T for field tenant_id", values[i])
-			} else if value.Valid {
-				_m.TenantID = new(uint32)
-				*_m.TenantID = uint32(value.Int64)
-			}
-		case permission.FieldRemark:
-			if value, ok := values[i].(*sql.NullString); !ok {
-				return fmt.Errorf("unexpected type %T for field remark", values[i])
-			} else if value.Valid {
-				_m.Remark = new(string)
-				*_m.Remark = value.String
-			}
-		case permission.FieldCode:
-			if value, ok := values[i].(*sql.NullString); !ok {
-				return fmt.Errorf("unexpected type %T for field code", values[i])
-			} else if value.Valid {
-				_m.Code = new(string)
-				*_m.Code = value.String
-			}
 		case permission.FieldStatus:
 			if value, ok := values[i].(*sql.NullString); !ok {
 				return fmt.Errorf("unexpected type %T for field status", values[i])
@@ -158,13 +131,6 @@ func (_m *Permission) assignValues(columns []string, values []any) error {
 				_m.Description = new(string)
 				*_m.Description = value.String
 			}
-		case permission.FieldGroupID:
-			if value, ok := values[i].(*sql.NullInt64); !ok {
-				return fmt.Errorf("unexpected type %T for field group_id", values[i])
-			} else if value.Valid {
-				_m.GroupID = new(uint32)
-				*_m.GroupID = uint32(value.Int64)
-			}
 		case permission.FieldName:
 			if value, ok := values[i].(*sql.NullString); !ok {
 				return fmt.Errorf("unexpected type %T for field name", values[i])
@@ -172,12 +138,19 @@ func (_m *Permission) assignValues(columns []string, values []any) error {
 				_m.Name = new(string)
 				*_m.Name = value.String
 			}
-		case permission.FieldType:
+		case permission.FieldCode:
 			if value, ok := values[i].(*sql.NullString); !ok {
-				return fmt.Errorf("unexpected type %T for field type", values[i])
+				return fmt.Errorf("unexpected type %T for field code", values[i])
 			} else if value.Valid {
-				_m.Type = new(permission.Type)
-				*_m.Type = permission.Type(value.String)
+				_m.Code = new(string)
+				*_m.Code = value.String
+			}
+		case permission.FieldGroupID:
+			if value, ok := values[i].(*sql.NullInt64); !ok {
+				return fmt.Errorf("unexpected type %T for field group_id", values[i])
+			} else if value.Valid {
+				_m.GroupID = new(uint32)
+				*_m.GroupID = uint32(value.Int64)
 			}
 		default:
 			_m.selectValues.Set(columns[i], values[i])
@@ -245,21 +218,6 @@ func (_m *Permission) String() string {
 		builder.WriteString(fmt.Sprintf("%v", *v))
 	}
 	builder.WriteString(", ")
-	if v := _m.TenantID; v != nil {
-		builder.WriteString("tenant_id=")
-		builder.WriteString(fmt.Sprintf("%v", *v))
-	}
-	builder.WriteString(", ")
-	if v := _m.Remark; v != nil {
-		builder.WriteString("remark=")
-		builder.WriteString(*v)
-	}
-	builder.WriteString(", ")
-	if v := _m.Code; v != nil {
-		builder.WriteString("code=")
-		builder.WriteString(*v)
-	}
-	builder.WriteString(", ")
 	if v := _m.Status; v != nil {
 		builder.WriteString("status=")
 		builder.WriteString(fmt.Sprintf("%v", *v))
@@ -270,18 +228,18 @@ func (_m *Permission) String() string {
 		builder.WriteString(*v)
 	}
 	builder.WriteString(", ")
-	if v := _m.GroupID; v != nil {
-		builder.WriteString("group_id=")
-		builder.WriteString(fmt.Sprintf("%v", *v))
-	}
-	builder.WriteString(", ")
 	if v := _m.Name; v != nil {
 		builder.WriteString("name=")
 		builder.WriteString(*v)
 	}
 	builder.WriteString(", ")
-	if v := _m.Type; v != nil {
-		builder.WriteString("type=")
+	if v := _m.Code; v != nil {
+		builder.WriteString("code=")
+		builder.WriteString(*v)
+	}
+	builder.WriteString(", ")
+	if v := _m.GroupID; v != nil {
+		builder.WriteString("group_id=")
 		builder.WriteString(fmt.Sprintf("%v", *v))
 	}
 	builder.WriteByte(')')

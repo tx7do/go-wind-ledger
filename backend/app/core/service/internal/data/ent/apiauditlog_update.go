@@ -6,9 +6,9 @@ import (
 	"context"
 	"errors"
 	"fmt"
+	auditpb "go-wind-ledger/api/gen/go/audit/service/v1"
 	"go-wind-ledger/app/core/service/internal/data/ent/apiauditlog"
 	"go-wind-ledger/app/core/service/internal/data/ent/predicate"
-	"time"
 
 	"entgo.io/ent/dialect/sql"
 	"entgo.io/ent/dialect/sql/sqlgraph"
@@ -26,153 +26,6 @@ type ApiAuditLogUpdate struct {
 // Where appends a list predicates to the ApiAuditLogUpdate builder.
 func (_u *ApiAuditLogUpdate) Where(ps ...predicate.ApiAuditLog) *ApiAuditLogUpdate {
 	_u.mutation.Where(ps...)
-	return _u
-}
-
-// SetUpdatedAt sets the "updated_at" field.
-func (_u *ApiAuditLogUpdate) SetUpdatedAt(v time.Time) *ApiAuditLogUpdate {
-	_u.mutation.SetUpdatedAt(v)
-	return _u
-}
-
-// SetNillableUpdatedAt sets the "updated_at" field if the given value is not nil.
-func (_u *ApiAuditLogUpdate) SetNillableUpdatedAt(v *time.Time) *ApiAuditLogUpdate {
-	if v != nil {
-		_u.SetUpdatedAt(*v)
-	}
-	return _u
-}
-
-// ClearUpdatedAt clears the value of the "updated_at" field.
-func (_u *ApiAuditLogUpdate) ClearUpdatedAt() *ApiAuditLogUpdate {
-	_u.mutation.ClearUpdatedAt()
-	return _u
-}
-
-// SetDeletedAt sets the "deleted_at" field.
-func (_u *ApiAuditLogUpdate) SetDeletedAt(v time.Time) *ApiAuditLogUpdate {
-	_u.mutation.SetDeletedAt(v)
-	return _u
-}
-
-// SetNillableDeletedAt sets the "deleted_at" field if the given value is not nil.
-func (_u *ApiAuditLogUpdate) SetNillableDeletedAt(v *time.Time) *ApiAuditLogUpdate {
-	if v != nil {
-		_u.SetDeletedAt(*v)
-	}
-	return _u
-}
-
-// ClearDeletedAt clears the value of the "deleted_at" field.
-func (_u *ApiAuditLogUpdate) ClearDeletedAt() *ApiAuditLogUpdate {
-	_u.mutation.ClearDeletedAt()
-	return _u
-}
-
-// SetOperatorID sets the "operator_id" field.
-func (_u *ApiAuditLogUpdate) SetOperatorID(v uint32) *ApiAuditLogUpdate {
-	_u.mutation.ResetOperatorID()
-	_u.mutation.SetOperatorID(v)
-	return _u
-}
-
-// SetNillableOperatorID sets the "operator_id" field if the given value is not nil.
-func (_u *ApiAuditLogUpdate) SetNillableOperatorID(v *uint32) *ApiAuditLogUpdate {
-	if v != nil {
-		_u.SetOperatorID(*v)
-	}
-	return _u
-}
-
-// AddOperatorID adds value to the "operator_id" field.
-func (_u *ApiAuditLogUpdate) AddOperatorID(v int32) *ApiAuditLogUpdate {
-	_u.mutation.AddOperatorID(v)
-	return _u
-}
-
-// ClearOperatorID clears the value of the "operator_id" field.
-func (_u *ApiAuditLogUpdate) ClearOperatorID() *ApiAuditLogUpdate {
-	_u.mutation.ClearOperatorID()
-	return _u
-}
-
-// SetOperatorName sets the "operator_name" field.
-func (_u *ApiAuditLogUpdate) SetOperatorName(v string) *ApiAuditLogUpdate {
-	_u.mutation.SetOperatorName(v)
-	return _u
-}
-
-// SetNillableOperatorName sets the "operator_name" field if the given value is not nil.
-func (_u *ApiAuditLogUpdate) SetNillableOperatorName(v *string) *ApiAuditLogUpdate {
-	if v != nil {
-		_u.SetOperatorName(*v)
-	}
-	return _u
-}
-
-// ClearOperatorName clears the value of the "operator_name" field.
-func (_u *ApiAuditLogUpdate) ClearOperatorName() *ApiAuditLogUpdate {
-	_u.mutation.ClearOperatorName()
-	return _u
-}
-
-// SetPath sets the "path" field.
-func (_u *ApiAuditLogUpdate) SetPath(v string) *ApiAuditLogUpdate {
-	_u.mutation.SetPath(v)
-	return _u
-}
-
-// SetNillablePath sets the "path" field if the given value is not nil.
-func (_u *ApiAuditLogUpdate) SetNillablePath(v *string) *ApiAuditLogUpdate {
-	if v != nil {
-		_u.SetPath(*v)
-	}
-	return _u
-}
-
-// ClearPath clears the value of the "path" field.
-func (_u *ApiAuditLogUpdate) ClearPath() *ApiAuditLogUpdate {
-	_u.mutation.ClearPath()
-	return _u
-}
-
-// SetMethod sets the "method" field.
-func (_u *ApiAuditLogUpdate) SetMethod(v string) *ApiAuditLogUpdate {
-	_u.mutation.SetMethod(v)
-	return _u
-}
-
-// SetNillableMethod sets the "method" field if the given value is not nil.
-func (_u *ApiAuditLogUpdate) SetNillableMethod(v *string) *ApiAuditLogUpdate {
-	if v != nil {
-		_u.SetMethod(*v)
-	}
-	return _u
-}
-
-// ClearMethod clears the value of the "method" field.
-func (_u *ApiAuditLogUpdate) ClearMethod() *ApiAuditLogUpdate {
-	_u.mutation.ClearMethod()
-	return _u
-}
-
-// SetDetail sets the "detail" field.
-func (_u *ApiAuditLogUpdate) SetDetail(v string) *ApiAuditLogUpdate {
-	_u.mutation.SetDetail(v)
-	return _u
-}
-
-// SetNillableDetail sets the "detail" field if the given value is not nil.
-func (_u *ApiAuditLogUpdate) SetNillableDetail(v *string) *ApiAuditLogUpdate {
-	if v != nil {
-		_u.SetDetail(*v)
-	}
-	return _u
-}
-
-// ClearDetail clears the value of the "detail" field.
-func (_u *ApiAuditLogUpdate) ClearDetail() *ApiAuditLogUpdate {
-	_u.mutation.ClearDetail()
 	return _u
 }
 
@@ -243,17 +96,21 @@ func (_u *ApiAuditLogUpdate) ClearIPAddress() *ApiAuditLogUpdate {
 	return _u
 }
 
-// SetDeviceInfo sets the "device_info" field.
-func (_u *ApiAuditLogUpdate) SetDeviceInfo(v string) *ApiAuditLogUpdate {
-	_u.mutation.SetDeviceInfo(v)
+// SetGeoLocation sets the "geo_location" field.
+func (_u *ApiAuditLogUpdate) SetGeoLocation(v *auditpb.GeoLocation) *ApiAuditLogUpdate {
+	_u.mutation.SetGeoLocation(v)
 	return _u
 }
 
-// SetNillableDeviceInfo sets the "device_info" field if the given value is not nil.
-func (_u *ApiAuditLogUpdate) SetNillableDeviceInfo(v *string) *ApiAuditLogUpdate {
-	if v != nil {
-		_u.SetDeviceInfo(*v)
-	}
+// ClearGeoLocation clears the value of the "geo_location" field.
+func (_u *ApiAuditLogUpdate) ClearGeoLocation() *ApiAuditLogUpdate {
+	_u.mutation.ClearGeoLocation()
+	return _u
+}
+
+// SetDeviceInfo sets the "device_info" field.
+func (_u *ApiAuditLogUpdate) SetDeviceInfo(v *auditpb.DeviceInfo) *ApiAuditLogUpdate {
+	_u.mutation.SetDeviceInfo(v)
 	return _u
 }
 
@@ -263,23 +120,409 @@ func (_u *ApiAuditLogUpdate) ClearDeviceInfo() *ApiAuditLogUpdate {
 	return _u
 }
 
-// SetOperatedAt sets the "operated_at" field.
-func (_u *ApiAuditLogUpdate) SetOperatedAt(v time.Time) *ApiAuditLogUpdate {
-	_u.mutation.SetOperatedAt(v)
+// SetReferer sets the "referer" field.
+func (_u *ApiAuditLogUpdate) SetReferer(v string) *ApiAuditLogUpdate {
+	_u.mutation.SetReferer(v)
 	return _u
 }
 
-// SetNillableOperatedAt sets the "operated_at" field if the given value is not nil.
-func (_u *ApiAuditLogUpdate) SetNillableOperatedAt(v *time.Time) *ApiAuditLogUpdate {
+// SetNillableReferer sets the "referer" field if the given value is not nil.
+func (_u *ApiAuditLogUpdate) SetNillableReferer(v *string) *ApiAuditLogUpdate {
 	if v != nil {
-		_u.SetOperatedAt(*v)
+		_u.SetReferer(*v)
 	}
 	return _u
 }
 
-// ClearOperatedAt clears the value of the "operated_at" field.
-func (_u *ApiAuditLogUpdate) ClearOperatedAt() *ApiAuditLogUpdate {
-	_u.mutation.ClearOperatedAt()
+// ClearReferer clears the value of the "referer" field.
+func (_u *ApiAuditLogUpdate) ClearReferer() *ApiAuditLogUpdate {
+	_u.mutation.ClearReferer()
+	return _u
+}
+
+// SetAppVersion sets the "app_version" field.
+func (_u *ApiAuditLogUpdate) SetAppVersion(v string) *ApiAuditLogUpdate {
+	_u.mutation.SetAppVersion(v)
+	return _u
+}
+
+// SetNillableAppVersion sets the "app_version" field if the given value is not nil.
+func (_u *ApiAuditLogUpdate) SetNillableAppVersion(v *string) *ApiAuditLogUpdate {
+	if v != nil {
+		_u.SetAppVersion(*v)
+	}
+	return _u
+}
+
+// ClearAppVersion clears the value of the "app_version" field.
+func (_u *ApiAuditLogUpdate) ClearAppVersion() *ApiAuditLogUpdate {
+	_u.mutation.ClearAppVersion()
+	return _u
+}
+
+// SetHTTPMethod sets the "http_method" field.
+func (_u *ApiAuditLogUpdate) SetHTTPMethod(v string) *ApiAuditLogUpdate {
+	_u.mutation.SetHTTPMethod(v)
+	return _u
+}
+
+// SetNillableHTTPMethod sets the "http_method" field if the given value is not nil.
+func (_u *ApiAuditLogUpdate) SetNillableHTTPMethod(v *string) *ApiAuditLogUpdate {
+	if v != nil {
+		_u.SetHTTPMethod(*v)
+	}
+	return _u
+}
+
+// ClearHTTPMethod clears the value of the "http_method" field.
+func (_u *ApiAuditLogUpdate) ClearHTTPMethod() *ApiAuditLogUpdate {
+	_u.mutation.ClearHTTPMethod()
+	return _u
+}
+
+// SetPath sets the "path" field.
+func (_u *ApiAuditLogUpdate) SetPath(v string) *ApiAuditLogUpdate {
+	_u.mutation.SetPath(v)
+	return _u
+}
+
+// SetNillablePath sets the "path" field if the given value is not nil.
+func (_u *ApiAuditLogUpdate) SetNillablePath(v *string) *ApiAuditLogUpdate {
+	if v != nil {
+		_u.SetPath(*v)
+	}
+	return _u
+}
+
+// ClearPath clears the value of the "path" field.
+func (_u *ApiAuditLogUpdate) ClearPath() *ApiAuditLogUpdate {
+	_u.mutation.ClearPath()
+	return _u
+}
+
+// SetRequestURI sets the "request_uri" field.
+func (_u *ApiAuditLogUpdate) SetRequestURI(v string) *ApiAuditLogUpdate {
+	_u.mutation.SetRequestURI(v)
+	return _u
+}
+
+// SetNillableRequestURI sets the "request_uri" field if the given value is not nil.
+func (_u *ApiAuditLogUpdate) SetNillableRequestURI(v *string) *ApiAuditLogUpdate {
+	if v != nil {
+		_u.SetRequestURI(*v)
+	}
+	return _u
+}
+
+// ClearRequestURI clears the value of the "request_uri" field.
+func (_u *ApiAuditLogUpdate) ClearRequestURI() *ApiAuditLogUpdate {
+	_u.mutation.ClearRequestURI()
+	return _u
+}
+
+// SetAPIModule sets the "api_module" field.
+func (_u *ApiAuditLogUpdate) SetAPIModule(v string) *ApiAuditLogUpdate {
+	_u.mutation.SetAPIModule(v)
+	return _u
+}
+
+// SetNillableAPIModule sets the "api_module" field if the given value is not nil.
+func (_u *ApiAuditLogUpdate) SetNillableAPIModule(v *string) *ApiAuditLogUpdate {
+	if v != nil {
+		_u.SetAPIModule(*v)
+	}
+	return _u
+}
+
+// ClearAPIModule clears the value of the "api_module" field.
+func (_u *ApiAuditLogUpdate) ClearAPIModule() *ApiAuditLogUpdate {
+	_u.mutation.ClearAPIModule()
+	return _u
+}
+
+// SetAPIOperation sets the "api_operation" field.
+func (_u *ApiAuditLogUpdate) SetAPIOperation(v string) *ApiAuditLogUpdate {
+	_u.mutation.SetAPIOperation(v)
+	return _u
+}
+
+// SetNillableAPIOperation sets the "api_operation" field if the given value is not nil.
+func (_u *ApiAuditLogUpdate) SetNillableAPIOperation(v *string) *ApiAuditLogUpdate {
+	if v != nil {
+		_u.SetAPIOperation(*v)
+	}
+	return _u
+}
+
+// ClearAPIOperation clears the value of the "api_operation" field.
+func (_u *ApiAuditLogUpdate) ClearAPIOperation() *ApiAuditLogUpdate {
+	_u.mutation.ClearAPIOperation()
+	return _u
+}
+
+// SetAPIDescription sets the "api_description" field.
+func (_u *ApiAuditLogUpdate) SetAPIDescription(v string) *ApiAuditLogUpdate {
+	_u.mutation.SetAPIDescription(v)
+	return _u
+}
+
+// SetNillableAPIDescription sets the "api_description" field if the given value is not nil.
+func (_u *ApiAuditLogUpdate) SetNillableAPIDescription(v *string) *ApiAuditLogUpdate {
+	if v != nil {
+		_u.SetAPIDescription(*v)
+	}
+	return _u
+}
+
+// ClearAPIDescription clears the value of the "api_description" field.
+func (_u *ApiAuditLogUpdate) ClearAPIDescription() *ApiAuditLogUpdate {
+	_u.mutation.ClearAPIDescription()
+	return _u
+}
+
+// SetRequestID sets the "request_id" field.
+func (_u *ApiAuditLogUpdate) SetRequestID(v string) *ApiAuditLogUpdate {
+	_u.mutation.SetRequestID(v)
+	return _u
+}
+
+// SetNillableRequestID sets the "request_id" field if the given value is not nil.
+func (_u *ApiAuditLogUpdate) SetNillableRequestID(v *string) *ApiAuditLogUpdate {
+	if v != nil {
+		_u.SetRequestID(*v)
+	}
+	return _u
+}
+
+// ClearRequestID clears the value of the "request_id" field.
+func (_u *ApiAuditLogUpdate) ClearRequestID() *ApiAuditLogUpdate {
+	_u.mutation.ClearRequestID()
+	return _u
+}
+
+// SetTraceID sets the "trace_id" field.
+func (_u *ApiAuditLogUpdate) SetTraceID(v string) *ApiAuditLogUpdate {
+	_u.mutation.SetTraceID(v)
+	return _u
+}
+
+// SetNillableTraceID sets the "trace_id" field if the given value is not nil.
+func (_u *ApiAuditLogUpdate) SetNillableTraceID(v *string) *ApiAuditLogUpdate {
+	if v != nil {
+		_u.SetTraceID(*v)
+	}
+	return _u
+}
+
+// ClearTraceID clears the value of the "trace_id" field.
+func (_u *ApiAuditLogUpdate) ClearTraceID() *ApiAuditLogUpdate {
+	_u.mutation.ClearTraceID()
+	return _u
+}
+
+// SetSpanID sets the "span_id" field.
+func (_u *ApiAuditLogUpdate) SetSpanID(v string) *ApiAuditLogUpdate {
+	_u.mutation.SetSpanID(v)
+	return _u
+}
+
+// SetNillableSpanID sets the "span_id" field if the given value is not nil.
+func (_u *ApiAuditLogUpdate) SetNillableSpanID(v *string) *ApiAuditLogUpdate {
+	if v != nil {
+		_u.SetSpanID(*v)
+	}
+	return _u
+}
+
+// ClearSpanID clears the value of the "span_id" field.
+func (_u *ApiAuditLogUpdate) ClearSpanID() *ApiAuditLogUpdate {
+	_u.mutation.ClearSpanID()
+	return _u
+}
+
+// SetLatencyMs sets the "latency_ms" field.
+func (_u *ApiAuditLogUpdate) SetLatencyMs(v uint32) *ApiAuditLogUpdate {
+	_u.mutation.ResetLatencyMs()
+	_u.mutation.SetLatencyMs(v)
+	return _u
+}
+
+// SetNillableLatencyMs sets the "latency_ms" field if the given value is not nil.
+func (_u *ApiAuditLogUpdate) SetNillableLatencyMs(v *uint32) *ApiAuditLogUpdate {
+	if v != nil {
+		_u.SetLatencyMs(*v)
+	}
+	return _u
+}
+
+// AddLatencyMs adds value to the "latency_ms" field.
+func (_u *ApiAuditLogUpdate) AddLatencyMs(v int32) *ApiAuditLogUpdate {
+	_u.mutation.AddLatencyMs(v)
+	return _u
+}
+
+// ClearLatencyMs clears the value of the "latency_ms" field.
+func (_u *ApiAuditLogUpdate) ClearLatencyMs() *ApiAuditLogUpdate {
+	_u.mutation.ClearLatencyMs()
+	return _u
+}
+
+// SetSuccess sets the "success" field.
+func (_u *ApiAuditLogUpdate) SetSuccess(v bool) *ApiAuditLogUpdate {
+	_u.mutation.SetSuccess(v)
+	return _u
+}
+
+// SetNillableSuccess sets the "success" field if the given value is not nil.
+func (_u *ApiAuditLogUpdate) SetNillableSuccess(v *bool) *ApiAuditLogUpdate {
+	if v != nil {
+		_u.SetSuccess(*v)
+	}
+	return _u
+}
+
+// ClearSuccess clears the value of the "success" field.
+func (_u *ApiAuditLogUpdate) ClearSuccess() *ApiAuditLogUpdate {
+	_u.mutation.ClearSuccess()
+	return _u
+}
+
+// SetStatusCode sets the "status_code" field.
+func (_u *ApiAuditLogUpdate) SetStatusCode(v uint32) *ApiAuditLogUpdate {
+	_u.mutation.ResetStatusCode()
+	_u.mutation.SetStatusCode(v)
+	return _u
+}
+
+// SetNillableStatusCode sets the "status_code" field if the given value is not nil.
+func (_u *ApiAuditLogUpdate) SetNillableStatusCode(v *uint32) *ApiAuditLogUpdate {
+	if v != nil {
+		_u.SetStatusCode(*v)
+	}
+	return _u
+}
+
+// AddStatusCode adds value to the "status_code" field.
+func (_u *ApiAuditLogUpdate) AddStatusCode(v int32) *ApiAuditLogUpdate {
+	_u.mutation.AddStatusCode(v)
+	return _u
+}
+
+// ClearStatusCode clears the value of the "status_code" field.
+func (_u *ApiAuditLogUpdate) ClearStatusCode() *ApiAuditLogUpdate {
+	_u.mutation.ClearStatusCode()
+	return _u
+}
+
+// SetReason sets the "reason" field.
+func (_u *ApiAuditLogUpdate) SetReason(v string) *ApiAuditLogUpdate {
+	_u.mutation.SetReason(v)
+	return _u
+}
+
+// SetNillableReason sets the "reason" field if the given value is not nil.
+func (_u *ApiAuditLogUpdate) SetNillableReason(v *string) *ApiAuditLogUpdate {
+	if v != nil {
+		_u.SetReason(*v)
+	}
+	return _u
+}
+
+// ClearReason clears the value of the "reason" field.
+func (_u *ApiAuditLogUpdate) ClearReason() *ApiAuditLogUpdate {
+	_u.mutation.ClearReason()
+	return _u
+}
+
+// SetRequestHeader sets the "request_header" field.
+func (_u *ApiAuditLogUpdate) SetRequestHeader(v string) *ApiAuditLogUpdate {
+	_u.mutation.SetRequestHeader(v)
+	return _u
+}
+
+// SetNillableRequestHeader sets the "request_header" field if the given value is not nil.
+func (_u *ApiAuditLogUpdate) SetNillableRequestHeader(v *string) *ApiAuditLogUpdate {
+	if v != nil {
+		_u.SetRequestHeader(*v)
+	}
+	return _u
+}
+
+// ClearRequestHeader clears the value of the "request_header" field.
+func (_u *ApiAuditLogUpdate) ClearRequestHeader() *ApiAuditLogUpdate {
+	_u.mutation.ClearRequestHeader()
+	return _u
+}
+
+// SetRequestBody sets the "request_body" field.
+func (_u *ApiAuditLogUpdate) SetRequestBody(v string) *ApiAuditLogUpdate {
+	_u.mutation.SetRequestBody(v)
+	return _u
+}
+
+// SetNillableRequestBody sets the "request_body" field if the given value is not nil.
+func (_u *ApiAuditLogUpdate) SetNillableRequestBody(v *string) *ApiAuditLogUpdate {
+	if v != nil {
+		_u.SetRequestBody(*v)
+	}
+	return _u
+}
+
+// ClearRequestBody clears the value of the "request_body" field.
+func (_u *ApiAuditLogUpdate) ClearRequestBody() *ApiAuditLogUpdate {
+	_u.mutation.ClearRequestBody()
+	return _u
+}
+
+// SetResponse sets the "response" field.
+func (_u *ApiAuditLogUpdate) SetResponse(v string) *ApiAuditLogUpdate {
+	_u.mutation.SetResponse(v)
+	return _u
+}
+
+// SetNillableResponse sets the "response" field if the given value is not nil.
+func (_u *ApiAuditLogUpdate) SetNillableResponse(v *string) *ApiAuditLogUpdate {
+	if v != nil {
+		_u.SetResponse(*v)
+	}
+	return _u
+}
+
+// ClearResponse clears the value of the "response" field.
+func (_u *ApiAuditLogUpdate) ClearResponse() *ApiAuditLogUpdate {
+	_u.mutation.ClearResponse()
+	return _u
+}
+
+// SetLogHash sets the "log_hash" field.
+func (_u *ApiAuditLogUpdate) SetLogHash(v string) *ApiAuditLogUpdate {
+	_u.mutation.SetLogHash(v)
+	return _u
+}
+
+// SetNillableLogHash sets the "log_hash" field if the given value is not nil.
+func (_u *ApiAuditLogUpdate) SetNillableLogHash(v *string) *ApiAuditLogUpdate {
+	if v != nil {
+		_u.SetLogHash(*v)
+	}
+	return _u
+}
+
+// ClearLogHash clears the value of the "log_hash" field.
+func (_u *ApiAuditLogUpdate) ClearLogHash() *ApiAuditLogUpdate {
+	_u.mutation.ClearLogHash()
+	return _u
+}
+
+// SetSignature sets the "signature" field.
+func (_u *ApiAuditLogUpdate) SetSignature(v []byte) *ApiAuditLogUpdate {
+	_u.mutation.SetSignature(v)
+	return _u
+}
+
+// ClearSignature clears the value of the "signature" field.
+func (_u *ApiAuditLogUpdate) ClearSignature() *ApiAuditLogUpdate {
+	_u.mutation.ClearSignature()
 	return _u
 }
 
@@ -315,46 +558,6 @@ func (_u *ApiAuditLogUpdate) ExecX(ctx context.Context) {
 	}
 }
 
-// check runs all checks and user-defined validators on the builder.
-func (_u *ApiAuditLogUpdate) check() error {
-	if v, ok := _u.mutation.OperatorName(); ok {
-		if err := apiauditlog.OperatorNameValidator(v); err != nil {
-			return &ValidationError{Name: "operator_name", err: fmt.Errorf(`ent: validator failed for field "ApiAuditLog.operator_name": %w`, err)}
-		}
-	}
-	if v, ok := _u.mutation.Path(); ok {
-		if err := apiauditlog.PathValidator(v); err != nil {
-			return &ValidationError{Name: "path", err: fmt.Errorf(`ent: validator failed for field "ApiAuditLog.path": %w`, err)}
-		}
-	}
-	if v, ok := _u.mutation.Method(); ok {
-		if err := apiauditlog.MethodValidator(v); err != nil {
-			return &ValidationError{Name: "method", err: fmt.Errorf(`ent: validator failed for field "ApiAuditLog.method": %w`, err)}
-		}
-	}
-	if v, ok := _u.mutation.Detail(); ok {
-		if err := apiauditlog.DetailValidator(v); err != nil {
-			return &ValidationError{Name: "detail", err: fmt.Errorf(`ent: validator failed for field "ApiAuditLog.detail": %w`, err)}
-		}
-	}
-	if v, ok := _u.mutation.Username(); ok {
-		if err := apiauditlog.UsernameValidator(v); err != nil {
-			return &ValidationError{Name: "username", err: fmt.Errorf(`ent: validator failed for field "ApiAuditLog.username": %w`, err)}
-		}
-	}
-	if v, ok := _u.mutation.IPAddress(); ok {
-		if err := apiauditlog.IPAddressValidator(v); err != nil {
-			return &ValidationError{Name: "ip_address", err: fmt.Errorf(`ent: validator failed for field "ApiAuditLog.ip_address": %w`, err)}
-		}
-	}
-	if v, ok := _u.mutation.DeviceInfo(); ok {
-		if err := apiauditlog.DeviceInfoValidator(v); err != nil {
-			return &ValidationError{Name: "device_info", err: fmt.Errorf(`ent: validator failed for field "ApiAuditLog.device_info": %w`, err)}
-		}
-	}
-	return nil
-}
-
 // Modify adds a statement modifier for attaching custom logic to the UPDATE statement.
 func (_u *ApiAuditLogUpdate) Modify(modifiers ...func(u *sql.UpdateBuilder)) *ApiAuditLogUpdate {
 	_u.modifiers = append(_u.modifiers, modifiers...)
@@ -362,9 +565,6 @@ func (_u *ApiAuditLogUpdate) Modify(modifiers ...func(u *sql.UpdateBuilder)) *Ap
 }
 
 func (_u *ApiAuditLogUpdate) sqlSave(ctx context.Context) (_node int, err error) {
-	if err := _u.check(); err != nil {
-		return _node, err
-	}
 	_spec := sqlgraph.NewUpdateSpec(apiauditlog.Table, apiauditlog.Columns, sqlgraph.NewFieldSpec(apiauditlog.FieldID, field.TypeUint32))
 	if ps := _u.mutation.predicates; len(ps) > 0 {
 		_spec.Predicate = func(selector *sql.Selector) {
@@ -376,53 +576,8 @@ func (_u *ApiAuditLogUpdate) sqlSave(ctx context.Context) (_node int, err error)
 	if _u.mutation.CreatedAtCleared() {
 		_spec.ClearField(apiauditlog.FieldCreatedAt, field.TypeTime)
 	}
-	if value, ok := _u.mutation.UpdatedAt(); ok {
-		_spec.SetField(apiauditlog.FieldUpdatedAt, field.TypeTime, value)
-	}
-	if _u.mutation.UpdatedAtCleared() {
-		_spec.ClearField(apiauditlog.FieldUpdatedAt, field.TypeTime)
-	}
-	if value, ok := _u.mutation.DeletedAt(); ok {
-		_spec.SetField(apiauditlog.FieldDeletedAt, field.TypeTime, value)
-	}
-	if _u.mutation.DeletedAtCleared() {
-		_spec.ClearField(apiauditlog.FieldDeletedAt, field.TypeTime)
-	}
 	if _u.mutation.TenantIDCleared() {
 		_spec.ClearField(apiauditlog.FieldTenantID, field.TypeUint32)
-	}
-	if value, ok := _u.mutation.OperatorID(); ok {
-		_spec.SetField(apiauditlog.FieldOperatorID, field.TypeUint32, value)
-	}
-	if value, ok := _u.mutation.AddedOperatorID(); ok {
-		_spec.AddField(apiauditlog.FieldOperatorID, field.TypeUint32, value)
-	}
-	if _u.mutation.OperatorIDCleared() {
-		_spec.ClearField(apiauditlog.FieldOperatorID, field.TypeUint32)
-	}
-	if value, ok := _u.mutation.OperatorName(); ok {
-		_spec.SetField(apiauditlog.FieldOperatorName, field.TypeString, value)
-	}
-	if _u.mutation.OperatorNameCleared() {
-		_spec.ClearField(apiauditlog.FieldOperatorName, field.TypeString)
-	}
-	if value, ok := _u.mutation.Path(); ok {
-		_spec.SetField(apiauditlog.FieldPath, field.TypeString, value)
-	}
-	if _u.mutation.PathCleared() {
-		_spec.ClearField(apiauditlog.FieldPath, field.TypeString)
-	}
-	if value, ok := _u.mutation.Method(); ok {
-		_spec.SetField(apiauditlog.FieldMethod, field.TypeString, value)
-	}
-	if _u.mutation.MethodCleared() {
-		_spec.ClearField(apiauditlog.FieldMethod, field.TypeString)
-	}
-	if value, ok := _u.mutation.Detail(); ok {
-		_spec.SetField(apiauditlog.FieldDetail, field.TypeString, value)
-	}
-	if _u.mutation.DetailCleared() {
-		_spec.ClearField(apiauditlog.FieldDetail, field.TypeString)
 	}
 	if value, ok := _u.mutation.UserID(); ok {
 		_spec.SetField(apiauditlog.FieldUserID, field.TypeUint32, value)
@@ -445,17 +600,143 @@ func (_u *ApiAuditLogUpdate) sqlSave(ctx context.Context) (_node int, err error)
 	if _u.mutation.IPAddressCleared() {
 		_spec.ClearField(apiauditlog.FieldIPAddress, field.TypeString)
 	}
+	if value, ok := _u.mutation.GeoLocation(); ok {
+		_spec.SetField(apiauditlog.FieldGeoLocation, field.TypeJSON, value)
+	}
+	if _u.mutation.GeoLocationCleared() {
+		_spec.ClearField(apiauditlog.FieldGeoLocation, field.TypeJSON)
+	}
 	if value, ok := _u.mutation.DeviceInfo(); ok {
-		_spec.SetField(apiauditlog.FieldDeviceInfo, field.TypeString, value)
+		_spec.SetField(apiauditlog.FieldDeviceInfo, field.TypeJSON, value)
 	}
 	if _u.mutation.DeviceInfoCleared() {
-		_spec.ClearField(apiauditlog.FieldDeviceInfo, field.TypeString)
+		_spec.ClearField(apiauditlog.FieldDeviceInfo, field.TypeJSON)
 	}
-	if value, ok := _u.mutation.OperatedAt(); ok {
-		_spec.SetField(apiauditlog.FieldOperatedAt, field.TypeTime, value)
+	if value, ok := _u.mutation.Referer(); ok {
+		_spec.SetField(apiauditlog.FieldReferer, field.TypeString, value)
 	}
-	if _u.mutation.OperatedAtCleared() {
-		_spec.ClearField(apiauditlog.FieldOperatedAt, field.TypeTime)
+	if _u.mutation.RefererCleared() {
+		_spec.ClearField(apiauditlog.FieldReferer, field.TypeString)
+	}
+	if value, ok := _u.mutation.AppVersion(); ok {
+		_spec.SetField(apiauditlog.FieldAppVersion, field.TypeString, value)
+	}
+	if _u.mutation.AppVersionCleared() {
+		_spec.ClearField(apiauditlog.FieldAppVersion, field.TypeString)
+	}
+	if value, ok := _u.mutation.HTTPMethod(); ok {
+		_spec.SetField(apiauditlog.FieldHTTPMethod, field.TypeString, value)
+	}
+	if _u.mutation.HTTPMethodCleared() {
+		_spec.ClearField(apiauditlog.FieldHTTPMethod, field.TypeString)
+	}
+	if value, ok := _u.mutation.Path(); ok {
+		_spec.SetField(apiauditlog.FieldPath, field.TypeString, value)
+	}
+	if _u.mutation.PathCleared() {
+		_spec.ClearField(apiauditlog.FieldPath, field.TypeString)
+	}
+	if value, ok := _u.mutation.RequestURI(); ok {
+		_spec.SetField(apiauditlog.FieldRequestURI, field.TypeString, value)
+	}
+	if _u.mutation.RequestURICleared() {
+		_spec.ClearField(apiauditlog.FieldRequestURI, field.TypeString)
+	}
+	if value, ok := _u.mutation.APIModule(); ok {
+		_spec.SetField(apiauditlog.FieldAPIModule, field.TypeString, value)
+	}
+	if _u.mutation.APIModuleCleared() {
+		_spec.ClearField(apiauditlog.FieldAPIModule, field.TypeString)
+	}
+	if value, ok := _u.mutation.APIOperation(); ok {
+		_spec.SetField(apiauditlog.FieldAPIOperation, field.TypeString, value)
+	}
+	if _u.mutation.APIOperationCleared() {
+		_spec.ClearField(apiauditlog.FieldAPIOperation, field.TypeString)
+	}
+	if value, ok := _u.mutation.APIDescription(); ok {
+		_spec.SetField(apiauditlog.FieldAPIDescription, field.TypeString, value)
+	}
+	if _u.mutation.APIDescriptionCleared() {
+		_spec.ClearField(apiauditlog.FieldAPIDescription, field.TypeString)
+	}
+	if value, ok := _u.mutation.RequestID(); ok {
+		_spec.SetField(apiauditlog.FieldRequestID, field.TypeString, value)
+	}
+	if _u.mutation.RequestIDCleared() {
+		_spec.ClearField(apiauditlog.FieldRequestID, field.TypeString)
+	}
+	if value, ok := _u.mutation.TraceID(); ok {
+		_spec.SetField(apiauditlog.FieldTraceID, field.TypeString, value)
+	}
+	if _u.mutation.TraceIDCleared() {
+		_spec.ClearField(apiauditlog.FieldTraceID, field.TypeString)
+	}
+	if value, ok := _u.mutation.SpanID(); ok {
+		_spec.SetField(apiauditlog.FieldSpanID, field.TypeString, value)
+	}
+	if _u.mutation.SpanIDCleared() {
+		_spec.ClearField(apiauditlog.FieldSpanID, field.TypeString)
+	}
+	if value, ok := _u.mutation.LatencyMs(); ok {
+		_spec.SetField(apiauditlog.FieldLatencyMs, field.TypeUint32, value)
+	}
+	if value, ok := _u.mutation.AddedLatencyMs(); ok {
+		_spec.AddField(apiauditlog.FieldLatencyMs, field.TypeUint32, value)
+	}
+	if _u.mutation.LatencyMsCleared() {
+		_spec.ClearField(apiauditlog.FieldLatencyMs, field.TypeUint32)
+	}
+	if value, ok := _u.mutation.Success(); ok {
+		_spec.SetField(apiauditlog.FieldSuccess, field.TypeBool, value)
+	}
+	if _u.mutation.SuccessCleared() {
+		_spec.ClearField(apiauditlog.FieldSuccess, field.TypeBool)
+	}
+	if value, ok := _u.mutation.StatusCode(); ok {
+		_spec.SetField(apiauditlog.FieldStatusCode, field.TypeUint32, value)
+	}
+	if value, ok := _u.mutation.AddedStatusCode(); ok {
+		_spec.AddField(apiauditlog.FieldStatusCode, field.TypeUint32, value)
+	}
+	if _u.mutation.StatusCodeCleared() {
+		_spec.ClearField(apiauditlog.FieldStatusCode, field.TypeUint32)
+	}
+	if value, ok := _u.mutation.Reason(); ok {
+		_spec.SetField(apiauditlog.FieldReason, field.TypeString, value)
+	}
+	if _u.mutation.ReasonCleared() {
+		_spec.ClearField(apiauditlog.FieldReason, field.TypeString)
+	}
+	if value, ok := _u.mutation.RequestHeader(); ok {
+		_spec.SetField(apiauditlog.FieldRequestHeader, field.TypeString, value)
+	}
+	if _u.mutation.RequestHeaderCleared() {
+		_spec.ClearField(apiauditlog.FieldRequestHeader, field.TypeString)
+	}
+	if value, ok := _u.mutation.RequestBody(); ok {
+		_spec.SetField(apiauditlog.FieldRequestBody, field.TypeString, value)
+	}
+	if _u.mutation.RequestBodyCleared() {
+		_spec.ClearField(apiauditlog.FieldRequestBody, field.TypeString)
+	}
+	if value, ok := _u.mutation.Response(); ok {
+		_spec.SetField(apiauditlog.FieldResponse, field.TypeString, value)
+	}
+	if _u.mutation.ResponseCleared() {
+		_spec.ClearField(apiauditlog.FieldResponse, field.TypeString)
+	}
+	if value, ok := _u.mutation.LogHash(); ok {
+		_spec.SetField(apiauditlog.FieldLogHash, field.TypeString, value)
+	}
+	if _u.mutation.LogHashCleared() {
+		_spec.ClearField(apiauditlog.FieldLogHash, field.TypeString)
+	}
+	if value, ok := _u.mutation.Signature(); ok {
+		_spec.SetField(apiauditlog.FieldSignature, field.TypeBytes, value)
+	}
+	if _u.mutation.SignatureCleared() {
+		_spec.ClearField(apiauditlog.FieldSignature, field.TypeBytes)
 	}
 	_spec.AddModifiers(_u.modifiers...)
 	if _node, err = sqlgraph.UpdateNodes(ctx, _u.driver, _spec); err != nil {
@@ -477,153 +758,6 @@ type ApiAuditLogUpdateOne struct {
 	hooks     []Hook
 	mutation  *ApiAuditLogMutation
 	modifiers []func(*sql.UpdateBuilder)
-}
-
-// SetUpdatedAt sets the "updated_at" field.
-func (_u *ApiAuditLogUpdateOne) SetUpdatedAt(v time.Time) *ApiAuditLogUpdateOne {
-	_u.mutation.SetUpdatedAt(v)
-	return _u
-}
-
-// SetNillableUpdatedAt sets the "updated_at" field if the given value is not nil.
-func (_u *ApiAuditLogUpdateOne) SetNillableUpdatedAt(v *time.Time) *ApiAuditLogUpdateOne {
-	if v != nil {
-		_u.SetUpdatedAt(*v)
-	}
-	return _u
-}
-
-// ClearUpdatedAt clears the value of the "updated_at" field.
-func (_u *ApiAuditLogUpdateOne) ClearUpdatedAt() *ApiAuditLogUpdateOne {
-	_u.mutation.ClearUpdatedAt()
-	return _u
-}
-
-// SetDeletedAt sets the "deleted_at" field.
-func (_u *ApiAuditLogUpdateOne) SetDeletedAt(v time.Time) *ApiAuditLogUpdateOne {
-	_u.mutation.SetDeletedAt(v)
-	return _u
-}
-
-// SetNillableDeletedAt sets the "deleted_at" field if the given value is not nil.
-func (_u *ApiAuditLogUpdateOne) SetNillableDeletedAt(v *time.Time) *ApiAuditLogUpdateOne {
-	if v != nil {
-		_u.SetDeletedAt(*v)
-	}
-	return _u
-}
-
-// ClearDeletedAt clears the value of the "deleted_at" field.
-func (_u *ApiAuditLogUpdateOne) ClearDeletedAt() *ApiAuditLogUpdateOne {
-	_u.mutation.ClearDeletedAt()
-	return _u
-}
-
-// SetOperatorID sets the "operator_id" field.
-func (_u *ApiAuditLogUpdateOne) SetOperatorID(v uint32) *ApiAuditLogUpdateOne {
-	_u.mutation.ResetOperatorID()
-	_u.mutation.SetOperatorID(v)
-	return _u
-}
-
-// SetNillableOperatorID sets the "operator_id" field if the given value is not nil.
-func (_u *ApiAuditLogUpdateOne) SetNillableOperatorID(v *uint32) *ApiAuditLogUpdateOne {
-	if v != nil {
-		_u.SetOperatorID(*v)
-	}
-	return _u
-}
-
-// AddOperatorID adds value to the "operator_id" field.
-func (_u *ApiAuditLogUpdateOne) AddOperatorID(v int32) *ApiAuditLogUpdateOne {
-	_u.mutation.AddOperatorID(v)
-	return _u
-}
-
-// ClearOperatorID clears the value of the "operator_id" field.
-func (_u *ApiAuditLogUpdateOne) ClearOperatorID() *ApiAuditLogUpdateOne {
-	_u.mutation.ClearOperatorID()
-	return _u
-}
-
-// SetOperatorName sets the "operator_name" field.
-func (_u *ApiAuditLogUpdateOne) SetOperatorName(v string) *ApiAuditLogUpdateOne {
-	_u.mutation.SetOperatorName(v)
-	return _u
-}
-
-// SetNillableOperatorName sets the "operator_name" field if the given value is not nil.
-func (_u *ApiAuditLogUpdateOne) SetNillableOperatorName(v *string) *ApiAuditLogUpdateOne {
-	if v != nil {
-		_u.SetOperatorName(*v)
-	}
-	return _u
-}
-
-// ClearOperatorName clears the value of the "operator_name" field.
-func (_u *ApiAuditLogUpdateOne) ClearOperatorName() *ApiAuditLogUpdateOne {
-	_u.mutation.ClearOperatorName()
-	return _u
-}
-
-// SetPath sets the "path" field.
-func (_u *ApiAuditLogUpdateOne) SetPath(v string) *ApiAuditLogUpdateOne {
-	_u.mutation.SetPath(v)
-	return _u
-}
-
-// SetNillablePath sets the "path" field if the given value is not nil.
-func (_u *ApiAuditLogUpdateOne) SetNillablePath(v *string) *ApiAuditLogUpdateOne {
-	if v != nil {
-		_u.SetPath(*v)
-	}
-	return _u
-}
-
-// ClearPath clears the value of the "path" field.
-func (_u *ApiAuditLogUpdateOne) ClearPath() *ApiAuditLogUpdateOne {
-	_u.mutation.ClearPath()
-	return _u
-}
-
-// SetMethod sets the "method" field.
-func (_u *ApiAuditLogUpdateOne) SetMethod(v string) *ApiAuditLogUpdateOne {
-	_u.mutation.SetMethod(v)
-	return _u
-}
-
-// SetNillableMethod sets the "method" field if the given value is not nil.
-func (_u *ApiAuditLogUpdateOne) SetNillableMethod(v *string) *ApiAuditLogUpdateOne {
-	if v != nil {
-		_u.SetMethod(*v)
-	}
-	return _u
-}
-
-// ClearMethod clears the value of the "method" field.
-func (_u *ApiAuditLogUpdateOne) ClearMethod() *ApiAuditLogUpdateOne {
-	_u.mutation.ClearMethod()
-	return _u
-}
-
-// SetDetail sets the "detail" field.
-func (_u *ApiAuditLogUpdateOne) SetDetail(v string) *ApiAuditLogUpdateOne {
-	_u.mutation.SetDetail(v)
-	return _u
-}
-
-// SetNillableDetail sets the "detail" field if the given value is not nil.
-func (_u *ApiAuditLogUpdateOne) SetNillableDetail(v *string) *ApiAuditLogUpdateOne {
-	if v != nil {
-		_u.SetDetail(*v)
-	}
-	return _u
-}
-
-// ClearDetail clears the value of the "detail" field.
-func (_u *ApiAuditLogUpdateOne) ClearDetail() *ApiAuditLogUpdateOne {
-	_u.mutation.ClearDetail()
-	return _u
 }
 
 // SetUserID sets the "user_id" field.
@@ -693,17 +827,21 @@ func (_u *ApiAuditLogUpdateOne) ClearIPAddress() *ApiAuditLogUpdateOne {
 	return _u
 }
 
-// SetDeviceInfo sets the "device_info" field.
-func (_u *ApiAuditLogUpdateOne) SetDeviceInfo(v string) *ApiAuditLogUpdateOne {
-	_u.mutation.SetDeviceInfo(v)
+// SetGeoLocation sets the "geo_location" field.
+func (_u *ApiAuditLogUpdateOne) SetGeoLocation(v *auditpb.GeoLocation) *ApiAuditLogUpdateOne {
+	_u.mutation.SetGeoLocation(v)
 	return _u
 }
 
-// SetNillableDeviceInfo sets the "device_info" field if the given value is not nil.
-func (_u *ApiAuditLogUpdateOne) SetNillableDeviceInfo(v *string) *ApiAuditLogUpdateOne {
-	if v != nil {
-		_u.SetDeviceInfo(*v)
-	}
+// ClearGeoLocation clears the value of the "geo_location" field.
+func (_u *ApiAuditLogUpdateOne) ClearGeoLocation() *ApiAuditLogUpdateOne {
+	_u.mutation.ClearGeoLocation()
+	return _u
+}
+
+// SetDeviceInfo sets the "device_info" field.
+func (_u *ApiAuditLogUpdateOne) SetDeviceInfo(v *auditpb.DeviceInfo) *ApiAuditLogUpdateOne {
+	_u.mutation.SetDeviceInfo(v)
 	return _u
 }
 
@@ -713,23 +851,409 @@ func (_u *ApiAuditLogUpdateOne) ClearDeviceInfo() *ApiAuditLogUpdateOne {
 	return _u
 }
 
-// SetOperatedAt sets the "operated_at" field.
-func (_u *ApiAuditLogUpdateOne) SetOperatedAt(v time.Time) *ApiAuditLogUpdateOne {
-	_u.mutation.SetOperatedAt(v)
+// SetReferer sets the "referer" field.
+func (_u *ApiAuditLogUpdateOne) SetReferer(v string) *ApiAuditLogUpdateOne {
+	_u.mutation.SetReferer(v)
 	return _u
 }
 
-// SetNillableOperatedAt sets the "operated_at" field if the given value is not nil.
-func (_u *ApiAuditLogUpdateOne) SetNillableOperatedAt(v *time.Time) *ApiAuditLogUpdateOne {
+// SetNillableReferer sets the "referer" field if the given value is not nil.
+func (_u *ApiAuditLogUpdateOne) SetNillableReferer(v *string) *ApiAuditLogUpdateOne {
 	if v != nil {
-		_u.SetOperatedAt(*v)
+		_u.SetReferer(*v)
 	}
 	return _u
 }
 
-// ClearOperatedAt clears the value of the "operated_at" field.
-func (_u *ApiAuditLogUpdateOne) ClearOperatedAt() *ApiAuditLogUpdateOne {
-	_u.mutation.ClearOperatedAt()
+// ClearReferer clears the value of the "referer" field.
+func (_u *ApiAuditLogUpdateOne) ClearReferer() *ApiAuditLogUpdateOne {
+	_u.mutation.ClearReferer()
+	return _u
+}
+
+// SetAppVersion sets the "app_version" field.
+func (_u *ApiAuditLogUpdateOne) SetAppVersion(v string) *ApiAuditLogUpdateOne {
+	_u.mutation.SetAppVersion(v)
+	return _u
+}
+
+// SetNillableAppVersion sets the "app_version" field if the given value is not nil.
+func (_u *ApiAuditLogUpdateOne) SetNillableAppVersion(v *string) *ApiAuditLogUpdateOne {
+	if v != nil {
+		_u.SetAppVersion(*v)
+	}
+	return _u
+}
+
+// ClearAppVersion clears the value of the "app_version" field.
+func (_u *ApiAuditLogUpdateOne) ClearAppVersion() *ApiAuditLogUpdateOne {
+	_u.mutation.ClearAppVersion()
+	return _u
+}
+
+// SetHTTPMethod sets the "http_method" field.
+func (_u *ApiAuditLogUpdateOne) SetHTTPMethod(v string) *ApiAuditLogUpdateOne {
+	_u.mutation.SetHTTPMethod(v)
+	return _u
+}
+
+// SetNillableHTTPMethod sets the "http_method" field if the given value is not nil.
+func (_u *ApiAuditLogUpdateOne) SetNillableHTTPMethod(v *string) *ApiAuditLogUpdateOne {
+	if v != nil {
+		_u.SetHTTPMethod(*v)
+	}
+	return _u
+}
+
+// ClearHTTPMethod clears the value of the "http_method" field.
+func (_u *ApiAuditLogUpdateOne) ClearHTTPMethod() *ApiAuditLogUpdateOne {
+	_u.mutation.ClearHTTPMethod()
+	return _u
+}
+
+// SetPath sets the "path" field.
+func (_u *ApiAuditLogUpdateOne) SetPath(v string) *ApiAuditLogUpdateOne {
+	_u.mutation.SetPath(v)
+	return _u
+}
+
+// SetNillablePath sets the "path" field if the given value is not nil.
+func (_u *ApiAuditLogUpdateOne) SetNillablePath(v *string) *ApiAuditLogUpdateOne {
+	if v != nil {
+		_u.SetPath(*v)
+	}
+	return _u
+}
+
+// ClearPath clears the value of the "path" field.
+func (_u *ApiAuditLogUpdateOne) ClearPath() *ApiAuditLogUpdateOne {
+	_u.mutation.ClearPath()
+	return _u
+}
+
+// SetRequestURI sets the "request_uri" field.
+func (_u *ApiAuditLogUpdateOne) SetRequestURI(v string) *ApiAuditLogUpdateOne {
+	_u.mutation.SetRequestURI(v)
+	return _u
+}
+
+// SetNillableRequestURI sets the "request_uri" field if the given value is not nil.
+func (_u *ApiAuditLogUpdateOne) SetNillableRequestURI(v *string) *ApiAuditLogUpdateOne {
+	if v != nil {
+		_u.SetRequestURI(*v)
+	}
+	return _u
+}
+
+// ClearRequestURI clears the value of the "request_uri" field.
+func (_u *ApiAuditLogUpdateOne) ClearRequestURI() *ApiAuditLogUpdateOne {
+	_u.mutation.ClearRequestURI()
+	return _u
+}
+
+// SetAPIModule sets the "api_module" field.
+func (_u *ApiAuditLogUpdateOne) SetAPIModule(v string) *ApiAuditLogUpdateOne {
+	_u.mutation.SetAPIModule(v)
+	return _u
+}
+
+// SetNillableAPIModule sets the "api_module" field if the given value is not nil.
+func (_u *ApiAuditLogUpdateOne) SetNillableAPIModule(v *string) *ApiAuditLogUpdateOne {
+	if v != nil {
+		_u.SetAPIModule(*v)
+	}
+	return _u
+}
+
+// ClearAPIModule clears the value of the "api_module" field.
+func (_u *ApiAuditLogUpdateOne) ClearAPIModule() *ApiAuditLogUpdateOne {
+	_u.mutation.ClearAPIModule()
+	return _u
+}
+
+// SetAPIOperation sets the "api_operation" field.
+func (_u *ApiAuditLogUpdateOne) SetAPIOperation(v string) *ApiAuditLogUpdateOne {
+	_u.mutation.SetAPIOperation(v)
+	return _u
+}
+
+// SetNillableAPIOperation sets the "api_operation" field if the given value is not nil.
+func (_u *ApiAuditLogUpdateOne) SetNillableAPIOperation(v *string) *ApiAuditLogUpdateOne {
+	if v != nil {
+		_u.SetAPIOperation(*v)
+	}
+	return _u
+}
+
+// ClearAPIOperation clears the value of the "api_operation" field.
+func (_u *ApiAuditLogUpdateOne) ClearAPIOperation() *ApiAuditLogUpdateOne {
+	_u.mutation.ClearAPIOperation()
+	return _u
+}
+
+// SetAPIDescription sets the "api_description" field.
+func (_u *ApiAuditLogUpdateOne) SetAPIDescription(v string) *ApiAuditLogUpdateOne {
+	_u.mutation.SetAPIDescription(v)
+	return _u
+}
+
+// SetNillableAPIDescription sets the "api_description" field if the given value is not nil.
+func (_u *ApiAuditLogUpdateOne) SetNillableAPIDescription(v *string) *ApiAuditLogUpdateOne {
+	if v != nil {
+		_u.SetAPIDescription(*v)
+	}
+	return _u
+}
+
+// ClearAPIDescription clears the value of the "api_description" field.
+func (_u *ApiAuditLogUpdateOne) ClearAPIDescription() *ApiAuditLogUpdateOne {
+	_u.mutation.ClearAPIDescription()
+	return _u
+}
+
+// SetRequestID sets the "request_id" field.
+func (_u *ApiAuditLogUpdateOne) SetRequestID(v string) *ApiAuditLogUpdateOne {
+	_u.mutation.SetRequestID(v)
+	return _u
+}
+
+// SetNillableRequestID sets the "request_id" field if the given value is not nil.
+func (_u *ApiAuditLogUpdateOne) SetNillableRequestID(v *string) *ApiAuditLogUpdateOne {
+	if v != nil {
+		_u.SetRequestID(*v)
+	}
+	return _u
+}
+
+// ClearRequestID clears the value of the "request_id" field.
+func (_u *ApiAuditLogUpdateOne) ClearRequestID() *ApiAuditLogUpdateOne {
+	_u.mutation.ClearRequestID()
+	return _u
+}
+
+// SetTraceID sets the "trace_id" field.
+func (_u *ApiAuditLogUpdateOne) SetTraceID(v string) *ApiAuditLogUpdateOne {
+	_u.mutation.SetTraceID(v)
+	return _u
+}
+
+// SetNillableTraceID sets the "trace_id" field if the given value is not nil.
+func (_u *ApiAuditLogUpdateOne) SetNillableTraceID(v *string) *ApiAuditLogUpdateOne {
+	if v != nil {
+		_u.SetTraceID(*v)
+	}
+	return _u
+}
+
+// ClearTraceID clears the value of the "trace_id" field.
+func (_u *ApiAuditLogUpdateOne) ClearTraceID() *ApiAuditLogUpdateOne {
+	_u.mutation.ClearTraceID()
+	return _u
+}
+
+// SetSpanID sets the "span_id" field.
+func (_u *ApiAuditLogUpdateOne) SetSpanID(v string) *ApiAuditLogUpdateOne {
+	_u.mutation.SetSpanID(v)
+	return _u
+}
+
+// SetNillableSpanID sets the "span_id" field if the given value is not nil.
+func (_u *ApiAuditLogUpdateOne) SetNillableSpanID(v *string) *ApiAuditLogUpdateOne {
+	if v != nil {
+		_u.SetSpanID(*v)
+	}
+	return _u
+}
+
+// ClearSpanID clears the value of the "span_id" field.
+func (_u *ApiAuditLogUpdateOne) ClearSpanID() *ApiAuditLogUpdateOne {
+	_u.mutation.ClearSpanID()
+	return _u
+}
+
+// SetLatencyMs sets the "latency_ms" field.
+func (_u *ApiAuditLogUpdateOne) SetLatencyMs(v uint32) *ApiAuditLogUpdateOne {
+	_u.mutation.ResetLatencyMs()
+	_u.mutation.SetLatencyMs(v)
+	return _u
+}
+
+// SetNillableLatencyMs sets the "latency_ms" field if the given value is not nil.
+func (_u *ApiAuditLogUpdateOne) SetNillableLatencyMs(v *uint32) *ApiAuditLogUpdateOne {
+	if v != nil {
+		_u.SetLatencyMs(*v)
+	}
+	return _u
+}
+
+// AddLatencyMs adds value to the "latency_ms" field.
+func (_u *ApiAuditLogUpdateOne) AddLatencyMs(v int32) *ApiAuditLogUpdateOne {
+	_u.mutation.AddLatencyMs(v)
+	return _u
+}
+
+// ClearLatencyMs clears the value of the "latency_ms" field.
+func (_u *ApiAuditLogUpdateOne) ClearLatencyMs() *ApiAuditLogUpdateOne {
+	_u.mutation.ClearLatencyMs()
+	return _u
+}
+
+// SetSuccess sets the "success" field.
+func (_u *ApiAuditLogUpdateOne) SetSuccess(v bool) *ApiAuditLogUpdateOne {
+	_u.mutation.SetSuccess(v)
+	return _u
+}
+
+// SetNillableSuccess sets the "success" field if the given value is not nil.
+func (_u *ApiAuditLogUpdateOne) SetNillableSuccess(v *bool) *ApiAuditLogUpdateOne {
+	if v != nil {
+		_u.SetSuccess(*v)
+	}
+	return _u
+}
+
+// ClearSuccess clears the value of the "success" field.
+func (_u *ApiAuditLogUpdateOne) ClearSuccess() *ApiAuditLogUpdateOne {
+	_u.mutation.ClearSuccess()
+	return _u
+}
+
+// SetStatusCode sets the "status_code" field.
+func (_u *ApiAuditLogUpdateOne) SetStatusCode(v uint32) *ApiAuditLogUpdateOne {
+	_u.mutation.ResetStatusCode()
+	_u.mutation.SetStatusCode(v)
+	return _u
+}
+
+// SetNillableStatusCode sets the "status_code" field if the given value is not nil.
+func (_u *ApiAuditLogUpdateOne) SetNillableStatusCode(v *uint32) *ApiAuditLogUpdateOne {
+	if v != nil {
+		_u.SetStatusCode(*v)
+	}
+	return _u
+}
+
+// AddStatusCode adds value to the "status_code" field.
+func (_u *ApiAuditLogUpdateOne) AddStatusCode(v int32) *ApiAuditLogUpdateOne {
+	_u.mutation.AddStatusCode(v)
+	return _u
+}
+
+// ClearStatusCode clears the value of the "status_code" field.
+func (_u *ApiAuditLogUpdateOne) ClearStatusCode() *ApiAuditLogUpdateOne {
+	_u.mutation.ClearStatusCode()
+	return _u
+}
+
+// SetReason sets the "reason" field.
+func (_u *ApiAuditLogUpdateOne) SetReason(v string) *ApiAuditLogUpdateOne {
+	_u.mutation.SetReason(v)
+	return _u
+}
+
+// SetNillableReason sets the "reason" field if the given value is not nil.
+func (_u *ApiAuditLogUpdateOne) SetNillableReason(v *string) *ApiAuditLogUpdateOne {
+	if v != nil {
+		_u.SetReason(*v)
+	}
+	return _u
+}
+
+// ClearReason clears the value of the "reason" field.
+func (_u *ApiAuditLogUpdateOne) ClearReason() *ApiAuditLogUpdateOne {
+	_u.mutation.ClearReason()
+	return _u
+}
+
+// SetRequestHeader sets the "request_header" field.
+func (_u *ApiAuditLogUpdateOne) SetRequestHeader(v string) *ApiAuditLogUpdateOne {
+	_u.mutation.SetRequestHeader(v)
+	return _u
+}
+
+// SetNillableRequestHeader sets the "request_header" field if the given value is not nil.
+func (_u *ApiAuditLogUpdateOne) SetNillableRequestHeader(v *string) *ApiAuditLogUpdateOne {
+	if v != nil {
+		_u.SetRequestHeader(*v)
+	}
+	return _u
+}
+
+// ClearRequestHeader clears the value of the "request_header" field.
+func (_u *ApiAuditLogUpdateOne) ClearRequestHeader() *ApiAuditLogUpdateOne {
+	_u.mutation.ClearRequestHeader()
+	return _u
+}
+
+// SetRequestBody sets the "request_body" field.
+func (_u *ApiAuditLogUpdateOne) SetRequestBody(v string) *ApiAuditLogUpdateOne {
+	_u.mutation.SetRequestBody(v)
+	return _u
+}
+
+// SetNillableRequestBody sets the "request_body" field if the given value is not nil.
+func (_u *ApiAuditLogUpdateOne) SetNillableRequestBody(v *string) *ApiAuditLogUpdateOne {
+	if v != nil {
+		_u.SetRequestBody(*v)
+	}
+	return _u
+}
+
+// ClearRequestBody clears the value of the "request_body" field.
+func (_u *ApiAuditLogUpdateOne) ClearRequestBody() *ApiAuditLogUpdateOne {
+	_u.mutation.ClearRequestBody()
+	return _u
+}
+
+// SetResponse sets the "response" field.
+func (_u *ApiAuditLogUpdateOne) SetResponse(v string) *ApiAuditLogUpdateOne {
+	_u.mutation.SetResponse(v)
+	return _u
+}
+
+// SetNillableResponse sets the "response" field if the given value is not nil.
+func (_u *ApiAuditLogUpdateOne) SetNillableResponse(v *string) *ApiAuditLogUpdateOne {
+	if v != nil {
+		_u.SetResponse(*v)
+	}
+	return _u
+}
+
+// ClearResponse clears the value of the "response" field.
+func (_u *ApiAuditLogUpdateOne) ClearResponse() *ApiAuditLogUpdateOne {
+	_u.mutation.ClearResponse()
+	return _u
+}
+
+// SetLogHash sets the "log_hash" field.
+func (_u *ApiAuditLogUpdateOne) SetLogHash(v string) *ApiAuditLogUpdateOne {
+	_u.mutation.SetLogHash(v)
+	return _u
+}
+
+// SetNillableLogHash sets the "log_hash" field if the given value is not nil.
+func (_u *ApiAuditLogUpdateOne) SetNillableLogHash(v *string) *ApiAuditLogUpdateOne {
+	if v != nil {
+		_u.SetLogHash(*v)
+	}
+	return _u
+}
+
+// ClearLogHash clears the value of the "log_hash" field.
+func (_u *ApiAuditLogUpdateOne) ClearLogHash() *ApiAuditLogUpdateOne {
+	_u.mutation.ClearLogHash()
+	return _u
+}
+
+// SetSignature sets the "signature" field.
+func (_u *ApiAuditLogUpdateOne) SetSignature(v []byte) *ApiAuditLogUpdateOne {
+	_u.mutation.SetSignature(v)
+	return _u
+}
+
+// ClearSignature clears the value of the "signature" field.
+func (_u *ApiAuditLogUpdateOne) ClearSignature() *ApiAuditLogUpdateOne {
+	_u.mutation.ClearSignature()
 	return _u
 }
 
@@ -778,46 +1302,6 @@ func (_u *ApiAuditLogUpdateOne) ExecX(ctx context.Context) {
 	}
 }
 
-// check runs all checks and user-defined validators on the builder.
-func (_u *ApiAuditLogUpdateOne) check() error {
-	if v, ok := _u.mutation.OperatorName(); ok {
-		if err := apiauditlog.OperatorNameValidator(v); err != nil {
-			return &ValidationError{Name: "operator_name", err: fmt.Errorf(`ent: validator failed for field "ApiAuditLog.operator_name": %w`, err)}
-		}
-	}
-	if v, ok := _u.mutation.Path(); ok {
-		if err := apiauditlog.PathValidator(v); err != nil {
-			return &ValidationError{Name: "path", err: fmt.Errorf(`ent: validator failed for field "ApiAuditLog.path": %w`, err)}
-		}
-	}
-	if v, ok := _u.mutation.Method(); ok {
-		if err := apiauditlog.MethodValidator(v); err != nil {
-			return &ValidationError{Name: "method", err: fmt.Errorf(`ent: validator failed for field "ApiAuditLog.method": %w`, err)}
-		}
-	}
-	if v, ok := _u.mutation.Detail(); ok {
-		if err := apiauditlog.DetailValidator(v); err != nil {
-			return &ValidationError{Name: "detail", err: fmt.Errorf(`ent: validator failed for field "ApiAuditLog.detail": %w`, err)}
-		}
-	}
-	if v, ok := _u.mutation.Username(); ok {
-		if err := apiauditlog.UsernameValidator(v); err != nil {
-			return &ValidationError{Name: "username", err: fmt.Errorf(`ent: validator failed for field "ApiAuditLog.username": %w`, err)}
-		}
-	}
-	if v, ok := _u.mutation.IPAddress(); ok {
-		if err := apiauditlog.IPAddressValidator(v); err != nil {
-			return &ValidationError{Name: "ip_address", err: fmt.Errorf(`ent: validator failed for field "ApiAuditLog.ip_address": %w`, err)}
-		}
-	}
-	if v, ok := _u.mutation.DeviceInfo(); ok {
-		if err := apiauditlog.DeviceInfoValidator(v); err != nil {
-			return &ValidationError{Name: "device_info", err: fmt.Errorf(`ent: validator failed for field "ApiAuditLog.device_info": %w`, err)}
-		}
-	}
-	return nil
-}
-
 // Modify adds a statement modifier for attaching custom logic to the UPDATE statement.
 func (_u *ApiAuditLogUpdateOne) Modify(modifiers ...func(u *sql.UpdateBuilder)) *ApiAuditLogUpdateOne {
 	_u.modifiers = append(_u.modifiers, modifiers...)
@@ -825,9 +1309,6 @@ func (_u *ApiAuditLogUpdateOne) Modify(modifiers ...func(u *sql.UpdateBuilder)) 
 }
 
 func (_u *ApiAuditLogUpdateOne) sqlSave(ctx context.Context) (_node *ApiAuditLog, err error) {
-	if err := _u.check(); err != nil {
-		return _node, err
-	}
 	_spec := sqlgraph.NewUpdateSpec(apiauditlog.Table, apiauditlog.Columns, sqlgraph.NewFieldSpec(apiauditlog.FieldID, field.TypeUint32))
 	id, ok := _u.mutation.ID()
 	if !ok {
@@ -856,53 +1337,8 @@ func (_u *ApiAuditLogUpdateOne) sqlSave(ctx context.Context) (_node *ApiAuditLog
 	if _u.mutation.CreatedAtCleared() {
 		_spec.ClearField(apiauditlog.FieldCreatedAt, field.TypeTime)
 	}
-	if value, ok := _u.mutation.UpdatedAt(); ok {
-		_spec.SetField(apiauditlog.FieldUpdatedAt, field.TypeTime, value)
-	}
-	if _u.mutation.UpdatedAtCleared() {
-		_spec.ClearField(apiauditlog.FieldUpdatedAt, field.TypeTime)
-	}
-	if value, ok := _u.mutation.DeletedAt(); ok {
-		_spec.SetField(apiauditlog.FieldDeletedAt, field.TypeTime, value)
-	}
-	if _u.mutation.DeletedAtCleared() {
-		_spec.ClearField(apiauditlog.FieldDeletedAt, field.TypeTime)
-	}
 	if _u.mutation.TenantIDCleared() {
 		_spec.ClearField(apiauditlog.FieldTenantID, field.TypeUint32)
-	}
-	if value, ok := _u.mutation.OperatorID(); ok {
-		_spec.SetField(apiauditlog.FieldOperatorID, field.TypeUint32, value)
-	}
-	if value, ok := _u.mutation.AddedOperatorID(); ok {
-		_spec.AddField(apiauditlog.FieldOperatorID, field.TypeUint32, value)
-	}
-	if _u.mutation.OperatorIDCleared() {
-		_spec.ClearField(apiauditlog.FieldOperatorID, field.TypeUint32)
-	}
-	if value, ok := _u.mutation.OperatorName(); ok {
-		_spec.SetField(apiauditlog.FieldOperatorName, field.TypeString, value)
-	}
-	if _u.mutation.OperatorNameCleared() {
-		_spec.ClearField(apiauditlog.FieldOperatorName, field.TypeString)
-	}
-	if value, ok := _u.mutation.Path(); ok {
-		_spec.SetField(apiauditlog.FieldPath, field.TypeString, value)
-	}
-	if _u.mutation.PathCleared() {
-		_spec.ClearField(apiauditlog.FieldPath, field.TypeString)
-	}
-	if value, ok := _u.mutation.Method(); ok {
-		_spec.SetField(apiauditlog.FieldMethod, field.TypeString, value)
-	}
-	if _u.mutation.MethodCleared() {
-		_spec.ClearField(apiauditlog.FieldMethod, field.TypeString)
-	}
-	if value, ok := _u.mutation.Detail(); ok {
-		_spec.SetField(apiauditlog.FieldDetail, field.TypeString, value)
-	}
-	if _u.mutation.DetailCleared() {
-		_spec.ClearField(apiauditlog.FieldDetail, field.TypeString)
 	}
 	if value, ok := _u.mutation.UserID(); ok {
 		_spec.SetField(apiauditlog.FieldUserID, field.TypeUint32, value)
@@ -925,17 +1361,143 @@ func (_u *ApiAuditLogUpdateOne) sqlSave(ctx context.Context) (_node *ApiAuditLog
 	if _u.mutation.IPAddressCleared() {
 		_spec.ClearField(apiauditlog.FieldIPAddress, field.TypeString)
 	}
+	if value, ok := _u.mutation.GeoLocation(); ok {
+		_spec.SetField(apiauditlog.FieldGeoLocation, field.TypeJSON, value)
+	}
+	if _u.mutation.GeoLocationCleared() {
+		_spec.ClearField(apiauditlog.FieldGeoLocation, field.TypeJSON)
+	}
 	if value, ok := _u.mutation.DeviceInfo(); ok {
-		_spec.SetField(apiauditlog.FieldDeviceInfo, field.TypeString, value)
+		_spec.SetField(apiauditlog.FieldDeviceInfo, field.TypeJSON, value)
 	}
 	if _u.mutation.DeviceInfoCleared() {
-		_spec.ClearField(apiauditlog.FieldDeviceInfo, field.TypeString)
+		_spec.ClearField(apiauditlog.FieldDeviceInfo, field.TypeJSON)
 	}
-	if value, ok := _u.mutation.OperatedAt(); ok {
-		_spec.SetField(apiauditlog.FieldOperatedAt, field.TypeTime, value)
+	if value, ok := _u.mutation.Referer(); ok {
+		_spec.SetField(apiauditlog.FieldReferer, field.TypeString, value)
 	}
-	if _u.mutation.OperatedAtCleared() {
-		_spec.ClearField(apiauditlog.FieldOperatedAt, field.TypeTime)
+	if _u.mutation.RefererCleared() {
+		_spec.ClearField(apiauditlog.FieldReferer, field.TypeString)
+	}
+	if value, ok := _u.mutation.AppVersion(); ok {
+		_spec.SetField(apiauditlog.FieldAppVersion, field.TypeString, value)
+	}
+	if _u.mutation.AppVersionCleared() {
+		_spec.ClearField(apiauditlog.FieldAppVersion, field.TypeString)
+	}
+	if value, ok := _u.mutation.HTTPMethod(); ok {
+		_spec.SetField(apiauditlog.FieldHTTPMethod, field.TypeString, value)
+	}
+	if _u.mutation.HTTPMethodCleared() {
+		_spec.ClearField(apiauditlog.FieldHTTPMethod, field.TypeString)
+	}
+	if value, ok := _u.mutation.Path(); ok {
+		_spec.SetField(apiauditlog.FieldPath, field.TypeString, value)
+	}
+	if _u.mutation.PathCleared() {
+		_spec.ClearField(apiauditlog.FieldPath, field.TypeString)
+	}
+	if value, ok := _u.mutation.RequestURI(); ok {
+		_spec.SetField(apiauditlog.FieldRequestURI, field.TypeString, value)
+	}
+	if _u.mutation.RequestURICleared() {
+		_spec.ClearField(apiauditlog.FieldRequestURI, field.TypeString)
+	}
+	if value, ok := _u.mutation.APIModule(); ok {
+		_spec.SetField(apiauditlog.FieldAPIModule, field.TypeString, value)
+	}
+	if _u.mutation.APIModuleCleared() {
+		_spec.ClearField(apiauditlog.FieldAPIModule, field.TypeString)
+	}
+	if value, ok := _u.mutation.APIOperation(); ok {
+		_spec.SetField(apiauditlog.FieldAPIOperation, field.TypeString, value)
+	}
+	if _u.mutation.APIOperationCleared() {
+		_spec.ClearField(apiauditlog.FieldAPIOperation, field.TypeString)
+	}
+	if value, ok := _u.mutation.APIDescription(); ok {
+		_spec.SetField(apiauditlog.FieldAPIDescription, field.TypeString, value)
+	}
+	if _u.mutation.APIDescriptionCleared() {
+		_spec.ClearField(apiauditlog.FieldAPIDescription, field.TypeString)
+	}
+	if value, ok := _u.mutation.RequestID(); ok {
+		_spec.SetField(apiauditlog.FieldRequestID, field.TypeString, value)
+	}
+	if _u.mutation.RequestIDCleared() {
+		_spec.ClearField(apiauditlog.FieldRequestID, field.TypeString)
+	}
+	if value, ok := _u.mutation.TraceID(); ok {
+		_spec.SetField(apiauditlog.FieldTraceID, field.TypeString, value)
+	}
+	if _u.mutation.TraceIDCleared() {
+		_spec.ClearField(apiauditlog.FieldTraceID, field.TypeString)
+	}
+	if value, ok := _u.mutation.SpanID(); ok {
+		_spec.SetField(apiauditlog.FieldSpanID, field.TypeString, value)
+	}
+	if _u.mutation.SpanIDCleared() {
+		_spec.ClearField(apiauditlog.FieldSpanID, field.TypeString)
+	}
+	if value, ok := _u.mutation.LatencyMs(); ok {
+		_spec.SetField(apiauditlog.FieldLatencyMs, field.TypeUint32, value)
+	}
+	if value, ok := _u.mutation.AddedLatencyMs(); ok {
+		_spec.AddField(apiauditlog.FieldLatencyMs, field.TypeUint32, value)
+	}
+	if _u.mutation.LatencyMsCleared() {
+		_spec.ClearField(apiauditlog.FieldLatencyMs, field.TypeUint32)
+	}
+	if value, ok := _u.mutation.Success(); ok {
+		_spec.SetField(apiauditlog.FieldSuccess, field.TypeBool, value)
+	}
+	if _u.mutation.SuccessCleared() {
+		_spec.ClearField(apiauditlog.FieldSuccess, field.TypeBool)
+	}
+	if value, ok := _u.mutation.StatusCode(); ok {
+		_spec.SetField(apiauditlog.FieldStatusCode, field.TypeUint32, value)
+	}
+	if value, ok := _u.mutation.AddedStatusCode(); ok {
+		_spec.AddField(apiauditlog.FieldStatusCode, field.TypeUint32, value)
+	}
+	if _u.mutation.StatusCodeCleared() {
+		_spec.ClearField(apiauditlog.FieldStatusCode, field.TypeUint32)
+	}
+	if value, ok := _u.mutation.Reason(); ok {
+		_spec.SetField(apiauditlog.FieldReason, field.TypeString, value)
+	}
+	if _u.mutation.ReasonCleared() {
+		_spec.ClearField(apiauditlog.FieldReason, field.TypeString)
+	}
+	if value, ok := _u.mutation.RequestHeader(); ok {
+		_spec.SetField(apiauditlog.FieldRequestHeader, field.TypeString, value)
+	}
+	if _u.mutation.RequestHeaderCleared() {
+		_spec.ClearField(apiauditlog.FieldRequestHeader, field.TypeString)
+	}
+	if value, ok := _u.mutation.RequestBody(); ok {
+		_spec.SetField(apiauditlog.FieldRequestBody, field.TypeString, value)
+	}
+	if _u.mutation.RequestBodyCleared() {
+		_spec.ClearField(apiauditlog.FieldRequestBody, field.TypeString)
+	}
+	if value, ok := _u.mutation.Response(); ok {
+		_spec.SetField(apiauditlog.FieldResponse, field.TypeString, value)
+	}
+	if _u.mutation.ResponseCleared() {
+		_spec.ClearField(apiauditlog.FieldResponse, field.TypeString)
+	}
+	if value, ok := _u.mutation.LogHash(); ok {
+		_spec.SetField(apiauditlog.FieldLogHash, field.TypeString, value)
+	}
+	if _u.mutation.LogHashCleared() {
+		_spec.ClearField(apiauditlog.FieldLogHash, field.TypeString)
+	}
+	if value, ok := _u.mutation.Signature(); ok {
+		_spec.SetField(apiauditlog.FieldSignature, field.TypeBytes, value)
+	}
+	if _u.mutation.SignatureCleared() {
+		_spec.ClearField(apiauditlog.FieldSignature, field.TypeBytes)
 	}
 	_spec.AddModifiers(_u.modifiers...)
 	_node = &ApiAuditLog{config: _u.config}

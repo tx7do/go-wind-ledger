@@ -64,20 +64,6 @@ func (_c *UserOrgUnitCreate) SetNillableDeletedAt(v *time.Time) *UserOrgUnitCrea
 	return _c
 }
 
-// SetTenantID sets the "tenant_id" field.
-func (_c *UserOrgUnitCreate) SetTenantID(v uint32) *UserOrgUnitCreate {
-	_c.mutation.SetTenantID(v)
-	return _c
-}
-
-// SetNillableTenantID sets the "tenant_id" field if the given value is not nil.
-func (_c *UserOrgUnitCreate) SetNillableTenantID(v *uint32) *UserOrgUnitCreate {
-	if v != nil {
-		_c.SetTenantID(*v)
-	}
-	return _c
-}
-
 // SetCreatedBy sets the "created_by" field.
 func (_c *UserOrgUnitCreate) SetCreatedBy(v uint32) *UserOrgUnitCreate {
 	_c.mutation.SetCreatedBy(v)
@@ -120,30 +106,56 @@ func (_c *UserOrgUnitCreate) SetNillableDeletedBy(v *uint32) *UserOrgUnitCreate 
 	return _c
 }
 
-// SetStatus sets the "status" field.
-func (_c *UserOrgUnitCreate) SetStatus(v userorgunit.Status) *UserOrgUnitCreate {
-	_c.mutation.SetStatus(v)
+// SetTenantID sets the "tenant_id" field.
+func (_c *UserOrgUnitCreate) SetTenantID(v uint32) *UserOrgUnitCreate {
+	_c.mutation.SetTenantID(v)
 	return _c
 }
 
-// SetNillableStatus sets the "status" field if the given value is not nil.
-func (_c *UserOrgUnitCreate) SetNillableStatus(v *userorgunit.Status) *UserOrgUnitCreate {
+// SetNillableTenantID sets the "tenant_id" field if the given value is not nil.
+func (_c *UserOrgUnitCreate) SetNillableTenantID(v *uint32) *UserOrgUnitCreate {
 	if v != nil {
-		_c.SetStatus(*v)
+		_c.SetTenantID(*v)
 	}
 	return _c
 }
 
-// SetIsPrimary sets the "is_primary" field.
-func (_c *UserOrgUnitCreate) SetIsPrimary(v bool) *UserOrgUnitCreate {
-	_c.mutation.SetIsPrimary(v)
+// SetRemark sets the "remark" field.
+func (_c *UserOrgUnitCreate) SetRemark(v string) *UserOrgUnitCreate {
+	_c.mutation.SetRemark(v)
 	return _c
 }
 
-// SetNillableIsPrimary sets the "is_primary" field if the given value is not nil.
-func (_c *UserOrgUnitCreate) SetNillableIsPrimary(v *bool) *UserOrgUnitCreate {
+// SetNillableRemark sets the "remark" field if the given value is not nil.
+func (_c *UserOrgUnitCreate) SetNillableRemark(v *string) *UserOrgUnitCreate {
 	if v != nil {
-		_c.SetIsPrimary(*v)
+		_c.SetRemark(*v)
+	}
+	return _c
+}
+
+// SetUserID sets the "user_id" field.
+func (_c *UserOrgUnitCreate) SetUserID(v uint32) *UserOrgUnitCreate {
+	_c.mutation.SetUserID(v)
+	return _c
+}
+
+// SetOrgUnitID sets the "org_unit_id" field.
+func (_c *UserOrgUnitCreate) SetOrgUnitID(v uint32) *UserOrgUnitCreate {
+	_c.mutation.SetOrgUnitID(v)
+	return _c
+}
+
+// SetPositionID sets the "position_id" field.
+func (_c *UserOrgUnitCreate) SetPositionID(v uint32) *UserOrgUnitCreate {
+	_c.mutation.SetPositionID(v)
+	return _c
+}
+
+// SetNillablePositionID sets the "position_id" field if the given value is not nil.
+func (_c *UserOrgUnitCreate) SetNillablePositionID(v *uint32) *UserOrgUnitCreate {
+	if v != nil {
+		_c.SetPositionID(*v)
 	}
 	return _c
 }
@@ -176,30 +188,58 @@ func (_c *UserOrgUnitCreate) SetNillableEndAt(v *time.Time) *UserOrgUnitCreate {
 	return _c
 }
 
-// SetUserID sets the "user_id" field.
-func (_c *UserOrgUnitCreate) SetUserID(v uint32) *UserOrgUnitCreate {
-	_c.mutation.SetUserID(v)
+// SetAssignedAt sets the "assigned_at" field.
+func (_c *UserOrgUnitCreate) SetAssignedAt(v time.Time) *UserOrgUnitCreate {
+	_c.mutation.SetAssignedAt(v)
 	return _c
 }
 
-// SetNillableUserID sets the "user_id" field if the given value is not nil.
-func (_c *UserOrgUnitCreate) SetNillableUserID(v *uint32) *UserOrgUnitCreate {
+// SetNillableAssignedAt sets the "assigned_at" field if the given value is not nil.
+func (_c *UserOrgUnitCreate) SetNillableAssignedAt(v *time.Time) *UserOrgUnitCreate {
 	if v != nil {
-		_c.SetUserID(*v)
+		_c.SetAssignedAt(*v)
 	}
 	return _c
 }
 
-// SetOrgUnitID sets the "org_unit_id" field.
-func (_c *UserOrgUnitCreate) SetOrgUnitID(v uint32) *UserOrgUnitCreate {
-	_c.mutation.SetOrgUnitID(v)
+// SetAssignedBy sets the "assigned_by" field.
+func (_c *UserOrgUnitCreate) SetAssignedBy(v uint32) *UserOrgUnitCreate {
+	_c.mutation.SetAssignedBy(v)
 	return _c
 }
 
-// SetNillableOrgUnitID sets the "org_unit_id" field if the given value is not nil.
-func (_c *UserOrgUnitCreate) SetNillableOrgUnitID(v *uint32) *UserOrgUnitCreate {
+// SetNillableAssignedBy sets the "assigned_by" field if the given value is not nil.
+func (_c *UserOrgUnitCreate) SetNillableAssignedBy(v *uint32) *UserOrgUnitCreate {
 	if v != nil {
-		_c.SetOrgUnitID(*v)
+		_c.SetAssignedBy(*v)
+	}
+	return _c
+}
+
+// SetIsPrimary sets the "is_primary" field.
+func (_c *UserOrgUnitCreate) SetIsPrimary(v bool) *UserOrgUnitCreate {
+	_c.mutation.SetIsPrimary(v)
+	return _c
+}
+
+// SetNillableIsPrimary sets the "is_primary" field if the given value is not nil.
+func (_c *UserOrgUnitCreate) SetNillableIsPrimary(v *bool) *UserOrgUnitCreate {
+	if v != nil {
+		_c.SetIsPrimary(*v)
+	}
+	return _c
+}
+
+// SetStatus sets the "status" field.
+func (_c *UserOrgUnitCreate) SetStatus(v userorgunit.Status) *UserOrgUnitCreate {
+	_c.mutation.SetStatus(v)
+	return _c
+}
+
+// SetNillableStatus sets the "status" field if the given value is not nil.
+func (_c *UserOrgUnitCreate) SetNillableStatus(v *userorgunit.Status) *UserOrgUnitCreate {
+	if v != nil {
+		_c.SetStatus(*v)
 	}
 	return _c
 }
@@ -251,19 +291,28 @@ func (_c *UserOrgUnitCreate) defaults() error {
 		v := userorgunit.DefaultTenantID
 		_c.mutation.SetTenantID(v)
 	}
-	if _, ok := _c.mutation.Status(); !ok {
-		v := userorgunit.DefaultStatus
-		_c.mutation.SetStatus(v)
-	}
 	if _, ok := _c.mutation.IsPrimary(); !ok {
 		v := userorgunit.DefaultIsPrimary
 		_c.mutation.SetIsPrimary(v)
+	}
+	if _, ok := _c.mutation.Status(); !ok {
+		v := userorgunit.DefaultStatus
+		_c.mutation.SetStatus(v)
 	}
 	return nil
 }
 
 // check runs all checks and user-defined validators on the builder.
 func (_c *UserOrgUnitCreate) check() error {
+	if _, ok := _c.mutation.UserID(); !ok {
+		return &ValidationError{Name: "user_id", err: errors.New(`ent: missing required field "UserOrgUnit.user_id"`)}
+	}
+	if _, ok := _c.mutation.OrgUnitID(); !ok {
+		return &ValidationError{Name: "org_unit_id", err: errors.New(`ent: missing required field "UserOrgUnit.org_unit_id"`)}
+	}
+	if _, ok := _c.mutation.IsPrimary(); !ok {
+		return &ValidationError{Name: "is_primary", err: errors.New(`ent: missing required field "UserOrgUnit.is_primary"`)}
+	}
 	if v, ok := _c.mutation.Status(); ok {
 		if err := userorgunit.StatusValidator(v); err != nil {
 			return &ValidationError{Name: "status", err: fmt.Errorf(`ent: validator failed for field "UserOrgUnit.status": %w`, err)}
@@ -319,10 +368,6 @@ func (_c *UserOrgUnitCreate) createSpec() (*UserOrgUnit, *sqlgraph.CreateSpec) {
 		_spec.SetField(userorgunit.FieldDeletedAt, field.TypeTime, value)
 		_node.DeletedAt = &value
 	}
-	if value, ok := _c.mutation.TenantID(); ok {
-		_spec.SetField(userorgunit.FieldTenantID, field.TypeUint32, value)
-		_node.TenantID = &value
-	}
 	if value, ok := _c.mutation.CreatedBy(); ok {
 		_spec.SetField(userorgunit.FieldCreatedBy, field.TypeUint32, value)
 		_node.CreatedBy = &value
@@ -335,13 +380,25 @@ func (_c *UserOrgUnitCreate) createSpec() (*UserOrgUnit, *sqlgraph.CreateSpec) {
 		_spec.SetField(userorgunit.FieldDeletedBy, field.TypeUint32, value)
 		_node.DeletedBy = &value
 	}
-	if value, ok := _c.mutation.Status(); ok {
-		_spec.SetField(userorgunit.FieldStatus, field.TypeEnum, value)
-		_node.Status = &value
+	if value, ok := _c.mutation.TenantID(); ok {
+		_spec.SetField(userorgunit.FieldTenantID, field.TypeUint32, value)
+		_node.TenantID = &value
 	}
-	if value, ok := _c.mutation.IsPrimary(); ok {
-		_spec.SetField(userorgunit.FieldIsPrimary, field.TypeBool, value)
-		_node.IsPrimary = &value
+	if value, ok := _c.mutation.Remark(); ok {
+		_spec.SetField(userorgunit.FieldRemark, field.TypeString, value)
+		_node.Remark = &value
+	}
+	if value, ok := _c.mutation.UserID(); ok {
+		_spec.SetField(userorgunit.FieldUserID, field.TypeUint32, value)
+		_node.UserID = &value
+	}
+	if value, ok := _c.mutation.OrgUnitID(); ok {
+		_spec.SetField(userorgunit.FieldOrgUnitID, field.TypeUint32, value)
+		_node.OrgUnitID = &value
+	}
+	if value, ok := _c.mutation.PositionID(); ok {
+		_spec.SetField(userorgunit.FieldPositionID, field.TypeUint32, value)
+		_node.PositionID = &value
 	}
 	if value, ok := _c.mutation.StartAt(); ok {
 		_spec.SetField(userorgunit.FieldStartAt, field.TypeTime, value)
@@ -351,13 +408,21 @@ func (_c *UserOrgUnitCreate) createSpec() (*UserOrgUnit, *sqlgraph.CreateSpec) {
 		_spec.SetField(userorgunit.FieldEndAt, field.TypeTime, value)
 		_node.EndAt = &value
 	}
-	if value, ok := _c.mutation.UserID(); ok {
-		_spec.SetField(userorgunit.FieldUserID, field.TypeUint32, value)
-		_node.UserID = &value
+	if value, ok := _c.mutation.AssignedAt(); ok {
+		_spec.SetField(userorgunit.FieldAssignedAt, field.TypeTime, value)
+		_node.AssignedAt = &value
 	}
-	if value, ok := _c.mutation.OrgUnitID(); ok {
-		_spec.SetField(userorgunit.FieldOrgUnitID, field.TypeUint32, value)
-		_node.OrgUnitID = &value
+	if value, ok := _c.mutation.AssignedBy(); ok {
+		_spec.SetField(userorgunit.FieldAssignedBy, field.TypeUint32, value)
+		_node.AssignedBy = &value
+	}
+	if value, ok := _c.mutation.IsPrimary(); ok {
+		_spec.SetField(userorgunit.FieldIsPrimary, field.TypeBool, value)
+		_node.IsPrimary = &value
+	}
+	if value, ok := _c.mutation.Status(); ok {
+		_spec.SetField(userorgunit.FieldStatus, field.TypeEnum, value)
+		_node.Status = &value
 	}
 	return _node, _spec
 }
@@ -519,39 +584,81 @@ func (u *UserOrgUnitUpsert) ClearDeletedBy() *UserOrgUnitUpsert {
 	return u
 }
 
-// SetStatus sets the "status" field.
-func (u *UserOrgUnitUpsert) SetStatus(v userorgunit.Status) *UserOrgUnitUpsert {
-	u.Set(userorgunit.FieldStatus, v)
+// SetRemark sets the "remark" field.
+func (u *UserOrgUnitUpsert) SetRemark(v string) *UserOrgUnitUpsert {
+	u.Set(userorgunit.FieldRemark, v)
 	return u
 }
 
-// UpdateStatus sets the "status" field to the value that was provided on create.
-func (u *UserOrgUnitUpsert) UpdateStatus() *UserOrgUnitUpsert {
-	u.SetExcluded(userorgunit.FieldStatus)
+// UpdateRemark sets the "remark" field to the value that was provided on create.
+func (u *UserOrgUnitUpsert) UpdateRemark() *UserOrgUnitUpsert {
+	u.SetExcluded(userorgunit.FieldRemark)
 	return u
 }
 
-// ClearStatus clears the value of the "status" field.
-func (u *UserOrgUnitUpsert) ClearStatus() *UserOrgUnitUpsert {
-	u.SetNull(userorgunit.FieldStatus)
+// ClearRemark clears the value of the "remark" field.
+func (u *UserOrgUnitUpsert) ClearRemark() *UserOrgUnitUpsert {
+	u.SetNull(userorgunit.FieldRemark)
 	return u
 }
 
-// SetIsPrimary sets the "is_primary" field.
-func (u *UserOrgUnitUpsert) SetIsPrimary(v bool) *UserOrgUnitUpsert {
-	u.Set(userorgunit.FieldIsPrimary, v)
+// SetUserID sets the "user_id" field.
+func (u *UserOrgUnitUpsert) SetUserID(v uint32) *UserOrgUnitUpsert {
+	u.Set(userorgunit.FieldUserID, v)
 	return u
 }
 
-// UpdateIsPrimary sets the "is_primary" field to the value that was provided on create.
-func (u *UserOrgUnitUpsert) UpdateIsPrimary() *UserOrgUnitUpsert {
-	u.SetExcluded(userorgunit.FieldIsPrimary)
+// UpdateUserID sets the "user_id" field to the value that was provided on create.
+func (u *UserOrgUnitUpsert) UpdateUserID() *UserOrgUnitUpsert {
+	u.SetExcluded(userorgunit.FieldUserID)
 	return u
 }
 
-// ClearIsPrimary clears the value of the "is_primary" field.
-func (u *UserOrgUnitUpsert) ClearIsPrimary() *UserOrgUnitUpsert {
-	u.SetNull(userorgunit.FieldIsPrimary)
+// AddUserID adds v to the "user_id" field.
+func (u *UserOrgUnitUpsert) AddUserID(v uint32) *UserOrgUnitUpsert {
+	u.Add(userorgunit.FieldUserID, v)
+	return u
+}
+
+// SetOrgUnitID sets the "org_unit_id" field.
+func (u *UserOrgUnitUpsert) SetOrgUnitID(v uint32) *UserOrgUnitUpsert {
+	u.Set(userorgunit.FieldOrgUnitID, v)
+	return u
+}
+
+// UpdateOrgUnitID sets the "org_unit_id" field to the value that was provided on create.
+func (u *UserOrgUnitUpsert) UpdateOrgUnitID() *UserOrgUnitUpsert {
+	u.SetExcluded(userorgunit.FieldOrgUnitID)
+	return u
+}
+
+// AddOrgUnitID adds v to the "org_unit_id" field.
+func (u *UserOrgUnitUpsert) AddOrgUnitID(v uint32) *UserOrgUnitUpsert {
+	u.Add(userorgunit.FieldOrgUnitID, v)
+	return u
+}
+
+// SetPositionID sets the "position_id" field.
+func (u *UserOrgUnitUpsert) SetPositionID(v uint32) *UserOrgUnitUpsert {
+	u.Set(userorgunit.FieldPositionID, v)
+	return u
+}
+
+// UpdatePositionID sets the "position_id" field to the value that was provided on create.
+func (u *UserOrgUnitUpsert) UpdatePositionID() *UserOrgUnitUpsert {
+	u.SetExcluded(userorgunit.FieldPositionID)
+	return u
+}
+
+// AddPositionID adds v to the "position_id" field.
+func (u *UserOrgUnitUpsert) AddPositionID(v uint32) *UserOrgUnitUpsert {
+	u.Add(userorgunit.FieldPositionID, v)
+	return u
+}
+
+// ClearPositionID clears the value of the "position_id" field.
+func (u *UserOrgUnitUpsert) ClearPositionID() *UserOrgUnitUpsert {
+	u.SetNull(userorgunit.FieldPositionID)
 	return u
 }
 
@@ -591,51 +698,75 @@ func (u *UserOrgUnitUpsert) ClearEndAt() *UserOrgUnitUpsert {
 	return u
 }
 
-// SetUserID sets the "user_id" field.
-func (u *UserOrgUnitUpsert) SetUserID(v uint32) *UserOrgUnitUpsert {
-	u.Set(userorgunit.FieldUserID, v)
+// SetAssignedAt sets the "assigned_at" field.
+func (u *UserOrgUnitUpsert) SetAssignedAt(v time.Time) *UserOrgUnitUpsert {
+	u.Set(userorgunit.FieldAssignedAt, v)
 	return u
 }
 
-// UpdateUserID sets the "user_id" field to the value that was provided on create.
-func (u *UserOrgUnitUpsert) UpdateUserID() *UserOrgUnitUpsert {
-	u.SetExcluded(userorgunit.FieldUserID)
+// UpdateAssignedAt sets the "assigned_at" field to the value that was provided on create.
+func (u *UserOrgUnitUpsert) UpdateAssignedAt() *UserOrgUnitUpsert {
+	u.SetExcluded(userorgunit.FieldAssignedAt)
 	return u
 }
 
-// AddUserID adds v to the "user_id" field.
-func (u *UserOrgUnitUpsert) AddUserID(v uint32) *UserOrgUnitUpsert {
-	u.Add(userorgunit.FieldUserID, v)
+// ClearAssignedAt clears the value of the "assigned_at" field.
+func (u *UserOrgUnitUpsert) ClearAssignedAt() *UserOrgUnitUpsert {
+	u.SetNull(userorgunit.FieldAssignedAt)
 	return u
 }
 
-// ClearUserID clears the value of the "user_id" field.
-func (u *UserOrgUnitUpsert) ClearUserID() *UserOrgUnitUpsert {
-	u.SetNull(userorgunit.FieldUserID)
+// SetAssignedBy sets the "assigned_by" field.
+func (u *UserOrgUnitUpsert) SetAssignedBy(v uint32) *UserOrgUnitUpsert {
+	u.Set(userorgunit.FieldAssignedBy, v)
 	return u
 }
 
-// SetOrgUnitID sets the "org_unit_id" field.
-func (u *UserOrgUnitUpsert) SetOrgUnitID(v uint32) *UserOrgUnitUpsert {
-	u.Set(userorgunit.FieldOrgUnitID, v)
+// UpdateAssignedBy sets the "assigned_by" field to the value that was provided on create.
+func (u *UserOrgUnitUpsert) UpdateAssignedBy() *UserOrgUnitUpsert {
+	u.SetExcluded(userorgunit.FieldAssignedBy)
 	return u
 }
 
-// UpdateOrgUnitID sets the "org_unit_id" field to the value that was provided on create.
-func (u *UserOrgUnitUpsert) UpdateOrgUnitID() *UserOrgUnitUpsert {
-	u.SetExcluded(userorgunit.FieldOrgUnitID)
+// AddAssignedBy adds v to the "assigned_by" field.
+func (u *UserOrgUnitUpsert) AddAssignedBy(v uint32) *UserOrgUnitUpsert {
+	u.Add(userorgunit.FieldAssignedBy, v)
 	return u
 }
 
-// AddOrgUnitID adds v to the "org_unit_id" field.
-func (u *UserOrgUnitUpsert) AddOrgUnitID(v uint32) *UserOrgUnitUpsert {
-	u.Add(userorgunit.FieldOrgUnitID, v)
+// ClearAssignedBy clears the value of the "assigned_by" field.
+func (u *UserOrgUnitUpsert) ClearAssignedBy() *UserOrgUnitUpsert {
+	u.SetNull(userorgunit.FieldAssignedBy)
 	return u
 }
 
-// ClearOrgUnitID clears the value of the "org_unit_id" field.
-func (u *UserOrgUnitUpsert) ClearOrgUnitID() *UserOrgUnitUpsert {
-	u.SetNull(userorgunit.FieldOrgUnitID)
+// SetIsPrimary sets the "is_primary" field.
+func (u *UserOrgUnitUpsert) SetIsPrimary(v bool) *UserOrgUnitUpsert {
+	u.Set(userorgunit.FieldIsPrimary, v)
+	return u
+}
+
+// UpdateIsPrimary sets the "is_primary" field to the value that was provided on create.
+func (u *UserOrgUnitUpsert) UpdateIsPrimary() *UserOrgUnitUpsert {
+	u.SetExcluded(userorgunit.FieldIsPrimary)
+	return u
+}
+
+// SetStatus sets the "status" field.
+func (u *UserOrgUnitUpsert) SetStatus(v userorgunit.Status) *UserOrgUnitUpsert {
+	u.Set(userorgunit.FieldStatus, v)
+	return u
+}
+
+// UpdateStatus sets the "status" field to the value that was provided on create.
+func (u *UserOrgUnitUpsert) UpdateStatus() *UserOrgUnitUpsert {
+	u.SetExcluded(userorgunit.FieldStatus)
+	return u
+}
+
+// ClearStatus clears the value of the "status" field.
+func (u *UserOrgUnitUpsert) ClearStatus() *UserOrgUnitUpsert {
+	u.SetNull(userorgunit.FieldStatus)
 	return u
 }
 
@@ -819,45 +950,94 @@ func (u *UserOrgUnitUpsertOne) ClearDeletedBy() *UserOrgUnitUpsertOne {
 	})
 }
 
-// SetStatus sets the "status" field.
-func (u *UserOrgUnitUpsertOne) SetStatus(v userorgunit.Status) *UserOrgUnitUpsertOne {
+// SetRemark sets the "remark" field.
+func (u *UserOrgUnitUpsertOne) SetRemark(v string) *UserOrgUnitUpsertOne {
 	return u.Update(func(s *UserOrgUnitUpsert) {
-		s.SetStatus(v)
+		s.SetRemark(v)
 	})
 }
 
-// UpdateStatus sets the "status" field to the value that was provided on create.
-func (u *UserOrgUnitUpsertOne) UpdateStatus() *UserOrgUnitUpsertOne {
+// UpdateRemark sets the "remark" field to the value that was provided on create.
+func (u *UserOrgUnitUpsertOne) UpdateRemark() *UserOrgUnitUpsertOne {
 	return u.Update(func(s *UserOrgUnitUpsert) {
-		s.UpdateStatus()
+		s.UpdateRemark()
 	})
 }
 
-// ClearStatus clears the value of the "status" field.
-func (u *UserOrgUnitUpsertOne) ClearStatus() *UserOrgUnitUpsertOne {
+// ClearRemark clears the value of the "remark" field.
+func (u *UserOrgUnitUpsertOne) ClearRemark() *UserOrgUnitUpsertOne {
 	return u.Update(func(s *UserOrgUnitUpsert) {
-		s.ClearStatus()
+		s.ClearRemark()
 	})
 }
 
-// SetIsPrimary sets the "is_primary" field.
-func (u *UserOrgUnitUpsertOne) SetIsPrimary(v bool) *UserOrgUnitUpsertOne {
+// SetUserID sets the "user_id" field.
+func (u *UserOrgUnitUpsertOne) SetUserID(v uint32) *UserOrgUnitUpsertOne {
 	return u.Update(func(s *UserOrgUnitUpsert) {
-		s.SetIsPrimary(v)
+		s.SetUserID(v)
 	})
 }
 
-// UpdateIsPrimary sets the "is_primary" field to the value that was provided on create.
-func (u *UserOrgUnitUpsertOne) UpdateIsPrimary() *UserOrgUnitUpsertOne {
+// AddUserID adds v to the "user_id" field.
+func (u *UserOrgUnitUpsertOne) AddUserID(v uint32) *UserOrgUnitUpsertOne {
 	return u.Update(func(s *UserOrgUnitUpsert) {
-		s.UpdateIsPrimary()
+		s.AddUserID(v)
 	})
 }
 
-// ClearIsPrimary clears the value of the "is_primary" field.
-func (u *UserOrgUnitUpsertOne) ClearIsPrimary() *UserOrgUnitUpsertOne {
+// UpdateUserID sets the "user_id" field to the value that was provided on create.
+func (u *UserOrgUnitUpsertOne) UpdateUserID() *UserOrgUnitUpsertOne {
 	return u.Update(func(s *UserOrgUnitUpsert) {
-		s.ClearIsPrimary()
+		s.UpdateUserID()
+	})
+}
+
+// SetOrgUnitID sets the "org_unit_id" field.
+func (u *UserOrgUnitUpsertOne) SetOrgUnitID(v uint32) *UserOrgUnitUpsertOne {
+	return u.Update(func(s *UserOrgUnitUpsert) {
+		s.SetOrgUnitID(v)
+	})
+}
+
+// AddOrgUnitID adds v to the "org_unit_id" field.
+func (u *UserOrgUnitUpsertOne) AddOrgUnitID(v uint32) *UserOrgUnitUpsertOne {
+	return u.Update(func(s *UserOrgUnitUpsert) {
+		s.AddOrgUnitID(v)
+	})
+}
+
+// UpdateOrgUnitID sets the "org_unit_id" field to the value that was provided on create.
+func (u *UserOrgUnitUpsertOne) UpdateOrgUnitID() *UserOrgUnitUpsertOne {
+	return u.Update(func(s *UserOrgUnitUpsert) {
+		s.UpdateOrgUnitID()
+	})
+}
+
+// SetPositionID sets the "position_id" field.
+func (u *UserOrgUnitUpsertOne) SetPositionID(v uint32) *UserOrgUnitUpsertOne {
+	return u.Update(func(s *UserOrgUnitUpsert) {
+		s.SetPositionID(v)
+	})
+}
+
+// AddPositionID adds v to the "position_id" field.
+func (u *UserOrgUnitUpsertOne) AddPositionID(v uint32) *UserOrgUnitUpsertOne {
+	return u.Update(func(s *UserOrgUnitUpsert) {
+		s.AddPositionID(v)
+	})
+}
+
+// UpdatePositionID sets the "position_id" field to the value that was provided on create.
+func (u *UserOrgUnitUpsertOne) UpdatePositionID() *UserOrgUnitUpsertOne {
+	return u.Update(func(s *UserOrgUnitUpsert) {
+		s.UpdatePositionID()
+	})
+}
+
+// ClearPositionID clears the value of the "position_id" field.
+func (u *UserOrgUnitUpsertOne) ClearPositionID() *UserOrgUnitUpsertOne {
+	return u.Update(func(s *UserOrgUnitUpsert) {
+		s.ClearPositionID()
 	})
 }
 
@@ -903,59 +1083,87 @@ func (u *UserOrgUnitUpsertOne) ClearEndAt() *UserOrgUnitUpsertOne {
 	})
 }
 
-// SetUserID sets the "user_id" field.
-func (u *UserOrgUnitUpsertOne) SetUserID(v uint32) *UserOrgUnitUpsertOne {
+// SetAssignedAt sets the "assigned_at" field.
+func (u *UserOrgUnitUpsertOne) SetAssignedAt(v time.Time) *UserOrgUnitUpsertOne {
 	return u.Update(func(s *UserOrgUnitUpsert) {
-		s.SetUserID(v)
+		s.SetAssignedAt(v)
 	})
 }
 
-// AddUserID adds v to the "user_id" field.
-func (u *UserOrgUnitUpsertOne) AddUserID(v uint32) *UserOrgUnitUpsertOne {
+// UpdateAssignedAt sets the "assigned_at" field to the value that was provided on create.
+func (u *UserOrgUnitUpsertOne) UpdateAssignedAt() *UserOrgUnitUpsertOne {
 	return u.Update(func(s *UserOrgUnitUpsert) {
-		s.AddUserID(v)
+		s.UpdateAssignedAt()
 	})
 }
 
-// UpdateUserID sets the "user_id" field to the value that was provided on create.
-func (u *UserOrgUnitUpsertOne) UpdateUserID() *UserOrgUnitUpsertOne {
+// ClearAssignedAt clears the value of the "assigned_at" field.
+func (u *UserOrgUnitUpsertOne) ClearAssignedAt() *UserOrgUnitUpsertOne {
 	return u.Update(func(s *UserOrgUnitUpsert) {
-		s.UpdateUserID()
+		s.ClearAssignedAt()
 	})
 }
 
-// ClearUserID clears the value of the "user_id" field.
-func (u *UserOrgUnitUpsertOne) ClearUserID() *UserOrgUnitUpsertOne {
+// SetAssignedBy sets the "assigned_by" field.
+func (u *UserOrgUnitUpsertOne) SetAssignedBy(v uint32) *UserOrgUnitUpsertOne {
 	return u.Update(func(s *UserOrgUnitUpsert) {
-		s.ClearUserID()
+		s.SetAssignedBy(v)
 	})
 }
 
-// SetOrgUnitID sets the "org_unit_id" field.
-func (u *UserOrgUnitUpsertOne) SetOrgUnitID(v uint32) *UserOrgUnitUpsertOne {
+// AddAssignedBy adds v to the "assigned_by" field.
+func (u *UserOrgUnitUpsertOne) AddAssignedBy(v uint32) *UserOrgUnitUpsertOne {
 	return u.Update(func(s *UserOrgUnitUpsert) {
-		s.SetOrgUnitID(v)
+		s.AddAssignedBy(v)
 	})
 }
 
-// AddOrgUnitID adds v to the "org_unit_id" field.
-func (u *UserOrgUnitUpsertOne) AddOrgUnitID(v uint32) *UserOrgUnitUpsertOne {
+// UpdateAssignedBy sets the "assigned_by" field to the value that was provided on create.
+func (u *UserOrgUnitUpsertOne) UpdateAssignedBy() *UserOrgUnitUpsertOne {
 	return u.Update(func(s *UserOrgUnitUpsert) {
-		s.AddOrgUnitID(v)
+		s.UpdateAssignedBy()
 	})
 }
 
-// UpdateOrgUnitID sets the "org_unit_id" field to the value that was provided on create.
-func (u *UserOrgUnitUpsertOne) UpdateOrgUnitID() *UserOrgUnitUpsertOne {
+// ClearAssignedBy clears the value of the "assigned_by" field.
+func (u *UserOrgUnitUpsertOne) ClearAssignedBy() *UserOrgUnitUpsertOne {
 	return u.Update(func(s *UserOrgUnitUpsert) {
-		s.UpdateOrgUnitID()
+		s.ClearAssignedBy()
 	})
 }
 
-// ClearOrgUnitID clears the value of the "org_unit_id" field.
-func (u *UserOrgUnitUpsertOne) ClearOrgUnitID() *UserOrgUnitUpsertOne {
+// SetIsPrimary sets the "is_primary" field.
+func (u *UserOrgUnitUpsertOne) SetIsPrimary(v bool) *UserOrgUnitUpsertOne {
 	return u.Update(func(s *UserOrgUnitUpsert) {
-		s.ClearOrgUnitID()
+		s.SetIsPrimary(v)
+	})
+}
+
+// UpdateIsPrimary sets the "is_primary" field to the value that was provided on create.
+func (u *UserOrgUnitUpsertOne) UpdateIsPrimary() *UserOrgUnitUpsertOne {
+	return u.Update(func(s *UserOrgUnitUpsert) {
+		s.UpdateIsPrimary()
+	})
+}
+
+// SetStatus sets the "status" field.
+func (u *UserOrgUnitUpsertOne) SetStatus(v userorgunit.Status) *UserOrgUnitUpsertOne {
+	return u.Update(func(s *UserOrgUnitUpsert) {
+		s.SetStatus(v)
+	})
+}
+
+// UpdateStatus sets the "status" field to the value that was provided on create.
+func (u *UserOrgUnitUpsertOne) UpdateStatus() *UserOrgUnitUpsertOne {
+	return u.Update(func(s *UserOrgUnitUpsert) {
+		s.UpdateStatus()
+	})
+}
+
+// ClearStatus clears the value of the "status" field.
+func (u *UserOrgUnitUpsertOne) ClearStatus() *UserOrgUnitUpsertOne {
+	return u.Update(func(s *UserOrgUnitUpsert) {
+		s.ClearStatus()
 	})
 }
 
@@ -1305,45 +1513,94 @@ func (u *UserOrgUnitUpsertBulk) ClearDeletedBy() *UserOrgUnitUpsertBulk {
 	})
 }
 
-// SetStatus sets the "status" field.
-func (u *UserOrgUnitUpsertBulk) SetStatus(v userorgunit.Status) *UserOrgUnitUpsertBulk {
+// SetRemark sets the "remark" field.
+func (u *UserOrgUnitUpsertBulk) SetRemark(v string) *UserOrgUnitUpsertBulk {
 	return u.Update(func(s *UserOrgUnitUpsert) {
-		s.SetStatus(v)
+		s.SetRemark(v)
 	})
 }
 
-// UpdateStatus sets the "status" field to the value that was provided on create.
-func (u *UserOrgUnitUpsertBulk) UpdateStatus() *UserOrgUnitUpsertBulk {
+// UpdateRemark sets the "remark" field to the value that was provided on create.
+func (u *UserOrgUnitUpsertBulk) UpdateRemark() *UserOrgUnitUpsertBulk {
 	return u.Update(func(s *UserOrgUnitUpsert) {
-		s.UpdateStatus()
+		s.UpdateRemark()
 	})
 }
 
-// ClearStatus clears the value of the "status" field.
-func (u *UserOrgUnitUpsertBulk) ClearStatus() *UserOrgUnitUpsertBulk {
+// ClearRemark clears the value of the "remark" field.
+func (u *UserOrgUnitUpsertBulk) ClearRemark() *UserOrgUnitUpsertBulk {
 	return u.Update(func(s *UserOrgUnitUpsert) {
-		s.ClearStatus()
+		s.ClearRemark()
 	})
 }
 
-// SetIsPrimary sets the "is_primary" field.
-func (u *UserOrgUnitUpsertBulk) SetIsPrimary(v bool) *UserOrgUnitUpsertBulk {
+// SetUserID sets the "user_id" field.
+func (u *UserOrgUnitUpsertBulk) SetUserID(v uint32) *UserOrgUnitUpsertBulk {
 	return u.Update(func(s *UserOrgUnitUpsert) {
-		s.SetIsPrimary(v)
+		s.SetUserID(v)
 	})
 }
 
-// UpdateIsPrimary sets the "is_primary" field to the value that was provided on create.
-func (u *UserOrgUnitUpsertBulk) UpdateIsPrimary() *UserOrgUnitUpsertBulk {
+// AddUserID adds v to the "user_id" field.
+func (u *UserOrgUnitUpsertBulk) AddUserID(v uint32) *UserOrgUnitUpsertBulk {
 	return u.Update(func(s *UserOrgUnitUpsert) {
-		s.UpdateIsPrimary()
+		s.AddUserID(v)
 	})
 }
 
-// ClearIsPrimary clears the value of the "is_primary" field.
-func (u *UserOrgUnitUpsertBulk) ClearIsPrimary() *UserOrgUnitUpsertBulk {
+// UpdateUserID sets the "user_id" field to the value that was provided on create.
+func (u *UserOrgUnitUpsertBulk) UpdateUserID() *UserOrgUnitUpsertBulk {
 	return u.Update(func(s *UserOrgUnitUpsert) {
-		s.ClearIsPrimary()
+		s.UpdateUserID()
+	})
+}
+
+// SetOrgUnitID sets the "org_unit_id" field.
+func (u *UserOrgUnitUpsertBulk) SetOrgUnitID(v uint32) *UserOrgUnitUpsertBulk {
+	return u.Update(func(s *UserOrgUnitUpsert) {
+		s.SetOrgUnitID(v)
+	})
+}
+
+// AddOrgUnitID adds v to the "org_unit_id" field.
+func (u *UserOrgUnitUpsertBulk) AddOrgUnitID(v uint32) *UserOrgUnitUpsertBulk {
+	return u.Update(func(s *UserOrgUnitUpsert) {
+		s.AddOrgUnitID(v)
+	})
+}
+
+// UpdateOrgUnitID sets the "org_unit_id" field to the value that was provided on create.
+func (u *UserOrgUnitUpsertBulk) UpdateOrgUnitID() *UserOrgUnitUpsertBulk {
+	return u.Update(func(s *UserOrgUnitUpsert) {
+		s.UpdateOrgUnitID()
+	})
+}
+
+// SetPositionID sets the "position_id" field.
+func (u *UserOrgUnitUpsertBulk) SetPositionID(v uint32) *UserOrgUnitUpsertBulk {
+	return u.Update(func(s *UserOrgUnitUpsert) {
+		s.SetPositionID(v)
+	})
+}
+
+// AddPositionID adds v to the "position_id" field.
+func (u *UserOrgUnitUpsertBulk) AddPositionID(v uint32) *UserOrgUnitUpsertBulk {
+	return u.Update(func(s *UserOrgUnitUpsert) {
+		s.AddPositionID(v)
+	})
+}
+
+// UpdatePositionID sets the "position_id" field to the value that was provided on create.
+func (u *UserOrgUnitUpsertBulk) UpdatePositionID() *UserOrgUnitUpsertBulk {
+	return u.Update(func(s *UserOrgUnitUpsert) {
+		s.UpdatePositionID()
+	})
+}
+
+// ClearPositionID clears the value of the "position_id" field.
+func (u *UserOrgUnitUpsertBulk) ClearPositionID() *UserOrgUnitUpsertBulk {
+	return u.Update(func(s *UserOrgUnitUpsert) {
+		s.ClearPositionID()
 	})
 }
 
@@ -1389,59 +1646,87 @@ func (u *UserOrgUnitUpsertBulk) ClearEndAt() *UserOrgUnitUpsertBulk {
 	})
 }
 
-// SetUserID sets the "user_id" field.
-func (u *UserOrgUnitUpsertBulk) SetUserID(v uint32) *UserOrgUnitUpsertBulk {
+// SetAssignedAt sets the "assigned_at" field.
+func (u *UserOrgUnitUpsertBulk) SetAssignedAt(v time.Time) *UserOrgUnitUpsertBulk {
 	return u.Update(func(s *UserOrgUnitUpsert) {
-		s.SetUserID(v)
+		s.SetAssignedAt(v)
 	})
 }
 
-// AddUserID adds v to the "user_id" field.
-func (u *UserOrgUnitUpsertBulk) AddUserID(v uint32) *UserOrgUnitUpsertBulk {
+// UpdateAssignedAt sets the "assigned_at" field to the value that was provided on create.
+func (u *UserOrgUnitUpsertBulk) UpdateAssignedAt() *UserOrgUnitUpsertBulk {
 	return u.Update(func(s *UserOrgUnitUpsert) {
-		s.AddUserID(v)
+		s.UpdateAssignedAt()
 	})
 }
 
-// UpdateUserID sets the "user_id" field to the value that was provided on create.
-func (u *UserOrgUnitUpsertBulk) UpdateUserID() *UserOrgUnitUpsertBulk {
+// ClearAssignedAt clears the value of the "assigned_at" field.
+func (u *UserOrgUnitUpsertBulk) ClearAssignedAt() *UserOrgUnitUpsertBulk {
 	return u.Update(func(s *UserOrgUnitUpsert) {
-		s.UpdateUserID()
+		s.ClearAssignedAt()
 	})
 }
 
-// ClearUserID clears the value of the "user_id" field.
-func (u *UserOrgUnitUpsertBulk) ClearUserID() *UserOrgUnitUpsertBulk {
+// SetAssignedBy sets the "assigned_by" field.
+func (u *UserOrgUnitUpsertBulk) SetAssignedBy(v uint32) *UserOrgUnitUpsertBulk {
 	return u.Update(func(s *UserOrgUnitUpsert) {
-		s.ClearUserID()
+		s.SetAssignedBy(v)
 	})
 }
 
-// SetOrgUnitID sets the "org_unit_id" field.
-func (u *UserOrgUnitUpsertBulk) SetOrgUnitID(v uint32) *UserOrgUnitUpsertBulk {
+// AddAssignedBy adds v to the "assigned_by" field.
+func (u *UserOrgUnitUpsertBulk) AddAssignedBy(v uint32) *UserOrgUnitUpsertBulk {
 	return u.Update(func(s *UserOrgUnitUpsert) {
-		s.SetOrgUnitID(v)
+		s.AddAssignedBy(v)
 	})
 }
 
-// AddOrgUnitID adds v to the "org_unit_id" field.
-func (u *UserOrgUnitUpsertBulk) AddOrgUnitID(v uint32) *UserOrgUnitUpsertBulk {
+// UpdateAssignedBy sets the "assigned_by" field to the value that was provided on create.
+func (u *UserOrgUnitUpsertBulk) UpdateAssignedBy() *UserOrgUnitUpsertBulk {
 	return u.Update(func(s *UserOrgUnitUpsert) {
-		s.AddOrgUnitID(v)
+		s.UpdateAssignedBy()
 	})
 }
 
-// UpdateOrgUnitID sets the "org_unit_id" field to the value that was provided on create.
-func (u *UserOrgUnitUpsertBulk) UpdateOrgUnitID() *UserOrgUnitUpsertBulk {
+// ClearAssignedBy clears the value of the "assigned_by" field.
+func (u *UserOrgUnitUpsertBulk) ClearAssignedBy() *UserOrgUnitUpsertBulk {
 	return u.Update(func(s *UserOrgUnitUpsert) {
-		s.UpdateOrgUnitID()
+		s.ClearAssignedBy()
 	})
 }
 
-// ClearOrgUnitID clears the value of the "org_unit_id" field.
-func (u *UserOrgUnitUpsertBulk) ClearOrgUnitID() *UserOrgUnitUpsertBulk {
+// SetIsPrimary sets the "is_primary" field.
+func (u *UserOrgUnitUpsertBulk) SetIsPrimary(v bool) *UserOrgUnitUpsertBulk {
 	return u.Update(func(s *UserOrgUnitUpsert) {
-		s.ClearOrgUnitID()
+		s.SetIsPrimary(v)
+	})
+}
+
+// UpdateIsPrimary sets the "is_primary" field to the value that was provided on create.
+func (u *UserOrgUnitUpsertBulk) UpdateIsPrimary() *UserOrgUnitUpsertBulk {
+	return u.Update(func(s *UserOrgUnitUpsert) {
+		s.UpdateIsPrimary()
+	})
+}
+
+// SetStatus sets the "status" field.
+func (u *UserOrgUnitUpsertBulk) SetStatus(v userorgunit.Status) *UserOrgUnitUpsertBulk {
+	return u.Update(func(s *UserOrgUnitUpsert) {
+		s.SetStatus(v)
+	})
+}
+
+// UpdateStatus sets the "status" field to the value that was provided on create.
+func (u *UserOrgUnitUpsertBulk) UpdateStatus() *UserOrgUnitUpsertBulk {
+	return u.Update(func(s *UserOrgUnitUpsert) {
+		s.UpdateStatus()
+	})
+}
+
+// ClearStatus clears the value of the "status" field.
+func (u *UserOrgUnitUpsertBulk) ClearStatus() *UserOrgUnitUpsertBulk {
+	return u.Update(func(s *UserOrgUnitUpsert) {
+		s.ClearStatus()
 	})
 }
 

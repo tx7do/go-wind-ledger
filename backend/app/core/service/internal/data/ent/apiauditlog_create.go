@@ -6,6 +6,7 @@ import (
 	"context"
 	"errors"
 	"fmt"
+	auditpb "go-wind-ledger/api/gen/go/audit/service/v1"
 	"go-wind-ledger/app/core/service/internal/data/ent/apiauditlog"
 	"time"
 
@@ -36,34 +37,6 @@ func (_c *ApiAuditLogCreate) SetNillableCreatedAt(v *time.Time) *ApiAuditLogCrea
 	return _c
 }
 
-// SetUpdatedAt sets the "updated_at" field.
-func (_c *ApiAuditLogCreate) SetUpdatedAt(v time.Time) *ApiAuditLogCreate {
-	_c.mutation.SetUpdatedAt(v)
-	return _c
-}
-
-// SetNillableUpdatedAt sets the "updated_at" field if the given value is not nil.
-func (_c *ApiAuditLogCreate) SetNillableUpdatedAt(v *time.Time) *ApiAuditLogCreate {
-	if v != nil {
-		_c.SetUpdatedAt(*v)
-	}
-	return _c
-}
-
-// SetDeletedAt sets the "deleted_at" field.
-func (_c *ApiAuditLogCreate) SetDeletedAt(v time.Time) *ApiAuditLogCreate {
-	_c.mutation.SetDeletedAt(v)
-	return _c
-}
-
-// SetNillableDeletedAt sets the "deleted_at" field if the given value is not nil.
-func (_c *ApiAuditLogCreate) SetNillableDeletedAt(v *time.Time) *ApiAuditLogCreate {
-	if v != nil {
-		_c.SetDeletedAt(*v)
-	}
-	return _c
-}
-
 // SetTenantID sets the "tenant_id" field.
 func (_c *ApiAuditLogCreate) SetTenantID(v uint32) *ApiAuditLogCreate {
 	_c.mutation.SetTenantID(v)
@@ -74,76 +47,6 @@ func (_c *ApiAuditLogCreate) SetTenantID(v uint32) *ApiAuditLogCreate {
 func (_c *ApiAuditLogCreate) SetNillableTenantID(v *uint32) *ApiAuditLogCreate {
 	if v != nil {
 		_c.SetTenantID(*v)
-	}
-	return _c
-}
-
-// SetOperatorID sets the "operator_id" field.
-func (_c *ApiAuditLogCreate) SetOperatorID(v uint32) *ApiAuditLogCreate {
-	_c.mutation.SetOperatorID(v)
-	return _c
-}
-
-// SetNillableOperatorID sets the "operator_id" field if the given value is not nil.
-func (_c *ApiAuditLogCreate) SetNillableOperatorID(v *uint32) *ApiAuditLogCreate {
-	if v != nil {
-		_c.SetOperatorID(*v)
-	}
-	return _c
-}
-
-// SetOperatorName sets the "operator_name" field.
-func (_c *ApiAuditLogCreate) SetOperatorName(v string) *ApiAuditLogCreate {
-	_c.mutation.SetOperatorName(v)
-	return _c
-}
-
-// SetNillableOperatorName sets the "operator_name" field if the given value is not nil.
-func (_c *ApiAuditLogCreate) SetNillableOperatorName(v *string) *ApiAuditLogCreate {
-	if v != nil {
-		_c.SetOperatorName(*v)
-	}
-	return _c
-}
-
-// SetPath sets the "path" field.
-func (_c *ApiAuditLogCreate) SetPath(v string) *ApiAuditLogCreate {
-	_c.mutation.SetPath(v)
-	return _c
-}
-
-// SetNillablePath sets the "path" field if the given value is not nil.
-func (_c *ApiAuditLogCreate) SetNillablePath(v *string) *ApiAuditLogCreate {
-	if v != nil {
-		_c.SetPath(*v)
-	}
-	return _c
-}
-
-// SetMethod sets the "method" field.
-func (_c *ApiAuditLogCreate) SetMethod(v string) *ApiAuditLogCreate {
-	_c.mutation.SetMethod(v)
-	return _c
-}
-
-// SetNillableMethod sets the "method" field if the given value is not nil.
-func (_c *ApiAuditLogCreate) SetNillableMethod(v *string) *ApiAuditLogCreate {
-	if v != nil {
-		_c.SetMethod(*v)
-	}
-	return _c
-}
-
-// SetDetail sets the "detail" field.
-func (_c *ApiAuditLogCreate) SetDetail(v string) *ApiAuditLogCreate {
-	_c.mutation.SetDetail(v)
-	return _c
-}
-
-// SetNillableDetail sets the "detail" field if the given value is not nil.
-func (_c *ApiAuditLogCreate) SetNillableDetail(v *string) *ApiAuditLogCreate {
-	if v != nil {
-		_c.SetDetail(*v)
 	}
 	return _c
 }
@@ -190,31 +93,287 @@ func (_c *ApiAuditLogCreate) SetNillableIPAddress(v *string) *ApiAuditLogCreate 
 	return _c
 }
 
+// SetGeoLocation sets the "geo_location" field.
+func (_c *ApiAuditLogCreate) SetGeoLocation(v *auditpb.GeoLocation) *ApiAuditLogCreate {
+	_c.mutation.SetGeoLocation(v)
+	return _c
+}
+
 // SetDeviceInfo sets the "device_info" field.
-func (_c *ApiAuditLogCreate) SetDeviceInfo(v string) *ApiAuditLogCreate {
+func (_c *ApiAuditLogCreate) SetDeviceInfo(v *auditpb.DeviceInfo) *ApiAuditLogCreate {
 	_c.mutation.SetDeviceInfo(v)
 	return _c
 }
 
-// SetNillableDeviceInfo sets the "device_info" field if the given value is not nil.
-func (_c *ApiAuditLogCreate) SetNillableDeviceInfo(v *string) *ApiAuditLogCreate {
+// SetReferer sets the "referer" field.
+func (_c *ApiAuditLogCreate) SetReferer(v string) *ApiAuditLogCreate {
+	_c.mutation.SetReferer(v)
+	return _c
+}
+
+// SetNillableReferer sets the "referer" field if the given value is not nil.
+func (_c *ApiAuditLogCreate) SetNillableReferer(v *string) *ApiAuditLogCreate {
 	if v != nil {
-		_c.SetDeviceInfo(*v)
+		_c.SetReferer(*v)
 	}
 	return _c
 }
 
-// SetOperatedAt sets the "operated_at" field.
-func (_c *ApiAuditLogCreate) SetOperatedAt(v time.Time) *ApiAuditLogCreate {
-	_c.mutation.SetOperatedAt(v)
+// SetAppVersion sets the "app_version" field.
+func (_c *ApiAuditLogCreate) SetAppVersion(v string) *ApiAuditLogCreate {
+	_c.mutation.SetAppVersion(v)
 	return _c
 }
 
-// SetNillableOperatedAt sets the "operated_at" field if the given value is not nil.
-func (_c *ApiAuditLogCreate) SetNillableOperatedAt(v *time.Time) *ApiAuditLogCreate {
+// SetNillableAppVersion sets the "app_version" field if the given value is not nil.
+func (_c *ApiAuditLogCreate) SetNillableAppVersion(v *string) *ApiAuditLogCreate {
 	if v != nil {
-		_c.SetOperatedAt(*v)
+		_c.SetAppVersion(*v)
 	}
+	return _c
+}
+
+// SetHTTPMethod sets the "http_method" field.
+func (_c *ApiAuditLogCreate) SetHTTPMethod(v string) *ApiAuditLogCreate {
+	_c.mutation.SetHTTPMethod(v)
+	return _c
+}
+
+// SetNillableHTTPMethod sets the "http_method" field if the given value is not nil.
+func (_c *ApiAuditLogCreate) SetNillableHTTPMethod(v *string) *ApiAuditLogCreate {
+	if v != nil {
+		_c.SetHTTPMethod(*v)
+	}
+	return _c
+}
+
+// SetPath sets the "path" field.
+func (_c *ApiAuditLogCreate) SetPath(v string) *ApiAuditLogCreate {
+	_c.mutation.SetPath(v)
+	return _c
+}
+
+// SetNillablePath sets the "path" field if the given value is not nil.
+func (_c *ApiAuditLogCreate) SetNillablePath(v *string) *ApiAuditLogCreate {
+	if v != nil {
+		_c.SetPath(*v)
+	}
+	return _c
+}
+
+// SetRequestURI sets the "request_uri" field.
+func (_c *ApiAuditLogCreate) SetRequestURI(v string) *ApiAuditLogCreate {
+	_c.mutation.SetRequestURI(v)
+	return _c
+}
+
+// SetNillableRequestURI sets the "request_uri" field if the given value is not nil.
+func (_c *ApiAuditLogCreate) SetNillableRequestURI(v *string) *ApiAuditLogCreate {
+	if v != nil {
+		_c.SetRequestURI(*v)
+	}
+	return _c
+}
+
+// SetAPIModule sets the "api_module" field.
+func (_c *ApiAuditLogCreate) SetAPIModule(v string) *ApiAuditLogCreate {
+	_c.mutation.SetAPIModule(v)
+	return _c
+}
+
+// SetNillableAPIModule sets the "api_module" field if the given value is not nil.
+func (_c *ApiAuditLogCreate) SetNillableAPIModule(v *string) *ApiAuditLogCreate {
+	if v != nil {
+		_c.SetAPIModule(*v)
+	}
+	return _c
+}
+
+// SetAPIOperation sets the "api_operation" field.
+func (_c *ApiAuditLogCreate) SetAPIOperation(v string) *ApiAuditLogCreate {
+	_c.mutation.SetAPIOperation(v)
+	return _c
+}
+
+// SetNillableAPIOperation sets the "api_operation" field if the given value is not nil.
+func (_c *ApiAuditLogCreate) SetNillableAPIOperation(v *string) *ApiAuditLogCreate {
+	if v != nil {
+		_c.SetAPIOperation(*v)
+	}
+	return _c
+}
+
+// SetAPIDescription sets the "api_description" field.
+func (_c *ApiAuditLogCreate) SetAPIDescription(v string) *ApiAuditLogCreate {
+	_c.mutation.SetAPIDescription(v)
+	return _c
+}
+
+// SetNillableAPIDescription sets the "api_description" field if the given value is not nil.
+func (_c *ApiAuditLogCreate) SetNillableAPIDescription(v *string) *ApiAuditLogCreate {
+	if v != nil {
+		_c.SetAPIDescription(*v)
+	}
+	return _c
+}
+
+// SetRequestID sets the "request_id" field.
+func (_c *ApiAuditLogCreate) SetRequestID(v string) *ApiAuditLogCreate {
+	_c.mutation.SetRequestID(v)
+	return _c
+}
+
+// SetNillableRequestID sets the "request_id" field if the given value is not nil.
+func (_c *ApiAuditLogCreate) SetNillableRequestID(v *string) *ApiAuditLogCreate {
+	if v != nil {
+		_c.SetRequestID(*v)
+	}
+	return _c
+}
+
+// SetTraceID sets the "trace_id" field.
+func (_c *ApiAuditLogCreate) SetTraceID(v string) *ApiAuditLogCreate {
+	_c.mutation.SetTraceID(v)
+	return _c
+}
+
+// SetNillableTraceID sets the "trace_id" field if the given value is not nil.
+func (_c *ApiAuditLogCreate) SetNillableTraceID(v *string) *ApiAuditLogCreate {
+	if v != nil {
+		_c.SetTraceID(*v)
+	}
+	return _c
+}
+
+// SetSpanID sets the "span_id" field.
+func (_c *ApiAuditLogCreate) SetSpanID(v string) *ApiAuditLogCreate {
+	_c.mutation.SetSpanID(v)
+	return _c
+}
+
+// SetNillableSpanID sets the "span_id" field if the given value is not nil.
+func (_c *ApiAuditLogCreate) SetNillableSpanID(v *string) *ApiAuditLogCreate {
+	if v != nil {
+		_c.SetSpanID(*v)
+	}
+	return _c
+}
+
+// SetLatencyMs sets the "latency_ms" field.
+func (_c *ApiAuditLogCreate) SetLatencyMs(v uint32) *ApiAuditLogCreate {
+	_c.mutation.SetLatencyMs(v)
+	return _c
+}
+
+// SetNillableLatencyMs sets the "latency_ms" field if the given value is not nil.
+func (_c *ApiAuditLogCreate) SetNillableLatencyMs(v *uint32) *ApiAuditLogCreate {
+	if v != nil {
+		_c.SetLatencyMs(*v)
+	}
+	return _c
+}
+
+// SetSuccess sets the "success" field.
+func (_c *ApiAuditLogCreate) SetSuccess(v bool) *ApiAuditLogCreate {
+	_c.mutation.SetSuccess(v)
+	return _c
+}
+
+// SetNillableSuccess sets the "success" field if the given value is not nil.
+func (_c *ApiAuditLogCreate) SetNillableSuccess(v *bool) *ApiAuditLogCreate {
+	if v != nil {
+		_c.SetSuccess(*v)
+	}
+	return _c
+}
+
+// SetStatusCode sets the "status_code" field.
+func (_c *ApiAuditLogCreate) SetStatusCode(v uint32) *ApiAuditLogCreate {
+	_c.mutation.SetStatusCode(v)
+	return _c
+}
+
+// SetNillableStatusCode sets the "status_code" field if the given value is not nil.
+func (_c *ApiAuditLogCreate) SetNillableStatusCode(v *uint32) *ApiAuditLogCreate {
+	if v != nil {
+		_c.SetStatusCode(*v)
+	}
+	return _c
+}
+
+// SetReason sets the "reason" field.
+func (_c *ApiAuditLogCreate) SetReason(v string) *ApiAuditLogCreate {
+	_c.mutation.SetReason(v)
+	return _c
+}
+
+// SetNillableReason sets the "reason" field if the given value is not nil.
+func (_c *ApiAuditLogCreate) SetNillableReason(v *string) *ApiAuditLogCreate {
+	if v != nil {
+		_c.SetReason(*v)
+	}
+	return _c
+}
+
+// SetRequestHeader sets the "request_header" field.
+func (_c *ApiAuditLogCreate) SetRequestHeader(v string) *ApiAuditLogCreate {
+	_c.mutation.SetRequestHeader(v)
+	return _c
+}
+
+// SetNillableRequestHeader sets the "request_header" field if the given value is not nil.
+func (_c *ApiAuditLogCreate) SetNillableRequestHeader(v *string) *ApiAuditLogCreate {
+	if v != nil {
+		_c.SetRequestHeader(*v)
+	}
+	return _c
+}
+
+// SetRequestBody sets the "request_body" field.
+func (_c *ApiAuditLogCreate) SetRequestBody(v string) *ApiAuditLogCreate {
+	_c.mutation.SetRequestBody(v)
+	return _c
+}
+
+// SetNillableRequestBody sets the "request_body" field if the given value is not nil.
+func (_c *ApiAuditLogCreate) SetNillableRequestBody(v *string) *ApiAuditLogCreate {
+	if v != nil {
+		_c.SetRequestBody(*v)
+	}
+	return _c
+}
+
+// SetResponse sets the "response" field.
+func (_c *ApiAuditLogCreate) SetResponse(v string) *ApiAuditLogCreate {
+	_c.mutation.SetResponse(v)
+	return _c
+}
+
+// SetNillableResponse sets the "response" field if the given value is not nil.
+func (_c *ApiAuditLogCreate) SetNillableResponse(v *string) *ApiAuditLogCreate {
+	if v != nil {
+		_c.SetResponse(*v)
+	}
+	return _c
+}
+
+// SetLogHash sets the "log_hash" field.
+func (_c *ApiAuditLogCreate) SetLogHash(v string) *ApiAuditLogCreate {
+	_c.mutation.SetLogHash(v)
+	return _c
+}
+
+// SetNillableLogHash sets the "log_hash" field if the given value is not nil.
+func (_c *ApiAuditLogCreate) SetNillableLogHash(v *string) *ApiAuditLogCreate {
+	if v != nil {
+		_c.SetLogHash(*v)
+	}
+	return _c
+}
+
+// SetSignature sets the "signature" field.
+func (_c *ApiAuditLogCreate) SetSignature(v []byte) *ApiAuditLogCreate {
+	_c.mutation.SetSignature(v)
 	return _c
 }
 
@@ -270,38 +429,13 @@ func (_c *ApiAuditLogCreate) defaults() error {
 
 // check runs all checks and user-defined validators on the builder.
 func (_c *ApiAuditLogCreate) check() error {
-	if v, ok := _c.mutation.OperatorName(); ok {
-		if err := apiauditlog.OperatorNameValidator(v); err != nil {
-			return &ValidationError{Name: "operator_name", err: fmt.Errorf(`ent: validator failed for field "ApiAuditLog.operator_name": %w`, err)}
-		}
-	}
-	if v, ok := _c.mutation.Path(); ok {
-		if err := apiauditlog.PathValidator(v); err != nil {
-			return &ValidationError{Name: "path", err: fmt.Errorf(`ent: validator failed for field "ApiAuditLog.path": %w`, err)}
-		}
-	}
-	if v, ok := _c.mutation.Method(); ok {
-		if err := apiauditlog.MethodValidator(v); err != nil {
-			return &ValidationError{Name: "method", err: fmt.Errorf(`ent: validator failed for field "ApiAuditLog.method": %w`, err)}
-		}
-	}
-	if v, ok := _c.mutation.Detail(); ok {
-		if err := apiauditlog.DetailValidator(v); err != nil {
-			return &ValidationError{Name: "detail", err: fmt.Errorf(`ent: validator failed for field "ApiAuditLog.detail": %w`, err)}
-		}
-	}
-	if v, ok := _c.mutation.Username(); ok {
-		if err := apiauditlog.UsernameValidator(v); err != nil {
-			return &ValidationError{Name: "username", err: fmt.Errorf(`ent: validator failed for field "ApiAuditLog.username": %w`, err)}
-		}
-	}
-	if v, ok := _c.mutation.IPAddress(); ok {
-		if err := apiauditlog.IPAddressValidator(v); err != nil {
-			return &ValidationError{Name: "ip_address", err: fmt.Errorf(`ent: validator failed for field "ApiAuditLog.ip_address": %w`, err)}
+	if v, ok := _c.mutation.GeoLocation(); ok {
+		if err := v.Validate(); err != nil {
+			return &ValidationError{Name: "geo_location", err: fmt.Errorf(`ent: validator failed for field "ApiAuditLog.geo_location": %w`, err)}
 		}
 	}
 	if v, ok := _c.mutation.DeviceInfo(); ok {
-		if err := apiauditlog.DeviceInfoValidator(v); err != nil {
+		if err := v.Validate(); err != nil {
 			return &ValidationError{Name: "device_info", err: fmt.Errorf(`ent: validator failed for field "ApiAuditLog.device_info": %w`, err)}
 		}
 	}
@@ -347,37 +481,9 @@ func (_c *ApiAuditLogCreate) createSpec() (*ApiAuditLog, *sqlgraph.CreateSpec) {
 		_spec.SetField(apiauditlog.FieldCreatedAt, field.TypeTime, value)
 		_node.CreatedAt = &value
 	}
-	if value, ok := _c.mutation.UpdatedAt(); ok {
-		_spec.SetField(apiauditlog.FieldUpdatedAt, field.TypeTime, value)
-		_node.UpdatedAt = &value
-	}
-	if value, ok := _c.mutation.DeletedAt(); ok {
-		_spec.SetField(apiauditlog.FieldDeletedAt, field.TypeTime, value)
-		_node.DeletedAt = &value
-	}
 	if value, ok := _c.mutation.TenantID(); ok {
 		_spec.SetField(apiauditlog.FieldTenantID, field.TypeUint32, value)
 		_node.TenantID = &value
-	}
-	if value, ok := _c.mutation.OperatorID(); ok {
-		_spec.SetField(apiauditlog.FieldOperatorID, field.TypeUint32, value)
-		_node.OperatorID = &value
-	}
-	if value, ok := _c.mutation.OperatorName(); ok {
-		_spec.SetField(apiauditlog.FieldOperatorName, field.TypeString, value)
-		_node.OperatorName = &value
-	}
-	if value, ok := _c.mutation.Path(); ok {
-		_spec.SetField(apiauditlog.FieldPath, field.TypeString, value)
-		_node.Path = &value
-	}
-	if value, ok := _c.mutation.Method(); ok {
-		_spec.SetField(apiauditlog.FieldMethod, field.TypeString, value)
-		_node.Method = &value
-	}
-	if value, ok := _c.mutation.Detail(); ok {
-		_spec.SetField(apiauditlog.FieldDetail, field.TypeString, value)
-		_node.Detail = &value
 	}
 	if value, ok := _c.mutation.UserID(); ok {
 		_spec.SetField(apiauditlog.FieldUserID, field.TypeUint32, value)
@@ -391,13 +497,93 @@ func (_c *ApiAuditLogCreate) createSpec() (*ApiAuditLog, *sqlgraph.CreateSpec) {
 		_spec.SetField(apiauditlog.FieldIPAddress, field.TypeString, value)
 		_node.IPAddress = &value
 	}
-	if value, ok := _c.mutation.DeviceInfo(); ok {
-		_spec.SetField(apiauditlog.FieldDeviceInfo, field.TypeString, value)
-		_node.DeviceInfo = &value
+	if value, ok := _c.mutation.GeoLocation(); ok {
+		_spec.SetField(apiauditlog.FieldGeoLocation, field.TypeJSON, value)
+		_node.GeoLocation = value
 	}
-	if value, ok := _c.mutation.OperatedAt(); ok {
-		_spec.SetField(apiauditlog.FieldOperatedAt, field.TypeTime, value)
-		_node.OperatedAt = &value
+	if value, ok := _c.mutation.DeviceInfo(); ok {
+		_spec.SetField(apiauditlog.FieldDeviceInfo, field.TypeJSON, value)
+		_node.DeviceInfo = value
+	}
+	if value, ok := _c.mutation.Referer(); ok {
+		_spec.SetField(apiauditlog.FieldReferer, field.TypeString, value)
+		_node.Referer = &value
+	}
+	if value, ok := _c.mutation.AppVersion(); ok {
+		_spec.SetField(apiauditlog.FieldAppVersion, field.TypeString, value)
+		_node.AppVersion = &value
+	}
+	if value, ok := _c.mutation.HTTPMethod(); ok {
+		_spec.SetField(apiauditlog.FieldHTTPMethod, field.TypeString, value)
+		_node.HTTPMethod = &value
+	}
+	if value, ok := _c.mutation.Path(); ok {
+		_spec.SetField(apiauditlog.FieldPath, field.TypeString, value)
+		_node.Path = &value
+	}
+	if value, ok := _c.mutation.RequestURI(); ok {
+		_spec.SetField(apiauditlog.FieldRequestURI, field.TypeString, value)
+		_node.RequestURI = &value
+	}
+	if value, ok := _c.mutation.APIModule(); ok {
+		_spec.SetField(apiauditlog.FieldAPIModule, field.TypeString, value)
+		_node.APIModule = &value
+	}
+	if value, ok := _c.mutation.APIOperation(); ok {
+		_spec.SetField(apiauditlog.FieldAPIOperation, field.TypeString, value)
+		_node.APIOperation = &value
+	}
+	if value, ok := _c.mutation.APIDescription(); ok {
+		_spec.SetField(apiauditlog.FieldAPIDescription, field.TypeString, value)
+		_node.APIDescription = &value
+	}
+	if value, ok := _c.mutation.RequestID(); ok {
+		_spec.SetField(apiauditlog.FieldRequestID, field.TypeString, value)
+		_node.RequestID = &value
+	}
+	if value, ok := _c.mutation.TraceID(); ok {
+		_spec.SetField(apiauditlog.FieldTraceID, field.TypeString, value)
+		_node.TraceID = &value
+	}
+	if value, ok := _c.mutation.SpanID(); ok {
+		_spec.SetField(apiauditlog.FieldSpanID, field.TypeString, value)
+		_node.SpanID = &value
+	}
+	if value, ok := _c.mutation.LatencyMs(); ok {
+		_spec.SetField(apiauditlog.FieldLatencyMs, field.TypeUint32, value)
+		_node.LatencyMs = &value
+	}
+	if value, ok := _c.mutation.Success(); ok {
+		_spec.SetField(apiauditlog.FieldSuccess, field.TypeBool, value)
+		_node.Success = &value
+	}
+	if value, ok := _c.mutation.StatusCode(); ok {
+		_spec.SetField(apiauditlog.FieldStatusCode, field.TypeUint32, value)
+		_node.StatusCode = &value
+	}
+	if value, ok := _c.mutation.Reason(); ok {
+		_spec.SetField(apiauditlog.FieldReason, field.TypeString, value)
+		_node.Reason = &value
+	}
+	if value, ok := _c.mutation.RequestHeader(); ok {
+		_spec.SetField(apiauditlog.FieldRequestHeader, field.TypeString, value)
+		_node.RequestHeader = &value
+	}
+	if value, ok := _c.mutation.RequestBody(); ok {
+		_spec.SetField(apiauditlog.FieldRequestBody, field.TypeString, value)
+		_node.RequestBody = &value
+	}
+	if value, ok := _c.mutation.Response(); ok {
+		_spec.SetField(apiauditlog.FieldResponse, field.TypeString, value)
+		_node.Response = &value
+	}
+	if value, ok := _c.mutation.LogHash(); ok {
+		_spec.SetField(apiauditlog.FieldLogHash, field.TypeString, value)
+		_node.LogHash = &value
+	}
+	if value, ok := _c.mutation.Signature(); ok {
+		_spec.SetField(apiauditlog.FieldSignature, field.TypeBytes, value)
+		_node.Signature = &value
 	}
 	return _node, _spec
 }
@@ -450,138 +636,6 @@ type (
 		*sql.UpdateSet
 	}
 )
-
-// SetUpdatedAt sets the "updated_at" field.
-func (u *ApiAuditLogUpsert) SetUpdatedAt(v time.Time) *ApiAuditLogUpsert {
-	u.Set(apiauditlog.FieldUpdatedAt, v)
-	return u
-}
-
-// UpdateUpdatedAt sets the "updated_at" field to the value that was provided on create.
-func (u *ApiAuditLogUpsert) UpdateUpdatedAt() *ApiAuditLogUpsert {
-	u.SetExcluded(apiauditlog.FieldUpdatedAt)
-	return u
-}
-
-// ClearUpdatedAt clears the value of the "updated_at" field.
-func (u *ApiAuditLogUpsert) ClearUpdatedAt() *ApiAuditLogUpsert {
-	u.SetNull(apiauditlog.FieldUpdatedAt)
-	return u
-}
-
-// SetDeletedAt sets the "deleted_at" field.
-func (u *ApiAuditLogUpsert) SetDeletedAt(v time.Time) *ApiAuditLogUpsert {
-	u.Set(apiauditlog.FieldDeletedAt, v)
-	return u
-}
-
-// UpdateDeletedAt sets the "deleted_at" field to the value that was provided on create.
-func (u *ApiAuditLogUpsert) UpdateDeletedAt() *ApiAuditLogUpsert {
-	u.SetExcluded(apiauditlog.FieldDeletedAt)
-	return u
-}
-
-// ClearDeletedAt clears the value of the "deleted_at" field.
-func (u *ApiAuditLogUpsert) ClearDeletedAt() *ApiAuditLogUpsert {
-	u.SetNull(apiauditlog.FieldDeletedAt)
-	return u
-}
-
-// SetOperatorID sets the "operator_id" field.
-func (u *ApiAuditLogUpsert) SetOperatorID(v uint32) *ApiAuditLogUpsert {
-	u.Set(apiauditlog.FieldOperatorID, v)
-	return u
-}
-
-// UpdateOperatorID sets the "operator_id" field to the value that was provided on create.
-func (u *ApiAuditLogUpsert) UpdateOperatorID() *ApiAuditLogUpsert {
-	u.SetExcluded(apiauditlog.FieldOperatorID)
-	return u
-}
-
-// AddOperatorID adds v to the "operator_id" field.
-func (u *ApiAuditLogUpsert) AddOperatorID(v uint32) *ApiAuditLogUpsert {
-	u.Add(apiauditlog.FieldOperatorID, v)
-	return u
-}
-
-// ClearOperatorID clears the value of the "operator_id" field.
-func (u *ApiAuditLogUpsert) ClearOperatorID() *ApiAuditLogUpsert {
-	u.SetNull(apiauditlog.FieldOperatorID)
-	return u
-}
-
-// SetOperatorName sets the "operator_name" field.
-func (u *ApiAuditLogUpsert) SetOperatorName(v string) *ApiAuditLogUpsert {
-	u.Set(apiauditlog.FieldOperatorName, v)
-	return u
-}
-
-// UpdateOperatorName sets the "operator_name" field to the value that was provided on create.
-func (u *ApiAuditLogUpsert) UpdateOperatorName() *ApiAuditLogUpsert {
-	u.SetExcluded(apiauditlog.FieldOperatorName)
-	return u
-}
-
-// ClearOperatorName clears the value of the "operator_name" field.
-func (u *ApiAuditLogUpsert) ClearOperatorName() *ApiAuditLogUpsert {
-	u.SetNull(apiauditlog.FieldOperatorName)
-	return u
-}
-
-// SetPath sets the "path" field.
-func (u *ApiAuditLogUpsert) SetPath(v string) *ApiAuditLogUpsert {
-	u.Set(apiauditlog.FieldPath, v)
-	return u
-}
-
-// UpdatePath sets the "path" field to the value that was provided on create.
-func (u *ApiAuditLogUpsert) UpdatePath() *ApiAuditLogUpsert {
-	u.SetExcluded(apiauditlog.FieldPath)
-	return u
-}
-
-// ClearPath clears the value of the "path" field.
-func (u *ApiAuditLogUpsert) ClearPath() *ApiAuditLogUpsert {
-	u.SetNull(apiauditlog.FieldPath)
-	return u
-}
-
-// SetMethod sets the "method" field.
-func (u *ApiAuditLogUpsert) SetMethod(v string) *ApiAuditLogUpsert {
-	u.Set(apiauditlog.FieldMethod, v)
-	return u
-}
-
-// UpdateMethod sets the "method" field to the value that was provided on create.
-func (u *ApiAuditLogUpsert) UpdateMethod() *ApiAuditLogUpsert {
-	u.SetExcluded(apiauditlog.FieldMethod)
-	return u
-}
-
-// ClearMethod clears the value of the "method" field.
-func (u *ApiAuditLogUpsert) ClearMethod() *ApiAuditLogUpsert {
-	u.SetNull(apiauditlog.FieldMethod)
-	return u
-}
-
-// SetDetail sets the "detail" field.
-func (u *ApiAuditLogUpsert) SetDetail(v string) *ApiAuditLogUpsert {
-	u.Set(apiauditlog.FieldDetail, v)
-	return u
-}
-
-// UpdateDetail sets the "detail" field to the value that was provided on create.
-func (u *ApiAuditLogUpsert) UpdateDetail() *ApiAuditLogUpsert {
-	u.SetExcluded(apiauditlog.FieldDetail)
-	return u
-}
-
-// ClearDetail clears the value of the "detail" field.
-func (u *ApiAuditLogUpsert) ClearDetail() *ApiAuditLogUpsert {
-	u.SetNull(apiauditlog.FieldDetail)
-	return u
-}
 
 // SetUserID sets the "user_id" field.
 func (u *ApiAuditLogUpsert) SetUserID(v uint32) *ApiAuditLogUpsert {
@@ -643,8 +697,26 @@ func (u *ApiAuditLogUpsert) ClearIPAddress() *ApiAuditLogUpsert {
 	return u
 }
 
+// SetGeoLocation sets the "geo_location" field.
+func (u *ApiAuditLogUpsert) SetGeoLocation(v *auditpb.GeoLocation) *ApiAuditLogUpsert {
+	u.Set(apiauditlog.FieldGeoLocation, v)
+	return u
+}
+
+// UpdateGeoLocation sets the "geo_location" field to the value that was provided on create.
+func (u *ApiAuditLogUpsert) UpdateGeoLocation() *ApiAuditLogUpsert {
+	u.SetExcluded(apiauditlog.FieldGeoLocation)
+	return u
+}
+
+// ClearGeoLocation clears the value of the "geo_location" field.
+func (u *ApiAuditLogUpsert) ClearGeoLocation() *ApiAuditLogUpsert {
+	u.SetNull(apiauditlog.FieldGeoLocation)
+	return u
+}
+
 // SetDeviceInfo sets the "device_info" field.
-func (u *ApiAuditLogUpsert) SetDeviceInfo(v string) *ApiAuditLogUpsert {
+func (u *ApiAuditLogUpsert) SetDeviceInfo(v *auditpb.DeviceInfo) *ApiAuditLogUpsert {
 	u.Set(apiauditlog.FieldDeviceInfo, v)
 	return u
 }
@@ -661,21 +733,375 @@ func (u *ApiAuditLogUpsert) ClearDeviceInfo() *ApiAuditLogUpsert {
 	return u
 }
 
-// SetOperatedAt sets the "operated_at" field.
-func (u *ApiAuditLogUpsert) SetOperatedAt(v time.Time) *ApiAuditLogUpsert {
-	u.Set(apiauditlog.FieldOperatedAt, v)
+// SetReferer sets the "referer" field.
+func (u *ApiAuditLogUpsert) SetReferer(v string) *ApiAuditLogUpsert {
+	u.Set(apiauditlog.FieldReferer, v)
 	return u
 }
 
-// UpdateOperatedAt sets the "operated_at" field to the value that was provided on create.
-func (u *ApiAuditLogUpsert) UpdateOperatedAt() *ApiAuditLogUpsert {
-	u.SetExcluded(apiauditlog.FieldOperatedAt)
+// UpdateReferer sets the "referer" field to the value that was provided on create.
+func (u *ApiAuditLogUpsert) UpdateReferer() *ApiAuditLogUpsert {
+	u.SetExcluded(apiauditlog.FieldReferer)
 	return u
 }
 
-// ClearOperatedAt clears the value of the "operated_at" field.
-func (u *ApiAuditLogUpsert) ClearOperatedAt() *ApiAuditLogUpsert {
-	u.SetNull(apiauditlog.FieldOperatedAt)
+// ClearReferer clears the value of the "referer" field.
+func (u *ApiAuditLogUpsert) ClearReferer() *ApiAuditLogUpsert {
+	u.SetNull(apiauditlog.FieldReferer)
+	return u
+}
+
+// SetAppVersion sets the "app_version" field.
+func (u *ApiAuditLogUpsert) SetAppVersion(v string) *ApiAuditLogUpsert {
+	u.Set(apiauditlog.FieldAppVersion, v)
+	return u
+}
+
+// UpdateAppVersion sets the "app_version" field to the value that was provided on create.
+func (u *ApiAuditLogUpsert) UpdateAppVersion() *ApiAuditLogUpsert {
+	u.SetExcluded(apiauditlog.FieldAppVersion)
+	return u
+}
+
+// ClearAppVersion clears the value of the "app_version" field.
+func (u *ApiAuditLogUpsert) ClearAppVersion() *ApiAuditLogUpsert {
+	u.SetNull(apiauditlog.FieldAppVersion)
+	return u
+}
+
+// SetHTTPMethod sets the "http_method" field.
+func (u *ApiAuditLogUpsert) SetHTTPMethod(v string) *ApiAuditLogUpsert {
+	u.Set(apiauditlog.FieldHTTPMethod, v)
+	return u
+}
+
+// UpdateHTTPMethod sets the "http_method" field to the value that was provided on create.
+func (u *ApiAuditLogUpsert) UpdateHTTPMethod() *ApiAuditLogUpsert {
+	u.SetExcluded(apiauditlog.FieldHTTPMethod)
+	return u
+}
+
+// ClearHTTPMethod clears the value of the "http_method" field.
+func (u *ApiAuditLogUpsert) ClearHTTPMethod() *ApiAuditLogUpsert {
+	u.SetNull(apiauditlog.FieldHTTPMethod)
+	return u
+}
+
+// SetPath sets the "path" field.
+func (u *ApiAuditLogUpsert) SetPath(v string) *ApiAuditLogUpsert {
+	u.Set(apiauditlog.FieldPath, v)
+	return u
+}
+
+// UpdatePath sets the "path" field to the value that was provided on create.
+func (u *ApiAuditLogUpsert) UpdatePath() *ApiAuditLogUpsert {
+	u.SetExcluded(apiauditlog.FieldPath)
+	return u
+}
+
+// ClearPath clears the value of the "path" field.
+func (u *ApiAuditLogUpsert) ClearPath() *ApiAuditLogUpsert {
+	u.SetNull(apiauditlog.FieldPath)
+	return u
+}
+
+// SetRequestURI sets the "request_uri" field.
+func (u *ApiAuditLogUpsert) SetRequestURI(v string) *ApiAuditLogUpsert {
+	u.Set(apiauditlog.FieldRequestURI, v)
+	return u
+}
+
+// UpdateRequestURI sets the "request_uri" field to the value that was provided on create.
+func (u *ApiAuditLogUpsert) UpdateRequestURI() *ApiAuditLogUpsert {
+	u.SetExcluded(apiauditlog.FieldRequestURI)
+	return u
+}
+
+// ClearRequestURI clears the value of the "request_uri" field.
+func (u *ApiAuditLogUpsert) ClearRequestURI() *ApiAuditLogUpsert {
+	u.SetNull(apiauditlog.FieldRequestURI)
+	return u
+}
+
+// SetAPIModule sets the "api_module" field.
+func (u *ApiAuditLogUpsert) SetAPIModule(v string) *ApiAuditLogUpsert {
+	u.Set(apiauditlog.FieldAPIModule, v)
+	return u
+}
+
+// UpdateAPIModule sets the "api_module" field to the value that was provided on create.
+func (u *ApiAuditLogUpsert) UpdateAPIModule() *ApiAuditLogUpsert {
+	u.SetExcluded(apiauditlog.FieldAPIModule)
+	return u
+}
+
+// ClearAPIModule clears the value of the "api_module" field.
+func (u *ApiAuditLogUpsert) ClearAPIModule() *ApiAuditLogUpsert {
+	u.SetNull(apiauditlog.FieldAPIModule)
+	return u
+}
+
+// SetAPIOperation sets the "api_operation" field.
+func (u *ApiAuditLogUpsert) SetAPIOperation(v string) *ApiAuditLogUpsert {
+	u.Set(apiauditlog.FieldAPIOperation, v)
+	return u
+}
+
+// UpdateAPIOperation sets the "api_operation" field to the value that was provided on create.
+func (u *ApiAuditLogUpsert) UpdateAPIOperation() *ApiAuditLogUpsert {
+	u.SetExcluded(apiauditlog.FieldAPIOperation)
+	return u
+}
+
+// ClearAPIOperation clears the value of the "api_operation" field.
+func (u *ApiAuditLogUpsert) ClearAPIOperation() *ApiAuditLogUpsert {
+	u.SetNull(apiauditlog.FieldAPIOperation)
+	return u
+}
+
+// SetAPIDescription sets the "api_description" field.
+func (u *ApiAuditLogUpsert) SetAPIDescription(v string) *ApiAuditLogUpsert {
+	u.Set(apiauditlog.FieldAPIDescription, v)
+	return u
+}
+
+// UpdateAPIDescription sets the "api_description" field to the value that was provided on create.
+func (u *ApiAuditLogUpsert) UpdateAPIDescription() *ApiAuditLogUpsert {
+	u.SetExcluded(apiauditlog.FieldAPIDescription)
+	return u
+}
+
+// ClearAPIDescription clears the value of the "api_description" field.
+func (u *ApiAuditLogUpsert) ClearAPIDescription() *ApiAuditLogUpsert {
+	u.SetNull(apiauditlog.FieldAPIDescription)
+	return u
+}
+
+// SetRequestID sets the "request_id" field.
+func (u *ApiAuditLogUpsert) SetRequestID(v string) *ApiAuditLogUpsert {
+	u.Set(apiauditlog.FieldRequestID, v)
+	return u
+}
+
+// UpdateRequestID sets the "request_id" field to the value that was provided on create.
+func (u *ApiAuditLogUpsert) UpdateRequestID() *ApiAuditLogUpsert {
+	u.SetExcluded(apiauditlog.FieldRequestID)
+	return u
+}
+
+// ClearRequestID clears the value of the "request_id" field.
+func (u *ApiAuditLogUpsert) ClearRequestID() *ApiAuditLogUpsert {
+	u.SetNull(apiauditlog.FieldRequestID)
+	return u
+}
+
+// SetTraceID sets the "trace_id" field.
+func (u *ApiAuditLogUpsert) SetTraceID(v string) *ApiAuditLogUpsert {
+	u.Set(apiauditlog.FieldTraceID, v)
+	return u
+}
+
+// UpdateTraceID sets the "trace_id" field to the value that was provided on create.
+func (u *ApiAuditLogUpsert) UpdateTraceID() *ApiAuditLogUpsert {
+	u.SetExcluded(apiauditlog.FieldTraceID)
+	return u
+}
+
+// ClearTraceID clears the value of the "trace_id" field.
+func (u *ApiAuditLogUpsert) ClearTraceID() *ApiAuditLogUpsert {
+	u.SetNull(apiauditlog.FieldTraceID)
+	return u
+}
+
+// SetSpanID sets the "span_id" field.
+func (u *ApiAuditLogUpsert) SetSpanID(v string) *ApiAuditLogUpsert {
+	u.Set(apiauditlog.FieldSpanID, v)
+	return u
+}
+
+// UpdateSpanID sets the "span_id" field to the value that was provided on create.
+func (u *ApiAuditLogUpsert) UpdateSpanID() *ApiAuditLogUpsert {
+	u.SetExcluded(apiauditlog.FieldSpanID)
+	return u
+}
+
+// ClearSpanID clears the value of the "span_id" field.
+func (u *ApiAuditLogUpsert) ClearSpanID() *ApiAuditLogUpsert {
+	u.SetNull(apiauditlog.FieldSpanID)
+	return u
+}
+
+// SetLatencyMs sets the "latency_ms" field.
+func (u *ApiAuditLogUpsert) SetLatencyMs(v uint32) *ApiAuditLogUpsert {
+	u.Set(apiauditlog.FieldLatencyMs, v)
+	return u
+}
+
+// UpdateLatencyMs sets the "latency_ms" field to the value that was provided on create.
+func (u *ApiAuditLogUpsert) UpdateLatencyMs() *ApiAuditLogUpsert {
+	u.SetExcluded(apiauditlog.FieldLatencyMs)
+	return u
+}
+
+// AddLatencyMs adds v to the "latency_ms" field.
+func (u *ApiAuditLogUpsert) AddLatencyMs(v uint32) *ApiAuditLogUpsert {
+	u.Add(apiauditlog.FieldLatencyMs, v)
+	return u
+}
+
+// ClearLatencyMs clears the value of the "latency_ms" field.
+func (u *ApiAuditLogUpsert) ClearLatencyMs() *ApiAuditLogUpsert {
+	u.SetNull(apiauditlog.FieldLatencyMs)
+	return u
+}
+
+// SetSuccess sets the "success" field.
+func (u *ApiAuditLogUpsert) SetSuccess(v bool) *ApiAuditLogUpsert {
+	u.Set(apiauditlog.FieldSuccess, v)
+	return u
+}
+
+// UpdateSuccess sets the "success" field to the value that was provided on create.
+func (u *ApiAuditLogUpsert) UpdateSuccess() *ApiAuditLogUpsert {
+	u.SetExcluded(apiauditlog.FieldSuccess)
+	return u
+}
+
+// ClearSuccess clears the value of the "success" field.
+func (u *ApiAuditLogUpsert) ClearSuccess() *ApiAuditLogUpsert {
+	u.SetNull(apiauditlog.FieldSuccess)
+	return u
+}
+
+// SetStatusCode sets the "status_code" field.
+func (u *ApiAuditLogUpsert) SetStatusCode(v uint32) *ApiAuditLogUpsert {
+	u.Set(apiauditlog.FieldStatusCode, v)
+	return u
+}
+
+// UpdateStatusCode sets the "status_code" field to the value that was provided on create.
+func (u *ApiAuditLogUpsert) UpdateStatusCode() *ApiAuditLogUpsert {
+	u.SetExcluded(apiauditlog.FieldStatusCode)
+	return u
+}
+
+// AddStatusCode adds v to the "status_code" field.
+func (u *ApiAuditLogUpsert) AddStatusCode(v uint32) *ApiAuditLogUpsert {
+	u.Add(apiauditlog.FieldStatusCode, v)
+	return u
+}
+
+// ClearStatusCode clears the value of the "status_code" field.
+func (u *ApiAuditLogUpsert) ClearStatusCode() *ApiAuditLogUpsert {
+	u.SetNull(apiauditlog.FieldStatusCode)
+	return u
+}
+
+// SetReason sets the "reason" field.
+func (u *ApiAuditLogUpsert) SetReason(v string) *ApiAuditLogUpsert {
+	u.Set(apiauditlog.FieldReason, v)
+	return u
+}
+
+// UpdateReason sets the "reason" field to the value that was provided on create.
+func (u *ApiAuditLogUpsert) UpdateReason() *ApiAuditLogUpsert {
+	u.SetExcluded(apiauditlog.FieldReason)
+	return u
+}
+
+// ClearReason clears the value of the "reason" field.
+func (u *ApiAuditLogUpsert) ClearReason() *ApiAuditLogUpsert {
+	u.SetNull(apiauditlog.FieldReason)
+	return u
+}
+
+// SetRequestHeader sets the "request_header" field.
+func (u *ApiAuditLogUpsert) SetRequestHeader(v string) *ApiAuditLogUpsert {
+	u.Set(apiauditlog.FieldRequestHeader, v)
+	return u
+}
+
+// UpdateRequestHeader sets the "request_header" field to the value that was provided on create.
+func (u *ApiAuditLogUpsert) UpdateRequestHeader() *ApiAuditLogUpsert {
+	u.SetExcluded(apiauditlog.FieldRequestHeader)
+	return u
+}
+
+// ClearRequestHeader clears the value of the "request_header" field.
+func (u *ApiAuditLogUpsert) ClearRequestHeader() *ApiAuditLogUpsert {
+	u.SetNull(apiauditlog.FieldRequestHeader)
+	return u
+}
+
+// SetRequestBody sets the "request_body" field.
+func (u *ApiAuditLogUpsert) SetRequestBody(v string) *ApiAuditLogUpsert {
+	u.Set(apiauditlog.FieldRequestBody, v)
+	return u
+}
+
+// UpdateRequestBody sets the "request_body" field to the value that was provided on create.
+func (u *ApiAuditLogUpsert) UpdateRequestBody() *ApiAuditLogUpsert {
+	u.SetExcluded(apiauditlog.FieldRequestBody)
+	return u
+}
+
+// ClearRequestBody clears the value of the "request_body" field.
+func (u *ApiAuditLogUpsert) ClearRequestBody() *ApiAuditLogUpsert {
+	u.SetNull(apiauditlog.FieldRequestBody)
+	return u
+}
+
+// SetResponse sets the "response" field.
+func (u *ApiAuditLogUpsert) SetResponse(v string) *ApiAuditLogUpsert {
+	u.Set(apiauditlog.FieldResponse, v)
+	return u
+}
+
+// UpdateResponse sets the "response" field to the value that was provided on create.
+func (u *ApiAuditLogUpsert) UpdateResponse() *ApiAuditLogUpsert {
+	u.SetExcluded(apiauditlog.FieldResponse)
+	return u
+}
+
+// ClearResponse clears the value of the "response" field.
+func (u *ApiAuditLogUpsert) ClearResponse() *ApiAuditLogUpsert {
+	u.SetNull(apiauditlog.FieldResponse)
+	return u
+}
+
+// SetLogHash sets the "log_hash" field.
+func (u *ApiAuditLogUpsert) SetLogHash(v string) *ApiAuditLogUpsert {
+	u.Set(apiauditlog.FieldLogHash, v)
+	return u
+}
+
+// UpdateLogHash sets the "log_hash" field to the value that was provided on create.
+func (u *ApiAuditLogUpsert) UpdateLogHash() *ApiAuditLogUpsert {
+	u.SetExcluded(apiauditlog.FieldLogHash)
+	return u
+}
+
+// ClearLogHash clears the value of the "log_hash" field.
+func (u *ApiAuditLogUpsert) ClearLogHash() *ApiAuditLogUpsert {
+	u.SetNull(apiauditlog.FieldLogHash)
+	return u
+}
+
+// SetSignature sets the "signature" field.
+func (u *ApiAuditLogUpsert) SetSignature(v []byte) *ApiAuditLogUpsert {
+	u.Set(apiauditlog.FieldSignature, v)
+	return u
+}
+
+// UpdateSignature sets the "signature" field to the value that was provided on create.
+func (u *ApiAuditLogUpsert) UpdateSignature() *ApiAuditLogUpsert {
+	u.SetExcluded(apiauditlog.FieldSignature)
+	return u
+}
+
+// ClearSignature clears the value of the "signature" field.
+func (u *ApiAuditLogUpsert) ClearSignature() *ApiAuditLogUpsert {
+	u.SetNull(apiauditlog.FieldSignature)
 	return u
 }
 
@@ -731,160 +1157,6 @@ func (u *ApiAuditLogUpsertOne) Update(set func(*ApiAuditLogUpsert)) *ApiAuditLog
 		set(&ApiAuditLogUpsert{UpdateSet: update})
 	}))
 	return u
-}
-
-// SetUpdatedAt sets the "updated_at" field.
-func (u *ApiAuditLogUpsertOne) SetUpdatedAt(v time.Time) *ApiAuditLogUpsertOne {
-	return u.Update(func(s *ApiAuditLogUpsert) {
-		s.SetUpdatedAt(v)
-	})
-}
-
-// UpdateUpdatedAt sets the "updated_at" field to the value that was provided on create.
-func (u *ApiAuditLogUpsertOne) UpdateUpdatedAt() *ApiAuditLogUpsertOne {
-	return u.Update(func(s *ApiAuditLogUpsert) {
-		s.UpdateUpdatedAt()
-	})
-}
-
-// ClearUpdatedAt clears the value of the "updated_at" field.
-func (u *ApiAuditLogUpsertOne) ClearUpdatedAt() *ApiAuditLogUpsertOne {
-	return u.Update(func(s *ApiAuditLogUpsert) {
-		s.ClearUpdatedAt()
-	})
-}
-
-// SetDeletedAt sets the "deleted_at" field.
-func (u *ApiAuditLogUpsertOne) SetDeletedAt(v time.Time) *ApiAuditLogUpsertOne {
-	return u.Update(func(s *ApiAuditLogUpsert) {
-		s.SetDeletedAt(v)
-	})
-}
-
-// UpdateDeletedAt sets the "deleted_at" field to the value that was provided on create.
-func (u *ApiAuditLogUpsertOne) UpdateDeletedAt() *ApiAuditLogUpsertOne {
-	return u.Update(func(s *ApiAuditLogUpsert) {
-		s.UpdateDeletedAt()
-	})
-}
-
-// ClearDeletedAt clears the value of the "deleted_at" field.
-func (u *ApiAuditLogUpsertOne) ClearDeletedAt() *ApiAuditLogUpsertOne {
-	return u.Update(func(s *ApiAuditLogUpsert) {
-		s.ClearDeletedAt()
-	})
-}
-
-// SetOperatorID sets the "operator_id" field.
-func (u *ApiAuditLogUpsertOne) SetOperatorID(v uint32) *ApiAuditLogUpsertOne {
-	return u.Update(func(s *ApiAuditLogUpsert) {
-		s.SetOperatorID(v)
-	})
-}
-
-// AddOperatorID adds v to the "operator_id" field.
-func (u *ApiAuditLogUpsertOne) AddOperatorID(v uint32) *ApiAuditLogUpsertOne {
-	return u.Update(func(s *ApiAuditLogUpsert) {
-		s.AddOperatorID(v)
-	})
-}
-
-// UpdateOperatorID sets the "operator_id" field to the value that was provided on create.
-func (u *ApiAuditLogUpsertOne) UpdateOperatorID() *ApiAuditLogUpsertOne {
-	return u.Update(func(s *ApiAuditLogUpsert) {
-		s.UpdateOperatorID()
-	})
-}
-
-// ClearOperatorID clears the value of the "operator_id" field.
-func (u *ApiAuditLogUpsertOne) ClearOperatorID() *ApiAuditLogUpsertOne {
-	return u.Update(func(s *ApiAuditLogUpsert) {
-		s.ClearOperatorID()
-	})
-}
-
-// SetOperatorName sets the "operator_name" field.
-func (u *ApiAuditLogUpsertOne) SetOperatorName(v string) *ApiAuditLogUpsertOne {
-	return u.Update(func(s *ApiAuditLogUpsert) {
-		s.SetOperatorName(v)
-	})
-}
-
-// UpdateOperatorName sets the "operator_name" field to the value that was provided on create.
-func (u *ApiAuditLogUpsertOne) UpdateOperatorName() *ApiAuditLogUpsertOne {
-	return u.Update(func(s *ApiAuditLogUpsert) {
-		s.UpdateOperatorName()
-	})
-}
-
-// ClearOperatorName clears the value of the "operator_name" field.
-func (u *ApiAuditLogUpsertOne) ClearOperatorName() *ApiAuditLogUpsertOne {
-	return u.Update(func(s *ApiAuditLogUpsert) {
-		s.ClearOperatorName()
-	})
-}
-
-// SetPath sets the "path" field.
-func (u *ApiAuditLogUpsertOne) SetPath(v string) *ApiAuditLogUpsertOne {
-	return u.Update(func(s *ApiAuditLogUpsert) {
-		s.SetPath(v)
-	})
-}
-
-// UpdatePath sets the "path" field to the value that was provided on create.
-func (u *ApiAuditLogUpsertOne) UpdatePath() *ApiAuditLogUpsertOne {
-	return u.Update(func(s *ApiAuditLogUpsert) {
-		s.UpdatePath()
-	})
-}
-
-// ClearPath clears the value of the "path" field.
-func (u *ApiAuditLogUpsertOne) ClearPath() *ApiAuditLogUpsertOne {
-	return u.Update(func(s *ApiAuditLogUpsert) {
-		s.ClearPath()
-	})
-}
-
-// SetMethod sets the "method" field.
-func (u *ApiAuditLogUpsertOne) SetMethod(v string) *ApiAuditLogUpsertOne {
-	return u.Update(func(s *ApiAuditLogUpsert) {
-		s.SetMethod(v)
-	})
-}
-
-// UpdateMethod sets the "method" field to the value that was provided on create.
-func (u *ApiAuditLogUpsertOne) UpdateMethod() *ApiAuditLogUpsertOne {
-	return u.Update(func(s *ApiAuditLogUpsert) {
-		s.UpdateMethod()
-	})
-}
-
-// ClearMethod clears the value of the "method" field.
-func (u *ApiAuditLogUpsertOne) ClearMethod() *ApiAuditLogUpsertOne {
-	return u.Update(func(s *ApiAuditLogUpsert) {
-		s.ClearMethod()
-	})
-}
-
-// SetDetail sets the "detail" field.
-func (u *ApiAuditLogUpsertOne) SetDetail(v string) *ApiAuditLogUpsertOne {
-	return u.Update(func(s *ApiAuditLogUpsert) {
-		s.SetDetail(v)
-	})
-}
-
-// UpdateDetail sets the "detail" field to the value that was provided on create.
-func (u *ApiAuditLogUpsertOne) UpdateDetail() *ApiAuditLogUpsertOne {
-	return u.Update(func(s *ApiAuditLogUpsert) {
-		s.UpdateDetail()
-	})
-}
-
-// ClearDetail clears the value of the "detail" field.
-func (u *ApiAuditLogUpsertOne) ClearDetail() *ApiAuditLogUpsertOne {
-	return u.Update(func(s *ApiAuditLogUpsert) {
-		s.ClearDetail()
-	})
 }
 
 // SetUserID sets the "user_id" field.
@@ -957,8 +1229,29 @@ func (u *ApiAuditLogUpsertOne) ClearIPAddress() *ApiAuditLogUpsertOne {
 	})
 }
 
+// SetGeoLocation sets the "geo_location" field.
+func (u *ApiAuditLogUpsertOne) SetGeoLocation(v *auditpb.GeoLocation) *ApiAuditLogUpsertOne {
+	return u.Update(func(s *ApiAuditLogUpsert) {
+		s.SetGeoLocation(v)
+	})
+}
+
+// UpdateGeoLocation sets the "geo_location" field to the value that was provided on create.
+func (u *ApiAuditLogUpsertOne) UpdateGeoLocation() *ApiAuditLogUpsertOne {
+	return u.Update(func(s *ApiAuditLogUpsert) {
+		s.UpdateGeoLocation()
+	})
+}
+
+// ClearGeoLocation clears the value of the "geo_location" field.
+func (u *ApiAuditLogUpsertOne) ClearGeoLocation() *ApiAuditLogUpsertOne {
+	return u.Update(func(s *ApiAuditLogUpsert) {
+		s.ClearGeoLocation()
+	})
+}
+
 // SetDeviceInfo sets the "device_info" field.
-func (u *ApiAuditLogUpsertOne) SetDeviceInfo(v string) *ApiAuditLogUpsertOne {
+func (u *ApiAuditLogUpsertOne) SetDeviceInfo(v *auditpb.DeviceInfo) *ApiAuditLogUpsertOne {
 	return u.Update(func(s *ApiAuditLogUpsert) {
 		s.SetDeviceInfo(v)
 	})
@@ -978,24 +1271,437 @@ func (u *ApiAuditLogUpsertOne) ClearDeviceInfo() *ApiAuditLogUpsertOne {
 	})
 }
 
-// SetOperatedAt sets the "operated_at" field.
-func (u *ApiAuditLogUpsertOne) SetOperatedAt(v time.Time) *ApiAuditLogUpsertOne {
+// SetReferer sets the "referer" field.
+func (u *ApiAuditLogUpsertOne) SetReferer(v string) *ApiAuditLogUpsertOne {
 	return u.Update(func(s *ApiAuditLogUpsert) {
-		s.SetOperatedAt(v)
+		s.SetReferer(v)
 	})
 }
 
-// UpdateOperatedAt sets the "operated_at" field to the value that was provided on create.
-func (u *ApiAuditLogUpsertOne) UpdateOperatedAt() *ApiAuditLogUpsertOne {
+// UpdateReferer sets the "referer" field to the value that was provided on create.
+func (u *ApiAuditLogUpsertOne) UpdateReferer() *ApiAuditLogUpsertOne {
 	return u.Update(func(s *ApiAuditLogUpsert) {
-		s.UpdateOperatedAt()
+		s.UpdateReferer()
 	})
 }
 
-// ClearOperatedAt clears the value of the "operated_at" field.
-func (u *ApiAuditLogUpsertOne) ClearOperatedAt() *ApiAuditLogUpsertOne {
+// ClearReferer clears the value of the "referer" field.
+func (u *ApiAuditLogUpsertOne) ClearReferer() *ApiAuditLogUpsertOne {
 	return u.Update(func(s *ApiAuditLogUpsert) {
-		s.ClearOperatedAt()
+		s.ClearReferer()
+	})
+}
+
+// SetAppVersion sets the "app_version" field.
+func (u *ApiAuditLogUpsertOne) SetAppVersion(v string) *ApiAuditLogUpsertOne {
+	return u.Update(func(s *ApiAuditLogUpsert) {
+		s.SetAppVersion(v)
+	})
+}
+
+// UpdateAppVersion sets the "app_version" field to the value that was provided on create.
+func (u *ApiAuditLogUpsertOne) UpdateAppVersion() *ApiAuditLogUpsertOne {
+	return u.Update(func(s *ApiAuditLogUpsert) {
+		s.UpdateAppVersion()
+	})
+}
+
+// ClearAppVersion clears the value of the "app_version" field.
+func (u *ApiAuditLogUpsertOne) ClearAppVersion() *ApiAuditLogUpsertOne {
+	return u.Update(func(s *ApiAuditLogUpsert) {
+		s.ClearAppVersion()
+	})
+}
+
+// SetHTTPMethod sets the "http_method" field.
+func (u *ApiAuditLogUpsertOne) SetHTTPMethod(v string) *ApiAuditLogUpsertOne {
+	return u.Update(func(s *ApiAuditLogUpsert) {
+		s.SetHTTPMethod(v)
+	})
+}
+
+// UpdateHTTPMethod sets the "http_method" field to the value that was provided on create.
+func (u *ApiAuditLogUpsertOne) UpdateHTTPMethod() *ApiAuditLogUpsertOne {
+	return u.Update(func(s *ApiAuditLogUpsert) {
+		s.UpdateHTTPMethod()
+	})
+}
+
+// ClearHTTPMethod clears the value of the "http_method" field.
+func (u *ApiAuditLogUpsertOne) ClearHTTPMethod() *ApiAuditLogUpsertOne {
+	return u.Update(func(s *ApiAuditLogUpsert) {
+		s.ClearHTTPMethod()
+	})
+}
+
+// SetPath sets the "path" field.
+func (u *ApiAuditLogUpsertOne) SetPath(v string) *ApiAuditLogUpsertOne {
+	return u.Update(func(s *ApiAuditLogUpsert) {
+		s.SetPath(v)
+	})
+}
+
+// UpdatePath sets the "path" field to the value that was provided on create.
+func (u *ApiAuditLogUpsertOne) UpdatePath() *ApiAuditLogUpsertOne {
+	return u.Update(func(s *ApiAuditLogUpsert) {
+		s.UpdatePath()
+	})
+}
+
+// ClearPath clears the value of the "path" field.
+func (u *ApiAuditLogUpsertOne) ClearPath() *ApiAuditLogUpsertOne {
+	return u.Update(func(s *ApiAuditLogUpsert) {
+		s.ClearPath()
+	})
+}
+
+// SetRequestURI sets the "request_uri" field.
+func (u *ApiAuditLogUpsertOne) SetRequestURI(v string) *ApiAuditLogUpsertOne {
+	return u.Update(func(s *ApiAuditLogUpsert) {
+		s.SetRequestURI(v)
+	})
+}
+
+// UpdateRequestURI sets the "request_uri" field to the value that was provided on create.
+func (u *ApiAuditLogUpsertOne) UpdateRequestURI() *ApiAuditLogUpsertOne {
+	return u.Update(func(s *ApiAuditLogUpsert) {
+		s.UpdateRequestURI()
+	})
+}
+
+// ClearRequestURI clears the value of the "request_uri" field.
+func (u *ApiAuditLogUpsertOne) ClearRequestURI() *ApiAuditLogUpsertOne {
+	return u.Update(func(s *ApiAuditLogUpsert) {
+		s.ClearRequestURI()
+	})
+}
+
+// SetAPIModule sets the "api_module" field.
+func (u *ApiAuditLogUpsertOne) SetAPIModule(v string) *ApiAuditLogUpsertOne {
+	return u.Update(func(s *ApiAuditLogUpsert) {
+		s.SetAPIModule(v)
+	})
+}
+
+// UpdateAPIModule sets the "api_module" field to the value that was provided on create.
+func (u *ApiAuditLogUpsertOne) UpdateAPIModule() *ApiAuditLogUpsertOne {
+	return u.Update(func(s *ApiAuditLogUpsert) {
+		s.UpdateAPIModule()
+	})
+}
+
+// ClearAPIModule clears the value of the "api_module" field.
+func (u *ApiAuditLogUpsertOne) ClearAPIModule() *ApiAuditLogUpsertOne {
+	return u.Update(func(s *ApiAuditLogUpsert) {
+		s.ClearAPIModule()
+	})
+}
+
+// SetAPIOperation sets the "api_operation" field.
+func (u *ApiAuditLogUpsertOne) SetAPIOperation(v string) *ApiAuditLogUpsertOne {
+	return u.Update(func(s *ApiAuditLogUpsert) {
+		s.SetAPIOperation(v)
+	})
+}
+
+// UpdateAPIOperation sets the "api_operation" field to the value that was provided on create.
+func (u *ApiAuditLogUpsertOne) UpdateAPIOperation() *ApiAuditLogUpsertOne {
+	return u.Update(func(s *ApiAuditLogUpsert) {
+		s.UpdateAPIOperation()
+	})
+}
+
+// ClearAPIOperation clears the value of the "api_operation" field.
+func (u *ApiAuditLogUpsertOne) ClearAPIOperation() *ApiAuditLogUpsertOne {
+	return u.Update(func(s *ApiAuditLogUpsert) {
+		s.ClearAPIOperation()
+	})
+}
+
+// SetAPIDescription sets the "api_description" field.
+func (u *ApiAuditLogUpsertOne) SetAPIDescription(v string) *ApiAuditLogUpsertOne {
+	return u.Update(func(s *ApiAuditLogUpsert) {
+		s.SetAPIDescription(v)
+	})
+}
+
+// UpdateAPIDescription sets the "api_description" field to the value that was provided on create.
+func (u *ApiAuditLogUpsertOne) UpdateAPIDescription() *ApiAuditLogUpsertOne {
+	return u.Update(func(s *ApiAuditLogUpsert) {
+		s.UpdateAPIDescription()
+	})
+}
+
+// ClearAPIDescription clears the value of the "api_description" field.
+func (u *ApiAuditLogUpsertOne) ClearAPIDescription() *ApiAuditLogUpsertOne {
+	return u.Update(func(s *ApiAuditLogUpsert) {
+		s.ClearAPIDescription()
+	})
+}
+
+// SetRequestID sets the "request_id" field.
+func (u *ApiAuditLogUpsertOne) SetRequestID(v string) *ApiAuditLogUpsertOne {
+	return u.Update(func(s *ApiAuditLogUpsert) {
+		s.SetRequestID(v)
+	})
+}
+
+// UpdateRequestID sets the "request_id" field to the value that was provided on create.
+func (u *ApiAuditLogUpsertOne) UpdateRequestID() *ApiAuditLogUpsertOne {
+	return u.Update(func(s *ApiAuditLogUpsert) {
+		s.UpdateRequestID()
+	})
+}
+
+// ClearRequestID clears the value of the "request_id" field.
+func (u *ApiAuditLogUpsertOne) ClearRequestID() *ApiAuditLogUpsertOne {
+	return u.Update(func(s *ApiAuditLogUpsert) {
+		s.ClearRequestID()
+	})
+}
+
+// SetTraceID sets the "trace_id" field.
+func (u *ApiAuditLogUpsertOne) SetTraceID(v string) *ApiAuditLogUpsertOne {
+	return u.Update(func(s *ApiAuditLogUpsert) {
+		s.SetTraceID(v)
+	})
+}
+
+// UpdateTraceID sets the "trace_id" field to the value that was provided on create.
+func (u *ApiAuditLogUpsertOne) UpdateTraceID() *ApiAuditLogUpsertOne {
+	return u.Update(func(s *ApiAuditLogUpsert) {
+		s.UpdateTraceID()
+	})
+}
+
+// ClearTraceID clears the value of the "trace_id" field.
+func (u *ApiAuditLogUpsertOne) ClearTraceID() *ApiAuditLogUpsertOne {
+	return u.Update(func(s *ApiAuditLogUpsert) {
+		s.ClearTraceID()
+	})
+}
+
+// SetSpanID sets the "span_id" field.
+func (u *ApiAuditLogUpsertOne) SetSpanID(v string) *ApiAuditLogUpsertOne {
+	return u.Update(func(s *ApiAuditLogUpsert) {
+		s.SetSpanID(v)
+	})
+}
+
+// UpdateSpanID sets the "span_id" field to the value that was provided on create.
+func (u *ApiAuditLogUpsertOne) UpdateSpanID() *ApiAuditLogUpsertOne {
+	return u.Update(func(s *ApiAuditLogUpsert) {
+		s.UpdateSpanID()
+	})
+}
+
+// ClearSpanID clears the value of the "span_id" field.
+func (u *ApiAuditLogUpsertOne) ClearSpanID() *ApiAuditLogUpsertOne {
+	return u.Update(func(s *ApiAuditLogUpsert) {
+		s.ClearSpanID()
+	})
+}
+
+// SetLatencyMs sets the "latency_ms" field.
+func (u *ApiAuditLogUpsertOne) SetLatencyMs(v uint32) *ApiAuditLogUpsertOne {
+	return u.Update(func(s *ApiAuditLogUpsert) {
+		s.SetLatencyMs(v)
+	})
+}
+
+// AddLatencyMs adds v to the "latency_ms" field.
+func (u *ApiAuditLogUpsertOne) AddLatencyMs(v uint32) *ApiAuditLogUpsertOne {
+	return u.Update(func(s *ApiAuditLogUpsert) {
+		s.AddLatencyMs(v)
+	})
+}
+
+// UpdateLatencyMs sets the "latency_ms" field to the value that was provided on create.
+func (u *ApiAuditLogUpsertOne) UpdateLatencyMs() *ApiAuditLogUpsertOne {
+	return u.Update(func(s *ApiAuditLogUpsert) {
+		s.UpdateLatencyMs()
+	})
+}
+
+// ClearLatencyMs clears the value of the "latency_ms" field.
+func (u *ApiAuditLogUpsertOne) ClearLatencyMs() *ApiAuditLogUpsertOne {
+	return u.Update(func(s *ApiAuditLogUpsert) {
+		s.ClearLatencyMs()
+	})
+}
+
+// SetSuccess sets the "success" field.
+func (u *ApiAuditLogUpsertOne) SetSuccess(v bool) *ApiAuditLogUpsertOne {
+	return u.Update(func(s *ApiAuditLogUpsert) {
+		s.SetSuccess(v)
+	})
+}
+
+// UpdateSuccess sets the "success" field to the value that was provided on create.
+func (u *ApiAuditLogUpsertOne) UpdateSuccess() *ApiAuditLogUpsertOne {
+	return u.Update(func(s *ApiAuditLogUpsert) {
+		s.UpdateSuccess()
+	})
+}
+
+// ClearSuccess clears the value of the "success" field.
+func (u *ApiAuditLogUpsertOne) ClearSuccess() *ApiAuditLogUpsertOne {
+	return u.Update(func(s *ApiAuditLogUpsert) {
+		s.ClearSuccess()
+	})
+}
+
+// SetStatusCode sets the "status_code" field.
+func (u *ApiAuditLogUpsertOne) SetStatusCode(v uint32) *ApiAuditLogUpsertOne {
+	return u.Update(func(s *ApiAuditLogUpsert) {
+		s.SetStatusCode(v)
+	})
+}
+
+// AddStatusCode adds v to the "status_code" field.
+func (u *ApiAuditLogUpsertOne) AddStatusCode(v uint32) *ApiAuditLogUpsertOne {
+	return u.Update(func(s *ApiAuditLogUpsert) {
+		s.AddStatusCode(v)
+	})
+}
+
+// UpdateStatusCode sets the "status_code" field to the value that was provided on create.
+func (u *ApiAuditLogUpsertOne) UpdateStatusCode() *ApiAuditLogUpsertOne {
+	return u.Update(func(s *ApiAuditLogUpsert) {
+		s.UpdateStatusCode()
+	})
+}
+
+// ClearStatusCode clears the value of the "status_code" field.
+func (u *ApiAuditLogUpsertOne) ClearStatusCode() *ApiAuditLogUpsertOne {
+	return u.Update(func(s *ApiAuditLogUpsert) {
+		s.ClearStatusCode()
+	})
+}
+
+// SetReason sets the "reason" field.
+func (u *ApiAuditLogUpsertOne) SetReason(v string) *ApiAuditLogUpsertOne {
+	return u.Update(func(s *ApiAuditLogUpsert) {
+		s.SetReason(v)
+	})
+}
+
+// UpdateReason sets the "reason" field to the value that was provided on create.
+func (u *ApiAuditLogUpsertOne) UpdateReason() *ApiAuditLogUpsertOne {
+	return u.Update(func(s *ApiAuditLogUpsert) {
+		s.UpdateReason()
+	})
+}
+
+// ClearReason clears the value of the "reason" field.
+func (u *ApiAuditLogUpsertOne) ClearReason() *ApiAuditLogUpsertOne {
+	return u.Update(func(s *ApiAuditLogUpsert) {
+		s.ClearReason()
+	})
+}
+
+// SetRequestHeader sets the "request_header" field.
+func (u *ApiAuditLogUpsertOne) SetRequestHeader(v string) *ApiAuditLogUpsertOne {
+	return u.Update(func(s *ApiAuditLogUpsert) {
+		s.SetRequestHeader(v)
+	})
+}
+
+// UpdateRequestHeader sets the "request_header" field to the value that was provided on create.
+func (u *ApiAuditLogUpsertOne) UpdateRequestHeader() *ApiAuditLogUpsertOne {
+	return u.Update(func(s *ApiAuditLogUpsert) {
+		s.UpdateRequestHeader()
+	})
+}
+
+// ClearRequestHeader clears the value of the "request_header" field.
+func (u *ApiAuditLogUpsertOne) ClearRequestHeader() *ApiAuditLogUpsertOne {
+	return u.Update(func(s *ApiAuditLogUpsert) {
+		s.ClearRequestHeader()
+	})
+}
+
+// SetRequestBody sets the "request_body" field.
+func (u *ApiAuditLogUpsertOne) SetRequestBody(v string) *ApiAuditLogUpsertOne {
+	return u.Update(func(s *ApiAuditLogUpsert) {
+		s.SetRequestBody(v)
+	})
+}
+
+// UpdateRequestBody sets the "request_body" field to the value that was provided on create.
+func (u *ApiAuditLogUpsertOne) UpdateRequestBody() *ApiAuditLogUpsertOne {
+	return u.Update(func(s *ApiAuditLogUpsert) {
+		s.UpdateRequestBody()
+	})
+}
+
+// ClearRequestBody clears the value of the "request_body" field.
+func (u *ApiAuditLogUpsertOne) ClearRequestBody() *ApiAuditLogUpsertOne {
+	return u.Update(func(s *ApiAuditLogUpsert) {
+		s.ClearRequestBody()
+	})
+}
+
+// SetResponse sets the "response" field.
+func (u *ApiAuditLogUpsertOne) SetResponse(v string) *ApiAuditLogUpsertOne {
+	return u.Update(func(s *ApiAuditLogUpsert) {
+		s.SetResponse(v)
+	})
+}
+
+// UpdateResponse sets the "response" field to the value that was provided on create.
+func (u *ApiAuditLogUpsertOne) UpdateResponse() *ApiAuditLogUpsertOne {
+	return u.Update(func(s *ApiAuditLogUpsert) {
+		s.UpdateResponse()
+	})
+}
+
+// ClearResponse clears the value of the "response" field.
+func (u *ApiAuditLogUpsertOne) ClearResponse() *ApiAuditLogUpsertOne {
+	return u.Update(func(s *ApiAuditLogUpsert) {
+		s.ClearResponse()
+	})
+}
+
+// SetLogHash sets the "log_hash" field.
+func (u *ApiAuditLogUpsertOne) SetLogHash(v string) *ApiAuditLogUpsertOne {
+	return u.Update(func(s *ApiAuditLogUpsert) {
+		s.SetLogHash(v)
+	})
+}
+
+// UpdateLogHash sets the "log_hash" field to the value that was provided on create.
+func (u *ApiAuditLogUpsertOne) UpdateLogHash() *ApiAuditLogUpsertOne {
+	return u.Update(func(s *ApiAuditLogUpsert) {
+		s.UpdateLogHash()
+	})
+}
+
+// ClearLogHash clears the value of the "log_hash" field.
+func (u *ApiAuditLogUpsertOne) ClearLogHash() *ApiAuditLogUpsertOne {
+	return u.Update(func(s *ApiAuditLogUpsert) {
+		s.ClearLogHash()
+	})
+}
+
+// SetSignature sets the "signature" field.
+func (u *ApiAuditLogUpsertOne) SetSignature(v []byte) *ApiAuditLogUpsertOne {
+	return u.Update(func(s *ApiAuditLogUpsert) {
+		s.SetSignature(v)
+	})
+}
+
+// UpdateSignature sets the "signature" field to the value that was provided on create.
+func (u *ApiAuditLogUpsertOne) UpdateSignature() *ApiAuditLogUpsertOne {
+	return u.Update(func(s *ApiAuditLogUpsert) {
+		s.UpdateSignature()
+	})
+}
+
+// ClearSignature clears the value of the "signature" field.
+func (u *ApiAuditLogUpsertOne) ClearSignature() *ApiAuditLogUpsertOne {
+	return u.Update(func(s *ApiAuditLogUpsert) {
+		s.ClearSignature()
 	})
 }
 
@@ -1219,160 +1925,6 @@ func (u *ApiAuditLogUpsertBulk) Update(set func(*ApiAuditLogUpsert)) *ApiAuditLo
 	return u
 }
 
-// SetUpdatedAt sets the "updated_at" field.
-func (u *ApiAuditLogUpsertBulk) SetUpdatedAt(v time.Time) *ApiAuditLogUpsertBulk {
-	return u.Update(func(s *ApiAuditLogUpsert) {
-		s.SetUpdatedAt(v)
-	})
-}
-
-// UpdateUpdatedAt sets the "updated_at" field to the value that was provided on create.
-func (u *ApiAuditLogUpsertBulk) UpdateUpdatedAt() *ApiAuditLogUpsertBulk {
-	return u.Update(func(s *ApiAuditLogUpsert) {
-		s.UpdateUpdatedAt()
-	})
-}
-
-// ClearUpdatedAt clears the value of the "updated_at" field.
-func (u *ApiAuditLogUpsertBulk) ClearUpdatedAt() *ApiAuditLogUpsertBulk {
-	return u.Update(func(s *ApiAuditLogUpsert) {
-		s.ClearUpdatedAt()
-	})
-}
-
-// SetDeletedAt sets the "deleted_at" field.
-func (u *ApiAuditLogUpsertBulk) SetDeletedAt(v time.Time) *ApiAuditLogUpsertBulk {
-	return u.Update(func(s *ApiAuditLogUpsert) {
-		s.SetDeletedAt(v)
-	})
-}
-
-// UpdateDeletedAt sets the "deleted_at" field to the value that was provided on create.
-func (u *ApiAuditLogUpsertBulk) UpdateDeletedAt() *ApiAuditLogUpsertBulk {
-	return u.Update(func(s *ApiAuditLogUpsert) {
-		s.UpdateDeletedAt()
-	})
-}
-
-// ClearDeletedAt clears the value of the "deleted_at" field.
-func (u *ApiAuditLogUpsertBulk) ClearDeletedAt() *ApiAuditLogUpsertBulk {
-	return u.Update(func(s *ApiAuditLogUpsert) {
-		s.ClearDeletedAt()
-	})
-}
-
-// SetOperatorID sets the "operator_id" field.
-func (u *ApiAuditLogUpsertBulk) SetOperatorID(v uint32) *ApiAuditLogUpsertBulk {
-	return u.Update(func(s *ApiAuditLogUpsert) {
-		s.SetOperatorID(v)
-	})
-}
-
-// AddOperatorID adds v to the "operator_id" field.
-func (u *ApiAuditLogUpsertBulk) AddOperatorID(v uint32) *ApiAuditLogUpsertBulk {
-	return u.Update(func(s *ApiAuditLogUpsert) {
-		s.AddOperatorID(v)
-	})
-}
-
-// UpdateOperatorID sets the "operator_id" field to the value that was provided on create.
-func (u *ApiAuditLogUpsertBulk) UpdateOperatorID() *ApiAuditLogUpsertBulk {
-	return u.Update(func(s *ApiAuditLogUpsert) {
-		s.UpdateOperatorID()
-	})
-}
-
-// ClearOperatorID clears the value of the "operator_id" field.
-func (u *ApiAuditLogUpsertBulk) ClearOperatorID() *ApiAuditLogUpsertBulk {
-	return u.Update(func(s *ApiAuditLogUpsert) {
-		s.ClearOperatorID()
-	})
-}
-
-// SetOperatorName sets the "operator_name" field.
-func (u *ApiAuditLogUpsertBulk) SetOperatorName(v string) *ApiAuditLogUpsertBulk {
-	return u.Update(func(s *ApiAuditLogUpsert) {
-		s.SetOperatorName(v)
-	})
-}
-
-// UpdateOperatorName sets the "operator_name" field to the value that was provided on create.
-func (u *ApiAuditLogUpsertBulk) UpdateOperatorName() *ApiAuditLogUpsertBulk {
-	return u.Update(func(s *ApiAuditLogUpsert) {
-		s.UpdateOperatorName()
-	})
-}
-
-// ClearOperatorName clears the value of the "operator_name" field.
-func (u *ApiAuditLogUpsertBulk) ClearOperatorName() *ApiAuditLogUpsertBulk {
-	return u.Update(func(s *ApiAuditLogUpsert) {
-		s.ClearOperatorName()
-	})
-}
-
-// SetPath sets the "path" field.
-func (u *ApiAuditLogUpsertBulk) SetPath(v string) *ApiAuditLogUpsertBulk {
-	return u.Update(func(s *ApiAuditLogUpsert) {
-		s.SetPath(v)
-	})
-}
-
-// UpdatePath sets the "path" field to the value that was provided on create.
-func (u *ApiAuditLogUpsertBulk) UpdatePath() *ApiAuditLogUpsertBulk {
-	return u.Update(func(s *ApiAuditLogUpsert) {
-		s.UpdatePath()
-	})
-}
-
-// ClearPath clears the value of the "path" field.
-func (u *ApiAuditLogUpsertBulk) ClearPath() *ApiAuditLogUpsertBulk {
-	return u.Update(func(s *ApiAuditLogUpsert) {
-		s.ClearPath()
-	})
-}
-
-// SetMethod sets the "method" field.
-func (u *ApiAuditLogUpsertBulk) SetMethod(v string) *ApiAuditLogUpsertBulk {
-	return u.Update(func(s *ApiAuditLogUpsert) {
-		s.SetMethod(v)
-	})
-}
-
-// UpdateMethod sets the "method" field to the value that was provided on create.
-func (u *ApiAuditLogUpsertBulk) UpdateMethod() *ApiAuditLogUpsertBulk {
-	return u.Update(func(s *ApiAuditLogUpsert) {
-		s.UpdateMethod()
-	})
-}
-
-// ClearMethod clears the value of the "method" field.
-func (u *ApiAuditLogUpsertBulk) ClearMethod() *ApiAuditLogUpsertBulk {
-	return u.Update(func(s *ApiAuditLogUpsert) {
-		s.ClearMethod()
-	})
-}
-
-// SetDetail sets the "detail" field.
-func (u *ApiAuditLogUpsertBulk) SetDetail(v string) *ApiAuditLogUpsertBulk {
-	return u.Update(func(s *ApiAuditLogUpsert) {
-		s.SetDetail(v)
-	})
-}
-
-// UpdateDetail sets the "detail" field to the value that was provided on create.
-func (u *ApiAuditLogUpsertBulk) UpdateDetail() *ApiAuditLogUpsertBulk {
-	return u.Update(func(s *ApiAuditLogUpsert) {
-		s.UpdateDetail()
-	})
-}
-
-// ClearDetail clears the value of the "detail" field.
-func (u *ApiAuditLogUpsertBulk) ClearDetail() *ApiAuditLogUpsertBulk {
-	return u.Update(func(s *ApiAuditLogUpsert) {
-		s.ClearDetail()
-	})
-}
-
 // SetUserID sets the "user_id" field.
 func (u *ApiAuditLogUpsertBulk) SetUserID(v uint32) *ApiAuditLogUpsertBulk {
 	return u.Update(func(s *ApiAuditLogUpsert) {
@@ -1443,8 +1995,29 @@ func (u *ApiAuditLogUpsertBulk) ClearIPAddress() *ApiAuditLogUpsertBulk {
 	})
 }
 
+// SetGeoLocation sets the "geo_location" field.
+func (u *ApiAuditLogUpsertBulk) SetGeoLocation(v *auditpb.GeoLocation) *ApiAuditLogUpsertBulk {
+	return u.Update(func(s *ApiAuditLogUpsert) {
+		s.SetGeoLocation(v)
+	})
+}
+
+// UpdateGeoLocation sets the "geo_location" field to the value that was provided on create.
+func (u *ApiAuditLogUpsertBulk) UpdateGeoLocation() *ApiAuditLogUpsertBulk {
+	return u.Update(func(s *ApiAuditLogUpsert) {
+		s.UpdateGeoLocation()
+	})
+}
+
+// ClearGeoLocation clears the value of the "geo_location" field.
+func (u *ApiAuditLogUpsertBulk) ClearGeoLocation() *ApiAuditLogUpsertBulk {
+	return u.Update(func(s *ApiAuditLogUpsert) {
+		s.ClearGeoLocation()
+	})
+}
+
 // SetDeviceInfo sets the "device_info" field.
-func (u *ApiAuditLogUpsertBulk) SetDeviceInfo(v string) *ApiAuditLogUpsertBulk {
+func (u *ApiAuditLogUpsertBulk) SetDeviceInfo(v *auditpb.DeviceInfo) *ApiAuditLogUpsertBulk {
 	return u.Update(func(s *ApiAuditLogUpsert) {
 		s.SetDeviceInfo(v)
 	})
@@ -1464,24 +2037,437 @@ func (u *ApiAuditLogUpsertBulk) ClearDeviceInfo() *ApiAuditLogUpsertBulk {
 	})
 }
 
-// SetOperatedAt sets the "operated_at" field.
-func (u *ApiAuditLogUpsertBulk) SetOperatedAt(v time.Time) *ApiAuditLogUpsertBulk {
+// SetReferer sets the "referer" field.
+func (u *ApiAuditLogUpsertBulk) SetReferer(v string) *ApiAuditLogUpsertBulk {
 	return u.Update(func(s *ApiAuditLogUpsert) {
-		s.SetOperatedAt(v)
+		s.SetReferer(v)
 	})
 }
 
-// UpdateOperatedAt sets the "operated_at" field to the value that was provided on create.
-func (u *ApiAuditLogUpsertBulk) UpdateOperatedAt() *ApiAuditLogUpsertBulk {
+// UpdateReferer sets the "referer" field to the value that was provided on create.
+func (u *ApiAuditLogUpsertBulk) UpdateReferer() *ApiAuditLogUpsertBulk {
 	return u.Update(func(s *ApiAuditLogUpsert) {
-		s.UpdateOperatedAt()
+		s.UpdateReferer()
 	})
 }
 
-// ClearOperatedAt clears the value of the "operated_at" field.
-func (u *ApiAuditLogUpsertBulk) ClearOperatedAt() *ApiAuditLogUpsertBulk {
+// ClearReferer clears the value of the "referer" field.
+func (u *ApiAuditLogUpsertBulk) ClearReferer() *ApiAuditLogUpsertBulk {
 	return u.Update(func(s *ApiAuditLogUpsert) {
-		s.ClearOperatedAt()
+		s.ClearReferer()
+	})
+}
+
+// SetAppVersion sets the "app_version" field.
+func (u *ApiAuditLogUpsertBulk) SetAppVersion(v string) *ApiAuditLogUpsertBulk {
+	return u.Update(func(s *ApiAuditLogUpsert) {
+		s.SetAppVersion(v)
+	})
+}
+
+// UpdateAppVersion sets the "app_version" field to the value that was provided on create.
+func (u *ApiAuditLogUpsertBulk) UpdateAppVersion() *ApiAuditLogUpsertBulk {
+	return u.Update(func(s *ApiAuditLogUpsert) {
+		s.UpdateAppVersion()
+	})
+}
+
+// ClearAppVersion clears the value of the "app_version" field.
+func (u *ApiAuditLogUpsertBulk) ClearAppVersion() *ApiAuditLogUpsertBulk {
+	return u.Update(func(s *ApiAuditLogUpsert) {
+		s.ClearAppVersion()
+	})
+}
+
+// SetHTTPMethod sets the "http_method" field.
+func (u *ApiAuditLogUpsertBulk) SetHTTPMethod(v string) *ApiAuditLogUpsertBulk {
+	return u.Update(func(s *ApiAuditLogUpsert) {
+		s.SetHTTPMethod(v)
+	})
+}
+
+// UpdateHTTPMethod sets the "http_method" field to the value that was provided on create.
+func (u *ApiAuditLogUpsertBulk) UpdateHTTPMethod() *ApiAuditLogUpsertBulk {
+	return u.Update(func(s *ApiAuditLogUpsert) {
+		s.UpdateHTTPMethod()
+	})
+}
+
+// ClearHTTPMethod clears the value of the "http_method" field.
+func (u *ApiAuditLogUpsertBulk) ClearHTTPMethod() *ApiAuditLogUpsertBulk {
+	return u.Update(func(s *ApiAuditLogUpsert) {
+		s.ClearHTTPMethod()
+	})
+}
+
+// SetPath sets the "path" field.
+func (u *ApiAuditLogUpsertBulk) SetPath(v string) *ApiAuditLogUpsertBulk {
+	return u.Update(func(s *ApiAuditLogUpsert) {
+		s.SetPath(v)
+	})
+}
+
+// UpdatePath sets the "path" field to the value that was provided on create.
+func (u *ApiAuditLogUpsertBulk) UpdatePath() *ApiAuditLogUpsertBulk {
+	return u.Update(func(s *ApiAuditLogUpsert) {
+		s.UpdatePath()
+	})
+}
+
+// ClearPath clears the value of the "path" field.
+func (u *ApiAuditLogUpsertBulk) ClearPath() *ApiAuditLogUpsertBulk {
+	return u.Update(func(s *ApiAuditLogUpsert) {
+		s.ClearPath()
+	})
+}
+
+// SetRequestURI sets the "request_uri" field.
+func (u *ApiAuditLogUpsertBulk) SetRequestURI(v string) *ApiAuditLogUpsertBulk {
+	return u.Update(func(s *ApiAuditLogUpsert) {
+		s.SetRequestURI(v)
+	})
+}
+
+// UpdateRequestURI sets the "request_uri" field to the value that was provided on create.
+func (u *ApiAuditLogUpsertBulk) UpdateRequestURI() *ApiAuditLogUpsertBulk {
+	return u.Update(func(s *ApiAuditLogUpsert) {
+		s.UpdateRequestURI()
+	})
+}
+
+// ClearRequestURI clears the value of the "request_uri" field.
+func (u *ApiAuditLogUpsertBulk) ClearRequestURI() *ApiAuditLogUpsertBulk {
+	return u.Update(func(s *ApiAuditLogUpsert) {
+		s.ClearRequestURI()
+	})
+}
+
+// SetAPIModule sets the "api_module" field.
+func (u *ApiAuditLogUpsertBulk) SetAPIModule(v string) *ApiAuditLogUpsertBulk {
+	return u.Update(func(s *ApiAuditLogUpsert) {
+		s.SetAPIModule(v)
+	})
+}
+
+// UpdateAPIModule sets the "api_module" field to the value that was provided on create.
+func (u *ApiAuditLogUpsertBulk) UpdateAPIModule() *ApiAuditLogUpsertBulk {
+	return u.Update(func(s *ApiAuditLogUpsert) {
+		s.UpdateAPIModule()
+	})
+}
+
+// ClearAPIModule clears the value of the "api_module" field.
+func (u *ApiAuditLogUpsertBulk) ClearAPIModule() *ApiAuditLogUpsertBulk {
+	return u.Update(func(s *ApiAuditLogUpsert) {
+		s.ClearAPIModule()
+	})
+}
+
+// SetAPIOperation sets the "api_operation" field.
+func (u *ApiAuditLogUpsertBulk) SetAPIOperation(v string) *ApiAuditLogUpsertBulk {
+	return u.Update(func(s *ApiAuditLogUpsert) {
+		s.SetAPIOperation(v)
+	})
+}
+
+// UpdateAPIOperation sets the "api_operation" field to the value that was provided on create.
+func (u *ApiAuditLogUpsertBulk) UpdateAPIOperation() *ApiAuditLogUpsertBulk {
+	return u.Update(func(s *ApiAuditLogUpsert) {
+		s.UpdateAPIOperation()
+	})
+}
+
+// ClearAPIOperation clears the value of the "api_operation" field.
+func (u *ApiAuditLogUpsertBulk) ClearAPIOperation() *ApiAuditLogUpsertBulk {
+	return u.Update(func(s *ApiAuditLogUpsert) {
+		s.ClearAPIOperation()
+	})
+}
+
+// SetAPIDescription sets the "api_description" field.
+func (u *ApiAuditLogUpsertBulk) SetAPIDescription(v string) *ApiAuditLogUpsertBulk {
+	return u.Update(func(s *ApiAuditLogUpsert) {
+		s.SetAPIDescription(v)
+	})
+}
+
+// UpdateAPIDescription sets the "api_description" field to the value that was provided on create.
+func (u *ApiAuditLogUpsertBulk) UpdateAPIDescription() *ApiAuditLogUpsertBulk {
+	return u.Update(func(s *ApiAuditLogUpsert) {
+		s.UpdateAPIDescription()
+	})
+}
+
+// ClearAPIDescription clears the value of the "api_description" field.
+func (u *ApiAuditLogUpsertBulk) ClearAPIDescription() *ApiAuditLogUpsertBulk {
+	return u.Update(func(s *ApiAuditLogUpsert) {
+		s.ClearAPIDescription()
+	})
+}
+
+// SetRequestID sets the "request_id" field.
+func (u *ApiAuditLogUpsertBulk) SetRequestID(v string) *ApiAuditLogUpsertBulk {
+	return u.Update(func(s *ApiAuditLogUpsert) {
+		s.SetRequestID(v)
+	})
+}
+
+// UpdateRequestID sets the "request_id" field to the value that was provided on create.
+func (u *ApiAuditLogUpsertBulk) UpdateRequestID() *ApiAuditLogUpsertBulk {
+	return u.Update(func(s *ApiAuditLogUpsert) {
+		s.UpdateRequestID()
+	})
+}
+
+// ClearRequestID clears the value of the "request_id" field.
+func (u *ApiAuditLogUpsertBulk) ClearRequestID() *ApiAuditLogUpsertBulk {
+	return u.Update(func(s *ApiAuditLogUpsert) {
+		s.ClearRequestID()
+	})
+}
+
+// SetTraceID sets the "trace_id" field.
+func (u *ApiAuditLogUpsertBulk) SetTraceID(v string) *ApiAuditLogUpsertBulk {
+	return u.Update(func(s *ApiAuditLogUpsert) {
+		s.SetTraceID(v)
+	})
+}
+
+// UpdateTraceID sets the "trace_id" field to the value that was provided on create.
+func (u *ApiAuditLogUpsertBulk) UpdateTraceID() *ApiAuditLogUpsertBulk {
+	return u.Update(func(s *ApiAuditLogUpsert) {
+		s.UpdateTraceID()
+	})
+}
+
+// ClearTraceID clears the value of the "trace_id" field.
+func (u *ApiAuditLogUpsertBulk) ClearTraceID() *ApiAuditLogUpsertBulk {
+	return u.Update(func(s *ApiAuditLogUpsert) {
+		s.ClearTraceID()
+	})
+}
+
+// SetSpanID sets the "span_id" field.
+func (u *ApiAuditLogUpsertBulk) SetSpanID(v string) *ApiAuditLogUpsertBulk {
+	return u.Update(func(s *ApiAuditLogUpsert) {
+		s.SetSpanID(v)
+	})
+}
+
+// UpdateSpanID sets the "span_id" field to the value that was provided on create.
+func (u *ApiAuditLogUpsertBulk) UpdateSpanID() *ApiAuditLogUpsertBulk {
+	return u.Update(func(s *ApiAuditLogUpsert) {
+		s.UpdateSpanID()
+	})
+}
+
+// ClearSpanID clears the value of the "span_id" field.
+func (u *ApiAuditLogUpsertBulk) ClearSpanID() *ApiAuditLogUpsertBulk {
+	return u.Update(func(s *ApiAuditLogUpsert) {
+		s.ClearSpanID()
+	})
+}
+
+// SetLatencyMs sets the "latency_ms" field.
+func (u *ApiAuditLogUpsertBulk) SetLatencyMs(v uint32) *ApiAuditLogUpsertBulk {
+	return u.Update(func(s *ApiAuditLogUpsert) {
+		s.SetLatencyMs(v)
+	})
+}
+
+// AddLatencyMs adds v to the "latency_ms" field.
+func (u *ApiAuditLogUpsertBulk) AddLatencyMs(v uint32) *ApiAuditLogUpsertBulk {
+	return u.Update(func(s *ApiAuditLogUpsert) {
+		s.AddLatencyMs(v)
+	})
+}
+
+// UpdateLatencyMs sets the "latency_ms" field to the value that was provided on create.
+func (u *ApiAuditLogUpsertBulk) UpdateLatencyMs() *ApiAuditLogUpsertBulk {
+	return u.Update(func(s *ApiAuditLogUpsert) {
+		s.UpdateLatencyMs()
+	})
+}
+
+// ClearLatencyMs clears the value of the "latency_ms" field.
+func (u *ApiAuditLogUpsertBulk) ClearLatencyMs() *ApiAuditLogUpsertBulk {
+	return u.Update(func(s *ApiAuditLogUpsert) {
+		s.ClearLatencyMs()
+	})
+}
+
+// SetSuccess sets the "success" field.
+func (u *ApiAuditLogUpsertBulk) SetSuccess(v bool) *ApiAuditLogUpsertBulk {
+	return u.Update(func(s *ApiAuditLogUpsert) {
+		s.SetSuccess(v)
+	})
+}
+
+// UpdateSuccess sets the "success" field to the value that was provided on create.
+func (u *ApiAuditLogUpsertBulk) UpdateSuccess() *ApiAuditLogUpsertBulk {
+	return u.Update(func(s *ApiAuditLogUpsert) {
+		s.UpdateSuccess()
+	})
+}
+
+// ClearSuccess clears the value of the "success" field.
+func (u *ApiAuditLogUpsertBulk) ClearSuccess() *ApiAuditLogUpsertBulk {
+	return u.Update(func(s *ApiAuditLogUpsert) {
+		s.ClearSuccess()
+	})
+}
+
+// SetStatusCode sets the "status_code" field.
+func (u *ApiAuditLogUpsertBulk) SetStatusCode(v uint32) *ApiAuditLogUpsertBulk {
+	return u.Update(func(s *ApiAuditLogUpsert) {
+		s.SetStatusCode(v)
+	})
+}
+
+// AddStatusCode adds v to the "status_code" field.
+func (u *ApiAuditLogUpsertBulk) AddStatusCode(v uint32) *ApiAuditLogUpsertBulk {
+	return u.Update(func(s *ApiAuditLogUpsert) {
+		s.AddStatusCode(v)
+	})
+}
+
+// UpdateStatusCode sets the "status_code" field to the value that was provided on create.
+func (u *ApiAuditLogUpsertBulk) UpdateStatusCode() *ApiAuditLogUpsertBulk {
+	return u.Update(func(s *ApiAuditLogUpsert) {
+		s.UpdateStatusCode()
+	})
+}
+
+// ClearStatusCode clears the value of the "status_code" field.
+func (u *ApiAuditLogUpsertBulk) ClearStatusCode() *ApiAuditLogUpsertBulk {
+	return u.Update(func(s *ApiAuditLogUpsert) {
+		s.ClearStatusCode()
+	})
+}
+
+// SetReason sets the "reason" field.
+func (u *ApiAuditLogUpsertBulk) SetReason(v string) *ApiAuditLogUpsertBulk {
+	return u.Update(func(s *ApiAuditLogUpsert) {
+		s.SetReason(v)
+	})
+}
+
+// UpdateReason sets the "reason" field to the value that was provided on create.
+func (u *ApiAuditLogUpsertBulk) UpdateReason() *ApiAuditLogUpsertBulk {
+	return u.Update(func(s *ApiAuditLogUpsert) {
+		s.UpdateReason()
+	})
+}
+
+// ClearReason clears the value of the "reason" field.
+func (u *ApiAuditLogUpsertBulk) ClearReason() *ApiAuditLogUpsertBulk {
+	return u.Update(func(s *ApiAuditLogUpsert) {
+		s.ClearReason()
+	})
+}
+
+// SetRequestHeader sets the "request_header" field.
+func (u *ApiAuditLogUpsertBulk) SetRequestHeader(v string) *ApiAuditLogUpsertBulk {
+	return u.Update(func(s *ApiAuditLogUpsert) {
+		s.SetRequestHeader(v)
+	})
+}
+
+// UpdateRequestHeader sets the "request_header" field to the value that was provided on create.
+func (u *ApiAuditLogUpsertBulk) UpdateRequestHeader() *ApiAuditLogUpsertBulk {
+	return u.Update(func(s *ApiAuditLogUpsert) {
+		s.UpdateRequestHeader()
+	})
+}
+
+// ClearRequestHeader clears the value of the "request_header" field.
+func (u *ApiAuditLogUpsertBulk) ClearRequestHeader() *ApiAuditLogUpsertBulk {
+	return u.Update(func(s *ApiAuditLogUpsert) {
+		s.ClearRequestHeader()
+	})
+}
+
+// SetRequestBody sets the "request_body" field.
+func (u *ApiAuditLogUpsertBulk) SetRequestBody(v string) *ApiAuditLogUpsertBulk {
+	return u.Update(func(s *ApiAuditLogUpsert) {
+		s.SetRequestBody(v)
+	})
+}
+
+// UpdateRequestBody sets the "request_body" field to the value that was provided on create.
+func (u *ApiAuditLogUpsertBulk) UpdateRequestBody() *ApiAuditLogUpsertBulk {
+	return u.Update(func(s *ApiAuditLogUpsert) {
+		s.UpdateRequestBody()
+	})
+}
+
+// ClearRequestBody clears the value of the "request_body" field.
+func (u *ApiAuditLogUpsertBulk) ClearRequestBody() *ApiAuditLogUpsertBulk {
+	return u.Update(func(s *ApiAuditLogUpsert) {
+		s.ClearRequestBody()
+	})
+}
+
+// SetResponse sets the "response" field.
+func (u *ApiAuditLogUpsertBulk) SetResponse(v string) *ApiAuditLogUpsertBulk {
+	return u.Update(func(s *ApiAuditLogUpsert) {
+		s.SetResponse(v)
+	})
+}
+
+// UpdateResponse sets the "response" field to the value that was provided on create.
+func (u *ApiAuditLogUpsertBulk) UpdateResponse() *ApiAuditLogUpsertBulk {
+	return u.Update(func(s *ApiAuditLogUpsert) {
+		s.UpdateResponse()
+	})
+}
+
+// ClearResponse clears the value of the "response" field.
+func (u *ApiAuditLogUpsertBulk) ClearResponse() *ApiAuditLogUpsertBulk {
+	return u.Update(func(s *ApiAuditLogUpsert) {
+		s.ClearResponse()
+	})
+}
+
+// SetLogHash sets the "log_hash" field.
+func (u *ApiAuditLogUpsertBulk) SetLogHash(v string) *ApiAuditLogUpsertBulk {
+	return u.Update(func(s *ApiAuditLogUpsert) {
+		s.SetLogHash(v)
+	})
+}
+
+// UpdateLogHash sets the "log_hash" field to the value that was provided on create.
+func (u *ApiAuditLogUpsertBulk) UpdateLogHash() *ApiAuditLogUpsertBulk {
+	return u.Update(func(s *ApiAuditLogUpsert) {
+		s.UpdateLogHash()
+	})
+}
+
+// ClearLogHash clears the value of the "log_hash" field.
+func (u *ApiAuditLogUpsertBulk) ClearLogHash() *ApiAuditLogUpsertBulk {
+	return u.Update(func(s *ApiAuditLogUpsert) {
+		s.ClearLogHash()
+	})
+}
+
+// SetSignature sets the "signature" field.
+func (u *ApiAuditLogUpsertBulk) SetSignature(v []byte) *ApiAuditLogUpsertBulk {
+	return u.Update(func(s *ApiAuditLogUpsert) {
+		s.SetSignature(v)
+	})
+}
+
+// UpdateSignature sets the "signature" field to the value that was provided on create.
+func (u *ApiAuditLogUpsertBulk) UpdateSignature() *ApiAuditLogUpsertBulk {
+	return u.Update(func(s *ApiAuditLogUpsert) {
+		s.UpdateSignature()
+	})
+}
+
+// ClearSignature clears the value of the "signature" field.
+func (u *ApiAuditLogUpsertBulk) ClearSignature() *ApiAuditLogUpsertBulk {
+	return u.Update(func(s *ApiAuditLogUpsert) {
+		s.ClearSignature()
 	})
 }
 

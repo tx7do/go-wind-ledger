@@ -3,7 +3,9 @@
 package ent
 
 import (
+	"encoding/json"
 	"fmt"
+	permissionpb "go-wind-ledger/api/gen/go/permission/service/v1"
 	"go-wind-ledger/app/core/service/internal/data/ent/menu"
 	"strings"
 	"time"
@@ -12,7 +14,7 @@ import (
 	"entgo.io/ent/dialect/sql"
 )
 
-// 菜单表
+// 菜单资源表
 type Menu struct {
 	config `json:"-"`
 	// ID of the ent.
@@ -36,16 +38,20 @@ type Menu struct {
 	Remark *string `json:"remark,omitempty"`
 	// 状态
 	Status *menu.Status `json:"status,omitempty"`
-	// Name holds the value of the "name" field.
-	Name *string `json:"name,omitempty"`
-	// Path holds the value of the "path" field.
+	// 菜单类型 CATALOG: 目录 MENU: 菜单 BUTTON: 按钮 EMBEDDED: 内嵌 LINK: 外链
+	Type *menu.Type `json:"type,omitempty"`
+	// 路径,当其类型为'按钮'的时候对应的数据操作名,例如:/identity.service.v1.UserService/Login
 	Path *string `json:"path,omitempty"`
-	// Icon holds the value of the "icon" field.
-	Icon *string `json:"icon,omitempty"`
-	// Component holds the value of the "component" field.
+	// 重定向地址
+	Redirect *string `json:"redirect,omitempty"`
+	// 路由别名
+	Alias *string `json:"alias,omitempty"`
+	// 路由命名，然后我们可以使用 name 而不是 path 来传递 to 属性给 <router-link>。
+	Name *string `json:"name,omitempty"`
+	// 前端页面组件
 	Component *string `json:"component,omitempty"`
-	// SortOrder holds the value of the "sort_order" field.
-	SortOrder *uint32 `json:"sort_order,omitempty"`
+	// 路由元信息
+	Meta *permissionpb.MenuMeta `json:"meta,omitempty"`
 	// Edges holds the relations/edges for other nodes in the graph.
 	// The values are being populated by the MenuQuery when eager-loading is set.
 	Edges        MenuEdges `json:"edges"`
@@ -88,9 +94,11 @@ func (*Menu) scanValues(columns []string) ([]any, error) {
 	values := make([]any, len(columns))
 	for i := range columns {
 		switch columns[i] {
-		case menu.FieldID, menu.FieldCreatedBy, menu.FieldUpdatedBy, menu.FieldDeletedBy, menu.FieldParentID, menu.FieldSortOrder:
+		case menu.FieldMeta:
+			values[i] = new([]byte)
+		case menu.FieldID, menu.FieldCreatedBy, menu.FieldUpdatedBy, menu.FieldDeletedBy, menu.FieldParentID:
 			values[i] = new(sql.NullInt64)
-		case menu.FieldRemark, menu.FieldStatus, menu.FieldName, menu.FieldPath, menu.FieldIcon, menu.FieldComponent:
+		case menu.FieldRemark, menu.FieldStatus, menu.FieldType, menu.FieldPath, menu.FieldRedirect, menu.FieldAlias, menu.FieldName, menu.FieldComponent:
 			values[i] = new(sql.NullString)
 		case menu.FieldCreatedAt, menu.FieldUpdatedAt, menu.FieldDeletedAt:
 			values[i] = new(sql.NullTime)
@@ -178,12 +186,12 @@ func (_m *Menu) assignValues(columns []string, values []any) error {
 				_m.Status = new(menu.Status)
 				*_m.Status = menu.Status(value.String)
 			}
-		case menu.FieldName:
+		case menu.FieldType:
 			if value, ok := values[i].(*sql.NullString); !ok {
-				return fmt.Errorf("unexpected type %T for field name", values[i])
+				return fmt.Errorf("unexpected type %T for field type", values[i])
 			} else if value.Valid {
-				_m.Name = new(string)
-				*_m.Name = value.String
+				_m.Type = new(menu.Type)
+				*_m.Type = menu.Type(value.String)
 			}
 		case menu.FieldPath:
 			if value, ok := values[i].(*sql.NullString); !ok {
@@ -192,12 +200,26 @@ func (_m *Menu) assignValues(columns []string, values []any) error {
 				_m.Path = new(string)
 				*_m.Path = value.String
 			}
-		case menu.FieldIcon:
+		case menu.FieldRedirect:
 			if value, ok := values[i].(*sql.NullString); !ok {
-				return fmt.Errorf("unexpected type %T for field icon", values[i])
+				return fmt.Errorf("unexpected type %T for field redirect", values[i])
 			} else if value.Valid {
-				_m.Icon = new(string)
-				*_m.Icon = value.String
+				_m.Redirect = new(string)
+				*_m.Redirect = value.String
+			}
+		case menu.FieldAlias:
+			if value, ok := values[i].(*sql.NullString); !ok {
+				return fmt.Errorf("unexpected type %T for field alias", values[i])
+			} else if value.Valid {
+				_m.Alias = new(string)
+				*_m.Alias = value.String
+			}
+		case menu.FieldName:
+			if value, ok := values[i].(*sql.NullString); !ok {
+				return fmt.Errorf("unexpected type %T for field name", values[i])
+			} else if value.Valid {
+				_m.Name = new(string)
+				*_m.Name = value.String
 			}
 		case menu.FieldComponent:
 			if value, ok := values[i].(*sql.NullString); !ok {
@@ -206,12 +228,13 @@ func (_m *Menu) assignValues(columns []string, values []any) error {
 				_m.Component = new(string)
 				*_m.Component = value.String
 			}
-		case menu.FieldSortOrder:
-			if value, ok := values[i].(*sql.NullInt64); !ok {
-				return fmt.Errorf("unexpected type %T for field sort_order", values[i])
-			} else if value.Valid {
-				_m.SortOrder = new(uint32)
-				*_m.SortOrder = uint32(value.Int64)
+		case menu.FieldMeta:
+			if value, ok := values[i].(*[]byte); !ok {
+				return fmt.Errorf("unexpected type %T for field meta", values[i])
+			} else if value != nil && len(*value) > 0 {
+				if err := json.Unmarshal(*value, &_m.Meta); err != nil {
+					return fmt.Errorf("unmarshal field meta: %w", err)
+				}
 			}
 		default:
 			_m.selectValues.Set(columns[i], values[i])
@@ -304,9 +327,9 @@ func (_m *Menu) String() string {
 		builder.WriteString(fmt.Sprintf("%v", *v))
 	}
 	builder.WriteString(", ")
-	if v := _m.Name; v != nil {
-		builder.WriteString("name=")
-		builder.WriteString(*v)
+	if v := _m.Type; v != nil {
+		builder.WriteString("type=")
+		builder.WriteString(fmt.Sprintf("%v", *v))
 	}
 	builder.WriteString(", ")
 	if v := _m.Path; v != nil {
@@ -314,8 +337,18 @@ func (_m *Menu) String() string {
 		builder.WriteString(*v)
 	}
 	builder.WriteString(", ")
-	if v := _m.Icon; v != nil {
-		builder.WriteString("icon=")
+	if v := _m.Redirect; v != nil {
+		builder.WriteString("redirect=")
+		builder.WriteString(*v)
+	}
+	builder.WriteString(", ")
+	if v := _m.Alias; v != nil {
+		builder.WriteString("alias=")
+		builder.WriteString(*v)
+	}
+	builder.WriteString(", ")
+	if v := _m.Name; v != nil {
+		builder.WriteString("name=")
 		builder.WriteString(*v)
 	}
 	builder.WriteString(", ")
@@ -324,10 +357,8 @@ func (_m *Menu) String() string {
 		builder.WriteString(*v)
 	}
 	builder.WriteString(", ")
-	if v := _m.SortOrder; v != nil {
-		builder.WriteString("sort_order=")
-		builder.WriteString(fmt.Sprintf("%v", *v))
-	}
+	builder.WriteString("meta=")
+	builder.WriteString(fmt.Sprintf("%v", _m.Meta))
 	builder.WriteByte(')')
 	return builder.String()
 }

@@ -12,7 +12,7 @@ import (
 	"entgo.io/ent/dialect/sql"
 )
 
-// 角色权限关联表
+// 角色与权限关联表
 type RolePermission struct {
 	config `json:"-"`
 	// ID of the ent.
@@ -24,22 +24,24 @@ type RolePermission struct {
 	UpdatedAt *time.Time `json:"updated_at,omitempty"`
 	// 删除时间
 	DeletedAt *time.Time `json:"deleted_at,omitempty"`
-	// 租户ID
-	TenantID *uint32 `json:"tenant_id,omitempty"`
-	// 状态
-	Status *rolepermission.Status `json:"status,omitempty"`
 	// 创建者ID
 	CreatedBy *uint32 `json:"created_by,omitempty"`
 	// 更新者ID
 	UpdatedBy *uint32 `json:"updated_by,omitempty"`
 	// 删除者ID
 	DeletedBy *uint32 `json:"deleted_by,omitempty"`
-	// Effect holds the value of the "effect" field.
-	Effect *string `json:"effect,omitempty"`
-	// 角色ID
+	// 租户ID
+	TenantID *uint32 `json:"tenant_id,omitempty"`
+	// 状态
+	Status *rolepermission.Status `json:"status,omitempty"`
+	// API资源ID（关联sys_apis.id）
 	RoleID *uint32 `json:"role_id,omitempty"`
-	// 权限ID
+	// 权限ID（关联sys_permissions.id）
 	PermissionID *uint32 `json:"permission_id,omitempty"`
+	// 生效方式
+	Effect *rolepermission.Effect `json:"effect,omitempty"`
+	// 优先级（-100~100，值越大优先级越高）
+	Priority     *int32 `json:"priority,omitempty"`
 	selectValues sql.SelectValues
 }
 
@@ -48,7 +50,7 @@ func (*RolePermission) scanValues(columns []string) ([]any, error) {
 	values := make([]any, len(columns))
 	for i := range columns {
 		switch columns[i] {
-		case rolepermission.FieldID, rolepermission.FieldTenantID, rolepermission.FieldCreatedBy, rolepermission.FieldUpdatedBy, rolepermission.FieldDeletedBy, rolepermission.FieldRoleID, rolepermission.FieldPermissionID:
+		case rolepermission.FieldID, rolepermission.FieldCreatedBy, rolepermission.FieldUpdatedBy, rolepermission.FieldDeletedBy, rolepermission.FieldTenantID, rolepermission.FieldRoleID, rolepermission.FieldPermissionID, rolepermission.FieldPriority:
 			values[i] = new(sql.NullInt64)
 		case rolepermission.FieldStatus, rolepermission.FieldEffect:
 			values[i] = new(sql.NullString)
@@ -96,20 +98,6 @@ func (_m *RolePermission) assignValues(columns []string, values []any) error {
 				_m.DeletedAt = new(time.Time)
 				*_m.DeletedAt = value.Time
 			}
-		case rolepermission.FieldTenantID:
-			if value, ok := values[i].(*sql.NullInt64); !ok {
-				return fmt.Errorf("unexpected type %T for field tenant_id", values[i])
-			} else if value.Valid {
-				_m.TenantID = new(uint32)
-				*_m.TenantID = uint32(value.Int64)
-			}
-		case rolepermission.FieldStatus:
-			if value, ok := values[i].(*sql.NullString); !ok {
-				return fmt.Errorf("unexpected type %T for field status", values[i])
-			} else if value.Valid {
-				_m.Status = new(rolepermission.Status)
-				*_m.Status = rolepermission.Status(value.String)
-			}
 		case rolepermission.FieldCreatedBy:
 			if value, ok := values[i].(*sql.NullInt64); !ok {
 				return fmt.Errorf("unexpected type %T for field created_by", values[i])
@@ -131,12 +119,19 @@ func (_m *RolePermission) assignValues(columns []string, values []any) error {
 				_m.DeletedBy = new(uint32)
 				*_m.DeletedBy = uint32(value.Int64)
 			}
-		case rolepermission.FieldEffect:
-			if value, ok := values[i].(*sql.NullString); !ok {
-				return fmt.Errorf("unexpected type %T for field effect", values[i])
+		case rolepermission.FieldTenantID:
+			if value, ok := values[i].(*sql.NullInt64); !ok {
+				return fmt.Errorf("unexpected type %T for field tenant_id", values[i])
 			} else if value.Valid {
-				_m.Effect = new(string)
-				*_m.Effect = value.String
+				_m.TenantID = new(uint32)
+				*_m.TenantID = uint32(value.Int64)
+			}
+		case rolepermission.FieldStatus:
+			if value, ok := values[i].(*sql.NullString); !ok {
+				return fmt.Errorf("unexpected type %T for field status", values[i])
+			} else if value.Valid {
+				_m.Status = new(rolepermission.Status)
+				*_m.Status = rolepermission.Status(value.String)
 			}
 		case rolepermission.FieldRoleID:
 			if value, ok := values[i].(*sql.NullInt64); !ok {
@@ -151,6 +146,20 @@ func (_m *RolePermission) assignValues(columns []string, values []any) error {
 			} else if value.Valid {
 				_m.PermissionID = new(uint32)
 				*_m.PermissionID = uint32(value.Int64)
+			}
+		case rolepermission.FieldEffect:
+			if value, ok := values[i].(*sql.NullString); !ok {
+				return fmt.Errorf("unexpected type %T for field effect", values[i])
+			} else if value.Valid {
+				_m.Effect = new(rolepermission.Effect)
+				*_m.Effect = rolepermission.Effect(value.String)
+			}
+		case rolepermission.FieldPriority:
+			if value, ok := values[i].(*sql.NullInt64); !ok {
+				return fmt.Errorf("unexpected type %T for field priority", values[i])
+			} else if value.Valid {
+				_m.Priority = new(int32)
+				*_m.Priority = int32(value.Int64)
 			}
 		default:
 			_m.selectValues.Set(columns[i], values[i])
@@ -203,16 +212,6 @@ func (_m *RolePermission) String() string {
 		builder.WriteString(v.Format(time.ANSIC))
 	}
 	builder.WriteString(", ")
-	if v := _m.TenantID; v != nil {
-		builder.WriteString("tenant_id=")
-		builder.WriteString(fmt.Sprintf("%v", *v))
-	}
-	builder.WriteString(", ")
-	if v := _m.Status; v != nil {
-		builder.WriteString("status=")
-		builder.WriteString(fmt.Sprintf("%v", *v))
-	}
-	builder.WriteString(", ")
 	if v := _m.CreatedBy; v != nil {
 		builder.WriteString("created_by=")
 		builder.WriteString(fmt.Sprintf("%v", *v))
@@ -228,9 +227,14 @@ func (_m *RolePermission) String() string {
 		builder.WriteString(fmt.Sprintf("%v", *v))
 	}
 	builder.WriteString(", ")
-	if v := _m.Effect; v != nil {
-		builder.WriteString("effect=")
-		builder.WriteString(*v)
+	if v := _m.TenantID; v != nil {
+		builder.WriteString("tenant_id=")
+		builder.WriteString(fmt.Sprintf("%v", *v))
+	}
+	builder.WriteString(", ")
+	if v := _m.Status; v != nil {
+		builder.WriteString("status=")
+		builder.WriteString(fmt.Sprintf("%v", *v))
 	}
 	builder.WriteString(", ")
 	if v := _m.RoleID; v != nil {
@@ -240,6 +244,16 @@ func (_m *RolePermission) String() string {
 	builder.WriteString(", ")
 	if v := _m.PermissionID; v != nil {
 		builder.WriteString("permission_id=")
+		builder.WriteString(fmt.Sprintf("%v", *v))
+	}
+	builder.WriteString(", ")
+	if v := _m.Effect; v != nil {
+		builder.WriteString("effect=")
+		builder.WriteString(fmt.Sprintf("%v", *v))
+	}
+	builder.WriteString(", ")
+	if v := _m.Priority; v != nil {
+		builder.WriteString("priority=")
 		builder.WriteString(fmt.Sprintf("%v", *v))
 	}
 	builder.WriteByte(')')

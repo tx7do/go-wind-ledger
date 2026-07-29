@@ -1,13 +1,75 @@
 package schema
-import ("entgo.io/ent";"entgo.io/ent/dialect/entsql";"entgo.io/ent/schema";"entgo.io/ent/schema/field";"entgo.io/ent/schema/index";"github.com/tx7do/go-crud/entgo/mixin")
-type DictEntryI18n struct{ ent.Schema }
-func (DictEntryI18n) Annotations() []schema.Annotation { return []schema.Annotation{entsql.Annotation{Table:"sys_dict_entry_i18n",Charset:"utf8mb4",Collation:"utf8mb4_bin"},entsql.WithComments(true),schema.Comment("字典项国际化表")} }
-func (DictEntryI18n) Mixin() []ent.Mixin { return []ent.Mixin{mixin.AutoIncrementId{},mixin.TimeAt{},mixin.TenantID[uint32]{},mixin.OperatorID{}} }
-func (DictEntryI18n) Fields() []ent.Field {
-	return []ent.Field{
-		field.Uint32("dict_entry_id").Comment("字典项ID").Optional().Nillable(),
-		field.String("language_code").Comment("语言代码").MaxLen(16).Optional().Nillable(),
-		field.String("name").Comment("名称").MaxLen(64).Optional().Nillable(),
+
+import (
+	"entgo.io/ent"
+	"entgo.io/ent/dialect/entsql"
+	"entgo.io/ent/schema"
+	"entgo.io/ent/schema/edge"
+	"entgo.io/ent/schema/field"
+	"entgo.io/ent/schema/index"
+	"github.com/tx7do/go-crud/entgo/mixin"
+)
+
+// DictEntryI18n holds the schema definition for the DictEntryI18n entity.
+type DictEntryI18n struct {
+	ent.Schema
+}
+
+func (DictEntryI18n) Annotations() []schema.Annotation {
+	return []schema.Annotation{
+		entsql.Annotation{
+			Table:     "sys_dict_entry_i18n",
+			Charset:   "utf8mb4",
+			Collation: "utf8mb4_bin",
+		},
+		entsql.WithComments(true),
+		schema.Comment("字典项翻译表"),
 	}
 }
-func (DictEntryI18n) Indexes() []ent.Index { return []ent.Index{index.Fields("dict_entry_id"),index.Fields("dict_entry_id","language_code").Unique()} }
+
+// Fields of the DictEntryI18n.
+func (DictEntryI18n) Fields() []ent.Field {
+	return []ent.Field{
+		field.String("language_code").
+			Comment("语言代码").
+			NotEmpty().
+			Immutable().
+			Optional().
+			Nillable(),
+
+		field.String("entry_label").
+			Comment("字典项的显示标签").
+			NotEmpty().
+			Optional().
+			Nillable(),
+	}
+}
+
+// Mixin of the DictEntryI18n.
+func (DictEntryI18n) Mixin() []ent.Mixin {
+	return []ent.Mixin{
+		mixin.AutoIncrementId{},
+		mixin.TimeAt{},
+		mixin.OperatorID{},
+		mixin.Description{},
+		mixin.SortOrder{},
+		mixin.TenantID[uint32]{},
+	}
+}
+
+// Edges of the DictEntryI18n.
+func (DictEntryI18n) Edges() []ent.Edge {
+	return []ent.Edge{
+		edge.From("dict_entry", DictEntry.Type).
+			Ref("i18ns").
+			Unique(),
+	}
+}
+
+// Indexes of the DictEntryI18n.
+func (DictEntryI18n) Indexes() []ent.Index {
+	return []ent.Index{
+		index.Fields("language_code").
+			StorageKey("idx_sys_dict_entry_i18n_language_code"),
+	}
+}

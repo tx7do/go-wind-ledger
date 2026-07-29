@@ -204,6 +204,12 @@ func (_c *OrgUnitCreate) SetNillablePath(v *string) *OrgUnitCreate {
 	return _c
 }
 
+// SetName sets the "name" field.
+func (_c *OrgUnitCreate) SetName(v string) *OrgUnitCreate {
+	_c.mutation.SetName(v)
+	return _c
+}
+
 // SetCode sets the "code" field.
 func (_c *OrgUnitCreate) SetCode(v string) *OrgUnitCreate {
 	_c.mutation.SetCode(v)
@@ -214,104 +220,6 @@ func (_c *OrgUnitCreate) SetCode(v string) *OrgUnitCreate {
 func (_c *OrgUnitCreate) SetNillableCode(v *string) *OrgUnitCreate {
 	if v != nil {
 		_c.SetCode(*v)
-	}
-	return _c
-}
-
-// SetName sets the "name" field.
-func (_c *OrgUnitCreate) SetName(v string) *OrgUnitCreate {
-	_c.mutation.SetName(v)
-	return _c
-}
-
-// SetNillableName sets the "name" field if the given value is not nil.
-func (_c *OrgUnitCreate) SetNillableName(v *string) *OrgUnitCreate {
-	if v != nil {
-		_c.SetName(*v)
-	}
-	return _c
-}
-
-// SetType sets the "type" field.
-func (_c *OrgUnitCreate) SetType(v string) *OrgUnitCreate {
-	_c.mutation.SetType(v)
-	return _c
-}
-
-// SetNillableType sets the "type" field if the given value is not nil.
-func (_c *OrgUnitCreate) SetNillableType(v *string) *OrgUnitCreate {
-	if v != nil {
-		_c.SetType(*v)
-	}
-	return _c
-}
-
-// SetIsLegalEntity sets the "is_legal_entity" field.
-func (_c *OrgUnitCreate) SetIsLegalEntity(v bool) *OrgUnitCreate {
-	_c.mutation.SetIsLegalEntity(v)
-	return _c
-}
-
-// SetNillableIsLegalEntity sets the "is_legal_entity" field if the given value is not nil.
-func (_c *OrgUnitCreate) SetNillableIsLegalEntity(v *bool) *OrgUnitCreate {
-	if v != nil {
-		_c.SetIsLegalEntity(*v)
-	}
-	return _c
-}
-
-// SetExternalID sets the "external_id" field.
-func (_c *OrgUnitCreate) SetExternalID(v string) *OrgUnitCreate {
-	_c.mutation.SetExternalID(v)
-	return _c
-}
-
-// SetNillableExternalID sets the "external_id" field if the given value is not nil.
-func (_c *OrgUnitCreate) SetNillableExternalID(v *string) *OrgUnitCreate {
-	if v != nil {
-		_c.SetExternalID(*v)
-	}
-	return _c
-}
-
-// SetLegalEntityOrgID sets the "legal_entity_org_id" field.
-func (_c *OrgUnitCreate) SetLegalEntityOrgID(v uint32) *OrgUnitCreate {
-	_c.mutation.SetLegalEntityOrgID(v)
-	return _c
-}
-
-// SetNillableLegalEntityOrgID sets the "legal_entity_org_id" field if the given value is not nil.
-func (_c *OrgUnitCreate) SetNillableLegalEntityOrgID(v *uint32) *OrgUnitCreate {
-	if v != nil {
-		_c.SetLegalEntityOrgID(*v)
-	}
-	return _c
-}
-
-// SetTaxID sets the "tax_id" field.
-func (_c *OrgUnitCreate) SetTaxID(v string) *OrgUnitCreate {
-	_c.mutation.SetTaxID(v)
-	return _c
-}
-
-// SetNillableTaxID sets the "tax_id" field if the given value is not nil.
-func (_c *OrgUnitCreate) SetNillableTaxID(v *string) *OrgUnitCreate {
-	if v != nil {
-		_c.SetTaxID(*v)
-	}
-	return _c
-}
-
-// SetRegistrationNumber sets the "registration_number" field.
-func (_c *OrgUnitCreate) SetRegistrationNumber(v string) *OrgUnitCreate {
-	_c.mutation.SetRegistrationNumber(v)
-	return _c
-}
-
-// SetNillableRegistrationNumber sets the "registration_number" field if the given value is not nil.
-func (_c *OrgUnitCreate) SetNillableRegistrationNumber(v *string) *OrgUnitCreate {
-	if v != nil {
-		_c.SetRegistrationNumber(*v)
 	}
 	return _c
 }
@@ -330,44 +238,92 @@ func (_c *OrgUnitCreate) SetNillableLeaderID(v *uint32) *OrgUnitCreate {
 	return _c
 }
 
-// SetContactUserID sets the "contact_user_id" field.
-func (_c *OrgUnitCreate) SetContactUserID(v uint32) *OrgUnitCreate {
-	_c.mutation.SetContactUserID(v)
+// SetType sets the "type" field.
+func (_c *OrgUnitCreate) SetType(v orgunit.Type) *OrgUnitCreate {
+	_c.mutation.SetType(v)
 	return _c
 }
 
-// SetNillableContactUserID sets the "contact_user_id" field if the given value is not nil.
-func (_c *OrgUnitCreate) SetNillableContactUserID(v *uint32) *OrgUnitCreate {
+// SetNillableType sets the "type" field if the given value is not nil.
+func (_c *OrgUnitCreate) SetNillableType(v *orgunit.Type) *OrgUnitCreate {
 	if v != nil {
-		_c.SetContactUserID(*v)
+		_c.SetType(*v)
 	}
 	return _c
 }
 
-// SetStartAt sets the "start_at" field.
-func (_c *OrgUnitCreate) SetStartAt(v time.Time) *OrgUnitCreate {
-	_c.mutation.SetStartAt(v)
+// SetBusinessScopes sets the "business_scopes" field.
+func (_c *OrgUnitCreate) SetBusinessScopes(v []string) *OrgUnitCreate {
+	_c.mutation.SetBusinessScopes(v)
 	return _c
 }
 
-// SetNillableStartAt sets the "start_at" field if the given value is not nil.
-func (_c *OrgUnitCreate) SetNillableStartAt(v *time.Time) *OrgUnitCreate {
+// SetExternalID sets the "external_id" field.
+func (_c *OrgUnitCreate) SetExternalID(v string) *OrgUnitCreate {
+	_c.mutation.SetExternalID(v)
+	return _c
+}
+
+// SetNillableExternalID sets the "external_id" field if the given value is not nil.
+func (_c *OrgUnitCreate) SetNillableExternalID(v *string) *OrgUnitCreate {
 	if v != nil {
-		_c.SetStartAt(*v)
+		_c.SetExternalID(*v)
 	}
 	return _c
 }
 
-// SetEndAt sets the "end_at" field.
-func (_c *OrgUnitCreate) SetEndAt(v time.Time) *OrgUnitCreate {
-	_c.mutation.SetEndAt(v)
+// SetIsLegalEntity sets the "is_legal_entity" field.
+func (_c *OrgUnitCreate) SetIsLegalEntity(v bool) *OrgUnitCreate {
+	_c.mutation.SetIsLegalEntity(v)
 	return _c
 }
 
-// SetNillableEndAt sets the "end_at" field if the given value is not nil.
-func (_c *OrgUnitCreate) SetNillableEndAt(v *time.Time) *OrgUnitCreate {
+// SetNillableIsLegalEntity sets the "is_legal_entity" field if the given value is not nil.
+func (_c *OrgUnitCreate) SetNillableIsLegalEntity(v *bool) *OrgUnitCreate {
 	if v != nil {
-		_c.SetEndAt(*v)
+		_c.SetIsLegalEntity(*v)
+	}
+	return _c
+}
+
+// SetRegistrationNumber sets the "registration_number" field.
+func (_c *OrgUnitCreate) SetRegistrationNumber(v string) *OrgUnitCreate {
+	_c.mutation.SetRegistrationNumber(v)
+	return _c
+}
+
+// SetNillableRegistrationNumber sets the "registration_number" field if the given value is not nil.
+func (_c *OrgUnitCreate) SetNillableRegistrationNumber(v *string) *OrgUnitCreate {
+	if v != nil {
+		_c.SetRegistrationNumber(*v)
+	}
+	return _c
+}
+
+// SetTaxID sets the "tax_id" field.
+func (_c *OrgUnitCreate) SetTaxID(v string) *OrgUnitCreate {
+	_c.mutation.SetTaxID(v)
+	return _c
+}
+
+// SetNillableTaxID sets the "tax_id" field if the given value is not nil.
+func (_c *OrgUnitCreate) SetNillableTaxID(v *string) *OrgUnitCreate {
+	if v != nil {
+		_c.SetTaxID(*v)
+	}
+	return _c
+}
+
+// SetLegalEntityOrgID sets the "legal_entity_org_id" field.
+func (_c *OrgUnitCreate) SetLegalEntityOrgID(v uint32) *OrgUnitCreate {
+	_c.mutation.SetLegalEntityOrgID(v)
+	return _c
+}
+
+// SetNillableLegalEntityOrgID sets the "legal_entity_org_id" field if the given value is not nil.
+func (_c *OrgUnitCreate) SetNillableLegalEntityOrgID(v *uint32) *OrgUnitCreate {
+	if v != nil {
+		_c.SetLegalEntityOrgID(*v)
 	}
 	return _c
 }
@@ -414,20 +370,6 @@ func (_c *OrgUnitCreate) SetNillableEmail(v *string) *OrgUnitCreate {
 	return _c
 }
 
-// SetWebsite sets the "website" field.
-func (_c *OrgUnitCreate) SetWebsite(v string) *OrgUnitCreate {
-	_c.mutation.SetWebsite(v)
-	return _c
-}
-
-// SetNillableWebsite sets the "website" field if the given value is not nil.
-func (_c *OrgUnitCreate) SetNillableWebsite(v *string) *OrgUnitCreate {
-	if v != nil {
-		_c.SetWebsite(*v)
-	}
-	return _c
-}
-
 // SetTimezone sets the "timezone" field.
 func (_c *OrgUnitCreate) SetTimezone(v string) *OrgUnitCreate {
 	_c.mutation.SetTimezone(v)
@@ -442,20 +384,6 @@ func (_c *OrgUnitCreate) SetNillableTimezone(v *string) *OrgUnitCreate {
 	return _c
 }
 
-// SetRegion sets the "region" field.
-func (_c *OrgUnitCreate) SetRegion(v string) *OrgUnitCreate {
-	_c.mutation.SetRegion(v)
-	return _c
-}
-
-// SetNillableRegion sets the "region" field if the given value is not nil.
-func (_c *OrgUnitCreate) SetNillableRegion(v *string) *OrgUnitCreate {
-	if v != nil {
-		_c.SetRegion(*v)
-	}
-	return _c
-}
-
 // SetCountry sets the "country" field.
 func (_c *OrgUnitCreate) SetCountry(v string) *OrgUnitCreate {
 	_c.mutation.SetCountry(v)
@@ -466,34 +394,6 @@ func (_c *OrgUnitCreate) SetCountry(v string) *OrgUnitCreate {
 func (_c *OrgUnitCreate) SetNillableCountry(v *string) *OrgUnitCreate {
 	if v != nil {
 		_c.SetCountry(*v)
-	}
-	return _c
-}
-
-// SetCity sets the "city" field.
-func (_c *OrgUnitCreate) SetCity(v string) *OrgUnitCreate {
-	_c.mutation.SetCity(v)
-	return _c
-}
-
-// SetNillableCity sets the "city" field if the given value is not nil.
-func (_c *OrgUnitCreate) SetNillableCity(v *string) *OrgUnitCreate {
-	if v != nil {
-		_c.SetCity(*v)
-	}
-	return _c
-}
-
-// SetPostalCode sets the "postal_code" field.
-func (_c *OrgUnitCreate) SetPostalCode(v string) *OrgUnitCreate {
-	_c.mutation.SetPostalCode(v)
-	return _c
-}
-
-// SetNillablePostalCode sets the "postal_code" field if the given value is not nil.
-func (_c *OrgUnitCreate) SetNillablePostalCode(v *string) *OrgUnitCreate {
-	if v != nil {
-		_c.SetPostalCode(*v)
 	}
 	return _c
 }
@@ -526,17 +426,51 @@ func (_c *OrgUnitCreate) SetNillableLongitude(v *float64) *OrgUnitCreate {
 	return _c
 }
 
-// SetLogo sets the "logo" field.
-func (_c *OrgUnitCreate) SetLogo(v string) *OrgUnitCreate {
-	_c.mutation.SetLogo(v)
+// SetStartAt sets the "start_at" field.
+func (_c *OrgUnitCreate) SetStartAt(v time.Time) *OrgUnitCreate {
+	_c.mutation.SetStartAt(v)
 	return _c
 }
 
-// SetNillableLogo sets the "logo" field if the given value is not nil.
-func (_c *OrgUnitCreate) SetNillableLogo(v *string) *OrgUnitCreate {
+// SetNillableStartAt sets the "start_at" field if the given value is not nil.
+func (_c *OrgUnitCreate) SetNillableStartAt(v *time.Time) *OrgUnitCreate {
 	if v != nil {
-		_c.SetLogo(*v)
+		_c.SetStartAt(*v)
 	}
+	return _c
+}
+
+// SetEndAt sets the "end_at" field.
+func (_c *OrgUnitCreate) SetEndAt(v time.Time) *OrgUnitCreate {
+	_c.mutation.SetEndAt(v)
+	return _c
+}
+
+// SetNillableEndAt sets the "end_at" field if the given value is not nil.
+func (_c *OrgUnitCreate) SetNillableEndAt(v *time.Time) *OrgUnitCreate {
+	if v != nil {
+		_c.SetEndAt(*v)
+	}
+	return _c
+}
+
+// SetContactUserID sets the "contact_user_id" field.
+func (_c *OrgUnitCreate) SetContactUserID(v uint32) *OrgUnitCreate {
+	_c.mutation.SetContactUserID(v)
+	return _c
+}
+
+// SetNillableContactUserID sets the "contact_user_id" field if the given value is not nil.
+func (_c *OrgUnitCreate) SetNillableContactUserID(v *uint32) *OrgUnitCreate {
+	if v != nil {
+		_c.SetContactUserID(*v)
+	}
+	return _c
+}
+
+// SetPermissionTags sets the "permission_tags" field.
+func (_c *OrgUnitCreate) SetPermissionTags(v []string) *OrgUnitCreate {
+	_c.mutation.SetPermissionTags(v)
 	return _c
 }
 
@@ -615,6 +549,10 @@ func (_c *OrgUnitCreate) defaults() error {
 		v := orgunit.DefaultTenantID
 		_c.mutation.SetTenantID(v)
 	}
+	if _, ok := _c.mutation.GetType(); !ok {
+		v := orgunit.DefaultType
+		_c.mutation.SetType(v)
+	}
 	if _, ok := _c.mutation.IsLegalEntity(); !ok {
 		v := orgunit.DefaultIsLegalEntity
 		_c.mutation.SetIsLegalEntity(v)
@@ -637,84 +575,20 @@ func (_c *OrgUnitCreate) check() error {
 			return &ValidationError{Name: "path", err: fmt.Errorf(`ent: validator failed for field "OrgUnit.path": %w`, err)}
 		}
 	}
-	if v, ok := _c.mutation.Code(); ok {
-		if err := orgunit.CodeValidator(v); err != nil {
-			return &ValidationError{Name: "code", err: fmt.Errorf(`ent: validator failed for field "OrgUnit.code": %w`, err)}
-		}
+	if _, ok := _c.mutation.Name(); !ok {
+		return &ValidationError{Name: "name", err: errors.New(`ent: missing required field "OrgUnit.name"`)}
 	}
 	if v, ok := _c.mutation.Name(); ok {
 		if err := orgunit.NameValidator(v); err != nil {
 			return &ValidationError{Name: "name", err: fmt.Errorf(`ent: validator failed for field "OrgUnit.name": %w`, err)}
 		}
 	}
+	if _, ok := _c.mutation.GetType(); !ok {
+		return &ValidationError{Name: "type", err: errors.New(`ent: missing required field "OrgUnit.type"`)}
+	}
 	if v, ok := _c.mutation.GetType(); ok {
 		if err := orgunit.TypeValidator(v); err != nil {
 			return &ValidationError{Name: "type", err: fmt.Errorf(`ent: validator failed for field "OrgUnit.type": %w`, err)}
-		}
-	}
-	if v, ok := _c.mutation.ExternalID(); ok {
-		if err := orgunit.ExternalIDValidator(v); err != nil {
-			return &ValidationError{Name: "external_id", err: fmt.Errorf(`ent: validator failed for field "OrgUnit.external_id": %w`, err)}
-		}
-	}
-	if v, ok := _c.mutation.TaxID(); ok {
-		if err := orgunit.TaxIDValidator(v); err != nil {
-			return &ValidationError{Name: "tax_id", err: fmt.Errorf(`ent: validator failed for field "OrgUnit.tax_id": %w`, err)}
-		}
-	}
-	if v, ok := _c.mutation.RegistrationNumber(); ok {
-		if err := orgunit.RegistrationNumberValidator(v); err != nil {
-			return &ValidationError{Name: "registration_number", err: fmt.Errorf(`ent: validator failed for field "OrgUnit.registration_number": %w`, err)}
-		}
-	}
-	if v, ok := _c.mutation.Address(); ok {
-		if err := orgunit.AddressValidator(v); err != nil {
-			return &ValidationError{Name: "address", err: fmt.Errorf(`ent: validator failed for field "OrgUnit.address": %w`, err)}
-		}
-	}
-	if v, ok := _c.mutation.Phone(); ok {
-		if err := orgunit.PhoneValidator(v); err != nil {
-			return &ValidationError{Name: "phone", err: fmt.Errorf(`ent: validator failed for field "OrgUnit.phone": %w`, err)}
-		}
-	}
-	if v, ok := _c.mutation.Email(); ok {
-		if err := orgunit.EmailValidator(v); err != nil {
-			return &ValidationError{Name: "email", err: fmt.Errorf(`ent: validator failed for field "OrgUnit.email": %w`, err)}
-		}
-	}
-	if v, ok := _c.mutation.Website(); ok {
-		if err := orgunit.WebsiteValidator(v); err != nil {
-			return &ValidationError{Name: "website", err: fmt.Errorf(`ent: validator failed for field "OrgUnit.website": %w`, err)}
-		}
-	}
-	if v, ok := _c.mutation.Timezone(); ok {
-		if err := orgunit.TimezoneValidator(v); err != nil {
-			return &ValidationError{Name: "timezone", err: fmt.Errorf(`ent: validator failed for field "OrgUnit.timezone": %w`, err)}
-		}
-	}
-	if v, ok := _c.mutation.Region(); ok {
-		if err := orgunit.RegionValidator(v); err != nil {
-			return &ValidationError{Name: "region", err: fmt.Errorf(`ent: validator failed for field "OrgUnit.region": %w`, err)}
-		}
-	}
-	if v, ok := _c.mutation.Country(); ok {
-		if err := orgunit.CountryValidator(v); err != nil {
-			return &ValidationError{Name: "country", err: fmt.Errorf(`ent: validator failed for field "OrgUnit.country": %w`, err)}
-		}
-	}
-	if v, ok := _c.mutation.City(); ok {
-		if err := orgunit.CityValidator(v); err != nil {
-			return &ValidationError{Name: "city", err: fmt.Errorf(`ent: validator failed for field "OrgUnit.city": %w`, err)}
-		}
-	}
-	if v, ok := _c.mutation.PostalCode(); ok {
-		if err := orgunit.PostalCodeValidator(v); err != nil {
-			return &ValidationError{Name: "postal_code", err: fmt.Errorf(`ent: validator failed for field "OrgUnit.postal_code": %w`, err)}
-		}
-	}
-	if v, ok := _c.mutation.Logo(); ok {
-		if err := orgunit.LogoValidator(v); err != nil {
-			return &ValidationError{Name: "logo", err: fmt.Errorf(`ent: validator failed for field "OrgUnit.logo": %w`, err)}
 		}
 	}
 	if v, ok := _c.mutation.ID(); ok {
@@ -803,53 +677,45 @@ func (_c *OrgUnitCreate) createSpec() (*OrgUnit, *sqlgraph.CreateSpec) {
 		_spec.SetField(orgunit.FieldPath, field.TypeString, value)
 		_node.Path = &value
 	}
-	if value, ok := _c.mutation.Code(); ok {
-		_spec.SetField(orgunit.FieldCode, field.TypeString, value)
-		_node.Code = &value
-	}
 	if value, ok := _c.mutation.Name(); ok {
 		_spec.SetField(orgunit.FieldName, field.TypeString, value)
 		_node.Name = &value
 	}
-	if value, ok := _c.mutation.GetType(); ok {
-		_spec.SetField(orgunit.FieldType, field.TypeString, value)
-		_node.Type = &value
-	}
-	if value, ok := _c.mutation.IsLegalEntity(); ok {
-		_spec.SetField(orgunit.FieldIsLegalEntity, field.TypeBool, value)
-		_node.IsLegalEntity = &value
-	}
-	if value, ok := _c.mutation.ExternalID(); ok {
-		_spec.SetField(orgunit.FieldExternalID, field.TypeString, value)
-		_node.ExternalID = &value
-	}
-	if value, ok := _c.mutation.LegalEntityOrgID(); ok {
-		_spec.SetField(orgunit.FieldLegalEntityOrgID, field.TypeUint32, value)
-		_node.LegalEntityOrgID = &value
-	}
-	if value, ok := _c.mutation.TaxID(); ok {
-		_spec.SetField(orgunit.FieldTaxID, field.TypeString, value)
-		_node.TaxID = &value
-	}
-	if value, ok := _c.mutation.RegistrationNumber(); ok {
-		_spec.SetField(orgunit.FieldRegistrationNumber, field.TypeString, value)
-		_node.RegistrationNumber = &value
+	if value, ok := _c.mutation.Code(); ok {
+		_spec.SetField(orgunit.FieldCode, field.TypeString, value)
+		_node.Code = &value
 	}
 	if value, ok := _c.mutation.LeaderID(); ok {
 		_spec.SetField(orgunit.FieldLeaderID, field.TypeUint32, value)
 		_node.LeaderID = &value
 	}
-	if value, ok := _c.mutation.ContactUserID(); ok {
-		_spec.SetField(orgunit.FieldContactUserID, field.TypeUint32, value)
-		_node.ContactUserID = &value
+	if value, ok := _c.mutation.GetType(); ok {
+		_spec.SetField(orgunit.FieldType, field.TypeEnum, value)
+		_node.Type = &value
 	}
-	if value, ok := _c.mutation.StartAt(); ok {
-		_spec.SetField(orgunit.FieldStartAt, field.TypeTime, value)
-		_node.StartAt = &value
+	if value, ok := _c.mutation.BusinessScopes(); ok {
+		_spec.SetField(orgunit.FieldBusinessScopes, field.TypeJSON, value)
+		_node.BusinessScopes = value
 	}
-	if value, ok := _c.mutation.EndAt(); ok {
-		_spec.SetField(orgunit.FieldEndAt, field.TypeTime, value)
-		_node.EndAt = &value
+	if value, ok := _c.mutation.ExternalID(); ok {
+		_spec.SetField(orgunit.FieldExternalID, field.TypeString, value)
+		_node.ExternalID = &value
+	}
+	if value, ok := _c.mutation.IsLegalEntity(); ok {
+		_spec.SetField(orgunit.FieldIsLegalEntity, field.TypeBool, value)
+		_node.IsLegalEntity = &value
+	}
+	if value, ok := _c.mutation.RegistrationNumber(); ok {
+		_spec.SetField(orgunit.FieldRegistrationNumber, field.TypeString, value)
+		_node.RegistrationNumber = &value
+	}
+	if value, ok := _c.mutation.TaxID(); ok {
+		_spec.SetField(orgunit.FieldTaxID, field.TypeString, value)
+		_node.TaxID = &value
+	}
+	if value, ok := _c.mutation.LegalEntityOrgID(); ok {
+		_spec.SetField(orgunit.FieldLegalEntityOrgID, field.TypeUint32, value)
+		_node.LegalEntityOrgID = &value
 	}
 	if value, ok := _c.mutation.Address(); ok {
 		_spec.SetField(orgunit.FieldAddress, field.TypeString, value)
@@ -863,29 +729,13 @@ func (_c *OrgUnitCreate) createSpec() (*OrgUnit, *sqlgraph.CreateSpec) {
 		_spec.SetField(orgunit.FieldEmail, field.TypeString, value)
 		_node.Email = &value
 	}
-	if value, ok := _c.mutation.Website(); ok {
-		_spec.SetField(orgunit.FieldWebsite, field.TypeString, value)
-		_node.Website = &value
-	}
 	if value, ok := _c.mutation.Timezone(); ok {
 		_spec.SetField(orgunit.FieldTimezone, field.TypeString, value)
 		_node.Timezone = &value
 	}
-	if value, ok := _c.mutation.Region(); ok {
-		_spec.SetField(orgunit.FieldRegion, field.TypeString, value)
-		_node.Region = &value
-	}
 	if value, ok := _c.mutation.Country(); ok {
 		_spec.SetField(orgunit.FieldCountry, field.TypeString, value)
 		_node.Country = &value
-	}
-	if value, ok := _c.mutation.City(); ok {
-		_spec.SetField(orgunit.FieldCity, field.TypeString, value)
-		_node.City = &value
-	}
-	if value, ok := _c.mutation.PostalCode(); ok {
-		_spec.SetField(orgunit.FieldPostalCode, field.TypeString, value)
-		_node.PostalCode = &value
 	}
 	if value, ok := _c.mutation.Latitude(); ok {
 		_spec.SetField(orgunit.FieldLatitude, field.TypeFloat64, value)
@@ -895,9 +745,21 @@ func (_c *OrgUnitCreate) createSpec() (*OrgUnit, *sqlgraph.CreateSpec) {
 		_spec.SetField(orgunit.FieldLongitude, field.TypeFloat64, value)
 		_node.Longitude = &value
 	}
-	if value, ok := _c.mutation.Logo(); ok {
-		_spec.SetField(orgunit.FieldLogo, field.TypeString, value)
-		_node.Logo = &value
+	if value, ok := _c.mutation.StartAt(); ok {
+		_spec.SetField(orgunit.FieldStartAt, field.TypeTime, value)
+		_node.StartAt = &value
+	}
+	if value, ok := _c.mutation.EndAt(); ok {
+		_spec.SetField(orgunit.FieldEndAt, field.TypeTime, value)
+		_node.EndAt = &value
+	}
+	if value, ok := _c.mutation.ContactUserID(); ok {
+		_spec.SetField(orgunit.FieldContactUserID, field.TypeUint32, value)
+		_node.ContactUserID = &value
+	}
+	if value, ok := _c.mutation.PermissionTags(); ok {
+		_spec.SetField(orgunit.FieldPermissionTags, field.TypeJSON, value)
+		_node.PermissionTags = value
 	}
 	if nodes := _c.mutation.ParentIDs(); len(nodes) > 0 {
 		edge := &sqlgraph.EdgeSpec{
@@ -1200,6 +1062,18 @@ func (u *OrgUnitUpsert) ClearPath() *OrgUnitUpsert {
 	return u
 }
 
+// SetName sets the "name" field.
+func (u *OrgUnitUpsert) SetName(v string) *OrgUnitUpsert {
+	u.Set(orgunit.FieldName, v)
+	return u
+}
+
+// UpdateName sets the "name" field to the value that was provided on create.
+func (u *OrgUnitUpsert) UpdateName() *OrgUnitUpsert {
+	u.SetExcluded(orgunit.FieldName)
+	return u
+}
+
 // SetCode sets the "code" field.
 func (u *OrgUnitUpsert) SetCode(v string) *OrgUnitUpsert {
 	u.Set(orgunit.FieldCode, v)
@@ -1215,138 +1089,6 @@ func (u *OrgUnitUpsert) UpdateCode() *OrgUnitUpsert {
 // ClearCode clears the value of the "code" field.
 func (u *OrgUnitUpsert) ClearCode() *OrgUnitUpsert {
 	u.SetNull(orgunit.FieldCode)
-	return u
-}
-
-// SetName sets the "name" field.
-func (u *OrgUnitUpsert) SetName(v string) *OrgUnitUpsert {
-	u.Set(orgunit.FieldName, v)
-	return u
-}
-
-// UpdateName sets the "name" field to the value that was provided on create.
-func (u *OrgUnitUpsert) UpdateName() *OrgUnitUpsert {
-	u.SetExcluded(orgunit.FieldName)
-	return u
-}
-
-// ClearName clears the value of the "name" field.
-func (u *OrgUnitUpsert) ClearName() *OrgUnitUpsert {
-	u.SetNull(orgunit.FieldName)
-	return u
-}
-
-// SetType sets the "type" field.
-func (u *OrgUnitUpsert) SetType(v string) *OrgUnitUpsert {
-	u.Set(orgunit.FieldType, v)
-	return u
-}
-
-// UpdateType sets the "type" field to the value that was provided on create.
-func (u *OrgUnitUpsert) UpdateType() *OrgUnitUpsert {
-	u.SetExcluded(orgunit.FieldType)
-	return u
-}
-
-// ClearType clears the value of the "type" field.
-func (u *OrgUnitUpsert) ClearType() *OrgUnitUpsert {
-	u.SetNull(orgunit.FieldType)
-	return u
-}
-
-// SetIsLegalEntity sets the "is_legal_entity" field.
-func (u *OrgUnitUpsert) SetIsLegalEntity(v bool) *OrgUnitUpsert {
-	u.Set(orgunit.FieldIsLegalEntity, v)
-	return u
-}
-
-// UpdateIsLegalEntity sets the "is_legal_entity" field to the value that was provided on create.
-func (u *OrgUnitUpsert) UpdateIsLegalEntity() *OrgUnitUpsert {
-	u.SetExcluded(orgunit.FieldIsLegalEntity)
-	return u
-}
-
-// ClearIsLegalEntity clears the value of the "is_legal_entity" field.
-func (u *OrgUnitUpsert) ClearIsLegalEntity() *OrgUnitUpsert {
-	u.SetNull(orgunit.FieldIsLegalEntity)
-	return u
-}
-
-// SetExternalID sets the "external_id" field.
-func (u *OrgUnitUpsert) SetExternalID(v string) *OrgUnitUpsert {
-	u.Set(orgunit.FieldExternalID, v)
-	return u
-}
-
-// UpdateExternalID sets the "external_id" field to the value that was provided on create.
-func (u *OrgUnitUpsert) UpdateExternalID() *OrgUnitUpsert {
-	u.SetExcluded(orgunit.FieldExternalID)
-	return u
-}
-
-// ClearExternalID clears the value of the "external_id" field.
-func (u *OrgUnitUpsert) ClearExternalID() *OrgUnitUpsert {
-	u.SetNull(orgunit.FieldExternalID)
-	return u
-}
-
-// SetLegalEntityOrgID sets the "legal_entity_org_id" field.
-func (u *OrgUnitUpsert) SetLegalEntityOrgID(v uint32) *OrgUnitUpsert {
-	u.Set(orgunit.FieldLegalEntityOrgID, v)
-	return u
-}
-
-// UpdateLegalEntityOrgID sets the "legal_entity_org_id" field to the value that was provided on create.
-func (u *OrgUnitUpsert) UpdateLegalEntityOrgID() *OrgUnitUpsert {
-	u.SetExcluded(orgunit.FieldLegalEntityOrgID)
-	return u
-}
-
-// AddLegalEntityOrgID adds v to the "legal_entity_org_id" field.
-func (u *OrgUnitUpsert) AddLegalEntityOrgID(v uint32) *OrgUnitUpsert {
-	u.Add(orgunit.FieldLegalEntityOrgID, v)
-	return u
-}
-
-// ClearLegalEntityOrgID clears the value of the "legal_entity_org_id" field.
-func (u *OrgUnitUpsert) ClearLegalEntityOrgID() *OrgUnitUpsert {
-	u.SetNull(orgunit.FieldLegalEntityOrgID)
-	return u
-}
-
-// SetTaxID sets the "tax_id" field.
-func (u *OrgUnitUpsert) SetTaxID(v string) *OrgUnitUpsert {
-	u.Set(orgunit.FieldTaxID, v)
-	return u
-}
-
-// UpdateTaxID sets the "tax_id" field to the value that was provided on create.
-func (u *OrgUnitUpsert) UpdateTaxID() *OrgUnitUpsert {
-	u.SetExcluded(orgunit.FieldTaxID)
-	return u
-}
-
-// ClearTaxID clears the value of the "tax_id" field.
-func (u *OrgUnitUpsert) ClearTaxID() *OrgUnitUpsert {
-	u.SetNull(orgunit.FieldTaxID)
-	return u
-}
-
-// SetRegistrationNumber sets the "registration_number" field.
-func (u *OrgUnitUpsert) SetRegistrationNumber(v string) *OrgUnitUpsert {
-	u.Set(orgunit.FieldRegistrationNumber, v)
-	return u
-}
-
-// UpdateRegistrationNumber sets the "registration_number" field to the value that was provided on create.
-func (u *OrgUnitUpsert) UpdateRegistrationNumber() *OrgUnitUpsert {
-	u.SetExcluded(orgunit.FieldRegistrationNumber)
-	return u
-}
-
-// ClearRegistrationNumber clears the value of the "registration_number" field.
-func (u *OrgUnitUpsert) ClearRegistrationNumber() *OrgUnitUpsert {
-	u.SetNull(orgunit.FieldRegistrationNumber)
 	return u
 }
 
@@ -1374,63 +1116,129 @@ func (u *OrgUnitUpsert) ClearLeaderID() *OrgUnitUpsert {
 	return u
 }
 
-// SetContactUserID sets the "contact_user_id" field.
-func (u *OrgUnitUpsert) SetContactUserID(v uint32) *OrgUnitUpsert {
-	u.Set(orgunit.FieldContactUserID, v)
+// SetType sets the "type" field.
+func (u *OrgUnitUpsert) SetType(v orgunit.Type) *OrgUnitUpsert {
+	u.Set(orgunit.FieldType, v)
 	return u
 }
 
-// UpdateContactUserID sets the "contact_user_id" field to the value that was provided on create.
-func (u *OrgUnitUpsert) UpdateContactUserID() *OrgUnitUpsert {
-	u.SetExcluded(orgunit.FieldContactUserID)
+// UpdateType sets the "type" field to the value that was provided on create.
+func (u *OrgUnitUpsert) UpdateType() *OrgUnitUpsert {
+	u.SetExcluded(orgunit.FieldType)
 	return u
 }
 
-// AddContactUserID adds v to the "contact_user_id" field.
-func (u *OrgUnitUpsert) AddContactUserID(v uint32) *OrgUnitUpsert {
-	u.Add(orgunit.FieldContactUserID, v)
+// SetBusinessScopes sets the "business_scopes" field.
+func (u *OrgUnitUpsert) SetBusinessScopes(v []string) *OrgUnitUpsert {
+	u.Set(orgunit.FieldBusinessScopes, v)
 	return u
 }
 
-// ClearContactUserID clears the value of the "contact_user_id" field.
-func (u *OrgUnitUpsert) ClearContactUserID() *OrgUnitUpsert {
-	u.SetNull(orgunit.FieldContactUserID)
+// UpdateBusinessScopes sets the "business_scopes" field to the value that was provided on create.
+func (u *OrgUnitUpsert) UpdateBusinessScopes() *OrgUnitUpsert {
+	u.SetExcluded(orgunit.FieldBusinessScopes)
 	return u
 }
 
-// SetStartAt sets the "start_at" field.
-func (u *OrgUnitUpsert) SetStartAt(v time.Time) *OrgUnitUpsert {
-	u.Set(orgunit.FieldStartAt, v)
+// ClearBusinessScopes clears the value of the "business_scopes" field.
+func (u *OrgUnitUpsert) ClearBusinessScopes() *OrgUnitUpsert {
+	u.SetNull(orgunit.FieldBusinessScopes)
 	return u
 }
 
-// UpdateStartAt sets the "start_at" field to the value that was provided on create.
-func (u *OrgUnitUpsert) UpdateStartAt() *OrgUnitUpsert {
-	u.SetExcluded(orgunit.FieldStartAt)
+// SetExternalID sets the "external_id" field.
+func (u *OrgUnitUpsert) SetExternalID(v string) *OrgUnitUpsert {
+	u.Set(orgunit.FieldExternalID, v)
 	return u
 }
 
-// ClearStartAt clears the value of the "start_at" field.
-func (u *OrgUnitUpsert) ClearStartAt() *OrgUnitUpsert {
-	u.SetNull(orgunit.FieldStartAt)
+// UpdateExternalID sets the "external_id" field to the value that was provided on create.
+func (u *OrgUnitUpsert) UpdateExternalID() *OrgUnitUpsert {
+	u.SetExcluded(orgunit.FieldExternalID)
 	return u
 }
 
-// SetEndAt sets the "end_at" field.
-func (u *OrgUnitUpsert) SetEndAt(v time.Time) *OrgUnitUpsert {
-	u.Set(orgunit.FieldEndAt, v)
+// ClearExternalID clears the value of the "external_id" field.
+func (u *OrgUnitUpsert) ClearExternalID() *OrgUnitUpsert {
+	u.SetNull(orgunit.FieldExternalID)
 	return u
 }
 
-// UpdateEndAt sets the "end_at" field to the value that was provided on create.
-func (u *OrgUnitUpsert) UpdateEndAt() *OrgUnitUpsert {
-	u.SetExcluded(orgunit.FieldEndAt)
+// SetIsLegalEntity sets the "is_legal_entity" field.
+func (u *OrgUnitUpsert) SetIsLegalEntity(v bool) *OrgUnitUpsert {
+	u.Set(orgunit.FieldIsLegalEntity, v)
 	return u
 }
 
-// ClearEndAt clears the value of the "end_at" field.
-func (u *OrgUnitUpsert) ClearEndAt() *OrgUnitUpsert {
-	u.SetNull(orgunit.FieldEndAt)
+// UpdateIsLegalEntity sets the "is_legal_entity" field to the value that was provided on create.
+func (u *OrgUnitUpsert) UpdateIsLegalEntity() *OrgUnitUpsert {
+	u.SetExcluded(orgunit.FieldIsLegalEntity)
+	return u
+}
+
+// ClearIsLegalEntity clears the value of the "is_legal_entity" field.
+func (u *OrgUnitUpsert) ClearIsLegalEntity() *OrgUnitUpsert {
+	u.SetNull(orgunit.FieldIsLegalEntity)
+	return u
+}
+
+// SetRegistrationNumber sets the "registration_number" field.
+func (u *OrgUnitUpsert) SetRegistrationNumber(v string) *OrgUnitUpsert {
+	u.Set(orgunit.FieldRegistrationNumber, v)
+	return u
+}
+
+// UpdateRegistrationNumber sets the "registration_number" field to the value that was provided on create.
+func (u *OrgUnitUpsert) UpdateRegistrationNumber() *OrgUnitUpsert {
+	u.SetExcluded(orgunit.FieldRegistrationNumber)
+	return u
+}
+
+// ClearRegistrationNumber clears the value of the "registration_number" field.
+func (u *OrgUnitUpsert) ClearRegistrationNumber() *OrgUnitUpsert {
+	u.SetNull(orgunit.FieldRegistrationNumber)
+	return u
+}
+
+// SetTaxID sets the "tax_id" field.
+func (u *OrgUnitUpsert) SetTaxID(v string) *OrgUnitUpsert {
+	u.Set(orgunit.FieldTaxID, v)
+	return u
+}
+
+// UpdateTaxID sets the "tax_id" field to the value that was provided on create.
+func (u *OrgUnitUpsert) UpdateTaxID() *OrgUnitUpsert {
+	u.SetExcluded(orgunit.FieldTaxID)
+	return u
+}
+
+// ClearTaxID clears the value of the "tax_id" field.
+func (u *OrgUnitUpsert) ClearTaxID() *OrgUnitUpsert {
+	u.SetNull(orgunit.FieldTaxID)
+	return u
+}
+
+// SetLegalEntityOrgID sets the "legal_entity_org_id" field.
+func (u *OrgUnitUpsert) SetLegalEntityOrgID(v uint32) *OrgUnitUpsert {
+	u.Set(orgunit.FieldLegalEntityOrgID, v)
+	return u
+}
+
+// UpdateLegalEntityOrgID sets the "legal_entity_org_id" field to the value that was provided on create.
+func (u *OrgUnitUpsert) UpdateLegalEntityOrgID() *OrgUnitUpsert {
+	u.SetExcluded(orgunit.FieldLegalEntityOrgID)
+	return u
+}
+
+// AddLegalEntityOrgID adds v to the "legal_entity_org_id" field.
+func (u *OrgUnitUpsert) AddLegalEntityOrgID(v uint32) *OrgUnitUpsert {
+	u.Add(orgunit.FieldLegalEntityOrgID, v)
+	return u
+}
+
+// ClearLegalEntityOrgID clears the value of the "legal_entity_org_id" field.
+func (u *OrgUnitUpsert) ClearLegalEntityOrgID() *OrgUnitUpsert {
+	u.SetNull(orgunit.FieldLegalEntityOrgID)
 	return u
 }
 
@@ -1488,24 +1296,6 @@ func (u *OrgUnitUpsert) ClearEmail() *OrgUnitUpsert {
 	return u
 }
 
-// SetWebsite sets the "website" field.
-func (u *OrgUnitUpsert) SetWebsite(v string) *OrgUnitUpsert {
-	u.Set(orgunit.FieldWebsite, v)
-	return u
-}
-
-// UpdateWebsite sets the "website" field to the value that was provided on create.
-func (u *OrgUnitUpsert) UpdateWebsite() *OrgUnitUpsert {
-	u.SetExcluded(orgunit.FieldWebsite)
-	return u
-}
-
-// ClearWebsite clears the value of the "website" field.
-func (u *OrgUnitUpsert) ClearWebsite() *OrgUnitUpsert {
-	u.SetNull(orgunit.FieldWebsite)
-	return u
-}
-
 // SetTimezone sets the "timezone" field.
 func (u *OrgUnitUpsert) SetTimezone(v string) *OrgUnitUpsert {
 	u.Set(orgunit.FieldTimezone, v)
@@ -1524,24 +1314,6 @@ func (u *OrgUnitUpsert) ClearTimezone() *OrgUnitUpsert {
 	return u
 }
 
-// SetRegion sets the "region" field.
-func (u *OrgUnitUpsert) SetRegion(v string) *OrgUnitUpsert {
-	u.Set(orgunit.FieldRegion, v)
-	return u
-}
-
-// UpdateRegion sets the "region" field to the value that was provided on create.
-func (u *OrgUnitUpsert) UpdateRegion() *OrgUnitUpsert {
-	u.SetExcluded(orgunit.FieldRegion)
-	return u
-}
-
-// ClearRegion clears the value of the "region" field.
-func (u *OrgUnitUpsert) ClearRegion() *OrgUnitUpsert {
-	u.SetNull(orgunit.FieldRegion)
-	return u
-}
-
 // SetCountry sets the "country" field.
 func (u *OrgUnitUpsert) SetCountry(v string) *OrgUnitUpsert {
 	u.Set(orgunit.FieldCountry, v)
@@ -1557,42 +1329,6 @@ func (u *OrgUnitUpsert) UpdateCountry() *OrgUnitUpsert {
 // ClearCountry clears the value of the "country" field.
 func (u *OrgUnitUpsert) ClearCountry() *OrgUnitUpsert {
 	u.SetNull(orgunit.FieldCountry)
-	return u
-}
-
-// SetCity sets the "city" field.
-func (u *OrgUnitUpsert) SetCity(v string) *OrgUnitUpsert {
-	u.Set(orgunit.FieldCity, v)
-	return u
-}
-
-// UpdateCity sets the "city" field to the value that was provided on create.
-func (u *OrgUnitUpsert) UpdateCity() *OrgUnitUpsert {
-	u.SetExcluded(orgunit.FieldCity)
-	return u
-}
-
-// ClearCity clears the value of the "city" field.
-func (u *OrgUnitUpsert) ClearCity() *OrgUnitUpsert {
-	u.SetNull(orgunit.FieldCity)
-	return u
-}
-
-// SetPostalCode sets the "postal_code" field.
-func (u *OrgUnitUpsert) SetPostalCode(v string) *OrgUnitUpsert {
-	u.Set(orgunit.FieldPostalCode, v)
-	return u
-}
-
-// UpdatePostalCode sets the "postal_code" field to the value that was provided on create.
-func (u *OrgUnitUpsert) UpdatePostalCode() *OrgUnitUpsert {
-	u.SetExcluded(orgunit.FieldPostalCode)
-	return u
-}
-
-// ClearPostalCode clears the value of the "postal_code" field.
-func (u *OrgUnitUpsert) ClearPostalCode() *OrgUnitUpsert {
-	u.SetNull(orgunit.FieldPostalCode)
 	return u
 }
 
@@ -1644,21 +1380,81 @@ func (u *OrgUnitUpsert) ClearLongitude() *OrgUnitUpsert {
 	return u
 }
 
-// SetLogo sets the "logo" field.
-func (u *OrgUnitUpsert) SetLogo(v string) *OrgUnitUpsert {
-	u.Set(orgunit.FieldLogo, v)
+// SetStartAt sets the "start_at" field.
+func (u *OrgUnitUpsert) SetStartAt(v time.Time) *OrgUnitUpsert {
+	u.Set(orgunit.FieldStartAt, v)
 	return u
 }
 
-// UpdateLogo sets the "logo" field to the value that was provided on create.
-func (u *OrgUnitUpsert) UpdateLogo() *OrgUnitUpsert {
-	u.SetExcluded(orgunit.FieldLogo)
+// UpdateStartAt sets the "start_at" field to the value that was provided on create.
+func (u *OrgUnitUpsert) UpdateStartAt() *OrgUnitUpsert {
+	u.SetExcluded(orgunit.FieldStartAt)
 	return u
 }
 
-// ClearLogo clears the value of the "logo" field.
-func (u *OrgUnitUpsert) ClearLogo() *OrgUnitUpsert {
-	u.SetNull(orgunit.FieldLogo)
+// ClearStartAt clears the value of the "start_at" field.
+func (u *OrgUnitUpsert) ClearStartAt() *OrgUnitUpsert {
+	u.SetNull(orgunit.FieldStartAt)
+	return u
+}
+
+// SetEndAt sets the "end_at" field.
+func (u *OrgUnitUpsert) SetEndAt(v time.Time) *OrgUnitUpsert {
+	u.Set(orgunit.FieldEndAt, v)
+	return u
+}
+
+// UpdateEndAt sets the "end_at" field to the value that was provided on create.
+func (u *OrgUnitUpsert) UpdateEndAt() *OrgUnitUpsert {
+	u.SetExcluded(orgunit.FieldEndAt)
+	return u
+}
+
+// ClearEndAt clears the value of the "end_at" field.
+func (u *OrgUnitUpsert) ClearEndAt() *OrgUnitUpsert {
+	u.SetNull(orgunit.FieldEndAt)
+	return u
+}
+
+// SetContactUserID sets the "contact_user_id" field.
+func (u *OrgUnitUpsert) SetContactUserID(v uint32) *OrgUnitUpsert {
+	u.Set(orgunit.FieldContactUserID, v)
+	return u
+}
+
+// UpdateContactUserID sets the "contact_user_id" field to the value that was provided on create.
+func (u *OrgUnitUpsert) UpdateContactUserID() *OrgUnitUpsert {
+	u.SetExcluded(orgunit.FieldContactUserID)
+	return u
+}
+
+// AddContactUserID adds v to the "contact_user_id" field.
+func (u *OrgUnitUpsert) AddContactUserID(v uint32) *OrgUnitUpsert {
+	u.Add(orgunit.FieldContactUserID, v)
+	return u
+}
+
+// ClearContactUserID clears the value of the "contact_user_id" field.
+func (u *OrgUnitUpsert) ClearContactUserID() *OrgUnitUpsert {
+	u.SetNull(orgunit.FieldContactUserID)
+	return u
+}
+
+// SetPermissionTags sets the "permission_tags" field.
+func (u *OrgUnitUpsert) SetPermissionTags(v []string) *OrgUnitUpsert {
+	u.Set(orgunit.FieldPermissionTags, v)
+	return u
+}
+
+// UpdatePermissionTags sets the "permission_tags" field to the value that was provided on create.
+func (u *OrgUnitUpsert) UpdatePermissionTags() *OrgUnitUpsert {
+	u.SetExcluded(orgunit.FieldPermissionTags)
+	return u
+}
+
+// ClearPermissionTags clears the value of the "permission_tags" field.
+func (u *OrgUnitUpsert) ClearPermissionTags() *OrgUnitUpsert {
+	u.SetNull(orgunit.FieldPermissionTags)
 	return u
 }
 
@@ -1968,6 +1764,20 @@ func (u *OrgUnitUpsertOne) ClearPath() *OrgUnitUpsertOne {
 	})
 }
 
+// SetName sets the "name" field.
+func (u *OrgUnitUpsertOne) SetName(v string) *OrgUnitUpsertOne {
+	return u.Update(func(s *OrgUnitUpsert) {
+		s.SetName(v)
+	})
+}
+
+// UpdateName sets the "name" field to the value that was provided on create.
+func (u *OrgUnitUpsertOne) UpdateName() *OrgUnitUpsertOne {
+	return u.Update(func(s *OrgUnitUpsert) {
+		s.UpdateName()
+	})
+}
+
 // SetCode sets the "code" field.
 func (u *OrgUnitUpsertOne) SetCode(v string) *OrgUnitUpsertOne {
 	return u.Update(func(s *OrgUnitUpsert) {
@@ -1986,160 +1796,6 @@ func (u *OrgUnitUpsertOne) UpdateCode() *OrgUnitUpsertOne {
 func (u *OrgUnitUpsertOne) ClearCode() *OrgUnitUpsertOne {
 	return u.Update(func(s *OrgUnitUpsert) {
 		s.ClearCode()
-	})
-}
-
-// SetName sets the "name" field.
-func (u *OrgUnitUpsertOne) SetName(v string) *OrgUnitUpsertOne {
-	return u.Update(func(s *OrgUnitUpsert) {
-		s.SetName(v)
-	})
-}
-
-// UpdateName sets the "name" field to the value that was provided on create.
-func (u *OrgUnitUpsertOne) UpdateName() *OrgUnitUpsertOne {
-	return u.Update(func(s *OrgUnitUpsert) {
-		s.UpdateName()
-	})
-}
-
-// ClearName clears the value of the "name" field.
-func (u *OrgUnitUpsertOne) ClearName() *OrgUnitUpsertOne {
-	return u.Update(func(s *OrgUnitUpsert) {
-		s.ClearName()
-	})
-}
-
-// SetType sets the "type" field.
-func (u *OrgUnitUpsertOne) SetType(v string) *OrgUnitUpsertOne {
-	return u.Update(func(s *OrgUnitUpsert) {
-		s.SetType(v)
-	})
-}
-
-// UpdateType sets the "type" field to the value that was provided on create.
-func (u *OrgUnitUpsertOne) UpdateType() *OrgUnitUpsertOne {
-	return u.Update(func(s *OrgUnitUpsert) {
-		s.UpdateType()
-	})
-}
-
-// ClearType clears the value of the "type" field.
-func (u *OrgUnitUpsertOne) ClearType() *OrgUnitUpsertOne {
-	return u.Update(func(s *OrgUnitUpsert) {
-		s.ClearType()
-	})
-}
-
-// SetIsLegalEntity sets the "is_legal_entity" field.
-func (u *OrgUnitUpsertOne) SetIsLegalEntity(v bool) *OrgUnitUpsertOne {
-	return u.Update(func(s *OrgUnitUpsert) {
-		s.SetIsLegalEntity(v)
-	})
-}
-
-// UpdateIsLegalEntity sets the "is_legal_entity" field to the value that was provided on create.
-func (u *OrgUnitUpsertOne) UpdateIsLegalEntity() *OrgUnitUpsertOne {
-	return u.Update(func(s *OrgUnitUpsert) {
-		s.UpdateIsLegalEntity()
-	})
-}
-
-// ClearIsLegalEntity clears the value of the "is_legal_entity" field.
-func (u *OrgUnitUpsertOne) ClearIsLegalEntity() *OrgUnitUpsertOne {
-	return u.Update(func(s *OrgUnitUpsert) {
-		s.ClearIsLegalEntity()
-	})
-}
-
-// SetExternalID sets the "external_id" field.
-func (u *OrgUnitUpsertOne) SetExternalID(v string) *OrgUnitUpsertOne {
-	return u.Update(func(s *OrgUnitUpsert) {
-		s.SetExternalID(v)
-	})
-}
-
-// UpdateExternalID sets the "external_id" field to the value that was provided on create.
-func (u *OrgUnitUpsertOne) UpdateExternalID() *OrgUnitUpsertOne {
-	return u.Update(func(s *OrgUnitUpsert) {
-		s.UpdateExternalID()
-	})
-}
-
-// ClearExternalID clears the value of the "external_id" field.
-func (u *OrgUnitUpsertOne) ClearExternalID() *OrgUnitUpsertOne {
-	return u.Update(func(s *OrgUnitUpsert) {
-		s.ClearExternalID()
-	})
-}
-
-// SetLegalEntityOrgID sets the "legal_entity_org_id" field.
-func (u *OrgUnitUpsertOne) SetLegalEntityOrgID(v uint32) *OrgUnitUpsertOne {
-	return u.Update(func(s *OrgUnitUpsert) {
-		s.SetLegalEntityOrgID(v)
-	})
-}
-
-// AddLegalEntityOrgID adds v to the "legal_entity_org_id" field.
-func (u *OrgUnitUpsertOne) AddLegalEntityOrgID(v uint32) *OrgUnitUpsertOne {
-	return u.Update(func(s *OrgUnitUpsert) {
-		s.AddLegalEntityOrgID(v)
-	})
-}
-
-// UpdateLegalEntityOrgID sets the "legal_entity_org_id" field to the value that was provided on create.
-func (u *OrgUnitUpsertOne) UpdateLegalEntityOrgID() *OrgUnitUpsertOne {
-	return u.Update(func(s *OrgUnitUpsert) {
-		s.UpdateLegalEntityOrgID()
-	})
-}
-
-// ClearLegalEntityOrgID clears the value of the "legal_entity_org_id" field.
-func (u *OrgUnitUpsertOne) ClearLegalEntityOrgID() *OrgUnitUpsertOne {
-	return u.Update(func(s *OrgUnitUpsert) {
-		s.ClearLegalEntityOrgID()
-	})
-}
-
-// SetTaxID sets the "tax_id" field.
-func (u *OrgUnitUpsertOne) SetTaxID(v string) *OrgUnitUpsertOne {
-	return u.Update(func(s *OrgUnitUpsert) {
-		s.SetTaxID(v)
-	})
-}
-
-// UpdateTaxID sets the "tax_id" field to the value that was provided on create.
-func (u *OrgUnitUpsertOne) UpdateTaxID() *OrgUnitUpsertOne {
-	return u.Update(func(s *OrgUnitUpsert) {
-		s.UpdateTaxID()
-	})
-}
-
-// ClearTaxID clears the value of the "tax_id" field.
-func (u *OrgUnitUpsertOne) ClearTaxID() *OrgUnitUpsertOne {
-	return u.Update(func(s *OrgUnitUpsert) {
-		s.ClearTaxID()
-	})
-}
-
-// SetRegistrationNumber sets the "registration_number" field.
-func (u *OrgUnitUpsertOne) SetRegistrationNumber(v string) *OrgUnitUpsertOne {
-	return u.Update(func(s *OrgUnitUpsert) {
-		s.SetRegistrationNumber(v)
-	})
-}
-
-// UpdateRegistrationNumber sets the "registration_number" field to the value that was provided on create.
-func (u *OrgUnitUpsertOne) UpdateRegistrationNumber() *OrgUnitUpsertOne {
-	return u.Update(func(s *OrgUnitUpsert) {
-		s.UpdateRegistrationNumber()
-	})
-}
-
-// ClearRegistrationNumber clears the value of the "registration_number" field.
-func (u *OrgUnitUpsertOne) ClearRegistrationNumber() *OrgUnitUpsertOne {
-	return u.Update(func(s *OrgUnitUpsert) {
-		s.ClearRegistrationNumber()
 	})
 }
 
@@ -2171,73 +1827,150 @@ func (u *OrgUnitUpsertOne) ClearLeaderID() *OrgUnitUpsertOne {
 	})
 }
 
-// SetContactUserID sets the "contact_user_id" field.
-func (u *OrgUnitUpsertOne) SetContactUserID(v uint32) *OrgUnitUpsertOne {
+// SetType sets the "type" field.
+func (u *OrgUnitUpsertOne) SetType(v orgunit.Type) *OrgUnitUpsertOne {
 	return u.Update(func(s *OrgUnitUpsert) {
-		s.SetContactUserID(v)
+		s.SetType(v)
 	})
 }
 
-// AddContactUserID adds v to the "contact_user_id" field.
-func (u *OrgUnitUpsertOne) AddContactUserID(v uint32) *OrgUnitUpsertOne {
+// UpdateType sets the "type" field to the value that was provided on create.
+func (u *OrgUnitUpsertOne) UpdateType() *OrgUnitUpsertOne {
 	return u.Update(func(s *OrgUnitUpsert) {
-		s.AddContactUserID(v)
+		s.UpdateType()
 	})
 }
 
-// UpdateContactUserID sets the "contact_user_id" field to the value that was provided on create.
-func (u *OrgUnitUpsertOne) UpdateContactUserID() *OrgUnitUpsertOne {
+// SetBusinessScopes sets the "business_scopes" field.
+func (u *OrgUnitUpsertOne) SetBusinessScopes(v []string) *OrgUnitUpsertOne {
 	return u.Update(func(s *OrgUnitUpsert) {
-		s.UpdateContactUserID()
+		s.SetBusinessScopes(v)
 	})
 }
 
-// ClearContactUserID clears the value of the "contact_user_id" field.
-func (u *OrgUnitUpsertOne) ClearContactUserID() *OrgUnitUpsertOne {
+// UpdateBusinessScopes sets the "business_scopes" field to the value that was provided on create.
+func (u *OrgUnitUpsertOne) UpdateBusinessScopes() *OrgUnitUpsertOne {
 	return u.Update(func(s *OrgUnitUpsert) {
-		s.ClearContactUserID()
+		s.UpdateBusinessScopes()
 	})
 }
 
-// SetStartAt sets the "start_at" field.
-func (u *OrgUnitUpsertOne) SetStartAt(v time.Time) *OrgUnitUpsertOne {
+// ClearBusinessScopes clears the value of the "business_scopes" field.
+func (u *OrgUnitUpsertOne) ClearBusinessScopes() *OrgUnitUpsertOne {
 	return u.Update(func(s *OrgUnitUpsert) {
-		s.SetStartAt(v)
+		s.ClearBusinessScopes()
 	})
 }
 
-// UpdateStartAt sets the "start_at" field to the value that was provided on create.
-func (u *OrgUnitUpsertOne) UpdateStartAt() *OrgUnitUpsertOne {
+// SetExternalID sets the "external_id" field.
+func (u *OrgUnitUpsertOne) SetExternalID(v string) *OrgUnitUpsertOne {
 	return u.Update(func(s *OrgUnitUpsert) {
-		s.UpdateStartAt()
+		s.SetExternalID(v)
 	})
 }
 
-// ClearStartAt clears the value of the "start_at" field.
-func (u *OrgUnitUpsertOne) ClearStartAt() *OrgUnitUpsertOne {
+// UpdateExternalID sets the "external_id" field to the value that was provided on create.
+func (u *OrgUnitUpsertOne) UpdateExternalID() *OrgUnitUpsertOne {
 	return u.Update(func(s *OrgUnitUpsert) {
-		s.ClearStartAt()
+		s.UpdateExternalID()
 	})
 }
 
-// SetEndAt sets the "end_at" field.
-func (u *OrgUnitUpsertOne) SetEndAt(v time.Time) *OrgUnitUpsertOne {
+// ClearExternalID clears the value of the "external_id" field.
+func (u *OrgUnitUpsertOne) ClearExternalID() *OrgUnitUpsertOne {
 	return u.Update(func(s *OrgUnitUpsert) {
-		s.SetEndAt(v)
+		s.ClearExternalID()
 	})
 }
 
-// UpdateEndAt sets the "end_at" field to the value that was provided on create.
-func (u *OrgUnitUpsertOne) UpdateEndAt() *OrgUnitUpsertOne {
+// SetIsLegalEntity sets the "is_legal_entity" field.
+func (u *OrgUnitUpsertOne) SetIsLegalEntity(v bool) *OrgUnitUpsertOne {
 	return u.Update(func(s *OrgUnitUpsert) {
-		s.UpdateEndAt()
+		s.SetIsLegalEntity(v)
 	})
 }
 
-// ClearEndAt clears the value of the "end_at" field.
-func (u *OrgUnitUpsertOne) ClearEndAt() *OrgUnitUpsertOne {
+// UpdateIsLegalEntity sets the "is_legal_entity" field to the value that was provided on create.
+func (u *OrgUnitUpsertOne) UpdateIsLegalEntity() *OrgUnitUpsertOne {
 	return u.Update(func(s *OrgUnitUpsert) {
-		s.ClearEndAt()
+		s.UpdateIsLegalEntity()
+	})
+}
+
+// ClearIsLegalEntity clears the value of the "is_legal_entity" field.
+func (u *OrgUnitUpsertOne) ClearIsLegalEntity() *OrgUnitUpsertOne {
+	return u.Update(func(s *OrgUnitUpsert) {
+		s.ClearIsLegalEntity()
+	})
+}
+
+// SetRegistrationNumber sets the "registration_number" field.
+func (u *OrgUnitUpsertOne) SetRegistrationNumber(v string) *OrgUnitUpsertOne {
+	return u.Update(func(s *OrgUnitUpsert) {
+		s.SetRegistrationNumber(v)
+	})
+}
+
+// UpdateRegistrationNumber sets the "registration_number" field to the value that was provided on create.
+func (u *OrgUnitUpsertOne) UpdateRegistrationNumber() *OrgUnitUpsertOne {
+	return u.Update(func(s *OrgUnitUpsert) {
+		s.UpdateRegistrationNumber()
+	})
+}
+
+// ClearRegistrationNumber clears the value of the "registration_number" field.
+func (u *OrgUnitUpsertOne) ClearRegistrationNumber() *OrgUnitUpsertOne {
+	return u.Update(func(s *OrgUnitUpsert) {
+		s.ClearRegistrationNumber()
+	})
+}
+
+// SetTaxID sets the "tax_id" field.
+func (u *OrgUnitUpsertOne) SetTaxID(v string) *OrgUnitUpsertOne {
+	return u.Update(func(s *OrgUnitUpsert) {
+		s.SetTaxID(v)
+	})
+}
+
+// UpdateTaxID sets the "tax_id" field to the value that was provided on create.
+func (u *OrgUnitUpsertOne) UpdateTaxID() *OrgUnitUpsertOne {
+	return u.Update(func(s *OrgUnitUpsert) {
+		s.UpdateTaxID()
+	})
+}
+
+// ClearTaxID clears the value of the "tax_id" field.
+func (u *OrgUnitUpsertOne) ClearTaxID() *OrgUnitUpsertOne {
+	return u.Update(func(s *OrgUnitUpsert) {
+		s.ClearTaxID()
+	})
+}
+
+// SetLegalEntityOrgID sets the "legal_entity_org_id" field.
+func (u *OrgUnitUpsertOne) SetLegalEntityOrgID(v uint32) *OrgUnitUpsertOne {
+	return u.Update(func(s *OrgUnitUpsert) {
+		s.SetLegalEntityOrgID(v)
+	})
+}
+
+// AddLegalEntityOrgID adds v to the "legal_entity_org_id" field.
+func (u *OrgUnitUpsertOne) AddLegalEntityOrgID(v uint32) *OrgUnitUpsertOne {
+	return u.Update(func(s *OrgUnitUpsert) {
+		s.AddLegalEntityOrgID(v)
+	})
+}
+
+// UpdateLegalEntityOrgID sets the "legal_entity_org_id" field to the value that was provided on create.
+func (u *OrgUnitUpsertOne) UpdateLegalEntityOrgID() *OrgUnitUpsertOne {
+	return u.Update(func(s *OrgUnitUpsert) {
+		s.UpdateLegalEntityOrgID()
+	})
+}
+
+// ClearLegalEntityOrgID clears the value of the "legal_entity_org_id" field.
+func (u *OrgUnitUpsertOne) ClearLegalEntityOrgID() *OrgUnitUpsertOne {
+	return u.Update(func(s *OrgUnitUpsert) {
+		s.ClearLegalEntityOrgID()
 	})
 }
 
@@ -2304,27 +2037,6 @@ func (u *OrgUnitUpsertOne) ClearEmail() *OrgUnitUpsertOne {
 	})
 }
 
-// SetWebsite sets the "website" field.
-func (u *OrgUnitUpsertOne) SetWebsite(v string) *OrgUnitUpsertOne {
-	return u.Update(func(s *OrgUnitUpsert) {
-		s.SetWebsite(v)
-	})
-}
-
-// UpdateWebsite sets the "website" field to the value that was provided on create.
-func (u *OrgUnitUpsertOne) UpdateWebsite() *OrgUnitUpsertOne {
-	return u.Update(func(s *OrgUnitUpsert) {
-		s.UpdateWebsite()
-	})
-}
-
-// ClearWebsite clears the value of the "website" field.
-func (u *OrgUnitUpsertOne) ClearWebsite() *OrgUnitUpsertOne {
-	return u.Update(func(s *OrgUnitUpsert) {
-		s.ClearWebsite()
-	})
-}
-
 // SetTimezone sets the "timezone" field.
 func (u *OrgUnitUpsertOne) SetTimezone(v string) *OrgUnitUpsertOne {
 	return u.Update(func(s *OrgUnitUpsert) {
@@ -2346,27 +2058,6 @@ func (u *OrgUnitUpsertOne) ClearTimezone() *OrgUnitUpsertOne {
 	})
 }
 
-// SetRegion sets the "region" field.
-func (u *OrgUnitUpsertOne) SetRegion(v string) *OrgUnitUpsertOne {
-	return u.Update(func(s *OrgUnitUpsert) {
-		s.SetRegion(v)
-	})
-}
-
-// UpdateRegion sets the "region" field to the value that was provided on create.
-func (u *OrgUnitUpsertOne) UpdateRegion() *OrgUnitUpsertOne {
-	return u.Update(func(s *OrgUnitUpsert) {
-		s.UpdateRegion()
-	})
-}
-
-// ClearRegion clears the value of the "region" field.
-func (u *OrgUnitUpsertOne) ClearRegion() *OrgUnitUpsertOne {
-	return u.Update(func(s *OrgUnitUpsert) {
-		s.ClearRegion()
-	})
-}
-
 // SetCountry sets the "country" field.
 func (u *OrgUnitUpsertOne) SetCountry(v string) *OrgUnitUpsertOne {
 	return u.Update(func(s *OrgUnitUpsert) {
@@ -2385,48 +2076,6 @@ func (u *OrgUnitUpsertOne) UpdateCountry() *OrgUnitUpsertOne {
 func (u *OrgUnitUpsertOne) ClearCountry() *OrgUnitUpsertOne {
 	return u.Update(func(s *OrgUnitUpsert) {
 		s.ClearCountry()
-	})
-}
-
-// SetCity sets the "city" field.
-func (u *OrgUnitUpsertOne) SetCity(v string) *OrgUnitUpsertOne {
-	return u.Update(func(s *OrgUnitUpsert) {
-		s.SetCity(v)
-	})
-}
-
-// UpdateCity sets the "city" field to the value that was provided on create.
-func (u *OrgUnitUpsertOne) UpdateCity() *OrgUnitUpsertOne {
-	return u.Update(func(s *OrgUnitUpsert) {
-		s.UpdateCity()
-	})
-}
-
-// ClearCity clears the value of the "city" field.
-func (u *OrgUnitUpsertOne) ClearCity() *OrgUnitUpsertOne {
-	return u.Update(func(s *OrgUnitUpsert) {
-		s.ClearCity()
-	})
-}
-
-// SetPostalCode sets the "postal_code" field.
-func (u *OrgUnitUpsertOne) SetPostalCode(v string) *OrgUnitUpsertOne {
-	return u.Update(func(s *OrgUnitUpsert) {
-		s.SetPostalCode(v)
-	})
-}
-
-// UpdatePostalCode sets the "postal_code" field to the value that was provided on create.
-func (u *OrgUnitUpsertOne) UpdatePostalCode() *OrgUnitUpsertOne {
-	return u.Update(func(s *OrgUnitUpsert) {
-		s.UpdatePostalCode()
-	})
-}
-
-// ClearPostalCode clears the value of the "postal_code" field.
-func (u *OrgUnitUpsertOne) ClearPostalCode() *OrgUnitUpsertOne {
-	return u.Update(func(s *OrgUnitUpsert) {
-		s.ClearPostalCode()
 	})
 }
 
@@ -2486,24 +2135,94 @@ func (u *OrgUnitUpsertOne) ClearLongitude() *OrgUnitUpsertOne {
 	})
 }
 
-// SetLogo sets the "logo" field.
-func (u *OrgUnitUpsertOne) SetLogo(v string) *OrgUnitUpsertOne {
+// SetStartAt sets the "start_at" field.
+func (u *OrgUnitUpsertOne) SetStartAt(v time.Time) *OrgUnitUpsertOne {
 	return u.Update(func(s *OrgUnitUpsert) {
-		s.SetLogo(v)
+		s.SetStartAt(v)
 	})
 }
 
-// UpdateLogo sets the "logo" field to the value that was provided on create.
-func (u *OrgUnitUpsertOne) UpdateLogo() *OrgUnitUpsertOne {
+// UpdateStartAt sets the "start_at" field to the value that was provided on create.
+func (u *OrgUnitUpsertOne) UpdateStartAt() *OrgUnitUpsertOne {
 	return u.Update(func(s *OrgUnitUpsert) {
-		s.UpdateLogo()
+		s.UpdateStartAt()
 	})
 }
 
-// ClearLogo clears the value of the "logo" field.
-func (u *OrgUnitUpsertOne) ClearLogo() *OrgUnitUpsertOne {
+// ClearStartAt clears the value of the "start_at" field.
+func (u *OrgUnitUpsertOne) ClearStartAt() *OrgUnitUpsertOne {
 	return u.Update(func(s *OrgUnitUpsert) {
-		s.ClearLogo()
+		s.ClearStartAt()
+	})
+}
+
+// SetEndAt sets the "end_at" field.
+func (u *OrgUnitUpsertOne) SetEndAt(v time.Time) *OrgUnitUpsertOne {
+	return u.Update(func(s *OrgUnitUpsert) {
+		s.SetEndAt(v)
+	})
+}
+
+// UpdateEndAt sets the "end_at" field to the value that was provided on create.
+func (u *OrgUnitUpsertOne) UpdateEndAt() *OrgUnitUpsertOne {
+	return u.Update(func(s *OrgUnitUpsert) {
+		s.UpdateEndAt()
+	})
+}
+
+// ClearEndAt clears the value of the "end_at" field.
+func (u *OrgUnitUpsertOne) ClearEndAt() *OrgUnitUpsertOne {
+	return u.Update(func(s *OrgUnitUpsert) {
+		s.ClearEndAt()
+	})
+}
+
+// SetContactUserID sets the "contact_user_id" field.
+func (u *OrgUnitUpsertOne) SetContactUserID(v uint32) *OrgUnitUpsertOne {
+	return u.Update(func(s *OrgUnitUpsert) {
+		s.SetContactUserID(v)
+	})
+}
+
+// AddContactUserID adds v to the "contact_user_id" field.
+func (u *OrgUnitUpsertOne) AddContactUserID(v uint32) *OrgUnitUpsertOne {
+	return u.Update(func(s *OrgUnitUpsert) {
+		s.AddContactUserID(v)
+	})
+}
+
+// UpdateContactUserID sets the "contact_user_id" field to the value that was provided on create.
+func (u *OrgUnitUpsertOne) UpdateContactUserID() *OrgUnitUpsertOne {
+	return u.Update(func(s *OrgUnitUpsert) {
+		s.UpdateContactUserID()
+	})
+}
+
+// ClearContactUserID clears the value of the "contact_user_id" field.
+func (u *OrgUnitUpsertOne) ClearContactUserID() *OrgUnitUpsertOne {
+	return u.Update(func(s *OrgUnitUpsert) {
+		s.ClearContactUserID()
+	})
+}
+
+// SetPermissionTags sets the "permission_tags" field.
+func (u *OrgUnitUpsertOne) SetPermissionTags(v []string) *OrgUnitUpsertOne {
+	return u.Update(func(s *OrgUnitUpsert) {
+		s.SetPermissionTags(v)
+	})
+}
+
+// UpdatePermissionTags sets the "permission_tags" field to the value that was provided on create.
+func (u *OrgUnitUpsertOne) UpdatePermissionTags() *OrgUnitUpsertOne {
+	return u.Update(func(s *OrgUnitUpsert) {
+		s.UpdatePermissionTags()
+	})
+}
+
+// ClearPermissionTags clears the value of the "permission_tags" field.
+func (u *OrgUnitUpsertOne) ClearPermissionTags() *OrgUnitUpsertOne {
+	return u.Update(func(s *OrgUnitUpsert) {
+		s.ClearPermissionTags()
 	})
 }
 
@@ -2979,6 +2698,20 @@ func (u *OrgUnitUpsertBulk) ClearPath() *OrgUnitUpsertBulk {
 	})
 }
 
+// SetName sets the "name" field.
+func (u *OrgUnitUpsertBulk) SetName(v string) *OrgUnitUpsertBulk {
+	return u.Update(func(s *OrgUnitUpsert) {
+		s.SetName(v)
+	})
+}
+
+// UpdateName sets the "name" field to the value that was provided on create.
+func (u *OrgUnitUpsertBulk) UpdateName() *OrgUnitUpsertBulk {
+	return u.Update(func(s *OrgUnitUpsert) {
+		s.UpdateName()
+	})
+}
+
 // SetCode sets the "code" field.
 func (u *OrgUnitUpsertBulk) SetCode(v string) *OrgUnitUpsertBulk {
 	return u.Update(func(s *OrgUnitUpsert) {
@@ -2997,160 +2730,6 @@ func (u *OrgUnitUpsertBulk) UpdateCode() *OrgUnitUpsertBulk {
 func (u *OrgUnitUpsertBulk) ClearCode() *OrgUnitUpsertBulk {
 	return u.Update(func(s *OrgUnitUpsert) {
 		s.ClearCode()
-	})
-}
-
-// SetName sets the "name" field.
-func (u *OrgUnitUpsertBulk) SetName(v string) *OrgUnitUpsertBulk {
-	return u.Update(func(s *OrgUnitUpsert) {
-		s.SetName(v)
-	})
-}
-
-// UpdateName sets the "name" field to the value that was provided on create.
-func (u *OrgUnitUpsertBulk) UpdateName() *OrgUnitUpsertBulk {
-	return u.Update(func(s *OrgUnitUpsert) {
-		s.UpdateName()
-	})
-}
-
-// ClearName clears the value of the "name" field.
-func (u *OrgUnitUpsertBulk) ClearName() *OrgUnitUpsertBulk {
-	return u.Update(func(s *OrgUnitUpsert) {
-		s.ClearName()
-	})
-}
-
-// SetType sets the "type" field.
-func (u *OrgUnitUpsertBulk) SetType(v string) *OrgUnitUpsertBulk {
-	return u.Update(func(s *OrgUnitUpsert) {
-		s.SetType(v)
-	})
-}
-
-// UpdateType sets the "type" field to the value that was provided on create.
-func (u *OrgUnitUpsertBulk) UpdateType() *OrgUnitUpsertBulk {
-	return u.Update(func(s *OrgUnitUpsert) {
-		s.UpdateType()
-	})
-}
-
-// ClearType clears the value of the "type" field.
-func (u *OrgUnitUpsertBulk) ClearType() *OrgUnitUpsertBulk {
-	return u.Update(func(s *OrgUnitUpsert) {
-		s.ClearType()
-	})
-}
-
-// SetIsLegalEntity sets the "is_legal_entity" field.
-func (u *OrgUnitUpsertBulk) SetIsLegalEntity(v bool) *OrgUnitUpsertBulk {
-	return u.Update(func(s *OrgUnitUpsert) {
-		s.SetIsLegalEntity(v)
-	})
-}
-
-// UpdateIsLegalEntity sets the "is_legal_entity" field to the value that was provided on create.
-func (u *OrgUnitUpsertBulk) UpdateIsLegalEntity() *OrgUnitUpsertBulk {
-	return u.Update(func(s *OrgUnitUpsert) {
-		s.UpdateIsLegalEntity()
-	})
-}
-
-// ClearIsLegalEntity clears the value of the "is_legal_entity" field.
-func (u *OrgUnitUpsertBulk) ClearIsLegalEntity() *OrgUnitUpsertBulk {
-	return u.Update(func(s *OrgUnitUpsert) {
-		s.ClearIsLegalEntity()
-	})
-}
-
-// SetExternalID sets the "external_id" field.
-func (u *OrgUnitUpsertBulk) SetExternalID(v string) *OrgUnitUpsertBulk {
-	return u.Update(func(s *OrgUnitUpsert) {
-		s.SetExternalID(v)
-	})
-}
-
-// UpdateExternalID sets the "external_id" field to the value that was provided on create.
-func (u *OrgUnitUpsertBulk) UpdateExternalID() *OrgUnitUpsertBulk {
-	return u.Update(func(s *OrgUnitUpsert) {
-		s.UpdateExternalID()
-	})
-}
-
-// ClearExternalID clears the value of the "external_id" field.
-func (u *OrgUnitUpsertBulk) ClearExternalID() *OrgUnitUpsertBulk {
-	return u.Update(func(s *OrgUnitUpsert) {
-		s.ClearExternalID()
-	})
-}
-
-// SetLegalEntityOrgID sets the "legal_entity_org_id" field.
-func (u *OrgUnitUpsertBulk) SetLegalEntityOrgID(v uint32) *OrgUnitUpsertBulk {
-	return u.Update(func(s *OrgUnitUpsert) {
-		s.SetLegalEntityOrgID(v)
-	})
-}
-
-// AddLegalEntityOrgID adds v to the "legal_entity_org_id" field.
-func (u *OrgUnitUpsertBulk) AddLegalEntityOrgID(v uint32) *OrgUnitUpsertBulk {
-	return u.Update(func(s *OrgUnitUpsert) {
-		s.AddLegalEntityOrgID(v)
-	})
-}
-
-// UpdateLegalEntityOrgID sets the "legal_entity_org_id" field to the value that was provided on create.
-func (u *OrgUnitUpsertBulk) UpdateLegalEntityOrgID() *OrgUnitUpsertBulk {
-	return u.Update(func(s *OrgUnitUpsert) {
-		s.UpdateLegalEntityOrgID()
-	})
-}
-
-// ClearLegalEntityOrgID clears the value of the "legal_entity_org_id" field.
-func (u *OrgUnitUpsertBulk) ClearLegalEntityOrgID() *OrgUnitUpsertBulk {
-	return u.Update(func(s *OrgUnitUpsert) {
-		s.ClearLegalEntityOrgID()
-	})
-}
-
-// SetTaxID sets the "tax_id" field.
-func (u *OrgUnitUpsertBulk) SetTaxID(v string) *OrgUnitUpsertBulk {
-	return u.Update(func(s *OrgUnitUpsert) {
-		s.SetTaxID(v)
-	})
-}
-
-// UpdateTaxID sets the "tax_id" field to the value that was provided on create.
-func (u *OrgUnitUpsertBulk) UpdateTaxID() *OrgUnitUpsertBulk {
-	return u.Update(func(s *OrgUnitUpsert) {
-		s.UpdateTaxID()
-	})
-}
-
-// ClearTaxID clears the value of the "tax_id" field.
-func (u *OrgUnitUpsertBulk) ClearTaxID() *OrgUnitUpsertBulk {
-	return u.Update(func(s *OrgUnitUpsert) {
-		s.ClearTaxID()
-	})
-}
-
-// SetRegistrationNumber sets the "registration_number" field.
-func (u *OrgUnitUpsertBulk) SetRegistrationNumber(v string) *OrgUnitUpsertBulk {
-	return u.Update(func(s *OrgUnitUpsert) {
-		s.SetRegistrationNumber(v)
-	})
-}
-
-// UpdateRegistrationNumber sets the "registration_number" field to the value that was provided on create.
-func (u *OrgUnitUpsertBulk) UpdateRegistrationNumber() *OrgUnitUpsertBulk {
-	return u.Update(func(s *OrgUnitUpsert) {
-		s.UpdateRegistrationNumber()
-	})
-}
-
-// ClearRegistrationNumber clears the value of the "registration_number" field.
-func (u *OrgUnitUpsertBulk) ClearRegistrationNumber() *OrgUnitUpsertBulk {
-	return u.Update(func(s *OrgUnitUpsert) {
-		s.ClearRegistrationNumber()
 	})
 }
 
@@ -3182,73 +2761,150 @@ func (u *OrgUnitUpsertBulk) ClearLeaderID() *OrgUnitUpsertBulk {
 	})
 }
 
-// SetContactUserID sets the "contact_user_id" field.
-func (u *OrgUnitUpsertBulk) SetContactUserID(v uint32) *OrgUnitUpsertBulk {
+// SetType sets the "type" field.
+func (u *OrgUnitUpsertBulk) SetType(v orgunit.Type) *OrgUnitUpsertBulk {
 	return u.Update(func(s *OrgUnitUpsert) {
-		s.SetContactUserID(v)
+		s.SetType(v)
 	})
 }
 
-// AddContactUserID adds v to the "contact_user_id" field.
-func (u *OrgUnitUpsertBulk) AddContactUserID(v uint32) *OrgUnitUpsertBulk {
+// UpdateType sets the "type" field to the value that was provided on create.
+func (u *OrgUnitUpsertBulk) UpdateType() *OrgUnitUpsertBulk {
 	return u.Update(func(s *OrgUnitUpsert) {
-		s.AddContactUserID(v)
+		s.UpdateType()
 	})
 }
 
-// UpdateContactUserID sets the "contact_user_id" field to the value that was provided on create.
-func (u *OrgUnitUpsertBulk) UpdateContactUserID() *OrgUnitUpsertBulk {
+// SetBusinessScopes sets the "business_scopes" field.
+func (u *OrgUnitUpsertBulk) SetBusinessScopes(v []string) *OrgUnitUpsertBulk {
 	return u.Update(func(s *OrgUnitUpsert) {
-		s.UpdateContactUserID()
+		s.SetBusinessScopes(v)
 	})
 }
 
-// ClearContactUserID clears the value of the "contact_user_id" field.
-func (u *OrgUnitUpsertBulk) ClearContactUserID() *OrgUnitUpsertBulk {
+// UpdateBusinessScopes sets the "business_scopes" field to the value that was provided on create.
+func (u *OrgUnitUpsertBulk) UpdateBusinessScopes() *OrgUnitUpsertBulk {
 	return u.Update(func(s *OrgUnitUpsert) {
-		s.ClearContactUserID()
+		s.UpdateBusinessScopes()
 	})
 }
 
-// SetStartAt sets the "start_at" field.
-func (u *OrgUnitUpsertBulk) SetStartAt(v time.Time) *OrgUnitUpsertBulk {
+// ClearBusinessScopes clears the value of the "business_scopes" field.
+func (u *OrgUnitUpsertBulk) ClearBusinessScopes() *OrgUnitUpsertBulk {
 	return u.Update(func(s *OrgUnitUpsert) {
-		s.SetStartAt(v)
+		s.ClearBusinessScopes()
 	})
 }
 
-// UpdateStartAt sets the "start_at" field to the value that was provided on create.
-func (u *OrgUnitUpsertBulk) UpdateStartAt() *OrgUnitUpsertBulk {
+// SetExternalID sets the "external_id" field.
+func (u *OrgUnitUpsertBulk) SetExternalID(v string) *OrgUnitUpsertBulk {
 	return u.Update(func(s *OrgUnitUpsert) {
-		s.UpdateStartAt()
+		s.SetExternalID(v)
 	})
 }
 
-// ClearStartAt clears the value of the "start_at" field.
-func (u *OrgUnitUpsertBulk) ClearStartAt() *OrgUnitUpsertBulk {
+// UpdateExternalID sets the "external_id" field to the value that was provided on create.
+func (u *OrgUnitUpsertBulk) UpdateExternalID() *OrgUnitUpsertBulk {
 	return u.Update(func(s *OrgUnitUpsert) {
-		s.ClearStartAt()
+		s.UpdateExternalID()
 	})
 }
 
-// SetEndAt sets the "end_at" field.
-func (u *OrgUnitUpsertBulk) SetEndAt(v time.Time) *OrgUnitUpsertBulk {
+// ClearExternalID clears the value of the "external_id" field.
+func (u *OrgUnitUpsertBulk) ClearExternalID() *OrgUnitUpsertBulk {
 	return u.Update(func(s *OrgUnitUpsert) {
-		s.SetEndAt(v)
+		s.ClearExternalID()
 	})
 }
 
-// UpdateEndAt sets the "end_at" field to the value that was provided on create.
-func (u *OrgUnitUpsertBulk) UpdateEndAt() *OrgUnitUpsertBulk {
+// SetIsLegalEntity sets the "is_legal_entity" field.
+func (u *OrgUnitUpsertBulk) SetIsLegalEntity(v bool) *OrgUnitUpsertBulk {
 	return u.Update(func(s *OrgUnitUpsert) {
-		s.UpdateEndAt()
+		s.SetIsLegalEntity(v)
 	})
 }
 
-// ClearEndAt clears the value of the "end_at" field.
-func (u *OrgUnitUpsertBulk) ClearEndAt() *OrgUnitUpsertBulk {
+// UpdateIsLegalEntity sets the "is_legal_entity" field to the value that was provided on create.
+func (u *OrgUnitUpsertBulk) UpdateIsLegalEntity() *OrgUnitUpsertBulk {
 	return u.Update(func(s *OrgUnitUpsert) {
-		s.ClearEndAt()
+		s.UpdateIsLegalEntity()
+	})
+}
+
+// ClearIsLegalEntity clears the value of the "is_legal_entity" field.
+func (u *OrgUnitUpsertBulk) ClearIsLegalEntity() *OrgUnitUpsertBulk {
+	return u.Update(func(s *OrgUnitUpsert) {
+		s.ClearIsLegalEntity()
+	})
+}
+
+// SetRegistrationNumber sets the "registration_number" field.
+func (u *OrgUnitUpsertBulk) SetRegistrationNumber(v string) *OrgUnitUpsertBulk {
+	return u.Update(func(s *OrgUnitUpsert) {
+		s.SetRegistrationNumber(v)
+	})
+}
+
+// UpdateRegistrationNumber sets the "registration_number" field to the value that was provided on create.
+func (u *OrgUnitUpsertBulk) UpdateRegistrationNumber() *OrgUnitUpsertBulk {
+	return u.Update(func(s *OrgUnitUpsert) {
+		s.UpdateRegistrationNumber()
+	})
+}
+
+// ClearRegistrationNumber clears the value of the "registration_number" field.
+func (u *OrgUnitUpsertBulk) ClearRegistrationNumber() *OrgUnitUpsertBulk {
+	return u.Update(func(s *OrgUnitUpsert) {
+		s.ClearRegistrationNumber()
+	})
+}
+
+// SetTaxID sets the "tax_id" field.
+func (u *OrgUnitUpsertBulk) SetTaxID(v string) *OrgUnitUpsertBulk {
+	return u.Update(func(s *OrgUnitUpsert) {
+		s.SetTaxID(v)
+	})
+}
+
+// UpdateTaxID sets the "tax_id" field to the value that was provided on create.
+func (u *OrgUnitUpsertBulk) UpdateTaxID() *OrgUnitUpsertBulk {
+	return u.Update(func(s *OrgUnitUpsert) {
+		s.UpdateTaxID()
+	})
+}
+
+// ClearTaxID clears the value of the "tax_id" field.
+func (u *OrgUnitUpsertBulk) ClearTaxID() *OrgUnitUpsertBulk {
+	return u.Update(func(s *OrgUnitUpsert) {
+		s.ClearTaxID()
+	})
+}
+
+// SetLegalEntityOrgID sets the "legal_entity_org_id" field.
+func (u *OrgUnitUpsertBulk) SetLegalEntityOrgID(v uint32) *OrgUnitUpsertBulk {
+	return u.Update(func(s *OrgUnitUpsert) {
+		s.SetLegalEntityOrgID(v)
+	})
+}
+
+// AddLegalEntityOrgID adds v to the "legal_entity_org_id" field.
+func (u *OrgUnitUpsertBulk) AddLegalEntityOrgID(v uint32) *OrgUnitUpsertBulk {
+	return u.Update(func(s *OrgUnitUpsert) {
+		s.AddLegalEntityOrgID(v)
+	})
+}
+
+// UpdateLegalEntityOrgID sets the "legal_entity_org_id" field to the value that was provided on create.
+func (u *OrgUnitUpsertBulk) UpdateLegalEntityOrgID() *OrgUnitUpsertBulk {
+	return u.Update(func(s *OrgUnitUpsert) {
+		s.UpdateLegalEntityOrgID()
+	})
+}
+
+// ClearLegalEntityOrgID clears the value of the "legal_entity_org_id" field.
+func (u *OrgUnitUpsertBulk) ClearLegalEntityOrgID() *OrgUnitUpsertBulk {
+	return u.Update(func(s *OrgUnitUpsert) {
+		s.ClearLegalEntityOrgID()
 	})
 }
 
@@ -3315,27 +2971,6 @@ func (u *OrgUnitUpsertBulk) ClearEmail() *OrgUnitUpsertBulk {
 	})
 }
 
-// SetWebsite sets the "website" field.
-func (u *OrgUnitUpsertBulk) SetWebsite(v string) *OrgUnitUpsertBulk {
-	return u.Update(func(s *OrgUnitUpsert) {
-		s.SetWebsite(v)
-	})
-}
-
-// UpdateWebsite sets the "website" field to the value that was provided on create.
-func (u *OrgUnitUpsertBulk) UpdateWebsite() *OrgUnitUpsertBulk {
-	return u.Update(func(s *OrgUnitUpsert) {
-		s.UpdateWebsite()
-	})
-}
-
-// ClearWebsite clears the value of the "website" field.
-func (u *OrgUnitUpsertBulk) ClearWebsite() *OrgUnitUpsertBulk {
-	return u.Update(func(s *OrgUnitUpsert) {
-		s.ClearWebsite()
-	})
-}
-
 // SetTimezone sets the "timezone" field.
 func (u *OrgUnitUpsertBulk) SetTimezone(v string) *OrgUnitUpsertBulk {
 	return u.Update(func(s *OrgUnitUpsert) {
@@ -3357,27 +2992,6 @@ func (u *OrgUnitUpsertBulk) ClearTimezone() *OrgUnitUpsertBulk {
 	})
 }
 
-// SetRegion sets the "region" field.
-func (u *OrgUnitUpsertBulk) SetRegion(v string) *OrgUnitUpsertBulk {
-	return u.Update(func(s *OrgUnitUpsert) {
-		s.SetRegion(v)
-	})
-}
-
-// UpdateRegion sets the "region" field to the value that was provided on create.
-func (u *OrgUnitUpsertBulk) UpdateRegion() *OrgUnitUpsertBulk {
-	return u.Update(func(s *OrgUnitUpsert) {
-		s.UpdateRegion()
-	})
-}
-
-// ClearRegion clears the value of the "region" field.
-func (u *OrgUnitUpsertBulk) ClearRegion() *OrgUnitUpsertBulk {
-	return u.Update(func(s *OrgUnitUpsert) {
-		s.ClearRegion()
-	})
-}
-
 // SetCountry sets the "country" field.
 func (u *OrgUnitUpsertBulk) SetCountry(v string) *OrgUnitUpsertBulk {
 	return u.Update(func(s *OrgUnitUpsert) {
@@ -3396,48 +3010,6 @@ func (u *OrgUnitUpsertBulk) UpdateCountry() *OrgUnitUpsertBulk {
 func (u *OrgUnitUpsertBulk) ClearCountry() *OrgUnitUpsertBulk {
 	return u.Update(func(s *OrgUnitUpsert) {
 		s.ClearCountry()
-	})
-}
-
-// SetCity sets the "city" field.
-func (u *OrgUnitUpsertBulk) SetCity(v string) *OrgUnitUpsertBulk {
-	return u.Update(func(s *OrgUnitUpsert) {
-		s.SetCity(v)
-	})
-}
-
-// UpdateCity sets the "city" field to the value that was provided on create.
-func (u *OrgUnitUpsertBulk) UpdateCity() *OrgUnitUpsertBulk {
-	return u.Update(func(s *OrgUnitUpsert) {
-		s.UpdateCity()
-	})
-}
-
-// ClearCity clears the value of the "city" field.
-func (u *OrgUnitUpsertBulk) ClearCity() *OrgUnitUpsertBulk {
-	return u.Update(func(s *OrgUnitUpsert) {
-		s.ClearCity()
-	})
-}
-
-// SetPostalCode sets the "postal_code" field.
-func (u *OrgUnitUpsertBulk) SetPostalCode(v string) *OrgUnitUpsertBulk {
-	return u.Update(func(s *OrgUnitUpsert) {
-		s.SetPostalCode(v)
-	})
-}
-
-// UpdatePostalCode sets the "postal_code" field to the value that was provided on create.
-func (u *OrgUnitUpsertBulk) UpdatePostalCode() *OrgUnitUpsertBulk {
-	return u.Update(func(s *OrgUnitUpsert) {
-		s.UpdatePostalCode()
-	})
-}
-
-// ClearPostalCode clears the value of the "postal_code" field.
-func (u *OrgUnitUpsertBulk) ClearPostalCode() *OrgUnitUpsertBulk {
-	return u.Update(func(s *OrgUnitUpsert) {
-		s.ClearPostalCode()
 	})
 }
 
@@ -3497,24 +3069,94 @@ func (u *OrgUnitUpsertBulk) ClearLongitude() *OrgUnitUpsertBulk {
 	})
 }
 
-// SetLogo sets the "logo" field.
-func (u *OrgUnitUpsertBulk) SetLogo(v string) *OrgUnitUpsertBulk {
+// SetStartAt sets the "start_at" field.
+func (u *OrgUnitUpsertBulk) SetStartAt(v time.Time) *OrgUnitUpsertBulk {
 	return u.Update(func(s *OrgUnitUpsert) {
-		s.SetLogo(v)
+		s.SetStartAt(v)
 	})
 }
 
-// UpdateLogo sets the "logo" field to the value that was provided on create.
-func (u *OrgUnitUpsertBulk) UpdateLogo() *OrgUnitUpsertBulk {
+// UpdateStartAt sets the "start_at" field to the value that was provided on create.
+func (u *OrgUnitUpsertBulk) UpdateStartAt() *OrgUnitUpsertBulk {
 	return u.Update(func(s *OrgUnitUpsert) {
-		s.UpdateLogo()
+		s.UpdateStartAt()
 	})
 }
 
-// ClearLogo clears the value of the "logo" field.
-func (u *OrgUnitUpsertBulk) ClearLogo() *OrgUnitUpsertBulk {
+// ClearStartAt clears the value of the "start_at" field.
+func (u *OrgUnitUpsertBulk) ClearStartAt() *OrgUnitUpsertBulk {
 	return u.Update(func(s *OrgUnitUpsert) {
-		s.ClearLogo()
+		s.ClearStartAt()
+	})
+}
+
+// SetEndAt sets the "end_at" field.
+func (u *OrgUnitUpsertBulk) SetEndAt(v time.Time) *OrgUnitUpsertBulk {
+	return u.Update(func(s *OrgUnitUpsert) {
+		s.SetEndAt(v)
+	})
+}
+
+// UpdateEndAt sets the "end_at" field to the value that was provided on create.
+func (u *OrgUnitUpsertBulk) UpdateEndAt() *OrgUnitUpsertBulk {
+	return u.Update(func(s *OrgUnitUpsert) {
+		s.UpdateEndAt()
+	})
+}
+
+// ClearEndAt clears the value of the "end_at" field.
+func (u *OrgUnitUpsertBulk) ClearEndAt() *OrgUnitUpsertBulk {
+	return u.Update(func(s *OrgUnitUpsert) {
+		s.ClearEndAt()
+	})
+}
+
+// SetContactUserID sets the "contact_user_id" field.
+func (u *OrgUnitUpsertBulk) SetContactUserID(v uint32) *OrgUnitUpsertBulk {
+	return u.Update(func(s *OrgUnitUpsert) {
+		s.SetContactUserID(v)
+	})
+}
+
+// AddContactUserID adds v to the "contact_user_id" field.
+func (u *OrgUnitUpsertBulk) AddContactUserID(v uint32) *OrgUnitUpsertBulk {
+	return u.Update(func(s *OrgUnitUpsert) {
+		s.AddContactUserID(v)
+	})
+}
+
+// UpdateContactUserID sets the "contact_user_id" field to the value that was provided on create.
+func (u *OrgUnitUpsertBulk) UpdateContactUserID() *OrgUnitUpsertBulk {
+	return u.Update(func(s *OrgUnitUpsert) {
+		s.UpdateContactUserID()
+	})
+}
+
+// ClearContactUserID clears the value of the "contact_user_id" field.
+func (u *OrgUnitUpsertBulk) ClearContactUserID() *OrgUnitUpsertBulk {
+	return u.Update(func(s *OrgUnitUpsert) {
+		s.ClearContactUserID()
+	})
+}
+
+// SetPermissionTags sets the "permission_tags" field.
+func (u *OrgUnitUpsertBulk) SetPermissionTags(v []string) *OrgUnitUpsertBulk {
+	return u.Update(func(s *OrgUnitUpsert) {
+		s.SetPermissionTags(v)
+	})
+}
+
+// UpdatePermissionTags sets the "permission_tags" field to the value that was provided on create.
+func (u *OrgUnitUpsertBulk) UpdatePermissionTags() *OrgUnitUpsertBulk {
+	return u.Update(func(s *OrgUnitUpsert) {
+		s.UpdatePermissionTags()
+	})
+}
+
+// ClearPermissionTags clears the value of the "permission_tags" field.
+func (u *OrgUnitUpsertBulk) ClearPermissionTags() *OrgUnitUpsertBulk {
+	return u.Update(func(s *OrgUnitUpsert) {
+		s.ClearPermissionTags()
 	})
 }
 

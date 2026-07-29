@@ -64,20 +64,6 @@ func (_c *UserRoleCreate) SetNillableDeletedAt(v *time.Time) *UserRoleCreate {
 	return _c
 }
 
-// SetTenantID sets the "tenant_id" field.
-func (_c *UserRoleCreate) SetTenantID(v uint32) *UserRoleCreate {
-	_c.mutation.SetTenantID(v)
-	return _c
-}
-
-// SetNillableTenantID sets the "tenant_id" field if the given value is not nil.
-func (_c *UserRoleCreate) SetNillableTenantID(v *uint32) *UserRoleCreate {
-	if v != nil {
-		_c.SetTenantID(*v)
-	}
-	return _c
-}
-
 // SetCreatedBy sets the "created_by" field.
 func (_c *UserRoleCreate) SetCreatedBy(v uint32) *UserRoleCreate {
 	_c.mutation.SetCreatedBy(v)
@@ -120,31 +106,29 @@ func (_c *UserRoleCreate) SetNillableDeletedBy(v *uint32) *UserRoleCreate {
 	return _c
 }
 
-// SetStatus sets the "status" field.
-func (_c *UserRoleCreate) SetStatus(v userrole.Status) *UserRoleCreate {
-	_c.mutation.SetStatus(v)
+// SetTenantID sets the "tenant_id" field.
+func (_c *UserRoleCreate) SetTenantID(v uint32) *UserRoleCreate {
+	_c.mutation.SetTenantID(v)
 	return _c
 }
 
-// SetNillableStatus sets the "status" field if the given value is not nil.
-func (_c *UserRoleCreate) SetNillableStatus(v *userrole.Status) *UserRoleCreate {
+// SetNillableTenantID sets the "tenant_id" field if the given value is not nil.
+func (_c *UserRoleCreate) SetNillableTenantID(v *uint32) *UserRoleCreate {
 	if v != nil {
-		_c.SetStatus(*v)
+		_c.SetTenantID(*v)
 	}
 	return _c
 }
 
-// SetIsPrimary sets the "is_primary" field.
-func (_c *UserRoleCreate) SetIsPrimary(v bool) *UserRoleCreate {
-	_c.mutation.SetIsPrimary(v)
+// SetUserID sets the "user_id" field.
+func (_c *UserRoleCreate) SetUserID(v uint32) *UserRoleCreate {
+	_c.mutation.SetUserID(v)
 	return _c
 }
 
-// SetNillableIsPrimary sets the "is_primary" field if the given value is not nil.
-func (_c *UserRoleCreate) SetNillableIsPrimary(v *bool) *UserRoleCreate {
-	if v != nil {
-		_c.SetIsPrimary(*v)
-	}
+// SetRoleID sets the "role_id" field.
+func (_c *UserRoleCreate) SetRoleID(v uint32) *UserRoleCreate {
+	_c.mutation.SetRoleID(v)
 	return _c
 }
 
@@ -176,30 +160,58 @@ func (_c *UserRoleCreate) SetNillableEndAt(v *time.Time) *UserRoleCreate {
 	return _c
 }
 
-// SetUserID sets the "user_id" field.
-func (_c *UserRoleCreate) SetUserID(v uint32) *UserRoleCreate {
-	_c.mutation.SetUserID(v)
+// SetAssignedAt sets the "assigned_at" field.
+func (_c *UserRoleCreate) SetAssignedAt(v time.Time) *UserRoleCreate {
+	_c.mutation.SetAssignedAt(v)
 	return _c
 }
 
-// SetNillableUserID sets the "user_id" field if the given value is not nil.
-func (_c *UserRoleCreate) SetNillableUserID(v *uint32) *UserRoleCreate {
+// SetNillableAssignedAt sets the "assigned_at" field if the given value is not nil.
+func (_c *UserRoleCreate) SetNillableAssignedAt(v *time.Time) *UserRoleCreate {
 	if v != nil {
-		_c.SetUserID(*v)
+		_c.SetAssignedAt(*v)
 	}
 	return _c
 }
 
-// SetRoleID sets the "role_id" field.
-func (_c *UserRoleCreate) SetRoleID(v uint32) *UserRoleCreate {
-	_c.mutation.SetRoleID(v)
+// SetAssignedBy sets the "assigned_by" field.
+func (_c *UserRoleCreate) SetAssignedBy(v uint32) *UserRoleCreate {
+	_c.mutation.SetAssignedBy(v)
 	return _c
 }
 
-// SetNillableRoleID sets the "role_id" field if the given value is not nil.
-func (_c *UserRoleCreate) SetNillableRoleID(v *uint32) *UserRoleCreate {
+// SetNillableAssignedBy sets the "assigned_by" field if the given value is not nil.
+func (_c *UserRoleCreate) SetNillableAssignedBy(v *uint32) *UserRoleCreate {
 	if v != nil {
-		_c.SetRoleID(*v)
+		_c.SetAssignedBy(*v)
+	}
+	return _c
+}
+
+// SetIsPrimary sets the "is_primary" field.
+func (_c *UserRoleCreate) SetIsPrimary(v bool) *UserRoleCreate {
+	_c.mutation.SetIsPrimary(v)
+	return _c
+}
+
+// SetNillableIsPrimary sets the "is_primary" field if the given value is not nil.
+func (_c *UserRoleCreate) SetNillableIsPrimary(v *bool) *UserRoleCreate {
+	if v != nil {
+		_c.SetIsPrimary(*v)
+	}
+	return _c
+}
+
+// SetStatus sets the "status" field.
+func (_c *UserRoleCreate) SetStatus(v userrole.Status) *UserRoleCreate {
+	_c.mutation.SetStatus(v)
+	return _c
+}
+
+// SetNillableStatus sets the "status" field if the given value is not nil.
+func (_c *UserRoleCreate) SetNillableStatus(v *userrole.Status) *UserRoleCreate {
+	if v != nil {
+		_c.SetStatus(*v)
 	}
 	return _c
 }
@@ -251,19 +263,31 @@ func (_c *UserRoleCreate) defaults() error {
 		v := userrole.DefaultTenantID
 		_c.mutation.SetTenantID(v)
 	}
-	if _, ok := _c.mutation.Status(); !ok {
-		v := userrole.DefaultStatus
-		_c.mutation.SetStatus(v)
-	}
 	if _, ok := _c.mutation.IsPrimary(); !ok {
 		v := userrole.DefaultIsPrimary
 		_c.mutation.SetIsPrimary(v)
+	}
+	if _, ok := _c.mutation.Status(); !ok {
+		v := userrole.DefaultStatus
+		_c.mutation.SetStatus(v)
 	}
 	return nil
 }
 
 // check runs all checks and user-defined validators on the builder.
 func (_c *UserRoleCreate) check() error {
+	if _, ok := _c.mutation.UserID(); !ok {
+		return &ValidationError{Name: "user_id", err: errors.New(`ent: missing required field "UserRole.user_id"`)}
+	}
+	if _, ok := _c.mutation.RoleID(); !ok {
+		return &ValidationError{Name: "role_id", err: errors.New(`ent: missing required field "UserRole.role_id"`)}
+	}
+	if _, ok := _c.mutation.IsPrimary(); !ok {
+		return &ValidationError{Name: "is_primary", err: errors.New(`ent: missing required field "UserRole.is_primary"`)}
+	}
+	if _, ok := _c.mutation.Status(); !ok {
+		return &ValidationError{Name: "status", err: errors.New(`ent: missing required field "UserRole.status"`)}
+	}
 	if v, ok := _c.mutation.Status(); ok {
 		if err := userrole.StatusValidator(v); err != nil {
 			return &ValidationError{Name: "status", err: fmt.Errorf(`ent: validator failed for field "UserRole.status": %w`, err)}
@@ -319,10 +343,6 @@ func (_c *UserRoleCreate) createSpec() (*UserRole, *sqlgraph.CreateSpec) {
 		_spec.SetField(userrole.FieldDeletedAt, field.TypeTime, value)
 		_node.DeletedAt = &value
 	}
-	if value, ok := _c.mutation.TenantID(); ok {
-		_spec.SetField(userrole.FieldTenantID, field.TypeUint32, value)
-		_node.TenantID = &value
-	}
 	if value, ok := _c.mutation.CreatedBy(); ok {
 		_spec.SetField(userrole.FieldCreatedBy, field.TypeUint32, value)
 		_node.CreatedBy = &value
@@ -335,13 +355,17 @@ func (_c *UserRoleCreate) createSpec() (*UserRole, *sqlgraph.CreateSpec) {
 		_spec.SetField(userrole.FieldDeletedBy, field.TypeUint32, value)
 		_node.DeletedBy = &value
 	}
-	if value, ok := _c.mutation.Status(); ok {
-		_spec.SetField(userrole.FieldStatus, field.TypeEnum, value)
-		_node.Status = &value
+	if value, ok := _c.mutation.TenantID(); ok {
+		_spec.SetField(userrole.FieldTenantID, field.TypeUint32, value)
+		_node.TenantID = &value
 	}
-	if value, ok := _c.mutation.IsPrimary(); ok {
-		_spec.SetField(userrole.FieldIsPrimary, field.TypeBool, value)
-		_node.IsPrimary = &value
+	if value, ok := _c.mutation.UserID(); ok {
+		_spec.SetField(userrole.FieldUserID, field.TypeUint32, value)
+		_node.UserID = &value
+	}
+	if value, ok := _c.mutation.RoleID(); ok {
+		_spec.SetField(userrole.FieldRoleID, field.TypeUint32, value)
+		_node.RoleID = &value
 	}
 	if value, ok := _c.mutation.StartAt(); ok {
 		_spec.SetField(userrole.FieldStartAt, field.TypeTime, value)
@@ -351,13 +375,21 @@ func (_c *UserRoleCreate) createSpec() (*UserRole, *sqlgraph.CreateSpec) {
 		_spec.SetField(userrole.FieldEndAt, field.TypeTime, value)
 		_node.EndAt = &value
 	}
-	if value, ok := _c.mutation.UserID(); ok {
-		_spec.SetField(userrole.FieldUserID, field.TypeUint32, value)
-		_node.UserID = &value
+	if value, ok := _c.mutation.AssignedAt(); ok {
+		_spec.SetField(userrole.FieldAssignedAt, field.TypeTime, value)
+		_node.AssignedAt = &value
 	}
-	if value, ok := _c.mutation.RoleID(); ok {
-		_spec.SetField(userrole.FieldRoleID, field.TypeUint32, value)
-		_node.RoleID = &value
+	if value, ok := _c.mutation.AssignedBy(); ok {
+		_spec.SetField(userrole.FieldAssignedBy, field.TypeUint32, value)
+		_node.AssignedBy = &value
+	}
+	if value, ok := _c.mutation.IsPrimary(); ok {
+		_spec.SetField(userrole.FieldIsPrimary, field.TypeBool, value)
+		_node.IsPrimary = &value
+	}
+	if value, ok := _c.mutation.Status(); ok {
+		_spec.SetField(userrole.FieldStatus, field.TypeEnum, value)
+		_node.Status = value
 	}
 	return _node, _spec
 }
@@ -519,39 +551,39 @@ func (u *UserRoleUpsert) ClearDeletedBy() *UserRoleUpsert {
 	return u
 }
 
-// SetStatus sets the "status" field.
-func (u *UserRoleUpsert) SetStatus(v userrole.Status) *UserRoleUpsert {
-	u.Set(userrole.FieldStatus, v)
+// SetUserID sets the "user_id" field.
+func (u *UserRoleUpsert) SetUserID(v uint32) *UserRoleUpsert {
+	u.Set(userrole.FieldUserID, v)
 	return u
 }
 
-// UpdateStatus sets the "status" field to the value that was provided on create.
-func (u *UserRoleUpsert) UpdateStatus() *UserRoleUpsert {
-	u.SetExcluded(userrole.FieldStatus)
+// UpdateUserID sets the "user_id" field to the value that was provided on create.
+func (u *UserRoleUpsert) UpdateUserID() *UserRoleUpsert {
+	u.SetExcluded(userrole.FieldUserID)
 	return u
 }
 
-// ClearStatus clears the value of the "status" field.
-func (u *UserRoleUpsert) ClearStatus() *UserRoleUpsert {
-	u.SetNull(userrole.FieldStatus)
+// AddUserID adds v to the "user_id" field.
+func (u *UserRoleUpsert) AddUserID(v uint32) *UserRoleUpsert {
+	u.Add(userrole.FieldUserID, v)
 	return u
 }
 
-// SetIsPrimary sets the "is_primary" field.
-func (u *UserRoleUpsert) SetIsPrimary(v bool) *UserRoleUpsert {
-	u.Set(userrole.FieldIsPrimary, v)
+// SetRoleID sets the "role_id" field.
+func (u *UserRoleUpsert) SetRoleID(v uint32) *UserRoleUpsert {
+	u.Set(userrole.FieldRoleID, v)
 	return u
 }
 
-// UpdateIsPrimary sets the "is_primary" field to the value that was provided on create.
-func (u *UserRoleUpsert) UpdateIsPrimary() *UserRoleUpsert {
-	u.SetExcluded(userrole.FieldIsPrimary)
+// UpdateRoleID sets the "role_id" field to the value that was provided on create.
+func (u *UserRoleUpsert) UpdateRoleID() *UserRoleUpsert {
+	u.SetExcluded(userrole.FieldRoleID)
 	return u
 }
 
-// ClearIsPrimary clears the value of the "is_primary" field.
-func (u *UserRoleUpsert) ClearIsPrimary() *UserRoleUpsert {
-	u.SetNull(userrole.FieldIsPrimary)
+// AddRoleID adds v to the "role_id" field.
+func (u *UserRoleUpsert) AddRoleID(v uint32) *UserRoleUpsert {
+	u.Add(userrole.FieldRoleID, v)
 	return u
 }
 
@@ -591,51 +623,69 @@ func (u *UserRoleUpsert) ClearEndAt() *UserRoleUpsert {
 	return u
 }
 
-// SetUserID sets the "user_id" field.
-func (u *UserRoleUpsert) SetUserID(v uint32) *UserRoleUpsert {
-	u.Set(userrole.FieldUserID, v)
+// SetAssignedAt sets the "assigned_at" field.
+func (u *UserRoleUpsert) SetAssignedAt(v time.Time) *UserRoleUpsert {
+	u.Set(userrole.FieldAssignedAt, v)
 	return u
 }
 
-// UpdateUserID sets the "user_id" field to the value that was provided on create.
-func (u *UserRoleUpsert) UpdateUserID() *UserRoleUpsert {
-	u.SetExcluded(userrole.FieldUserID)
+// UpdateAssignedAt sets the "assigned_at" field to the value that was provided on create.
+func (u *UserRoleUpsert) UpdateAssignedAt() *UserRoleUpsert {
+	u.SetExcluded(userrole.FieldAssignedAt)
 	return u
 }
 
-// AddUserID adds v to the "user_id" field.
-func (u *UserRoleUpsert) AddUserID(v uint32) *UserRoleUpsert {
-	u.Add(userrole.FieldUserID, v)
+// ClearAssignedAt clears the value of the "assigned_at" field.
+func (u *UserRoleUpsert) ClearAssignedAt() *UserRoleUpsert {
+	u.SetNull(userrole.FieldAssignedAt)
 	return u
 }
 
-// ClearUserID clears the value of the "user_id" field.
-func (u *UserRoleUpsert) ClearUserID() *UserRoleUpsert {
-	u.SetNull(userrole.FieldUserID)
+// SetAssignedBy sets the "assigned_by" field.
+func (u *UserRoleUpsert) SetAssignedBy(v uint32) *UserRoleUpsert {
+	u.Set(userrole.FieldAssignedBy, v)
 	return u
 }
 
-// SetRoleID sets the "role_id" field.
-func (u *UserRoleUpsert) SetRoleID(v uint32) *UserRoleUpsert {
-	u.Set(userrole.FieldRoleID, v)
+// UpdateAssignedBy sets the "assigned_by" field to the value that was provided on create.
+func (u *UserRoleUpsert) UpdateAssignedBy() *UserRoleUpsert {
+	u.SetExcluded(userrole.FieldAssignedBy)
 	return u
 }
 
-// UpdateRoleID sets the "role_id" field to the value that was provided on create.
-func (u *UserRoleUpsert) UpdateRoleID() *UserRoleUpsert {
-	u.SetExcluded(userrole.FieldRoleID)
+// AddAssignedBy adds v to the "assigned_by" field.
+func (u *UserRoleUpsert) AddAssignedBy(v uint32) *UserRoleUpsert {
+	u.Add(userrole.FieldAssignedBy, v)
 	return u
 }
 
-// AddRoleID adds v to the "role_id" field.
-func (u *UserRoleUpsert) AddRoleID(v uint32) *UserRoleUpsert {
-	u.Add(userrole.FieldRoleID, v)
+// ClearAssignedBy clears the value of the "assigned_by" field.
+func (u *UserRoleUpsert) ClearAssignedBy() *UserRoleUpsert {
+	u.SetNull(userrole.FieldAssignedBy)
 	return u
 }
 
-// ClearRoleID clears the value of the "role_id" field.
-func (u *UserRoleUpsert) ClearRoleID() *UserRoleUpsert {
-	u.SetNull(userrole.FieldRoleID)
+// SetIsPrimary sets the "is_primary" field.
+func (u *UserRoleUpsert) SetIsPrimary(v bool) *UserRoleUpsert {
+	u.Set(userrole.FieldIsPrimary, v)
+	return u
+}
+
+// UpdateIsPrimary sets the "is_primary" field to the value that was provided on create.
+func (u *UserRoleUpsert) UpdateIsPrimary() *UserRoleUpsert {
+	u.SetExcluded(userrole.FieldIsPrimary)
+	return u
+}
+
+// SetStatus sets the "status" field.
+func (u *UserRoleUpsert) SetStatus(v userrole.Status) *UserRoleUpsert {
+	u.Set(userrole.FieldStatus, v)
+	return u
+}
+
+// UpdateStatus sets the "status" field to the value that was provided on create.
+func (u *UserRoleUpsert) UpdateStatus() *UserRoleUpsert {
+	u.SetExcluded(userrole.FieldStatus)
 	return u
 }
 
@@ -819,45 +869,45 @@ func (u *UserRoleUpsertOne) ClearDeletedBy() *UserRoleUpsertOne {
 	})
 }
 
-// SetStatus sets the "status" field.
-func (u *UserRoleUpsertOne) SetStatus(v userrole.Status) *UserRoleUpsertOne {
+// SetUserID sets the "user_id" field.
+func (u *UserRoleUpsertOne) SetUserID(v uint32) *UserRoleUpsertOne {
 	return u.Update(func(s *UserRoleUpsert) {
-		s.SetStatus(v)
+		s.SetUserID(v)
 	})
 }
 
-// UpdateStatus sets the "status" field to the value that was provided on create.
-func (u *UserRoleUpsertOne) UpdateStatus() *UserRoleUpsertOne {
+// AddUserID adds v to the "user_id" field.
+func (u *UserRoleUpsertOne) AddUserID(v uint32) *UserRoleUpsertOne {
 	return u.Update(func(s *UserRoleUpsert) {
-		s.UpdateStatus()
+		s.AddUserID(v)
 	})
 }
 
-// ClearStatus clears the value of the "status" field.
-func (u *UserRoleUpsertOne) ClearStatus() *UserRoleUpsertOne {
+// UpdateUserID sets the "user_id" field to the value that was provided on create.
+func (u *UserRoleUpsertOne) UpdateUserID() *UserRoleUpsertOne {
 	return u.Update(func(s *UserRoleUpsert) {
-		s.ClearStatus()
+		s.UpdateUserID()
 	})
 }
 
-// SetIsPrimary sets the "is_primary" field.
-func (u *UserRoleUpsertOne) SetIsPrimary(v bool) *UserRoleUpsertOne {
+// SetRoleID sets the "role_id" field.
+func (u *UserRoleUpsertOne) SetRoleID(v uint32) *UserRoleUpsertOne {
 	return u.Update(func(s *UserRoleUpsert) {
-		s.SetIsPrimary(v)
+		s.SetRoleID(v)
 	})
 }
 
-// UpdateIsPrimary sets the "is_primary" field to the value that was provided on create.
-func (u *UserRoleUpsertOne) UpdateIsPrimary() *UserRoleUpsertOne {
+// AddRoleID adds v to the "role_id" field.
+func (u *UserRoleUpsertOne) AddRoleID(v uint32) *UserRoleUpsertOne {
 	return u.Update(func(s *UserRoleUpsert) {
-		s.UpdateIsPrimary()
+		s.AddRoleID(v)
 	})
 }
 
-// ClearIsPrimary clears the value of the "is_primary" field.
-func (u *UserRoleUpsertOne) ClearIsPrimary() *UserRoleUpsertOne {
+// UpdateRoleID sets the "role_id" field to the value that was provided on create.
+func (u *UserRoleUpsertOne) UpdateRoleID() *UserRoleUpsertOne {
 	return u.Update(func(s *UserRoleUpsert) {
-		s.ClearIsPrimary()
+		s.UpdateRoleID()
 	})
 }
 
@@ -903,59 +953,80 @@ func (u *UserRoleUpsertOne) ClearEndAt() *UserRoleUpsertOne {
 	})
 }
 
-// SetUserID sets the "user_id" field.
-func (u *UserRoleUpsertOne) SetUserID(v uint32) *UserRoleUpsertOne {
+// SetAssignedAt sets the "assigned_at" field.
+func (u *UserRoleUpsertOne) SetAssignedAt(v time.Time) *UserRoleUpsertOne {
 	return u.Update(func(s *UserRoleUpsert) {
-		s.SetUserID(v)
+		s.SetAssignedAt(v)
 	})
 }
 
-// AddUserID adds v to the "user_id" field.
-func (u *UserRoleUpsertOne) AddUserID(v uint32) *UserRoleUpsertOne {
+// UpdateAssignedAt sets the "assigned_at" field to the value that was provided on create.
+func (u *UserRoleUpsertOne) UpdateAssignedAt() *UserRoleUpsertOne {
 	return u.Update(func(s *UserRoleUpsert) {
-		s.AddUserID(v)
+		s.UpdateAssignedAt()
 	})
 }
 
-// UpdateUserID sets the "user_id" field to the value that was provided on create.
-func (u *UserRoleUpsertOne) UpdateUserID() *UserRoleUpsertOne {
+// ClearAssignedAt clears the value of the "assigned_at" field.
+func (u *UserRoleUpsertOne) ClearAssignedAt() *UserRoleUpsertOne {
 	return u.Update(func(s *UserRoleUpsert) {
-		s.UpdateUserID()
+		s.ClearAssignedAt()
 	})
 }
 
-// ClearUserID clears the value of the "user_id" field.
-func (u *UserRoleUpsertOne) ClearUserID() *UserRoleUpsertOne {
+// SetAssignedBy sets the "assigned_by" field.
+func (u *UserRoleUpsertOne) SetAssignedBy(v uint32) *UserRoleUpsertOne {
 	return u.Update(func(s *UserRoleUpsert) {
-		s.ClearUserID()
+		s.SetAssignedBy(v)
 	})
 }
 
-// SetRoleID sets the "role_id" field.
-func (u *UserRoleUpsertOne) SetRoleID(v uint32) *UserRoleUpsertOne {
+// AddAssignedBy adds v to the "assigned_by" field.
+func (u *UserRoleUpsertOne) AddAssignedBy(v uint32) *UserRoleUpsertOne {
 	return u.Update(func(s *UserRoleUpsert) {
-		s.SetRoleID(v)
+		s.AddAssignedBy(v)
 	})
 }
 
-// AddRoleID adds v to the "role_id" field.
-func (u *UserRoleUpsertOne) AddRoleID(v uint32) *UserRoleUpsertOne {
+// UpdateAssignedBy sets the "assigned_by" field to the value that was provided on create.
+func (u *UserRoleUpsertOne) UpdateAssignedBy() *UserRoleUpsertOne {
 	return u.Update(func(s *UserRoleUpsert) {
-		s.AddRoleID(v)
+		s.UpdateAssignedBy()
 	})
 }
 
-// UpdateRoleID sets the "role_id" field to the value that was provided on create.
-func (u *UserRoleUpsertOne) UpdateRoleID() *UserRoleUpsertOne {
+// ClearAssignedBy clears the value of the "assigned_by" field.
+func (u *UserRoleUpsertOne) ClearAssignedBy() *UserRoleUpsertOne {
 	return u.Update(func(s *UserRoleUpsert) {
-		s.UpdateRoleID()
+		s.ClearAssignedBy()
 	})
 }
 
-// ClearRoleID clears the value of the "role_id" field.
-func (u *UserRoleUpsertOne) ClearRoleID() *UserRoleUpsertOne {
+// SetIsPrimary sets the "is_primary" field.
+func (u *UserRoleUpsertOne) SetIsPrimary(v bool) *UserRoleUpsertOne {
 	return u.Update(func(s *UserRoleUpsert) {
-		s.ClearRoleID()
+		s.SetIsPrimary(v)
+	})
+}
+
+// UpdateIsPrimary sets the "is_primary" field to the value that was provided on create.
+func (u *UserRoleUpsertOne) UpdateIsPrimary() *UserRoleUpsertOne {
+	return u.Update(func(s *UserRoleUpsert) {
+		s.UpdateIsPrimary()
+	})
+}
+
+// SetStatus sets the "status" field.
+func (u *UserRoleUpsertOne) SetStatus(v userrole.Status) *UserRoleUpsertOne {
+	return u.Update(func(s *UserRoleUpsert) {
+		s.SetStatus(v)
+	})
+}
+
+// UpdateStatus sets the "status" field to the value that was provided on create.
+func (u *UserRoleUpsertOne) UpdateStatus() *UserRoleUpsertOne {
+	return u.Update(func(s *UserRoleUpsert) {
+		s.UpdateStatus()
 	})
 }
 
@@ -1305,45 +1376,45 @@ func (u *UserRoleUpsertBulk) ClearDeletedBy() *UserRoleUpsertBulk {
 	})
 }
 
-// SetStatus sets the "status" field.
-func (u *UserRoleUpsertBulk) SetStatus(v userrole.Status) *UserRoleUpsertBulk {
+// SetUserID sets the "user_id" field.
+func (u *UserRoleUpsertBulk) SetUserID(v uint32) *UserRoleUpsertBulk {
 	return u.Update(func(s *UserRoleUpsert) {
-		s.SetStatus(v)
+		s.SetUserID(v)
 	})
 }
 
-// UpdateStatus sets the "status" field to the value that was provided on create.
-func (u *UserRoleUpsertBulk) UpdateStatus() *UserRoleUpsertBulk {
+// AddUserID adds v to the "user_id" field.
+func (u *UserRoleUpsertBulk) AddUserID(v uint32) *UserRoleUpsertBulk {
 	return u.Update(func(s *UserRoleUpsert) {
-		s.UpdateStatus()
+		s.AddUserID(v)
 	})
 }
 
-// ClearStatus clears the value of the "status" field.
-func (u *UserRoleUpsertBulk) ClearStatus() *UserRoleUpsertBulk {
+// UpdateUserID sets the "user_id" field to the value that was provided on create.
+func (u *UserRoleUpsertBulk) UpdateUserID() *UserRoleUpsertBulk {
 	return u.Update(func(s *UserRoleUpsert) {
-		s.ClearStatus()
+		s.UpdateUserID()
 	})
 }
 
-// SetIsPrimary sets the "is_primary" field.
-func (u *UserRoleUpsertBulk) SetIsPrimary(v bool) *UserRoleUpsertBulk {
+// SetRoleID sets the "role_id" field.
+func (u *UserRoleUpsertBulk) SetRoleID(v uint32) *UserRoleUpsertBulk {
 	return u.Update(func(s *UserRoleUpsert) {
-		s.SetIsPrimary(v)
+		s.SetRoleID(v)
 	})
 }
 
-// UpdateIsPrimary sets the "is_primary" field to the value that was provided on create.
-func (u *UserRoleUpsertBulk) UpdateIsPrimary() *UserRoleUpsertBulk {
+// AddRoleID adds v to the "role_id" field.
+func (u *UserRoleUpsertBulk) AddRoleID(v uint32) *UserRoleUpsertBulk {
 	return u.Update(func(s *UserRoleUpsert) {
-		s.UpdateIsPrimary()
+		s.AddRoleID(v)
 	})
 }
 
-// ClearIsPrimary clears the value of the "is_primary" field.
-func (u *UserRoleUpsertBulk) ClearIsPrimary() *UserRoleUpsertBulk {
+// UpdateRoleID sets the "role_id" field to the value that was provided on create.
+func (u *UserRoleUpsertBulk) UpdateRoleID() *UserRoleUpsertBulk {
 	return u.Update(func(s *UserRoleUpsert) {
-		s.ClearIsPrimary()
+		s.UpdateRoleID()
 	})
 }
 
@@ -1389,59 +1460,80 @@ func (u *UserRoleUpsertBulk) ClearEndAt() *UserRoleUpsertBulk {
 	})
 }
 
-// SetUserID sets the "user_id" field.
-func (u *UserRoleUpsertBulk) SetUserID(v uint32) *UserRoleUpsertBulk {
+// SetAssignedAt sets the "assigned_at" field.
+func (u *UserRoleUpsertBulk) SetAssignedAt(v time.Time) *UserRoleUpsertBulk {
 	return u.Update(func(s *UserRoleUpsert) {
-		s.SetUserID(v)
+		s.SetAssignedAt(v)
 	})
 }
 
-// AddUserID adds v to the "user_id" field.
-func (u *UserRoleUpsertBulk) AddUserID(v uint32) *UserRoleUpsertBulk {
+// UpdateAssignedAt sets the "assigned_at" field to the value that was provided on create.
+func (u *UserRoleUpsertBulk) UpdateAssignedAt() *UserRoleUpsertBulk {
 	return u.Update(func(s *UserRoleUpsert) {
-		s.AddUserID(v)
+		s.UpdateAssignedAt()
 	})
 }
 
-// UpdateUserID sets the "user_id" field to the value that was provided on create.
-func (u *UserRoleUpsertBulk) UpdateUserID() *UserRoleUpsertBulk {
+// ClearAssignedAt clears the value of the "assigned_at" field.
+func (u *UserRoleUpsertBulk) ClearAssignedAt() *UserRoleUpsertBulk {
 	return u.Update(func(s *UserRoleUpsert) {
-		s.UpdateUserID()
+		s.ClearAssignedAt()
 	})
 }
 
-// ClearUserID clears the value of the "user_id" field.
-func (u *UserRoleUpsertBulk) ClearUserID() *UserRoleUpsertBulk {
+// SetAssignedBy sets the "assigned_by" field.
+func (u *UserRoleUpsertBulk) SetAssignedBy(v uint32) *UserRoleUpsertBulk {
 	return u.Update(func(s *UserRoleUpsert) {
-		s.ClearUserID()
+		s.SetAssignedBy(v)
 	})
 }
 
-// SetRoleID sets the "role_id" field.
-func (u *UserRoleUpsertBulk) SetRoleID(v uint32) *UserRoleUpsertBulk {
+// AddAssignedBy adds v to the "assigned_by" field.
+func (u *UserRoleUpsertBulk) AddAssignedBy(v uint32) *UserRoleUpsertBulk {
 	return u.Update(func(s *UserRoleUpsert) {
-		s.SetRoleID(v)
+		s.AddAssignedBy(v)
 	})
 }
 
-// AddRoleID adds v to the "role_id" field.
-func (u *UserRoleUpsertBulk) AddRoleID(v uint32) *UserRoleUpsertBulk {
+// UpdateAssignedBy sets the "assigned_by" field to the value that was provided on create.
+func (u *UserRoleUpsertBulk) UpdateAssignedBy() *UserRoleUpsertBulk {
 	return u.Update(func(s *UserRoleUpsert) {
-		s.AddRoleID(v)
+		s.UpdateAssignedBy()
 	})
 }
 
-// UpdateRoleID sets the "role_id" field to the value that was provided on create.
-func (u *UserRoleUpsertBulk) UpdateRoleID() *UserRoleUpsertBulk {
+// ClearAssignedBy clears the value of the "assigned_by" field.
+func (u *UserRoleUpsertBulk) ClearAssignedBy() *UserRoleUpsertBulk {
 	return u.Update(func(s *UserRoleUpsert) {
-		s.UpdateRoleID()
+		s.ClearAssignedBy()
 	})
 }
 
-// ClearRoleID clears the value of the "role_id" field.
-func (u *UserRoleUpsertBulk) ClearRoleID() *UserRoleUpsertBulk {
+// SetIsPrimary sets the "is_primary" field.
+func (u *UserRoleUpsertBulk) SetIsPrimary(v bool) *UserRoleUpsertBulk {
 	return u.Update(func(s *UserRoleUpsert) {
-		s.ClearRoleID()
+		s.SetIsPrimary(v)
+	})
+}
+
+// UpdateIsPrimary sets the "is_primary" field to the value that was provided on create.
+func (u *UserRoleUpsertBulk) UpdateIsPrimary() *UserRoleUpsertBulk {
+	return u.Update(func(s *UserRoleUpsert) {
+		s.UpdateIsPrimary()
+	})
+}
+
+// SetStatus sets the "status" field.
+func (u *UserRoleUpsertBulk) SetStatus(v userrole.Status) *UserRoleUpsertBulk {
+	return u.Update(func(s *UserRoleUpsert) {
+		s.SetStatus(v)
+	})
+}
+
+// UpdateStatus sets the "status" field to the value that was provided on create.
+func (u *UserRoleUpsertBulk) UpdateStatus() *UserRoleUpsertBulk {
+	return u.Update(func(s *UserRoleUpsert) {
+		s.UpdateStatus()
 	})
 }
 

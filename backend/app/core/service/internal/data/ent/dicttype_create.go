@@ -6,6 +6,7 @@ import (
 	"context"
 	"errors"
 	"fmt"
+	"go-wind-ledger/app/core/service/internal/data/ent/dictentry"
 	"go-wind-ledger/app/core/service/internal/data/ent/dicttype"
 	"time"
 
@@ -106,44 +107,72 @@ func (_c *DictTypeCreate) SetNillableDeletedBy(v *uint32) *DictTypeCreate {
 	return _c
 }
 
-// SetRemark sets the "remark" field.
-func (_c *DictTypeCreate) SetRemark(v string) *DictTypeCreate {
-	_c.mutation.SetRemark(v)
+// SetIsEnabled sets the "is_enabled" field.
+func (_c *DictTypeCreate) SetIsEnabled(v bool) *DictTypeCreate {
+	_c.mutation.SetIsEnabled(v)
 	return _c
 }
 
-// SetNillableRemark sets the "remark" field if the given value is not nil.
-func (_c *DictTypeCreate) SetNillableRemark(v *string) *DictTypeCreate {
+// SetNillableIsEnabled sets the "is_enabled" field if the given value is not nil.
+func (_c *DictTypeCreate) SetNillableIsEnabled(v *bool) *DictTypeCreate {
 	if v != nil {
-		_c.SetRemark(*v)
+		_c.SetIsEnabled(*v)
 	}
 	return _c
 }
 
-// SetCode sets the "code" field.
-func (_c *DictTypeCreate) SetCode(v string) *DictTypeCreate {
-	_c.mutation.SetCode(v)
+// SetSortOrder sets the "sort_order" field.
+func (_c *DictTypeCreate) SetSortOrder(v uint32) *DictTypeCreate {
+	_c.mutation.SetSortOrder(v)
 	return _c
 }
 
-// SetNillableCode sets the "code" field if the given value is not nil.
-func (_c *DictTypeCreate) SetNillableCode(v *string) *DictTypeCreate {
+// SetNillableSortOrder sets the "sort_order" field if the given value is not nil.
+func (_c *DictTypeCreate) SetNillableSortOrder(v *uint32) *DictTypeCreate {
 	if v != nil {
-		_c.SetCode(*v)
+		_c.SetSortOrder(*v)
 	}
 	return _c
 }
 
-// SetName sets the "name" field.
-func (_c *DictTypeCreate) SetName(v string) *DictTypeCreate {
-	_c.mutation.SetName(v)
+// SetTenantID sets the "tenant_id" field.
+func (_c *DictTypeCreate) SetTenantID(v uint32) *DictTypeCreate {
+	_c.mutation.SetTenantID(v)
 	return _c
 }
 
-// SetNillableName sets the "name" field if the given value is not nil.
-func (_c *DictTypeCreate) SetNillableName(v *string) *DictTypeCreate {
+// SetNillableTenantID sets the "tenant_id" field if the given value is not nil.
+func (_c *DictTypeCreate) SetNillableTenantID(v *uint32) *DictTypeCreate {
 	if v != nil {
-		_c.SetName(*v)
+		_c.SetTenantID(*v)
+	}
+	return _c
+}
+
+// SetTypeCode sets the "type_code" field.
+func (_c *DictTypeCreate) SetTypeCode(v string) *DictTypeCreate {
+	_c.mutation.SetTypeCode(v)
+	return _c
+}
+
+// SetNillableTypeCode sets the "type_code" field if the given value is not nil.
+func (_c *DictTypeCreate) SetNillableTypeCode(v *string) *DictTypeCreate {
+	if v != nil {
+		_c.SetTypeCode(*v)
+	}
+	return _c
+}
+
+// SetTypeName sets the "type_name" field.
+func (_c *DictTypeCreate) SetTypeName(v string) *DictTypeCreate {
+	_c.mutation.SetTypeName(v)
+	return _c
+}
+
+// SetNillableTypeName sets the "type_name" field if the given value is not nil.
+func (_c *DictTypeCreate) SetNillableTypeName(v *string) *DictTypeCreate {
+	if v != nil {
+		_c.SetTypeName(*v)
 	}
 	return _c
 }
@@ -154,6 +183,21 @@ func (_c *DictTypeCreate) SetID(v uint32) *DictTypeCreate {
 	return _c
 }
 
+// AddEntryIDs adds the "entries" edge to the DictEntry entity by IDs.
+func (_c *DictTypeCreate) AddEntryIDs(ids ...uint32) *DictTypeCreate {
+	_c.mutation.AddEntryIDs(ids...)
+	return _c
+}
+
+// AddEntries adds the "entries" edges to the DictEntry entity.
+func (_c *DictTypeCreate) AddEntries(v ...*DictEntry) *DictTypeCreate {
+	ids := make([]uint32, len(v))
+	for i := range v {
+		ids[i] = v[i].ID
+	}
+	return _c.AddEntryIDs(ids...)
+}
+
 // Mutation returns the DictTypeMutation object of the builder.
 func (_c *DictTypeCreate) Mutation() *DictTypeMutation {
 	return _c.mutation
@@ -161,6 +205,9 @@ func (_c *DictTypeCreate) Mutation() *DictTypeMutation {
 
 // Save creates the DictType in the database.
 func (_c *DictTypeCreate) Save(ctx context.Context) (*DictType, error) {
+	if err := _c.defaults(); err != nil {
+		return nil, err
+	}
 	return withHooks(ctx, _c.sqlSave, _c.mutation, _c.hooks)
 }
 
@@ -186,22 +233,42 @@ func (_c *DictTypeCreate) ExecX(ctx context.Context) {
 	}
 }
 
+// defaults sets the default values of the builder before save.
+func (_c *DictTypeCreate) defaults() error {
+	if _, ok := _c.mutation.IsEnabled(); !ok {
+		v := dicttype.DefaultIsEnabled
+		_c.mutation.SetIsEnabled(v)
+	}
+	if _, ok := _c.mutation.SortOrder(); !ok {
+		v := dicttype.DefaultSortOrder
+		_c.mutation.SetSortOrder(v)
+	}
+	if _, ok := _c.mutation.TenantID(); !ok {
+		v := dicttype.DefaultTenantID
+		_c.mutation.SetTenantID(v)
+	}
+	return nil
+}
+
 // check runs all checks and user-defined validators on the builder.
 func (_c *DictTypeCreate) check() error {
-	if v, ok := _c.mutation.Code(); ok {
-		if err := dicttype.CodeValidator(v); err != nil {
-			return &ValidationError{Name: "code", err: fmt.Errorf(`ent: validator failed for field "DictType.code": %w`, err)}
+	if v, ok := _c.mutation.TypeCode(); ok {
+		if err := dicttype.TypeCodeValidator(v); err != nil {
+			return &ValidationError{Name: "type_code", err: fmt.Errorf(`ent: validator failed for field "DictType.type_code": %w`, err)}
 		}
 	}
-	if v, ok := _c.mutation.Name(); ok {
-		if err := dicttype.NameValidator(v); err != nil {
-			return &ValidationError{Name: "name", err: fmt.Errorf(`ent: validator failed for field "DictType.name": %w`, err)}
+	if v, ok := _c.mutation.TypeName(); ok {
+		if err := dicttype.TypeNameValidator(v); err != nil {
+			return &ValidationError{Name: "type_name", err: fmt.Errorf(`ent: validator failed for field "DictType.type_name": %w`, err)}
 		}
 	}
 	if v, ok := _c.mutation.ID(); ok {
 		if err := dicttype.IDValidator(v); err != nil {
 			return &ValidationError{Name: "id", err: fmt.Errorf(`ent: validator failed for field "DictType.id": %w`, err)}
 		}
+	}
+	if len(_c.mutation.EntriesIDs()) == 0 {
+		return &ValidationError{Name: "entries", err: errors.New(`ent: missing required edge "DictType.entries"`)}
 	}
 	return nil
 }
@@ -260,17 +327,41 @@ func (_c *DictTypeCreate) createSpec() (*DictType, *sqlgraph.CreateSpec) {
 		_spec.SetField(dicttype.FieldDeletedBy, field.TypeUint32, value)
 		_node.DeletedBy = &value
 	}
-	if value, ok := _c.mutation.Remark(); ok {
-		_spec.SetField(dicttype.FieldRemark, field.TypeString, value)
-		_node.Remark = &value
+	if value, ok := _c.mutation.IsEnabled(); ok {
+		_spec.SetField(dicttype.FieldIsEnabled, field.TypeBool, value)
+		_node.IsEnabled = &value
 	}
-	if value, ok := _c.mutation.Code(); ok {
-		_spec.SetField(dicttype.FieldCode, field.TypeString, value)
-		_node.Code = &value
+	if value, ok := _c.mutation.SortOrder(); ok {
+		_spec.SetField(dicttype.FieldSortOrder, field.TypeUint32, value)
+		_node.SortOrder = &value
 	}
-	if value, ok := _c.mutation.Name(); ok {
-		_spec.SetField(dicttype.FieldName, field.TypeString, value)
-		_node.Name = &value
+	if value, ok := _c.mutation.TenantID(); ok {
+		_spec.SetField(dicttype.FieldTenantID, field.TypeUint32, value)
+		_node.TenantID = &value
+	}
+	if value, ok := _c.mutation.TypeCode(); ok {
+		_spec.SetField(dicttype.FieldTypeCode, field.TypeString, value)
+		_node.TypeCode = &value
+	}
+	if value, ok := _c.mutation.TypeName(); ok {
+		_spec.SetField(dicttype.FieldTypeName, field.TypeString, value)
+		_node.TypeName = &value
+	}
+	if nodes := _c.mutation.EntriesIDs(); len(nodes) > 0 {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.O2M,
+			Inverse: false,
+			Table:   dicttype.EntriesTable,
+			Columns: []string{dicttype.EntriesColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: sqlgraph.NewFieldSpec(dictentry.FieldID, field.TypeUint32),
+			},
+		}
+		for _, k := range nodes {
+			edge.Target.Nodes = append(edge.Target.Nodes, k)
+		}
+		_spec.Edges = append(_spec.Edges, edge)
 	}
 	return _node, _spec
 }
@@ -432,57 +523,63 @@ func (u *DictTypeUpsert) ClearDeletedBy() *DictTypeUpsert {
 	return u
 }
 
-// SetRemark sets the "remark" field.
-func (u *DictTypeUpsert) SetRemark(v string) *DictTypeUpsert {
-	u.Set(dicttype.FieldRemark, v)
+// SetIsEnabled sets the "is_enabled" field.
+func (u *DictTypeUpsert) SetIsEnabled(v bool) *DictTypeUpsert {
+	u.Set(dicttype.FieldIsEnabled, v)
 	return u
 }
 
-// UpdateRemark sets the "remark" field to the value that was provided on create.
-func (u *DictTypeUpsert) UpdateRemark() *DictTypeUpsert {
-	u.SetExcluded(dicttype.FieldRemark)
+// UpdateIsEnabled sets the "is_enabled" field to the value that was provided on create.
+func (u *DictTypeUpsert) UpdateIsEnabled() *DictTypeUpsert {
+	u.SetExcluded(dicttype.FieldIsEnabled)
 	return u
 }
 
-// ClearRemark clears the value of the "remark" field.
-func (u *DictTypeUpsert) ClearRemark() *DictTypeUpsert {
-	u.SetNull(dicttype.FieldRemark)
+// ClearIsEnabled clears the value of the "is_enabled" field.
+func (u *DictTypeUpsert) ClearIsEnabled() *DictTypeUpsert {
+	u.SetNull(dicttype.FieldIsEnabled)
 	return u
 }
 
-// SetCode sets the "code" field.
-func (u *DictTypeUpsert) SetCode(v string) *DictTypeUpsert {
-	u.Set(dicttype.FieldCode, v)
+// SetSortOrder sets the "sort_order" field.
+func (u *DictTypeUpsert) SetSortOrder(v uint32) *DictTypeUpsert {
+	u.Set(dicttype.FieldSortOrder, v)
 	return u
 }
 
-// UpdateCode sets the "code" field to the value that was provided on create.
-func (u *DictTypeUpsert) UpdateCode() *DictTypeUpsert {
-	u.SetExcluded(dicttype.FieldCode)
+// UpdateSortOrder sets the "sort_order" field to the value that was provided on create.
+func (u *DictTypeUpsert) UpdateSortOrder() *DictTypeUpsert {
+	u.SetExcluded(dicttype.FieldSortOrder)
 	return u
 }
 
-// ClearCode clears the value of the "code" field.
-func (u *DictTypeUpsert) ClearCode() *DictTypeUpsert {
-	u.SetNull(dicttype.FieldCode)
+// AddSortOrder adds v to the "sort_order" field.
+func (u *DictTypeUpsert) AddSortOrder(v uint32) *DictTypeUpsert {
+	u.Add(dicttype.FieldSortOrder, v)
 	return u
 }
 
-// SetName sets the "name" field.
-func (u *DictTypeUpsert) SetName(v string) *DictTypeUpsert {
-	u.Set(dicttype.FieldName, v)
+// ClearSortOrder clears the value of the "sort_order" field.
+func (u *DictTypeUpsert) ClearSortOrder() *DictTypeUpsert {
+	u.SetNull(dicttype.FieldSortOrder)
 	return u
 }
 
-// UpdateName sets the "name" field to the value that was provided on create.
-func (u *DictTypeUpsert) UpdateName() *DictTypeUpsert {
-	u.SetExcluded(dicttype.FieldName)
+// SetTypeName sets the "type_name" field.
+func (u *DictTypeUpsert) SetTypeName(v string) *DictTypeUpsert {
+	u.Set(dicttype.FieldTypeName, v)
 	return u
 }
 
-// ClearName clears the value of the "name" field.
-func (u *DictTypeUpsert) ClearName() *DictTypeUpsert {
-	u.SetNull(dicttype.FieldName)
+// UpdateTypeName sets the "type_name" field to the value that was provided on create.
+func (u *DictTypeUpsert) UpdateTypeName() *DictTypeUpsert {
+	u.SetExcluded(dicttype.FieldTypeName)
+	return u
+}
+
+// ClearTypeName clears the value of the "type_name" field.
+func (u *DictTypeUpsert) ClearTypeName() *DictTypeUpsert {
+	u.SetNull(dicttype.FieldTypeName)
 	return u
 }
 
@@ -505,6 +602,12 @@ func (u *DictTypeUpsertOne) UpdateNewValues() *DictTypeUpsertOne {
 		}
 		if _, exists := u.create.mutation.CreatedAt(); exists {
 			s.SetIgnore(dicttype.FieldCreatedAt)
+		}
+		if _, exists := u.create.mutation.TenantID(); exists {
+			s.SetIgnore(dicttype.FieldTenantID)
+		}
+		if _, exists := u.create.mutation.TypeCode(); exists {
+			s.SetIgnore(dicttype.FieldTypeCode)
 		}
 	}))
 	return u
@@ -663,66 +766,73 @@ func (u *DictTypeUpsertOne) ClearDeletedBy() *DictTypeUpsertOne {
 	})
 }
 
-// SetRemark sets the "remark" field.
-func (u *DictTypeUpsertOne) SetRemark(v string) *DictTypeUpsertOne {
+// SetIsEnabled sets the "is_enabled" field.
+func (u *DictTypeUpsertOne) SetIsEnabled(v bool) *DictTypeUpsertOne {
 	return u.Update(func(s *DictTypeUpsert) {
-		s.SetRemark(v)
+		s.SetIsEnabled(v)
 	})
 }
 
-// UpdateRemark sets the "remark" field to the value that was provided on create.
-func (u *DictTypeUpsertOne) UpdateRemark() *DictTypeUpsertOne {
+// UpdateIsEnabled sets the "is_enabled" field to the value that was provided on create.
+func (u *DictTypeUpsertOne) UpdateIsEnabled() *DictTypeUpsertOne {
 	return u.Update(func(s *DictTypeUpsert) {
-		s.UpdateRemark()
+		s.UpdateIsEnabled()
 	})
 }
 
-// ClearRemark clears the value of the "remark" field.
-func (u *DictTypeUpsertOne) ClearRemark() *DictTypeUpsertOne {
+// ClearIsEnabled clears the value of the "is_enabled" field.
+func (u *DictTypeUpsertOne) ClearIsEnabled() *DictTypeUpsertOne {
 	return u.Update(func(s *DictTypeUpsert) {
-		s.ClearRemark()
+		s.ClearIsEnabled()
 	})
 }
 
-// SetCode sets the "code" field.
-func (u *DictTypeUpsertOne) SetCode(v string) *DictTypeUpsertOne {
+// SetSortOrder sets the "sort_order" field.
+func (u *DictTypeUpsertOne) SetSortOrder(v uint32) *DictTypeUpsertOne {
 	return u.Update(func(s *DictTypeUpsert) {
-		s.SetCode(v)
+		s.SetSortOrder(v)
 	})
 }
 
-// UpdateCode sets the "code" field to the value that was provided on create.
-func (u *DictTypeUpsertOne) UpdateCode() *DictTypeUpsertOne {
+// AddSortOrder adds v to the "sort_order" field.
+func (u *DictTypeUpsertOne) AddSortOrder(v uint32) *DictTypeUpsertOne {
 	return u.Update(func(s *DictTypeUpsert) {
-		s.UpdateCode()
+		s.AddSortOrder(v)
 	})
 }
 
-// ClearCode clears the value of the "code" field.
-func (u *DictTypeUpsertOne) ClearCode() *DictTypeUpsertOne {
+// UpdateSortOrder sets the "sort_order" field to the value that was provided on create.
+func (u *DictTypeUpsertOne) UpdateSortOrder() *DictTypeUpsertOne {
 	return u.Update(func(s *DictTypeUpsert) {
-		s.ClearCode()
+		s.UpdateSortOrder()
 	})
 }
 
-// SetName sets the "name" field.
-func (u *DictTypeUpsertOne) SetName(v string) *DictTypeUpsertOne {
+// ClearSortOrder clears the value of the "sort_order" field.
+func (u *DictTypeUpsertOne) ClearSortOrder() *DictTypeUpsertOne {
 	return u.Update(func(s *DictTypeUpsert) {
-		s.SetName(v)
+		s.ClearSortOrder()
 	})
 }
 
-// UpdateName sets the "name" field to the value that was provided on create.
-func (u *DictTypeUpsertOne) UpdateName() *DictTypeUpsertOne {
+// SetTypeName sets the "type_name" field.
+func (u *DictTypeUpsertOne) SetTypeName(v string) *DictTypeUpsertOne {
 	return u.Update(func(s *DictTypeUpsert) {
-		s.UpdateName()
+		s.SetTypeName(v)
 	})
 }
 
-// ClearName clears the value of the "name" field.
-func (u *DictTypeUpsertOne) ClearName() *DictTypeUpsertOne {
+// UpdateTypeName sets the "type_name" field to the value that was provided on create.
+func (u *DictTypeUpsertOne) UpdateTypeName() *DictTypeUpsertOne {
 	return u.Update(func(s *DictTypeUpsert) {
-		s.ClearName()
+		s.UpdateTypeName()
+	})
+}
+
+// ClearTypeName clears the value of the "type_name" field.
+func (u *DictTypeUpsertOne) ClearTypeName() *DictTypeUpsertOne {
+	return u.Update(func(s *DictTypeUpsert) {
+		s.ClearTypeName()
 	})
 }
 
@@ -778,6 +888,7 @@ func (_c *DictTypeCreateBulk) Save(ctx context.Context) ([]*DictType, error) {
 	for i := range _c.builders {
 		func(i int, root context.Context) {
 			builder := _c.builders[i]
+			builder.defaults()
 			var mut Mutator = MutateFunc(func(ctx context.Context, m Mutation) (Value, error) {
 				mutation, ok := m.(*DictTypeMutation)
 				if !ok {
@@ -909,6 +1020,12 @@ func (u *DictTypeUpsertBulk) UpdateNewValues() *DictTypeUpsertBulk {
 			}
 			if _, exists := b.mutation.CreatedAt(); exists {
 				s.SetIgnore(dicttype.FieldCreatedAt)
+			}
+			if _, exists := b.mutation.TenantID(); exists {
+				s.SetIgnore(dicttype.FieldTenantID)
+			}
+			if _, exists := b.mutation.TypeCode(); exists {
+				s.SetIgnore(dicttype.FieldTypeCode)
 			}
 		}
 	}))
@@ -1068,66 +1185,73 @@ func (u *DictTypeUpsertBulk) ClearDeletedBy() *DictTypeUpsertBulk {
 	})
 }
 
-// SetRemark sets the "remark" field.
-func (u *DictTypeUpsertBulk) SetRemark(v string) *DictTypeUpsertBulk {
+// SetIsEnabled sets the "is_enabled" field.
+func (u *DictTypeUpsertBulk) SetIsEnabled(v bool) *DictTypeUpsertBulk {
 	return u.Update(func(s *DictTypeUpsert) {
-		s.SetRemark(v)
+		s.SetIsEnabled(v)
 	})
 }
 
-// UpdateRemark sets the "remark" field to the value that was provided on create.
-func (u *DictTypeUpsertBulk) UpdateRemark() *DictTypeUpsertBulk {
+// UpdateIsEnabled sets the "is_enabled" field to the value that was provided on create.
+func (u *DictTypeUpsertBulk) UpdateIsEnabled() *DictTypeUpsertBulk {
 	return u.Update(func(s *DictTypeUpsert) {
-		s.UpdateRemark()
+		s.UpdateIsEnabled()
 	})
 }
 
-// ClearRemark clears the value of the "remark" field.
-func (u *DictTypeUpsertBulk) ClearRemark() *DictTypeUpsertBulk {
+// ClearIsEnabled clears the value of the "is_enabled" field.
+func (u *DictTypeUpsertBulk) ClearIsEnabled() *DictTypeUpsertBulk {
 	return u.Update(func(s *DictTypeUpsert) {
-		s.ClearRemark()
+		s.ClearIsEnabled()
 	})
 }
 
-// SetCode sets the "code" field.
-func (u *DictTypeUpsertBulk) SetCode(v string) *DictTypeUpsertBulk {
+// SetSortOrder sets the "sort_order" field.
+func (u *DictTypeUpsertBulk) SetSortOrder(v uint32) *DictTypeUpsertBulk {
 	return u.Update(func(s *DictTypeUpsert) {
-		s.SetCode(v)
+		s.SetSortOrder(v)
 	})
 }
 
-// UpdateCode sets the "code" field to the value that was provided on create.
-func (u *DictTypeUpsertBulk) UpdateCode() *DictTypeUpsertBulk {
+// AddSortOrder adds v to the "sort_order" field.
+func (u *DictTypeUpsertBulk) AddSortOrder(v uint32) *DictTypeUpsertBulk {
 	return u.Update(func(s *DictTypeUpsert) {
-		s.UpdateCode()
+		s.AddSortOrder(v)
 	})
 }
 
-// ClearCode clears the value of the "code" field.
-func (u *DictTypeUpsertBulk) ClearCode() *DictTypeUpsertBulk {
+// UpdateSortOrder sets the "sort_order" field to the value that was provided on create.
+func (u *DictTypeUpsertBulk) UpdateSortOrder() *DictTypeUpsertBulk {
 	return u.Update(func(s *DictTypeUpsert) {
-		s.ClearCode()
+		s.UpdateSortOrder()
 	})
 }
 
-// SetName sets the "name" field.
-func (u *DictTypeUpsertBulk) SetName(v string) *DictTypeUpsertBulk {
+// ClearSortOrder clears the value of the "sort_order" field.
+func (u *DictTypeUpsertBulk) ClearSortOrder() *DictTypeUpsertBulk {
 	return u.Update(func(s *DictTypeUpsert) {
-		s.SetName(v)
+		s.ClearSortOrder()
 	})
 }
 
-// UpdateName sets the "name" field to the value that was provided on create.
-func (u *DictTypeUpsertBulk) UpdateName() *DictTypeUpsertBulk {
+// SetTypeName sets the "type_name" field.
+func (u *DictTypeUpsertBulk) SetTypeName(v string) *DictTypeUpsertBulk {
 	return u.Update(func(s *DictTypeUpsert) {
-		s.UpdateName()
+		s.SetTypeName(v)
 	})
 }
 
-// ClearName clears the value of the "name" field.
-func (u *DictTypeUpsertBulk) ClearName() *DictTypeUpsertBulk {
+// UpdateTypeName sets the "type_name" field to the value that was provided on create.
+func (u *DictTypeUpsertBulk) UpdateTypeName() *DictTypeUpsertBulk {
 	return u.Update(func(s *DictTypeUpsert) {
-		s.ClearName()
+		s.UpdateTypeName()
+	})
+}
+
+// ClearTypeName clears the value of the "type_name" field.
+func (u *DictTypeUpsertBulk) ClearTypeName() *DictTypeUpsertBulk {
+	return u.Update(func(s *DictTypeUpsert) {
+		s.ClearTypeName()
 	})
 }
 

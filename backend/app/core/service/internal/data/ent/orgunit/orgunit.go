@@ -41,54 +41,48 @@ const (
 	FieldParentID = "parent_id"
 	// FieldPath holds the string denoting the path field in the database.
 	FieldPath = "path"
-	// FieldCode holds the string denoting the code field in the database.
-	FieldCode = "code"
 	// FieldName holds the string denoting the name field in the database.
 	FieldName = "name"
-	// FieldType holds the string denoting the type field in the database.
-	FieldType = "type"
-	// FieldIsLegalEntity holds the string denoting the is_legal_entity field in the database.
-	FieldIsLegalEntity = "is_legal_entity"
-	// FieldExternalID holds the string denoting the external_id field in the database.
-	FieldExternalID = "external_id"
-	// FieldLegalEntityOrgID holds the string denoting the legal_entity_org_id field in the database.
-	FieldLegalEntityOrgID = "legal_entity_org_id"
-	// FieldTaxID holds the string denoting the tax_id field in the database.
-	FieldTaxID = "tax_id"
-	// FieldRegistrationNumber holds the string denoting the registration_number field in the database.
-	FieldRegistrationNumber = "registration_number"
+	// FieldCode holds the string denoting the code field in the database.
+	FieldCode = "code"
 	// FieldLeaderID holds the string denoting the leader_id field in the database.
 	FieldLeaderID = "leader_id"
-	// FieldContactUserID holds the string denoting the contact_user_id field in the database.
-	FieldContactUserID = "contact_user_id"
-	// FieldStartAt holds the string denoting the start_at field in the database.
-	FieldStartAt = "start_at"
-	// FieldEndAt holds the string denoting the end_at field in the database.
-	FieldEndAt = "end_at"
+	// FieldType holds the string denoting the type field in the database.
+	FieldType = "type"
+	// FieldBusinessScopes holds the string denoting the business_scopes field in the database.
+	FieldBusinessScopes = "business_scopes"
+	// FieldExternalID holds the string denoting the external_id field in the database.
+	FieldExternalID = "external_id"
+	// FieldIsLegalEntity holds the string denoting the is_legal_entity field in the database.
+	FieldIsLegalEntity = "is_legal_entity"
+	// FieldRegistrationNumber holds the string denoting the registration_number field in the database.
+	FieldRegistrationNumber = "registration_number"
+	// FieldTaxID holds the string denoting the tax_id field in the database.
+	FieldTaxID = "tax_id"
+	// FieldLegalEntityOrgID holds the string denoting the legal_entity_org_id field in the database.
+	FieldLegalEntityOrgID = "legal_entity_org_id"
 	// FieldAddress holds the string denoting the address field in the database.
 	FieldAddress = "address"
 	// FieldPhone holds the string denoting the phone field in the database.
 	FieldPhone = "phone"
 	// FieldEmail holds the string denoting the email field in the database.
 	FieldEmail = "email"
-	// FieldWebsite holds the string denoting the website field in the database.
-	FieldWebsite = "website"
 	// FieldTimezone holds the string denoting the timezone field in the database.
 	FieldTimezone = "timezone"
-	// FieldRegion holds the string denoting the region field in the database.
-	FieldRegion = "region"
 	// FieldCountry holds the string denoting the country field in the database.
 	FieldCountry = "country"
-	// FieldCity holds the string denoting the city field in the database.
-	FieldCity = "city"
-	// FieldPostalCode holds the string denoting the postal_code field in the database.
-	FieldPostalCode = "postal_code"
 	// FieldLatitude holds the string denoting the latitude field in the database.
 	FieldLatitude = "latitude"
 	// FieldLongitude holds the string denoting the longitude field in the database.
 	FieldLongitude = "longitude"
-	// FieldLogo holds the string denoting the logo field in the database.
-	FieldLogo = "logo"
+	// FieldStartAt holds the string denoting the start_at field in the database.
+	FieldStartAt = "start_at"
+	// FieldEndAt holds the string denoting the end_at field in the database.
+	FieldEndAt = "end_at"
+	// FieldContactUserID holds the string denoting the contact_user_id field in the database.
+	FieldContactUserID = "contact_user_id"
+	// FieldPermissionTags holds the string denoting the permission_tags field in the database.
+	FieldPermissionTags = "permission_tags"
 	// EdgeParent holds the string denoting the parent edge name in mutations.
 	EdgeParent = "parent"
 	// EdgeChildren holds the string denoting the children edge name in mutations.
@@ -121,30 +115,27 @@ var Columns = []string{
 	FieldDescription,
 	FieldParentID,
 	FieldPath,
-	FieldCode,
 	FieldName,
-	FieldType,
-	FieldIsLegalEntity,
-	FieldExternalID,
-	FieldLegalEntityOrgID,
-	FieldTaxID,
-	FieldRegistrationNumber,
+	FieldCode,
 	FieldLeaderID,
-	FieldContactUserID,
-	FieldStartAt,
-	FieldEndAt,
+	FieldType,
+	FieldBusinessScopes,
+	FieldExternalID,
+	FieldIsLegalEntity,
+	FieldRegistrationNumber,
+	FieldTaxID,
+	FieldLegalEntityOrgID,
 	FieldAddress,
 	FieldPhone,
 	FieldEmail,
-	FieldWebsite,
 	FieldTimezone,
-	FieldRegion,
 	FieldCountry,
-	FieldCity,
-	FieldPostalCode,
 	FieldLatitude,
 	FieldLongitude,
-	FieldLogo,
+	FieldStartAt,
+	FieldEndAt,
+	FieldContactUserID,
+	FieldPermissionTags,
 }
 
 // ValidColumn reports if the column name is valid (part of the table columns).
@@ -171,40 +162,10 @@ var (
 	DefaultTenantID uint32
 	// PathValidator is a validator for the "path" field. It is called by the builders before save.
 	PathValidator func(string) error
-	// CodeValidator is a validator for the "code" field. It is called by the builders before save.
-	CodeValidator func(string) error
 	// NameValidator is a validator for the "name" field. It is called by the builders before save.
 	NameValidator func(string) error
-	// TypeValidator is a validator for the "type" field. It is called by the builders before save.
-	TypeValidator func(string) error
 	// DefaultIsLegalEntity holds the default value on creation for the "is_legal_entity" field.
 	DefaultIsLegalEntity bool
-	// ExternalIDValidator is a validator for the "external_id" field. It is called by the builders before save.
-	ExternalIDValidator func(string) error
-	// TaxIDValidator is a validator for the "tax_id" field. It is called by the builders before save.
-	TaxIDValidator func(string) error
-	// RegistrationNumberValidator is a validator for the "registration_number" field. It is called by the builders before save.
-	RegistrationNumberValidator func(string) error
-	// AddressValidator is a validator for the "address" field. It is called by the builders before save.
-	AddressValidator func(string) error
-	// PhoneValidator is a validator for the "phone" field. It is called by the builders before save.
-	PhoneValidator func(string) error
-	// EmailValidator is a validator for the "email" field. It is called by the builders before save.
-	EmailValidator func(string) error
-	// WebsiteValidator is a validator for the "website" field. It is called by the builders before save.
-	WebsiteValidator func(string) error
-	// TimezoneValidator is a validator for the "timezone" field. It is called by the builders before save.
-	TimezoneValidator func(string) error
-	// RegionValidator is a validator for the "region" field. It is called by the builders before save.
-	RegionValidator func(string) error
-	// CountryValidator is a validator for the "country" field. It is called by the builders before save.
-	CountryValidator func(string) error
-	// CityValidator is a validator for the "city" field. It is called by the builders before save.
-	CityValidator func(string) error
-	// PostalCodeValidator is a validator for the "postal_code" field. It is called by the builders before save.
-	PostalCodeValidator func(string) error
-	// LogoValidator is a validator for the "logo" field. It is called by the builders before save.
-	LogoValidator func(string) error
 	// IDValidator is a validator for the "id" field. It is called by the builders before save.
 	IDValidator func(uint32) error
 )
@@ -232,6 +193,38 @@ func StatusValidator(s Status) error {
 		return nil
 	default:
 		return fmt.Errorf("orgunit: invalid enum value for status field: %q", s)
+	}
+}
+
+// Type defines the type for the "type" enum field.
+type Type string
+
+// TypeDepartment is the default value of the Type enum.
+const DefaultType = TypeDepartment
+
+// Type values.
+const (
+	TypeCompany    Type = "COMPANY"
+	TypeDivision   Type = "DIVISION"
+	TypeDepartment Type = "DEPARTMENT"
+	TypeTeam       Type = "TEAM"
+	TypeProject    Type = "PROJECT"
+	TypeCommittee  Type = "COMMITTEE"
+	TypeRegion     Type = "REGION"
+	TypeOther      Type = "OTHER"
+)
+
+func (_type Type) String() string {
+	return string(_type)
+}
+
+// TypeValidator is a validator for the "type" field enum values. It is called by the builders before save.
+func TypeValidator(_type Type) error {
+	switch _type {
+	case TypeCompany, TypeDivision, TypeDepartment, TypeTeam, TypeProject, TypeCommittee, TypeRegion, TypeOther:
+		return nil
+	default:
+		return fmt.Errorf("orgunit: invalid enum value for type field: %q", _type)
 	}
 }
 
@@ -308,44 +301,14 @@ func ByPath(opts ...sql.OrderTermOption) OrderOption {
 	return sql.OrderByField(FieldPath, opts...).ToFunc()
 }
 
-// ByCode orders the results by the code field.
-func ByCode(opts ...sql.OrderTermOption) OrderOption {
-	return sql.OrderByField(FieldCode, opts...).ToFunc()
-}
-
 // ByName orders the results by the name field.
 func ByName(opts ...sql.OrderTermOption) OrderOption {
 	return sql.OrderByField(FieldName, opts...).ToFunc()
 }
 
-// ByType orders the results by the type field.
-func ByType(opts ...sql.OrderTermOption) OrderOption {
-	return sql.OrderByField(FieldType, opts...).ToFunc()
-}
-
-// ByIsLegalEntity orders the results by the is_legal_entity field.
-func ByIsLegalEntity(opts ...sql.OrderTermOption) OrderOption {
-	return sql.OrderByField(FieldIsLegalEntity, opts...).ToFunc()
-}
-
-// ByExternalID orders the results by the external_id field.
-func ByExternalID(opts ...sql.OrderTermOption) OrderOption {
-	return sql.OrderByField(FieldExternalID, opts...).ToFunc()
-}
-
-// ByLegalEntityOrgID orders the results by the legal_entity_org_id field.
-func ByLegalEntityOrgID(opts ...sql.OrderTermOption) OrderOption {
-	return sql.OrderByField(FieldLegalEntityOrgID, opts...).ToFunc()
-}
-
-// ByTaxID orders the results by the tax_id field.
-func ByTaxID(opts ...sql.OrderTermOption) OrderOption {
-	return sql.OrderByField(FieldTaxID, opts...).ToFunc()
-}
-
-// ByRegistrationNumber orders the results by the registration_number field.
-func ByRegistrationNumber(opts ...sql.OrderTermOption) OrderOption {
-	return sql.OrderByField(FieldRegistrationNumber, opts...).ToFunc()
+// ByCode orders the results by the code field.
+func ByCode(opts ...sql.OrderTermOption) OrderOption {
+	return sql.OrderByField(FieldCode, opts...).ToFunc()
 }
 
 // ByLeaderID orders the results by the leader_id field.
@@ -353,19 +316,34 @@ func ByLeaderID(opts ...sql.OrderTermOption) OrderOption {
 	return sql.OrderByField(FieldLeaderID, opts...).ToFunc()
 }
 
-// ByContactUserID orders the results by the contact_user_id field.
-func ByContactUserID(opts ...sql.OrderTermOption) OrderOption {
-	return sql.OrderByField(FieldContactUserID, opts...).ToFunc()
+// ByType orders the results by the type field.
+func ByType(opts ...sql.OrderTermOption) OrderOption {
+	return sql.OrderByField(FieldType, opts...).ToFunc()
 }
 
-// ByStartAt orders the results by the start_at field.
-func ByStartAt(opts ...sql.OrderTermOption) OrderOption {
-	return sql.OrderByField(FieldStartAt, opts...).ToFunc()
+// ByExternalID orders the results by the external_id field.
+func ByExternalID(opts ...sql.OrderTermOption) OrderOption {
+	return sql.OrderByField(FieldExternalID, opts...).ToFunc()
 }
 
-// ByEndAt orders the results by the end_at field.
-func ByEndAt(opts ...sql.OrderTermOption) OrderOption {
-	return sql.OrderByField(FieldEndAt, opts...).ToFunc()
+// ByIsLegalEntity orders the results by the is_legal_entity field.
+func ByIsLegalEntity(opts ...sql.OrderTermOption) OrderOption {
+	return sql.OrderByField(FieldIsLegalEntity, opts...).ToFunc()
+}
+
+// ByRegistrationNumber orders the results by the registration_number field.
+func ByRegistrationNumber(opts ...sql.OrderTermOption) OrderOption {
+	return sql.OrderByField(FieldRegistrationNumber, opts...).ToFunc()
+}
+
+// ByTaxID orders the results by the tax_id field.
+func ByTaxID(opts ...sql.OrderTermOption) OrderOption {
+	return sql.OrderByField(FieldTaxID, opts...).ToFunc()
+}
+
+// ByLegalEntityOrgID orders the results by the legal_entity_org_id field.
+func ByLegalEntityOrgID(opts ...sql.OrderTermOption) OrderOption {
+	return sql.OrderByField(FieldLegalEntityOrgID, opts...).ToFunc()
 }
 
 // ByAddress orders the results by the address field.
@@ -383,34 +361,14 @@ func ByEmail(opts ...sql.OrderTermOption) OrderOption {
 	return sql.OrderByField(FieldEmail, opts...).ToFunc()
 }
 
-// ByWebsite orders the results by the website field.
-func ByWebsite(opts ...sql.OrderTermOption) OrderOption {
-	return sql.OrderByField(FieldWebsite, opts...).ToFunc()
-}
-
 // ByTimezone orders the results by the timezone field.
 func ByTimezone(opts ...sql.OrderTermOption) OrderOption {
 	return sql.OrderByField(FieldTimezone, opts...).ToFunc()
 }
 
-// ByRegion orders the results by the region field.
-func ByRegion(opts ...sql.OrderTermOption) OrderOption {
-	return sql.OrderByField(FieldRegion, opts...).ToFunc()
-}
-
 // ByCountry orders the results by the country field.
 func ByCountry(opts ...sql.OrderTermOption) OrderOption {
 	return sql.OrderByField(FieldCountry, opts...).ToFunc()
-}
-
-// ByCity orders the results by the city field.
-func ByCity(opts ...sql.OrderTermOption) OrderOption {
-	return sql.OrderByField(FieldCity, opts...).ToFunc()
-}
-
-// ByPostalCode orders the results by the postal_code field.
-func ByPostalCode(opts ...sql.OrderTermOption) OrderOption {
-	return sql.OrderByField(FieldPostalCode, opts...).ToFunc()
 }
 
 // ByLatitude orders the results by the latitude field.
@@ -423,9 +381,19 @@ func ByLongitude(opts ...sql.OrderTermOption) OrderOption {
 	return sql.OrderByField(FieldLongitude, opts...).ToFunc()
 }
 
-// ByLogo orders the results by the logo field.
-func ByLogo(opts ...sql.OrderTermOption) OrderOption {
-	return sql.OrderByField(FieldLogo, opts...).ToFunc()
+// ByStartAt orders the results by the start_at field.
+func ByStartAt(opts ...sql.OrderTermOption) OrderOption {
+	return sql.OrderByField(FieldStartAt, opts...).ToFunc()
+}
+
+// ByEndAt orders the results by the end_at field.
+func ByEndAt(opts ...sql.OrderTermOption) OrderOption {
+	return sql.OrderByField(FieldEndAt, opts...).ToFunc()
+}
+
+// ByContactUserID orders the results by the contact_user_id field.
+func ByContactUserID(opts ...sql.OrderTermOption) OrderOption {
+	return sql.OrderByField(FieldContactUserID, opts...).ToFunc()
 }
 
 // ByParentField orders the results by parent field.

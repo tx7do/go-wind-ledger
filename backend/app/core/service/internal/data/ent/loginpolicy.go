@@ -32,18 +32,16 @@ type LoginPolicy struct {
 	DeletedBy *uint32 `json:"deleted_by,omitempty"`
 	// 租户ID
 	TenantID *uint32 `json:"tenant_id,omitempty"`
-	// 备注
-	Remark *string `json:"remark,omitempty"`
-	// Name holds the value of the "name" field.
-	Name *string `json:"name,omitempty"`
-	// Type holds the value of the "type" field.
+	// 目标用户ID
+	TargetID *uint32 `json:"target_id,omitempty"`
+	// 限制值（如IP地址、MAC地址或地区代码）
+	Value *string `json:"value,omitempty"`
+	// 限制原因
+	Reason *string `json:"reason,omitempty"`
+	// 限制类型
 	Type *loginpolicy.Type `json:"type,omitempty"`
-	// Config holds the value of the "config" field.
-	Config *string `json:"config,omitempty"`
-	// Method holds the value of the "method" field.
-	Method *loginpolicy.Method `json:"method,omitempty"`
-	// Enable holds the value of the "enable" field.
-	Enable       *bool `json:"enable,omitempty"`
+	// 限制方式
+	Method       *loginpolicy.Method `json:"method,omitempty"`
 	selectValues sql.SelectValues
 }
 
@@ -52,11 +50,9 @@ func (*LoginPolicy) scanValues(columns []string) ([]any, error) {
 	values := make([]any, len(columns))
 	for i := range columns {
 		switch columns[i] {
-		case loginpolicy.FieldEnable:
-			values[i] = new(sql.NullBool)
-		case loginpolicy.FieldID, loginpolicy.FieldCreatedBy, loginpolicy.FieldUpdatedBy, loginpolicy.FieldDeletedBy, loginpolicy.FieldTenantID:
+		case loginpolicy.FieldID, loginpolicy.FieldCreatedBy, loginpolicy.FieldUpdatedBy, loginpolicy.FieldDeletedBy, loginpolicy.FieldTenantID, loginpolicy.FieldTargetID:
 			values[i] = new(sql.NullInt64)
-		case loginpolicy.FieldRemark, loginpolicy.FieldName, loginpolicy.FieldType, loginpolicy.FieldConfig, loginpolicy.FieldMethod:
+		case loginpolicy.FieldValue, loginpolicy.FieldReason, loginpolicy.FieldType, loginpolicy.FieldMethod:
 			values[i] = new(sql.NullString)
 		case loginpolicy.FieldCreatedAt, loginpolicy.FieldUpdatedAt, loginpolicy.FieldDeletedAt:
 			values[i] = new(sql.NullTime)
@@ -130,19 +126,26 @@ func (_m *LoginPolicy) assignValues(columns []string, values []any) error {
 				_m.TenantID = new(uint32)
 				*_m.TenantID = uint32(value.Int64)
 			}
-		case loginpolicy.FieldRemark:
-			if value, ok := values[i].(*sql.NullString); !ok {
-				return fmt.Errorf("unexpected type %T for field remark", values[i])
+		case loginpolicy.FieldTargetID:
+			if value, ok := values[i].(*sql.NullInt64); !ok {
+				return fmt.Errorf("unexpected type %T for field target_id", values[i])
 			} else if value.Valid {
-				_m.Remark = new(string)
-				*_m.Remark = value.String
+				_m.TargetID = new(uint32)
+				*_m.TargetID = uint32(value.Int64)
 			}
-		case loginpolicy.FieldName:
+		case loginpolicy.FieldValue:
 			if value, ok := values[i].(*sql.NullString); !ok {
-				return fmt.Errorf("unexpected type %T for field name", values[i])
+				return fmt.Errorf("unexpected type %T for field value", values[i])
 			} else if value.Valid {
-				_m.Name = new(string)
-				*_m.Name = value.String
+				_m.Value = new(string)
+				*_m.Value = value.String
+			}
+		case loginpolicy.FieldReason:
+			if value, ok := values[i].(*sql.NullString); !ok {
+				return fmt.Errorf("unexpected type %T for field reason", values[i])
+			} else if value.Valid {
+				_m.Reason = new(string)
+				*_m.Reason = value.String
 			}
 		case loginpolicy.FieldType:
 			if value, ok := values[i].(*sql.NullString); !ok {
@@ -151,26 +154,12 @@ func (_m *LoginPolicy) assignValues(columns []string, values []any) error {
 				_m.Type = new(loginpolicy.Type)
 				*_m.Type = loginpolicy.Type(value.String)
 			}
-		case loginpolicy.FieldConfig:
-			if value, ok := values[i].(*sql.NullString); !ok {
-				return fmt.Errorf("unexpected type %T for field config", values[i])
-			} else if value.Valid {
-				_m.Config = new(string)
-				*_m.Config = value.String
-			}
 		case loginpolicy.FieldMethod:
 			if value, ok := values[i].(*sql.NullString); !ok {
 				return fmt.Errorf("unexpected type %T for field method", values[i])
 			} else if value.Valid {
 				_m.Method = new(loginpolicy.Method)
 				*_m.Method = loginpolicy.Method(value.String)
-			}
-		case loginpolicy.FieldEnable:
-			if value, ok := values[i].(*sql.NullBool); !ok {
-				return fmt.Errorf("unexpected type %T for field enable", values[i])
-			} else if value.Valid {
-				_m.Enable = new(bool)
-				*_m.Enable = value.Bool
 			}
 		default:
 			_m.selectValues.Set(columns[i], values[i])
@@ -179,9 +168,9 @@ func (_m *LoginPolicy) assignValues(columns []string, values []any) error {
 	return nil
 }
 
-// Value returns the ent.Value that was dynamically selected and assigned to the LoginPolicy.
+// GetValue returns the ent.Value that was dynamically selected and assigned to the LoginPolicy.
 // This includes values selected through modifiers, order, etc.
-func (_m *LoginPolicy) Value(name string) (ent.Value, error) {
+func (_m *LoginPolicy) GetValue(name string) (ent.Value, error) {
 	return _m.selectValues.Get(name)
 }
 
@@ -243,13 +232,18 @@ func (_m *LoginPolicy) String() string {
 		builder.WriteString(fmt.Sprintf("%v", *v))
 	}
 	builder.WriteString(", ")
-	if v := _m.Remark; v != nil {
-		builder.WriteString("remark=")
+	if v := _m.TargetID; v != nil {
+		builder.WriteString("target_id=")
+		builder.WriteString(fmt.Sprintf("%v", *v))
+	}
+	builder.WriteString(", ")
+	if v := _m.Value; v != nil {
+		builder.WriteString("value=")
 		builder.WriteString(*v)
 	}
 	builder.WriteString(", ")
-	if v := _m.Name; v != nil {
-		builder.WriteString("name=")
+	if v := _m.Reason; v != nil {
+		builder.WriteString("reason=")
 		builder.WriteString(*v)
 	}
 	builder.WriteString(", ")
@@ -258,18 +252,8 @@ func (_m *LoginPolicy) String() string {
 		builder.WriteString(fmt.Sprintf("%v", *v))
 	}
 	builder.WriteString(", ")
-	if v := _m.Config; v != nil {
-		builder.WriteString("config=")
-		builder.WriteString(*v)
-	}
-	builder.WriteString(", ")
 	if v := _m.Method; v != nil {
 		builder.WriteString("method=")
-		builder.WriteString(fmt.Sprintf("%v", *v))
-	}
-	builder.WriteString(", ")
-	if v := _m.Enable; v != nil {
-		builder.WriteString("enable=")
 		builder.WriteString(fmt.Sprintf("%v", *v))
 	}
 	builder.WriteByte(')')

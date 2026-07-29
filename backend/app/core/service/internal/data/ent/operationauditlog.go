@@ -5,6 +5,7 @@ package ent
 import (
 	"encoding/json"
 	"fmt"
+	auditpb "go-wind-ledger/api/gen/go/audit/service/v1"
 	"go-wind-ledger/app/core/service/internal/data/ent/operationauditlog"
 	"strings"
 	"time"
@@ -13,7 +14,7 @@ import (
 	"entgo.io/ent/dialect/sql"
 )
 
-// OperationAuditLog is the model entity for the OperationAuditLog schema.
+// 操作审计日志表
 type OperationAuditLog struct {
 	config `json:"-"`
 	// ID of the ent.
@@ -21,22 +22,42 @@ type OperationAuditLog struct {
 	ID uint32 `json:"id,omitempty"`
 	// 创建时间
 	CreatedAt *time.Time `json:"created_at,omitempty"`
-	// 更新时间
-	UpdatedAt *time.Time `json:"updated_at,omitempty"`
-	// 删除时间
-	DeletedAt *time.Time `json:"deleted_at,omitempty"`
 	// 租户ID
 	TenantID *uint32 `json:"tenant_id,omitempty"`
-	// OperatorID holds the value of the "operator_id" field.
-	OperatorID *uint32 `json:"operator_id,omitempty"`
-	// Action holds the value of the "action" field.
-	Action *string `json:"action,omitempty"`
-	// OldData holds the value of the "old_data" field.
-	OldData map[string]interface{} `json:"old_data,omitempty"`
-	// NewData holds the value of the "new_data" field.
-	NewData map[string]interface{} `json:"new_data,omitempty"`
-	// OperatedAt holds the value of the "operated_at" field.
-	OperatedAt   *time.Time `json:"operated_at,omitempty"`
+	// 操作者用户ID
+	UserID *uint32 `json:"user_id,omitempty"`
+	// 操作者账号名
+	Username *string `json:"username,omitempty"`
+	// 资源类型
+	ResourceType *string `json:"resource_type,omitempty"`
+	// 资源ID
+	ResourceID *string `json:"resource_id,omitempty"`
+	// 动作
+	Action *operationauditlog.Action `json:"action,omitempty"`
+	// 操作前数据
+	BeforeData *string `json:"before_data,omitempty"`
+	// 操作后数据
+	AfterData *string `json:"after_data,omitempty"`
+	// 数据敏感级别
+	SensitiveLevel *operationauditlog.SensitiveLevel `json:"sensitive_level,omitempty"`
+	// 全局请求ID
+	RequestID *string `json:"request_id,omitempty"`
+	// 全局链路追踪ID
+	TraceID *string `json:"trace_id,omitempty"`
+	// 操作结果
+	Success *bool `json:"success,omitempty"`
+	// 失败原因
+	FailureReason *string `json:"failure_reason,omitempty"`
+	// IP地址
+	IPAddress *string `json:"ip_address,omitempty"`
+	// 地理位置(来自IP库)
+	GeoLocation *auditpb.GeoLocation `json:"geo_location,omitempty"`
+	// 设备信息
+	DeviceInfo *auditpb.DeviceInfo `json:"device_info,omitempty"`
+	// 日志内容哈希（SHA256，十六进制字符串）
+	LogHash *string `json:"log_hash,omitempty"`
+	// 日志数字签名
+	Signature    *[]byte `json:"signature,omitempty"`
 	selectValues sql.SelectValues
 }
 
@@ -45,13 +66,15 @@ func (*OperationAuditLog) scanValues(columns []string) ([]any, error) {
 	values := make([]any, len(columns))
 	for i := range columns {
 		switch columns[i] {
-		case operationauditlog.FieldOldData, operationauditlog.FieldNewData:
+		case operationauditlog.FieldGeoLocation, operationauditlog.FieldDeviceInfo, operationauditlog.FieldSignature:
 			values[i] = new([]byte)
-		case operationauditlog.FieldID, operationauditlog.FieldTenantID, operationauditlog.FieldOperatorID:
+		case operationauditlog.FieldSuccess:
+			values[i] = new(sql.NullBool)
+		case operationauditlog.FieldID, operationauditlog.FieldTenantID, operationauditlog.FieldUserID:
 			values[i] = new(sql.NullInt64)
-		case operationauditlog.FieldAction:
+		case operationauditlog.FieldUsername, operationauditlog.FieldResourceType, operationauditlog.FieldResourceID, operationauditlog.FieldAction, operationauditlog.FieldBeforeData, operationauditlog.FieldAfterData, operationauditlog.FieldSensitiveLevel, operationauditlog.FieldRequestID, operationauditlog.FieldTraceID, operationauditlog.FieldFailureReason, operationauditlog.FieldIPAddress, operationauditlog.FieldLogHash:
 			values[i] = new(sql.NullString)
-		case operationauditlog.FieldCreatedAt, operationauditlog.FieldUpdatedAt, operationauditlog.FieldDeletedAt, operationauditlog.FieldOperatedAt:
+		case operationauditlog.FieldCreatedAt:
 			values[i] = new(sql.NullTime)
 		default:
 			values[i] = new(sql.UnknownType)
@@ -81,20 +104,6 @@ func (_m *OperationAuditLog) assignValues(columns []string, values []any) error 
 				_m.CreatedAt = new(time.Time)
 				*_m.CreatedAt = value.Time
 			}
-		case operationauditlog.FieldUpdatedAt:
-			if value, ok := values[i].(*sql.NullTime); !ok {
-				return fmt.Errorf("unexpected type %T for field updated_at", values[i])
-			} else if value.Valid {
-				_m.UpdatedAt = new(time.Time)
-				*_m.UpdatedAt = value.Time
-			}
-		case operationauditlog.FieldDeletedAt:
-			if value, ok := values[i].(*sql.NullTime); !ok {
-				return fmt.Errorf("unexpected type %T for field deleted_at", values[i])
-			} else if value.Valid {
-				_m.DeletedAt = new(time.Time)
-				*_m.DeletedAt = value.Time
-			}
 		case operationauditlog.FieldTenantID:
 			if value, ok := values[i].(*sql.NullInt64); !ok {
 				return fmt.Errorf("unexpected type %T for field tenant_id", values[i])
@@ -102,42 +111,125 @@ func (_m *OperationAuditLog) assignValues(columns []string, values []any) error 
 				_m.TenantID = new(uint32)
 				*_m.TenantID = uint32(value.Int64)
 			}
-		case operationauditlog.FieldOperatorID:
+		case operationauditlog.FieldUserID:
 			if value, ok := values[i].(*sql.NullInt64); !ok {
-				return fmt.Errorf("unexpected type %T for field operator_id", values[i])
+				return fmt.Errorf("unexpected type %T for field user_id", values[i])
 			} else if value.Valid {
-				_m.OperatorID = new(uint32)
-				*_m.OperatorID = uint32(value.Int64)
+				_m.UserID = new(uint32)
+				*_m.UserID = uint32(value.Int64)
+			}
+		case operationauditlog.FieldUsername:
+			if value, ok := values[i].(*sql.NullString); !ok {
+				return fmt.Errorf("unexpected type %T for field username", values[i])
+			} else if value.Valid {
+				_m.Username = new(string)
+				*_m.Username = value.String
+			}
+		case operationauditlog.FieldResourceType:
+			if value, ok := values[i].(*sql.NullString); !ok {
+				return fmt.Errorf("unexpected type %T for field resource_type", values[i])
+			} else if value.Valid {
+				_m.ResourceType = new(string)
+				*_m.ResourceType = value.String
+			}
+		case operationauditlog.FieldResourceID:
+			if value, ok := values[i].(*sql.NullString); !ok {
+				return fmt.Errorf("unexpected type %T for field resource_id", values[i])
+			} else if value.Valid {
+				_m.ResourceID = new(string)
+				*_m.ResourceID = value.String
 			}
 		case operationauditlog.FieldAction:
 			if value, ok := values[i].(*sql.NullString); !ok {
 				return fmt.Errorf("unexpected type %T for field action", values[i])
 			} else if value.Valid {
-				_m.Action = new(string)
-				*_m.Action = value.String
+				_m.Action = new(operationauditlog.Action)
+				*_m.Action = operationauditlog.Action(value.String)
 			}
-		case operationauditlog.FieldOldData:
-			if value, ok := values[i].(*[]byte); !ok {
-				return fmt.Errorf("unexpected type %T for field old_data", values[i])
-			} else if value != nil && len(*value) > 0 {
-				if err := json.Unmarshal(*value, &_m.OldData); err != nil {
-					return fmt.Errorf("unmarshal field old_data: %w", err)
-				}
-			}
-		case operationauditlog.FieldNewData:
-			if value, ok := values[i].(*[]byte); !ok {
-				return fmt.Errorf("unexpected type %T for field new_data", values[i])
-			} else if value != nil && len(*value) > 0 {
-				if err := json.Unmarshal(*value, &_m.NewData); err != nil {
-					return fmt.Errorf("unmarshal field new_data: %w", err)
-				}
-			}
-		case operationauditlog.FieldOperatedAt:
-			if value, ok := values[i].(*sql.NullTime); !ok {
-				return fmt.Errorf("unexpected type %T for field operated_at", values[i])
+		case operationauditlog.FieldBeforeData:
+			if value, ok := values[i].(*sql.NullString); !ok {
+				return fmt.Errorf("unexpected type %T for field before_data", values[i])
 			} else if value.Valid {
-				_m.OperatedAt = new(time.Time)
-				*_m.OperatedAt = value.Time
+				_m.BeforeData = new(string)
+				*_m.BeforeData = value.String
+			}
+		case operationauditlog.FieldAfterData:
+			if value, ok := values[i].(*sql.NullString); !ok {
+				return fmt.Errorf("unexpected type %T for field after_data", values[i])
+			} else if value.Valid {
+				_m.AfterData = new(string)
+				*_m.AfterData = value.String
+			}
+		case operationauditlog.FieldSensitiveLevel:
+			if value, ok := values[i].(*sql.NullString); !ok {
+				return fmt.Errorf("unexpected type %T for field sensitive_level", values[i])
+			} else if value.Valid {
+				_m.SensitiveLevel = new(operationauditlog.SensitiveLevel)
+				*_m.SensitiveLevel = operationauditlog.SensitiveLevel(value.String)
+			}
+		case operationauditlog.FieldRequestID:
+			if value, ok := values[i].(*sql.NullString); !ok {
+				return fmt.Errorf("unexpected type %T for field request_id", values[i])
+			} else if value.Valid {
+				_m.RequestID = new(string)
+				*_m.RequestID = value.String
+			}
+		case operationauditlog.FieldTraceID:
+			if value, ok := values[i].(*sql.NullString); !ok {
+				return fmt.Errorf("unexpected type %T for field trace_id", values[i])
+			} else if value.Valid {
+				_m.TraceID = new(string)
+				*_m.TraceID = value.String
+			}
+		case operationauditlog.FieldSuccess:
+			if value, ok := values[i].(*sql.NullBool); !ok {
+				return fmt.Errorf("unexpected type %T for field success", values[i])
+			} else if value.Valid {
+				_m.Success = new(bool)
+				*_m.Success = value.Bool
+			}
+		case operationauditlog.FieldFailureReason:
+			if value, ok := values[i].(*sql.NullString); !ok {
+				return fmt.Errorf("unexpected type %T for field failure_reason", values[i])
+			} else if value.Valid {
+				_m.FailureReason = new(string)
+				*_m.FailureReason = value.String
+			}
+		case operationauditlog.FieldIPAddress:
+			if value, ok := values[i].(*sql.NullString); !ok {
+				return fmt.Errorf("unexpected type %T for field ip_address", values[i])
+			} else if value.Valid {
+				_m.IPAddress = new(string)
+				*_m.IPAddress = value.String
+			}
+		case operationauditlog.FieldGeoLocation:
+			if value, ok := values[i].(*[]byte); !ok {
+				return fmt.Errorf("unexpected type %T for field geo_location", values[i])
+			} else if value != nil && len(*value) > 0 {
+				if err := json.Unmarshal(*value, &_m.GeoLocation); err != nil {
+					return fmt.Errorf("unmarshal field geo_location: %w", err)
+				}
+			}
+		case operationauditlog.FieldDeviceInfo:
+			if value, ok := values[i].(*[]byte); !ok {
+				return fmt.Errorf("unexpected type %T for field device_info", values[i])
+			} else if value != nil && len(*value) > 0 {
+				if err := json.Unmarshal(*value, &_m.DeviceInfo); err != nil {
+					return fmt.Errorf("unmarshal field device_info: %w", err)
+				}
+			}
+		case operationauditlog.FieldLogHash:
+			if value, ok := values[i].(*sql.NullString); !ok {
+				return fmt.Errorf("unexpected type %T for field log_hash", values[i])
+			} else if value.Valid {
+				_m.LogHash = new(string)
+				*_m.LogHash = value.String
+			}
+		case operationauditlog.FieldSignature:
+			if value, ok := values[i].(*[]byte); !ok {
+				return fmt.Errorf("unexpected type %T for field signature", values[i])
+			} else if value != nil {
+				_m.Signature = value
 			}
 		default:
 			_m.selectValues.Set(columns[i], values[i])
@@ -180,40 +272,90 @@ func (_m *OperationAuditLog) String() string {
 		builder.WriteString(v.Format(time.ANSIC))
 	}
 	builder.WriteString(", ")
-	if v := _m.UpdatedAt; v != nil {
-		builder.WriteString("updated_at=")
-		builder.WriteString(v.Format(time.ANSIC))
-	}
-	builder.WriteString(", ")
-	if v := _m.DeletedAt; v != nil {
-		builder.WriteString("deleted_at=")
-		builder.WriteString(v.Format(time.ANSIC))
-	}
-	builder.WriteString(", ")
 	if v := _m.TenantID; v != nil {
 		builder.WriteString("tenant_id=")
 		builder.WriteString(fmt.Sprintf("%v", *v))
 	}
 	builder.WriteString(", ")
-	if v := _m.OperatorID; v != nil {
-		builder.WriteString("operator_id=")
+	if v := _m.UserID; v != nil {
+		builder.WriteString("user_id=")
 		builder.WriteString(fmt.Sprintf("%v", *v))
+	}
+	builder.WriteString(", ")
+	if v := _m.Username; v != nil {
+		builder.WriteString("username=")
+		builder.WriteString(*v)
+	}
+	builder.WriteString(", ")
+	if v := _m.ResourceType; v != nil {
+		builder.WriteString("resource_type=")
+		builder.WriteString(*v)
+	}
+	builder.WriteString(", ")
+	if v := _m.ResourceID; v != nil {
+		builder.WriteString("resource_id=")
+		builder.WriteString(*v)
 	}
 	builder.WriteString(", ")
 	if v := _m.Action; v != nil {
 		builder.WriteString("action=")
+		builder.WriteString(fmt.Sprintf("%v", *v))
+	}
+	builder.WriteString(", ")
+	if v := _m.BeforeData; v != nil {
+		builder.WriteString("before_data=")
 		builder.WriteString(*v)
 	}
 	builder.WriteString(", ")
-	builder.WriteString("old_data=")
-	builder.WriteString(fmt.Sprintf("%v", _m.OldData))
+	if v := _m.AfterData; v != nil {
+		builder.WriteString("after_data=")
+		builder.WriteString(*v)
+	}
 	builder.WriteString(", ")
-	builder.WriteString("new_data=")
-	builder.WriteString(fmt.Sprintf("%v", _m.NewData))
+	if v := _m.SensitiveLevel; v != nil {
+		builder.WriteString("sensitive_level=")
+		builder.WriteString(fmt.Sprintf("%v", *v))
+	}
 	builder.WriteString(", ")
-	if v := _m.OperatedAt; v != nil {
-		builder.WriteString("operated_at=")
-		builder.WriteString(v.Format(time.ANSIC))
+	if v := _m.RequestID; v != nil {
+		builder.WriteString("request_id=")
+		builder.WriteString(*v)
+	}
+	builder.WriteString(", ")
+	if v := _m.TraceID; v != nil {
+		builder.WriteString("trace_id=")
+		builder.WriteString(*v)
+	}
+	builder.WriteString(", ")
+	if v := _m.Success; v != nil {
+		builder.WriteString("success=")
+		builder.WriteString(fmt.Sprintf("%v", *v))
+	}
+	builder.WriteString(", ")
+	if v := _m.FailureReason; v != nil {
+		builder.WriteString("failure_reason=")
+		builder.WriteString(*v)
+	}
+	builder.WriteString(", ")
+	if v := _m.IPAddress; v != nil {
+		builder.WriteString("ip_address=")
+		builder.WriteString(*v)
+	}
+	builder.WriteString(", ")
+	builder.WriteString("geo_location=")
+	builder.WriteString(fmt.Sprintf("%v", _m.GeoLocation))
+	builder.WriteString(", ")
+	builder.WriteString("device_info=")
+	builder.WriteString(fmt.Sprintf("%v", _m.DeviceInfo))
+	builder.WriteString(", ")
+	if v := _m.LogHash; v != nil {
+		builder.WriteString("log_hash=")
+		builder.WriteString(*v)
+	}
+	builder.WriteString(", ")
+	if v := _m.Signature; v != nil {
+		builder.WriteString("signature=")
+		builder.WriteString(fmt.Sprintf("%v", *v))
 	}
 	builder.WriteByte(')')
 	return builder.String()

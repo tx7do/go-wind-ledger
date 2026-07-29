@@ -12,7 +12,7 @@ import (
 	"entgo.io/ent/dialect/sql"
 )
 
-// 权限组表
+// 权限分组表
 type PermissionGroup struct {
 	config `json:"-"`
 	// ID of the ent.
@@ -30,29 +30,55 @@ type PermissionGroup struct {
 	UpdatedBy *uint32 `json:"updated_by,omitempty"`
 	// 删除者ID
 	DeletedBy *uint32 `json:"deleted_by,omitempty"`
-	// 租户ID
-	TenantID *uint32 `json:"tenant_id,omitempty"`
-	// Name holds the value of the "name" field.
-	Name *string `json:"name,omitempty"`
-	// Code holds the value of the "code" field.
-	Code *string `json:"code,omitempty"`
-	// Module holds the value of the "module" field.
-	Module *string `json:"module,omitempty"`
-	// Status holds the value of the "status" field.
-	Status *permissiongroup.Status `json:"status,omitempty"`
-	// ParentID holds the value of the "parent_id" field.
-	ParentID *uint32 `json:"parent_id,omitempty"`
-	// PermissionID holds the value of the "permission_id" field.
-	PermissionID *uint32 `json:"permission_id,omitempty"`
-	// SortOrder holds the value of the "sort_order" field.
-	SortOrder *uint32 `json:"sort_order,omitempty"`
-	// Description holds the value of the "description" field.
+	// 描述
 	Description *string `json:"description,omitempty"`
-	// Path holds the value of the "path" field.
+	// 状态
+	Status *permissiongroup.Status `json:"status,omitempty"`
+	// 排序值（越小越靠前）
+	SortOrder *uint32 `json:"sort_order,omitempty"`
+	// 父节点ID
+	ParentID *uint32 `json:"parent_id,omitempty"`
+	// 树路径，规范： 根节点: /，非根节点: /1/2/3/（以 / 开头且以 / 结尾）。禁止空字符串（NULL 表示未设置）。
 	Path *string `json:"path,omitempty"`
-	// TargetID holds the value of the "target_id" field.
-	TargetID     *uint32 `json:"target_id,omitempty"`
+	// 分组名称（如：用户管理、订单操作）
+	Name *string `json:"name,omitempty"`
+	// 业务模块标识（如：opm、order、pay）
+	Module *string `json:"module,omitempty"`
+	// Edges holds the relations/edges for other nodes in the graph.
+	// The values are being populated by the PermissionGroupQuery when eager-loading is set.
+	Edges        PermissionGroupEdges `json:"edges"`
 	selectValues sql.SelectValues
+}
+
+// PermissionGroupEdges holds the relations/edges for other nodes in the graph.
+type PermissionGroupEdges struct {
+	// Parent holds the value of the parent edge.
+	Parent *PermissionGroup `json:"parent,omitempty"`
+	// Children holds the value of the children edge.
+	Children []*PermissionGroup `json:"children,omitempty"`
+	// loadedTypes holds the information for reporting if a
+	// type was loaded (or requested) in eager-loading or not.
+	loadedTypes [2]bool
+}
+
+// ParentOrErr returns the Parent value or an error if the edge
+// was not loaded in eager-loading, or loaded but was not found.
+func (e PermissionGroupEdges) ParentOrErr() (*PermissionGroup, error) {
+	if e.Parent != nil {
+		return e.Parent, nil
+	} else if e.loadedTypes[0] {
+		return nil, &NotFoundError{label: permissiongroup.Label}
+	}
+	return nil, &NotLoadedError{edge: "parent"}
+}
+
+// ChildrenOrErr returns the Children value or an error if the edge
+// was not loaded in eager-loading.
+func (e PermissionGroupEdges) ChildrenOrErr() ([]*PermissionGroup, error) {
+	if e.loadedTypes[1] {
+		return e.Children, nil
+	}
+	return nil, &NotLoadedError{edge: "children"}
 }
 
 // scanValues returns the types for scanning values from sql.Rows.
@@ -60,9 +86,9 @@ func (*PermissionGroup) scanValues(columns []string) ([]any, error) {
 	values := make([]any, len(columns))
 	for i := range columns {
 		switch columns[i] {
-		case permissiongroup.FieldID, permissiongroup.FieldCreatedBy, permissiongroup.FieldUpdatedBy, permissiongroup.FieldDeletedBy, permissiongroup.FieldTenantID, permissiongroup.FieldParentID, permissiongroup.FieldPermissionID, permissiongroup.FieldSortOrder, permissiongroup.FieldTargetID:
+		case permissiongroup.FieldID, permissiongroup.FieldCreatedBy, permissiongroup.FieldUpdatedBy, permissiongroup.FieldDeletedBy, permissiongroup.FieldSortOrder, permissiongroup.FieldParentID:
 			values[i] = new(sql.NullInt64)
-		case permissiongroup.FieldName, permissiongroup.FieldCode, permissiongroup.FieldModule, permissiongroup.FieldStatus, permissiongroup.FieldDescription, permissiongroup.FieldPath:
+		case permissiongroup.FieldDescription, permissiongroup.FieldStatus, permissiongroup.FieldPath, permissiongroup.FieldName, permissiongroup.FieldModule:
 			values[i] = new(sql.NullString)
 		case permissiongroup.FieldCreatedAt, permissiongroup.FieldUpdatedAt, permissiongroup.FieldDeletedAt:
 			values[i] = new(sql.NullTime)
@@ -129,33 +155,12 @@ func (_m *PermissionGroup) assignValues(columns []string, values []any) error {
 				_m.DeletedBy = new(uint32)
 				*_m.DeletedBy = uint32(value.Int64)
 			}
-		case permissiongroup.FieldTenantID:
-			if value, ok := values[i].(*sql.NullInt64); !ok {
-				return fmt.Errorf("unexpected type %T for field tenant_id", values[i])
-			} else if value.Valid {
-				_m.TenantID = new(uint32)
-				*_m.TenantID = uint32(value.Int64)
-			}
-		case permissiongroup.FieldName:
+		case permissiongroup.FieldDescription:
 			if value, ok := values[i].(*sql.NullString); !ok {
-				return fmt.Errorf("unexpected type %T for field name", values[i])
+				return fmt.Errorf("unexpected type %T for field description", values[i])
 			} else if value.Valid {
-				_m.Name = new(string)
-				*_m.Name = value.String
-			}
-		case permissiongroup.FieldCode:
-			if value, ok := values[i].(*sql.NullString); !ok {
-				return fmt.Errorf("unexpected type %T for field code", values[i])
-			} else if value.Valid {
-				_m.Code = new(string)
-				*_m.Code = value.String
-			}
-		case permissiongroup.FieldModule:
-			if value, ok := values[i].(*sql.NullString); !ok {
-				return fmt.Errorf("unexpected type %T for field module", values[i])
-			} else if value.Valid {
-				_m.Module = new(string)
-				*_m.Module = value.String
+				_m.Description = new(string)
+				*_m.Description = value.String
 			}
 		case permissiongroup.FieldStatus:
 			if value, ok := values[i].(*sql.NullString); !ok {
@@ -164,20 +169,6 @@ func (_m *PermissionGroup) assignValues(columns []string, values []any) error {
 				_m.Status = new(permissiongroup.Status)
 				*_m.Status = permissiongroup.Status(value.String)
 			}
-		case permissiongroup.FieldParentID:
-			if value, ok := values[i].(*sql.NullInt64); !ok {
-				return fmt.Errorf("unexpected type %T for field parent_id", values[i])
-			} else if value.Valid {
-				_m.ParentID = new(uint32)
-				*_m.ParentID = uint32(value.Int64)
-			}
-		case permissiongroup.FieldPermissionID:
-			if value, ok := values[i].(*sql.NullInt64); !ok {
-				return fmt.Errorf("unexpected type %T for field permission_id", values[i])
-			} else if value.Valid {
-				_m.PermissionID = new(uint32)
-				*_m.PermissionID = uint32(value.Int64)
-			}
 		case permissiongroup.FieldSortOrder:
 			if value, ok := values[i].(*sql.NullInt64); !ok {
 				return fmt.Errorf("unexpected type %T for field sort_order", values[i])
@@ -185,12 +176,12 @@ func (_m *PermissionGroup) assignValues(columns []string, values []any) error {
 				_m.SortOrder = new(uint32)
 				*_m.SortOrder = uint32(value.Int64)
 			}
-		case permissiongroup.FieldDescription:
-			if value, ok := values[i].(*sql.NullString); !ok {
-				return fmt.Errorf("unexpected type %T for field description", values[i])
+		case permissiongroup.FieldParentID:
+			if value, ok := values[i].(*sql.NullInt64); !ok {
+				return fmt.Errorf("unexpected type %T for field parent_id", values[i])
 			} else if value.Valid {
-				_m.Description = new(string)
-				*_m.Description = value.String
+				_m.ParentID = new(uint32)
+				*_m.ParentID = uint32(value.Int64)
 			}
 		case permissiongroup.FieldPath:
 			if value, ok := values[i].(*sql.NullString); !ok {
@@ -199,12 +190,19 @@ func (_m *PermissionGroup) assignValues(columns []string, values []any) error {
 				_m.Path = new(string)
 				*_m.Path = value.String
 			}
-		case permissiongroup.FieldTargetID:
-			if value, ok := values[i].(*sql.NullInt64); !ok {
-				return fmt.Errorf("unexpected type %T for field target_id", values[i])
+		case permissiongroup.FieldName:
+			if value, ok := values[i].(*sql.NullString); !ok {
+				return fmt.Errorf("unexpected type %T for field name", values[i])
 			} else if value.Valid {
-				_m.TargetID = new(uint32)
-				*_m.TargetID = uint32(value.Int64)
+				_m.Name = new(string)
+				*_m.Name = value.String
+			}
+		case permissiongroup.FieldModule:
+			if value, ok := values[i].(*sql.NullString); !ok {
+				return fmt.Errorf("unexpected type %T for field module", values[i])
+			} else if value.Valid {
+				_m.Module = new(string)
+				*_m.Module = value.String
 			}
 		default:
 			_m.selectValues.Set(columns[i], values[i])
@@ -217,6 +215,16 @@ func (_m *PermissionGroup) assignValues(columns []string, values []any) error {
 // This includes values selected through modifiers, order, etc.
 func (_m *PermissionGroup) Value(name string) (ent.Value, error) {
 	return _m.selectValues.Get(name)
+}
+
+// QueryParent queries the "parent" edge of the PermissionGroup entity.
+func (_m *PermissionGroup) QueryParent() *PermissionGroupQuery {
+	return NewPermissionGroupClient(_m.config).QueryParent(_m)
+}
+
+// QueryChildren queries the "children" edge of the PermissionGroup entity.
+func (_m *PermissionGroup) QueryChildren() *PermissionGroupQuery {
+	return NewPermissionGroupClient(_m.config).QueryChildren(_m)
 }
 
 // Update returns a builder for updating this PermissionGroup.
@@ -272,23 +280,8 @@ func (_m *PermissionGroup) String() string {
 		builder.WriteString(fmt.Sprintf("%v", *v))
 	}
 	builder.WriteString(", ")
-	if v := _m.TenantID; v != nil {
-		builder.WriteString("tenant_id=")
-		builder.WriteString(fmt.Sprintf("%v", *v))
-	}
-	builder.WriteString(", ")
-	if v := _m.Name; v != nil {
-		builder.WriteString("name=")
-		builder.WriteString(*v)
-	}
-	builder.WriteString(", ")
-	if v := _m.Code; v != nil {
-		builder.WriteString("code=")
-		builder.WriteString(*v)
-	}
-	builder.WriteString(", ")
-	if v := _m.Module; v != nil {
-		builder.WriteString("module=")
+	if v := _m.Description; v != nil {
+		builder.WriteString("description=")
 		builder.WriteString(*v)
 	}
 	builder.WriteString(", ")
@@ -297,24 +290,14 @@ func (_m *PermissionGroup) String() string {
 		builder.WriteString(fmt.Sprintf("%v", *v))
 	}
 	builder.WriteString(", ")
-	if v := _m.ParentID; v != nil {
-		builder.WriteString("parent_id=")
-		builder.WriteString(fmt.Sprintf("%v", *v))
-	}
-	builder.WriteString(", ")
-	if v := _m.PermissionID; v != nil {
-		builder.WriteString("permission_id=")
-		builder.WriteString(fmt.Sprintf("%v", *v))
-	}
-	builder.WriteString(", ")
 	if v := _m.SortOrder; v != nil {
 		builder.WriteString("sort_order=")
 		builder.WriteString(fmt.Sprintf("%v", *v))
 	}
 	builder.WriteString(", ")
-	if v := _m.Description; v != nil {
-		builder.WriteString("description=")
-		builder.WriteString(*v)
+	if v := _m.ParentID; v != nil {
+		builder.WriteString("parent_id=")
+		builder.WriteString(fmt.Sprintf("%v", *v))
 	}
 	builder.WriteString(", ")
 	if v := _m.Path; v != nil {
@@ -322,9 +305,14 @@ func (_m *PermissionGroup) String() string {
 		builder.WriteString(*v)
 	}
 	builder.WriteString(", ")
-	if v := _m.TargetID; v != nil {
-		builder.WriteString("target_id=")
-		builder.WriteString(fmt.Sprintf("%v", *v))
+	if v := _m.Name; v != nil {
+		builder.WriteString("name=")
+		builder.WriteString(*v)
+	}
+	builder.WriteString(", ")
+	if v := _m.Module; v != nil {
+		builder.WriteString("module=")
+		builder.WriteString(*v)
 	}
 	builder.WriteByte(')')
 	return builder.String()

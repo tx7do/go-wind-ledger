@@ -31,42 +31,32 @@ const (
 	FieldName = "name"
 	// FieldCode holds the string denoting the code field in the database.
 	FieldCode = "code"
-	// FieldDomain holds the string denoting the domain field in the database.
-	FieldDomain = "domain"
 	// FieldLogoURL holds the string denoting the logo_url field in the database.
 	FieldLogoURL = "logo_url"
-	// FieldLogo holds the string denoting the logo field in the database.
-	FieldLogo = "logo"
-	// FieldWebsite holds the string denoting the website field in the database.
-	FieldWebsite = "website"
+	// FieldDomain holds the string denoting the domain field in the database.
+	FieldDomain = "domain"
 	// FieldIndustry holds the string denoting the industry field in the database.
 	FieldIndustry = "industry"
 	// FieldAdminUserID holds the string denoting the admin_user_id field in the database.
 	FieldAdminUserID = "admin_user_id"
-	// FieldContactName holds the string denoting the contact_name field in the database.
-	FieldContactName = "contact_name"
-	// FieldContactEmail holds the string denoting the contact_email field in the database.
-	FieldContactEmail = "contact_email"
-	// FieldContactPhone holds the string denoting the contact_phone field in the database.
-	FieldContactPhone = "contact_phone"
 	// FieldStatus holds the string denoting the status field in the database.
 	FieldStatus = "status"
 	// FieldType holds the string denoting the type field in the database.
 	FieldType = "type"
 	// FieldAuditStatus holds the string denoting the audit_status field in the database.
 	FieldAuditStatus = "audit_status"
-	// FieldSubscriptionPlan holds the string denoting the subscription_plan field in the database.
-	FieldSubscriptionPlan = "subscription_plan"
-	// FieldUnsubscribeAt holds the string denoting the unsubscribe_at field in the database.
-	FieldUnsubscribeAt = "unsubscribe_at"
 	// FieldSubscriptionAt holds the string denoting the subscription_at field in the database.
 	FieldSubscriptionAt = "subscription_at"
-	// FieldExpiredAt holds the string denoting the expired_at field in the database.
-	FieldExpiredAt = "expired_at"
+	// FieldUnsubscribeAt holds the string denoting the unsubscribe_at field in the database.
+	FieldUnsubscribeAt = "unsubscribe_at"
+	// FieldSubscriptionPlan holds the string denoting the subscription_plan field in the database.
+	FieldSubscriptionPlan = "subscription_plan"
 	// FieldDefaultCurrencyCode holds the string denoting the default_currency_code field in the database.
 	FieldDefaultCurrencyCode = "default_currency_code"
 	// FieldDefaultBookID holds the string denoting the default_book_id field in the database.
 	FieldDefaultBookID = "default_book_id"
+	// FieldExpiredAt holds the string denoting the expired_at field in the database.
+	FieldExpiredAt = "expired_at"
 	// Table holds the table name of the tenant in the database.
 	Table = "sys_tenants"
 )
@@ -83,24 +73,19 @@ var Columns = []string{
 	FieldRemark,
 	FieldName,
 	FieldCode,
-	FieldDomain,
 	FieldLogoURL,
-	FieldLogo,
-	FieldWebsite,
+	FieldDomain,
 	FieldIndustry,
 	FieldAdminUserID,
-	FieldContactName,
-	FieldContactEmail,
-	FieldContactPhone,
 	FieldStatus,
 	FieldType,
 	FieldAuditStatus,
-	FieldSubscriptionPlan,
-	FieldUnsubscribeAt,
 	FieldSubscriptionAt,
-	FieldExpiredAt,
+	FieldUnsubscribeAt,
+	FieldSubscriptionPlan,
 	FieldDefaultCurrencyCode,
 	FieldDefaultBookID,
+	FieldExpiredAt,
 }
 
 // ValidColumn reports if the column name is valid (part of the table columns).
@@ -118,14 +103,6 @@ var (
 	NameValidator func(string) error
 	// CodeValidator is a validator for the "code" field. It is called by the builders before save.
 	CodeValidator func(string) error
-	// DomainValidator is a validator for the "domain" field. It is called by the builders before save.
-	DomainValidator func(string) error
-	// LogoURLValidator is a validator for the "logo_url" field. It is called by the builders before save.
-	LogoURLValidator func(string) error
-	// IndustryValidator is a validator for the "industry" field. It is called by the builders before save.
-	IndustryValidator func(string) error
-	// SubscriptionPlanValidator is a validator for the "subscription_plan" field. It is called by the builders before save.
-	SubscriptionPlanValidator func(string) error
 	// DefaultDefaultCurrencyCode holds the default value on creation for the "default_currency_code" field.
 	DefaultDefaultCurrencyCode string
 	// DefaultCurrencyCodeValidator is a validator for the "default_currency_code" field. It is called by the builders before save.
@@ -193,9 +170,6 @@ func TypeValidator(_type Type) error {
 
 // AuditStatus defines the type for the "audit_status" enum field.
 type AuditStatus string
-
-// AuditStatusPending is the default value of the AuditStatus enum.
-const DefaultAuditStatus = AuditStatusPending
 
 // AuditStatus values.
 const (
@@ -271,24 +245,14 @@ func ByCode(opts ...sql.OrderTermOption) OrderOption {
 	return sql.OrderByField(FieldCode, opts...).ToFunc()
 }
 
-// ByDomain orders the results by the domain field.
-func ByDomain(opts ...sql.OrderTermOption) OrderOption {
-	return sql.OrderByField(FieldDomain, opts...).ToFunc()
-}
-
 // ByLogoURL orders the results by the logo_url field.
 func ByLogoURL(opts ...sql.OrderTermOption) OrderOption {
 	return sql.OrderByField(FieldLogoURL, opts...).ToFunc()
 }
 
-// ByLogo orders the results by the logo field.
-func ByLogo(opts ...sql.OrderTermOption) OrderOption {
-	return sql.OrderByField(FieldLogo, opts...).ToFunc()
-}
-
-// ByWebsite orders the results by the website field.
-func ByWebsite(opts ...sql.OrderTermOption) OrderOption {
-	return sql.OrderByField(FieldWebsite, opts...).ToFunc()
+// ByDomain orders the results by the domain field.
+func ByDomain(opts ...sql.OrderTermOption) OrderOption {
+	return sql.OrderByField(FieldDomain, opts...).ToFunc()
 }
 
 // ByIndustry orders the results by the industry field.
@@ -299,21 +263,6 @@ func ByIndustry(opts ...sql.OrderTermOption) OrderOption {
 // ByAdminUserID orders the results by the admin_user_id field.
 func ByAdminUserID(opts ...sql.OrderTermOption) OrderOption {
 	return sql.OrderByField(FieldAdminUserID, opts...).ToFunc()
-}
-
-// ByContactName orders the results by the contact_name field.
-func ByContactName(opts ...sql.OrderTermOption) OrderOption {
-	return sql.OrderByField(FieldContactName, opts...).ToFunc()
-}
-
-// ByContactEmail orders the results by the contact_email field.
-func ByContactEmail(opts ...sql.OrderTermOption) OrderOption {
-	return sql.OrderByField(FieldContactEmail, opts...).ToFunc()
-}
-
-// ByContactPhone orders the results by the contact_phone field.
-func ByContactPhone(opts ...sql.OrderTermOption) OrderOption {
-	return sql.OrderByField(FieldContactPhone, opts...).ToFunc()
 }
 
 // ByStatus orders the results by the status field.
@@ -331,9 +280,9 @@ func ByAuditStatus(opts ...sql.OrderTermOption) OrderOption {
 	return sql.OrderByField(FieldAuditStatus, opts...).ToFunc()
 }
 
-// BySubscriptionPlan orders the results by the subscription_plan field.
-func BySubscriptionPlan(opts ...sql.OrderTermOption) OrderOption {
-	return sql.OrderByField(FieldSubscriptionPlan, opts...).ToFunc()
+// BySubscriptionAt orders the results by the subscription_at field.
+func BySubscriptionAt(opts ...sql.OrderTermOption) OrderOption {
+	return sql.OrderByField(FieldSubscriptionAt, opts...).ToFunc()
 }
 
 // ByUnsubscribeAt orders the results by the unsubscribe_at field.
@@ -341,14 +290,9 @@ func ByUnsubscribeAt(opts ...sql.OrderTermOption) OrderOption {
 	return sql.OrderByField(FieldUnsubscribeAt, opts...).ToFunc()
 }
 
-// BySubscriptionAt orders the results by the subscription_at field.
-func BySubscriptionAt(opts ...sql.OrderTermOption) OrderOption {
-	return sql.OrderByField(FieldSubscriptionAt, opts...).ToFunc()
-}
-
-// ByExpiredAt orders the results by the expired_at field.
-func ByExpiredAt(opts ...sql.OrderTermOption) OrderOption {
-	return sql.OrderByField(FieldExpiredAt, opts...).ToFunc()
+// BySubscriptionPlan orders the results by the subscription_plan field.
+func BySubscriptionPlan(opts ...sql.OrderTermOption) OrderOption {
+	return sql.OrderByField(FieldSubscriptionPlan, opts...).ToFunc()
 }
 
 // ByDefaultCurrencyCode orders the results by the default_currency_code field.
@@ -359,4 +303,9 @@ func ByDefaultCurrencyCode(opts ...sql.OrderTermOption) OrderOption {
 // ByDefaultBookID orders the results by the default_book_id field.
 func ByDefaultBookID(opts ...sql.OrderTermOption) OrderOption {
 	return sql.OrderByField(FieldDefaultBookID, opts...).ToFunc()
+}
+
+// ByExpiredAt orders the results by the expired_at field.
+func ByExpiredAt(opts ...sql.OrderTermOption) OrderOption {
+	return sql.OrderByField(FieldExpiredAt, opts...).ToFunc()
 }

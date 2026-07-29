@@ -150,43 +150,92 @@ func (_u *UserOrgUnitUpdate) ClearDeletedBy() *UserOrgUnitUpdate {
 	return _u
 }
 
-// SetStatus sets the "status" field.
-func (_u *UserOrgUnitUpdate) SetStatus(v userorgunit.Status) *UserOrgUnitUpdate {
-	_u.mutation.SetStatus(v)
+// SetRemark sets the "remark" field.
+func (_u *UserOrgUnitUpdate) SetRemark(v string) *UserOrgUnitUpdate {
+	_u.mutation.SetRemark(v)
 	return _u
 }
 
-// SetNillableStatus sets the "status" field if the given value is not nil.
-func (_u *UserOrgUnitUpdate) SetNillableStatus(v *userorgunit.Status) *UserOrgUnitUpdate {
+// SetNillableRemark sets the "remark" field if the given value is not nil.
+func (_u *UserOrgUnitUpdate) SetNillableRemark(v *string) *UserOrgUnitUpdate {
 	if v != nil {
-		_u.SetStatus(*v)
+		_u.SetRemark(*v)
 	}
 	return _u
 }
 
-// ClearStatus clears the value of the "status" field.
-func (_u *UserOrgUnitUpdate) ClearStatus() *UserOrgUnitUpdate {
-	_u.mutation.ClearStatus()
+// ClearRemark clears the value of the "remark" field.
+func (_u *UserOrgUnitUpdate) ClearRemark() *UserOrgUnitUpdate {
+	_u.mutation.ClearRemark()
 	return _u
 }
 
-// SetIsPrimary sets the "is_primary" field.
-func (_u *UserOrgUnitUpdate) SetIsPrimary(v bool) *UserOrgUnitUpdate {
-	_u.mutation.SetIsPrimary(v)
+// SetUserID sets the "user_id" field.
+func (_u *UserOrgUnitUpdate) SetUserID(v uint32) *UserOrgUnitUpdate {
+	_u.mutation.ResetUserID()
+	_u.mutation.SetUserID(v)
 	return _u
 }
 
-// SetNillableIsPrimary sets the "is_primary" field if the given value is not nil.
-func (_u *UserOrgUnitUpdate) SetNillableIsPrimary(v *bool) *UserOrgUnitUpdate {
+// SetNillableUserID sets the "user_id" field if the given value is not nil.
+func (_u *UserOrgUnitUpdate) SetNillableUserID(v *uint32) *UserOrgUnitUpdate {
 	if v != nil {
-		_u.SetIsPrimary(*v)
+		_u.SetUserID(*v)
 	}
 	return _u
 }
 
-// ClearIsPrimary clears the value of the "is_primary" field.
-func (_u *UserOrgUnitUpdate) ClearIsPrimary() *UserOrgUnitUpdate {
-	_u.mutation.ClearIsPrimary()
+// AddUserID adds value to the "user_id" field.
+func (_u *UserOrgUnitUpdate) AddUserID(v int32) *UserOrgUnitUpdate {
+	_u.mutation.AddUserID(v)
+	return _u
+}
+
+// SetOrgUnitID sets the "org_unit_id" field.
+func (_u *UserOrgUnitUpdate) SetOrgUnitID(v uint32) *UserOrgUnitUpdate {
+	_u.mutation.ResetOrgUnitID()
+	_u.mutation.SetOrgUnitID(v)
+	return _u
+}
+
+// SetNillableOrgUnitID sets the "org_unit_id" field if the given value is not nil.
+func (_u *UserOrgUnitUpdate) SetNillableOrgUnitID(v *uint32) *UserOrgUnitUpdate {
+	if v != nil {
+		_u.SetOrgUnitID(*v)
+	}
+	return _u
+}
+
+// AddOrgUnitID adds value to the "org_unit_id" field.
+func (_u *UserOrgUnitUpdate) AddOrgUnitID(v int32) *UserOrgUnitUpdate {
+	_u.mutation.AddOrgUnitID(v)
+	return _u
+}
+
+// SetPositionID sets the "position_id" field.
+func (_u *UserOrgUnitUpdate) SetPositionID(v uint32) *UserOrgUnitUpdate {
+	_u.mutation.ResetPositionID()
+	_u.mutation.SetPositionID(v)
+	return _u
+}
+
+// SetNillablePositionID sets the "position_id" field if the given value is not nil.
+func (_u *UserOrgUnitUpdate) SetNillablePositionID(v *uint32) *UserOrgUnitUpdate {
+	if v != nil {
+		_u.SetPositionID(*v)
+	}
+	return _u
+}
+
+// AddPositionID adds value to the "position_id" field.
+func (_u *UserOrgUnitUpdate) AddPositionID(v int32) *UserOrgUnitUpdate {
+	_u.mutation.AddPositionID(v)
+	return _u
+}
+
+// ClearPositionID clears the value of the "position_id" field.
+func (_u *UserOrgUnitUpdate) ClearPositionID() *UserOrgUnitUpdate {
+	_u.mutation.ClearPositionID()
 	return _u
 }
 
@@ -230,57 +279,84 @@ func (_u *UserOrgUnitUpdate) ClearEndAt() *UserOrgUnitUpdate {
 	return _u
 }
 
-// SetUserID sets the "user_id" field.
-func (_u *UserOrgUnitUpdate) SetUserID(v uint32) *UserOrgUnitUpdate {
-	_u.mutation.ResetUserID()
-	_u.mutation.SetUserID(v)
+// SetAssignedAt sets the "assigned_at" field.
+func (_u *UserOrgUnitUpdate) SetAssignedAt(v time.Time) *UserOrgUnitUpdate {
+	_u.mutation.SetAssignedAt(v)
 	return _u
 }
 
-// SetNillableUserID sets the "user_id" field if the given value is not nil.
-func (_u *UserOrgUnitUpdate) SetNillableUserID(v *uint32) *UserOrgUnitUpdate {
+// SetNillableAssignedAt sets the "assigned_at" field if the given value is not nil.
+func (_u *UserOrgUnitUpdate) SetNillableAssignedAt(v *time.Time) *UserOrgUnitUpdate {
 	if v != nil {
-		_u.SetUserID(*v)
+		_u.SetAssignedAt(*v)
 	}
 	return _u
 }
 
-// AddUserID adds value to the "user_id" field.
-func (_u *UserOrgUnitUpdate) AddUserID(v int32) *UserOrgUnitUpdate {
-	_u.mutation.AddUserID(v)
+// ClearAssignedAt clears the value of the "assigned_at" field.
+func (_u *UserOrgUnitUpdate) ClearAssignedAt() *UserOrgUnitUpdate {
+	_u.mutation.ClearAssignedAt()
 	return _u
 }
 
-// ClearUserID clears the value of the "user_id" field.
-func (_u *UserOrgUnitUpdate) ClearUserID() *UserOrgUnitUpdate {
-	_u.mutation.ClearUserID()
+// SetAssignedBy sets the "assigned_by" field.
+func (_u *UserOrgUnitUpdate) SetAssignedBy(v uint32) *UserOrgUnitUpdate {
+	_u.mutation.ResetAssignedBy()
+	_u.mutation.SetAssignedBy(v)
 	return _u
 }
 
-// SetOrgUnitID sets the "org_unit_id" field.
-func (_u *UserOrgUnitUpdate) SetOrgUnitID(v uint32) *UserOrgUnitUpdate {
-	_u.mutation.ResetOrgUnitID()
-	_u.mutation.SetOrgUnitID(v)
-	return _u
-}
-
-// SetNillableOrgUnitID sets the "org_unit_id" field if the given value is not nil.
-func (_u *UserOrgUnitUpdate) SetNillableOrgUnitID(v *uint32) *UserOrgUnitUpdate {
+// SetNillableAssignedBy sets the "assigned_by" field if the given value is not nil.
+func (_u *UserOrgUnitUpdate) SetNillableAssignedBy(v *uint32) *UserOrgUnitUpdate {
 	if v != nil {
-		_u.SetOrgUnitID(*v)
+		_u.SetAssignedBy(*v)
 	}
 	return _u
 }
 
-// AddOrgUnitID adds value to the "org_unit_id" field.
-func (_u *UserOrgUnitUpdate) AddOrgUnitID(v int32) *UserOrgUnitUpdate {
-	_u.mutation.AddOrgUnitID(v)
+// AddAssignedBy adds value to the "assigned_by" field.
+func (_u *UserOrgUnitUpdate) AddAssignedBy(v int32) *UserOrgUnitUpdate {
+	_u.mutation.AddAssignedBy(v)
 	return _u
 }
 
-// ClearOrgUnitID clears the value of the "org_unit_id" field.
-func (_u *UserOrgUnitUpdate) ClearOrgUnitID() *UserOrgUnitUpdate {
-	_u.mutation.ClearOrgUnitID()
+// ClearAssignedBy clears the value of the "assigned_by" field.
+func (_u *UserOrgUnitUpdate) ClearAssignedBy() *UserOrgUnitUpdate {
+	_u.mutation.ClearAssignedBy()
+	return _u
+}
+
+// SetIsPrimary sets the "is_primary" field.
+func (_u *UserOrgUnitUpdate) SetIsPrimary(v bool) *UserOrgUnitUpdate {
+	_u.mutation.SetIsPrimary(v)
+	return _u
+}
+
+// SetNillableIsPrimary sets the "is_primary" field if the given value is not nil.
+func (_u *UserOrgUnitUpdate) SetNillableIsPrimary(v *bool) *UserOrgUnitUpdate {
+	if v != nil {
+		_u.SetIsPrimary(*v)
+	}
+	return _u
+}
+
+// SetStatus sets the "status" field.
+func (_u *UserOrgUnitUpdate) SetStatus(v userorgunit.Status) *UserOrgUnitUpdate {
+	_u.mutation.SetStatus(v)
+	return _u
+}
+
+// SetNillableStatus sets the "status" field if the given value is not nil.
+func (_u *UserOrgUnitUpdate) SetNillableStatus(v *userorgunit.Status) *UserOrgUnitUpdate {
+	if v != nil {
+		_u.SetStatus(*v)
+	}
+	return _u
+}
+
+// ClearStatus clears the value of the "status" field.
+func (_u *UserOrgUnitUpdate) ClearStatus() *UserOrgUnitUpdate {
+	_u.mutation.ClearStatus()
 	return _u
 }
 
@@ -359,9 +435,6 @@ func (_u *UserOrgUnitUpdate) sqlSave(ctx context.Context) (_node int, err error)
 	if _u.mutation.DeletedAtCleared() {
 		_spec.ClearField(userorgunit.FieldDeletedAt, field.TypeTime)
 	}
-	if _u.mutation.TenantIDCleared() {
-		_spec.ClearField(userorgunit.FieldTenantID, field.TypeUint32)
-	}
 	if value, ok := _u.mutation.CreatedBy(); ok {
 		_spec.SetField(userorgunit.FieldCreatedBy, field.TypeUint32, value)
 	}
@@ -389,17 +462,35 @@ func (_u *UserOrgUnitUpdate) sqlSave(ctx context.Context) (_node int, err error)
 	if _u.mutation.DeletedByCleared() {
 		_spec.ClearField(userorgunit.FieldDeletedBy, field.TypeUint32)
 	}
-	if value, ok := _u.mutation.Status(); ok {
-		_spec.SetField(userorgunit.FieldStatus, field.TypeEnum, value)
+	if _u.mutation.TenantIDCleared() {
+		_spec.ClearField(userorgunit.FieldTenantID, field.TypeUint32)
 	}
-	if _u.mutation.StatusCleared() {
-		_spec.ClearField(userorgunit.FieldStatus, field.TypeEnum)
+	if value, ok := _u.mutation.Remark(); ok {
+		_spec.SetField(userorgunit.FieldRemark, field.TypeString, value)
 	}
-	if value, ok := _u.mutation.IsPrimary(); ok {
-		_spec.SetField(userorgunit.FieldIsPrimary, field.TypeBool, value)
+	if _u.mutation.RemarkCleared() {
+		_spec.ClearField(userorgunit.FieldRemark, field.TypeString)
 	}
-	if _u.mutation.IsPrimaryCleared() {
-		_spec.ClearField(userorgunit.FieldIsPrimary, field.TypeBool)
+	if value, ok := _u.mutation.UserID(); ok {
+		_spec.SetField(userorgunit.FieldUserID, field.TypeUint32, value)
+	}
+	if value, ok := _u.mutation.AddedUserID(); ok {
+		_spec.AddField(userorgunit.FieldUserID, field.TypeUint32, value)
+	}
+	if value, ok := _u.mutation.OrgUnitID(); ok {
+		_spec.SetField(userorgunit.FieldOrgUnitID, field.TypeUint32, value)
+	}
+	if value, ok := _u.mutation.AddedOrgUnitID(); ok {
+		_spec.AddField(userorgunit.FieldOrgUnitID, field.TypeUint32, value)
+	}
+	if value, ok := _u.mutation.PositionID(); ok {
+		_spec.SetField(userorgunit.FieldPositionID, field.TypeUint32, value)
+	}
+	if value, ok := _u.mutation.AddedPositionID(); ok {
+		_spec.AddField(userorgunit.FieldPositionID, field.TypeUint32, value)
+	}
+	if _u.mutation.PositionIDCleared() {
+		_spec.ClearField(userorgunit.FieldPositionID, field.TypeUint32)
 	}
 	if value, ok := _u.mutation.StartAt(); ok {
 		_spec.SetField(userorgunit.FieldStartAt, field.TypeTime, value)
@@ -413,23 +504,29 @@ func (_u *UserOrgUnitUpdate) sqlSave(ctx context.Context) (_node int, err error)
 	if _u.mutation.EndAtCleared() {
 		_spec.ClearField(userorgunit.FieldEndAt, field.TypeTime)
 	}
-	if value, ok := _u.mutation.UserID(); ok {
-		_spec.SetField(userorgunit.FieldUserID, field.TypeUint32, value)
+	if value, ok := _u.mutation.AssignedAt(); ok {
+		_spec.SetField(userorgunit.FieldAssignedAt, field.TypeTime, value)
 	}
-	if value, ok := _u.mutation.AddedUserID(); ok {
-		_spec.AddField(userorgunit.FieldUserID, field.TypeUint32, value)
+	if _u.mutation.AssignedAtCleared() {
+		_spec.ClearField(userorgunit.FieldAssignedAt, field.TypeTime)
 	}
-	if _u.mutation.UserIDCleared() {
-		_spec.ClearField(userorgunit.FieldUserID, field.TypeUint32)
+	if value, ok := _u.mutation.AssignedBy(); ok {
+		_spec.SetField(userorgunit.FieldAssignedBy, field.TypeUint32, value)
 	}
-	if value, ok := _u.mutation.OrgUnitID(); ok {
-		_spec.SetField(userorgunit.FieldOrgUnitID, field.TypeUint32, value)
+	if value, ok := _u.mutation.AddedAssignedBy(); ok {
+		_spec.AddField(userorgunit.FieldAssignedBy, field.TypeUint32, value)
 	}
-	if value, ok := _u.mutation.AddedOrgUnitID(); ok {
-		_spec.AddField(userorgunit.FieldOrgUnitID, field.TypeUint32, value)
+	if _u.mutation.AssignedByCleared() {
+		_spec.ClearField(userorgunit.FieldAssignedBy, field.TypeUint32)
 	}
-	if _u.mutation.OrgUnitIDCleared() {
-		_spec.ClearField(userorgunit.FieldOrgUnitID, field.TypeUint32)
+	if value, ok := _u.mutation.IsPrimary(); ok {
+		_spec.SetField(userorgunit.FieldIsPrimary, field.TypeBool, value)
+	}
+	if value, ok := _u.mutation.Status(); ok {
+		_spec.SetField(userorgunit.FieldStatus, field.TypeEnum, value)
+	}
+	if _u.mutation.StatusCleared() {
+		_spec.ClearField(userorgunit.FieldStatus, field.TypeEnum)
 	}
 	_spec.AddModifiers(_u.modifiers...)
 	if _node, err = sqlgraph.UpdateNodes(ctx, _u.driver, _spec); err != nil {
@@ -574,43 +671,92 @@ func (_u *UserOrgUnitUpdateOne) ClearDeletedBy() *UserOrgUnitUpdateOne {
 	return _u
 }
 
-// SetStatus sets the "status" field.
-func (_u *UserOrgUnitUpdateOne) SetStatus(v userorgunit.Status) *UserOrgUnitUpdateOne {
-	_u.mutation.SetStatus(v)
+// SetRemark sets the "remark" field.
+func (_u *UserOrgUnitUpdateOne) SetRemark(v string) *UserOrgUnitUpdateOne {
+	_u.mutation.SetRemark(v)
 	return _u
 }
 
-// SetNillableStatus sets the "status" field if the given value is not nil.
-func (_u *UserOrgUnitUpdateOne) SetNillableStatus(v *userorgunit.Status) *UserOrgUnitUpdateOne {
+// SetNillableRemark sets the "remark" field if the given value is not nil.
+func (_u *UserOrgUnitUpdateOne) SetNillableRemark(v *string) *UserOrgUnitUpdateOne {
 	if v != nil {
-		_u.SetStatus(*v)
+		_u.SetRemark(*v)
 	}
 	return _u
 }
 
-// ClearStatus clears the value of the "status" field.
-func (_u *UserOrgUnitUpdateOne) ClearStatus() *UserOrgUnitUpdateOne {
-	_u.mutation.ClearStatus()
+// ClearRemark clears the value of the "remark" field.
+func (_u *UserOrgUnitUpdateOne) ClearRemark() *UserOrgUnitUpdateOne {
+	_u.mutation.ClearRemark()
 	return _u
 }
 
-// SetIsPrimary sets the "is_primary" field.
-func (_u *UserOrgUnitUpdateOne) SetIsPrimary(v bool) *UserOrgUnitUpdateOne {
-	_u.mutation.SetIsPrimary(v)
+// SetUserID sets the "user_id" field.
+func (_u *UserOrgUnitUpdateOne) SetUserID(v uint32) *UserOrgUnitUpdateOne {
+	_u.mutation.ResetUserID()
+	_u.mutation.SetUserID(v)
 	return _u
 }
 
-// SetNillableIsPrimary sets the "is_primary" field if the given value is not nil.
-func (_u *UserOrgUnitUpdateOne) SetNillableIsPrimary(v *bool) *UserOrgUnitUpdateOne {
+// SetNillableUserID sets the "user_id" field if the given value is not nil.
+func (_u *UserOrgUnitUpdateOne) SetNillableUserID(v *uint32) *UserOrgUnitUpdateOne {
 	if v != nil {
-		_u.SetIsPrimary(*v)
+		_u.SetUserID(*v)
 	}
 	return _u
 }
 
-// ClearIsPrimary clears the value of the "is_primary" field.
-func (_u *UserOrgUnitUpdateOne) ClearIsPrimary() *UserOrgUnitUpdateOne {
-	_u.mutation.ClearIsPrimary()
+// AddUserID adds value to the "user_id" field.
+func (_u *UserOrgUnitUpdateOne) AddUserID(v int32) *UserOrgUnitUpdateOne {
+	_u.mutation.AddUserID(v)
+	return _u
+}
+
+// SetOrgUnitID sets the "org_unit_id" field.
+func (_u *UserOrgUnitUpdateOne) SetOrgUnitID(v uint32) *UserOrgUnitUpdateOne {
+	_u.mutation.ResetOrgUnitID()
+	_u.mutation.SetOrgUnitID(v)
+	return _u
+}
+
+// SetNillableOrgUnitID sets the "org_unit_id" field if the given value is not nil.
+func (_u *UserOrgUnitUpdateOne) SetNillableOrgUnitID(v *uint32) *UserOrgUnitUpdateOne {
+	if v != nil {
+		_u.SetOrgUnitID(*v)
+	}
+	return _u
+}
+
+// AddOrgUnitID adds value to the "org_unit_id" field.
+func (_u *UserOrgUnitUpdateOne) AddOrgUnitID(v int32) *UserOrgUnitUpdateOne {
+	_u.mutation.AddOrgUnitID(v)
+	return _u
+}
+
+// SetPositionID sets the "position_id" field.
+func (_u *UserOrgUnitUpdateOne) SetPositionID(v uint32) *UserOrgUnitUpdateOne {
+	_u.mutation.ResetPositionID()
+	_u.mutation.SetPositionID(v)
+	return _u
+}
+
+// SetNillablePositionID sets the "position_id" field if the given value is not nil.
+func (_u *UserOrgUnitUpdateOne) SetNillablePositionID(v *uint32) *UserOrgUnitUpdateOne {
+	if v != nil {
+		_u.SetPositionID(*v)
+	}
+	return _u
+}
+
+// AddPositionID adds value to the "position_id" field.
+func (_u *UserOrgUnitUpdateOne) AddPositionID(v int32) *UserOrgUnitUpdateOne {
+	_u.mutation.AddPositionID(v)
+	return _u
+}
+
+// ClearPositionID clears the value of the "position_id" field.
+func (_u *UserOrgUnitUpdateOne) ClearPositionID() *UserOrgUnitUpdateOne {
+	_u.mutation.ClearPositionID()
 	return _u
 }
 
@@ -654,57 +800,84 @@ func (_u *UserOrgUnitUpdateOne) ClearEndAt() *UserOrgUnitUpdateOne {
 	return _u
 }
 
-// SetUserID sets the "user_id" field.
-func (_u *UserOrgUnitUpdateOne) SetUserID(v uint32) *UserOrgUnitUpdateOne {
-	_u.mutation.ResetUserID()
-	_u.mutation.SetUserID(v)
+// SetAssignedAt sets the "assigned_at" field.
+func (_u *UserOrgUnitUpdateOne) SetAssignedAt(v time.Time) *UserOrgUnitUpdateOne {
+	_u.mutation.SetAssignedAt(v)
 	return _u
 }
 
-// SetNillableUserID sets the "user_id" field if the given value is not nil.
-func (_u *UserOrgUnitUpdateOne) SetNillableUserID(v *uint32) *UserOrgUnitUpdateOne {
+// SetNillableAssignedAt sets the "assigned_at" field if the given value is not nil.
+func (_u *UserOrgUnitUpdateOne) SetNillableAssignedAt(v *time.Time) *UserOrgUnitUpdateOne {
 	if v != nil {
-		_u.SetUserID(*v)
+		_u.SetAssignedAt(*v)
 	}
 	return _u
 }
 
-// AddUserID adds value to the "user_id" field.
-func (_u *UserOrgUnitUpdateOne) AddUserID(v int32) *UserOrgUnitUpdateOne {
-	_u.mutation.AddUserID(v)
+// ClearAssignedAt clears the value of the "assigned_at" field.
+func (_u *UserOrgUnitUpdateOne) ClearAssignedAt() *UserOrgUnitUpdateOne {
+	_u.mutation.ClearAssignedAt()
 	return _u
 }
 
-// ClearUserID clears the value of the "user_id" field.
-func (_u *UserOrgUnitUpdateOne) ClearUserID() *UserOrgUnitUpdateOne {
-	_u.mutation.ClearUserID()
+// SetAssignedBy sets the "assigned_by" field.
+func (_u *UserOrgUnitUpdateOne) SetAssignedBy(v uint32) *UserOrgUnitUpdateOne {
+	_u.mutation.ResetAssignedBy()
+	_u.mutation.SetAssignedBy(v)
 	return _u
 }
 
-// SetOrgUnitID sets the "org_unit_id" field.
-func (_u *UserOrgUnitUpdateOne) SetOrgUnitID(v uint32) *UserOrgUnitUpdateOne {
-	_u.mutation.ResetOrgUnitID()
-	_u.mutation.SetOrgUnitID(v)
-	return _u
-}
-
-// SetNillableOrgUnitID sets the "org_unit_id" field if the given value is not nil.
-func (_u *UserOrgUnitUpdateOne) SetNillableOrgUnitID(v *uint32) *UserOrgUnitUpdateOne {
+// SetNillableAssignedBy sets the "assigned_by" field if the given value is not nil.
+func (_u *UserOrgUnitUpdateOne) SetNillableAssignedBy(v *uint32) *UserOrgUnitUpdateOne {
 	if v != nil {
-		_u.SetOrgUnitID(*v)
+		_u.SetAssignedBy(*v)
 	}
 	return _u
 }
 
-// AddOrgUnitID adds value to the "org_unit_id" field.
-func (_u *UserOrgUnitUpdateOne) AddOrgUnitID(v int32) *UserOrgUnitUpdateOne {
-	_u.mutation.AddOrgUnitID(v)
+// AddAssignedBy adds value to the "assigned_by" field.
+func (_u *UserOrgUnitUpdateOne) AddAssignedBy(v int32) *UserOrgUnitUpdateOne {
+	_u.mutation.AddAssignedBy(v)
 	return _u
 }
 
-// ClearOrgUnitID clears the value of the "org_unit_id" field.
-func (_u *UserOrgUnitUpdateOne) ClearOrgUnitID() *UserOrgUnitUpdateOne {
-	_u.mutation.ClearOrgUnitID()
+// ClearAssignedBy clears the value of the "assigned_by" field.
+func (_u *UserOrgUnitUpdateOne) ClearAssignedBy() *UserOrgUnitUpdateOne {
+	_u.mutation.ClearAssignedBy()
+	return _u
+}
+
+// SetIsPrimary sets the "is_primary" field.
+func (_u *UserOrgUnitUpdateOne) SetIsPrimary(v bool) *UserOrgUnitUpdateOne {
+	_u.mutation.SetIsPrimary(v)
+	return _u
+}
+
+// SetNillableIsPrimary sets the "is_primary" field if the given value is not nil.
+func (_u *UserOrgUnitUpdateOne) SetNillableIsPrimary(v *bool) *UserOrgUnitUpdateOne {
+	if v != nil {
+		_u.SetIsPrimary(*v)
+	}
+	return _u
+}
+
+// SetStatus sets the "status" field.
+func (_u *UserOrgUnitUpdateOne) SetStatus(v userorgunit.Status) *UserOrgUnitUpdateOne {
+	_u.mutation.SetStatus(v)
+	return _u
+}
+
+// SetNillableStatus sets the "status" field if the given value is not nil.
+func (_u *UserOrgUnitUpdateOne) SetNillableStatus(v *userorgunit.Status) *UserOrgUnitUpdateOne {
+	if v != nil {
+		_u.SetStatus(*v)
+	}
+	return _u
+}
+
+// ClearStatus clears the value of the "status" field.
+func (_u *UserOrgUnitUpdateOne) ClearStatus() *UserOrgUnitUpdateOne {
+	_u.mutation.ClearStatus()
 	return _u
 }
 
@@ -813,9 +986,6 @@ func (_u *UserOrgUnitUpdateOne) sqlSave(ctx context.Context) (_node *UserOrgUnit
 	if _u.mutation.DeletedAtCleared() {
 		_spec.ClearField(userorgunit.FieldDeletedAt, field.TypeTime)
 	}
-	if _u.mutation.TenantIDCleared() {
-		_spec.ClearField(userorgunit.FieldTenantID, field.TypeUint32)
-	}
 	if value, ok := _u.mutation.CreatedBy(); ok {
 		_spec.SetField(userorgunit.FieldCreatedBy, field.TypeUint32, value)
 	}
@@ -843,17 +1013,35 @@ func (_u *UserOrgUnitUpdateOne) sqlSave(ctx context.Context) (_node *UserOrgUnit
 	if _u.mutation.DeletedByCleared() {
 		_spec.ClearField(userorgunit.FieldDeletedBy, field.TypeUint32)
 	}
-	if value, ok := _u.mutation.Status(); ok {
-		_spec.SetField(userorgunit.FieldStatus, field.TypeEnum, value)
+	if _u.mutation.TenantIDCleared() {
+		_spec.ClearField(userorgunit.FieldTenantID, field.TypeUint32)
 	}
-	if _u.mutation.StatusCleared() {
-		_spec.ClearField(userorgunit.FieldStatus, field.TypeEnum)
+	if value, ok := _u.mutation.Remark(); ok {
+		_spec.SetField(userorgunit.FieldRemark, field.TypeString, value)
 	}
-	if value, ok := _u.mutation.IsPrimary(); ok {
-		_spec.SetField(userorgunit.FieldIsPrimary, field.TypeBool, value)
+	if _u.mutation.RemarkCleared() {
+		_spec.ClearField(userorgunit.FieldRemark, field.TypeString)
 	}
-	if _u.mutation.IsPrimaryCleared() {
-		_spec.ClearField(userorgunit.FieldIsPrimary, field.TypeBool)
+	if value, ok := _u.mutation.UserID(); ok {
+		_spec.SetField(userorgunit.FieldUserID, field.TypeUint32, value)
+	}
+	if value, ok := _u.mutation.AddedUserID(); ok {
+		_spec.AddField(userorgunit.FieldUserID, field.TypeUint32, value)
+	}
+	if value, ok := _u.mutation.OrgUnitID(); ok {
+		_spec.SetField(userorgunit.FieldOrgUnitID, field.TypeUint32, value)
+	}
+	if value, ok := _u.mutation.AddedOrgUnitID(); ok {
+		_spec.AddField(userorgunit.FieldOrgUnitID, field.TypeUint32, value)
+	}
+	if value, ok := _u.mutation.PositionID(); ok {
+		_spec.SetField(userorgunit.FieldPositionID, field.TypeUint32, value)
+	}
+	if value, ok := _u.mutation.AddedPositionID(); ok {
+		_spec.AddField(userorgunit.FieldPositionID, field.TypeUint32, value)
+	}
+	if _u.mutation.PositionIDCleared() {
+		_spec.ClearField(userorgunit.FieldPositionID, field.TypeUint32)
 	}
 	if value, ok := _u.mutation.StartAt(); ok {
 		_spec.SetField(userorgunit.FieldStartAt, field.TypeTime, value)
@@ -867,23 +1055,29 @@ func (_u *UserOrgUnitUpdateOne) sqlSave(ctx context.Context) (_node *UserOrgUnit
 	if _u.mutation.EndAtCleared() {
 		_spec.ClearField(userorgunit.FieldEndAt, field.TypeTime)
 	}
-	if value, ok := _u.mutation.UserID(); ok {
-		_spec.SetField(userorgunit.FieldUserID, field.TypeUint32, value)
+	if value, ok := _u.mutation.AssignedAt(); ok {
+		_spec.SetField(userorgunit.FieldAssignedAt, field.TypeTime, value)
 	}
-	if value, ok := _u.mutation.AddedUserID(); ok {
-		_spec.AddField(userorgunit.FieldUserID, field.TypeUint32, value)
+	if _u.mutation.AssignedAtCleared() {
+		_spec.ClearField(userorgunit.FieldAssignedAt, field.TypeTime)
 	}
-	if _u.mutation.UserIDCleared() {
-		_spec.ClearField(userorgunit.FieldUserID, field.TypeUint32)
+	if value, ok := _u.mutation.AssignedBy(); ok {
+		_spec.SetField(userorgunit.FieldAssignedBy, field.TypeUint32, value)
 	}
-	if value, ok := _u.mutation.OrgUnitID(); ok {
-		_spec.SetField(userorgunit.FieldOrgUnitID, field.TypeUint32, value)
+	if value, ok := _u.mutation.AddedAssignedBy(); ok {
+		_spec.AddField(userorgunit.FieldAssignedBy, field.TypeUint32, value)
 	}
-	if value, ok := _u.mutation.AddedOrgUnitID(); ok {
-		_spec.AddField(userorgunit.FieldOrgUnitID, field.TypeUint32, value)
+	if _u.mutation.AssignedByCleared() {
+		_spec.ClearField(userorgunit.FieldAssignedBy, field.TypeUint32)
 	}
-	if _u.mutation.OrgUnitIDCleared() {
-		_spec.ClearField(userorgunit.FieldOrgUnitID, field.TypeUint32)
+	if value, ok := _u.mutation.IsPrimary(); ok {
+		_spec.SetField(userorgunit.FieldIsPrimary, field.TypeBool, value)
+	}
+	if value, ok := _u.mutation.Status(); ok {
+		_spec.SetField(userorgunit.FieldStatus, field.TypeEnum, value)
+	}
+	if _u.mutation.StatusCleared() {
+		_spec.ClearField(userorgunit.FieldStatus, field.TypeEnum)
 	}
 	_spec.AddModifiers(_u.modifiers...)
 	_node = &UserOrgUnit{config: _u.config}

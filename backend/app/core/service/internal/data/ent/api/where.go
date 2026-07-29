@@ -84,9 +84,24 @@ func DeletedBy(v uint32) predicate.Api {
 	return predicate.Api(sql.FieldEQ(FieldDeletedBy, v))
 }
 
-// TenantID applies equality check predicate on the "tenant_id" field. It's identical to TenantIDEQ.
-func TenantID(v uint32) predicate.Api {
-	return predicate.Api(sql.FieldEQ(FieldTenantID, v))
+// Description applies equality check predicate on the "description" field. It's identical to DescriptionEQ.
+func Description(v string) predicate.Api {
+	return predicate.Api(sql.FieldEQ(FieldDescription, v))
+}
+
+// Module applies equality check predicate on the "module" field. It's identical to ModuleEQ.
+func Module(v string) predicate.Api {
+	return predicate.Api(sql.FieldEQ(FieldModule, v))
+}
+
+// ModuleDescription applies equality check predicate on the "module_description" field. It's identical to ModuleDescriptionEQ.
+func ModuleDescription(v string) predicate.Api {
+	return predicate.Api(sql.FieldEQ(FieldModuleDescription, v))
+}
+
+// Operation applies equality check predicate on the "operation" field. It's identical to OperationEQ.
+func Operation(v string) predicate.Api {
+	return predicate.Api(sql.FieldEQ(FieldOperation, v))
 }
 
 // Path applies equality check predicate on the "path" field. It's identical to PathEQ.
@@ -97,11 +112,6 @@ func Path(v string) predicate.Api {
 // Method applies equality check predicate on the "method" field. It's identical to MethodEQ.
 func Method(v string) predicate.Api {
 	return predicate.Api(sql.FieldEQ(FieldMethod, v))
-}
-
-// Description applies equality check predicate on the "description" field. It's identical to DescriptionEQ.
-func Description(v string) predicate.Api {
-	return predicate.Api(sql.FieldEQ(FieldDescription, v))
 }
 
 // CreatedAtEQ applies the EQ predicate on the "created_at" field.
@@ -404,54 +414,324 @@ func DeletedByNotNil() predicate.Api {
 	return predicate.Api(sql.FieldNotNull(FieldDeletedBy))
 }
 
-// TenantIDEQ applies the EQ predicate on the "tenant_id" field.
-func TenantIDEQ(v uint32) predicate.Api {
-	return predicate.Api(sql.FieldEQ(FieldTenantID, v))
+// StatusEQ applies the EQ predicate on the "status" field.
+func StatusEQ(v Status) predicate.Api {
+	return predicate.Api(sql.FieldEQ(FieldStatus, v))
 }
 
-// TenantIDNEQ applies the NEQ predicate on the "tenant_id" field.
-func TenantIDNEQ(v uint32) predicate.Api {
-	return predicate.Api(sql.FieldNEQ(FieldTenantID, v))
+// StatusNEQ applies the NEQ predicate on the "status" field.
+func StatusNEQ(v Status) predicate.Api {
+	return predicate.Api(sql.FieldNEQ(FieldStatus, v))
 }
 
-// TenantIDIn applies the In predicate on the "tenant_id" field.
-func TenantIDIn(vs ...uint32) predicate.Api {
-	return predicate.Api(sql.FieldIn(FieldTenantID, vs...))
+// StatusIn applies the In predicate on the "status" field.
+func StatusIn(vs ...Status) predicate.Api {
+	return predicate.Api(sql.FieldIn(FieldStatus, vs...))
 }
 
-// TenantIDNotIn applies the NotIn predicate on the "tenant_id" field.
-func TenantIDNotIn(vs ...uint32) predicate.Api {
-	return predicate.Api(sql.FieldNotIn(FieldTenantID, vs...))
+// StatusNotIn applies the NotIn predicate on the "status" field.
+func StatusNotIn(vs ...Status) predicate.Api {
+	return predicate.Api(sql.FieldNotIn(FieldStatus, vs...))
 }
 
-// TenantIDGT applies the GT predicate on the "tenant_id" field.
-func TenantIDGT(v uint32) predicate.Api {
-	return predicate.Api(sql.FieldGT(FieldTenantID, v))
+// DescriptionEQ applies the EQ predicate on the "description" field.
+func DescriptionEQ(v string) predicate.Api {
+	return predicate.Api(sql.FieldEQ(FieldDescription, v))
 }
 
-// TenantIDGTE applies the GTE predicate on the "tenant_id" field.
-func TenantIDGTE(v uint32) predicate.Api {
-	return predicate.Api(sql.FieldGTE(FieldTenantID, v))
+// DescriptionNEQ applies the NEQ predicate on the "description" field.
+func DescriptionNEQ(v string) predicate.Api {
+	return predicate.Api(sql.FieldNEQ(FieldDescription, v))
 }
 
-// TenantIDLT applies the LT predicate on the "tenant_id" field.
-func TenantIDLT(v uint32) predicate.Api {
-	return predicate.Api(sql.FieldLT(FieldTenantID, v))
+// DescriptionIn applies the In predicate on the "description" field.
+func DescriptionIn(vs ...string) predicate.Api {
+	return predicate.Api(sql.FieldIn(FieldDescription, vs...))
 }
 
-// TenantIDLTE applies the LTE predicate on the "tenant_id" field.
-func TenantIDLTE(v uint32) predicate.Api {
-	return predicate.Api(sql.FieldLTE(FieldTenantID, v))
+// DescriptionNotIn applies the NotIn predicate on the "description" field.
+func DescriptionNotIn(vs ...string) predicate.Api {
+	return predicate.Api(sql.FieldNotIn(FieldDescription, vs...))
 }
 
-// TenantIDIsNil applies the IsNil predicate on the "tenant_id" field.
-func TenantIDIsNil() predicate.Api {
-	return predicate.Api(sql.FieldIsNull(FieldTenantID))
+// DescriptionGT applies the GT predicate on the "description" field.
+func DescriptionGT(v string) predicate.Api {
+	return predicate.Api(sql.FieldGT(FieldDescription, v))
 }
 
-// TenantIDNotNil applies the NotNil predicate on the "tenant_id" field.
-func TenantIDNotNil() predicate.Api {
-	return predicate.Api(sql.FieldNotNull(FieldTenantID))
+// DescriptionGTE applies the GTE predicate on the "description" field.
+func DescriptionGTE(v string) predicate.Api {
+	return predicate.Api(sql.FieldGTE(FieldDescription, v))
+}
+
+// DescriptionLT applies the LT predicate on the "description" field.
+func DescriptionLT(v string) predicate.Api {
+	return predicate.Api(sql.FieldLT(FieldDescription, v))
+}
+
+// DescriptionLTE applies the LTE predicate on the "description" field.
+func DescriptionLTE(v string) predicate.Api {
+	return predicate.Api(sql.FieldLTE(FieldDescription, v))
+}
+
+// DescriptionContains applies the Contains predicate on the "description" field.
+func DescriptionContains(v string) predicate.Api {
+	return predicate.Api(sql.FieldContains(FieldDescription, v))
+}
+
+// DescriptionHasPrefix applies the HasPrefix predicate on the "description" field.
+func DescriptionHasPrefix(v string) predicate.Api {
+	return predicate.Api(sql.FieldHasPrefix(FieldDescription, v))
+}
+
+// DescriptionHasSuffix applies the HasSuffix predicate on the "description" field.
+func DescriptionHasSuffix(v string) predicate.Api {
+	return predicate.Api(sql.FieldHasSuffix(FieldDescription, v))
+}
+
+// DescriptionIsNil applies the IsNil predicate on the "description" field.
+func DescriptionIsNil() predicate.Api {
+	return predicate.Api(sql.FieldIsNull(FieldDescription))
+}
+
+// DescriptionNotNil applies the NotNil predicate on the "description" field.
+func DescriptionNotNil() predicate.Api {
+	return predicate.Api(sql.FieldNotNull(FieldDescription))
+}
+
+// DescriptionEqualFold applies the EqualFold predicate on the "description" field.
+func DescriptionEqualFold(v string) predicate.Api {
+	return predicate.Api(sql.FieldEqualFold(FieldDescription, v))
+}
+
+// DescriptionContainsFold applies the ContainsFold predicate on the "description" field.
+func DescriptionContainsFold(v string) predicate.Api {
+	return predicate.Api(sql.FieldContainsFold(FieldDescription, v))
+}
+
+// ModuleEQ applies the EQ predicate on the "module" field.
+func ModuleEQ(v string) predicate.Api {
+	return predicate.Api(sql.FieldEQ(FieldModule, v))
+}
+
+// ModuleNEQ applies the NEQ predicate on the "module" field.
+func ModuleNEQ(v string) predicate.Api {
+	return predicate.Api(sql.FieldNEQ(FieldModule, v))
+}
+
+// ModuleIn applies the In predicate on the "module" field.
+func ModuleIn(vs ...string) predicate.Api {
+	return predicate.Api(sql.FieldIn(FieldModule, vs...))
+}
+
+// ModuleNotIn applies the NotIn predicate on the "module" field.
+func ModuleNotIn(vs ...string) predicate.Api {
+	return predicate.Api(sql.FieldNotIn(FieldModule, vs...))
+}
+
+// ModuleGT applies the GT predicate on the "module" field.
+func ModuleGT(v string) predicate.Api {
+	return predicate.Api(sql.FieldGT(FieldModule, v))
+}
+
+// ModuleGTE applies the GTE predicate on the "module" field.
+func ModuleGTE(v string) predicate.Api {
+	return predicate.Api(sql.FieldGTE(FieldModule, v))
+}
+
+// ModuleLT applies the LT predicate on the "module" field.
+func ModuleLT(v string) predicate.Api {
+	return predicate.Api(sql.FieldLT(FieldModule, v))
+}
+
+// ModuleLTE applies the LTE predicate on the "module" field.
+func ModuleLTE(v string) predicate.Api {
+	return predicate.Api(sql.FieldLTE(FieldModule, v))
+}
+
+// ModuleContains applies the Contains predicate on the "module" field.
+func ModuleContains(v string) predicate.Api {
+	return predicate.Api(sql.FieldContains(FieldModule, v))
+}
+
+// ModuleHasPrefix applies the HasPrefix predicate on the "module" field.
+func ModuleHasPrefix(v string) predicate.Api {
+	return predicate.Api(sql.FieldHasPrefix(FieldModule, v))
+}
+
+// ModuleHasSuffix applies the HasSuffix predicate on the "module" field.
+func ModuleHasSuffix(v string) predicate.Api {
+	return predicate.Api(sql.FieldHasSuffix(FieldModule, v))
+}
+
+// ModuleIsNil applies the IsNil predicate on the "module" field.
+func ModuleIsNil() predicate.Api {
+	return predicate.Api(sql.FieldIsNull(FieldModule))
+}
+
+// ModuleNotNil applies the NotNil predicate on the "module" field.
+func ModuleNotNil() predicate.Api {
+	return predicate.Api(sql.FieldNotNull(FieldModule))
+}
+
+// ModuleEqualFold applies the EqualFold predicate on the "module" field.
+func ModuleEqualFold(v string) predicate.Api {
+	return predicate.Api(sql.FieldEqualFold(FieldModule, v))
+}
+
+// ModuleContainsFold applies the ContainsFold predicate on the "module" field.
+func ModuleContainsFold(v string) predicate.Api {
+	return predicate.Api(sql.FieldContainsFold(FieldModule, v))
+}
+
+// ModuleDescriptionEQ applies the EQ predicate on the "module_description" field.
+func ModuleDescriptionEQ(v string) predicate.Api {
+	return predicate.Api(sql.FieldEQ(FieldModuleDescription, v))
+}
+
+// ModuleDescriptionNEQ applies the NEQ predicate on the "module_description" field.
+func ModuleDescriptionNEQ(v string) predicate.Api {
+	return predicate.Api(sql.FieldNEQ(FieldModuleDescription, v))
+}
+
+// ModuleDescriptionIn applies the In predicate on the "module_description" field.
+func ModuleDescriptionIn(vs ...string) predicate.Api {
+	return predicate.Api(sql.FieldIn(FieldModuleDescription, vs...))
+}
+
+// ModuleDescriptionNotIn applies the NotIn predicate on the "module_description" field.
+func ModuleDescriptionNotIn(vs ...string) predicate.Api {
+	return predicate.Api(sql.FieldNotIn(FieldModuleDescription, vs...))
+}
+
+// ModuleDescriptionGT applies the GT predicate on the "module_description" field.
+func ModuleDescriptionGT(v string) predicate.Api {
+	return predicate.Api(sql.FieldGT(FieldModuleDescription, v))
+}
+
+// ModuleDescriptionGTE applies the GTE predicate on the "module_description" field.
+func ModuleDescriptionGTE(v string) predicate.Api {
+	return predicate.Api(sql.FieldGTE(FieldModuleDescription, v))
+}
+
+// ModuleDescriptionLT applies the LT predicate on the "module_description" field.
+func ModuleDescriptionLT(v string) predicate.Api {
+	return predicate.Api(sql.FieldLT(FieldModuleDescription, v))
+}
+
+// ModuleDescriptionLTE applies the LTE predicate on the "module_description" field.
+func ModuleDescriptionLTE(v string) predicate.Api {
+	return predicate.Api(sql.FieldLTE(FieldModuleDescription, v))
+}
+
+// ModuleDescriptionContains applies the Contains predicate on the "module_description" field.
+func ModuleDescriptionContains(v string) predicate.Api {
+	return predicate.Api(sql.FieldContains(FieldModuleDescription, v))
+}
+
+// ModuleDescriptionHasPrefix applies the HasPrefix predicate on the "module_description" field.
+func ModuleDescriptionHasPrefix(v string) predicate.Api {
+	return predicate.Api(sql.FieldHasPrefix(FieldModuleDescription, v))
+}
+
+// ModuleDescriptionHasSuffix applies the HasSuffix predicate on the "module_description" field.
+func ModuleDescriptionHasSuffix(v string) predicate.Api {
+	return predicate.Api(sql.FieldHasSuffix(FieldModuleDescription, v))
+}
+
+// ModuleDescriptionIsNil applies the IsNil predicate on the "module_description" field.
+func ModuleDescriptionIsNil() predicate.Api {
+	return predicate.Api(sql.FieldIsNull(FieldModuleDescription))
+}
+
+// ModuleDescriptionNotNil applies the NotNil predicate on the "module_description" field.
+func ModuleDescriptionNotNil() predicate.Api {
+	return predicate.Api(sql.FieldNotNull(FieldModuleDescription))
+}
+
+// ModuleDescriptionEqualFold applies the EqualFold predicate on the "module_description" field.
+func ModuleDescriptionEqualFold(v string) predicate.Api {
+	return predicate.Api(sql.FieldEqualFold(FieldModuleDescription, v))
+}
+
+// ModuleDescriptionContainsFold applies the ContainsFold predicate on the "module_description" field.
+func ModuleDescriptionContainsFold(v string) predicate.Api {
+	return predicate.Api(sql.FieldContainsFold(FieldModuleDescription, v))
+}
+
+// OperationEQ applies the EQ predicate on the "operation" field.
+func OperationEQ(v string) predicate.Api {
+	return predicate.Api(sql.FieldEQ(FieldOperation, v))
+}
+
+// OperationNEQ applies the NEQ predicate on the "operation" field.
+func OperationNEQ(v string) predicate.Api {
+	return predicate.Api(sql.FieldNEQ(FieldOperation, v))
+}
+
+// OperationIn applies the In predicate on the "operation" field.
+func OperationIn(vs ...string) predicate.Api {
+	return predicate.Api(sql.FieldIn(FieldOperation, vs...))
+}
+
+// OperationNotIn applies the NotIn predicate on the "operation" field.
+func OperationNotIn(vs ...string) predicate.Api {
+	return predicate.Api(sql.FieldNotIn(FieldOperation, vs...))
+}
+
+// OperationGT applies the GT predicate on the "operation" field.
+func OperationGT(v string) predicate.Api {
+	return predicate.Api(sql.FieldGT(FieldOperation, v))
+}
+
+// OperationGTE applies the GTE predicate on the "operation" field.
+func OperationGTE(v string) predicate.Api {
+	return predicate.Api(sql.FieldGTE(FieldOperation, v))
+}
+
+// OperationLT applies the LT predicate on the "operation" field.
+func OperationLT(v string) predicate.Api {
+	return predicate.Api(sql.FieldLT(FieldOperation, v))
+}
+
+// OperationLTE applies the LTE predicate on the "operation" field.
+func OperationLTE(v string) predicate.Api {
+	return predicate.Api(sql.FieldLTE(FieldOperation, v))
+}
+
+// OperationContains applies the Contains predicate on the "operation" field.
+func OperationContains(v string) predicate.Api {
+	return predicate.Api(sql.FieldContains(FieldOperation, v))
+}
+
+// OperationHasPrefix applies the HasPrefix predicate on the "operation" field.
+func OperationHasPrefix(v string) predicate.Api {
+	return predicate.Api(sql.FieldHasPrefix(FieldOperation, v))
+}
+
+// OperationHasSuffix applies the HasSuffix predicate on the "operation" field.
+func OperationHasSuffix(v string) predicate.Api {
+	return predicate.Api(sql.FieldHasSuffix(FieldOperation, v))
+}
+
+// OperationIsNil applies the IsNil predicate on the "operation" field.
+func OperationIsNil() predicate.Api {
+	return predicate.Api(sql.FieldIsNull(FieldOperation))
+}
+
+// OperationNotNil applies the NotNil predicate on the "operation" field.
+func OperationNotNil() predicate.Api {
+	return predicate.Api(sql.FieldNotNull(FieldOperation))
+}
+
+// OperationEqualFold applies the EqualFold predicate on the "operation" field.
+func OperationEqualFold(v string) predicate.Api {
+	return predicate.Api(sql.FieldEqualFold(FieldOperation, v))
+}
+
+// OperationContainsFold applies the ContainsFold predicate on the "operation" field.
+func OperationContainsFold(v string) predicate.Api {
+	return predicate.Api(sql.FieldContainsFold(FieldOperation, v))
 }
 
 // PathEQ applies the EQ predicate on the "path" field.
@@ -602,81 +882,6 @@ func MethodEqualFold(v string) predicate.Api {
 // MethodContainsFold applies the ContainsFold predicate on the "method" field.
 func MethodContainsFold(v string) predicate.Api {
 	return predicate.Api(sql.FieldContainsFold(FieldMethod, v))
-}
-
-// DescriptionEQ applies the EQ predicate on the "description" field.
-func DescriptionEQ(v string) predicate.Api {
-	return predicate.Api(sql.FieldEQ(FieldDescription, v))
-}
-
-// DescriptionNEQ applies the NEQ predicate on the "description" field.
-func DescriptionNEQ(v string) predicate.Api {
-	return predicate.Api(sql.FieldNEQ(FieldDescription, v))
-}
-
-// DescriptionIn applies the In predicate on the "description" field.
-func DescriptionIn(vs ...string) predicate.Api {
-	return predicate.Api(sql.FieldIn(FieldDescription, vs...))
-}
-
-// DescriptionNotIn applies the NotIn predicate on the "description" field.
-func DescriptionNotIn(vs ...string) predicate.Api {
-	return predicate.Api(sql.FieldNotIn(FieldDescription, vs...))
-}
-
-// DescriptionGT applies the GT predicate on the "description" field.
-func DescriptionGT(v string) predicate.Api {
-	return predicate.Api(sql.FieldGT(FieldDescription, v))
-}
-
-// DescriptionGTE applies the GTE predicate on the "description" field.
-func DescriptionGTE(v string) predicate.Api {
-	return predicate.Api(sql.FieldGTE(FieldDescription, v))
-}
-
-// DescriptionLT applies the LT predicate on the "description" field.
-func DescriptionLT(v string) predicate.Api {
-	return predicate.Api(sql.FieldLT(FieldDescription, v))
-}
-
-// DescriptionLTE applies the LTE predicate on the "description" field.
-func DescriptionLTE(v string) predicate.Api {
-	return predicate.Api(sql.FieldLTE(FieldDescription, v))
-}
-
-// DescriptionContains applies the Contains predicate on the "description" field.
-func DescriptionContains(v string) predicate.Api {
-	return predicate.Api(sql.FieldContains(FieldDescription, v))
-}
-
-// DescriptionHasPrefix applies the HasPrefix predicate on the "description" field.
-func DescriptionHasPrefix(v string) predicate.Api {
-	return predicate.Api(sql.FieldHasPrefix(FieldDescription, v))
-}
-
-// DescriptionHasSuffix applies the HasSuffix predicate on the "description" field.
-func DescriptionHasSuffix(v string) predicate.Api {
-	return predicate.Api(sql.FieldHasSuffix(FieldDescription, v))
-}
-
-// DescriptionIsNil applies the IsNil predicate on the "description" field.
-func DescriptionIsNil() predicate.Api {
-	return predicate.Api(sql.FieldIsNull(FieldDescription))
-}
-
-// DescriptionNotNil applies the NotNil predicate on the "description" field.
-func DescriptionNotNil() predicate.Api {
-	return predicate.Api(sql.FieldNotNull(FieldDescription))
-}
-
-// DescriptionEqualFold applies the EqualFold predicate on the "description" field.
-func DescriptionEqualFold(v string) predicate.Api {
-	return predicate.Api(sql.FieldEqualFold(FieldDescription, v))
-}
-
-// DescriptionContainsFold applies the ContainsFold predicate on the "description" field.
-func DescriptionContainsFold(v string) predicate.Api {
-	return predicate.Api(sql.FieldContainsFold(FieldDescription, v))
 }
 
 // ScopeEQ applies the EQ predicate on the "scope" field.

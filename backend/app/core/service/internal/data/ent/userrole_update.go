@@ -150,43 +150,45 @@ func (_u *UserRoleUpdate) ClearDeletedBy() *UserRoleUpdate {
 	return _u
 }
 
-// SetStatus sets the "status" field.
-func (_u *UserRoleUpdate) SetStatus(v userrole.Status) *UserRoleUpdate {
-	_u.mutation.SetStatus(v)
+// SetUserID sets the "user_id" field.
+func (_u *UserRoleUpdate) SetUserID(v uint32) *UserRoleUpdate {
+	_u.mutation.ResetUserID()
+	_u.mutation.SetUserID(v)
 	return _u
 }
 
-// SetNillableStatus sets the "status" field if the given value is not nil.
-func (_u *UserRoleUpdate) SetNillableStatus(v *userrole.Status) *UserRoleUpdate {
+// SetNillableUserID sets the "user_id" field if the given value is not nil.
+func (_u *UserRoleUpdate) SetNillableUserID(v *uint32) *UserRoleUpdate {
 	if v != nil {
-		_u.SetStatus(*v)
+		_u.SetUserID(*v)
 	}
 	return _u
 }
 
-// ClearStatus clears the value of the "status" field.
-func (_u *UserRoleUpdate) ClearStatus() *UserRoleUpdate {
-	_u.mutation.ClearStatus()
+// AddUserID adds value to the "user_id" field.
+func (_u *UserRoleUpdate) AddUserID(v int32) *UserRoleUpdate {
+	_u.mutation.AddUserID(v)
 	return _u
 }
 
-// SetIsPrimary sets the "is_primary" field.
-func (_u *UserRoleUpdate) SetIsPrimary(v bool) *UserRoleUpdate {
-	_u.mutation.SetIsPrimary(v)
+// SetRoleID sets the "role_id" field.
+func (_u *UserRoleUpdate) SetRoleID(v uint32) *UserRoleUpdate {
+	_u.mutation.ResetRoleID()
+	_u.mutation.SetRoleID(v)
 	return _u
 }
 
-// SetNillableIsPrimary sets the "is_primary" field if the given value is not nil.
-func (_u *UserRoleUpdate) SetNillableIsPrimary(v *bool) *UserRoleUpdate {
+// SetNillableRoleID sets the "role_id" field if the given value is not nil.
+func (_u *UserRoleUpdate) SetNillableRoleID(v *uint32) *UserRoleUpdate {
 	if v != nil {
-		_u.SetIsPrimary(*v)
+		_u.SetRoleID(*v)
 	}
 	return _u
 }
 
-// ClearIsPrimary clears the value of the "is_primary" field.
-func (_u *UserRoleUpdate) ClearIsPrimary() *UserRoleUpdate {
-	_u.mutation.ClearIsPrimary()
+// AddRoleID adds value to the "role_id" field.
+func (_u *UserRoleUpdate) AddRoleID(v int32) *UserRoleUpdate {
+	_u.mutation.AddRoleID(v)
 	return _u
 }
 
@@ -230,57 +232,78 @@ func (_u *UserRoleUpdate) ClearEndAt() *UserRoleUpdate {
 	return _u
 }
 
-// SetUserID sets the "user_id" field.
-func (_u *UserRoleUpdate) SetUserID(v uint32) *UserRoleUpdate {
-	_u.mutation.ResetUserID()
-	_u.mutation.SetUserID(v)
+// SetAssignedAt sets the "assigned_at" field.
+func (_u *UserRoleUpdate) SetAssignedAt(v time.Time) *UserRoleUpdate {
+	_u.mutation.SetAssignedAt(v)
 	return _u
 }
 
-// SetNillableUserID sets the "user_id" field if the given value is not nil.
-func (_u *UserRoleUpdate) SetNillableUserID(v *uint32) *UserRoleUpdate {
+// SetNillableAssignedAt sets the "assigned_at" field if the given value is not nil.
+func (_u *UserRoleUpdate) SetNillableAssignedAt(v *time.Time) *UserRoleUpdate {
 	if v != nil {
-		_u.SetUserID(*v)
+		_u.SetAssignedAt(*v)
 	}
 	return _u
 }
 
-// AddUserID adds value to the "user_id" field.
-func (_u *UserRoleUpdate) AddUserID(v int32) *UserRoleUpdate {
-	_u.mutation.AddUserID(v)
+// ClearAssignedAt clears the value of the "assigned_at" field.
+func (_u *UserRoleUpdate) ClearAssignedAt() *UserRoleUpdate {
+	_u.mutation.ClearAssignedAt()
 	return _u
 }
 
-// ClearUserID clears the value of the "user_id" field.
-func (_u *UserRoleUpdate) ClearUserID() *UserRoleUpdate {
-	_u.mutation.ClearUserID()
+// SetAssignedBy sets the "assigned_by" field.
+func (_u *UserRoleUpdate) SetAssignedBy(v uint32) *UserRoleUpdate {
+	_u.mutation.ResetAssignedBy()
+	_u.mutation.SetAssignedBy(v)
 	return _u
 }
 
-// SetRoleID sets the "role_id" field.
-func (_u *UserRoleUpdate) SetRoleID(v uint32) *UserRoleUpdate {
-	_u.mutation.ResetRoleID()
-	_u.mutation.SetRoleID(v)
-	return _u
-}
-
-// SetNillableRoleID sets the "role_id" field if the given value is not nil.
-func (_u *UserRoleUpdate) SetNillableRoleID(v *uint32) *UserRoleUpdate {
+// SetNillableAssignedBy sets the "assigned_by" field if the given value is not nil.
+func (_u *UserRoleUpdate) SetNillableAssignedBy(v *uint32) *UserRoleUpdate {
 	if v != nil {
-		_u.SetRoleID(*v)
+		_u.SetAssignedBy(*v)
 	}
 	return _u
 }
 
-// AddRoleID adds value to the "role_id" field.
-func (_u *UserRoleUpdate) AddRoleID(v int32) *UserRoleUpdate {
-	_u.mutation.AddRoleID(v)
+// AddAssignedBy adds value to the "assigned_by" field.
+func (_u *UserRoleUpdate) AddAssignedBy(v int32) *UserRoleUpdate {
+	_u.mutation.AddAssignedBy(v)
 	return _u
 }
 
-// ClearRoleID clears the value of the "role_id" field.
-func (_u *UserRoleUpdate) ClearRoleID() *UserRoleUpdate {
-	_u.mutation.ClearRoleID()
+// ClearAssignedBy clears the value of the "assigned_by" field.
+func (_u *UserRoleUpdate) ClearAssignedBy() *UserRoleUpdate {
+	_u.mutation.ClearAssignedBy()
+	return _u
+}
+
+// SetIsPrimary sets the "is_primary" field.
+func (_u *UserRoleUpdate) SetIsPrimary(v bool) *UserRoleUpdate {
+	_u.mutation.SetIsPrimary(v)
+	return _u
+}
+
+// SetNillableIsPrimary sets the "is_primary" field if the given value is not nil.
+func (_u *UserRoleUpdate) SetNillableIsPrimary(v *bool) *UserRoleUpdate {
+	if v != nil {
+		_u.SetIsPrimary(*v)
+	}
+	return _u
+}
+
+// SetStatus sets the "status" field.
+func (_u *UserRoleUpdate) SetStatus(v userrole.Status) *UserRoleUpdate {
+	_u.mutation.SetStatus(v)
+	return _u
+}
+
+// SetNillableStatus sets the "status" field if the given value is not nil.
+func (_u *UserRoleUpdate) SetNillableStatus(v *userrole.Status) *UserRoleUpdate {
+	if v != nil {
+		_u.SetStatus(*v)
+	}
 	return _u
 }
 
@@ -359,9 +382,6 @@ func (_u *UserRoleUpdate) sqlSave(ctx context.Context) (_node int, err error) {
 	if _u.mutation.DeletedAtCleared() {
 		_spec.ClearField(userrole.FieldDeletedAt, field.TypeTime)
 	}
-	if _u.mutation.TenantIDCleared() {
-		_spec.ClearField(userrole.FieldTenantID, field.TypeUint32)
-	}
 	if value, ok := _u.mutation.CreatedBy(); ok {
 		_spec.SetField(userrole.FieldCreatedBy, field.TypeUint32, value)
 	}
@@ -389,17 +409,20 @@ func (_u *UserRoleUpdate) sqlSave(ctx context.Context) (_node int, err error) {
 	if _u.mutation.DeletedByCleared() {
 		_spec.ClearField(userrole.FieldDeletedBy, field.TypeUint32)
 	}
-	if value, ok := _u.mutation.Status(); ok {
-		_spec.SetField(userrole.FieldStatus, field.TypeEnum, value)
+	if _u.mutation.TenantIDCleared() {
+		_spec.ClearField(userrole.FieldTenantID, field.TypeUint32)
 	}
-	if _u.mutation.StatusCleared() {
-		_spec.ClearField(userrole.FieldStatus, field.TypeEnum)
+	if value, ok := _u.mutation.UserID(); ok {
+		_spec.SetField(userrole.FieldUserID, field.TypeUint32, value)
 	}
-	if value, ok := _u.mutation.IsPrimary(); ok {
-		_spec.SetField(userrole.FieldIsPrimary, field.TypeBool, value)
+	if value, ok := _u.mutation.AddedUserID(); ok {
+		_spec.AddField(userrole.FieldUserID, field.TypeUint32, value)
 	}
-	if _u.mutation.IsPrimaryCleared() {
-		_spec.ClearField(userrole.FieldIsPrimary, field.TypeBool)
+	if value, ok := _u.mutation.RoleID(); ok {
+		_spec.SetField(userrole.FieldRoleID, field.TypeUint32, value)
+	}
+	if value, ok := _u.mutation.AddedRoleID(); ok {
+		_spec.AddField(userrole.FieldRoleID, field.TypeUint32, value)
 	}
 	if value, ok := _u.mutation.StartAt(); ok {
 		_spec.SetField(userrole.FieldStartAt, field.TypeTime, value)
@@ -413,23 +436,26 @@ func (_u *UserRoleUpdate) sqlSave(ctx context.Context) (_node int, err error) {
 	if _u.mutation.EndAtCleared() {
 		_spec.ClearField(userrole.FieldEndAt, field.TypeTime)
 	}
-	if value, ok := _u.mutation.UserID(); ok {
-		_spec.SetField(userrole.FieldUserID, field.TypeUint32, value)
+	if value, ok := _u.mutation.AssignedAt(); ok {
+		_spec.SetField(userrole.FieldAssignedAt, field.TypeTime, value)
 	}
-	if value, ok := _u.mutation.AddedUserID(); ok {
-		_spec.AddField(userrole.FieldUserID, field.TypeUint32, value)
+	if _u.mutation.AssignedAtCleared() {
+		_spec.ClearField(userrole.FieldAssignedAt, field.TypeTime)
 	}
-	if _u.mutation.UserIDCleared() {
-		_spec.ClearField(userrole.FieldUserID, field.TypeUint32)
+	if value, ok := _u.mutation.AssignedBy(); ok {
+		_spec.SetField(userrole.FieldAssignedBy, field.TypeUint32, value)
 	}
-	if value, ok := _u.mutation.RoleID(); ok {
-		_spec.SetField(userrole.FieldRoleID, field.TypeUint32, value)
+	if value, ok := _u.mutation.AddedAssignedBy(); ok {
+		_spec.AddField(userrole.FieldAssignedBy, field.TypeUint32, value)
 	}
-	if value, ok := _u.mutation.AddedRoleID(); ok {
-		_spec.AddField(userrole.FieldRoleID, field.TypeUint32, value)
+	if _u.mutation.AssignedByCleared() {
+		_spec.ClearField(userrole.FieldAssignedBy, field.TypeUint32)
 	}
-	if _u.mutation.RoleIDCleared() {
-		_spec.ClearField(userrole.FieldRoleID, field.TypeUint32)
+	if value, ok := _u.mutation.IsPrimary(); ok {
+		_spec.SetField(userrole.FieldIsPrimary, field.TypeBool, value)
+	}
+	if value, ok := _u.mutation.Status(); ok {
+		_spec.SetField(userrole.FieldStatus, field.TypeEnum, value)
 	}
 	_spec.AddModifiers(_u.modifiers...)
 	if _node, err = sqlgraph.UpdateNodes(ctx, _u.driver, _spec); err != nil {
@@ -574,43 +600,45 @@ func (_u *UserRoleUpdateOne) ClearDeletedBy() *UserRoleUpdateOne {
 	return _u
 }
 
-// SetStatus sets the "status" field.
-func (_u *UserRoleUpdateOne) SetStatus(v userrole.Status) *UserRoleUpdateOne {
-	_u.mutation.SetStatus(v)
+// SetUserID sets the "user_id" field.
+func (_u *UserRoleUpdateOne) SetUserID(v uint32) *UserRoleUpdateOne {
+	_u.mutation.ResetUserID()
+	_u.mutation.SetUserID(v)
 	return _u
 }
 
-// SetNillableStatus sets the "status" field if the given value is not nil.
-func (_u *UserRoleUpdateOne) SetNillableStatus(v *userrole.Status) *UserRoleUpdateOne {
+// SetNillableUserID sets the "user_id" field if the given value is not nil.
+func (_u *UserRoleUpdateOne) SetNillableUserID(v *uint32) *UserRoleUpdateOne {
 	if v != nil {
-		_u.SetStatus(*v)
+		_u.SetUserID(*v)
 	}
 	return _u
 }
 
-// ClearStatus clears the value of the "status" field.
-func (_u *UserRoleUpdateOne) ClearStatus() *UserRoleUpdateOne {
-	_u.mutation.ClearStatus()
+// AddUserID adds value to the "user_id" field.
+func (_u *UserRoleUpdateOne) AddUserID(v int32) *UserRoleUpdateOne {
+	_u.mutation.AddUserID(v)
 	return _u
 }
 
-// SetIsPrimary sets the "is_primary" field.
-func (_u *UserRoleUpdateOne) SetIsPrimary(v bool) *UserRoleUpdateOne {
-	_u.mutation.SetIsPrimary(v)
+// SetRoleID sets the "role_id" field.
+func (_u *UserRoleUpdateOne) SetRoleID(v uint32) *UserRoleUpdateOne {
+	_u.mutation.ResetRoleID()
+	_u.mutation.SetRoleID(v)
 	return _u
 }
 
-// SetNillableIsPrimary sets the "is_primary" field if the given value is not nil.
-func (_u *UserRoleUpdateOne) SetNillableIsPrimary(v *bool) *UserRoleUpdateOne {
+// SetNillableRoleID sets the "role_id" field if the given value is not nil.
+func (_u *UserRoleUpdateOne) SetNillableRoleID(v *uint32) *UserRoleUpdateOne {
 	if v != nil {
-		_u.SetIsPrimary(*v)
+		_u.SetRoleID(*v)
 	}
 	return _u
 }
 
-// ClearIsPrimary clears the value of the "is_primary" field.
-func (_u *UserRoleUpdateOne) ClearIsPrimary() *UserRoleUpdateOne {
-	_u.mutation.ClearIsPrimary()
+// AddRoleID adds value to the "role_id" field.
+func (_u *UserRoleUpdateOne) AddRoleID(v int32) *UserRoleUpdateOne {
+	_u.mutation.AddRoleID(v)
 	return _u
 }
 
@@ -654,57 +682,78 @@ func (_u *UserRoleUpdateOne) ClearEndAt() *UserRoleUpdateOne {
 	return _u
 }
 
-// SetUserID sets the "user_id" field.
-func (_u *UserRoleUpdateOne) SetUserID(v uint32) *UserRoleUpdateOne {
-	_u.mutation.ResetUserID()
-	_u.mutation.SetUserID(v)
+// SetAssignedAt sets the "assigned_at" field.
+func (_u *UserRoleUpdateOne) SetAssignedAt(v time.Time) *UserRoleUpdateOne {
+	_u.mutation.SetAssignedAt(v)
 	return _u
 }
 
-// SetNillableUserID sets the "user_id" field if the given value is not nil.
-func (_u *UserRoleUpdateOne) SetNillableUserID(v *uint32) *UserRoleUpdateOne {
+// SetNillableAssignedAt sets the "assigned_at" field if the given value is not nil.
+func (_u *UserRoleUpdateOne) SetNillableAssignedAt(v *time.Time) *UserRoleUpdateOne {
 	if v != nil {
-		_u.SetUserID(*v)
+		_u.SetAssignedAt(*v)
 	}
 	return _u
 }
 
-// AddUserID adds value to the "user_id" field.
-func (_u *UserRoleUpdateOne) AddUserID(v int32) *UserRoleUpdateOne {
-	_u.mutation.AddUserID(v)
+// ClearAssignedAt clears the value of the "assigned_at" field.
+func (_u *UserRoleUpdateOne) ClearAssignedAt() *UserRoleUpdateOne {
+	_u.mutation.ClearAssignedAt()
 	return _u
 }
 
-// ClearUserID clears the value of the "user_id" field.
-func (_u *UserRoleUpdateOne) ClearUserID() *UserRoleUpdateOne {
-	_u.mutation.ClearUserID()
+// SetAssignedBy sets the "assigned_by" field.
+func (_u *UserRoleUpdateOne) SetAssignedBy(v uint32) *UserRoleUpdateOne {
+	_u.mutation.ResetAssignedBy()
+	_u.mutation.SetAssignedBy(v)
 	return _u
 }
 
-// SetRoleID sets the "role_id" field.
-func (_u *UserRoleUpdateOne) SetRoleID(v uint32) *UserRoleUpdateOne {
-	_u.mutation.ResetRoleID()
-	_u.mutation.SetRoleID(v)
-	return _u
-}
-
-// SetNillableRoleID sets the "role_id" field if the given value is not nil.
-func (_u *UserRoleUpdateOne) SetNillableRoleID(v *uint32) *UserRoleUpdateOne {
+// SetNillableAssignedBy sets the "assigned_by" field if the given value is not nil.
+func (_u *UserRoleUpdateOne) SetNillableAssignedBy(v *uint32) *UserRoleUpdateOne {
 	if v != nil {
-		_u.SetRoleID(*v)
+		_u.SetAssignedBy(*v)
 	}
 	return _u
 }
 
-// AddRoleID adds value to the "role_id" field.
-func (_u *UserRoleUpdateOne) AddRoleID(v int32) *UserRoleUpdateOne {
-	_u.mutation.AddRoleID(v)
+// AddAssignedBy adds value to the "assigned_by" field.
+func (_u *UserRoleUpdateOne) AddAssignedBy(v int32) *UserRoleUpdateOne {
+	_u.mutation.AddAssignedBy(v)
 	return _u
 }
 
-// ClearRoleID clears the value of the "role_id" field.
-func (_u *UserRoleUpdateOne) ClearRoleID() *UserRoleUpdateOne {
-	_u.mutation.ClearRoleID()
+// ClearAssignedBy clears the value of the "assigned_by" field.
+func (_u *UserRoleUpdateOne) ClearAssignedBy() *UserRoleUpdateOne {
+	_u.mutation.ClearAssignedBy()
+	return _u
+}
+
+// SetIsPrimary sets the "is_primary" field.
+func (_u *UserRoleUpdateOne) SetIsPrimary(v bool) *UserRoleUpdateOne {
+	_u.mutation.SetIsPrimary(v)
+	return _u
+}
+
+// SetNillableIsPrimary sets the "is_primary" field if the given value is not nil.
+func (_u *UserRoleUpdateOne) SetNillableIsPrimary(v *bool) *UserRoleUpdateOne {
+	if v != nil {
+		_u.SetIsPrimary(*v)
+	}
+	return _u
+}
+
+// SetStatus sets the "status" field.
+func (_u *UserRoleUpdateOne) SetStatus(v userrole.Status) *UserRoleUpdateOne {
+	_u.mutation.SetStatus(v)
+	return _u
+}
+
+// SetNillableStatus sets the "status" field if the given value is not nil.
+func (_u *UserRoleUpdateOne) SetNillableStatus(v *userrole.Status) *UserRoleUpdateOne {
+	if v != nil {
+		_u.SetStatus(*v)
+	}
 	return _u
 }
 
@@ -813,9 +862,6 @@ func (_u *UserRoleUpdateOne) sqlSave(ctx context.Context) (_node *UserRole, err 
 	if _u.mutation.DeletedAtCleared() {
 		_spec.ClearField(userrole.FieldDeletedAt, field.TypeTime)
 	}
-	if _u.mutation.TenantIDCleared() {
-		_spec.ClearField(userrole.FieldTenantID, field.TypeUint32)
-	}
 	if value, ok := _u.mutation.CreatedBy(); ok {
 		_spec.SetField(userrole.FieldCreatedBy, field.TypeUint32, value)
 	}
@@ -843,17 +889,20 @@ func (_u *UserRoleUpdateOne) sqlSave(ctx context.Context) (_node *UserRole, err 
 	if _u.mutation.DeletedByCleared() {
 		_spec.ClearField(userrole.FieldDeletedBy, field.TypeUint32)
 	}
-	if value, ok := _u.mutation.Status(); ok {
-		_spec.SetField(userrole.FieldStatus, field.TypeEnum, value)
+	if _u.mutation.TenantIDCleared() {
+		_spec.ClearField(userrole.FieldTenantID, field.TypeUint32)
 	}
-	if _u.mutation.StatusCleared() {
-		_spec.ClearField(userrole.FieldStatus, field.TypeEnum)
+	if value, ok := _u.mutation.UserID(); ok {
+		_spec.SetField(userrole.FieldUserID, field.TypeUint32, value)
 	}
-	if value, ok := _u.mutation.IsPrimary(); ok {
-		_spec.SetField(userrole.FieldIsPrimary, field.TypeBool, value)
+	if value, ok := _u.mutation.AddedUserID(); ok {
+		_spec.AddField(userrole.FieldUserID, field.TypeUint32, value)
 	}
-	if _u.mutation.IsPrimaryCleared() {
-		_spec.ClearField(userrole.FieldIsPrimary, field.TypeBool)
+	if value, ok := _u.mutation.RoleID(); ok {
+		_spec.SetField(userrole.FieldRoleID, field.TypeUint32, value)
+	}
+	if value, ok := _u.mutation.AddedRoleID(); ok {
+		_spec.AddField(userrole.FieldRoleID, field.TypeUint32, value)
 	}
 	if value, ok := _u.mutation.StartAt(); ok {
 		_spec.SetField(userrole.FieldStartAt, field.TypeTime, value)
@@ -867,23 +916,26 @@ func (_u *UserRoleUpdateOne) sqlSave(ctx context.Context) (_node *UserRole, err 
 	if _u.mutation.EndAtCleared() {
 		_spec.ClearField(userrole.FieldEndAt, field.TypeTime)
 	}
-	if value, ok := _u.mutation.UserID(); ok {
-		_spec.SetField(userrole.FieldUserID, field.TypeUint32, value)
+	if value, ok := _u.mutation.AssignedAt(); ok {
+		_spec.SetField(userrole.FieldAssignedAt, field.TypeTime, value)
 	}
-	if value, ok := _u.mutation.AddedUserID(); ok {
-		_spec.AddField(userrole.FieldUserID, field.TypeUint32, value)
+	if _u.mutation.AssignedAtCleared() {
+		_spec.ClearField(userrole.FieldAssignedAt, field.TypeTime)
 	}
-	if _u.mutation.UserIDCleared() {
-		_spec.ClearField(userrole.FieldUserID, field.TypeUint32)
+	if value, ok := _u.mutation.AssignedBy(); ok {
+		_spec.SetField(userrole.FieldAssignedBy, field.TypeUint32, value)
 	}
-	if value, ok := _u.mutation.RoleID(); ok {
-		_spec.SetField(userrole.FieldRoleID, field.TypeUint32, value)
+	if value, ok := _u.mutation.AddedAssignedBy(); ok {
+		_spec.AddField(userrole.FieldAssignedBy, field.TypeUint32, value)
 	}
-	if value, ok := _u.mutation.AddedRoleID(); ok {
-		_spec.AddField(userrole.FieldRoleID, field.TypeUint32, value)
+	if _u.mutation.AssignedByCleared() {
+		_spec.ClearField(userrole.FieldAssignedBy, field.TypeUint32)
 	}
-	if _u.mutation.RoleIDCleared() {
-		_spec.ClearField(userrole.FieldRoleID, field.TypeUint32)
+	if value, ok := _u.mutation.IsPrimary(); ok {
+		_spec.SetField(userrole.FieldIsPrimary, field.TypeBool, value)
+	}
+	if value, ok := _u.mutation.Status(); ok {
+		_spec.SetField(userrole.FieldStatus, field.TypeEnum, value)
 	}
 	_spec.AddModifiers(_u.modifiers...)
 	_node = &UserRole{config: _u.config}

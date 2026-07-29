@@ -64,45 +64,57 @@ func (_c *PermissionMenuCreate) SetNillableDeletedAt(v *time.Time) *PermissionMe
 	return _c
 }
 
+// SetCreatedBy sets the "created_by" field.
+func (_c *PermissionMenuCreate) SetCreatedBy(v uint32) *PermissionMenuCreate {
+	_c.mutation.SetCreatedBy(v)
+	return _c
+}
+
+// SetNillableCreatedBy sets the "created_by" field if the given value is not nil.
+func (_c *PermissionMenuCreate) SetNillableCreatedBy(v *uint32) *PermissionMenuCreate {
+	if v != nil {
+		_c.SetCreatedBy(*v)
+	}
+	return _c
+}
+
+// SetUpdatedBy sets the "updated_by" field.
+func (_c *PermissionMenuCreate) SetUpdatedBy(v uint32) *PermissionMenuCreate {
+	_c.mutation.SetUpdatedBy(v)
+	return _c
+}
+
+// SetNillableUpdatedBy sets the "updated_by" field if the given value is not nil.
+func (_c *PermissionMenuCreate) SetNillableUpdatedBy(v *uint32) *PermissionMenuCreate {
+	if v != nil {
+		_c.SetUpdatedBy(*v)
+	}
+	return _c
+}
+
+// SetDeletedBy sets the "deleted_by" field.
+func (_c *PermissionMenuCreate) SetDeletedBy(v uint32) *PermissionMenuCreate {
+	_c.mutation.SetDeletedBy(v)
+	return _c
+}
+
+// SetNillableDeletedBy sets the "deleted_by" field if the given value is not nil.
+func (_c *PermissionMenuCreate) SetNillableDeletedBy(v *uint32) *PermissionMenuCreate {
+	if v != nil {
+		_c.SetDeletedBy(*v)
+	}
+	return _c
+}
+
 // SetPermissionID sets the "permission_id" field.
 func (_c *PermissionMenuCreate) SetPermissionID(v uint32) *PermissionMenuCreate {
 	_c.mutation.SetPermissionID(v)
 	return _c
 }
 
-// SetNillablePermissionID sets the "permission_id" field if the given value is not nil.
-func (_c *PermissionMenuCreate) SetNillablePermissionID(v *uint32) *PermissionMenuCreate {
-	if v != nil {
-		_c.SetPermissionID(*v)
-	}
-	return _c
-}
-
 // SetMenuID sets the "menu_id" field.
 func (_c *PermissionMenuCreate) SetMenuID(v uint32) *PermissionMenuCreate {
 	_c.mutation.SetMenuID(v)
-	return _c
-}
-
-// SetNillableMenuID sets the "menu_id" field if the given value is not nil.
-func (_c *PermissionMenuCreate) SetNillableMenuID(v *uint32) *PermissionMenuCreate {
-	if v != nil {
-		_c.SetMenuID(*v)
-	}
-	return _c
-}
-
-// SetTargetID sets the "target_id" field.
-func (_c *PermissionMenuCreate) SetTargetID(v uint32) *PermissionMenuCreate {
-	_c.mutation.SetTargetID(v)
-	return _c
-}
-
-// SetNillableTargetID sets the "target_id" field if the given value is not nil.
-func (_c *PermissionMenuCreate) SetNillableTargetID(v *uint32) *PermissionMenuCreate {
-	if v != nil {
-		_c.SetTargetID(*v)
-	}
 	return _c
 }
 
@@ -146,6 +158,12 @@ func (_c *PermissionMenuCreate) ExecX(ctx context.Context) {
 
 // check runs all checks and user-defined validators on the builder.
 func (_c *PermissionMenuCreate) check() error {
+	if _, ok := _c.mutation.PermissionID(); !ok {
+		return &ValidationError{Name: "permission_id", err: errors.New(`ent: missing required field "PermissionMenu.permission_id"`)}
+	}
+	if _, ok := _c.mutation.MenuID(); !ok {
+		return &ValidationError{Name: "menu_id", err: errors.New(`ent: missing required field "PermissionMenu.menu_id"`)}
+	}
 	if v, ok := _c.mutation.ID(); ok {
 		if err := permissionmenu.IDValidator(v); err != nil {
 			return &ValidationError{Name: "id", err: fmt.Errorf(`ent: validator failed for field "PermissionMenu.id": %w`, err)}
@@ -196,6 +214,18 @@ func (_c *PermissionMenuCreate) createSpec() (*PermissionMenu, *sqlgraph.CreateS
 		_spec.SetField(permissionmenu.FieldDeletedAt, field.TypeTime, value)
 		_node.DeletedAt = &value
 	}
+	if value, ok := _c.mutation.CreatedBy(); ok {
+		_spec.SetField(permissionmenu.FieldCreatedBy, field.TypeUint32, value)
+		_node.CreatedBy = &value
+	}
+	if value, ok := _c.mutation.UpdatedBy(); ok {
+		_spec.SetField(permissionmenu.FieldUpdatedBy, field.TypeUint32, value)
+		_node.UpdatedBy = &value
+	}
+	if value, ok := _c.mutation.DeletedBy(); ok {
+		_spec.SetField(permissionmenu.FieldDeletedBy, field.TypeUint32, value)
+		_node.DeletedBy = &value
+	}
 	if value, ok := _c.mutation.PermissionID(); ok {
 		_spec.SetField(permissionmenu.FieldPermissionID, field.TypeUint32, value)
 		_node.PermissionID = &value
@@ -203,10 +233,6 @@ func (_c *PermissionMenuCreate) createSpec() (*PermissionMenu, *sqlgraph.CreateS
 	if value, ok := _c.mutation.MenuID(); ok {
 		_spec.SetField(permissionmenu.FieldMenuID, field.TypeUint32, value)
 		_node.MenuID = &value
-	}
-	if value, ok := _c.mutation.TargetID(); ok {
-		_spec.SetField(permissionmenu.FieldTargetID, field.TypeUint32, value)
-		_node.TargetID = &value
 	}
 	return _node, _spec
 }
@@ -296,6 +322,78 @@ func (u *PermissionMenuUpsert) ClearDeletedAt() *PermissionMenuUpsert {
 	return u
 }
 
+// SetCreatedBy sets the "created_by" field.
+func (u *PermissionMenuUpsert) SetCreatedBy(v uint32) *PermissionMenuUpsert {
+	u.Set(permissionmenu.FieldCreatedBy, v)
+	return u
+}
+
+// UpdateCreatedBy sets the "created_by" field to the value that was provided on create.
+func (u *PermissionMenuUpsert) UpdateCreatedBy() *PermissionMenuUpsert {
+	u.SetExcluded(permissionmenu.FieldCreatedBy)
+	return u
+}
+
+// AddCreatedBy adds v to the "created_by" field.
+func (u *PermissionMenuUpsert) AddCreatedBy(v uint32) *PermissionMenuUpsert {
+	u.Add(permissionmenu.FieldCreatedBy, v)
+	return u
+}
+
+// ClearCreatedBy clears the value of the "created_by" field.
+func (u *PermissionMenuUpsert) ClearCreatedBy() *PermissionMenuUpsert {
+	u.SetNull(permissionmenu.FieldCreatedBy)
+	return u
+}
+
+// SetUpdatedBy sets the "updated_by" field.
+func (u *PermissionMenuUpsert) SetUpdatedBy(v uint32) *PermissionMenuUpsert {
+	u.Set(permissionmenu.FieldUpdatedBy, v)
+	return u
+}
+
+// UpdateUpdatedBy sets the "updated_by" field to the value that was provided on create.
+func (u *PermissionMenuUpsert) UpdateUpdatedBy() *PermissionMenuUpsert {
+	u.SetExcluded(permissionmenu.FieldUpdatedBy)
+	return u
+}
+
+// AddUpdatedBy adds v to the "updated_by" field.
+func (u *PermissionMenuUpsert) AddUpdatedBy(v uint32) *PermissionMenuUpsert {
+	u.Add(permissionmenu.FieldUpdatedBy, v)
+	return u
+}
+
+// ClearUpdatedBy clears the value of the "updated_by" field.
+func (u *PermissionMenuUpsert) ClearUpdatedBy() *PermissionMenuUpsert {
+	u.SetNull(permissionmenu.FieldUpdatedBy)
+	return u
+}
+
+// SetDeletedBy sets the "deleted_by" field.
+func (u *PermissionMenuUpsert) SetDeletedBy(v uint32) *PermissionMenuUpsert {
+	u.Set(permissionmenu.FieldDeletedBy, v)
+	return u
+}
+
+// UpdateDeletedBy sets the "deleted_by" field to the value that was provided on create.
+func (u *PermissionMenuUpsert) UpdateDeletedBy() *PermissionMenuUpsert {
+	u.SetExcluded(permissionmenu.FieldDeletedBy)
+	return u
+}
+
+// AddDeletedBy adds v to the "deleted_by" field.
+func (u *PermissionMenuUpsert) AddDeletedBy(v uint32) *PermissionMenuUpsert {
+	u.Add(permissionmenu.FieldDeletedBy, v)
+	return u
+}
+
+// ClearDeletedBy clears the value of the "deleted_by" field.
+func (u *PermissionMenuUpsert) ClearDeletedBy() *PermissionMenuUpsert {
+	u.SetNull(permissionmenu.FieldDeletedBy)
+	return u
+}
+
 // SetPermissionID sets the "permission_id" field.
 func (u *PermissionMenuUpsert) SetPermissionID(v uint32) *PermissionMenuUpsert {
 	u.Set(permissionmenu.FieldPermissionID, v)
@@ -314,12 +412,6 @@ func (u *PermissionMenuUpsert) AddPermissionID(v uint32) *PermissionMenuUpsert {
 	return u
 }
 
-// ClearPermissionID clears the value of the "permission_id" field.
-func (u *PermissionMenuUpsert) ClearPermissionID() *PermissionMenuUpsert {
-	u.SetNull(permissionmenu.FieldPermissionID)
-	return u
-}
-
 // SetMenuID sets the "menu_id" field.
 func (u *PermissionMenuUpsert) SetMenuID(v uint32) *PermissionMenuUpsert {
 	u.Set(permissionmenu.FieldMenuID, v)
@@ -335,36 +427,6 @@ func (u *PermissionMenuUpsert) UpdateMenuID() *PermissionMenuUpsert {
 // AddMenuID adds v to the "menu_id" field.
 func (u *PermissionMenuUpsert) AddMenuID(v uint32) *PermissionMenuUpsert {
 	u.Add(permissionmenu.FieldMenuID, v)
-	return u
-}
-
-// ClearMenuID clears the value of the "menu_id" field.
-func (u *PermissionMenuUpsert) ClearMenuID() *PermissionMenuUpsert {
-	u.SetNull(permissionmenu.FieldMenuID)
-	return u
-}
-
-// SetTargetID sets the "target_id" field.
-func (u *PermissionMenuUpsert) SetTargetID(v uint32) *PermissionMenuUpsert {
-	u.Set(permissionmenu.FieldTargetID, v)
-	return u
-}
-
-// UpdateTargetID sets the "target_id" field to the value that was provided on create.
-func (u *PermissionMenuUpsert) UpdateTargetID() *PermissionMenuUpsert {
-	u.SetExcluded(permissionmenu.FieldTargetID)
-	return u
-}
-
-// AddTargetID adds v to the "target_id" field.
-func (u *PermissionMenuUpsert) AddTargetID(v uint32) *PermissionMenuUpsert {
-	u.Add(permissionmenu.FieldTargetID, v)
-	return u
-}
-
-// ClearTargetID clears the value of the "target_id" field.
-func (u *PermissionMenuUpsert) ClearTargetID() *PermissionMenuUpsert {
-	u.SetNull(permissionmenu.FieldTargetID)
 	return u
 }
 
@@ -461,6 +523,90 @@ func (u *PermissionMenuUpsertOne) ClearDeletedAt() *PermissionMenuUpsertOne {
 	})
 }
 
+// SetCreatedBy sets the "created_by" field.
+func (u *PermissionMenuUpsertOne) SetCreatedBy(v uint32) *PermissionMenuUpsertOne {
+	return u.Update(func(s *PermissionMenuUpsert) {
+		s.SetCreatedBy(v)
+	})
+}
+
+// AddCreatedBy adds v to the "created_by" field.
+func (u *PermissionMenuUpsertOne) AddCreatedBy(v uint32) *PermissionMenuUpsertOne {
+	return u.Update(func(s *PermissionMenuUpsert) {
+		s.AddCreatedBy(v)
+	})
+}
+
+// UpdateCreatedBy sets the "created_by" field to the value that was provided on create.
+func (u *PermissionMenuUpsertOne) UpdateCreatedBy() *PermissionMenuUpsertOne {
+	return u.Update(func(s *PermissionMenuUpsert) {
+		s.UpdateCreatedBy()
+	})
+}
+
+// ClearCreatedBy clears the value of the "created_by" field.
+func (u *PermissionMenuUpsertOne) ClearCreatedBy() *PermissionMenuUpsertOne {
+	return u.Update(func(s *PermissionMenuUpsert) {
+		s.ClearCreatedBy()
+	})
+}
+
+// SetUpdatedBy sets the "updated_by" field.
+func (u *PermissionMenuUpsertOne) SetUpdatedBy(v uint32) *PermissionMenuUpsertOne {
+	return u.Update(func(s *PermissionMenuUpsert) {
+		s.SetUpdatedBy(v)
+	})
+}
+
+// AddUpdatedBy adds v to the "updated_by" field.
+func (u *PermissionMenuUpsertOne) AddUpdatedBy(v uint32) *PermissionMenuUpsertOne {
+	return u.Update(func(s *PermissionMenuUpsert) {
+		s.AddUpdatedBy(v)
+	})
+}
+
+// UpdateUpdatedBy sets the "updated_by" field to the value that was provided on create.
+func (u *PermissionMenuUpsertOne) UpdateUpdatedBy() *PermissionMenuUpsertOne {
+	return u.Update(func(s *PermissionMenuUpsert) {
+		s.UpdateUpdatedBy()
+	})
+}
+
+// ClearUpdatedBy clears the value of the "updated_by" field.
+func (u *PermissionMenuUpsertOne) ClearUpdatedBy() *PermissionMenuUpsertOne {
+	return u.Update(func(s *PermissionMenuUpsert) {
+		s.ClearUpdatedBy()
+	})
+}
+
+// SetDeletedBy sets the "deleted_by" field.
+func (u *PermissionMenuUpsertOne) SetDeletedBy(v uint32) *PermissionMenuUpsertOne {
+	return u.Update(func(s *PermissionMenuUpsert) {
+		s.SetDeletedBy(v)
+	})
+}
+
+// AddDeletedBy adds v to the "deleted_by" field.
+func (u *PermissionMenuUpsertOne) AddDeletedBy(v uint32) *PermissionMenuUpsertOne {
+	return u.Update(func(s *PermissionMenuUpsert) {
+		s.AddDeletedBy(v)
+	})
+}
+
+// UpdateDeletedBy sets the "deleted_by" field to the value that was provided on create.
+func (u *PermissionMenuUpsertOne) UpdateDeletedBy() *PermissionMenuUpsertOne {
+	return u.Update(func(s *PermissionMenuUpsert) {
+		s.UpdateDeletedBy()
+	})
+}
+
+// ClearDeletedBy clears the value of the "deleted_by" field.
+func (u *PermissionMenuUpsertOne) ClearDeletedBy() *PermissionMenuUpsertOne {
+	return u.Update(func(s *PermissionMenuUpsert) {
+		s.ClearDeletedBy()
+	})
+}
+
 // SetPermissionID sets the "permission_id" field.
 func (u *PermissionMenuUpsertOne) SetPermissionID(v uint32) *PermissionMenuUpsertOne {
 	return u.Update(func(s *PermissionMenuUpsert) {
@@ -482,13 +628,6 @@ func (u *PermissionMenuUpsertOne) UpdatePermissionID() *PermissionMenuUpsertOne 
 	})
 }
 
-// ClearPermissionID clears the value of the "permission_id" field.
-func (u *PermissionMenuUpsertOne) ClearPermissionID() *PermissionMenuUpsertOne {
-	return u.Update(func(s *PermissionMenuUpsert) {
-		s.ClearPermissionID()
-	})
-}
-
 // SetMenuID sets the "menu_id" field.
 func (u *PermissionMenuUpsertOne) SetMenuID(v uint32) *PermissionMenuUpsertOne {
 	return u.Update(func(s *PermissionMenuUpsert) {
@@ -507,41 +646,6 @@ func (u *PermissionMenuUpsertOne) AddMenuID(v uint32) *PermissionMenuUpsertOne {
 func (u *PermissionMenuUpsertOne) UpdateMenuID() *PermissionMenuUpsertOne {
 	return u.Update(func(s *PermissionMenuUpsert) {
 		s.UpdateMenuID()
-	})
-}
-
-// ClearMenuID clears the value of the "menu_id" field.
-func (u *PermissionMenuUpsertOne) ClearMenuID() *PermissionMenuUpsertOne {
-	return u.Update(func(s *PermissionMenuUpsert) {
-		s.ClearMenuID()
-	})
-}
-
-// SetTargetID sets the "target_id" field.
-func (u *PermissionMenuUpsertOne) SetTargetID(v uint32) *PermissionMenuUpsertOne {
-	return u.Update(func(s *PermissionMenuUpsert) {
-		s.SetTargetID(v)
-	})
-}
-
-// AddTargetID adds v to the "target_id" field.
-func (u *PermissionMenuUpsertOne) AddTargetID(v uint32) *PermissionMenuUpsertOne {
-	return u.Update(func(s *PermissionMenuUpsert) {
-		s.AddTargetID(v)
-	})
-}
-
-// UpdateTargetID sets the "target_id" field to the value that was provided on create.
-func (u *PermissionMenuUpsertOne) UpdateTargetID() *PermissionMenuUpsertOne {
-	return u.Update(func(s *PermissionMenuUpsert) {
-		s.UpdateTargetID()
-	})
-}
-
-// ClearTargetID clears the value of the "target_id" field.
-func (u *PermissionMenuUpsertOne) ClearTargetID() *PermissionMenuUpsertOne {
-	return u.Update(func(s *PermissionMenuUpsert) {
-		s.ClearTargetID()
 	})
 }
 
@@ -803,6 +907,90 @@ func (u *PermissionMenuUpsertBulk) ClearDeletedAt() *PermissionMenuUpsertBulk {
 	})
 }
 
+// SetCreatedBy sets the "created_by" field.
+func (u *PermissionMenuUpsertBulk) SetCreatedBy(v uint32) *PermissionMenuUpsertBulk {
+	return u.Update(func(s *PermissionMenuUpsert) {
+		s.SetCreatedBy(v)
+	})
+}
+
+// AddCreatedBy adds v to the "created_by" field.
+func (u *PermissionMenuUpsertBulk) AddCreatedBy(v uint32) *PermissionMenuUpsertBulk {
+	return u.Update(func(s *PermissionMenuUpsert) {
+		s.AddCreatedBy(v)
+	})
+}
+
+// UpdateCreatedBy sets the "created_by" field to the value that was provided on create.
+func (u *PermissionMenuUpsertBulk) UpdateCreatedBy() *PermissionMenuUpsertBulk {
+	return u.Update(func(s *PermissionMenuUpsert) {
+		s.UpdateCreatedBy()
+	})
+}
+
+// ClearCreatedBy clears the value of the "created_by" field.
+func (u *PermissionMenuUpsertBulk) ClearCreatedBy() *PermissionMenuUpsertBulk {
+	return u.Update(func(s *PermissionMenuUpsert) {
+		s.ClearCreatedBy()
+	})
+}
+
+// SetUpdatedBy sets the "updated_by" field.
+func (u *PermissionMenuUpsertBulk) SetUpdatedBy(v uint32) *PermissionMenuUpsertBulk {
+	return u.Update(func(s *PermissionMenuUpsert) {
+		s.SetUpdatedBy(v)
+	})
+}
+
+// AddUpdatedBy adds v to the "updated_by" field.
+func (u *PermissionMenuUpsertBulk) AddUpdatedBy(v uint32) *PermissionMenuUpsertBulk {
+	return u.Update(func(s *PermissionMenuUpsert) {
+		s.AddUpdatedBy(v)
+	})
+}
+
+// UpdateUpdatedBy sets the "updated_by" field to the value that was provided on create.
+func (u *PermissionMenuUpsertBulk) UpdateUpdatedBy() *PermissionMenuUpsertBulk {
+	return u.Update(func(s *PermissionMenuUpsert) {
+		s.UpdateUpdatedBy()
+	})
+}
+
+// ClearUpdatedBy clears the value of the "updated_by" field.
+func (u *PermissionMenuUpsertBulk) ClearUpdatedBy() *PermissionMenuUpsertBulk {
+	return u.Update(func(s *PermissionMenuUpsert) {
+		s.ClearUpdatedBy()
+	})
+}
+
+// SetDeletedBy sets the "deleted_by" field.
+func (u *PermissionMenuUpsertBulk) SetDeletedBy(v uint32) *PermissionMenuUpsertBulk {
+	return u.Update(func(s *PermissionMenuUpsert) {
+		s.SetDeletedBy(v)
+	})
+}
+
+// AddDeletedBy adds v to the "deleted_by" field.
+func (u *PermissionMenuUpsertBulk) AddDeletedBy(v uint32) *PermissionMenuUpsertBulk {
+	return u.Update(func(s *PermissionMenuUpsert) {
+		s.AddDeletedBy(v)
+	})
+}
+
+// UpdateDeletedBy sets the "deleted_by" field to the value that was provided on create.
+func (u *PermissionMenuUpsertBulk) UpdateDeletedBy() *PermissionMenuUpsertBulk {
+	return u.Update(func(s *PermissionMenuUpsert) {
+		s.UpdateDeletedBy()
+	})
+}
+
+// ClearDeletedBy clears the value of the "deleted_by" field.
+func (u *PermissionMenuUpsertBulk) ClearDeletedBy() *PermissionMenuUpsertBulk {
+	return u.Update(func(s *PermissionMenuUpsert) {
+		s.ClearDeletedBy()
+	})
+}
+
 // SetPermissionID sets the "permission_id" field.
 func (u *PermissionMenuUpsertBulk) SetPermissionID(v uint32) *PermissionMenuUpsertBulk {
 	return u.Update(func(s *PermissionMenuUpsert) {
@@ -824,13 +1012,6 @@ func (u *PermissionMenuUpsertBulk) UpdatePermissionID() *PermissionMenuUpsertBul
 	})
 }
 
-// ClearPermissionID clears the value of the "permission_id" field.
-func (u *PermissionMenuUpsertBulk) ClearPermissionID() *PermissionMenuUpsertBulk {
-	return u.Update(func(s *PermissionMenuUpsert) {
-		s.ClearPermissionID()
-	})
-}
-
 // SetMenuID sets the "menu_id" field.
 func (u *PermissionMenuUpsertBulk) SetMenuID(v uint32) *PermissionMenuUpsertBulk {
 	return u.Update(func(s *PermissionMenuUpsert) {
@@ -849,41 +1030,6 @@ func (u *PermissionMenuUpsertBulk) AddMenuID(v uint32) *PermissionMenuUpsertBulk
 func (u *PermissionMenuUpsertBulk) UpdateMenuID() *PermissionMenuUpsertBulk {
 	return u.Update(func(s *PermissionMenuUpsert) {
 		s.UpdateMenuID()
-	})
-}
-
-// ClearMenuID clears the value of the "menu_id" field.
-func (u *PermissionMenuUpsertBulk) ClearMenuID() *PermissionMenuUpsertBulk {
-	return u.Update(func(s *PermissionMenuUpsert) {
-		s.ClearMenuID()
-	})
-}
-
-// SetTargetID sets the "target_id" field.
-func (u *PermissionMenuUpsertBulk) SetTargetID(v uint32) *PermissionMenuUpsertBulk {
-	return u.Update(func(s *PermissionMenuUpsert) {
-		s.SetTargetID(v)
-	})
-}
-
-// AddTargetID adds v to the "target_id" field.
-func (u *PermissionMenuUpsertBulk) AddTargetID(v uint32) *PermissionMenuUpsertBulk {
-	return u.Update(func(s *PermissionMenuUpsert) {
-		s.AddTargetID(v)
-	})
-}
-
-// UpdateTargetID sets the "target_id" field to the value that was provided on create.
-func (u *PermissionMenuUpsertBulk) UpdateTargetID() *PermissionMenuUpsertBulk {
-	return u.Update(func(s *PermissionMenuUpsert) {
-		s.UpdateTargetID()
-	})
-}
-
-// ClearTargetID clears the value of the "target_id" field.
-func (u *PermissionMenuUpsertBulk) ClearTargetID() *PermissionMenuUpsertBulk {
-	return u.Update(func(s *PermissionMenuUpsert) {
-		s.ClearTargetID()
 	})
 }
 

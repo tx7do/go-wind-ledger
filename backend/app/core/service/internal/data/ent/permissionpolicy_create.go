@@ -64,30 +64,134 @@ func (_c *PermissionPolicyCreate) SetNillableDeletedAt(v *time.Time) *Permission
 	return _c
 }
 
+// SetCreatedBy sets the "created_by" field.
+func (_c *PermissionPolicyCreate) SetCreatedBy(v uint32) *PermissionPolicyCreate {
+	_c.mutation.SetCreatedBy(v)
+	return _c
+}
+
+// SetNillableCreatedBy sets the "created_by" field if the given value is not nil.
+func (_c *PermissionPolicyCreate) SetNillableCreatedBy(v *uint32) *PermissionPolicyCreate {
+	if v != nil {
+		_c.SetCreatedBy(*v)
+	}
+	return _c
+}
+
+// SetUpdatedBy sets the "updated_by" field.
+func (_c *PermissionPolicyCreate) SetUpdatedBy(v uint32) *PermissionPolicyCreate {
+	_c.mutation.SetUpdatedBy(v)
+	return _c
+}
+
+// SetNillableUpdatedBy sets the "updated_by" field if the given value is not nil.
+func (_c *PermissionPolicyCreate) SetNillableUpdatedBy(v *uint32) *PermissionPolicyCreate {
+	if v != nil {
+		_c.SetUpdatedBy(*v)
+	}
+	return _c
+}
+
+// SetDeletedBy sets the "deleted_by" field.
+func (_c *PermissionPolicyCreate) SetDeletedBy(v uint32) *PermissionPolicyCreate {
+	_c.mutation.SetDeletedBy(v)
+	return _c
+}
+
+// SetNillableDeletedBy sets the "deleted_by" field if the given value is not nil.
+func (_c *PermissionPolicyCreate) SetNillableDeletedBy(v *uint32) *PermissionPolicyCreate {
+	if v != nil {
+		_c.SetDeletedBy(*v)
+	}
+	return _c
+}
+
+// SetStatus sets the "status" field.
+func (_c *PermissionPolicyCreate) SetStatus(v permissionpolicy.Status) *PermissionPolicyCreate {
+	_c.mutation.SetStatus(v)
+	return _c
+}
+
+// SetNillableStatus sets the "status" field if the given value is not nil.
+func (_c *PermissionPolicyCreate) SetNillableStatus(v *permissionpolicy.Status) *PermissionPolicyCreate {
+	if v != nil {
+		_c.SetStatus(*v)
+	}
+	return _c
+}
+
 // SetPermissionID sets the "permission_id" field.
 func (_c *PermissionPolicyCreate) SetPermissionID(v uint32) *PermissionPolicyCreate {
 	_c.mutation.SetPermissionID(v)
 	return _c
 }
 
-// SetNillablePermissionID sets the "permission_id" field if the given value is not nil.
-func (_c *PermissionPolicyCreate) SetNillablePermissionID(v *uint32) *PermissionPolicyCreate {
+// SetPolicyEngine sets the "policy_engine" field.
+func (_c *PermissionPolicyCreate) SetPolicyEngine(v permissionpolicy.PolicyEngine) *PermissionPolicyCreate {
+	_c.mutation.SetPolicyEngine(v)
+	return _c
+}
+
+// SetNillablePolicyEngine sets the "policy_engine" field if the given value is not nil.
+func (_c *PermissionPolicyCreate) SetNillablePolicyEngine(v *permissionpolicy.PolicyEngine) *PermissionPolicyCreate {
 	if v != nil {
-		_c.SetPermissionID(*v)
+		_c.SetPolicyEngine(*v)
 	}
 	return _c
 }
 
-// SetTargetID sets the "target_id" field.
-func (_c *PermissionPolicyCreate) SetTargetID(v uint32) *PermissionPolicyCreate {
-	_c.mutation.SetTargetID(v)
+// SetDefinition sets the "definition" field.
+func (_c *PermissionPolicyCreate) SetDefinition(v string) *PermissionPolicyCreate {
+	_c.mutation.SetDefinition(v)
 	return _c
 }
 
-// SetNillableTargetID sets the "target_id" field if the given value is not nil.
-func (_c *PermissionPolicyCreate) SetNillableTargetID(v *uint32) *PermissionPolicyCreate {
+// SetNillableDefinition sets the "definition" field if the given value is not nil.
+func (_c *PermissionPolicyCreate) SetNillableDefinition(v *string) *PermissionPolicyCreate {
 	if v != nil {
-		_c.SetTargetID(*v)
+		_c.SetDefinition(*v)
+	}
+	return _c
+}
+
+// SetVersion sets the "version" field.
+func (_c *PermissionPolicyCreate) SetVersion(v uint32) *PermissionPolicyCreate {
+	_c.mutation.SetVersion(v)
+	return _c
+}
+
+// SetNillableVersion sets the "version" field if the given value is not nil.
+func (_c *PermissionPolicyCreate) SetNillableVersion(v *uint32) *PermissionPolicyCreate {
+	if v != nil {
+		_c.SetVersion(*v)
+	}
+	return _c
+}
+
+// SetEvalOrder sets the "eval_order" field.
+func (_c *PermissionPolicyCreate) SetEvalOrder(v uint32) *PermissionPolicyCreate {
+	_c.mutation.SetEvalOrder(v)
+	return _c
+}
+
+// SetNillableEvalOrder sets the "eval_order" field if the given value is not nil.
+func (_c *PermissionPolicyCreate) SetNillableEvalOrder(v *uint32) *PermissionPolicyCreate {
+	if v != nil {
+		_c.SetEvalOrder(*v)
+	}
+	return _c
+}
+
+// SetCacheTTL sets the "cache_ttl" field.
+func (_c *PermissionPolicyCreate) SetCacheTTL(v uint32) *PermissionPolicyCreate {
+	_c.mutation.SetCacheTTL(v)
+	return _c
+}
+
+// SetNillableCacheTTL sets the "cache_ttl" field if the given value is not nil.
+func (_c *PermissionPolicyCreate) SetNillableCacheTTL(v *uint32) *PermissionPolicyCreate {
+	if v != nil {
+		_c.SetCacheTTL(*v)
 	}
 	return _c
 }
@@ -105,6 +209,7 @@ func (_c *PermissionPolicyCreate) Mutation() *PermissionPolicyMutation {
 
 // Save creates the PermissionPolicy in the database.
 func (_c *PermissionPolicyCreate) Save(ctx context.Context) (*PermissionPolicy, error) {
+	_c.defaults()
 	return withHooks(ctx, _c.sqlSave, _c.mutation, _c.hooks)
 }
 
@@ -130,8 +235,60 @@ func (_c *PermissionPolicyCreate) ExecX(ctx context.Context) {
 	}
 }
 
+// defaults sets the default values of the builder before save.
+func (_c *PermissionPolicyCreate) defaults() {
+	if _, ok := _c.mutation.Status(); !ok {
+		v := permissionpolicy.DefaultStatus
+		_c.mutation.SetStatus(v)
+	}
+	if _, ok := _c.mutation.PolicyEngine(); !ok {
+		v := permissionpolicy.DefaultPolicyEngine
+		_c.mutation.SetPolicyEngine(v)
+	}
+	if _, ok := _c.mutation.Version(); !ok {
+		v := permissionpolicy.DefaultVersion
+		_c.mutation.SetVersion(v)
+	}
+	if _, ok := _c.mutation.EvalOrder(); !ok {
+		v := permissionpolicy.DefaultEvalOrder
+		_c.mutation.SetEvalOrder(v)
+	}
+	if _, ok := _c.mutation.CacheTTL(); !ok {
+		v := permissionpolicy.DefaultCacheTTL
+		_c.mutation.SetCacheTTL(v)
+	}
+}
+
 // check runs all checks and user-defined validators on the builder.
 func (_c *PermissionPolicyCreate) check() error {
+	if _, ok := _c.mutation.Status(); !ok {
+		return &ValidationError{Name: "status", err: errors.New(`ent: missing required field "PermissionPolicy.status"`)}
+	}
+	if v, ok := _c.mutation.Status(); ok {
+		if err := permissionpolicy.StatusValidator(v); err != nil {
+			return &ValidationError{Name: "status", err: fmt.Errorf(`ent: validator failed for field "PermissionPolicy.status": %w`, err)}
+		}
+	}
+	if _, ok := _c.mutation.PermissionID(); !ok {
+		return &ValidationError{Name: "permission_id", err: errors.New(`ent: missing required field "PermissionPolicy.permission_id"`)}
+	}
+	if _, ok := _c.mutation.PolicyEngine(); !ok {
+		return &ValidationError{Name: "policy_engine", err: errors.New(`ent: missing required field "PermissionPolicy.policy_engine"`)}
+	}
+	if v, ok := _c.mutation.PolicyEngine(); ok {
+		if err := permissionpolicy.PolicyEngineValidator(v); err != nil {
+			return &ValidationError{Name: "policy_engine", err: fmt.Errorf(`ent: validator failed for field "PermissionPolicy.policy_engine": %w`, err)}
+		}
+	}
+	if _, ok := _c.mutation.Version(); !ok {
+		return &ValidationError{Name: "version", err: errors.New(`ent: missing required field "PermissionPolicy.version"`)}
+	}
+	if _, ok := _c.mutation.EvalOrder(); !ok {
+		return &ValidationError{Name: "eval_order", err: errors.New(`ent: missing required field "PermissionPolicy.eval_order"`)}
+	}
+	if _, ok := _c.mutation.CacheTTL(); !ok {
+		return &ValidationError{Name: "cache_ttl", err: errors.New(`ent: missing required field "PermissionPolicy.cache_ttl"`)}
+	}
 	if v, ok := _c.mutation.ID(); ok {
 		if err := permissionpolicy.IDValidator(v); err != nil {
 			return &ValidationError{Name: "id", err: fmt.Errorf(`ent: validator failed for field "PermissionPolicy.id": %w`, err)}
@@ -182,13 +339,45 @@ func (_c *PermissionPolicyCreate) createSpec() (*PermissionPolicy, *sqlgraph.Cre
 		_spec.SetField(permissionpolicy.FieldDeletedAt, field.TypeTime, value)
 		_node.DeletedAt = &value
 	}
+	if value, ok := _c.mutation.CreatedBy(); ok {
+		_spec.SetField(permissionpolicy.FieldCreatedBy, field.TypeUint32, value)
+		_node.CreatedBy = &value
+	}
+	if value, ok := _c.mutation.UpdatedBy(); ok {
+		_spec.SetField(permissionpolicy.FieldUpdatedBy, field.TypeUint32, value)
+		_node.UpdatedBy = &value
+	}
+	if value, ok := _c.mutation.DeletedBy(); ok {
+		_spec.SetField(permissionpolicy.FieldDeletedBy, field.TypeUint32, value)
+		_node.DeletedBy = &value
+	}
+	if value, ok := _c.mutation.Status(); ok {
+		_spec.SetField(permissionpolicy.FieldStatus, field.TypeEnum, value)
+		_node.Status = &value
+	}
 	if value, ok := _c.mutation.PermissionID(); ok {
 		_spec.SetField(permissionpolicy.FieldPermissionID, field.TypeUint32, value)
 		_node.PermissionID = &value
 	}
-	if value, ok := _c.mutation.TargetID(); ok {
-		_spec.SetField(permissionpolicy.FieldTargetID, field.TypeUint32, value)
-		_node.TargetID = &value
+	if value, ok := _c.mutation.PolicyEngine(); ok {
+		_spec.SetField(permissionpolicy.FieldPolicyEngine, field.TypeEnum, value)
+		_node.PolicyEngine = &value
+	}
+	if value, ok := _c.mutation.Definition(); ok {
+		_spec.SetField(permissionpolicy.FieldDefinition, field.TypeString, value)
+		_node.Definition = &value
+	}
+	if value, ok := _c.mutation.Version(); ok {
+		_spec.SetField(permissionpolicy.FieldVersion, field.TypeUint32, value)
+		_node.Version = &value
+	}
+	if value, ok := _c.mutation.EvalOrder(); ok {
+		_spec.SetField(permissionpolicy.FieldEvalOrder, field.TypeUint32, value)
+		_node.EvalOrder = &value
+	}
+	if value, ok := _c.mutation.CacheTTL(); ok {
+		_spec.SetField(permissionpolicy.FieldCacheTTL, field.TypeUint32, value)
+		_node.CacheTTL = &value
 	}
 	return _node, _spec
 }
@@ -278,6 +467,90 @@ func (u *PermissionPolicyUpsert) ClearDeletedAt() *PermissionPolicyUpsert {
 	return u
 }
 
+// SetCreatedBy sets the "created_by" field.
+func (u *PermissionPolicyUpsert) SetCreatedBy(v uint32) *PermissionPolicyUpsert {
+	u.Set(permissionpolicy.FieldCreatedBy, v)
+	return u
+}
+
+// UpdateCreatedBy sets the "created_by" field to the value that was provided on create.
+func (u *PermissionPolicyUpsert) UpdateCreatedBy() *PermissionPolicyUpsert {
+	u.SetExcluded(permissionpolicy.FieldCreatedBy)
+	return u
+}
+
+// AddCreatedBy adds v to the "created_by" field.
+func (u *PermissionPolicyUpsert) AddCreatedBy(v uint32) *PermissionPolicyUpsert {
+	u.Add(permissionpolicy.FieldCreatedBy, v)
+	return u
+}
+
+// ClearCreatedBy clears the value of the "created_by" field.
+func (u *PermissionPolicyUpsert) ClearCreatedBy() *PermissionPolicyUpsert {
+	u.SetNull(permissionpolicy.FieldCreatedBy)
+	return u
+}
+
+// SetUpdatedBy sets the "updated_by" field.
+func (u *PermissionPolicyUpsert) SetUpdatedBy(v uint32) *PermissionPolicyUpsert {
+	u.Set(permissionpolicy.FieldUpdatedBy, v)
+	return u
+}
+
+// UpdateUpdatedBy sets the "updated_by" field to the value that was provided on create.
+func (u *PermissionPolicyUpsert) UpdateUpdatedBy() *PermissionPolicyUpsert {
+	u.SetExcluded(permissionpolicy.FieldUpdatedBy)
+	return u
+}
+
+// AddUpdatedBy adds v to the "updated_by" field.
+func (u *PermissionPolicyUpsert) AddUpdatedBy(v uint32) *PermissionPolicyUpsert {
+	u.Add(permissionpolicy.FieldUpdatedBy, v)
+	return u
+}
+
+// ClearUpdatedBy clears the value of the "updated_by" field.
+func (u *PermissionPolicyUpsert) ClearUpdatedBy() *PermissionPolicyUpsert {
+	u.SetNull(permissionpolicy.FieldUpdatedBy)
+	return u
+}
+
+// SetDeletedBy sets the "deleted_by" field.
+func (u *PermissionPolicyUpsert) SetDeletedBy(v uint32) *PermissionPolicyUpsert {
+	u.Set(permissionpolicy.FieldDeletedBy, v)
+	return u
+}
+
+// UpdateDeletedBy sets the "deleted_by" field to the value that was provided on create.
+func (u *PermissionPolicyUpsert) UpdateDeletedBy() *PermissionPolicyUpsert {
+	u.SetExcluded(permissionpolicy.FieldDeletedBy)
+	return u
+}
+
+// AddDeletedBy adds v to the "deleted_by" field.
+func (u *PermissionPolicyUpsert) AddDeletedBy(v uint32) *PermissionPolicyUpsert {
+	u.Add(permissionpolicy.FieldDeletedBy, v)
+	return u
+}
+
+// ClearDeletedBy clears the value of the "deleted_by" field.
+func (u *PermissionPolicyUpsert) ClearDeletedBy() *PermissionPolicyUpsert {
+	u.SetNull(permissionpolicy.FieldDeletedBy)
+	return u
+}
+
+// SetStatus sets the "status" field.
+func (u *PermissionPolicyUpsert) SetStatus(v permissionpolicy.Status) *PermissionPolicyUpsert {
+	u.Set(permissionpolicy.FieldStatus, v)
+	return u
+}
+
+// UpdateStatus sets the "status" field to the value that was provided on create.
+func (u *PermissionPolicyUpsert) UpdateStatus() *PermissionPolicyUpsert {
+	u.SetExcluded(permissionpolicy.FieldStatus)
+	return u
+}
+
 // SetPermissionID sets the "permission_id" field.
 func (u *PermissionPolicyUpsert) SetPermissionID(v uint32) *PermissionPolicyUpsert {
 	u.Set(permissionpolicy.FieldPermissionID, v)
@@ -296,33 +569,87 @@ func (u *PermissionPolicyUpsert) AddPermissionID(v uint32) *PermissionPolicyUpse
 	return u
 }
 
-// ClearPermissionID clears the value of the "permission_id" field.
-func (u *PermissionPolicyUpsert) ClearPermissionID() *PermissionPolicyUpsert {
-	u.SetNull(permissionpolicy.FieldPermissionID)
+// SetPolicyEngine sets the "policy_engine" field.
+func (u *PermissionPolicyUpsert) SetPolicyEngine(v permissionpolicy.PolicyEngine) *PermissionPolicyUpsert {
+	u.Set(permissionpolicy.FieldPolicyEngine, v)
 	return u
 }
 
-// SetTargetID sets the "target_id" field.
-func (u *PermissionPolicyUpsert) SetTargetID(v uint32) *PermissionPolicyUpsert {
-	u.Set(permissionpolicy.FieldTargetID, v)
+// UpdatePolicyEngine sets the "policy_engine" field to the value that was provided on create.
+func (u *PermissionPolicyUpsert) UpdatePolicyEngine() *PermissionPolicyUpsert {
+	u.SetExcluded(permissionpolicy.FieldPolicyEngine)
 	return u
 }
 
-// UpdateTargetID sets the "target_id" field to the value that was provided on create.
-func (u *PermissionPolicyUpsert) UpdateTargetID() *PermissionPolicyUpsert {
-	u.SetExcluded(permissionpolicy.FieldTargetID)
+// SetDefinition sets the "definition" field.
+func (u *PermissionPolicyUpsert) SetDefinition(v string) *PermissionPolicyUpsert {
+	u.Set(permissionpolicy.FieldDefinition, v)
 	return u
 }
 
-// AddTargetID adds v to the "target_id" field.
-func (u *PermissionPolicyUpsert) AddTargetID(v uint32) *PermissionPolicyUpsert {
-	u.Add(permissionpolicy.FieldTargetID, v)
+// UpdateDefinition sets the "definition" field to the value that was provided on create.
+func (u *PermissionPolicyUpsert) UpdateDefinition() *PermissionPolicyUpsert {
+	u.SetExcluded(permissionpolicy.FieldDefinition)
 	return u
 }
 
-// ClearTargetID clears the value of the "target_id" field.
-func (u *PermissionPolicyUpsert) ClearTargetID() *PermissionPolicyUpsert {
-	u.SetNull(permissionpolicy.FieldTargetID)
+// ClearDefinition clears the value of the "definition" field.
+func (u *PermissionPolicyUpsert) ClearDefinition() *PermissionPolicyUpsert {
+	u.SetNull(permissionpolicy.FieldDefinition)
+	return u
+}
+
+// SetVersion sets the "version" field.
+func (u *PermissionPolicyUpsert) SetVersion(v uint32) *PermissionPolicyUpsert {
+	u.Set(permissionpolicy.FieldVersion, v)
+	return u
+}
+
+// UpdateVersion sets the "version" field to the value that was provided on create.
+func (u *PermissionPolicyUpsert) UpdateVersion() *PermissionPolicyUpsert {
+	u.SetExcluded(permissionpolicy.FieldVersion)
+	return u
+}
+
+// AddVersion adds v to the "version" field.
+func (u *PermissionPolicyUpsert) AddVersion(v uint32) *PermissionPolicyUpsert {
+	u.Add(permissionpolicy.FieldVersion, v)
+	return u
+}
+
+// SetEvalOrder sets the "eval_order" field.
+func (u *PermissionPolicyUpsert) SetEvalOrder(v uint32) *PermissionPolicyUpsert {
+	u.Set(permissionpolicy.FieldEvalOrder, v)
+	return u
+}
+
+// UpdateEvalOrder sets the "eval_order" field to the value that was provided on create.
+func (u *PermissionPolicyUpsert) UpdateEvalOrder() *PermissionPolicyUpsert {
+	u.SetExcluded(permissionpolicy.FieldEvalOrder)
+	return u
+}
+
+// AddEvalOrder adds v to the "eval_order" field.
+func (u *PermissionPolicyUpsert) AddEvalOrder(v uint32) *PermissionPolicyUpsert {
+	u.Add(permissionpolicy.FieldEvalOrder, v)
+	return u
+}
+
+// SetCacheTTL sets the "cache_ttl" field.
+func (u *PermissionPolicyUpsert) SetCacheTTL(v uint32) *PermissionPolicyUpsert {
+	u.Set(permissionpolicy.FieldCacheTTL, v)
+	return u
+}
+
+// UpdateCacheTTL sets the "cache_ttl" field to the value that was provided on create.
+func (u *PermissionPolicyUpsert) UpdateCacheTTL() *PermissionPolicyUpsert {
+	u.SetExcluded(permissionpolicy.FieldCacheTTL)
+	return u
+}
+
+// AddCacheTTL adds v to the "cache_ttl" field.
+func (u *PermissionPolicyUpsert) AddCacheTTL(v uint32) *PermissionPolicyUpsert {
+	u.Add(permissionpolicy.FieldCacheTTL, v)
 	return u
 }
 
@@ -419,6 +746,104 @@ func (u *PermissionPolicyUpsertOne) ClearDeletedAt() *PermissionPolicyUpsertOne 
 	})
 }
 
+// SetCreatedBy sets the "created_by" field.
+func (u *PermissionPolicyUpsertOne) SetCreatedBy(v uint32) *PermissionPolicyUpsertOne {
+	return u.Update(func(s *PermissionPolicyUpsert) {
+		s.SetCreatedBy(v)
+	})
+}
+
+// AddCreatedBy adds v to the "created_by" field.
+func (u *PermissionPolicyUpsertOne) AddCreatedBy(v uint32) *PermissionPolicyUpsertOne {
+	return u.Update(func(s *PermissionPolicyUpsert) {
+		s.AddCreatedBy(v)
+	})
+}
+
+// UpdateCreatedBy sets the "created_by" field to the value that was provided on create.
+func (u *PermissionPolicyUpsertOne) UpdateCreatedBy() *PermissionPolicyUpsertOne {
+	return u.Update(func(s *PermissionPolicyUpsert) {
+		s.UpdateCreatedBy()
+	})
+}
+
+// ClearCreatedBy clears the value of the "created_by" field.
+func (u *PermissionPolicyUpsertOne) ClearCreatedBy() *PermissionPolicyUpsertOne {
+	return u.Update(func(s *PermissionPolicyUpsert) {
+		s.ClearCreatedBy()
+	})
+}
+
+// SetUpdatedBy sets the "updated_by" field.
+func (u *PermissionPolicyUpsertOne) SetUpdatedBy(v uint32) *PermissionPolicyUpsertOne {
+	return u.Update(func(s *PermissionPolicyUpsert) {
+		s.SetUpdatedBy(v)
+	})
+}
+
+// AddUpdatedBy adds v to the "updated_by" field.
+func (u *PermissionPolicyUpsertOne) AddUpdatedBy(v uint32) *PermissionPolicyUpsertOne {
+	return u.Update(func(s *PermissionPolicyUpsert) {
+		s.AddUpdatedBy(v)
+	})
+}
+
+// UpdateUpdatedBy sets the "updated_by" field to the value that was provided on create.
+func (u *PermissionPolicyUpsertOne) UpdateUpdatedBy() *PermissionPolicyUpsertOne {
+	return u.Update(func(s *PermissionPolicyUpsert) {
+		s.UpdateUpdatedBy()
+	})
+}
+
+// ClearUpdatedBy clears the value of the "updated_by" field.
+func (u *PermissionPolicyUpsertOne) ClearUpdatedBy() *PermissionPolicyUpsertOne {
+	return u.Update(func(s *PermissionPolicyUpsert) {
+		s.ClearUpdatedBy()
+	})
+}
+
+// SetDeletedBy sets the "deleted_by" field.
+func (u *PermissionPolicyUpsertOne) SetDeletedBy(v uint32) *PermissionPolicyUpsertOne {
+	return u.Update(func(s *PermissionPolicyUpsert) {
+		s.SetDeletedBy(v)
+	})
+}
+
+// AddDeletedBy adds v to the "deleted_by" field.
+func (u *PermissionPolicyUpsertOne) AddDeletedBy(v uint32) *PermissionPolicyUpsertOne {
+	return u.Update(func(s *PermissionPolicyUpsert) {
+		s.AddDeletedBy(v)
+	})
+}
+
+// UpdateDeletedBy sets the "deleted_by" field to the value that was provided on create.
+func (u *PermissionPolicyUpsertOne) UpdateDeletedBy() *PermissionPolicyUpsertOne {
+	return u.Update(func(s *PermissionPolicyUpsert) {
+		s.UpdateDeletedBy()
+	})
+}
+
+// ClearDeletedBy clears the value of the "deleted_by" field.
+func (u *PermissionPolicyUpsertOne) ClearDeletedBy() *PermissionPolicyUpsertOne {
+	return u.Update(func(s *PermissionPolicyUpsert) {
+		s.ClearDeletedBy()
+	})
+}
+
+// SetStatus sets the "status" field.
+func (u *PermissionPolicyUpsertOne) SetStatus(v permissionpolicy.Status) *PermissionPolicyUpsertOne {
+	return u.Update(func(s *PermissionPolicyUpsert) {
+		s.SetStatus(v)
+	})
+}
+
+// UpdateStatus sets the "status" field to the value that was provided on create.
+func (u *PermissionPolicyUpsertOne) UpdateStatus() *PermissionPolicyUpsertOne {
+	return u.Update(func(s *PermissionPolicyUpsert) {
+		s.UpdateStatus()
+	})
+}
+
 // SetPermissionID sets the "permission_id" field.
 func (u *PermissionPolicyUpsertOne) SetPermissionID(v uint32) *PermissionPolicyUpsertOne {
 	return u.Update(func(s *PermissionPolicyUpsert) {
@@ -440,38 +865,101 @@ func (u *PermissionPolicyUpsertOne) UpdatePermissionID() *PermissionPolicyUpsert
 	})
 }
 
-// ClearPermissionID clears the value of the "permission_id" field.
-func (u *PermissionPolicyUpsertOne) ClearPermissionID() *PermissionPolicyUpsertOne {
+// SetPolicyEngine sets the "policy_engine" field.
+func (u *PermissionPolicyUpsertOne) SetPolicyEngine(v permissionpolicy.PolicyEngine) *PermissionPolicyUpsertOne {
 	return u.Update(func(s *PermissionPolicyUpsert) {
-		s.ClearPermissionID()
+		s.SetPolicyEngine(v)
 	})
 }
 
-// SetTargetID sets the "target_id" field.
-func (u *PermissionPolicyUpsertOne) SetTargetID(v uint32) *PermissionPolicyUpsertOne {
+// UpdatePolicyEngine sets the "policy_engine" field to the value that was provided on create.
+func (u *PermissionPolicyUpsertOne) UpdatePolicyEngine() *PermissionPolicyUpsertOne {
 	return u.Update(func(s *PermissionPolicyUpsert) {
-		s.SetTargetID(v)
+		s.UpdatePolicyEngine()
 	})
 }
 
-// AddTargetID adds v to the "target_id" field.
-func (u *PermissionPolicyUpsertOne) AddTargetID(v uint32) *PermissionPolicyUpsertOne {
+// SetDefinition sets the "definition" field.
+func (u *PermissionPolicyUpsertOne) SetDefinition(v string) *PermissionPolicyUpsertOne {
 	return u.Update(func(s *PermissionPolicyUpsert) {
-		s.AddTargetID(v)
+		s.SetDefinition(v)
 	})
 }
 
-// UpdateTargetID sets the "target_id" field to the value that was provided on create.
-func (u *PermissionPolicyUpsertOne) UpdateTargetID() *PermissionPolicyUpsertOne {
+// UpdateDefinition sets the "definition" field to the value that was provided on create.
+func (u *PermissionPolicyUpsertOne) UpdateDefinition() *PermissionPolicyUpsertOne {
 	return u.Update(func(s *PermissionPolicyUpsert) {
-		s.UpdateTargetID()
+		s.UpdateDefinition()
 	})
 }
 
-// ClearTargetID clears the value of the "target_id" field.
-func (u *PermissionPolicyUpsertOne) ClearTargetID() *PermissionPolicyUpsertOne {
+// ClearDefinition clears the value of the "definition" field.
+func (u *PermissionPolicyUpsertOne) ClearDefinition() *PermissionPolicyUpsertOne {
 	return u.Update(func(s *PermissionPolicyUpsert) {
-		s.ClearTargetID()
+		s.ClearDefinition()
+	})
+}
+
+// SetVersion sets the "version" field.
+func (u *PermissionPolicyUpsertOne) SetVersion(v uint32) *PermissionPolicyUpsertOne {
+	return u.Update(func(s *PermissionPolicyUpsert) {
+		s.SetVersion(v)
+	})
+}
+
+// AddVersion adds v to the "version" field.
+func (u *PermissionPolicyUpsertOne) AddVersion(v uint32) *PermissionPolicyUpsertOne {
+	return u.Update(func(s *PermissionPolicyUpsert) {
+		s.AddVersion(v)
+	})
+}
+
+// UpdateVersion sets the "version" field to the value that was provided on create.
+func (u *PermissionPolicyUpsertOne) UpdateVersion() *PermissionPolicyUpsertOne {
+	return u.Update(func(s *PermissionPolicyUpsert) {
+		s.UpdateVersion()
+	})
+}
+
+// SetEvalOrder sets the "eval_order" field.
+func (u *PermissionPolicyUpsertOne) SetEvalOrder(v uint32) *PermissionPolicyUpsertOne {
+	return u.Update(func(s *PermissionPolicyUpsert) {
+		s.SetEvalOrder(v)
+	})
+}
+
+// AddEvalOrder adds v to the "eval_order" field.
+func (u *PermissionPolicyUpsertOne) AddEvalOrder(v uint32) *PermissionPolicyUpsertOne {
+	return u.Update(func(s *PermissionPolicyUpsert) {
+		s.AddEvalOrder(v)
+	})
+}
+
+// UpdateEvalOrder sets the "eval_order" field to the value that was provided on create.
+func (u *PermissionPolicyUpsertOne) UpdateEvalOrder() *PermissionPolicyUpsertOne {
+	return u.Update(func(s *PermissionPolicyUpsert) {
+		s.UpdateEvalOrder()
+	})
+}
+
+// SetCacheTTL sets the "cache_ttl" field.
+func (u *PermissionPolicyUpsertOne) SetCacheTTL(v uint32) *PermissionPolicyUpsertOne {
+	return u.Update(func(s *PermissionPolicyUpsert) {
+		s.SetCacheTTL(v)
+	})
+}
+
+// AddCacheTTL adds v to the "cache_ttl" field.
+func (u *PermissionPolicyUpsertOne) AddCacheTTL(v uint32) *PermissionPolicyUpsertOne {
+	return u.Update(func(s *PermissionPolicyUpsert) {
+		s.AddCacheTTL(v)
+	})
+}
+
+// UpdateCacheTTL sets the "cache_ttl" field to the value that was provided on create.
+func (u *PermissionPolicyUpsertOne) UpdateCacheTTL() *PermissionPolicyUpsertOne {
+	return u.Update(func(s *PermissionPolicyUpsert) {
+		s.UpdateCacheTTL()
 	})
 }
 
@@ -527,6 +1015,7 @@ func (_c *PermissionPolicyCreateBulk) Save(ctx context.Context) ([]*PermissionPo
 	for i := range _c.builders {
 		func(i int, root context.Context) {
 			builder := _c.builders[i]
+			builder.defaults()
 			var mut Mutator = MutateFunc(func(ctx context.Context, m Mutation) (Value, error) {
 				mutation, ok := m.(*PermissionPolicyMutation)
 				if !ok {
@@ -733,6 +1222,104 @@ func (u *PermissionPolicyUpsertBulk) ClearDeletedAt() *PermissionPolicyUpsertBul
 	})
 }
 
+// SetCreatedBy sets the "created_by" field.
+func (u *PermissionPolicyUpsertBulk) SetCreatedBy(v uint32) *PermissionPolicyUpsertBulk {
+	return u.Update(func(s *PermissionPolicyUpsert) {
+		s.SetCreatedBy(v)
+	})
+}
+
+// AddCreatedBy adds v to the "created_by" field.
+func (u *PermissionPolicyUpsertBulk) AddCreatedBy(v uint32) *PermissionPolicyUpsertBulk {
+	return u.Update(func(s *PermissionPolicyUpsert) {
+		s.AddCreatedBy(v)
+	})
+}
+
+// UpdateCreatedBy sets the "created_by" field to the value that was provided on create.
+func (u *PermissionPolicyUpsertBulk) UpdateCreatedBy() *PermissionPolicyUpsertBulk {
+	return u.Update(func(s *PermissionPolicyUpsert) {
+		s.UpdateCreatedBy()
+	})
+}
+
+// ClearCreatedBy clears the value of the "created_by" field.
+func (u *PermissionPolicyUpsertBulk) ClearCreatedBy() *PermissionPolicyUpsertBulk {
+	return u.Update(func(s *PermissionPolicyUpsert) {
+		s.ClearCreatedBy()
+	})
+}
+
+// SetUpdatedBy sets the "updated_by" field.
+func (u *PermissionPolicyUpsertBulk) SetUpdatedBy(v uint32) *PermissionPolicyUpsertBulk {
+	return u.Update(func(s *PermissionPolicyUpsert) {
+		s.SetUpdatedBy(v)
+	})
+}
+
+// AddUpdatedBy adds v to the "updated_by" field.
+func (u *PermissionPolicyUpsertBulk) AddUpdatedBy(v uint32) *PermissionPolicyUpsertBulk {
+	return u.Update(func(s *PermissionPolicyUpsert) {
+		s.AddUpdatedBy(v)
+	})
+}
+
+// UpdateUpdatedBy sets the "updated_by" field to the value that was provided on create.
+func (u *PermissionPolicyUpsertBulk) UpdateUpdatedBy() *PermissionPolicyUpsertBulk {
+	return u.Update(func(s *PermissionPolicyUpsert) {
+		s.UpdateUpdatedBy()
+	})
+}
+
+// ClearUpdatedBy clears the value of the "updated_by" field.
+func (u *PermissionPolicyUpsertBulk) ClearUpdatedBy() *PermissionPolicyUpsertBulk {
+	return u.Update(func(s *PermissionPolicyUpsert) {
+		s.ClearUpdatedBy()
+	})
+}
+
+// SetDeletedBy sets the "deleted_by" field.
+func (u *PermissionPolicyUpsertBulk) SetDeletedBy(v uint32) *PermissionPolicyUpsertBulk {
+	return u.Update(func(s *PermissionPolicyUpsert) {
+		s.SetDeletedBy(v)
+	})
+}
+
+// AddDeletedBy adds v to the "deleted_by" field.
+func (u *PermissionPolicyUpsertBulk) AddDeletedBy(v uint32) *PermissionPolicyUpsertBulk {
+	return u.Update(func(s *PermissionPolicyUpsert) {
+		s.AddDeletedBy(v)
+	})
+}
+
+// UpdateDeletedBy sets the "deleted_by" field to the value that was provided on create.
+func (u *PermissionPolicyUpsertBulk) UpdateDeletedBy() *PermissionPolicyUpsertBulk {
+	return u.Update(func(s *PermissionPolicyUpsert) {
+		s.UpdateDeletedBy()
+	})
+}
+
+// ClearDeletedBy clears the value of the "deleted_by" field.
+func (u *PermissionPolicyUpsertBulk) ClearDeletedBy() *PermissionPolicyUpsertBulk {
+	return u.Update(func(s *PermissionPolicyUpsert) {
+		s.ClearDeletedBy()
+	})
+}
+
+// SetStatus sets the "status" field.
+func (u *PermissionPolicyUpsertBulk) SetStatus(v permissionpolicy.Status) *PermissionPolicyUpsertBulk {
+	return u.Update(func(s *PermissionPolicyUpsert) {
+		s.SetStatus(v)
+	})
+}
+
+// UpdateStatus sets the "status" field to the value that was provided on create.
+func (u *PermissionPolicyUpsertBulk) UpdateStatus() *PermissionPolicyUpsertBulk {
+	return u.Update(func(s *PermissionPolicyUpsert) {
+		s.UpdateStatus()
+	})
+}
+
 // SetPermissionID sets the "permission_id" field.
 func (u *PermissionPolicyUpsertBulk) SetPermissionID(v uint32) *PermissionPolicyUpsertBulk {
 	return u.Update(func(s *PermissionPolicyUpsert) {
@@ -754,38 +1341,101 @@ func (u *PermissionPolicyUpsertBulk) UpdatePermissionID() *PermissionPolicyUpser
 	})
 }
 
-// ClearPermissionID clears the value of the "permission_id" field.
-func (u *PermissionPolicyUpsertBulk) ClearPermissionID() *PermissionPolicyUpsertBulk {
+// SetPolicyEngine sets the "policy_engine" field.
+func (u *PermissionPolicyUpsertBulk) SetPolicyEngine(v permissionpolicy.PolicyEngine) *PermissionPolicyUpsertBulk {
 	return u.Update(func(s *PermissionPolicyUpsert) {
-		s.ClearPermissionID()
+		s.SetPolicyEngine(v)
 	})
 }
 
-// SetTargetID sets the "target_id" field.
-func (u *PermissionPolicyUpsertBulk) SetTargetID(v uint32) *PermissionPolicyUpsertBulk {
+// UpdatePolicyEngine sets the "policy_engine" field to the value that was provided on create.
+func (u *PermissionPolicyUpsertBulk) UpdatePolicyEngine() *PermissionPolicyUpsertBulk {
 	return u.Update(func(s *PermissionPolicyUpsert) {
-		s.SetTargetID(v)
+		s.UpdatePolicyEngine()
 	})
 }
 
-// AddTargetID adds v to the "target_id" field.
-func (u *PermissionPolicyUpsertBulk) AddTargetID(v uint32) *PermissionPolicyUpsertBulk {
+// SetDefinition sets the "definition" field.
+func (u *PermissionPolicyUpsertBulk) SetDefinition(v string) *PermissionPolicyUpsertBulk {
 	return u.Update(func(s *PermissionPolicyUpsert) {
-		s.AddTargetID(v)
+		s.SetDefinition(v)
 	})
 }
 
-// UpdateTargetID sets the "target_id" field to the value that was provided on create.
-func (u *PermissionPolicyUpsertBulk) UpdateTargetID() *PermissionPolicyUpsertBulk {
+// UpdateDefinition sets the "definition" field to the value that was provided on create.
+func (u *PermissionPolicyUpsertBulk) UpdateDefinition() *PermissionPolicyUpsertBulk {
 	return u.Update(func(s *PermissionPolicyUpsert) {
-		s.UpdateTargetID()
+		s.UpdateDefinition()
 	})
 }
 
-// ClearTargetID clears the value of the "target_id" field.
-func (u *PermissionPolicyUpsertBulk) ClearTargetID() *PermissionPolicyUpsertBulk {
+// ClearDefinition clears the value of the "definition" field.
+func (u *PermissionPolicyUpsertBulk) ClearDefinition() *PermissionPolicyUpsertBulk {
 	return u.Update(func(s *PermissionPolicyUpsert) {
-		s.ClearTargetID()
+		s.ClearDefinition()
+	})
+}
+
+// SetVersion sets the "version" field.
+func (u *PermissionPolicyUpsertBulk) SetVersion(v uint32) *PermissionPolicyUpsertBulk {
+	return u.Update(func(s *PermissionPolicyUpsert) {
+		s.SetVersion(v)
+	})
+}
+
+// AddVersion adds v to the "version" field.
+func (u *PermissionPolicyUpsertBulk) AddVersion(v uint32) *PermissionPolicyUpsertBulk {
+	return u.Update(func(s *PermissionPolicyUpsert) {
+		s.AddVersion(v)
+	})
+}
+
+// UpdateVersion sets the "version" field to the value that was provided on create.
+func (u *PermissionPolicyUpsertBulk) UpdateVersion() *PermissionPolicyUpsertBulk {
+	return u.Update(func(s *PermissionPolicyUpsert) {
+		s.UpdateVersion()
+	})
+}
+
+// SetEvalOrder sets the "eval_order" field.
+func (u *PermissionPolicyUpsertBulk) SetEvalOrder(v uint32) *PermissionPolicyUpsertBulk {
+	return u.Update(func(s *PermissionPolicyUpsert) {
+		s.SetEvalOrder(v)
+	})
+}
+
+// AddEvalOrder adds v to the "eval_order" field.
+func (u *PermissionPolicyUpsertBulk) AddEvalOrder(v uint32) *PermissionPolicyUpsertBulk {
+	return u.Update(func(s *PermissionPolicyUpsert) {
+		s.AddEvalOrder(v)
+	})
+}
+
+// UpdateEvalOrder sets the "eval_order" field to the value that was provided on create.
+func (u *PermissionPolicyUpsertBulk) UpdateEvalOrder() *PermissionPolicyUpsertBulk {
+	return u.Update(func(s *PermissionPolicyUpsert) {
+		s.UpdateEvalOrder()
+	})
+}
+
+// SetCacheTTL sets the "cache_ttl" field.
+func (u *PermissionPolicyUpsertBulk) SetCacheTTL(v uint32) *PermissionPolicyUpsertBulk {
+	return u.Update(func(s *PermissionPolicyUpsert) {
+		s.SetCacheTTL(v)
+	})
+}
+
+// AddCacheTTL adds v to the "cache_ttl" field.
+func (u *PermissionPolicyUpsertBulk) AddCacheTTL(v uint32) *PermissionPolicyUpsertBulk {
+	return u.Update(func(s *PermissionPolicyUpsert) {
+		s.AddCacheTTL(v)
+	})
+}
+
+// UpdateCacheTTL sets the "cache_ttl" field to the value that was provided on create.
+func (u *PermissionPolicyUpsertBulk) UpdateCacheTTL() *PermissionPolicyUpsertBulk {
+	return u.Update(func(s *PermissionPolicyUpsert) {
+		s.UpdateCacheTTL()
 	})
 }
 
