@@ -10,7 +10,7 @@ service LedgerCategoryService {
     option (google.api.http) = { get: "/app/v1/ledger-categories" };
   }
   rpc ListAll (ledger.service.v1.ListAllCategoryRequest) returns (ledger.service.v1.ListCategoryResponse) {
-    option (google.api.http) = { get: "/app/v1/ledger-categories/all" };
+    option (google.api.http) = { get: "/app/v1/ledger-categories-all" };
   }
   rpc Get (ledger.service.v1.GetCategoryRequest) returns (ledger.service.v1.Category) {
     option (google.api.http) = { get: "/app/v1/ledger-categories/{id}" };

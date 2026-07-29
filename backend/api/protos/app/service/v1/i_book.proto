@@ -10,7 +10,7 @@ service BookService {
     option (google.api.http) = { get: "/app/v1/books" };
   }
   rpc ListAll (ledger.service.v1.ListAllBookRequest) returns (ledger.service.v1.ListBookResponse) {
-    option (google.api.http) = { get: "/app/v1/books/all" };
+    option (google.api.http) = { get: "/app/v1/books-all" };
   }
   rpc Get (ledger.service.v1.GetBookRequest) returns (ledger.service.v1.Book) {
     option (google.api.http) = { get: "/app/v1/books/{id}" };
@@ -28,15 +28,15 @@ service BookService {
     option (google.api.http) = { patch: "/app/v1/books/{id}/toggle" body: "*" };
   }
   rpc CreateByTemplate (ledger.service.v1.CreateBookByTemplateRequest) returns (ledger.service.v1.Book) {
-    option (google.api.http) = { post: "/app/v1/books/template" body: "*" };
+    option (google.api.http) = { post: "/app/v1/books-from-template" body: "*" };
   }
   rpc Copy (ledger.service.v1.CopyBookRequest) returns (ledger.service.v1.Book) {
-    option (google.api.http) = { post: "/app/v1/books/copy" body: "*" };
+    option (google.api.http) = { post: "/app/v1/books-copy" body: "*" };
   }
   rpc Export (ledger.service.v1.ExportBookRequest) returns (ledger.service.v1.ExportBookResponse) {
     option (google.api.http) = { get: "/app/v1/books/{id}/export" };
   }
   rpc ListAllBooks (google.protobuf.Empty) returns (ledger.service.v1.ListBookResponse) {
-    option (google.api.http) = { get: "/app/v1/books/select-all" };
+    option (google.api.http) = { get: "/app/v1/books-select-all" };
   }
 }

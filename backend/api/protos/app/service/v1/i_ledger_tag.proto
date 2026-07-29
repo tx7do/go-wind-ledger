@@ -10,7 +10,7 @@ service LedgerTagService {
     option (google.api.http) = { get: "/app/v1/ledger-tags" };
   }
   rpc ListAll (ledger.service.v1.ListAllTagRequest) returns (ledger.service.v1.ListTagResponse) {
-    option (google.api.http) = { get: "/app/v1/ledger-tags/all" };
+    option (google.api.http) = { get: "/app/v1/ledger-tags-all" };
   }
   rpc Get (ledger.service.v1.GetTagRequest) returns (ledger.service.v1.Tag) {
     option (google.api.http) = { get: "/app/v1/ledger-tags/{id}" };

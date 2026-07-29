@@ -43,7 +43,7 @@ type LedgerCategoryServiceHTTPServer interface {
 func RegisterLedgerCategoryServiceHTTPServer(s *http.Server, srv LedgerCategoryServiceHTTPServer) {
 	r := s.Route("/")
 	r.GET("/app/v1/ledger-categories", _LedgerCategoryService_List6_HTTP_Handler(srv))
-	r.GET("/app/v1/ledger-categories/all", _LedgerCategoryService_ListAll5_HTTP_Handler(srv))
+	r.GET("/app/v1/ledger-categories-all", _LedgerCategoryService_ListAll5_HTTP_Handler(srv))
 	r.GET("/app/v1/ledger-categories/{id}", _LedgerCategoryService_Get5_HTTP_Handler(srv))
 	r.POST("/app/v1/ledger-categories", _LedgerCategoryService_Create4_HTTP_Handler(srv))
 	r.PUT("/app/v1/ledger-categories/{id}", _LedgerCategoryService_Update4_HTTP_Handler(srv))
@@ -277,7 +277,7 @@ func (c *LedgerCategoryServiceHTTPClientImpl) List(ctx context.Context, in *v1.P
 
 func (c *LedgerCategoryServiceHTTPClientImpl) ListAll(ctx context.Context, in *v11.ListAllCategoryRequest, opts ...http.CallOption) (*v11.ListCategoryResponse, error) {
 	var out v11.ListCategoryResponse
-	pattern := "/app/v1/ledger-categories/all"
+	pattern := "/app/v1/ledger-categories-all"
 	path := binding.EncodeURL(pattern, in, true)
 	opts = append(opts, http.Operation(OperationLedgerCategoryServiceListAll))
 	opts = append(opts, http.PathTemplate(pattern))

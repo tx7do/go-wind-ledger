@@ -43,7 +43,7 @@ type LedgerTagServiceHTTPServer interface {
 func RegisterLedgerTagServiceHTTPServer(s *http.Server, srv LedgerTagServiceHTTPServer) {
 	r := s.Route("/")
 	r.GET("/app/v1/ledger-tags", _LedgerTagService_List7_HTTP_Handler(srv))
-	r.GET("/app/v1/ledger-tags/all", _LedgerTagService_ListAll6_HTTP_Handler(srv))
+	r.GET("/app/v1/ledger-tags-all", _LedgerTagService_ListAll6_HTTP_Handler(srv))
 	r.GET("/app/v1/ledger-tags/{id}", _LedgerTagService_Get6_HTTP_Handler(srv))
 	r.POST("/app/v1/ledger-tags", _LedgerTagService_Create5_HTTP_Handler(srv))
 	r.PUT("/app/v1/ledger-tags/{id}", _LedgerTagService_Update5_HTTP_Handler(srv))
@@ -277,7 +277,7 @@ func (c *LedgerTagServiceHTTPClientImpl) List(ctx context.Context, in *v1.Paging
 
 func (c *LedgerTagServiceHTTPClientImpl) ListAll(ctx context.Context, in *v11.ListAllTagRequest, opts ...http.CallOption) (*v11.ListTagResponse, error) {
 	var out v11.ListTagResponse
-	pattern := "/app/v1/ledger-tags/all"
+	pattern := "/app/v1/ledger-tags-all"
 	path := binding.EncodeURL(pattern, in, true)
 	opts = append(opts, http.Operation(OperationLedgerTagServiceListAll))
 	opts = append(opts, http.PathTemplate(pattern))

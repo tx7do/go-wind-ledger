@@ -18,7 +18,7 @@ service PayeeService {
 
   rpc ListAll (ledger.service.v1.ListAllPayeeRequest) returns (ledger.service.v1.ListPayeeResponse) {
     option (google.api.http) = {
-      get: "/admin/v1/payees/all"
+      get: "/admin/v1/payees-all"
     };
   }
 

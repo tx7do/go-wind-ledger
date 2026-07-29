@@ -31,7 +31,7 @@ const file_app_service_v1_i_budget_proto_rawDesc = "" +
 	"\x1dapp/service/v1/i_budget.proto\x12\x0eapp.service.v1\x1a\x1cgoogle/api/annotations.proto\x1a\x1bgoogle/protobuf/empty.proto\x1a\x1epagination/v1/pagination.proto\x1a\x1eledger/service/v1/budget.proto2\x95\x06\n" +
 	"\rBudgetService\x12a\n" +
 	"\x04List\x12\x19.pagination.PagingRequest\x1a%.ledger.service.v1.ListBudgetResponse\"\x17\x82\xd3\xe4\x93\x02\x11\x12\x0f/app/v1/budgets\x12v\n" +
-	"\aListAll\x12'.ledger.service.v1.ListAllBudgetRequest\x1a%.ledger.service.v1.ListBudgetResponse\"\x1b\x82\xd3\xe4\x93\x02\x15\x12\x13/app/v1/budgets/all\x12c\n" +
+	"\aListAll\x12'.ledger.service.v1.ListAllBudgetRequest\x1a%.ledger.service.v1.ListBudgetResponse\"\x1b\x82\xd3\xe4\x93\x02\x15\x12\x13/app/v1/budgets-all\x12c\n" +
 	"\x03Get\x12#.ledger.service.v1.GetBudgetRequest\x1a\x19.ledger.service.v1.Budget\"\x1c\x82\xd3\xe4\x93\x02\x16\x12\x14/app/v1/budgets/{id}\x12g\n" +
 	"\x06Create\x12&.ledger.service.v1.CreateBudgetRequest\x1a\x19.ledger.service.v1.Budget\"\x1a\x82\xd3\xe4\x93\x02\x14:\x01*\"\x0f/app/v1/budgets\x12l\n" +
 	"\x06Update\x12&.ledger.service.v1.UpdateBudgetRequest\x1a\x19.ledger.service.v1.Budget\"\x1f\x82\xd3\xe4\x93\x02\x19:\x01*\x1a\x14/app/v1/budgets/{id}\x12f\n" +

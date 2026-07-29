@@ -18,7 +18,7 @@ service BookService {
 
   rpc ListAll (ledger.service.v1.ListAllBookRequest) returns (ledger.service.v1.ListBookResponse) {
     option (google.api.http) = {
-      get: "/admin/v1/books/all"
+      get: "/admin/v1/books-all"
     };
   }
 
@@ -57,14 +57,14 @@ service BookService {
 
   rpc CreateByTemplate (ledger.service.v1.CreateBookByTemplateRequest) returns (ledger.service.v1.Book) {
     option (google.api.http) = {
-      post: "/admin/v1/books/template"
+      post: "/admin/v1/books-from-template"
       body: "*"
     };
   }
 
   rpc Copy (ledger.service.v1.CopyBookRequest) returns (ledger.service.v1.Book) {
     option (google.api.http) = {
-      post: "/admin/v1/books/copy"
+      post: "/admin/v1/books-copy"
       body: "*"
     };
   }
@@ -77,7 +77,7 @@ service BookService {
 
   rpc ListAllBooks (google.protobuf.Empty) returns (ledger.service.v1.ListBookResponse) {
     option (google.api.http) = {
-      get: "/admin/v1/books/select-all"
+      get: "/admin/v1/books-select-all"
     };
   }
 }

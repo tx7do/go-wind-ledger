@@ -48,7 +48,7 @@ func RegisterBalanceFlowServiceHTTPServer(s *http.Server, srv BalanceFlowService
 	r.PUT("/app/v1/balance-flows/{id}", _BalanceFlowService_Update1_HTTP_Handler(srv))
 	r.DELETE("/app/v1/balance-flows/{id}", _BalanceFlowService_Delete1_HTTP_Handler(srv))
 	r.PATCH("/app/v1/balance-flows/{id}/confirm", _BalanceFlowService_Confirm0_HTTP_Handler(srv))
-	r.GET("/app/v1/balance-flows/statistics", _BalanceFlowService_Statistics1_HTTP_Handler(srv))
+	r.GET("/app/v1/balance-flow-statistics", _BalanceFlowService_Statistics1_HTTP_Handler(srv))
 }
 
 func _BalanceFlowService_List1_HTTP_Handler(srv BalanceFlowServiceHTTPServer) func(ctx http.Context) error {
@@ -290,7 +290,7 @@ func (c *BalanceFlowServiceHTTPClientImpl) List(ctx context.Context, in *v1.Pagi
 
 func (c *BalanceFlowServiceHTTPClientImpl) Statistics(ctx context.Context, in *v11.StatisticsRequest, opts ...http.CallOption) (*v11.StatisticsResponse, error) {
 	var out v11.StatisticsResponse
-	pattern := "/app/v1/balance-flows/statistics"
+	pattern := "/app/v1/balance-flow-statistics"
 	path := binding.EncodeURL(pattern, in, true)
 	opts = append(opts, http.Operation(OperationBalanceFlowServiceStatistics))
 	opts = append(opts, http.PathTemplate(pattern))

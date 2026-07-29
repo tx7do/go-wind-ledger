@@ -31,7 +31,7 @@ const file_app_service_v1_i_ledger_tag_proto_rawDesc = "" +
 	"!app/service/v1/i_ledger_tag.proto\x12\x0eapp.service.v1\x1a\x1cgoogle/api/annotations.proto\x1a\x1bgoogle/protobuf/empty.proto\x1a\x1epagination/v1/pagination.proto\x1a\x1bledger/service/v1/tag.proto2\xfe\x05\n" +
 	"\x10LedgerTagService\x12b\n" +
 	"\x04List\x12\x19.pagination.PagingRequest\x1a\".ledger.service.v1.ListTagResponse\"\x1b\x82\xd3\xe4\x93\x02\x15\x12\x13/app/v1/ledger-tags\x12t\n" +
-	"\aListAll\x12$.ledger.service.v1.ListAllTagRequest\x1a\".ledger.service.v1.ListTagResponse\"\x1f\x82\xd3\xe4\x93\x02\x19\x12\x17/app/v1/ledger-tags/all\x12a\n" +
+	"\aListAll\x12$.ledger.service.v1.ListAllTagRequest\x1a\".ledger.service.v1.ListTagResponse\"\x1f\x82\xd3\xe4\x93\x02\x19\x12\x17/app/v1/ledger-tags-all\x12a\n" +
 	"\x03Get\x12 .ledger.service.v1.GetTagRequest\x1a\x16.ledger.service.v1.Tag\" \x82\xd3\xe4\x93\x02\x1a\x12\x18/app/v1/ledger-tags/{id}\x12e\n" +
 	"\x06Create\x12#.ledger.service.v1.CreateTagRequest\x1a\x16.ledger.service.v1.Tag\"\x1e\x82\xd3\xe4\x93\x02\x18:\x01*\"\x13/app/v1/ledger-tags\x12j\n" +
 	"\x06Update\x12#.ledger.service.v1.UpdateTagRequest\x1a\x16.ledger.service.v1.Tag\"#\x82\xd3\xe4\x93\x02\x1d:\x01*\x1a\x18/app/v1/ledger-tags/{id}\x12g\n" +

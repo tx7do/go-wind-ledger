@@ -43,7 +43,7 @@ type BudgetServiceHTTPServer interface {
 func RegisterBudgetServiceHTTPServer(s *http.Server, srv BudgetServiceHTTPServer) {
 	r := s.Route("/")
 	r.GET("/admin/v1/budgets", _BudgetService_List5_HTTP_Handler(srv))
-	r.GET("/admin/v1/budgets/all", _BudgetService_ListAll3_HTTP_Handler(srv))
+	r.GET("/admin/v1/budgets-all", _BudgetService_ListAll3_HTTP_Handler(srv))
 	r.GET("/admin/v1/budgets/{id}", _BudgetService_Get6_HTTP_Handler(srv))
 	r.POST("/admin/v1/budgets", _BudgetService_Create4_HTTP_Handler(srv))
 	r.PUT("/admin/v1/budgets/{id}", _BudgetService_Update4_HTTP_Handler(srv))
@@ -287,7 +287,7 @@ func (c *BudgetServiceHTTPClientImpl) List(ctx context.Context, in *v1.PagingReq
 
 func (c *BudgetServiceHTTPClientImpl) ListAll(ctx context.Context, in *v11.ListAllBudgetRequest, opts ...http.CallOption) (*v11.ListBudgetResponse, error) {
 	var out v11.ListBudgetResponse
-	pattern := "/admin/v1/budgets/all"
+	pattern := "/admin/v1/budgets-all"
 	path := binding.EncodeURL(pattern, in, true)
 	opts = append(opts, http.Operation(OperationBudgetServiceListAll))
 	opts = append(opts, http.PathTemplate(pattern))

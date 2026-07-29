@@ -28,16 +28,16 @@ var File_app_service_v1_i_balance_flow_proto protoreflect.FileDescriptor
 
 const file_app_service_v1_i_balance_flow_proto_rawDesc = "" +
 	"\n" +
-	"#app/service/v1/i_balance_flow.proto\x12\x0eapp.service.v1\x1a\x1cgoogle/api/annotations.proto\x1a\x1bgoogle/protobuf/empty.proto\x1a\x1epagination/v1/pagination.proto\x1a$ledger/service/v1/balance_flow.proto2\xf0\x06\n" +
+	"#app/service/v1/i_balance_flow.proto\x12\x0eapp.service.v1\x1a\x1cgoogle/api/annotations.proto\x1a\x1bgoogle/protobuf/empty.proto\x1a\x1epagination/v1/pagination.proto\x1a$ledger/service/v1/balance_flow.proto2\xef\x06\n" +
 	"\x12BalanceFlowService\x12l\n" +
 	"\x04List\x12\x19.pagination.PagingRequest\x1a*.ledger.service.v1.ListBalanceFlowResponse\"\x1d\x82\xd3\xe4\x93\x02\x17\x12\x15/app/v1/balance-flows\x12s\n" +
 	"\x03Get\x12(.ledger.service.v1.GetBalanceFlowRequest\x1a\x1e.ledger.service.v1.BalanceFlow\"\"\x82\xd3\xe4\x93\x02\x1c\x12\x1a/app/v1/balance-flows/{id}\x12w\n" +
 	"\x06Create\x12+.ledger.service.v1.CreateBalanceFlowRequest\x1a\x1e.ledger.service.v1.BalanceFlow\" \x82\xd3\xe4\x93\x02\x1a:\x01*\"\x15/app/v1/balance-flows\x12|\n" +
 	"\x06Update\x12+.ledger.service.v1.UpdateBalanceFlowRequest\x1a\x1e.ledger.service.v1.BalanceFlow\"%\x82\xd3\xe4\x93\x02\x1f:\x01*\x1a\x1a/app/v1/balance-flows/{id}\x12q\n" +
 	"\x06Delete\x12+.ledger.service.v1.DeleteBalanceFlowRequest\x1a\x16.google.protobuf.Empty\"\"\x82\xd3\xe4\x93\x02\x1c*\x1a/app/v1/balance-flows/{id}\x12\x86\x01\n" +
-	"\aConfirm\x12,.ledger.service.v1.ConfirmBalanceFlowRequest\x1a\x1e.ledger.service.v1.BalanceFlow\"-\x82\xd3\xe4\x93\x02':\x01*2\"/app/v1/balance-flows/{id}/confirm\x12\x83\x01\n" +
+	"\aConfirm\x12,.ledger.service.v1.ConfirmBalanceFlowRequest\x1a\x1e.ledger.service.v1.BalanceFlow\"-\x82\xd3\xe4\x93\x02':\x01*2\"/app/v1/balance-flows/{id}/confirm\x12\x82\x01\n" +
 	"\n" +
-	"Statistics\x12$.ledger.service.v1.StatisticsRequest\x1a%.ledger.service.v1.StatisticsResponse\"(\x82\xd3\xe4\x93\x02\"\x12 /app/v1/balance-flows/statisticsB\xb5\x01\n" +
+	"Statistics\x12$.ledger.service.v1.StatisticsRequest\x1a%.ledger.service.v1.StatisticsResponse\"'\x82\xd3\xe4\x93\x02!\x12\x1f/app/v1/balance-flow-statisticsB\xb5\x01\n" +
 	"\x12com.app.service.v1B\x11IBalanceFlowProtoP\x01Z2go-wind-ledger/api/gen/go/app/service/v1;servicev1\xa2\x02\x03ASX\xaa\x02\x0eApp.Service.V1\xca\x02\x0eApp\\Service\\V1\xe2\x02\x1aApp\\Service\\V1\\GPBMetadata\xea\x02\x10App::Service::V1b\x06proto3"
 
 var file_app_service_v1_i_balance_flow_proto_goTypes = []any{

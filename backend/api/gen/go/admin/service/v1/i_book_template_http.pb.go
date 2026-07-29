@@ -31,7 +31,7 @@ type BookTemplateServiceHTTPServer interface {
 
 func RegisterBookTemplateServiceHTTPServer(s *http.Server, srv BookTemplateServiceHTTPServer) {
 	r := s.Route("/")
-	r.GET("/admin/v1/book-templates/all", _BookTemplateService_ListAll2_HTTP_Handler(srv))
+	r.GET("/admin/v1/book-templates-all", _BookTemplateService_ListAll2_HTTP_Handler(srv))
 	r.GET("/admin/v1/book-templates/{id}", _BookTemplateService_Get5_HTTP_Handler(srv))
 }
 
@@ -104,7 +104,7 @@ func (c *BookTemplateServiceHTTPClientImpl) Get(ctx context.Context, in *v1.GetB
 
 func (c *BookTemplateServiceHTTPClientImpl) ListAll(ctx context.Context, in *emptypb.Empty, opts ...http.CallOption) (*v1.ListBookTemplateResponse, error) {
 	var out v1.ListBookTemplateResponse
-	pattern := "/admin/v1/book-templates/all"
+	pattern := "/admin/v1/book-templates-all"
 	path := binding.EncodeURL(pattern, in, true)
 	opts = append(opts, http.Operation(OperationBookTemplateServiceListAll))
 	opts = append(opts, http.PathTemplate(pattern))

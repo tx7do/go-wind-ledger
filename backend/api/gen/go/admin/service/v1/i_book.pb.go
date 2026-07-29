@@ -28,19 +28,19 @@ var File_admin_service_v1_i_book_proto protoreflect.FileDescriptor
 
 const file_admin_service_v1_i_book_proto_rawDesc = "" +
 	"\n" +
-	"\x1dadmin/service/v1/i_book.proto\x12\x10admin.service.v1\x1a\x1cgoogle/api/annotations.proto\x1a\x1bgoogle/protobuf/empty.proto\x1a\x1epagination/v1/pagination.proto\x1a\x1cledger/service/v1/book.proto2\xbf\t\n" +
+	"\x1dadmin/service/v1/i_book.proto\x12\x10admin.service.v1\x1a\x1cgoogle/api/annotations.proto\x1a\x1bgoogle/protobuf/empty.proto\x1a\x1epagination/v1/pagination.proto\x1a\x1cledger/service/v1/book.proto2\xc4\t\n" +
 	"\vBookService\x12_\n" +
 	"\x04List\x12\x19.pagination.PagingRequest\x1a#.ledger.service.v1.ListBookResponse\"\x17\x82\xd3\xe4\x93\x02\x11\x12\x0f/admin/v1/books\x12r\n" +
-	"\aListAll\x12%.ledger.service.v1.ListAllBookRequest\x1a#.ledger.service.v1.ListBookResponse\"\x1b\x82\xd3\xe4\x93\x02\x15\x12\x13/admin/v1/books/all\x12_\n" +
+	"\aListAll\x12%.ledger.service.v1.ListAllBookRequest\x1a#.ledger.service.v1.ListBookResponse\"\x1b\x82\xd3\xe4\x93\x02\x15\x12\x13/admin/v1/books-all\x12_\n" +
 	"\x03Get\x12!.ledger.service.v1.GetBookRequest\x1a\x17.ledger.service.v1.Book\"\x1c\x82\xd3\xe4\x93\x02\x16\x12\x14/admin/v1/books/{id}\x12c\n" +
 	"\x06Create\x12$.ledger.service.v1.CreateBookRequest\x1a\x17.ledger.service.v1.Book\"\x1a\x82\xd3\xe4\x93\x02\x14:\x01*\"\x0f/admin/v1/books\x12h\n" +
 	"\x06Update\x12$.ledger.service.v1.UpdateBookRequest\x1a\x17.ledger.service.v1.Book\"\x1f\x82\xd3\xe4\x93\x02\x19:\x01*\x1a\x14/admin/v1/books/{id}\x12d\n" +
 	"\x06Delete\x12$.ledger.service.v1.DeleteBookRequest\x1a\x16.google.protobuf.Empty\"\x1c\x82\xd3\xe4\x93\x02\x16*\x14/admin/v1/books/{id}\x12o\n" +
-	"\x06Toggle\x12$.ledger.service.v1.ToggleBookRequest\x1a\x17.ledger.service.v1.Book\"&\x82\xd3\xe4\x93\x02 :\x01*2\x1b/admin/v1/books/{id}/toggle\x12\x80\x01\n" +
-	"\x10CreateByTemplate\x12..ledger.service.v1.CreateBookByTemplateRequest\x1a\x17.ledger.service.v1.Book\"#\x82\xd3\xe4\x93\x02\x1d:\x01*\"\x18/admin/v1/books/template\x12d\n" +
-	"\x04Copy\x12\".ledger.service.v1.CopyBookRequest\x1a\x17.ledger.service.v1.Book\"\x1f\x82\xd3\xe4\x93\x02\x19:\x01*\"\x14/admin/v1/books/copy\x12z\n" +
+	"\x06Toggle\x12$.ledger.service.v1.ToggleBookRequest\x1a\x17.ledger.service.v1.Book\"&\x82\xd3\xe4\x93\x02 :\x01*2\x1b/admin/v1/books/{id}/toggle\x12\x85\x01\n" +
+	"\x10CreateByTemplate\x12..ledger.service.v1.CreateBookByTemplateRequest\x1a\x17.ledger.service.v1.Book\"(\x82\xd3\xe4\x93\x02\":\x01*\"\x1d/admin/v1/books-from-template\x12d\n" +
+	"\x04Copy\x12\".ledger.service.v1.CopyBookRequest\x1a\x17.ledger.service.v1.Book\"\x1f\x82\xd3\xe4\x93\x02\x19:\x01*\"\x14/admin/v1/books-copy\x12z\n" +
 	"\x06Export\x12$.ledger.service.v1.ExportBookRequest\x1a%.ledger.service.v1.ExportBookResponse\"#\x82\xd3\xe4\x93\x02\x1d\x12\x1b/admin/v1/books/{id}/export\x12o\n" +
-	"\fListAllBooks\x12\x16.google.protobuf.Empty\x1a#.ledger.service.v1.ListBookResponse\"\"\x82\xd3\xe4\x93\x02\x1c\x12\x1a/admin/v1/books/select-allB\xb8\x01\n" +
+	"\fListAllBooks\x12\x16.google.protobuf.Empty\x1a#.ledger.service.v1.ListBookResponse\"\"\x82\xd3\xe4\x93\x02\x1c\x12\x1a/admin/v1/books-select-allB\xb8\x01\n" +
 	"\x14com.admin.service.v1B\n" +
 	"IBookProtoP\x01Z2go-wind-ledger/api/gen/go/admin/service/v1;adminpb\xa2\x02\x03ASX\xaa\x02\x10Admin.Service.V1\xca\x02\x10Admin\\Service\\V1\xe2\x02\x1cAdmin\\Service\\V1\\GPBMetadata\xea\x02\x12Admin::Service::V1b\x06proto3"
 

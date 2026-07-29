@@ -51,7 +51,7 @@ service BalanceFlowService {
 
   rpc Statistics (ledger.service.v1.StatisticsRequest) returns (ledger.service.v1.StatisticsResponse) {
     option (google.api.http) = {
-      get: "/admin/v1/balance-flows/statistics"
+      get: "/admin/v1/balance-flow-statistics"
     };
   }
 }

@@ -51,16 +51,16 @@ type BookServiceHTTPServer interface {
 func RegisterBookServiceHTTPServer(s *http.Server, srv BookServiceHTTPServer) {
 	r := s.Route("/")
 	r.GET("/app/v1/books", _BookService_List2_HTTP_Handler(srv))
-	r.GET("/app/v1/books/all", _BookService_ListAll1_HTTP_Handler(srv))
+	r.GET("/app/v1/books-all", _BookService_ListAll1_HTTP_Handler(srv))
 	r.GET("/app/v1/books/{id}", _BookService_Get2_HTTP_Handler(srv))
 	r.POST("/app/v1/books", _BookService_Create2_HTTP_Handler(srv))
 	r.PUT("/app/v1/books/{id}", _BookService_Update2_HTTP_Handler(srv))
 	r.DELETE("/app/v1/books/{id}", _BookService_Delete2_HTTP_Handler(srv))
 	r.PATCH("/app/v1/books/{id}/toggle", _BookService_Toggle1_HTTP_Handler(srv))
-	r.POST("/app/v1/books/template", _BookService_CreateByTemplate0_HTTP_Handler(srv))
-	r.POST("/app/v1/books/copy", _BookService_Copy0_HTTP_Handler(srv))
+	r.POST("/app/v1/books-from-template", _BookService_CreateByTemplate0_HTTP_Handler(srv))
+	r.POST("/app/v1/books-copy", _BookService_Copy0_HTTP_Handler(srv))
 	r.GET("/app/v1/books/{id}/export", _BookService_Export0_HTTP_Handler(srv))
-	r.GET("/app/v1/books/select-all", _BookService_ListAllBooks0_HTTP_Handler(srv))
+	r.GET("/app/v1/books-select-all", _BookService_ListAllBooks0_HTTP_Handler(srv))
 }
 
 func _BookService_List2_HTTP_Handler(srv BookServiceHTTPServer) func(ctx http.Context) error {
@@ -326,7 +326,7 @@ func NewBookServiceHTTPClient(client *http.Client) BookServiceHTTPClient {
 
 func (c *BookServiceHTTPClientImpl) Copy(ctx context.Context, in *v11.CopyBookRequest, opts ...http.CallOption) (*v11.Book, error) {
 	var out v11.Book
-	pattern := "/app/v1/books/copy"
+	pattern := "/app/v1/books-copy"
 	path := binding.EncodeURL(pattern, in, false)
 	opts = append(opts, http.Operation(OperationBookServiceCopy))
 	opts = append(opts, http.PathTemplate(pattern))
@@ -352,7 +352,7 @@ func (c *BookServiceHTTPClientImpl) Create(ctx context.Context, in *v11.CreateBo
 
 func (c *BookServiceHTTPClientImpl) CreateByTemplate(ctx context.Context, in *v11.CreateBookByTemplateRequest, opts ...http.CallOption) (*v11.Book, error) {
 	var out v11.Book
-	pattern := "/app/v1/books/template"
+	pattern := "/app/v1/books-from-template"
 	path := binding.EncodeURL(pattern, in, false)
 	opts = append(opts, http.Operation(OperationBookServiceCreateByTemplate))
 	opts = append(opts, http.PathTemplate(pattern))
@@ -417,7 +417,7 @@ func (c *BookServiceHTTPClientImpl) List(ctx context.Context, in *v1.PagingReque
 
 func (c *BookServiceHTTPClientImpl) ListAll(ctx context.Context, in *v11.ListAllBookRequest, opts ...http.CallOption) (*v11.ListBookResponse, error) {
 	var out v11.ListBookResponse
-	pattern := "/app/v1/books/all"
+	pattern := "/app/v1/books-all"
 	path := binding.EncodeURL(pattern, in, true)
 	opts = append(opts, http.Operation(OperationBookServiceListAll))
 	opts = append(opts, http.PathTemplate(pattern))
@@ -430,7 +430,7 @@ func (c *BookServiceHTTPClientImpl) ListAll(ctx context.Context, in *v11.ListAll
 
 func (c *BookServiceHTTPClientImpl) ListAllBooks(ctx context.Context, in *emptypb.Empty, opts ...http.CallOption) (*v11.ListBookResponse, error) {
 	var out v11.ListBookResponse
-	pattern := "/app/v1/books/select-all"
+	pattern := "/app/v1/books-select-all"
 	path := binding.EncodeURL(pattern, in, true)
 	opts = append(opts, http.Operation(OperationBookServiceListAllBooks))
 	opts = append(opts, http.PathTemplate(pattern))

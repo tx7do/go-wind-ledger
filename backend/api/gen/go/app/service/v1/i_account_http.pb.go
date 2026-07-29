@@ -49,7 +49,7 @@ type AccountServiceHTTPServer interface {
 func RegisterAccountServiceHTTPServer(s *http.Server, srv AccountServiceHTTPServer) {
 	r := s.Route("/")
 	r.GET("/app/v1/accounts", _AccountService_List0_HTTP_Handler(srv))
-	r.GET("/app/v1/accounts/all", _AccountService_ListAll0_HTTP_Handler(srv))
+	r.GET("/app/v1/accounts-all", _AccountService_ListAll0_HTTP_Handler(srv))
 	r.GET("/app/v1/accounts/{id}", _AccountService_Get0_HTTP_Handler(srv))
 	r.POST("/app/v1/accounts", _AccountService_Create0_HTTP_Handler(srv))
 	r.PUT("/app/v1/accounts/{id}", _AccountService_Update0_HTTP_Handler(srv))
@@ -365,7 +365,7 @@ func (c *AccountServiceHTTPClientImpl) List(ctx context.Context, in *v1.PagingRe
 
 func (c *AccountServiceHTTPClientImpl) ListAll(ctx context.Context, in *v11.ListAllAccountRequest, opts ...http.CallOption) (*v11.ListAccountResponse, error) {
 	var out v11.ListAccountResponse
-	pattern := "/app/v1/accounts/all"
+	pattern := "/app/v1/accounts-all"
 	path := binding.EncodeURL(pattern, in, true)
 	opts = append(opts, http.Operation(OperationAccountServiceListAll))
 	opts = append(opts, http.PathTemplate(pattern))

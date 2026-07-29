@@ -25,6 +25,6 @@ service BalanceFlowService {
     option (google.api.http) = { patch: "/app/v1/balance-flows/{id}/confirm" body: "*" };
   }
   rpc Statistics (ledger.service.v1.StatisticsRequest) returns (ledger.service.v1.StatisticsResponse) {
-    option (google.api.http) = { get: "/app/v1/balance-flows/statistics" };
+    option (google.api.http) = { get: "/app/v1/balance-flow-statistics" };
   }
 }

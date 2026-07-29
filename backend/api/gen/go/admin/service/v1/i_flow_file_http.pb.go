@@ -41,8 +41,8 @@ func RegisterFlowFileServiceHTTPServer(s *http.Server, srv FlowFileServiceHTTPSe
 	r := s.Route("/")
 	r.GET("/admin/v1/flow-files", _FlowFileService_List11_HTTP_Handler(srv))
 	r.DELETE("/admin/v1/flow-files/{id}", _FlowFileService_Delete8_HTTP_Handler(srv))
-	r.POST("/admin/v1/flow-files/upload", _FlowFileService_UploadFile0_HTTP_Handler(srv))
-	r.GET("/admin/v1/flow-files/view", _FlowFileService_ViewFile0_HTTP_Handler(srv))
+	r.POST("/admin/v1/flow-files-upload", _FlowFileService_UploadFile0_HTTP_Handler(srv))
+	r.GET("/admin/v1/flow-files-view", _FlowFileService_ViewFile0_HTTP_Handler(srv))
 }
 
 func _FlowFileService_List11_HTTP_Handler(srv FlowFileServiceHTTPServer) func(ctx http.Context) error {
@@ -177,7 +177,7 @@ func (c *FlowFileServiceHTTPClientImpl) List(ctx context.Context, in *v1.ListFlo
 // UploadFile 上传附件
 func (c *FlowFileServiceHTTPClientImpl) UploadFile(ctx context.Context, in *v1.UploadFlowFileRequest, opts ...http.CallOption) (*v1.FlowFile, error) {
 	var out v1.FlowFile
-	pattern := "/admin/v1/flow-files/upload"
+	pattern := "/admin/v1/flow-files-upload"
 	path := binding.EncodeURL(pattern, in, false)
 	opts = append(opts, http.Operation(OperationFlowFileServiceUploadFile))
 	opts = append(opts, http.PathTemplate(pattern))
@@ -191,7 +191,7 @@ func (c *FlowFileServiceHTTPClientImpl) UploadFile(ctx context.Context, in *v1.U
 // ViewFile 查看附件（免认证，按 create_time 安全验证）
 func (c *FlowFileServiceHTTPClientImpl) ViewFile(ctx context.Context, in *v1.ViewFlowFileRequest, opts ...http.CallOption) (*v1.ViewFlowFileResponse, error) {
 	var out v1.ViewFlowFileResponse
-	pattern := "/admin/v1/flow-files/view"
+	pattern := "/admin/v1/flow-files-view"
 	path := binding.EncodeURL(pattern, in, true)
 	opts = append(opts, http.Operation(OperationFlowFileServiceViewFile))
 	opts = append(opts, http.PathTemplate(pattern))

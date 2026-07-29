@@ -679,6 +679,82 @@ paths:
                 "200":
                     description: OK
                     content: {}
+    /admin/v1/balance-flow-statistics:
+        get:
+            tags:
+                - BalanceFlowService
+            operationId: BalanceFlowService_Statistics
+            parameters:
+                - name: bookId
+                  in: query
+                  schema:
+                    type: integer
+                    format: uint32
+                - name: type
+                  in: query
+                  schema:
+                    enum:
+                        - FLOW_TYPE_UNSPECIFIED
+                        - FLOW_TYPE_EXPENSE
+                        - FLOW_TYPE_INCOME
+                        - FLOW_TYPE_TRANSFER
+                        - FLOW_TYPE_ADJUST
+                    type: string
+                    format: enum
+                - name: title
+                  in: query
+                  schema:
+                    type: string
+                - name: minAmount
+                  in: query
+                  schema:
+                    type: string
+                - name: maxAmount
+                  in: query
+                  schema:
+                    type: string
+                - name: minTime
+                  in: query
+                  schema:
+                    type: string
+                - name: maxTime
+                  in: query
+                  schema:
+                    type: string
+                - name: accountId
+                  in: query
+                  schema:
+                    type: integer
+                    format: uint32
+                - name: categoryIds
+                  in: query
+                  schema:
+                    type: array
+                    items:
+                        type: integer
+                        format: uint32
+                - name: tagIds
+                  in: query
+                  schema:
+                    type: array
+                    items:
+                        type: integer
+                        format: uint32
+                - name: confirm
+                  in: query
+                  schema:
+                    type: boolean
+                - name: include
+                  in: query
+                  schema:
+                    type: boolean
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/ledger.service.v1.StatisticsResponse'
     /admin/v1/balance-flows:
         get:
             tags:
@@ -773,82 +849,6 @@ paths:
                         application/json:
                             schema:
                                 $ref: '#/components/schemas/ledger.service.v1.BalanceFlow'
-    /admin/v1/balance-flows/statistics:
-        get:
-            tags:
-                - BalanceFlowService
-            operationId: BalanceFlowService_Statistics
-            parameters:
-                - name: bookId
-                  in: query
-                  schema:
-                    type: integer
-                    format: uint32
-                - name: type
-                  in: query
-                  schema:
-                    enum:
-                        - FLOW_TYPE_UNSPECIFIED
-                        - FLOW_TYPE_EXPENSE
-                        - FLOW_TYPE_INCOME
-                        - FLOW_TYPE_TRANSFER
-                        - FLOW_TYPE_ADJUST
-                    type: string
-                    format: enum
-                - name: title
-                  in: query
-                  schema:
-                    type: string
-                - name: minAmount
-                  in: query
-                  schema:
-                    type: string
-                - name: maxAmount
-                  in: query
-                  schema:
-                    type: string
-                - name: minTime
-                  in: query
-                  schema:
-                    type: string
-                - name: maxTime
-                  in: query
-                  schema:
-                    type: string
-                - name: accountId
-                  in: query
-                  schema:
-                    type: integer
-                    format: uint32
-                - name: categoryIds
-                  in: query
-                  schema:
-                    type: array
-                    items:
-                        type: integer
-                        format: uint32
-                - name: tagIds
-                  in: query
-                  schema:
-                    type: array
-                    items:
-                        type: integer
-                        format: uint32
-                - name: confirm
-                  in: query
-                  schema:
-                    type: boolean
-                - name: include
-                  in: query
-                  schema:
-                    type: boolean
-            responses:
-                "200":
-                    description: OK
-                    content:
-                        application/json:
-                            schema:
-                                $ref: '#/components/schemas/ledger.service.v1.StatisticsResponse'
     /admin/v1/balance-flows/{id}:
         get:
             tags:
@@ -937,7 +937,7 @@ paths:
                         application/json:
                             schema:
                                 $ref: '#/components/schemas/ledger.service.v1.BalanceFlow'
-    /admin/v1/book-templates/all:
+    /admin/v1/book-templates-all:
         get:
             tags:
                 - BookTemplateService
@@ -1062,7 +1062,7 @@ paths:
                         application/json:
                             schema:
                                 $ref: '#/components/schemas/ledger.service.v1.Book'
-    /admin/v1/books/all:
+    /admin/v1/books-all:
         get:
             tags:
                 - BookService
@@ -1079,7 +1079,7 @@ paths:
                         application/json:
                             schema:
                                 $ref: '#/components/schemas/ledger.service.v1.ListBookResponse'
-    /admin/v1/books/copy:
+    /admin/v1/books-copy:
         post:
             tags:
                 - BookService
@@ -1097,19 +1097,7 @@ paths:
                         application/json:
                             schema:
                                 $ref: '#/components/schemas/ledger.service.v1.Book'
-    /admin/v1/books/select-all:
-        get:
-            tags:
-                - BookService
-            operationId: BookService_ListAllBooks
-            responses:
-                "200":
-                    description: OK
-                    content:
-                        application/json:
-                            schema:
-                                $ref: '#/components/schemas/ledger.service.v1.ListBookResponse'
-    /admin/v1/books/template:
+    /admin/v1/books-from-template:
         post:
             tags:
                 - BookService
@@ -1127,6 +1115,18 @@ paths:
                         application/json:
                             schema:
                                 $ref: '#/components/schemas/ledger.service.v1.Book'
+    /admin/v1/books-select-all:
+        get:
+            tags:
+                - BookService
+            operationId: BookService_ListAllBooks
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/ledger.service.v1.ListBookResponse'
     /admin/v1/books/{id}:
         get:
             tags:
@@ -1333,7 +1333,7 @@ paths:
                         application/json:
                             schema:
                                 $ref: '#/components/schemas/ledger.service.v1.Budget'
-    /admin/v1/budgets/all:
+    /admin/v1/budgets-all:
         get:
             tags:
                 - BudgetService
@@ -2499,7 +2499,7 @@ paths:
                         application/json:
                             schema:
                                 $ref: '#/components/schemas/ledger.service.v1.ListFlowFileResponse'
-    /admin/v1/flow-files/upload:
+    /admin/v1/flow-files-upload:
         post:
             tags:
                 - FlowFileService
@@ -2518,7 +2518,7 @@ paths:
                         application/json:
                             schema:
                                 $ref: '#/components/schemas/ledger.service.v1.FlowFile'
-    /admin/v1/flow-files/view:
+    /admin/v1/flow-files-view:
         get:
             tags:
                 - FlowFileService
@@ -4303,7 +4303,7 @@ paths:
                         application/json:
                             schema:
                                 $ref: '#/components/schemas/ledger.service.v1.Payee'
-    /admin/v1/payees/all:
+    /admin/v1/payees-all:
         get:
             tags:
                 - PayeeService

@@ -31,7 +31,7 @@ const file_app_service_v1_i_account_proto_rawDesc = "" +
 	"\x1eapp/service/v1/i_account.proto\x12\x0eapp.service.v1\x1a\x1cgoogle/api/annotations.proto\x1a\x1bgoogle/protobuf/empty.proto\x1a\x1epagination/v1/pagination.proto\x1a\x1fledger/service/v1/account.proto2\x9b\t\n" +
 	"\x0eAccountService\x12c\n" +
 	"\x04List\x12\x19.pagination.PagingRequest\x1a&.ledger.service.v1.ListAccountResponse\"\x18\x82\xd3\xe4\x93\x02\x12\x12\x10/app/v1/accounts\x12y\n" +
-	"\aListAll\x12(.ledger.service.v1.ListAllAccountRequest\x1a&.ledger.service.v1.ListAccountResponse\"\x1c\x82\xd3\xe4\x93\x02\x16\x12\x14/app/v1/accounts/all\x12f\n" +
+	"\aListAll\x12(.ledger.service.v1.ListAllAccountRequest\x1a&.ledger.service.v1.ListAccountResponse\"\x1c\x82\xd3\xe4\x93\x02\x16\x12\x14/app/v1/accounts-all\x12f\n" +
 	"\x03Get\x12$.ledger.service.v1.GetAccountRequest\x1a\x1a.ledger.service.v1.Account\"\x1d\x82\xd3\xe4\x93\x02\x17\x12\x15/app/v1/accounts/{id}\x12j\n" +
 	"\x06Create\x12'.ledger.service.v1.CreateAccountRequest\x1a\x1a.ledger.service.v1.Account\"\x1b\x82\xd3\xe4\x93\x02\x15:\x01*\"\x10/app/v1/accounts\x12o\n" +
 	"\x06Update\x12'.ledger.service.v1.UpdateAccountRequest\x1a\x1a.ledger.service.v1.Account\" \x82\xd3\xe4\x93\x02\x1a:\x01*\x1a\x15/app/v1/accounts/{id}\x12h\n" +

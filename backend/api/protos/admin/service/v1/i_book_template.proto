@@ -11,7 +11,7 @@ import "ledger/service/v1/book_template.proto";
 service BookTemplateService {
   rpc ListAll (google.protobuf.Empty) returns (ledger.service.v1.ListBookTemplateResponse) {
     option (google.api.http) = {
-      get: "/admin/v1/book-templates/all"
+      get: "/admin/v1/book-templates-all"
     };
   }
 

@@ -32,8 +32,8 @@ const file_admin_service_v1_i_flow_file_proto_rawDesc = "" +
 	"\x04List\x12&.ledger.service.v1.ListFlowFileRequest\x1a'.ledger.service.v1.ListFlowFileResponse\"\x1c\x82\xd3\xe4\x93\x02\x16\x12\x14/admin/v1/flow-files\x12m\n" +
 	"\x06Delete\x12(.ledger.service.v1.DeleteFlowFileRequest\x1a\x16.google.protobuf.Empty\"!\x82\xd3\xe4\x93\x02\x1b*\x19/admin/v1/flow-files/{id}\x12{\n" +
 	"\n" +
-	"UploadFile\x12(.ledger.service.v1.UploadFlowFileRequest\x1a\x1b.ledger.service.v1.FlowFile\"&\x82\xd3\xe4\x93\x02 :\x01*\"\x1b/admin/v1/flow-files/upload\x12~\n" +
-	"\bViewFile\x12&.ledger.service.v1.ViewFlowFileRequest\x1a'.ledger.service.v1.ViewFlowFileResponse\"!\x82\xd3\xe4\x93\x02\x1b\x12\x19/admin/v1/flow-files/viewB\xbc\x01\n" +
+	"UploadFile\x12(.ledger.service.v1.UploadFlowFileRequest\x1a\x1b.ledger.service.v1.FlowFile\"&\x82\xd3\xe4\x93\x02 :\x01*\"\x1b/admin/v1/flow-files-upload\x12~\n" +
+	"\bViewFile\x12&.ledger.service.v1.ViewFlowFileRequest\x1a'.ledger.service.v1.ViewFlowFileResponse\"!\x82\xd3\xe4\x93\x02\x1b\x12\x19/admin/v1/flow-files-viewB\xbc\x01\n" +
 	"\x14com.admin.service.v1B\x0eIFlowFileProtoP\x01Z2go-wind-ledger/api/gen/go/admin/service/v1;adminpb\xa2\x02\x03ASX\xaa\x02\x10Admin.Service.V1\xca\x02\x10Admin\\Service\\V1\xe2\x02\x1cAdmin\\Service\\V1\\GPBMetadata\xea\x02\x12Admin::Service::V1b\x06proto3"
 
 var file_admin_service_v1_i_flow_file_proto_goTypes = []any{

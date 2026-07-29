@@ -15,7 +15,7 @@ service BudgetService {
   }
 
   rpc ListAll (ledger.service.v1.ListAllBudgetRequest) returns (ledger.service.v1.ListBudgetResponse) {
-    option (google.api.http) = { get: "/admin/v1/budgets/all" };
+    option (google.api.http) = { get: "/admin/v1/budgets-all" };
   }
 
   rpc Get (ledger.service.v1.GetBudgetRequest) returns (ledger.service.v1.Budget) {

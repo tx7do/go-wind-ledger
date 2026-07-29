@@ -47,7 +47,7 @@ type PayeeServiceHTTPServer interface {
 func RegisterPayeeServiceHTTPServer(s *http.Server, srv PayeeServiceHTTPServer) {
 	r := s.Route("/")
 	r.GET("/admin/v1/payees", _PayeeService_List20_HTTP_Handler(srv))
-	r.GET("/admin/v1/payees/all", _PayeeService_ListAll5_HTTP_Handler(srv))
+	r.GET("/admin/v1/payees-all", _PayeeService_ListAll5_HTTP_Handler(srv))
 	r.GET("/admin/v1/payees/{id}", _PayeeService_Get19_HTTP_Handler(srv))
 	r.POST("/admin/v1/payees", _PayeeService_Create14_HTTP_Handler(srv))
 	r.PUT("/admin/v1/payees/{id}", _PayeeService_Update14_HTTP_Handler(srv))
@@ -335,7 +335,7 @@ func (c *PayeeServiceHTTPClientImpl) List(ctx context.Context, in *v1.PagingRequ
 
 func (c *PayeeServiceHTTPClientImpl) ListAll(ctx context.Context, in *v11.ListAllPayeeRequest, opts ...http.CallOption) (*v11.ListPayeeResponse, error) {
 	var out v11.ListPayeeResponse
-	pattern := "/admin/v1/payees/all"
+	pattern := "/admin/v1/payees-all"
 	path := binding.EncodeURL(pattern, in, true)
 	opts = append(opts, http.Operation(OperationPayeeServiceListAll))
 	opts = append(opts, http.PathTemplate(pattern))

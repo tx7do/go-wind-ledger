@@ -28,19 +28,19 @@ var File_app_service_v1_i_book_proto protoreflect.FileDescriptor
 
 const file_app_service_v1_i_book_proto_rawDesc = "" +
 	"\n" +
-	"\x1bapp/service/v1/i_book.proto\x12\x0eapp.service.v1\x1a\x1cgoogle/api/annotations.proto\x1a\x1bgoogle/protobuf/empty.proto\x1a\x1epagination/v1/pagination.proto\x1a\x1cledger/service/v1/book.proto2\xa8\t\n" +
+	"\x1bapp/service/v1/i_book.proto\x12\x0eapp.service.v1\x1a\x1cgoogle/api/annotations.proto\x1a\x1bgoogle/protobuf/empty.proto\x1a\x1epagination/v1/pagination.proto\x1a\x1cledger/service/v1/book.proto2\xae\t\n" +
 	"\vBookService\x12]\n" +
 	"\x04List\x12\x19.pagination.PagingRequest\x1a#.ledger.service.v1.ListBookResponse\"\x15\x82\xd3\xe4\x93\x02\x0f\x12\r/app/v1/books\x12p\n" +
-	"\aListAll\x12%.ledger.service.v1.ListAllBookRequest\x1a#.ledger.service.v1.ListBookResponse\"\x19\x82\xd3\xe4\x93\x02\x13\x12\x11/app/v1/books/all\x12]\n" +
+	"\aListAll\x12%.ledger.service.v1.ListAllBookRequest\x1a#.ledger.service.v1.ListBookResponse\"\x19\x82\xd3\xe4\x93\x02\x13\x12\x11/app/v1/books-all\x12]\n" +
 	"\x03Get\x12!.ledger.service.v1.GetBookRequest\x1a\x17.ledger.service.v1.Book\"\x1a\x82\xd3\xe4\x93\x02\x14\x12\x12/app/v1/books/{id}\x12a\n" +
 	"\x06Create\x12$.ledger.service.v1.CreateBookRequest\x1a\x17.ledger.service.v1.Book\"\x18\x82\xd3\xe4\x93\x02\x12:\x01*\"\r/app/v1/books\x12f\n" +
 	"\x06Update\x12$.ledger.service.v1.UpdateBookRequest\x1a\x17.ledger.service.v1.Book\"\x1d\x82\xd3\xe4\x93\x02\x17:\x01*\x1a\x12/app/v1/books/{id}\x12b\n" +
 	"\x06Delete\x12$.ledger.service.v1.DeleteBookRequest\x1a\x16.google.protobuf.Empty\"\x1a\x82\xd3\xe4\x93\x02\x14*\x12/app/v1/books/{id}\x12m\n" +
-	"\x06Toggle\x12$.ledger.service.v1.ToggleBookRequest\x1a\x17.ledger.service.v1.Book\"$\x82\xd3\xe4\x93\x02\x1e:\x01*2\x19/app/v1/books/{id}/toggle\x12~\n" +
-	"\x10CreateByTemplate\x12..ledger.service.v1.CreateBookByTemplateRequest\x1a\x17.ledger.service.v1.Book\"!\x82\xd3\xe4\x93\x02\x1b:\x01*\"\x16/app/v1/books/template\x12b\n" +
-	"\x04Copy\x12\".ledger.service.v1.CopyBookRequest\x1a\x17.ledger.service.v1.Book\"\x1d\x82\xd3\xe4\x93\x02\x17:\x01*\"\x12/app/v1/books/copy\x12x\n" +
+	"\x06Toggle\x12$.ledger.service.v1.ToggleBookRequest\x1a\x17.ledger.service.v1.Book\"$\x82\xd3\xe4\x93\x02\x1e:\x01*2\x19/app/v1/books/{id}/toggle\x12\x83\x01\n" +
+	"\x10CreateByTemplate\x12..ledger.service.v1.CreateBookByTemplateRequest\x1a\x17.ledger.service.v1.Book\"&\x82\xd3\xe4\x93\x02 :\x01*\"\x1b/app/v1/books-from-template\x12b\n" +
+	"\x04Copy\x12\".ledger.service.v1.CopyBookRequest\x1a\x17.ledger.service.v1.Book\"\x1d\x82\xd3\xe4\x93\x02\x17:\x01*\"\x12/app/v1/books-copy\x12x\n" +
 	"\x06Export\x12$.ledger.service.v1.ExportBookRequest\x1a%.ledger.service.v1.ExportBookResponse\"!\x82\xd3\xe4\x93\x02\x1b\x12\x19/app/v1/books/{id}/export\x12m\n" +
-	"\fListAllBooks\x12\x16.google.protobuf.Empty\x1a#.ledger.service.v1.ListBookResponse\" \x82\xd3\xe4\x93\x02\x1a\x12\x18/app/v1/books/select-allB\xae\x01\n" +
+	"\fListAllBooks\x12\x16.google.protobuf.Empty\x1a#.ledger.service.v1.ListBookResponse\" \x82\xd3\xe4\x93\x02\x1a\x12\x18/app/v1/books-select-allB\xae\x01\n" +
 	"\x12com.app.service.v1B\n" +
 	"IBookProtoP\x01Z2go-wind-ledger/api/gen/go/app/service/v1;servicev1\xa2\x02\x03ASX\xaa\x02\x0eApp.Service.V1\xca\x02\x0eApp\\Service\\V1\xe2\x02\x1aApp\\Service\\V1\\GPBMetadata\xea\x02\x10App::Service::V1b\x06proto3"
 

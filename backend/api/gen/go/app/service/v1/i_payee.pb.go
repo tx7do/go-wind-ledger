@@ -31,7 +31,7 @@ const file_app_service_v1_i_payee_proto_rawDesc = "" +
 	"\x1capp/service/v1/i_payee.proto\x12\x0eapp.service.v1\x1a\x1cgoogle/api/annotations.proto\x1a\x1bgoogle/protobuf/empty.proto\x1a\x1epagination/v1/pagination.proto\x1a\x1dledger/service/v1/payee.proto2\xef\x05\n" +
 	"\fPayeeService\x12_\n" +
 	"\x04List\x12\x19.pagination.PagingRequest\x1a$.ledger.service.v1.ListPayeeResponse\"\x16\x82\xd3\xe4\x93\x02\x10\x12\x0e/app/v1/payees\x12s\n" +
-	"\aListAll\x12&.ledger.service.v1.ListAllPayeeRequest\x1a$.ledger.service.v1.ListPayeeResponse\"\x1a\x82\xd3\xe4\x93\x02\x14\x12\x12/app/v1/payees/all\x12`\n" +
+	"\aListAll\x12&.ledger.service.v1.ListAllPayeeRequest\x1a$.ledger.service.v1.ListPayeeResponse\"\x1a\x82\xd3\xe4\x93\x02\x14\x12\x12/app/v1/payees-all\x12`\n" +
 	"\x03Get\x12\".ledger.service.v1.GetPayeeRequest\x1a\x18.ledger.service.v1.Payee\"\x1b\x82\xd3\xe4\x93\x02\x15\x12\x13/app/v1/payees/{id}\x12d\n" +
 	"\x06Create\x12%.ledger.service.v1.CreatePayeeRequest\x1a\x18.ledger.service.v1.Payee\"\x19\x82\xd3\xe4\x93\x02\x13:\x01*\"\x0e/app/v1/payees\x12i\n" +
 	"\x06Update\x12%.ledger.service.v1.UpdatePayeeRequest\x1a\x18.ledger.service.v1.Payee\"\x1e\x82\xd3\xe4\x93\x02\x18:\x01*\x1a\x13/app/v1/payees/{id}\x12d\n" +

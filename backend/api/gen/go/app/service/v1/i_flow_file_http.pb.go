@@ -37,8 +37,8 @@ func RegisterFlowFileServiceHTTPServer(s *http.Server, srv FlowFileServiceHTTPSe
 	r := s.Route("/")
 	r.GET("/app/v1/flow-files", _FlowFileService_List5_HTTP_Handler(srv))
 	r.DELETE("/app/v1/flow-files/{id}", _FlowFileService_Delete4_HTTP_Handler(srv))
-	r.POST("/app/v1/flow-files/upload", _FlowFileService_UploadFile0_HTTP_Handler(srv))
-	r.GET("/app/v1/flow-files/view", _FlowFileService_ViewFile0_HTTP_Handler(srv))
+	r.POST("/app/v1/flow-files-upload", _FlowFileService_UploadFile0_HTTP_Handler(srv))
+	r.GET("/app/v1/flow-files-view", _FlowFileService_ViewFile0_HTTP_Handler(srv))
 }
 
 func _FlowFileService_List5_HTTP_Handler(srv FlowFileServiceHTTPServer) func(ctx http.Context) error {
@@ -166,7 +166,7 @@ func (c *FlowFileServiceHTTPClientImpl) List(ctx context.Context, in *v1.ListFlo
 
 func (c *FlowFileServiceHTTPClientImpl) UploadFile(ctx context.Context, in *v1.UploadFlowFileRequest, opts ...http.CallOption) (*v1.FlowFile, error) {
 	var out v1.FlowFile
-	pattern := "/app/v1/flow-files/upload"
+	pattern := "/app/v1/flow-files-upload"
 	path := binding.EncodeURL(pattern, in, false)
 	opts = append(opts, http.Operation(OperationFlowFileServiceUploadFile))
 	opts = append(opts, http.PathTemplate(pattern))
@@ -179,7 +179,7 @@ func (c *FlowFileServiceHTTPClientImpl) UploadFile(ctx context.Context, in *v1.U
 
 func (c *FlowFileServiceHTTPClientImpl) ViewFile(ctx context.Context, in *v1.ViewFlowFileRequest, opts ...http.CallOption) (*v1.ViewFlowFileResponse, error) {
 	var out v1.ViewFlowFileResponse
-	pattern := "/app/v1/flow-files/view"
+	pattern := "/app/v1/flow-files-view"
 	path := binding.EncodeURL(pattern, in, true)
 	opts = append(opts, http.Operation(OperationFlowFileServiceViewFile))
 	opts = append(opts, http.PathTemplate(pattern))

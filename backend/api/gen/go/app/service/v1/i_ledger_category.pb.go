@@ -31,7 +31,7 @@ const file_app_service_v1_i_ledger_category_proto_rawDesc = "" +
 	"&app/service/v1/i_ledger_category.proto\x12\x0eapp.service.v1\x1a\x1cgoogle/api/annotations.proto\x1a\x1bgoogle/protobuf/empty.proto\x1a\x1epagination/v1/pagination.proto\x1a ledger/service/v1/category.proto2\xeb\x06\n" +
 	"\x15LedgerCategoryService\x12m\n" +
 	"\x04List\x12\x19.pagination.PagingRequest\x1a'.ledger.service.v1.ListCategoryResponse\"!\x82\xd3\xe4\x93\x02\x1b\x12\x19/app/v1/ledger-categories\x12\x84\x01\n" +
-	"\aListAll\x12).ledger.service.v1.ListAllCategoryRequest\x1a'.ledger.service.v1.ListCategoryResponse\"%\x82\xd3\xe4\x93\x02\x1f\x12\x1d/app/v1/ledger-categories/all\x12q\n" +
+	"\aListAll\x12).ledger.service.v1.ListAllCategoryRequest\x1a'.ledger.service.v1.ListCategoryResponse\"%\x82\xd3\xe4\x93\x02\x1f\x12\x1d/app/v1/ledger-categories-all\x12q\n" +
 	"\x03Get\x12%.ledger.service.v1.GetCategoryRequest\x1a\x1b.ledger.service.v1.Category\"&\x82\xd3\xe4\x93\x02 \x12\x1e/app/v1/ledger-categories/{id}\x12u\n" +
 	"\x06Create\x12(.ledger.service.v1.CreateCategoryRequest\x1a\x1b.ledger.service.v1.Category\"$\x82\xd3\xe4\x93\x02\x1e:\x01*\"\x19/app/v1/ledger-categories\x12z\n" +
 	"\x06Update\x12(.ledger.service.v1.UpdateCategoryRequest\x1a\x1b.ledger.service.v1.Category\")\x82\xd3\xe4\x93\x02#:\x01*\x1a\x1e/app/v1/ledger-categories/{id}\x12r\n" +

@@ -26,7 +26,7 @@ service FlowFileService {
   // 上传附件
   rpc UploadFile (ledger.service.v1.UploadFlowFileRequest) returns (ledger.service.v1.FlowFile) {
     option (google.api.http) = {
-      post: "/admin/v1/flow-files/upload"
+      post: "/admin/v1/flow-files-upload"
       body: "*"
     };
   }
@@ -34,7 +34,7 @@ service FlowFileService {
   // 查看附件（免认证，按 create_time 安全验证）
   rpc ViewFile (ledger.service.v1.ViewFlowFileRequest) returns (ledger.service.v1.ViewFlowFileResponse) {
     option (google.api.http) = {
-      get: "/admin/v1/flow-files/view"
+      get: "/admin/v1/flow-files-view"
     };
   }
 }
