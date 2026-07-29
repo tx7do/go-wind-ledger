@@ -25,7 +25,7 @@ type TaskRepo struct {
 	entClient *entCrud.EntClient[*ent.Client]
 	log       *log.Helper
 
-	mapper        *mapper.CopierMapper[taskV1.Task, ent.Task]
+	mapper *mapper.CopierMapper[taskV1.Task, ent.Task]
 
 	repository *entCrud.Repository[
 		ent.TaskQuery, ent.TaskSelect,
@@ -41,11 +41,11 @@ func NewTaskRepo(ctx *bootstrap.Context, entClient *entCrud.EntClient[*ent.Clien
 	repo := &TaskRepo{
 		log:       ctx.NewLoggerHelper("task/repo/core-service"),
 		entClient: entClient,
+		mapper:    mapper.NewCopierMapper[taskV1.Task, ent.Task](),
 	}
 	repo.init()
 	return repo
 }
-
 
 func (r *TaskRepo) init() {
 	r.repository = entCrud.NewRepository[

@@ -26,7 +26,7 @@ type TenantRepo struct {
 	entClient *entCrud.EntClient[*ent.Client]
 	log       *log.Helper
 
-	mapper               *mapper.CopierMapper[identityV1.Tenant, ent.Tenant]
+	mapper *mapper.CopierMapper[identityV1.Tenant, ent.Tenant]
 
 	repository *entCrud.Repository[
 		ent.TenantQuery, ent.TenantSelect,
@@ -42,11 +42,11 @@ func NewTenantRepo(ctx *bootstrap.Context, entClient *entCrud.EntClient[*ent.Cli
 	repo := &TenantRepo{
 		log:       ctx.NewLoggerHelper("tenant/repo/core-service"),
 		entClient: entClient,
+		mapper:    mapper.NewCopierMapper[identityV1.Tenant, ent.Tenant](),
 	}
 	repo.init()
 	return repo
 }
-
 
 func (r *TenantRepo) init() {
 	r.repository = entCrud.NewRepository[

@@ -27,7 +27,7 @@ type MenuRepo struct {
 	entClient *entCrud.EntClient[*ent.Client]
 	log       *log.Helper
 
-	mapper          *mapper.CopierMapper[permissionV1.Menu, ent.Menu]
+	mapper *mapper.CopierMapper[permissionV1.Menu, ent.Menu]
 
 	repository *entCrud.Repository[
 		ent.MenuQuery, ent.MenuSelect,
@@ -43,11 +43,11 @@ func NewMenuRepo(ctx *bootstrap.Context, entClient *entCrud.EntClient[*ent.Clien
 	repo := &MenuRepo{
 		log:       ctx.NewLoggerHelper("menu/repo/core-service"),
 		entClient: entClient,
+		mapper:    mapper.NewCopierMapper[permissionV1.Menu, ent.Menu](),
 	}
 	repo.init()
 	return repo
 }
-
 
 func (r *MenuRepo) init() {
 	r.repository = entCrud.NewRepository[

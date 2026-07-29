@@ -36,7 +36,8 @@ func initApp(context *bootstrap.Context) (*kratos.App, func(), error) {
 		cleanup()
 		return nil, nil, err
 	}
-	userCredentialRepo := data.NewUserCredentialRepo(context, entClient)
+	crypto := data.NewPasswordCrypto()
+	userCredentialRepo := data.NewUserCredentialRepo(context, entClient, crypto)
 	userRoleRepo := data.NewUserRoleRepo(context, entClient)
 	userOrgUnitRepo := data.NewUserOrgUnitRepo(context, entClient)
 	userPositionRepo := data.NewUserPositionRepo(context, entClient)
@@ -44,7 +45,9 @@ func initApp(context *bootstrap.Context) (*kratos.App, func(), error) {
 	userRepo := data.NewUserRepo(context, entClient, userRoleRepo, userOrgUnitRepo, userPositionRepo, membershipRepo)
 	roleRepo := data.NewRoleRepo(context, entClient)
 	tenantRepo := data.NewTenantRepo(context, entClient)
-	permissionRepo := data.NewPermissionRepo(context, entClient)
+	permissionApiRepo := data.NewPermissionApiRepo(context, entClient)
+	permissionMenuRepo := data.NewPermissionMenuRepo(context, entClient)
+	permissionRepo := data.NewPermissionRepo(context, entClient, permissionApiRepo, permissionMenuRepo)
 	authenticationService := service.NewAuthenticationService(context, authenticator, userCredentialRepo, userRepo, roleRepo, tenantRepo, permissionRepo)
 	loginPolicyRepo := data.NewLoginPolicyRepo(context, entClient)
 	loginPolicyService := service.NewLoginPolicyService(context, loginPolicyRepo)

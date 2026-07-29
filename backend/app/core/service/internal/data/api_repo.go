@@ -42,6 +42,7 @@ func NewApiRepo(ctx *bootstrap.Context, entClient *entCrud.EntClient[*ent.Client
 	repo := &ApiRepo{
 		log:       ctx.NewLoggerHelper("api/repo/core-service"),
 		entClient: entClient,
+		mapper:    mapper.NewCopierMapper[permissionV1.Api, ent.Api](),
 	}
 	repo.init()
 	return repo

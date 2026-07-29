@@ -70,7 +70,7 @@ func NewPermissionService(
 
 func (s *PermissionService) init() {
 	ctx := appViewer.NewSystemViewerContext(context.Background())
-	if resp, _ := s.permissionServiceClient.Count(ctx, nil); resp.Count == 0 || resp.Count == (uint64)(len(constants.DefaultPermissions)) {
+	if resp, _ := s.permissionServiceClient.Count(ctx, nil); resp != nil && (resp.Count == 0 || resp.Count == (uint64)(len(constants.DefaultPermissions))) {
 		apiCount, _ := s.apiServiceClient.Count(ctx, nil)
 
 		menusCount, _ := s.menuServiceClient.Count(ctx, nil)

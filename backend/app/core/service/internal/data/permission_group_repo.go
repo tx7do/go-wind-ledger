@@ -28,7 +28,7 @@ type PermissionGroupRepo struct {
 	entClient *entCrud.EntClient[*ent.Client]
 	log       *log.Helper
 
-	mapper          *mapper.CopierMapper[permissionV1.PermissionGroup, ent.PermissionGroup]
+	mapper *mapper.CopierMapper[permissionV1.PermissionGroup, ent.PermissionGroup]
 
 	repository *entCrud.Repository[
 		ent.PermissionGroupQuery, ent.PermissionGroupSelect,
@@ -44,11 +44,11 @@ func NewPermissionGroupRepo(ctx *bootstrap.Context, entClient *entCrud.EntClient
 	repo := &PermissionGroupRepo{
 		log:       ctx.NewLoggerHelper("permissiongroup/repo/core-service"),
 		entClient: entClient,
+		mapper:    mapper.NewCopierMapper[permissionV1.PermissionGroup, ent.PermissionGroup](),
 	}
 	repo.init()
 	return repo
 }
-
 
 func (r *PermissionGroupRepo) init() {
 	r.repository = entCrud.NewRepository[

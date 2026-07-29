@@ -30,7 +30,7 @@ type UserCredentialRepo struct {
 	entClient *entCrud.EntClient[*ent.Client]
 	log       *log.Helper
 
-	mapper                  *mapper.CopierMapper[authenticationV1.UserCredential, ent.UserCredential]
+	mapper *mapper.CopierMapper[authenticationV1.UserCredential, ent.UserCredential]
 
 	passwordCrypto password.Crypto
 
@@ -44,15 +44,20 @@ type UserCredentialRepo struct {
 	]
 }
 
-func NewUserCredentialRepo(ctx *bootstrap.Context, entClient *entCrud.EntClient[*ent.Client]) *UserCredentialRepo {
+func NewUserCredentialRepo(
+	ctx *bootstrap.Context,
+	entClient *entCrud.EntClient[*ent.Client],
+	passwordCrypto password.Crypto,
+) *UserCredentialRepo {
 	repo := &UserCredentialRepo{
-		log:       ctx.NewLoggerHelper("usercredential/repo/core-service"),
-		entClient: entClient,
+		log:            ctx.NewLoggerHelper("usercredential/repo/core-service"),
+		entClient:      entClient,
+		mapper:         mapper.NewCopierMapper[authenticationV1.UserCredential, ent.UserCredential](),
+		passwordCrypto: passwordCrypto,
 	}
 	repo.init()
 	return repo
 }
-
 
 func (r *UserCredentialRepo) init() {
 	r.repository = entCrud.NewRepository[

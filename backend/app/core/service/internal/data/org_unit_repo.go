@@ -28,7 +28,7 @@ type OrgUnitRepo struct {
 	entClient *entCrud.EntClient[*ent.Client]
 	log       *log.Helper
 
-	mapper          *mapper.CopierMapper[identityV1.OrgUnit, ent.OrgUnit]
+	mapper *mapper.CopierMapper[identityV1.OrgUnit, ent.OrgUnit]
 
 	repository *entCrud.Repository[
 		ent.OrgUnitQuery, ent.OrgUnitSelect,
@@ -44,11 +44,11 @@ func NewOrgUnitRepo(ctx *bootstrap.Context, entClient *entCrud.EntClient[*ent.Cl
 	repo := &OrgUnitRepo{
 		log:       ctx.NewLoggerHelper("orgunit/repo/core-service"),
 		entClient: entClient,
+		mapper:    mapper.NewCopierMapper[identityV1.OrgUnit, ent.OrgUnit](),
 	}
 	repo.init()
 	return repo
 }
-
 
 func (r *OrgUnitRepo) init() {
 	r.repository = entCrud.NewRepository[
@@ -255,7 +255,6 @@ func (r *OrgUnitRepo) Create(ctx context.Context, req *identityV1.CreateOrgUnitR
 		SetNillableContactUserID(req.Data.ContactUserId).
 		SetNillableCreatedBy(req.Data.CreatedBy).
 		SetCreatedAt(time.Now())
-
 
 	if req.Data.Id != nil {
 		builder.SetID(req.GetData().GetId())

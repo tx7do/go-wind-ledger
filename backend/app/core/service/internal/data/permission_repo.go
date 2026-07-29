@@ -31,7 +31,7 @@ type PermissionRepo struct {
 	entClient *entCrud.EntClient[*ent.Client]
 	log       *log.Helper
 
-	mapper          *mapper.CopierMapper[permissionV1.Permission, ent.Permission]
+	mapper *mapper.CopierMapper[permissionV1.Permission, ent.Permission]
 
 	repository *entCrud.Repository[
 		ent.PermissionQuery, ent.PermissionSelect,
@@ -46,15 +46,22 @@ type PermissionRepo struct {
 	permissionMenuRepo *PermissionMenuRepo
 }
 
-func NewPermissionRepo(ctx *bootstrap.Context, entClient *entCrud.EntClient[*ent.Client]) *PermissionRepo {
+func NewPermissionRepo(
+	ctx *bootstrap.Context,
+	entClient *entCrud.EntClient[*ent.Client],
+	permissionApiRepo *PermissionApiRepo,
+	permissionMenuRepo *PermissionMenuRepo,
+) *PermissionRepo {
 	repo := &PermissionRepo{
-		log:       ctx.NewLoggerHelper("permission/repo/core-service"),
-		entClient: entClient,
+		log:                ctx.NewLoggerHelper("permission/repo/core-service"),
+		entClient:          entClient,
+		mapper:             mapper.NewCopierMapper[permissionV1.Permission, ent.Permission](),
+		permissionApiRepo:  permissionApiRepo,
+		permissionMenuRepo: permissionMenuRepo,
 	}
 	repo.init()
 	return repo
 }
-
 
 func (r *PermissionRepo) init() {
 	r.repository = entCrud.NewRepository[

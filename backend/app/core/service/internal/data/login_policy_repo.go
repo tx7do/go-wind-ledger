@@ -25,7 +25,7 @@ type LoginPolicyRepo struct {
 	entClient *entCrud.EntClient[*ent.Client]
 	log       *log.Helper
 
-	mapper          *mapper.CopierMapper[authenticationV1.LoginPolicy, ent.LoginPolicy]
+	mapper *mapper.CopierMapper[authenticationV1.LoginPolicy, ent.LoginPolicy]
 
 	repository *entCrud.Repository[
 		ent.LoginPolicyQuery, ent.LoginPolicySelect,
@@ -41,11 +41,11 @@ func NewLoginPolicyRepo(ctx *bootstrap.Context, entClient *entCrud.EntClient[*en
 	repo := &LoginPolicyRepo{
 		log:       ctx.NewLoggerHelper("loginpolicy/repo/core-service"),
 		entClient: entClient,
+		mapper:    mapper.NewCopierMapper[authenticationV1.LoginPolicy, ent.LoginPolicy](),
 	}
 	repo.init()
 	return repo
 }
-
 
 func (r *LoginPolicyRepo) init() {
 	r.repository = entCrud.NewRepository[
