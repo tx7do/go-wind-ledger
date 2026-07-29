@@ -77,3 +77,11 @@ func (s *AccountService) ToggleCanTransferTo(ctx context.Context, req *ledgerV1.
 func (s *AccountService) AdjustBalance(ctx context.Context, req *ledgerV1.AdjustBalanceRequest) (*ledgerV1.Account, error) {
 	return s.client.AdjustBalance(ctx, req)
 }
+
+func (s *AccountService) Overview(ctx context.Context, req *ledgerV1.OverviewRequest) (*ledgerV1.OverviewResponse, error) {
+	return s.client.Overview(ctx, req)
+}
+
+func (s *AccountService) Statistics(ctx context.Context, req *ledgerV1.AccountStatisticsRequest) (*ledgerV1.AccountStatisticsResponse, error) {
+	return s.client.Statistics(ctx, req)
+}

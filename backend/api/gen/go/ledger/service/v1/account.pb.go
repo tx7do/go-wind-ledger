@@ -705,6 +705,295 @@ func (x *AdjustBalanceRequest) GetCreateTime() int64 {
 	return 0
 }
 
+// 请求 - 账户概览
+type OverviewRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *OverviewRequest) Reset() {
+	*x = OverviewRequest{}
+	mi := &file_ledger_service_v1_account_proto_msgTypes[9]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *OverviewRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*OverviewRequest) ProtoMessage() {}
+
+func (x *OverviewRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_ledger_service_v1_account_proto_msgTypes[9]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use OverviewRequest.ProtoReflect.Descriptor instead.
+func (*OverviewRequest) Descriptor() ([]byte, []int) {
+	return file_ledger_service_v1_account_proto_rawDescGZIP(), []int{9}
+}
+
+// 回应 - 账户概览
+type OverviewResponse struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	TotalAssets   string                 `protobuf:"bytes,1,opt,name=total_assets,json=totalAssets,proto3" json:"total_assets,omitempty"`
+	TotalDebts    string                 `protobuf:"bytes,2,opt,name=total_debts,json=totalDebts,proto3" json:"total_debts,omitempty"`
+	NetWorth      string                 `protobuf:"bytes,3,opt,name=net_worth,json=netWorth,proto3" json:"net_worth,omitempty"`
+	Assets        []*AccountAsset        `protobuf:"bytes,4,rep,name=assets,proto3" json:"assets,omitempty"`
+	Debts         []*AccountAsset        `protobuf:"bytes,5,rep,name=debts,proto3" json:"debts,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *OverviewResponse) Reset() {
+	*x = OverviewResponse{}
+	mi := &file_ledger_service_v1_account_proto_msgTypes[10]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *OverviewResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*OverviewResponse) ProtoMessage() {}
+
+func (x *OverviewResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_ledger_service_v1_account_proto_msgTypes[10]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use OverviewResponse.ProtoReflect.Descriptor instead.
+func (*OverviewResponse) Descriptor() ([]byte, []int) {
+	return file_ledger_service_v1_account_proto_rawDescGZIP(), []int{10}
+}
+
+func (x *OverviewResponse) GetTotalAssets() string {
+	if x != nil {
+		return x.TotalAssets
+	}
+	return ""
+}
+
+func (x *OverviewResponse) GetTotalDebts() string {
+	if x != nil {
+		return x.TotalDebts
+	}
+	return ""
+}
+
+func (x *OverviewResponse) GetNetWorth() string {
+	if x != nil {
+		return x.NetWorth
+	}
+	return ""
+}
+
+func (x *OverviewResponse) GetAssets() []*AccountAsset {
+	if x != nil {
+		return x.Assets
+	}
+	return nil
+}
+
+func (x *OverviewResponse) GetDebts() []*AccountAsset {
+	if x != nil {
+		return x.Debts
+	}
+	return nil
+}
+
+// 账户资产/负债明细
+type AccountAsset struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Name          string                 `protobuf:"bytes,1,opt,name=name,proto3" json:"name,omitempty"`
+	Type          string                 `protobuf:"bytes,2,opt,name=type,proto3" json:"type,omitempty"`
+	Balance       string                 `protobuf:"bytes,3,opt,name=balance,proto3" json:"balance,omitempty"`
+	CurrencyCode  string                 `protobuf:"bytes,4,opt,name=currency_code,json=currencyCode,proto3" json:"currency_code,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *AccountAsset) Reset() {
+	*x = AccountAsset{}
+	mi := &file_ledger_service_v1_account_proto_msgTypes[11]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *AccountAsset) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*AccountAsset) ProtoMessage() {}
+
+func (x *AccountAsset) ProtoReflect() protoreflect.Message {
+	mi := &file_ledger_service_v1_account_proto_msgTypes[11]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use AccountAsset.ProtoReflect.Descriptor instead.
+func (*AccountAsset) Descriptor() ([]byte, []int) {
+	return file_ledger_service_v1_account_proto_rawDescGZIP(), []int{11}
+}
+
+func (x *AccountAsset) GetName() string {
+	if x != nil {
+		return x.Name
+	}
+	return ""
+}
+
+func (x *AccountAsset) GetType() string {
+	if x != nil {
+		return x.Type
+	}
+	return ""
+}
+
+func (x *AccountAsset) GetBalance() string {
+	if x != nil {
+		return x.Balance
+	}
+	return ""
+}
+
+func (x *AccountAsset) GetCurrencyCode() string {
+	if x != nil {
+		return x.CurrencyCode
+	}
+	return ""
+}
+
+// 请求 - 账户统计
+type AccountStatisticsRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	CurrencyCode  *string                `protobuf:"bytes,1,opt,name=currency_code,json=currencyCode,proto3,oneof" json:"currency_code,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *AccountStatisticsRequest) Reset() {
+	*x = AccountStatisticsRequest{}
+	mi := &file_ledger_service_v1_account_proto_msgTypes[12]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *AccountStatisticsRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*AccountStatisticsRequest) ProtoMessage() {}
+
+func (x *AccountStatisticsRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_ledger_service_v1_account_proto_msgTypes[12]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use AccountStatisticsRequest.ProtoReflect.Descriptor instead.
+func (*AccountStatisticsRequest) Descriptor() ([]byte, []int) {
+	return file_ledger_service_v1_account_proto_rawDescGZIP(), []int{12}
+}
+
+func (x *AccountStatisticsRequest) GetCurrencyCode() string {
+	if x != nil && x.CurrencyCode != nil {
+		return *x.CurrencyCode
+	}
+	return ""
+}
+
+// 回应 - 账户统计
+type AccountStatisticsResponse struct {
+	state            protoimpl.MessageState `protogen:"open.v1"`
+	TotalBalance     string                 `protobuf:"bytes,1,opt,name=total_balance,json=totalBalance,proto3" json:"total_balance,omitempty"`
+	TotalCreditLimit string                 `protobuf:"bytes,2,opt,name=total_credit_limit,json=totalCreditLimit,proto3" json:"total_credit_limit,omitempty"`
+	TotalAvailable   string                 `protobuf:"bytes,3,opt,name=total_available,json=totalAvailable,proto3" json:"total_available,omitempty"`
+	unknownFields    protoimpl.UnknownFields
+	sizeCache        protoimpl.SizeCache
+}
+
+func (x *AccountStatisticsResponse) Reset() {
+	*x = AccountStatisticsResponse{}
+	mi := &file_ledger_service_v1_account_proto_msgTypes[13]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *AccountStatisticsResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*AccountStatisticsResponse) ProtoMessage() {}
+
+func (x *AccountStatisticsResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_ledger_service_v1_account_proto_msgTypes[13]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use AccountStatisticsResponse.ProtoReflect.Descriptor instead.
+func (*AccountStatisticsResponse) Descriptor() ([]byte, []int) {
+	return file_ledger_service_v1_account_proto_rawDescGZIP(), []int{13}
+}
+
+func (x *AccountStatisticsResponse) GetTotalBalance() string {
+	if x != nil {
+		return x.TotalBalance
+	}
+	return ""
+}
+
+func (x *AccountStatisticsResponse) GetTotalCreditLimit() string {
+	if x != nil {
+		return x.TotalCreditLimit
+	}
+	return ""
+}
+
+func (x *AccountStatisticsResponse) GetTotalAvailable() string {
+	if x != nil {
+		return x.TotalAvailable
+	}
+	return ""
+}
+
 var File_ledger_service_v1_account_proto protoreflect.FileDescriptor
 
 const file_ledger_service_v1_account_proto_rawDesc = "" +
@@ -810,7 +1099,28 @@ const file_ledger_service_v1_account_proto_rawDesc = "" +
 	"createTime\x88\x01\x01B\b\n" +
 	"\x06_titleB\b\n" +
 	"\x06_notesB\x0e\n" +
-	"\f_create_time2\xea\b\n" +
+	"\f_create_time\"\x11\n" +
+	"\x0fOverviewRequest\"\xe3\x01\n" +
+	"\x10OverviewResponse\x12!\n" +
+	"\ftotal_assets\x18\x01 \x01(\tR\vtotalAssets\x12\x1f\n" +
+	"\vtotal_debts\x18\x02 \x01(\tR\n" +
+	"totalDebts\x12\x1b\n" +
+	"\tnet_worth\x18\x03 \x01(\tR\bnetWorth\x127\n" +
+	"\x06assets\x18\x04 \x03(\v2\x1f.ledger.service.v1.AccountAssetR\x06assets\x125\n" +
+	"\x05debts\x18\x05 \x03(\v2\x1f.ledger.service.v1.AccountAssetR\x05debts\"u\n" +
+	"\fAccountAsset\x12\x12\n" +
+	"\x04name\x18\x01 \x01(\tR\x04name\x12\x12\n" +
+	"\x04type\x18\x02 \x01(\tR\x04type\x12\x18\n" +
+	"\abalance\x18\x03 \x01(\tR\abalance\x12#\n" +
+	"\rcurrency_code\x18\x04 \x01(\tR\fcurrencyCode\"V\n" +
+	"\x18AccountStatisticsRequest\x12(\n" +
+	"\rcurrency_code\x18\x01 \x01(\tH\x00R\fcurrencyCode\x88\x01\x01B\x10\n" +
+	"\x0e_currency_code\"\x97\x01\n" +
+	"\x19AccountStatisticsResponse\x12#\n" +
+	"\rtotal_balance\x18\x01 \x01(\tR\ftotalBalance\x12,\n" +
+	"\x12total_credit_limit\x18\x02 \x01(\tR\x10totalCreditLimit\x12'\n" +
+	"\x0ftotal_available\x18\x03 \x01(\tR\x0etotalAvailable2\xac\n" +
+	"\n" +
 	"\x0eAccountService\x12K\n" +
 	"\x04List\x12\x19.pagination.PagingRequest\x1a&.ledger.service.v1.ListAccountResponse\"\x00\x12]\n" +
 	"\aListAll\x12(.ledger.service.v1.ListAllAccountRequest\x1a&.ledger.service.v1.ListAccountResponse\"\x00\x12I\n" +
@@ -819,7 +1129,10 @@ const file_ledger_service_v1_account_proto_rawDesc = "" +
 	"\x06Update\x12'.ledger.service.v1.UpdateAccountRequest\x1a\x1a.ledger.service.v1.Account\"\x00\x12K\n" +
 	"\x06Delete\x12'.ledger.service.v1.DeleteAccountRequest\x1a\x16.google.protobuf.Empty\"\x00\x12O\n" +
 	"\x06Toggle\x12'.ledger.service.v1.ToggleAccountRequest\x1a\x1a.ledger.service.v1.Account\"\x00\x12V\n" +
-	"\rAdjustBalance\x12'.ledger.service.v1.AdjustBalanceRequest\x1a\x1a.ledger.service.v1.Account\"\x00\x12V\n" +
+	"\rAdjustBalance\x12'.ledger.service.v1.AdjustBalanceRequest\x1a\x1a.ledger.service.v1.Account\"\x00\x12U\n" +
+	"\bOverview\x12\".ledger.service.v1.OverviewRequest\x1a#.ledger.service.v1.OverviewResponse\"\x00\x12i\n" +
+	"\n" +
+	"Statistics\x12+.ledger.service.v1.AccountStatisticsRequest\x1a,.ledger.service.v1.AccountStatisticsResponse\"\x00\x12V\n" +
 	"\rToggleInclude\x12'.ledger.service.v1.ToggleAccountRequest\x1a\x1a.ledger.service.v1.Account\"\x00\x12Y\n" +
 	"\x10ToggleCanExpense\x12'.ledger.service.v1.ToggleAccountRequest\x1a\x1a.ledger.service.v1.Account\"\x00\x12X\n" +
 	"\x0fToggleCanIncome\x12'.ledger.service.v1.ToggleAccountRequest\x1a\x1a.ledger.service.v1.Account\"\x00\x12^\n" +
@@ -839,64 +1152,75 @@ func file_ledger_service_v1_account_proto_rawDescGZIP() []byte {
 	return file_ledger_service_v1_account_proto_rawDescData
 }
 
-var file_ledger_service_v1_account_proto_msgTypes = make([]protoimpl.MessageInfo, 9)
+var file_ledger_service_v1_account_proto_msgTypes = make([]protoimpl.MessageInfo, 14)
 var file_ledger_service_v1_account_proto_goTypes = []any{
-	(*Account)(nil),               // 0: ledger.service.v1.Account
-	(*ListAccountResponse)(nil),   // 1: ledger.service.v1.ListAccountResponse
-	(*ListAllAccountRequest)(nil), // 2: ledger.service.v1.ListAllAccountRequest
-	(*GetAccountRequest)(nil),     // 3: ledger.service.v1.GetAccountRequest
-	(*CreateAccountRequest)(nil),  // 4: ledger.service.v1.CreateAccountRequest
-	(*UpdateAccountRequest)(nil),  // 5: ledger.service.v1.UpdateAccountRequest
-	(*DeleteAccountRequest)(nil),  // 6: ledger.service.v1.DeleteAccountRequest
-	(*ToggleAccountRequest)(nil),  // 7: ledger.service.v1.ToggleAccountRequest
-	(*AdjustBalanceRequest)(nil),  // 8: ledger.service.v1.AdjustBalanceRequest
-	(AccountType)(0),              // 9: ledger.service.v1.AccountType
-	(*timestamppb.Timestamp)(nil), // 10: google.protobuf.Timestamp
-	(*fieldmaskpb.FieldMask)(nil), // 11: google.protobuf.FieldMask
-	(*v1.PagingRequest)(nil),      // 12: pagination.PagingRequest
-	(*emptypb.Empty)(nil),         // 13: google.protobuf.Empty
+	(*Account)(nil),                   // 0: ledger.service.v1.Account
+	(*ListAccountResponse)(nil),       // 1: ledger.service.v1.ListAccountResponse
+	(*ListAllAccountRequest)(nil),     // 2: ledger.service.v1.ListAllAccountRequest
+	(*GetAccountRequest)(nil),         // 3: ledger.service.v1.GetAccountRequest
+	(*CreateAccountRequest)(nil),      // 4: ledger.service.v1.CreateAccountRequest
+	(*UpdateAccountRequest)(nil),      // 5: ledger.service.v1.UpdateAccountRequest
+	(*DeleteAccountRequest)(nil),      // 6: ledger.service.v1.DeleteAccountRequest
+	(*ToggleAccountRequest)(nil),      // 7: ledger.service.v1.ToggleAccountRequest
+	(*AdjustBalanceRequest)(nil),      // 8: ledger.service.v1.AdjustBalanceRequest
+	(*OverviewRequest)(nil),           // 9: ledger.service.v1.OverviewRequest
+	(*OverviewResponse)(nil),          // 10: ledger.service.v1.OverviewResponse
+	(*AccountAsset)(nil),              // 11: ledger.service.v1.AccountAsset
+	(*AccountStatisticsRequest)(nil),  // 12: ledger.service.v1.AccountStatisticsRequest
+	(*AccountStatisticsResponse)(nil), // 13: ledger.service.v1.AccountStatisticsResponse
+	(AccountType)(0),                  // 14: ledger.service.v1.AccountType
+	(*timestamppb.Timestamp)(nil),     // 15: google.protobuf.Timestamp
+	(*fieldmaskpb.FieldMask)(nil),     // 16: google.protobuf.FieldMask
+	(*v1.PagingRequest)(nil),          // 17: pagination.PagingRequest
+	(*emptypb.Empty)(nil),             // 18: google.protobuf.Empty
 }
 var file_ledger_service_v1_account_proto_depIdxs = []int32{
-	9,  // 0: ledger.service.v1.Account.type:type_name -> ledger.service.v1.AccountType
-	10, // 1: ledger.service.v1.Account.created_at:type_name -> google.protobuf.Timestamp
-	10, // 2: ledger.service.v1.Account.updated_at:type_name -> google.protobuf.Timestamp
-	10, // 3: ledger.service.v1.Account.deleted_at:type_name -> google.protobuf.Timestamp
+	14, // 0: ledger.service.v1.Account.type:type_name -> ledger.service.v1.AccountType
+	15, // 1: ledger.service.v1.Account.created_at:type_name -> google.protobuf.Timestamp
+	15, // 2: ledger.service.v1.Account.updated_at:type_name -> google.protobuf.Timestamp
+	15, // 3: ledger.service.v1.Account.deleted_at:type_name -> google.protobuf.Timestamp
 	0,  // 4: ledger.service.v1.ListAccountResponse.items:type_name -> ledger.service.v1.Account
-	11, // 5: ledger.service.v1.GetAccountRequest.view_mask:type_name -> google.protobuf.FieldMask
+	16, // 5: ledger.service.v1.GetAccountRequest.view_mask:type_name -> google.protobuf.FieldMask
 	0,  // 6: ledger.service.v1.CreateAccountRequest.data:type_name -> ledger.service.v1.Account
 	0,  // 7: ledger.service.v1.UpdateAccountRequest.data:type_name -> ledger.service.v1.Account
-	11, // 8: ledger.service.v1.UpdateAccountRequest.update_mask:type_name -> google.protobuf.FieldMask
-	12, // 9: ledger.service.v1.AccountService.List:input_type -> pagination.PagingRequest
-	2,  // 10: ledger.service.v1.AccountService.ListAll:input_type -> ledger.service.v1.ListAllAccountRequest
-	3,  // 11: ledger.service.v1.AccountService.Get:input_type -> ledger.service.v1.GetAccountRequest
-	4,  // 12: ledger.service.v1.AccountService.Create:input_type -> ledger.service.v1.CreateAccountRequest
-	5,  // 13: ledger.service.v1.AccountService.Update:input_type -> ledger.service.v1.UpdateAccountRequest
-	6,  // 14: ledger.service.v1.AccountService.Delete:input_type -> ledger.service.v1.DeleteAccountRequest
-	7,  // 15: ledger.service.v1.AccountService.Toggle:input_type -> ledger.service.v1.ToggleAccountRequest
-	8,  // 16: ledger.service.v1.AccountService.AdjustBalance:input_type -> ledger.service.v1.AdjustBalanceRequest
-	7,  // 17: ledger.service.v1.AccountService.ToggleInclude:input_type -> ledger.service.v1.ToggleAccountRequest
-	7,  // 18: ledger.service.v1.AccountService.ToggleCanExpense:input_type -> ledger.service.v1.ToggleAccountRequest
-	7,  // 19: ledger.service.v1.AccountService.ToggleCanIncome:input_type -> ledger.service.v1.ToggleAccountRequest
-	7,  // 20: ledger.service.v1.AccountService.ToggleCanTransferFrom:input_type -> ledger.service.v1.ToggleAccountRequest
-	7,  // 21: ledger.service.v1.AccountService.ToggleCanTransferTo:input_type -> ledger.service.v1.ToggleAccountRequest
-	1,  // 22: ledger.service.v1.AccountService.List:output_type -> ledger.service.v1.ListAccountResponse
-	1,  // 23: ledger.service.v1.AccountService.ListAll:output_type -> ledger.service.v1.ListAccountResponse
-	0,  // 24: ledger.service.v1.AccountService.Get:output_type -> ledger.service.v1.Account
-	0,  // 25: ledger.service.v1.AccountService.Create:output_type -> ledger.service.v1.Account
-	0,  // 26: ledger.service.v1.AccountService.Update:output_type -> ledger.service.v1.Account
-	13, // 27: ledger.service.v1.AccountService.Delete:output_type -> google.protobuf.Empty
-	0,  // 28: ledger.service.v1.AccountService.Toggle:output_type -> ledger.service.v1.Account
-	0,  // 29: ledger.service.v1.AccountService.AdjustBalance:output_type -> ledger.service.v1.Account
-	0,  // 30: ledger.service.v1.AccountService.ToggleInclude:output_type -> ledger.service.v1.Account
-	0,  // 31: ledger.service.v1.AccountService.ToggleCanExpense:output_type -> ledger.service.v1.Account
-	0,  // 32: ledger.service.v1.AccountService.ToggleCanIncome:output_type -> ledger.service.v1.Account
-	0,  // 33: ledger.service.v1.AccountService.ToggleCanTransferFrom:output_type -> ledger.service.v1.Account
-	0,  // 34: ledger.service.v1.AccountService.ToggleCanTransferTo:output_type -> ledger.service.v1.Account
-	22, // [22:35] is the sub-list for method output_type
-	9,  // [9:22] is the sub-list for method input_type
-	9,  // [9:9] is the sub-list for extension type_name
-	9,  // [9:9] is the sub-list for extension extendee
-	0,  // [0:9] is the sub-list for field type_name
+	16, // 8: ledger.service.v1.UpdateAccountRequest.update_mask:type_name -> google.protobuf.FieldMask
+	11, // 9: ledger.service.v1.OverviewResponse.assets:type_name -> ledger.service.v1.AccountAsset
+	11, // 10: ledger.service.v1.OverviewResponse.debts:type_name -> ledger.service.v1.AccountAsset
+	17, // 11: ledger.service.v1.AccountService.List:input_type -> pagination.PagingRequest
+	2,  // 12: ledger.service.v1.AccountService.ListAll:input_type -> ledger.service.v1.ListAllAccountRequest
+	3,  // 13: ledger.service.v1.AccountService.Get:input_type -> ledger.service.v1.GetAccountRequest
+	4,  // 14: ledger.service.v1.AccountService.Create:input_type -> ledger.service.v1.CreateAccountRequest
+	5,  // 15: ledger.service.v1.AccountService.Update:input_type -> ledger.service.v1.UpdateAccountRequest
+	6,  // 16: ledger.service.v1.AccountService.Delete:input_type -> ledger.service.v1.DeleteAccountRequest
+	7,  // 17: ledger.service.v1.AccountService.Toggle:input_type -> ledger.service.v1.ToggleAccountRequest
+	8,  // 18: ledger.service.v1.AccountService.AdjustBalance:input_type -> ledger.service.v1.AdjustBalanceRequest
+	9,  // 19: ledger.service.v1.AccountService.Overview:input_type -> ledger.service.v1.OverviewRequest
+	12, // 20: ledger.service.v1.AccountService.Statistics:input_type -> ledger.service.v1.AccountStatisticsRequest
+	7,  // 21: ledger.service.v1.AccountService.ToggleInclude:input_type -> ledger.service.v1.ToggleAccountRequest
+	7,  // 22: ledger.service.v1.AccountService.ToggleCanExpense:input_type -> ledger.service.v1.ToggleAccountRequest
+	7,  // 23: ledger.service.v1.AccountService.ToggleCanIncome:input_type -> ledger.service.v1.ToggleAccountRequest
+	7,  // 24: ledger.service.v1.AccountService.ToggleCanTransferFrom:input_type -> ledger.service.v1.ToggleAccountRequest
+	7,  // 25: ledger.service.v1.AccountService.ToggleCanTransferTo:input_type -> ledger.service.v1.ToggleAccountRequest
+	1,  // 26: ledger.service.v1.AccountService.List:output_type -> ledger.service.v1.ListAccountResponse
+	1,  // 27: ledger.service.v1.AccountService.ListAll:output_type -> ledger.service.v1.ListAccountResponse
+	0,  // 28: ledger.service.v1.AccountService.Get:output_type -> ledger.service.v1.Account
+	0,  // 29: ledger.service.v1.AccountService.Create:output_type -> ledger.service.v1.Account
+	0,  // 30: ledger.service.v1.AccountService.Update:output_type -> ledger.service.v1.Account
+	18, // 31: ledger.service.v1.AccountService.Delete:output_type -> google.protobuf.Empty
+	0,  // 32: ledger.service.v1.AccountService.Toggle:output_type -> ledger.service.v1.Account
+	0,  // 33: ledger.service.v1.AccountService.AdjustBalance:output_type -> ledger.service.v1.Account
+	10, // 34: ledger.service.v1.AccountService.Overview:output_type -> ledger.service.v1.OverviewResponse
+	13, // 35: ledger.service.v1.AccountService.Statistics:output_type -> ledger.service.v1.AccountStatisticsResponse
+	0,  // 36: ledger.service.v1.AccountService.ToggleInclude:output_type -> ledger.service.v1.Account
+	0,  // 37: ledger.service.v1.AccountService.ToggleCanExpense:output_type -> ledger.service.v1.Account
+	0,  // 38: ledger.service.v1.AccountService.ToggleCanIncome:output_type -> ledger.service.v1.Account
+	0,  // 39: ledger.service.v1.AccountService.ToggleCanTransferFrom:output_type -> ledger.service.v1.Account
+	0,  // 40: ledger.service.v1.AccountService.ToggleCanTransferTo:output_type -> ledger.service.v1.Account
+	26, // [26:41] is the sub-list for method output_type
+	11, // [11:26] is the sub-list for method input_type
+	11, // [11:11] is the sub-list for extension type_name
+	11, // [11:11] is the sub-list for extension extendee
+	0,  // [0:11] is the sub-list for field type_name
 }
 
 func init() { file_ledger_service_v1_account_proto_init() }
@@ -910,13 +1234,14 @@ func file_ledger_service_v1_account_proto_init() {
 	file_ledger_service_v1_account_proto_msgTypes[3].OneofWrappers = []any{}
 	file_ledger_service_v1_account_proto_msgTypes[5].OneofWrappers = []any{}
 	file_ledger_service_v1_account_proto_msgTypes[8].OneofWrappers = []any{}
+	file_ledger_service_v1_account_proto_msgTypes[12].OneofWrappers = []any{}
 	type x struct{}
 	out := protoimpl.TypeBuilder{
 		File: protoimpl.DescBuilder{
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_ledger_service_v1_account_proto_rawDesc), len(file_ledger_service_v1_account_proto_rawDesc)),
 			NumEnums:      0,
-			NumMessages:   9,
+			NumMessages:   14,
 			NumExtensions: 0,
 			NumServices:   1,
 		},

@@ -30,4 +30,10 @@ service AccountService {
   rpc AdjustBalance (ledger.service.v1.AdjustBalanceRequest) returns (ledger.service.v1.Account) {
     option (google.api.http) = { post: "/app/v1/accounts/{id}/adjust" body: "*" };
   }
+  rpc Overview (ledger.service.v1.OverviewRequest) returns (ledger.service.v1.OverviewResponse) {
+    option (google.api.http) = { get: "/app/v1/accounts/overview" };
+  }
+  rpc Statistics (ledger.service.v1.AccountStatisticsRequest) returns (ledger.service.v1.AccountStatisticsResponse) {
+    option (google.api.http) = { get: "/app/v1/accounts/statistics" };
+  }
 }

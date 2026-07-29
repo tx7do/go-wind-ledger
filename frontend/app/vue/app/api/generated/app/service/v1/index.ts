@@ -2462,6 +2462,210 @@ export type ledgerservicev1_DeleteFlowFileRequest = {
   id: number | undefined;
 };
 
+// 注册请求
+export type LedgerRegisterRequest = {
+  inviteCode?: string;
+  nickName?: string;
+  password: string | undefined;
+  username: string | undefined;
+};
+
+// 认证响应
+export type LedgerAuthResponse = {
+  accessToken: string | undefined;
+  refreshToken?: string;
+  username?: string;
+};
+
+// 初始化状态响应
+export type InitStateResponse = {
+  availableBooks: ledgerservicev1_Book[] | undefined;
+  availableTenants: identityservicev1_Tenant[] | undefined;
+  book?: ledgerservicev1_Book;
+  tenant?: identityservicev1_Tenant;
+  user?: identityservicev1_User;
+};
+
+// 用户
+export type identityservicev1_User = {
+  address?: string;
+  avatar?: string;
+  commentCount?: number;
+  createdAt?: wellKnownTimestamp;
+  createdBy?: number;
+  deletedAt?: wellKnownTimestamp;
+  deletedBy?: number;
+  description?: string;
+  email?: string;
+  followers?: number;
+  following?: number;
+  gender?: identityservicev1_User_Gender;
+  id?: number;
+  lastLoginAt?: wellKnownTimestamp;
+  lastLoginIp?: string;
+  likeCount?: number;
+  lockedUntil?: wellKnownTimestamp;
+  mobile?: string;
+  nickname?: string;
+  orgUnitId?: number;
+  orgUnitIds: number[] | undefined;
+  orgUnitName?: string;
+  orgUnitNames: string[] | undefined;
+  positionId?: number;
+  positionIds: number[] | undefined;
+  positionName?: string;
+  positionNames: string[] | undefined;
+  postCount?: number;
+  realname?: string;
+  region?: string;
+  remark?: string;
+  roleId?: number;
+  roleIds: number[] | undefined;
+  roleNames: string[] | undefined;
+  roles: string[] | undefined;
+  status?: identityservicev1_User_Status;
+  telephone?: string;
+  tenantId?: number;
+  tenantName?: string;
+  updatedAt?: wellKnownTimestamp;
+  updatedBy?: number;
+  username?: string;
+};
+
+// 用户性别
+export type identityservicev1_User_Gender =
+  | 'FEMALE'
+  | 'MALE'
+  | 'SECRET';
+// 用户状态
+export type identityservicev1_User_Status =
+  | 'CLOSED'
+  | 'DISABLED'
+  | 'EXPIRED'
+  | 'LOCKED'
+  | 'NORMAL'
+  | 'PENDING';
+// 租户
+export type identityservicev1_Tenant = {
+  adminUserId?: number;
+  adminUserName?: string;
+  auditStatus?: identityservicev1_Tenant_AuditStatus;
+  code?: string;
+  createdAt?: wellKnownTimestamp;
+  createdBy?: number;
+  deletedAt?: wellKnownTimestamp;
+  deletedBy?: number;
+  domain?: string;
+  expiredAt?: wellKnownTimestamp;
+  id?: number;
+  industry?: string;
+  logoUrl?: string;
+  memberCount?: number;
+  name?: string;
+  remark?: string;
+  status?: identityservicev1_Tenant_Status;
+  subscriptionAt?: wellKnownTimestamp;
+  subscriptionPlan?: string;
+  type?: identityservicev1_Tenant_Type;
+  unsubscribeAt?: wellKnownTimestamp;
+  updatedAt?: wellKnownTimestamp;
+  updatedBy?: number;
+};
+
+// 租户类型
+export type identityservicev1_Tenant_Type =
+  | 'CUSTOM'
+  | 'INTERNAL'
+  | 'PAID'
+  | 'PARTNER'
+  | 'TENANT_TYPE_UNSPECIFIED'
+  | 'TRIAL';
+// 租户状态
+export type identityservicev1_Tenant_Status =
+  | 'EXPIRED'
+  | 'FREEZE'
+  | 'OFF'
+  | 'ON';
+// 租户审核状态
+export type identityservicev1_Tenant_AuditStatus =
+  | 'APPROVED'
+  | 'PENDING'
+  | 'REJECTED'
+  | 'TENANT_AUDIT_STATUS_UNSPECIFIED';
+// 设置默认账本请求
+export type SetDefaultBookRequest = {
+  bookId: number | undefined;
+};
+
+// 设置默认租户请求
+export type SetDefaultTenantRequest = {
+  tenantId: number | undefined;
+};
+
+// 记账认证服务（App BFF）— 扩展注册/初始化/切换
+export interface LedgerAuthService {
+  // 用户注册（自动创建默认租户和账本）
+  Register(
+    request: LedgerRegisterRequest,
+  ): Promise<LedgerAuthResponse>;
+  // 初始化状态（返回用户/租户/账本聚合信息）
+  InitState(
+    request: wellKnownEmpty,
+  ): Promise<InitStateResponse>;
+  // 设置默认账本
+  SetDefaultBook(
+    request: SetDefaultBookRequest,
+  ): Promise<wellKnownEmpty>;
+  // 设置默认租户
+  SetDefaultTenant(
+    request: SetDefaultTenantRequest,
+  ): Promise<wellKnownEmpty>;
+}
+
+export function createLedgerAuthServiceClient(
+  transport: ClientTransport,
+): LedgerAuthService {
+  return {
+    Register(request) {
+      const path = `app/v1/auth/register`;
+      const body = JSON.stringify(request);
+      return transport.unary(path, 'POST', body, {
+        service: 'LedgerAuthService',
+        method: 'Register',
+      }) as Promise<LedgerAuthResponse>;
+    },
+    InitState(_request) {
+      const path = `app/v1/auth/init-state`;
+      const body = null;
+      return transport.unary(path, 'GET', body, {
+        service: 'LedgerAuthService',
+        method: 'InitState',
+      }) as Promise<InitStateResponse>;
+    },
+    SetDefaultBook(request) {
+      if (request.bookId === undefined || request.bookId === null) {
+        throw new Error('missing required field request.book_id');
+      }
+      const path = `app/v1/auth/set-default-book/${request.bookId}`;
+      const body = JSON.stringify(request);
+      return transport.unary(path, 'PATCH', body, {
+        service: 'LedgerAuthService',
+        method: 'SetDefaultBook',
+      }) as Promise<wellKnownEmpty>;
+    },
+    SetDefaultTenant(request) {
+      if (request.tenantId === undefined || request.tenantId === null) {
+        throw new Error('missing required field request.tenant_id');
+      }
+      const path = `app/v1/auth/set-default-tenant/${request.tenantId}`;
+      const body = JSON.stringify(request);
+      return transport.unary(path, 'PATCH', body, {
+        service: 'LedgerAuthService',
+        method: 'SetDefaultTenant',
+      }) as Promise<wellKnownEmpty>;
+    },
+  };
+}
 export interface LedgerCategoryService {
   List(
     request: pagination_PagingRequest,
@@ -5713,65 +5917,6 @@ export function createUserProfileServiceClient(
     },
   };
 }
-// 用户
-export type identityservicev1_User = {
-  address?: string;
-  avatar?: string;
-  commentCount?: number;
-  createdAt?: wellKnownTimestamp;
-  createdBy?: number;
-  deletedAt?: wellKnownTimestamp;
-  deletedBy?: number;
-  description?: string;
-  email?: string;
-  followers?: number;
-  following?: number;
-  gender?: identityservicev1_User_Gender;
-  id?: number;
-  lastLoginAt?: wellKnownTimestamp;
-  lastLoginIp?: string;
-  likeCount?: number;
-  lockedUntil?: wellKnownTimestamp;
-  mobile?: string;
-  nickname?: string;
-  orgUnitId?: number;
-  orgUnitIds: number[] | undefined;
-  orgUnitName?: string;
-  orgUnitNames: string[] | undefined;
-  positionId?: number;
-  positionIds: number[] | undefined;
-  positionName?: string;
-  positionNames: string[] | undefined;
-  postCount?: number;
-  realname?: string;
-  region?: string;
-  remark?: string;
-  roleId?: number;
-  roleIds: number[] | undefined;
-  roleNames: string[] | undefined;
-  roles: string[] | undefined;
-  status?: identityservicev1_User_Status;
-  telephone?: string;
-  tenantId?: number;
-  tenantName?: string;
-  updatedAt?: wellKnownTimestamp;
-  updatedBy?: number;
-  username?: string;
-};
-
-// 用户性别
-export type identityservicev1_User_Gender =
-  | 'FEMALE'
-  | 'MALE'
-  | 'SECRET';
-// 用户状态
-export type identityservicev1_User_Status =
-  | 'CLOSED'
-  | 'DISABLED'
-  | 'EXPIRED'
-  | 'LOCKED'
-  | 'NORMAL'
-  | 'PENDING';
 // 更新用户 - 请求
 export type identityservicev1_UpdateUserRequest = {
   allowMissing?: boolean;
@@ -5846,6 +5991,7 @@ export class ApiClient {
   private _currencyService?: CurrencyService;
   private _fileTransferService?: FileTransferService;
   private _flowFileService?: FlowFileService;
+  private _ledgerAuthService?: LedgerAuthService;
   private _ledgerCategoryService?: LedgerCategoryService;
   private _ledgerTagService?: LedgerTagService;
   private _navigationService?: NavigationService;
@@ -5897,6 +6043,10 @@ export class ApiClient {
 
   get flowFileService(): FlowFileService {
     return this._flowFileService ??= createFlowFileServiceClient(this._transport);
+  }
+
+  get ledgerAuthService(): LedgerAuthService {
+    return this._ledgerAuthService ??= createLedgerAuthServiceClient(this._transport);
   }
 
   get ledgerCategoryService(): LedgerCategoryService {

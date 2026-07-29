@@ -124,4 +124,17 @@ func (s *AccountService) AdjustBalance(ctx context.Context, req *ledgerV1.Adjust
 	}
 
 	return s.accountRepo.Get(ctx, req.GetId())
+
+}
+
+// Overview returns an aggregated view of assets and debts across all enabled,
+// statistics-included accounts.
+func (s *AccountService) Overview(ctx context.Context, req *ledgerV1.OverviewRequest) (*ledgerV1.OverviewResponse, error) {
+	return s.accountRepo.Overview(ctx)
+}
+
+// Statistics returns aggregated balance/credit figures across all enabled
+// accounts, optionally filtered by currency code.
+func (s *AccountService) Statistics(ctx context.Context, req *ledgerV1.AccountStatisticsRequest) (*ledgerV1.AccountStatisticsResponse, error) {
+	return s.accountRepo.Statistics(ctx, req.GetCurrencyCode())
 }

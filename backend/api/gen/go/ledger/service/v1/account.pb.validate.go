@@ -1325,3 +1325,598 @@ var _ interface {
 	Cause() error
 	ErrorName() string
 } = AdjustBalanceRequestValidationError{}
+
+// Validate checks the field values on OverviewRequest with the rules defined
+// in the proto definition for this message. If any rules are violated, the
+// first error encountered is returned, or nil if there are no violations.
+func (m *OverviewRequest) Validate() error {
+	return m.validate(false)
+}
+
+// ValidateAll checks the field values on OverviewRequest with the rules
+// defined in the proto definition for this message. If any rules are
+// violated, the result is a list of violation errors wrapped in
+// OverviewRequestMultiError, or nil if none found.
+func (m *OverviewRequest) ValidateAll() error {
+	return m.validate(true)
+}
+
+func (m *OverviewRequest) validate(all bool) error {
+	if m == nil {
+		return nil
+	}
+
+	var errors []error
+
+	if len(errors) > 0 {
+		return OverviewRequestMultiError(errors)
+	}
+
+	return nil
+}
+
+// OverviewRequestMultiError is an error wrapping multiple validation errors
+// returned by OverviewRequest.ValidateAll() if the designated constraints
+// aren't met.
+type OverviewRequestMultiError []error
+
+// Error returns a concatenation of all the error messages it wraps.
+func (m OverviewRequestMultiError) Error() string {
+	msgs := make([]string, 0, len(m))
+	for _, err := range m {
+		msgs = append(msgs, err.Error())
+	}
+	return strings.Join(msgs, "; ")
+}
+
+// AllErrors returns a list of validation violation errors.
+func (m OverviewRequestMultiError) AllErrors() []error { return m }
+
+// OverviewRequestValidationError is the validation error returned by
+// OverviewRequest.Validate if the designated constraints aren't met.
+type OverviewRequestValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e OverviewRequestValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e OverviewRequestValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e OverviewRequestValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e OverviewRequestValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e OverviewRequestValidationError) ErrorName() string { return "OverviewRequestValidationError" }
+
+// Error satisfies the builtin error interface
+func (e OverviewRequestValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sOverviewRequest.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = OverviewRequestValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = OverviewRequestValidationError{}
+
+// Validate checks the field values on OverviewResponse with the rules defined
+// in the proto definition for this message. If any rules are violated, the
+// first error encountered is returned, or nil if there are no violations.
+func (m *OverviewResponse) Validate() error {
+	return m.validate(false)
+}
+
+// ValidateAll checks the field values on OverviewResponse with the rules
+// defined in the proto definition for this message. If any rules are
+// violated, the result is a list of violation errors wrapped in
+// OverviewResponseMultiError, or nil if none found.
+func (m *OverviewResponse) ValidateAll() error {
+	return m.validate(true)
+}
+
+func (m *OverviewResponse) validate(all bool) error {
+	if m == nil {
+		return nil
+	}
+
+	var errors []error
+
+	// no validation rules for TotalAssets
+
+	// no validation rules for TotalDebts
+
+	// no validation rules for NetWorth
+
+	for idx, item := range m.GetAssets() {
+		_, _ = idx, item
+
+		if all {
+			switch v := interface{}(item).(type) {
+			case interface{ ValidateAll() error }:
+				if err := v.ValidateAll(); err != nil {
+					errors = append(errors, OverviewResponseValidationError{
+						field:  fmt.Sprintf("Assets[%v]", idx),
+						reason: "embedded message failed validation",
+						cause:  err,
+					})
+				}
+			case interface{ Validate() error }:
+				if err := v.Validate(); err != nil {
+					errors = append(errors, OverviewResponseValidationError{
+						field:  fmt.Sprintf("Assets[%v]", idx),
+						reason: "embedded message failed validation",
+						cause:  err,
+					})
+				}
+			}
+		} else if v, ok := interface{}(item).(interface{ Validate() error }); ok {
+			if err := v.Validate(); err != nil {
+				return OverviewResponseValidationError{
+					field:  fmt.Sprintf("Assets[%v]", idx),
+					reason: "embedded message failed validation",
+					cause:  err,
+				}
+			}
+		}
+
+	}
+
+	for idx, item := range m.GetDebts() {
+		_, _ = idx, item
+
+		if all {
+			switch v := interface{}(item).(type) {
+			case interface{ ValidateAll() error }:
+				if err := v.ValidateAll(); err != nil {
+					errors = append(errors, OverviewResponseValidationError{
+						field:  fmt.Sprintf("Debts[%v]", idx),
+						reason: "embedded message failed validation",
+						cause:  err,
+					})
+				}
+			case interface{ Validate() error }:
+				if err := v.Validate(); err != nil {
+					errors = append(errors, OverviewResponseValidationError{
+						field:  fmt.Sprintf("Debts[%v]", idx),
+						reason: "embedded message failed validation",
+						cause:  err,
+					})
+				}
+			}
+		} else if v, ok := interface{}(item).(interface{ Validate() error }); ok {
+			if err := v.Validate(); err != nil {
+				return OverviewResponseValidationError{
+					field:  fmt.Sprintf("Debts[%v]", idx),
+					reason: "embedded message failed validation",
+					cause:  err,
+				}
+			}
+		}
+
+	}
+
+	if len(errors) > 0 {
+		return OverviewResponseMultiError(errors)
+	}
+
+	return nil
+}
+
+// OverviewResponseMultiError is an error wrapping multiple validation errors
+// returned by OverviewResponse.ValidateAll() if the designated constraints
+// aren't met.
+type OverviewResponseMultiError []error
+
+// Error returns a concatenation of all the error messages it wraps.
+func (m OverviewResponseMultiError) Error() string {
+	msgs := make([]string, 0, len(m))
+	for _, err := range m {
+		msgs = append(msgs, err.Error())
+	}
+	return strings.Join(msgs, "; ")
+}
+
+// AllErrors returns a list of validation violation errors.
+func (m OverviewResponseMultiError) AllErrors() []error { return m }
+
+// OverviewResponseValidationError is the validation error returned by
+// OverviewResponse.Validate if the designated constraints aren't met.
+type OverviewResponseValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e OverviewResponseValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e OverviewResponseValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e OverviewResponseValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e OverviewResponseValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e OverviewResponseValidationError) ErrorName() string { return "OverviewResponseValidationError" }
+
+// Error satisfies the builtin error interface
+func (e OverviewResponseValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sOverviewResponse.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = OverviewResponseValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = OverviewResponseValidationError{}
+
+// Validate checks the field values on AccountAsset with the rules defined in
+// the proto definition for this message. If any rules are violated, the first
+// error encountered is returned, or nil if there are no violations.
+func (m *AccountAsset) Validate() error {
+	return m.validate(false)
+}
+
+// ValidateAll checks the field values on AccountAsset with the rules defined
+// in the proto definition for this message. If any rules are violated, the
+// result is a list of violation errors wrapped in AccountAssetMultiError, or
+// nil if none found.
+func (m *AccountAsset) ValidateAll() error {
+	return m.validate(true)
+}
+
+func (m *AccountAsset) validate(all bool) error {
+	if m == nil {
+		return nil
+	}
+
+	var errors []error
+
+	// no validation rules for Name
+
+	// no validation rules for Type
+
+	// no validation rules for Balance
+
+	// no validation rules for CurrencyCode
+
+	if len(errors) > 0 {
+		return AccountAssetMultiError(errors)
+	}
+
+	return nil
+}
+
+// AccountAssetMultiError is an error wrapping multiple validation errors
+// returned by AccountAsset.ValidateAll() if the designated constraints aren't met.
+type AccountAssetMultiError []error
+
+// Error returns a concatenation of all the error messages it wraps.
+func (m AccountAssetMultiError) Error() string {
+	msgs := make([]string, 0, len(m))
+	for _, err := range m {
+		msgs = append(msgs, err.Error())
+	}
+	return strings.Join(msgs, "; ")
+}
+
+// AllErrors returns a list of validation violation errors.
+func (m AccountAssetMultiError) AllErrors() []error { return m }
+
+// AccountAssetValidationError is the validation error returned by
+// AccountAsset.Validate if the designated constraints aren't met.
+type AccountAssetValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e AccountAssetValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e AccountAssetValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e AccountAssetValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e AccountAssetValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e AccountAssetValidationError) ErrorName() string { return "AccountAssetValidationError" }
+
+// Error satisfies the builtin error interface
+func (e AccountAssetValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sAccountAsset.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = AccountAssetValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = AccountAssetValidationError{}
+
+// Validate checks the field values on AccountStatisticsRequest with the rules
+// defined in the proto definition for this message. If any rules are
+// violated, the first error encountered is returned, or nil if there are no violations.
+func (m *AccountStatisticsRequest) Validate() error {
+	return m.validate(false)
+}
+
+// ValidateAll checks the field values on AccountStatisticsRequest with the
+// rules defined in the proto definition for this message. If any rules are
+// violated, the result is a list of violation errors wrapped in
+// AccountStatisticsRequestMultiError, or nil if none found.
+func (m *AccountStatisticsRequest) ValidateAll() error {
+	return m.validate(true)
+}
+
+func (m *AccountStatisticsRequest) validate(all bool) error {
+	if m == nil {
+		return nil
+	}
+
+	var errors []error
+
+	if m.CurrencyCode != nil {
+		// no validation rules for CurrencyCode
+	}
+
+	if len(errors) > 0 {
+		return AccountStatisticsRequestMultiError(errors)
+	}
+
+	return nil
+}
+
+// AccountStatisticsRequestMultiError is an error wrapping multiple validation
+// errors returned by AccountStatisticsRequest.ValidateAll() if the designated
+// constraints aren't met.
+type AccountStatisticsRequestMultiError []error
+
+// Error returns a concatenation of all the error messages it wraps.
+func (m AccountStatisticsRequestMultiError) Error() string {
+	msgs := make([]string, 0, len(m))
+	for _, err := range m {
+		msgs = append(msgs, err.Error())
+	}
+	return strings.Join(msgs, "; ")
+}
+
+// AllErrors returns a list of validation violation errors.
+func (m AccountStatisticsRequestMultiError) AllErrors() []error { return m }
+
+// AccountStatisticsRequestValidationError is the validation error returned by
+// AccountStatisticsRequest.Validate if the designated constraints aren't met.
+type AccountStatisticsRequestValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e AccountStatisticsRequestValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e AccountStatisticsRequestValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e AccountStatisticsRequestValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e AccountStatisticsRequestValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e AccountStatisticsRequestValidationError) ErrorName() string {
+	return "AccountStatisticsRequestValidationError"
+}
+
+// Error satisfies the builtin error interface
+func (e AccountStatisticsRequestValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sAccountStatisticsRequest.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = AccountStatisticsRequestValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = AccountStatisticsRequestValidationError{}
+
+// Validate checks the field values on AccountStatisticsResponse with the rules
+// defined in the proto definition for this message. If any rules are
+// violated, the first error encountered is returned, or nil if there are no violations.
+func (m *AccountStatisticsResponse) Validate() error {
+	return m.validate(false)
+}
+
+// ValidateAll checks the field values on AccountStatisticsResponse with the
+// rules defined in the proto definition for this message. If any rules are
+// violated, the result is a list of violation errors wrapped in
+// AccountStatisticsResponseMultiError, or nil if none found.
+func (m *AccountStatisticsResponse) ValidateAll() error {
+	return m.validate(true)
+}
+
+func (m *AccountStatisticsResponse) validate(all bool) error {
+	if m == nil {
+		return nil
+	}
+
+	var errors []error
+
+	// no validation rules for TotalBalance
+
+	// no validation rules for TotalCreditLimit
+
+	// no validation rules for TotalAvailable
+
+	if len(errors) > 0 {
+		return AccountStatisticsResponseMultiError(errors)
+	}
+
+	return nil
+}
+
+// AccountStatisticsResponseMultiError is an error wrapping multiple validation
+// errors returned by AccountStatisticsResponse.ValidateAll() if the
+// designated constraints aren't met.
+type AccountStatisticsResponseMultiError []error
+
+// Error returns a concatenation of all the error messages it wraps.
+func (m AccountStatisticsResponseMultiError) Error() string {
+	msgs := make([]string, 0, len(m))
+	for _, err := range m {
+		msgs = append(msgs, err.Error())
+	}
+	return strings.Join(msgs, "; ")
+}
+
+// AllErrors returns a list of validation violation errors.
+func (m AccountStatisticsResponseMultiError) AllErrors() []error { return m }
+
+// AccountStatisticsResponseValidationError is the validation error returned by
+// AccountStatisticsResponse.Validate if the designated constraints aren't met.
+type AccountStatisticsResponseValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e AccountStatisticsResponseValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e AccountStatisticsResponseValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e AccountStatisticsResponseValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e AccountStatisticsResponseValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e AccountStatisticsResponseValidationError) ErrorName() string {
+	return "AccountStatisticsResponseValidationError"
+}
+
+// Error satisfies the builtin error interface
+func (e AccountStatisticsResponseValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sAccountStatisticsResponse.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = AccountStatisticsResponseValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = AccountStatisticsResponseValidationError{}

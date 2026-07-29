@@ -35,6 +35,13 @@ service AccountService {
 
   // 余额调整
   rpc AdjustBalance (AdjustBalanceRequest) returns (Account) {}
+
+  // 账户概览（资产/负债汇总）
+  rpc Overview (OverviewRequest) returns (OverviewResponse) {}
+
+  // 账户统计（余额/额度汇总）
+  rpc Statistics (AccountStatisticsRequest) returns (AccountStatisticsResponse) {}
+
   rpc ToggleInclude (ToggleAccountRequest) returns (Account) {}
   rpc ToggleCanExpense (ToggleAccountRequest) returns (Account) {}
   rpc ToggleCanIncome (ToggleAccountRequest) returns (Account) {}
@@ -215,4 +222,36 @@ message AdjustBalanceRequest {
   optional string title = 12 [json_name = "title"];
   optional string notes = 13 [json_name = "notes"];
   optional int64 create_time = 14 [json_name = "createTime"];
+}
+
+// 请求 - 账户概览
+message OverviewRequest {}
+
+// 回应 - 账户概览
+message OverviewResponse {
+  string total_assets = 1 [json_name = "totalAssets"];
+  string total_debts = 2 [json_name = "totalDebts"];
+  string net_worth = 3 [json_name = "netWorth"];
+  repeated AccountAsset assets = 4 [json_name = "assets"];
+  repeated AccountAsset debts = 5 [json_name = "debts"];
+}
+
+// 账户资产/负债明细
+message AccountAsset {
+  string name = 1 [json_name = "name"];
+  string type = 2 [json_name = "type"];
+  string balance = 3 [json_name = "balance"];
+  string currency_code = 4 [json_name = "currencyCode"];
+}
+
+// 请求 - 账户统计
+message AccountStatisticsRequest {
+  optional string currency_code = 1 [json_name = "currencyCode"];
+}
+
+// 回应 - 账户统计
+message AccountStatisticsResponse {
+  string total_balance = 1 [json_name = "totalBalance"];
+  string total_credit_limit = 2 [json_name = "totalCreditLimit"];
+  string total_available = 3 [json_name = "totalAvailable"];
 }

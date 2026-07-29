@@ -29,6 +29,8 @@ const (
 	AccountService_Delete_FullMethodName                = "/ledger.service.v1.AccountService/Delete"
 	AccountService_Toggle_FullMethodName                = "/ledger.service.v1.AccountService/Toggle"
 	AccountService_AdjustBalance_FullMethodName         = "/ledger.service.v1.AccountService/AdjustBalance"
+	AccountService_Overview_FullMethodName              = "/ledger.service.v1.AccountService/Overview"
+	AccountService_Statistics_FullMethodName            = "/ledger.service.v1.AccountService/Statistics"
 	AccountService_ToggleInclude_FullMethodName         = "/ledger.service.v1.AccountService/ToggleInclude"
 	AccountService_ToggleCanExpense_FullMethodName      = "/ledger.service.v1.AccountService/ToggleCanExpense"
 	AccountService_ToggleCanIncome_FullMethodName       = "/ledger.service.v1.AccountService/ToggleCanIncome"
@@ -58,6 +60,10 @@ type AccountServiceClient interface {
 	Toggle(ctx context.Context, in *ToggleAccountRequest, opts ...grpc.CallOption) (*Account, error)
 	// 余额调整
 	AdjustBalance(ctx context.Context, in *AdjustBalanceRequest, opts ...grpc.CallOption) (*Account, error)
+	// 账户概览（资产/负债汇总）
+	Overview(ctx context.Context, in *OverviewRequest, opts ...grpc.CallOption) (*OverviewResponse, error)
+	// 账户统计（余额/额度汇总）
+	Statistics(ctx context.Context, in *AccountStatisticsRequest, opts ...grpc.CallOption) (*AccountStatisticsResponse, error)
 	ToggleInclude(ctx context.Context, in *ToggleAccountRequest, opts ...grpc.CallOption) (*Account, error)
 	ToggleCanExpense(ctx context.Context, in *ToggleAccountRequest, opts ...grpc.CallOption) (*Account, error)
 	ToggleCanIncome(ctx context.Context, in *ToggleAccountRequest, opts ...grpc.CallOption) (*Account, error)
@@ -153,6 +159,26 @@ func (c *accountServiceClient) AdjustBalance(ctx context.Context, in *AdjustBala
 	return out, nil
 }
 
+func (c *accountServiceClient) Overview(ctx context.Context, in *OverviewRequest, opts ...grpc.CallOption) (*OverviewResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(OverviewResponse)
+	err := c.cc.Invoke(ctx, AccountService_Overview_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *accountServiceClient) Statistics(ctx context.Context, in *AccountStatisticsRequest, opts ...grpc.CallOption) (*AccountStatisticsResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(AccountStatisticsResponse)
+	err := c.cc.Invoke(ctx, AccountService_Statistics_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 func (c *accountServiceClient) ToggleInclude(ctx context.Context, in *ToggleAccountRequest, opts ...grpc.CallOption) (*Account, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(Account)
@@ -225,6 +251,10 @@ type AccountServiceServer interface {
 	Toggle(context.Context, *ToggleAccountRequest) (*Account, error)
 	// 余额调整
 	AdjustBalance(context.Context, *AdjustBalanceRequest) (*Account, error)
+	// 账户概览（资产/负债汇总）
+	Overview(context.Context, *OverviewRequest) (*OverviewResponse, error)
+	// 账户统计（余额/额度汇总）
+	Statistics(context.Context, *AccountStatisticsRequest) (*AccountStatisticsResponse, error)
 	ToggleInclude(context.Context, *ToggleAccountRequest) (*Account, error)
 	ToggleCanExpense(context.Context, *ToggleAccountRequest) (*Account, error)
 	ToggleCanIncome(context.Context, *ToggleAccountRequest) (*Account, error)
@@ -263,6 +293,12 @@ func (UnimplementedAccountServiceServer) Toggle(context.Context, *ToggleAccountR
 }
 func (UnimplementedAccountServiceServer) AdjustBalance(context.Context, *AdjustBalanceRequest) (*Account, error) {
 	return nil, status.Error(codes.Unimplemented, "method AdjustBalance not implemented")
+}
+func (UnimplementedAccountServiceServer) Overview(context.Context, *OverviewRequest) (*OverviewResponse, error) {
+	return nil, status.Error(codes.Unimplemented, "method Overview not implemented")
+}
+func (UnimplementedAccountServiceServer) Statistics(context.Context, *AccountStatisticsRequest) (*AccountStatisticsResponse, error) {
+	return nil, status.Error(codes.Unimplemented, "method Statistics not implemented")
 }
 func (UnimplementedAccountServiceServer) ToggleInclude(context.Context, *ToggleAccountRequest) (*Account, error) {
 	return nil, status.Error(codes.Unimplemented, "method ToggleInclude not implemented")
@@ -444,6 +480,42 @@ func _AccountService_AdjustBalance_Handler(srv interface{}, ctx context.Context,
 	return interceptor(ctx, in, info, handler)
 }
 
+func _AccountService_Overview_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(OverviewRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AccountServiceServer).Overview(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: AccountService_Overview_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AccountServiceServer).Overview(ctx, req.(*OverviewRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _AccountService_Statistics_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(AccountStatisticsRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AccountServiceServer).Statistics(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: AccountService_Statistics_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AccountServiceServer).Statistics(ctx, req.(*AccountStatisticsRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 func _AccountService_ToggleInclude_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(ToggleAccountRequest)
 	if err := dec(in); err != nil {
@@ -572,6 +644,14 @@ var AccountService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "AdjustBalance",
 			Handler:    _AccountService_AdjustBalance_Handler,
+		},
+		{
+			MethodName: "Overview",
+			Handler:    _AccountService_Overview_Handler,
+		},
+		{
+			MethodName: "Statistics",
+			Handler:    _AccountService_Statistics_Handler,
 		},
 		{
 			MethodName: "ToggleInclude",

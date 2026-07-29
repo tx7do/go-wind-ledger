@@ -18,6 +18,7 @@ import 'package:flutter_app/src/features/cms/pages/tag_list/tag_list_page.dart';
 import 'package:flutter_app/src/features/cms/pages/category_list/category_list_page.dart';
 import 'package:flutter_app/src/features/cms/pages/search/search_page.dart';
 import 'package:flutter_app/src/features/auth/pages/login_page.dart';
+import 'package:flutter_app/src/features/auth/pages/register_page.dart';
 import 'package:flutter_app/src/core/utils/responsive_utils.dart';
 
 import 'package:flutter_app/src/features/ledger/pages/ledger_home_page.dart';
@@ -340,6 +341,14 @@ class AppRouter {
         path: constants.AppRoutePath.login,
         builder: (context, state) {
           return const LoginPage();
+        },
+      ),
+      // 注册页（不在 Shell 内）
+      GoRoute(
+        name: RouteNames.register,
+        path: constants.AppRoutePath.register,
+        builder: (context, state) {
+          return const RegisterPage();
         },
       ),
     ],

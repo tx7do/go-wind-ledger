@@ -96,4 +96,16 @@ service AccountService {
       body: "*"
     };
   }
+
+  rpc Overview (ledger.service.v1.OverviewRequest) returns (ledger.service.v1.OverviewResponse) {
+    option (google.api.http) = {
+      get: "/admin/v1/accounts/overview"
+    };
+  }
+
+  rpc Statistics (ledger.service.v1.AccountStatisticsRequest) returns (ledger.service.v1.AccountStatisticsResponse) {
+    option (google.api.http) = {
+      get: "/admin/v1/accounts/statistics"
+    };
+  }
 }

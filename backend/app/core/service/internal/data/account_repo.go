@@ -242,3 +242,125 @@ func (r *AccountRepo) UpdateBalance(ctx context.Context, id uint32, newBalance f
 	return err
 }
 
+// Overview returns an aggregated view of assets and debts based on accounts
+// that are enabled (enable=true) and included in statistics (include=true).
+//
+// Classification by type:
+//   - CHECKING / ASSET  -> assets (balance taken as-is, expected positive)
+//   - CREDIT  / DEBT    -> debts  (balance negated, since liabilities are stored negative)
+func (r *AccountRepo) Overview(ctx context.Context) (*ledgerV1.OverviewResponse, error) {
+	entities, err := r.entClient.Client().Account.Query().
+		Where(
+			account.EnableEQ(true),
+			account.IncludeEQ(true),
+		).
+		All(ctx)
+	if err != nil {
+		return nil, ledgerV1.ErrorInternalServerError("query accounts for overview failed")
+	}
+
+	var (
+		totalAssets float64
+		totalDebts  float64
+		assets      []*ledgerV1.AccountAsset
+		debts       []*ledgerV1.AccountAsset
+	)
+
+	for _, e := range entities {
+		balance := 0.0
+		if e.Balance != nil {
+			balance = *e.Balance
+		}
+		currencyCode := ""
+		if e.CurrencyCode != nil {
+			currencyCode = *e.CurrencyCode
+		}
+		name := ""
+		if e.Name != nil {
+			name = *e.Name
+		}
+		typeName := ""
+		if e.Type != nil {
+			typeName = (*e.Type).String()
+		}
+
+		isDebt := false
+		if e.Type != nil {
+			switch *e.Type {
+			case account.TypeAccountTypeCredit, account.TypeAccountTypeDebt:
+				isDebt = true
+			}
+		}
+
+		if isDebt {
+			// Liabilities: balance is stored as a negative number; report its
+			// absolute value in the debts list and accumulate as a positive debt.
+			debtValue := -balance
+			if debtValue < 0 {
+				debtValue = 0
+			}
+			totalDebts += debtValue
+			debts = append(debts, &ledgerV1.AccountAsset{
+				Name:         name,
+				Type:         typeName,
+				Balance:      FloatToStr(debtValue),
+				CurrencyCode: currencyCode,
+			})
+		} else {
+			// Assets: balance is reported as-is.
+			if balance < 0 {
+				balance = 0
+			}
+			totalAssets += balance
+			assets = append(assets, &ledgerV1.AccountAsset{
+				Name:         name,
+				Type:         typeName,
+				Balance:      FloatToStr(balance),
+				CurrencyCode: currencyCode,
+			})
+		}
+	}
+
+	return &ledgerV1.OverviewResponse{
+		TotalAssets: FloatToStr(totalAssets),
+		TotalDebts:  FloatToStr(totalDebts),
+		NetWorth:    FloatToStr(totalAssets - totalDebts),
+		Assets:      assets,
+		Debts:       debts,
+	}, nil
+}
+
+// Statistics returns aggregated balance/credit figures across all enabled
+// accounts. An optional currency_code filter may be applied.
+func (r *AccountRepo) Statistics(ctx context.Context, currencyCode string) (*ledgerV1.AccountStatisticsResponse, error) {
+	q := r.entClient.Client().Account.Query().Where(account.EnableEQ(true))
+	if currencyCode != "" {
+		q = q.Where(account.CurrencyCodeEQ(currencyCode))
+	}
+
+	entities, err := q.All(ctx)
+	if err != nil {
+		return nil, ledgerV1.ErrorInternalServerError("query accounts for statistics failed")
+	}
+
+	var (
+		totalBalance     float64
+		totalCreditLimit float64
+	)
+
+	for _, e := range entities {
+		if e.Balance != nil {
+			totalBalance += *e.Balance
+		}
+		if e.CreditLimit != nil {
+			totalCreditLimit += *e.CreditLimit
+		}
+	}
+
+	return &ledgerV1.AccountStatisticsResponse{
+		TotalBalance:     FloatToStr(totalBalance),
+		TotalCreditLimit: FloatToStr(totalCreditLimit),
+		TotalAvailable:   FloatToStr(totalBalance + totalCreditLimit),
+	}, nil
+}
+

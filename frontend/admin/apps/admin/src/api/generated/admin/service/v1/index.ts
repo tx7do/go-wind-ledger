@@ -148,6 +148,21 @@ export interface AccountService {
   Toggle(
     request: ledgerservicev1_ToggleAccountRequest,
   ): Promise<ledgerservicev1_Account>;
+  ToggleInclude(
+    request: ledgerservicev1_ToggleAccountRequest,
+  ): Promise<ledgerservicev1_Account>;
+  ToggleCanExpense(
+    request: ledgerservicev1_ToggleAccountRequest,
+  ): Promise<ledgerservicev1_Account>;
+  ToggleCanIncome(
+    request: ledgerservicev1_ToggleAccountRequest,
+  ): Promise<ledgerservicev1_Account>;
+  ToggleCanTransferFrom(
+    request: ledgerservicev1_ToggleAccountRequest,
+  ): Promise<ledgerservicev1_Account>;
+  ToggleCanTransferTo(
+    request: ledgerservicev1_ToggleAccountRequest,
+  ): Promise<ledgerservicev1_Account>;
   AdjustBalance(
     request: ledgerservicev1_AdjustBalanceRequest,
   ): Promise<ledgerservicev1_Account>;
@@ -350,6 +365,61 @@ export function createAccountServiceClient(
       return transport.unary(path, 'PATCH', body, {
         service: 'AccountService',
         method: 'Toggle',
+      }) as Promise<ledgerservicev1_Account>;
+    },
+    ToggleInclude(request) {
+      if (request.id === undefined || request.id === null) {
+        throw new Error('missing required field request.id');
+      }
+      const path = `admin/v1/accounts/${request.id}/toggle-include`;
+      const body = JSON.stringify(request);
+      return transport.unary(path, 'PATCH', body, {
+        service: 'AccountService',
+        method: 'ToggleInclude',
+      }) as Promise<ledgerservicev1_Account>;
+    },
+    ToggleCanExpense(request) {
+      if (request.id === undefined || request.id === null) {
+        throw new Error('missing required field request.id');
+      }
+      const path = `admin/v1/accounts/${request.id}/toggle-can-expense`;
+      const body = JSON.stringify(request);
+      return transport.unary(path, 'PATCH', body, {
+        service: 'AccountService',
+        method: 'ToggleCanExpense',
+      }) as Promise<ledgerservicev1_Account>;
+    },
+    ToggleCanIncome(request) {
+      if (request.id === undefined || request.id === null) {
+        throw new Error('missing required field request.id');
+      }
+      const path = `admin/v1/accounts/${request.id}/toggle-can-income`;
+      const body = JSON.stringify(request);
+      return transport.unary(path, 'PATCH', body, {
+        service: 'AccountService',
+        method: 'ToggleCanIncome',
+      }) as Promise<ledgerservicev1_Account>;
+    },
+    ToggleCanTransferFrom(request) {
+      if (request.id === undefined || request.id === null) {
+        throw new Error('missing required field request.id');
+      }
+      const path = `admin/v1/accounts/${request.id}/toggle-can-transfer-from`;
+      const body = JSON.stringify(request);
+      return transport.unary(path, 'PATCH', body, {
+        service: 'AccountService',
+        method: 'ToggleCanTransferFrom',
+      }) as Promise<ledgerservicev1_Account>;
+    },
+    ToggleCanTransferTo(request) {
+      if (request.id === undefined || request.id === null) {
+        throw new Error('missing required field request.id');
+      }
+      const path = `admin/v1/accounts/${request.id}/toggle-can-transfer-to`;
+      const body = JSON.stringify(request);
+      return transport.unary(path, 'PATCH', body, {
+        service: 'AccountService',
+        method: 'ToggleCanTransferTo',
       }) as Promise<ledgerservicev1_Account>;
     },
     AdjustBalance(request) {
@@ -4375,6 +4445,14 @@ export interface FlowFileService {
   Delete(
     request: ledgerservicev1_DeleteFlowFileRequest,
   ): Promise<wellKnownEmpty>;
+  // 上传附件
+  UploadFile(
+    request: ledgerservicev1_UploadFlowFileRequest,
+  ): Promise<ledgerservicev1_FlowFile>;
+  // 查看附件（免认证，按 create_time 安全验证）
+  ViewFile(
+    request: ledgerservicev1_ViewFlowFileRequest,
+  ): Promise<ledgerservicev1_ViewFlowFileResponse>;
 }
 
 export function createFlowFileServiceClient(
@@ -4410,6 +4488,37 @@ export function createFlowFileServiceClient(
         method: 'Delete',
       }) as Promise<wellKnownEmpty>;
     },
+    UploadFile(request) {
+      const path = `admin/v1/flow-files/upload`;
+      const body = JSON.stringify(request);
+      return transport.unary(path, 'POST', body, {
+        service: 'FlowFileService',
+        method: 'UploadFile',
+      }) as Promise<ledgerservicev1_FlowFile>;
+    },
+    ViewFile(request) {
+      const path = `admin/v1/flow-files/view`;
+      const body = null;
+      const queryParams: string[] = [];
+      if (request.id) {
+        queryParams.push(
+          `id=${encodeURIComponent(request.id.toString())}`,
+        );
+      }
+      if (request.createTime) {
+        queryParams.push(
+          `createTime=${encodeURIComponent(request.createTime.toString())}`,
+        );
+      }
+      let uri = path;
+      if (queryParams.length > 0) {
+        uri += `?${queryParams.join('&')}`;
+      }
+      return transport.unary(uri, 'GET', body, {
+        service: 'FlowFileService',
+        method: 'ViewFile',
+      }) as Promise<ledgerservicev1_ViewFlowFileResponse>;
+    },
   };
 }
 // 请求 - 附件列表
@@ -4436,6 +4545,28 @@ export type ledgerservicev1_FlowFile = {
 // 请求 - 删除附件
 export type ledgerservicev1_DeleteFlowFileRequest = {
   id: number | undefined;
+};
+
+// 请求 - 上传附件
+export type ledgerservicev1_UploadFlowFileRequest = {
+  contentType: string | undefined;
+  data: string | undefined;
+  fileName: string | undefined;
+  flowId: number | undefined;
+  size: number | undefined;
+};
+
+// 请求 - 查看附件（公开免认证，按 create_time 安全验证）
+export type ledgerservicev1_ViewFlowFileRequest = {
+  createTime: number | undefined;
+  id: number | undefined;
+};
+
+// 回应 - 查看附件（返回文件内容）
+export type ledgerservicev1_ViewFlowFileResponse = {
+  contentType: string | undefined;
+  data: string | undefined;
+  originalName: string | undefined;
 };
 
 // 站内信消息管理服务
@@ -8097,6 +8228,12 @@ export interface PayeeService {
   Toggle(
     request: ledgerservicev1_TogglePayeeRequest,
   ): Promise<ledgerservicev1_Payee>;
+  ToggleCanExpense(
+    request: ledgerservicev1_TogglePayeeRequest,
+  ): Promise<ledgerservicev1_Payee>;
+  ToggleCanIncome(
+    request: ledgerservicev1_TogglePayeeRequest,
+  ): Promise<ledgerservicev1_Payee>;
 }
 
 export function createPayeeServiceClient(
@@ -8296,6 +8433,28 @@ export function createPayeeServiceClient(
       return transport.unary(path, 'PATCH', body, {
         service: 'PayeeService',
         method: 'Toggle',
+      }) as Promise<ledgerservicev1_Payee>;
+    },
+    ToggleCanExpense(request) {
+      if (request.id === undefined || request.id === null) {
+        throw new Error('missing required field request.id');
+      }
+      const path = `admin/v1/payees/${request.id}/toggle-can-expense`;
+      const body = JSON.stringify(request);
+      return transport.unary(path, 'PATCH', body, {
+        service: 'PayeeService',
+        method: 'ToggleCanExpense',
+      }) as Promise<ledgerservicev1_Payee>;
+    },
+    ToggleCanIncome(request) {
+      if (request.id === undefined || request.id === null) {
+        throw new Error('missing required field request.id');
+      }
+      const path = `admin/v1/payees/${request.id}/toggle-can-income`;
+      const body = JSON.stringify(request);
+      return transport.unary(path, 'PATCH', body, {
+        service: 'PayeeService',
+        method: 'ToggleCanIncome',
       }) as Promise<ledgerservicev1_Payee>;
     },
   };
@@ -11424,6 +11583,15 @@ export interface TagService {
   Toggle(
     request: ledgerservicev1_ToggleTagRequest,
   ): Promise<ledgerservicev1_Tag>;
+  ToggleCanExpense(
+    request: ledgerservicev1_ToggleTagRequest,
+  ): Promise<ledgerservicev1_Tag>;
+  ToggleCanIncome(
+    request: ledgerservicev1_ToggleTagRequest,
+  ): Promise<ledgerservicev1_Tag>;
+  ToggleCanTransfer(
+    request: ledgerservicev1_ToggleTagRequest,
+  ): Promise<ledgerservicev1_Tag>;
 }
 
 export function createTagServiceClient(
@@ -11623,6 +11791,39 @@ export function createTagServiceClient(
       return transport.unary(path, 'PATCH', body, {
         service: 'TagService',
         method: 'Toggle',
+      }) as Promise<ledgerservicev1_Tag>;
+    },
+    ToggleCanExpense(request) {
+      if (request.id === undefined || request.id === null) {
+        throw new Error('missing required field request.id');
+      }
+      const path = `admin/v1/tags/${request.id}/toggle-can-expense`;
+      const body = JSON.stringify(request);
+      return transport.unary(path, 'PATCH', body, {
+        service: 'TagService',
+        method: 'ToggleCanExpense',
+      }) as Promise<ledgerservicev1_Tag>;
+    },
+    ToggleCanIncome(request) {
+      if (request.id === undefined || request.id === null) {
+        throw new Error('missing required field request.id');
+      }
+      const path = `admin/v1/tags/${request.id}/toggle-can-income`;
+      const body = JSON.stringify(request);
+      return transport.unary(path, 'PATCH', body, {
+        service: 'TagService',
+        method: 'ToggleCanIncome',
+      }) as Promise<ledgerservicev1_Tag>;
+    },
+    ToggleCanTransfer(request) {
+      if (request.id === undefined || request.id === null) {
+        throw new Error('missing required field request.id');
+      }
+      const path = `admin/v1/tags/${request.id}/toggle-can-transfer`;
+      const body = JSON.stringify(request);
+      return transport.unary(path, 'PATCH', body, {
+        service: 'TagService',
+        method: 'ToggleCanTransfer',
       }) as Promise<ledgerservicev1_Tag>;
     },
   };

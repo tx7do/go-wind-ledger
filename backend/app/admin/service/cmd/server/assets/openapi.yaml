@@ -125,6 +125,35 @@ paths:
                         application/json:
                             schema:
                                 $ref: '#/components/schemas/ledger.service.v1.ListAccountResponse'
+    /admin/v1/accounts/overview:
+        get:
+            tags:
+                - AccountService
+            operationId: AccountService_Overview
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/ledger.service.v1.OverviewResponse'
+    /admin/v1/accounts/statistics:
+        get:
+            tags:
+                - AccountService
+            operationId: AccountService_Statistics
+            parameters:
+                - name: currencyCode
+                  in: query
+                  schema:
+                    type: string
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/ledger.service.v1.AccountStatisticsResponse'
     /admin/v1/accounts/{id}:
         get:
             tags:
@@ -11797,6 +11826,28 @@ components:
                     type: string
                     format: date-time
             description: 账户
+        ledger.service.v1.AccountAsset:
+            type: object
+            properties:
+                name:
+                    type: string
+                type:
+                    type: string
+                balance:
+                    type: string
+                currencyCode:
+                    type: string
+            description: 账户资产/负债明细
+        ledger.service.v1.AccountStatisticsResponse:
+            type: object
+            properties:
+                totalBalance:
+                    type: string
+                totalCreditLimit:
+                    type: string
+                totalAvailable:
+                    type: string
+            description: 回应 - 账户统计
         ledger.service.v1.AdjustBalanceRequest:
             type: object
             properties:
@@ -12421,6 +12472,24 @@ components:
                     type: string
                     format: date-time
             description: 定期提醒
+        ledger.service.v1.OverviewResponse:
+            type: object
+            properties:
+                totalAssets:
+                    type: string
+                totalDebts:
+                    type: string
+                netWorth:
+                    type: string
+                assets:
+                    type: array
+                    items:
+                        $ref: '#/components/schemas/ledger.service.v1.AccountAsset'
+                debts:
+                    type: array
+                    items:
+                        $ref: '#/components/schemas/ledger.service.v1.AccountAsset'
+            description: 回应 - 账户概览
         ledger.service.v1.Payee:
             type: object
             properties:

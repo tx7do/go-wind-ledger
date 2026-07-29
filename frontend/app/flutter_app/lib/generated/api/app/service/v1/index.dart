@@ -6448,6 +6448,1050 @@ class LedgerServiceV1DeleteFlowFileRequest {
   }
 }
 
+/// 注册请求
+class LedgerRegisterRequest {
+  String? inviteCode;
+  String? nickName;
+  String? password;
+  String? username;
+
+  LedgerRegisterRequest({
+    this.inviteCode,
+    this.nickName,
+    this.password,
+    this.username,
+  });
+
+  factory LedgerRegisterRequest.fromJson(Map<String, dynamic> json) {
+    return LedgerRegisterRequest(
+      inviteCode: json['inviteCode'] as String?,
+      nickName: json['nickName'] as String?,
+      password: json['password'] as String?,
+      username: json['username'] as String?,
+    );
+  }
+
+  Map<String, dynamic> toJson() {
+    final json = <String, dynamic>{};
+    if (inviteCode != null) json['inviteCode'] = inviteCode;
+    if (nickName != null) json['nickName'] = nickName;
+    if (password != null) json['password'] = password;
+    if (username != null) json['username'] = username;
+    return json;
+  }
+
+  @override
+  String toString() {
+    return 'LedgerRegisterRequest(inviteCode: $inviteCode, nickName: $nickName, password: $password, username: $username)';
+  }
+
+  @override
+  bool operator ==(Object other) =>
+    identical(this, other) ||
+    other is LedgerRegisterRequest &&
+      runtimeType == other.runtimeType
+      && inviteCode == other.inviteCode
+      && nickName == other.nickName
+      && password == other.password
+      && username == other.username
+    ;
+
+  @override
+  int get hashCode => Object.hashAll([
+    inviteCode,
+    nickName,
+    password,
+    username,
+  ]);
+
+  LedgerRegisterRequest copyWith({
+    String? inviteCode,
+    String? nickName,
+    String? password,
+    String? username,
+  }) {
+    return LedgerRegisterRequest(
+      inviteCode: inviteCode ?? this.inviteCode,
+      nickName: nickName ?? this.nickName,
+      password: password ?? this.password,
+      username: username ?? this.username,
+    );
+  }
+}
+
+/// 认证响应
+class LedgerAuthResponse {
+  String? accessToken;
+  String? refreshToken;
+  String? username;
+
+  LedgerAuthResponse({
+    this.accessToken,
+    this.refreshToken,
+    this.username,
+  });
+
+  factory LedgerAuthResponse.fromJson(Map<String, dynamic> json) {
+    return LedgerAuthResponse(
+      accessToken: json['accessToken'] as String?,
+      refreshToken: json['refreshToken'] as String?,
+      username: json['username'] as String?,
+    );
+  }
+
+  Map<String, dynamic> toJson() {
+    final json = <String, dynamic>{};
+    if (accessToken != null) json['accessToken'] = accessToken;
+    if (refreshToken != null) json['refreshToken'] = refreshToken;
+    if (username != null) json['username'] = username;
+    return json;
+  }
+
+  @override
+  String toString() {
+    return 'LedgerAuthResponse(accessToken: $accessToken, refreshToken: $refreshToken, username: $username)';
+  }
+
+  @override
+  bool operator ==(Object other) =>
+    identical(this, other) ||
+    other is LedgerAuthResponse &&
+      runtimeType == other.runtimeType
+      && accessToken == other.accessToken
+      && refreshToken == other.refreshToken
+      && username == other.username
+    ;
+
+  @override
+  int get hashCode => Object.hashAll([
+    accessToken,
+    refreshToken,
+    username,
+  ]);
+
+  LedgerAuthResponse copyWith({
+    String? accessToken,
+    String? refreshToken,
+    String? username,
+  }) {
+    return LedgerAuthResponse(
+      accessToken: accessToken ?? this.accessToken,
+      refreshToken: refreshToken ?? this.refreshToken,
+      username: username ?? this.username,
+    );
+  }
+}
+
+/// 初始化状态响应
+class InitStateResponse {
+  List<LedgerServiceV1Book>? availableBooks;
+  List<IdentityServiceV1Tenant>? availableTenants;
+  LedgerServiceV1Book? book;
+  IdentityServiceV1Tenant? tenant;
+  IdentityServiceV1User? user;
+
+  InitStateResponse({
+    this.availableBooks,
+    this.availableTenants,
+    this.book,
+    this.tenant,
+    this.user,
+  });
+
+  factory InitStateResponse.fromJson(Map<String, dynamic> json) {
+    return InitStateResponse(
+      availableBooks: (json['availableBooks'] as List<dynamic>?)?.map((e) => LedgerServiceV1Book.fromJson(e as Map<String, dynamic>)).toList(),
+      availableTenants: (json['availableTenants'] as List<dynamic>?)?.map((e) => IdentityServiceV1Tenant.fromJson(e as Map<String, dynamic>)).toList(),
+      book: json['book'] != null ? LedgerServiceV1Book.fromJson(json['book'] as Map<String, dynamic>) : null,
+      tenant: json['tenant'] != null ? IdentityServiceV1Tenant.fromJson(json['tenant'] as Map<String, dynamic>) : null,
+      user: json['user'] != null ? IdentityServiceV1User.fromJson(json['user'] as Map<String, dynamic>) : null,
+    );
+  }
+
+  Map<String, dynamic> toJson() {
+    final json = <String, dynamic>{};
+    if (availableBooks != null) json['availableBooks'] = availableBooks!.map((e) => e.toJson()).toList();
+    if (availableTenants != null) json['availableTenants'] = availableTenants!.map((e) => e.toJson()).toList();
+    if (book != null) json['book'] = book!.toJson();
+    if (tenant != null) json['tenant'] = tenant!.toJson();
+    if (user != null) json['user'] = user!.toJson();
+    return json;
+  }
+
+  @override
+  String toString() {
+    return 'InitStateResponse(availableBooks: $availableBooks, availableTenants: $availableTenants, book: $book, tenant: $tenant, user: $user)';
+  }
+
+  @override
+  bool operator ==(Object other) =>
+    identical(this, other) ||
+    other is InitStateResponse &&
+      runtimeType == other.runtimeType
+      && availableBooks == other.availableBooks
+      && availableTenants == other.availableTenants
+      && book == other.book
+      && tenant == other.tenant
+      && user == other.user
+    ;
+
+  @override
+  int get hashCode => Object.hashAll([
+    availableBooks,
+    availableTenants,
+    book,
+    tenant,
+    user,
+  ]);
+
+  InitStateResponse copyWith({
+    List<LedgerServiceV1Book>? availableBooks,
+    List<IdentityServiceV1Tenant>? availableTenants,
+    LedgerServiceV1Book? book,
+    IdentityServiceV1Tenant? tenant,
+    IdentityServiceV1User? user,
+  }) {
+    return InitStateResponse(
+      availableBooks: availableBooks ?? this.availableBooks,
+      availableTenants: availableTenants ?? this.availableTenants,
+      book: book ?? this.book,
+      tenant: tenant ?? this.tenant,
+      user: user ?? this.user,
+    );
+  }
+}
+
+/// 用户
+class IdentityServiceV1User {
+  String? address;
+  String? avatar;
+  int? commentCount;
+  String? createdAt;
+  int? createdBy;
+  String? deletedAt;
+  int? deletedBy;
+  String? description;
+  String? email;
+  int? followers;
+  int? following;
+  IdentityServiceV1User$Gender? gender;
+  int? id;
+  String? lastLoginAt;
+  String? lastLoginIp;
+  int? likeCount;
+  String? lockedUntil;
+  String? mobile;
+  String? nickname;
+  int? orgUnitId;
+  List<int>? orgUnitIds;
+  String? orgUnitName;
+  List<String>? orgUnitNames;
+  int? positionId;
+  List<int>? positionIds;
+  String? positionName;
+  List<String>? positionNames;
+  int? postCount;
+  String? realname;
+  String? region;
+  String? remark;
+  int? roleId;
+  List<int>? roleIds;
+  List<String>? roleNames;
+  List<String>? roles;
+  IdentityServiceV1User$Status? status;
+  String? telephone;
+  int? tenantId;
+  String? tenantName;
+  String? updatedAt;
+  int? updatedBy;
+  String? username;
+
+  IdentityServiceV1User({
+    this.address,
+    this.avatar,
+    this.commentCount,
+    this.createdAt,
+    this.createdBy,
+    this.deletedAt,
+    this.deletedBy,
+    this.description,
+    this.email,
+    this.followers,
+    this.following,
+    this.gender,
+    this.id,
+    this.lastLoginAt,
+    this.lastLoginIp,
+    this.likeCount,
+    this.lockedUntil,
+    this.mobile,
+    this.nickname,
+    this.orgUnitId,
+    this.orgUnitIds,
+    this.orgUnitName,
+    this.orgUnitNames,
+    this.positionId,
+    this.positionIds,
+    this.positionName,
+    this.positionNames,
+    this.postCount,
+    this.realname,
+    this.region,
+    this.remark,
+    this.roleId,
+    this.roleIds,
+    this.roleNames,
+    this.roles,
+    this.status,
+    this.telephone,
+    this.tenantId,
+    this.tenantName,
+    this.updatedAt,
+    this.updatedBy,
+    this.username,
+  });
+
+  factory IdentityServiceV1User.fromJson(Map<String, dynamic> json) {
+    return IdentityServiceV1User(
+      address: json['address'] as String?,
+      avatar: json['avatar'] as String?,
+      commentCount: json['commentCount'] != null ? int.parse(json['commentCount'].toString()) : null,
+      createdAt: json['createdAt'] as String?,
+      createdBy: json['createdBy'] as int?,
+      deletedAt: json['deletedAt'] as String?,
+      deletedBy: json['deletedBy'] as int?,
+      description: json['description'] as String?,
+      email: json['email'] as String?,
+      followers: json['followers'] != null ? int.parse(json['followers'].toString()) : null,
+      following: json['following'] != null ? int.parse(json['following'].toString()) : null,
+      gender: json['gender'] != null ? IdentityServiceV1User$Gender.fromString(json['gender'] as String) : null,
+      id: json['id'] as int?,
+      lastLoginAt: json['lastLoginAt'] as String?,
+      lastLoginIp: json['lastLoginIp'] as String?,
+      likeCount: json['likeCount'] != null ? int.parse(json['likeCount'].toString()) : null,
+      lockedUntil: json['lockedUntil'] as String?,
+      mobile: json['mobile'] as String?,
+      nickname: json['nickname'] as String?,
+      orgUnitId: json['orgUnitId'] as int?,
+      orgUnitIds: (json['orgUnitIds'] as List<dynamic>?)?.map((e) => e as int).toList(),
+      orgUnitName: json['orgUnitName'] as String?,
+      orgUnitNames: (json['orgUnitNames'] as List<dynamic>?)?.map((e) => e as String).toList(),
+      positionId: json['positionId'] as int?,
+      positionIds: (json['positionIds'] as List<dynamic>?)?.map((e) => e as int).toList(),
+      positionName: json['positionName'] as String?,
+      positionNames: (json['positionNames'] as List<dynamic>?)?.map((e) => e as String).toList(),
+      postCount: json['postCount'] != null ? int.parse(json['postCount'].toString()) : null,
+      realname: json['realname'] as String?,
+      region: json['region'] as String?,
+      remark: json['remark'] as String?,
+      roleId: json['roleId'] as int?,
+      roleIds: (json['roleIds'] as List<dynamic>?)?.map((e) => e as int).toList(),
+      roleNames: (json['roleNames'] as List<dynamic>?)?.map((e) => e as String).toList(),
+      roles: (json['roles'] as List<dynamic>?)?.map((e) => e as String).toList(),
+      status: json['status'] != null ? IdentityServiceV1User$Status.fromString(json['status'] as String) : null,
+      telephone: json['telephone'] as String?,
+      tenantId: json['tenantId'] as int?,
+      tenantName: json['tenantName'] as String?,
+      updatedAt: json['updatedAt'] as String?,
+      updatedBy: json['updatedBy'] as int?,
+      username: json['username'] as String?,
+    );
+  }
+
+  Map<String, dynamic> toJson() {
+    final json = <String, dynamic>{};
+    if (address != null) json['address'] = address;
+    if (avatar != null) json['avatar'] = avatar;
+    if (commentCount != null) json['commentCount'] = commentCount.toString();
+    if (createdAt != null) json['createdAt'] = createdAt;
+    if (createdBy != null) json['createdBy'] = createdBy;
+    if (deletedAt != null) json['deletedAt'] = deletedAt;
+    if (deletedBy != null) json['deletedBy'] = deletedBy;
+    if (description != null) json['description'] = description;
+    if (email != null) json['email'] = email;
+    if (followers != null) json['followers'] = followers.toString();
+    if (following != null) json['following'] = following.toString();
+    if (gender != null) json['gender'] = gender!.value;
+    if (id != null) json['id'] = id;
+    if (lastLoginAt != null) json['lastLoginAt'] = lastLoginAt;
+    if (lastLoginIp != null) json['lastLoginIp'] = lastLoginIp;
+    if (likeCount != null) json['likeCount'] = likeCount.toString();
+    if (lockedUntil != null) json['lockedUntil'] = lockedUntil;
+    if (mobile != null) json['mobile'] = mobile;
+    if (nickname != null) json['nickname'] = nickname;
+    if (orgUnitId != null) json['orgUnitId'] = orgUnitId;
+    if (orgUnitIds != null) json['orgUnitIds'] = orgUnitIds;
+    if (orgUnitName != null) json['orgUnitName'] = orgUnitName;
+    if (orgUnitNames != null) json['orgUnitNames'] = orgUnitNames;
+    if (positionId != null) json['positionId'] = positionId;
+    if (positionIds != null) json['positionIds'] = positionIds;
+    if (positionName != null) json['positionName'] = positionName;
+    if (positionNames != null) json['positionNames'] = positionNames;
+    if (postCount != null) json['postCount'] = postCount.toString();
+    if (realname != null) json['realname'] = realname;
+    if (region != null) json['region'] = region;
+    if (remark != null) json['remark'] = remark;
+    if (roleId != null) json['roleId'] = roleId;
+    if (roleIds != null) json['roleIds'] = roleIds;
+    if (roleNames != null) json['roleNames'] = roleNames;
+    if (roles != null) json['roles'] = roles;
+    if (status != null) json['status'] = status!.value;
+    if (telephone != null) json['telephone'] = telephone;
+    if (tenantId != null) json['tenantId'] = tenantId;
+    if (tenantName != null) json['tenantName'] = tenantName;
+    if (updatedAt != null) json['updatedAt'] = updatedAt;
+    if (updatedBy != null) json['updatedBy'] = updatedBy;
+    if (username != null) json['username'] = username;
+    return json;
+  }
+
+  @override
+  String toString() {
+    return 'IdentityServiceV1User(address: $address, avatar: $avatar, commentCount: $commentCount, createdAt: $createdAt, createdBy: $createdBy, deletedAt: $deletedAt, deletedBy: $deletedBy, description: $description, email: $email, followers: $followers, following: $following, gender: $gender, id: $id, lastLoginAt: $lastLoginAt, lastLoginIp: $lastLoginIp, likeCount: $likeCount, lockedUntil: $lockedUntil, mobile: $mobile, nickname: $nickname, orgUnitId: $orgUnitId, orgUnitIds: $orgUnitIds, orgUnitName: $orgUnitName, orgUnitNames: $orgUnitNames, positionId: $positionId, positionIds: $positionIds, positionName: $positionName, positionNames: $positionNames, postCount: $postCount, realname: $realname, region: $region, remark: $remark, roleId: $roleId, roleIds: $roleIds, roleNames: $roleNames, roles: $roles, status: $status, telephone: $telephone, tenantId: $tenantId, tenantName: $tenantName, updatedAt: $updatedAt, updatedBy: $updatedBy, username: $username)';
+  }
+
+  @override
+  bool operator ==(Object other) =>
+    identical(this, other) ||
+    other is IdentityServiceV1User &&
+      runtimeType == other.runtimeType
+      && address == other.address
+      && avatar == other.avatar
+      && commentCount == other.commentCount
+      && createdAt == other.createdAt
+      && createdBy == other.createdBy
+      && deletedAt == other.deletedAt
+      && deletedBy == other.deletedBy
+      && description == other.description
+      && email == other.email
+      && followers == other.followers
+      && following == other.following
+      && gender == other.gender
+      && id == other.id
+      && lastLoginAt == other.lastLoginAt
+      && lastLoginIp == other.lastLoginIp
+      && likeCount == other.likeCount
+      && lockedUntil == other.lockedUntil
+      && mobile == other.mobile
+      && nickname == other.nickname
+      && orgUnitId == other.orgUnitId
+      && orgUnitIds == other.orgUnitIds
+      && orgUnitName == other.orgUnitName
+      && orgUnitNames == other.orgUnitNames
+      && positionId == other.positionId
+      && positionIds == other.positionIds
+      && positionName == other.positionName
+      && positionNames == other.positionNames
+      && postCount == other.postCount
+      && realname == other.realname
+      && region == other.region
+      && remark == other.remark
+      && roleId == other.roleId
+      && roleIds == other.roleIds
+      && roleNames == other.roleNames
+      && roles == other.roles
+      && status == other.status
+      && telephone == other.telephone
+      && tenantId == other.tenantId
+      && tenantName == other.tenantName
+      && updatedAt == other.updatedAt
+      && updatedBy == other.updatedBy
+      && username == other.username
+    ;
+
+  @override
+  int get hashCode => Object.hashAll([
+    address,
+    avatar,
+    commentCount,
+    createdAt,
+    createdBy,
+    deletedAt,
+    deletedBy,
+    description,
+    email,
+    followers,
+    following,
+    gender,
+    id,
+    lastLoginAt,
+    lastLoginIp,
+    likeCount,
+    lockedUntil,
+    mobile,
+    nickname,
+    orgUnitId,
+    orgUnitIds,
+    orgUnitName,
+    orgUnitNames,
+    positionId,
+    positionIds,
+    positionName,
+    positionNames,
+    postCount,
+    realname,
+    region,
+    remark,
+    roleId,
+    roleIds,
+    roleNames,
+    roles,
+    status,
+    telephone,
+    tenantId,
+    tenantName,
+    updatedAt,
+    updatedBy,
+    username,
+  ]);
+
+  IdentityServiceV1User copyWith({
+    String? address,
+    String? avatar,
+    int? commentCount,
+    String? createdAt,
+    int? createdBy,
+    String? deletedAt,
+    int? deletedBy,
+    String? description,
+    String? email,
+    int? followers,
+    int? following,
+    IdentityServiceV1User$Gender? gender,
+    int? id,
+    String? lastLoginAt,
+    String? lastLoginIp,
+    int? likeCount,
+    String? lockedUntil,
+    String? mobile,
+    String? nickname,
+    int? orgUnitId,
+    List<int>? orgUnitIds,
+    String? orgUnitName,
+    List<String>? orgUnitNames,
+    int? positionId,
+    List<int>? positionIds,
+    String? positionName,
+    List<String>? positionNames,
+    int? postCount,
+    String? realname,
+    String? region,
+    String? remark,
+    int? roleId,
+    List<int>? roleIds,
+    List<String>? roleNames,
+    List<String>? roles,
+    IdentityServiceV1User$Status? status,
+    String? telephone,
+    int? tenantId,
+    String? tenantName,
+    String? updatedAt,
+    int? updatedBy,
+    String? username,
+  }) {
+    return IdentityServiceV1User(
+      address: address ?? this.address,
+      avatar: avatar ?? this.avatar,
+      commentCount: commentCount ?? this.commentCount,
+      createdAt: createdAt ?? this.createdAt,
+      createdBy: createdBy ?? this.createdBy,
+      deletedAt: deletedAt ?? this.deletedAt,
+      deletedBy: deletedBy ?? this.deletedBy,
+      description: description ?? this.description,
+      email: email ?? this.email,
+      followers: followers ?? this.followers,
+      following: following ?? this.following,
+      gender: gender ?? this.gender,
+      id: id ?? this.id,
+      lastLoginAt: lastLoginAt ?? this.lastLoginAt,
+      lastLoginIp: lastLoginIp ?? this.lastLoginIp,
+      likeCount: likeCount ?? this.likeCount,
+      lockedUntil: lockedUntil ?? this.lockedUntil,
+      mobile: mobile ?? this.mobile,
+      nickname: nickname ?? this.nickname,
+      orgUnitId: orgUnitId ?? this.orgUnitId,
+      orgUnitIds: orgUnitIds ?? this.orgUnitIds,
+      orgUnitName: orgUnitName ?? this.orgUnitName,
+      orgUnitNames: orgUnitNames ?? this.orgUnitNames,
+      positionId: positionId ?? this.positionId,
+      positionIds: positionIds ?? this.positionIds,
+      positionName: positionName ?? this.positionName,
+      positionNames: positionNames ?? this.positionNames,
+      postCount: postCount ?? this.postCount,
+      realname: realname ?? this.realname,
+      region: region ?? this.region,
+      remark: remark ?? this.remark,
+      roleId: roleId ?? this.roleId,
+      roleIds: roleIds ?? this.roleIds,
+      roleNames: roleNames ?? this.roleNames,
+      roles: roles ?? this.roles,
+      status: status ?? this.status,
+      telephone: telephone ?? this.telephone,
+      tenantId: tenantId ?? this.tenantId,
+      tenantName: tenantName ?? this.tenantName,
+      updatedAt: updatedAt ?? this.updatedAt,
+      updatedBy: updatedBy ?? this.updatedBy,
+      username: username ?? this.username,
+    );
+  }
+}
+
+/// 用户性别
+enum IdentityServiceV1User$Gender {
+  female('FEMALE'),
+  male('MALE'),
+  secret('SECRET');
+
+  final String value;
+  const IdentityServiceV1User$Gender(this.value);
+
+  static IdentityServiceV1User$Gender fromString(String v) =>
+    values.firstWhere((e) => e.value == v, orElse: () => throw ArgumentError('Unknown IdentityServiceV1User\$Gender value: ' + v));
+  @override
+  String toString() => value;
+}
+
+/// 用户状态
+enum IdentityServiceV1User$Status {
+  closed('CLOSED'),
+  disabled('DISABLED'),
+  expired('EXPIRED'),
+  locked('LOCKED'),
+  normal('NORMAL'),
+  pending('PENDING');
+
+  final String value;
+  const IdentityServiceV1User$Status(this.value);
+
+  static IdentityServiceV1User$Status fromString(String v) =>
+    values.firstWhere((e) => e.value == v, orElse: () => throw ArgumentError('Unknown IdentityServiceV1User\$Status value: ' + v));
+  @override
+  String toString() => value;
+}
+
+/// 租户
+class IdentityServiceV1Tenant {
+  int? adminUserId;
+  String? adminUserName;
+  IdentityServiceV1Tenant$AuditStatus? auditStatus;
+  String? code;
+  String? createdAt;
+  int? createdBy;
+  String? deletedAt;
+  int? deletedBy;
+  String? domain;
+  String? expiredAt;
+  int? id;
+  String? industry;
+  String? logoUrl;
+  int? memberCount;
+  String? name;
+  String? remark;
+  IdentityServiceV1Tenant$Status? status;
+  String? subscriptionAt;
+  String? subscriptionPlan;
+  IdentityServiceV1Tenant$Type? type;
+  String? unsubscribeAt;
+  String? updatedAt;
+  int? updatedBy;
+
+  IdentityServiceV1Tenant({
+    this.adminUserId,
+    this.adminUserName,
+    this.auditStatus,
+    this.code,
+    this.createdAt,
+    this.createdBy,
+    this.deletedAt,
+    this.deletedBy,
+    this.domain,
+    this.expiredAt,
+    this.id,
+    this.industry,
+    this.logoUrl,
+    this.memberCount,
+    this.name,
+    this.remark,
+    this.status,
+    this.subscriptionAt,
+    this.subscriptionPlan,
+    this.type,
+    this.unsubscribeAt,
+    this.updatedAt,
+    this.updatedBy,
+  });
+
+  factory IdentityServiceV1Tenant.fromJson(Map<String, dynamic> json) {
+    return IdentityServiceV1Tenant(
+      adminUserId: json['adminUserId'] as int?,
+      adminUserName: json['adminUserName'] as String?,
+      auditStatus: json['auditStatus'] != null ? IdentityServiceV1Tenant$AuditStatus.fromString(json['auditStatus'] as String) : null,
+      code: json['code'] as String?,
+      createdAt: json['createdAt'] as String?,
+      createdBy: json['createdBy'] as int?,
+      deletedAt: json['deletedAt'] as String?,
+      deletedBy: json['deletedBy'] as int?,
+      domain: json['domain'] as String?,
+      expiredAt: json['expiredAt'] as String?,
+      id: json['id'] as int?,
+      industry: json['industry'] as String?,
+      logoUrl: json['logoUrl'] as String?,
+      memberCount: json['memberCount'] as int?,
+      name: json['name'] as String?,
+      remark: json['remark'] as String?,
+      status: json['status'] != null ? IdentityServiceV1Tenant$Status.fromString(json['status'] as String) : null,
+      subscriptionAt: json['subscriptionAt'] as String?,
+      subscriptionPlan: json['subscriptionPlan'] as String?,
+      type: json['type'] != null ? IdentityServiceV1Tenant$Type.fromString(json['type'] as String) : null,
+      unsubscribeAt: json['unsubscribeAt'] as String?,
+      updatedAt: json['updatedAt'] as String?,
+      updatedBy: json['updatedBy'] as int?,
+    );
+  }
+
+  Map<String, dynamic> toJson() {
+    final json = <String, dynamic>{};
+    if (adminUserId != null) json['adminUserId'] = adminUserId;
+    if (adminUserName != null) json['adminUserName'] = adminUserName;
+    if (auditStatus != null) json['auditStatus'] = auditStatus!.value;
+    if (code != null) json['code'] = code;
+    if (createdAt != null) json['createdAt'] = createdAt;
+    if (createdBy != null) json['createdBy'] = createdBy;
+    if (deletedAt != null) json['deletedAt'] = deletedAt;
+    if (deletedBy != null) json['deletedBy'] = deletedBy;
+    if (domain != null) json['domain'] = domain;
+    if (expiredAt != null) json['expiredAt'] = expiredAt;
+    if (id != null) json['id'] = id;
+    if (industry != null) json['industry'] = industry;
+    if (logoUrl != null) json['logoUrl'] = logoUrl;
+    if (memberCount != null) json['memberCount'] = memberCount;
+    if (name != null) json['name'] = name;
+    if (remark != null) json['remark'] = remark;
+    if (status != null) json['status'] = status!.value;
+    if (subscriptionAt != null) json['subscriptionAt'] = subscriptionAt;
+    if (subscriptionPlan != null) json['subscriptionPlan'] = subscriptionPlan;
+    if (type != null) json['type'] = type!.value;
+    if (unsubscribeAt != null) json['unsubscribeAt'] = unsubscribeAt;
+    if (updatedAt != null) json['updatedAt'] = updatedAt;
+    if (updatedBy != null) json['updatedBy'] = updatedBy;
+    return json;
+  }
+
+  @override
+  String toString() {
+    return 'IdentityServiceV1Tenant(adminUserId: $adminUserId, adminUserName: $adminUserName, auditStatus: $auditStatus, code: $code, createdAt: $createdAt, createdBy: $createdBy, deletedAt: $deletedAt, deletedBy: $deletedBy, domain: $domain, expiredAt: $expiredAt, id: $id, industry: $industry, logoUrl: $logoUrl, memberCount: $memberCount, name: $name, remark: $remark, status: $status, subscriptionAt: $subscriptionAt, subscriptionPlan: $subscriptionPlan, type: $type, unsubscribeAt: $unsubscribeAt, updatedAt: $updatedAt, updatedBy: $updatedBy)';
+  }
+
+  @override
+  bool operator ==(Object other) =>
+    identical(this, other) ||
+    other is IdentityServiceV1Tenant &&
+      runtimeType == other.runtimeType
+      && adminUserId == other.adminUserId
+      && adminUserName == other.adminUserName
+      && auditStatus == other.auditStatus
+      && code == other.code
+      && createdAt == other.createdAt
+      && createdBy == other.createdBy
+      && deletedAt == other.deletedAt
+      && deletedBy == other.deletedBy
+      && domain == other.domain
+      && expiredAt == other.expiredAt
+      && id == other.id
+      && industry == other.industry
+      && logoUrl == other.logoUrl
+      && memberCount == other.memberCount
+      && name == other.name
+      && remark == other.remark
+      && status == other.status
+      && subscriptionAt == other.subscriptionAt
+      && subscriptionPlan == other.subscriptionPlan
+      && type == other.type
+      && unsubscribeAt == other.unsubscribeAt
+      && updatedAt == other.updatedAt
+      && updatedBy == other.updatedBy
+    ;
+
+  @override
+  int get hashCode => Object.hashAll([
+    adminUserId,
+    adminUserName,
+    auditStatus,
+    code,
+    createdAt,
+    createdBy,
+    deletedAt,
+    deletedBy,
+    domain,
+    expiredAt,
+    id,
+    industry,
+    logoUrl,
+    memberCount,
+    name,
+    remark,
+    status,
+    subscriptionAt,
+    subscriptionPlan,
+    type,
+    unsubscribeAt,
+    updatedAt,
+    updatedBy,
+  ]);
+
+  IdentityServiceV1Tenant copyWith({
+    int? adminUserId,
+    String? adminUserName,
+    IdentityServiceV1Tenant$AuditStatus? auditStatus,
+    String? code,
+    String? createdAt,
+    int? createdBy,
+    String? deletedAt,
+    int? deletedBy,
+    String? domain,
+    String? expiredAt,
+    int? id,
+    String? industry,
+    String? logoUrl,
+    int? memberCount,
+    String? name,
+    String? remark,
+    IdentityServiceV1Tenant$Status? status,
+    String? subscriptionAt,
+    String? subscriptionPlan,
+    IdentityServiceV1Tenant$Type? type,
+    String? unsubscribeAt,
+    String? updatedAt,
+    int? updatedBy,
+  }) {
+    return IdentityServiceV1Tenant(
+      adminUserId: adminUserId ?? this.adminUserId,
+      adminUserName: adminUserName ?? this.adminUserName,
+      auditStatus: auditStatus ?? this.auditStatus,
+      code: code ?? this.code,
+      createdAt: createdAt ?? this.createdAt,
+      createdBy: createdBy ?? this.createdBy,
+      deletedAt: deletedAt ?? this.deletedAt,
+      deletedBy: deletedBy ?? this.deletedBy,
+      domain: domain ?? this.domain,
+      expiredAt: expiredAt ?? this.expiredAt,
+      id: id ?? this.id,
+      industry: industry ?? this.industry,
+      logoUrl: logoUrl ?? this.logoUrl,
+      memberCount: memberCount ?? this.memberCount,
+      name: name ?? this.name,
+      remark: remark ?? this.remark,
+      status: status ?? this.status,
+      subscriptionAt: subscriptionAt ?? this.subscriptionAt,
+      subscriptionPlan: subscriptionPlan ?? this.subscriptionPlan,
+      type: type ?? this.type,
+      unsubscribeAt: unsubscribeAt ?? this.unsubscribeAt,
+      updatedAt: updatedAt ?? this.updatedAt,
+      updatedBy: updatedBy ?? this.updatedBy,
+    );
+  }
+}
+
+/// 租户类型
+enum IdentityServiceV1Tenant$Type {
+  custom('CUSTOM'),
+  internal('INTERNAL'),
+  paid('PAID'),
+  partner('PARTNER'),
+  tenantTypeUnspecified('TENANT_TYPE_UNSPECIFIED'),
+  trial('TRIAL');
+
+  final String value;
+  const IdentityServiceV1Tenant$Type(this.value);
+
+  static IdentityServiceV1Tenant$Type fromString(String v) =>
+    values.firstWhere((e) => e.value == v, orElse: () => throw ArgumentError('Unknown IdentityServiceV1Tenant\$Type value: ' + v));
+  @override
+  String toString() => value;
+}
+
+/// 租户状态
+enum IdentityServiceV1Tenant$Status {
+  expired('EXPIRED'),
+  freeze('FREEZE'),
+  off('OFF'),
+  on('ON');
+
+  final String value;
+  const IdentityServiceV1Tenant$Status(this.value);
+
+  static IdentityServiceV1Tenant$Status fromString(String v) =>
+    values.firstWhere((e) => e.value == v, orElse: () => throw ArgumentError('Unknown IdentityServiceV1Tenant\$Status value: ' + v));
+  @override
+  String toString() => value;
+}
+
+/// 租户审核状态
+enum IdentityServiceV1Tenant$AuditStatus {
+  approved('APPROVED'),
+  pending('PENDING'),
+  rejected('REJECTED'),
+  tenantAuditStatusUnspecified('TENANT_AUDIT_STATUS_UNSPECIFIED');
+
+  final String value;
+  const IdentityServiceV1Tenant$AuditStatus(this.value);
+
+  static IdentityServiceV1Tenant$AuditStatus fromString(String v) =>
+    values.firstWhere((e) => e.value == v, orElse: () => throw ArgumentError('Unknown IdentityServiceV1Tenant\$AuditStatus value: ' + v));
+  @override
+  String toString() => value;
+}
+
+/// 设置默认账本请求
+class SetDefaultBookRequest {
+  int? bookId;
+
+  SetDefaultBookRequest({
+    this.bookId,
+  });
+
+  factory SetDefaultBookRequest.fromJson(Map<String, dynamic> json) {
+    return SetDefaultBookRequest(
+      bookId: json['bookId'] as int?,
+    );
+  }
+
+  Map<String, dynamic> toJson() {
+    final json = <String, dynamic>{};
+    if (bookId != null) json['bookId'] = bookId;
+    return json;
+  }
+
+  @override
+  String toString() {
+    return 'SetDefaultBookRequest(bookId: $bookId)';
+  }
+
+  @override
+  bool operator ==(Object other) =>
+    identical(this, other) ||
+    other is SetDefaultBookRequest &&
+      runtimeType == other.runtimeType
+      && bookId == other.bookId
+    ;
+
+  @override
+  int get hashCode => Object.hashAll([
+    bookId,
+  ]);
+
+  SetDefaultBookRequest copyWith({
+    int? bookId,
+  }) {
+    return SetDefaultBookRequest(
+      bookId: bookId ?? this.bookId,
+    );
+  }
+}
+
+/// 设置默认租户请求
+class SetDefaultTenantRequest {
+  int? tenantId;
+
+  SetDefaultTenantRequest({
+    this.tenantId,
+  });
+
+  factory SetDefaultTenantRequest.fromJson(Map<String, dynamic> json) {
+    return SetDefaultTenantRequest(
+      tenantId: json['tenantId'] as int?,
+    );
+  }
+
+  Map<String, dynamic> toJson() {
+    final json = <String, dynamic>{};
+    if (tenantId != null) json['tenantId'] = tenantId;
+    return json;
+  }
+
+  @override
+  String toString() {
+    return 'SetDefaultTenantRequest(tenantId: $tenantId)';
+  }
+
+  @override
+  bool operator ==(Object other) =>
+    identical(this, other) ||
+    other is SetDefaultTenantRequest &&
+      runtimeType == other.runtimeType
+      && tenantId == other.tenantId
+    ;
+
+  @override
+  int get hashCode => Object.hashAll([
+    tenantId,
+  ]);
+
+  SetDefaultTenantRequest copyWith({
+    int? tenantId,
+  }) {
+    return SetDefaultTenantRequest(
+      tenantId: tenantId ?? this.tenantId,
+    );
+  }
+}
+
+/// 记账认证服务（App BFF）— 扩展注册/初始化/切换
+class LedgerAuthServiceClient {
+  final ClientTransport _transport;
+
+  LedgerAuthServiceClient(this._transport);
+
+  /// 用户注册（自动创建默认租户和账本）
+  Future<LedgerAuthResponse> register(LedgerRegisterRequest request, {Map<String, String>? headers}) async {
+    final path = '/app/v1/auth/register';
+    final body = jsonEncode(request.toJson());
+    final result = await _transport.unary(path, 'POST', body, TransportMeta(
+      service: 'LedgerAuthService',
+      method: 'Register',
+    ), headers: headers);
+    return LedgerAuthResponse.fromJson(result as Map<String, dynamic>);
+  }
+
+  /// 初始化状态（返回用户/租户/账本聚合信息）
+  Future<InitStateResponse> initState(Map<String, dynamic> _request, {Map<String, String>? headers}) async {
+    final path = '/app/v1/auth/init-state';
+    final result = await _transport.unary(path, 'GET', null, TransportMeta(
+      service: 'LedgerAuthService',
+      method: 'InitState',
+    ), headers: headers);
+    return InitStateResponse.fromJson(result as Map<String, dynamic>);
+  }
+
+  /// 设置默认账本
+  Future<Map<String, dynamic>> setDefaultBook(SetDefaultBookRequest request, {Map<String, String>? headers}) async {
+    if (request.bookId == null) {
+      throw ArgumentError('missing required field request.book_id');
+    }
+    final path = '/app/v1/auth/set-default-book/${request.bookId}';
+    final body = jsonEncode(request.toJson());
+    final result = await _transport.unary(path, 'PATCH', body, TransportMeta(
+      service: 'LedgerAuthService',
+      method: 'SetDefaultBook',
+    ), headers: headers);
+    return result as Map<String, dynamic>;
+  }
+
+  /// 设置默认租户
+  Future<Map<String, dynamic>> setDefaultTenant(SetDefaultTenantRequest request, {Map<String, String>? headers}) async {
+    if (request.tenantId == null) {
+      throw ArgumentError('missing required field request.tenant_id');
+    }
+    final path = '/app/v1/auth/set-default-tenant/${request.tenantId}';
+    final body = jsonEncode(request.toJson());
+    final result = await _transport.unary(path, 'PATCH', body, TransportMeta(
+      service: 'LedgerAuthService',
+      method: 'SetDefaultTenant',
+    ), headers: headers);
+    return result as Map<String, dynamic>;
+  }
+}
+
 class LedgerCategoryServiceClient {
   final ClientTransport _transport;
 
@@ -13947,414 +14991,6 @@ class UserProfileServiceClient {
   }
 }
 
-/// 用户
-class IdentityServiceV1User {
-  String? address;
-  String? avatar;
-  int? commentCount;
-  String? createdAt;
-  int? createdBy;
-  String? deletedAt;
-  int? deletedBy;
-  String? description;
-  String? email;
-  int? followers;
-  int? following;
-  IdentityServiceV1User$Gender? gender;
-  int? id;
-  String? lastLoginAt;
-  String? lastLoginIp;
-  int? likeCount;
-  String? lockedUntil;
-  String? mobile;
-  String? nickname;
-  int? orgUnitId;
-  List<int>? orgUnitIds;
-  String? orgUnitName;
-  List<String>? orgUnitNames;
-  int? positionId;
-  List<int>? positionIds;
-  String? positionName;
-  List<String>? positionNames;
-  int? postCount;
-  String? realname;
-  String? region;
-  String? remark;
-  int? roleId;
-  List<int>? roleIds;
-  List<String>? roleNames;
-  List<String>? roles;
-  IdentityServiceV1User$Status? status;
-  String? telephone;
-  int? tenantId;
-  String? tenantName;
-  String? updatedAt;
-  int? updatedBy;
-  String? username;
-
-  IdentityServiceV1User({
-    this.address,
-    this.avatar,
-    this.commentCount,
-    this.createdAt,
-    this.createdBy,
-    this.deletedAt,
-    this.deletedBy,
-    this.description,
-    this.email,
-    this.followers,
-    this.following,
-    this.gender,
-    this.id,
-    this.lastLoginAt,
-    this.lastLoginIp,
-    this.likeCount,
-    this.lockedUntil,
-    this.mobile,
-    this.nickname,
-    this.orgUnitId,
-    this.orgUnitIds,
-    this.orgUnitName,
-    this.orgUnitNames,
-    this.positionId,
-    this.positionIds,
-    this.positionName,
-    this.positionNames,
-    this.postCount,
-    this.realname,
-    this.region,
-    this.remark,
-    this.roleId,
-    this.roleIds,
-    this.roleNames,
-    this.roles,
-    this.status,
-    this.telephone,
-    this.tenantId,
-    this.tenantName,
-    this.updatedAt,
-    this.updatedBy,
-    this.username,
-  });
-
-  factory IdentityServiceV1User.fromJson(Map<String, dynamic> json) {
-    return IdentityServiceV1User(
-      address: json['address'] as String?,
-      avatar: json['avatar'] as String?,
-      commentCount: json['commentCount'] != null ? int.parse(json['commentCount'].toString()) : null,
-      createdAt: json['createdAt'] as String?,
-      createdBy: json['createdBy'] as int?,
-      deletedAt: json['deletedAt'] as String?,
-      deletedBy: json['deletedBy'] as int?,
-      description: json['description'] as String?,
-      email: json['email'] as String?,
-      followers: json['followers'] != null ? int.parse(json['followers'].toString()) : null,
-      following: json['following'] != null ? int.parse(json['following'].toString()) : null,
-      gender: json['gender'] != null ? IdentityServiceV1User$Gender.fromString(json['gender'] as String) : null,
-      id: json['id'] as int?,
-      lastLoginAt: json['lastLoginAt'] as String?,
-      lastLoginIp: json['lastLoginIp'] as String?,
-      likeCount: json['likeCount'] != null ? int.parse(json['likeCount'].toString()) : null,
-      lockedUntil: json['lockedUntil'] as String?,
-      mobile: json['mobile'] as String?,
-      nickname: json['nickname'] as String?,
-      orgUnitId: json['orgUnitId'] as int?,
-      orgUnitIds: (json['orgUnitIds'] as List<dynamic>?)?.map((e) => e as int).toList(),
-      orgUnitName: json['orgUnitName'] as String?,
-      orgUnitNames: (json['orgUnitNames'] as List<dynamic>?)?.map((e) => e as String).toList(),
-      positionId: json['positionId'] as int?,
-      positionIds: (json['positionIds'] as List<dynamic>?)?.map((e) => e as int).toList(),
-      positionName: json['positionName'] as String?,
-      positionNames: (json['positionNames'] as List<dynamic>?)?.map((e) => e as String).toList(),
-      postCount: json['postCount'] != null ? int.parse(json['postCount'].toString()) : null,
-      realname: json['realname'] as String?,
-      region: json['region'] as String?,
-      remark: json['remark'] as String?,
-      roleId: json['roleId'] as int?,
-      roleIds: (json['roleIds'] as List<dynamic>?)?.map((e) => e as int).toList(),
-      roleNames: (json['roleNames'] as List<dynamic>?)?.map((e) => e as String).toList(),
-      roles: (json['roles'] as List<dynamic>?)?.map((e) => e as String).toList(),
-      status: json['status'] != null ? IdentityServiceV1User$Status.fromString(json['status'] as String) : null,
-      telephone: json['telephone'] as String?,
-      tenantId: json['tenantId'] as int?,
-      tenantName: json['tenantName'] as String?,
-      updatedAt: json['updatedAt'] as String?,
-      updatedBy: json['updatedBy'] as int?,
-      username: json['username'] as String?,
-    );
-  }
-
-  Map<String, dynamic> toJson() {
-    final json = <String, dynamic>{};
-    if (address != null) json['address'] = address;
-    if (avatar != null) json['avatar'] = avatar;
-    if (commentCount != null) json['commentCount'] = commentCount.toString();
-    if (createdAt != null) json['createdAt'] = createdAt;
-    if (createdBy != null) json['createdBy'] = createdBy;
-    if (deletedAt != null) json['deletedAt'] = deletedAt;
-    if (deletedBy != null) json['deletedBy'] = deletedBy;
-    if (description != null) json['description'] = description;
-    if (email != null) json['email'] = email;
-    if (followers != null) json['followers'] = followers.toString();
-    if (following != null) json['following'] = following.toString();
-    if (gender != null) json['gender'] = gender!.value;
-    if (id != null) json['id'] = id;
-    if (lastLoginAt != null) json['lastLoginAt'] = lastLoginAt;
-    if (lastLoginIp != null) json['lastLoginIp'] = lastLoginIp;
-    if (likeCount != null) json['likeCount'] = likeCount.toString();
-    if (lockedUntil != null) json['lockedUntil'] = lockedUntil;
-    if (mobile != null) json['mobile'] = mobile;
-    if (nickname != null) json['nickname'] = nickname;
-    if (orgUnitId != null) json['orgUnitId'] = orgUnitId;
-    if (orgUnitIds != null) json['orgUnitIds'] = orgUnitIds;
-    if (orgUnitName != null) json['orgUnitName'] = orgUnitName;
-    if (orgUnitNames != null) json['orgUnitNames'] = orgUnitNames;
-    if (positionId != null) json['positionId'] = positionId;
-    if (positionIds != null) json['positionIds'] = positionIds;
-    if (positionName != null) json['positionName'] = positionName;
-    if (positionNames != null) json['positionNames'] = positionNames;
-    if (postCount != null) json['postCount'] = postCount.toString();
-    if (realname != null) json['realname'] = realname;
-    if (region != null) json['region'] = region;
-    if (remark != null) json['remark'] = remark;
-    if (roleId != null) json['roleId'] = roleId;
-    if (roleIds != null) json['roleIds'] = roleIds;
-    if (roleNames != null) json['roleNames'] = roleNames;
-    if (roles != null) json['roles'] = roles;
-    if (status != null) json['status'] = status!.value;
-    if (telephone != null) json['telephone'] = telephone;
-    if (tenantId != null) json['tenantId'] = tenantId;
-    if (tenantName != null) json['tenantName'] = tenantName;
-    if (updatedAt != null) json['updatedAt'] = updatedAt;
-    if (updatedBy != null) json['updatedBy'] = updatedBy;
-    if (username != null) json['username'] = username;
-    return json;
-  }
-
-  @override
-  String toString() {
-    return 'IdentityServiceV1User(address: $address, avatar: $avatar, commentCount: $commentCount, createdAt: $createdAt, createdBy: $createdBy, deletedAt: $deletedAt, deletedBy: $deletedBy, description: $description, email: $email, followers: $followers, following: $following, gender: $gender, id: $id, lastLoginAt: $lastLoginAt, lastLoginIp: $lastLoginIp, likeCount: $likeCount, lockedUntil: $lockedUntil, mobile: $mobile, nickname: $nickname, orgUnitId: $orgUnitId, orgUnitIds: $orgUnitIds, orgUnitName: $orgUnitName, orgUnitNames: $orgUnitNames, positionId: $positionId, positionIds: $positionIds, positionName: $positionName, positionNames: $positionNames, postCount: $postCount, realname: $realname, region: $region, remark: $remark, roleId: $roleId, roleIds: $roleIds, roleNames: $roleNames, roles: $roles, status: $status, telephone: $telephone, tenantId: $tenantId, tenantName: $tenantName, updatedAt: $updatedAt, updatedBy: $updatedBy, username: $username)';
-  }
-
-  @override
-  bool operator ==(Object other) =>
-    identical(this, other) ||
-    other is IdentityServiceV1User &&
-      runtimeType == other.runtimeType
-      && address == other.address
-      && avatar == other.avatar
-      && commentCount == other.commentCount
-      && createdAt == other.createdAt
-      && createdBy == other.createdBy
-      && deletedAt == other.deletedAt
-      && deletedBy == other.deletedBy
-      && description == other.description
-      && email == other.email
-      && followers == other.followers
-      && following == other.following
-      && gender == other.gender
-      && id == other.id
-      && lastLoginAt == other.lastLoginAt
-      && lastLoginIp == other.lastLoginIp
-      && likeCount == other.likeCount
-      && lockedUntil == other.lockedUntil
-      && mobile == other.mobile
-      && nickname == other.nickname
-      && orgUnitId == other.orgUnitId
-      && orgUnitIds == other.orgUnitIds
-      && orgUnitName == other.orgUnitName
-      && orgUnitNames == other.orgUnitNames
-      && positionId == other.positionId
-      && positionIds == other.positionIds
-      && positionName == other.positionName
-      && positionNames == other.positionNames
-      && postCount == other.postCount
-      && realname == other.realname
-      && region == other.region
-      && remark == other.remark
-      && roleId == other.roleId
-      && roleIds == other.roleIds
-      && roleNames == other.roleNames
-      && roles == other.roles
-      && status == other.status
-      && telephone == other.telephone
-      && tenantId == other.tenantId
-      && tenantName == other.tenantName
-      && updatedAt == other.updatedAt
-      && updatedBy == other.updatedBy
-      && username == other.username
-    ;
-
-  @override
-  int get hashCode => Object.hashAll([
-    address,
-    avatar,
-    commentCount,
-    createdAt,
-    createdBy,
-    deletedAt,
-    deletedBy,
-    description,
-    email,
-    followers,
-    following,
-    gender,
-    id,
-    lastLoginAt,
-    lastLoginIp,
-    likeCount,
-    lockedUntil,
-    mobile,
-    nickname,
-    orgUnitId,
-    orgUnitIds,
-    orgUnitName,
-    orgUnitNames,
-    positionId,
-    positionIds,
-    positionName,
-    positionNames,
-    postCount,
-    realname,
-    region,
-    remark,
-    roleId,
-    roleIds,
-    roleNames,
-    roles,
-    status,
-    telephone,
-    tenantId,
-    tenantName,
-    updatedAt,
-    updatedBy,
-    username,
-  ]);
-
-  IdentityServiceV1User copyWith({
-    String? address,
-    String? avatar,
-    int? commentCount,
-    String? createdAt,
-    int? createdBy,
-    String? deletedAt,
-    int? deletedBy,
-    String? description,
-    String? email,
-    int? followers,
-    int? following,
-    IdentityServiceV1User$Gender? gender,
-    int? id,
-    String? lastLoginAt,
-    String? lastLoginIp,
-    int? likeCount,
-    String? lockedUntil,
-    String? mobile,
-    String? nickname,
-    int? orgUnitId,
-    List<int>? orgUnitIds,
-    String? orgUnitName,
-    List<String>? orgUnitNames,
-    int? positionId,
-    List<int>? positionIds,
-    String? positionName,
-    List<String>? positionNames,
-    int? postCount,
-    String? realname,
-    String? region,
-    String? remark,
-    int? roleId,
-    List<int>? roleIds,
-    List<String>? roleNames,
-    List<String>? roles,
-    IdentityServiceV1User$Status? status,
-    String? telephone,
-    int? tenantId,
-    String? tenantName,
-    String? updatedAt,
-    int? updatedBy,
-    String? username,
-  }) {
-    return IdentityServiceV1User(
-      address: address ?? this.address,
-      avatar: avatar ?? this.avatar,
-      commentCount: commentCount ?? this.commentCount,
-      createdAt: createdAt ?? this.createdAt,
-      createdBy: createdBy ?? this.createdBy,
-      deletedAt: deletedAt ?? this.deletedAt,
-      deletedBy: deletedBy ?? this.deletedBy,
-      description: description ?? this.description,
-      email: email ?? this.email,
-      followers: followers ?? this.followers,
-      following: following ?? this.following,
-      gender: gender ?? this.gender,
-      id: id ?? this.id,
-      lastLoginAt: lastLoginAt ?? this.lastLoginAt,
-      lastLoginIp: lastLoginIp ?? this.lastLoginIp,
-      likeCount: likeCount ?? this.likeCount,
-      lockedUntil: lockedUntil ?? this.lockedUntil,
-      mobile: mobile ?? this.mobile,
-      nickname: nickname ?? this.nickname,
-      orgUnitId: orgUnitId ?? this.orgUnitId,
-      orgUnitIds: orgUnitIds ?? this.orgUnitIds,
-      orgUnitName: orgUnitName ?? this.orgUnitName,
-      orgUnitNames: orgUnitNames ?? this.orgUnitNames,
-      positionId: positionId ?? this.positionId,
-      positionIds: positionIds ?? this.positionIds,
-      positionName: positionName ?? this.positionName,
-      positionNames: positionNames ?? this.positionNames,
-      postCount: postCount ?? this.postCount,
-      realname: realname ?? this.realname,
-      region: region ?? this.region,
-      remark: remark ?? this.remark,
-      roleId: roleId ?? this.roleId,
-      roleIds: roleIds ?? this.roleIds,
-      roleNames: roleNames ?? this.roleNames,
-      roles: roles ?? this.roles,
-      status: status ?? this.status,
-      telephone: telephone ?? this.telephone,
-      tenantId: tenantId ?? this.tenantId,
-      tenantName: tenantName ?? this.tenantName,
-      updatedAt: updatedAt ?? this.updatedAt,
-      updatedBy: updatedBy ?? this.updatedBy,
-      username: username ?? this.username,
-    );
-  }
-}
-
-/// 用户性别
-enum IdentityServiceV1User$Gender {
-  female('FEMALE'),
-  male('MALE'),
-  secret('SECRET');
-
-  final String value;
-  const IdentityServiceV1User$Gender(this.value);
-
-  static IdentityServiceV1User$Gender fromString(String v) =>
-    values.firstWhere((e) => e.value == v, orElse: () => throw ArgumentError('Unknown IdentityServiceV1User\$Gender value: ' + v));
-  @override
-  String toString() => value;
-}
-
-/// 用户状态
-enum IdentityServiceV1User$Status {
-  closed('CLOSED'),
-  disabled('DISABLED'),
-  expired('EXPIRED'),
-  locked('LOCKED'),
-  normal('NORMAL'),
-  pending('PENDING');
-
-  final String value;
-  const IdentityServiceV1User$Status(this.value);
-
-  static IdentityServiceV1User$Status fromString(String v) =>
-    values.firstWhere((e) => e.value == v, orElse: () => throw ArgumentError('Unknown IdentityServiceV1User\$Status value: ' + v));
-  @override
-  String toString() => value;
-}
-
 /// 更新用户 - 请求
 class IdentityServiceV1UpdateUserRequest {
   bool? allowMissing;
@@ -14942,6 +15578,7 @@ class ApiClient {
   CurrencyServiceClient? _currencyService;
   FileTransferServiceClient? _fileTransferService;
   FlowFileServiceClient? _flowFileService;
+  LedgerAuthServiceClient? _ledgerAuthService;
   LedgerCategoryServiceClient? _ledgerCategoryService;
   LedgerTagServiceClient? _ledgerTagService;
   NavigationServiceClient? _navigationService;
@@ -14999,6 +15636,11 @@ class ApiClient {
   FlowFileServiceClient get flowFileService {
     _flowFileService ??= FlowFileServiceClient(_transport);
     return _flowFileService!;
+  }
+
+  LedgerAuthServiceClient get ledgerAuthService {
+    _ledgerAuthService ??= LedgerAuthServiceClient(_transport);
+    return _ledgerAuthService!;
   }
 
   LedgerCategoryServiceClient get ledgerCategoryService {
@@ -15067,6 +15709,7 @@ class ApiClient {
     _currencyService = null;
     _fileTransferService = null;
     _flowFileService = null;
+    _ledgerAuthService = null;
     _ledgerCategoryService = null;
     _ledgerTagService = null;
     _navigationService = null;

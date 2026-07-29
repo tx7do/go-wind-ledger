@@ -5,6 +5,7 @@ class AppRoutePath {
   static const initial = '/';
 
   static const login = '/login';
+  static const register = '/register';
   static const signIn = '/sign_in';
   static const signUp = '/sign_up';
 

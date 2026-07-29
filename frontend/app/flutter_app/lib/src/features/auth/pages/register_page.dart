@@ -1,75 +1,79 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
-import 'package:cached_query/cached_query.dart' show MutationSuccess;
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 
 import 'package:flutter_app/generated/l10n.dart';
 import 'package:flutter_app/src/core/utils/responsive_utils.dart';
-import 'package:flutter_app/src/features/auth/services/authentication_service.dart';
+import 'package:flutter_app/src/core/transport/http/status.dart';
+import 'package:flutter_app/src/features/ledger/services/ledger_auth_service.dart';
 import 'package:flutter_app/generated/api/app/service/v1/index.dart'
-    show AuthenticationServiceV1LoginResponse;
+    show LedgerAuthResponse;
 
-/// 登录页面
-class LoginPage extends StatefulWidget {
-  const LoginPage({super.key});
+/// 注册页面
+///
+/// 调用 [LedgerAuthService.register] 完成用户注册（后端自动创建默认租户和账本），
+/// 注册成功后跳转登录页。UI 风格与 [LoginPage] 保持一致（Material 3）。
+class RegisterPage extends StatefulWidget {
+  const RegisterPage({super.key});
 
   @override
-  State<LoginPage> createState() => _LoginPageState();
+  State<RegisterPage> createState() => _RegisterPageState();
 }
 
-class _LoginPageState extends State<LoginPage> {
+class _RegisterPageState extends State<RegisterPage> {
   final _formKey = GlobalKey<FormState>();
   final _usernameController = TextEditingController();
   final _passwordController = TextEditingController();
-  final _authService = AuthenticationService();
+  final _confirmPasswordController = TextEditingController();
+  final _inviteCodeController = TextEditingController(text: '111111');
+  final _nickNameController = TextEditingController();
+  final _service = LedgerAuthService();
   bool _obscurePassword = true;
+  bool _obscureConfirmPassword = true;
+
+  /// 密码最小长度
+  static const int _minPasswordLength = 6;
 
   @override
   void dispose() {
     _usernameController.dispose();
     _passwordController.dispose();
+    _confirmPasswordController.dispose();
+    _inviteCodeController.dispose();
+    _nickNameController.dispose();
     super.dispose();
   }
 
-  Future<void> _handleLogin() async {
+  Future<void> _handleRegister() async {
     if (!_formKey.currentState!.validate()) return;
 
-    final mutation = _authService.loginMutation();
-    try {
-      final result = await mutation.mutate(
-        LoginParams(
-          username: _usernameController.text.trim(),
-          password: _passwordController.text,
-        ),
-      );
+    EasyLoading.show(status: '注册中...');
 
-      if (!mounted) return;
-
-      if (result is MutationSuccess<AuthenticationServiceV1LoginResponse?> &&
-          result.data != null) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text(S.of(context).loginSuccess),
-            backgroundColor: Colors.green,
-          ),
-        );
-        context.go('/');
-      } else {
-        _showLoginFailed();
-      }
-    } catch (e) {
-      if (!mounted) return;
-      _showLoginFailed();
-    }
-  }
-
-  void _showLoginFailed() {
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: Text(S.of(context).loginFailed),
-        backgroundColor: Colors.red,
-      ),
+    final result = await _service.register(
+      _usernameController.text.trim(),
+      _passwordController.text,
+      inviteCode: _inviteCodeController.text.trim().isEmpty
+          ? null
+          : _inviteCodeController.text.trim(),
+      nickName: _nickNameController.text.trim().isEmpty
+          ? null
+          : _nickNameController.text.trim(),
     );
+
+    EasyLoading.dismiss();
+    if (!mounted) return;
+
+    if (result is LedgerAuthResponse) {
+      EasyLoading.showSuccess('注册成功');
+      context.go('/login');
+    } else if (result is Status) {
+      EasyLoading.showError(
+        result.getMessage.isEmpty ? '注册失败' : result.getMessage,
+      );
+    } else {
+      EasyLoading.showError('注册失败');
+    }
   }
 
   @override
@@ -140,7 +144,7 @@ class _LoginPageState extends State<LoginPage> {
                               ),
                             ),
                             child: Icon(
-                              Icons.article_outlined,
+                              Icons.person_add_outlined,
                               size: isMobile ? 32.sp : 36,
                               color: theme.colorScheme.primary,
                             ),
@@ -156,7 +160,7 @@ class _LoginPageState extends State<LoginPage> {
                           ),
                           SizedBox(height: isMobile ? 4.h : 6),
                           Text(
-                            loc.loginForMore,
+                            '创建账号，开启记账之旅',
                             style: TextStyle(
                               fontSize: isMobile ? 13.sp : 14,
                               color: theme.colorScheme.onSurface.withAlpha(140),
@@ -216,18 +220,93 @@ class _LoginPageState extends State<LoginPage> {
                               if (value == null || value.isEmpty) {
                                 return loc.passwordHint;
                               }
+                              if (value.length < _minPasswordLength) {
+                                return '密码长度不能少于 $_minPasswordLength 位';
+                              }
                               return null;
                             },
-                            onFieldSubmitted: (_) => _handleLogin(),
+                          ),
+                          SizedBox(height: isMobile ? 16.h : 18),
+
+                          // Confirm Password
+                          TextFormField(
+                            controller: _confirmPasswordController,
+                            obscureText: _obscureConfirmPassword,
+                            decoration: InputDecoration(
+                              labelText: '确认密码',
+                              hintText: '请再次输入密码',
+                              prefixIcon: const Icon(Icons.lock_outline),
+                              suffixIcon: IconButton(
+                                icon: Icon(
+                                  _obscureConfirmPassword
+                                      ? Icons.visibility_off_outlined
+                                      : Icons.visibility_outlined,
+                                ),
+                                onPressed: () {
+                                  setState(() {
+                                    _obscureConfirmPassword =
+                                        !_obscureConfirmPassword;
+                                  });
+                                },
+                              ),
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(
+                                  isMobile ? 12.r : 14,
+                                ),
+                              ),
+                            ),
+                            validator: (value) {
+                              if (value == null || value.isEmpty) {
+                                return '请再次输入密码';
+                              }
+                              if (value != _passwordController.text) {
+                                return '两次输入的密码不一致';
+                              }
+                              return null;
+                            },
+                            onFieldSubmitted: (_) => _handleRegister(),
+                          ),
+                          SizedBox(height: isMobile ? 16.h : 18),
+
+                          // Nickname (optional)
+                          TextFormField(
+                            controller: _nickNameController,
+                            decoration: InputDecoration(
+                              labelText: '昵称（可选）',
+                              hintText: '请输入昵称',
+                              prefixIcon: const Icon(Icons.badge_outlined),
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(
+                                  isMobile ? 12.r : 14,
+                                ),
+                              ),
+                            ),
+                          ),
+                          SizedBox(height: isMobile ? 16.h : 18),
+
+                          // Invite code (optional, default 111111)
+                          TextFormField(
+                            controller: _inviteCodeController,
+                            decoration: InputDecoration(
+                              labelText: '邀请码（可选）',
+                              hintText: '请输入邀请码',
+                              prefixIcon:
+                                  const Icon(Icons.card_giftcard_outlined),
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(
+                                  isMobile ? 12.r : 14,
+                                ),
+                              ),
+                            ),
                           ),
                           SizedBox(height: isMobile ? 28.h : 32),
 
-                          // Login Button
+                          // Register Button
                           SizedBox(
                             width: double.infinity,
                             height: isMobile ? 48.h : 50,
                             child: FilledButton(
-                              onPressed: _handleLogin,
+                              onPressed: _handleRegister,
                               style: FilledButton.styleFrom(
                                 shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(
@@ -236,7 +315,7 @@ class _LoginPageState extends State<LoginPage> {
                                 ),
                               ),
                               child: Text(
-                                loc.loginButton,
+                                '注册',
                                 style: TextStyle(
                                   fontSize: isMobile ? 16.sp : 16,
                                   fontWeight: FontWeight.w600,
@@ -246,12 +325,12 @@ class _LoginPageState extends State<LoginPage> {
                           ),
                           SizedBox(height: isMobile ? 16.h : 18),
 
-                          // 没有账号？去注册
+                          // 已有账号？去登录
                           Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               Text(
-                                '没有账号？',
+                                '已有账号？',
                                 style: TextStyle(
                                   fontSize: isMobile ? 13.sp : 14,
                                   color: theme.colorScheme.onSurface
@@ -259,9 +338,9 @@ class _LoginPageState extends State<LoginPage> {
                                 ),
                               ),
                               GestureDetector(
-                                onTap: () => context.go('/register'),
+                                onTap: () => context.go('/login'),
                                 child: Text(
-                                  '去注册',
+                                  '去登录',
                                   style: TextStyle(
                                     fontSize: isMobile ? 13.sp : 14,
                                     color: theme.colorScheme.primary,

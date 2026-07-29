@@ -28,7 +28,7 @@ var File_app_service_v1_i_account_proto protoreflect.FileDescriptor
 
 const file_app_service_v1_i_account_proto_rawDesc = "" +
 	"\n" +
-	"\x1eapp/service/v1/i_account.proto\x12\x0eapp.service.v1\x1a\x1cgoogle/api/annotations.proto\x1a\x1bgoogle/protobuf/empty.proto\x1a\x1epagination/v1/pagination.proto\x1a\x1fledger/service/v1/account.proto2\x96\a\n" +
+	"\x1eapp/service/v1/i_account.proto\x12\x0eapp.service.v1\x1a\x1cgoogle/api/annotations.proto\x1a\x1bgoogle/protobuf/empty.proto\x1a\x1epagination/v1/pagination.proto\x1a\x1fledger/service/v1/account.proto2\x9d\t\n" +
 	"\x0eAccountService\x12c\n" +
 	"\x04List\x12\x19.pagination.PagingRequest\x1a&.ledger.service.v1.ListAccountResponse\"\x18\x82\xd3\xe4\x93\x02\x12\x12\x10/app/v1/accounts\x12y\n" +
 	"\aListAll\x12(.ledger.service.v1.ListAllAccountRequest\x1a&.ledger.service.v1.ListAccountResponse\"\x1c\x82\xd3\xe4\x93\x02\x16\x12\x14/app/v1/accounts/all\x12f\n" +
@@ -37,21 +37,28 @@ const file_app_service_v1_i_account_proto_rawDesc = "" +
 	"\x06Update\x12'.ledger.service.v1.UpdateAccountRequest\x1a\x1a.ledger.service.v1.Account\" \x82\xd3\xe4\x93\x02\x1a:\x01*\x1a\x15/app/v1/accounts/{id}\x12h\n" +
 	"\x06Delete\x12'.ledger.service.v1.DeleteAccountRequest\x1a\x16.google.protobuf.Empty\"\x1d\x82\xd3\xe4\x93\x02\x17*\x15/app/v1/accounts/{id}\x12v\n" +
 	"\x06Toggle\x12'.ledger.service.v1.ToggleAccountRequest\x1a\x1a.ledger.service.v1.Account\"'\x82\xd3\xe4\x93\x02!:\x01*2\x1c/app/v1/accounts/{id}/toggle\x12}\n" +
-	"\rAdjustBalance\x12'.ledger.service.v1.AdjustBalanceRequest\x1a\x1a.ledger.service.v1.Account\"'\x82\xd3\xe4\x93\x02!:\x01*\"\x1c/app/v1/accounts/{id}/adjustB\xae\x01\n" +
+	"\rAdjustBalance\x12'.ledger.service.v1.AdjustBalanceRequest\x1a\x1a.ledger.service.v1.Account\"'\x82\xd3\xe4\x93\x02!:\x01*\"\x1c/app/v1/accounts/{id}/adjust\x12v\n" +
+	"\bOverview\x12\".ledger.service.v1.OverviewRequest\x1a#.ledger.service.v1.OverviewResponse\"!\x82\xd3\xe4\x93\x02\x1b\x12\x19/app/v1/accounts/overview\x12\x8c\x01\n" +
+	"\n" +
+	"Statistics\x12+.ledger.service.v1.AccountStatisticsRequest\x1a,.ledger.service.v1.AccountStatisticsResponse\"#\x82\xd3\xe4\x93\x02\x1d\x12\x1b/app/v1/accounts/statisticsB\xae\x01\n" +
 	"\x12com.app.service.v1B\rIAccountProtoP\x01Z/go-wind-cms/api/gen/go/app/service/v1;servicev1\xa2\x02\x03ASX\xaa\x02\x0eApp.Service.V1\xca\x02\x0eApp\\Service\\V1\xe2\x02\x1aApp\\Service\\V1\\GPBMetadata\xea\x02\x10App::Service::V1b\x06proto3"
 
 var file_app_service_v1_i_account_proto_goTypes = []any{
-	(*v1.PagingRequest)(nil),          // 0: pagination.PagingRequest
-	(*v11.ListAllAccountRequest)(nil), // 1: ledger.service.v1.ListAllAccountRequest
-	(*v11.GetAccountRequest)(nil),     // 2: ledger.service.v1.GetAccountRequest
-	(*v11.CreateAccountRequest)(nil),  // 3: ledger.service.v1.CreateAccountRequest
-	(*v11.UpdateAccountRequest)(nil),  // 4: ledger.service.v1.UpdateAccountRequest
-	(*v11.DeleteAccountRequest)(nil),  // 5: ledger.service.v1.DeleteAccountRequest
-	(*v11.ToggleAccountRequest)(nil),  // 6: ledger.service.v1.ToggleAccountRequest
-	(*v11.AdjustBalanceRequest)(nil),  // 7: ledger.service.v1.AdjustBalanceRequest
-	(*v11.ListAccountResponse)(nil),   // 8: ledger.service.v1.ListAccountResponse
-	(*v11.Account)(nil),               // 9: ledger.service.v1.Account
-	(*emptypb.Empty)(nil),             // 10: google.protobuf.Empty
+	(*v1.PagingRequest)(nil),              // 0: pagination.PagingRequest
+	(*v11.ListAllAccountRequest)(nil),     // 1: ledger.service.v1.ListAllAccountRequest
+	(*v11.GetAccountRequest)(nil),         // 2: ledger.service.v1.GetAccountRequest
+	(*v11.CreateAccountRequest)(nil),      // 3: ledger.service.v1.CreateAccountRequest
+	(*v11.UpdateAccountRequest)(nil),      // 4: ledger.service.v1.UpdateAccountRequest
+	(*v11.DeleteAccountRequest)(nil),      // 5: ledger.service.v1.DeleteAccountRequest
+	(*v11.ToggleAccountRequest)(nil),      // 6: ledger.service.v1.ToggleAccountRequest
+	(*v11.AdjustBalanceRequest)(nil),      // 7: ledger.service.v1.AdjustBalanceRequest
+	(*v11.OverviewRequest)(nil),           // 8: ledger.service.v1.OverviewRequest
+	(*v11.AccountStatisticsRequest)(nil),  // 9: ledger.service.v1.AccountStatisticsRequest
+	(*v11.ListAccountResponse)(nil),       // 10: ledger.service.v1.ListAccountResponse
+	(*v11.Account)(nil),                   // 11: ledger.service.v1.Account
+	(*emptypb.Empty)(nil),                 // 12: google.protobuf.Empty
+	(*v11.OverviewResponse)(nil),          // 13: ledger.service.v1.OverviewResponse
+	(*v11.AccountStatisticsResponse)(nil), // 14: ledger.service.v1.AccountStatisticsResponse
 }
 var file_app_service_v1_i_account_proto_depIdxs = []int32{
 	0,  // 0: app.service.v1.AccountService.List:input_type -> pagination.PagingRequest
@@ -62,16 +69,20 @@ var file_app_service_v1_i_account_proto_depIdxs = []int32{
 	5,  // 5: app.service.v1.AccountService.Delete:input_type -> ledger.service.v1.DeleteAccountRequest
 	6,  // 6: app.service.v1.AccountService.Toggle:input_type -> ledger.service.v1.ToggleAccountRequest
 	7,  // 7: app.service.v1.AccountService.AdjustBalance:input_type -> ledger.service.v1.AdjustBalanceRequest
-	8,  // 8: app.service.v1.AccountService.List:output_type -> ledger.service.v1.ListAccountResponse
-	8,  // 9: app.service.v1.AccountService.ListAll:output_type -> ledger.service.v1.ListAccountResponse
-	9,  // 10: app.service.v1.AccountService.Get:output_type -> ledger.service.v1.Account
-	9,  // 11: app.service.v1.AccountService.Create:output_type -> ledger.service.v1.Account
-	9,  // 12: app.service.v1.AccountService.Update:output_type -> ledger.service.v1.Account
-	10, // 13: app.service.v1.AccountService.Delete:output_type -> google.protobuf.Empty
-	9,  // 14: app.service.v1.AccountService.Toggle:output_type -> ledger.service.v1.Account
-	9,  // 15: app.service.v1.AccountService.AdjustBalance:output_type -> ledger.service.v1.Account
-	8,  // [8:16] is the sub-list for method output_type
-	0,  // [0:8] is the sub-list for method input_type
+	8,  // 8: app.service.v1.AccountService.Overview:input_type -> ledger.service.v1.OverviewRequest
+	9,  // 9: app.service.v1.AccountService.Statistics:input_type -> ledger.service.v1.AccountStatisticsRequest
+	10, // 10: app.service.v1.AccountService.List:output_type -> ledger.service.v1.ListAccountResponse
+	10, // 11: app.service.v1.AccountService.ListAll:output_type -> ledger.service.v1.ListAccountResponse
+	11, // 12: app.service.v1.AccountService.Get:output_type -> ledger.service.v1.Account
+	11, // 13: app.service.v1.AccountService.Create:output_type -> ledger.service.v1.Account
+	11, // 14: app.service.v1.AccountService.Update:output_type -> ledger.service.v1.Account
+	12, // 15: app.service.v1.AccountService.Delete:output_type -> google.protobuf.Empty
+	11, // 16: app.service.v1.AccountService.Toggle:output_type -> ledger.service.v1.Account
+	11, // 17: app.service.v1.AccountService.AdjustBalance:output_type -> ledger.service.v1.Account
+	13, // 18: app.service.v1.AccountService.Overview:output_type -> ledger.service.v1.OverviewResponse
+	14, // 19: app.service.v1.AccountService.Statistics:output_type -> ledger.service.v1.AccountStatisticsResponse
+	10, // [10:20] is the sub-list for method output_type
+	0,  // [0:10] is the sub-list for method input_type
 	0,  // [0:0] is the sub-list for extension type_name
 	0,  // [0:0] is the sub-list for extension extendee
 	0,  // [0:0] is the sub-list for field type_name
