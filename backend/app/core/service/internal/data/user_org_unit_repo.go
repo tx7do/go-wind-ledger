@@ -136,7 +136,7 @@ func (r *UserOrgUnitRepo) AssignUserOrgUnit(
 		Create().
 		SetUserID(data.GetUserId()).
 		SetOrgUnitID(data.GetOrgUnitId()).
-		SetNillableStatus(nil).
+		SetNillableStatus(userorgunitStatusToEntity(data.Status)).
 		SetNillableIsPrimary(data.IsPrimary).
 		SetNillableStartAt(timeutil.TimestamppbToTime(data.StartAt)).
 		SetNillableEndAt(timeutil.TimestamppbToTime(data.EndAt)).
@@ -179,7 +179,7 @@ func (r *UserOrgUnitRepo) AssignUserOrgUnits(
 			SetNillableTenantID(data.TenantId).
 			SetUserID(data.GetUserId()).
 			SetOrgUnitID(data.GetOrgUnitId()).
-			SetNillableStatus(nil).
+			SetNillableStatus(userorgunitStatusToEntity(data.Status)).
 			SetNillableIsPrimary(data.IsPrimary).
 			SetNillableStartAt(timeutil.TimestamppbToTime(data.StartAt)).
 			SetNillableEndAt(timeutil.TimestamppbToTime(data.EndAt)).
@@ -294,4 +294,13 @@ func (r *UserOrgUnitRepo) ListUserIDsByOrgUnitIDs(ctx context.Context, orgUnitID
 		ids[i] = uint32(v)
 	}
 	return ids, nil
+}
+
+// userorgunitStatusToEntity converts proto Membership_Status to ent userorgunit.Status.
+func userorgunitStatusToEntity(s *identityV1.UserOrgUnit_Status) *userorgunit.Status {
+	if s == nil {
+		return nil
+	}
+	v := userorgunit.Status(s.String())
+	return &v
 }

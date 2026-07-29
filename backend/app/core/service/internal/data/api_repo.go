@@ -210,7 +210,7 @@ func (r *ApiRepo) newApiCreate(api *permissionV1.Api) *ent.APICreate {
 		SetNillableDescription(api.Description).
 		SetNillablePath(api.Path).
 		SetNillableMethod(api.Method).
-		SetNillableScope(nil).
+		SetNillableScope(scopeToEntity(api.Scope)).
 		SetNillableCreatedBy(api.CreatedBy).
 		SetCreatedAt(time.Now())
 
@@ -268,7 +268,7 @@ func (r *ApiRepo) Update(ctx context.Context, req *permissionV1.UpdateApiRequest
 				SetNillableDescription(req.Data.Description).
 				SetNillablePath(req.Data.Path).
 				SetNillableMethod(req.Data.Method).
-				SetNillableScope(nil).
+				SetNillableScope(scopeToEntity(req.Data.Scope)).
 				SetNillableUpdatedBy(req.Data.UpdatedBy).
 				SetUpdatedAt(time.Now())
 		},
@@ -305,4 +305,13 @@ func (r *ApiRepo) Truncate(ctx context.Context) error {
 		return permissionV1.ErrorInternalServerError("truncate failed")
 	}
 	return nil
+}
+
+// scopeToEntity converts proto Api_Scope to ent api.Scope.
+func scopeToEntity(s *permissionV1.Api_Scope) *api.Scope {
+	if s == nil {
+		return nil
+	}
+	v := api.Scope(s.String())
+	return &v
 }

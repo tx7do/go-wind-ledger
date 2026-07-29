@@ -251,7 +251,7 @@ func (r *PermissionGroupRepo) newPermissionCreate(permissionGroup *permissionV1.
 func (r *PermissionGroupRepo) newPermissionCreateWithBuilder(builder *ent.PermissionGroupCreate, permissionGroup *permissionV1.PermissionGroup) *ent.PermissionGroupCreate {
 	builder.
 		SetName(permissionGroup.GetName()).
-		SetNillableStatus(nil).
+		SetNillableStatus(pgStatusToEntity(permissionGroup.Status)).
 		SetNillableModule(permissionGroup.Module).
 		SetNillableSortOrder(permissionGroup.SortOrder).
 		SetNillableDescription(permissionGroup.Description).
@@ -291,7 +291,7 @@ func (r *PermissionGroupRepo) Update(ctx context.Context, req *permissionV1.Upda
 	_, err := r.repository.UpdateOne(ctx, builder, req.Data, req.GetUpdateMask(),
 		func(dto *permissionV1.PermissionGroup) {
 			builder.
-				SetNillableStatus(nil).
+				SetNillableStatus(pgStatusToEntity(req.Data.Status)).
 				SetNillableModule(req.Data.Module).
 				SetNillableSortOrder(req.Data.SortOrder).
 				SetNillableDescription(req.Data.Description).
@@ -438,4 +438,13 @@ func (r *PermissionGroupRepo) setTreePath(ctx context.Context, tx *ent.Tx, entit
 		Exec(ctx)
 
 	return err
+}
+
+// pgStatusToEntity converts proto Status to ent permissiongroup.Status.
+func pgStatusToEntity(s *permissionV1.PermissionGroup_Status) *permissiongroup.Status {
+	if s == nil {
+		return nil
+	}
+	v := permissiongroup.Status(s.String())
+	return &v
 }

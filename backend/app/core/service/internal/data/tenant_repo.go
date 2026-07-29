@@ -360,3 +360,21 @@ func (r *TenantRepo) ListTenantsByIds(ctx context.Context, ids []uint32) ([]*ide
 
 	return dtos, nil
 }
+
+// tenantStatusToEntity converts proto Status to ent tenant.Status.
+func tenantStatusToEntity(s *identityV1.Tenant_Status) *tenant.Status {
+	if s == nil {
+		return nil
+	}
+	v := tenant.Status(s.String())
+	return &v
+}
+
+// tenantAuditStatusToEntity converts proto AuditStatus to ent tenant.AuditStatus.
+func tenantAuditStatusToEntity(s *identityV1.Tenant_AuditStatus) *tenant.AuditStatus {
+	if s == nil {
+		return nil
+	}
+	v := tenant.AuditStatus(s.String())
+	return &v
+}

@@ -129,7 +129,7 @@ func (r *UserRoleRepo) AssignUserRole(ctx context.Context, tx *ent.Tx, data *per
 		Create().
 		SetUserID(data.GetUserId()).
 		SetRoleID(data.GetRoleId()).
-		SetNillableStatus(nil).
+		SetNillableStatus(userroleStatusToEntity(data.Status)).
 		SetNillableIsPrimary(data.IsPrimary).
 		SetNillableStartAt(timeutil.TimestamppbToTime(data.StartAt)).
 		SetNillableEndAt(timeutil.TimestamppbToTime(data.EndAt)).
@@ -170,7 +170,7 @@ func (r *UserRoleRepo) AssignUserRoles(ctx context.Context, tx *ent.Tx, userID u
 			SetNillableTenantID(data.TenantId).
 			SetUserID(userID).
 			SetRoleID(data.GetRoleId()).
-			SetNillableStatus(nil).
+			SetNillableStatus(userroleStatusToEntity(data.Status)).
 			SetNillableIsPrimary(data.IsPrimary).
 			SetNillableStartAt(timeutil.TimestamppbToTime(data.StartAt)).
 			SetNillableEndAt(timeutil.TimestamppbToTime(data.EndAt)).
@@ -285,4 +285,13 @@ func (r *UserRoleRepo) ListUserIDsByRoleIDs(ctx context.Context, roleIDs []uint3
 		ids[i] = uint32(v)
 	}
 	return ids, nil
+}
+
+// userroleStatusToEntity converts proto UserRole_Status to ent userrole.Status.
+func userroleStatusToEntity(s *permissionV1.UserRole_Status) *userrole.Status {
+	if s == nil {
+		return nil
+	}
+	v := userrole.Status(s.String())
+	return &v
 }

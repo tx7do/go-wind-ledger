@@ -381,7 +381,7 @@ func (r *PermissionRepo) newPermissionCreate(permission *permissionV1.Permission
 	builder := r.entClient.Client().Permission.Create().
 		SetName(permission.GetName()).
 		SetCode(permission.GetCode()).
-		SetNillableStatus(nil).
+		SetNillableStatus(permStatusToEntity(permission.Status)).
 		SetNillableDescription(permission.Description).
 		SetNillableGroupID(permission.GroupId).
 		SetNillableCreatedBy(permission.CreatedBy).
@@ -430,7 +430,7 @@ func (r *PermissionRepo) Update(ctx context.Context, req *permissionV1.UpdatePer
 				SetNillableName(req.Data.Name).
 				SetNillableCode(req.Data.Code).
 				SetNillableGroupID(req.Data.GroupId).
-				SetNillableStatus(nil).
+				SetNillableStatus(permStatusToEntity(req.Data.Status)).
 				SetNillableDescription(req.Data.Description).
 				SetNillableUpdatedBy(req.Data.UpdatedBy).
 				SetUpdatedAt(time.Now())
@@ -704,4 +704,13 @@ func (r *PermissionRepo) ListPermissionResources(ctx context.Context, req *permi
 	}
 
 	return resp, nil
+}
+
+// permStatusToEntity converts proto Status to ent permission.Status.
+func permStatusToEntity(s *permissionV1.Permission_Status) *permission.Status {
+	if s == nil {
+		return nil
+	}
+	v := permission.Status(s.String())
+	return &v
 }

@@ -131,7 +131,7 @@ func (r *UserPositionRepo) AssignUserPosition(
 		Create().
 		SetUserID(data.GetUserId()).
 		SetPositionID(data.GetPositionId()).
-		SetNillableStatus(nil).
+		SetNillableStatus(userpositionStatusToEntity(data.Status)).
 		SetNillableIsPrimary(data.IsPrimary).
 		SetNillableStartAt(timeutil.TimestamppbToTime(data.StartAt)).
 		SetNillableEndAt(timeutil.TimestamppbToTime(data.EndAt)).
@@ -176,7 +176,7 @@ func (r *UserPositionRepo) AssignUserPositions(
 			SetNillableTenantID(data.TenantId).
 			SetUserID(userID).
 			SetPositionID(data.GetPositionId()).
-			SetNillableStatus(nil).
+			SetNillableStatus(userpositionStatusToEntity(data.Status)).
 			SetNillableIsPrimary(data.IsPrimary).
 			SetNillableStartAt(timeutil.TimestamppbToTime(data.StartAt)).
 			SetNillableEndAt(timeutil.TimestamppbToTime(data.EndAt)).
@@ -291,4 +291,13 @@ func (r *UserPositionRepo) ListUserIDsByPositionIDs(ctx context.Context, positio
 		ids[i] = uint32(v)
 	}
 	return ids, nil
+}
+
+// userpositionStatusToEntity converts proto Membership_Status to ent userposition.Status.
+func userpositionStatusToEntity(s *identityV1.UserPosition_Status) *userposition.Status {
+	if s == nil {
+		return nil
+	}
+	v := userposition.Status(s.String())
+	return &v
 }
