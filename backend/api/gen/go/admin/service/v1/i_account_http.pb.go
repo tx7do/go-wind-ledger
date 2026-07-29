@@ -45,6 +45,8 @@ type AccountServiceHTTPServer interface {
 	Get(context.Context, *v11.GetAccountRequest) (*v11.Account, error)
 	List(context.Context, *v1.PagingRequest) (*v11.ListAccountResponse, error)
 	ListAll(context.Context, *v11.ListAllAccountRequest) (*v11.ListAccountResponse, error)
+	// Overview Overview and Statistics must be defined BEFORE {id} routes
+	// to avoid being matched by the {id} path parameter.
 	Overview(context.Context, *v11.OverviewRequest) (*v11.OverviewResponse, error)
 	Statistics(context.Context, *v11.AccountStatisticsRequest) (*v11.AccountStatisticsResponse, error)
 	Toggle(context.Context, *v11.ToggleAccountRequest) (*v11.Account, error)
@@ -60,6 +62,8 @@ func RegisterAccountServiceHTTPServer(s *http.Server, srv AccountServiceHTTPServ
 	r := s.Route("/")
 	r.GET("/admin/v1/accounts", _AccountService_List0_HTTP_Handler(srv))
 	r.GET("/admin/v1/accounts/all", _AccountService_ListAll0_HTTP_Handler(srv))
+	r.GET("/admin/v1/accounts/overview", _AccountService_Overview0_HTTP_Handler(srv))
+	r.GET("/admin/v1/accounts/statistics", _AccountService_Statistics0_HTTP_Handler(srv))
 	r.GET("/admin/v1/accounts/{id}", _AccountService_Get0_HTTP_Handler(srv))
 	r.POST("/admin/v1/accounts", _AccountService_Create0_HTTP_Handler(srv))
 	r.PUT("/admin/v1/accounts/{id}", _AccountService_Update0_HTTP_Handler(srv))
@@ -71,8 +75,6 @@ func RegisterAccountServiceHTTPServer(s *http.Server, srv AccountServiceHTTPServ
 	r.PATCH("/admin/v1/accounts/{id}/toggle-can-transfer-from", _AccountService_ToggleCanTransferFrom0_HTTP_Handler(srv))
 	r.PATCH("/admin/v1/accounts/{id}/toggle-can-transfer-to", _AccountService_ToggleCanTransferTo0_HTTP_Handler(srv))
 	r.POST("/admin/v1/accounts/{id}/adjust", _AccountService_AdjustBalance0_HTTP_Handler(srv))
-	r.GET("/admin/v1/accounts/overview", _AccountService_Overview0_HTTP_Handler(srv))
-	r.GET("/admin/v1/accounts/statistics", _AccountService_Statistics0_HTTP_Handler(srv))
 }
 
 func _AccountService_List0_HTTP_Handler(srv AccountServiceHTTPServer) func(ctx http.Context) error {
@@ -109,6 +111,44 @@ func _AccountService_ListAll0_HTTP_Handler(srv AccountServiceHTTPServer) func(ct
 			return err
 		}
 		reply := out.(*v11.ListAccountResponse)
+		return ctx.Result(200, reply)
+	}
+}
+
+func _AccountService_Overview0_HTTP_Handler(srv AccountServiceHTTPServer) func(ctx http.Context) error {
+	return func(ctx http.Context) error {
+		var in v11.OverviewRequest
+		if err := ctx.BindQuery(&in); err != nil {
+			return err
+		}
+		http.SetOperation(ctx, OperationAccountServiceOverview)
+		h := ctx.Middleware(func(ctx context.Context, req interface{}) (interface{}, error) {
+			return srv.Overview(ctx, req.(*v11.OverviewRequest))
+		})
+		out, err := h(ctx, &in)
+		if err != nil {
+			return err
+		}
+		reply := out.(*v11.OverviewResponse)
+		return ctx.Result(200, reply)
+	}
+}
+
+func _AccountService_Statistics0_HTTP_Handler(srv AccountServiceHTTPServer) func(ctx http.Context) error {
+	return func(ctx http.Context) error {
+		var in v11.AccountStatisticsRequest
+		if err := ctx.BindQuery(&in); err != nil {
+			return err
+		}
+		http.SetOperation(ctx, OperationAccountServiceStatistics)
+		h := ctx.Middleware(func(ctx context.Context, req interface{}) (interface{}, error) {
+			return srv.Statistics(ctx, req.(*v11.AccountStatisticsRequest))
+		})
+		out, err := h(ctx, &in)
+		if err != nil {
+			return err
+		}
+		reply := out.(*v11.AccountStatisticsResponse)
 		return ctx.Result(200, reply)
 	}
 }
@@ -379,44 +419,6 @@ func _AccountService_AdjustBalance0_HTTP_Handler(srv AccountServiceHTTPServer) f
 	}
 }
 
-func _AccountService_Overview0_HTTP_Handler(srv AccountServiceHTTPServer) func(ctx http.Context) error {
-	return func(ctx http.Context) error {
-		var in v11.OverviewRequest
-		if err := ctx.BindQuery(&in); err != nil {
-			return err
-		}
-		http.SetOperation(ctx, OperationAccountServiceOverview)
-		h := ctx.Middleware(func(ctx context.Context, req interface{}) (interface{}, error) {
-			return srv.Overview(ctx, req.(*v11.OverviewRequest))
-		})
-		out, err := h(ctx, &in)
-		if err != nil {
-			return err
-		}
-		reply := out.(*v11.OverviewResponse)
-		return ctx.Result(200, reply)
-	}
-}
-
-func _AccountService_Statistics0_HTTP_Handler(srv AccountServiceHTTPServer) func(ctx http.Context) error {
-	return func(ctx http.Context) error {
-		var in v11.AccountStatisticsRequest
-		if err := ctx.BindQuery(&in); err != nil {
-			return err
-		}
-		http.SetOperation(ctx, OperationAccountServiceStatistics)
-		h := ctx.Middleware(func(ctx context.Context, req interface{}) (interface{}, error) {
-			return srv.Statistics(ctx, req.(*v11.AccountStatisticsRequest))
-		})
-		out, err := h(ctx, &in)
-		if err != nil {
-			return err
-		}
-		reply := out.(*v11.AccountStatisticsResponse)
-		return ctx.Result(200, reply)
-	}
-}
-
 type AccountServiceHTTPClient interface {
 	AdjustBalance(ctx context.Context, req *v11.AdjustBalanceRequest, opts ...http.CallOption) (rsp *v11.Account, err error)
 	Create(ctx context.Context, req *v11.CreateAccountRequest, opts ...http.CallOption) (rsp *v11.Account, err error)
@@ -424,6 +426,8 @@ type AccountServiceHTTPClient interface {
 	Get(ctx context.Context, req *v11.GetAccountRequest, opts ...http.CallOption) (rsp *v11.Account, err error)
 	List(ctx context.Context, req *v1.PagingRequest, opts ...http.CallOption) (rsp *v11.ListAccountResponse, err error)
 	ListAll(ctx context.Context, req *v11.ListAllAccountRequest, opts ...http.CallOption) (rsp *v11.ListAccountResponse, err error)
+	// Overview Overview and Statistics must be defined BEFORE {id} routes
+	// to avoid being matched by the {id} path parameter.
 	Overview(ctx context.Context, req *v11.OverviewRequest, opts ...http.CallOption) (rsp *v11.OverviewResponse, err error)
 	Statistics(ctx context.Context, req *v11.AccountStatisticsRequest, opts ...http.CallOption) (rsp *v11.AccountStatisticsResponse, err error)
 	Toggle(ctx context.Context, req *v11.ToggleAccountRequest, opts ...http.CallOption) (rsp *v11.Account, err error)
@@ -521,6 +525,8 @@ func (c *AccountServiceHTTPClientImpl) ListAll(ctx context.Context, in *v11.List
 	return &out, nil
 }
 
+// Overview Overview and Statistics must be defined BEFORE {id} routes
+// to avoid being matched by the {id} path parameter.
 func (c *AccountServiceHTTPClientImpl) Overview(ctx context.Context, in *v11.OverviewRequest, opts ...http.CallOption) (*v11.OverviewResponse, error) {
 	var out v11.OverviewResponse
 	pattern := "/admin/v1/accounts/overview"

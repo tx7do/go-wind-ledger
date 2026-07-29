@@ -31,7 +31,10 @@ const file_admin_service_v1_i_account_proto_rawDesc = "" +
 	" admin/service/v1/i_account.proto\x12\x10admin.service.v1\x1a\x1cgoogle/api/annotations.proto\x1a\x1bgoogle/protobuf/empty.proto\x1a\x1epagination/v1/pagination.proto\x1a\x1fledger/service/v1/account.proto2\x8f\x0f\n" +
 	"\x0eAccountService\x12e\n" +
 	"\x04List\x12\x19.pagination.PagingRequest\x1a&.ledger.service.v1.ListAccountResponse\"\x1a\x82\xd3\xe4\x93\x02\x14\x12\x12/admin/v1/accounts\x12{\n" +
-	"\aListAll\x12(.ledger.service.v1.ListAllAccountRequest\x1a&.ledger.service.v1.ListAccountResponse\"\x1e\x82\xd3\xe4\x93\x02\x18\x12\x16/admin/v1/accounts/all\x12h\n" +
+	"\aListAll\x12(.ledger.service.v1.ListAllAccountRequest\x1a&.ledger.service.v1.ListAccountResponse\"\x1e\x82\xd3\xe4\x93\x02\x18\x12\x16/admin/v1/accounts/all\x12x\n" +
+	"\bOverview\x12\".ledger.service.v1.OverviewRequest\x1a#.ledger.service.v1.OverviewResponse\"#\x82\xd3\xe4\x93\x02\x1d\x12\x1b/admin/v1/accounts/overview\x12\x8e\x01\n" +
+	"\n" +
+	"Statistics\x12+.ledger.service.v1.AccountStatisticsRequest\x1a,.ledger.service.v1.AccountStatisticsResponse\"%\x82\xd3\xe4\x93\x02\x1f\x12\x1d/admin/v1/accounts/statistics\x12h\n" +
 	"\x03Get\x12$.ledger.service.v1.GetAccountRequest\x1a\x1a.ledger.service.v1.Account\"\x1f\x82\xd3\xe4\x93\x02\x19\x12\x17/admin/v1/accounts/{id}\x12l\n" +
 	"\x06Create\x12'.ledger.service.v1.CreateAccountRequest\x1a\x1a.ledger.service.v1.Account\"\x1d\x82\xd3\xe4\x93\x02\x17:\x01*\"\x12/admin/v1/accounts\x12q\n" +
 	"\x06Update\x12'.ledger.service.v1.UpdateAccountRequest\x1a\x1a.ledger.service.v1.Account\"\"\x82\xd3\xe4\x93\x02\x1c:\x01*\x1a\x17/admin/v1/accounts/{id}\x12j\n" +
@@ -42,60 +45,57 @@ const file_admin_service_v1_i_account_proto_rawDesc = "" +
 	"\x0fToggleCanIncome\x12'.ledger.service.v1.ToggleAccountRequest\x1a\x1a.ledger.service.v1.Account\"4\x82\xd3\xe4\x93\x02.:\x01*2)/admin/v1/accounts/{id}/toggle-can-income\x12\x99\x01\n" +
 	"\x15ToggleCanTransferFrom\x12'.ledger.service.v1.ToggleAccountRequest\x1a\x1a.ledger.service.v1.Account\";\x82\xd3\xe4\x93\x025:\x01*20/admin/v1/accounts/{id}/toggle-can-transfer-from\x12\x95\x01\n" +
 	"\x13ToggleCanTransferTo\x12'.ledger.service.v1.ToggleAccountRequest\x1a\x1a.ledger.service.v1.Account\"9\x82\xd3\xe4\x93\x023:\x01*2./admin/v1/accounts/{id}/toggle-can-transfer-to\x12\x7f\n" +
-	"\rAdjustBalance\x12'.ledger.service.v1.AdjustBalanceRequest\x1a\x1a.ledger.service.v1.Account\")\x82\xd3\xe4\x93\x02#:\x01*\"\x1e/admin/v1/accounts/{id}/adjust\x12x\n" +
-	"\bOverview\x12\".ledger.service.v1.OverviewRequest\x1a#.ledger.service.v1.OverviewResponse\"#\x82\xd3\xe4\x93\x02\x1d\x12\x1b/admin/v1/accounts/overview\x12\x8e\x01\n" +
-	"\n" +
-	"Statistics\x12+.ledger.service.v1.AccountStatisticsRequest\x1a,.ledger.service.v1.AccountStatisticsResponse\"%\x82\xd3\xe4\x93\x02\x1f\x12\x1d/admin/v1/accounts/statisticsB\xbb\x01\n" +
+	"\rAdjustBalance\x12'.ledger.service.v1.AdjustBalanceRequest\x1a\x1a.ledger.service.v1.Account\")\x82\xd3\xe4\x93\x02#:\x01*\"\x1e/admin/v1/accounts/{id}/adjustB\xbb\x01\n" +
 	"\x14com.admin.service.v1B\rIAccountProtoP\x01Z2go-wind-ledger/api/gen/go/admin/service/v1;adminpb\xa2\x02\x03ASX\xaa\x02\x10Admin.Service.V1\xca\x02\x10Admin\\Service\\V1\xe2\x02\x1cAdmin\\Service\\V1\\GPBMetadata\xea\x02\x12Admin::Service::V1b\x06proto3"
 
 var file_admin_service_v1_i_account_proto_goTypes = []any{
 	(*v1.PagingRequest)(nil),              // 0: pagination.PagingRequest
 	(*v11.ListAllAccountRequest)(nil),     // 1: ledger.service.v1.ListAllAccountRequest
-	(*v11.GetAccountRequest)(nil),         // 2: ledger.service.v1.GetAccountRequest
-	(*v11.CreateAccountRequest)(nil),      // 3: ledger.service.v1.CreateAccountRequest
-	(*v11.UpdateAccountRequest)(nil),      // 4: ledger.service.v1.UpdateAccountRequest
-	(*v11.DeleteAccountRequest)(nil),      // 5: ledger.service.v1.DeleteAccountRequest
-	(*v11.ToggleAccountRequest)(nil),      // 6: ledger.service.v1.ToggleAccountRequest
-	(*v11.AdjustBalanceRequest)(nil),      // 7: ledger.service.v1.AdjustBalanceRequest
-	(*v11.OverviewRequest)(nil),           // 8: ledger.service.v1.OverviewRequest
-	(*v11.AccountStatisticsRequest)(nil),  // 9: ledger.service.v1.AccountStatisticsRequest
+	(*v11.OverviewRequest)(nil),           // 2: ledger.service.v1.OverviewRequest
+	(*v11.AccountStatisticsRequest)(nil),  // 3: ledger.service.v1.AccountStatisticsRequest
+	(*v11.GetAccountRequest)(nil),         // 4: ledger.service.v1.GetAccountRequest
+	(*v11.CreateAccountRequest)(nil),      // 5: ledger.service.v1.CreateAccountRequest
+	(*v11.UpdateAccountRequest)(nil),      // 6: ledger.service.v1.UpdateAccountRequest
+	(*v11.DeleteAccountRequest)(nil),      // 7: ledger.service.v1.DeleteAccountRequest
+	(*v11.ToggleAccountRequest)(nil),      // 8: ledger.service.v1.ToggleAccountRequest
+	(*v11.AdjustBalanceRequest)(nil),      // 9: ledger.service.v1.AdjustBalanceRequest
 	(*v11.ListAccountResponse)(nil),       // 10: ledger.service.v1.ListAccountResponse
-	(*v11.Account)(nil),                   // 11: ledger.service.v1.Account
-	(*emptypb.Empty)(nil),                 // 12: google.protobuf.Empty
-	(*v11.OverviewResponse)(nil),          // 13: ledger.service.v1.OverviewResponse
-	(*v11.AccountStatisticsResponse)(nil), // 14: ledger.service.v1.AccountStatisticsResponse
+	(*v11.OverviewResponse)(nil),          // 11: ledger.service.v1.OverviewResponse
+	(*v11.AccountStatisticsResponse)(nil), // 12: ledger.service.v1.AccountStatisticsResponse
+	(*v11.Account)(nil),                   // 13: ledger.service.v1.Account
+	(*emptypb.Empty)(nil),                 // 14: google.protobuf.Empty
 }
 var file_admin_service_v1_i_account_proto_depIdxs = []int32{
 	0,  // 0: admin.service.v1.AccountService.List:input_type -> pagination.PagingRequest
 	1,  // 1: admin.service.v1.AccountService.ListAll:input_type -> ledger.service.v1.ListAllAccountRequest
-	2,  // 2: admin.service.v1.AccountService.Get:input_type -> ledger.service.v1.GetAccountRequest
-	3,  // 3: admin.service.v1.AccountService.Create:input_type -> ledger.service.v1.CreateAccountRequest
-	4,  // 4: admin.service.v1.AccountService.Update:input_type -> ledger.service.v1.UpdateAccountRequest
-	5,  // 5: admin.service.v1.AccountService.Delete:input_type -> ledger.service.v1.DeleteAccountRequest
-	6,  // 6: admin.service.v1.AccountService.Toggle:input_type -> ledger.service.v1.ToggleAccountRequest
-	6,  // 7: admin.service.v1.AccountService.ToggleInclude:input_type -> ledger.service.v1.ToggleAccountRequest
-	6,  // 8: admin.service.v1.AccountService.ToggleCanExpense:input_type -> ledger.service.v1.ToggleAccountRequest
-	6,  // 9: admin.service.v1.AccountService.ToggleCanIncome:input_type -> ledger.service.v1.ToggleAccountRequest
-	6,  // 10: admin.service.v1.AccountService.ToggleCanTransferFrom:input_type -> ledger.service.v1.ToggleAccountRequest
-	6,  // 11: admin.service.v1.AccountService.ToggleCanTransferTo:input_type -> ledger.service.v1.ToggleAccountRequest
-	7,  // 12: admin.service.v1.AccountService.AdjustBalance:input_type -> ledger.service.v1.AdjustBalanceRequest
-	8,  // 13: admin.service.v1.AccountService.Overview:input_type -> ledger.service.v1.OverviewRequest
-	9,  // 14: admin.service.v1.AccountService.Statistics:input_type -> ledger.service.v1.AccountStatisticsRequest
+	2,  // 2: admin.service.v1.AccountService.Overview:input_type -> ledger.service.v1.OverviewRequest
+	3,  // 3: admin.service.v1.AccountService.Statistics:input_type -> ledger.service.v1.AccountStatisticsRequest
+	4,  // 4: admin.service.v1.AccountService.Get:input_type -> ledger.service.v1.GetAccountRequest
+	5,  // 5: admin.service.v1.AccountService.Create:input_type -> ledger.service.v1.CreateAccountRequest
+	6,  // 6: admin.service.v1.AccountService.Update:input_type -> ledger.service.v1.UpdateAccountRequest
+	7,  // 7: admin.service.v1.AccountService.Delete:input_type -> ledger.service.v1.DeleteAccountRequest
+	8,  // 8: admin.service.v1.AccountService.Toggle:input_type -> ledger.service.v1.ToggleAccountRequest
+	8,  // 9: admin.service.v1.AccountService.ToggleInclude:input_type -> ledger.service.v1.ToggleAccountRequest
+	8,  // 10: admin.service.v1.AccountService.ToggleCanExpense:input_type -> ledger.service.v1.ToggleAccountRequest
+	8,  // 11: admin.service.v1.AccountService.ToggleCanIncome:input_type -> ledger.service.v1.ToggleAccountRequest
+	8,  // 12: admin.service.v1.AccountService.ToggleCanTransferFrom:input_type -> ledger.service.v1.ToggleAccountRequest
+	8,  // 13: admin.service.v1.AccountService.ToggleCanTransferTo:input_type -> ledger.service.v1.ToggleAccountRequest
+	9,  // 14: admin.service.v1.AccountService.AdjustBalance:input_type -> ledger.service.v1.AdjustBalanceRequest
 	10, // 15: admin.service.v1.AccountService.List:output_type -> ledger.service.v1.ListAccountResponse
 	10, // 16: admin.service.v1.AccountService.ListAll:output_type -> ledger.service.v1.ListAccountResponse
-	11, // 17: admin.service.v1.AccountService.Get:output_type -> ledger.service.v1.Account
-	11, // 18: admin.service.v1.AccountService.Create:output_type -> ledger.service.v1.Account
-	11, // 19: admin.service.v1.AccountService.Update:output_type -> ledger.service.v1.Account
-	12, // 20: admin.service.v1.AccountService.Delete:output_type -> google.protobuf.Empty
-	11, // 21: admin.service.v1.AccountService.Toggle:output_type -> ledger.service.v1.Account
-	11, // 22: admin.service.v1.AccountService.ToggleInclude:output_type -> ledger.service.v1.Account
-	11, // 23: admin.service.v1.AccountService.ToggleCanExpense:output_type -> ledger.service.v1.Account
-	11, // 24: admin.service.v1.AccountService.ToggleCanIncome:output_type -> ledger.service.v1.Account
-	11, // 25: admin.service.v1.AccountService.ToggleCanTransferFrom:output_type -> ledger.service.v1.Account
-	11, // 26: admin.service.v1.AccountService.ToggleCanTransferTo:output_type -> ledger.service.v1.Account
-	11, // 27: admin.service.v1.AccountService.AdjustBalance:output_type -> ledger.service.v1.Account
-	13, // 28: admin.service.v1.AccountService.Overview:output_type -> ledger.service.v1.OverviewResponse
-	14, // 29: admin.service.v1.AccountService.Statistics:output_type -> ledger.service.v1.AccountStatisticsResponse
+	11, // 17: admin.service.v1.AccountService.Overview:output_type -> ledger.service.v1.OverviewResponse
+	12, // 18: admin.service.v1.AccountService.Statistics:output_type -> ledger.service.v1.AccountStatisticsResponse
+	13, // 19: admin.service.v1.AccountService.Get:output_type -> ledger.service.v1.Account
+	13, // 20: admin.service.v1.AccountService.Create:output_type -> ledger.service.v1.Account
+	13, // 21: admin.service.v1.AccountService.Update:output_type -> ledger.service.v1.Account
+	14, // 22: admin.service.v1.AccountService.Delete:output_type -> google.protobuf.Empty
+	13, // 23: admin.service.v1.AccountService.Toggle:output_type -> ledger.service.v1.Account
+	13, // 24: admin.service.v1.AccountService.ToggleInclude:output_type -> ledger.service.v1.Account
+	13, // 25: admin.service.v1.AccountService.ToggleCanExpense:output_type -> ledger.service.v1.Account
+	13, // 26: admin.service.v1.AccountService.ToggleCanIncome:output_type -> ledger.service.v1.Account
+	13, // 27: admin.service.v1.AccountService.ToggleCanTransferFrom:output_type -> ledger.service.v1.Account
+	13, // 28: admin.service.v1.AccountService.ToggleCanTransferTo:output_type -> ledger.service.v1.Account
+	13, // 29: admin.service.v1.AccountService.AdjustBalance:output_type -> ledger.service.v1.Account
 	15, // [15:30] is the sub-list for method output_type
 	0,  // [0:15] is the sub-list for method input_type
 	0,  // [0:0] is the sub-list for extension type_name

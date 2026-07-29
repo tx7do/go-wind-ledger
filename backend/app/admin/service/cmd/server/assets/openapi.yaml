@@ -129,6 +129,7 @@ paths:
         get:
             tags:
                 - AccountService
+            description: "Overview and Statistics must be defined BEFORE {id} routes\r\n to avoid being matched by the {id} path parameter."
             operationId: AccountService_Overview
             responses:
                 "200":

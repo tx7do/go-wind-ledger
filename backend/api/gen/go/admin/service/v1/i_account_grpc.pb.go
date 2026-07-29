@@ -24,6 +24,8 @@ const _ = grpc.SupportPackageIsVersion9
 const (
 	AccountService_List_FullMethodName                  = "/admin.service.v1.AccountService/List"
 	AccountService_ListAll_FullMethodName               = "/admin.service.v1.AccountService/ListAll"
+	AccountService_Overview_FullMethodName              = "/admin.service.v1.AccountService/Overview"
+	AccountService_Statistics_FullMethodName            = "/admin.service.v1.AccountService/Statistics"
 	AccountService_Get_FullMethodName                   = "/admin.service.v1.AccountService/Get"
 	AccountService_Create_FullMethodName                = "/admin.service.v1.AccountService/Create"
 	AccountService_Update_FullMethodName                = "/admin.service.v1.AccountService/Update"
@@ -35,8 +37,6 @@ const (
 	AccountService_ToggleCanTransferFrom_FullMethodName = "/admin.service.v1.AccountService/ToggleCanTransferFrom"
 	AccountService_ToggleCanTransferTo_FullMethodName   = "/admin.service.v1.AccountService/ToggleCanTransferTo"
 	AccountService_AdjustBalance_FullMethodName         = "/admin.service.v1.AccountService/AdjustBalance"
-	AccountService_Overview_FullMethodName              = "/admin.service.v1.AccountService/Overview"
-	AccountService_Statistics_FullMethodName            = "/admin.service.v1.AccountService/Statistics"
 )
 
 // AccountServiceClient is the client API for AccountService service.
@@ -47,6 +47,10 @@ const (
 type AccountServiceClient interface {
 	List(ctx context.Context, in *v1.PagingRequest, opts ...grpc.CallOption) (*v11.ListAccountResponse, error)
 	ListAll(ctx context.Context, in *v11.ListAllAccountRequest, opts ...grpc.CallOption) (*v11.ListAccountResponse, error)
+	// Overview and Statistics must be defined BEFORE {id} routes
+	// to avoid being matched by the {id} path parameter.
+	Overview(ctx context.Context, in *v11.OverviewRequest, opts ...grpc.CallOption) (*v11.OverviewResponse, error)
+	Statistics(ctx context.Context, in *v11.AccountStatisticsRequest, opts ...grpc.CallOption) (*v11.AccountStatisticsResponse, error)
 	Get(ctx context.Context, in *v11.GetAccountRequest, opts ...grpc.CallOption) (*v11.Account, error)
 	Create(ctx context.Context, in *v11.CreateAccountRequest, opts ...grpc.CallOption) (*v11.Account, error)
 	Update(ctx context.Context, in *v11.UpdateAccountRequest, opts ...grpc.CallOption) (*v11.Account, error)
@@ -58,8 +62,6 @@ type AccountServiceClient interface {
 	ToggleCanTransferFrom(ctx context.Context, in *v11.ToggleAccountRequest, opts ...grpc.CallOption) (*v11.Account, error)
 	ToggleCanTransferTo(ctx context.Context, in *v11.ToggleAccountRequest, opts ...grpc.CallOption) (*v11.Account, error)
 	AdjustBalance(ctx context.Context, in *v11.AdjustBalanceRequest, opts ...grpc.CallOption) (*v11.Account, error)
-	Overview(ctx context.Context, in *v11.OverviewRequest, opts ...grpc.CallOption) (*v11.OverviewResponse, error)
-	Statistics(ctx context.Context, in *v11.AccountStatisticsRequest, opts ...grpc.CallOption) (*v11.AccountStatisticsResponse, error)
 }
 
 type accountServiceClient struct {
@@ -84,6 +86,26 @@ func (c *accountServiceClient) ListAll(ctx context.Context, in *v11.ListAllAccou
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(v11.ListAccountResponse)
 	err := c.cc.Invoke(ctx, AccountService_ListAll_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *accountServiceClient) Overview(ctx context.Context, in *v11.OverviewRequest, opts ...grpc.CallOption) (*v11.OverviewResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(v11.OverviewResponse)
+	err := c.cc.Invoke(ctx, AccountService_Overview_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *accountServiceClient) Statistics(ctx context.Context, in *v11.AccountStatisticsRequest, opts ...grpc.CallOption) (*v11.AccountStatisticsResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(v11.AccountStatisticsResponse)
+	err := c.cc.Invoke(ctx, AccountService_Statistics_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
@@ -200,26 +222,6 @@ func (c *accountServiceClient) AdjustBalance(ctx context.Context, in *v11.Adjust
 	return out, nil
 }
 
-func (c *accountServiceClient) Overview(ctx context.Context, in *v11.OverviewRequest, opts ...grpc.CallOption) (*v11.OverviewResponse, error) {
-	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(v11.OverviewResponse)
-	err := c.cc.Invoke(ctx, AccountService_Overview_FullMethodName, in, out, cOpts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *accountServiceClient) Statistics(ctx context.Context, in *v11.AccountStatisticsRequest, opts ...grpc.CallOption) (*v11.AccountStatisticsResponse, error) {
-	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(v11.AccountStatisticsResponse)
-	err := c.cc.Invoke(ctx, AccountService_Statistics_FullMethodName, in, out, cOpts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
 // AccountServiceServer is the server API for AccountService service.
 // All implementations must embed UnimplementedAccountServiceServer
 // for forward compatibility.
@@ -228,6 +230,10 @@ func (c *accountServiceClient) Statistics(ctx context.Context, in *v11.AccountSt
 type AccountServiceServer interface {
 	List(context.Context, *v1.PagingRequest) (*v11.ListAccountResponse, error)
 	ListAll(context.Context, *v11.ListAllAccountRequest) (*v11.ListAccountResponse, error)
+	// Overview and Statistics must be defined BEFORE {id} routes
+	// to avoid being matched by the {id} path parameter.
+	Overview(context.Context, *v11.OverviewRequest) (*v11.OverviewResponse, error)
+	Statistics(context.Context, *v11.AccountStatisticsRequest) (*v11.AccountStatisticsResponse, error)
 	Get(context.Context, *v11.GetAccountRequest) (*v11.Account, error)
 	Create(context.Context, *v11.CreateAccountRequest) (*v11.Account, error)
 	Update(context.Context, *v11.UpdateAccountRequest) (*v11.Account, error)
@@ -239,8 +245,6 @@ type AccountServiceServer interface {
 	ToggleCanTransferFrom(context.Context, *v11.ToggleAccountRequest) (*v11.Account, error)
 	ToggleCanTransferTo(context.Context, *v11.ToggleAccountRequest) (*v11.Account, error)
 	AdjustBalance(context.Context, *v11.AdjustBalanceRequest) (*v11.Account, error)
-	Overview(context.Context, *v11.OverviewRequest) (*v11.OverviewResponse, error)
-	Statistics(context.Context, *v11.AccountStatisticsRequest) (*v11.AccountStatisticsResponse, error)
 	mustEmbedUnimplementedAccountServiceServer()
 }
 
@@ -256,6 +260,12 @@ func (UnimplementedAccountServiceServer) List(context.Context, *v1.PagingRequest
 }
 func (UnimplementedAccountServiceServer) ListAll(context.Context, *v11.ListAllAccountRequest) (*v11.ListAccountResponse, error) {
 	return nil, status.Error(codes.Unimplemented, "method ListAll not implemented")
+}
+func (UnimplementedAccountServiceServer) Overview(context.Context, *v11.OverviewRequest) (*v11.OverviewResponse, error) {
+	return nil, status.Error(codes.Unimplemented, "method Overview not implemented")
+}
+func (UnimplementedAccountServiceServer) Statistics(context.Context, *v11.AccountStatisticsRequest) (*v11.AccountStatisticsResponse, error) {
+	return nil, status.Error(codes.Unimplemented, "method Statistics not implemented")
 }
 func (UnimplementedAccountServiceServer) Get(context.Context, *v11.GetAccountRequest) (*v11.Account, error) {
 	return nil, status.Error(codes.Unimplemented, "method Get not implemented")
@@ -289,12 +299,6 @@ func (UnimplementedAccountServiceServer) ToggleCanTransferTo(context.Context, *v
 }
 func (UnimplementedAccountServiceServer) AdjustBalance(context.Context, *v11.AdjustBalanceRequest) (*v11.Account, error) {
 	return nil, status.Error(codes.Unimplemented, "method AdjustBalance not implemented")
-}
-func (UnimplementedAccountServiceServer) Overview(context.Context, *v11.OverviewRequest) (*v11.OverviewResponse, error) {
-	return nil, status.Error(codes.Unimplemented, "method Overview not implemented")
-}
-func (UnimplementedAccountServiceServer) Statistics(context.Context, *v11.AccountStatisticsRequest) (*v11.AccountStatisticsResponse, error) {
-	return nil, status.Error(codes.Unimplemented, "method Statistics not implemented")
 }
 func (UnimplementedAccountServiceServer) mustEmbedUnimplementedAccountServiceServer() {}
 func (UnimplementedAccountServiceServer) testEmbeddedByValue()                        {}
@@ -349,6 +353,42 @@ func _AccountService_ListAll_Handler(srv interface{}, ctx context.Context, dec f
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(AccountServiceServer).ListAll(ctx, req.(*v11.ListAllAccountRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _AccountService_Overview_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(v11.OverviewRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AccountServiceServer).Overview(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: AccountService_Overview_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AccountServiceServer).Overview(ctx, req.(*v11.OverviewRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _AccountService_Statistics_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(v11.AccountStatisticsRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AccountServiceServer).Statistics(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: AccountService_Statistics_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AccountServiceServer).Statistics(ctx, req.(*v11.AccountStatisticsRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -551,42 +591,6 @@ func _AccountService_AdjustBalance_Handler(srv interface{}, ctx context.Context,
 	return interceptor(ctx, in, info, handler)
 }
 
-func _AccountService_Overview_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(v11.OverviewRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(AccountServiceServer).Overview(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: AccountService_Overview_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(AccountServiceServer).Overview(ctx, req.(*v11.OverviewRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _AccountService_Statistics_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(v11.AccountStatisticsRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(AccountServiceServer).Statistics(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: AccountService_Statistics_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(AccountServiceServer).Statistics(ctx, req.(*v11.AccountStatisticsRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
 // AccountService_ServiceDesc is the grpc.ServiceDesc for AccountService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -601,6 +605,14 @@ var AccountService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "ListAll",
 			Handler:    _AccountService_ListAll_Handler,
+		},
+		{
+			MethodName: "Overview",
+			Handler:    _AccountService_Overview_Handler,
+		},
+		{
+			MethodName: "Statistics",
+			Handler:    _AccountService_Statistics_Handler,
 		},
 		{
 			MethodName: "Get",
@@ -645,14 +657,6 @@ var AccountService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "AdjustBalance",
 			Handler:    _AccountService_AdjustBalance_Handler,
-		},
-		{
-			MethodName: "Overview",
-			Handler:    _AccountService_Overview_Handler,
-		},
-		{
-			MethodName: "Statistics",
-			Handler:    _AccountService_Statistics_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
