@@ -177,29 +177,18 @@ func (r *userRepo) queryUserIDsByRelationIDsUserTenantRelationOneToMany(ctx cont
 		return nil, nil
 	}
 
-	var err error
-
 	var orgUnitUserIDs []uint32
 	var positionUserIDs []uint32
 	var roleUserIDs []uint32
 
 	if len(orgUnitIDs) > 0 {
 		orgUnitUserIDs = []uint32{}
-		if err != nil {
-			return nil, err
-		}
 	}
 	if len(positionIDs) > 0 {
 		positionUserIDs = []uint32{}
-		if err != nil {
-			return nil, err
-		}
 	}
 	if len(roleIDs) > 0 {
 		roleUserIDs = []uint32{}
-		if err != nil {
-			return nil, err
-		}
 	}
 
 	// 收集所有非空列表用于求交集

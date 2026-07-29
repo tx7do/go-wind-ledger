@@ -102,15 +102,3 @@ func (s *MenuService) createDefaultMenus(ctx context.Context) error {
 	}
 	return nil
 }
-
-// Count counts menus.
-func (s *MenuService) Count(ctx context.Context, req *paginationV1.PagingRequest) (*permissionV1.CountMenuResponse, error) {
-	count, err := s.menuRepo.Count(ctx, nil)
-	if err != nil {
-		s.log.Errorf("query menu count failed: %s", err.Error())
-		return nil, permissionV1.ErrorInternalServerError("query menu count failed")
-	}
-	return &permissionV1.CountMenuResponse{
-		Count: uint64(count),
-	}, nil
-}
