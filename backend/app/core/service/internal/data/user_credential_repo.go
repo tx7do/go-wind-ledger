@@ -156,7 +156,11 @@ func (r *UserCredentialRepo) CreateWithTx(ctx context.Context, tx *ent.Tx, data 
 
 	if data.Credential != nil {
 		var newCredential string
-		newCredential, err = r.prepareCredential(nil, data.GetCredential())
+		ct := ""
+		if data.CredentialType != nil {
+			ct = data.CredentialType.String()
+		}
+		newCredential, err = r.prepareCredential(&ct, data.GetCredential())
 		if err != nil {
 			r.log.Errorf("prepare new credential failed: %s", err.Error())
 			return authenticationV1.ErrorBadRequest("prepare new credential failed")
@@ -168,12 +172,12 @@ func (r *UserCredentialRepo) CreateWithTx(ctx context.Context, tx *ent.Tx, data 
 	builder.
 		SetUserID(data.GetUserId()).
 		SetNillableTenantID(data.TenantId).
-		SetNillableIdentityType(nil).
+		SetNillableIdentityType(identityTypeToString(data.IdentityType)).
 		SetNillableIdentifier(data.Identifier).
-		SetNillableCredentialType(nil).
+		SetNillableCredentialType(credentialTypeToString(data.CredentialType)).
 		SetNillableCredential(data.Credential).
 		SetNillableIsPrimary(data.IsPrimary).
-		SetNillableStatus(nil).
+		SetNillableStatus(statusToEntity(data.Status)).
 		SetNillableExtraInfo(data.ExtraInfo).
 		SetNillableProvider(data.Provider).
 		SetNillableProviderAccountID(data.ProviderAccountId).
@@ -185,6 +189,33 @@ func (r *UserCredentialRepo) CreateWithTx(ctx context.Context, tx *ent.Tx, data 
 	}
 
 	return nil
+}
+
+// identityTypeToString converts proto IdentityType enum to ent string.
+func identityTypeToString(t *authenticationV1.UserCredential_IdentityType) *string {
+	if t == nil {
+		return nil
+	}
+	s := t.String()
+	return &s
+}
+
+// credentialTypeToString converts proto CredentialType enum to ent string.
+func credentialTypeToString(t *authenticationV1.UserCredential_CredentialType) *string {
+	if t == nil {
+		return nil
+	}
+	s := t.String()
+	return &s
+}
+
+// statusToEntity converts proto Status enum to ent Status.
+func statusToEntity(s *authenticationV1.UserCredential_Status) *usercredential.Status {
+	if s == nil {
+		return nil
+	}
+	v := usercredential.Status(s.String())
+	return &v
 }
 
 func (r *UserCredentialRepo) Update(ctx context.Context, req *authenticationV1.UpdateUserCredentialRequest) error {
@@ -220,12 +251,12 @@ func (r *UserCredentialRepo) Update(ctx context.Context, req *authenticationV1.U
 	err = r.repository.UpdateX(ctx, builder, req.Data, req.GetUpdateMask(),
 		func(dto *authenticationV1.UserCredential) {
 			builder.
-				SetNillableIdentityType(nil).
+				SetNillableIdentityType(identityTypeToString(req.Data.IdentityType)).
 				SetNillableIdentifier(req.Data.Identifier).
-				SetNillableCredentialType(nil).
+				SetNillableCredentialType(credentialTypeToString(req.Data.CredentialType)).
 				SetNillableCredential(req.Data.Credential).
 				SetNillableIsPrimary(req.Data.IsPrimary).
-				SetNillableStatus(nil).
+				SetNillableStatus(statusToEntity(req.Data.Status)).
 				SetNillableExtraInfo(req.Data.ExtraInfo).
 				SetNillableProvider(req.Data.Provider).
 				SetNillableProviderAccountID(req.Data.ProviderAccountId).
