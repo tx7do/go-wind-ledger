@@ -4,6 +4,7 @@ import (
 	"context"
 
 	"github.com/go-kratos/kratos/v2/log"
+	"github.com/tx7do/go-utils/trans"
 	"github.com/tx7do/kratos-bootstrap/bootstrap"
 
 	paginationV1 "github.com/tx7do/go-crud/api/gen/go/pagination/v1"
@@ -85,4 +86,14 @@ func (s *ApiService) SyncApis(ctx context.Context, req *permissionV1.SyncApisReq
 	}
 
 	return &emptypb.Empty{}, nil
+}
+
+// Count counts APIs.
+func (s *ApiService) Count(ctx context.Context, req *paginationV1.PagingRequest) (*permissionV1.CountApiResponse, error) {
+	return s.apiRepo.Count(ctx, req)
+}
+
+// GetWalkRouteData returns all APIs for route walking.
+func (s *ApiService) GetWalkRouteData(ctx context.Context, req *emptypb.Empty) (*permissionV1.ListApiResponse, error) {
+	return s.apiRepo.List(ctx, &paginationV1.PagingRequest{NoPaging: trans.Ptr(true)})
 }
