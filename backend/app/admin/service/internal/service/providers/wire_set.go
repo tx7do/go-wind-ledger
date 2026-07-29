@@ -50,6 +50,11 @@ var ProviderSet = wire.NewSet(
 	service.NewPermissionAuditLogService,
 	service.NewPolicyEvaluationLogService,
 
+	// === 站内信 ===
+	service.NewInternalMessageService,
+	service.NewInternalMessageCategoryService,
+	service.NewInternalMessageRecipientService,
+
 	// === 记账系统 Admin BFF Services ===
 	service.NewBookService,
 	service.NewBookTemplateService,

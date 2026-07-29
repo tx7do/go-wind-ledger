@@ -104,7 +104,12 @@ func initApp(context *bootstrap.Context) (*kratos.App, func(), error) {
 	if err != nil {
 		return nil, nil, err
 	}
-	app := newApp(context, httpServer, grpcServer)
+	internalMessageServiceClient := data.NewInternalMessageServiceClient(context, discovery)
+	internalMessageCategoryServiceClient := data.NewInternalMessageCategoryServiceClient(context, discovery)
+	internalMessageRecipientServiceClient := data.NewInternalMessageRecipientServiceClient(context, discovery)
+	internalMessageService := service.NewInternalMessageService(context, internalMessageServiceClient, internalMessageCategoryServiceClient, internalMessageRecipientServiceClient, authenticationServiceClient, userServiceClient, clientType)
+	sseServer := server.NewSseServer(context, internalMessageService)
+	app := newApp(context, httpServer, grpcServer, sseServer)
 	return app, func() {
 	}, nil
 }

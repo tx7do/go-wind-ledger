@@ -24,6 +24,5 @@ var ProviderSet = wire.NewSet(
 	server.NewGrpcMiddleware,
 	server.NewGrpcServer,
 
-	// SSE 暂时禁用（依赖 InternalMessage 服务，记账应用不需要）
-	// server.NewSseServer,
+	server.NewSseServer,
 )
