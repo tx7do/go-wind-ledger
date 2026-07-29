@@ -98,16 +98,18 @@ func initApp(context *bootstrap.Context) (*kratos.App, func(), error) {
 	budgetService := service.NewBudgetService(context, budgetServiceClient)
 	tenantMemberServiceClient := data.NewTenantMemberServiceClient(context, discovery)
 	tenantMemberService := service.NewTenantMemberService(context, tenantMemberServiceClient)
-	httpServer := server.NewRestServer(context, v, userService, userProfileService, roleService, tenantService, orgUnitService, positionService, menuService, apiService, permissionGroupService, permissionService, adminPortalService, taskService, authenticationService, loginPolicyService, languageService, dictTypeService, dictEntryService, fileService, apiAuditLogService, dataAccessAuditLogService, loginAuditLogService, policyEvaluationLogService, operationAuditLogService, permissionAuditLogService, bookService, bookTemplateService, accountService, payeeService, balanceFlowService, flowFileService, noteDayService, currencyService, reportService, budgetService, tenantMemberService)
+	internalMessageServiceClient := data.NewInternalMessageServiceClient(context, discovery)
+	internalMessageCategoryServiceClient := data.NewInternalMessageCategoryServiceClient(context, discovery)
+	internalMessageRecipientServiceClient := data.NewInternalMessageRecipientServiceClient(context, discovery)
+	internalMessageService := service.NewInternalMessageService(context, internalMessageServiceClient, internalMessageCategoryServiceClient, internalMessageRecipientServiceClient, authenticationServiceClient, userServiceClient, clientType)
+	internalMessageCategoryService := service.NewInternalMessageCategoryService(context, internalMessageCategoryServiceClient)
+	internalMessageRecipientService := service.NewInternalMessageRecipientService(context, internalMessageServiceClient, internalMessageRecipientServiceClient)
+	httpServer := server.NewRestServer(context, v, userService, userProfileService, roleService, tenantService, orgUnitService, positionService, menuService, apiService, permissionGroupService, permissionService, adminPortalService, taskService, authenticationService, loginPolicyService, languageService, dictTypeService, dictEntryService, fileService, apiAuditLogService, dataAccessAuditLogService, loginAuditLogService, policyEvaluationLogService, operationAuditLogService, permissionAuditLogService, bookService, bookTemplateService, accountService, payeeService, balanceFlowService, flowFileService, noteDayService, currencyService, reportService, budgetService, tenantMemberService, internalMessageService, internalMessageCategoryService, internalMessageRecipientService)
 	grpcMiddlewares := server.NewGrpcMiddleware(context)
 	grpcServer, err := server.NewGrpcServer(context, grpcMiddlewares)
 	if err != nil {
 		return nil, nil, err
 	}
-	internalMessageServiceClient := data.NewInternalMessageServiceClient(context, discovery)
-	internalMessageCategoryServiceClient := data.NewInternalMessageCategoryServiceClient(context, discovery)
-	internalMessageRecipientServiceClient := data.NewInternalMessageRecipientServiceClient(context, discovery)
-	internalMessageService := service.NewInternalMessageService(context, internalMessageServiceClient, internalMessageCategoryServiceClient, internalMessageRecipientServiceClient, authenticationServiceClient, userServiceClient, clientType)
 	sseServer := server.NewSseServer(context, internalMessageService)
 	app := newApp(context, httpServer, grpcServer, sseServer)
 	return app, func() {

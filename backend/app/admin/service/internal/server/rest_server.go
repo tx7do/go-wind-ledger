@@ -124,6 +124,11 @@ func NewRestServer(
 
 	// === 成员管理 Admin BFF Services ===
 	tenantMemberService *service.TenantMemberService,
+
+	// === 站内信 ===
+	internalMessageService          *service.InternalMessageService,
+	internalMessageCategoryService *service.InternalMessageCategoryService,
+	internalMessageRecipientService *service.InternalMessageRecipientService,
 ) *http.Server {
 	cfg := ctx.GetConfig()
 
@@ -181,6 +186,11 @@ func NewRestServer(
 
 		// === 成员管理 Admin REST API ===
 		adminV1.RegisterTenantMemberServiceHTTPServer(srv, tenantMemberService)
+
+		// === 站内信 ===
+		adminV1.RegisterInternalMessageServiceHTTPServer(srv, internalMessageService)
+		adminV1.RegisterInternalMessageCategoryServiceHTTPServer(srv, internalMessageCategoryService)
+		adminV1.RegisterInternalMessageRecipientServiceHTTPServer(srv, internalMessageRecipientService)
 
 	if cfg.GetServer().GetRest().GetEnableSwagger() {
 		swaggerUI.RegisterSwaggerUIServerWithOption(
