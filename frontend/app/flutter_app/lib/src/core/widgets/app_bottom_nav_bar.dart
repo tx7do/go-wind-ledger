@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-import 'package:flutter_app/src/features/cms/services/navigation_service.dart';
 
 /// 底部导航项定义
 class BottomNavItem {
@@ -18,16 +17,6 @@ class BottomNavItem {
   });
 
   /// 从服务端 NavigationItem 构造
-  factory BottomNavItem.fromNavigationItem(NavigationItem item) {
-    final iconName = item.icon ?? '';
-    final activeIconName = iconName.replaceAll('_outlined', '');
-    return BottomNavItem(
-      icon: resolveNavIcon(iconName, fallback: Icons.article_outlined),
-      activeIcon: resolveNavIcon(activeIconName, fallback: Icons.article),
-      label: item.title ?? '',
-      route: resolveNavRoute(item),
-    );
-  }
 }
 
 /// 应用底部导航栏

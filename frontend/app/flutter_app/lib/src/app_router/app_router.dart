@@ -10,13 +10,6 @@ import 'package:flutter_app/src/core/widgets/web_shell_layout.dart';
 import 'package:flutter_app/src/app_router/route_names.dart';
 import 'package:flutter_app/src/features/ledger/widgets/ledger_bottom_nav.dart'
     show LedgerTab;
-import 'package:flutter_app/src/features/cms/pages/home/home_page.dart';
-import 'package:flutter_app/src/features/cms/pages/post_detail/post_detail_page.dart';
-import 'package:flutter_app/src/features/cms/pages/post_list/post_list_page.dart';
-import 'package:flutter_app/src/features/cms/pages/tag_feed/tag_feed_page.dart';
-import 'package:flutter_app/src/features/cms/pages/tag_list/tag_list_page.dart';
-import 'package:flutter_app/src/features/cms/pages/category_list/category_list_page.dart';
-import 'package:flutter_app/src/features/cms/pages/search/search_page.dart';
 import 'package:flutter_app/src/features/auth/pages/login_page.dart';
 import 'package:flutter_app/src/features/auth/pages/register_page.dart';
 import 'package:flutter_app/src/core/utils/responsive_utils.dart';
@@ -45,14 +38,8 @@ import 'package:flutter_app/src/features/ledger/pages/note_day_form_page.dart';
 import 'package:flutter_app/src/features/ledger/pages/currency_list_page.dart';
 import 'package:flutter_app/src/features/ledger/pages/settings_page.dart';
 import 'package:flutter_app/src/features/ledger/pages/report_page.dart';
-import 'package:flutter_app/src/features/cms/pages/explore/explore_page.dart';
-import 'package:flutter_app/src/features/cms/pages/profile/profile_page.dart';
-import 'package:flutter_app/src/features/cms/pages/settings/settings_page.dart';
-import 'package:flutter_app/src/features/cms/pages/my_comments/my_comments_page.dart';
-import 'package:flutter_app/src/features/cms/pages/about/about_page.dart';
-import 'package:flutter_app/src/features/cms/pages/legal/legal_page.dart';
 
-/// CMS 应用路由
+/// 记账应用路由
 class AppRouter {
   static const initial = constants.AppRoutePath.initial;
 
@@ -407,7 +394,7 @@ class AppRouter {
   }
 
   static FutureOr<String?> _guard(BuildContext context, GoRouterState state) {
-    // CMS 内容展示端暂时不需要登录验证，直接放行
+    // 暂时不需要登录验证，直接放行
     return null;
   }
 }
