@@ -39,7 +39,7 @@ func (User) Fields() []ent.Field {
 		field.String("email").Comment("邮箱").MaxLen(32).Optional().Nillable(),
 		field.String("mobile").Comment("手机号").MaxLen(16).Optional().Nillable(),
 		field.String("telephone").Comment("电话").MaxLen(16).Optional().Nillable(),
-		field.Enum("gender").Comment("性别").NamedValues("GenderSecret","GENDER_SECRET","GenderMale","GENDER_MALE","GenderFemale","GENDER_FEMALE").Optional().Nillable(),
+		field.Enum("gender").Comment("性别").NamedValues("Secret","SECRET","Male","MALE","Female","FEMALE").Optional().Nillable(),
 		field.String("address").Comment("地址").MaxLen(256).Optional().Nillable(),
 		field.String("region").Comment("地区").MaxLen(64).Optional().Nillable(),
 		field.String("description").Comment("描述").MaxLen(128).Optional().Nillable(),

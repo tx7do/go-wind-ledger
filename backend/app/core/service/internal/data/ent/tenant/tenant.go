@@ -137,14 +137,15 @@ var (
 // Status defines the type for the "status" enum field.
 type Status string
 
-// StatusTenantStatusActive is the default value of the Status enum.
-const DefaultStatus = StatusTenantStatusActive
+// StatusOn is the default value of the Status enum.
+const DefaultStatus = StatusOn
 
 // Status values.
 const (
-	StatusTenantStatusActive    Status = "TENANT_STATUS_ACTIVE"
-	StatusTenantStatusSuspended Status = "TENANT_STATUS_SUSPENDED"
-	StatusTenantStatusCancelled Status = "TENANT_STATUS_CANCELLED"
+	StatusOn      Status = "ON"
+	StatusOff     Status = "OFF"
+	StatusExpired Status = "EXPIRED"
+	StatusFreeze  Status = "FREEZE"
 )
 
 func (s Status) String() string {
@@ -154,7 +155,7 @@ func (s Status) String() string {
 // StatusValidator is a validator for the "status" field enum values. It is called by the builders before save.
 func StatusValidator(s Status) error {
 	switch s {
-	case StatusTenantStatusActive, StatusTenantStatusSuspended, StatusTenantStatusCancelled:
+	case StatusOn, StatusOff, StatusExpired, StatusFreeze:
 		return nil
 	default:
 		return fmt.Errorf("tenant: invalid enum value for status field: %q", s)
@@ -164,13 +165,16 @@ func StatusValidator(s Status) error {
 // Type defines the type for the "type" enum field.
 type Type string
 
-// TypeTenantTypePersonal is the default value of the Type enum.
-const DefaultType = TypeTenantTypePersonal
+// TypePaid is the default value of the Type enum.
+const DefaultType = TypePaid
 
 // Type values.
 const (
-	TypeTenantTypePersonal   Type = "TENANT_TYPE_PERSONAL"
-	TypeTenantTypeEnterprise Type = "TENANT_TYPE_ENTERPRISE"
+	TypeTrial    Type = "TRIAL"
+	TypePaid     Type = "PAID"
+	TypeInternal Type = "INTERNAL"
+	TypePartner  Type = "PARTNER"
+	TypeCustom   Type = "CUSTOM"
 )
 
 func (_type Type) String() string {
@@ -180,7 +184,7 @@ func (_type Type) String() string {
 // TypeValidator is a validator for the "type" field enum values. It is called by the builders before save.
 func TypeValidator(_type Type) error {
 	switch _type {
-	case TypeTenantTypePersonal, TypeTenantTypeEnterprise:
+	case TypeTrial, TypePaid, TypeInternal, TypePartner, TypeCustom:
 		return nil
 	default:
 		return fmt.Errorf("tenant: invalid enum value for type field: %q", _type)
@@ -190,14 +194,14 @@ func TypeValidator(_type Type) error {
 // AuditStatus defines the type for the "audit_status" enum field.
 type AuditStatus string
 
-// AuditStatusAuditStatusPending is the default value of the AuditStatus enum.
-const DefaultAuditStatus = AuditStatusAuditStatusPending
+// AuditStatusPending is the default value of the AuditStatus enum.
+const DefaultAuditStatus = AuditStatusPending
 
 // AuditStatus values.
 const (
-	AuditStatusAuditStatusPending  AuditStatus = "AUDIT_STATUS_PENDING"
-	AuditStatusAuditStatusApproved AuditStatus = "AUDIT_STATUS_APPROVED"
-	AuditStatusAuditStatusRejected AuditStatus = "AUDIT_STATUS_REJECTED"
+	AuditStatusPending  AuditStatus = "PENDING"
+	AuditStatusApproved AuditStatus = "APPROVED"
+	AuditStatusRejected AuditStatus = "REJECTED"
 )
 
 func (as AuditStatus) String() string {
@@ -207,7 +211,7 @@ func (as AuditStatus) String() string {
 // AuditStatusValidator is a validator for the "audit_status" field enum values. It is called by the builders before save.
 func AuditStatusValidator(as AuditStatus) error {
 	switch as {
-	case AuditStatusAuditStatusPending, AuditStatusAuditStatusApproved, AuditStatusAuditStatusRejected:
+	case AuditStatusPending, AuditStatusApproved, AuditStatusRejected:
 		return nil
 	default:
 		return fmt.Errorf("tenant: invalid enum value for audit_status field: %q", as)

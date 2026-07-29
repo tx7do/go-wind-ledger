@@ -78,20 +78,6 @@ func (_c *UserPositionCreate) SetNillableTenantID(v *uint32) *UserPositionCreate
 	return _c
 }
 
-// SetStatus sets the "status" field.
-func (_c *UserPositionCreate) SetStatus(v userposition.Status) *UserPositionCreate {
-	_c.mutation.SetStatus(v)
-	return _c
-}
-
-// SetNillableStatus sets the "status" field if the given value is not nil.
-func (_c *UserPositionCreate) SetNillableStatus(v *userposition.Status) *UserPositionCreate {
-	if v != nil {
-		_c.SetStatus(*v)
-	}
-	return _c
-}
-
 // SetCreatedBy sets the "created_by" field.
 func (_c *UserPositionCreate) SetCreatedBy(v uint32) *UserPositionCreate {
 	_c.mutation.SetCreatedBy(v)
@@ -130,6 +116,20 @@ func (_c *UserPositionCreate) SetDeletedBy(v uint32) *UserPositionCreate {
 func (_c *UserPositionCreate) SetNillableDeletedBy(v *uint32) *UserPositionCreate {
 	if v != nil {
 		_c.SetDeletedBy(*v)
+	}
+	return _c
+}
+
+// SetStatus sets the "status" field.
+func (_c *UserPositionCreate) SetStatus(v userposition.Status) *UserPositionCreate {
+	_c.mutation.SetStatus(v)
+	return _c
+}
+
+// SetNillableStatus sets the "status" field if the given value is not nil.
+func (_c *UserPositionCreate) SetNillableStatus(v *userposition.Status) *UserPositionCreate {
+	if v != nil {
+		_c.SetStatus(*v)
 	}
 	return _c
 }
@@ -264,9 +264,6 @@ func (_c *UserPositionCreate) defaults() error {
 
 // check runs all checks and user-defined validators on the builder.
 func (_c *UserPositionCreate) check() error {
-	if _, ok := _c.mutation.Status(); !ok {
-		return &ValidationError{Name: "status", err: errors.New(`ent: missing required field "UserPosition.status"`)}
-	}
 	if v, ok := _c.mutation.Status(); ok {
 		if err := userposition.StatusValidator(v); err != nil {
 			return &ValidationError{Name: "status", err: fmt.Errorf(`ent: validator failed for field "UserPosition.status": %w`, err)}
@@ -326,10 +323,6 @@ func (_c *UserPositionCreate) createSpec() (*UserPosition, *sqlgraph.CreateSpec)
 		_spec.SetField(userposition.FieldTenantID, field.TypeUint32, value)
 		_node.TenantID = &value
 	}
-	if value, ok := _c.mutation.Status(); ok {
-		_spec.SetField(userposition.FieldStatus, field.TypeEnum, value)
-		_node.Status = &value
-	}
 	if value, ok := _c.mutation.CreatedBy(); ok {
 		_spec.SetField(userposition.FieldCreatedBy, field.TypeUint32, value)
 		_node.CreatedBy = &value
@@ -341,6 +334,10 @@ func (_c *UserPositionCreate) createSpec() (*UserPosition, *sqlgraph.CreateSpec)
 	if value, ok := _c.mutation.DeletedBy(); ok {
 		_spec.SetField(userposition.FieldDeletedBy, field.TypeUint32, value)
 		_node.DeletedBy = &value
+	}
+	if value, ok := _c.mutation.Status(); ok {
+		_spec.SetField(userposition.FieldStatus, field.TypeEnum, value)
+		_node.Status = &value
 	}
 	if value, ok := _c.mutation.IsPrimary(); ok {
 		_spec.SetField(userposition.FieldIsPrimary, field.TypeBool, value)
@@ -450,18 +447,6 @@ func (u *UserPositionUpsert) ClearDeletedAt() *UserPositionUpsert {
 	return u
 }
 
-// SetStatus sets the "status" field.
-func (u *UserPositionUpsert) SetStatus(v userposition.Status) *UserPositionUpsert {
-	u.Set(userposition.FieldStatus, v)
-	return u
-}
-
-// UpdateStatus sets the "status" field to the value that was provided on create.
-func (u *UserPositionUpsert) UpdateStatus() *UserPositionUpsert {
-	u.SetExcluded(userposition.FieldStatus)
-	return u
-}
-
 // SetCreatedBy sets the "created_by" field.
 func (u *UserPositionUpsert) SetCreatedBy(v uint32) *UserPositionUpsert {
 	u.Set(userposition.FieldCreatedBy, v)
@@ -531,6 +516,24 @@ func (u *UserPositionUpsert) AddDeletedBy(v uint32) *UserPositionUpsert {
 // ClearDeletedBy clears the value of the "deleted_by" field.
 func (u *UserPositionUpsert) ClearDeletedBy() *UserPositionUpsert {
 	u.SetNull(userposition.FieldDeletedBy)
+	return u
+}
+
+// SetStatus sets the "status" field.
+func (u *UserPositionUpsert) SetStatus(v userposition.Status) *UserPositionUpsert {
+	u.Set(userposition.FieldStatus, v)
+	return u
+}
+
+// UpdateStatus sets the "status" field to the value that was provided on create.
+func (u *UserPositionUpsert) UpdateStatus() *UserPositionUpsert {
+	u.SetExcluded(userposition.FieldStatus)
+	return u
+}
+
+// ClearStatus clears the value of the "status" field.
+func (u *UserPositionUpsert) ClearStatus() *UserPositionUpsert {
+	u.SetNull(userposition.FieldStatus)
 	return u
 }
 
@@ -732,20 +735,6 @@ func (u *UserPositionUpsertOne) ClearDeletedAt() *UserPositionUpsertOne {
 	})
 }
 
-// SetStatus sets the "status" field.
-func (u *UserPositionUpsertOne) SetStatus(v userposition.Status) *UserPositionUpsertOne {
-	return u.Update(func(s *UserPositionUpsert) {
-		s.SetStatus(v)
-	})
-}
-
-// UpdateStatus sets the "status" field to the value that was provided on create.
-func (u *UserPositionUpsertOne) UpdateStatus() *UserPositionUpsertOne {
-	return u.Update(func(s *UserPositionUpsert) {
-		s.UpdateStatus()
-	})
-}
-
 // SetCreatedBy sets the "created_by" field.
 func (u *UserPositionUpsertOne) SetCreatedBy(v uint32) *UserPositionUpsertOne {
 	return u.Update(func(s *UserPositionUpsert) {
@@ -827,6 +816,27 @@ func (u *UserPositionUpsertOne) UpdateDeletedBy() *UserPositionUpsertOne {
 func (u *UserPositionUpsertOne) ClearDeletedBy() *UserPositionUpsertOne {
 	return u.Update(func(s *UserPositionUpsert) {
 		s.ClearDeletedBy()
+	})
+}
+
+// SetStatus sets the "status" field.
+func (u *UserPositionUpsertOne) SetStatus(v userposition.Status) *UserPositionUpsertOne {
+	return u.Update(func(s *UserPositionUpsert) {
+		s.SetStatus(v)
+	})
+}
+
+// UpdateStatus sets the "status" field to the value that was provided on create.
+func (u *UserPositionUpsertOne) UpdateStatus() *UserPositionUpsertOne {
+	return u.Update(func(s *UserPositionUpsert) {
+		s.UpdateStatus()
+	})
+}
+
+// ClearStatus clears the value of the "status" field.
+func (u *UserPositionUpsertOne) ClearStatus() *UserPositionUpsertOne {
+	return u.Update(func(s *UserPositionUpsert) {
+		s.ClearStatus()
 	})
 }
 
@@ -1211,20 +1221,6 @@ func (u *UserPositionUpsertBulk) ClearDeletedAt() *UserPositionUpsertBulk {
 	})
 }
 
-// SetStatus sets the "status" field.
-func (u *UserPositionUpsertBulk) SetStatus(v userposition.Status) *UserPositionUpsertBulk {
-	return u.Update(func(s *UserPositionUpsert) {
-		s.SetStatus(v)
-	})
-}
-
-// UpdateStatus sets the "status" field to the value that was provided on create.
-func (u *UserPositionUpsertBulk) UpdateStatus() *UserPositionUpsertBulk {
-	return u.Update(func(s *UserPositionUpsert) {
-		s.UpdateStatus()
-	})
-}
-
 // SetCreatedBy sets the "created_by" field.
 func (u *UserPositionUpsertBulk) SetCreatedBy(v uint32) *UserPositionUpsertBulk {
 	return u.Update(func(s *UserPositionUpsert) {
@@ -1306,6 +1302,27 @@ func (u *UserPositionUpsertBulk) UpdateDeletedBy() *UserPositionUpsertBulk {
 func (u *UserPositionUpsertBulk) ClearDeletedBy() *UserPositionUpsertBulk {
 	return u.Update(func(s *UserPositionUpsert) {
 		s.ClearDeletedBy()
+	})
+}
+
+// SetStatus sets the "status" field.
+func (u *UserPositionUpsertBulk) SetStatus(v userposition.Status) *UserPositionUpsertBulk {
+	return u.Update(func(s *UserPositionUpsert) {
+		s.SetStatus(v)
+	})
+}
+
+// UpdateStatus sets the "status" field to the value that was provided on create.
+func (u *UserPositionUpsertBulk) UpdateStatus() *UserPositionUpsertBulk {
+	return u.Update(func(s *UserPositionUpsert) {
+		s.UpdateStatus()
+	})
+}
+
+// ClearStatus clears the value of the "status" field.
+func (u *UserPositionUpsertBulk) ClearStatus() *UserPositionUpsertBulk {
+	return u.Update(func(s *UserPositionUpsert) {
+		s.ClearStatus()
 	})
 }
 

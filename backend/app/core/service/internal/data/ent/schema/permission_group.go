@@ -31,7 +31,7 @@ func (PermissionGroup) Fields() []ent.Field {
 		field.String("name").MaxLen(64).Optional().Nillable(),
 		field.String("code").MaxLen(32).Optional().Nillable(),
 		field.String("module").MaxLen(64).Optional().Nillable(),
-		field.Enum("status").NamedValues("StatusActive", "STATUS_ACTIVE", "StatusInactive", "STATUS_INACTIVE").Default("STATUS_ACTIVE").Optional().Nillable(),
+		field.Enum("status").NamedValues("Off", "OFF", "On", "ON").Default("ON").Optional().Nillable(),
 		field.Uint32("parent_id").Optional().Nillable(),
 		field.Uint32("permission_id").Optional().Nillable(),
 		field.Uint32("sort_order").Default(0).Optional().Nillable(),

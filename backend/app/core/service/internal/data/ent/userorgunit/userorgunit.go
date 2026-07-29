@@ -22,14 +22,14 @@ const (
 	FieldDeletedAt = "deleted_at"
 	// FieldTenantID holds the string denoting the tenant_id field in the database.
 	FieldTenantID = "tenant_id"
-	// FieldStatus holds the string denoting the status field in the database.
-	FieldStatus = "status"
 	// FieldCreatedBy holds the string denoting the created_by field in the database.
 	FieldCreatedBy = "created_by"
 	// FieldUpdatedBy holds the string denoting the updated_by field in the database.
 	FieldUpdatedBy = "updated_by"
 	// FieldDeletedBy holds the string denoting the deleted_by field in the database.
 	FieldDeletedBy = "deleted_by"
+	// FieldStatus holds the string denoting the status field in the database.
+	FieldStatus = "status"
 	// FieldIsPrimary holds the string denoting the is_primary field in the database.
 	FieldIsPrimary = "is_primary"
 	// FieldStartAt holds the string denoting the start_at field in the database.
@@ -51,10 +51,10 @@ var Columns = []string{
 	FieldUpdatedAt,
 	FieldDeletedAt,
 	FieldTenantID,
-	FieldStatus,
 	FieldCreatedBy,
 	FieldUpdatedBy,
 	FieldDeletedBy,
+	FieldStatus,
 	FieldIsPrimary,
 	FieldStartAt,
 	FieldEndAt,
@@ -91,13 +91,16 @@ var (
 // Status defines the type for the "status" enum field.
 type Status string
 
-// StatusOn is the default value of the Status enum.
-const DefaultStatus = StatusOn
+// StatusActive is the default value of the Status enum.
+const DefaultStatus = StatusActive
 
 // Status values.
 const (
-	StatusOff Status = "OFF"
-	StatusOn  Status = "ON"
+	StatusActive    Status = "ACTIVE"
+	StatusPending   Status = "PENDING"
+	StatusInactive  Status = "INACTIVE"
+	StatusSuspended Status = "SUSPENDED"
+	StatusExpired   Status = "EXPIRED"
 )
 
 func (s Status) String() string {
@@ -107,7 +110,7 @@ func (s Status) String() string {
 // StatusValidator is a validator for the "status" field enum values. It is called by the builders before save.
 func StatusValidator(s Status) error {
 	switch s {
-	case StatusOff, StatusOn:
+	case StatusActive, StatusPending, StatusInactive, StatusSuspended, StatusExpired:
 		return nil
 	default:
 		return fmt.Errorf("userorgunit: invalid enum value for status field: %q", s)
@@ -142,11 +145,6 @@ func ByTenantID(opts ...sql.OrderTermOption) OrderOption {
 	return sql.OrderByField(FieldTenantID, opts...).ToFunc()
 }
 
-// ByStatus orders the results by the status field.
-func ByStatus(opts ...sql.OrderTermOption) OrderOption {
-	return sql.OrderByField(FieldStatus, opts...).ToFunc()
-}
-
 // ByCreatedBy orders the results by the created_by field.
 func ByCreatedBy(opts ...sql.OrderTermOption) OrderOption {
 	return sql.OrderByField(FieldCreatedBy, opts...).ToFunc()
@@ -160,6 +158,11 @@ func ByUpdatedBy(opts ...sql.OrderTermOption) OrderOption {
 // ByDeletedBy orders the results by the deleted_by field.
 func ByDeletedBy(opts ...sql.OrderTermOption) OrderOption {
 	return sql.OrderByField(FieldDeletedBy, opts...).ToFunc()
+}
+
+// ByStatus orders the results by the status field.
+func ByStatus(opts ...sql.OrderTermOption) OrderOption {
+	return sql.OrderByField(FieldStatus, opts...).ToFunc()
 }
 
 // ByIsPrimary orders the results by the is_primary field.

@@ -94,17 +94,17 @@ var (
 // Status defines the type for the "status" enum field.
 type Status string
 
-// StatusMembershipStatusActive is the default value of the Status enum.
-const DefaultStatus = StatusMembershipStatusActive
+// StatusActive is the default value of the Status enum.
+const DefaultStatus = StatusActive
 
 // Status values.
 const (
-	StatusMembershipStatusDisabled Status = "MEMBERSHIP_STATUS_DISABLED"
-	StatusMembershipStatusActive   Status = "MEMBERSHIP_STATUS_ACTIVE"
-	StatusMembershipStatusPending  Status = "MEMBERSHIP_STATUS_PENDING"
-	StatusMembershipStatusInvited  Status = "MEMBERSHIP_STATUS_INVITED"
-	StatusMembershipStatusExpired  Status = "MEMBERSHIP_STATUS_EXPIRED"
-	StatusMembershipStatusRejected Status = "MEMBERSHIP_STATUS_REJECTED"
+	StatusDisabled Status = "DISABLED"
+	StatusActive   Status = "ACTIVE"
+	StatusPending  Status = "PENDING"
+	StatusInvited  Status = "INVITED"
+	StatusExpired  Status = "EXPIRED"
+	StatusRejected Status = "REJECTED"
 )
 
 func (s Status) String() string {
@@ -114,7 +114,7 @@ func (s Status) String() string {
 // StatusValidator is a validator for the "status" field enum values. It is called by the builders before save.
 func StatusValidator(s Status) error {
 	switch s {
-	case StatusMembershipStatusDisabled, StatusMembershipStatusActive, StatusMembershipStatusPending, StatusMembershipStatusInvited, StatusMembershipStatusExpired, StatusMembershipStatusRejected:
+	case StatusDisabled, StatusActive, StatusPending, StatusInvited, StatusExpired, StatusRejected:
 		return nil
 	default:
 		return fmt.Errorf("membership: invalid enum value for status field: %q", s)

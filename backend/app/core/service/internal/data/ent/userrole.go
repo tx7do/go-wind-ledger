@@ -26,14 +26,14 @@ type UserRole struct {
 	DeletedAt *time.Time `json:"deleted_at,omitempty"`
 	// 租户ID
 	TenantID *uint32 `json:"tenant_id,omitempty"`
-	// 状态
-	Status *userrole.Status `json:"status,omitempty"`
 	// 创建者ID
 	CreatedBy *uint32 `json:"created_by,omitempty"`
 	// 更新者ID
 	UpdatedBy *uint32 `json:"updated_by,omitempty"`
 	// 删除者ID
 	DeletedBy *uint32 `json:"deleted_by,omitempty"`
+	// Status holds the value of the "status" field.
+	Status *userrole.Status `json:"status,omitempty"`
 	// IsPrimary holds the value of the "is_primary" field.
 	IsPrimary *bool `json:"is_primary,omitempty"`
 	// StartAt holds the value of the "start_at" field.
@@ -109,13 +109,6 @@ func (_m *UserRole) assignValues(columns []string, values []any) error {
 				_m.TenantID = new(uint32)
 				*_m.TenantID = uint32(value.Int64)
 			}
-		case userrole.FieldStatus:
-			if value, ok := values[i].(*sql.NullString); !ok {
-				return fmt.Errorf("unexpected type %T for field status", values[i])
-			} else if value.Valid {
-				_m.Status = new(userrole.Status)
-				*_m.Status = userrole.Status(value.String)
-			}
 		case userrole.FieldCreatedBy:
 			if value, ok := values[i].(*sql.NullInt64); !ok {
 				return fmt.Errorf("unexpected type %T for field created_by", values[i])
@@ -136,6 +129,13 @@ func (_m *UserRole) assignValues(columns []string, values []any) error {
 			} else if value.Valid {
 				_m.DeletedBy = new(uint32)
 				*_m.DeletedBy = uint32(value.Int64)
+			}
+		case userrole.FieldStatus:
+			if value, ok := values[i].(*sql.NullString); !ok {
+				return fmt.Errorf("unexpected type %T for field status", values[i])
+			} else if value.Valid {
+				_m.Status = new(userrole.Status)
+				*_m.Status = userrole.Status(value.String)
 			}
 		case userrole.FieldIsPrimary:
 			if value, ok := values[i].(*sql.NullBool); !ok {
@@ -228,11 +228,6 @@ func (_m *UserRole) String() string {
 		builder.WriteString(fmt.Sprintf("%v", *v))
 	}
 	builder.WriteString(", ")
-	if v := _m.Status; v != nil {
-		builder.WriteString("status=")
-		builder.WriteString(fmt.Sprintf("%v", *v))
-	}
-	builder.WriteString(", ")
 	if v := _m.CreatedBy; v != nil {
 		builder.WriteString("created_by=")
 		builder.WriteString(fmt.Sprintf("%v", *v))
@@ -245,6 +240,11 @@ func (_m *UserRole) String() string {
 	builder.WriteString(", ")
 	if v := _m.DeletedBy; v != nil {
 		builder.WriteString("deleted_by=")
+		builder.WriteString(fmt.Sprintf("%v", *v))
+	}
+	builder.WriteString(", ")
+	if v := _m.Status; v != nil {
+		builder.WriteString("status=")
 		builder.WriteString(fmt.Sprintf("%v", *v))
 	}
 	builder.WriteString(", ")

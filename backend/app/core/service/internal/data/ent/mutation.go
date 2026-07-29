@@ -61462,13 +61462,13 @@ type UserOrgUnitMutation struct {
 	deleted_at     *time.Time
 	tenant_id      *uint32
 	addtenant_id   *int32
-	status         *userorgunit.Status
 	created_by     *uint32
 	addcreated_by  *int32
 	updated_by     *uint32
 	addupdated_by  *int32
 	deleted_by     *uint32
 	adddeleted_by  *int32
+	status         *userorgunit.Status
 	is_primary     *bool
 	start_at       *time.Time
 	end_at         *time.Time
@@ -61803,42 +61803,6 @@ func (m *UserOrgUnitMutation) ResetTenantID() {
 	delete(m.clearedFields, userorgunit.FieldTenantID)
 }
 
-// SetStatus sets the "status" field.
-func (m *UserOrgUnitMutation) SetStatus(u userorgunit.Status) {
-	m.status = &u
-}
-
-// Status returns the value of the "status" field in the mutation.
-func (m *UserOrgUnitMutation) Status() (r userorgunit.Status, exists bool) {
-	v := m.status
-	if v == nil {
-		return
-	}
-	return *v, true
-}
-
-// OldStatus returns the old "status" field's value of the UserOrgUnit entity.
-// If the UserOrgUnit object wasn't provided to the builder, the object is fetched from the database.
-// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
-func (m *UserOrgUnitMutation) OldStatus(ctx context.Context) (v *userorgunit.Status, err error) {
-	if !m.op.Is(OpUpdateOne) {
-		return v, errors.New("OldStatus is only allowed on UpdateOne operations")
-	}
-	if m.id == nil || m.oldValue == nil {
-		return v, errors.New("OldStatus requires an ID field in the mutation")
-	}
-	oldValue, err := m.oldValue(ctx)
-	if err != nil {
-		return v, fmt.Errorf("querying old value for OldStatus: %w", err)
-	}
-	return oldValue.Status, nil
-}
-
-// ResetStatus resets all changes to the "status" field.
-func (m *UserOrgUnitMutation) ResetStatus() {
-	m.status = nil
-}
-
 // SetCreatedBy sets the "created_by" field.
 func (m *UserOrgUnitMutation) SetCreatedBy(u uint32) {
 	m.created_by = &u
@@ -62047,6 +62011,55 @@ func (m *UserOrgUnitMutation) ResetDeletedBy() {
 	m.deleted_by = nil
 	m.adddeleted_by = nil
 	delete(m.clearedFields, userorgunit.FieldDeletedBy)
+}
+
+// SetStatus sets the "status" field.
+func (m *UserOrgUnitMutation) SetStatus(u userorgunit.Status) {
+	m.status = &u
+}
+
+// Status returns the value of the "status" field in the mutation.
+func (m *UserOrgUnitMutation) Status() (r userorgunit.Status, exists bool) {
+	v := m.status
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldStatus returns the old "status" field's value of the UserOrgUnit entity.
+// If the UserOrgUnit object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *UserOrgUnitMutation) OldStatus(ctx context.Context) (v *userorgunit.Status, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, errors.New("OldStatus is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, errors.New("OldStatus requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldStatus: %w", err)
+	}
+	return oldValue.Status, nil
+}
+
+// ClearStatus clears the value of the "status" field.
+func (m *UserOrgUnitMutation) ClearStatus() {
+	m.status = nil
+	m.clearedFields[userorgunit.FieldStatus] = struct{}{}
+}
+
+// StatusCleared returns if the "status" field was cleared in this mutation.
+func (m *UserOrgUnitMutation) StatusCleared() bool {
+	_, ok := m.clearedFields[userorgunit.FieldStatus]
+	return ok
+}
+
+// ResetStatus resets all changes to the "status" field.
+func (m *UserOrgUnitMutation) ResetStatus() {
+	m.status = nil
+	delete(m.clearedFields, userorgunit.FieldStatus)
 }
 
 // SetIsPrimary sets the "is_primary" field.
@@ -62383,9 +62396,6 @@ func (m *UserOrgUnitMutation) Fields() []string {
 	if m.tenant_id != nil {
 		fields = append(fields, userorgunit.FieldTenantID)
 	}
-	if m.status != nil {
-		fields = append(fields, userorgunit.FieldStatus)
-	}
 	if m.created_by != nil {
 		fields = append(fields, userorgunit.FieldCreatedBy)
 	}
@@ -62394,6 +62404,9 @@ func (m *UserOrgUnitMutation) Fields() []string {
 	}
 	if m.deleted_by != nil {
 		fields = append(fields, userorgunit.FieldDeletedBy)
+	}
+	if m.status != nil {
+		fields = append(fields, userorgunit.FieldStatus)
 	}
 	if m.is_primary != nil {
 		fields = append(fields, userorgunit.FieldIsPrimary)
@@ -62426,14 +62439,14 @@ func (m *UserOrgUnitMutation) Field(name string) (ent.Value, bool) {
 		return m.DeletedAt()
 	case userorgunit.FieldTenantID:
 		return m.TenantID()
-	case userorgunit.FieldStatus:
-		return m.Status()
 	case userorgunit.FieldCreatedBy:
 		return m.CreatedBy()
 	case userorgunit.FieldUpdatedBy:
 		return m.UpdatedBy()
 	case userorgunit.FieldDeletedBy:
 		return m.DeletedBy()
+	case userorgunit.FieldStatus:
+		return m.Status()
 	case userorgunit.FieldIsPrimary:
 		return m.IsPrimary()
 	case userorgunit.FieldStartAt:
@@ -62461,14 +62474,14 @@ func (m *UserOrgUnitMutation) OldField(ctx context.Context, name string) (ent.Va
 		return m.OldDeletedAt(ctx)
 	case userorgunit.FieldTenantID:
 		return m.OldTenantID(ctx)
-	case userorgunit.FieldStatus:
-		return m.OldStatus(ctx)
 	case userorgunit.FieldCreatedBy:
 		return m.OldCreatedBy(ctx)
 	case userorgunit.FieldUpdatedBy:
 		return m.OldUpdatedBy(ctx)
 	case userorgunit.FieldDeletedBy:
 		return m.OldDeletedBy(ctx)
+	case userorgunit.FieldStatus:
+		return m.OldStatus(ctx)
 	case userorgunit.FieldIsPrimary:
 		return m.OldIsPrimary(ctx)
 	case userorgunit.FieldStartAt:
@@ -62516,13 +62529,6 @@ func (m *UserOrgUnitMutation) SetField(name string, value ent.Value) error {
 		}
 		m.SetTenantID(v)
 		return nil
-	case userorgunit.FieldStatus:
-		v, ok := value.(userorgunit.Status)
-		if !ok {
-			return fmt.Errorf("unexpected type %T for field %s", value, name)
-		}
-		m.SetStatus(v)
-		return nil
 	case userorgunit.FieldCreatedBy:
 		v, ok := value.(uint32)
 		if !ok {
@@ -62543,6 +62549,13 @@ func (m *UserOrgUnitMutation) SetField(name string, value ent.Value) error {
 			return fmt.Errorf("unexpected type %T for field %s", value, name)
 		}
 		m.SetDeletedBy(v)
+		return nil
+	case userorgunit.FieldStatus:
+		v, ok := value.(userorgunit.Status)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetStatus(v)
 		return nil
 	case userorgunit.FieldIsPrimary:
 		v, ok := value.(bool)
@@ -62705,6 +62718,9 @@ func (m *UserOrgUnitMutation) ClearedFields() []string {
 	if m.FieldCleared(userorgunit.FieldDeletedBy) {
 		fields = append(fields, userorgunit.FieldDeletedBy)
 	}
+	if m.FieldCleared(userorgunit.FieldStatus) {
+		fields = append(fields, userorgunit.FieldStatus)
+	}
 	if m.FieldCleared(userorgunit.FieldIsPrimary) {
 		fields = append(fields, userorgunit.FieldIsPrimary)
 	}
@@ -62755,6 +62771,9 @@ func (m *UserOrgUnitMutation) ClearField(name string) error {
 	case userorgunit.FieldDeletedBy:
 		m.ClearDeletedBy()
 		return nil
+	case userorgunit.FieldStatus:
+		m.ClearStatus()
+		return nil
 	case userorgunit.FieldIsPrimary:
 		m.ClearIsPrimary()
 		return nil
@@ -62790,9 +62809,6 @@ func (m *UserOrgUnitMutation) ResetField(name string) error {
 	case userorgunit.FieldTenantID:
 		m.ResetTenantID()
 		return nil
-	case userorgunit.FieldStatus:
-		m.ResetStatus()
-		return nil
 	case userorgunit.FieldCreatedBy:
 		m.ResetCreatedBy()
 		return nil
@@ -62801,6 +62817,9 @@ func (m *UserOrgUnitMutation) ResetField(name string) error {
 		return nil
 	case userorgunit.FieldDeletedBy:
 		m.ResetDeletedBy()
+		return nil
+	case userorgunit.FieldStatus:
+		m.ResetStatus()
 		return nil
 	case userorgunit.FieldIsPrimary:
 		m.ResetIsPrimary()
@@ -62880,13 +62899,13 @@ type UserPositionMutation struct {
 	deleted_at     *time.Time
 	tenant_id      *uint32
 	addtenant_id   *int32
-	status         *userposition.Status
 	created_by     *uint32
 	addcreated_by  *int32
 	updated_by     *uint32
 	addupdated_by  *int32
 	deleted_by     *uint32
 	adddeleted_by  *int32
+	status         *userposition.Status
 	is_primary     *bool
 	start_at       *time.Time
 	end_at         *time.Time
@@ -63221,42 +63240,6 @@ func (m *UserPositionMutation) ResetTenantID() {
 	delete(m.clearedFields, userposition.FieldTenantID)
 }
 
-// SetStatus sets the "status" field.
-func (m *UserPositionMutation) SetStatus(u userposition.Status) {
-	m.status = &u
-}
-
-// Status returns the value of the "status" field in the mutation.
-func (m *UserPositionMutation) Status() (r userposition.Status, exists bool) {
-	v := m.status
-	if v == nil {
-		return
-	}
-	return *v, true
-}
-
-// OldStatus returns the old "status" field's value of the UserPosition entity.
-// If the UserPosition object wasn't provided to the builder, the object is fetched from the database.
-// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
-func (m *UserPositionMutation) OldStatus(ctx context.Context) (v *userposition.Status, err error) {
-	if !m.op.Is(OpUpdateOne) {
-		return v, errors.New("OldStatus is only allowed on UpdateOne operations")
-	}
-	if m.id == nil || m.oldValue == nil {
-		return v, errors.New("OldStatus requires an ID field in the mutation")
-	}
-	oldValue, err := m.oldValue(ctx)
-	if err != nil {
-		return v, fmt.Errorf("querying old value for OldStatus: %w", err)
-	}
-	return oldValue.Status, nil
-}
-
-// ResetStatus resets all changes to the "status" field.
-func (m *UserPositionMutation) ResetStatus() {
-	m.status = nil
-}
-
 // SetCreatedBy sets the "created_by" field.
 func (m *UserPositionMutation) SetCreatedBy(u uint32) {
 	m.created_by = &u
@@ -63465,6 +63448,55 @@ func (m *UserPositionMutation) ResetDeletedBy() {
 	m.deleted_by = nil
 	m.adddeleted_by = nil
 	delete(m.clearedFields, userposition.FieldDeletedBy)
+}
+
+// SetStatus sets the "status" field.
+func (m *UserPositionMutation) SetStatus(u userposition.Status) {
+	m.status = &u
+}
+
+// Status returns the value of the "status" field in the mutation.
+func (m *UserPositionMutation) Status() (r userposition.Status, exists bool) {
+	v := m.status
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldStatus returns the old "status" field's value of the UserPosition entity.
+// If the UserPosition object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *UserPositionMutation) OldStatus(ctx context.Context) (v *userposition.Status, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, errors.New("OldStatus is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, errors.New("OldStatus requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldStatus: %w", err)
+	}
+	return oldValue.Status, nil
+}
+
+// ClearStatus clears the value of the "status" field.
+func (m *UserPositionMutation) ClearStatus() {
+	m.status = nil
+	m.clearedFields[userposition.FieldStatus] = struct{}{}
+}
+
+// StatusCleared returns if the "status" field was cleared in this mutation.
+func (m *UserPositionMutation) StatusCleared() bool {
+	_, ok := m.clearedFields[userposition.FieldStatus]
+	return ok
+}
+
+// ResetStatus resets all changes to the "status" field.
+func (m *UserPositionMutation) ResetStatus() {
+	m.status = nil
+	delete(m.clearedFields, userposition.FieldStatus)
 }
 
 // SetIsPrimary sets the "is_primary" field.
@@ -63801,9 +63833,6 @@ func (m *UserPositionMutation) Fields() []string {
 	if m.tenant_id != nil {
 		fields = append(fields, userposition.FieldTenantID)
 	}
-	if m.status != nil {
-		fields = append(fields, userposition.FieldStatus)
-	}
 	if m.created_by != nil {
 		fields = append(fields, userposition.FieldCreatedBy)
 	}
@@ -63812,6 +63841,9 @@ func (m *UserPositionMutation) Fields() []string {
 	}
 	if m.deleted_by != nil {
 		fields = append(fields, userposition.FieldDeletedBy)
+	}
+	if m.status != nil {
+		fields = append(fields, userposition.FieldStatus)
 	}
 	if m.is_primary != nil {
 		fields = append(fields, userposition.FieldIsPrimary)
@@ -63844,14 +63876,14 @@ func (m *UserPositionMutation) Field(name string) (ent.Value, bool) {
 		return m.DeletedAt()
 	case userposition.FieldTenantID:
 		return m.TenantID()
-	case userposition.FieldStatus:
-		return m.Status()
 	case userposition.FieldCreatedBy:
 		return m.CreatedBy()
 	case userposition.FieldUpdatedBy:
 		return m.UpdatedBy()
 	case userposition.FieldDeletedBy:
 		return m.DeletedBy()
+	case userposition.FieldStatus:
+		return m.Status()
 	case userposition.FieldIsPrimary:
 		return m.IsPrimary()
 	case userposition.FieldStartAt:
@@ -63879,14 +63911,14 @@ func (m *UserPositionMutation) OldField(ctx context.Context, name string) (ent.V
 		return m.OldDeletedAt(ctx)
 	case userposition.FieldTenantID:
 		return m.OldTenantID(ctx)
-	case userposition.FieldStatus:
-		return m.OldStatus(ctx)
 	case userposition.FieldCreatedBy:
 		return m.OldCreatedBy(ctx)
 	case userposition.FieldUpdatedBy:
 		return m.OldUpdatedBy(ctx)
 	case userposition.FieldDeletedBy:
 		return m.OldDeletedBy(ctx)
+	case userposition.FieldStatus:
+		return m.OldStatus(ctx)
 	case userposition.FieldIsPrimary:
 		return m.OldIsPrimary(ctx)
 	case userposition.FieldStartAt:
@@ -63934,13 +63966,6 @@ func (m *UserPositionMutation) SetField(name string, value ent.Value) error {
 		}
 		m.SetTenantID(v)
 		return nil
-	case userposition.FieldStatus:
-		v, ok := value.(userposition.Status)
-		if !ok {
-			return fmt.Errorf("unexpected type %T for field %s", value, name)
-		}
-		m.SetStatus(v)
-		return nil
 	case userposition.FieldCreatedBy:
 		v, ok := value.(uint32)
 		if !ok {
@@ -63961,6 +63986,13 @@ func (m *UserPositionMutation) SetField(name string, value ent.Value) error {
 			return fmt.Errorf("unexpected type %T for field %s", value, name)
 		}
 		m.SetDeletedBy(v)
+		return nil
+	case userposition.FieldStatus:
+		v, ok := value.(userposition.Status)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetStatus(v)
 		return nil
 	case userposition.FieldIsPrimary:
 		v, ok := value.(bool)
@@ -64123,6 +64155,9 @@ func (m *UserPositionMutation) ClearedFields() []string {
 	if m.FieldCleared(userposition.FieldDeletedBy) {
 		fields = append(fields, userposition.FieldDeletedBy)
 	}
+	if m.FieldCleared(userposition.FieldStatus) {
+		fields = append(fields, userposition.FieldStatus)
+	}
 	if m.FieldCleared(userposition.FieldIsPrimary) {
 		fields = append(fields, userposition.FieldIsPrimary)
 	}
@@ -64173,6 +64208,9 @@ func (m *UserPositionMutation) ClearField(name string) error {
 	case userposition.FieldDeletedBy:
 		m.ClearDeletedBy()
 		return nil
+	case userposition.FieldStatus:
+		m.ClearStatus()
+		return nil
 	case userposition.FieldIsPrimary:
 		m.ClearIsPrimary()
 		return nil
@@ -64208,9 +64246,6 @@ func (m *UserPositionMutation) ResetField(name string) error {
 	case userposition.FieldTenantID:
 		m.ResetTenantID()
 		return nil
-	case userposition.FieldStatus:
-		m.ResetStatus()
-		return nil
 	case userposition.FieldCreatedBy:
 		m.ResetCreatedBy()
 		return nil
@@ -64219,6 +64254,9 @@ func (m *UserPositionMutation) ResetField(name string) error {
 		return nil
 	case userposition.FieldDeletedBy:
 		m.ResetDeletedBy()
+		return nil
+	case userposition.FieldStatus:
+		m.ResetStatus()
 		return nil
 	case userposition.FieldIsPrimary:
 		m.ResetIsPrimary()
@@ -64298,13 +64336,13 @@ type UserRoleMutation struct {
 	deleted_at    *time.Time
 	tenant_id     *uint32
 	addtenant_id  *int32
-	status        *userrole.Status
 	created_by    *uint32
 	addcreated_by *int32
 	updated_by    *uint32
 	addupdated_by *int32
 	deleted_by    *uint32
 	adddeleted_by *int32
+	status        *userrole.Status
 	is_primary    *bool
 	start_at      *time.Time
 	end_at        *time.Time
@@ -64639,42 +64677,6 @@ func (m *UserRoleMutation) ResetTenantID() {
 	delete(m.clearedFields, userrole.FieldTenantID)
 }
 
-// SetStatus sets the "status" field.
-func (m *UserRoleMutation) SetStatus(u userrole.Status) {
-	m.status = &u
-}
-
-// Status returns the value of the "status" field in the mutation.
-func (m *UserRoleMutation) Status() (r userrole.Status, exists bool) {
-	v := m.status
-	if v == nil {
-		return
-	}
-	return *v, true
-}
-
-// OldStatus returns the old "status" field's value of the UserRole entity.
-// If the UserRole object wasn't provided to the builder, the object is fetched from the database.
-// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
-func (m *UserRoleMutation) OldStatus(ctx context.Context) (v *userrole.Status, err error) {
-	if !m.op.Is(OpUpdateOne) {
-		return v, errors.New("OldStatus is only allowed on UpdateOne operations")
-	}
-	if m.id == nil || m.oldValue == nil {
-		return v, errors.New("OldStatus requires an ID field in the mutation")
-	}
-	oldValue, err := m.oldValue(ctx)
-	if err != nil {
-		return v, fmt.Errorf("querying old value for OldStatus: %w", err)
-	}
-	return oldValue.Status, nil
-}
-
-// ResetStatus resets all changes to the "status" field.
-func (m *UserRoleMutation) ResetStatus() {
-	m.status = nil
-}
-
 // SetCreatedBy sets the "created_by" field.
 func (m *UserRoleMutation) SetCreatedBy(u uint32) {
 	m.created_by = &u
@@ -64883,6 +64885,55 @@ func (m *UserRoleMutation) ResetDeletedBy() {
 	m.deleted_by = nil
 	m.adddeleted_by = nil
 	delete(m.clearedFields, userrole.FieldDeletedBy)
+}
+
+// SetStatus sets the "status" field.
+func (m *UserRoleMutation) SetStatus(u userrole.Status) {
+	m.status = &u
+}
+
+// Status returns the value of the "status" field in the mutation.
+func (m *UserRoleMutation) Status() (r userrole.Status, exists bool) {
+	v := m.status
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldStatus returns the old "status" field's value of the UserRole entity.
+// If the UserRole object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *UserRoleMutation) OldStatus(ctx context.Context) (v *userrole.Status, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, errors.New("OldStatus is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, errors.New("OldStatus requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldStatus: %w", err)
+	}
+	return oldValue.Status, nil
+}
+
+// ClearStatus clears the value of the "status" field.
+func (m *UserRoleMutation) ClearStatus() {
+	m.status = nil
+	m.clearedFields[userrole.FieldStatus] = struct{}{}
+}
+
+// StatusCleared returns if the "status" field was cleared in this mutation.
+func (m *UserRoleMutation) StatusCleared() bool {
+	_, ok := m.clearedFields[userrole.FieldStatus]
+	return ok
+}
+
+// ResetStatus resets all changes to the "status" field.
+func (m *UserRoleMutation) ResetStatus() {
+	m.status = nil
+	delete(m.clearedFields, userrole.FieldStatus)
 }
 
 // SetIsPrimary sets the "is_primary" field.
@@ -65219,9 +65270,6 @@ func (m *UserRoleMutation) Fields() []string {
 	if m.tenant_id != nil {
 		fields = append(fields, userrole.FieldTenantID)
 	}
-	if m.status != nil {
-		fields = append(fields, userrole.FieldStatus)
-	}
 	if m.created_by != nil {
 		fields = append(fields, userrole.FieldCreatedBy)
 	}
@@ -65230,6 +65278,9 @@ func (m *UserRoleMutation) Fields() []string {
 	}
 	if m.deleted_by != nil {
 		fields = append(fields, userrole.FieldDeletedBy)
+	}
+	if m.status != nil {
+		fields = append(fields, userrole.FieldStatus)
 	}
 	if m.is_primary != nil {
 		fields = append(fields, userrole.FieldIsPrimary)
@@ -65262,14 +65313,14 @@ func (m *UserRoleMutation) Field(name string) (ent.Value, bool) {
 		return m.DeletedAt()
 	case userrole.FieldTenantID:
 		return m.TenantID()
-	case userrole.FieldStatus:
-		return m.Status()
 	case userrole.FieldCreatedBy:
 		return m.CreatedBy()
 	case userrole.FieldUpdatedBy:
 		return m.UpdatedBy()
 	case userrole.FieldDeletedBy:
 		return m.DeletedBy()
+	case userrole.FieldStatus:
+		return m.Status()
 	case userrole.FieldIsPrimary:
 		return m.IsPrimary()
 	case userrole.FieldStartAt:
@@ -65297,14 +65348,14 @@ func (m *UserRoleMutation) OldField(ctx context.Context, name string) (ent.Value
 		return m.OldDeletedAt(ctx)
 	case userrole.FieldTenantID:
 		return m.OldTenantID(ctx)
-	case userrole.FieldStatus:
-		return m.OldStatus(ctx)
 	case userrole.FieldCreatedBy:
 		return m.OldCreatedBy(ctx)
 	case userrole.FieldUpdatedBy:
 		return m.OldUpdatedBy(ctx)
 	case userrole.FieldDeletedBy:
 		return m.OldDeletedBy(ctx)
+	case userrole.FieldStatus:
+		return m.OldStatus(ctx)
 	case userrole.FieldIsPrimary:
 		return m.OldIsPrimary(ctx)
 	case userrole.FieldStartAt:
@@ -65352,13 +65403,6 @@ func (m *UserRoleMutation) SetField(name string, value ent.Value) error {
 		}
 		m.SetTenantID(v)
 		return nil
-	case userrole.FieldStatus:
-		v, ok := value.(userrole.Status)
-		if !ok {
-			return fmt.Errorf("unexpected type %T for field %s", value, name)
-		}
-		m.SetStatus(v)
-		return nil
 	case userrole.FieldCreatedBy:
 		v, ok := value.(uint32)
 		if !ok {
@@ -65379,6 +65423,13 @@ func (m *UserRoleMutation) SetField(name string, value ent.Value) error {
 			return fmt.Errorf("unexpected type %T for field %s", value, name)
 		}
 		m.SetDeletedBy(v)
+		return nil
+	case userrole.FieldStatus:
+		v, ok := value.(userrole.Status)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetStatus(v)
 		return nil
 	case userrole.FieldIsPrimary:
 		v, ok := value.(bool)
@@ -65541,6 +65592,9 @@ func (m *UserRoleMutation) ClearedFields() []string {
 	if m.FieldCleared(userrole.FieldDeletedBy) {
 		fields = append(fields, userrole.FieldDeletedBy)
 	}
+	if m.FieldCleared(userrole.FieldStatus) {
+		fields = append(fields, userrole.FieldStatus)
+	}
 	if m.FieldCleared(userrole.FieldIsPrimary) {
 		fields = append(fields, userrole.FieldIsPrimary)
 	}
@@ -65591,6 +65645,9 @@ func (m *UserRoleMutation) ClearField(name string) error {
 	case userrole.FieldDeletedBy:
 		m.ClearDeletedBy()
 		return nil
+	case userrole.FieldStatus:
+		m.ClearStatus()
+		return nil
 	case userrole.FieldIsPrimary:
 		m.ClearIsPrimary()
 		return nil
@@ -65626,9 +65683,6 @@ func (m *UserRoleMutation) ResetField(name string) error {
 	case userrole.FieldTenantID:
 		m.ResetTenantID()
 		return nil
-	case userrole.FieldStatus:
-		m.ResetStatus()
-		return nil
 	case userrole.FieldCreatedBy:
 		m.ResetCreatedBy()
 		return nil
@@ -65637,6 +65691,9 @@ func (m *UserRoleMutation) ResetField(name string) error {
 		return nil
 	case userrole.FieldDeletedBy:
 		m.ResetDeletedBy()
+		return nil
+	case userrole.FieldStatus:
+		m.ResetStatus()
 		return nil
 	case userrole.FieldIsPrimary:
 		m.ResetIsPrimary()

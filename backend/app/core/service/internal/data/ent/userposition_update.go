@@ -69,20 +69,6 @@ func (_u *UserPositionUpdate) ClearDeletedAt() *UserPositionUpdate {
 	return _u
 }
 
-// SetStatus sets the "status" field.
-func (_u *UserPositionUpdate) SetStatus(v userposition.Status) *UserPositionUpdate {
-	_u.mutation.SetStatus(v)
-	return _u
-}
-
-// SetNillableStatus sets the "status" field if the given value is not nil.
-func (_u *UserPositionUpdate) SetNillableStatus(v *userposition.Status) *UserPositionUpdate {
-	if v != nil {
-		_u.SetStatus(*v)
-	}
-	return _u
-}
-
 // SetCreatedBy sets the "created_by" field.
 func (_u *UserPositionUpdate) SetCreatedBy(v uint32) *UserPositionUpdate {
 	_u.mutation.ResetCreatedBy()
@@ -161,6 +147,26 @@ func (_u *UserPositionUpdate) AddDeletedBy(v int32) *UserPositionUpdate {
 // ClearDeletedBy clears the value of the "deleted_by" field.
 func (_u *UserPositionUpdate) ClearDeletedBy() *UserPositionUpdate {
 	_u.mutation.ClearDeletedBy()
+	return _u
+}
+
+// SetStatus sets the "status" field.
+func (_u *UserPositionUpdate) SetStatus(v userposition.Status) *UserPositionUpdate {
+	_u.mutation.SetStatus(v)
+	return _u
+}
+
+// SetNillableStatus sets the "status" field if the given value is not nil.
+func (_u *UserPositionUpdate) SetNillableStatus(v *userposition.Status) *UserPositionUpdate {
+	if v != nil {
+		_u.SetStatus(*v)
+	}
+	return _u
+}
+
+// ClearStatus clears the value of the "status" field.
+func (_u *UserPositionUpdate) ClearStatus() *UserPositionUpdate {
+	_u.mutation.ClearStatus()
 	return _u
 }
 
@@ -356,9 +362,6 @@ func (_u *UserPositionUpdate) sqlSave(ctx context.Context) (_node int, err error
 	if _u.mutation.TenantIDCleared() {
 		_spec.ClearField(userposition.FieldTenantID, field.TypeUint32)
 	}
-	if value, ok := _u.mutation.Status(); ok {
-		_spec.SetField(userposition.FieldStatus, field.TypeEnum, value)
-	}
 	if value, ok := _u.mutation.CreatedBy(); ok {
 		_spec.SetField(userposition.FieldCreatedBy, field.TypeUint32, value)
 	}
@@ -385,6 +388,12 @@ func (_u *UserPositionUpdate) sqlSave(ctx context.Context) (_node int, err error
 	}
 	if _u.mutation.DeletedByCleared() {
 		_spec.ClearField(userposition.FieldDeletedBy, field.TypeUint32)
+	}
+	if value, ok := _u.mutation.Status(); ok {
+		_spec.SetField(userposition.FieldStatus, field.TypeEnum, value)
+	}
+	if _u.mutation.StatusCleared() {
+		_spec.ClearField(userposition.FieldStatus, field.TypeEnum)
 	}
 	if value, ok := _u.mutation.IsPrimary(); ok {
 		_spec.SetField(userposition.FieldIsPrimary, field.TypeBool, value)
@@ -484,20 +493,6 @@ func (_u *UserPositionUpdateOne) ClearDeletedAt() *UserPositionUpdateOne {
 	return _u
 }
 
-// SetStatus sets the "status" field.
-func (_u *UserPositionUpdateOne) SetStatus(v userposition.Status) *UserPositionUpdateOne {
-	_u.mutation.SetStatus(v)
-	return _u
-}
-
-// SetNillableStatus sets the "status" field if the given value is not nil.
-func (_u *UserPositionUpdateOne) SetNillableStatus(v *userposition.Status) *UserPositionUpdateOne {
-	if v != nil {
-		_u.SetStatus(*v)
-	}
-	return _u
-}
-
 // SetCreatedBy sets the "created_by" field.
 func (_u *UserPositionUpdateOne) SetCreatedBy(v uint32) *UserPositionUpdateOne {
 	_u.mutation.ResetCreatedBy()
@@ -576,6 +571,26 @@ func (_u *UserPositionUpdateOne) AddDeletedBy(v int32) *UserPositionUpdateOne {
 // ClearDeletedBy clears the value of the "deleted_by" field.
 func (_u *UserPositionUpdateOne) ClearDeletedBy() *UserPositionUpdateOne {
 	_u.mutation.ClearDeletedBy()
+	return _u
+}
+
+// SetStatus sets the "status" field.
+func (_u *UserPositionUpdateOne) SetStatus(v userposition.Status) *UserPositionUpdateOne {
+	_u.mutation.SetStatus(v)
+	return _u
+}
+
+// SetNillableStatus sets the "status" field if the given value is not nil.
+func (_u *UserPositionUpdateOne) SetNillableStatus(v *userposition.Status) *UserPositionUpdateOne {
+	if v != nil {
+		_u.SetStatus(*v)
+	}
+	return _u
+}
+
+// ClearStatus clears the value of the "status" field.
+func (_u *UserPositionUpdateOne) ClearStatus() *UserPositionUpdateOne {
+	_u.mutation.ClearStatus()
 	return _u
 }
 
@@ -801,9 +816,6 @@ func (_u *UserPositionUpdateOne) sqlSave(ctx context.Context) (_node *UserPositi
 	if _u.mutation.TenantIDCleared() {
 		_spec.ClearField(userposition.FieldTenantID, field.TypeUint32)
 	}
-	if value, ok := _u.mutation.Status(); ok {
-		_spec.SetField(userposition.FieldStatus, field.TypeEnum, value)
-	}
 	if value, ok := _u.mutation.CreatedBy(); ok {
 		_spec.SetField(userposition.FieldCreatedBy, field.TypeUint32, value)
 	}
@@ -830,6 +842,12 @@ func (_u *UserPositionUpdateOne) sqlSave(ctx context.Context) (_node *UserPositi
 	}
 	if _u.mutation.DeletedByCleared() {
 		_spec.ClearField(userposition.FieldDeletedBy, field.TypeUint32)
+	}
+	if value, ok := _u.mutation.Status(); ok {
+		_spec.SetField(userposition.FieldStatus, field.TypeEnum, value)
+	}
+	if _u.mutation.StatusCleared() {
+		_spec.ClearField(userposition.FieldStatus, field.TypeEnum)
 	}
 	if value, ok := _u.mutation.IsPrimary(); ok {
 		_spec.SetField(userposition.FieldIsPrimary, field.TypeBool, value)

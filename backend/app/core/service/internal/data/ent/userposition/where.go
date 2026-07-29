@@ -314,26 +314,6 @@ func TenantIDNotNil() predicate.UserPosition {
 	return predicate.UserPosition(sql.FieldNotNull(FieldTenantID))
 }
 
-// StatusEQ applies the EQ predicate on the "status" field.
-func StatusEQ(v Status) predicate.UserPosition {
-	return predicate.UserPosition(sql.FieldEQ(FieldStatus, v))
-}
-
-// StatusNEQ applies the NEQ predicate on the "status" field.
-func StatusNEQ(v Status) predicate.UserPosition {
-	return predicate.UserPosition(sql.FieldNEQ(FieldStatus, v))
-}
-
-// StatusIn applies the In predicate on the "status" field.
-func StatusIn(vs ...Status) predicate.UserPosition {
-	return predicate.UserPosition(sql.FieldIn(FieldStatus, vs...))
-}
-
-// StatusNotIn applies the NotIn predicate on the "status" field.
-func StatusNotIn(vs ...Status) predicate.UserPosition {
-	return predicate.UserPosition(sql.FieldNotIn(FieldStatus, vs...))
-}
-
 // CreatedByEQ applies the EQ predicate on the "created_by" field.
 func CreatedByEQ(v uint32) predicate.UserPosition {
 	return predicate.UserPosition(sql.FieldEQ(FieldCreatedBy, v))
@@ -482,6 +462,36 @@ func DeletedByIsNil() predicate.UserPosition {
 // DeletedByNotNil applies the NotNil predicate on the "deleted_by" field.
 func DeletedByNotNil() predicate.UserPosition {
 	return predicate.UserPosition(sql.FieldNotNull(FieldDeletedBy))
+}
+
+// StatusEQ applies the EQ predicate on the "status" field.
+func StatusEQ(v Status) predicate.UserPosition {
+	return predicate.UserPosition(sql.FieldEQ(FieldStatus, v))
+}
+
+// StatusNEQ applies the NEQ predicate on the "status" field.
+func StatusNEQ(v Status) predicate.UserPosition {
+	return predicate.UserPosition(sql.FieldNEQ(FieldStatus, v))
+}
+
+// StatusIn applies the In predicate on the "status" field.
+func StatusIn(vs ...Status) predicate.UserPosition {
+	return predicate.UserPosition(sql.FieldIn(FieldStatus, vs...))
+}
+
+// StatusNotIn applies the NotIn predicate on the "status" field.
+func StatusNotIn(vs ...Status) predicate.UserPosition {
+	return predicate.UserPosition(sql.FieldNotIn(FieldStatus, vs...))
+}
+
+// StatusIsNil applies the IsNil predicate on the "status" field.
+func StatusIsNil() predicate.UserPosition {
+	return predicate.UserPosition(sql.FieldIsNull(FieldStatus))
+}
+
+// StatusNotNil applies the NotNil predicate on the "status" field.
+func StatusNotNil() predicate.UserPosition {
+	return predicate.UserPosition(sql.FieldNotNull(FieldStatus))
 }
 
 // IsPrimaryEQ applies the EQ predicate on the "is_primary" field.

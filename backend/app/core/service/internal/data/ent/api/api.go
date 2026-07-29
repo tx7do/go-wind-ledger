@@ -89,13 +89,13 @@ var (
 // Scope defines the type for the "scope" enum field.
 type Scope string
 
-// ScopeScopePublic is the default value of the Scope enum.
-const DefaultScope = ScopeScopePublic
+// ScopeScopeAdmin is the default value of the Scope enum.
+const DefaultScope = ScopeScopeAdmin
 
 // Scope values.
 const (
-	ScopeScopePublic  Scope = "SCOPE_PUBLIC"
-	ScopeScopePrivate Scope = "SCOPE_PRIVATE"
+	ScopeScopeAdmin Scope = "ADMIN"
+	ScopeScopeApp   Scope = "APP"
 )
 
 func (s Scope) String() string {
@@ -105,7 +105,7 @@ func (s Scope) String() string {
 // ScopeValidator is a validator for the "scope" field enum values. It is called by the builders before save.
 func ScopeValidator(s Scope) error {
 	switch s {
-	case ScopeScopePublic, ScopeScopePrivate:
+	case ScopeScopeAdmin, ScopeScopeApp:
 		return nil
 	default:
 		return fmt.Errorf("api: invalid enum value for scope field: %q", s)

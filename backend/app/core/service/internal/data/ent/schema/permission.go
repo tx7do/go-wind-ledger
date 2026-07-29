@@ -6,7 +6,7 @@ func (Permission) Mixin() []ent.Mixin { return []ent.Mixin{mixin.AutoIncrementId
 func (Permission) Fields() []ent.Field {
 	return []ent.Field{
 		field.String("code").Comment("权限代码").MaxLen(64).Optional().Nillable(),
-		field.Enum("status").NamedValues("StatusActive","STATUS_ACTIVE","StatusInactive","STATUS_INACTIVE").Default("STATUS_ACTIVE").Optional().Nillable(),
+		field.Enum("status").NamedValues("Off","OFF","On","ON").Default("ON").Optional().Nillable(),
 		field.String("description").MaxLen(256).Optional().Nillable(),
 		field.Uint32("group_id").Optional().Nillable(),
 		field.String("name").Comment("权限名称").MaxLen(64).Optional().Nillable(),

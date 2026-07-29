@@ -52,7 +52,7 @@ func NewApiService(
 
 func (s *ApiService) init() {
 	ctx := appViewer.NewSystemViewerContext(context.Background())
-		ctx, _ = metadata.NewSystemContext(ctx)
+	ctx, _ = metadata.NewSystemContext(ctx)
 	if resp, _ := s.apiServiceClient.Count(ctx, nil); resp != nil && resp.Count == 0 {
 		_, _ = s.SyncApis(ctx, &emptypb.Empty{})
 	}

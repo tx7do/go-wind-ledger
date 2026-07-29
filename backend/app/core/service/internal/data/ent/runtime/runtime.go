@@ -1820,8 +1820,6 @@ func init() {
 	_ = userorgunitMixinFields0
 	userorgunitMixinFields2 := userorgunitMixin[2].Fields()
 	_ = userorgunitMixinFields2
-	userorgunitMixinFields3 := userorgunitMixin[3].Fields()
-	_ = userorgunitMixinFields3
 	userorgunitFields := schema.UserOrgUnit{}.Fields()
 	_ = userorgunitFields
 	// userorgunitDescTenantID is the schema descriptor for tenant_id field.
@@ -1829,7 +1827,7 @@ func init() {
 	// userorgunit.DefaultTenantID holds the default value on creation for the tenant_id field.
 	userorgunit.DefaultTenantID = userorgunitDescTenantID.Default.(uint32)
 	// userorgunitDescIsPrimary is the schema descriptor for is_primary field.
-	userorgunitDescIsPrimary := userorgunitFields[0].Descriptor()
+	userorgunitDescIsPrimary := userorgunitFields[1].Descriptor()
 	// userorgunit.DefaultIsPrimary holds the default value on creation for the is_primary field.
 	userorgunit.DefaultIsPrimary = userorgunitDescIsPrimary.Default.(bool)
 	// userorgunitDescID is the schema descriptor for id field.
@@ -1850,8 +1848,6 @@ func init() {
 	_ = userpositionMixinFields0
 	userpositionMixinFields2 := userpositionMixin[2].Fields()
 	_ = userpositionMixinFields2
-	userpositionMixinFields3 := userpositionMixin[3].Fields()
-	_ = userpositionMixinFields3
 	userpositionFields := schema.UserPosition{}.Fields()
 	_ = userpositionFields
 	// userpositionDescTenantID is the schema descriptor for tenant_id field.
@@ -1859,7 +1855,7 @@ func init() {
 	// userposition.DefaultTenantID holds the default value on creation for the tenant_id field.
 	userposition.DefaultTenantID = userpositionDescTenantID.Default.(uint32)
 	// userpositionDescIsPrimary is the schema descriptor for is_primary field.
-	userpositionDescIsPrimary := userpositionFields[0].Descriptor()
+	userpositionDescIsPrimary := userpositionFields[1].Descriptor()
 	// userposition.DefaultIsPrimary holds the default value on creation for the is_primary field.
 	userposition.DefaultIsPrimary = userpositionDescIsPrimary.Default.(bool)
 	// userpositionDescID is the schema descriptor for id field.
@@ -1880,8 +1876,6 @@ func init() {
 	_ = userroleMixinFields0
 	userroleMixinFields2 := userroleMixin[2].Fields()
 	_ = userroleMixinFields2
-	userroleMixinFields3 := userroleMixin[3].Fields()
-	_ = userroleMixinFields3
 	userroleFields := schema.UserRole{}.Fields()
 	_ = userroleFields
 	// userroleDescTenantID is the schema descriptor for tenant_id field.
@@ -1889,7 +1883,7 @@ func init() {
 	// userrole.DefaultTenantID holds the default value on creation for the tenant_id field.
 	userrole.DefaultTenantID = userroleDescTenantID.Default.(uint32)
 	// userroleDescIsPrimary is the schema descriptor for is_primary field.
-	userroleDescIsPrimary := userroleFields[0].Descriptor()
+	userroleDescIsPrimary := userroleFields[1].Descriptor()
 	// userrole.DefaultIsPrimary holds the default value on creation for the is_primary field.
 	userrole.DefaultIsPrimary = userroleDescIsPrimary.Default.(bool)
 	// userroleDescID is the schema descriptor for id field.

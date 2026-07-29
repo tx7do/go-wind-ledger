@@ -203,7 +203,7 @@ func (s *LedgerAuthService) Register(ctx context.Context, req *appV1.LedgerRegis
 	if _, err = tx.Membership.Create().
 		SetTenantID(tenantEntity.ID).
 		SetUserID(userEntity.ID).
-		SetStatus(membership.StatusMembershipStatusActive).
+		SetStatus(membership.StatusActive).
 		SetIsPrimary(true).
 		SetCreatedAt(time.Now()).
 		SetJoinedAt(time.Now()).

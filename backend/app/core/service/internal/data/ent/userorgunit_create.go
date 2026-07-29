@@ -78,20 +78,6 @@ func (_c *UserOrgUnitCreate) SetNillableTenantID(v *uint32) *UserOrgUnitCreate {
 	return _c
 }
 
-// SetStatus sets the "status" field.
-func (_c *UserOrgUnitCreate) SetStatus(v userorgunit.Status) *UserOrgUnitCreate {
-	_c.mutation.SetStatus(v)
-	return _c
-}
-
-// SetNillableStatus sets the "status" field if the given value is not nil.
-func (_c *UserOrgUnitCreate) SetNillableStatus(v *userorgunit.Status) *UserOrgUnitCreate {
-	if v != nil {
-		_c.SetStatus(*v)
-	}
-	return _c
-}
-
 // SetCreatedBy sets the "created_by" field.
 func (_c *UserOrgUnitCreate) SetCreatedBy(v uint32) *UserOrgUnitCreate {
 	_c.mutation.SetCreatedBy(v)
@@ -130,6 +116,20 @@ func (_c *UserOrgUnitCreate) SetDeletedBy(v uint32) *UserOrgUnitCreate {
 func (_c *UserOrgUnitCreate) SetNillableDeletedBy(v *uint32) *UserOrgUnitCreate {
 	if v != nil {
 		_c.SetDeletedBy(*v)
+	}
+	return _c
+}
+
+// SetStatus sets the "status" field.
+func (_c *UserOrgUnitCreate) SetStatus(v userorgunit.Status) *UserOrgUnitCreate {
+	_c.mutation.SetStatus(v)
+	return _c
+}
+
+// SetNillableStatus sets the "status" field if the given value is not nil.
+func (_c *UserOrgUnitCreate) SetNillableStatus(v *userorgunit.Status) *UserOrgUnitCreate {
+	if v != nil {
+		_c.SetStatus(*v)
 	}
 	return _c
 }
@@ -264,9 +264,6 @@ func (_c *UserOrgUnitCreate) defaults() error {
 
 // check runs all checks and user-defined validators on the builder.
 func (_c *UserOrgUnitCreate) check() error {
-	if _, ok := _c.mutation.Status(); !ok {
-		return &ValidationError{Name: "status", err: errors.New(`ent: missing required field "UserOrgUnit.status"`)}
-	}
 	if v, ok := _c.mutation.Status(); ok {
 		if err := userorgunit.StatusValidator(v); err != nil {
 			return &ValidationError{Name: "status", err: fmt.Errorf(`ent: validator failed for field "UserOrgUnit.status": %w`, err)}
@@ -326,10 +323,6 @@ func (_c *UserOrgUnitCreate) createSpec() (*UserOrgUnit, *sqlgraph.CreateSpec) {
 		_spec.SetField(userorgunit.FieldTenantID, field.TypeUint32, value)
 		_node.TenantID = &value
 	}
-	if value, ok := _c.mutation.Status(); ok {
-		_spec.SetField(userorgunit.FieldStatus, field.TypeEnum, value)
-		_node.Status = &value
-	}
 	if value, ok := _c.mutation.CreatedBy(); ok {
 		_spec.SetField(userorgunit.FieldCreatedBy, field.TypeUint32, value)
 		_node.CreatedBy = &value
@@ -341,6 +334,10 @@ func (_c *UserOrgUnitCreate) createSpec() (*UserOrgUnit, *sqlgraph.CreateSpec) {
 	if value, ok := _c.mutation.DeletedBy(); ok {
 		_spec.SetField(userorgunit.FieldDeletedBy, field.TypeUint32, value)
 		_node.DeletedBy = &value
+	}
+	if value, ok := _c.mutation.Status(); ok {
+		_spec.SetField(userorgunit.FieldStatus, field.TypeEnum, value)
+		_node.Status = &value
 	}
 	if value, ok := _c.mutation.IsPrimary(); ok {
 		_spec.SetField(userorgunit.FieldIsPrimary, field.TypeBool, value)
@@ -450,18 +447,6 @@ func (u *UserOrgUnitUpsert) ClearDeletedAt() *UserOrgUnitUpsert {
 	return u
 }
 
-// SetStatus sets the "status" field.
-func (u *UserOrgUnitUpsert) SetStatus(v userorgunit.Status) *UserOrgUnitUpsert {
-	u.Set(userorgunit.FieldStatus, v)
-	return u
-}
-
-// UpdateStatus sets the "status" field to the value that was provided on create.
-func (u *UserOrgUnitUpsert) UpdateStatus() *UserOrgUnitUpsert {
-	u.SetExcluded(userorgunit.FieldStatus)
-	return u
-}
-
 // SetCreatedBy sets the "created_by" field.
 func (u *UserOrgUnitUpsert) SetCreatedBy(v uint32) *UserOrgUnitUpsert {
 	u.Set(userorgunit.FieldCreatedBy, v)
@@ -531,6 +516,24 @@ func (u *UserOrgUnitUpsert) AddDeletedBy(v uint32) *UserOrgUnitUpsert {
 // ClearDeletedBy clears the value of the "deleted_by" field.
 func (u *UserOrgUnitUpsert) ClearDeletedBy() *UserOrgUnitUpsert {
 	u.SetNull(userorgunit.FieldDeletedBy)
+	return u
+}
+
+// SetStatus sets the "status" field.
+func (u *UserOrgUnitUpsert) SetStatus(v userorgunit.Status) *UserOrgUnitUpsert {
+	u.Set(userorgunit.FieldStatus, v)
+	return u
+}
+
+// UpdateStatus sets the "status" field to the value that was provided on create.
+func (u *UserOrgUnitUpsert) UpdateStatus() *UserOrgUnitUpsert {
+	u.SetExcluded(userorgunit.FieldStatus)
+	return u
+}
+
+// ClearStatus clears the value of the "status" field.
+func (u *UserOrgUnitUpsert) ClearStatus() *UserOrgUnitUpsert {
+	u.SetNull(userorgunit.FieldStatus)
 	return u
 }
 
@@ -732,20 +735,6 @@ func (u *UserOrgUnitUpsertOne) ClearDeletedAt() *UserOrgUnitUpsertOne {
 	})
 }
 
-// SetStatus sets the "status" field.
-func (u *UserOrgUnitUpsertOne) SetStatus(v userorgunit.Status) *UserOrgUnitUpsertOne {
-	return u.Update(func(s *UserOrgUnitUpsert) {
-		s.SetStatus(v)
-	})
-}
-
-// UpdateStatus sets the "status" field to the value that was provided on create.
-func (u *UserOrgUnitUpsertOne) UpdateStatus() *UserOrgUnitUpsertOne {
-	return u.Update(func(s *UserOrgUnitUpsert) {
-		s.UpdateStatus()
-	})
-}
-
 // SetCreatedBy sets the "created_by" field.
 func (u *UserOrgUnitUpsertOne) SetCreatedBy(v uint32) *UserOrgUnitUpsertOne {
 	return u.Update(func(s *UserOrgUnitUpsert) {
@@ -827,6 +816,27 @@ func (u *UserOrgUnitUpsertOne) UpdateDeletedBy() *UserOrgUnitUpsertOne {
 func (u *UserOrgUnitUpsertOne) ClearDeletedBy() *UserOrgUnitUpsertOne {
 	return u.Update(func(s *UserOrgUnitUpsert) {
 		s.ClearDeletedBy()
+	})
+}
+
+// SetStatus sets the "status" field.
+func (u *UserOrgUnitUpsertOne) SetStatus(v userorgunit.Status) *UserOrgUnitUpsertOne {
+	return u.Update(func(s *UserOrgUnitUpsert) {
+		s.SetStatus(v)
+	})
+}
+
+// UpdateStatus sets the "status" field to the value that was provided on create.
+func (u *UserOrgUnitUpsertOne) UpdateStatus() *UserOrgUnitUpsertOne {
+	return u.Update(func(s *UserOrgUnitUpsert) {
+		s.UpdateStatus()
+	})
+}
+
+// ClearStatus clears the value of the "status" field.
+func (u *UserOrgUnitUpsertOne) ClearStatus() *UserOrgUnitUpsertOne {
+	return u.Update(func(s *UserOrgUnitUpsert) {
+		s.ClearStatus()
 	})
 }
 
@@ -1211,20 +1221,6 @@ func (u *UserOrgUnitUpsertBulk) ClearDeletedAt() *UserOrgUnitUpsertBulk {
 	})
 }
 
-// SetStatus sets the "status" field.
-func (u *UserOrgUnitUpsertBulk) SetStatus(v userorgunit.Status) *UserOrgUnitUpsertBulk {
-	return u.Update(func(s *UserOrgUnitUpsert) {
-		s.SetStatus(v)
-	})
-}
-
-// UpdateStatus sets the "status" field to the value that was provided on create.
-func (u *UserOrgUnitUpsertBulk) UpdateStatus() *UserOrgUnitUpsertBulk {
-	return u.Update(func(s *UserOrgUnitUpsert) {
-		s.UpdateStatus()
-	})
-}
-
 // SetCreatedBy sets the "created_by" field.
 func (u *UserOrgUnitUpsertBulk) SetCreatedBy(v uint32) *UserOrgUnitUpsertBulk {
 	return u.Update(func(s *UserOrgUnitUpsert) {
@@ -1306,6 +1302,27 @@ func (u *UserOrgUnitUpsertBulk) UpdateDeletedBy() *UserOrgUnitUpsertBulk {
 func (u *UserOrgUnitUpsertBulk) ClearDeletedBy() *UserOrgUnitUpsertBulk {
 	return u.Update(func(s *UserOrgUnitUpsert) {
 		s.ClearDeletedBy()
+	})
+}
+
+// SetStatus sets the "status" field.
+func (u *UserOrgUnitUpsertBulk) SetStatus(v userorgunit.Status) *UserOrgUnitUpsertBulk {
+	return u.Update(func(s *UserOrgUnitUpsert) {
+		s.SetStatus(v)
+	})
+}
+
+// UpdateStatus sets the "status" field to the value that was provided on create.
+func (u *UserOrgUnitUpsertBulk) UpdateStatus() *UserOrgUnitUpsertBulk {
+	return u.Update(func(s *UserOrgUnitUpsert) {
+		s.UpdateStatus()
+	})
+}
+
+// ClearStatus clears the value of the "status" field.
+func (u *UserOrgUnitUpsertBulk) ClearStatus() *UserOrgUnitUpsertBulk {
+	return u.Update(func(s *UserOrgUnitUpsert) {
+		s.ClearStatus()
 	})
 }
 

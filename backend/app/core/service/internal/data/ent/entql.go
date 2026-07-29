@@ -1178,10 +1178,10 @@ var schemaGraph = func() *sqlgraph.Schema {
 			userorgunit.FieldUpdatedAt: {Type: field.TypeTime, Column: userorgunit.FieldUpdatedAt},
 			userorgunit.FieldDeletedAt: {Type: field.TypeTime, Column: userorgunit.FieldDeletedAt},
 			userorgunit.FieldTenantID:  {Type: field.TypeUint32, Column: userorgunit.FieldTenantID},
-			userorgunit.FieldStatus:    {Type: field.TypeEnum, Column: userorgunit.FieldStatus},
 			userorgunit.FieldCreatedBy: {Type: field.TypeUint32, Column: userorgunit.FieldCreatedBy},
 			userorgunit.FieldUpdatedBy: {Type: field.TypeUint32, Column: userorgunit.FieldUpdatedBy},
 			userorgunit.FieldDeletedBy: {Type: field.TypeUint32, Column: userorgunit.FieldDeletedBy},
+			userorgunit.FieldStatus:    {Type: field.TypeEnum, Column: userorgunit.FieldStatus},
 			userorgunit.FieldIsPrimary: {Type: field.TypeBool, Column: userorgunit.FieldIsPrimary},
 			userorgunit.FieldStartAt:   {Type: field.TypeTime, Column: userorgunit.FieldStartAt},
 			userorgunit.FieldEndAt:     {Type: field.TypeTime, Column: userorgunit.FieldEndAt},
@@ -1204,10 +1204,10 @@ var schemaGraph = func() *sqlgraph.Schema {
 			userposition.FieldUpdatedAt:  {Type: field.TypeTime, Column: userposition.FieldUpdatedAt},
 			userposition.FieldDeletedAt:  {Type: field.TypeTime, Column: userposition.FieldDeletedAt},
 			userposition.FieldTenantID:   {Type: field.TypeUint32, Column: userposition.FieldTenantID},
-			userposition.FieldStatus:     {Type: field.TypeEnum, Column: userposition.FieldStatus},
 			userposition.FieldCreatedBy:  {Type: field.TypeUint32, Column: userposition.FieldCreatedBy},
 			userposition.FieldUpdatedBy:  {Type: field.TypeUint32, Column: userposition.FieldUpdatedBy},
 			userposition.FieldDeletedBy:  {Type: field.TypeUint32, Column: userposition.FieldDeletedBy},
+			userposition.FieldStatus:     {Type: field.TypeEnum, Column: userposition.FieldStatus},
 			userposition.FieldIsPrimary:  {Type: field.TypeBool, Column: userposition.FieldIsPrimary},
 			userposition.FieldStartAt:    {Type: field.TypeTime, Column: userposition.FieldStartAt},
 			userposition.FieldEndAt:      {Type: field.TypeTime, Column: userposition.FieldEndAt},
@@ -1230,10 +1230,10 @@ var schemaGraph = func() *sqlgraph.Schema {
 			userrole.FieldUpdatedAt: {Type: field.TypeTime, Column: userrole.FieldUpdatedAt},
 			userrole.FieldDeletedAt: {Type: field.TypeTime, Column: userrole.FieldDeletedAt},
 			userrole.FieldTenantID:  {Type: field.TypeUint32, Column: userrole.FieldTenantID},
-			userrole.FieldStatus:    {Type: field.TypeEnum, Column: userrole.FieldStatus},
 			userrole.FieldCreatedBy: {Type: field.TypeUint32, Column: userrole.FieldCreatedBy},
 			userrole.FieldUpdatedBy: {Type: field.TypeUint32, Column: userrole.FieldUpdatedBy},
 			userrole.FieldDeletedBy: {Type: field.TypeUint32, Column: userrole.FieldDeletedBy},
+			userrole.FieldStatus:    {Type: field.TypeEnum, Column: userrole.FieldStatus},
 			userrole.FieldIsPrimary: {Type: field.TypeBool, Column: userrole.FieldIsPrimary},
 			userrole.FieldStartAt:   {Type: field.TypeTime, Column: userrole.FieldStartAt},
 			userrole.FieldEndAt:     {Type: field.TypeTime, Column: userrole.FieldEndAt},
@@ -6018,11 +6018,6 @@ func (f *UserOrgUnitFilter) WhereTenantID(p entql.Uint32P) {
 	f.Where(p.Field(userorgunit.FieldTenantID))
 }
 
-// WhereStatus applies the entql string predicate on the status field.
-func (f *UserOrgUnitFilter) WhereStatus(p entql.StringP) {
-	f.Where(p.Field(userorgunit.FieldStatus))
-}
-
 // WhereCreatedBy applies the entql uint32 predicate on the created_by field.
 func (f *UserOrgUnitFilter) WhereCreatedBy(p entql.Uint32P) {
 	f.Where(p.Field(userorgunit.FieldCreatedBy))
@@ -6036,6 +6031,11 @@ func (f *UserOrgUnitFilter) WhereUpdatedBy(p entql.Uint32P) {
 // WhereDeletedBy applies the entql uint32 predicate on the deleted_by field.
 func (f *UserOrgUnitFilter) WhereDeletedBy(p entql.Uint32P) {
 	f.Where(p.Field(userorgunit.FieldDeletedBy))
+}
+
+// WhereStatus applies the entql string predicate on the status field.
+func (f *UserOrgUnitFilter) WhereStatus(p entql.StringP) {
+	f.Where(p.Field(userorgunit.FieldStatus))
 }
 
 // WhereIsPrimary applies the entql bool predicate on the is_primary field.
@@ -6123,11 +6123,6 @@ func (f *UserPositionFilter) WhereTenantID(p entql.Uint32P) {
 	f.Where(p.Field(userposition.FieldTenantID))
 }
 
-// WhereStatus applies the entql string predicate on the status field.
-func (f *UserPositionFilter) WhereStatus(p entql.StringP) {
-	f.Where(p.Field(userposition.FieldStatus))
-}
-
 // WhereCreatedBy applies the entql uint32 predicate on the created_by field.
 func (f *UserPositionFilter) WhereCreatedBy(p entql.Uint32P) {
 	f.Where(p.Field(userposition.FieldCreatedBy))
@@ -6141,6 +6136,11 @@ func (f *UserPositionFilter) WhereUpdatedBy(p entql.Uint32P) {
 // WhereDeletedBy applies the entql uint32 predicate on the deleted_by field.
 func (f *UserPositionFilter) WhereDeletedBy(p entql.Uint32P) {
 	f.Where(p.Field(userposition.FieldDeletedBy))
+}
+
+// WhereStatus applies the entql string predicate on the status field.
+func (f *UserPositionFilter) WhereStatus(p entql.StringP) {
+	f.Where(p.Field(userposition.FieldStatus))
 }
 
 // WhereIsPrimary applies the entql bool predicate on the is_primary field.
@@ -6228,11 +6228,6 @@ func (f *UserRoleFilter) WhereTenantID(p entql.Uint32P) {
 	f.Where(p.Field(userrole.FieldTenantID))
 }
 
-// WhereStatus applies the entql string predicate on the status field.
-func (f *UserRoleFilter) WhereStatus(p entql.StringP) {
-	f.Where(p.Field(userrole.FieldStatus))
-}
-
 // WhereCreatedBy applies the entql uint32 predicate on the created_by field.
 func (f *UserRoleFilter) WhereCreatedBy(p entql.Uint32P) {
 	f.Where(p.Field(userrole.FieldCreatedBy))
@@ -6246,6 +6241,11 @@ func (f *UserRoleFilter) WhereUpdatedBy(p entql.Uint32P) {
 // WhereDeletedBy applies the entql uint32 predicate on the deleted_by field.
 func (f *UserRoleFilter) WhereDeletedBy(p entql.Uint32P) {
 	f.Where(p.Field(userrole.FieldDeletedBy))
+}
+
+// WhereStatus applies the entql string predicate on the status field.
+func (f *UserRoleFilter) WhereStatus(p entql.StringP) {
+	f.Where(p.Field(userrole.FieldStatus))
 }
 
 // WhereIsPrimary applies the entql bool predicate on the is_primary field.

@@ -37,14 +37,14 @@ func (Membership) Fields() []ent.Field {
 		field.Enum("status").
 			Comment("成员状态").
 			NamedValues(
-				"MembershipStatusDisabled", "MEMBERSHIP_STATUS_DISABLED",
-				"MembershipStatusActive", "MEMBERSHIP_STATUS_ACTIVE",
-				"MembershipStatusPending", "MEMBERSHIP_STATUS_PENDING",
-				"MembershipStatusInvited", "MEMBERSHIP_STATUS_INVITED",
-				"MembershipStatusExpired", "MEMBERSHIP_STATUS_EXPIRED",
-				"MembershipStatusRejected", "MEMBERSHIP_STATUS_REJECTED",
+				"Disabled", "DISABLED",
+				"Active", "ACTIVE",
+				"Pending", "PENDING",
+				"Invited", "INVITED",
+				"Expired", "EXPIRED",
+				"Rejected", "REJECTED",
 			).
-			Default("MEMBERSHIP_STATUS_ACTIVE").
+			Default("ACTIVE").
 			Optional().
 			Nillable(),
 		field.Uint32("role_id").Comment("角色ID").Optional().Nillable(),
