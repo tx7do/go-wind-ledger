@@ -24,6 +24,17 @@ Step 2: 创建 Service
   每个方法用 try/catch + handleDioError
   模板见 frontend/app/flutter_app/AGENTS.md 的 "Service 层模板" 章节
 
+  ★ 标准范式（生成层已有 XxxServiceClient 时）：
+    通过 GetIt.instance<ApiClient>().xxxService 调用，返回生成层 message 模型
+    （int64 序列化已由 protoc-gen-dart-http 正确处理，无需手动 parseInt）
+
+  ★ 降级方案（后端未补齐 BFF 路由、无生成 ServiceClient 时）：
+    用 GetIt.instance<Dio>() 直接调用 REST 接口，手写 fromJson/toJson
+    整数字段必须用 parseInt()（core/utilities/convert.dart）安全解析 protojson
+    的 int64 字符串（"123" 或 123 均可），避免 as num 转换失败
+    参照 budget_service.dart 的实现
+    待后端补齐 BFF 路由并重新生成客户端后，可平滑迁移到标准范式
+
 Step 3: 创建列表页
   在 lib/src/features/ledger/pages/xxx_list_page.dart
   StatefulWidget + ResponsiveLayout + PaginationQuery 分页
@@ -56,6 +67,7 @@ Step 8: 代码分析
 
 - Service 必须继承 `BaseService`
 - API 调用必须 try/catch 捕获 `DioException`
+- 降级方案（手写 fromJson）的整数字段必须用 `parseInt()` 解析，不可直接 `as num`
 - 响应式布局用 `ResponsiveLayout(mobileBody:, webBody:)`
 - Web 端禁止用 `.w` / `.h` / `.sp`
 - 路由跳转：顶级切换 `context.go()`，子页 `context.push()`
@@ -111,8 +123,10 @@ Step 4: 重新生成
 |------|------|------|
 | DioException: Connection refused | 后端服务未启动或地址错误 | 检查 `.dev.env` 的 `API_BASE_URL` |
 | DioException: 401 Unauthorized | Token 过期或未登录 | 检查 Token 注入拦截器；重新登录 |
+| DioException: 404（降级方案 Service） | BFF 路由未注册 | 检查后端 `rest_server.go` 是否 Register 了对应 HTTPServer；补齐后重新生成客户端并迁移到标准范式 |
 | type 'Null' is not a subtype | API 返回 null 但类型声明非空 | 添加 `?` 可空标记；或后端修复 |
-| NoSuchMethodError | API client 方法不存在 | 重新生成 API 代码：`dart run build_runner build` |
+| type 'String' is not a subtype of 'num' | protojson 将 int64 序列化为字符串 | 手写 fromJson 中整数字段用 `parseInt()` 解析（见 convert.dart） |
+| NoSuchMethodError | API client 方法不存在 | 重新生成 API 代码：`dart run build_runner build --delete-conflicting-outputs` |
 | MissingPluginException | 原生插件在 Web 端不可用 | 添加平台判断：`if (!kIsWeb) { ... }` |
 
 ### 调试流程
@@ -122,6 +136,8 @@ Step 4: 重新生成
 2. 用 Swagger UI (http://localhost:6700/docs/) 验证 API 是否正常
 3. 对比 Service 层的参数和 proto 定义是否一致
 4. 确认 ApiClient 从 GetIt 正确注入：GetIt.instance<ApiClient>()
+5. 若用降级方案（直接 Dio），检查手写 fromJson 的整数解析是否用了 parseInt()
+6. 重新生成客户端确认：dart run build_runner build --delete-conflicting-outputs
 ```
 
 ---
@@ -174,3 +190,88 @@ class MyPage extends StatelessWidget {
 - 手机端：用 `Scaffold` + `AppBar` + 底部 `LedgerBottomNav`（首页）
 - Web 端：不设置 `AppBar`（WebShellLayout 提供全局导航栏），内容 `Center` + `ConstrainedBox(maxWidth: 800)`
 - 禁止在 Web 端使用 `.w` / `.h` / `.sp`
+
+---
+
+## skill: customize-theme
+
+**描述**: 为 Flutter 记账应用添加或修改主题模式（亮/暗/跟随系统）、主题色（seed color）、语言切换。
+
+**前置条件**: 了解 `AppThemeCubit`（`lib/src/core/themes/cubit/app_theme_cubit.dart`）的状态管理机制。
+
+### 主题模式切换
+
+```
+Step 1: 获取当前主题模式
+  final cubit = context.watch<AppThemeCubit>();
+  final currentMode = cubit.themeMode;  // ThemeMode.light / dark / system
+
+Step 2: 提供切换 UI
+  用 SegmentedButton<ThemeMode> 提供三种模式选择
+  onSelectionChanged: (mode) => cubit.modify(mode.first)
+
+Step 3: 持久化自动完成
+  cubit.modify() 内部调用 UserPreferenceCache.setMaterialThemeMode() 写入 SharedPreferences
+  并同步 EasyLoading 的明暗风格
+```
+
+参考实现：`settings_page.dart` 的 `_buildThemeModeSwitcher`
+
+### 主题色切换
+
+```
+Step 1: 获取当前主题色
+  final cubit = context.watch<AppThemeCubit>();
+  final currentColor = cubit.currentSeedColor;
+
+Step 2: 提供色板选择 UI
+  用 GestureDetector + AnimatedContainer 渲染圆形色板
+  onTap: () => cubit.modifySeedColor(color)
+
+Step 3: 持久化自动完成
+  cubit.modifySeedColor() 内部调用 UserPreferenceCache.setSeedColor() 写入
+```
+
+参考实现：`settings_page.dart` 的 `_buildColorPicker`（含 6 种预设 seed color）
+
+### 语言切换
+
+```
+Step 1: 获取当前语言和支持列表
+  final cubit = context.watch<AppThemeCubit>();
+  final currentLocale = cubit.currentLocale;
+  final supported = cubit.supportedLocales;  // 来自 l10n.S.delegate.supportedLocales
+
+Step 2: 提供切换 UI
+  用 SegmentedButton<Locale> 提供语言选择
+  onSelectionChanged: (locale) => cubit.modifyLocale(locale.first)
+
+Step 3: 持久化自动完成
+  cubit.modifyLocale() 内部调用 UserPreferenceCache.setLanguage() 写入
+```
+
+参考实现：`settings_page.dart` 的 `_buildLanguageSwitcher`
+
+### 添加新语言
+
+```
+Step 1: 复制翻译文件
+  创建 lib/l10n/intl_xx_XX.arb（复制 intl_en_US.arb 并翻译）
+
+Step 2: 注册语言
+  在 pubspec.yaml 的 flutter_intl 配置中添加 xx_XX
+
+Step 3: 重新生成
+  flutter pub run intl_utils:generate
+
+Step 4: 验证
+  cubit.supportedLocales 会自动包含新语言（来自 l10n.S.delegate）
+```
+
+### 关键检查点
+
+- 主题/语言状态统一通过 `AppThemeCubit` 管理，不要直接读写 SharedPreferences
+- 读取当前值用 `context.watch<AppThemeCubit>()` 响应式监听
+- 修改用 `modify()` / `modifySeedColor()` / `modifyLocale()`，持久化由 Cubit 内部完成
+- 新增语言后必须运行 `flutter pub run intl_utils:generate`
+- UI 参考实现均在 `settings_page.dart`，保持风格一致
