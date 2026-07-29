@@ -144,3 +144,13 @@ func GetOperatorFromRequestHeader(reqHeaders transport.Header) (*authenticationV
 
 	return info, nil
 }
+
+// NewSystemContext creates a context with system operator metadata for gRPC client calls.
+// Use this in init() methods that need to call gRPC services without user authentication.
+func NewSystemContext(ctx context.Context) (context.Context, error) {
+	operator := &authenticationV1.OperatorMetadata{
+		UserId:   0,
+		TenantId: 0,
+	}
+	return NewContext(ctx, operator)
+}
