@@ -16,14 +16,14 @@ import (
 
 	swaggerUI "github.com/tx7do/kratos-swagger-ui"
 
-	"go-wind-cms/app/app/service/cmd/server/assets"
-	"go-wind-cms/app/app/service/internal/service"
+	"go-wind-ledger/app/app/service/cmd/server/assets"
+	"go-wind-ledger/app/app/service/internal/service"
 
-	appV1 "go-wind-cms/api/gen/go/app/service/v1"
-	auditV1 "go-wind-cms/api/gen/go/audit/service/v1"
+	appV1 "go-wind-ledger/api/gen/go/app/service/v1"
+	auditV1 "go-wind-ledger/api/gen/go/audit/service/v1"
 
-	"go-wind-cms/pkg/middleware/auth"
-	applogging "go-wind-cms/pkg/middleware/logging"
+	"go-wind-ledger/pkg/middleware/auth"
+	applogging "go-wind-ledger/pkg/middleware/logging"
 )
 
 // NewRestMiddleware 创建中间件
@@ -41,22 +41,6 @@ func NewRestMiddleware(
 
 		// 记账注册端点免认证
 		appV1.OperationLedgerAuthServiceRegister,
-
-		appV1.OperationNavigationServiceList,
-		appV1.OperationPageServiceList,
-		appV1.OperationPostServiceList,
-		appV1.OperationCategoryServiceList,
-		appV1.OperationCommentServiceList,
-		appV1.OperationTagServiceList,
-
-		appV1.OperationPageServiceGet,
-		appV1.OperationSectionServiceList,
-		appV1.OperationSectionServiceGet,
-		appV1.OperationSectionServiceGetTranslation,
-		appV1.OperationPostServiceGet,
-		appV1.OperationCategoryServiceGet,
-		appV1.OperationCommentServiceGet,
-		appV1.OperationTagServiceGet,
 	)
 
 	ms = append(ms, applogging.Server(
@@ -90,14 +74,6 @@ func NewRestServer(
 	fileTransferService *service.FileTransferService,
 	userProfileService *service.UserProfileService,
 
-	postService *service.PostService,
-	categoryService *service.CategoryService,
-	commentService *service.CommentService,
-	tagService *service.TagService,
-	pageService *service.PageService,
-	sectionService *service.SectionService,
-	navigationService *service.NavigationService,
-
 	bookService *service.BookService,
 	bookTemplateService *service.BookTemplateService,
 	accountService *service.AccountService,
@@ -129,16 +105,6 @@ func NewRestServer(
 	appV1.RegisterAuthenticationServiceHTTPServer(srv, authenticationService)
 	appV1.RegisterFileTransferServiceHTTPServer(srv, fileTransferService)
 	appV1.RegisterUserProfileServiceHTTPServer(srv, userProfileService)
-
-	appV1.RegisterNavigationServiceHTTPServer(srv, navigationService)
-
-	appV1.RegisterPostServiceHTTPServer(srv, postService)
-	appV1.RegisterCategoryServiceHTTPServer(srv, categoryService)
-	appV1.RegisterTagServiceHTTPServer(srv, tagService)
-	appV1.RegisterPageServiceHTTPServer(srv, pageService)
-	appV1.RegisterSectionServiceHTTPServer(srv, sectionService)
-
-	appV1.RegisterCommentServiceHTTPServer(srv, commentService)
 
 	appV1.RegisterBookServiceHTTPServer(srv, bookService)
 	appV1.RegisterBookTemplateServiceHTTPServer(srv, bookTemplateService)

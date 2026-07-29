@@ -397,8 +397,8 @@ const file_ledger_service_v1_book_template_proto_rawDesc = "" +
 	"\x02id\x18\x01 \x01(\rR\x02id2\xbc\x01\n" +
 	"\x13BookTemplateService\x12P\n" +
 	"\aListAll\x12\x16.google.protobuf.Empty\x1a+.ledger.service.v1.ListBookTemplateResponse\"\x00\x12S\n" +
-	"\x03Get\x12).ledger.service.v1.GetBookTemplateRequest\x1a\x1f.ledger.service.v1.BookTemplate\"\x00B\xc4\x01\n" +
-	"\x15com.ledger.service.v1B\x11BookTemplateProtoP\x01Z2go-wind-cms/api/gen/go/ledger/service/v1;servicev1\xa2\x02\x03LSX\xaa\x02\x11Ledger.Service.V1\xca\x02\x11Ledger\\Service\\V1\xe2\x02\x1dLedger\\Service\\V1\\GPBMetadata\xea\x02\x13Ledger::Service::V1b\x06proto3"
+	"\x03Get\x12).ledger.service.v1.GetBookTemplateRequest\x1a\x1f.ledger.service.v1.BookTemplate\"\x00B\xc7\x01\n" +
+	"\x15com.ledger.service.v1B\x11BookTemplateProtoP\x01Z5go-wind-ledger/api/gen/go/ledger/service/v1;servicev1\xa2\x02\x03LSX\xaa\x02\x11Ledger.Service.V1\xca\x02\x11Ledger\\Service\\V1\xe2\x02\x1dLedger\\Service\\V1\\GPBMetadata\xea\x02\x13Ledger::Service::V1b\x06proto3"
 
 var (
 	file_ledger_service_v1_book_template_proto_rawDescOnce sync.Once

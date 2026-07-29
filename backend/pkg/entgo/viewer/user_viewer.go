@@ -1,7 +1,7 @@
 package viewer
 
 import (
-	identityV1 "go-wind-cms/api/gen/go/identity/service/v1"
+	identityV1 "go-wind-ledger/api/gen/go/identity/service/v1"
 
 	"github.com/tx7do/go-crud/viewer"
 )

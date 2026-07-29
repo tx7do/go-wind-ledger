@@ -8,7 +8,7 @@ package adminpb
 
 import (
 	v1 "github.com/tx7do/go-crud/api/gen/go/pagination/v1"
-	v11 "go-wind-cms/api/gen/go/ledger/service/v1"
+	v11 "go-wind-ledger/api/gen/go/ledger/service/v1"
 	_ "google.golang.org/genproto/googleapis/api/annotations"
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
@@ -36,8 +36,8 @@ const file_admin_service_v1_i_budget_proto_rawDesc = "" +
 	"\x06Create\x12&.ledger.service.v1.CreateBudgetRequest\x1a\x19.ledger.service.v1.Budget\"\x1c\x82\xd3\xe4\x93\x02\x16:\x01*\"\x11/admin/v1/budgets\x12n\n" +
 	"\x06Update\x12&.ledger.service.v1.UpdateBudgetRequest\x1a\x19.ledger.service.v1.Budget\"!\x82\xd3\xe4\x93\x02\x1b:\x01*\x1a\x16/admin/v1/budgets/{id}\x12h\n" +
 	"\x06Delete\x12&.ledger.service.v1.DeleteBudgetRequest\x1a\x16.google.protobuf.Empty\"\x1e\x82\xd3\xe4\x93\x02\x18*\x16/admin/v1/budgets/{id}\x12\x86\x01\n" +
-	"\vGetProgress\x12+.ledger.service.v1.GetBudgetProgressRequest\x1a!.ledger.service.v1.BudgetProgress\"'\x82\xd3\xe4\x93\x02!\x12\x1f/admin/v1/budgets/{id}/progressB\xb7\x01\n" +
-	"\x14com.admin.service.v1B\fIBudgetProtoP\x01Z/go-wind-cms/api/gen/go/admin/service/v1;adminpb\xa2\x02\x03ASX\xaa\x02\x10Admin.Service.V1\xca\x02\x10Admin\\Service\\V1\xe2\x02\x1cAdmin\\Service\\V1\\GPBMetadata\xea\x02\x12Admin::Service::V1b\x06proto3"
+	"\vGetProgress\x12+.ledger.service.v1.GetBudgetProgressRequest\x1a!.ledger.service.v1.BudgetProgress\"'\x82\xd3\xe4\x93\x02!\x12\x1f/admin/v1/budgets/{id}/progressB\xba\x01\n" +
+	"\x14com.admin.service.v1B\fIBudgetProtoP\x01Z2go-wind-ledger/api/gen/go/admin/service/v1;adminpb\xa2\x02\x03ASX\xaa\x02\x10Admin.Service.V1\xca\x02\x10Admin\\Service\\V1\xe2\x02\x1cAdmin\\Service\\V1\\GPBMetadata\xea\x02\x12Admin::Service::V1b\x06proto3"
 
 var file_admin_service_v1_i_budget_proto_goTypes = []any{
 	(*v1.PagingRequest)(nil),             // 0: pagination.PagingRequest

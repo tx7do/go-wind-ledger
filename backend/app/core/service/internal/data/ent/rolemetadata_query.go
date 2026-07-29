@@ -6,8 +6,8 @@ import (
 	"context"
 	"errors"
 	"fmt"
-	"go-wind-cms/app/core/service/internal/data/ent/predicate"
-	"go-wind-cms/app/core/service/internal/data/ent/rolemetadata"
+	"go-wind-ledger/app/core/service/internal/data/ent/predicate"
+	"go-wind-ledger/app/core/service/internal/data/ent/rolemetadata"
 	"math"
 
 	"entgo.io/ent"

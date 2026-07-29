@@ -6,7 +6,7 @@ import (
 	"context"
 	"errors"
 	"fmt"
-	"go-wind-cms/app/core/service/internal/data/ent/categoryrelation"
+	"go-wind-ledger/app/core/service/internal/data/ent/categoryrelation"
 
 	"entgo.io/ent/dialect/sql"
 	"entgo.io/ent/dialect/sql/sqlgraph"

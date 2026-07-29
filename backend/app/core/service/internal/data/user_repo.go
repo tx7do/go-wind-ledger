@@ -21,15 +21,15 @@ import (
 	"github.com/tx7do/go-utils/timeutil"
 	"github.com/tx7do/go-utils/trans"
 
-	"go-wind-cms/app/core/service/internal/data/ent"
-	"go-wind-cms/app/core/service/internal/data/ent/predicate"
-	"go-wind-cms/app/core/service/internal/data/ent/user"
+	"go-wind-ledger/app/core/service/internal/data/ent"
+	"go-wind-ledger/app/core/service/internal/data/ent/predicate"
+	"go-wind-ledger/app/core/service/internal/data/ent/user"
 
-	identityV1 "go-wind-cms/api/gen/go/identity/service/v1"
-	permissionV1 "go-wind-cms/api/gen/go/permission/service/v1"
+	identityV1 "go-wind-ledger/api/gen/go/identity/service/v1"
+	permissionV1 "go-wind-ledger/api/gen/go/permission/service/v1"
 
-	"go-wind-cms/pkg/constants"
-	"go-wind-cms/pkg/utils"
+	"go-wind-ledger/pkg/constants"
+	"go-wind-ledger/pkg/utils"
 )
 
 type UserRepo interface {
@@ -75,7 +75,7 @@ type userRepo struct {
 	entClient *entCrud.EntClient[*ent.Client]
 	log       *log.Helper
 
-	mapper          *mapper.CopierMapper[identityV1.User, ent.User]
+	mapper *mapper.CopierMapper[identityV1.User, ent.User]
 
 	repository *entCrud.Repository[
 		ent.UserQuery, ent.UserSelect,

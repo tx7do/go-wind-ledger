@@ -3,7 +3,7 @@
 package categoryrelation
 
 import (
-	"go-wind-cms/app/core/service/internal/data/ent/predicate"
+	"go-wind-ledger/app/core/service/internal/data/ent/predicate"
 
 	"entgo.io/ent/dialect/sql"
 )

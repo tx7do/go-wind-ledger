@@ -8,7 +8,7 @@ package adminpb
 
 import (
 	v11 "github.com/tx7do/go-crud/api/gen/go/pagination/v1"
-	v1 "go-wind-cms/api/gen/go/ledger/service/v1"
+	v1 "go-wind-ledger/api/gen/go/ledger/service/v1"
 	_ "google.golang.org/genproto/googleapis/api/annotations"
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
@@ -34,8 +34,8 @@ const file_admin_service_v1_i_currency_proto_rawDesc = "" +
 	"\aRefresh\x12).ledger.service.v1.RefreshCurrencyRequest\x1a'.ledger.service.v1.ListCurrencyResponse\"'\x82\xd3\xe4\x93\x02!:\x01*\"\x1c/admin/v1/currencies/refresh\x12\x83\x01\n" +
 	"\aConvert\x12).ledger.service.v1.ConvertCurrencyRequest\x1a*.ledger.service.v1.ConvertCurrencyResponse\"!\x82\xd3\xe4\x93\x02\x1b\x12\x19/admin/v1/currencies/calc\x12z\n" +
 	"\n" +
-	"ChangeRate\x12$.ledger.service.v1.ChangeRateRequest\x1a\x1b.ledger.service.v1.Currency\")\x82\xd3\xe4\x93\x02#:\x01*\x1a\x1e/admin/v1/currencies/{id}/rateB\xb9\x01\n" +
-	"\x14com.admin.service.v1B\x0eICurrencyProtoP\x01Z/go-wind-cms/api/gen/go/admin/service/v1;adminpb\xa2\x02\x03ASX\xaa\x02\x10Admin.Service.V1\xca\x02\x10Admin\\Service\\V1\xe2\x02\x1cAdmin\\Service\\V1\\GPBMetadata\xea\x02\x12Admin::Service::V1b\x06proto3"
+	"ChangeRate\x12$.ledger.service.v1.ChangeRateRequest\x1a\x1b.ledger.service.v1.Currency\")\x82\xd3\xe4\x93\x02#:\x01*\x1a\x1e/admin/v1/currencies/{id}/rateB\xbc\x01\n" +
+	"\x14com.admin.service.v1B\x0eICurrencyProtoP\x01Z2go-wind-ledger/api/gen/go/admin/service/v1;adminpb\xa2\x02\x03ASX\xaa\x02\x10Admin.Service.V1\xca\x02\x10Admin\\Service\\V1\xe2\x02\x1cAdmin\\Service\\V1\\GPBMetadata\xea\x02\x12Admin::Service::V1b\x06proto3"
 
 var file_admin_service_v1_i_currency_proto_goTypes = []any{
 	(*v1.ListAllCurrencyRequest)(nil),  // 0: ledger.service.v1.ListAllCurrencyRequest

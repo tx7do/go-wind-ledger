@@ -13,7 +13,7 @@ import (
 	"github.com/go-kratos/kratos/v2/encoding"
 	_ "github.com/go-kratos/kratos/v2/encoding/json"
 
-	appViewer "go-wind-cms/pkg/entgo/viewer"
+	appViewer "go-wind-ledger/pkg/entgo/viewer"
 )
 
 var codec = encoding.GetCodec("proto")

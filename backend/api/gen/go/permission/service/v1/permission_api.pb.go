@@ -99,8 +99,8 @@ const file_permission_service_v1_permission_api_proto_rawDesc = "" +
 	"\x06api_id\x18\x03 \x01(\rB\f\xbaG\t\x92\x02\x06API IDH\x02R\x05apiId\x88\x01\x01B\x05\n" +
 	"\x03_idB\x10\n" +
 	"\x0e_permission_idB\t\n" +
-	"\a_api_idB\xe0\x01\n" +
-	"\x19com.permission.service.v1B\x12PermissionApiProtoP\x01Z9go-wind-cms/api/gen/go/permission/service/v1;permissionpb\xa2\x02\x03PSX\xaa\x02\x15Permission.Service.V1\xca\x02\x15Permission\\Service\\V1\xe2\x02!Permission\\Service\\V1\\GPBMetadata\xea\x02\x17Permission::Service::V1b\x06proto3"
+	"\a_api_idB\xe3\x01\n" +
+	"\x19com.permission.service.v1B\x12PermissionApiProtoP\x01Z<go-wind-ledger/api/gen/go/permission/service/v1;permissionpb\xa2\x02\x03PSX\xaa\x02\x15Permission.Service.V1\xca\x02\x15Permission\\Service\\V1\xe2\x02!Permission\\Service\\V1\\GPBMetadata\xea\x02\x17Permission::Service::V1b\x06proto3"
 
 var (
 	file_permission_service_v1_permission_api_proto_rawDescOnce sync.Once

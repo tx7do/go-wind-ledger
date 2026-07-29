@@ -5,7 +5,7 @@ import (
 
 	"github.com/go-kratos/kratos/v2/log"
 
-	authenticationV1 "go-wind-cms/api/gen/go/authentication/service/v1"
+	authenticationV1 "go-wind-ledger/api/gen/go/authentication/service/v1"
 )
 
 // AccessTokenChecker 定义访问令牌检查接口

@@ -14,11 +14,11 @@ import (
 	"github.com/tx7do/go-utils/mapper"
 	"google.golang.org/protobuf/types/known/fieldmaskpb"
 
-	"go-wind-cms/app/core/service/internal/data/ent"
-	"go-wind-cms/app/core/service/internal/data/ent/book"
-	"go-wind-cms/app/core/service/internal/data/ent/predicate"
+	"go-wind-ledger/app/core/service/internal/data/ent"
+	"go-wind-ledger/app/core/service/internal/data/ent/book"
+	"go-wind-ledger/app/core/service/internal/data/ent/predicate"
 
-	ledgerV1 "go-wind-cms/api/gen/go/ledger/service/v1"
+	ledgerV1 "go-wind-ledger/api/gen/go/ledger/service/v1"
 )
 
 type BookRepo struct {

@@ -5,7 +5,7 @@ package ent
 import (
 	"encoding/json"
 	"fmt"
-	"go-wind-cms/app/core/service/internal/data/ent/operationauditlog"
+	"go-wind-ledger/app/core/service/internal/data/ent/operationauditlog"
 	"strings"
 	"time"
 

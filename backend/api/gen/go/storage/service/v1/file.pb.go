@@ -758,8 +758,8 @@ const file_storage_service_v1_file_proto_rawDesc = "" +
 	"\x03Get\x12\".storage.service.v1.GetFileRequest\x1a\x18.storage.service.v1.File\"\x00\x12K\n" +
 	"\x06Create\x12%.storage.service.v1.CreateFileRequest\x1a\x18.storage.service.v1.File\"\x00\x12I\n" +
 	"\x06Update\x12%.storage.service.v1.UpdateFileRequest\x1a\x16.google.protobuf.Empty\"\x00\x12I\n" +
-	"\x06Delete\x12%.storage.service.v1.DeleteFileRequest\x1a\x16.google.protobuf.Empty\"\x00B\xc2\x01\n" +
-	"\x16com.storage.service.v1B\tFileProtoP\x01Z3go-wind-cms/api/gen/go/storage/service/v1;storagepb\xa2\x02\x03SSX\xaa\x02\x12Storage.Service.V1\xca\x02\x12Storage\\Service\\V1\xe2\x02\x1eStorage\\Service\\V1\\GPBMetadata\xea\x02\x14Storage::Service::V1b\x06proto3"
+	"\x06Delete\x12%.storage.service.v1.DeleteFileRequest\x1a\x16.google.protobuf.Empty\"\x00B\xc5\x01\n" +
+	"\x16com.storage.service.v1B\tFileProtoP\x01Z6go-wind-ledger/api/gen/go/storage/service/v1;storagepb\xa2\x02\x03SSX\xaa\x02\x12Storage.Service.V1\xca\x02\x12Storage\\Service\\V1\xe2\x02\x1eStorage\\Service\\V1\\GPBMetadata\xea\x02\x14Storage::Service::V1b\x06proto3"
 
 var (
 	file_storage_service_v1_file_proto_rawDescOnce sync.Once

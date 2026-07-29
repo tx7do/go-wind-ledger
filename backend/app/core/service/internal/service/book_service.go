@@ -13,12 +13,12 @@ import (
 	"github.com/tx7do/kratos-bootstrap/bootstrap"
 	"google.golang.org/protobuf/types/known/emptypb"
 
-	"go-wind-cms/app/core/service/internal/data"
-	"go-wind-cms/app/core/service/internal/data/ent/balanceflow"
+	"go-wind-ledger/app/core/service/internal/data"
+	"go-wind-ledger/app/core/service/internal/data/ent/balanceflow"
 
-	ledgerV1 "go-wind-cms/api/gen/go/ledger/service/v1"
+	ledgerV1 "go-wind-ledger/api/gen/go/ledger/service/v1"
 
-	"go-wind-cms/pkg/middleware/auth"
+	"go-wind-ledger/pkg/middleware/auth"
 )
 
 type BookService struct {

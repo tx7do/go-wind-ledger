@@ -12,9 +12,9 @@ import (
 	entCrud "github.com/tx7do/go-crud/entgo"
 	"github.com/tx7do/go-utils/mapper"
 
-	"go-wind-cms/app/core/service/internal/data/ent"
+	"go-wind-ledger/app/core/service/internal/data/ent"
 
-	auditV1 "go-wind-cms/api/gen/go/audit/service/v1"
+	auditV1 "go-wind-ledger/api/gen/go/audit/service/v1"
 )
 
 type DataAccessAuditLogRepo struct {

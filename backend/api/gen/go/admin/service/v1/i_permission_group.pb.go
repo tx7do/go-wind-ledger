@@ -8,7 +8,7 @@ package adminpb
 
 import (
 	v1 "github.com/tx7do/go-crud/api/gen/go/pagination/v1"
-	v11 "go-wind-cms/api/gen/go/permission/service/v1"
+	v11 "go-wind-ledger/api/gen/go/permission/service/v1"
 	_ "google.golang.org/genproto/googleapis/api/annotations"
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
@@ -34,8 +34,8 @@ const file_admin_service_v1_i_permission_group_proto_rawDesc = "" +
 	"\x03Get\x120.permission.service.v1.GetPermissionGroupRequest\x1a&.permission.service.v1.PermissionGroup\"(\x82\xd3\xe4\x93\x02\"\x12 /admin/v1/permission-groups/{id}\x12}\n" +
 	"\x06Create\x123.permission.service.v1.CreatePermissionGroupRequest\x1a\x16.google.protobuf.Empty\"&\x82\xd3\xe4\x93\x02 :\x01*\"\x1b/admin/v1/permission-groups\x12\x82\x01\n" +
 	"\x06Update\x123.permission.service.v1.UpdatePermissionGroupRequest\x1a\x16.google.protobuf.Empty\"+\x82\xd3\xe4\x93\x02%:\x01*\x1a /admin/v1/permission-groups/{id}\x12\x7f\n" +
-	"\x06Delete\x123.permission.service.v1.DeletePermissionGroupRequest\x1a\x16.google.protobuf.Empty\"(\x82\xd3\xe4\x93\x02\"* /admin/v1/permission-groups/{id}B\xc0\x01\n" +
-	"\x14com.admin.service.v1B\x15IPermissionGroupProtoP\x01Z/go-wind-cms/api/gen/go/admin/service/v1;adminpb\xa2\x02\x03ASX\xaa\x02\x10Admin.Service.V1\xca\x02\x10Admin\\Service\\V1\xe2\x02\x1cAdmin\\Service\\V1\\GPBMetadata\xea\x02\x12Admin::Service::V1b\x06proto3"
+	"\x06Delete\x123.permission.service.v1.DeletePermissionGroupRequest\x1a\x16.google.protobuf.Empty\"(\x82\xd3\xe4\x93\x02\"* /admin/v1/permission-groups/{id}B\xc3\x01\n" +
+	"\x14com.admin.service.v1B\x15IPermissionGroupProtoP\x01Z2go-wind-ledger/api/gen/go/admin/service/v1;adminpb\xa2\x02\x03ASX\xaa\x02\x10Admin.Service.V1\xca\x02\x10Admin\\Service\\V1\xe2\x02\x1cAdmin\\Service\\V1\\GPBMetadata\xea\x02\x12Admin::Service::V1b\x06proto3"
 
 var file_admin_service_v1_i_permission_group_proto_goTypes = []any{
 	(*v1.PagingRequest)(nil),                 // 0: pagination.PagingRequest

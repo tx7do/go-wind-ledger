@@ -1,14 +1,14 @@
 package converter
 
 import (
-	"go-wind-cms/pkg/constants"
+	"go-wind-ledger/pkg/constants"
 	"strings"
 	"unicode"
 
 	"github.com/jinzhu/inflection"
 	"github.com/tx7do/go-utils/trans"
 
-	permissionV1 "go-wind-cms/api/gen/go/permission/service/v1"
+	permissionV1 "go-wind-ledger/api/gen/go/permission/service/v1"
 )
 
 type MenuPermissionConverter struct {

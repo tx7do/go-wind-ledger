@@ -13,13 +13,13 @@ import (
 	"github.com/tx7do/go-utils/trans"
 	"github.com/tx7do/kratos-bootstrap/bootstrap"
 
-	adminV1 "go-wind-cms/api/gen/go/admin/service/v1"
-	authenticationV1 "go-wind-cms/api/gen/go/authentication/service/v1"
-	identityV1 "go-wind-cms/api/gen/go/identity/service/v1"
-	permissionV1 "go-wind-cms/api/gen/go/permission/service/v1"
+	adminV1 "go-wind-ledger/api/gen/go/admin/service/v1"
+	authenticationV1 "go-wind-ledger/api/gen/go/authentication/service/v1"
+	identityV1 "go-wind-ledger/api/gen/go/identity/service/v1"
+	permissionV1 "go-wind-ledger/api/gen/go/permission/service/v1"
 
-	"go-wind-cms/pkg/middleware/auth"
-	"go-wind-cms/pkg/utils"
+	"go-wind-ledger/pkg/middleware/auth"
+	"go-wind-ledger/pkg/utils"
 )
 
 type UserService struct {

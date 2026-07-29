@@ -8,7 +8,7 @@ package servicev1
 
 import (
 	v1 "github.com/tx7do/go-crud/api/gen/go/pagination/v1"
-	v11 "go-wind-cms/api/gen/go/ledger/service/v1"
+	v11 "go-wind-ledger/api/gen/go/ledger/service/v1"
 	_ "google.golang.org/genproto/googleapis/api/annotations"
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
@@ -37,8 +37,8 @@ const file_app_service_v1_i_balance_flow_proto_rawDesc = "" +
 	"\x06Delete\x12+.ledger.service.v1.DeleteBalanceFlowRequest\x1a\x16.google.protobuf.Empty\"\"\x82\xd3\xe4\x93\x02\x1c*\x1a/app/v1/balance-flows/{id}\x12\x86\x01\n" +
 	"\aConfirm\x12,.ledger.service.v1.ConfirmBalanceFlowRequest\x1a\x1e.ledger.service.v1.BalanceFlow\"-\x82\xd3\xe4\x93\x02':\x01*2\"/app/v1/balance-flows/{id}/confirm\x12\x83\x01\n" +
 	"\n" +
-	"Statistics\x12$.ledger.service.v1.StatisticsRequest\x1a%.ledger.service.v1.StatisticsResponse\"(\x82\xd3\xe4\x93\x02\"\x12 /app/v1/balance-flows/statisticsB\xb2\x01\n" +
-	"\x12com.app.service.v1B\x11IBalanceFlowProtoP\x01Z/go-wind-cms/api/gen/go/app/service/v1;servicev1\xa2\x02\x03ASX\xaa\x02\x0eApp.Service.V1\xca\x02\x0eApp\\Service\\V1\xe2\x02\x1aApp\\Service\\V1\\GPBMetadata\xea\x02\x10App::Service::V1b\x06proto3"
+	"Statistics\x12$.ledger.service.v1.StatisticsRequest\x1a%.ledger.service.v1.StatisticsResponse\"(\x82\xd3\xe4\x93\x02\"\x12 /app/v1/balance-flows/statisticsB\xb5\x01\n" +
+	"\x12com.app.service.v1B\x11IBalanceFlowProtoP\x01Z2go-wind-ledger/api/gen/go/app/service/v1;servicev1\xa2\x02\x03ASX\xaa\x02\x0eApp.Service.V1\xca\x02\x0eApp\\Service\\V1\xe2\x02\x1aApp\\Service\\V1\\GPBMetadata\xea\x02\x10App::Service::V1b\x06proto3"
 
 var file_app_service_v1_i_balance_flow_proto_goTypes = []any{
 	(*v1.PagingRequest)(nil),              // 0: pagination.PagingRequest

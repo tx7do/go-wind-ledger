@@ -8,7 +8,7 @@ package adminpb
 
 import (
 	v1 "github.com/tx7do/go-crud/api/gen/go/pagination/v1"
-	v11 "go-wind-cms/api/gen/go/permission/service/v1"
+	v11 "go-wind-ledger/api/gen/go/permission/service/v1"
 	_ "google.golang.org/genproto/googleapis/api/annotations"
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
@@ -34,9 +34,9 @@ const file_admin_service_v1_i_menu_proto_rawDesc = "" +
 	"\x03Get\x12%.permission.service.v1.GetMenuRequest\x1a\x1b.permission.service.v1.Menu\"\x1c\x82\xd3\xe4\x93\x02\x16\x12\x14/admin/v1/menus/{id}\x12f\n" +
 	"\x06Create\x12(.permission.service.v1.CreateMenuRequest\x1a\x16.google.protobuf.Empty\"\x1a\x82\xd3\xe4\x93\x02\x14:\x01*\"\x0f/admin/v1/menus\x12k\n" +
 	"\x06Update\x12(.permission.service.v1.UpdateMenuRequest\x1a\x16.google.protobuf.Empty\"\x1f\x82\xd3\xe4\x93\x02\x19:\x01*\x1a\x14/admin/v1/menus/{id}\x12h\n" +
-	"\x06Delete\x12(.permission.service.v1.DeleteMenuRequest\x1a\x16.google.protobuf.Empty\"\x1c\x82\xd3\xe4\x93\x02\x16*\x14/admin/v1/menus/{id}B\xb5\x01\n" +
+	"\x06Delete\x12(.permission.service.v1.DeleteMenuRequest\x1a\x16.google.protobuf.Empty\"\x1c\x82\xd3\xe4\x93\x02\x16*\x14/admin/v1/menus/{id}B\xb8\x01\n" +
 	"\x14com.admin.service.v1B\n" +
-	"IMenuProtoP\x01Z/go-wind-cms/api/gen/go/admin/service/v1;adminpb\xa2\x02\x03ASX\xaa\x02\x10Admin.Service.V1\xca\x02\x10Admin\\Service\\V1\xe2\x02\x1cAdmin\\Service\\V1\\GPBMetadata\xea\x02\x12Admin::Service::V1b\x06proto3"
+	"IMenuProtoP\x01Z2go-wind-ledger/api/gen/go/admin/service/v1;adminpb\xa2\x02\x03ASX\xaa\x02\x10Admin.Service.V1\xca\x02\x10Admin\\Service\\V1\xe2\x02\x1cAdmin\\Service\\V1\\GPBMetadata\xea\x02\x12Admin::Service::V1b\x06proto3"
 
 var file_admin_service_v1_i_menu_proto_goTypes = []any{
 	(*v1.PagingRequest)(nil),      // 0: pagination.PagingRequest

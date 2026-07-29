@@ -2262,8 +2262,8 @@ const file_identity_service_v1_user_proto_rawDesc = "" +
 	"\x12ListUserOrgUintIDs\x12#.identity.service.v1.GetUserRequest\x1a/.identity.service.v1.ListUserOrgUintIDsResponse\"\x00\x12z\n" +
 	"\x17ListUserIDsByOrgUnitIDs\x123.identity.service.v1.ListUserIDsByOrgUnitIDsRequest\x1a(.identity.service.v1.ListUserIDsResponse\"\x00\x12n\n" +
 	"\x13ListUserPositionIDs\x12#.identity.service.v1.GetUserRequest\x1a0.identity.service.v1.ListUserPositionIDsResponse\"\x00\x12|\n" +
-	"\x18ListUserIDsByPositionIDs\x124.identity.service.v1.ListUserIDsByPositionIDsRequest\x1a(.identity.service.v1.ListUserIDsResponse\"\x00B\xc9\x01\n" +
-	"\x17com.identity.service.v1B\tUserProtoP\x01Z5go-wind-cms/api/gen/go/identity/service/v1;identitypb\xa2\x02\x03ISX\xaa\x02\x13Identity.Service.V1\xca\x02\x13Identity\\Service\\V1\xe2\x02\x1fIdentity\\Service\\V1\\GPBMetadata\xea\x02\x15Identity::Service::V1b\x06proto3"
+	"\x18ListUserIDsByPositionIDs\x124.identity.service.v1.ListUserIDsByPositionIDsRequest\x1a(.identity.service.v1.ListUserIDsResponse\"\x00B\xcc\x01\n" +
+	"\x17com.identity.service.v1B\tUserProtoP\x01Z8go-wind-ledger/api/gen/go/identity/service/v1;identitypb\xa2\x02\x03ISX\xaa\x02\x13Identity.Service.V1\xca\x02\x13Identity\\Service\\V1\xe2\x02\x1fIdentity\\Service\\V1\\GPBMetadata\xea\x02\x15Identity::Service::V1b\x06proto3"
 
 var (
 	file_identity_service_v1_user_proto_rawDescOnce sync.Once

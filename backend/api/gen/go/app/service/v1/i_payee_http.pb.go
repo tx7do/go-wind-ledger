@@ -11,7 +11,7 @@ import (
 	http "github.com/go-kratos/kratos/v2/transport/http"
 	binding "github.com/go-kratos/kratos/v2/transport/http/binding"
 	v1 "github.com/tx7do/go-crud/api/gen/go/pagination/v1"
-	v11 "go-wind-cms/api/gen/go/ledger/service/v1"
+	v11 "go-wind-ledger/api/gen/go/ledger/service/v1"
 	emptypb "google.golang.org/protobuf/types/known/emptypb"
 )
 
@@ -42,16 +42,16 @@ type PayeeServiceHTTPServer interface {
 
 func RegisterPayeeServiceHTTPServer(s *http.Server, srv PayeeServiceHTTPServer) {
 	r := s.Route("/")
-	r.GET("/app/v1/payees", _PayeeService_List13_HTTP_Handler(srv))
+	r.GET("/app/v1/payees", _PayeeService_List9_HTTP_Handler(srv))
 	r.GET("/app/v1/payees/all", _PayeeService_ListAll7_HTTP_Handler(srv))
-	r.GET("/app/v1/payees/{id}", _PayeeService_Get12_HTTP_Handler(srv))
-	r.POST("/app/v1/payees", _PayeeService_Create11_HTTP_Handler(srv))
-	r.PUT("/app/v1/payees/{id}", _PayeeService_Update11_HTTP_Handler(srv))
-	r.DELETE("/app/v1/payees/{id}", _PayeeService_Delete12_HTTP_Handler(srv))
+	r.GET("/app/v1/payees/{id}", _PayeeService_Get8_HTTP_Handler(srv))
+	r.POST("/app/v1/payees", _PayeeService_Create7_HTTP_Handler(srv))
+	r.PUT("/app/v1/payees/{id}", _PayeeService_Update7_HTTP_Handler(srv))
+	r.DELETE("/app/v1/payees/{id}", _PayeeService_Delete8_HTTP_Handler(srv))
 	r.PATCH("/app/v1/payees/{id}/toggle", _PayeeService_Toggle4_HTTP_Handler(srv))
 }
 
-func _PayeeService_List13_HTTP_Handler(srv PayeeServiceHTTPServer) func(ctx http.Context) error {
+func _PayeeService_List9_HTTP_Handler(srv PayeeServiceHTTPServer) func(ctx http.Context) error {
 	return func(ctx http.Context) error {
 		var in v1.PagingRequest
 		if err := ctx.BindQuery(&in); err != nil {
@@ -89,7 +89,7 @@ func _PayeeService_ListAll7_HTTP_Handler(srv PayeeServiceHTTPServer) func(ctx ht
 	}
 }
 
-func _PayeeService_Get12_HTTP_Handler(srv PayeeServiceHTTPServer) func(ctx http.Context) error {
+func _PayeeService_Get8_HTTP_Handler(srv PayeeServiceHTTPServer) func(ctx http.Context) error {
 	return func(ctx http.Context) error {
 		var in v11.GetPayeeRequest
 		if err := ctx.BindQuery(&in); err != nil {
@@ -111,7 +111,7 @@ func _PayeeService_Get12_HTTP_Handler(srv PayeeServiceHTTPServer) func(ctx http.
 	}
 }
 
-func _PayeeService_Create11_HTTP_Handler(srv PayeeServiceHTTPServer) func(ctx http.Context) error {
+func _PayeeService_Create7_HTTP_Handler(srv PayeeServiceHTTPServer) func(ctx http.Context) error {
 	return func(ctx http.Context) error {
 		var in v11.CreatePayeeRequest
 		if err := ctx.Bind(&in); err != nil {
@@ -133,7 +133,7 @@ func _PayeeService_Create11_HTTP_Handler(srv PayeeServiceHTTPServer) func(ctx ht
 	}
 }
 
-func _PayeeService_Update11_HTTP_Handler(srv PayeeServiceHTTPServer) func(ctx http.Context) error {
+func _PayeeService_Update7_HTTP_Handler(srv PayeeServiceHTTPServer) func(ctx http.Context) error {
 	return func(ctx http.Context) error {
 		var in v11.UpdatePayeeRequest
 		if err := ctx.Bind(&in); err != nil {
@@ -158,7 +158,7 @@ func _PayeeService_Update11_HTTP_Handler(srv PayeeServiceHTTPServer) func(ctx ht
 	}
 }
 
-func _PayeeService_Delete12_HTTP_Handler(srv PayeeServiceHTTPServer) func(ctx http.Context) error {
+func _PayeeService_Delete8_HTTP_Handler(srv PayeeServiceHTTPServer) func(ctx http.Context) error {
 	return func(ctx http.Context) error {
 		var in v11.DeletePayeeRequest
 		if err := ctx.BindQuery(&in); err != nil {

@@ -322,8 +322,8 @@ const file_permission_service_v1_role_permission_proto_rawDesc = "" +
 	"\v_deleted_byB\r\n" +
 	"\v_created_atB\r\n" +
 	"\v_updated_atB\r\n" +
-	"\v_deleted_atB\xe1\x01\n" +
-	"\x19com.permission.service.v1B\x13RolePermissionProtoP\x01Z9go-wind-cms/api/gen/go/permission/service/v1;permissionpb\xa2\x02\x03PSX\xaa\x02\x15Permission.Service.V1\xca\x02\x15Permission\\Service\\V1\xe2\x02!Permission\\Service\\V1\\GPBMetadata\xea\x02\x17Permission::Service::V1b\x06proto3"
+	"\v_deleted_atB\xe4\x01\n" +
+	"\x19com.permission.service.v1B\x13RolePermissionProtoP\x01Z<go-wind-ledger/api/gen/go/permission/service/v1;permissionpb\xa2\x02\x03PSX\xaa\x02\x15Permission.Service.V1\xca\x02\x15Permission\\Service\\V1\xe2\x02!Permission\\Service\\V1\\GPBMetadata\xea\x02\x17Permission::Service::V1b\x06proto3"
 
 var (
 	file_permission_service_v1_role_permission_proto_rawDescOnce sync.Once

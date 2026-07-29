@@ -25,10 +25,10 @@ var File_admin_service_v1_admin_doc_proto protoreflect.FileDescriptor
 
 const file_admin_service_v1_admin_doc_proto_rawDesc = "" +
 	"\n" +
-	" admin/service/v1/admin_doc.proto\x12\x10admin.service.v1\x1a$gnostic/openapi/v3/annotations.protoB\xc2\x06\xbaG\x86\x05\x12\xce\x01\n" +
-	"\x1cGoWind Content Hub Admin API\x12\x1cGoWind Content Hub Admin API\"B\n" +
-	"\x05tx7do\x12$https://github.com/tx7do/go-wind-cms\x1a\x13yanglinbo@gmail.com*G\n" +
-	"\vMIT License\x128https://github.com/tx7do/go-wind-cms/blob/master/LICENSE2\x031.0*\x96\x03\n" +
+	" admin/service/v1/admin_doc.proto\x12\x10admin.service.v1\x1a$gnostic/openapi/v3/annotations.protoB\xcb\x06\xbaG\x8c\x05\x12\xd4\x01\n" +
+	"\x1cGoWind Content Hub Admin API\x12\x1cGoWind Content Hub Admin API\"E\n" +
+	"\x05tx7do\x12'https://github.com/tx7do/go-wind-ledger\x1a\x13yanglinbo@gmail.com*J\n" +
+	"\vMIT License\x12;https://github.com/tx7do/go-wind-ledger/blob/master/LICENSE2\x031.0*\x96\x03\n" +
 	"\xd4\x01\n" +
 	"\xd1\x01\n" +
 	"\fKratosStatus\x12\xc0\x01\n" +
@@ -59,7 +59,7 @@ const file_admin_service_v1_admin_doc_proto_rawDesc = "" +
 	"\x06oauth2:.\x12,\x12\x0f/admin/v1/login\x1a\x17/admin/v1/refresh-token\"\x002\x1a\n" +
 	"\x18\n" +
 	"\x14OAuth2PasswordBearer\x12\x00\n" +
-	"\x14com.admin.service.v1B\rAdminDocProtoP\x01Z/go-wind-cms/api/gen/go/admin/service/v1;adminpb\xa2\x02\x03ASX\xaa\x02\x10Admin.Service.V1\xca\x02\x10Admin\\Service\\V1\xe2\x02\x1cAdmin\\Service\\V1\\GPBMetadata\xea\x02\x12Admin::Service::V1b\x06proto3"
+	"\x14com.admin.service.v1B\rAdminDocProtoP\x01Z2go-wind-ledger/api/gen/go/admin/service/v1;adminpb\xa2\x02\x03ASX\xaa\x02\x10Admin.Service.V1\xca\x02\x10Admin\\Service\\V1\xe2\x02\x1cAdmin\\Service\\V1\\GPBMetadata\xea\x02\x12Admin::Service::V1b\x06proto3"
 
 var file_admin_service_v1_admin_doc_proto_goTypes = []any{}
 var file_admin_service_v1_admin_doc_proto_depIdxs = []int32{

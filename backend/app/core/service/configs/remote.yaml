@@ -4,4 +4,4 @@ config:
   consul:
     scheme: "http"
     address: "localhost:8500"
-    key: "go-wind-cms/core/service"
+    key: "go-wind-ledger/core/service"

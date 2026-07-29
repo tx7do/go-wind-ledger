@@ -665,8 +665,8 @@ const file_permission_service_v1_permission_group_proto_rawDesc = "" +
 	"\x03Get\x120.permission.service.v1.GetPermissionGroupRequest\x1a&.permission.service.v1.PermissionGroup\"\x00\x12W\n" +
 	"\x06Create\x123.permission.service.v1.CreatePermissionGroupRequest\x1a\x16.google.protobuf.Empty\"\x00\x12W\n" +
 	"\x06Update\x123.permission.service.v1.UpdatePermissionGroupRequest\x1a\x16.google.protobuf.Empty\"\x00\x12W\n" +
-	"\x06Delete\x123.permission.service.v1.DeletePermissionGroupRequest\x1a\x16.google.protobuf.Empty\"\x00B\xe2\x01\n" +
-	"\x19com.permission.service.v1B\x14PermissionGroupProtoP\x01Z9go-wind-cms/api/gen/go/permission/service/v1;permissionpb\xa2\x02\x03PSX\xaa\x02\x15Permission.Service.V1\xca\x02\x15Permission\\Service\\V1\xe2\x02!Permission\\Service\\V1\\GPBMetadata\xea\x02\x17Permission::Service::V1b\x06proto3"
+	"\x06Delete\x123.permission.service.v1.DeletePermissionGroupRequest\x1a\x16.google.protobuf.Empty\"\x00B\xe5\x01\n" +
+	"\x19com.permission.service.v1B\x14PermissionGroupProtoP\x01Z<go-wind-ledger/api/gen/go/permission/service/v1;permissionpb\xa2\x02\x03PSX\xaa\x02\x15Permission.Service.V1\xca\x02\x15Permission\\Service\\V1\xe2\x02!Permission\\Service\\V1\\GPBMetadata\xea\x02\x17Permission::Service::V1b\x06proto3"
 
 var (
 	file_permission_service_v1_permission_group_proto_rawDescOnce sync.Once

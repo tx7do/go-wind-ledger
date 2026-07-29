@@ -8,12 +8,12 @@ import (
 	"github.com/go-kratos/kratos/v2/log"
 	"github.com/tx7do/kratos-bootstrap/bootstrap"
 
-	"go-wind-cms/app/core/service/internal/data"
-	"go-wind-cms/app/core/service/internal/data/ent"
-	"go-wind-cms/app/core/service/internal/data/ent/account"
-	"go-wind-cms/app/core/service/internal/data/ent/balanceflow"
+	"go-wind-ledger/app/core/service/internal/data"
+	"go-wind-ledger/app/core/service/internal/data/ent"
+	"go-wind-ledger/app/core/service/internal/data/ent/account"
+	"go-wind-ledger/app/core/service/internal/data/ent/balanceflow"
 
-	ledgerV1 "go-wind-cms/api/gen/go/ledger/service/v1"
+	ledgerV1 "go-wind-ledger/api/gen/go/ledger/service/v1"
 )
 
 type ReportService struct {

@@ -77,3 +77,24 @@ export function useDeleteBook(
     ...options,
   });
 }
+
+// 账本模板列表
+export async function fetchListBookTemplates() {
+  return queryClient.fetchQuery({
+    queryKey: ['listBookTemplates'],
+    queryFn: () => apiClient.bookTemplateService.ListAll({}),
+    staleTime: 0,
+    retry: 0,
+  });
+}
+
+// 从模板创建账本
+export function useCreateBookByTemplate(
+  options?: UseMutationOptions<object, Error, Record<string, any>>,
+) {
+  return useMutation({
+    mutationFn: (values) =>
+      apiClient.bookService.CreateByTemplate(values as any),
+    ...options,
+  });
+}

@@ -8,7 +8,7 @@ package servicev1
 
 import (
 	v1 "github.com/tx7do/go-crud/api/gen/go/pagination/v1"
-	v11 "go-wind-cms/api/gen/go/ledger/service/v1"
+	v11 "go-wind-ledger/api/gen/go/ledger/service/v1"
 	_ "google.golang.org/genproto/googleapis/api/annotations"
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
@@ -36,8 +36,8 @@ const file_app_service_v1_i_budget_proto_rawDesc = "" +
 	"\x06Create\x12&.ledger.service.v1.CreateBudgetRequest\x1a\x19.ledger.service.v1.Budget\"\x1a\x82\xd3\xe4\x93\x02\x14:\x01*\"\x0f/app/v1/budgets\x12l\n" +
 	"\x06Update\x12&.ledger.service.v1.UpdateBudgetRequest\x1a\x19.ledger.service.v1.Budget\"\x1f\x82\xd3\xe4\x93\x02\x19:\x01*\x1a\x14/app/v1/budgets/{id}\x12f\n" +
 	"\x06Delete\x12&.ledger.service.v1.DeleteBudgetRequest\x1a\x16.google.protobuf.Empty\"\x1c\x82\xd3\xe4\x93\x02\x16*\x14/app/v1/budgets/{id}\x12\x84\x01\n" +
-	"\vGetProgress\x12+.ledger.service.v1.GetBudgetProgressRequest\x1a!.ledger.service.v1.BudgetProgress\"%\x82\xd3\xe4\x93\x02\x1f\x12\x1d/app/v1/budgets/{id}/progressB\xad\x01\n" +
-	"\x12com.app.service.v1B\fIBudgetProtoP\x01Z/go-wind-cms/api/gen/go/app/service/v1;servicev1\xa2\x02\x03ASX\xaa\x02\x0eApp.Service.V1\xca\x02\x0eApp\\Service\\V1\xe2\x02\x1aApp\\Service\\V1\\GPBMetadata\xea\x02\x10App::Service::V1b\x06proto3"
+	"\vGetProgress\x12+.ledger.service.v1.GetBudgetProgressRequest\x1a!.ledger.service.v1.BudgetProgress\"%\x82\xd3\xe4\x93\x02\x1f\x12\x1d/app/v1/budgets/{id}/progressB\xb0\x01\n" +
+	"\x12com.app.service.v1B\fIBudgetProtoP\x01Z2go-wind-ledger/api/gen/go/app/service/v1;servicev1\xa2\x02\x03ASX\xaa\x02\x0eApp.Service.V1\xca\x02\x0eApp\\Service\\V1\xe2\x02\x1aApp\\Service\\V1\\GPBMetadata\xea\x02\x10App::Service::V1b\x06proto3"
 
 var file_app_service_v1_i_budget_proto_goTypes = []any{
 	(*v1.PagingRequest)(nil),             // 0: pagination.PagingRequest

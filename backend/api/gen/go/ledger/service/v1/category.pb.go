@@ -658,8 +658,8 @@ const file_ledger_service_v1_category_proto_rawDesc = "" +
 	"\x06Create\x12(.ledger.service.v1.CreateCategoryRequest\x1a\x1b.ledger.service.v1.Category\"\x00\x12Q\n" +
 	"\x06Update\x12(.ledger.service.v1.UpdateCategoryRequest\x1a\x1b.ledger.service.v1.Category\"\x00\x12L\n" +
 	"\x06Delete\x12(.ledger.service.v1.DeleteCategoryRequest\x1a\x16.google.protobuf.Empty\"\x00\x12Q\n" +
-	"\x06Toggle\x12(.ledger.service.v1.ToggleCategoryRequest\x1a\x1b.ledger.service.v1.Category\"\x00B\xc0\x01\n" +
-	"\x15com.ledger.service.v1B\rCategoryProtoP\x01Z2go-wind-cms/api/gen/go/ledger/service/v1;servicev1\xa2\x02\x03LSX\xaa\x02\x11Ledger.Service.V1\xca\x02\x11Ledger\\Service\\V1\xe2\x02\x1dLedger\\Service\\V1\\GPBMetadata\xea\x02\x13Ledger::Service::V1b\x06proto3"
+	"\x06Toggle\x12(.ledger.service.v1.ToggleCategoryRequest\x1a\x1b.ledger.service.v1.Category\"\x00B\xc3\x01\n" +
+	"\x15com.ledger.service.v1B\rCategoryProtoP\x01Z5go-wind-ledger/api/gen/go/ledger/service/v1;servicev1\xa2\x02\x03LSX\xaa\x02\x11Ledger.Service.V1\xca\x02\x11Ledger\\Service\\V1\xe2\x02\x1dLedger\\Service\\V1\\GPBMetadata\xea\x02\x13Ledger::Service::V1b\x06proto3"
 
 var (
 	file_ledger_service_v1_category_proto_rawDescOnce sync.Once

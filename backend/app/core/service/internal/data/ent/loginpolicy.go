@@ -4,7 +4,7 @@ package ent
 
 import (
 	"fmt"
-	"go-wind-cms/app/core/service/internal/data/ent/loginpolicy"
+	"go-wind-ledger/app/core/service/internal/data/ent/loginpolicy"
 	"strings"
 	"time"
 

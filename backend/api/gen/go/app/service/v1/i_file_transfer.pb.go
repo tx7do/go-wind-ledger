@@ -7,7 +7,7 @@
 package servicev1
 
 import (
-	v1 "go-wind-cms/api/gen/go/storage/service/v1"
+	v1 "go-wind-ledger/api/gen/go/storage/service/v1"
 	_ "google.golang.org/genproto/googleapis/api/annotations"
 	_ "google.golang.org/genproto/googleapis/api/httpbody"
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
@@ -31,8 +31,8 @@ const file_app_service_v1_i_file_transfer_proto_rawDesc = "" +
 	"\x13FileTransferService\x12\x80\x01\n" +
 	"\fDownloadFile\x12'.storage.service.v1.DownloadFileRequest\x1a(.storage.service.v1.DownloadFileResponse\"\x1d\x82\xd3\xe4\x93\x02\x17\x12\x15/app/v1/file/download\x12~\n" +
 	"\rPutUploadFile\x12%.storage.service.v1.UploadFileRequest\x1a&.storage.service.v1.UploadFileResponse\"\x1e\x82\xd3\xe4\x93\x02\x18:\x01*\x1a\x13/app/v1/file/upload\x12\x7f\n" +
-	"\x0ePostUploadFile\x12%.storage.service.v1.UploadFileRequest\x1a&.storage.service.v1.UploadFileResponse\"\x1e\x82\xd3\xe4\x93\x02\x18:\x01*\"\x13/app/v1/file/uploadB\xb3\x01\n" +
-	"\x12com.app.service.v1B\x12IFileTransferProtoP\x01Z/go-wind-cms/api/gen/go/app/service/v1;servicev1\xa2\x02\x03ASX\xaa\x02\x0eApp.Service.V1\xca\x02\x0eApp\\Service\\V1\xe2\x02\x1aApp\\Service\\V1\\GPBMetadata\xea\x02\x10App::Service::V1b\x06proto3"
+	"\x0ePostUploadFile\x12%.storage.service.v1.UploadFileRequest\x1a&.storage.service.v1.UploadFileResponse\"\x1e\x82\xd3\xe4\x93\x02\x18:\x01*\"\x13/app/v1/file/uploadB\xb6\x01\n" +
+	"\x12com.app.service.v1B\x12IFileTransferProtoP\x01Z2go-wind-ledger/api/gen/go/app/service/v1;servicev1\xa2\x02\x03ASX\xaa\x02\x0eApp.Service.V1\xca\x02\x0eApp\\Service\\V1\xe2\x02\x1aApp\\Service\\V1\\GPBMetadata\xea\x02\x10App::Service::V1b\x06proto3"
 
 var file_app_service_v1_i_file_transfer_proto_goTypes = []any{
 	(*v1.DownloadFileRequest)(nil),  // 0: storage.service.v1.DownloadFileRequest

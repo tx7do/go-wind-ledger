@@ -98,6 +98,12 @@ class _LedgerHomePageState extends State<LedgerHomePage> {
         subtitle: '查看币种与汇率',
         route: '/ledger/currencies',
       ),
+      _MenuEntry(
+        icon: Icons.settings_outlined,
+        title: '设置',
+        subtitle: '切换默认租户与账本',
+        route: '/ledger/settings',
+      ),
     ];
     return SafeArea(
       child: ListView(

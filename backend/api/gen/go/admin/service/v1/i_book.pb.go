@@ -8,7 +8,7 @@ package adminpb
 
 import (
 	v1 "github.com/tx7do/go-crud/api/gen/go/pagination/v1"
-	v11 "go-wind-cms/api/gen/go/ledger/service/v1"
+	v11 "go-wind-ledger/api/gen/go/ledger/service/v1"
 	_ "google.golang.org/genproto/googleapis/api/annotations"
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
@@ -40,9 +40,9 @@ const file_admin_service_v1_i_book_proto_rawDesc = "" +
 	"\x10CreateByTemplate\x12..ledger.service.v1.CreateBookByTemplateRequest\x1a\x17.ledger.service.v1.Book\"#\x82\xd3\xe4\x93\x02\x1d:\x01*\"\x18/admin/v1/books/template\x12d\n" +
 	"\x04Copy\x12\".ledger.service.v1.CopyBookRequest\x1a\x17.ledger.service.v1.Book\"\x1f\x82\xd3\xe4\x93\x02\x19:\x01*\"\x14/admin/v1/books/copy\x12z\n" +
 	"\x06Export\x12$.ledger.service.v1.ExportBookRequest\x1a%.ledger.service.v1.ExportBookResponse\"#\x82\xd3\xe4\x93\x02\x1d\x12\x1b/admin/v1/books/{id}/export\x12o\n" +
-	"\fListAllBooks\x12\x16.google.protobuf.Empty\x1a#.ledger.service.v1.ListBookResponse\"\"\x82\xd3\xe4\x93\x02\x1c\x12\x1a/admin/v1/books/select-allB\xb5\x01\n" +
+	"\fListAllBooks\x12\x16.google.protobuf.Empty\x1a#.ledger.service.v1.ListBookResponse\"\"\x82\xd3\xe4\x93\x02\x1c\x12\x1a/admin/v1/books/select-allB\xb8\x01\n" +
 	"\x14com.admin.service.v1B\n" +
-	"IBookProtoP\x01Z/go-wind-cms/api/gen/go/admin/service/v1;adminpb\xa2\x02\x03ASX\xaa\x02\x10Admin.Service.V1\xca\x02\x10Admin\\Service\\V1\xe2\x02\x1cAdmin\\Service\\V1\\GPBMetadata\xea\x02\x12Admin::Service::V1b\x06proto3"
+	"IBookProtoP\x01Z2go-wind-ledger/api/gen/go/admin/service/v1;adminpb\xa2\x02\x03ASX\xaa\x02\x10Admin.Service.V1\xca\x02\x10Admin\\Service\\V1\xe2\x02\x1cAdmin\\Service\\V1\\GPBMetadata\xea\x02\x12Admin::Service::V1b\x06proto3"
 
 var file_admin_service_v1_i_book_proto_goTypes = []any{
 	(*v1.PagingRequest)(nil),                // 0: pagination.PagingRequest

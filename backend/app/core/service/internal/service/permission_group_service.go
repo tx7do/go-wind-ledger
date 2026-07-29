@@ -9,12 +9,12 @@ import (
 	"github.com/tx7do/kratos-bootstrap/bootstrap"
 	"google.golang.org/protobuf/types/known/emptypb"
 
-	"go-wind-cms/app/core/service/internal/data"
+	"go-wind-ledger/app/core/service/internal/data"
 
-	permissionV1 "go-wind-cms/api/gen/go/permission/service/v1"
+	permissionV1 "go-wind-ledger/api/gen/go/permission/service/v1"
 
-	"go-wind-cms/pkg/constants"
-	appViewer "go-wind-cms/pkg/entgo/viewer"
+	"go-wind-ledger/pkg/constants"
+	appViewer "go-wind-ledger/pkg/entgo/viewer"
 )
 
 type PermissionGroupService struct {

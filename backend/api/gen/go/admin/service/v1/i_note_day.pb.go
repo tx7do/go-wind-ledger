@@ -8,7 +8,7 @@ package adminpb
 
 import (
 	v1 "github.com/tx7do/go-crud/api/gen/go/pagination/v1"
-	v11 "go-wind-cms/api/gen/go/ledger/service/v1"
+	v11 "go-wind-ledger/api/gen/go/ledger/service/v1"
 	_ "google.golang.org/genproto/googleapis/api/annotations"
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
@@ -36,8 +36,8 @@ const file_admin_service_v1_i_note_day_proto_rawDesc = "" +
 	"\x06Update\x12'.ledger.service.v1.UpdateNoteDayRequest\x1a\x1a.ledger.service.v1.NoteDay\"#\x82\xd3\xe4\x93\x02\x1d:\x01*\x1a\x18/admin/v1/note-days/{id}\x12k\n" +
 	"\x06Delete\x12'.ledger.service.v1.DeleteNoteDayRequest\x1a\x16.google.protobuf.Empty\" \x82\xd3\xe4\x93\x02\x1a*\x18/admin/v1/note-days/{id}\x12p\n" +
 	"\x03Run\x12$.ledger.service.v1.RunNoteDayRequest\x1a\x1a.ledger.service.v1.NoteDay\"'\x82\xd3\xe4\x93\x02!:\x01*2\x1c/admin/v1/note-days/{id}/run\x12y\n" +
-	"\x06Recall\x12'.ledger.service.v1.RecallNoteDayRequest\x1a\x1a.ledger.service.v1.NoteDay\"*\x82\xd3\xe4\x93\x02$:\x01*2\x1f/admin/v1/note-days/{id}/recallB\xb8\x01\n" +
-	"\x14com.admin.service.v1B\rINoteDayProtoP\x01Z/go-wind-cms/api/gen/go/admin/service/v1;adminpb\xa2\x02\x03ASX\xaa\x02\x10Admin.Service.V1\xca\x02\x10Admin\\Service\\V1\xe2\x02\x1cAdmin\\Service\\V1\\GPBMetadata\xea\x02\x12Admin::Service::V1b\x06proto3"
+	"\x06Recall\x12'.ledger.service.v1.RecallNoteDayRequest\x1a\x1a.ledger.service.v1.NoteDay\"*\x82\xd3\xe4\x93\x02$:\x01*2\x1f/admin/v1/note-days/{id}/recallB\xbb\x01\n" +
+	"\x14com.admin.service.v1B\rINoteDayProtoP\x01Z2go-wind-ledger/api/gen/go/admin/service/v1;adminpb\xa2\x02\x03ASX\xaa\x02\x10Admin.Service.V1\xca\x02\x10Admin\\Service\\V1\xe2\x02\x1cAdmin\\Service\\V1\\GPBMetadata\xea\x02\x12Admin::Service::V1b\x06proto3"
 
 var file_admin_service_v1_i_note_day_proto_goTypes = []any{
 	(*v1.PagingRequest)(nil),         // 0: pagination.PagingRequest

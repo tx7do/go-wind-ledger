@@ -5,11 +5,11 @@ package enttest
 import (
 	"context"
 
-	"go-wind-cms/app/core/service/internal/data/ent"
+	"go-wind-ledger/app/core/service/internal/data/ent"
 	// required by schema hooks.
-	_ "go-wind-cms/app/core/service/internal/data/ent/runtime"
+	_ "go-wind-ledger/app/core/service/internal/data/ent/runtime"
 
-	"go-wind-cms/app/core/service/internal/data/ent/migrate"
+	"go-wind-ledger/app/core/service/internal/data/ent/migrate"
 
 	"entgo.io/ent/dialect/sql/schema"
 )

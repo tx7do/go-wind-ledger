@@ -439,8 +439,8 @@ const file_permission_service_v1_policy_evaluation_log_proto_rawDesc = "" +
 	"\x1aPolicyEvaluationLogService\x12[\n" +
 	"\x04List\x12\x19.pagination.PagingRequest\x1a6.permission.service.v1.ListPolicyEvaluationLogResponse\"\x00\x12i\n" +
 	"\x03Get\x124.permission.service.v1.GetPolicyEvaluationLogRequest\x1a*.permission.service.v1.PolicyEvaluationLog\"\x00\x12[\n" +
-	"\x06Create\x127.permission.service.v1.CreatePolicyEvaluationLogRequest\x1a\x16.google.protobuf.Empty\"\x00B\xe6\x01\n" +
-	"\x19com.permission.service.v1B\x18PolicyEvaluationLogProtoP\x01Z9go-wind-cms/api/gen/go/permission/service/v1;permissionpb\xa2\x02\x03PSX\xaa\x02\x15Permission.Service.V1\xca\x02\x15Permission\\Service\\V1\xe2\x02!Permission\\Service\\V1\\GPBMetadata\xea\x02\x17Permission::Service::V1b\x06proto3"
+	"\x06Create\x127.permission.service.v1.CreatePolicyEvaluationLogRequest\x1a\x16.google.protobuf.Empty\"\x00B\xe9\x01\n" +
+	"\x19com.permission.service.v1B\x18PolicyEvaluationLogProtoP\x01Z<go-wind-ledger/api/gen/go/permission/service/v1;permissionpb\xa2\x02\x03PSX\xaa\x02\x15Permission.Service.V1\xca\x02\x15Permission\\Service\\V1\xe2\x02!Permission\\Service\\V1\\GPBMetadata\xea\x02\x17Permission::Service::V1b\x06proto3"
 
 var (
 	file_permission_service_v1_policy_evaluation_log_proto_rawDescOnce sync.Once

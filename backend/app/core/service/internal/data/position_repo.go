@@ -10,10 +10,10 @@ import (
 	entCrud "github.com/tx7do/go-crud/entgo"
 	"github.com/tx7do/go-utils/mapper"
 
-	"go-wind-cms/app/core/service/internal/data/ent"
-	"go-wind-cms/app/core/service/internal/data/ent/position"
+	"go-wind-ledger/app/core/service/internal/data/ent"
+	"go-wind-ledger/app/core/service/internal/data/ent/position"
 
-	identityV1 "go-wind-cms/api/gen/go/identity/service/v1"
+	identityV1 "go-wind-ledger/api/gen/go/identity/service/v1"
 )
 
 type PositionRepo struct {

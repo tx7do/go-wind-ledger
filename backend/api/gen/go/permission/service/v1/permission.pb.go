@@ -1189,8 +1189,8 @@ const file_permission_service_v1_permission_proto_rawDesc = "" +
 	"\vBatchCreate\x123.permission.service.v1.BatchCreatePermissionRequest\x1a4.permission.service.v1.BatchCreatePermissionResponse\"\x00\x12Z\n" +
 	"\x0fSyncPermissions\x12-.permission.service.v1.SyncPermissionsRequest\x1a\x16.google.protobuf.Empty\"\x00\x12\x8a\x01\n" +
 	"\x17ListPermissionResources\x125.permission.service.v1.ListPermissionResourcesRequest\x1a6.permission.service.v1.ListPermissionResourcesResponse\"\x00\x12\x8d\x01\n" +
-	"\x18ListPermissionCodesByIds\x126.permission.service.v1.ListPermissionCodesByIdsRequest\x1a7.permission.service.v1.ListPermissionCodesByIdsResponse\"\x00B\xdd\x01\n" +
-	"\x19com.permission.service.v1B\x0fPermissionProtoP\x01Z9go-wind-cms/api/gen/go/permission/service/v1;permissionpb\xa2\x02\x03PSX\xaa\x02\x15Permission.Service.V1\xca\x02\x15Permission\\Service\\V1\xe2\x02!Permission\\Service\\V1\\GPBMetadata\xea\x02\x17Permission::Service::V1b\x06proto3"
+	"\x18ListPermissionCodesByIds\x126.permission.service.v1.ListPermissionCodesByIdsRequest\x1a7.permission.service.v1.ListPermissionCodesByIdsResponse\"\x00B\xe0\x01\n" +
+	"\x19com.permission.service.v1B\x0fPermissionProtoP\x01Z<go-wind-ledger/api/gen/go/permission/service/v1;permissionpb\xa2\x02\x03PSX\xaa\x02\x15Permission.Service.V1\xca\x02\x15Permission\\Service\\V1\xe2\x02!Permission\\Service\\V1\\GPBMetadata\xea\x02\x17Permission::Service::V1b\x06proto3"
 
 var (
 	file_permission_service_v1_permission_proto_rawDescOnce sync.Once

@@ -15,9 +15,9 @@ import (
 	"github.com/tx7do/go-utils/trans"
 	"google.golang.org/protobuf/proto"
 
-	auditV1 "go-wind-cms/api/gen/go/audit/service/v1"
+	auditV1 "go-wind-ledger/api/gen/go/audit/service/v1"
 
-	appViewer "go-wind-cms/pkg/entgo/viewer"
+	appViewer "go-wind-ledger/pkg/entgo/viewer"
 )
 
 type ApiAuditLogMiddleware struct {

@@ -8,7 +8,7 @@ package adminpb
 
 import (
 	v1 "github.com/tx7do/go-crud/api/gen/go/pagination/v1"
-	v11 "go-wind-cms/api/gen/go/dict/service/v1"
+	v11 "go-wind-ledger/api/gen/go/dict/service/v1"
 	_ "google.golang.org/genproto/googleapis/api/annotations"
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
@@ -34,8 +34,8 @@ const file_admin_service_v1_i_dict_type_proto_rawDesc = "" +
 	"\x03Get\x12#.dict.service.v1.GetDictTypeRequest\x1a\x19.dict.service.v1.DictType\"E\x82\xd3\xe4\x93\x02?Z\"\x12 /admin/v1/dict/types/code/{code}\x12\x19/admin/v1/dict/types/{id}\x12i\n" +
 	"\x06Create\x12&.dict.service.v1.CreateDictTypeRequest\x1a\x16.google.protobuf.Empty\"\x1f\x82\xd3\xe4\x93\x02\x19:\x01*\"\x14/admin/v1/dict/types\x12n\n" +
 	"\x06Update\x12&.dict.service.v1.UpdateDictTypeRequest\x1a\x16.google.protobuf.Empty\"$\x82\xd3\xe4\x93\x02\x1e:\x01*\x1a\x19/admin/v1/dict/types/{id}\x12f\n" +
-	"\x06Delete\x12&.dict.service.v1.DeleteDictTypeRequest\x1a\x16.google.protobuf.Empty\"\x1c\x82\xd3\xe4\x93\x02\x16*\x14/admin/v1/dict/typesB\xb9\x01\n" +
-	"\x14com.admin.service.v1B\x0eIDictTypeProtoP\x01Z/go-wind-cms/api/gen/go/admin/service/v1;adminpb\xa2\x02\x03ASX\xaa\x02\x10Admin.Service.V1\xca\x02\x10Admin\\Service\\V1\xe2\x02\x1cAdmin\\Service\\V1\\GPBMetadata\xea\x02\x12Admin::Service::V1b\x06proto3"
+	"\x06Delete\x12&.dict.service.v1.DeleteDictTypeRequest\x1a\x16.google.protobuf.Empty\"\x1c\x82\xd3\xe4\x93\x02\x16*\x14/admin/v1/dict/typesB\xbc\x01\n" +
+	"\x14com.admin.service.v1B\x0eIDictTypeProtoP\x01Z2go-wind-ledger/api/gen/go/admin/service/v1;adminpb\xa2\x02\x03ASX\xaa\x02\x10Admin.Service.V1\xca\x02\x10Admin\\Service\\V1\xe2\x02\x1cAdmin\\Service\\V1\\GPBMetadata\xea\x02\x12Admin::Service::V1b\x06proto3"
 
 var file_admin_service_v1_i_dict_type_proto_goTypes = []any{
 	(*v1.PagingRequest)(nil),          // 0: pagination.PagingRequest

@@ -11,7 +11,7 @@ import (
 	http "github.com/go-kratos/kratos/v2/transport/http"
 	binding "github.com/go-kratos/kratos/v2/transport/http/binding"
 	v11 "github.com/tx7do/go-crud/api/gen/go/pagination/v1"
-	v1 "go-wind-cms/api/gen/go/ledger/service/v1"
+	v1 "go-wind-ledger/api/gen/go/ledger/service/v1"
 )
 
 // This is a compile-time assertion to ensure that this generated file
@@ -38,7 +38,7 @@ type CurrencyServiceHTTPServer interface {
 func RegisterCurrencyServiceHTTPServer(s *http.Server, srv CurrencyServiceHTTPServer) {
 	r := s.Route("/")
 	r.GET("/app/v1/currencies/all", _CurrencyService_ListAll4_HTTP_Handler(srv))
-	r.GET("/app/v1/currencies", _CurrencyService_List6_HTTP_Handler(srv))
+	r.GET("/app/v1/currencies", _CurrencyService_List4_HTTP_Handler(srv))
 	r.POST("/app/v1/currencies/refresh", _CurrencyService_Refresh0_HTTP_Handler(srv))
 	r.GET("/app/v1/currencies/calc", _CurrencyService_Convert0_HTTP_Handler(srv))
 	r.PUT("/app/v1/currencies/{id}/rate", _CurrencyService_ChangeRate0_HTTP_Handler(srv))
@@ -63,7 +63,7 @@ func _CurrencyService_ListAll4_HTTP_Handler(srv CurrencyServiceHTTPServer) func(
 	}
 }
 
-func _CurrencyService_List6_HTTP_Handler(srv CurrencyServiceHTTPServer) func(ctx http.Context) error {
+func _CurrencyService_List4_HTTP_Handler(srv CurrencyServiceHTTPServer) func(ctx http.Context) error {
 	return func(ctx http.Context) error {
 		var in v11.PagingRequest
 		if err := ctx.BindQuery(&in); err != nil {

@@ -11,11 +11,11 @@ import (
 	"github.com/redis/go-redis/v9"
 	"github.com/tx7do/kratos-bootstrap/bootstrap"
 
-	authenticationV1 "go-wind-cms/api/gen/go/authentication/service/v1"
+	authenticationV1 "go-wind-ledger/api/gen/go/authentication/service/v1"
 )
 
 const (
-	ProjectPrefix = "gwc:"
+	ProjectPrefix = "gwl:"
 
 	// AccessTokenKeyFormat 访问令牌键前缀格式 at:{ct}:{uid}
 	AccessTokenKeyFormat = ProjectPrefix + "at:%d:%d"

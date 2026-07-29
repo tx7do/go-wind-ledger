@@ -15,12 +15,12 @@ import (
 
 	entCrud "github.com/tx7do/go-crud/entgo"
 
-	"go-wind-cms/app/core/service/internal/data/ent"
-	"go-wind-cms/app/core/service/internal/data/ent/flowfile"
+	"go-wind-ledger/app/core/service/internal/data/ent"
+	"go-wind-ledger/app/core/service/internal/data/ent/flowfile"
 
-	ledgerV1 "go-wind-cms/api/gen/go/ledger/service/v1"
+	ledgerV1 "go-wind-ledger/api/gen/go/ledger/service/v1"
 
-	"go-wind-cms/pkg/oss"
+	"go-wind-ledger/pkg/oss"
 )
 
 // flowFileBucket 流水附件统一存储桶。流水附件对 bucket 划分不敏感，

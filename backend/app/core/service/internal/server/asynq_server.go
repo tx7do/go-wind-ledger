@@ -6,10 +6,10 @@ import (
 	"github.com/tx7do/kratos-bootstrap/bootstrap"
 	"github.com/tx7do/kratos-transport/transport/asynq"
 
-	"go-wind-cms/app/core/service/internal/service"
+	"go-wind-ledger/app/core/service/internal/service"
 
-	appViewer "go-wind-cms/pkg/entgo/viewer"
-	"go-wind-cms/pkg/task"
+	appViewer "go-wind-ledger/pkg/entgo/viewer"
+	"go-wind-ledger/pkg/task"
 )
 
 // NewAsynqServer creates a new asynq server.

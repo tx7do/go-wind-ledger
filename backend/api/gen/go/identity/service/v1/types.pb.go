@@ -91,9 +91,9 @@ const file_identity_service_v1_types_proto_rawDesc = "" +
 	"\x04SELF\x10\x02\x12\r\n" +
 	"\tUNIT_ONLY\x10\x03\x12\x12\n" +
 	"\x0eUNIT_AND_CHILD\x10\x04\x12\x12\n" +
-	"\x0eSELECTED_UNITS\x10\x05B\xca\x01\n" +
+	"\x0eSELECTED_UNITS\x10\x05B\xcd\x01\n" +
 	"\x17com.identity.service.v1B\n" +
-	"TypesProtoP\x01Z5go-wind-cms/api/gen/go/identity/service/v1;identitypb\xa2\x02\x03ISX\xaa\x02\x13Identity.Service.V1\xca\x02\x13Identity\\Service\\V1\xe2\x02\x1fIdentity\\Service\\V1\\GPBMetadata\xea\x02\x15Identity::Service::V1b\x06proto3"
+	"TypesProtoP\x01Z8go-wind-ledger/api/gen/go/identity/service/v1;identitypb\xa2\x02\x03ISX\xaa\x02\x13Identity.Service.V1\xca\x02\x13Identity\\Service\\V1\xe2\x02\x1fIdentity\\Service\\V1\\GPBMetadata\xea\x02\x15Identity::Service::V1b\x06proto3"
 
 var (
 	file_identity_service_v1_types_proto_rawDescOnce sync.Once

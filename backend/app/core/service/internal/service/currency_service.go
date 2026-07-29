@@ -9,7 +9,7 @@ import (
 	paginationV1 "github.com/tx7do/go-crud/api/gen/go/pagination/v1"
 	"github.com/tx7do/kratos-bootstrap/bootstrap"
 
-	ledgerV1 "go-wind-cms/api/gen/go/ledger/service/v1"
+	ledgerV1 "go-wind-ledger/api/gen/go/ledger/service/v1"
 )
 
 type CurrencyService struct {

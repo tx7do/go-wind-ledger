@@ -11,7 +11,7 @@ import (
 	authzEngine "github.com/tx7do/kratos-authz/engine"
 	authz "github.com/tx7do/kratos-authz/middleware"
 
-	authenticationV1 "go-wind-cms/api/gen/go/authentication/service/v1"
+	authenticationV1 "go-wind-ledger/api/gen/go/authentication/service/v1"
 )
 
 func processAuthz(

@@ -11,12 +11,12 @@ option (gnostic.openapi.v3.document) = {
     description: "GoWind Content Hub Admin API";
     contact: {
       name: "tx7do";
-      url: "https://github.com/tx7do/go-wind-cms";
+      url: "https://github.com/tx7do/go-wind-ledger";
       email: "yanglinbo@gmail.com";
     }
     license: {
       name: "MIT License";
-      url: "https://github.com/tx7do/go-wind-cms/blob/master/LICENSE";
+      url: "https://github.com/tx7do/go-wind-ledger/blob/master/LICENSE";
     }
   }
 

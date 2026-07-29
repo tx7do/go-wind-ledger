@@ -8,9 +8,9 @@ package providers
 import (
 	"github.com/google/wire"
 
-	"go-wind-cms/app/admin/service/internal/data"
+	"go-wind-ledger/app/admin/service/internal/data"
 
-	"go-wind-cms/pkg/middleware/auth"
+	"go-wind-ledger/pkg/middleware/auth"
 )
 
 // ProviderSet is the Wire provider set for data layer.
@@ -21,8 +21,6 @@ var ProviderSet = wire.NewSet(
 
 	data.NewClientType,
 	data.NewAuthorizer,
-
-	data.NewTranslator,
 
 	auth.NewTokenChecker,
 
@@ -62,8 +60,6 @@ var ProviderSet = wire.NewSet(
 	data.NewBookServiceClient,
 	data.NewBookTemplateServiceClient,
 	data.NewAccountServiceClient,
-	data.NewCategoryServiceClient,
-	data.NewTagServiceClient,
 	data.NewPayeeServiceClient,
 	data.NewBalanceFlowServiceClient,
 	data.NewFlowFileServiceClient,

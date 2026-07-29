@@ -11,13 +11,13 @@ import (
 	"github.com/tx7do/kratos-bootstrap/bootstrap"
 	"google.golang.org/protobuf/types/known/emptypb"
 
-	"go-wind-cms/app/core/service/internal/data"
-	"go-wind-cms/app/core/service/internal/data/ent/privacy"
+	"go-wind-ledger/app/core/service/internal/data"
+	"go-wind-ledger/app/core/service/internal/data/ent/privacy"
 
-	authenticationV1 "go-wind-cms/api/gen/go/authentication/service/v1"
-	identityV1 "go-wind-cms/api/gen/go/identity/service/v1"
-	"go-wind-cms/pkg/constants"
-	"go-wind-cms/pkg/metadata"
+	authenticationV1 "go-wind-ledger/api/gen/go/authentication/service/v1"
+	identityV1 "go-wind-ledger/api/gen/go/identity/service/v1"
+	"go-wind-ledger/pkg/constants"
+	"go-wind-ledger/pkg/metadata"
 )
 
 type AuthenticationService struct {

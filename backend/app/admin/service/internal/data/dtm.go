@@ -9,8 +9,8 @@ import (
 
 	"google.golang.org/grpc/resolver"
 
-	_ "go-wind-cms/pkg/dtmdriver-kratos"
-	dtmdriverKratos "go-wind-cms/pkg/dtmdriver-kratos"
+	_ "go-wind-ledger/pkg/dtmdriver-kratos"
+	dtmdriverKratos "go-wind-ledger/pkg/dtmdriver-kratos"
 )
 
 func NewDtmDriver(rr registry.Discovery) {

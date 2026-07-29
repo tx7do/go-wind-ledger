@@ -9,10 +9,10 @@ package main
 import (
 	"github.com/go-kratos/kratos/v2"
 	"github.com/tx7do/kratos-bootstrap/bootstrap"
-	"go-wind-cms/app/admin/service/internal/data"
-	"go-wind-cms/app/admin/service/internal/server"
-	"go-wind-cms/app/admin/service/internal/service"
-	"go-wind-cms/pkg/middleware/auth"
+	"go-wind-ledger/app/admin/service/internal/data"
+	"go-wind-ledger/app/admin/service/internal/server"
+	"go-wind-ledger/app/admin/service/internal/service"
+	"go-wind-ledger/pkg/middleware/auth"
 )
 
 import (
@@ -62,8 +62,6 @@ func initApp(context *bootstrap.Context) (*kratos.App, func(), error) {
 	languageService := service.NewLanguageService(context, languageServiceClient)
 	fileServiceClient := data.NewFileServiceClient(context, discovery)
 	fileService := service.NewFileService(context, fileServiceClient)
-	translator := data.NewTranslator(context)
-	translatorService := service.NewTranslatorService(context, translator)
 	apiAuditLogService := service.NewApiAuditLogService(context, apiAuditLogServiceClient, apiServiceClient)
 	dataAccessAuditLogServiceClient := data.NewDataAccessAuditLogServiceClient(context, discovery)
 	dataAccessAuditLogService := service.NewDataAccessAuditLogService(context, dataAccessAuditLogServiceClient)
@@ -80,10 +78,6 @@ func initApp(context *bootstrap.Context) (*kratos.App, func(), error) {
 	bookTemplateService := service.NewBookTemplateService(context, bookTemplateServiceClient)
 	accountServiceClient := data.NewAccountServiceClient(context, discovery)
 	accountService := service.NewAccountService(context, accountServiceClient)
-	categoryServiceClient := data.NewCategoryServiceClient(context, discovery)
-	categoryService := service.NewCategoryService(context, categoryServiceClient)
-	tagServiceClient := data.NewTagServiceClient(context, discovery)
-	tagService := service.NewTagService(context, tagServiceClient)
 	payeeServiceClient := data.NewPayeeServiceClient(context, discovery)
 	payeeService := service.NewPayeeService(context, payeeServiceClient)
 	balanceFlowServiceClient := data.NewBalanceFlowServiceClient(context, discovery)
@@ -100,7 +94,7 @@ func initApp(context *bootstrap.Context) (*kratos.App, func(), error) {
 	budgetService := service.NewBudgetService(context, budgetServiceClient)
 	tenantMemberServiceClient := data.NewTenantMemberServiceClient(context, discovery)
 	tenantMemberService := service.NewTenantMemberService(context, tenantMemberServiceClient)
-	httpServer := server.NewRestServer(context, v, userService, userProfileService, roleService, tenantService, orgUnitService, positionService, menuService, apiService, permissionGroupService, permissionService, adminPortalService, taskService, authenticationService, loginPolicyService, languageService, fileService, translatorService, apiAuditLogService, dataAccessAuditLogService, loginAuditLogService, policyEvaluationLogService, operationAuditLogService, permissionAuditLogService, bookService, bookTemplateService, accountService, categoryService, tagService, payeeService, balanceFlowService, flowFileService, noteDayService, currencyService, reportService, budgetService, tenantMemberService)
+	httpServer := server.NewRestServer(context, v, userService, userProfileService, roleService, tenantService, orgUnitService, positionService, menuService, apiService, permissionGroupService, permissionService, adminPortalService, taskService, authenticationService, loginPolicyService, languageService, fileService, apiAuditLogService, dataAccessAuditLogService, loginAuditLogService, policyEvaluationLogService, operationAuditLogService, permissionAuditLogService, bookService, bookTemplateService, accountService, payeeService, balanceFlowService, flowFileService, noteDayService, currencyService, reportService, budgetService, tenantMemberService)
 	grpcMiddlewares := server.NewGrpcMiddleware(context)
 	grpcServer, err := server.NewGrpcServer(context, grpcMiddlewares)
 	if err != nil {

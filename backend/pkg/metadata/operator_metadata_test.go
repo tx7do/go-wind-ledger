@@ -8,8 +8,8 @@ import (
 	"github.com/go-kratos/kratos/v2/metadata"
 	"github.com/stretchr/testify/assert"
 
-	authenticationV1 "go-wind-cms/api/gen/go/authentication/service/v1"
-	identityV1 "go-wind-cms/api/gen/go/identity/service/v1"
+	authenticationV1 "go-wind-ledger/api/gen/go/authentication/service/v1"
+	identityV1 "go-wind-ledger/api/gen/go/identity/service/v1"
 )
 
 func TestNewContext_FromContext_RoundTrip(t *testing.T) {

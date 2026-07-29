@@ -6,7 +6,7 @@ import (
 
 	"github.com/getkin/kin-openapi/openapi3"
 
-	"go-wind-cms/app/admin/service/cmd/server/assets"
+	"go-wind-ledger/app/admin/service/cmd/server/assets"
 )
 
 func TestMenuListToQueryString(t *testing.T) {

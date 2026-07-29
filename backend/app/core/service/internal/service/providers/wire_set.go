@@ -11,7 +11,7 @@
 package providers
 
 import (
-	"go-wind-cms/app/core/service/internal/service"
+	"go-wind-ledger/app/core/service/internal/service"
 
 	"github.com/google/wire"
 )
@@ -52,10 +52,10 @@ var ProviderSet = wire.NewSet(
 	service.NewCurrencyService,
 	service.NewReportService,
 	service.NewFlowFileService,
-		service.NewMembershipService,
-		service.NewBudgetService,
-		service.NewBookTemplateService,
+	service.NewMembershipService,
+	service.NewBudgetService,
+	service.NewBookTemplateService,
 
-		// === 记账认证服务 ===
-		service.NewLedgerAuthService,
-	)
+	// === 记账认证服务 ===
+	service.NewLedgerAuthService,
+)

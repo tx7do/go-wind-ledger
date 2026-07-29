@@ -4,8 +4,8 @@ package ent
 
 import (
 	"context"
-	"go-wind-cms/app/core/service/internal/data/ent/predicate"
-	"go-wind-cms/app/core/service/internal/data/ent/tenant"
+	"go-wind-ledger/app/core/service/internal/data/ent/predicate"
+	"go-wind-ledger/app/core/service/internal/data/ent/tenant"
 
 	"entgo.io/ent/dialect/sql"
 	"entgo.io/ent/dialect/sql/sqlgraph"

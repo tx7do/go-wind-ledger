@@ -11,8 +11,8 @@ import (
 	"github.com/tx7do/kratos-bootstrap/bootstrap"
 	"github.com/tx7do/kratos-bootstrap/rpc"
 
-	"go-wind-cms/pkg/middleware/ent"
-	serviceName "go-wind-cms/pkg/serviceid"
+	"go-wind-ledger/pkg/middleware/ent"
+	serviceName "go-wind-ledger/pkg/serviceid"
 )
 
 type GrpcMiddlewares []middleware.Middleware

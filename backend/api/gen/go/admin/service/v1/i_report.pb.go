@@ -7,7 +7,7 @@
 package adminpb
 
 import (
-	v1 "go-wind-cms/api/gen/go/ledger/service/v1"
+	v1 "go-wind-ledger/api/gen/go/ledger/service/v1"
 	_ "google.golang.org/genproto/googleapis/api/annotations"
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
@@ -35,8 +35,8 @@ const file_admin_service_v1_i_report_proto_rawDesc = "" +
 	"\tIncomeTag\x12%.ledger.service.v1.ReportQueryRequest\x1a!.ledger.service.v1.ReportResponse\"$\x82\xd3\xe4\x93\x02\x1e\x12\x1c/admin/v1/reports/income-tag\x12\x81\x01\n" +
 	"\fExpensePayee\x12%.ledger.service.v1.ReportQueryRequest\x1a!.ledger.service.v1.ReportResponse\"'\x82\xd3\xe4\x93\x02!\x12\x1f/admin/v1/reports/expense-payee\x12\x7f\n" +
 	"\vIncomePayee\x12%.ledger.service.v1.ReportQueryRequest\x1a!.ledger.service.v1.ReportResponse\"&\x82\xd3\xe4\x93\x02 \x12\x1e/admin/v1/reports/income-payee\x12\x7f\n" +
-	"\aBalance\x12'.ledger.service.v1.BalanceReportRequest\x1a(.ledger.service.v1.BalanceReportResponse\"!\x82\xd3\xe4\x93\x02\x1b\x12\x19/admin/v1/reports/balanceB\xb7\x01\n" +
-	"\x14com.admin.service.v1B\fIReportProtoP\x01Z/go-wind-cms/api/gen/go/admin/service/v1;adminpb\xa2\x02\x03ASX\xaa\x02\x10Admin.Service.V1\xca\x02\x10Admin\\Service\\V1\xe2\x02\x1cAdmin\\Service\\V1\\GPBMetadata\xea\x02\x12Admin::Service::V1b\x06proto3"
+	"\aBalance\x12'.ledger.service.v1.BalanceReportRequest\x1a(.ledger.service.v1.BalanceReportResponse\"!\x82\xd3\xe4\x93\x02\x1b\x12\x19/admin/v1/reports/balanceB\xba\x01\n" +
+	"\x14com.admin.service.v1B\fIReportProtoP\x01Z2go-wind-ledger/api/gen/go/admin/service/v1;adminpb\xa2\x02\x03ASX\xaa\x02\x10Admin.Service.V1\xca\x02\x10Admin\\Service\\V1\xe2\x02\x1cAdmin\\Service\\V1\\GPBMetadata\xea\x02\x12Admin::Service::V1b\x06proto3"
 
 var file_admin_service_v1_i_report_proto_goTypes = []any{
 	(*v1.ReportQueryRequest)(nil),    // 0: ledger.service.v1.ReportQueryRequest

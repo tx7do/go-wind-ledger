@@ -7,9 +7,9 @@ import (
 	paginationV1 "github.com/tx7do/go-crud/api/gen/go/pagination/v1"
 	"github.com/tx7do/kratos-bootstrap/bootstrap"
 
-	"go-wind-cms/app/core/service/internal/data"
+	"go-wind-ledger/app/core/service/internal/data"
 
-	permissionV1 "go-wind-cms/api/gen/go/permission/service/v1"
+	permissionV1 "go-wind-ledger/api/gen/go/permission/service/v1"
 )
 
 type PolicyEvaluationLogService struct {

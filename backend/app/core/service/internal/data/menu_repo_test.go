@@ -12,7 +12,7 @@ import (
 	"github.com/tx7do/go-utils/fieldmaskutil"
 	"github.com/tx7do/go-utils/trans"
 
-	permissionV1 "go-wind-cms/api/gen/go/permission/service/v1"
+	permissionV1 "go-wind-ledger/api/gen/go/permission/service/v1"
 )
 
 func TestMenuMetaFieldMask(t *testing.T) {

@@ -4,7 +4,7 @@ import type { VxeGridProps } from '#/adapter/vxe-table';
 import { h, onMounted, ref } from 'vue';
 
 import { Page, useVbenDrawer, type VbenFormProps } from '@vben/common-ui';
-import { LucideFilePenLine, LucideTrash2 } from '@vben/icons';
+import { LucideFilePenLine, LucidePaperclip, LucideTrash2 } from '@vben/icons';
 
 import { notification } from 'ant-design-vue';
 
@@ -12,7 +12,11 @@ import { useVbenVxeGrid } from '#/adapter/vxe-table';
 import { apiClient, fetchListBalanceFlows, PaginationQuery } from '#/api';
 import { $t } from '#/locales';
 
+import { useRouter } from 'vue-router';
+
 import BalanceFlowDrawer from './balance-flow-drawer.vue';
+
+const router = useRouter();
 
 // 流水类型选项
 const flowTypeOptions = [
@@ -182,7 +186,7 @@ const gridOptions: VxeGridProps = {
       field: 'action',
       fixed: 'right',
       slots: { default: 'action' },
-      width: 160,
+      width: 200,
     },
   ],
 };
@@ -209,6 +213,13 @@ function handleCreate() {
 
 function handleEdit(row: any) {
   openDrawer(false, row);
+}
+
+function handleViewFiles(row: any) {
+  router.push({
+    name: 'FlowFileManagement',
+    query: { flowId: row.id },
+  });
 }
 
 function handleDelete(row: any) {
@@ -291,6 +302,11 @@ onMounted(() => {
           type="link"
           :icon="h(LucideFilePenLine)"
           @click.stop="handleEdit(row)"
+        />
+        <a-button
+          type="link"
+          :icon="h(LucidePaperclip)"
+          @click.stop="handleViewFiles(row)"
         />
         <a-button
           v-if="!row.confirm"

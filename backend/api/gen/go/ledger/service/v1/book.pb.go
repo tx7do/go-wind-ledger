@@ -936,8 +936,8 @@ const file_ledger_service_v1_book_proto_rawDesc = "" +
 	"\x10CreateByTemplate\x12..ledger.service.v1.CreateBookByTemplateRequest\x1a\x17.ledger.service.v1.Book\"\x00\x12E\n" +
 	"\x04Copy\x12\".ledger.service.v1.CopyBookRequest\x1a\x17.ledger.service.v1.Book\"\x00\x12W\n" +
 	"\x06Export\x12$.ledger.service.v1.ExportBookRequest\x1a%.ledger.service.v1.ExportBookResponse\"\x00\x12M\n" +
-	"\fListAllBooks\x12\x16.google.protobuf.Empty\x1a#.ledger.service.v1.ListBookResponse\"\x00B\xbc\x01\n" +
-	"\x15com.ledger.service.v1B\tBookProtoP\x01Z2go-wind-cms/api/gen/go/ledger/service/v1;servicev1\xa2\x02\x03LSX\xaa\x02\x11Ledger.Service.V1\xca\x02\x11Ledger\\Service\\V1\xe2\x02\x1dLedger\\Service\\V1\\GPBMetadata\xea\x02\x13Ledger::Service::V1b\x06proto3"
+	"\fListAllBooks\x12\x16.google.protobuf.Empty\x1a#.ledger.service.v1.ListBookResponse\"\x00B\xbf\x01\n" +
+	"\x15com.ledger.service.v1B\tBookProtoP\x01Z5go-wind-ledger/api/gen/go/ledger/service/v1;servicev1\xa2\x02\x03LSX\xaa\x02\x11Ledger.Service.V1\xca\x02\x11Ledger\\Service\\V1\xe2\x02\x1dLedger\\Service\\V1\\GPBMetadata\xea\x02\x13Ledger::Service::V1b\x06proto3"
 
 var (
 	file_ledger_service_v1_book_proto_rawDescOnce sync.Once

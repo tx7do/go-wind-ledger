@@ -11,7 +11,7 @@ import (
 	http "github.com/go-kratos/kratos/v2/transport/http"
 	binding "github.com/go-kratos/kratos/v2/transport/http/binding"
 	v1 "github.com/tx7do/go-crud/api/gen/go/pagination/v1"
-	v11 "go-wind-cms/api/gen/go/ledger/service/v1"
+	v11 "go-wind-ledger/api/gen/go/ledger/service/v1"
 	emptypb "google.golang.org/protobuf/types/known/emptypb"
 )
 
@@ -42,16 +42,16 @@ type LedgerCategoryServiceHTTPServer interface {
 
 func RegisterLedgerCategoryServiceHTTPServer(s *http.Server, srv LedgerCategoryServiceHTTPServer) {
 	r := s.Route("/")
-	r.GET("/app/v1/ledger-categories", _LedgerCategoryService_List8_HTTP_Handler(srv))
+	r.GET("/app/v1/ledger-categories", _LedgerCategoryService_List6_HTTP_Handler(srv))
 	r.GET("/app/v1/ledger-categories/all", _LedgerCategoryService_ListAll5_HTTP_Handler(srv))
-	r.GET("/app/v1/ledger-categories/{id}", _LedgerCategoryService_Get7_HTTP_Handler(srv))
-	r.POST("/app/v1/ledger-categories", _LedgerCategoryService_Create6_HTTP_Handler(srv))
-	r.PUT("/app/v1/ledger-categories/{id}", _LedgerCategoryService_Update6_HTTP_Handler(srv))
-	r.DELETE("/app/v1/ledger-categories/{id}", _LedgerCategoryService_Delete7_HTTP_Handler(srv))
+	r.GET("/app/v1/ledger-categories/{id}", _LedgerCategoryService_Get5_HTTP_Handler(srv))
+	r.POST("/app/v1/ledger-categories", _LedgerCategoryService_Create4_HTTP_Handler(srv))
+	r.PUT("/app/v1/ledger-categories/{id}", _LedgerCategoryService_Update4_HTTP_Handler(srv))
+	r.DELETE("/app/v1/ledger-categories/{id}", _LedgerCategoryService_Delete5_HTTP_Handler(srv))
 	r.PATCH("/app/v1/ledger-categories/{id}/toggle", _LedgerCategoryService_Toggle2_HTTP_Handler(srv))
 }
 
-func _LedgerCategoryService_List8_HTTP_Handler(srv LedgerCategoryServiceHTTPServer) func(ctx http.Context) error {
+func _LedgerCategoryService_List6_HTTP_Handler(srv LedgerCategoryServiceHTTPServer) func(ctx http.Context) error {
 	return func(ctx http.Context) error {
 		var in v1.PagingRequest
 		if err := ctx.BindQuery(&in); err != nil {
@@ -89,7 +89,7 @@ func _LedgerCategoryService_ListAll5_HTTP_Handler(srv LedgerCategoryServiceHTTPS
 	}
 }
 
-func _LedgerCategoryService_Get7_HTTP_Handler(srv LedgerCategoryServiceHTTPServer) func(ctx http.Context) error {
+func _LedgerCategoryService_Get5_HTTP_Handler(srv LedgerCategoryServiceHTTPServer) func(ctx http.Context) error {
 	return func(ctx http.Context) error {
 		var in v11.GetCategoryRequest
 		if err := ctx.BindQuery(&in); err != nil {
@@ -111,7 +111,7 @@ func _LedgerCategoryService_Get7_HTTP_Handler(srv LedgerCategoryServiceHTTPServe
 	}
 }
 
-func _LedgerCategoryService_Create6_HTTP_Handler(srv LedgerCategoryServiceHTTPServer) func(ctx http.Context) error {
+func _LedgerCategoryService_Create4_HTTP_Handler(srv LedgerCategoryServiceHTTPServer) func(ctx http.Context) error {
 	return func(ctx http.Context) error {
 		var in v11.CreateCategoryRequest
 		if err := ctx.Bind(&in); err != nil {
@@ -133,7 +133,7 @@ func _LedgerCategoryService_Create6_HTTP_Handler(srv LedgerCategoryServiceHTTPSe
 	}
 }
 
-func _LedgerCategoryService_Update6_HTTP_Handler(srv LedgerCategoryServiceHTTPServer) func(ctx http.Context) error {
+func _LedgerCategoryService_Update4_HTTP_Handler(srv LedgerCategoryServiceHTTPServer) func(ctx http.Context) error {
 	return func(ctx http.Context) error {
 		var in v11.UpdateCategoryRequest
 		if err := ctx.Bind(&in); err != nil {
@@ -158,7 +158,7 @@ func _LedgerCategoryService_Update6_HTTP_Handler(srv LedgerCategoryServiceHTTPSe
 	}
 }
 
-func _LedgerCategoryService_Delete7_HTTP_Handler(srv LedgerCategoryServiceHTTPServer) func(ctx http.Context) error {
+func _LedgerCategoryService_Delete5_HTTP_Handler(srv LedgerCategoryServiceHTTPServer) func(ctx http.Context) error {
 	return func(ctx http.Context) error {
 		var in v11.DeleteCategoryRequest
 		if err := ctx.BindQuery(&in); err != nil {

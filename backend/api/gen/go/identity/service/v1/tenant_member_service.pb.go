@@ -856,8 +856,8 @@ const file_identity_service_v1_tenant_member_service_proto_rawDesc = "" +
 	"\fRemoveMember\x12(.identity.service.v1.RemoveMemberRequest\x1a\x16.google.protobuf.Empty\"\x00\x12h\n" +
 	"\rListMyTenants\x12).identity.service.v1.ListMyTenantsRequest\x1a*.identity.service.v1.ListMyTenantsResponse\"\x00\x12]\n" +
 	"\rGetMembership\x12).identity.service.v1.GetMembershipRequest\x1a\x1f.identity.service.v1.Membership\"\x00\x12c\n" +
-	"\x10UpdateMembership\x12,.identity.service.v1.UpdateMembershipRequest\x1a\x1f.identity.service.v1.Membership\"\x00B\xd8\x01\n" +
-	"\x17com.identity.service.v1B\x18TenantMemberServiceProtoP\x01Z5go-wind-cms/api/gen/go/identity/service/v1;identitypb\xa2\x02\x03ISX\xaa\x02\x13Identity.Service.V1\xca\x02\x13Identity\\Service\\V1\xe2\x02\x1fIdentity\\Service\\V1\\GPBMetadata\xea\x02\x15Identity::Service::V1b\x06proto3"
+	"\x10UpdateMembership\x12,.identity.service.v1.UpdateMembershipRequest\x1a\x1f.identity.service.v1.Membership\"\x00B\xdb\x01\n" +
+	"\x17com.identity.service.v1B\x18TenantMemberServiceProtoP\x01Z8go-wind-ledger/api/gen/go/identity/service/v1;identitypb\xa2\x02\x03ISX\xaa\x02\x13Identity.Service.V1\xca\x02\x13Identity\\Service\\V1\xe2\x02\x1fIdentity\\Service\\V1\\GPBMetadata\xea\x02\x15Identity::Service::V1b\x06proto3"
 
 var (
 	file_identity_service_v1_tenant_member_service_proto_rawDescOnce sync.Once

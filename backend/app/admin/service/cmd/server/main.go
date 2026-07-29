@@ -12,7 +12,7 @@ import (
 	_ "github.com/tx7do/kratos-bootstrap/registry/etcd"
 	_ "github.com/tx7do/kratos-bootstrap/tracer"
 
-	"go-wind-cms/pkg/serviceid"
+	"go-wind-ledger/pkg/serviceid"
 )
 
 var version = "1.0.0"

@@ -14,14 +14,14 @@ import (
 	"github.com/tx7do/go-utils/copierutil"
 	"github.com/tx7do/go-utils/mapper"
 
-	"go-wind-cms/app/core/service/internal/data/ent"
-	"go-wind-cms/app/core/service/internal/data/ent/account"
-	"go-wind-cms/app/core/service/internal/data/ent/balanceflow"
-	"go-wind-cms/app/core/service/internal/data/ent/categoryrelation"
-	"go-wind-cms/app/core/service/internal/data/ent/predicate"
-	"go-wind-cms/app/core/service/internal/data/ent/tagrelation"
+	"go-wind-ledger/app/core/service/internal/data/ent"
+	"go-wind-ledger/app/core/service/internal/data/ent/account"
+	"go-wind-ledger/app/core/service/internal/data/ent/balanceflow"
+	"go-wind-ledger/app/core/service/internal/data/ent/categoryrelation"
+	"go-wind-ledger/app/core/service/internal/data/ent/predicate"
+	"go-wind-ledger/app/core/service/internal/data/ent/tagrelation"
 
-	ledgerV1 "go-wind-cms/api/gen/go/ledger/service/v1"
+	ledgerV1 "go-wind-ledger/api/gen/go/ledger/service/v1"
 )
 
 type BalanceFlowRepo struct {

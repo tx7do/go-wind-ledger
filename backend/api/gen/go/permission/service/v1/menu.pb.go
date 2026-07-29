@@ -1147,8 +1147,8 @@ const file_permission_service_v1_menu_proto_rawDesc = "" +
 	"\x03Get\x12%.permission.service.v1.GetMenuRequest\x1a\x1b.permission.service.v1.Menu\"\x00\x12L\n" +
 	"\x06Create\x12(.permission.service.v1.CreateMenuRequest\x1a\x16.google.protobuf.Empty\"\x00\x12L\n" +
 	"\x06Update\x12(.permission.service.v1.UpdateMenuRequest\x1a\x16.google.protobuf.Empty\"\x00\x12L\n" +
-	"\x06Delete\x12(.permission.service.v1.DeleteMenuRequest\x1a\x16.google.protobuf.Empty\"\x00B\xd7\x01\n" +
-	"\x19com.permission.service.v1B\tMenuProtoP\x01Z9go-wind-cms/api/gen/go/permission/service/v1;permissionpb\xa2\x02\x03PSX\xaa\x02\x15Permission.Service.V1\xca\x02\x15Permission\\Service\\V1\xe2\x02!Permission\\Service\\V1\\GPBMetadata\xea\x02\x17Permission::Service::V1b\x06proto3"
+	"\x06Delete\x12(.permission.service.v1.DeleteMenuRequest\x1a\x16.google.protobuf.Empty\"\x00B\xda\x01\n" +
+	"\x19com.permission.service.v1B\tMenuProtoP\x01Z<go-wind-ledger/api/gen/go/permission/service/v1;permissionpb\xa2\x02\x03PSX\xaa\x02\x15Permission.Service.V1\xca\x02\x15Permission\\Service\\V1\xe2\x02!Permission\\Service\\V1\\GPBMetadata\xea\x02\x17Permission::Service::V1b\x06proto3"
 
 var (
 	file_permission_service_v1_menu_proto_rawDescOnce sync.Once

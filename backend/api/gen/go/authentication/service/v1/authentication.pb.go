@@ -9,7 +9,7 @@ package authenticationpb
 import (
 	_ "github.com/google/gnostic/openapiv3"
 	_ "github.com/tx7do/go-wind-toolkit/protoc-gen-go-redact/redact/v1"
-	_ "go-wind-cms/api/gen/go/identity/service/v1"
+	_ "go-wind-ledger/api/gen/go/identity/service/v1"
 	_ "google.golang.org/genproto/googleapis/api/annotations"
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
@@ -1474,8 +1474,8 @@ const file_authentication_service_v1_authentication_proto_rawDesc = "" +
 	"\n" +
 	"BlockToken\x12,.authentication.service.v1.BlockTokenRequest\x1a-.authentication.service.v1.BlockTokenResponse\"\x00\x12X\n" +
 	"\fUnblockToken\x12..authentication.service.v1.UnblockTokenRequest\x1a\x16.google.protobuf.Empty\"\x00\x12M\n" +
-	"\x06WhoAmI\x12\x16.google.protobuf.Empty\x1a).authentication.service.v1.WhoAmIResponse\"\x00B\xfd\x01\n" +
-	"\x1dcom.authentication.service.v1B\x13AuthenticationProtoP\x01ZAgo-wind-cms/api/gen/go/authentication/service/v1;authenticationpb\xa2\x02\x03ASX\xaa\x02\x19Authentication.Service.V1\xca\x02\x19Authentication\\Service\\V1\xe2\x02%Authentication\\Service\\V1\\GPBMetadata\xea\x02\x1bAuthentication::Service::V1b\x06proto3"
+	"\x06WhoAmI\x12\x16.google.protobuf.Empty\x1a).authentication.service.v1.WhoAmIResponse\"\x00B\x80\x02\n" +
+	"\x1dcom.authentication.service.v1B\x13AuthenticationProtoP\x01ZDgo-wind-ledger/api/gen/go/authentication/service/v1;authenticationpb\xa2\x02\x03ASX\xaa\x02\x19Authentication.Service.V1\xca\x02\x19Authentication\\Service\\V1\xe2\x02%Authentication\\Service\\V1\\GPBMetadata\xea\x02\x1bAuthentication::Service::V1b\x06proto3"
 
 var (
 	file_authentication_service_v1_authentication_proto_rawDescOnce sync.Once

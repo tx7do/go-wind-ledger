@@ -873,7 +873,11 @@
       "assetBalance": "金额",
       "assetCurrency": "币种",
       "noData": "暂无数据",
-      "refreshOverview": "刷新"
+      "refreshOverview": "刷新",
+      "statisticsTitle": "账户统计",
+      "totalBalance": "账户总余额",
+      "totalCreditLimit": "信用额度合计",
+      "totalAvailable": "可用额度合计"
     },
     "balanceFlow": {
       "moduleName": "收支流水",
@@ -905,7 +909,8 @@
       "button": {
         "create": "新建流水",
         "confirm": "确认"
-      }
+      },
+      "viewFiles": "查看附件"
     },
     "category": {
       "moduleName": "分类",
@@ -969,7 +974,13 @@
       "rate": "汇率",
       "button": {
         "refresh": "刷新汇率"
-      }
+      },
+      "convert": "换算",
+      "from": "源币种",
+      "to": "目标币种",
+      "convertAmount": "金额",
+      "convertRate": "汇率",
+      "convertResult": "换算结果"
     },
     "report": {
       "moduleName": "统计报表",
@@ -1012,7 +1023,10 @@
       "tenant": "所属租户",
       "button": {
         "create": "邀请成员"
-      }
+      },
+      "pendingInvites": "我的邀请",
+      "accept": "接受",
+      "reject": "拒绝"
     },
     "budget": {
       "moduleName": "预算管理",

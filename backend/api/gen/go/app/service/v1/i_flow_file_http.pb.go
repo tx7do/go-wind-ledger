@@ -10,7 +10,7 @@ import (
 	context "context"
 	http "github.com/go-kratos/kratos/v2/transport/http"
 	binding "github.com/go-kratos/kratos/v2/transport/http/binding"
-	v1 "go-wind-cms/api/gen/go/ledger/service/v1"
+	v1 "go-wind-ledger/api/gen/go/ledger/service/v1"
 	emptypb "google.golang.org/protobuf/types/known/emptypb"
 )
 
@@ -35,13 +35,13 @@ type FlowFileServiceHTTPServer interface {
 
 func RegisterFlowFileServiceHTTPServer(s *http.Server, srv FlowFileServiceHTTPServer) {
 	r := s.Route("/")
-	r.GET("/app/v1/flow-files", _FlowFileService_List7_HTTP_Handler(srv))
-	r.DELETE("/app/v1/flow-files/{id}", _FlowFileService_Delete6_HTTP_Handler(srv))
+	r.GET("/app/v1/flow-files", _FlowFileService_List5_HTTP_Handler(srv))
+	r.DELETE("/app/v1/flow-files/{id}", _FlowFileService_Delete4_HTTP_Handler(srv))
 	r.POST("/app/v1/flow-files/upload", _FlowFileService_UploadFile0_HTTP_Handler(srv))
 	r.GET("/app/v1/flow-files/view", _FlowFileService_ViewFile0_HTTP_Handler(srv))
 }
 
-func _FlowFileService_List7_HTTP_Handler(srv FlowFileServiceHTTPServer) func(ctx http.Context) error {
+func _FlowFileService_List5_HTTP_Handler(srv FlowFileServiceHTTPServer) func(ctx http.Context) error {
 	return func(ctx http.Context) error {
 		var in v1.ListFlowFileRequest
 		if err := ctx.BindQuery(&in); err != nil {
@@ -60,7 +60,7 @@ func _FlowFileService_List7_HTTP_Handler(srv FlowFileServiceHTTPServer) func(ctx
 	}
 }
 
-func _FlowFileService_Delete6_HTTP_Handler(srv FlowFileServiceHTTPServer) func(ctx http.Context) error {
+func _FlowFileService_Delete4_HTTP_Handler(srv FlowFileServiceHTTPServer) func(ctx http.Context) error {
 	return func(ctx http.Context) error {
 		var in v1.DeleteFlowFileRequest
 		if err := ctx.BindQuery(&in); err != nil {

@@ -11,7 +11,7 @@ import (
 	http "github.com/go-kratos/kratos/v2/transport/http"
 	binding "github.com/go-kratos/kratos/v2/transport/http/binding"
 	v1 "github.com/tx7do/go-crud/api/gen/go/pagination/v1"
-	v11 "go-wind-cms/api/gen/go/permission/service/v1"
+	v11 "go-wind-ledger/api/gen/go/permission/service/v1"
 )
 
 // This is a compile-time assertion to ensure that this generated file
@@ -33,11 +33,11 @@ type PolicyEvaluationLogServiceHTTPServer interface {
 
 func RegisterPolicyEvaluationLogServiceHTTPServer(s *http.Server, srv PolicyEvaluationLogServiceHTTPServer) {
 	r := s.Route("/")
-	r.GET("/admin/v1/policy-evaluation-logs", _PolicyEvaluationLogService_List30_HTTP_Handler(srv))
-	r.GET("/admin/v1/policy-evaluation-logs/{id}", _PolicyEvaluationLogService_Get29_HTTP_Handler(srv))
+	r.GET("/admin/v1/policy-evaluation-logs", _PolicyEvaluationLogService_List24_HTTP_Handler(srv))
+	r.GET("/admin/v1/policy-evaluation-logs/{id}", _PolicyEvaluationLogService_Get23_HTTP_Handler(srv))
 }
 
-func _PolicyEvaluationLogService_List30_HTTP_Handler(srv PolicyEvaluationLogServiceHTTPServer) func(ctx http.Context) error {
+func _PolicyEvaluationLogService_List24_HTTP_Handler(srv PolicyEvaluationLogServiceHTTPServer) func(ctx http.Context) error {
 	return func(ctx http.Context) error {
 		var in v1.PagingRequest
 		if err := ctx.BindQuery(&in); err != nil {
@@ -56,7 +56,7 @@ func _PolicyEvaluationLogService_List30_HTTP_Handler(srv PolicyEvaluationLogServ
 	}
 }
 
-func _PolicyEvaluationLogService_Get29_HTTP_Handler(srv PolicyEvaluationLogServiceHTTPServer) func(ctx http.Context) error {
+func _PolicyEvaluationLogService_Get23_HTTP_Handler(srv PolicyEvaluationLogServiceHTTPServer) func(ctx http.Context) error {
 	return func(ctx http.Context) error {
 		var in v11.GetPolicyEvaluationLogRequest
 		if err := ctx.BindQuery(&in); err != nil {

@@ -18,7 +18,7 @@ import (
 	_ "github.com/jackc/pgx/v5/stdlib"
 	_ "github.com/lib/pq"
 
-	"go-wind-cms/pkg/oss"
+	"go-wind-ledger/pkg/oss"
 )
 
 // NewRedisClient 创建Redis客户端

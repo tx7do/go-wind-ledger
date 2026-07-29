@@ -304,8 +304,8 @@ const file_identity_service_v1_user_org_unit_proto_rawDesc = "" +
 	"\v_deleted_byB\r\n" +
 	"\v_created_atB\r\n" +
 	"\v_updated_atB\r\n" +
-	"\v_deleted_atB\xd0\x01\n" +
-	"\x17com.identity.service.v1B\x10UserOrgUnitProtoP\x01Z5go-wind-cms/api/gen/go/identity/service/v1;identitypb\xa2\x02\x03ISX\xaa\x02\x13Identity.Service.V1\xca\x02\x13Identity\\Service\\V1\xe2\x02\x1fIdentity\\Service\\V1\\GPBMetadata\xea\x02\x15Identity::Service::V1b\x06proto3"
+	"\v_deleted_atB\xd3\x01\n" +
+	"\x17com.identity.service.v1B\x10UserOrgUnitProtoP\x01Z8go-wind-ledger/api/gen/go/identity/service/v1;identitypb\xa2\x02\x03ISX\xaa\x02\x13Identity.Service.V1\xca\x02\x13Identity\\Service\\V1\xe2\x02\x1fIdentity\\Service\\V1\\GPBMetadata\xea\x02\x15Identity::Service::V1b\x06proto3"
 
 var (
 	file_identity_service_v1_user_org_unit_proto_rawDescOnce sync.Once

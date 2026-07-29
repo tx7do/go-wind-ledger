@@ -1047,8 +1047,8 @@ const file_ledger_service_v1_balance_flow_proto_rawDesc = "" +
 	"\x06Delete\x12+.ledger.service.v1.DeleteBalanceFlowRequest\x1a\x16.google.protobuf.Empty\"\x00\x12Y\n" +
 	"\aConfirm\x12,.ledger.service.v1.ConfirmBalanceFlowRequest\x1a\x1e.ledger.service.v1.BalanceFlow\"\x00\x12[\n" +
 	"\n" +
-	"Statistics\x12$.ledger.service.v1.StatisticsRequest\x1a%.ledger.service.v1.StatisticsResponse\"\x00B\xc3\x01\n" +
-	"\x15com.ledger.service.v1B\x10BalanceFlowProtoP\x01Z2go-wind-cms/api/gen/go/ledger/service/v1;servicev1\xa2\x02\x03LSX\xaa\x02\x11Ledger.Service.V1\xca\x02\x11Ledger\\Service\\V1\xe2\x02\x1dLedger\\Service\\V1\\GPBMetadata\xea\x02\x13Ledger::Service::V1b\x06proto3"
+	"Statistics\x12$.ledger.service.v1.StatisticsRequest\x1a%.ledger.service.v1.StatisticsResponse\"\x00B\xc6\x01\n" +
+	"\x15com.ledger.service.v1B\x10BalanceFlowProtoP\x01Z5go-wind-ledger/api/gen/go/ledger/service/v1;servicev1\xa2\x02\x03LSX\xaa\x02\x11Ledger.Service.V1\xca\x02\x11Ledger\\Service\\V1\xe2\x02\x1dLedger\\Service\\V1\\GPBMetadata\xea\x02\x13Ledger::Service::V1b\x06proto3"
 
 var (
 	file_ledger_service_v1_balance_flow_proto_rawDescOnce sync.Once

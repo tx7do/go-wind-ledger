@@ -7,8 +7,8 @@ import (
 	"database/sql/driver"
 	"errors"
 	"fmt"
-	"go-wind-cms/app/core/service/internal/data/ent/orgunit"
-	"go-wind-cms/app/core/service/internal/data/ent/predicate"
+	"go-wind-ledger/app/core/service/internal/data/ent/orgunit"
+	"go-wind-ledger/app/core/service/internal/data/ent/predicate"
 	"math"
 
 	"entgo.io/ent"

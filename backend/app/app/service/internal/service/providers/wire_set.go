@@ -13,7 +13,7 @@ package providers
 import (
 	"github.com/google/wire"
 
-	"go-wind-cms/app/app/service/internal/service"
+	"go-wind-ledger/app/app/service/internal/service"
 )
 
 // ProviderSet is the Wire provider set for data layer.
@@ -21,14 +21,6 @@ var ProviderSet = wire.NewSet(
 	service.NewAuthenticationService,
 	service.NewUserProfileService,
 	service.NewFileTransferService,
-
-	service.NewCategoryService,
-	service.NewTagService,
-	service.NewCommentService,
-	service.NewPageService,
-	service.NewSectionService,
-	service.NewPostService,
-	service.NewNavigationService,
 
 	service.NewBookService,
 	service.NewBookTemplateService,

@@ -43,6 +43,7 @@ import 'package:flutter_app/src/features/ledger/pages/payee_form_page.dart';
 import 'package:flutter_app/src/features/ledger/pages/note_day_list_page.dart';
 import 'package:flutter_app/src/features/ledger/pages/note_day_form_page.dart';
 import 'package:flutter_app/src/features/ledger/pages/currency_list_page.dart';
+import 'package:flutter_app/src/features/ledger/pages/settings_page.dart';
 import 'package:flutter_app/src/features/ledger/pages/report_page.dart';
 import 'package:flutter_app/src/features/cms/pages/explore/explore_page.dart';
 import 'package:flutter_app/src/features/cms/pages/profile/profile_page.dart';
@@ -358,6 +359,12 @@ class AppRouter {
         path: '/ledger/currencies',
         builder: (context, state) {
           return const CurrencyListPage();
+        },
+      ),
+      GoRoute(
+        path: '/ledger/settings',
+        builder: (context, state) {
+          return const SettingsPage();
         },
       ),
       GoRoute(

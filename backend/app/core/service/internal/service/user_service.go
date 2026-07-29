@@ -13,14 +13,14 @@ import (
 	"github.com/tx7do/go-utils/sliceutil"
 	"github.com/tx7do/go-utils/trans"
 
-	"go-wind-cms/app/core/service/internal/data"
+	"go-wind-ledger/app/core/service/internal/data"
 
-	authenticationV1 "go-wind-cms/api/gen/go/authentication/service/v1"
-	identityV1 "go-wind-cms/api/gen/go/identity/service/v1"
-	permissionV1 "go-wind-cms/api/gen/go/permission/service/v1"
+	authenticationV1 "go-wind-ledger/api/gen/go/authentication/service/v1"
+	identityV1 "go-wind-ledger/api/gen/go/identity/service/v1"
+	permissionV1 "go-wind-ledger/api/gen/go/permission/service/v1"
 
-	"go-wind-cms/pkg/constants"
-	appViewer "go-wind-cms/pkg/entgo/viewer"
+	"go-wind-ledger/pkg/constants"
+	appViewer "go-wind-ledger/pkg/entgo/viewer"
 )
 
 type UserService struct {

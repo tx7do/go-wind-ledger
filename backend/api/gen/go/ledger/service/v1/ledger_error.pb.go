@@ -124,8 +124,8 @@ const file_ledger_service_v1_ledger_error_proto_rawDesc = "" +
 	"\x12MAX_LIMIT_EXCEEDED\x10\x89\t\x1a\x04\xa8E\xad\x03\x12 \n" +
 	"\x15INTERNAL_SERVER_ERROR\x10\xd0\x0f\x1a\x04\xa8E\xf4\x03\x12\x18\n" +
 	"\rUPLOAD_FAILED\x10\xd1\x0f\x1a\x04\xa8E\xf4\x03\x12\x1a\n" +
-	"\x0fDOWNLOAD_FAILED\x10\xd2\x0f\x1a\x04\xa8E\xf4\x03\x1a\x04\xa0E\xf4\x03B\xc3\x01\n" +
-	"\x15com.ledger.service.v1B\x10LedgerErrorProtoP\x01Z2go-wind-cms/api/gen/go/ledger/service/v1;servicev1\xa2\x02\x03LSX\xaa\x02\x11Ledger.Service.V1\xca\x02\x11Ledger\\Service\\V1\xe2\x02\x1dLedger\\Service\\V1\\GPBMetadata\xea\x02\x13Ledger::Service::V1b\x06proto3"
+	"\x0fDOWNLOAD_FAILED\x10\xd2\x0f\x1a\x04\xa8E\xf4\x03\x1a\x04\xa0E\xf4\x03B\xc6\x01\n" +
+	"\x15com.ledger.service.v1B\x10LedgerErrorProtoP\x01Z5go-wind-ledger/api/gen/go/ledger/service/v1;servicev1\xa2\x02\x03LSX\xaa\x02\x11Ledger.Service.V1\xca\x02\x11Ledger\\Service\\V1\xe2\x02\x1dLedger\\Service\\V1\\GPBMetadata\xea\x02\x13Ledger::Service::V1b\x06proto3"
 
 var (
 	file_ledger_service_v1_ledger_error_proto_rawDescOnce sync.Once

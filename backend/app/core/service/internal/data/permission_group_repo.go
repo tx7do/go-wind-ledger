@@ -15,13 +15,13 @@ import (
 	"github.com/tx7do/go-utils/copierutil"
 	"github.com/tx7do/go-utils/mapper"
 
-	"go-wind-cms/app/core/service/internal/data/ent"
-	"go-wind-cms/app/core/service/internal/data/ent/permissiongroup"
-	"go-wind-cms/app/core/service/internal/data/ent/predicate"
+	"go-wind-ledger/app/core/service/internal/data/ent"
+	"go-wind-ledger/app/core/service/internal/data/ent/permissiongroup"
+	"go-wind-ledger/app/core/service/internal/data/ent/predicate"
 
-	permissionV1 "go-wind-cms/api/gen/go/permission/service/v1"
+	permissionV1 "go-wind-ledger/api/gen/go/permission/service/v1"
 
-	"go-wind-cms/pkg/constants"
+	"go-wind-ledger/pkg/constants"
 )
 
 type PermissionGroupRepo struct {

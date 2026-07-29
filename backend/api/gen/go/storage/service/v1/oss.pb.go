@@ -958,8 +958,8 @@ const file_storage_service_v1_oss_proto_rawDesc = "" +
 	"\x15GetUploadPresignedUrl\x120.storage.service.v1.GetUploadPresignedUrlRequest\x1a1.storage.service.v1.GetUploadPresignedUrlResponse\"\x00\x12k\n" +
 	"\x0eGetDownloadUrl\x12*.storage.service.v1.GetDownloadInfoRequest\x1a+.storage.service.v1.GetDownloadInfoResponse\"\x00\x12`\n" +
 	"\vListOssFile\x12&.storage.service.v1.ListOssFileRequest\x1a'.storage.service.v1.ListOssFileResponse\"\x00\x12f\n" +
-	"\rDeleteOssFile\x12(.storage.service.v1.DeleteOssFileRequest\x1a).storage.service.v1.DeleteOssFileResponse\"\x00B\xc1\x01\n" +
-	"\x16com.storage.service.v1B\bOssProtoP\x01Z3go-wind-cms/api/gen/go/storage/service/v1;storagepb\xa2\x02\x03SSX\xaa\x02\x12Storage.Service.V1\xca\x02\x12Storage\\Service\\V1\xe2\x02\x1eStorage\\Service\\V1\\GPBMetadata\xea\x02\x14Storage::Service::V1b\x06proto3"
+	"\rDeleteOssFile\x12(.storage.service.v1.DeleteOssFileRequest\x1a).storage.service.v1.DeleteOssFileResponse\"\x00B\xc4\x01\n" +
+	"\x16com.storage.service.v1B\bOssProtoP\x01Z6go-wind-ledger/api/gen/go/storage/service/v1;storagepb\xa2\x02\x03SSX\xaa\x02\x12Storage.Service.V1\xca\x02\x12Storage\\Service\\V1\xe2\x02\x1eStorage\\Service\\V1\\GPBMetadata\xea\x02\x14Storage::Service::V1b\x06proto3"
 
 var (
 	file_storage_service_v1_oss_proto_rawDescOnce sync.Once

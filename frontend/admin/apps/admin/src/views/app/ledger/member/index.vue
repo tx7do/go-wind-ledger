@@ -16,6 +16,7 @@ import { useVbenVxeGrid } from '#/adapter/vxe-table';
 import {
   apiClient,
   fetchListMembers,
+  fetchListMyTenants,
   fetchListTenants,
   membershipStatusList,
   membershipStatusToColor,
@@ -32,6 +33,82 @@ const userViewStore = useUserViewStore();
 
 const tenantOptions = ref<{ label: string; value: number }[]>([]);
 const currentTenantId = ref<number | undefined>(undefined);
+
+// 我的待处理邀请
+const pendingInvites = ref<any[]>([]);
+const invitesLoading = ref(false);
+
+const inviteColumns = [
+  {
+    title: $t('page.ledger.member.tenant'),
+    dataIndex: 'tenantName',
+    key: 'tenantName',
+    ellipsis: true,
+  },
+  {
+    title: $t('page.ledger.member.role'),
+    dataIndex: 'roleName',
+    key: 'roleName',
+    width: 140,
+  },
+  {
+    title: $t('page.ledger.member.status'),
+    dataIndex: 'status',
+    key: 'status',
+    slots: { default: 'status' },
+    width: 110,
+  },
+  {
+    title: $t('ui.table.action'),
+    dataIndex: 'action',
+    key: 'action',
+    fixed: 'right' as const,
+    slots: { default: 'inviteAction' },
+    width: 160,
+  },
+];
+
+async function loadPendingInvites() {
+  invitesLoading.value = true;
+  try {
+    const resp = await fetchListMyTenants({});
+    pendingInvites.value = (resp.items ?? []).filter(
+      (item: any) => item.status === 'INVITED',
+    );
+  } catch {
+    pendingInvites.value = [];
+  } finally {
+    invitesLoading.value = false;
+  }
+}
+
+async function handleAcceptInvite(row: any) {
+  try {
+    await apiClient.tenantMemberService.AcceptInvite({ id: row.membershipId });
+    notification.success({
+      message: $t('ui.notification.operation_success'),
+    });
+    await loadPendingInvites();
+  } catch {
+    notification.error({
+      message: $t('ui.notification.operation_failed'),
+    });
+  }
+}
+
+async function handleRejectInvite(row: any) {
+  try {
+    await apiClient.tenantMemberService.RejectInvite({ id: row.membershipId });
+    notification.success({
+      message: $t('ui.notification.operation_success'),
+    });
+    await loadPendingInvites();
+  } catch {
+    notification.error({
+      message: $t('ui.notification.operation_failed'),
+    });
+  }
+}
 
 const formOptions: VbenFormProps = {
   collapsed: false,
@@ -212,6 +289,9 @@ onMounted(async () => {
     currentTenantId.value = userViewStore.getCurrentTenantId();
     gridApi.query();
   }
+
+  // 加载当前用户的待处理邀请
+  loadPendingInvites();
 });
 
 watch(currentTenantId, () => {
@@ -260,6 +340,40 @@ watch(currentTenantId, () => {
         </a-popconfirm>
       </template>
     </Grid>
+
+    <!-- 我的邀请 -->
+    <a-card :bordered="false" class="mt-4" :loading="invitesLoading">
+      <template #title>
+        <span>{{ $t('page.ledger.member.pendingInvites') }}</span>
+      </template>
+      <a-table
+        :columns="inviteColumns"
+        :data-source="pendingInvites"
+        :pagination="false"
+        size="small"
+        :row-key="(record: any) => record.membershipId"
+      >
+        <template #status="{ row }">
+          <a-tag :color="membershipStatusToColor(row.status)">
+            {{ membershipStatusToName(row.status) }}
+          </a-tag>
+        </template>
+        <template #inviteAction="{ row }">
+          <a-button
+            type="link"
+            @click="handleAcceptInvite(row)"
+          >
+            {{ $t('page.ledger.member.accept') }}
+          </a-button>
+          <a-button danger type="link" @click="handleRejectInvite(row)">
+            {{ $t('page.ledger.member.reject') }}
+          </a-button>
+        </template>
+        <template #emptyText>
+          {{ $t('page.ledger.account.noData') }}
+        </template>
+      </a-table>
+    </a-card>
     <Drawer />
   </Page>
 </template>

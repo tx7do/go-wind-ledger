@@ -8,11 +8,11 @@ import (
 	"github.com/tx7do/kratos-bootstrap/bootstrap"
 	"google.golang.org/protobuf/types/known/emptypb"
 
-	"go-wind-cms/app/core/service/internal/data"
+	"go-wind-ledger/app/core/service/internal/data"
 
-	storageV1 "go-wind-cms/api/gen/go/storage/service/v1"
+	storageV1 "go-wind-ledger/api/gen/go/storage/service/v1"
 
-	"go-wind-cms/pkg/oss"
+	"go-wind-ledger/pkg/oss"
 )
 
 type FileService struct {

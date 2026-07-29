@@ -6,7 +6,7 @@ package authenticationpb
 import (
 	context "context"
 	redact "github.com/tx7do/go-wind-toolkit/protoc-gen-go-redact/redact/v1"
-	identitypb "go-wind-cms/api/gen/go/identity/service/v1"
+	identitypb "go-wind-ledger/api/gen/go/identity/service/v1"
 	annotations "google.golang.org/genproto/googleapis/api/annotations"
 	grpc "google.golang.org/grpc"
 	codes "google.golang.org/grpc/codes"

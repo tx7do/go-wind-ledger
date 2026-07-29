@@ -11,7 +11,7 @@ import (
 	http "github.com/go-kratos/kratos/v2/transport/http"
 	binding "github.com/go-kratos/kratos/v2/transport/http/binding"
 	v1 "github.com/tx7do/go-crud/api/gen/go/pagination/v1"
-	v11 "go-wind-cms/api/gen/go/internal_message/service/v1"
+	v11 "go-wind-ledger/api/gen/go/internal_message/service/v1"
 	emptypb "google.golang.org/protobuf/types/known/emptypb"
 )
 
@@ -43,14 +43,14 @@ type InternalMessageCategoryServiceHTTPServer interface {
 
 func RegisterInternalMessageCategoryServiceHTTPServer(s *http.Server, srv InternalMessageCategoryServiceHTTPServer) {
 	r := s.Route("/")
-	r.GET("/admin/v1/internal-message/categories", _InternalMessageCategoryService_List14_HTTP_Handler(srv))
-	r.GET("/admin/v1/internal-message/categories/{id}", _InternalMessageCategoryService_Get13_HTTP_Handler(srv))
-	r.POST("/admin/v1/internal-message/categories", _InternalMessageCategoryService_Create10_HTTP_Handler(srv))
-	r.PUT("/admin/v1/internal-message/categories/{id}", _InternalMessageCategoryService_Update10_HTTP_Handler(srv))
-	r.DELETE("/admin/v1/internal-message/categories/{id}", _InternalMessageCategoryService_Delete11_HTTP_Handler(srv))
+	r.GET("/admin/v1/internal-message/categories", _InternalMessageCategoryService_List12_HTTP_Handler(srv))
+	r.GET("/admin/v1/internal-message/categories/{id}", _InternalMessageCategoryService_Get11_HTTP_Handler(srv))
+	r.POST("/admin/v1/internal-message/categories", _InternalMessageCategoryService_Create8_HTTP_Handler(srv))
+	r.PUT("/admin/v1/internal-message/categories/{id}", _InternalMessageCategoryService_Update8_HTTP_Handler(srv))
+	r.DELETE("/admin/v1/internal-message/categories/{id}", _InternalMessageCategoryService_Delete9_HTTP_Handler(srv))
 }
 
-func _InternalMessageCategoryService_List14_HTTP_Handler(srv InternalMessageCategoryServiceHTTPServer) func(ctx http.Context) error {
+func _InternalMessageCategoryService_List12_HTTP_Handler(srv InternalMessageCategoryServiceHTTPServer) func(ctx http.Context) error {
 	return func(ctx http.Context) error {
 		var in v1.PagingRequest
 		if err := ctx.BindQuery(&in); err != nil {
@@ -69,7 +69,7 @@ func _InternalMessageCategoryService_List14_HTTP_Handler(srv InternalMessageCate
 	}
 }
 
-func _InternalMessageCategoryService_Get13_HTTP_Handler(srv InternalMessageCategoryServiceHTTPServer) func(ctx http.Context) error {
+func _InternalMessageCategoryService_Get11_HTTP_Handler(srv InternalMessageCategoryServiceHTTPServer) func(ctx http.Context) error {
 	return func(ctx http.Context) error {
 		var in v11.GetInternalMessageCategoryRequest
 		if err := ctx.BindQuery(&in); err != nil {
@@ -91,7 +91,7 @@ func _InternalMessageCategoryService_Get13_HTTP_Handler(srv InternalMessageCateg
 	}
 }
 
-func _InternalMessageCategoryService_Create10_HTTP_Handler(srv InternalMessageCategoryServiceHTTPServer) func(ctx http.Context) error {
+func _InternalMessageCategoryService_Create8_HTTP_Handler(srv InternalMessageCategoryServiceHTTPServer) func(ctx http.Context) error {
 	return func(ctx http.Context) error {
 		var in v11.CreateInternalMessageCategoryRequest
 		if err := ctx.Bind(&in); err != nil {
@@ -113,7 +113,7 @@ func _InternalMessageCategoryService_Create10_HTTP_Handler(srv InternalMessageCa
 	}
 }
 
-func _InternalMessageCategoryService_Update10_HTTP_Handler(srv InternalMessageCategoryServiceHTTPServer) func(ctx http.Context) error {
+func _InternalMessageCategoryService_Update8_HTTP_Handler(srv InternalMessageCategoryServiceHTTPServer) func(ctx http.Context) error {
 	return func(ctx http.Context) error {
 		var in v11.UpdateInternalMessageCategoryRequest
 		if err := ctx.Bind(&in); err != nil {
@@ -138,7 +138,7 @@ func _InternalMessageCategoryService_Update10_HTTP_Handler(srv InternalMessageCa
 	}
 }
 
-func _InternalMessageCategoryService_Delete11_HTTP_Handler(srv InternalMessageCategoryServiceHTTPServer) func(ctx http.Context) error {
+func _InternalMessageCategoryService_Delete9_HTTP_Handler(srv InternalMessageCategoryServiceHTTPServer) func(ctx http.Context) error {
 	return func(ctx http.Context) error {
 		var in v11.DeleteInternalMessageCategoryRequest
 		if err := ctx.BindQuery(&in); err != nil {

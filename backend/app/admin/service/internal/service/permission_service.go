@@ -16,13 +16,13 @@ import (
 	"github.com/tx7do/go-utils/sliceutil"
 	"github.com/tx7do/go-utils/trans"
 
-	adminV1 "go-wind-cms/api/gen/go/admin/service/v1"
-	permissionV1 "go-wind-cms/api/gen/go/permission/service/v1"
+	adminV1 "go-wind-ledger/api/gen/go/admin/service/v1"
+	permissionV1 "go-wind-ledger/api/gen/go/permission/service/v1"
 
-	"go-wind-cms/pkg/constants"
-	appViewer "go-wind-cms/pkg/entgo/viewer"
-	"go-wind-cms/pkg/middleware/auth"
-	"go-wind-cms/pkg/utils/converter"
+	"go-wind-ledger/pkg/constants"
+	appViewer "go-wind-ledger/pkg/entgo/viewer"
+	"go-wind-ledger/pkg/middleware/auth"
+	"go-wind-ledger/pkg/utils/converter"
 )
 
 type PermissionService struct {

@@ -14,9 +14,9 @@ import (
 	"github.com/tx7do/kratos-bootstrap/bootstrap"
 	entBootstrap "github.com/tx7do/kratos-bootstrap/database/ent"
 
-	"go-wind-cms/app/core/service/internal/data/ent"
-	"go-wind-cms/app/core/service/internal/data/ent/migrate"
-	_ "go-wind-cms/app/core/service/internal/data/ent/runtime"
+	"go-wind-ledger/app/core/service/internal/data/ent"
+	"go-wind-ledger/app/core/service/internal/data/ent/migrate"
+	_ "go-wind-ledger/app/core/service/internal/data/ent/runtime"
 )
 
 // NewEntClient 创建Ent ORM数据库客户端

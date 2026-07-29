@@ -8,7 +8,7 @@ package adminpb
 
 import (
 	v1 "github.com/tx7do/go-crud/api/gen/go/pagination/v1"
-	v11 "go-wind-cms/api/gen/go/internal_message/service/v1"
+	v11 "go-wind-ledger/api/gen/go/internal_message/service/v1"
 	_ "google.golang.org/genproto/googleapis/api/annotations"
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
@@ -32,8 +32,8 @@ const file_admin_service_v1_i_internal_message_recipient_proto_rawDesc = "" +
 	"\x1fInternalMessageRecipientService\x12\x88\x01\n" +
 	"\rListUserInbox\x12\x19.pagination.PagingRequest\x1a2.internal_message.service.v1.ListUserInboxResponse\"(\x82\xd3\xe4\x93\x02\"\x12 /admin/v1/internal-message/inbox\x12\xaa\x01\n" +
 	"\x1bDeleteNotificationFromInbox\x12?.internal_message.service.v1.DeleteNotificationFromInboxRequest\x1a\x16.google.protobuf.Empty\"2\x82\xd3\xe4\x93\x02,:\x01*\"'/admin/v1/internal-message/inbox/delete\x12\x98\x01\n" +
-	"\x16MarkNotificationAsRead\x12:.internal_message.service.v1.MarkNotificationAsReadRequest\x1a\x16.google.protobuf.Empty\"*\x82\xd3\xe4\x93\x02$:\x01*\"\x1f/admin/v1/internal-message/readB\xc9\x01\n" +
-	"\x14com.admin.service.v1B\x1eIInternalMessageRecipientProtoP\x01Z/go-wind-cms/api/gen/go/admin/service/v1;adminpb\xa2\x02\x03ASX\xaa\x02\x10Admin.Service.V1\xca\x02\x10Admin\\Service\\V1\xe2\x02\x1cAdmin\\Service\\V1\\GPBMetadata\xea\x02\x12Admin::Service::V1b\x06proto3"
+	"\x16MarkNotificationAsRead\x12:.internal_message.service.v1.MarkNotificationAsReadRequest\x1a\x16.google.protobuf.Empty\"*\x82\xd3\xe4\x93\x02$:\x01*\"\x1f/admin/v1/internal-message/readB\xcc\x01\n" +
+	"\x14com.admin.service.v1B\x1eIInternalMessageRecipientProtoP\x01Z2go-wind-ledger/api/gen/go/admin/service/v1;adminpb\xa2\x02\x03ASX\xaa\x02\x10Admin.Service.V1\xca\x02\x10Admin\\Service\\V1\xe2\x02\x1cAdmin\\Service\\V1\\GPBMetadata\xea\x02\x12Admin::Service::V1b\x06proto3"
 
 var file_admin_service_v1_i_internal_message_recipient_proto_goTypes = []any{
 	(*v1.PagingRequest)(nil),                       // 0: pagination.PagingRequest

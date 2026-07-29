@@ -4,7 +4,7 @@ package ent
 
 import (
 	"fmt"
-	"go-wind-cms/app/core/service/internal/data/ent/language"
+	"go-wind-ledger/app/core/service/internal/data/ent/language"
 	"strings"
 	"time"
 

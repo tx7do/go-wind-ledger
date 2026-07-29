@@ -2,4 +2,4 @@
 
 package ent
 
-// The schema-stitching logic is generated in go-wind-cms/app/core/service/internal/data/ent/runtime/runtime.go
+// The schema-stitching logic is generated in go-wind-ledger/app/core/service/internal/data/ent/runtime/runtime.go

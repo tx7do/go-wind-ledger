@@ -8,9 +8,9 @@ import (
 	"github.com/tx7do/kratos-bootstrap/bootstrap"
 	"google.golang.org/protobuf/types/known/emptypb"
 
-	"go-wind-cms/app/core/service/internal/data"
+	"go-wind-ledger/app/core/service/internal/data"
 
-	authenticationV1 "go-wind-cms/api/gen/go/authentication/service/v1"
+	authenticationV1 "go-wind-ledger/api/gen/go/authentication/service/v1"
 )
 
 type UserCredentialService struct {

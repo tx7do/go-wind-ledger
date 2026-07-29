@@ -16,16 +16,16 @@ import (
 	"github.com/tx7do/kratos-bootstrap/bootstrap"
 	"github.com/tx7do/kratos-bootstrap/rpc"
 
-	"go-wind-cms/app/admin/service/cmd/server/assets"
-	"go-wind-cms/app/admin/service/internal/service"
+	"go-wind-ledger/app/admin/service/cmd/server/assets"
+	"go-wind-ledger/app/admin/service/internal/service"
 
-	adminV1 "go-wind-cms/api/gen/go/admin/service/v1"
-	auditV1 "go-wind-cms/api/gen/go/audit/service/v1"
-	identityV1 "go-wind-cms/api/gen/go/identity/service/v1"
+	adminV1 "go-wind-ledger/api/gen/go/admin/service/v1"
+	auditV1 "go-wind-ledger/api/gen/go/audit/service/v1"
+	identityV1 "go-wind-ledger/api/gen/go/identity/service/v1"
 
-	"go-wind-cms/pkg/metadata"
-	"go-wind-cms/pkg/middleware/auth"
-	applogging "go-wind-cms/pkg/middleware/logging"
+	"go-wind-ledger/pkg/metadata"
+	"go-wind-ledger/pkg/middleware/auth"
+	applogging "go-wind-ledger/pkg/middleware/logging"
 )
 
 // NewRestMiddleware 创建中间件
@@ -101,8 +101,6 @@ func NewRestServer(
 
 	fileSvc *service.FileService,
 
-	translatorService *service.TranslatorService,
-
 	apiAuditLogService *service.ApiAuditLogService,
 	dataAccessAuditLogService *service.DataAccessAuditLogService,
 	loginAuditLogService *service.LoginAuditLogService,
@@ -114,8 +112,6 @@ func NewRestServer(
 	bookService         *service.BookService,
 	bookTemplateService *service.BookTemplateService,
 	accountService      *service.AccountService,
-	categoryService    *service.CategoryService,
-	tagService         *service.TagService,
 	payeeService       *service.PayeeService,
 	balanceFlowService *service.BalanceFlowService,
 	flowFileService    *service.FlowFileService,
@@ -165,16 +161,12 @@ func NewRestServer(
 	adminV1.RegisterPermissionAuditLogServiceHTTPServer(srv, permissionAuditLogService)
 	adminV1.RegisterPolicyEvaluationLogServiceHTTPServer(srv, policyEvaluationLogService)
 
-	adminV1.RegisterTranslatorServiceHTTPServer(srv, translatorService)
-
 	adminV1.RegisterFileServiceHTTPServer(srv, fileSvc)
 
 		// === 记账系统 Admin REST API ===
 		adminV1.RegisterBookServiceHTTPServer(srv, bookService)
 		adminV1.RegisterBookTemplateServiceHTTPServer(srv, bookTemplateService)
 		adminV1.RegisterAccountServiceHTTPServer(srv, accountService)
-		adminV1.RegisterCategoryServiceHTTPServer(srv, categoryService)
-		adminV1.RegisterTagServiceHTTPServer(srv, tagService)
 		adminV1.RegisterPayeeServiceHTTPServer(srv, payeeService)
 		adminV1.RegisterBalanceFlowServiceHTTPServer(srv, balanceFlowService)
 		adminV1.RegisterFlowFileServiceHTTPServer(srv, flowFileService)

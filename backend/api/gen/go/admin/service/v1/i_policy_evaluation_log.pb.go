@@ -8,7 +8,7 @@ package adminpb
 
 import (
 	v1 "github.com/tx7do/go-crud/api/gen/go/pagination/v1"
-	v11 "go-wind-cms/api/gen/go/permission/service/v1"
+	v11 "go-wind-ledger/api/gen/go/permission/service/v1"
 	_ "google.golang.org/genproto/googleapis/api/annotations"
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
@@ -30,8 +30,8 @@ const file_admin_service_v1_i_policy_evaluation_log_proto_rawDesc = "" +
 	".admin/service/v1/i_policy_evaluation_log.proto\x12\x10admin.service.v1\x1a\x1cgoogle/api/annotations.proto\x1a\x1epagination/v1/pagination.proto\x1a1permission/service/v1/policy_evaluation_log.proto2\xbb\x02\n" +
 	"\x1aPolicyEvaluationLogService\x12\x83\x01\n" +
 	"\x04List\x12\x19.pagination.PagingRequest\x1a6.permission.service.v1.ListPolicyEvaluationLogResponse\"(\x82\xd3\xe4\x93\x02\"\x12 /admin/v1/policy-evaluation-logs\x12\x96\x01\n" +
-	"\x03Get\x124.permission.service.v1.GetPolicyEvaluationLogRequest\x1a*.permission.service.v1.PolicyEvaluationLog\"-\x82\xd3\xe4\x93\x02'\x12%/admin/v1/policy-evaluation-logs/{id}B\xc4\x01\n" +
-	"\x14com.admin.service.v1B\x19IPolicyEvaluationLogProtoP\x01Z/go-wind-cms/api/gen/go/admin/service/v1;adminpb\xa2\x02\x03ASX\xaa\x02\x10Admin.Service.V1\xca\x02\x10Admin\\Service\\V1\xe2\x02\x1cAdmin\\Service\\V1\\GPBMetadata\xea\x02\x12Admin::Service::V1b\x06proto3"
+	"\x03Get\x124.permission.service.v1.GetPolicyEvaluationLogRequest\x1a*.permission.service.v1.PolicyEvaluationLog\"-\x82\xd3\xe4\x93\x02'\x12%/admin/v1/policy-evaluation-logs/{id}B\xc7\x01\n" +
+	"\x14com.admin.service.v1B\x19IPolicyEvaluationLogProtoP\x01Z2go-wind-ledger/api/gen/go/admin/service/v1;adminpb\xa2\x02\x03ASX\xaa\x02\x10Admin.Service.V1\xca\x02\x10Admin\\Service\\V1\xe2\x02\x1cAdmin\\Service\\V1\\GPBMetadata\xea\x02\x12Admin::Service::V1b\x06proto3"
 
 var file_admin_service_v1_i_policy_evaluation_log_proto_goTypes = []any{
 	(*v1.PagingRequest)(nil),                    // 0: pagination.PagingRequest

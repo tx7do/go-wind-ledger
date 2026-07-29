@@ -27,10 +27,10 @@ import (
 	"github.com/tx7do/go-utils/geoip/geolite"
 	"github.com/tx7do/go-utils/jwtutil"
 
-	auditV1 "go-wind-cms/api/gen/go/audit/service/v1"
-	authenticationV1 "go-wind-cms/api/gen/go/authentication/service/v1"
+	auditV1 "go-wind-ledger/api/gen/go/audit/service/v1"
+	authenticationV1 "go-wind-ledger/api/gen/go/authentication/service/v1"
 
-	"go-wind-cms/pkg/jwt"
+	"go-wind-ledger/pkg/jwt"
 )
 
 var ipClient, _ = geolite.NewClient()

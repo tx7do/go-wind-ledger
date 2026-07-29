@@ -7,7 +7,7 @@
 package adminpb
 
 import (
-	v1 "go-wind-cms/api/gen/go/identity/service/v1"
+	v1 "go-wind-ledger/api/gen/go/identity/service/v1"
 	_ "google.golang.org/genproto/googleapis/api/annotations"
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
@@ -36,8 +36,8 @@ const file_admin_service_v1_i_user_profile_proto_rawDesc = "" +
 	"\fUploadAvatar\x12(.identity.service.v1.UploadAvatarRequest\x1a).identity.service.v1.UploadAvatarResponse\"\x1e\x82\xd3\xe4\x93\x02\x18:\x01*\"\x13/admin/v1/me/avatar\x12[\n" +
 	"\fDeleteAvatar\x12\x16.google.protobuf.Empty\x1a\x16.google.protobuf.Empty\"\x1b\x82\xd3\xe4\x93\x02\x15*\x13/admin/v1/me/avatar\x12o\n" +
 	"\vBindContact\x12'.identity.service.v1.BindContactRequest\x1a\x16.google.protobuf.Empty\"\x1f\x82\xd3\xe4\x93\x02\x19:\x01*\"\x14/admin/v1/me/contact\x12z\n" +
-	"\rVerifyContact\x12).identity.service.v1.VerifyContactRequest\x1a\x16.google.protobuf.Empty\"&\x82\xd3\xe4\x93\x02 :\x01*\"\x1b/admin/v1/me/contact/verifyB\xbc\x01\n" +
-	"\x14com.admin.service.v1B\x11IUserProfileProtoP\x01Z/go-wind-cms/api/gen/go/admin/service/v1;adminpb\xa2\x02\x03ASX\xaa\x02\x10Admin.Service.V1\xca\x02\x10Admin\\Service\\V1\xe2\x02\x1cAdmin\\Service\\V1\\GPBMetadata\xea\x02\x12Admin::Service::V1b\x06proto3"
+	"\rVerifyContact\x12).identity.service.v1.VerifyContactRequest\x1a\x16.google.protobuf.Empty\"&\x82\xd3\xe4\x93\x02 :\x01*\"\x1b/admin/v1/me/contact/verifyB\xbf\x01\n" +
+	"\x14com.admin.service.v1B\x11IUserProfileProtoP\x01Z2go-wind-ledger/api/gen/go/admin/service/v1;adminpb\xa2\x02\x03ASX\xaa\x02\x10Admin.Service.V1\xca\x02\x10Admin\\Service\\V1\xe2\x02\x1cAdmin\\Service\\V1\\GPBMetadata\xea\x02\x12Admin::Service::V1b\x06proto3"
 
 var file_admin_service_v1_i_user_profile_proto_goTypes = []any{
 	(*emptypb.Empty)(nil),            // 0: google.protobuf.Empty

@@ -613,9 +613,9 @@ const file_ledger_service_v1_payee_proto_rawDesc = "" +
 	"\x06Delete\x12%.ledger.service.v1.DeletePayeeRequest\x1a\x16.google.protobuf.Empty\"\x00\x12K\n" +
 	"\x06Toggle\x12%.ledger.service.v1.TogglePayeeRequest\x1a\x18.ledger.service.v1.Payee\"\x00\x12U\n" +
 	"\x10ToggleCanExpense\x12%.ledger.service.v1.TogglePayeeRequest\x1a\x18.ledger.service.v1.Payee\"\x00\x12T\n" +
-	"\x0fToggleCanIncome\x12%.ledger.service.v1.TogglePayeeRequest\x1a\x18.ledger.service.v1.Payee\"\x00B\xbd\x01\n" +
+	"\x0fToggleCanIncome\x12%.ledger.service.v1.TogglePayeeRequest\x1a\x18.ledger.service.v1.Payee\"\x00B\xc0\x01\n" +
 	"\x15com.ledger.service.v1B\n" +
-	"PayeeProtoP\x01Z2go-wind-cms/api/gen/go/ledger/service/v1;servicev1\xa2\x02\x03LSX\xaa\x02\x11Ledger.Service.V1\xca\x02\x11Ledger\\Service\\V1\xe2\x02\x1dLedger\\Service\\V1\\GPBMetadata\xea\x02\x13Ledger::Service::V1b\x06proto3"
+	"PayeeProtoP\x01Z5go-wind-ledger/api/gen/go/ledger/service/v1;servicev1\xa2\x02\x03LSX\xaa\x02\x11Ledger.Service.V1\xca\x02\x11Ledger\\Service\\V1\xe2\x02\x1dLedger\\Service\\V1\\GPBMetadata\xea\x02\x13Ledger::Service::V1b\x06proto3"
 
 var (
 	file_ledger_service_v1_payee_proto_rawDescOnce sync.Once

@@ -8,7 +8,7 @@ import (
 	"github.com/go-kratos/kratos/v2/transport"
 	"github.com/go-kratos/kratos/v2/transport/http"
 
-	adminV1 "go-wind-cms/api/gen/go/admin/service/v1"
+	adminV1 "go-wind-ledger/api/gen/go/admin/service/v1"
 )
 
 // Server is an server logging middleware.

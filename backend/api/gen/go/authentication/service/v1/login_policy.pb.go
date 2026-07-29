@@ -729,8 +729,8 @@ const file_authentication_service_v1_login_policy_proto_rawDesc = "" +
 	"\x03Get\x120.authentication.service.v1.GetLoginPolicyRequest\x1a&.authentication.service.v1.LoginPolicy\"\x00\x12W\n" +
 	"\x06Create\x123.authentication.service.v1.CreateLoginPolicyRequest\x1a\x16.google.protobuf.Empty\"\x00\x12W\n" +
 	"\x06Update\x123.authentication.service.v1.UpdateLoginPolicyRequest\x1a\x16.google.protobuf.Empty\"\x00\x12W\n" +
-	"\x06Delete\x123.authentication.service.v1.DeleteLoginPolicyRequest\x1a\x16.google.protobuf.Empty\"\x00B\xfa\x01\n" +
-	"\x1dcom.authentication.service.v1B\x10LoginPolicyProtoP\x01ZAgo-wind-cms/api/gen/go/authentication/service/v1;authenticationpb\xa2\x02\x03ASX\xaa\x02\x19Authentication.Service.V1\xca\x02\x19Authentication\\Service\\V1\xe2\x02%Authentication\\Service\\V1\\GPBMetadata\xea\x02\x1bAuthentication::Service::V1b\x06proto3"
+	"\x06Delete\x123.authentication.service.v1.DeleteLoginPolicyRequest\x1a\x16.google.protobuf.Empty\"\x00B\xfd\x01\n" +
+	"\x1dcom.authentication.service.v1B\x10LoginPolicyProtoP\x01ZDgo-wind-ledger/api/gen/go/authentication/service/v1;authenticationpb\xa2\x02\x03ASX\xaa\x02\x19Authentication.Service.V1\xca\x02\x19Authentication\\Service\\V1\xe2\x02%Authentication\\Service\\V1\\GPBMetadata\xea\x02\x1bAuthentication::Service::V1b\x06proto3"
 
 var (
 	file_authentication_service_v1_login_policy_proto_rawDescOnce sync.Once

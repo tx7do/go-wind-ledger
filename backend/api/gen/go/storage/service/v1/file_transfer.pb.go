@@ -685,8 +685,8 @@ const file_storage_service_v1_file_transfer_proto_rawDesc = "" +
 	"\x13FileTransferService\x12Q\n" +
 	"\fDownloadFile\x12'.storage.service.v1.DownloadFileRequest\x1a\x14.google.api.HttpBody\"\x000\x01\x12Q\n" +
 	"\rPutUploadFile\x12\x14.google.api.HttpBody\x1a&.storage.service.v1.UploadFileResponse\"\x00(\x01\x12R\n" +
-	"\x0ePostUploadFile\x12\x14.google.api.HttpBody\x1a&.storage.service.v1.UploadFileResponse\"\x00(\x01B\xca\x01\n" +
-	"\x16com.storage.service.v1B\x11FileTransferProtoP\x01Z3go-wind-cms/api/gen/go/storage/service/v1;storagepb\xa2\x02\x03SSX\xaa\x02\x12Storage.Service.V1\xca\x02\x12Storage\\Service\\V1\xe2\x02\x1eStorage\\Service\\V1\\GPBMetadata\xea\x02\x14Storage::Service::V1b\x06proto3"
+	"\x0ePostUploadFile\x12\x14.google.api.HttpBody\x1a&.storage.service.v1.UploadFileResponse\"\x00(\x01B\xcd\x01\n" +
+	"\x16com.storage.service.v1B\x11FileTransferProtoP\x01Z6go-wind-ledger/api/gen/go/storage/service/v1;storagepb\xa2\x02\x03SSX\xaa\x02\x12Storage.Service.V1\xca\x02\x12Storage\\Service\\V1\xe2\x02\x1eStorage\\Service\\V1\\GPBMetadata\xea\x02\x14Storage::Service::V1b\x06proto3"
 
 var (
 	file_storage_service_v1_file_transfer_proto_rawDescOnce sync.Once

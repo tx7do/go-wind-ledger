@@ -5,15 +5,13 @@ import (
 	"testing"
 	"time"
 
-	"github.com/alicebob/miniredis/v2"
 	"github.com/go-kratos/kratos/v2/log"
-	"github.com/redis/go-redis/v9"
 	"github.com/stretchr/testify/assert"
 
 	conf "github.com/tx7do/kratos-bootstrap/api/gen/go/conf/v1"
 	"github.com/tx7do/kratos-bootstrap/bootstrap"
 
-	authenticationV1 "go-wind-cms/api/gen/go/authentication/service/v1"
+	authenticationV1 "go-wind-ledger/api/gen/go/authentication/service/v1"
 )
 
 func TestUserTokenCache_BasicOperations(t *testing.T) {

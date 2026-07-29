@@ -11,10 +11,10 @@ import (
 	"github.com/tx7do/go-crud/viewer"
 	"go.opentelemetry.io/otel/trace"
 
-	authenticationV1 "go-wind-cms/api/gen/go/authentication/service/v1"
+	authenticationV1 "go-wind-ledger/api/gen/go/authentication/service/v1"
 
-	appViewer "go-wind-cms/pkg/entgo/viewer"
-	"go-wind-cms/pkg/metadata"
+	appViewer "go-wind-ledger/pkg/entgo/viewer"
+	"go-wind-ledger/pkg/metadata"
 )
 
 // Server 设置 Ent Viewer 到 Context 中的中间件

@@ -8,8 +8,8 @@ import (
 	"github.com/tx7do/kratos-bootstrap/bootstrap"
 	"google.golang.org/protobuf/types/known/emptypb"
 
-	appV1 "go-wind-cms/api/gen/go/app/service/v1"
-	ledgerV1 "go-wind-cms/api/gen/go/ledger/service/v1"
+	appV1 "go-wind-ledger/api/gen/go/app/service/v1"
+	ledgerV1 "go-wind-ledger/api/gen/go/ledger/service/v1"
 )
 
 type BookService struct {

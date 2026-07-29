@@ -7,7 +7,7 @@ import { Page } from '@vben/common-ui';
 
 import { notification } from 'ant-design-vue';
 
-import { fetchOverview } from '#/api';
+import { apiClient, fetchListAllCurrencies, fetchOverview } from '#/api';
 import { $t } from '#/locales';
 
 // 概览数据
@@ -56,6 +56,39 @@ const detailColumns = [
   },
 ];
 
+// 账户统计（按币种汇总）
+const statistics = ref<{ totalBalance: string; totalCreditLimit: string; totalAvailable: string }>({
+  totalBalance: '0',
+  totalCreditLimit: '0',
+  totalAvailable: '0',
+});
+
+const statsLoading = ref(false);
+
+// 币种过滤
+const currencyOptions = ref<Array<{ label: string; value: string }>>([]);
+const statsCurrency = ref<string | undefined>(undefined);
+
+async function loadStatistics() {
+  statsLoading.value = true;
+  try {
+    const resp = await apiClient.accountService.Statistics({
+      currencyCode: statsCurrency.value,
+    });
+    statistics.value = {
+      totalBalance: resp.totalBalance ?? '0',
+      totalCreditLimit: resp.totalCreditLimit ?? '0',
+      totalAvailable: resp.totalAvailable ?? '0',
+    };
+  } catch {
+    notification.error({
+      message: $t('ui.notification.operation_failed'),
+    });
+  } finally {
+    statsLoading.value = false;
+  }
+}
+
 async function loadOverview() {
   loading.value = true;
   try {
@@ -76,8 +109,19 @@ async function loadOverview() {
   }
 }
 
-onMounted(() => {
+onMounted(async () => {
   loadOverview();
+  // 加载币种列表用于统计过滤
+  try {
+    const resp = await fetchListAllCurrencies();
+    currencyOptions.value = (resp.items ?? []).map((c: any) => ({
+      label: `${c.code} - ${c.name}`,
+      value: c.code,
+    }));
+  } catch {
+    currencyOptions.value = [];
+  }
+  loadStatistics();
 });
 </script>
 
@@ -166,6 +210,47 @@ onMounted(() => {
         </a-card>
       </a-col>
     </a-row>
+
+    <!-- 账户统计 -->
+    <a-card :bordered="false" class="mt-4" :loading="statsLoading">
+      <template #title>
+        <span>{{ $t('page.ledger.account.statisticsTitle') }}</span>
+      </template>
+      <template #extra>
+        <a-select
+          v-model:value="statsCurrency"
+          :options="currencyOptions"
+          :placeholder="$t('page.ledger.account.assetCurrency')"
+          allow-clear
+          show-search
+          style="width: 220px"
+          @change="loadStatistics"
+        />
+      </template>
+      <a-row :gutter="16">
+        <a-col :span="8">
+          <a-statistic
+            :title="$t('page.ledger.account.totalBalance')"
+            :value="statistics.totalBalance"
+            :value-style="{ color: '#3b82f6' }"
+          />
+        </a-col>
+        <a-col :span="8">
+          <a-statistic
+            :title="$t('page.ledger.account.totalCreditLimit')"
+            :value="statistics.totalCreditLimit"
+            :value-style="{ color: '#f97316' }"
+          />
+        </a-col>
+        <a-col :span="8">
+          <a-statistic
+            :title="$t('page.ledger.account.totalAvailable')"
+            :value="statistics.totalAvailable"
+            :value-style="{ color: '#22c55e' }"
+          />
+        </a-col>
+      </a-row>
+    </a-card>
   </Page>
 </template>
 

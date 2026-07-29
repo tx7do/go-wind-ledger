@@ -10,10 +10,10 @@ import (
 	paginationV1 "github.com/tx7do/go-crud/api/gen/go/pagination/v1"
 	"github.com/tx7do/go-utils/trans"
 
-	adminV1 "go-wind-cms/api/gen/go/admin/service/v1"
-	taskV1 "go-wind-cms/api/gen/go/task/service/v1"
+	adminV1 "go-wind-ledger/api/gen/go/admin/service/v1"
+	taskV1 "go-wind-ledger/api/gen/go/task/service/v1"
 
-	"go-wind-cms/pkg/middleware/auth"
+	"go-wind-ledger/pkg/middleware/auth"
 )
 
 type TaskService struct {

@@ -8,7 +8,7 @@ package servicev1
 
 import (
 	context "context"
-	v1 "go-wind-cms/api/gen/go/ledger/service/v1"
+	v1 "go-wind-ledger/api/gen/go/ledger/service/v1"
 	grpc "google.golang.org/grpc"
 	codes "google.golang.org/grpc/codes"
 	status "google.golang.org/grpc/status"

@@ -1104,8 +1104,8 @@ const file_identity_service_v1_org_unit_proto_rawDesc = "" +
 	"\x06Create\x12).identity.service.v1.CreateOrgUnitRequest\x1a\x16.google.protobuf.Empty\"\x00\x12M\n" +
 	"\x06Update\x12).identity.service.v1.UpdateOrgUnitRequest\x1a\x16.google.protobuf.Empty\"\x00\x12M\n" +
 	"\x06Delete\x12).identity.service.v1.DeleteOrgUnitRequest\x1a\x16.google.protobuf.Empty\"\x00\x12r\n" +
-	"\vBatchCreate\x12/.identity.service.v1.BatchCreateOrgUnitsRequest\x1a0.identity.service.v1.BatchCreateOrgUnitsResponse\"\x00B\xcc\x01\n" +
-	"\x17com.identity.service.v1B\fOrgUnitProtoP\x01Z5go-wind-cms/api/gen/go/identity/service/v1;identitypb\xa2\x02\x03ISX\xaa\x02\x13Identity.Service.V1\xca\x02\x13Identity\\Service\\V1\xe2\x02\x1fIdentity\\Service\\V1\\GPBMetadata\xea\x02\x15Identity::Service::V1b\x06proto3"
+	"\vBatchCreate\x12/.identity.service.v1.BatchCreateOrgUnitsRequest\x1a0.identity.service.v1.BatchCreateOrgUnitsResponse\"\x00B\xcf\x01\n" +
+	"\x17com.identity.service.v1B\fOrgUnitProtoP\x01Z8go-wind-ledger/api/gen/go/identity/service/v1;identitypb\xa2\x02\x03ISX\xaa\x02\x13Identity.Service.V1\xca\x02\x13Identity\\Service\\V1\xe2\x02\x1fIdentity\\Service\\V1\\GPBMetadata\xea\x02\x15Identity::Service::V1b\x06proto3"
 
 var (
 	file_identity_service_v1_org_unit_proto_rawDescOnce sync.Once

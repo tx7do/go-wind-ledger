@@ -5,7 +5,7 @@ package privacy
 import (
 	"context"
 
-	"go-wind-cms/app/core/service/internal/data/ent"
+	"go-wind-ledger/app/core/service/internal/data/ent"
 
 	"entgo.io/ent/entql"
 	"entgo.io/ent/privacy"

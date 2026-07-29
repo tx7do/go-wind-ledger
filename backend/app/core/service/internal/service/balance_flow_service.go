@@ -11,10 +11,10 @@ import (
 	"google.golang.org/protobuf/types/known/emptypb"
 	"google.golang.org/protobuf/types/known/fieldmaskpb"
 
-	"go-wind-cms/app/core/service/internal/data"
-	"go-wind-cms/app/core/service/internal/data/ent"
+	"go-wind-ledger/app/core/service/internal/data"
+	"go-wind-ledger/app/core/service/internal/data/ent"
 
-	ledgerV1 "go-wind-cms/api/gen/go/ledger/service/v1"
+	ledgerV1 "go-wind-ledger/api/gen/go/ledger/service/v1"
 )
 
 type BalanceFlowService struct {

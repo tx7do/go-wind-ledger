@@ -8,7 +8,7 @@ package adminpb
 
 import (
 	v1 "github.com/tx7do/go-crud/api/gen/go/pagination/v1"
-	v11 "go-wind-cms/api/gen/go/authentication/service/v1"
+	v11 "go-wind-ledger/api/gen/go/authentication/service/v1"
 	_ "google.golang.org/genproto/googleapis/api/annotations"
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
@@ -34,8 +34,8 @@ const file_admin_service_v1_i_login_policy_proto_rawDesc = "" +
 	"\x03Get\x120.authentication.service.v1.GetLoginPolicyRequest\x1a&.authentication.service.v1.LoginPolicy\"%\x82\xd3\xe4\x93\x02\x1f\x12\x1d/admin/v1/login-policies/{id}\x12z\n" +
 	"\x06Create\x123.authentication.service.v1.CreateLoginPolicyRequest\x1a\x16.google.protobuf.Empty\"#\x82\xd3\xe4\x93\x02\x1d:\x01*\"\x18/admin/v1/login-policies\x12\x7f\n" +
 	"\x06Update\x123.authentication.service.v1.UpdateLoginPolicyRequest\x1a\x16.google.protobuf.Empty\"(\x82\xd3\xe4\x93\x02\":\x01*\x1a\x1d/admin/v1/login-policies/{id}\x12|\n" +
-	"\x06Delete\x123.authentication.service.v1.DeleteLoginPolicyRequest\x1a\x16.google.protobuf.Empty\"%\x82\xd3\xe4\x93\x02\x1f*\x1d/admin/v1/login-policies/{id}B\xbc\x01\n" +
-	"\x14com.admin.service.v1B\x11ILoginPolicyProtoP\x01Z/go-wind-cms/api/gen/go/admin/service/v1;adminpb\xa2\x02\x03ASX\xaa\x02\x10Admin.Service.V1\xca\x02\x10Admin\\Service\\V1\xe2\x02\x1cAdmin\\Service\\V1\\GPBMetadata\xea\x02\x12Admin::Service::V1b\x06proto3"
+	"\x06Delete\x123.authentication.service.v1.DeleteLoginPolicyRequest\x1a\x16.google.protobuf.Empty\"%\x82\xd3\xe4\x93\x02\x1f*\x1d/admin/v1/login-policies/{id}B\xbf\x01\n" +
+	"\x14com.admin.service.v1B\x11ILoginPolicyProtoP\x01Z2go-wind-ledger/api/gen/go/admin/service/v1;adminpb\xa2\x02\x03ASX\xaa\x02\x10Admin.Service.V1\xca\x02\x10Admin\\Service\\V1\xe2\x02\x1cAdmin\\Service\\V1\\GPBMetadata\xea\x02\x12Admin::Service::V1b\x06proto3"
 
 var file_admin_service_v1_i_login_policy_proto_goTypes = []any{
 	(*v1.PagingRequest)(nil),             // 0: pagination.PagingRequest

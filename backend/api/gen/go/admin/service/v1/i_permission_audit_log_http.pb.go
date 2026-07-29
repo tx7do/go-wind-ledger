@@ -11,7 +11,7 @@ import (
 	http "github.com/go-kratos/kratos/v2/transport/http"
 	binding "github.com/go-kratos/kratos/v2/transport/http/binding"
 	v1 "github.com/tx7do/go-crud/api/gen/go/pagination/v1"
-	v11 "go-wind-cms/api/gen/go/audit/service/v1"
+	v11 "go-wind-ledger/api/gen/go/audit/service/v1"
 )
 
 // This is a compile-time assertion to ensure that this generated file
@@ -33,11 +33,11 @@ type PermissionAuditLogServiceHTTPServer interface {
 
 func RegisterPermissionAuditLogServiceHTTPServer(s *http.Server, srv PermissionAuditLogServiceHTTPServer) {
 	r := s.Route("/")
-	r.GET("/admin/v1/permission-audit-logs", _PermissionAuditLogService_List28_HTTP_Handler(srv))
-	r.GET("/admin/v1/permission-audit-logs/{id}", _PermissionAuditLogService_Get27_HTTP_Handler(srv))
+	r.GET("/admin/v1/permission-audit-logs", _PermissionAuditLogService_List22_HTTP_Handler(srv))
+	r.GET("/admin/v1/permission-audit-logs/{id}", _PermissionAuditLogService_Get21_HTTP_Handler(srv))
 }
 
-func _PermissionAuditLogService_List28_HTTP_Handler(srv PermissionAuditLogServiceHTTPServer) func(ctx http.Context) error {
+func _PermissionAuditLogService_List22_HTTP_Handler(srv PermissionAuditLogServiceHTTPServer) func(ctx http.Context) error {
 	return func(ctx http.Context) error {
 		var in v1.PagingRequest
 		if err := ctx.BindQuery(&in); err != nil {
@@ -56,7 +56,7 @@ func _PermissionAuditLogService_List28_HTTP_Handler(srv PermissionAuditLogServic
 	}
 }
 
-func _PermissionAuditLogService_Get27_HTTP_Handler(srv PermissionAuditLogServiceHTTPServer) func(ctx http.Context) error {
+func _PermissionAuditLogService_Get21_HTTP_Handler(srv PermissionAuditLogServiceHTTPServer) func(ctx http.Context) error {
 	return func(ctx http.Context) error {
 		var in v11.GetPermissionAuditLogRequest
 		if err := ctx.BindQuery(&in); err != nil {

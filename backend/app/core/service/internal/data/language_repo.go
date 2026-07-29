@@ -11,10 +11,10 @@ import (
 	entCrud "github.com/tx7do/go-crud/entgo"
 	"github.com/tx7do/go-utils/mapper"
 
-	"go-wind-cms/app/core/service/internal/data/ent"
-	"go-wind-cms/app/core/service/internal/data/ent/language"
+	"go-wind-ledger/app/core/service/internal/data/ent"
+	"go-wind-ledger/app/core/service/internal/data/ent/language"
 
-	dictV1 "go-wind-cms/api/gen/go/dict/service/v1"
+	dictV1 "go-wind-ledger/api/gen/go/dict/service/v1"
 )
 
 type LanguageRepo struct {

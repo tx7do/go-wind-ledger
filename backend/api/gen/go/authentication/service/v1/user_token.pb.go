@@ -8,7 +8,7 @@ package authenticationpb
 
 import (
 	_ "github.com/google/gnostic/openapiv3"
-	v1 "go-wind-cms/api/gen/go/identity/service/v1"
+	v1 "go-wind-ledger/api/gen/go/identity/service/v1"
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
 	reflect "reflect"
@@ -178,8 +178,8 @@ const file_authentication_service_v1_user_token_proto_rawDesc = "" +
 	"\f_org_unit_idB\x14\n" +
 	"\x12_is_platform_adminB\x12\n" +
 	"\x10_is_tenant_adminB\x06\n" +
-	"\x04_jtiB\xf8\x01\n" +
-	"\x1dcom.authentication.service.v1B\x0eUserTokenProtoP\x01ZAgo-wind-cms/api/gen/go/authentication/service/v1;authenticationpb\xa2\x02\x03ASX\xaa\x02\x19Authentication.Service.V1\xca\x02\x19Authentication\\Service\\V1\xe2\x02%Authentication\\Service\\V1\\GPBMetadata\xea\x02\x1bAuthentication::Service::V1b\x06proto3"
+	"\x04_jtiB\xfb\x01\n" +
+	"\x1dcom.authentication.service.v1B\x0eUserTokenProtoP\x01ZDgo-wind-ledger/api/gen/go/authentication/service/v1;authenticationpb\xa2\x02\x03ASX\xaa\x02\x19Authentication.Service.V1\xca\x02\x19Authentication\\Service\\V1\xe2\x02%Authentication\\Service\\V1\\GPBMetadata\xea\x02\x1bAuthentication::Service::V1b\x06proto3"
 
 var (
 	file_authentication_service_v1_user_token_proto_rawDescOnce sync.Once

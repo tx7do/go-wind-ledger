@@ -15,7 +15,7 @@ managed:
 
   override:
     - file_option: go_package_prefix
-      value: go-wind-cms/api/gen/go
+      value: go-wind-ledger/api/gen/go
 
 inputs:
   - directory: protos

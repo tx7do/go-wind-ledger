@@ -832,8 +832,8 @@ const file_ledger_service_v1_budget_proto_rawDesc = "" +
 	"\x06Create\x12&.ledger.service.v1.CreateBudgetRequest\x1a\x19.ledger.service.v1.Budget\"\x00\x12M\n" +
 	"\x06Update\x12&.ledger.service.v1.UpdateBudgetRequest\x1a\x19.ledger.service.v1.Budget\"\x00\x12J\n" +
 	"\x06Delete\x12&.ledger.service.v1.DeleteBudgetRequest\x1a\x16.google.protobuf.Empty\"\x00\x12_\n" +
-	"\vGetProgress\x12+.ledger.service.v1.GetBudgetProgressRequest\x1a!.ledger.service.v1.BudgetProgress\"\x00B\xbe\x01\n" +
-	"\x15com.ledger.service.v1B\vBudgetProtoP\x01Z2go-wind-cms/api/gen/go/ledger/service/v1;servicev1\xa2\x02\x03LSX\xaa\x02\x11Ledger.Service.V1\xca\x02\x11Ledger\\Service\\V1\xe2\x02\x1dLedger\\Service\\V1\\GPBMetadata\xea\x02\x13Ledger::Service::V1b\x06proto3"
+	"\vGetProgress\x12+.ledger.service.v1.GetBudgetProgressRequest\x1a!.ledger.service.v1.BudgetProgress\"\x00B\xc1\x01\n" +
+	"\x15com.ledger.service.v1B\vBudgetProtoP\x01Z5go-wind-ledger/api/gen/go/ledger/service/v1;servicev1\xa2\x02\x03LSX\xaa\x02\x11Ledger.Service.V1\xca\x02\x11Ledger\\Service\\V1\xe2\x02\x1dLedger\\Service\\V1\\GPBMetadata\xea\x02\x13Ledger::Service::V1b\x06proto3"
 
 var (
 	file_ledger_service_v1_budget_proto_rawDescOnce sync.Once

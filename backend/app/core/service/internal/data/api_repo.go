@@ -12,21 +12,21 @@ import (
 	paginationV1 "github.com/tx7do/go-crud/api/gen/go/pagination/v1"
 	entCrud "github.com/tx7do/go-crud/entgo"
 
-	"go-wind-cms/app/core/service/internal/data/ent"
-	"go-wind-cms/app/core/service/internal/data/ent/api"
-	"go-wind-cms/app/core/service/internal/data/ent/predicate"
+	"go-wind-ledger/app/core/service/internal/data/ent"
+	"go-wind-ledger/app/core/service/internal/data/ent/api"
+	"go-wind-ledger/app/core/service/internal/data/ent/predicate"
 
 	"github.com/tx7do/go-utils/copierutil"
 	"github.com/tx7do/go-utils/mapper"
 
-	permissionV1 "go-wind-cms/api/gen/go/permission/service/v1"
+	permissionV1 "go-wind-ledger/api/gen/go/permission/service/v1"
 )
 
 type ApiRepo struct {
 	entClient *entCrud.EntClient[*ent.Client]
 	log       *log.Helper
 
-	mapper         *mapper.CopierMapper[permissionV1.Api, ent.Api]
+	mapper *mapper.CopierMapper[permissionV1.Api, ent.Api]
 
 	repository *entCrud.Repository[
 		ent.APIQuery, ent.APISelect,
@@ -46,7 +46,6 @@ func NewApiRepo(ctx *bootstrap.Context, entClient *entCrud.EntClient[*ent.Client
 	repo.init()
 	return repo
 }
-
 
 func (r *ApiRepo) init() {
 	r.repository = entCrud.NewRepository[

@@ -214,8 +214,8 @@ const file_authentication_service_v1_conf_proto_rawDesc = "" +
 	"\n" +
 	"\b_aes_key\"r\n" +
 	"\x1aAuthenticatorOptionWrapper\x12T\n" +
-	"\rauthenticator\x18\x01 \x01(\v2..authentication.service.v1.AuthenticatorOptionR\rauthenticatorB\xf3\x01\n" +
-	"\x1dcom.authentication.service.v1B\tConfProtoP\x01ZAgo-wind-cms/api/gen/go/authentication/service/v1;authenticationpb\xa2\x02\x03ASX\xaa\x02\x19Authentication.Service.V1\xca\x02\x19Authentication\\Service\\V1\xe2\x02%Authentication\\Service\\V1\\GPBMetadata\xea\x02\x1bAuthentication::Service::V1b\x06proto3"
+	"\rauthenticator\x18\x01 \x01(\v2..authentication.service.v1.AuthenticatorOptionR\rauthenticatorB\xf6\x01\n" +
+	"\x1dcom.authentication.service.v1B\tConfProtoP\x01ZDgo-wind-ledger/api/gen/go/authentication/service/v1;authenticationpb\xa2\x02\x03ASX\xaa\x02\x19Authentication.Service.V1\xca\x02\x19Authentication\\Service\\V1\xe2\x02%Authentication\\Service\\V1\\GPBMetadata\xea\x02\x1bAuthentication::Service::V1b\x06proto3"
 
 var (
 	file_authentication_service_v1_conf_proto_rawDescOnce sync.Once

@@ -12,11 +12,11 @@ import (
 	"github.com/tx7do/kratos-bootstrap/bootstrap"
 	"google.golang.org/protobuf/types/known/emptypb"
 
-	"go-wind-cms/app/core/service/internal/data"
+	"go-wind-ledger/app/core/service/internal/data"
 
-	taskV1 "go-wind-cms/api/gen/go/task/service/v1"
+	taskV1 "go-wind-ledger/api/gen/go/task/service/v1"
 
-	"go-wind-cms/pkg/task"
+	"go-wind-ledger/pkg/task"
 )
 
 // TaskScheduler 任务调度接口

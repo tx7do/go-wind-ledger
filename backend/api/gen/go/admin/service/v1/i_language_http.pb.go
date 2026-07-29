@@ -11,7 +11,7 @@ import (
 	http "github.com/go-kratos/kratos/v2/transport/http"
 	binding "github.com/go-kratos/kratos/v2/transport/http/binding"
 	v1 "github.com/tx7do/go-crud/api/gen/go/pagination/v1"
-	v11 "go-wind-cms/api/gen/go/dict/service/v1"
+	v11 "go-wind-ledger/api/gen/go/dict/service/v1"
 	emptypb "google.golang.org/protobuf/types/known/emptypb"
 )
 
@@ -46,15 +46,15 @@ type LanguageServiceHTTPServer interface {
 
 func RegisterLanguageServiceHTTPServer(s *http.Server, srv LanguageServiceHTTPServer) {
 	r := s.Route("/")
-	r.GET("/admin/v1/dict/langs", _LanguageService_List15_HTTP_Handler(srv))
-	r.GET("/admin/v1/dict/langs/{id}", _LanguageService_Get14_HTTP_Handler(srv))
-	r.POST("/admin/v1/dict/langs", _LanguageService_Create11_HTTP_Handler(srv))
-	r.PUT("/admin/v1/dict/langs/{id}", _LanguageService_Update11_HTTP_Handler(srv))
-	r.DELETE("/admin/v1/dict/langs", _LanguageService_Delete12_HTTP_Handler(srv))
+	r.GET("/admin/v1/dict/langs", _LanguageService_List13_HTTP_Handler(srv))
+	r.GET("/admin/v1/dict/langs/{id}", _LanguageService_Get12_HTTP_Handler(srv))
+	r.POST("/admin/v1/dict/langs", _LanguageService_Create9_HTTP_Handler(srv))
+	r.PUT("/admin/v1/dict/langs/{id}", _LanguageService_Update9_HTTP_Handler(srv))
+	r.DELETE("/admin/v1/dict/langs", _LanguageService_Delete10_HTTP_Handler(srv))
 	r.POST("/admin/v1/dict/langs/batch", _LanguageService_BatchCreate0_HTTP_Handler(srv))
 }
 
-func _LanguageService_List15_HTTP_Handler(srv LanguageServiceHTTPServer) func(ctx http.Context) error {
+func _LanguageService_List13_HTTP_Handler(srv LanguageServiceHTTPServer) func(ctx http.Context) error {
 	return func(ctx http.Context) error {
 		var in v1.PagingRequest
 		if err := ctx.BindQuery(&in); err != nil {
@@ -73,7 +73,7 @@ func _LanguageService_List15_HTTP_Handler(srv LanguageServiceHTTPServer) func(ct
 	}
 }
 
-func _LanguageService_Get14_HTTP_Handler(srv LanguageServiceHTTPServer) func(ctx http.Context) error {
+func _LanguageService_Get12_HTTP_Handler(srv LanguageServiceHTTPServer) func(ctx http.Context) error {
 	return func(ctx http.Context) error {
 		var in v11.GetLanguageRequest
 		if err := ctx.BindQuery(&in); err != nil {
@@ -95,7 +95,7 @@ func _LanguageService_Get14_HTTP_Handler(srv LanguageServiceHTTPServer) func(ctx
 	}
 }
 
-func _LanguageService_Create11_HTTP_Handler(srv LanguageServiceHTTPServer) func(ctx http.Context) error {
+func _LanguageService_Create9_HTTP_Handler(srv LanguageServiceHTTPServer) func(ctx http.Context) error {
 	return func(ctx http.Context) error {
 		var in v11.CreateLanguageRequest
 		if err := ctx.Bind(&in); err != nil {
@@ -117,7 +117,7 @@ func _LanguageService_Create11_HTTP_Handler(srv LanguageServiceHTTPServer) func(
 	}
 }
 
-func _LanguageService_Update11_HTTP_Handler(srv LanguageServiceHTTPServer) func(ctx http.Context) error {
+func _LanguageService_Update9_HTTP_Handler(srv LanguageServiceHTTPServer) func(ctx http.Context) error {
 	return func(ctx http.Context) error {
 		var in v11.UpdateLanguageRequest
 		if err := ctx.Bind(&in); err != nil {
@@ -142,7 +142,7 @@ func _LanguageService_Update11_HTTP_Handler(srv LanguageServiceHTTPServer) func(
 	}
 }
 
-func _LanguageService_Delete12_HTTP_Handler(srv LanguageServiceHTTPServer) func(ctx http.Context) error {
+func _LanguageService_Delete10_HTTP_Handler(srv LanguageServiceHTTPServer) func(ctx http.Context) error {
 	return func(ctx http.Context) error {
 		var in v11.DeleteLanguageRequest
 		if err := ctx.BindQuery(&in); err != nil {

@@ -834,7 +834,11 @@
       "assetBalance": "Balance",
       "assetCurrency": "Currency",
       "noData": "No data",
-      "refreshOverview": "Refresh"
+      "refreshOverview": "Refresh",
+      "statisticsTitle": "Account Statistics",
+      "totalBalance": "Total Balance",
+      "totalCreditLimit": "Total Credit Limit",
+      "totalAvailable": "Total Available"
     },
     "balanceFlow": {
       "moduleName": "Transaction",
@@ -866,7 +870,8 @@
       "button": {
         "create": "New Transaction",
         "confirm": "Confirm"
-      }
+      },
+      "viewFiles": "View Files"
     },
     "category": {
       "moduleName": "Category",
@@ -930,7 +935,13 @@
       "rate": "Rate",
       "button": {
         "refresh": "Refresh Rates"
-      }
+      },
+      "convert": "Convert",
+      "from": "From",
+      "to": "To",
+      "convertAmount": "Amount",
+      "convertRate": "Rate",
+      "convertResult": "Result"
     },
     "report": {
       "moduleName": "Reports",
@@ -973,7 +984,10 @@
       "tenant": "Tenant",
       "button": {
         "create": "Invite Member"
-      }
+      },
+      "pendingInvites": "My Invitations",
+      "accept": "Accept",
+      "reject": "Reject"
     },
     "budget": {
       "moduleName": "Budgets",

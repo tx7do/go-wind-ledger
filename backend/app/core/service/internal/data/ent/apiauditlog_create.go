@@ -6,7 +6,7 @@ import (
 	"context"
 	"errors"
 	"fmt"
-	"go-wind-cms/app/core/service/internal/data/ent/apiauditlog"
+	"go-wind-ledger/app/core/service/internal/data/ent/apiauditlog"
 	"time"
 
 	"entgo.io/ent/dialect/sql"

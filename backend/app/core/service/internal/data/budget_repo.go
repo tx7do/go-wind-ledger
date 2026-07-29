@@ -12,13 +12,13 @@ import (
 	"github.com/tx7do/kratos-bootstrap/bootstrap"
 	"google.golang.org/protobuf/types/known/fieldmaskpb"
 
-	"go-wind-cms/app/core/service/internal/data/ent"
-	"go-wind-cms/app/core/service/internal/data/ent/balanceflow"
-	"go-wind-cms/app/core/service/internal/data/ent/budget"
-	"go-wind-cms/app/core/service/internal/data/ent/categoryrelation"
-	"go-wind-cms/app/core/service/internal/data/ent/predicate"
+	"go-wind-ledger/app/core/service/internal/data/ent"
+	"go-wind-ledger/app/core/service/internal/data/ent/balanceflow"
+	"go-wind-ledger/app/core/service/internal/data/ent/budget"
+	"go-wind-ledger/app/core/service/internal/data/ent/categoryrelation"
+	"go-wind-ledger/app/core/service/internal/data/ent/predicate"
 
-	ledgerV1 "go-wind-cms/api/gen/go/ledger/service/v1"
+	ledgerV1 "go-wind-ledger/api/gen/go/ledger/service/v1"
 )
 
 // BudgetRepo 预算仓库

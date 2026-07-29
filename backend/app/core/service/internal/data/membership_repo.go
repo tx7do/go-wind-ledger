@@ -11,10 +11,10 @@ import (
 	"github.com/tx7do/kratos-bootstrap/bootstrap"
 	"google.golang.org/protobuf/types/known/fieldmaskpb"
 
-	"go-wind-cms/app/core/service/internal/data/ent"
-	"go-wind-cms/app/core/service/internal/data/ent/membership"
+	"go-wind-ledger/app/core/service/internal/data/ent"
+	"go-wind-ledger/app/core/service/internal/data/ent/membership"
 
-	identityV1 "go-wind-cms/api/gen/go/identity/service/v1"
+	identityV1 "go-wind-ledger/api/gen/go/identity/service/v1"
 )
 
 // MembershipRepo 成员关系仓库（用于用户-租户关联）

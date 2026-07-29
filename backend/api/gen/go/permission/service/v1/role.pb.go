@@ -2891,8 +2891,8 @@ const file_permission_service_v1_role_proto_rawDesc = "" +
 	"\x11AssignRolesToUser\x12/.permission.service.v1.AssignRolesToUserRequest\x1a\x16.google.protobuf.Empty\x12\x84\x01\n" +
 	"\x15UnassignRolesFromUser\x123.permission.service.v1.UnassignRolesFromUserRequest\x1a4.permission.service.v1.UnassignRolesFromUserResponse\"\x00\x12\\\n" +
 	"\x11AssignUsersToRole\x12/.permission.service.v1.AssignUsersToRoleRequest\x1a\x16.google.protobuf.Empty\x12\x84\x01\n" +
-	"\x15UnassignUsersFromRole\x123.permission.service.v1.UnassignUsersFromRoleRequest\x1a4.permission.service.v1.UnassignUsersFromRoleResponse\"\x00B\xd7\x01\n" +
-	"\x19com.permission.service.v1B\tRoleProtoP\x01Z9go-wind-cms/api/gen/go/permission/service/v1;permissionpb\xa2\x02\x03PSX\xaa\x02\x15Permission.Service.V1\xca\x02\x15Permission\\Service\\V1\xe2\x02!Permission\\Service\\V1\\GPBMetadata\xea\x02\x17Permission::Service::V1b\x06proto3"
+	"\x15UnassignUsersFromRole\x123.permission.service.v1.UnassignUsersFromRoleRequest\x1a4.permission.service.v1.UnassignUsersFromRoleResponse\"\x00B\xda\x01\n" +
+	"\x19com.permission.service.v1B\tRoleProtoP\x01Z<go-wind-ledger/api/gen/go/permission/service/v1;permissionpb\xa2\x02\x03PSX\xaa\x02\x15Permission.Service.V1\xca\x02\x15Permission\\Service\\V1\xe2\x02!Permission\\Service\\V1\\GPBMetadata\xea\x02\x17Permission::Service::V1b\x06proto3"
 
 var (
 	file_permission_service_v1_role_proto_rawDescOnce sync.Once

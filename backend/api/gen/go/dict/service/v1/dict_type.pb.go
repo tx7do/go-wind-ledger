@@ -590,8 +590,8 @@ const file_dict_service_v1_dict_type_proto_rawDesc = "" +
 	"\x03Get\x12#.dict.service.v1.GetDictTypeRequest\x1a\x19.dict.service.v1.DictType\"\x00\x12J\n" +
 	"\x06Create\x12&.dict.service.v1.CreateDictTypeRequest\x1a\x16.google.protobuf.Empty\"\x00\x12J\n" +
 	"\x06Update\x12&.dict.service.v1.UpdateDictTypeRequest\x1a\x16.google.protobuf.Empty\"\x00\x12J\n" +
-	"\x06Delete\x12&.dict.service.v1.DeleteDictTypeRequest\x1a\x16.google.protobuf.Empty\"\x00B\xb1\x01\n" +
-	"\x13com.dict.service.v1B\rDictTypeProtoP\x01Z-go-wind-cms/api/gen/go/dict/service/v1;dictpb\xa2\x02\x03DSX\xaa\x02\x0fDict.Service.V1\xca\x02\x0fDict\\Service\\V1\xe2\x02\x1bDict\\Service\\V1\\GPBMetadata\xea\x02\x11Dict::Service::V1b\x06proto3"
+	"\x06Delete\x12&.dict.service.v1.DeleteDictTypeRequest\x1a\x16.google.protobuf.Empty\"\x00B\xb4\x01\n" +
+	"\x13com.dict.service.v1B\rDictTypeProtoP\x01Z0go-wind-ledger/api/gen/go/dict/service/v1;dictpb\xa2\x02\x03DSX\xaa\x02\x0fDict.Service.V1\xca\x02\x0fDict\\Service\\V1\xe2\x02\x1bDict\\Service\\V1\\GPBMetadata\xea\x02\x11Dict::Service::V1b\x06proto3"
 
 var (
 	file_dict_service_v1_dict_type_proto_rawDescOnce sync.Once

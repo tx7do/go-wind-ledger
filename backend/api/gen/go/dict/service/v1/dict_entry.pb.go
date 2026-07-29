@@ -801,8 +801,8 @@ const file_dict_service_v1_dict_entry_proto_rawDesc = "" +
 	"\x06Create\x12'.dict.service.v1.CreateDictEntryRequest\x1a\x16.google.protobuf.Empty\"\x00\x12K\n" +
 	"\x06Update\x12'.dict.service.v1.UpdateDictEntryRequest\x1a\x16.google.protobuf.Empty\"\x00\x12K\n" +
 	"\x06Delete\x12'.dict.service.v1.DeleteDictEntryRequest\x1a\x16.google.protobuf.Empty\"\x00\x12u\n" +
-	"\x0eListByTypeCode\x12/.dict.service.v1.ListDictEntryByTypeCodeRequest\x1a0.dict.service.v1.ListDictEntryByTypeCodeResponse\"\x00B\xb2\x01\n" +
-	"\x13com.dict.service.v1B\x0eDictEntryProtoP\x01Z-go-wind-cms/api/gen/go/dict/service/v1;dictpb\xa2\x02\x03DSX\xaa\x02\x0fDict.Service.V1\xca\x02\x0fDict\\Service\\V1\xe2\x02\x1bDict\\Service\\V1\\GPBMetadata\xea\x02\x11Dict::Service::V1b\x06proto3"
+	"\x0eListByTypeCode\x12/.dict.service.v1.ListDictEntryByTypeCodeRequest\x1a0.dict.service.v1.ListDictEntryByTypeCodeResponse\"\x00B\xb5\x01\n" +
+	"\x13com.dict.service.v1B\x0eDictEntryProtoP\x01Z0go-wind-ledger/api/gen/go/dict/service/v1;dictpb\xa2\x02\x03DSX\xaa\x02\x0fDict.Service.V1\xca\x02\x0fDict\\Service\\V1\xe2\x02\x1bDict\\Service\\V1\\GPBMetadata\xea\x02\x11Dict::Service::V1b\x06proto3"
 
 var (
 	file_dict_service_v1_dict_entry_proto_rawDescOnce sync.Once

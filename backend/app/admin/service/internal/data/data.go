@@ -13,20 +13,17 @@ import (
 	bRegistry "github.com/tx7do/kratos-bootstrap/registry"
 	"github.com/tx7do/kratos-bootstrap/rpc"
 
-	"github.com/tx7do/go-utils/translator"
-	"github.com/tx7do/go-utils/translator/google"
+	auditV1 "go-wind-ledger/api/gen/go/audit/service/v1"
+	authenticationV1 "go-wind-ledger/api/gen/go/authentication/service/v1"
+	dictV1 "go-wind-ledger/api/gen/go/dict/service/v1"
+	identityV1 "go-wind-ledger/api/gen/go/identity/service/v1"
+	ledgerV1 "go-wind-ledger/api/gen/go/ledger/service/v1"
+	permissionV1 "go-wind-ledger/api/gen/go/permission/service/v1"
+	storageV1 "go-wind-ledger/api/gen/go/storage/service/v1"
+	taskV1 "go-wind-ledger/api/gen/go/task/service/v1"
 
-	auditV1 "go-wind-cms/api/gen/go/audit/service/v1"
-	authenticationV1 "go-wind-cms/api/gen/go/authentication/service/v1"
-	dictV1 "go-wind-cms/api/gen/go/dict/service/v1"
-	identityV1 "go-wind-cms/api/gen/go/identity/service/v1"
-	ledgerV1 "go-wind-cms/api/gen/go/ledger/service/v1"
-	permissionV1 "go-wind-cms/api/gen/go/permission/service/v1"
-	storageV1 "go-wind-cms/api/gen/go/storage/service/v1"
-	taskV1 "go-wind-cms/api/gen/go/task/service/v1"
-
-	"go-wind-cms/pkg/oss"
-	"go-wind-cms/pkg/serviceid"
+	"go-wind-ledger/pkg/oss"
+	"go-wind-ledger/pkg/serviceid"
 )
 
 func NewClientType() authenticationV1.ClientType {
@@ -70,13 +67,6 @@ func NewDiscovery(ctx *bootstrap.Context) registry.Discovery {
 
 func NewMinIoClient(ctx *bootstrap.Context) *oss.MinIOClient {
 	return oss.NewMinIoClient(ctx.GetConfig(), ctx.GetLogger())
-}
-
-// NewTranslator 创建翻译器
-func NewTranslator(_ *bootstrap.Context) translator.Translator {
-	return google.NewTranslator(
-		google.WithVersion("v1"),
-	)
 }
 
 // NewAuthorizer 创建权鉴器

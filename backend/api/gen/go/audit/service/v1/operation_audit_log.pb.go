@@ -560,8 +560,8 @@ const file_audit_service_v1_operation_audit_log_proto_rawDesc = "" +
 	"\x18OperationAuditLogService\x12T\n" +
 	"\x04List\x12\x19.pagination.PagingRequest\x1a/.audit.service.v1.ListOperationAuditLogResponse\"\x00\x12[\n" +
 	"\x03Get\x12-.audit.service.v1.GetOperationAuditLogRequest\x1a#.audit.service.v1.OperationAuditLog\"\x00\x12T\n" +
-	"\x06Create\x120.audit.service.v1.CreateOperationAuditLogRequest\x1a\x16.google.protobuf.Empty\"\x00B\xc1\x01\n" +
-	"\x14com.audit.service.v1B\x16OperationAuditLogProtoP\x01Z/go-wind-cms/api/gen/go/audit/service/v1;auditpb\xa2\x02\x03ASX\xaa\x02\x10Audit.Service.V1\xca\x02\x10Audit\\Service\\V1\xe2\x02\x1cAudit\\Service\\V1\\GPBMetadata\xea\x02\x12Audit::Service::V1b\x06proto3"
+	"\x06Create\x120.audit.service.v1.CreateOperationAuditLogRequest\x1a\x16.google.protobuf.Empty\"\x00B\xc4\x01\n" +
+	"\x14com.audit.service.v1B\x16OperationAuditLogProtoP\x01Z2go-wind-ledger/api/gen/go/audit/service/v1;auditpb\xa2\x02\x03ASX\xaa\x02\x10Audit.Service.V1\xca\x02\x10Audit\\Service\\V1\xe2\x02\x1cAudit\\Service\\V1\\GPBMetadata\xea\x02\x12Audit::Service::V1b\x06proto3"
 
 var (
 	file_audit_service_v1_operation_audit_log_proto_rawDescOnce sync.Once

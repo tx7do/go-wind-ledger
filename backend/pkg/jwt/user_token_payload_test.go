@@ -8,7 +8,7 @@ import (
 	"github.com/tx7do/go-utils/trans"
 	authn "github.com/tx7do/kratos-authn/engine"
 
-	identityV1 "go-wind-cms/api/gen/go/identity/service/v1"
+	identityV1 "go-wind-ledger/api/gen/go/identity/service/v1"
 )
 
 func TestNewUserTokenPayload(t *testing.T) {

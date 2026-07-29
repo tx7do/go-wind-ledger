@@ -4,7 +4,7 @@ import (
 	"context"
 	"crypto/ecdsa"
 
-	auditV1 "go-wind-cms/api/gen/go/audit/service/v1"
+	auditV1 "go-wind-ledger/api/gen/go/audit/service/v1"
 )
 
 type WriteApiLogFunc func(ctx context.Context, data *auditV1.ApiAuditLog) error

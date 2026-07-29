@@ -18,7 +18,7 @@ import (
 
 	"google.golang.org/protobuf/types/known/anypb"
 
-	identitypb "go-wind-cms/api/gen/go/identity/service/v1"
+	identitypb "go-wind-ledger/api/gen/go/identity/service/v1"
 )
 
 // ensure the imports are used

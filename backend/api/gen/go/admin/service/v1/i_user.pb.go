@@ -9,7 +9,7 @@ package adminpb
 import (
 	v1 "github.com/tx7do/go-crud/api/gen/go/pagination/v1"
 	_ "github.com/tx7do/go-wind-toolkit/protoc-gen-go-redact/redact/v1"
-	v11 "go-wind-cms/api/gen/go/identity/service/v1"
+	v11 "go-wind-ledger/api/gen/go/identity/service/v1"
 	_ "google.golang.org/genproto/googleapis/api/annotations"
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
@@ -38,9 +38,9 @@ const file_admin_service_v1_i_user_proto_rawDesc = "" +
 	"\x06Delete\x12&.identity.service.v1.DeleteUserRequest\x1a\x16.google.protobuf.Empty\"C\x82\xd3\xe4\x93\x02=Z%*#/admin/v1/users/username/{username}*\x14/admin/v1/users/{id}\x12}\n" +
 	"\n" +
 	"UserExists\x12&.identity.service.v1.UserExistsRequest\x1a'.identity.service.v1.UserExistsResponse\"\x1e\x82\xd3\xe4\x93\x02\x18\x12\x16/admin/v1/users:exists\x12\x87\x01\n" +
-	"\x10EditUserPassword\x12,.identity.service.v1.EditUserPasswordRequest\x1a\x16.google.protobuf.Empty\"-\x82\xd3\xe4\x93\x02':\x01*\"\"/admin/v1/users/{user_id}/passwordB\xb5\x01\n" +
+	"\x10EditUserPassword\x12,.identity.service.v1.EditUserPasswordRequest\x1a\x16.google.protobuf.Empty\"-\x82\xd3\xe4\x93\x02':\x01*\"\"/admin/v1/users/{user_id}/passwordB\xb8\x01\n" +
 	"\x14com.admin.service.v1B\n" +
-	"IUserProtoP\x01Z/go-wind-cms/api/gen/go/admin/service/v1;adminpb\xa2\x02\x03ASX\xaa\x02\x10Admin.Service.V1\xca\x02\x10Admin\\Service\\V1\xe2\x02\x1cAdmin\\Service\\V1\\GPBMetadata\xea\x02\x12Admin::Service::V1b\x06proto3"
+	"IUserProtoP\x01Z2go-wind-ledger/api/gen/go/admin/service/v1;adminpb\xa2\x02\x03ASX\xaa\x02\x10Admin.Service.V1\xca\x02\x10Admin\\Service\\V1\xe2\x02\x1cAdmin\\Service\\V1\\GPBMetadata\xea\x02\x12Admin::Service::V1b\x06proto3"
 
 var file_admin_service_v1_i_user_proto_goTypes = []any{
 	(*v1.PagingRequest)(nil),            // 0: pagination.PagingRequest

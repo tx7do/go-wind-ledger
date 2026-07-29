@@ -10,7 +10,9 @@ import {
   apiClient,
   fetchListAllAccounts,
   fetchListAllLedgerCategories,
+  fetchListBookTemplates,
   makeUpdateMask,
+  useCreateBookByTemplate,
 } from '#/api';
 import { $t } from '#/locales';
 
@@ -200,7 +202,8 @@ const [Drawer, drawerApi] = useVbenDrawer({
 
     try {
       if (data.value?.create && templateId !== undefined && templateId !== null) {
-        await apiClient.bookService.CreateByTemplate({
+        const createByTemplate = useCreateBookByTemplate();
+        await createByTemplate.mutateAsync({
           templateId: Number(templateId),
           name: finalValues.name,
           defaultCurrencyCode: finalValues.defaultCurrencyCode,
@@ -252,7 +255,7 @@ const [Drawer, drawerApi] = useVbenDrawer({
       let templateOptionsList: Array<{ value: number; label: string }> = [];
       if (isCreate) {
         try {
-          const templateData = await apiClient.bookTemplateService.ListAll({});
+          const templateData = await fetchListBookTemplates();
           templateOptions.value = (templateData.items ?? []).map((t: any) => ({
             value: t.id as number,
             label: t.name ?? `#${t.id}`,

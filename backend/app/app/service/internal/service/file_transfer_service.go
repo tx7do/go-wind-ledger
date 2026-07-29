@@ -16,11 +16,11 @@ import (
 	"github.com/tx7do/go-utils/trans"
 	"github.com/tx7do/kratos-bootstrap/bootstrap"
 
-	appV1 "go-wind-cms/api/gen/go/app/service/v1"
-	storageV1 "go-wind-cms/api/gen/go/storage/service/v1"
+	appV1 "go-wind-ledger/api/gen/go/app/service/v1"
+	storageV1 "go-wind-ledger/api/gen/go/storage/service/v1"
 
-	"go-wind-cms/pkg/middleware/auth"
-	"go-wind-cms/pkg/oss"
+	"go-wind-ledger/pkg/middleware/auth"
+	"go-wind-ledger/pkg/oss"
 )
 
 type FileTransferService struct {

@@ -98,7 +98,7 @@ func ValidColumn(column string) bool {
 // package on the initialization of the application. Therefore,
 // it should be imported in the main as follows:
 //
-//	import _ "go-wind-cms/app/core/service/internal/data/ent/runtime"
+//	import _ "go-wind-ledger/app/core/service/internal/data/ent/runtime"
 var (
 	Hooks  [1]ent.Hook
 	Policy ent.Policy

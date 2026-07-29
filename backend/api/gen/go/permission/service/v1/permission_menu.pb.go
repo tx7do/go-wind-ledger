@@ -100,8 +100,8 @@ const file_permission_service_v1_permission_menu_proto_rawDesc = "" +
 	"\x03_idB\x10\n" +
 	"\x0e_permission_idB\n" +
 	"\n" +
-	"\b_menu_idB\xe1\x01\n" +
-	"\x19com.permission.service.v1B\x13PermissionMenuProtoP\x01Z9go-wind-cms/api/gen/go/permission/service/v1;permissionpb\xa2\x02\x03PSX\xaa\x02\x15Permission.Service.V1\xca\x02\x15Permission\\Service\\V1\xe2\x02!Permission\\Service\\V1\\GPBMetadata\xea\x02\x17Permission::Service::V1b\x06proto3"
+	"\b_menu_idB\xe4\x01\n" +
+	"\x19com.permission.service.v1B\x13PermissionMenuProtoP\x01Z<go-wind-ledger/api/gen/go/permission/service/v1;permissionpb\xa2\x02\x03PSX\xaa\x02\x15Permission.Service.V1\xca\x02\x15Permission\\Service\\V1\xe2\x02!Permission\\Service\\V1\\GPBMetadata\xea\x02\x17Permission::Service::V1b\x06proto3"
 
 var (
 	file_permission_service_v1_permission_menu_proto_rawDescOnce sync.Once

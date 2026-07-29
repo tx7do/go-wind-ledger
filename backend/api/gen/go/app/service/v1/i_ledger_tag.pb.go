@@ -8,7 +8,7 @@ package servicev1
 
 import (
 	v1 "github.com/tx7do/go-crud/api/gen/go/pagination/v1"
-	v11 "go-wind-cms/api/gen/go/ledger/service/v1"
+	v11 "go-wind-ledger/api/gen/go/ledger/service/v1"
 	_ "google.golang.org/genproto/googleapis/api/annotations"
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
@@ -36,8 +36,8 @@ const file_app_service_v1_i_ledger_tag_proto_rawDesc = "" +
 	"\x06Create\x12#.ledger.service.v1.CreateTagRequest\x1a\x16.ledger.service.v1.Tag\"\x1e\x82\xd3\xe4\x93\x02\x18:\x01*\"\x13/app/v1/ledger-tags\x12j\n" +
 	"\x06Update\x12#.ledger.service.v1.UpdateTagRequest\x1a\x16.ledger.service.v1.Tag\"#\x82\xd3\xe4\x93\x02\x1d:\x01*\x1a\x18/app/v1/ledger-tags/{id}\x12g\n" +
 	"\x06Delete\x12#.ledger.service.v1.DeleteTagRequest\x1a\x16.google.protobuf.Empty\" \x82\xd3\xe4\x93\x02\x1a*\x18/app/v1/ledger-tags/{id}\x12q\n" +
-	"\x06Toggle\x12#.ledger.service.v1.ToggleTagRequest\x1a\x16.ledger.service.v1.Tag\"*\x82\xd3\xe4\x93\x02$:\x01*2\x1f/app/v1/ledger-tags/{id}/toggleB\xb0\x01\n" +
-	"\x12com.app.service.v1B\x0fILedgerTagProtoP\x01Z/go-wind-cms/api/gen/go/app/service/v1;servicev1\xa2\x02\x03ASX\xaa\x02\x0eApp.Service.V1\xca\x02\x0eApp\\Service\\V1\xe2\x02\x1aApp\\Service\\V1\\GPBMetadata\xea\x02\x10App::Service::V1b\x06proto3"
+	"\x06Toggle\x12#.ledger.service.v1.ToggleTagRequest\x1a\x16.ledger.service.v1.Tag\"*\x82\xd3\xe4\x93\x02$:\x01*2\x1f/app/v1/ledger-tags/{id}/toggleB\xb3\x01\n" +
+	"\x12com.app.service.v1B\x0fILedgerTagProtoP\x01Z2go-wind-ledger/api/gen/go/app/service/v1;servicev1\xa2\x02\x03ASX\xaa\x02\x0eApp.Service.V1\xca\x02\x0eApp\\Service\\V1\xe2\x02\x1aApp\\Service\\V1\\GPBMetadata\xea\x02\x10App::Service::V1b\x06proto3"
 
 var file_app_service_v1_i_ledger_tag_proto_goTypes = []any{
 	(*v1.PagingRequest)(nil),      // 0: pagination.PagingRequest

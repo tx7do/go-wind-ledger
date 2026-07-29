@@ -769,8 +769,8 @@ const file_permission_service_v1_api_proto_rawDesc = "" +
 	"\x06Update\x12'.permission.service.v1.UpdateApiRequest\x1a\x16.google.protobuf.Empty\"\x00\x12K\n" +
 	"\x06Delete\x12'.permission.service.v1.DeleteApiRequest\x1a\x16.google.protobuf.Empty\"\x00\x12L\n" +
 	"\bSyncApis\x12&.permission.service.v1.SyncApisRequest\x1a\x16.google.protobuf.Empty\"\x00\x12T\n" +
-	"\x10GetWalkRouteData\x12\x16.google.protobuf.Empty\x1a&.permission.service.v1.ListApiResponse\"\x00B\xd6\x01\n" +
-	"\x19com.permission.service.v1B\bApiProtoP\x01Z9go-wind-cms/api/gen/go/permission/service/v1;permissionpb\xa2\x02\x03PSX\xaa\x02\x15Permission.Service.V1\xca\x02\x15Permission\\Service\\V1\xe2\x02!Permission\\Service\\V1\\GPBMetadata\xea\x02\x17Permission::Service::V1b\x06proto3"
+	"\x10GetWalkRouteData\x12\x16.google.protobuf.Empty\x1a&.permission.service.v1.ListApiResponse\"\x00B\xd9\x01\n" +
+	"\x19com.permission.service.v1B\bApiProtoP\x01Z<go-wind-ledger/api/gen/go/permission/service/v1;permissionpb\xa2\x02\x03PSX\xaa\x02\x15Permission.Service.V1\xca\x02\x15Permission\\Service\\V1\xe2\x02!Permission\\Service\\V1\\GPBMetadata\xea\x02\x17Permission::Service::V1b\x06proto3"
 
 var (
 	file_permission_service_v1_api_proto_rawDescOnce sync.Once

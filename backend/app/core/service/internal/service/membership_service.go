@@ -10,10 +10,10 @@ import (
 	"google.golang.org/protobuf/types/known/emptypb"
 	"google.golang.org/protobuf/types/known/timestamppb"
 
-	"go-wind-cms/app/core/service/internal/data"
+	"go-wind-ledger/app/core/service/internal/data"
 
-	identityV1 "go-wind-cms/api/gen/go/identity/service/v1"
-	permissionV1 "go-wind-cms/api/gen/go/permission/service/v1"
+	identityV1 "go-wind-ledger/api/gen/go/identity/service/v1"
+	permissionV1 "go-wind-ledger/api/gen/go/permission/service/v1"
 )
 
 // MembershipService 成员管理服务（邀请/接受/拒绝/列出/移除）。

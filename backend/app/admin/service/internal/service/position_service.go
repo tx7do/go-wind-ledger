@@ -9,10 +9,10 @@ import (
 	"github.com/tx7do/kratos-bootstrap/bootstrap"
 	"google.golang.org/protobuf/types/known/emptypb"
 
-	adminV1 "go-wind-cms/api/gen/go/admin/service/v1"
-	identityV1 "go-wind-cms/api/gen/go/identity/service/v1"
+	adminV1 "go-wind-ledger/api/gen/go/admin/service/v1"
+	identityV1 "go-wind-ledger/api/gen/go/identity/service/v1"
 
-	"go-wind-cms/pkg/middleware/auth"
+	"go-wind-ledger/pkg/middleware/auth"
 )
 
 type PositionService struct {

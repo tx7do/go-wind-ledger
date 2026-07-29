@@ -266,9 +266,9 @@ const file_ledger_service_v1_types_proto_rawDesc = "" +
 	"\x10REPEAT_TYPE_ONCE\x10d\x12\x16\n" +
 	"\x11REPEAT_TYPE_DAILY\x10\xc8\x01\x12\x18\n" +
 	"\x13REPEAT_TYPE_MONTHLY\x10\xac\x02\x12\x17\n" +
-	"\x12REPEAT_TYPE_YEARLY\x10\x90\x03B\xbd\x01\n" +
+	"\x12REPEAT_TYPE_YEARLY\x10\x90\x03B\xc0\x01\n" +
 	"\x15com.ledger.service.v1B\n" +
-	"TypesProtoP\x01Z2go-wind-cms/api/gen/go/ledger/service/v1;servicev1\xa2\x02\x03LSX\xaa\x02\x11Ledger.Service.V1\xca\x02\x11Ledger\\Service\\V1\xe2\x02\x1dLedger\\Service\\V1\\GPBMetadata\xea\x02\x13Ledger::Service::V1b\x06proto3"
+	"TypesProtoP\x01Z5go-wind-ledger/api/gen/go/ledger/service/v1;servicev1\xa2\x02\x03LSX\xaa\x02\x11Ledger.Service.V1\xca\x02\x11Ledger\\Service\\V1\xe2\x02\x1dLedger\\Service\\V1\\GPBMetadata\xea\x02\x13Ledger::Service::V1b\x06proto3"
 
 var (
 	file_ledger_service_v1_types_proto_rawDescOnce sync.Once

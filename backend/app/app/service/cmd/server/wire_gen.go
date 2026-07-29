@@ -9,10 +9,10 @@ package main
 import (
 	"github.com/go-kratos/kratos/v2"
 	"github.com/tx7do/kratos-bootstrap/bootstrap"
-	"go-wind-cms/app/app/service/internal/data"
-	"go-wind-cms/app/app/service/internal/server"
-	"go-wind-cms/app/app/service/internal/service"
-	"go-wind-cms/pkg/middleware/auth"
+	"go-wind-ledger/app/app/service/internal/data"
+	"go-wind-ledger/app/app/service/internal/server"
+	"go-wind-ledger/app/app/service/internal/service"
+	"go-wind-ledger/pkg/middleware/auth"
 )
 
 import (
@@ -41,20 +41,6 @@ func initApp(context *bootstrap.Context) (*kratos.App, func(), error) {
 	roleServiceClient := data.NewRoleServiceClient(context, discovery)
 	userCredentialServiceClient := data.NewUserCredentialServiceClient(context, discovery)
 	userProfileService := service.NewUserProfileService(context, userServiceClient, tenantServiceClient, orgUnitServiceClient, positionServiceClient, roleServiceClient, userCredentialServiceClient)
-	postServiceClient := data.NewPostServiceClient(context, discovery)
-	postService := service.NewPostService(context, postServiceClient)
-	categoryServiceClient := data.NewCategoryServiceClient(context, discovery)
-	categoryService := service.NewCategoryService(context, categoryServiceClient)
-	commentServiceClient := data.NewCommentServiceClient(context, discovery)
-	commentService := service.NewCommentService(context, commentServiceClient)
-	tagServiceClient := data.NewTagServiceClient(context, discovery)
-	tagService := service.NewTagService(context, tagServiceClient)
-	pageServiceClient := data.NewPageServiceClient(context, discovery)
-	pageService := service.NewPageService(context, pageServiceClient)
-	sectionServiceClient := data.NewSectionServiceClient(context, discovery)
-	sectionService := service.NewSectionService(context, sectionServiceClient)
-	navigationServiceClient := data.NewNavigationServiceClient(context, discovery)
-	navigationService := service.NewNavigationService(context, navigationServiceClient)
 	bookServiceClient := data.NewBookServiceClient(context, discovery)
 	bookService := service.NewBookService(context, bookServiceClient)
 	bookTemplateServiceClient := data.NewBookTemplateServiceClient(context, discovery)
@@ -63,10 +49,10 @@ func initApp(context *bootstrap.Context) (*kratos.App, func(), error) {
 	accountService := service.NewAccountService(context, accountServiceClient)
 	balanceFlowServiceClient := data.NewBalanceFlowServiceClient(context, discovery)
 	balanceFlowService := service.NewBalanceFlowService(context, balanceFlowServiceClient)
-	servicev1CategoryServiceClient := data.NewLedgerCategoryServiceClient(context, discovery)
-	ledgerCategoryService := service.NewLedgerCategoryService(context, servicev1CategoryServiceClient)
-	servicev1TagServiceClient := data.NewLedgerTagServiceClient(context, discovery)
-	ledgerTagService := service.NewLedgerTagService(context, servicev1TagServiceClient)
+	categoryServiceClient := data.NewLedgerCategoryServiceClient(context, discovery)
+	ledgerCategoryService := service.NewLedgerCategoryService(context, categoryServiceClient)
+	tagServiceClient := data.NewLedgerTagServiceClient(context, discovery)
+	ledgerTagService := service.NewLedgerTagService(context, tagServiceClient)
 	payeeServiceClient := data.NewPayeeServiceClient(context, discovery)
 	payeeService := service.NewPayeeService(context, payeeServiceClient)
 	noteDayServiceClient := data.NewNoteDayServiceClient(context, discovery)
@@ -77,9 +63,13 @@ func initApp(context *bootstrap.Context) (*kratos.App, func(), error) {
 	reportService := service.NewReportService(context, reportServiceClient)
 	flowFileServiceClient := data.NewFlowFileServiceClient(context, discovery)
 	flowFileService := service.NewFlowFileService(context, flowFileServiceClient)
+	budgetServiceClient := data.NewBudgetServiceClient(context, discovery)
+	budgetService := service.NewBudgetService(context, budgetServiceClient)
+	tenantMemberServiceClient := data.NewTenantMemberServiceClient(context, discovery)
+	tenantMemberService := service.NewTenantMemberService(context, tenantMemberServiceClient)
 	ledgerAuthServiceClient := data.NewLedgerAuthServiceClient(context, discovery)
 	ledgerAuthService := service.NewLedgerAuthService(context, ledgerAuthServiceClient)
-	httpServer := server.NewRestServer(context, v, authenticationService, fileTransferService, userProfileService, postService, categoryService, commentService, tagService, pageService, sectionService, navigationService, bookService, bookTemplateService, accountService, balanceFlowService, ledgerCategoryService, ledgerTagService, payeeService, noteDayService, currencyService, reportService, flowFileService, ledgerAuthService)
+	httpServer := server.NewRestServer(context, v, authenticationService, fileTransferService, userProfileService, bookService, bookTemplateService, accountService, balanceFlowService, ledgerCategoryService, ledgerTagService, payeeService, noteDayService, currencyService, reportService, flowFileService, budgetService, tenantMemberService, ledgerAuthService)
 	grpcMiddlewares := server.NewGrpcMiddleware(context)
 	grpcServer, err := server.NewGrpcServer(context, grpcMiddlewares)
 	if err != nil {

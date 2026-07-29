@@ -8,7 +8,7 @@ package adminpb
 
 import (
 	_ "github.com/tx7do/go-crud/api/gen/go/pagination/v1"
-	v1 "go-wind-cms/api/gen/go/identity/service/v1"
+	v1 "go-wind-ledger/api/gen/go/identity/service/v1"
 	_ "google.golang.org/genproto/googleapis/api/annotations"
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
@@ -37,8 +37,8 @@ const file_admin_service_v1_i_tenant_member_proto_rawDesc = "" +
 	"\fRemoveMember\x12(.identity.service.v1.RemoveMemberRequest\x1a\x16.google.protobuf.Empty\"$\x82\xd3\xe4\x93\x02\x1e*\x1c/admin/v1/memberships/remove\x12\x90\x01\n" +
 	"\rListMyTenants\x12).identity.service.v1.ListMyTenantsRequest\x1a*.identity.service.v1.ListMyTenantsResponse\"(\x82\xd3\xe4\x93\x02\"\x12 /admin/v1/memberships/my-tenants\x12\x7f\n" +
 	"\rGetMembership\x12).identity.service.v1.GetMembershipRequest\x1a\x1f.identity.service.v1.Membership\"\"\x82\xd3\xe4\x93\x02\x1c\x12\x1a/admin/v1/memberships/{id}\x12\x88\x01\n" +
-	"\x10UpdateMembership\x12,.identity.service.v1.UpdateMembershipRequest\x1a\x1f.identity.service.v1.Membership\"%\x82\xd3\xe4\x93\x02\x1f:\x01*\x1a\x1a/admin/v1/memberships/{id}B\xbd\x01\n" +
-	"\x14com.admin.service.v1B\x12ITenantMemberProtoP\x01Z/go-wind-cms/api/gen/go/admin/service/v1;adminpb\xa2\x02\x03ASX\xaa\x02\x10Admin.Service.V1\xca\x02\x10Admin\\Service\\V1\xe2\x02\x1cAdmin\\Service\\V1\\GPBMetadata\xea\x02\x12Admin::Service::V1b\x06proto3"
+	"\x10UpdateMembership\x12,.identity.service.v1.UpdateMembershipRequest\x1a\x1f.identity.service.v1.Membership\"%\x82\xd3\xe4\x93\x02\x1f:\x01*\x1a\x1a/admin/v1/memberships/{id}B\xc0\x01\n" +
+	"\x14com.admin.service.v1B\x12ITenantMemberProtoP\x01Z2go-wind-ledger/api/gen/go/admin/service/v1;adminpb\xa2\x02\x03ASX\xaa\x02\x10Admin.Service.V1\xca\x02\x10Admin\\Service\\V1\xe2\x02\x1cAdmin\\Service\\V1\\GPBMetadata\xea\x02\x12Admin::Service::V1b\x06proto3"
 
 var file_admin_service_v1_i_tenant_member_proto_goTypes = []any{
 	(*v1.ListMembersRequest)(nil),      // 0: identity.service.v1.ListMembersRequest

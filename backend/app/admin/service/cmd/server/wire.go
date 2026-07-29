@@ -11,9 +11,9 @@ import (
 	"github.com/go-kratos/kratos/v2"
 	"github.com/tx7do/kratos-bootstrap/bootstrap"
 
-	dataProviders "go-wind-cms/app/admin/service/internal/data/providers"
-	serverProviders "go-wind-cms/app/admin/service/internal/server/providers"
-	serviceProviders "go-wind-cms/app/admin/service/internal/service/providers"
+	dataProviders "go-wind-ledger/app/admin/service/internal/data/providers"
+	serverProviders "go-wind-ledger/app/admin/service/internal/server/providers"
+	serviceProviders "go-wind-ledger/app/admin/service/internal/service/providers"
 )
 
 // initApp init kratos application.

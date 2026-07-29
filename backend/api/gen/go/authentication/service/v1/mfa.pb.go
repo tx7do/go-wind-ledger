@@ -1977,8 +1977,8 @@ const file_authentication_service_v1_mfa_proto_rawDesc = "" +
 	"\x12VerifyMFAChallenge\x124.authentication.service.v1.VerifyMFAChallengeRequest\x1a5.authentication.service.v1.VerifyMFAChallengeResponse\"\x00\x12\x86\x01\n" +
 	"\x13GenerateBackupCodes\x125.authentication.service.v1.GenerateBackupCodesRequest\x1a6.authentication.service.v1.GenerateBackupCodesResponse\"\x00\x12z\n" +
 	"\x0fListBackupCodes\x121.authentication.service.v1.ListBackupCodesRequest\x1a2.authentication.service.v1.ListBackupCodesResponse\"\x00\x12^\n" +
-	"\x0fRevokeMFADevice\x121.authentication.service.v1.RevokeMFADeviceRequest\x1a\x16.google.protobuf.Empty\"\x00B\xf2\x01\n" +
-	"\x1dcom.authentication.service.v1B\bMfaProtoP\x01ZAgo-wind-cms/api/gen/go/authentication/service/v1;authenticationpb\xa2\x02\x03ASX\xaa\x02\x19Authentication.Service.V1\xca\x02\x19Authentication\\Service\\V1\xe2\x02%Authentication\\Service\\V1\\GPBMetadata\xea\x02\x1bAuthentication::Service::V1b\x06proto3"
+	"\x0fRevokeMFADevice\x121.authentication.service.v1.RevokeMFADeviceRequest\x1a\x16.google.protobuf.Empty\"\x00B\xf5\x01\n" +
+	"\x1dcom.authentication.service.v1B\bMfaProtoP\x01ZDgo-wind-ledger/api/gen/go/authentication/service/v1;authenticationpb\xa2\x02\x03ASX\xaa\x02\x19Authentication.Service.V1\xca\x02\x19Authentication\\Service\\V1\xe2\x02%Authentication\\Service\\V1\\GPBMetadata\xea\x02\x1bAuthentication::Service::V1b\x06proto3"
 
 var (
 	file_authentication_service_v1_mfa_proto_rawDescOnce sync.Once

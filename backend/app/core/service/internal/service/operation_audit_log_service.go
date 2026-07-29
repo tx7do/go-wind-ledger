@@ -7,9 +7,9 @@ import (
 	paginationV1 "github.com/tx7do/go-crud/api/gen/go/pagination/v1"
 	"github.com/tx7do/kratos-bootstrap/bootstrap"
 
-	"go-wind-cms/app/core/service/internal/data"
+	"go-wind-ledger/app/core/service/internal/data"
 
-	auditV1 "go-wind-cms/api/gen/go/audit/service/v1"
+	auditV1 "go-wind-ledger/api/gen/go/audit/service/v1"
 )
 
 type OperationAuditLogService struct {

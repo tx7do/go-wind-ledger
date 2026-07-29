@@ -15,9 +15,9 @@ import (
 
 	"github.com/tx7do/kratos-bootstrap/bootstrap"
 
-	authenticationV1 "go-wind-cms/api/gen/go/authentication/service/v1"
+	authenticationV1 "go-wind-ledger/api/gen/go/authentication/service/v1"
 
-	"go-wind-cms/pkg/jwt"
+	"go-wind-ledger/pkg/jwt"
 )
 
 const (

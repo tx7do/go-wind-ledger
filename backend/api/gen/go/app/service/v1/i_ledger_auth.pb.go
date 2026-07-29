@@ -7,9 +7,9 @@
 package servicev1
 
 import (
-	_ "go-wind-cms/api/gen/go/authentication/service/v1"
-	v1 "go-wind-cms/api/gen/go/identity/service/v1"
-	v11 "go-wind-cms/api/gen/go/ledger/service/v1"
+	_ "go-wind-ledger/api/gen/go/authentication/service/v1"
+	v1 "go-wind-ledger/api/gen/go/identity/service/v1"
+	v11 "go-wind-ledger/api/gen/go/ledger/service/v1"
 	_ "google.golang.org/genproto/googleapis/api/annotations"
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
@@ -360,8 +360,8 @@ const file_app_service_v1_i_ledger_auth_proto_rawDesc = "" +
 	"\bRegister\x12%.app.service.v1.LedgerRegisterRequest\x1a\".app.service.v1.LedgerAuthResponse\" \x82\xd3\xe4\x93\x02\x1a:\x01*\"\x15/app/v1/auth/register\x12g\n" +
 	"\tInitState\x12\x16.google.protobuf.Empty\x1a!.app.service.v1.InitStateResponse\"\x1f\x82\xd3\xe4\x93\x02\x19\x12\x17/app/v1/auth/init-state\x12\x83\x01\n" +
 	"\x0eSetDefaultBook\x12%.app.service.v1.SetDefaultBookRequest\x1a\x16.google.protobuf.Empty\"2\x82\xd3\xe4\x93\x02,:\x01*2'/app/v1/auth/set-default-book/{book_id}\x12\x8b\x01\n" +
-	"\x10SetDefaultTenant\x12'.app.service.v1.SetDefaultTenantRequest\x1a\x16.google.protobuf.Empty\"6\x82\xd3\xe4\x93\x020:\x01*2+/app/v1/auth/set-default-tenant/{tenant_id}B\xb1\x01\n" +
-	"\x12com.app.service.v1B\x10ILedgerAuthProtoP\x01Z/go-wind-cms/api/gen/go/app/service/v1;servicev1\xa2\x02\x03ASX\xaa\x02\x0eApp.Service.V1\xca\x02\x0eApp\\Service\\V1\xe2\x02\x1aApp\\Service\\V1\\GPBMetadata\xea\x02\x10App::Service::V1b\x06proto3"
+	"\x10SetDefaultTenant\x12'.app.service.v1.SetDefaultTenantRequest\x1a\x16.google.protobuf.Empty\"6\x82\xd3\xe4\x93\x020:\x01*2+/app/v1/auth/set-default-tenant/{tenant_id}B\xb4\x01\n" +
+	"\x12com.app.service.v1B\x10ILedgerAuthProtoP\x01Z2go-wind-ledger/api/gen/go/app/service/v1;servicev1\xa2\x02\x03ASX\xaa\x02\x0eApp.Service.V1\xca\x02\x0eApp\\Service\\V1\xe2\x02\x1aApp\\Service\\V1\\GPBMetadata\xea\x02\x10App::Service::V1b\x06proto3"
 
 var (
 	file_app_service_v1_i_ledger_auth_proto_rawDescOnce sync.Once

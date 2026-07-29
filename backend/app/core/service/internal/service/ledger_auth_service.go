@@ -13,22 +13,22 @@ import (
 	entCrud "github.com/tx7do/go-crud/entgo"
 	"github.com/tx7do/go-crud/viewer"
 
-	"go-wind-cms/app/core/service/internal/data"
-	"go-wind-cms/app/core/service/internal/data/ent"
-	"go-wind-cms/app/core/service/internal/data/ent/book"
-	"go-wind-cms/app/core/service/internal/data/ent/membership"
-	"go-wind-cms/app/core/service/internal/data/ent/privacy"
-	"go-wind-cms/app/core/service/internal/data/ent/tenant"
-	"go-wind-cms/app/core/service/internal/data/ent/user"
-	"go-wind-cms/app/core/service/internal/data/ent/usercredential"
+	"go-wind-ledger/app/core/service/internal/data"
+	"go-wind-ledger/app/core/service/internal/data/ent"
+	"go-wind-ledger/app/core/service/internal/data/ent/book"
+	"go-wind-ledger/app/core/service/internal/data/ent/membership"
+	"go-wind-ledger/app/core/service/internal/data/ent/privacy"
+	"go-wind-ledger/app/core/service/internal/data/ent/tenant"
+	"go-wind-ledger/app/core/service/internal/data/ent/user"
+	"go-wind-ledger/app/core/service/internal/data/ent/usercredential"
 
-	appV1 "go-wind-cms/api/gen/go/app/service/v1"
-	authenticationV1 "go-wind-cms/api/gen/go/authentication/service/v1"
-	identityV1 "go-wind-cms/api/gen/go/identity/service/v1"
-	ledgerV1 "go-wind-cms/api/gen/go/ledger/service/v1"
+	appV1 "go-wind-ledger/api/gen/go/app/service/v1"
+	authenticationV1 "go-wind-ledger/api/gen/go/authentication/service/v1"
+	identityV1 "go-wind-ledger/api/gen/go/identity/service/v1"
+	ledgerV1 "go-wind-ledger/api/gen/go/ledger/service/v1"
 
-	"go-wind-cms/pkg/metadata"
-	"go-wind-cms/pkg/middleware/auth"
+	"go-wind-ledger/pkg/metadata"
+	"go-wind-ledger/pkg/middleware/auth"
 )
 
 // defaultInviteCode 默认邀请码（未配置时使用）

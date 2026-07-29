@@ -12,11 +12,11 @@ import (
 	entCrud "github.com/tx7do/go-crud/entgo"
 	"github.com/tx7do/go-utils/mapper"
 
-	"go-wind-cms/app/core/service/internal/data/ent"
-	"go-wind-cms/app/core/service/internal/data/ent/file"
-	"go-wind-cms/app/core/service/internal/data/ent/predicate"
+	"go-wind-ledger/app/core/service/internal/data/ent"
+	"go-wind-ledger/app/core/service/internal/data/ent/file"
+	"go-wind-ledger/app/core/service/internal/data/ent/predicate"
 
-	storageV1 "go-wind-cms/api/gen/go/storage/service/v1"
+	storageV1 "go-wind-ledger/api/gen/go/storage/service/v1"
 )
 
 type FileRepo struct {
