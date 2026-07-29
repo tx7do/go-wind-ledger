@@ -75,7 +75,9 @@ type userRepo struct {
 	entClient *entCrud.EntClient[*ent.Client]
 	log       *log.Helper
 
-	mapper *mapper.CopierMapper[identityV1.User, ent.User]
+	mapper          *mapper.CopierMapper[identityV1.User, ent.User]
+	genderConverter *mapper.EnumTypeConverter[identityV1.User_Gender, user.Gender]
+	statusConverter *mapper.EnumTypeConverter[identityV1.User_Status, user.Status]
 
 	repository *entCrud.Repository[
 		ent.UserQuery, ent.UserSelect,
@@ -105,12 +107,16 @@ func NewUserRepo(
 		log:              ctx.NewLoggerHelper("user/repo/core-service"),
 		entClient:        entClient,
 		mapper:           mapper.NewCopierMapper[identityV1.User, ent.User](),
+		genderConverter:  mapper.NewEnumTypeConverter[identityV1.User_Gender, user.Gender](identityV1.User_Gender_name, identityV1.User_Gender_value),
+		statusConverter:  mapper.NewEnumTypeConverter[identityV1.User_Status, user.Status](identityV1.User_Status_name, identityV1.User_Status_value),
 		userRoleRepo:     userRoleRepo,
 		userOrgUnitRepo:  userOrgUnitRepo,
 		userPositionRepo: userPositionRepo,
 		membershipRepo:   membershipRepo,
 	}
+
 	repo.init()
+
 	return repo
 }
 
@@ -126,6 +132,9 @@ func (r *userRepo) init() {
 
 	r.mapper.AppendConverters(copierutil.NewTimeStringConverterPair())
 	r.mapper.AppendConverters(copierutil.NewTimeTimestamppbConverterPair())
+
+	r.mapper.AppendConverters(r.genderConverter.NewConverterPair())
+	r.mapper.AppendConverters(r.statusConverter.NewConverterPair())
 }
 
 // Count 统计用户数量
@@ -502,8 +511,8 @@ func (r *userRepo) CreateWithTx(ctx context.Context, tx *ent.Tx, data *identityV
 		SetNillableLastLoginAt(timeutil.TimestamppbToTime(data.LastLoginAt)).
 		SetNillableLockedUntil(timeutil.TimestamppbToTime(data.LockedUntil)).
 		SetNillableLastLoginIP(data.LastLoginIp).
-		SetNillableGender(genderToEntity(data.Gender)).
-		SetNillableStatus(userStatusToEntity(data.Status)).
+		SetNillableGender(r.genderConverter.ToEntity(data.Gender)).
+		SetNillableStatus(r.statusConverter.ToEntity(data.Status)).
 		SetNillableCreatedBy(data.CreatedBy).
 		SetCreatedAt(time.Now())
 
@@ -643,8 +652,8 @@ func (r *userRepo) Update(ctx context.Context, req *identityV1.UpdateUserRequest
 				SetNillableLastLoginAt(timeutil.TimestamppbToTime(req.Data.LastLoginAt)).
 				SetNillableLockedUntil(timeutil.TimestamppbToTime(req.Data.LockedUntil)).
 				SetNillableLastLoginIP(req.Data.LastLoginIp).
-				SetNillableGender(genderToEntity(req.Data.Gender)).
-				SetNillableStatus(userStatusToEntity(req.Data.Status)).
+				SetNillableGender(r.genderConverter.ToEntity(req.Data.Gender)).
+				SetNillableStatus(r.statusConverter.ToEntity(req.Data.Status)).
 				SetNillableUpdatedBy(req.Data.UpdatedBy).
 				SetUpdatedAt(time.Now())
 		},
@@ -1123,22 +1132,4 @@ func (r *userRepo) ListUserIDsByPositionIDs(ctx context.Context, positionIDs []u
 
 func (r *userRepo) ListUserIDsByRoleIDs(ctx context.Context, roleIDs []uint32, excludeExpired bool) ([]uint32, error) {
 	return r.userRoleRepo.ListUserIDsByRoleIDs(ctx, roleIDs, excludeExpired)
-}
-
-// genderToEntity converts proto Gender enum to ent Gender.
-func genderToEntity(g *identityV1.User_Gender) *user.Gender {
-	if g == nil {
-		return nil
-	}
-	v := user.Gender(g.String())
-	return &v
-}
-
-// userStatusToEntity converts proto Status enum to ent Status.
-func userStatusToEntity(s *identityV1.User_Status) *user.Status {
-	if s == nil {
-		return nil
-	}
-	v := user.Status(s.String())
-	return &v
 }
