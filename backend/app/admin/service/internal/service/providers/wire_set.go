@@ -60,6 +60,8 @@ var ProviderSet = wire.NewSet(
 	service.NewBookTemplateService,
 	service.NewAccountService,
 	service.NewPayeeService,
+	service.NewLedgerCategoryService,
+	service.NewLedgerTagService,
 	service.NewBalanceFlowService,
 	service.NewFlowFileService,
 	service.NewNoteDayService,

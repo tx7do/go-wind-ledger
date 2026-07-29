@@ -115,6 +115,8 @@ func NewRestServer(
 	bookTemplateService *service.BookTemplateService,
 	accountService      *service.AccountService,
 	payeeService       *service.PayeeService,
+	ledgerCategoryService *service.LedgerCategoryService,
+	ledgerTagService     *service.LedgerTagService,
 	balanceFlowService *service.BalanceFlowService,
 	flowFileService    *service.FlowFileService,
 	noteDayService     *service.NoteDayService,
@@ -177,6 +179,8 @@ func NewRestServer(
 		adminV1.RegisterBookTemplateServiceHTTPServer(srv, bookTemplateService)
 		adminV1.RegisterAccountServiceHTTPServer(srv, accountService)
 		adminV1.RegisterPayeeServiceHTTPServer(srv, payeeService)
+		adminV1.RegisterLedgerCategoryServiceHTTPServer(srv, ledgerCategoryService)
+		adminV1.RegisterLedgerTagServiceHTTPServer(srv, ledgerTagService)
 		adminV1.RegisterBalanceFlowServiceHTTPServer(srv, balanceFlowService)
 		adminV1.RegisterFlowFileServiceHTTPServer(srv, flowFileService)
 		adminV1.RegisterNoteDayServiceHTTPServer(srv, noteDayService)

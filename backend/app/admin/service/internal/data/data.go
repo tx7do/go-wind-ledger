@@ -436,3 +436,19 @@ func NewInternalMessageRecipientServiceClient(ctx *bootstrap.Context, r registry
 	}
 	return internalMessageV1.NewInternalMessageRecipientServiceClient(cli)
 }
+
+func NewLedgerCategoryServiceClient(ctx *bootstrap.Context, r registry.Discovery) ledgerV1.CategoryServiceClient {
+	cli, err := rpc.CreateGrpcClient(ctx.Context(), r, serviceid.NewDiscoveryName(serviceid.CoreService), ctx.GetConfig())
+	if err != nil {
+		return nil
+	}
+	return ledgerV1.NewCategoryServiceClient(cli)
+}
+
+func NewLedgerTagServiceClient(ctx *bootstrap.Context, r registry.Discovery) ledgerV1.TagServiceClient {
+	cli, err := rpc.CreateGrpcClient(ctx.Context(), r, serviceid.NewDiscoveryName(serviceid.CoreService), ctx.GetConfig())
+	if err != nil {
+		return nil
+	}
+	return ledgerV1.NewTagServiceClient(cli)
+}

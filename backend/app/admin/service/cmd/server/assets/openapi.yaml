@@ -3013,6 +3013,490 @@ paths:
                         application/json:
                             schema:
                                 $ref: '#/components/schemas/internal_message.service.v1.SendMessageResponse'
+    /admin/v1/ledger-categories:
+        get:
+            tags:
+                - LedgerCategoryService
+            operationId: LedgerCategoryService_List
+            parameters:
+                - name: page
+                  in: query
+                  description: 当前页码（从1开始，默认1）
+                  schema:
+                    type: integer
+                    format: uint32
+                - name: pageSize
+                  in: query
+                  description: 每页条数（默认10，建议设置上限如100）
+                  schema:
+                    type: integer
+                    format: uint32
+                - name: offset
+                  in: query
+                  description: 跳过的记录数（从0开始，默认0）
+                  schema:
+                    type: string
+                - name: limit
+                  in: query
+                  description: 最多返回的记录数（默认10，建议设置上限如100）
+                  schema:
+                    type: integer
+                    format: uint32
+                - name: token
+                  in: query
+                  description: 上一页最后一条记录的游标（如ID/时间戳+ID，首次请求为空）
+                  schema:
+                    type: string
+                - name: noPaging
+                  in: query
+                  description: 是否不分页，如果为true，则page和pageSize参数无效。
+                  schema:
+                    type: boolean
+                - name: query
+                  in: query
+                  description: JSON字符串过滤条件，基础语法：{"field1":"val1", "field2___icontains":"val2"}，具体请参见：https://github.com/tx7do/go-crud/tree/main/pagination/filter/README.md
+                  schema:
+                    type: string
+                - name: filter
+                  in: query
+                  description: Google AIP规范字符串过滤条件
+                  schema:
+                    type: string
+                - name: filterExpr.type
+                  in: query
+                  description: 过滤表达式类型
+                  schema:
+                    enum:
+                        - EXPR_TYPE_UNSPECIFIED
+                        - AND
+                        - OR
+                    type: string
+                    format: enum
+                - name: orderBy
+                  in: query
+                  description: 排序条件
+                  schema:
+                    type: string
+                - name: fieldMask
+                  in: query
+                  description: 字段掩码，其作用为SELECT中的字段，其语法为使用逗号分隔字段名，例如：id,realName,userName。如果为空则选中所有字段，即SELECT *。
+                  schema:
+                    type: string
+                    format: field-mask
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/ledger.service.v1.ListCategoryResponse'
+        post:
+            tags:
+                - LedgerCategoryService
+            operationId: LedgerCategoryService_Create
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/ledger.service.v1.CreateCategoryRequest'
+                required: true
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/ledger.service.v1.Category'
+    /admin/v1/ledger-categories-all:
+        get:
+            tags:
+                - LedgerCategoryService
+            operationId: LedgerCategoryService_ListAll
+            parameters:
+                - name: bookId
+                  in: query
+                  schema:
+                    type: integer
+                    format: uint32
+                - name: type
+                  in: query
+                  schema:
+                    enum:
+                        - CATEGORY_TYPE_UNSPECIFIED
+                        - CATEGORY_TYPE_EXPENSE
+                        - CATEGORY_TYPE_INCOME
+                    type: string
+                    format: enum
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/ledger.service.v1.ListCategoryResponse'
+    /admin/v1/ledger-categories/{id}:
+        get:
+            tags:
+                - LedgerCategoryService
+            operationId: LedgerCategoryService_Get
+            parameters:
+                - name: id
+                  in: path
+                  required: true
+                  schema:
+                    type: integer
+                    format: uint32
+                - name: viewMask
+                  in: query
+                  schema:
+                    type: string
+                    format: field-mask
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/ledger.service.v1.Category'
+        put:
+            tags:
+                - LedgerCategoryService
+            operationId: LedgerCategoryService_Update
+            parameters:
+                - name: id
+                  in: path
+                  required: true
+                  schema:
+                    type: integer
+                    format: uint32
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/ledger.service.v1.UpdateCategoryRequest'
+                required: true
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/ledger.service.v1.Category'
+        delete:
+            tags:
+                - LedgerCategoryService
+            operationId: LedgerCategoryService_Delete
+            parameters:
+                - name: id
+                  in: path
+                  required: true
+                  schema:
+                    type: integer
+                    format: uint32
+            responses:
+                "200":
+                    description: OK
+                    content: {}
+    /admin/v1/ledger-categories/{id}/toggle:
+        patch:
+            tags:
+                - LedgerCategoryService
+            operationId: LedgerCategoryService_Toggle
+            parameters:
+                - name: id
+                  in: path
+                  required: true
+                  schema:
+                    type: integer
+                    format: uint32
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/ledger.service.v1.ToggleCategoryRequest'
+                required: true
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/ledger.service.v1.Category'
+    /admin/v1/ledger-tags:
+        get:
+            tags:
+                - LedgerTagService
+            operationId: LedgerTagService_List
+            parameters:
+                - name: page
+                  in: query
+                  description: 当前页码（从1开始，默认1）
+                  schema:
+                    type: integer
+                    format: uint32
+                - name: pageSize
+                  in: query
+                  description: 每页条数（默认10，建议设置上限如100）
+                  schema:
+                    type: integer
+                    format: uint32
+                - name: offset
+                  in: query
+                  description: 跳过的记录数（从0开始，默认0）
+                  schema:
+                    type: string
+                - name: limit
+                  in: query
+                  description: 最多返回的记录数（默认10，建议设置上限如100）
+                  schema:
+                    type: integer
+                    format: uint32
+                - name: token
+                  in: query
+                  description: 上一页最后一条记录的游标（如ID/时间戳+ID，首次请求为空）
+                  schema:
+                    type: string
+                - name: noPaging
+                  in: query
+                  description: 是否不分页，如果为true，则page和pageSize参数无效。
+                  schema:
+                    type: boolean
+                - name: query
+                  in: query
+                  description: JSON字符串过滤条件，基础语法：{"field1":"val1", "field2___icontains":"val2"}，具体请参见：https://github.com/tx7do/go-crud/tree/main/pagination/filter/README.md
+                  schema:
+                    type: string
+                - name: filter
+                  in: query
+                  description: Google AIP规范字符串过滤条件
+                  schema:
+                    type: string
+                - name: filterExpr.type
+                  in: query
+                  description: 过滤表达式类型
+                  schema:
+                    enum:
+                        - EXPR_TYPE_UNSPECIFIED
+                        - AND
+                        - OR
+                    type: string
+                    format: enum
+                - name: orderBy
+                  in: query
+                  description: 排序条件
+                  schema:
+                    type: string
+                - name: fieldMask
+                  in: query
+                  description: 字段掩码，其作用为SELECT中的字段，其语法为使用逗号分隔字段名，例如：id,realName,userName。如果为空则选中所有字段，即SELECT *。
+                  schema:
+                    type: string
+                    format: field-mask
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/ledger.service.v1.ListTagResponse'
+        post:
+            tags:
+                - LedgerTagService
+            operationId: LedgerTagService_Create
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/ledger.service.v1.CreateTagRequest'
+                required: true
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/ledger.service.v1.Tag'
+    /admin/v1/ledger-tags-all:
+        get:
+            tags:
+                - LedgerTagService
+            operationId: LedgerTagService_ListAll
+            parameters:
+                - name: bookId
+                  in: query
+                  schema:
+                    type: integer
+                    format: uint32
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/ledger.service.v1.ListTagResponse'
+    /admin/v1/ledger-tags/{id}:
+        get:
+            tags:
+                - LedgerTagService
+            operationId: LedgerTagService_Get
+            parameters:
+                - name: id
+                  in: path
+                  required: true
+                  schema:
+                    type: integer
+                    format: uint32
+                - name: viewMask
+                  in: query
+                  schema:
+                    type: string
+                    format: field-mask
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/ledger.service.v1.Tag'
+        put:
+            tags:
+                - LedgerTagService
+            operationId: LedgerTagService_Update
+            parameters:
+                - name: id
+                  in: path
+                  required: true
+                  schema:
+                    type: integer
+                    format: uint32
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/ledger.service.v1.UpdateTagRequest'
+                required: true
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/ledger.service.v1.Tag'
+        delete:
+            tags:
+                - LedgerTagService
+            operationId: LedgerTagService_Delete
+            parameters:
+                - name: id
+                  in: path
+                  required: true
+                  schema:
+                    type: integer
+                    format: uint32
+            responses:
+                "200":
+                    description: OK
+                    content: {}
+    /admin/v1/ledger-tags/{id}/toggle:
+        patch:
+            tags:
+                - LedgerTagService
+            operationId: LedgerTagService_Toggle
+            parameters:
+                - name: id
+                  in: path
+                  required: true
+                  schema:
+                    type: integer
+                    format: uint32
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/ledger.service.v1.ToggleTagRequest'
+                required: true
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/ledger.service.v1.Tag'
+    /admin/v1/ledger-tags/{id}/toggle-can-expense:
+        patch:
+            tags:
+                - LedgerTagService
+            operationId: LedgerTagService_ToggleCanExpense
+            parameters:
+                - name: id
+                  in: path
+                  required: true
+                  schema:
+                    type: integer
+                    format: uint32
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/ledger.service.v1.ToggleTagRequest'
+                required: true
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/ledger.service.v1.Tag'
+    /admin/v1/ledger-tags/{id}/toggle-can-income:
+        patch:
+            tags:
+                - LedgerTagService
+            operationId: LedgerTagService_ToggleCanIncome
+            parameters:
+                - name: id
+                  in: path
+                  required: true
+                  schema:
+                    type: integer
+                    format: uint32
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/ledger.service.v1.ToggleTagRequest'
+                required: true
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/ledger.service.v1.Tag'
+    /admin/v1/ledger-tags/{id}/toggle-can-transfer:
+        patch:
+            tags:
+                - LedgerTagService
+            operationId: LedgerTagService_ToggleCanTransfer
+            parameters:
+                - name: id
+                  in: path
+                  required: true
+                  schema:
+                    type: integer
+                    format: uint32
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/ledger.service.v1.ToggleTagRequest'
+                required: true
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/ledger.service.v1.Tag'
     /admin/v1/login:
         post:
             tags:
@@ -9482,6 +9966,72 @@ components:
                 periodEnd:
                     type: string
             description: 预算进度
+        ledger.service.v1.Category:
+            type: object
+            properties:
+                id:
+                    type: integer
+                    format: uint32
+                tenantId:
+                    type: integer
+                    format: uint32
+                bookId:
+                    type: integer
+                    description: 所属账本ID
+                    format: uint32
+                name:
+                    type: string
+                    description: 分类名称
+                type:
+                    enum:
+                        - CATEGORY_TYPE_UNSPECIFIED
+                        - CATEGORY_TYPE_EXPENSE
+                        - CATEGORY_TYPE_INCOME
+                    type: string
+                    description: 分类类型（支出/收入）
+                    format: enum
+                notes:
+                    type: string
+                enable:
+                    type: boolean
+                sortOrder:
+                    type: integer
+                    format: int32
+                parentId:
+                    type: integer
+                    description: 父分类ID
+                    format: uint32
+                children:
+                    type: array
+                    items:
+                        $ref: '#/components/schemas/ledger.service.v1.Category'
+                    description: 子分类列表
+                depth:
+                    type: integer
+                    description: 层级深度（0=顶级）
+                    format: int32
+                path:
+                    type: string
+                    description: 物化路径
+                createdBy:
+                    type: integer
+                    format: uint32
+                updatedBy:
+                    type: integer
+                    format: uint32
+                deletedBy:
+                    type: integer
+                    format: uint32
+                createdAt:
+                    type: string
+                    format: date-time
+                updatedAt:
+                    type: string
+                    format: date-time
+                deletedAt:
+                    type: string
+                    format: date-time
+            description: 分类
         ledger.service.v1.CategoryRelation:
             type: object
             properties:
@@ -9595,6 +10145,12 @@ components:
                 data:
                     $ref: '#/components/schemas/ledger.service.v1.Budget'
             description: 请求 - 创建预算
+        ledger.service.v1.CreateCategoryRequest:
+            type: object
+            properties:
+                data:
+                    $ref: '#/components/schemas/ledger.service.v1.Category'
+            description: 请求 - 创建分类
         ledger.service.v1.CreateNoteDayRequest:
             type: object
             properties:
@@ -9605,6 +10161,11 @@ components:
             properties:
                 data:
                     $ref: '#/components/schemas/ledger.service.v1.Payee'
+        ledger.service.v1.CreateTagRequest:
+            type: object
+            properties:
+                data:
+                    $ref: '#/components/schemas/ledger.service.v1.Tag'
         ledger.service.v1.Currency:
             type: object
             properties:
@@ -9702,6 +10263,16 @@ components:
                 total:
                     type: string
             description: 回应 - 预算列表
+        ledger.service.v1.ListCategoryResponse:
+            type: object
+            properties:
+                items:
+                    type: array
+                    items:
+                        $ref: '#/components/schemas/ledger.service.v1.Category'
+                total:
+                    type: string
+            description: 回应 - 分类列表
         ledger.service.v1.ListCurrencyResponse:
             type: object
             properties:
@@ -9736,6 +10307,15 @@ components:
                     type: array
                     items:
                         $ref: '#/components/schemas/ledger.service.v1.Payee'
+                total:
+                    type: string
+        ledger.service.v1.ListTagResponse:
+            type: object
+            properties:
+                items:
+                    type: array
+                    items:
+                        $ref: '#/components/schemas/ledger.service.v1.Tag'
                 total:
                     type: string
         ledger.service.v1.NoteDay:
@@ -9895,6 +10475,67 @@ components:
                 net:
                     type: string
             description: 回应 - 统计
+        ledger.service.v1.Tag:
+            type: object
+            properties:
+                id:
+                    type: integer
+                    format: uint32
+                tenantId:
+                    type: integer
+                    format: uint32
+                bookId:
+                    type: integer
+                    format: uint32
+                name:
+                    type: string
+                notes:
+                    type: string
+                enable:
+                    type: boolean
+                canExpense:
+                    type: boolean
+                    description: 是否可用于支出
+                canIncome:
+                    type: boolean
+                    description: 是否可用于收入
+                canTransfer:
+                    type: boolean
+                    description: 是否可用于转账
+                sortOrder:
+                    type: integer
+                    format: int32
+                parentId:
+                    type: integer
+                    description: 树形字段
+                    format: uint32
+                children:
+                    type: array
+                    items:
+                        $ref: '#/components/schemas/ledger.service.v1.Tag'
+                depth:
+                    type: integer
+                    format: int32
+                path:
+                    type: string
+                createdBy:
+                    type: integer
+                    format: uint32
+                updatedBy:
+                    type: integer
+                    format: uint32
+                deletedBy:
+                    type: integer
+                    format: uint32
+                createdAt:
+                    type: string
+                    format: date-time
+                updatedAt:
+                    type: string
+                    format: date-time
+                deletedAt:
+                    type: string
+                    format: date-time
         ledger.service.v1.TagRelation:
             type: object
             properties:
@@ -9931,7 +10572,20 @@ components:
                     description: 账本ID
                     format: uint32
             description: 请求 - 切换启用/禁用
+        ledger.service.v1.ToggleCategoryRequest:
+            type: object
+            properties:
+                id:
+                    type: integer
+                    format: uint32
+            description: 请求 - 切换启用/禁用
         ledger.service.v1.TogglePayeeRequest:
+            type: object
+            properties:
+                id:
+                    type: integer
+                    format: uint32
+        ledger.service.v1.ToggleTagRequest:
             type: object
             properties:
                 id:
@@ -9995,6 +10649,20 @@ components:
                 allowMissing:
                     type: boolean
             description: 请求 - 更新预算
+        ledger.service.v1.UpdateCategoryRequest:
+            type: object
+            properties:
+                id:
+                    type: integer
+                    format: uint32
+                data:
+                    $ref: '#/components/schemas/ledger.service.v1.Category'
+                updateMask:
+                    type: string
+                    format: field-mask
+                allowMissing:
+                    type: boolean
+            description: 请求 - 更新分类
         ledger.service.v1.UpdateNoteDayRequest:
             type: object
             properties:
@@ -10016,6 +10684,19 @@ components:
                     format: uint32
                 data:
                     $ref: '#/components/schemas/ledger.service.v1.Payee'
+                updateMask:
+                    type: string
+                    format: field-mask
+                allowMissing:
+                    type: boolean
+        ledger.service.v1.UpdateTagRequest:
+            type: object
+            properties:
+                id:
+                    type: integer
+                    format: uint32
+                data:
+                    $ref: '#/components/schemas/ledger.service.v1.Tag'
                 updateMask:
                     type: string
                     format: field-mask
@@ -11220,6 +11901,10 @@ tags:
       description: 站内信消息管理服务
     - name: LanguageService
       description: 语言管理服务
+    - name: LedgerCategoryService
+      description: 记账分类服务（Admin BFF）
+    - name: LedgerTagService
+      description: 记账标签服务（Admin BFF）
     - name: LoginAuditLogService
       description: 登录审计日志管理服务
     - name: LoginPolicyService

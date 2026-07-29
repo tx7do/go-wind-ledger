@@ -64,6 +64,8 @@ var ProviderSet = wire.NewSet(
 	data.NewBookTemplateServiceClient,
 	data.NewAccountServiceClient,
 	data.NewPayeeServiceClient,
+	data.NewLedgerCategoryServiceClient,
+	data.NewLedgerTagServiceClient,
 	data.NewBalanceFlowServiceClient,
 	data.NewFlowFileServiceClient,
 	data.NewNoteDayServiceClient,
