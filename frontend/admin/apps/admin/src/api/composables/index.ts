@@ -13,7 +13,6 @@ export * from './auth';
 
 export * from './category';
 
-export * from './comment';
 
 export * from './data-access-audit-log';
 
@@ -31,19 +30,15 @@ export * from './login-audit-log';
 
 export * from './login-policy';
 
-export * from './media-asset';
 
 export * from './menu';
 
-export * from './navigation';
 
-export * from './navigation-item';
 
 export * from './operation-audit-log';
 
 export * from './org-unit';
 
-export * from './page';
 
 export * from './permission';
 
@@ -55,17 +50,13 @@ export * from './policy-evaluation-log';
 
 export * from './position';
 
-export * from './post';
 
 export * from './role';
 
-export * from './section';
 
 export * from './shared';
 
-export * from './site';
 
-export * from './site-setting';
 
 export * from './tag';
 

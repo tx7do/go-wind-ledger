@@ -12,7 +12,7 @@ defineOptions({
 });
 
 withDefaults(defineProps<Props>(), {
-  companyName: 'GoWind CMS',
+  companyName: 'GoWind',
   companySiteLink: '',
   date: '2026',
   icp: '',
