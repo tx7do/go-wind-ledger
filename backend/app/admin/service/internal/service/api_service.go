@@ -19,7 +19,6 @@ import (
 	"go-wind-ledger/app/admin/service/cmd/server/assets"
 
 	appViewer "go-wind-ledger/pkg/entgo/viewer"
-	metadata "go-wind-ledger/pkg/metadata"
 	"go-wind-ledger/pkg/middleware/auth"
 )
 
@@ -52,7 +51,6 @@ func NewApiService(
 
 func (s *ApiService) init() {
 	ctx := appViewer.NewSystemViewerContext(context.Background())
-	ctx, _ = metadata.NewSystemContext(ctx)
 	if resp, _ := s.apiServiceClient.Count(ctx, nil); resp != nil && resp.Count == 0 {
 		_, _ = s.SyncApis(ctx, &emptypb.Empty{})
 	}
