@@ -56,8 +56,8 @@ func RegisterAccountServiceHTTPServer(s *http.Server, srv AccountServiceHTTPServ
 	r.DELETE("/app/v1/accounts/{id}", _AccountService_Delete0_HTTP_Handler(srv))
 	r.PATCH("/app/v1/accounts/{id}/toggle", _AccountService_Toggle0_HTTP_Handler(srv))
 	r.POST("/app/v1/accounts/{id}/adjust", _AccountService_AdjustBalance0_HTTP_Handler(srv))
-	r.GET("/app/v1/accounts/overview", _AccountService_Overview0_HTTP_Handler(srv))
-	r.GET("/app/v1/accounts/statistics", _AccountService_Statistics0_HTTP_Handler(srv))
+	r.GET("/app/v1/account-overview", _AccountService_Overview0_HTTP_Handler(srv))
+	r.GET("/app/v1/account-statistics", _AccountService_Statistics0_HTTP_Handler(srv))
 }
 
 func _AccountService_List0_HTTP_Handler(srv AccountServiceHTTPServer) func(ctx http.Context) error {
@@ -378,7 +378,7 @@ func (c *AccountServiceHTTPClientImpl) ListAll(ctx context.Context, in *v11.List
 
 func (c *AccountServiceHTTPClientImpl) Overview(ctx context.Context, in *v11.OverviewRequest, opts ...http.CallOption) (*v11.OverviewResponse, error) {
 	var out v11.OverviewResponse
-	pattern := "/app/v1/accounts/overview"
+	pattern := "/app/v1/account-overview"
 	path := binding.EncodeURL(pattern, in, true)
 	opts = append(opts, http.Operation(OperationAccountServiceOverview))
 	opts = append(opts, http.PathTemplate(pattern))
@@ -391,7 +391,7 @@ func (c *AccountServiceHTTPClientImpl) Overview(ctx context.Context, in *v11.Ove
 
 func (c *AccountServiceHTTPClientImpl) Statistics(ctx context.Context, in *v11.AccountStatisticsRequest, opts ...http.CallOption) (*v11.AccountStatisticsResponse, error) {
 	var out v11.AccountStatisticsResponse
-	pattern := "/app/v1/accounts/statistics"
+	pattern := "/app/v1/account-statistics"
 	path := binding.EncodeURL(pattern, in, true)
 	opts = append(opts, http.Operation(OperationAccountServiceStatistics))
 	opts = append(opts, http.PathTemplate(pattern))

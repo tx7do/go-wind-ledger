@@ -31,9 +31,9 @@ service AccountService {
     option (google.api.http) = { post: "/app/v1/accounts/{id}/adjust" body: "*" };
   }
   rpc Overview (ledger.service.v1.OverviewRequest) returns (ledger.service.v1.OverviewResponse) {
-    option (google.api.http) = { get: "/app/v1/accounts/overview" };
+    option (google.api.http) = { get: "/app/v1/account-overview" };
   }
   rpc Statistics (ledger.service.v1.AccountStatisticsRequest) returns (ledger.service.v1.AccountStatisticsResponse) {
-    option (google.api.http) = { get: "/app/v1/accounts/statistics" };
+    option (google.api.http) = { get: "/app/v1/account-statistics" };
   }
 }

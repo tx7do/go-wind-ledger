@@ -14,6 +14,35 @@ info:
         url: https://github.com/tx7do/go-wind-ledger/blob/master/LICENSE
     version: "1.0"
 paths:
+    /app/v1/account-overview:
+        get:
+            tags:
+                - AccountService
+            operationId: AccountService_Overview
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/ledger.service.v1.OverviewResponse'
+    /app/v1/account-statistics:
+        get:
+            tags:
+                - AccountService
+            operationId: AccountService_Statistics
+            parameters:
+                - name: currencyCode
+                  in: query
+                  schema:
+                    type: string
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/ledger.service.v1.AccountStatisticsResponse'
     /app/v1/accounts:
         get:
             tags:
@@ -125,35 +154,6 @@ paths:
                         application/json:
                             schema:
                                 $ref: '#/components/schemas/ledger.service.v1.ListAccountResponse'
-    /app/v1/accounts/overview:
-        get:
-            tags:
-                - AccountService
-            operationId: AccountService_Overview
-            responses:
-                "200":
-                    description: OK
-                    content:
-                        application/json:
-                            schema:
-                                $ref: '#/components/schemas/ledger.service.v1.OverviewResponse'
-    /app/v1/accounts/statistics:
-        get:
-            tags:
-                - AccountService
-            operationId: AccountService_Statistics
-            parameters:
-                - name: currencyCode
-                  in: query
-                  schema:
-                    type: string
-            responses:
-                "200":
-                    description: OK
-                    content:
-                        application/json:
-                            schema:
-                                $ref: '#/components/schemas/ledger.service.v1.AccountStatisticsResponse'
     /app/v1/accounts/{id}:
         get:
             tags:

@@ -28,7 +28,7 @@ var File_app_service_v1_i_account_proto protoreflect.FileDescriptor
 
 const file_app_service_v1_i_account_proto_rawDesc = "" +
 	"\n" +
-	"\x1eapp/service/v1/i_account.proto\x12\x0eapp.service.v1\x1a\x1cgoogle/api/annotations.proto\x1a\x1bgoogle/protobuf/empty.proto\x1a\x1epagination/v1/pagination.proto\x1a\x1fledger/service/v1/account.proto2\x9d\t\n" +
+	"\x1eapp/service/v1/i_account.proto\x12\x0eapp.service.v1\x1a\x1cgoogle/api/annotations.proto\x1a\x1bgoogle/protobuf/empty.proto\x1a\x1epagination/v1/pagination.proto\x1a\x1fledger/service/v1/account.proto2\x9b\t\n" +
 	"\x0eAccountService\x12c\n" +
 	"\x04List\x12\x19.pagination.PagingRequest\x1a&.ledger.service.v1.ListAccountResponse\"\x18\x82\xd3\xe4\x93\x02\x12\x12\x10/app/v1/accounts\x12y\n" +
 	"\aListAll\x12(.ledger.service.v1.ListAllAccountRequest\x1a&.ledger.service.v1.ListAccountResponse\"\x1c\x82\xd3\xe4\x93\x02\x16\x12\x14/app/v1/accounts/all\x12f\n" +
@@ -37,10 +37,10 @@ const file_app_service_v1_i_account_proto_rawDesc = "" +
 	"\x06Update\x12'.ledger.service.v1.UpdateAccountRequest\x1a\x1a.ledger.service.v1.Account\" \x82\xd3\xe4\x93\x02\x1a:\x01*\x1a\x15/app/v1/accounts/{id}\x12h\n" +
 	"\x06Delete\x12'.ledger.service.v1.DeleteAccountRequest\x1a\x16.google.protobuf.Empty\"\x1d\x82\xd3\xe4\x93\x02\x17*\x15/app/v1/accounts/{id}\x12v\n" +
 	"\x06Toggle\x12'.ledger.service.v1.ToggleAccountRequest\x1a\x1a.ledger.service.v1.Account\"'\x82\xd3\xe4\x93\x02!:\x01*2\x1c/app/v1/accounts/{id}/toggle\x12}\n" +
-	"\rAdjustBalance\x12'.ledger.service.v1.AdjustBalanceRequest\x1a\x1a.ledger.service.v1.Account\"'\x82\xd3\xe4\x93\x02!:\x01*\"\x1c/app/v1/accounts/{id}/adjust\x12v\n" +
-	"\bOverview\x12\".ledger.service.v1.OverviewRequest\x1a#.ledger.service.v1.OverviewResponse\"!\x82\xd3\xe4\x93\x02\x1b\x12\x19/app/v1/accounts/overview\x12\x8c\x01\n" +
+	"\rAdjustBalance\x12'.ledger.service.v1.AdjustBalanceRequest\x1a\x1a.ledger.service.v1.Account\"'\x82\xd3\xe4\x93\x02!:\x01*\"\x1c/app/v1/accounts/{id}/adjust\x12u\n" +
+	"\bOverview\x12\".ledger.service.v1.OverviewRequest\x1a#.ledger.service.v1.OverviewResponse\" \x82\xd3\xe4\x93\x02\x1a\x12\x18/app/v1/account-overview\x12\x8b\x01\n" +
 	"\n" +
-	"Statistics\x12+.ledger.service.v1.AccountStatisticsRequest\x1a,.ledger.service.v1.AccountStatisticsResponse\"#\x82\xd3\xe4\x93\x02\x1d\x12\x1b/app/v1/accounts/statisticsB\xb1\x01\n" +
+	"Statistics\x12+.ledger.service.v1.AccountStatisticsRequest\x1a,.ledger.service.v1.AccountStatisticsResponse\"\"\x82\xd3\xe4\x93\x02\x1c\x12\x1a/app/v1/account-statisticsB\xb1\x01\n" +
 	"\x12com.app.service.v1B\rIAccountProtoP\x01Z2go-wind-ledger/api/gen/go/app/service/v1;servicev1\xa2\x02\x03ASX\xaa\x02\x0eApp.Service.V1\xca\x02\x0eApp\\Service\\V1\xe2\x02\x1aApp\\Service\\V1\\GPBMetadata\xea\x02\x10App::Service::V1b\x06proto3"
 
 var file_app_service_v1_i_account_proto_goTypes = []any{

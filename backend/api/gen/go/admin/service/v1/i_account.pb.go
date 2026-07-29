@@ -28,13 +28,13 @@ var File_admin_service_v1_i_account_proto protoreflect.FileDescriptor
 
 const file_admin_service_v1_i_account_proto_rawDesc = "" +
 	"\n" +
-	" admin/service/v1/i_account.proto\x12\x10admin.service.v1\x1a\x1cgoogle/api/annotations.proto\x1a\x1bgoogle/protobuf/empty.proto\x1a\x1epagination/v1/pagination.proto\x1a\x1fledger/service/v1/account.proto2\x8f\x0f\n" +
+	" admin/service/v1/i_account.proto\x12\x10admin.service.v1\x1a\x1cgoogle/api/annotations.proto\x1a\x1bgoogle/protobuf/empty.proto\x1a\x1epagination/v1/pagination.proto\x1a\x1fledger/service/v1/account.proto2\x8d\x0f\n" +
 	"\x0eAccountService\x12e\n" +
 	"\x04List\x12\x19.pagination.PagingRequest\x1a&.ledger.service.v1.ListAccountResponse\"\x1a\x82\xd3\xe4\x93\x02\x14\x12\x12/admin/v1/accounts\x12{\n" +
-	"\aListAll\x12(.ledger.service.v1.ListAllAccountRequest\x1a&.ledger.service.v1.ListAccountResponse\"\x1e\x82\xd3\xe4\x93\x02\x18\x12\x16/admin/v1/accounts/all\x12x\n" +
-	"\bOverview\x12\".ledger.service.v1.OverviewRequest\x1a#.ledger.service.v1.OverviewResponse\"#\x82\xd3\xe4\x93\x02\x1d\x12\x1b/admin/v1/accounts/overview\x12\x8e\x01\n" +
+	"\aListAll\x12(.ledger.service.v1.ListAllAccountRequest\x1a&.ledger.service.v1.ListAccountResponse\"\x1e\x82\xd3\xe4\x93\x02\x18\x12\x16/admin/v1/accounts/all\x12w\n" +
+	"\bOverview\x12\".ledger.service.v1.OverviewRequest\x1a#.ledger.service.v1.OverviewResponse\"\"\x82\xd3\xe4\x93\x02\x1c\x12\x1a/admin/v1/account-overview\x12\x8d\x01\n" +
 	"\n" +
-	"Statistics\x12+.ledger.service.v1.AccountStatisticsRequest\x1a,.ledger.service.v1.AccountStatisticsResponse\"%\x82\xd3\xe4\x93\x02\x1f\x12\x1d/admin/v1/accounts/statistics\x12h\n" +
+	"Statistics\x12+.ledger.service.v1.AccountStatisticsRequest\x1a,.ledger.service.v1.AccountStatisticsResponse\"$\x82\xd3\xe4\x93\x02\x1e\x12\x1c/admin/v1/account-statistics\x12h\n" +
 	"\x03Get\x12$.ledger.service.v1.GetAccountRequest\x1a\x1a.ledger.service.v1.Account\"\x1f\x82\xd3\xe4\x93\x02\x19\x12\x17/admin/v1/accounts/{id}\x12l\n" +
 	"\x06Create\x12'.ledger.service.v1.CreateAccountRequest\x1a\x1a.ledger.service.v1.Account\"\x1d\x82\xd3\xe4\x93\x02\x17:\x01*\"\x12/admin/v1/accounts\x12q\n" +
 	"\x06Update\x12'.ledger.service.v1.UpdateAccountRequest\x1a\x1a.ledger.service.v1.Account\"\"\x82\xd3\xe4\x93\x02\x1c:\x01*\x1a\x17/admin/v1/accounts/{id}\x12j\n" +

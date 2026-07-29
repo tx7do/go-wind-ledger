@@ -14,6 +14,36 @@ info:
         url: https://github.com/tx7do/go-wind-ledger/blob/master/LICENSE
     version: "1.0"
 paths:
+    /admin/v1/account-overview:
+        get:
+            tags:
+                - AccountService
+            description: "Overview and Statistics use different path prefix to avoid\r\n being matched by the {id} path parameter in Get/Update/Delete."
+            operationId: AccountService_Overview
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/ledger.service.v1.OverviewResponse'
+    /admin/v1/account-statistics:
+        get:
+            tags:
+                - AccountService
+            operationId: AccountService_Statistics
+            parameters:
+                - name: currencyCode
+                  in: query
+                  schema:
+                    type: string
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/ledger.service.v1.AccountStatisticsResponse'
     /admin/v1/accounts:
         get:
             tags:
@@ -125,36 +155,6 @@ paths:
                         application/json:
                             schema:
                                 $ref: '#/components/schemas/ledger.service.v1.ListAccountResponse'
-    /admin/v1/accounts/overview:
-        get:
-            tags:
-                - AccountService
-            description: "Overview and Statistics must be defined BEFORE {id} routes\r\n to avoid being matched by the {id} path parameter."
-            operationId: AccountService_Overview
-            responses:
-                "200":
-                    description: OK
-                    content:
-                        application/json:
-                            schema:
-                                $ref: '#/components/schemas/ledger.service.v1.OverviewResponse'
-    /admin/v1/accounts/statistics:
-        get:
-            tags:
-                - AccountService
-            operationId: AccountService_Statistics
-            parameters:
-                - name: currencyCode
-                  in: query
-                  schema:
-                    type: string
-            responses:
-                "200":
-                    description: OK
-                    content:
-                        application/json:
-                            schema:
-                                $ref: '#/components/schemas/ledger.service.v1.AccountStatisticsResponse'
     /admin/v1/accounts/{id}:
         get:
             tags:

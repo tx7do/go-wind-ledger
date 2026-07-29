@@ -22,17 +22,17 @@ service AccountService {
     };
   }
 
-  // Overview and Statistics must be defined BEFORE {id} routes
-  // to avoid being matched by the {id} path parameter.
+  // Overview and Statistics use different path prefix to avoid
+  // being matched by the {id} path parameter in Get/Update/Delete.
   rpc Overview (ledger.service.v1.OverviewRequest) returns (ledger.service.v1.OverviewResponse) {
     option (google.api.http) = {
-      get: "/admin/v1/accounts/overview"
+      get: "/admin/v1/account-overview"
     };
   }
 
   rpc Statistics (ledger.service.v1.AccountStatisticsRequest) returns (ledger.service.v1.AccountStatisticsResponse) {
     option (google.api.http) = {
-      get: "/admin/v1/accounts/statistics"
+      get: "/admin/v1/account-statistics"
     };
   }
 

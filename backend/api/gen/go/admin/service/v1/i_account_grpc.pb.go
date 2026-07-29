@@ -47,8 +47,8 @@ const (
 type AccountServiceClient interface {
 	List(ctx context.Context, in *v1.PagingRequest, opts ...grpc.CallOption) (*v11.ListAccountResponse, error)
 	ListAll(ctx context.Context, in *v11.ListAllAccountRequest, opts ...grpc.CallOption) (*v11.ListAccountResponse, error)
-	// Overview and Statistics must be defined BEFORE {id} routes
-	// to avoid being matched by the {id} path parameter.
+	// Overview and Statistics use different path prefix to avoid
+	// being matched by the {id} path parameter in Get/Update/Delete.
 	Overview(ctx context.Context, in *v11.OverviewRequest, opts ...grpc.CallOption) (*v11.OverviewResponse, error)
 	Statistics(ctx context.Context, in *v11.AccountStatisticsRequest, opts ...grpc.CallOption) (*v11.AccountStatisticsResponse, error)
 	Get(ctx context.Context, in *v11.GetAccountRequest, opts ...grpc.CallOption) (*v11.Account, error)
@@ -230,8 +230,8 @@ func (c *accountServiceClient) AdjustBalance(ctx context.Context, in *v11.Adjust
 type AccountServiceServer interface {
 	List(context.Context, *v1.PagingRequest) (*v11.ListAccountResponse, error)
 	ListAll(context.Context, *v11.ListAllAccountRequest) (*v11.ListAccountResponse, error)
-	// Overview and Statistics must be defined BEFORE {id} routes
-	// to avoid being matched by the {id} path parameter.
+	// Overview and Statistics use different path prefix to avoid
+	// being matched by the {id} path parameter in Get/Update/Delete.
 	Overview(context.Context, *v11.OverviewRequest) (*v11.OverviewResponse, error)
 	Statistics(context.Context, *v11.AccountStatisticsRequest) (*v11.AccountStatisticsResponse, error)
 	Get(context.Context, *v11.GetAccountRequest) (*v11.Account, error)
