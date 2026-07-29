@@ -3,6 +3,7 @@ import 'package:get_it/get_it.dart' show GetIt;
 
 import 'package:flutter_app/src/core/services/base_service.dart';
 import 'package:flutter_app/src/core/transport/http/index.dart';
+import 'package:flutter_app/src/core/utilities/convert.dart' show parseInt;
 
 /// 预算周期类型。
 ///
@@ -61,17 +62,17 @@ class Budget {
 
   factory Budget.fromJson(Map<String, dynamic> json) {
     return Budget(
-      id: (json['id'] as num?)?.toInt(),
-      tenantId: (json['tenantId'] as num?)?.toInt(),
-      bookId: (json['bookId'] as num?)?.toInt(),
+      id: parseInt(json['id']),
+      tenantId: parseInt(json['tenantId']),
+      bookId: parseInt(json['bookId']),
       name: json['name'] as String?,
       period: BudgetPeriod.fromWire(json['period'] as String?),
       amount: json['amount'] as String?,
       usedAmount: json['usedAmount'] as String?,
-      categoryId: (json['categoryId'] as num?)?.toInt(),
-      accountId: (json['accountId'] as num?)?.toInt(),
-      startDate: (json['startDate'] as num?)?.toInt(),
-      endDate: (json['endDate'] as num?)?.toInt(),
+      categoryId: parseInt(json['categoryId']),
+      accountId: parseInt(json['accountId']),
+      startDate: parseInt(json['startDate']),
+      endDate: parseInt(json['endDate']),
       enable: json['enable'] as bool?,
       notify: json['notify'] as bool?,
       notes: json['notes'] as String?,
@@ -158,15 +159,15 @@ class BudgetProgress {
 
   factory BudgetProgress.fromJson(Map<String, dynamic> json) {
     return BudgetProgress(
-      budgetId: (json['budgetId'] as num?)?.toInt(),
+      budgetId: parseInt(json['budgetId']),
       budgetName: json['budgetName'] as String?,
       amount: json['amount'] as String?,
       usedAmount: json['usedAmount'] as String?,
       remaining: json['remaining'] as String?,
       usagePercent: json['usagePercent'] as String?,
       exceeded: json['exceeded'] as bool?,
-      periodStart: (json['periodStart'] as num?)?.toInt(),
-      periodEnd: (json['periodEnd'] as num?)?.toInt(),
+      periodStart: parseInt(json['periodStart']),
+      periodEnd: parseInt(json['periodEnd']),
     );
   }
 }
@@ -184,7 +185,7 @@ class ListBudgetResponse {
               ?.map((e) => Budget.fromJson(e as Map<String, dynamic>))
               .toList() ??
           const [],
-      total: (json['total'] as num?)?.toInt() ?? 0,
+      total: parseInt(json['total']) ?? 0,
     );
   }
 }

@@ -2,6 +2,7 @@ package service
 
 import (
 	"context"
+	"go-wind-ledger/pkg/metadata"
 
 	"github.com/go-kratos/kratos/v2/log"
 	"github.com/tx7do/kratos-bootstrap/bootstrap"
@@ -10,8 +11,6 @@ import (
 	"go-wind-ledger/app/core/service/internal/data"
 
 	ledgerV1 "go-wind-ledger/api/gen/go/ledger/service/v1"
-
-	"go-wind-ledger/pkg/middleware/auth"
 )
 
 type FlowFileService struct {
@@ -44,7 +43,7 @@ func (s *FlowFileService) Delete(ctx context.Context, req *ledgerV1.DeleteFlowFi
 
 // UploadFile 上传流水附件。creator_id 取自认证上下文，由 repo 落库。
 func (s *FlowFileService) UploadFile(ctx context.Context, req *ledgerV1.UploadFlowFileRequest) (*ledgerV1.FlowFile, error) {
-	operator, err := auth.FromContext(ctx)
+	operator, err := metadata.FromServerContext(ctx)
 	if err != nil {
 		return nil, err
 	}
@@ -52,7 +51,7 @@ func (s *FlowFileService) UploadFile(ctx context.Context, req *ledgerV1.UploadFl
 	if creatorID == 0 {
 		return nil, ledgerV1.ErrorBadRequest("invalid creator")
 	}
-	return s.flowFileRepo.UploadFile(ctx, creatorID, req)
+	return s.flowFileRepo.UploadFile(ctx, uint32(creatorID), req)
 }
 
 // ViewFile 查看流水附件（免认证，按 create_time 安全校验）。

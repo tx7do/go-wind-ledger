@@ -1,15 +1,16 @@
 import 'dart:convert' show jsonEncode;
 
-import 'package:get_it/get_it.dart' show GetIt;
-
 import 'package:flutter_app/generated/api/app/service/v1/index.dart'
     show PaginationPagingRequest;
-import 'package:flutter_app/src/core/preference/user_preference_cache.dart';
 
 /// 通用分页查询类
 ///
 /// 参考 TS 端的 PaginationQuery，统一封装所有 List API 的查询参数。
-/// locale 自动从 [UserPreferenceCache] 获取（可覆盖）。
+///
+/// 注意：locale 不在此处注入。OpenAPI 中只有 Get 单条/GetTranslation 接口
+/// 接受 locale 参数，List 接口不接受（详见 request_interceptor.dart 中的
+/// 设计说明）。若某 List 接口确需按 locale 过滤，应通过 [formValues]
+/// 显式传递，而非全局自动注入。
 ///
 /// 用法：
 /// ```dart
@@ -41,16 +42,8 @@ class PaginationQuery {
   /// 排序条件（默认 ['-created_at']）
   final List<String>? orderBy;
 
-  /// 语言代码（如 'zh-CN'）。不传则自动从 UserPreferenceCache 获取
-  final String? locale;
-
   /// 是否需要清理租户字段
   final bool isTenantUser;
-
-  /// 是否跳过自动注入 locale
-  ///
-  /// 某些 API（如 Comment）不支持 locale 参数，设为 true 可跳过。
-  final bool skipLocale;
 
   const PaginationQuery({
     this.page,
@@ -58,9 +51,7 @@ class PaginationQuery {
     this.formValues,
     this.fieldMask,
     this.orderBy,
-    this.locale,
     this.isTenantUser = false,
-    this.skipLocale = false,
   });
 
   // ─── 私有工具方法 ──────────────────────────────────────
@@ -74,17 +65,6 @@ class PaginationQuery {
     );
   }
 
-  /// 获取当前用户语言偏好，转换为 API 格式 (zh_CN → zh-CN)
-  static String? get _currentLocale {
-    try {
-      final lang = GetIt.instance<UserPreferenceCache>().language;
-      if (lang.isEmpty) return null;
-      return lang.replaceAll('_', '-');
-    } catch (_) {
-      return null;
-    }
-  }
-
   // ─── 计算属性 ──────────────────────────────────────────
 
   /// 是否不分页
@@ -96,7 +76,7 @@ class PaginationQuery {
 
   /// 构建 query JSON 字符串
   ///
-  /// 将 formValues + locale 合并为 JSON 字符串。
+  /// 将 formValues 合并为 JSON 字符串。
   /// 参考 TS: makeQueryString()
   String? get queryString {
     final Map<String, dynamic> values = {};
@@ -104,13 +84,6 @@ class PaginationQuery {
     if (formValues != null) {
       final cleaned = _removeNullUndefined(formValues!);
       values.addAll(cleaned);
-    }
-
-    if (!skipLocale) {
-      final resolvedLocale = locale ?? _currentLocale;
-      if (resolvedLocale != null && resolvedLocale.isNotEmpty) {
-        values['locale'] = resolvedLocale;
-      }
     }
 
     if (values.isEmpty) return null;
@@ -193,9 +166,7 @@ class PaginationQuery {
     Map<String, dynamic>? formValues,
     Object? fieldMask,
     List<String>? orderBy,
-    String? locale,
     bool? isTenantUser,
-    bool? skipLocale,
     bool clearPage = false,
     bool clearFormValues = false,
   }) {
@@ -205,9 +176,7 @@ class PaginationQuery {
       formValues: clearFormValues ? null : (formValues ?? this.formValues),
       fieldMask: fieldMask ?? this.fieldMask,
       orderBy: orderBy ?? this.orderBy,
-      locale: locale ?? this.locale,
       isTenantUser: isTenantUser ?? this.isTenantUser,
-      skipLocale: skipLocale ?? this.skipLocale,
     );
   }
 

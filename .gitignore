@@ -148,3 +148,6 @@ bazel-*
 
 # protobuf generate output
 # gen/
+
+# ZCode agent working files
+.zcode/

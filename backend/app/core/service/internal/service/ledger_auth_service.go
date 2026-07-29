@@ -28,7 +28,6 @@ import (
 	ledgerV1 "go-wind-ledger/api/gen/go/ledger/service/v1"
 
 	"go-wind-ledger/pkg/metadata"
-	"go-wind-ledger/pkg/middleware/auth"
 )
 
 // defaultInviteCode 默认邀请码（未配置时使用）
@@ -274,7 +273,7 @@ func (s *LedgerAuthService) Register(ctx context.Context, req *appV1.LedgerRegis
 // InitState 初始化状态（返回用户/租户/账本聚合信息）
 func (s *LedgerAuthService) InitState(ctx context.Context, _ *emptypb.Empty) (*appV1.InitStateResponse, error) {
 	// 1. 从认证上下文获取当前用户 ID
-	operator, err := auth.FromContext(ctx)
+	operator, err := metadata.FromServerContext(ctx)
 	if err != nil {
 		return nil, err
 	}
@@ -287,7 +286,7 @@ func (s *LedgerAuthService) InitState(ctx context.Context, _ *emptypb.Empty) (*a
 
 	// 2. 查询用户信息（proto User 不含 default_book_id/default_group_id，需 ent 实体）
 	userEntity, err := s.entClient.Client().User.Query().
-		Where(user.IDEQ(userID)).
+		Where(user.IDEQ(uint32(userID))).
 		Only(privacyCtx)
 	if err != nil {
 		if ent.IsNotFound(err) {
@@ -299,7 +298,7 @@ func (s *LedgerAuthService) InitState(ctx context.Context, _ *emptypb.Empty) (*a
 
 	// proto User 信息（供前端展示）
 	userInfo, err := s.userRepo.Get(privacyCtx, &identityV1.GetUserRequest{
-		QueryBy: &identityV1.GetUserRequest_Id{Id: userID},
+		QueryBy: &identityV1.GetUserRequest_Id{Id: uint32(userID)},
 	})
 	if err != nil {
 		s.log.Errorf("get user (proto) failed: %s", err.Error())
@@ -309,7 +308,7 @@ func (s *LedgerAuthService) InitState(ctx context.Context, _ *emptypb.Empty) (*a
 	}
 
 	// 3. 查询用户可访问的租户（通过 membership 关联）
-	memberships, err := s.membershipRepo.FindByUser(privacyCtx, userID)
+	memberships, err := s.membershipRepo.FindByUser(privacyCtx, uint32(userID))
 	if err != nil {
 		s.log.Errorf("find memberships by user failed: %s", err.Error())
 	}
@@ -323,11 +322,11 @@ func (s *LedgerAuthService) InitState(ctx context.Context, _ *emptypb.Empty) (*a
 	// 默认租户：优先使用 user.tenant_id（注册时设置）
 	defaultTenantID := operator.GetTenantId()
 	if defaultTenantID == 0 && userEntity.TenantID != nil {
-		defaultTenantID = *userEntity.TenantID
+		defaultTenantID = uint64(*userEntity.TenantID)
 	}
 	if defaultTenantID > 0 {
 		if tenantInfo, err := s.tenantRepo.Get(privacyCtx, &identityV1.GetTenantRequest{
-			QueryBy: &identityV1.GetTenantRequest_Id{Id: defaultTenantID},
+			QueryBy: &identityV1.GetTenantRequest_Id{Id: uint32(defaultTenantID)},
 		}); err == nil {
 			resp.Tenant = tenantInfo
 		}
@@ -375,7 +374,7 @@ func (s *LedgerAuthService) InitState(ctx context.Context, _ *emptypb.Empty) (*a
 
 // SetDefaultBook 设置默认账本
 func (s *LedgerAuthService) SetDefaultBook(ctx context.Context, req *appV1.SetDefaultBookRequest) (*emptypb.Empty, error) {
-	operator, err := auth.FromContext(ctx)
+	operator, err := metadata.FromServerContext(ctx)
 	if err != nil {
 		return nil, err
 	}
@@ -405,12 +404,12 @@ func (s *LedgerAuthService) SetDefaultBook(ctx context.Context, req *appV1.SetDe
 	}
 
 	// 检查用户是否属于该租户
-	if _, err := s.membershipRepo.FindByTenantAndUser(privacyCtx, *bookEntity.TenantID, userID); err != nil {
+	if _, err := s.membershipRepo.FindByTenantAndUser(privacyCtx, *bookEntity.TenantID, uint32(userID)); err != nil {
 		return nil, identityV1.ErrorForbidden("book not accessible")
 	}
 
 	// 2. 更新 user.default_book_id
-	if _, err := s.entClient.Client().User.UpdateOneID(userID).
+	if _, err := s.entClient.Client().User.UpdateOneID(uint32(userID)).
 		SetDefaultBookID(req.GetBookId()).
 		SetUpdatedAt(time.Now()).
 		Save(privacyCtx); err != nil {
@@ -423,7 +422,7 @@ func (s *LedgerAuthService) SetDefaultBook(ctx context.Context, req *appV1.SetDe
 
 // SetDefaultTenant 设置默认租户
 func (s *LedgerAuthService) SetDefaultTenant(ctx context.Context, req *appV1.SetDefaultTenantRequest) (*emptypb.Empty, error) {
-	operator, err := auth.FromContext(ctx)
+	operator, err := metadata.FromServerContext(ctx)
 	if err != nil {
 		return nil, err
 	}
@@ -438,7 +437,7 @@ func (s *LedgerAuthService) SetDefaultTenant(ctx context.Context, req *appV1.Set
 	privacyCtx := newPrivacyCtx(ctx)
 
 	// 1. 验证用户属于该租户（membership 存在）
-	if _, err := s.membershipRepo.FindByTenantAndUser(privacyCtx, req.GetTenantId(), userID); err != nil {
+	if _, err := s.membershipRepo.FindByTenantAndUser(privacyCtx, req.GetTenantId(), uint32(userID)); err != nil {
 		return nil, identityV1.ErrorForbidden("tenant not accessible")
 	}
 
@@ -456,7 +455,7 @@ func (s *LedgerAuthService) SetDefaultTenant(ctx context.Context, req *appV1.Set
 
 	// 3. 更新 user.default_group_id 和 default_book_id
 	// 注：user.tenant_id 不可通过 UpdateOne 修改，仅更新 default_group_id 与 default_book_id 指针
-	userUpdateBuilder := s.entClient.Client().User.UpdateOneID(userID).
+	userUpdateBuilder := s.entClient.Client().User.UpdateOneID(uint32(userID)).
 		SetDefaultGroupID(req.GetTenantId()).
 		SetUpdatedAt(time.Now())
 
@@ -477,51 +476,51 @@ func mapEntBookToProto(b *ent.Book) *ledgerV1.Book {
 	if b == nil {
 		return nil
 	}
-	book := &ledgerV1.Book{}
+	l := &ledgerV1.Book{}
 	if b.ID != 0 {
-		book.Id = trans.Ptr(b.ID)
+		l.Id = trans.Ptr(b.ID)
 	}
 	if b.TenantID != nil {
-		book.TenantId = b.TenantID
+		l.TenantId = b.TenantID
 	}
 	if b.Name != nil {
-		book.Name = b.Name
+		l.Name = b.Name
 	}
 	if b.DefaultCurrencyCode != nil {
-		book.DefaultCurrencyCode = b.DefaultCurrencyCode
+		l.DefaultCurrencyCode = b.DefaultCurrencyCode
 	}
 	if b.Enable != nil {
-		book.Enable = b.Enable
+		l.Enable = b.Enable
 	}
 	if b.Notes != nil {
-		book.Notes = b.Notes
+		l.Notes = b.Notes
 	}
 	if b.ExportAt != nil {
-		book.ExportAt = b.ExportAt
+		l.ExportAt = b.ExportAt
 	}
 	if b.DefaultExpenseAccountID != nil {
-		book.DefaultExpenseAccountId = b.DefaultExpenseAccountID
+		l.DefaultExpenseAccountId = b.DefaultExpenseAccountID
 	}
 	if b.DefaultIncomeAccountID != nil {
-		book.DefaultIncomeAccountId = b.DefaultIncomeAccountID
+		l.DefaultIncomeAccountId = b.DefaultIncomeAccountID
 	}
 	if b.DefaultTransferFromAccountID != nil {
-		book.DefaultTransferFromAccountId = b.DefaultTransferFromAccountID
+		l.DefaultTransferFromAccountId = b.DefaultTransferFromAccountID
 	}
 	if b.DefaultTransferToAccountID != nil {
-		book.DefaultTransferToAccountId = b.DefaultTransferToAccountID
+		l.DefaultTransferToAccountId = b.DefaultTransferToAccountID
 	}
 	if b.DefaultExpenseCategoryID != nil {
-		book.DefaultExpenseCategoryId = b.DefaultExpenseCategoryID
+		l.DefaultExpenseCategoryId = b.DefaultExpenseCategoryID
 	}
 	if b.DefaultIncomeCategoryID != nil {
-		book.DefaultIncomeCategoryId = b.DefaultIncomeCategoryID
+		l.DefaultIncomeCategoryId = b.DefaultIncomeCategoryID
 	}
 	if b.CreatedAt != nil {
-		book.CreatedAt = timestamppb.New(*b.CreatedAt)
+		l.CreatedAt = timestamppb.New(*b.CreatedAt)
 	}
 	if b.UpdatedAt != nil {
-		book.UpdatedAt = timestamppb.New(*b.UpdatedAt)
+		l.UpdatedAt = timestamppb.New(*b.UpdatedAt)
 	}
-	return book
+	return l
 }

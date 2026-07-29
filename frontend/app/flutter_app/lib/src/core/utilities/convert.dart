@@ -40,3 +40,20 @@ bool parseBool(String s) {
 Map protoToMap(GeneratedMessage msg) {
   return json.decode(json.encode(msg.toProto3Json()));
 }
+
+/// 安全解析整数：兼容 protojson 将 int64/uint64 序列化为字符串的情况。
+///
+/// 支持 `int`、`num`、`String` 三种输入类型，均尝试转为 `int?`。
+int? parseInt(dynamic value) {
+  if (value == null) return null;
+  if (value is int) return value;
+  if (value is num) return value.toInt();
+  if (value is String) {
+    final parsed = int.tryParse(value);
+    if (parsed != null) return parsed;
+    // 可能是 double 字符串如 "0.0"
+    final d = double.tryParse(value);
+    return d?.toInt();
+  }
+  return null;
+}

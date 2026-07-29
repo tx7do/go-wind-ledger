@@ -3,6 +3,7 @@ import 'package:get_it/get_it.dart' show GetIt;
 
 import 'package:flutter_app/src/core/services/base_service.dart';
 import 'package:flutter_app/src/core/transport/http/index.dart';
+import 'package:flutter_app/src/core/utilities/convert.dart' show parseInt;
 
 /// 成员状态（对应 identity.service.v1.Membership.Status）。
 enum MemberStatus {
@@ -51,12 +52,12 @@ class MemberInfo {
 
   factory MemberInfo.fromJson(Map<String, dynamic> json) {
     return MemberInfo(
-      id: (json['id'] as num?)?.toInt(),
-      userId: (json['userId'] as num?)?.toInt(),
+      id: parseInt(json['id']),
+      userId: parseInt(json['userId']),
       username: json['username'] as String?,
       nickname: json['nickname'] as String?,
-      tenantId: (json['tenantId'] as num?)?.toInt(),
-      roleId: (json['roleId'] as num?)?.toInt(),
+      tenantId: parseInt(json['tenantId']),
+      roleId: parseInt(json['roleId']),
       roleName: json['roleName'] as String?,
       status: MemberStatus.fromWire(json['status'] as String?),
       isPrimary: json['isPrimary'] as bool?,
@@ -78,7 +79,7 @@ class ListMembersResponse {
               ?.map((e) => MemberInfo.fromJson(e as Map<String, dynamic>))
               .toList() ??
           const [],
-      total: (json['total'] as num?)?.toInt() ?? 0,
+      total: parseInt(json['total']) ?? 0,
     );
   }
 }

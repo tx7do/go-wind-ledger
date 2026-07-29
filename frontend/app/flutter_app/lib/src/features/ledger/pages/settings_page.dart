@@ -7,6 +7,7 @@ import 'package:flutter_app/generated/api/app/service/v1/index.dart'
     show InitStateResponse, LedgerServiceV1Book, IdentityServiceV1Tenant;
 
 import 'package:flutter_app/src/core/transport/http/status.dart';
+import 'package:flutter_app/src/core/themes/cubit/app_theme_cubit.dart';
 import 'package:flutter_app/src/features/ledger/services/ledger_auth_service.dart';
 import 'package:flutter_app/src/features/auth/cubit/auth_cubit.dart';
 
@@ -114,6 +115,9 @@ class _SettingsPageState extends State<SettingsPage> {
                 padding: const EdgeInsets.symmetric(vertical: 12),
                 children: [
                   _buildUserCard(theme),
+                  _buildThemeModeSwitcher(theme),
+                  _buildColorPicker(theme),
+                  _buildLanguageSwitcher(theme),
                   _buildSectionHeader(theme, '当前默认'),
                   _buildInfoTile(
                     theme,
@@ -254,6 +258,179 @@ class _SettingsPageState extends State<SettingsPage> {
       ),
     );
   }
+
+  // ─── 主题 & 语言设置 ─────────────────────────────
+
+  static const _seedColors = [
+    Color(0xFF3A7CA5), // 海蓝（默认）
+    Color(0xFF2E7D32), // 森林绿
+    Color(0xFF7B1FA2), // 深紫
+    Color(0xFFE65100), // 暖橙
+    Color(0xFF00838F), // 青蓝
+    Color(0xFFC62828), // 赤红
+  ];
+
+  Widget _buildThemeModeSwitcher(ThemeData theme) {
+    final cubit = context.watch<AppThemeCubit>();
+    final currentMode = cubit.themeMode;
+
+    return Card(
+      margin: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              children: [
+                Icon(Icons.brightness_6_outlined,
+                    size: 20, color: theme.colorScheme.primary),
+                const SizedBox(width: 8),
+                Text('主题模式',
+                    style: theme.textTheme.titleSmall
+                        ?.copyWith(fontWeight: FontWeight.bold)),
+              ],
+            ),
+            const SizedBox(height: 12),
+            SegmentedButton<ThemeMode>(
+              segments: const [
+                ButtonSegment(
+                  value: ThemeMode.light,
+                  icon: Icon(Icons.light_mode_outlined, size: 18),
+                  label: Text('亮色'),
+                ),
+                ButtonSegment(
+                  value: ThemeMode.dark,
+                  icon: Icon(Icons.dark_mode_outlined, size: 18),
+                  label: Text('暗色'),
+                ),
+                ButtonSegment(
+                  value: ThemeMode.system,
+                  icon: Icon(Icons.settings_suggest_outlined, size: 18),
+                  label: Text('跟随系统'),
+                ),
+              ],
+              selected: {currentMode},
+              onSelectionChanged: (mode) => cubit.modify(mode.first),
+              style: ButtonStyle(
+                visualDensity: VisualDensity.compact,
+                tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildColorPicker(ThemeData theme) {
+    final cubit = context.watch<AppThemeCubit>();
+    final currentColor = cubit.currentSeedColor;
+
+    return Card(
+      margin: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              children: [
+                Icon(Icons.palette_outlined,
+                    size: 20, color: theme.colorScheme.primary),
+                const SizedBox(width: 8),
+                Text('主题色',
+                    style: theme.textTheme.titleSmall
+                        ?.copyWith(fontWeight: FontWeight.bold)),
+              ],
+            ),
+            const SizedBox(height: 12),
+            Wrap(
+              spacing: 16,
+              runSpacing: 12,
+              children: _seedColors.map((color) {
+                final isSelected = currentColor.value == color.value;
+                return GestureDetector(
+                  onTap: () => cubit.modifySeedColor(color),
+                  child: AnimatedContainer(
+                    duration: const Duration(milliseconds: 200),
+                    width: 36,
+                    height: 36,
+                    decoration: BoxDecoration(
+                      color: color,
+                      shape: BoxShape.circle,
+                      border: Border.all(
+                        color: isSelected
+                            ? theme.colorScheme.onSurface
+                            : Colors.transparent,
+                        width: 3,
+                      ),
+                      boxShadow: isSelected
+                          ? [
+                              BoxShadow(
+                                color: color.withAlpha(100),
+                                blurRadius: 8,
+                                spreadRadius: 1,
+                              ),
+                            ]
+                          : null,
+                    ),
+                    child: isSelected
+                        ? const Icon(Icons.check, color: Colors.white, size: 18)
+                        : null,
+                  ),
+                );
+              }).toList(),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildLanguageSwitcher(ThemeData theme) {
+    final cubit = context.watch<AppThemeCubit>();
+    final currentLocale = cubit.currentLocale;
+    final supported = cubit.supportedLocales;
+
+    return Card(
+      margin: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              children: [
+                Icon(Icons.translate_outlined,
+                    size: 20, color: theme.colorScheme.primary),
+                const SizedBox(width: 8),
+                Text('语言',
+                    style: theme.textTheme.titleSmall
+                        ?.copyWith(fontWeight: FontWeight.bold)),
+              ],
+            ),
+            const SizedBox(height: 12),
+            SegmentedButton<Locale>(
+              segments: supported.map((locale) {
+                final label = locale.languageCode == 'zh' ? '中文' : 'English';
+                return ButtonSegment(value: locale, label: Text(label));
+              }).toList(),
+              selected: {currentLocale},
+              onSelectionChanged: (locale) =>
+                  cubit.modifyLocale(locale.first),
+              style: ButtonStyle(
+                visualDensity: VisualDensity.compact,
+                tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  // ─── 退出登录 ──────────────────────────────────
 
   Widget _buildLogoutSection(ThemeData theme) {
     return Padding(

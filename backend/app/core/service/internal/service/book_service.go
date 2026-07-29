@@ -4,6 +4,7 @@ import (
 	"bytes"
 	"context"
 	"fmt"
+	"go-wind-ledger/pkg/metadata"
 	"strconv"
 	"time"
 
@@ -17,8 +18,6 @@ import (
 	"go-wind-ledger/app/core/service/internal/data/ent/balanceflow"
 
 	ledgerV1 "go-wind-ledger/api/gen/go/ledger/service/v1"
-
-	"go-wind-ledger/pkg/middleware/auth"
 )
 
 type BookService struct {
@@ -441,7 +440,7 @@ func (s *BookService) Export(ctx context.Context, req *ledgerV1.ExportBookReques
 // 从 auth context 获取当前用户 ID，查询其所有 membership 得到可访问租户，
 // 再查询这些租户下所有 enable=true 的账本。
 func (s *BookService) ListAllBooks(ctx context.Context, req *emptypb.Empty) (*ledgerV1.ListBookResponse, error) {
-	operator, err := auth.FromContext(ctx)
+	operator, err := metadata.FromServerContext(ctx)
 	if err != nil {
 		return nil, err
 	}
@@ -451,7 +450,7 @@ func (s *BookService) ListAllBooks(ctx context.Context, req *emptypb.Empty) (*le
 	}
 
 	// 1. 查询用户所有 membership
-	memberships, err := s.membershipRepo.FindByUser(ctx, userID)
+	memberships, err := s.membershipRepo.FindByUser(ctx, uint32(userID))
 	if err != nil {
 		s.log.Errorf("find membership by user failed: %s", err.Error())
 		return nil, ledgerV1.ErrorInternalServerError("find membership failed")
