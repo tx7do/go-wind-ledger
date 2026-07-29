@@ -502,8 +502,8 @@ func (r *userRepo) CreateWithTx(ctx context.Context, tx *ent.Tx, data *identityV
 		SetNillableLastLoginAt(timeutil.TimestamppbToTime(data.LastLoginAt)).
 		SetNillableLockedUntil(timeutil.TimestamppbToTime(data.LockedUntil)).
 		SetNillableLastLoginIP(data.LastLoginIp).
-		SetNillableGender(nil).
-		SetNillableStatus(nil).
+		SetNillableGender(genderToEntity(data.Gender)).
+		SetNillableStatus(userStatusToEntity(data.Status)).
 		SetNillableCreatedBy(data.CreatedBy).
 		SetCreatedAt(time.Now())
 
@@ -643,8 +643,8 @@ func (r *userRepo) Update(ctx context.Context, req *identityV1.UpdateUserRequest
 				SetNillableLastLoginAt(timeutil.TimestamppbToTime(req.Data.LastLoginAt)).
 				SetNillableLockedUntil(timeutil.TimestamppbToTime(req.Data.LockedUntil)).
 				SetNillableLastLoginIP(req.Data.LastLoginIp).
-				SetNillableGender(nil).
-				SetNillableStatus(nil).
+				SetNillableGender(genderToEntity(req.Data.Gender)).
+				SetNillableStatus(userStatusToEntity(req.Data.Status)).
 				SetNillableUpdatedBy(req.Data.UpdatedBy).
 				SetUpdatedAt(time.Now())
 		},
@@ -1123,4 +1123,22 @@ func (r *userRepo) ListUserIDsByPositionIDs(ctx context.Context, positionIDs []u
 
 func (r *userRepo) ListUserIDsByRoleIDs(ctx context.Context, roleIDs []uint32, excludeExpired bool) ([]uint32, error) {
 	return r.userRoleRepo.ListUserIDsByRoleIDs(ctx, roleIDs, excludeExpired)
+}
+
+// genderToEntity converts proto Gender enum to ent Gender.
+func genderToEntity(g *identityV1.User_Gender) *user.Gender {
+	if g == nil {
+		return nil
+	}
+	v := user.Gender(g.String())
+	return &v
+}
+
+// userStatusToEntity converts proto Status enum to ent Status.
+func userStatusToEntity(s *identityV1.User_Status) *user.Status {
+	if s == nil {
+		return nil
+	}
+	v := user.Status(s.String())
+	return &v
 }
