@@ -146,18 +146,12 @@ class TenantMemberService extends BaseService {
   Future<dynamic> removeMember({
     required int tenantId,
     required int userId,
-  }) async {
-    try {
-      await _dio.delete<dynamic>(
+  }) =>
+      call(() async { await _dio.delete<dynamic>(
         _base,
         queryParameters: <String, dynamic>{
           'tenantId': tenantId,
           'userId': userId,
         },
-      );
-      return null;
-    } on DioException catch (e) {
-      return handleDioError(e);
-    }
-  }
+      ); });
 }

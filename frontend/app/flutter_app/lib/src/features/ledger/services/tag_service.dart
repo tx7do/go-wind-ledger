@@ -1,4 +1,3 @@
-import 'package:dio/dio.dart' show DioException;
 import 'package:get_it/get_it.dart' show GetIt;
 
 import 'package:flutter_app/generated/api/app/service/v1/index.dart'
@@ -31,42 +30,22 @@ class TagService extends BaseService {
       GetIt.instance<ApiClient>().ledgerTagService;
 
   /// 获取标签列表（分页）
-  Future<dynamic> list([PaginationQuery? query]) async {
-    final q = query ?? const PaginationQuery();
-    try {
-      return await _api.list(q.toPagingRequest());
-    } on DioException catch (e) {
-      return handleDioError(e);
-    }
+  Future<dynamic> list([PaginationQuery? query]) {
+    final q = query ?? const PaginationQuery();  return call(() => _api.list(q.toPagingRequest()););
   }
 
   /// 获取所有标签（不分页，可按账本过滤）
-  Future<dynamic> listAll({int? bookId}) async {
-    try {
-      return await _api
-          .listAll(LedgerServiceV1ListAllTagRequest(bookId: bookId));
-    } on DioException catch (e) {
-      return handleDioError(e);
-    }
-  }
+  Future<dynamic> listAll({int? bookId}) =>
+      call(() => _api
+          .listAll(LedgerServiceV1ListAllTagRequest(bookId: bookId)));
 
   /// 获取单个标签
-  Future<dynamic> get(int id) async {
-    try {
-      return await _api.get(LedgerServiceV1GetTagRequest(id: id));
-    } on DioException catch (e) {
-      return handleDioError(e);
-    }
-  }
+  Future<dynamic> get(int id) =>
+      call(() => _api.get(LedgerServiceV1GetTagRequest(id: id)));
 
   /// 创建标签
-  Future<dynamic> create(LedgerTag data) async {
-    try {
-      return await _api.create(LedgerServiceV1CreateTagRequest(data: data));
-    } on DioException catch (e) {
-      return handleDioError(e);
-    }
-  }
+  Future<dynamic> create(LedgerTag data) =>
+      call(() => _api.create(LedgerServiceV1CreateTagRequest(data: data)));
 
   /// 更新标签
   Future<dynamic> update(
@@ -74,37 +53,21 @@ class TagService extends BaseService {
     LedgerTag data, {
     String? updateMask,
     bool? allowMissing,
-  }) async {
-    try {
-      return await _api.update(
+  }) =>
+      call(() => _api.update(
         LedgerServiceV1UpdateTagRequest(
           id: id,
           data: data,
           updateMask: updateMask,
           allowMissing: allowMissing,
         ),
-      );
-    } on DioException catch (e) {
-      return handleDioError(e);
-    }
-  }
+      ));
 
   /// 删除标签
-  Future<dynamic> delete(int id) async {
-    try {
-      await _api.delete(LedgerServiceV1DeleteTagRequest(id: id));
-      return null;
-    } on DioException catch (e) {
-      return handleDioError(e);
-    }
-  }
+  Future<dynamic> delete(int id) =>
+      call(() async { await _api.delete(LedgerServiceV1DeleteTagRequest(id: id)); });
 
   /// 切换启用/禁用
-  Future<dynamic> toggle(int id) async {
-    try {
-      return await _api.toggle(LedgerServiceV1ToggleTagRequest(id: id));
-    } on DioException catch (e) {
-      return handleDioError(e);
-    }
-  }
+  Future<dynamic> toggle(int id) =>
+      call(() => _api.toggle(LedgerServiceV1ToggleTagRequest(id: id)));
 }

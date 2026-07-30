@@ -270,14 +270,8 @@ class BudgetService extends BaseService {
   }
 
   /// 删除预算
-  Future<dynamic> delete(int id) async {
-    try {
-      await _dio.delete<dynamic>('$_base/$id');
-      return null;
-    } on DioException catch (e) {
-      return handleDioError(e);
-    }
-  }
+  Future<dynamic> delete(int id) =>
+      call(() async { await _dio.delete<dynamic>('$_base/$id'); });
 
   /// 获取预算进度（已用金额/预算金额）
   Future<dynamic> getProgress(int id) async {

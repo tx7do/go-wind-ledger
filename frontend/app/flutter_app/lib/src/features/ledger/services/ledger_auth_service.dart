@@ -1,4 +1,3 @@
-import 'package:dio/dio.dart' show DioException;
 import 'package:get_it/get_it.dart' show GetIt;
 
 import 'package:flutter_app/generated/api/app/service/v1/index.dart'
@@ -39,47 +38,29 @@ class LedgerAuthService extends BaseService {
     String password, {
     String? inviteCode,
     String? nickName,
-  }) async {
+  }) {
     final request = LedgerRegisterRequest(
       username: username,
       password: password,
       inviteCode: inviteCode,
       nickName: nickName,
-    );
-    try {
-      return await _api.register(request);
-    } on DioException catch (e) {
-      return handleDioError(e);
-    }
+    );  return call(() => _api.register(request););
   }
 
   /// 初始化状态（返回当前用户/租户/账本聚合信息）
   Future<dynamic> initState() async {
-    try {
+    return call(() =>
       // 后端 InitState 接收 google.protobuf.Empty，传输层以空 JSON 对象表示
-      return await _api.initState({});
-    } on DioException catch (e) {
-      return handleDioError(e);
-    }
+      _api.initState({}));
   }
 
   /// 设置默认账本
-  Future<dynamic> setDefaultBook(int bookId) async {
-    final request = SetDefaultBookRequest(bookId: bookId);
-    try {
-      return await _api.setDefaultBook(request);
-    } on DioException catch (e) {
-      return handleDioError(e);
-    }
+  Future<dynamic> setDefaultBook(int bookId) {
+    final request = SetDefaultBookRequest(bookId: bookId);  return call(() => _api.setDefaultBook(request););
   }
 
   /// 设置默认租户
-  Future<dynamic> setDefaultTenant(int tenantId) async {
-    final request = SetDefaultTenantRequest(tenantId: tenantId);
-    try {
-      return await _api.setDefaultTenant(request);
-    } on DioException catch (e) {
-      return handleDioError(e);
-    }
+  Future<dynamic> setDefaultTenant(int tenantId) {
+    final request = SetDefaultTenantRequest(tenantId: tenantId);  return call(() => _api.setDefaultTenant(request););
   }
 }

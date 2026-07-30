@@ -56,9 +56,23 @@ abstract class BaseService {
     );
   }
 
+  /// 包装一次 API 调用，自动处理 [DioException] 并返回原始结果或 [Status]。
+  ///
+  /// 用于消除服务方法中的手写 try-catch 模板。
+  /// ```dart
+  /// Future<dynamic> listAll() => call(() => _api.listAll(request));
+  /// ```
+  Future<dynamic> call(Future<dynamic> Function() apiCall) async {
+    try {
+      return await apiCall();
+    } on DioException catch (e) {
+      return handleDioError(e);
+    }
+  }
+
   /// 包装一次 API 调用，自动处理 [DioException] 并返回 [ServiceResult]。
   ///
-  /// 用法（替换手写 try-catch）：
+  /// 相比 [call]，提供强类型返回（后续迁移目标）。
   /// ```dart
   /// Future<ServiceResult<ListBookResponse>> listAll() =>
   ///     apiCall(() => _api.listAll(request));

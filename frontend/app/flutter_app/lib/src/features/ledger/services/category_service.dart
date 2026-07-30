@@ -1,4 +1,3 @@
-import 'package:dio/dio.dart' show DioException;
 import 'package:get_it/get_it.dart' show GetIt;
 
 import 'package:flutter_app/generated/api/app/service/v1/index.dart'
@@ -32,47 +31,27 @@ class CategoryService extends BaseService {
       GetIt.instance<ApiClient>().ledgerCategoryService;
 
   /// 获取分类列表（分页）
-  Future<dynamic> list([PaginationQuery? query]) async {
-    final q = query ?? const PaginationQuery();
-    try {
-      return await _api.list(q.toPagingRequest());
-    } on DioException catch (e) {
-      return handleDioError(e);
-    }
+  Future<dynamic> list([PaginationQuery? query]) {
+    final q = query ?? const PaginationQuery();  return call(() => _api.list(q.toPagingRequest()););
   }
 
   /// 获取所有分类（不分页，可按账本/类型过滤）
   Future<dynamic> listAll({
     int? bookId,
     LedgerServiceV1CategoryType? type,
-  }) async {
-    try {
-      return await _api.listAll(
+  }) =>
+      call(() => _api.listAll(
         LedgerServiceV1ListAllCategoryRequest(bookId: bookId, type: type),
-      );
-    } on DioException catch (e) {
-      return handleDioError(e);
-    }
-  }
+      ));
 
   /// 获取单个分类
-  Future<dynamic> get(int id) async {
-    try {
-      return await _api.get(LedgerServiceV1GetCategoryRequest(id: id));
-    } on DioException catch (e) {
-      return handleDioError(e);
-    }
-  }
+  Future<dynamic> get(int id) =>
+      call(() => _api.get(LedgerServiceV1GetCategoryRequest(id: id)));
 
   /// 创建分类
-  Future<dynamic> create(Category data) async {
-    try {
-      return await _api
-          .create(LedgerServiceV1CreateCategoryRequest(data: data));
-    } on DioException catch (e) {
-      return handleDioError(e);
-    }
-  }
+  Future<dynamic> create(Category data) =>
+      call(() => _api
+          .create(LedgerServiceV1CreateCategoryRequest(data: data)));
 
   /// 更新分类
   Future<dynamic> update(
@@ -80,37 +59,21 @@ class CategoryService extends BaseService {
     Category data, {
     String? updateMask,
     bool? allowMissing,
-  }) async {
-    try {
-      return await _api.update(
+  }) =>
+      call(() => _api.update(
         LedgerServiceV1UpdateCategoryRequest(
           id: id,
           data: data,
           updateMask: updateMask,
           allowMissing: allowMissing,
         ),
-      );
-    } on DioException catch (e) {
-      return handleDioError(e);
-    }
-  }
+      ));
 
   /// 删除分类
-  Future<dynamic> delete(int id) async {
-    try {
-      await _api.delete(LedgerServiceV1DeleteCategoryRequest(id: id));
-      return null;
-    } on DioException catch (e) {
-      return handleDioError(e);
-    }
-  }
+  Future<dynamic> delete(int id) =>
+      call(() async { await _api.delete(LedgerServiceV1DeleteCategoryRequest(id: id)); });
 
   /// 切换启用/禁用
-  Future<dynamic> toggle(int id) async {
-    try {
-      return await _api.toggle(LedgerServiceV1ToggleCategoryRequest(id: id));
-    } on DioException catch (e) {
-      return handleDioError(e);
-    }
-  }
+  Future<dynamic> toggle(int id) =>
+      call(() => _api.toggle(LedgerServiceV1ToggleCategoryRequest(id: id)));
 }

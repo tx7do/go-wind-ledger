@@ -1,4 +1,3 @@
-import 'package:dio/dio.dart' show DioException;
 import 'package:get_it/get_it.dart' show GetIt;
 
 import 'package:flutter_app/generated/api/app/service/v1/index.dart'
@@ -36,52 +35,27 @@ class AccountService extends BaseService {
   AccountServiceClient get _api => GetIt.instance<ApiClient>().accountService;
 
   /// 获取账户列表（分页）
-  Future<dynamic> list([PaginationQuery? query]) async {
-    final q = query ?? const PaginationQuery();
-    try {
-      return await _api.list(q.toPagingRequest());
-    } on DioException catch (e) {
-      return handleDioError(e);
-    }
+  Future<dynamic> list([PaginationQuery? query]) {
+    final q = query ?? const PaginationQuery();  return call(() => _api.list(q.toPagingRequest()););
   }
 
   /// 获取所有账户（不分页）
-  Future<dynamic> listAll({bool? includeDisabled}) async {
-    try {
-      return await _api.listAll(
+  Future<dynamic> listAll({bool? includeDisabled}) =>
+      call(() => _api.listAll(
         LedgerServiceV1ListAllAccountRequest(includeDisabled: includeDisabled),
-      );
-    } on DioException catch (e) {
-      return handleDioError(e);
-    }
-  }
+      ));
 
   /// 获取账户概览（总资产/总负债/净资产及明细）
-  Future<dynamic> overview() async {
-    try {
-      return await _api.overview(LedgerServiceV1OverviewRequest());
-    } on DioException catch (e) {
-      return handleDioError(e);
-    }
-  }
+  Future<dynamic> overview() =>
+      call(() => _api.overview(LedgerServiceV1OverviewRequest()));
 
   /// 获取单个账户
-  Future<dynamic> get(int id) async {
-    try {
-      return await _api.get(LedgerServiceV1GetAccountRequest(id: id));
-    } on DioException catch (e) {
-      return handleDioError(e);
-    }
-  }
+  Future<dynamic> get(int id) =>
+      call(() => _api.get(LedgerServiceV1GetAccountRequest(id: id)));
 
   /// 创建账户
-  Future<dynamic> create(Account data) async {
-    try {
-      return await _api.create(LedgerServiceV1CreateAccountRequest(data: data));
-    } on DioException catch (e) {
-      return handleDioError(e);
-    }
-  }
+  Future<dynamic> create(Account data) =>
+      call(() => _api.create(LedgerServiceV1CreateAccountRequest(data: data)));
 
   /// 更新账户
   Future<dynamic> update(
@@ -89,39 +63,23 @@ class AccountService extends BaseService {
     Account data, {
     String? updateMask,
     bool? allowMissing,
-  }) async {
-    try {
-      return await _api.update(
+  }) =>
+      call(() => _api.update(
         LedgerServiceV1UpdateAccountRequest(
           id: id,
           data: data,
           updateMask: updateMask,
           allowMissing: allowMissing,
         ),
-      );
-    } on DioException catch (e) {
-      return handleDioError(e);
-    }
-  }
+      ));
 
   /// 删除账户
-  Future<dynamic> delete(int id) async {
-    try {
-      await _api.delete(LedgerServiceV1DeleteAccountRequest(id: id));
-      return null;
-    } on DioException catch (e) {
-      return handleDioError(e);
-    }
-  }
+  Future<dynamic> delete(int id) =>
+      call(() async { await _api.delete(LedgerServiceV1DeleteAccountRequest(id: id)); });
 
   /// 切换启用/禁用
-  Future<dynamic> toggle(int id) async {
-    try {
-      return await _api.toggle(LedgerServiceV1ToggleAccountRequest(id: id));
-    } on DioException catch (e) {
-      return handleDioError(e);
-    }
-  }
+  Future<dynamic> toggle(int id) =>
+      call(() => _api.toggle(LedgerServiceV1ToggleAccountRequest(id: id)));
 
   /// 余额调整（会创建 ADJUST 流水记录）
   Future<dynamic> adjustBalance({
@@ -131,9 +89,8 @@ class AccountService extends BaseService {
     int? createTime,
     String? title,
     String? notes,
-  }) async {
-    try {
-      return await _api.adjustBalance(
+  }) =>
+      call(() => _api.adjustBalance(
         LedgerServiceV1AdjustBalanceRequest(
           id: id,
           balance: balance,
@@ -142,9 +99,5 @@ class AccountService extends BaseService {
           title: title,
           notes: notes,
         ),
-      );
-    } on DioException catch (e) {
-      return handleDioError(e);
-    }
-  }
+      ));
 }

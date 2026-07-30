@@ -1,4 +1,3 @@
-import 'package:dio/dio.dart' show DioException;
 import 'package:get_it/get_it.dart' show GetIt;
 
 import 'package:flutter_app/generated/api/app/service/v1/index.dart'
@@ -36,9 +35,8 @@ class ReportService extends BaseService {
     List<int>? tagIds,
     List<int>? payeeIds,
     int? accountId,
-  }) async {
-    try {
-      return await _api.expenseCategory(
+  }) =>
+      call(() => _api.expenseCategory(
         LedgerServiceV1ReportQueryRequest(
           bookId: bookId,
           minTime: minTime,
@@ -49,11 +47,7 @@ class ReportService extends BaseService {
           payeeIds: payeeIds,
           accountId: accountId,
         ),
-      );
-    } on DioException catch (e) {
-      return handleDioError(e);
-    }
-  }
+      ));
 
   /// 按分类统计收入
   Future<dynamic> incomeCategory({
@@ -65,9 +59,8 @@ class ReportService extends BaseService {
     List<int>? tagIds,
     List<int>? payeeIds,
     int? accountId,
-  }) async {
-    try {
-      return await _api.incomeCategory(
+  }) =>
+      call(() => _api.incomeCategory(
         LedgerServiceV1ReportQueryRequest(
           bookId: bookId,
           minTime: minTime,
@@ -78,11 +71,7 @@ class ReportService extends BaseService {
           payeeIds: payeeIds,
           accountId: accountId,
         ),
-      );
-    } on DioException catch (e) {
-      return handleDioError(e);
-    }
-  }
+      ));
 
   /// 按标签统计支出
   Future<dynamic> expenseTag({
@@ -94,9 +83,8 @@ class ReportService extends BaseService {
     List<int>? tagIds,
     List<int>? payeeIds,
     int? accountId,
-  }) async {
-    try {
-      return await _api.expenseTag(
+  }) =>
+      call(() => _api.expenseTag(
         LedgerServiceV1ReportQueryRequest(
           bookId: bookId,
           minTime: minTime,
@@ -107,11 +95,7 @@ class ReportService extends BaseService {
           payeeIds: payeeIds,
           accountId: accountId,
         ),
-      );
-    } on DioException catch (e) {
-      return handleDioError(e);
-    }
-  }
+      ));
 
   /// 按标签统计收入
   Future<dynamic> incomeTag({
@@ -123,9 +107,8 @@ class ReportService extends BaseService {
     List<int>? tagIds,
     List<int>? payeeIds,
     int? accountId,
-  }) async {
-    try {
-      return await _api.incomeTag(
+  }) =>
+      call(() => _api.incomeTag(
         LedgerServiceV1ReportQueryRequest(
           bookId: bookId,
           minTime: minTime,
@@ -136,11 +119,7 @@ class ReportService extends BaseService {
           payeeIds: payeeIds,
           accountId: accountId,
         ),
-      );
-    } on DioException catch (e) {
-      return handleDioError(e);
-    }
-  }
+      ));
 
   /// 按收款人统计支出
   Future<dynamic> expensePayee({
@@ -152,9 +131,8 @@ class ReportService extends BaseService {
     List<int>? tagIds,
     List<int>? payeeIds,
     int? accountId,
-  }) async {
-    try {
-      return await _api.expensePayee(
+  }) =>
+      call(() => _api.expensePayee(
         LedgerServiceV1ReportQueryRequest(
           bookId: bookId,
           minTime: minTime,
@@ -165,11 +143,7 @@ class ReportService extends BaseService {
           payeeIds: payeeIds,
           accountId: accountId,
         ),
-      );
-    } on DioException catch (e) {
-      return handleDioError(e);
-    }
-  }
+      ));
 
   /// 按收款人统计收入
   Future<dynamic> incomePayee({
@@ -181,9 +155,8 @@ class ReportService extends BaseService {
     List<int>? tagIds,
     List<int>? payeeIds,
     int? accountId,
-  }) async {
-    try {
-      return await _api.incomePayee(
+  }) =>
+      call(() => _api.incomePayee(
         LedgerServiceV1ReportQueryRequest(
           bookId: bookId,
           minTime: minTime,
@@ -194,19 +167,10 @@ class ReportService extends BaseService {
           payeeIds: payeeIds,
           accountId: accountId,
         ),
-      );
-    } on DioException catch (e) {
-      return handleDioError(e);
-    }
-  }
+      ));
 
   /// 资产负债报表
-  Future<dynamic> balance({int? bookId}) async {
-    try {
-      return await _api
-          .balance(LedgerServiceV1BalanceReportRequest(bookId: bookId));
-    } on DioException catch (e) {
-      return handleDioError(e);
-    }
-  }
+  Future<dynamic> balance({int? bookId}) =>
+      call(() => _api
+          .balance(LedgerServiceV1BalanceReportRequest(bookId: bookId)));
 }

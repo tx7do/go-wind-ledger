@@ -1,4 +1,3 @@
-import 'package:dio/dio.dart' show DioException;
 import 'package:get_it/get_it.dart' show GetIt;
 
 import 'package:flutter_app/generated/api/app/service/v1/index.dart'
@@ -30,49 +29,31 @@ class CurrencyService extends BaseService {
       GetIt.instance<ApiClient>().currencyService;
 
   /// 获取所有币种（不分页）
-  Future<dynamic> listAll() async {
-    try {
-      return await _api.listAll(LedgerServiceV1ListAllCurrencyRequest());
-    } on DioException catch (e) {
-      return handleDioError(e);
-    }
-  }
+  Future<dynamic> listAll() =>
+      call(() => _api.listAll(LedgerServiceV1ListAllCurrencyRequest()));
 
   /// 获取币种列表（分页）
   Future<dynamic> list([PaginationQuery? query]) async {
     final q = query ?? const PaginationQuery();
-    try {
-      return await _api.list(q.toPagingRequest());
-    } on DioException catch (e) {
-      return handleDioError(e);
-    }
+    return call(() =>
+      _api.list(q.toPagingRequest()));
   }
 
   /// 刷新汇率
-  Future<dynamic> refresh() async {
-    try {
-      return await _api.refresh(LedgerServiceV1RefreshCurrencyRequest());
-    } on DioException catch (e) {
-      return handleDioError(e);
-    }
-  }
+  Future<dynamic> refresh() =>
+      call(() => _api.refresh(LedgerServiceV1RefreshCurrencyRequest()));
 
   /// 币种转换
   Future<dynamic> convert({
     required String amount,
     required String from,
     required String to,
-  }) async {
-    try {
-      return await _api.convert(
+  }) =>
+      call(() => _api.convert(
         LedgerServiceV1ConvertCurrencyRequest(
           amount: amount,
           from: from,
           to: to,
         ),
-      );
-    } on DioException catch (e) {
-      return handleDioError(e);
-    }
-  }
+      ));
 }

@@ -1,4 +1,3 @@
-import 'package:dio/dio.dart' show DioException;
 import 'package:get_it/get_it.dart' show GetIt;
 
 import 'package:flutter_app/generated/api/app/service/v1/index.dart'
@@ -27,22 +26,11 @@ class FlowFileService extends BaseService {
       GetIt.instance<ApiClient>().flowFileService;
 
   /// 获取流水附件列表
-  Future<dynamic> list(int flowId) async {
-    try {
-      return await _api
-          .list(LedgerServiceV1ListFlowFileRequest(flowId: flowId));
-    } on DioException catch (e) {
-      return handleDioError(e);
-    }
-  }
+  Future<dynamic> list(int flowId) =>
+      call(() => _api
+          .list(LedgerServiceV1ListFlowFileRequest(flowId: flowId)));
 
   /// 删除附件
-  Future<dynamic> delete(int id) async {
-    try {
-      await _api.delete(LedgerServiceV1DeleteFlowFileRequest(id: id));
-      return null;
-    } on DioException catch (e) {
-      return handleDioError(e);
-    }
-  }
+  Future<dynamic> delete(int id) =>
+      call(() async { await _api.delete(LedgerServiceV1DeleteFlowFileRequest(id: id)); });
 }

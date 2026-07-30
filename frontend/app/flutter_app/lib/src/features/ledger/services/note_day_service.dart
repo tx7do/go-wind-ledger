@@ -1,4 +1,3 @@
-import 'package:dio/dio.dart' show DioException;
 import 'package:get_it/get_it.dart' show GetIt;
 
 import 'package:flutter_app/generated/api/app/service/v1/index.dart'
@@ -30,32 +29,17 @@ class NoteDayService extends BaseService {
   NoteDayServiceClient get _api => GetIt.instance<ApiClient>().noteDayService;
 
   /// 获取提醒列表（分页）
-  Future<dynamic> list([PaginationQuery? query]) async {
-    final q = query ?? const PaginationQuery();
-    try {
-      return await _api.list(q.toPagingRequest());
-    } on DioException catch (e) {
-      return handleDioError(e);
-    }
+  Future<dynamic> list([PaginationQuery? query]) {
+    final q = query ?? const PaginationQuery();  return call(() => _api.list(q.toPagingRequest()););
   }
 
   /// 获取单个提醒
-  Future<dynamic> get(int id) async {
-    try {
-      return await _api.get(LedgerServiceV1GetNoteDayRequest(id: id));
-    } on DioException catch (e) {
-      return handleDioError(e);
-    }
-  }
+  Future<dynamic> get(int id) =>
+      call(() => _api.get(LedgerServiceV1GetNoteDayRequest(id: id)));
 
   /// 创建提醒
-  Future<dynamic> create(NoteDay data) async {
-    try {
-      return await _api.create(LedgerServiceV1CreateNoteDayRequest(data: data));
-    } on DioException catch (e) {
-      return handleDioError(e);
-    }
-  }
+  Future<dynamic> create(NoteDay data) =>
+      call(() => _api.create(LedgerServiceV1CreateNoteDayRequest(data: data)));
 
   /// 更新提醒
   Future<dynamic> update(
@@ -63,46 +47,25 @@ class NoteDayService extends BaseService {
     NoteDay data, {
     String? updateMask,
     bool? allowMissing,
-  }) async {
-    try {
-      return await _api.update(
+  }) =>
+      call(() => _api.update(
         LedgerServiceV1UpdateNoteDayRequest(
           id: id,
           data: data,
           updateMask: updateMask,
           allowMissing: allowMissing,
         ),
-      );
-    } on DioException catch (e) {
-      return handleDioError(e);
-    }
-  }
+      ));
 
   /// 删除提醒
-  Future<dynamic> delete(int id) async {
-    try {
-      await _api.delete(LedgerServiceV1DeleteNoteDayRequest(id: id));
-      return null;
-    } on DioException catch (e) {
-      return handleDioError(e);
-    }
-  }
+  Future<dynamic> delete(int id) =>
+      call(() async { await _api.delete(LedgerServiceV1DeleteNoteDayRequest(id: id)); });
 
   /// 立即执行一次提醒（生成流水）
-  Future<dynamic> run(int id) async {
-    try {
-      return await _api.run(LedgerServiceV1RunNoteDayRequest(id: id));
-    } on DioException catch (e) {
-      return handleDioError(e);
-    }
-  }
+  Future<dynamic> run(int id) =>
+      call(() => _api.run(LedgerServiceV1RunNoteDayRequest(id: id)));
 
   /// 撤回已执行的提醒（删除对应流水）
-  Future<dynamic> recall(int id) async {
-    try {
-      return await _api.recall(LedgerServiceV1RecallNoteDayRequest(id: id));
-    } on DioException catch (e) {
-      return handleDioError(e);
-    }
-  }
+  Future<dynamic> recall(int id) =>
+      call(() => _api.recall(LedgerServiceV1RecallNoteDayRequest(id: id)));
 }

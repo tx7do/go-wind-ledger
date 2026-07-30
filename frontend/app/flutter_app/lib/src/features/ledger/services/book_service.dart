@@ -1,4 +1,3 @@
-import 'package:dio/dio.dart' show DioException;
 import 'package:get_it/get_it.dart' show GetIt;
 
 import 'package:flutter_app/generated/api/app/service/v1/index.dart'
@@ -36,13 +35,8 @@ class BookService extends BaseService {
       GetIt.instance<ApiClient>().bookTemplateService;
 
   /// 获取所有账本模板
-  Future<dynamic> listTemplates() async {
-    try {
-      return await _templateApi.listAll({});
-    } on DioException catch (e) {
-      return handleDioError(e);
-    }
-  }
+  Future<dynamic> listTemplates() =>
+      call(() => _templateApi.listAll({}));
 
   /// 从模板创建账本（会一并创建模板中的分类/标签/收款人）
   Future<dynamic> createByTemplate({
@@ -50,59 +44,34 @@ class BookService extends BaseService {
     required String name,
     required String defaultCurrencyCode,
     String? notes,
-  }) async {
-    try {
-      return await _api.createByTemplate(
+  }) =>
+      call(() => _api.createByTemplate(
         LedgerServiceV1CreateBookByTemplateRequest(
           templateId: templateId,
           name: name,
           defaultCurrencyCode: defaultCurrencyCode,
           notes: notes,
         ),
-      );
-    } on DioException catch (e) {
-      return handleDioError(e);
-    }
-  }
+      ));
 
   /// 获取账本列表（分页）
-  Future<dynamic> list([PaginationQuery? query]) async {
-    final q = query ?? const PaginationQuery();
-    try {
-      return await _api.list(q.toPagingRequest());
-    } on DioException catch (e) {
-      return handleDioError(e);
-    }
+  Future<dynamic> list([PaginationQuery? query]) {
+    final q = query ?? const PaginationQuery();  return call(() => _api.list(q.toPagingRequest()););
   }
 
   /// 获取所有账本（不分页）
-  Future<dynamic> listAll({bool? includeDisabled}) async {
-    try {
-      return await _api.listAll(
+  Future<dynamic> listAll({bool? includeDisabled}) =>
+      call(() => _api.listAll(
         LedgerServiceV1ListAllBookRequest(includeDisabled: includeDisabled),
-      );
-    } on DioException catch (e) {
-      return handleDioError(e);
-    }
-  }
+      ));
 
   /// 获取单个账本
-  Future<dynamic> get(int id) async {
-    try {
-      return await _api.get(LedgerServiceV1GetBookRequest(id: id));
-    } on DioException catch (e) {
-      return handleDioError(e);
-    }
-  }
+  Future<dynamic> get(int id) =>
+      call(() => _api.get(LedgerServiceV1GetBookRequest(id: id)));
 
   /// 创建账本
-  Future<dynamic> create(Book data) async {
-    try {
-      return await _api.create(LedgerServiceV1CreateBookRequest(data: data));
-    } on DioException catch (e) {
-      return handleDioError(e);
-    }
-  }
+  Future<dynamic> create(Book data) =>
+      call(() => _api.create(LedgerServiceV1CreateBookRequest(data: data)));
 
   /// 更新账本
   Future<dynamic> update(
@@ -110,37 +79,21 @@ class BookService extends BaseService {
     Book data, {
     String? updateMask,
     bool? allowMissing,
-  }) async {
-    try {
-      return await _api.update(
+  }) =>
+      call(() => _api.update(
         LedgerServiceV1UpdateBookRequest(
           id: id,
           data: data,
           updateMask: updateMask,
           allowMissing: allowMissing,
         ),
-      );
-    } on DioException catch (e) {
-      return handleDioError(e);
-    }
-  }
+      ));
 
   /// 删除账本
-  Future<dynamic> delete(int id) async {
-    try {
-      await _api.delete(LedgerServiceV1DeleteBookRequest(id: id));
-      return null;
-    } on DioException catch (e) {
-      return handleDioError(e);
-    }
-  }
+  Future<dynamic> delete(int id) =>
+      call(() async { await _api.delete(LedgerServiceV1DeleteBookRequest(id: id)); });
 
   /// 切换启用/禁用
-  Future<dynamic> toggle(int id) async {
-    try {
-      return await _api.toggle(LedgerServiceV1ToggleBookRequest(id: id));
-    } on DioException catch (e) {
-      return handleDioError(e);
-    }
-  }
+  Future<dynamic> toggle(int id) =>
+      call(() => _api.toggle(LedgerServiceV1ToggleBookRequest(id: id)));
 }
