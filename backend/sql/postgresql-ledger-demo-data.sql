@@ -189,32 +189,28 @@ SELECT setval('balance_flows_id_seq', (SELECT MAX(id) FROM balance_flows));
 INSERT INTO public.category_relations (category_id, balance_flow_id, amount, converted_amount)
 SELECT c.id, f.id, f.amount, f.converted_amount
 FROM (
-    SELECT id, ROW_NUMBER() OVER (ORDER BY id) AS rn
+    SELECT id, amount, converted_amount, ROW_NUMBER() OVER (ORDER BY id) AS rn
     FROM balance_flows
     WHERE type = 'FLOW_TYPE_EXPENSE'
 ) f
-JOIN LATERAL (
-    SELECT id FROM (
-        SELECT id, ROW_NUMBER() OVER (ORDER BY id) AS rn
-        FROM categories
-        WHERE type = 'CATEGORY_TYPE_EXPENSE' AND parent_id IS NOT NULL
-    ) ec ON ec.rn = ((f.rn - 1) % (SELECT COUNT(*) FROM categories WHERE type = 'CATEGORY_TYPE_EXPENSE' AND parent_id IS NOT NULL)) + 1
-) c ON true;
+JOIN (
+    SELECT id, ROW_NUMBER() OVER (ORDER BY id) AS rn
+    FROM categories
+    WHERE type = 'CATEGORY_TYPE_EXPENSE' AND parent_id IS NOT NULL
+) c ON c.rn = ((f.rn - 1) % (SELECT COUNT(*) FROM categories WHERE type = 'CATEGORY_TYPE_EXPENSE' AND parent_id IS NOT NULL)) + 1;
 
 INSERT INTO public.category_relations (category_id, balance_flow_id, amount, converted_amount)
 SELECT c.id, f.id, f.amount, f.converted_amount
 FROM (
-    SELECT id, ROW_NUMBER() OVER (ORDER BY id) AS rn
+    SELECT id, amount, converted_amount, ROW_NUMBER() OVER (ORDER BY id) AS rn
     FROM balance_flows
     WHERE type = 'FLOW_TYPE_INCOME'
 ) f
-JOIN LATERAL (
-    SELECT id FROM (
-        SELECT id, ROW_NUMBER() OVER (ORDER BY id) AS rn
-        FROM categories
-        WHERE type = 'CATEGORY_TYPE_INCOME'
-    ) ic ON ic.rn = ((f.rn - 1) % (SELECT COUNT(*) FROM categories WHERE type = 'CATEGORY_TYPE_INCOME')) + 1
-) c ON true;
+JOIN (
+    SELECT id, ROW_NUMBER() OVER (ORDER BY id) AS rn
+    FROM categories
+    WHERE type = 'CATEGORY_TYPE_INCOME'
+) c ON c.rn = ((f.rn - 1) % (SELECT COUNT(*) FROM categories WHERE type = 'CATEGORY_TYPE_INCOME')) + 1;
 
 SELECT setval('category_relations_id_seq', (SELECT MAX(id) FROM category_relations));
 
@@ -226,17 +222,15 @@ SELECT setval('category_relations_id_seq', (SELECT MAX(id) FROM category_relatio
 INSERT INTO public.tag_relations (tag_id, balance_flow_id, amount, converted_amount)
 SELECT t.id, f.id, f.amount, f.converted_amount
 FROM (
-    SELECT id, ROW_NUMBER() OVER (ORDER BY id) AS rn
+    SELECT id, amount, converted_amount, ROW_NUMBER() OVER (ORDER BY id) AS rn
     FROM balance_flows
     WHERE type = 'FLOW_TYPE_EXPENSE'
 ) f
-JOIN LATERAL (
-    SELECT id FROM (
-        SELECT id, ROW_NUMBER() OVER (ORDER BY id) AS rn
-        FROM tags
-        WHERE parent_id IS NULL AND can_expense = true
-    ) et ON et.rn = ((f.rn - 1) % 2) + 1
-) t ON true
+JOIN (
+    SELECT id, ROW_NUMBER() OVER (ORDER BY id) AS rn
+    FROM tags
+    WHERE parent_id IS NULL AND can_expense = true
+) t ON t.rn = ((f.rn - 1) % 2) + 1
 WHERE (f.rn % 2) = 1;
 
 SELECT setval('tag_relations_id_seq', (SELECT MAX(id) FROM tag_relations));
