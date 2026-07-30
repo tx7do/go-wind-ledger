@@ -39,6 +39,11 @@ ColorScheme _buildDarkColorScheme(Color seedColor) => ColorScheme.fromSeed(
   /// 背景颜色
   surface: DarkColor.surfaceColor,
 
+  /// 容器表面色（卡片等）。与 surface 取相同色值，消除卡片与背景的色差，
+  /// 避免列表多卡片叠出“格子化”。两端正反一致处理。
+  /// 卡片层级改由圆角与间距隐约区分。
+  surfaceContainer: DarkColor.surfaceColor,
+
   /// 背景颜色上的文字或图标颜色
   onSurface: DarkColor.onSurface,
 

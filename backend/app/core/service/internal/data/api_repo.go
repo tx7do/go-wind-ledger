@@ -28,6 +28,7 @@ type ApiRepo struct {
 
 	mapper         *mapper.CopierMapper[permissionV1.Api, ent.Api]
 	scopeConverter *mapper.EnumTypeConverter[permissionV1.Api_Scope, api.Scope]
+	statusConverter *mapper.EnumTypeConverter[permissionV1.Api_Status, api.Status]
 
 	repository *entCrud.Repository[
 		ent.APIQuery, ent.APISelect,
@@ -46,6 +47,9 @@ func NewApiRepo(ctx *bootstrap.Context, entClient *entCrud.EntClient[*ent.Client
 		mapper:    mapper.NewCopierMapper[permissionV1.Api, ent.Api](),
 		scopeConverter: mapper.NewEnumTypeConverter[permissionV1.Api_Scope, api.Scope](
 			permissionV1.Api_Scope_name, permissionV1.Api_Scope_value,
+		),
+		statusConverter: mapper.NewEnumTypeConverter[permissionV1.Api_Status, api.Status](
+			permissionV1.Api_Status_name, permissionV1.Api_Status_value,
 		),
 	}
 
@@ -68,6 +72,7 @@ func (r *ApiRepo) init() {
 	r.mapper.AppendConverters(copierutil.NewTimeTimestamppbConverterPair())
 
 	r.mapper.AppendConverters(r.scopeConverter.NewConverterPair())
+	r.mapper.AppendConverters(r.statusConverter.NewConverterPair())
 }
 
 func (r *ApiRepo) Count(ctx context.Context, req *paginationV1.PagingRequest) (*permissionV1.CountApiResponse, error) {

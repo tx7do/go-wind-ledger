@@ -51,14 +51,14 @@ class StatisticsCard extends StatelessWidget {
               value: loading ? '--' : expense,
               color: SemanticColors.expense(context),
             ),
-            _divider(theme),
+            _divider(),
             _buildCell(
               context,
               label: loc.flowFilterIncome,
               value: loading ? '--' : income,
               color: SemanticColors.income(context),
             ),
-            _divider(theme),
+            _divider(),
             _buildCell(
               context,
               label: loc.netWorth,
@@ -103,11 +103,10 @@ class StatisticsCard extends StatelessWidget {
     );
   }
 
-  Widget _divider(ThemeData theme) {
-    return Container(
+  Widget _divider() {
+    return const VerticalDivider(
       width: 1,
-      height: 32,
-      color: theme.colorScheme.outlineVariant.withAlpha(60),
+      thickness: 1,
     );
   }
 

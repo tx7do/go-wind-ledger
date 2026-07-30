@@ -25,10 +25,11 @@ import (
 )
 
 type BalanceFlowRepo struct {
-	entClient  *entCrud.EntClient[*ent.Client]
-	log        *log.Helper
-	mapper     *mapper.CopierMapper[ledgerV1.BalanceFlow, ent.BalanceFlow]
-	repository *entCrud.Repository[
+	entClient     *entCrud.EntClient[*ent.Client]
+	log           *log.Helper
+	mapper        *mapper.CopierMapper[ledgerV1.BalanceFlow, ent.BalanceFlow]
+	typeConverter *mapper.EnumTypeConverter[ledgerV1.FlowType, balanceflow.Type]
+	repository    *entCrud.Repository[
 		ent.BalanceFlowQuery, ent.BalanceFlowSelect,
 		ent.BalanceFlowCreate, ent.BalanceFlowCreateBulk,
 		ent.BalanceFlowUpdate, ent.BalanceFlowUpdateOne,
@@ -43,6 +44,9 @@ func NewBalanceFlowRepo(ctx *bootstrap.Context, entClient *entCrud.EntClient[*en
 		log:       ctx.NewLoggerHelper("balanceflow/repo/core-service"),
 		entClient: entClient,
 		mapper:    mapper.NewCopierMapper[ledgerV1.BalanceFlow, ent.BalanceFlow](),
+		typeConverter: mapper.NewEnumTypeConverter[ledgerV1.FlowType, balanceflow.Type](
+			ledgerV1.FlowType_name, ledgerV1.FlowType_value,
+		),
 	}
 	repo.init()
 	return repo
@@ -57,9 +61,12 @@ func (r *BalanceFlowRepo) init() {
 		predicate.BalanceFlow,
 		ledgerV1.BalanceFlow, ent.BalanceFlow,
 	](r.mapper)
+
 	r.mapper.AppendConverters(copierutil.NewTimeStringConverterPair())
 	r.mapper.AppendConverters(copierutil.NewTimeTimestamppbConverterPair())
+
 	r.mapper.AppendConverters(float64StringConverters)
+	r.mapper.AppendConverters(r.typeConverter.NewConverterPair())
 }
 
 func (r *BalanceFlowRepo) List(ctx context.Context, req *paginationV1.PagingRequest) (*ledgerV1.ListBalanceFlowResponse, error) {

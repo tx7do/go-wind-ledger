@@ -22,6 +22,7 @@ type MembershipRepo struct {
 	log       *log.Helper
 	entClient *entCrud.EntClient[*ent.Client]
 	mapper    *mapper.CopierMapper[identityV1.Membership, ent.Membership]
+	statusConverter *mapper.EnumTypeConverter[identityV1.Membership_Status, membership.Status]
 }
 
 func NewMembershipRepo(ctx *bootstrap.Context, entClient *entCrud.EntClient[*ent.Client]) *MembershipRepo {
@@ -29,7 +30,11 @@ func NewMembershipRepo(ctx *bootstrap.Context, entClient *entCrud.EntClient[*ent
 		log:       ctx.NewLoggerHelper("membership/repo/core-service"),
 		entClient: entClient,
 		mapper:    mapper.NewCopierMapper[identityV1.Membership, ent.Membership](),
+		statusConverter: mapper.NewEnumTypeConverter[identityV1.Membership_Status, membership.Status](
+			identityV1.Membership_Status_name, identityV1.Membership_Status_value,
+		),
 	}
+	repo.mapper.AppendConverters(repo.statusConverter.NewConverterPair())
 	return repo
 }
 

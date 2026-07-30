@@ -26,6 +26,7 @@ type BudgetRepo struct {
 	entClient  *entCrud.EntClient[*ent.Client]
 	log        *log.Helper
 	mapper     *mapper.CopierMapper[ledgerV1.Budget, ent.Budget]
+	periodConverter *mapper.EnumTypeConverter[ledgerV1.BudgetPeriod, budget.Period]
 	repository *entCrud.Repository[
 		ent.BudgetQuery, ent.BudgetSelect,
 		ent.BudgetCreate, ent.BudgetCreateBulk,
@@ -42,6 +43,9 @@ func NewBudgetRepo(ctx *bootstrap.Context, entClient *entCrud.EntClient[*ent.Cli
 		log:       ctx.NewLoggerHelper("budget/repo/core-service"),
 		entClient: entClient,
 		mapper:    mapper.NewCopierMapper[ledgerV1.Budget, ent.Budget](),
+		periodConverter: mapper.NewEnumTypeConverter[ledgerV1.BudgetPeriod, budget.Period](
+			ledgerV1.BudgetPeriod_name, ledgerV1.BudgetPeriod_value,
+		),
 	}
 	repo.init()
 	return repo
@@ -59,6 +63,7 @@ func (r *BudgetRepo) init() {
 	r.mapper.AppendConverters(copierutil.NewTimeStringConverterPair())
 	r.mapper.AppendConverters(copierutil.NewTimeTimestamppbConverterPair())
 	r.mapper.AppendConverters(float64StringConverters)
+	r.mapper.AppendConverters(r.periodConverter.NewConverterPair())
 }
 
 // List 分页查询预算

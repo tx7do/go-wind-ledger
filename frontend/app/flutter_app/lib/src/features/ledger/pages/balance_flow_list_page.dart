@@ -286,7 +286,7 @@ class _BalanceFlowListPageState extends State<BalanceFlowListPage> {
       onRefresh: _refresh,
       child: ListView.builder(
         controller: _scrollController,
-        padding: const EdgeInsets.only(bottom: 16),
+        padding: const EdgeInsets.only(bottom: 80),
         itemCount: _items.length + (_loadingMore ? 1 : 0),
         itemBuilder: (context, index) {
           if (index >= _items.length) {
@@ -306,12 +306,15 @@ class _BalanceFlowListPageState extends State<BalanceFlowListPage> {
     final type = flow.type;
     final typeLabel = _typeLabel(type);
     final typeColor = _typeColor(type);
-    final amount = double.tryParse(flow.amount ?? '0') ?? 0;
+    final amount = (double.tryParse(flow.amount ?? '0') ?? 0).abs();
     final sign = type == LedgerServiceV1FlowType.flowTypeIncome ? '+' : '-';
     return Card(
       margin: const EdgeInsets.symmetric(
         horizontal: kListMarginH,
         vertical: kListMarginV,
+      ),
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(kCardRadius),
       ),
       child: ListTile(
         leading: CircleAvatar(
@@ -325,7 +328,7 @@ class _BalanceFlowListPageState extends State<BalanceFlowListPage> {
           overflow: TextOverflow.ellipsis,
         ),
         subtitle: Text(
-          _formatTime(flow.createTime),
+          _formatTime(flow.createdAt, flow.createTime),
           style: theme.textTheme.bodySmall,
         ),
         trailing: Row(
@@ -339,7 +342,10 @@ class _BalanceFlowListPageState extends State<BalanceFlowListPage> {
               ),
             ),
             PopupMenuButton<String>(
-              icon: const Icon(Icons.more_vert, size: 20),
+              icon: Icon(Icons.more_vert, size: 24),
+              iconSize: 24,
+              padding: EdgeInsets.zero,
+              constraints: const BoxConstraints(minWidth: 48, minHeight: 48),
               onSelected: (v) {
                 if (v == 'edit') {
                   context.push('/ledger/flows/create?id=${flow.id}');
@@ -427,10 +433,20 @@ class _BalanceFlowListPageState extends State<BalanceFlowListPage> {
     }
   }
 
-  String _formatTime(int? ts) {
-    if (ts == null || ts <= 0) return '';
-    final dt = DateTime.fromMillisecondsSinceEpoch(ts * 1000);
+  String _formatTime(String? createdAt, int? ts) {
+    DateTime? dt;
+    if (createdAt != null && createdAt.isNotEmpty) {
+      dt = DateTime.tryParse(createdAt);
+    }
+    if (dt == null && ts != null && ts > 0) {
+      dt = DateTime.fromMillisecondsSinceEpoch(ts * 1000);
+    }
+    if (dt == null) return '';
     String two(int n) => n.toString().padLeft(2, '0');
+    final now = DateTime.now();
+    if (dt.year == now.year) {
+      return '${two(dt.month)}-${two(dt.day)} ${two(dt.hour)}:${two(dt.minute)}';
+    }
     return '${dt.year}-${two(dt.month)}-${two(dt.day)} ${two(dt.hour)}:${two(dt.minute)}';
   }
 }

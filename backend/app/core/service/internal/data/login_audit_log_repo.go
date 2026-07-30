@@ -80,6 +80,7 @@ func (r *LoginAuditLogRepo) init() {
 	r.mapper.AppendConverters(r.statusConverter.NewConverterPair())
 	r.mapper.AppendConverters(r.actionTypeConverter.NewConverterPair())
 	r.mapper.AppendConverters(r.riskLevelConverter.NewConverterPair())
+	r.mapper.AppendConverters(r.loginMethodConverter.NewConverterPair())
 }
 
 func (r *LoginAuditLogRepo) Count(ctx context.Context, whereCond []func(s *sql.Selector)) (int, error) {

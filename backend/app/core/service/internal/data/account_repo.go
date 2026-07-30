@@ -24,6 +24,7 @@ type AccountRepo struct {
 	entClient  *entCrud.EntClient[*ent.Client]
 	log        *log.Helper
 	mapper     *mapper.CopierMapper[ledgerV1.Account, ent.Account]
+	typeConverter *mapper.EnumTypeConverter[ledgerV1.AccountType, account.Type]
 	repository *entCrud.Repository[
 		ent.AccountQuery, ent.AccountSelect,
 		ent.AccountCreate, ent.AccountCreateBulk,
@@ -39,6 +40,9 @@ func NewAccountRepo(ctx *bootstrap.Context, entClient *entCrud.EntClient[*ent.Cl
 		log:       ctx.NewLoggerHelper("account/repo/core-service"),
 		entClient: entClient,
 		mapper:    mapper.NewCopierMapper[ledgerV1.Account, ent.Account](),
+		typeConverter: mapper.NewEnumTypeConverter[ledgerV1.AccountType, account.Type](
+			ledgerV1.AccountType_name, ledgerV1.AccountType_value,
+		),
 	}
 	repo.init()
 	return repo
@@ -56,6 +60,7 @@ func (r *AccountRepo) init() {
 	r.mapper.AppendConverters(copierutil.NewTimeStringConverterPair())
 	r.mapper.AppendConverters(copierutil.NewTimeTimestamppbConverterPair())
 	r.mapper.AppendConverters(float64StringConverters)
+	r.mapper.AppendConverters(r.typeConverter.NewConverterPair())
 }
 
 func (r *AccountRepo) List(ctx context.Context, req *paginationV1.PagingRequest) (*ledgerV1.ListAccountResponse, error) {

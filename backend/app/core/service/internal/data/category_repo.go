@@ -25,6 +25,7 @@ type CategoryRepo struct {
 	entClient  *entCrud.EntClient[*ent.Client]
 	log        *log.Helper
 	mapper     *mapper.CopierMapper[ledgerV1.Category, ent.Category]
+	typeConverter *mapper.EnumTypeConverter[ledgerV1.CategoryType, category.Type]
 	repository *entCrud.Repository[
 		ent.CategoryQuery, ent.CategorySelect,
 		ent.CategoryCreate, ent.CategoryCreateBulk,
@@ -40,6 +41,9 @@ func NewCategoryRepo(ctx *bootstrap.Context, entClient *entCrud.EntClient[*ent.C
 		log:       ctx.NewLoggerHelper("category/repo/core-service"),
 		entClient: entClient,
 		mapper:    mapper.NewCopierMapper[ledgerV1.Category, ent.Category](),
+		typeConverter: mapper.NewEnumTypeConverter[ledgerV1.CategoryType, category.Type](
+			ledgerV1.CategoryType_name, ledgerV1.CategoryType_value,
+		),
 	}
 	repo.init()
 	return repo
@@ -56,6 +60,7 @@ func (r *CategoryRepo) init() {
 	](r.mapper)
 	r.mapper.AppendConverters(copierutil.NewTimeStringConverterPair())
 	r.mapper.AppendConverters(copierutil.NewTimeTimestamppbConverterPair())
+	r.mapper.AppendConverters(r.typeConverter.NewConverterPair())
 }
 
 func (r *CategoryRepo) List(ctx context.Context, req *paginationV1.PagingRequest) (*ledgerV1.ListCategoryResponse, error) {

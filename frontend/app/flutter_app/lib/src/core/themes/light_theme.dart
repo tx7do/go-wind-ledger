@@ -38,6 +38,11 @@ ColorScheme _buildLightColorScheme(Color seedColor) => ColorScheme.fromSeed(
   /// 背景颜色
   surface: const Color.fromARGB(255, 255, 255, 255),
 
+  /// 容器表面色（卡片等）。与 scaffoldBackgroundColor 取相同色值，
+  /// 消除卡片与背景的色差，避免列表多卡片叠出“格子化”。
+  /// 卡片层级改由圆角与间距隐约区分。
+  surfaceContainer: const Color.fromRGBO(245, 247, 250, 1.0),
+
   // 背景颜色上的文字或图标颜色
   onSurface: const Color.fromRGBO(30, 30, 30, 1.0),
 
