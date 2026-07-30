@@ -40,15 +40,9 @@ func (s *AuthenticationService) Login(ctx context.Context, req *authenticationV1
 
 	req.ClientType = trans.Ptr(authenticationV1.ClientType_app)
 
-	if req.GetGrantType() == authenticationV1.GrantType_refresh_token {
-		operator, err := auth.FromContext(ctx)
-		if err != nil {
-			return nil, err
-		}
-
-		req.Jti = operator.Jti
-		req.UserId = trans.Ptr(operator.GetUserId())
-	}
+	// 刷新令牌现为自验证 JWT，身份（uid/jti）由 core 服务从令牌自身解析，
+	// BFF 不再需要从 access-token 中间件注入的 operator 取值写回请求。
+	// 这使得刷新端点可免认证（access token 已过期也能续期），实现无感刷新。
 
 	return s.authenticationServiceClient.Login(ctx, req)
 }

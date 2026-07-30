@@ -99,6 +99,45 @@ func NewUserTokenAuthClaims(
 	return &authClaims
 }
 
+// NewRefreshTokenAuthClaims 创建刷新令牌的认证声明。
+//
+// 与访问令牌（NewUserTokenAuthClaims）不同，刷新令牌只携带身份定位所需的
+// 最小字段：uid（用户ID）、jti（令牌ID，用于定位 Redis 中的令牌对）以及
+// 标准的签发/过期时间。故意不写入 sub/roles/tenant 等敏感业务字段，
+// 使刷新令牌即使泄露也只具备"续期"能力，无法直接还原用户上下文。
+//
+// 刷新令牌的验签使用与访问令牌相同的 clientType 密钥，但令牌类型隔离
+// 由 Redis 中 access/refresh 各自的 value 比对天然保证（见
+// user_token_cache.go 的 VerifyAndRevokeTokenPair / IsValidAccessToken），
+// 因此无需额外的 typ claim。
+func NewRefreshTokenAuthClaims(
+	tokenPayload *authenticationV1.UserTokenPayload,
+	expirationTime *time.Time,
+) *authn.AuthClaims {
+	authClaims := authn.AuthClaims{
+		authn.ClaimFieldIssuedAt: time.Now().Unix(),
+	}
+
+	if expirationTime != nil {
+		authClaims[authn.ClaimFieldExpirationTime] = expirationTime.Unix()
+	}
+
+	// jti 用于在 Redis 中定位令牌对（gwl:rt:{ct}:{uid}:{jti}），校验时
+	// 由服务端从令牌自身解析，不再依赖客户端自报。
+	if tokenPayload.Jti != nil {
+		authClaims[authn.ClaimFieldJwtID] = tokenPayload.GetJti()
+	}
+
+	// uid 用于在 Redis 中定位令牌对，同样从令牌自身解析。
+	// 注意：刷新令牌里不写入 tenantId，租户上下文在续期成功后由新 access
+	// token 重新携带，避免刷新令牌承担过多身份信息。
+	if tokenPayload.UserId != 0 {
+		authClaims[ClaimFieldUserID] = tokenPayload.GetUserId()
+	}
+
+	return &authClaims
+}
+
 // NewUserTokenPayloadWithClaims 从认证声明创建用户令牌
 func NewUserTokenPayloadWithClaims(claims *authn.AuthClaims) (*authenticationV1.UserTokenPayload, error) {
 	payload := &authenticationV1.UserTokenPayload{}

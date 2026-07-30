@@ -10,5 +10,5 @@ authenticator:
     method: "HS256" # 对称加密算法，支持 HS256, HS384, HS512
     key: "some_api_key" # 请根据实际情况更换为更复杂的密钥
     access_token_expires: 900s        # 移动/客户端短期 token 15分钟
-    refresh_token_expires: 0s        # 0s 表示不颁发/禁用 refresh token
+    refresh_token_expires: 604800s   # 刷新令牌有效期 7 天（带 exp 的自验证 JWT）
     aes_key: "f51d66a73d8a0927"

@@ -37,11 +37,15 @@ class AuthenticationService extends AuthService {
   }
 
   /// 刷新访问令牌（内部方法，供 AuthenticationInterceptor 调用）
+  ///
+  /// 仅负责尝试刷新并返回新的 access token（成功）或 null（失败），
+  /// 不在此处清理认证状态或跳转登录——清理职责统一由
+  /// [AuthenticationInterceptor] 在刷新失败后调用
+  /// [authenticationFailed] 承担，避免双重清理与职责分散。
   @override
   Future<String?> refreshToken() async {
     final token = getRefreshToken();
     if (token == null || token.isEmpty) {
-      doAuthenticationFailed();
       return null;
     }
 
@@ -50,7 +54,6 @@ class AuthenticationService extends AuthService {
       return result.access_token;
     }
 
-    doAuthenticationFailed();
     return null;
   }
 

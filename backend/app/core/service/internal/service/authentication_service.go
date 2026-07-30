@@ -236,10 +236,18 @@ func (s *AuthenticationService) doGrantTypePassword(ctx context.Context, req *au
 
 // doGrantTypeRefreshToken 处理授权类型 - 刷新令牌
 func (s *AuthenticationService) doGrantTypeRefreshToken(ctx context.Context, req *authenticationV1.LoginRequest) (*authenticationV1.LoginResponse, error) {
-	// 获取用户信息
+	// 验证刷新令牌（自验证 JWT）：身份（uid/jti）从令牌自身解析，
+	// 不再依赖请求参数 req.GetUserId()/req.GetJti()，并原子吊销旧令牌对。
+	uid, _, err := s.authenticator.VerifyRefreshToken(ctx, req.GetClientType(), req.GetRefreshToken())
+	if err != nil {
+		s.log.Errorf("verify refresh token failed: [%s]", err)
+		return nil, authenticationV1.ErrorIncorrectRefreshToken("invalid refresh token")
+	}
+
+	// 用从刷新令牌解析出的 uid 取用户信息。
 	user, err := s.userRepo.Get(ctx, &identityV1.GetUserRequest{
 		QueryBy: &identityV1.GetUserRequest_Id{
-			Id: req.GetUserId(),
+			Id: uid,
 		},
 	})
 	if err != nil {
@@ -259,12 +267,6 @@ func (s *AuthenticationService) doGrantTypeRefreshToken(ctx context.Context, req
 	if err != nil {
 		s.log.Errorf("resolve user [%d] authority failed [%s]", user.GetId(), err.Error())
 		return nil, err
-	}
-
-	// 验证刷新令牌
-	if err = s.authenticator.VerifyRefreshToken(ctx, req.GetClientType(), req.GetUserId(), req.GetJti(), req.GetRefreshToken()); err != nil {
-		s.log.Errorf("verify refresh token failed for user [%d]: [%s]", req.GetUserId(), err)
-		return nil, authenticationV1.ErrorIncorrectRefreshToken("invalid refresh token")
 	}
 
 	roleCodes, err := s.roleRepo.ListRoleCodesByIds(ctx, user.GetRoleIds())

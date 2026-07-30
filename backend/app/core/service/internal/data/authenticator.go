@@ -229,7 +229,9 @@ func (a *Authenticator) CreateUserToken(
 	}
 
 	// CreateTranslation Refresh Token
-	if refreshToken, err = a.newRefreshToken(); refreshToken == "" || err != nil {
+	// 刷新令牌现为自验证 JWT，携带 uid/jti/exp，由 clientType 对应的密钥签发。
+	// 验证时服务端从令牌自身解析身份定位 Redis key，不再依赖客户端自报。
+	if refreshToken, err = a.newRefreshToken(clientType, tokenPayload); refreshToken == "" || err != nil {
 		return "", "", authenticationV1.ErrorServiceUnavailable("create refresh token failed")
 	}
 
@@ -287,41 +289,69 @@ func (a *Authenticator) RevokeTokenByJti(ctx context.Context, clientType *authen
 	return a.userTokenCache.RevokeTokenByJti(ctx, authenticationV1.ClientType_app, userId, jti)
 }
 
-// VerifyRefreshToken 验证刷新令牌，并原子地吊销旧令牌对。
+// VerifyRefreshToken 验证刷新令牌（自验证 JWT），并原子地吊销旧令牌对。
+//
+// 身份定位信息（uid/jti）从刷新令牌自身解析，不再依赖客户端自报，
+// 消除了"客户端伪造 userId/jti 碰撞他人 refresh token"的隐患。
 // 使用 Lua 脚本保证「验证 RT → 删除 RT → 删除 AT」的原子性，避免 TOCTOU 竞态。
+//
+// 返回解析得到的 uid 与 jti，供上游定位用户记录使用。
 func (a *Authenticator) VerifyRefreshToken(
 	ctx context.Context,
 	clientType authenticationV1.ClientType,
-	userId uint32,
-	jti string,
 	refreshToken string,
-) (err error) {
+) (uid uint32, jti string, err error) {
 	if a.userTokenCache == nil {
 		a.log.Error("userTokenCache is nil")
-		return authenticationV1.ErrorServiceUnavailable("token cache unavailable")
+		return 0, "", authenticationV1.ErrorServiceUnavailable("token cache unavailable")
 	}
-	if userId == 0 {
-		return authenticationV1.ErrorBadRequest("invalid user id")
-	}
-	if jti == "" || refreshToken == "" {
-		return authenticationV1.ErrorBadRequest("jti or refresh token is empty")
-	}
-	if _, err = a.getAuthenticator(clientType); err != nil {
-		return err
+	if refreshToken == "" {
+		return 0, "", authenticationV1.ErrorBadRequest("refresh token is empty")
 	}
 
-	// 原子验证并吊销旧令牌对（Lua 脚本保证原子性）
+	authenticator, err := a.getAuthenticator(clientType)
+	if err != nil {
+		return 0, "", err
+	}
+
+	// 验签刷新令牌。刷新令牌与访问令牌共用 clientType 密钥，但类型隔离由
+	// Redis value 比对保证（见 VerifyAndRevokeTokenPair）。
+	claims, err := authenticator.AuthenticateToken(refreshToken)
+	if err != nil {
+		a.log.Errorf("authenticate refresh token failed: [%v]", err)
+		return 0, "", authenticationV1.ErrorUnauthorized("authenticate refresh token failed: [%v]", err)
+	}
+
+	// 刷新令牌带 exp，过期即拒。
+	if jwt.IsTokenExpired(claims) {
+		return 0, "", authenticationV1.ErrorUnauthorized("refresh token is expired")
+	}
+
+	// 从令牌自身解析 uid/jti，不再信任请求参数。
+	uid, err = claims.GetUint32(jwt.ClaimFieldUserID)
+	if err != nil || uid == 0 {
+		a.log.Errorf("parse uid from refresh token failed: [%v]", err)
+		return 0, "", authenticationV1.ErrorUnauthorized("invalid refresh token payload")
+	}
+
+	jti, err = claims.GetJwtID()
+	if err != nil || jti == "" {
+		a.log.Errorf("parse jti from refresh token failed: [%v]", err)
+		return 0, "", authenticationV1.ErrorUnauthorized("invalid refresh token payload")
+	}
+
+	// 原子验证并吊销旧令牌对（Lua 脚本保证原子性）。
 	var valid bool
-	if valid, err = a.userTokenCache.VerifyAndRevokeTokenPair(ctx, clientType, userId, jti, refreshToken); err != nil {
-		a.log.Errorf("verify refresh token failed for user [%d]: [%s]", userId, err)
-		return authenticationV1.ErrorServiceUnavailable("verify refresh token failed")
+	if valid, err = a.userTokenCache.VerifyAndRevokeTokenPair(ctx, clientType, uid, jti, refreshToken); err != nil {
+		a.log.Errorf("verify refresh token failed for user [%d]: [%s]", uid, err)
+		return 0, "", authenticationV1.ErrorServiceUnavailable("verify refresh token failed")
 	}
 	if !valid {
-		a.log.Errorf("invalid refresh token for user [%d]", userId)
-		return authenticationV1.ErrorIncorrectRefreshToken("invalid refresh token")
+		a.log.Errorf("invalid refresh token for user [%d]", uid)
+		return 0, "", authenticationV1.ErrorIncorrectRefreshToken("invalid refresh token")
 	}
 
-	return nil
+	return uid, jti, nil
 }
 
 // GetAccessTokens 获取用户的所有访问令牌
@@ -454,13 +484,35 @@ func (a *Authenticator) newAccessToken(
 	return accessToken, nil
 }
 
-// newRefreshToken 创建刷新令牌
-func (a *Authenticator) newRefreshToken() (refreshToken string, err error) {
-	refreshToken, err = jwtutil.NewRefreshToken()
+// newRefreshToken 创建刷新令牌。
+//
+// 刷新令牌采用与访问令牌相同的 clientType 密钥签发的自验证 JWT，
+// 仅携带 uid/jti/exp/iat，不包含业务上下文。令牌类型隔离由 Redis 中
+// access/refresh 各自的 value 比对天然保证（见 VerifyAndRevokeTokenPair /
+// IsValidAccessToken），无需额外 typ claim。
+func (a *Authenticator) newRefreshToken(
+	clientType authenticationV1.ClientType,
+	tokenPayload *authenticationV1.UserTokenPayload,
+) (refreshToken string, err error) {
+	if tokenPayload == nil {
+		a.log.Error("token payload is nil")
+		return "", authenticationV1.ErrorBadRequest("token payload is nil")
+	}
+
+	expTime := time.Now().Add(a.GetRefreshTokenExpires(clientType))
+	refreshClaims := jwt.NewRefreshTokenAuthClaims(tokenPayload, &expTime)
+
+	authenticator, err := a.getAuthenticator(clientType)
 	if err != nil {
-		a.log.Error("create refresh token failed: [%v]", err)
+		return "", err
+	}
+
+	refreshToken, err = authenticator.CreateIdentity(*refreshClaims)
+	if err != nil {
+		a.log.Error("create refresh token failed: %v", err)
 		return "", authenticationV1.ErrorServiceUnavailable("create refresh token failed")
 	}
+
 	return refreshToken, nil
 }
 

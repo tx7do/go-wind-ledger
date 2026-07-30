@@ -42,6 +42,10 @@ func NewRestMiddleware(
 	// add white list for authentication.
 	rpc.AddWhiteList(
 		adminV1.OperationAuthenticationServiceLogin,
+		// 刷新令牌端点免认证：刷新令牌现为自验证 JWT，身份由 core 从令牌自身
+		// 解析，不再依赖 access-token 中间件。免认证使 access token 过期后仍可
+		// 续期，实现无感刷新。
+		adminV1.OperationAuthenticationServiceRefreshToken,
 		// 流水附件查看：公开免认证访问，按 id+create_time 安全校验防止遍历。
 		adminV1.OperationFlowFileServiceViewFile,
 	)

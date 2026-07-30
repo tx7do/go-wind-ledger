@@ -39,6 +39,11 @@ func NewRestMiddleware(
 	rpc.AddWhiteList(
 		appV1.OperationAuthenticationServiceLogin,
 
+		// 刷新令牌端点免认证：刷新令牌现为自验证 JWT，身份由 core 从令牌自身
+		// 解析，不再依赖 access-token 中间件。免认证使 access token 过期后仍可
+		// 续期，实现无感刷新。
+		appV1.OperationAuthenticationServiceRefreshToken,
+
 		// 记账注册端点免认证
 		appV1.OperationLedgerAuthServiceRegister,
 	)
