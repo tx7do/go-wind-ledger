@@ -1,16 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'package:go_router/go_router.dart';
 
 import 'package:flutter_app/generated/l10n.dart';
+import 'package:flutter_app/src/core/logic/api/list_api_cubit.dart';
 import 'package:flutter_app/src/core/themes/const.dart';
 import 'package:flutter_app/src/core/transport/http/status.dart';
 import 'package:flutter_app/src/features/ledger/services/budget_service.dart';
 
 /// 预算管理列表页。
-///
-/// 用 ListView + Card 展示每个预算的名称/周期/金额/已用金额/进度条，
-/// 进度通过 [BudgetService.getProgress] 获取。支持创建/编辑/删除。
 class BudgetListPage extends StatefulWidget {
   const BudgetListPage({super.key});
 
@@ -20,36 +19,32 @@ class BudgetListPage extends StatefulWidget {
 
 class _BudgetListPageState extends State<BudgetListPage> {
   final BudgetService _service = BudgetService();
-  List<Budget> _budgets = [];
+  late final ListApiCubit<Budget> _cubit;
   final Map<int, BudgetProgress> _progress = {};
-  bool _loading = true;
 
   @override
   void initState() {
     super.initState();
-    _loadData();
+    _cubit = ListApiCubit<Budget>(loader: _fetchBudgets)..load();
   }
 
-  Future<void> _loadData() async {
-    setState(() => _loading = true);
+  @override
+  void dispose() {
+    _cubit.close();
+    super.dispose();
+  }
+
+  Future<List<Budget>> _fetchBudgets() async {
     final result = await _service.listAll();
-    if (!mounted) return;
-    final loc = S.of(context);
-    if (result is ListBudgetResponse) {
-      setState(() {
-        _budgets = result.items;
-        _loading = false;
-      });
-      _loadProgresses();
-    } else if (result is Status) {
-      setState(() => _loading = false);
-      EasyLoading.showError(
-          result.getMessage.isEmpty ? loc.loadFailed : result.getMessage);
-    }
+    if (result is Status) throw Exception(result.getMessage);
+    final response = result as ListBudgetResponse;
+    // 加载进度
+    _loadProgresses(response.items);
+    return response.items;
   }
 
-  Future<void> _loadProgresses() async {
-    for (final b in _budgets) {
+  Future<void> _loadProgresses(List<Budget> budgets) async {
+    for (final b in budgets) {
       final id = b.id;
       if (id == null) continue;
       final result = await _service.getProgress(id);
@@ -70,14 +65,8 @@ class _BudgetListPageState extends State<BudgetListPage> {
         title: Text(loc.deleteBudgetTitle),
         content: Text(loc.deleteBudgetMsg(budget.name ?? '')),
         actions: [
-          TextButton(
-            onPressed: () => Navigator.pop(ctx, false),
-            child: Text(loc.cancel),
-          ),
-          TextButton(
-            onPressed: () => Navigator.pop(ctx, true),
-            child: Text(loc.delete),
-          ),
+          TextButton(onPressed: () => Navigator.pop(ctx, false), child: Text(loc.cancel)),
+          TextButton(onPressed: () => Navigator.pop(ctx, true), child: Text(loc.delete)),
         ],
       ),
     );
@@ -88,26 +77,21 @@ class _BudgetListPageState extends State<BudgetListPage> {
     if (!mounted) return;
     if (result == null) {
       EasyLoading.showSuccess(loc.deleted);
-      _loadData();
+      _progress.clear();
+      _cubit.refresh();
     } else if (result is Status) {
-      EasyLoading.showError(
-          result.getMessage.isEmpty ? loc.loadFailed : result.getMessage);
+      EasyLoading.showError(result.getMessage.isEmpty ? loc.loadFailed : result.getMessage);
     }
   }
 
   String _periodLabel(BudgetPeriod p) {
     final loc = S.of(context);
     switch (p) {
-      case BudgetPeriod.monthly:
-        return loc.periodMonthly;
-      case BudgetPeriod.yearly:
-        return loc.periodYearly;
-      case BudgetPeriod.quarterly:
-        return loc.periodQuarterly;
-      case BudgetPeriod.weekly:
-        return loc.periodWeekly;
-      case BudgetPeriod.unspecified:
-        return loc.budgetUnspecified;
+      case BudgetPeriod.monthly: return loc.periodMonthly;
+      case BudgetPeriod.yearly: return loc.periodYearly;
+      case BudgetPeriod.quarterly: return loc.periodQuarterly;
+      case BudgetPeriod.weekly: return loc.periodWeekly;
+      case BudgetPeriod.unspecified: return loc.budgetUnspecified;
     }
   }
 
@@ -117,23 +101,31 @@ class _BudgetListPageState extends State<BudgetListPage> {
     final loc = S.of(context);
     return Scaffold(
       appBar: AppBar(title: Text(loc.budgetManagement)),
-      body: _loading
-          ? const Center(child: CircularProgressIndicator())
-          : _budgets.isEmpty
+      body: BlocBuilder<ListApiCubit<Budget>, ApiResponse<List<Budget>>>(
+        bloc: _cubit,
+        builder: (context, state) => switch (state) {
+          Initial() || Loading() => const Center(child: CircularProgressIndicator()),
+          Success(data) => data.isEmpty
               ? _buildEmpty(theme)
               : RefreshIndicator(
-                  onRefresh: _loadData,
+                  onRefresh: () async {
+                    _progress.clear();
+                    await _cubit.refresh();
+                  },
                   child: ListView.builder(
                     padding: const EdgeInsets.only(bottom: 80),
-                    itemCount: _budgets.length,
-                    itemBuilder: (context, index) =>
-                        _buildBudgetCard(theme, _budgets[index]),
+                    itemCount: data.length,
+                    itemBuilder: (_, i) => _buildBudgetCard(theme, data[i]),
                   ),
                 ),
+          Error(msg) => _buildError(theme, msg),
+        },
+      ),
       floatingActionButton: FloatingActionButton.extended(
         onPressed: () async {
           await context.push('/ledger/budgets/create');
-          _loadData();
+          _progress.clear();
+          _cubit.refresh();
         },
         icon: const Icon(Icons.add),
         label: Text(loc.newBudget),
@@ -160,7 +152,8 @@ class _BudgetListPageState extends State<BudgetListPage> {
         onTap: () async {
           if (id != null) {
             await context.push('/ledger/budgets/create?id=$id');
-            _loadData();
+            _progress.clear();
+            _cubit.refresh();
           }
         },
         child: Padding(
@@ -173,18 +166,16 @@ class _BudgetListPageState extends State<BudgetListPage> {
                   Icon(Icons.savings_outlined, color: color, size: 22),
                   const SizedBox(width: 8),
                   Expanded(
-                    child: Text(
-                      budget.name ?? loc.unnamedBudget,
-                      style: theme.textTheme.titleMedium
-                          ?.copyWith(fontWeight: FontWeight.w600),
-                    ),
+                    child: Text(budget.name ?? loc.unnamedBudget,
+                        style: theme.textTheme.titleMedium?.copyWith(fontWeight: FontWeight.w600)),
                   ),
                   PopupMenuButton<String>(
                     icon: const Icon(Icons.more_vert, size: 20),
                     onSelected: (v) async {
                       if (v == 'edit' && id != null) {
                         await context.push('/ledger/budgets/create?id=$id');
-                        _loadData();
+                        _progress.clear();
+                        _cubit.refresh();
                       } else if (v == 'delete') {
                         _delete(budget);
                       }
@@ -199,8 +190,7 @@ class _BudgetListPageState extends State<BudgetListPage> {
               const SizedBox(height: 4),
               Text(
                 loc.budgetUsage(_periodLabel(budget.period), used.toStringAsFixed(2), amount.toStringAsFixed(2)),
-                style: theme.textTheme.bodySmall
-                    ?.copyWith(color: theme.colorScheme.onSurfaceVariant),
+                style: theme.textTheme.bodySmall?.copyWith(color: theme.colorScheme.onSurfaceVariant),
               ),
               const SizedBox(height: 10),
               ClipRRect(
@@ -216,23 +206,12 @@ class _BudgetListPageState extends State<BudgetListPage> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text(
-                    '${(percent * 100).clamp(0, 999).toStringAsFixed(1)}%',
-                    style: theme.textTheme.labelSmall
-                        ?.copyWith(color: color),
-                  ),
+                  Text('${(percent * 100).clamp(0, 999).toStringAsFixed(1)}%',
+                      style: theme.textTheme.labelSmall?.copyWith(color: color)),
                   if (exceeded)
-                    Text(
-                      loc.budgetOverran,
-                      style: theme.textTheme.labelSmall
-                          ?.copyWith(color: theme.colorScheme.error),
-                    )
+                    Text(loc.budgetOverran, style: theme.textTheme.labelSmall?.copyWith(color: theme.colorScheme.error))
                   else if (budget.enable == false)
-                    Text(
-                      loc.budgetDisabled,
-                      style: theme.textTheme.labelSmall
-                          ?.copyWith(color: theme.colorScheme.outline),
-                    ),
+                    Text(loc.budgetDisabled, style: theme.textTheme.labelSmall?.copyWith(color: theme.colorScheme.outline)),
                 ],
               ),
             ],
@@ -248,20 +227,39 @@ class _BudgetListPageState extends State<BudgetListPage> {
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          Icon(Icons.savings_outlined,
-              size: 64, color: theme.colorScheme.outline),
+          Icon(Icons.savings_outlined, size: 64, color: theme.colorScheme.outline),
           const SizedBox(height: 12),
-          Text(loc.noBudgets,
-              style: theme.textTheme.bodyLarge
-                  ?.copyWith(color: theme.colorScheme.outline)),
+          Text(loc.noBudgets, style: theme.textTheme.bodyLarge?.copyWith(color: theme.colorScheme.outline)),
           const SizedBox(height: 16),
           FilledButton.icon(
             onPressed: () async {
               await context.push('/ledger/budgets/create');
-              _loadData();
+              _progress.clear();
+              _cubit.refresh();
             },
             icon: const Icon(Icons.add),
             label: Text(loc.newBudget),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildError(ThemeData theme, String message) {
+    final loc = S.of(context);
+    return Center(
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Icon(Icons.error_outline, size: 64, color: theme.colorScheme.error),
+          const SizedBox(height: 12),
+          Text(message.isNotEmpty ? message : loc.loadFailed,
+              style: theme.textTheme.bodyLarge?.copyWith(color: theme.colorScheme.error)),
+          const SizedBox(height: 16),
+          FilledButton.icon(
+            onPressed: _cubit.refresh,
+            icon: const Icon(Icons.refresh),
+            label: Text(loc.retry),
           ),
         ],
       ),

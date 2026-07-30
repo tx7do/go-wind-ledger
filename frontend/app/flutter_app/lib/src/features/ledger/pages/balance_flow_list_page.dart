@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'package:go_router/go_router.dart';
 
 import 'package:flutter_app/generated/api/app/service/v1/index.dart'
     show
@@ -9,20 +10,22 @@ import 'package:flutter_app/generated/api/app/service/v1/index.dart'
         LedgerServiceV1StatisticsResponse,
         LedgerServiceV1FlowType;
 
+import 'package:flutter_app/generated/l10n.dart';
+import 'package:flutter_app/src/core/logic/api/paginated_list_cubit.dart';
 import 'package:flutter_app/src/core/services/pagination_query.dart';
 import 'package:flutter_app/src/core/themes/const.dart';
 import 'package:flutter_app/src/core/themes/semantic_colors.dart';
-import 'package:flutter_app/generated/l10n.dart';
-import 'package:flutter_app/src/core/themes/const.dart';
 import 'package:flutter_app/src/core/transport/http/status.dart';
 import 'package:flutter_app/src/features/ledger/services/balance_flow_service.dart';
 import 'package:flutter_app/src/features/ledger/widgets/statistics_card.dart';
+
+typedef BalanceFlow = LedgerServiceV1BalanceFlow;
+typedef FlowType = LedgerServiceV1FlowType;
 
 /// 收支流水列表页。
 ///
 /// 分页加载流水，按类型筛选，顶部统计卡片显示支出/收入/净额。
 class BalanceFlowListPage extends StatefulWidget {
-  /// 是否作为子页面嵌入（不显示返回按钮与 AppBar 偏好）。
   final bool embedded;
 
   const BalanceFlowListPage({super.key, this.embedded = false});
@@ -34,17 +37,10 @@ class BalanceFlowListPage extends StatefulWidget {
 class _BalanceFlowListPageState extends State<BalanceFlowListPage> {
   final BalanceFlowService _service = BalanceFlowService();
   final ScrollController _scrollController = ScrollController();
-
-  final List<LedgerServiceV1BalanceFlow> _items = [];
-  int _page = 1;
   static const int _pageSize = 20;
-  int? _total;
-  bool _loading = false;
-  bool _loadingMore = false;
-  bool _hasMore = true;
 
   // 类型筛选：null=全部
-  LedgerServiceV1FlowType? _filterType;
+  FlowType? _filterType;
 
   // 统计
   String _statExpense = '0';
@@ -52,85 +48,44 @@ class _BalanceFlowListPageState extends State<BalanceFlowListPage> {
   String _statNet = '0';
   bool _statLoading = false;
 
+  late final PaginatedListCubit<BalanceFlow> _listCubit;
+
   @override
   void initState() {
     super.initState();
+    _listCubit = PaginatedListCubit<BalanceFlow>(
+      pageLoader: (page) => _loadPage(page),
+      pageSize: _pageSize,
+    )..load();
     _scrollController.addListener(_onScroll);
-    _refresh();
+    _loadStatistics();
   }
 
   @override
   void dispose() {
     _scrollController.removeListener(_onScroll);
     _scrollController.dispose();
+    _listCubit.close();
     super.dispose();
   }
 
   void _onScroll() {
     if (_scrollController.position.pixels >=
-            _scrollController.position.maxScrollExtent - 200 &&
-        !_loadingMore &&
-        _hasMore) {
-      _loadMore();
+            _scrollController.position.maxScrollExtent - 200) {
+      _listCubit.loadMore();
     }
   }
 
-  Future<void> _refresh() async {
-    setState(() {
-      _page = 1;
-      _hasMore = true;
-      _items.clear();
-    });
-    await Future.wait([_loadFirstPage(), _loadStatistics()]);
-  }
-
-  Future<void> _loadFirstPage() async {
-    setState(() => _loading = true);
-    final result = await _service.list(_buildQuery(1));
-    if (!mounted) return;
-    if (result is LedgerServiceV1ListBalanceFlowResponse) {
-      setState(() {
-        _items
-          ..clear()
-          ..addAll(result.items ?? []);
-        _total = result.total;
-        _loading = false;
-        _hasMore = _items.length < (result.total ?? 0);
-      });
-    } else if (result is Status) {
-      setState(() => _loading = false);
-      _showError(result.getMessage);
-    }
-  }
-
-  Future<void> _loadMore() async {
-    if (_loadingMore || !_hasMore) return;
-    setState(() => _loadingMore = true);
-    final nextPage = _page + 1;
-    final result = await _service.list(_buildQuery(nextPage));
-    if (!mounted) return;
-    if (result is LedgerServiceV1ListBalanceFlowResponse) {
-      setState(() {
-        _items.addAll(result.items ?? []);
-        _page = nextPage;
-        _loadingMore = false;
-        _hasMore = _items.length < (result.total ?? 0);
-      });
-    } else {
-      setState(() => _loadingMore = false);
-    }
-  }
-
-  PaginationQuery _buildQuery(int page) {
-    final formValues = <String, dynamic>{};
-    if (_filterType != null) {
-      formValues['type'] = _filterType!.value;
-    }
-    return PaginationQuery(
+  Future<({List<BalanceFlow> items, int total})> _loadPage(int page) async {
+    final query = PaginationQuery(
       page: page,
       pageSize: _pageSize,
-      formValues: formValues.isEmpty ? null : formValues,
+      formValues: _filterType != null ? {'type': _filterType!.value} : null,
     );
+    final result = await _service.list(query);
+    if (result is Status) throw Exception(result.getMessage);
+    final r = result as LedgerServiceV1ListBalanceFlowResponse;
+    return (items: r.items ?? [], total: r.total ?? 0);
   }
 
   Future<void> _loadStatistics() async {
@@ -149,19 +104,14 @@ class _BalanceFlowListPageState extends State<BalanceFlowListPage> {
     }
   }
 
-  void _showError(String message) {
-    final loc = S.of(context);
-    if (!mounted) return;
-    EasyLoading.showError(message.isEmpty ? loc.loadFailed : message);
-  }
-
-  void _changeFilter(LedgerServiceV1FlowType? type) {
+  void _changeFilter(FlowType? type) {
     if (_filterType == type) return;
     setState(() => _filterType = type);
-    _refresh();
+    _listCubit.refresh();
+    _loadStatistics();
   }
 
-  Future<void> _confirmFlow(LedgerServiceV1BalanceFlow flow) async {
+  Future<void> _confirmFlow(BalanceFlow flow) async {
     final loc = S.of(context);
     final id = flow.id;
     if (id == null) return;
@@ -169,15 +119,16 @@ class _BalanceFlowListPageState extends State<BalanceFlowListPage> {
     final result = await _service.confirm(id);
     EasyLoading.dismiss();
     if (!mounted) return;
-    if (result is LedgerServiceV1BalanceFlow) {
+    if (result is BalanceFlow) {
       EasyLoading.showSuccess(loc.confirmed);
-      _refresh();
+      _listCubit.refresh();
+      _loadStatistics();
     } else if (result is Status) {
-      _showError(result.getMessage);
+      EasyLoading.showError(result.getMessage.isEmpty ? loc.loadFailed : result.getMessage);
     }
   }
 
-  Future<void> _deleteFlow(LedgerServiceV1BalanceFlow flow) async {
+  Future<void> _deleteFlow(BalanceFlow flow) async {
     final loc = S.of(context);
     final id = flow.id;
     if (id == null) return;
@@ -205,9 +156,10 @@ class _BalanceFlowListPageState extends State<BalanceFlowListPage> {
     if (!mounted) return;
     if (result == null) {
       EasyLoading.showSuccess(loc.deleted);
-      _refresh();
+      _listCubit.refresh();
+      _loadStatistics();
     } else if (result is Status) {
-      _showError(result.getMessage);
+      EasyLoading.showError(result.getMessage.isEmpty ? loc.loadFailed : result.getMessage);
     }
   }
 
@@ -247,12 +199,9 @@ class _BalanceFlowListPageState extends State<BalanceFlowListPage> {
     final loc = S.of(context);
     final filters = <_FilterItem>[
       _FilterItem(label: loc.flowFilterAll, type: null),
-      _FilterItem(
-          label: loc.flowFilterExpense, type: LedgerServiceV1FlowType.flowTypeExpense),
-      _FilterItem(
-          label: loc.flowFilterIncome, type: LedgerServiceV1FlowType.flowTypeIncome),
-      _FilterItem(
-          label: loc.flowFilterTransfer, type: LedgerServiceV1FlowType.flowTypeTransfer),
+      _FilterItem(label: loc.flowFilterExpense, type: FlowType.flowTypeExpense),
+      _FilterItem(label: loc.flowFilterIncome, type: FlowType.flowTypeIncome),
+      _FilterItem(label: loc.flowFilterTransfer, type: FlowType.flowTypeTransfer),
     ];
     return SizedBox(
       height: 44,
@@ -276,46 +225,48 @@ class _BalanceFlowListPageState extends State<BalanceFlowListPage> {
   }
 
   Widget _buildList(ThemeData theme) {
-    if (_loading && _items.isEmpty) {
-      return const Center(child: CircularProgressIndicator());
-    }
-    if (!_loading && _items.isEmpty) {
-      return _buildEmpty(theme);
-    }
-    return RefreshIndicator(
-      onRefresh: _refresh,
-      child: ListView.builder(
-        controller: _scrollController,
-        padding: const EdgeInsets.only(bottom: 80),
-        itemCount: _items.length + (_loadingMore ? 1 : 0),
-        itemBuilder: (context, index) {
-          if (index >= _items.length) {
-            return const Padding(
-              padding: EdgeInsets.all(16),
-              child: Center(child: CircularProgressIndicator()),
-            );
-          }
-          return _buildFlowTile(theme, _items[index]);
-        },
-      ),
+    return BlocBuilder<PaginatedListCubit<BalanceFlow>, PaginatedListState<BalanceFlow>>(
+      bloc: _listCubit,
+      builder: (context, state) => switch (state) {
+        PaginatedInitial() || PaginatedLoading() =>
+          const Center(child: CircularProgressIndicator()),
+        PaginatedLoaded(:final items, :final loadingMore) => items.isEmpty
+            ? _buildEmpty(theme)
+            : RefreshIndicator(
+                onRefresh: () async {
+                  await _listCubit.refresh();
+                  _loadStatistics();
+                },
+                child: ListView.builder(
+                  controller: _scrollController,
+                  padding: const EdgeInsets.only(bottom: 80),
+                  itemCount: items.length + (loadingMore ? 1 : 0),
+                  itemBuilder: (context, index) {
+                    if (index >= items.length) {
+                      return const Padding(
+                        padding: EdgeInsets.all(16),
+                        child: Center(child: CircularProgressIndicator()),
+                      );
+                    }
+                    return _buildFlowTile(theme, items[index]);
+                  },
+                ),
+              ),
+        PaginatedError(:final message) => _buildError(theme, message),
+      },
     );
   }
 
-  Widget _buildFlowTile(ThemeData theme, LedgerServiceV1BalanceFlow flow) {
+  Widget _buildFlowTile(ThemeData theme, BalanceFlow flow) {
     final loc = S.of(context);
     final type = flow.type;
     final typeLabel = _typeLabel(type);
     final typeColor = _typeColor(type);
     final amount = (double.tryParse(flow.amount ?? '0') ?? 0).abs();
-    final sign = type == LedgerServiceV1FlowType.flowTypeIncome ? '+' : '-';
+    final sign = type == FlowType.flowTypeIncome ? '+' : '-';
     return Card(
-      margin: const EdgeInsets.symmetric(
-        horizontal: kListMarginH,
-        vertical: kListMarginV,
-      ),
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(kCardRadius),
-      ),
+      margin: const EdgeInsets.symmetric(horizontal: kListMarginH, vertical: kListMarginV),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(kCardRadius)),
       child: ListTile(
         leading: CircleAvatar(
           backgroundColor: typeColor.withAlpha(30),
@@ -358,8 +309,7 @@ class _BalanceFlowListPageState extends State<BalanceFlowListPage> {
               itemBuilder: (ctx) => [
                 PopupMenuItem(value: 'edit', child: Text(loc.edit)),
                 if (flow.confirm != true)
-                  PopupMenuItem(
-                      value: 'confirm', child: Text(loc.confirmFlow)),
+                  PopupMenuItem(value: 'confirm', child: Text(loc.confirmFlow)),
                 PopupMenuItem(value: 'delete', child: Text(loc.delete)),
               ],
             ),
@@ -376,57 +326,78 @@ class _BalanceFlowListPageState extends State<BalanceFlowListPage> {
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          Icon(Icons.receipt_long_outlined,
-              size: 64, color: theme.colorScheme.outline),
+          Icon(Icons.receipt_long_outlined, size: 64, color: theme.colorScheme.outline),
           const SizedBox(height: 12),
           Text(loc.noFlows,
-              style: theme.textTheme.bodyLarge
-                  ?.copyWith(color: theme.colorScheme.outline)),
+              style: theme.textTheme.bodyLarge?.copyWith(color: theme.colorScheme.outline)),
         ],
       ),
     );
   }
 
-  Color _typeColor(LedgerServiceV1FlowType? type) {
+  Widget _buildError(ThemeData theme, String message) {
+    final loc = S.of(context);
+    return Center(
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Icon(Icons.error_outline, size: 64, color: theme.colorScheme.error),
+          const SizedBox(height: 12),
+          Text(message.isNotEmpty ? message : loc.loadFailed,
+              style: theme.textTheme.bodyLarge?.copyWith(color: theme.colorScheme.error)),
+          const SizedBox(height: 16),
+          FilledButton.icon(
+            onPressed: () => _listCubit.refresh(),
+            icon: const Icon(Icons.refresh),
+            label: Text(loc.retry),
+          ),
+        ],
+      ),
+    );
+  }
+
+  // ---- type helpers ----
+
+  Color _typeColor(FlowType? type) {
     switch (type) {
-      case LedgerServiceV1FlowType.flowTypeExpense:
+      case FlowType.flowTypeExpense:
         return SemanticColors.expense(context);
-      case LedgerServiceV1FlowType.flowTypeIncome:
+      case FlowType.flowTypeIncome:
         return SemanticColors.income(context);
-      case LedgerServiceV1FlowType.flowTypeTransfer:
+      case FlowType.flowTypeTransfer:
         return SemanticColors.transfer(context);
-      case LedgerServiceV1FlowType.flowTypeAdjust:
+      case FlowType.flowTypeAdjust:
         return SemanticColors.adjust(context);
       default:
         return SemanticColors.grey(context);
     }
   }
 
-  String _typeLabel(LedgerServiceV1FlowType? type) {
+  String _typeLabel(FlowType? type) {
     final loc = S.of(context);
     switch (type) {
-      case LedgerServiceV1FlowType.flowTypeExpense:
+      case FlowType.flowTypeExpense:
         return loc.flowFilterExpense;
-      case LedgerServiceV1FlowType.flowTypeIncome:
+      case FlowType.flowTypeIncome:
         return loc.flowFilterIncome;
-      case LedgerServiceV1FlowType.flowTypeTransfer:
+      case FlowType.flowTypeTransfer:
         return loc.flowFilterTransfer;
-      case LedgerServiceV1FlowType.flowTypeAdjust:
+      case FlowType.flowTypeAdjust:
         return loc.flowTypeAdjust;
       default:
         return loc.flowType;
     }
   }
 
-  IconData _typeIcon(LedgerServiceV1FlowType? type) {
+  IconData _typeIcon(FlowType? type) {
     switch (type) {
-      case LedgerServiceV1FlowType.flowTypeExpense:
+      case FlowType.flowTypeExpense:
         return Icons.south_west;
-      case LedgerServiceV1FlowType.flowTypeIncome:
+      case FlowType.flowTypeIncome:
         return Icons.north_east;
-      case LedgerServiceV1FlowType.flowTypeTransfer:
+      case FlowType.flowTypeTransfer:
         return Icons.swap_horiz;
-      case LedgerServiceV1FlowType.flowTypeAdjust:
+      case FlowType.flowTypeAdjust:
         return Icons.tune;
       default:
         return Icons.receipt_long_outlined;
@@ -453,6 +424,6 @@ class _BalanceFlowListPageState extends State<BalanceFlowListPage> {
 
 class _FilterItem {
   final String label;
-  final LedgerServiceV1FlowType? type;
+  final FlowType? type;
   const _FilterItem({required this.label, required this.type});
 }

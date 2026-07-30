@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 
 import 'package:flutter_app/generated/api/app/service/v1/index.dart'
@@ -8,11 +9,14 @@ import 'package:flutter_app/generated/api/app/service/v1/index.dart'
         LedgerServiceV1ConvertCurrencyResponse;
 
 import 'package:flutter_app/generated/l10n.dart';
+import 'package:flutter_app/src/core/logic/api/list_api_cubit.dart';
 import 'package:flutter_app/src/core/themes/const.dart';
 import 'package:flutter_app/src/core/transport/http/status.dart';
 import 'package:flutter_app/src/features/ledger/services/currency_service.dart';
 
-/// 币种列表页（只读 + 刷新按钮）。
+typedef Currency = LedgerServiceV1Currency;
+
+/// 币种列表页（只读 + 汇率刷新 + 换算工具）。
 class CurrencyListPage extends StatefulWidget {
   const CurrencyListPage({super.key});
 
@@ -22,8 +26,7 @@ class CurrencyListPage extends StatefulWidget {
 
 class _CurrencyListPageState extends State<CurrencyListPage> {
   final CurrencyService _service = CurrencyService();
-  List<LedgerServiceV1Currency> _currencies = [];
-  bool _loading = true;
+  late final ListApiCubit<Currency> _cubit;
 
   // 汇率换算工具状态
   final TextEditingController _amountCtrl = TextEditingController();
@@ -32,37 +35,28 @@ class _CurrencyListPageState extends State<CurrencyListPage> {
   String _resultText = '';
 
   @override
-  void dispose() {
-    _amountCtrl.dispose();
-    super.dispose();
+  void initState() {
+    super.initState();
+    _cubit = ListApiCubit<Currency>(loader: _fetchCurrencies)..load();
   }
 
   @override
-  void initState() {
-    super.initState();
-    _loadData();
+  void dispose() {
+    _amountCtrl.dispose();
+    _cubit.close();
+    super.dispose();
   }
 
-  Future<void> _loadData() async {
-    setState(() => _loading = true);
+  Future<List<Currency>> _fetchCurrencies() async {
     final result = await _service.listAll();
-    if (!mounted) return;
-    final loc = S.of(context);
-    if (result is LedgerServiceV1ListCurrencyResponse) {
-      setState(() {
-        _currencies = result.items ?? [];
-        _loading = false;
-        // 默认选中首个币种，便于快速体验换算工具。
-        _fromCode ??=
-            _currencies.isNotEmpty ? _currencies.first.code : null;
-        _toCode ??= _currencies.length > 1
-            ? _currencies[1].code
-            : (_currencies.isNotEmpty ? _currencies.first.code : null);
-      });
-    } else if (result is Status) {
-      setState(() => _loading = false);
-      EasyLoading.showError(result.getMessage.isEmpty ? loc.loadFailed : result.getMessage);
+    if (result is Status) throw Exception(result.getMessage);
+    final items = (result as LedgerServiceV1ListCurrencyResponse).items ?? [];
+    // 默认选中首个币种
+    if (_fromCode == null && items.isNotEmpty) _fromCode = items.first.code;
+    if (_toCode == null) {
+      _toCode = items.length > 1 ? items[1].code : (items.isNotEmpty ? items.first.code : null);
     }
+    return items;
   }
 
   Future<void> _refreshRates() async {
@@ -73,7 +67,7 @@ class _CurrencyListPageState extends State<CurrencyListPage> {
     if (!mounted) return;
     if (result is LedgerServiceV1ListCurrencyResponse) {
       EasyLoading.showSuccess(loc.ratesUpdated);
-      setState(() => _currencies = result.items ?? []);
+      _cubit.refresh();
     } else if (result is Status) {
       EasyLoading.showError(result.getMessage.isEmpty ? loc.refreshFailed : result.getMessage);
     }
@@ -99,11 +93,9 @@ class _CurrencyListPageState extends State<CurrencyListPage> {
     if (result is LedgerServiceV1ConvertCurrencyResponse) {
       final converted = result.amount ?? '-';
       final rate = result.rate ?? '-';
-      setState(() => _resultText =
-          loc.convertFormula(amount, from, converted, to, rate));
+      setState(() => _resultText = loc.convertFormula(amount, from, converted, to, rate));
     } else if (result is Status) {
-      EasyLoading.showError(
-          result.getMessage.isEmpty ? loc.convertFailed : result.getMessage);
+      EasyLoading.showError(result.getMessage.isEmpty ? loc.convertFailed : result.getMessage);
     }
   }
 
@@ -115,48 +107,41 @@ class _CurrencyListPageState extends State<CurrencyListPage> {
       appBar: AppBar(
         title: Text(loc.currencyManagement),
         actions: [
-          IconButton(
-            icon: const Icon(Icons.refresh),
-            tooltip: loc.refreshRates,
-            onPressed: _refreshRates,
-          ),
+          IconButton(icon: const Icon(Icons.refresh), tooltip: loc.refreshRates, onPressed: _refreshRates),
         ],
       ),
-      body: _loading
-          ? const Center(child: CircularProgressIndicator())
-          : _currencies.isEmpty
+      body: BlocBuilder<ListApiCubit<Currency>, ApiResponse<List<Currency>>>(
+        bloc: _cubit,
+        builder: (context, state) => switch (state) {
+          Initial() || Loading() => const Center(child: CircularProgressIndicator()),
+          Success(data) => data.isEmpty
               ? _buildEmpty(theme)
               : RefreshIndicator(
-                  onRefresh: _loadData,
+                  onRefresh: _cubit.refresh,
                   child: ListView(
                     children: [
-                      ..._currencies
-                          .map((c) => _buildCurrencyTile(theme, c)),
+                      ...data.map((c) => _buildCurrencyTile(theme, c)),
                       const SizedBox(height: 12),
-                      _buildConverterCard(theme),
+                      _buildConverterCard(theme, data),
                       const SizedBox(height: 16),
                     ],
                   ),
                 ),
+          Error(msg) => _buildError(theme, msg),
+        },
+      ),
     );
   }
 
-  Widget _buildConverterCard(ThemeData theme) {
+  Widget _buildConverterCard(ThemeData theme, List<Currency> currencies) {
     final loc = S.of(context);
-    final codes = _currencies
-        .map((c) => c.code)
-        .where((c) => (c ?? '').isNotEmpty)
-        .cast<String>()
-        .toList();
-    // 当前选中值必须在可选列表内，否则 DropdownButton 会断言失败。
+    final codes = currencies.map((c) => c.code).where((c) => (c ?? '').isNotEmpty).cast<String>().toList();
     final fromValue = codes.contains(_fromCode) ? _fromCode : null;
     final toValue = codes.contains(_toCode) ? _toCode : null;
 
     return Card(
       margin: const EdgeInsets.symmetric(horizontal: 12),
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(16),
-      ),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
       child: Padding(
         padding: const EdgeInsets.all(16),
         child: Column(
@@ -164,21 +149,15 @@ class _CurrencyListPageState extends State<CurrencyListPage> {
           children: [
             Row(
               children: [
-                Icon(Icons.currency_exchange_outlined,
-                    color: theme.colorScheme.primary),
+                Icon(Icons.currency_exchange_outlined, color: theme.colorScheme.primary),
                 const SizedBox(width: 8),
-                Text(
-                  loc.rateConvert,
-                  style: theme.textTheme.titleMedium
-                      ?.copyWith(fontWeight: FontWeight.bold),
-                ),
+                Text(loc.rateConvert, style: theme.textTheme.titleMedium?.copyWith(fontWeight: FontWeight.bold)),
               ],
             ),
             const SizedBox(height: 12),
             TextField(
               controller: _amountCtrl,
-              keyboardType:
-                  const TextInputType.numberWithOptions(decimal: true),
+              keyboardType: const TextInputType.numberWithOptions(decimal: true),
               decoration: InputDecoration(
                 labelText: loc.fieldFlowAmount,
                 prefixIcon: Icon(Icons.attach_money_outlined),
@@ -192,66 +171,31 @@ class _CurrencyListPageState extends State<CurrencyListPage> {
                 Expanded(
                   child: DropdownButtonFormField<String>(
                     value: fromValue,
-                    decoration: InputDecoration(
-                      labelText: loc.sourceCurrency,
-                      prefixIcon: Icon(Icons.arrow_outward),
-                      border: OutlineInputBorder(),
-                      isDense: true,
-                    ),
-                    items: codes
-                        .map((c) => DropdownMenuItem<String>(
-                              value: c,
-                              child: Text(c),
-                            ))
-                        .toList(),
+                    decoration: InputDecoration(labelText: loc.sourceCurrency, prefixIcon: Icon(Icons.arrow_outward), border: OutlineInputBorder(), isDense: true),
+                    items: codes.map((c) => DropdownMenuItem<String>(value: c, child: Text(c))).toList(),
                     onChanged: (v) => setState(() => _fromCode = v),
                   ),
                 ),
-                const Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 8),
-                  child: Icon(Icons.arrow_forward),
-                ),
+                const Padding(padding: EdgeInsets.symmetric(horizontal: 8), child: Icon(Icons.arrow_forward)),
                 Expanded(
                   child: DropdownButtonFormField<String>(
                     value: toValue,
-                    decoration: InputDecoration(
-                      labelText: loc.targetCurrency,
-                      prefixIcon: Icon(Icons.arrow_outward),
-                      border: OutlineInputBorder(),
-                      isDense: true,
-                    ),
-                    items: codes
-                        .map((c) => DropdownMenuItem<String>(
-                              value: c,
-                              child: Text(c),
-                            ))
-                        .toList(),
+                    decoration: InputDecoration(labelText: loc.targetCurrency, prefixIcon: Icon(Icons.arrow_outward), border: OutlineInputBorder(), isDense: true),
+                    items: codes.map((c) => DropdownMenuItem<String>(value: c, child: Text(c))).toList(),
                     onChanged: (v) => setState(() => _toCode = v),
                   ),
                 ),
               ],
             ),
             const SizedBox(height: 12),
-            FilledButton.icon(
-              onPressed: _convert,
-              icon: const Icon(Icons.calculate_outlined),
-              label: Text(loc.convert),
-            ),
+            FilledButton.icon(onPressed: _convert, icon: const Icon(Icons.calculate_outlined), label: Text(loc.convert)),
             if (_resultText.isNotEmpty) ...[
               const SizedBox(height: 12),
               Container(
                 width: double.infinity,
                 padding: const EdgeInsets.all(12),
-                decoration: BoxDecoration(
-                  color: theme.colorScheme.primaryContainer.withAlpha(80),
-                  borderRadius: BorderRadius.circular(8),
-                ),
-                child: Text(
-                  _resultText,
-                  style: theme.textTheme.bodyMedium?.copyWith(
-                    fontWeight: FontWeight.w600,
-                  ),
-                ),
+                decoration: BoxDecoration(color: theme.colorScheme.primaryContainer.withAlpha(80), borderRadius: BorderRadius.circular(8)),
+                child: Text(_resultText, style: theme.textTheme.bodyMedium?.copyWith(fontWeight: FontWeight.w600)),
               ),
             ],
           ],
@@ -260,7 +204,7 @@ class _CurrencyListPageState extends State<CurrencyListPage> {
     );
   }
 
-  Widget _buildCurrencyTile(ThemeData theme, LedgerServiceV1Currency currency) {
+  Widget _buildCurrencyTile(ThemeData theme, Currency currency) {
     final loc = S.of(context);
     final rate = double.tryParse(currency.rate ?? '0') ?? 0;
     return Card(
@@ -269,22 +213,12 @@ class _CurrencyListPageState extends State<CurrencyListPage> {
         leading: CircleAvatar(
           backgroundColor: theme.colorScheme.secondaryContainer,
           foregroundColor: theme.colorScheme.onSecondaryContainer,
-          child: Text(
-            (currency.code ?? '?').substring(0, 1),
-            style: const TextStyle(fontWeight: FontWeight.bold),
-          ),
+          child: Text((currency.code ?? '?').substring(0, 1), style: const TextStyle(fontWeight: FontWeight.bold)),
         ),
         title: Text(currency.code ?? ''),
-        subtitle: Text(
-          currency.name ?? '',
-          style: theme.textTheme.bodySmall,
-        ),
-        trailing: Text(
-          loc.rateValue(rate.toStringAsFixed(4)),
-          style: theme.textTheme.bodyMedium?.copyWith(
-            color: theme.colorScheme.onSurfaceVariant,
-          ),
-        ),
+        subtitle: Text(currency.name ?? '', style: theme.textTheme.bodySmall),
+        trailing: Text(loc.rateValue(rate.toStringAsFixed(4)),
+            style: theme.textTheme.bodyMedium?.copyWith(color: theme.colorScheme.onSurfaceVariant)),
       ),
     );
   }
@@ -295,18 +229,28 @@ class _CurrencyListPageState extends State<CurrencyListPage> {
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          Icon(Icons.currency_exchange_outlined,
-              size: 64, color: theme.colorScheme.outline),
+          Icon(Icons.currency_exchange_outlined, size: 64, color: theme.colorScheme.outline),
           const SizedBox(height: 12),
-          Text(loc.noCurrenciesData,
-              style: theme.textTheme.bodyLarge
-                  ?.copyWith(color: theme.colorScheme.outline)),
+          Text(loc.noCurrenciesData, style: theme.textTheme.bodyLarge?.copyWith(color: theme.colorScheme.outline)),
           const SizedBox(height: 16),
-          FilledButton.icon(
-            onPressed: _refreshRates,
-            icon: const Icon(Icons.refresh),
-            label: Text(loc.refreshRates),
-          ),
+          FilledButton.icon(onPressed: _refreshRates, icon: const Icon(Icons.refresh), label: Text(loc.refreshRates)),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildError(ThemeData theme, String message) {
+    final loc = S.of(context);
+    return Center(
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Icon(Icons.error_outline, size: 64, color: theme.colorScheme.error),
+          const SizedBox(height: 12),
+          Text(message.isNotEmpty ? message : loc.loadFailed,
+              style: theme.textTheme.bodyLarge?.copyWith(color: theme.colorScheme.error)),
+          const SizedBox(height: 16),
+          FilledButton.icon(onPressed: _cubit.refresh, icon: const Icon(Icons.refresh), label: Text(loc.retry)),
         ],
       ),
     );

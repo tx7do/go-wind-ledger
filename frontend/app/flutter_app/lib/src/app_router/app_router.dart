@@ -26,11 +26,9 @@ import 'package:flutter_app/src/features/ledger/pages/book_form_page.dart';
 import 'package:flutter_app/src/features/ledger/pages/budget_list_page.dart';
 import 'package:flutter_app/src/features/ledger/pages/budget_form_page.dart';
 import 'package:flutter_app/src/features/ledger/pages/member_list_page.dart';
-import 'package:flutter_app/src/features/ledger/pages/category_list_page.dart'
-    as ledger;
+import 'package:flutter_app/src/features/ledger/pages/category_list_page.dart';
 import 'package:flutter_app/src/features/ledger/pages/category_form_page.dart';
-import 'package:flutter_app/src/features/ledger/pages/tag_list_page.dart'
-    as ledger;
+import 'package:flutter_app/src/features/ledger/pages/tag_list_page.dart';
 import 'package:flutter_app/src/features/ledger/pages/tag_form_page.dart';
 import 'package:flutter_app/src/features/ledger/pages/payee_list_page.dart';
 import 'package:flutter_app/src/features/ledger/pages/payee_form_page.dart';
@@ -129,7 +127,7 @@ class AppRouter {
       GoRoute(
         path: '/ledger/categories',
         builder: (context, state) {
-          return const ledger.CategoryListPage();
+          return const CategoryListPage();
         },
       ),
       GoRoute(
@@ -144,7 +142,7 @@ class AppRouter {
       GoRoute(
         path: '/ledger/tags',
         builder: (context, state) {
-          return const ledger.TagListPage();
+          return const TagListPage();
         },
       ),
       GoRoute(

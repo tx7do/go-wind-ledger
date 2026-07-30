@@ -1,22 +1,21 @@
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'package:go_router/go_router.dart';
 
 import 'package:flutter_app/generated/api/app/service/v1/index.dart'
-    show
-        LedgerServiceV1Category,
-        LedgerServiceV1CategoryType,
-        LedgerServiceV1ListCategoryResponse;
+    show LedgerServiceV1Category, LedgerServiceV1CategoryType, LedgerServiceV1ListCategoryResponse;
 
-import 'package:flutter_app/src/core/themes/semantic_colors.dart';
 import 'package:flutter_app/generated/l10n.dart';
+import 'package:flutter_app/src/core/logic/api/list_api_cubit.dart';
 import 'package:flutter_app/src/core/themes/const.dart';
+import 'package:flutter_app/src/core/themes/semantic_colors.dart';
 import 'package:flutter_app/src/core/transport/http/status.dart';
 import 'package:flutter_app/src/features/ledger/services/category_service.dart';
 
-/// 分类管理列表页。
-///
-/// 分类为树形结构，本页以缩进的展开方式展示全部层级。
+typedef Category = LedgerServiceV1Category;
+
+/// 分类管理列表页（树形结构）。
 class CategoryListPage extends StatefulWidget {
   const CategoryListPage({super.key});
 
@@ -26,8 +25,7 @@ class CategoryListPage extends StatefulWidget {
 
 class _CategoryListPageState extends State<CategoryListPage> {
   final CategoryService _service = CategoryService();
-  List<LedgerServiceV1Category> _rootCategories = [];
-  bool _loading = true;
+  late final ListApiCubit<Category> _cubit;
 
   // 展开的节点 id 集合
   final Set<int> _expanded = {};
@@ -35,31 +33,28 @@ class _CategoryListPageState extends State<CategoryListPage> {
   @override
   void initState() {
     super.initState();
-    _loadData();
+    _cubit = ListApiCubit<Category>(loader: _fetchCategories)..load();
   }
 
-  Future<void> _loadData() async {
-    setState(() => _loading = true);
+  @override
+  void dispose() {
+    _cubit.close();
+    super.dispose();
+  }
+
+  Future<List<Category>> _fetchCategories() async {
     final result = await _service.listAll();
-    if (!mounted) return;
-    final loc = S.of(context);
-    if (result is LedgerServiceV1ListCategoryResponse) {
-      setState(() {
-        _rootCategories = _buildTree(result.items ?? []);
-        _loading = false;
-      });
-    } else if (result is Status) {
-      setState(() => _loading = false);
-      EasyLoading.showError(result.getMessage.isEmpty ? loc.loadFailed : result.getMessage);
-    }
+    if (result is Status) throw Exception(result.getMessage);
+    final all = (result as LedgerServiceV1ListCategoryResponse).items ?? [];
+    return _buildTree(all);
   }
 
-  List<LedgerServiceV1Category> _buildTree(List<LedgerServiceV1Category> all) {
-    final byId = <int, LedgerServiceV1Category>{};
+  List<Category> _buildTree(List<Category> all) {
+    final byId = <int, Category>{};
     for (final c in all) {
       if (c.id != null) byId[c.id!] = c.copyWith(children: []);
     }
-    final roots = <LedgerServiceV1Category>[];
+    final roots = <Category>[];
     for (final c in all) {
       if (c.parentId == null || !byId.containsKey(c.parentId)) {
         roots.add(byId[c.id!]!);
@@ -71,7 +66,7 @@ class _CategoryListPageState extends State<CategoryListPage> {
     return roots;
   }
 
-  Future<void> _toggle(LedgerServiceV1Category cat) async {
+  Future<void> _toggle(Category cat) async {
     final loc = S.of(context);
     final id = cat.id;
     if (id == null) return;
@@ -79,15 +74,15 @@ class _CategoryListPageState extends State<CategoryListPage> {
     final result = await _service.toggle(id);
     EasyLoading.dismiss();
     if (!mounted) return;
-    if (result is LedgerServiceV1Category) {
+    if (result is Category) {
       EasyLoading.showSuccess(loc.updated);
-      _loadData();
+      _cubit.refresh();
     } else if (result is Status) {
       EasyLoading.showError(result.getMessage.isEmpty ? loc.operationFailed : result.getMessage);
     }
   }
 
-  Future<void> _delete(LedgerServiceV1Category cat) async {
+  Future<void> _delete(Category cat) async {
     final loc = S.of(context);
     final id = cat.id;
     if (id == null) return;
@@ -97,14 +92,8 @@ class _CategoryListPageState extends State<CategoryListPage> {
         title: Text(loc.deleteCategoryTitle),
         content: Text(loc.deleteCategoryMsg(cat.name ?? '')),
         actions: [
-          TextButton(
-            onPressed: () => Navigator.pop(ctx, false),
-            child: Text(loc.cancel),
-          ),
-          TextButton(
-            onPressed: () => Navigator.pop(ctx, true),
-            child: Text(loc.delete),
-          ),
+          TextButton(onPressed: () => Navigator.pop(ctx, false), child: Text(loc.cancel)),
+          TextButton(onPressed: () => Navigator.pop(ctx, true), child: Text(loc.delete)),
         ],
       ),
     );
@@ -115,7 +104,7 @@ class _CategoryListPageState extends State<CategoryListPage> {
     if (!mounted) return;
     if (result == null) {
       EasyLoading.showSuccess(loc.deleted);
-      _loadData();
+      _cubit.refresh();
     } else if (result is Status) {
       EasyLoading.showError(result.getMessage.isEmpty ? loc.loadFailed : result.getMessage);
     }
@@ -127,23 +116,27 @@ class _CategoryListPageState extends State<CategoryListPage> {
     final loc = S.of(context);
     return Scaffold(
       appBar: AppBar(title: Text(loc.categoryManagement)),
-      body: _loading
-          ? const Center(child: CircularProgressIndicator())
-          : _rootCategories.isEmpty
+      body: BlocBuilder<ListApiCubit<Category>, ApiResponse<List<Category>>>(
+        bloc: _cubit,
+        builder: (context, state) => switch (state) {
+          Initial() || Loading() => const Center(child: CircularProgressIndicator()),
+          Success(data) => data.isEmpty
               ? _buildEmpty(theme)
               : RefreshIndicator(
-                  onRefresh: _loadData,
+                  onRefresh: _cubit.refresh,
                   child: ListView.builder(
                     padding: const EdgeInsets.only(bottom: 80),
-                    itemCount: _rootCategories.length,
-                    itemBuilder: (context, index) =>
-                        _buildCategoryTile(theme, _rootCategories[index], 0),
+                    itemCount: data.length,
+                    itemBuilder: (_, i) => _buildCategoryTile(theme, data[i], 0),
                   ),
                 ),
+          Error(msg) => _buildError(theme, msg),
+        },
+      ),
       floatingActionButton: FloatingActionButton.extended(
         onPressed: () async {
           await context.push('/ledger/categories/create');
-          _loadData();
+          _cubit.refresh();
         },
         icon: const Icon(Icons.add),
         label: Text(loc.newCategory),
@@ -151,59 +144,38 @@ class _CategoryListPageState extends State<CategoryListPage> {
     );
   }
 
-  Widget _buildCategoryTile(ThemeData theme, LedgerServiceV1Category cat,
-      int depth) {
+  Widget _buildCategoryTile(ThemeData theme, Category cat, int depth) {
     final loc = S.of(context);
     final hasChildren = cat.children?.isNotEmpty == true;
     final expanded = _expanded.contains(cat.id ?? -1);
-    final isExpense =
-        cat.type == LedgerServiceV1CategoryType.categoryTypeExpense;
-    final color = isExpense
-        ? SemanticColors.expense(context)
-        : SemanticColors.income(context);
+    final isExpense = cat.type == LedgerServiceV1CategoryType.categoryTypeExpense;
+    final color = isExpense ? SemanticColors.expense(context) : SemanticColors.income(context);
 
     return Column(
       children: [
         Card(
-          margin: EdgeInsets.only(
-            left: 12 + depth * 16.0,
-            right: 12,
-            top: 4,
-            bottom: 4,
-          ),
+          margin: EdgeInsets.only(left: 12 + depth * 16.0, right: 12, top: 4, bottom: 4),
           child: ListTile(
             leading: hasChildren
                 ? IconButton(
-                    icon: Icon(expanded
-                        ? Icons.expand_less
-                        : Icons.expand_more),
-                    onPressed: () {
-                      setState(() {
-                        final id = cat.id ?? -1;
-                        if (expanded) {
-                          _expanded.remove(id);
-                        } else {
-                          _expanded.add(id);
-                        }
-                      });
-                    },
+                    icon: Icon(expanded ? Icons.expand_less : Icons.expand_more),
+                    onPressed: () => setState(() {
+                      final id = cat.id ?? -1;
+                      expanded ? _expanded.remove(id) : _expanded.add(id);
+                    }),
                   )
                 : Icon(Icons.circle, size: 8, color: color),
             title: Text(cat.name ?? loc.unnamed),
-            subtitle: Text(
-              isExpense ? loc.expenseCategory : loc.incomeCategory,
-              style: theme.textTheme.bodySmall,
-            ),
+            subtitle: Text(isExpense ? loc.expenseCategory : loc.incomeCategory, style: theme.textTheme.bodySmall),
             trailing: PopupMenuButton<String>(
               icon: const Icon(Icons.more_vert, size: 20),
               onSelected: (v) async {
                 if (v == 'edit') {
                   await context.push('/ledger/categories/create?id=${cat.id}');
-                  _loadData();
+                  _cubit.refresh();
                 } else if (v == 'add') {
-                  await context.push(
-                      '/ledger/categories/create?parentId=${cat.id}');
-                  _loadData();
+                  await context.push('/ledger/categories/create?parentId=${cat.id}');
+                  _cubit.refresh();
                 } else if (v == 'toggle') {
                   _toggle(cat);
                 } else if (v == 'delete') {
@@ -213,23 +185,18 @@ class _CategoryListPageState extends State<CategoryListPage> {
               itemBuilder: (ctx) => [
                 PopupMenuItem(value: 'edit', child: Text(loc.edit)),
                 PopupMenuItem(value: 'add', child: Text(loc.addSubcategory)),
-                PopupMenuItem(
-                  value: 'toggle',
-                  child: Text(cat.enable == false ? loc.enable : loc.disable),
-                ),
+                PopupMenuItem(value: 'toggle', child: Text(cat.enable == false ? loc.enable : loc.disable)),
                 PopupMenuItem(value: 'delete', child: Text(loc.delete)),
               ],
             ),
             onTap: () async {
               await context.push('/ledger/categories/create?id=${cat.id}');
-              _loadData();
+              _cubit.refresh();
             },
           ),
         ),
         if (hasChildren && expanded)
-          ...cat.children!
-              .map((c) => _buildCategoryTile(theme, c, depth + 1))
-              ,
+          ...cat.children!.map((c) => _buildCategoryTile(theme, c, depth + 1)),
       ],
     );
   }
@@ -240,20 +207,38 @@ class _CategoryListPageState extends State<CategoryListPage> {
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          Icon(Icons.category_outlined,
-              size: 64, color: theme.colorScheme.outline),
+          Icon(Icons.category_outlined, size: 64, color: theme.colorScheme.outline),
           const SizedBox(height: 12),
-          Text(loc.noCategories,
-              style: theme.textTheme.bodyLarge
-                  ?.copyWith(color: theme.colorScheme.outline)),
+          Text(loc.noCategories, style: theme.textTheme.bodyLarge?.copyWith(color: theme.colorScheme.outline)),
           const SizedBox(height: 16),
           FilledButton.icon(
             onPressed: () async {
               await context.push('/ledger/categories/create');
-              _loadData();
+              _cubit.refresh();
             },
             icon: const Icon(Icons.add),
             label: Text(loc.newCategory),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildError(ThemeData theme, String message) {
+    final loc = S.of(context);
+    return Center(
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Icon(Icons.error_outline, size: 64, color: theme.colorScheme.error),
+          const SizedBox(height: 12),
+          Text(message.isNotEmpty ? message : loc.loadFailed,
+              style: theme.textTheme.bodyLarge?.copyWith(color: theme.colorScheme.error)),
+          const SizedBox(height: 16),
+          FilledButton.icon(
+            onPressed: _cubit.refresh,
+            icon: const Icon(Icons.refresh),
+            label: Text(loc.retry),
           ),
         ],
       ),
