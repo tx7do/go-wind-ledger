@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'package:go_router/go_router.dart';
 
 import 'package:flutter_app/generated/api/app/service/v1/index.dart'
     show
@@ -11,6 +12,7 @@ import 'package:flutter_app/generated/api/app/service/v1/index.dart'
         LedgerServiceV1ListBookTemplateResponse;
 
 import 'package:flutter_app/generated/l10n.dart';
+import 'package:flutter_app/src/core/logic/api/form_cubit.dart';
 import 'package:flutter_app/src/core/themes/const.dart';
 import 'package:flutter_app/src/core/transport/http/status.dart';
 import 'package:flutter_app/src/features/ledger/services/book_service.dart';
@@ -18,9 +20,7 @@ import 'package:flutter_app/src/features/ledger/services/currency_service.dart';
 
 /// 账本表单页（新建/编辑）。
 class BookFormPage extends StatefulWidget {
-  /// 编辑时传入的账本 ID。
   final int? editId;
-
   const BookFormPage({super.key, this.editId});
 
   @override
@@ -39,31 +39,28 @@ class _BookFormPageState extends State<BookFormPage> {
   List<LedgerServiceV1Currency> _currencies = [];
   List<LedgerServiceV1BookTemplate> _templates = [];
   int? _templateId;
-  bool _loading = true;
   bool _saving = false;
+
+  late final FormCubit _formCubit;
 
   @override
   void initState() {
     super.initState();
-    _loadInitial();
+    _formCubit = FormCubit()..loadInitial(() async {
+      await Future.wait([
+        _loadCurrencies(),
+        _loadTemplates(),
+        if (widget.editId != null) _loadEditTarget(),
+      ]);
+    });
   }
 
   @override
   void dispose() {
     _nameCtrl.dispose();
     _notesCtrl.dispose();
+    _formCubit.close();
     super.dispose();
-  }
-
-  Future<void> _loadInitial() async {
-    setState(() => _loading = true);
-    await Future.wait([
-      _loadCurrencies(),
-      _loadTemplates(),
-      if (widget.editId != null) _loadEditTarget(),
-    ]);
-    if (!mounted) return;
-    setState(() => _loading = false);
   }
 
   Future<void> _loadTemplates() async {
@@ -78,8 +75,7 @@ class _BookFormPageState extends State<BookFormPage> {
     if (result is LedgerServiceV1ListCurrencyResponse && mounted) {
       setState(() {
         _currencies = result.items ?? [];
-        if (_currencies.isNotEmpty &&
-            _currencies.every((c) => c.code != _defaultCurrencyCode)) {
+        if (_currencies.isNotEmpty && _currencies.every((c) => c.code != _defaultCurrencyCode)) {
           _defaultCurrencyCode = _currencies.first.code ?? 'CNY';
         }
       });
@@ -105,14 +101,11 @@ class _BookFormPageState extends State<BookFormPage> {
     EasyLoading.show(status: loc.processing);
 
     final name = _nameCtrl.text.trim();
-    final notes = _notesCtrl.text.trim().isEmpty
-        ? null
-        : _notesCtrl.text.trim();
+    final notes = _notesCtrl.text.trim().isEmpty ? null : _notesCtrl.text.trim();
 
     dynamic result;
     if (widget.editId == null) {
       if (_templateId != null) {
-        // 从模板创建账本（会一并创建模板中的分类/标签/收款人）
         result = await _service.createByTemplate(
           templateId: _templateId!,
           name: name,
@@ -120,19 +113,11 @@ class _BookFormPageState extends State<BookFormPage> {
           notes: notes,
         );
       } else {
-        final data = LedgerServiceV1Book(
-          name: name,
-          notes: notes,
-          defaultCurrencyCode: _defaultCurrencyCode,
-        );
+        final data = LedgerServiceV1Book(name: name, notes: notes, defaultCurrencyCode: _defaultCurrencyCode);
         result = await _service.create(data);
       }
     } else {
-      final data = LedgerServiceV1Book(
-        name: name,
-        notes: notes,
-        defaultCurrencyCode: _defaultCurrencyCode,
-      );
+      final data = LedgerServiceV1Book(name: name, notes: notes, defaultCurrencyCode: _defaultCurrencyCode);
       result = await _service.update(widget.editId!, data);
     }
 
@@ -142,116 +127,100 @@ class _BookFormPageState extends State<BookFormPage> {
 
     if (result is LedgerServiceV1Book) {
       EasyLoading.showSuccess(loc.saveSuccess);
-      if (context.canPop()) {
-        context.pop();
-      } else {
-        context.go('/ledger/books');
-      }
+      if (context.canPop()) { context.pop(); } else { context.go('/ledger/books'); }
     } else if (result is Status) {
-      EasyLoading.showError(
-        result.getMessage.isEmpty ? loc.saveFailed : result.getMessage,
-      );
+      EasyLoading.showError(result.getMessage.isEmpty ? loc.saveFailed : result.getMessage);
     }
   }
 
   @override
   Widget build(BuildContext context) {
+    return BlocBuilder<FormCubit, FormLoadState>(
+      bloc: _formCubit,
+      builder: (context, state) => switch (state) {
+        FormLoadState.initial || FormLoadState.loading => const Center(child: CircularProgressIndicator()),
+        FormLoadState.loaded => _buildForm(context),
+        FormLoadState.error => _buildError(context),
+      },
+    );
+  }
+
+  Widget _buildForm(BuildContext context) {
     final loc = S.of(context);
     return Scaffold(
-      appBar: AppBar(
-        title: Text(widget.editId == null ? loc.create : loc.edit),
-      ),
-      body: _loading
-          ? const Center(child: CircularProgressIndicator())
-          : SingleChildScrollView(
-              padding: const EdgeInsets.all(16),
-              child: Form(
-                key: _formKey,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [
-                    TextFormField(
-                      controller: _nameCtrl,
-                      decoration: InputDecoration(
-                        labelText: loc.fieldBookName,
-                        prefixIcon: Icon(Icons.menu_book_outlined),
-                        border: OutlineInputBorder(),
-                      ),
-                      validator: (v) => (v == null || v.trim().isEmpty)
-                          ? loc.enterBookName
-                          : null,
-                    ),
-                    const SizedBox(height: 12),
-                    DropdownButtonFormField<String>(
-                      value: _defaultCurrencyCode,
-                      decoration: InputDecoration(
-                        labelText: loc.fieldDefaultCurrency,
-                        prefixIcon: Icon(Icons.currency_exchange_outlined),
-                        border: OutlineInputBorder(),
-                      ),
-                      items: _currencies
-                          .map(
-                            (c) => DropdownMenuItem(
-                              value: c.code,
-                              child: Text('${c.code} - ${c.name ?? ''}'),
-                            ),
-                          )
-                          .toList(),
-                      onChanged: (v) {
-                        if (v != null) {
-                          setState(() => _defaultCurrencyCode = v);
-                        }
-                      },
-                    ),
-                    if (widget.editId == null && _templates.isNotEmpty) ...[
-                      const SizedBox(height: 12),
-                      DropdownButtonFormField<int?>(
-                        value: _templateId,
-                        decoration: InputDecoration(
-                          labelText: loc.fieldTemplate,
-                          prefixIcon: Icon(Icons.dashboard_customize_outlined),
-                          border: OutlineInputBorder(),
-                          helperText: loc.templateHelper,
-                        ),
-                        items: [
-                          DropdownMenuItem<int?>(
-                            value: null,
-                            child: Text(loc.noTemplate),
-                          ),
-                          ..._templates.map(
-                            (t) => DropdownMenuItem<int?>(
-                              value: t.id,
-                              child: Text(t.name ?? loc.unnamedTemplate),
-                            ),
-                          ),
-                        ],
-                        onChanged: (v) => setState(() => _templateId = v),
-                      ),
-                    ],
-                    const SizedBox(height: 12),
-                    TextFormField(
-                      controller: _notesCtrl,
-                      maxLines: 3,
-                      decoration: InputDecoration(
-                        labelText: loc.fieldDescription,
-                        prefixIcon: Icon(Icons.notes),
-                        border: OutlineInputBorder(),
-                      ),
-                    ),
-                    const SizedBox(height: 24),
-                    FilledButton(
-                      onPressed: _saving ? null : _submit,
-                      style: FilledButton.styleFrom(
-                        padding: const EdgeInsets.symmetric(vertical: 14),
-                      ),
-                      child: Text(
-                        widget.editId == null ? loc.flowSave : loc.flowUpdate,
-                      ),
-                    ),
-                  ],
-                ),
+      appBar: AppBar(title: Text(widget.editId == null ? loc.create : loc.edit)),
+      body: SingleChildScrollView(
+        padding: const EdgeInsets.all(16),
+        child: Form(
+          key: _formKey,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              TextFormField(
+                controller: _nameCtrl,
+                decoration: InputDecoration(labelText: loc.fieldBookName, prefixIcon: Icon(Icons.menu_book_outlined), border: OutlineInputBorder()),
+                validator: (v) => (v == null || v.trim().isEmpty) ? loc.enterBookName : null,
               ),
+              const SizedBox(height: 12),
+              DropdownButtonFormField<String>(
+                value: _defaultCurrencyCode,
+                decoration: InputDecoration(labelText: loc.fieldDefaultCurrency, prefixIcon: Icon(Icons.currency_exchange_outlined), border: OutlineInputBorder()),
+                items: _currencies.map((c) => DropdownMenuItem(value: c.code, child: Text('${c.code} - ${c.name ?? ''}'))).toList(),
+                onChanged: (v) { if (v != null) setState(() => _defaultCurrencyCode = v); },
+              ),
+              if (widget.editId == null && _templates.isNotEmpty) ...[
+                const SizedBox(height: 12),
+                DropdownButtonFormField<int?>(
+                  value: _templateId,
+                  decoration: InputDecoration(labelText: loc.fieldTemplate, prefixIcon: Icon(Icons.dashboard_customize_outlined), border: OutlineInputBorder(), helperText: loc.templateHelper),
+                  items: [
+                    DropdownMenuItem<int?>(value: null, child: Text(loc.noTemplate)),
+                    ..._templates.map((t) => DropdownMenuItem<int?>(value: t.id, child: Text(t.name ?? loc.unnamedTemplate))),
+                  ],
+                  onChanged: (v) => setState(() => _templateId = v),
+                ),
+              ],
+              const SizedBox(height: 12),
+              TextFormField(
+                controller: _notesCtrl, maxLines: 3,
+                decoration: InputDecoration(labelText: loc.fieldDescription, prefixIcon: Icon(Icons.notes), border: OutlineInputBorder()),
+              ),
+              const SizedBox(height: 24),
+              FilledButton(
+                onPressed: _saving ? null : _submit,
+                style: FilledButton.styleFrom(padding: const EdgeInsets.symmetric(vertical: 14)),
+                child: Text(widget.editId == null ? loc.flowSave : loc.flowUpdate),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildError(BuildContext context) {
+    final loc = S.of(context);
+    final msg = _formCubit.errorMessage;
+    return Scaffold(
+      appBar: AppBar(title: Text(widget.editId == null ? loc.create : loc.edit)),
+      body: Center(
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Icon(Icons.error_outline, size: 64, color: Theme.of(context).colorScheme.error),
+            const SizedBox(height: 12),
+            Text(msg.isNotEmpty ? msg : loc.loadFailed,
+                style: Theme.of(context).textTheme.bodyLarge?.copyWith(color: Theme.of(context).colorScheme.error)),
+            const SizedBox(height: 16),
+            FilledButton.icon(
+              onPressed: () => _formCubit.loadInitial(() async {
+                await Future.wait([_loadCurrencies(), _loadTemplates(), if (widget.editId != null) _loadEditTarget()]);
+              }),
+              icon: const Icon(Icons.refresh), label: Text(loc.retry),
             ),
+          ],
+        ),
+      ),
     );
   }
 }
