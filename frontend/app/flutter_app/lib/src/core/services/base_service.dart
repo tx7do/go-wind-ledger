@@ -2,18 +2,16 @@ import 'package:dio/dio.dart' show DioException;
 import 'package:get_it/get_it.dart' show GetIt;
 
 import 'package:flutter_app/src/core/repositories/user_auth_cache.dart';
+import 'package:flutter_app/src/core/services/service_result.dart';
 import 'package:flutter_app/src/core/transport/http/status.dart';
 import 'package:flutter_app/src/core/utilities/logger.dart';
 
 abstract class BaseService {
   final Logger _logger;
-  final bool _loadFromLocal = false;
 
   BaseService({String tag = 'Service'}) : _logger = Logger(tag);
 
   Logger get logger => _logger;
-
-  bool get loadFromLocal => _loadFromLocal;
 
   int get currentUserId {
     return GetIt.instance<UserAuthCache>().userId;
@@ -56,5 +54,22 @@ abstract class BaseService {
       reason: e.type.name,
       message: e.message,
     );
+  }
+
+  /// 包装一次 API 调用，自动处理 [DioException] 并返回 [ServiceResult]。
+  ///
+  /// 用法（替换手写 try-catch）：
+  /// ```dart
+  /// Future<ServiceResult<ListBookResponse>> listAll() =>
+  ///     apiCall(() => _api.listAll(request));
+  /// ```
+  Future<ServiceResult<T>> apiCall<T>(Future<dynamic> Function() call) async {
+    try {
+      final result = await call();
+      if (result is Status) return Failure(result);
+      return Success(result as T);
+    } on DioException catch (e) {
+      return Failure(handleDioError(e));
+    }
   }
 }

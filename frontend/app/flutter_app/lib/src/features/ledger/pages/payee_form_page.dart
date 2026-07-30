@@ -35,7 +35,6 @@ class _PayeeFormPageState extends State<PayeeFormPage> {
   int? _bookId;
   bool _canExpense = true;
   bool _canIncome = true;
-  bool _saving = false;
 
   late final FormCubit _formCubit;
 
@@ -82,7 +81,6 @@ class _PayeeFormPageState extends State<PayeeFormPage> {
   Future<void> _submit() async {
     final loc = S.of(context);
     if (!_formKey.currentState!.validate()) return;
-    setState(() => _saving = true);
     EasyLoading.show(status: loc.processing);
 
     final data = LedgerServiceV1Payee(
@@ -94,17 +92,16 @@ class _PayeeFormPageState extends State<PayeeFormPage> {
       sortOrder: int.tryParse(_sortOrderCtrl.text.trim()),
     );
 
-    final result = widget.editId == null ? await _service.create(data) : await _service.update(widget.editId!, data);
+    final success = await _formCubit.save(() => widget.editId == null ? _service.create(data) : _service.update(widget.editId!, data));
 
     EasyLoading.dismiss();
     if (!mounted) return;
-    setState(() => _saving = false);
 
-    if (result is LedgerServiceV1Payee) {
+    if (success) {
       EasyLoading.showSuccess(loc.saveSuccess);
       if (context.canPop()) { context.pop(); } else { context.go('/ledger/payees'); }
-    } else if (result is Status) {
-      EasyLoading.showError(result.getMessage.isEmpty ? loc.saveFailed : result.getMessage);
+    } else {
+      EasyLoading.showError(_formCubit.errorMessage.isEmpty ? loc.saveFailed : _formCubit.errorMessage);
     }
   }
 
@@ -158,7 +155,7 @@ class _PayeeFormPageState extends State<PayeeFormPage> {
               ),
               const SizedBox(height: 24),
               FilledButton(
-                onPressed: _saving ? null : _submit,
+                onPressed: _formCubit.state == FormLoadState.saving ? null : _submit,
                 style: FilledButton.styleFrom(padding: const EdgeInsets.symmetric(vertical: 14)),
                 child: Text(widget.editId == null ? loc.flowSave : loc.flowUpdate),
               ),

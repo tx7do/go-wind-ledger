@@ -39,7 +39,6 @@ class _BookFormPageState extends State<BookFormPage> {
   List<LedgerServiceV1Currency> _currencies = [];
   List<LedgerServiceV1BookTemplate> _templates = [];
   int? _templateId;
-  bool _saving = false;
 
   late final FormCubit _formCubit;
 
@@ -97,39 +96,38 @@ class _BookFormPageState extends State<BookFormPage> {
   Future<void> _submit() async {
     final loc = S.of(context);
     if (!_formKey.currentState!.validate()) return;
-    setState(() => _saving = true);
     EasyLoading.show(status: loc.processing);
 
     final name = _nameCtrl.text.trim();
     final notes = _notesCtrl.text.trim().isEmpty ? null : _notesCtrl.text.trim();
 
-    dynamic result;
-    if (widget.editId == null) {
-      if (_templateId != null) {
-        result = await _service.createByTemplate(
-          templateId: _templateId!,
-          name: name,
-          defaultCurrencyCode: _defaultCurrencyCode,
-          notes: notes,
-        );
+    final success = await _formCubit.save(() async {
+      if (widget.editId == null) {
+        if (_templateId != null) {
+          return await _service.createByTemplate(
+            templateId: _templateId!,
+            name: name,
+            defaultCurrencyCode: _defaultCurrencyCode,
+            notes: notes,
+          );
+        } else {
+          final data = LedgerServiceV1Book(name: name, notes: notes, defaultCurrencyCode: _defaultCurrencyCode);
+          return await _service.create(data);
+        }
       } else {
         final data = LedgerServiceV1Book(name: name, notes: notes, defaultCurrencyCode: _defaultCurrencyCode);
-        result = await _service.create(data);
+        return await _service.update(widget.editId!, data);
       }
-    } else {
-      final data = LedgerServiceV1Book(name: name, notes: notes, defaultCurrencyCode: _defaultCurrencyCode);
-      result = await _service.update(widget.editId!, data);
-    }
+    });
 
     EasyLoading.dismiss();
     if (!mounted) return;
-    setState(() => _saving = false);
 
-    if (result is LedgerServiceV1Book) {
+    if (success) {
       EasyLoading.showSuccess(loc.saveSuccess);
       if (context.canPop()) { context.pop(); } else { context.go('/ledger/books'); }
-    } else if (result is Status) {
-      EasyLoading.showError(result.getMessage.isEmpty ? loc.saveFailed : result.getMessage);
+    } else {
+      EasyLoading.showError(_formCubit.errorMessage.isEmpty ? loc.saveFailed : _formCubit.errorMessage);
     }
   }
 
@@ -187,7 +185,7 @@ class _BookFormPageState extends State<BookFormPage> {
               ),
               const SizedBox(height: 24),
               FilledButton(
-                onPressed: _saving ? null : _submit,
+                onPressed: _formCubit.state == FormLoadState.saving ? null : _submit,
                 style: FilledButton.styleFrom(padding: const EdgeInsets.symmetric(vertical: 14)),
                 child: Text(widget.editId == null ? loc.flowSave : loc.flowUpdate),
               ),

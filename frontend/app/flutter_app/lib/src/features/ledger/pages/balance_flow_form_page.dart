@@ -68,7 +68,6 @@ class _BalanceFlowFormPageState extends State<BalanceFlowFormPage> {
   int? _categoryId;
   int? _payeeId;
   DateTime _selectedDate = DateTime.now();
-  bool _saving = false;
 
   late final FormCubit _formCubit;
 
@@ -197,7 +196,6 @@ class _BalanceFlowFormPageState extends State<BalanceFlowFormPage> {
     if (_type != LedgerServiceV1FlowType.flowTypeTransfer && _accountId == null) { EasyLoading.showError(loc.selectAccount); return; }
     if (_type == LedgerServiceV1FlowType.flowTypeTransfer && (_accountId == null || _toAccountId == null)) { EasyLoading.showError(loc.selectAccounts); return; }
 
-    setState(() => _saving = true);
     EasyLoading.show(status: loc.processing);
 
     final flow = LedgerServiceV1BalanceFlow(
@@ -212,17 +210,16 @@ class _BalanceFlowFormPageState extends State<BalanceFlowFormPage> {
           : null,
     );
 
-    final result = widget.editId == null ? await _flowService.create(flow) : await _flowService.update(widget.editId!, flow);
+    final success = await _formCubit.save(() => widget.editId == null ? _flowService.create(flow) : _flowService.update(widget.editId!, flow));
 
     EasyLoading.dismiss();
     if (!mounted) return;
-    setState(() => _saving = false);
 
-    if (result is LedgerServiceV1BalanceFlow) {
+    if (success) {
       EasyLoading.showSuccess(loc.saveSuccess);
       if (context.canPop()) { context.pop(); } else { context.go('/ledger/flows'); }
-    } else if (result is Status) {
-      EasyLoading.showError(result.getMessage.isEmpty ? loc.saveFailed : result.getMessage);
+    } else {
+      EasyLoading.showError(_formCubit.errorMessage.isEmpty ? loc.saveFailed : _formCubit.errorMessage);
     }
   }
 
@@ -291,7 +288,7 @@ class _BalanceFlowFormPageState extends State<BalanceFlowFormPage> {
               ],
               const SizedBox(height: 24),
               FilledButton(
-                onPressed: _saving ? null : _submit,
+                onPressed: _formCubit.state == FormLoadState.saving ? null : _submit,
                 style: FilledButton.styleFrom(padding: const EdgeInsets.symmetric(vertical: 14)),
                 child: Text(widget.editId == null ? loc.flowSave : loc.flowUpdate),
               ),

@@ -54,7 +54,6 @@ class _BudgetFormPageState extends State<BudgetFormPage> {
   DateTime _endDate = DateTime.now().add(const Duration(days: 30));
   bool _enable = true;
   bool _notify = false;
-  bool _saving = false;
 
   late final FormCubit _formCubit;
 
@@ -123,7 +122,6 @@ class _BudgetFormPageState extends State<BudgetFormPage> {
     final amount = double.tryParse(_amountCtrl.text);
     if (amount == null || amount <= 0) { EasyLoading.showError(loc.enterAmount); return; }
 
-    setState(() => _saving = true);
     EasyLoading.show(status: loc.processing);
 
     final data = Budget(
@@ -135,17 +133,16 @@ class _BudgetFormPageState extends State<BudgetFormPage> {
       notes: _notesCtrl.text.trim().isEmpty ? null : _notesCtrl.text.trim(),
     );
 
-    final result = widget.editId == null ? await _service.create(data) : await _service.update(widget.editId!, data);
+    final success = await _formCubit.save(() => widget.editId == null ? _service.create(data) : _service.update(widget.editId!, data));
 
     EasyLoading.dismiss();
     if (!mounted) return;
-    setState(() => _saving = false);
 
-    if (result is Budget) {
+    if (success) {
       EasyLoading.showSuccess(loc.saveSuccess);
       if (context.canPop()) { context.pop(); } else { context.go('/ledger/budgets'); }
-    } else if (result is Status) {
-      EasyLoading.showError(result.getMessage.isEmpty ? loc.saveFailed : result.getMessage);
+    } else {
+      EasyLoading.showError(_formCubit.errorMessage.isEmpty ? loc.saveFailed : _formCubit.errorMessage);
     }
   }
 
@@ -222,7 +219,7 @@ class _BudgetFormPageState extends State<BudgetFormPage> {
               ),
               const SizedBox(height: 24),
               FilledButton(
-                onPressed: _saving ? null : _submit,
+                onPressed: _formCubit.state == FormLoadState.saving ? null : _submit,
                 style: FilledButton.styleFrom(padding: const EdgeInsets.symmetric(vertical: 14)),
                 child: Text(widget.editId == null ? loc.flowSave : loc.flowUpdate),
               ),
