@@ -3,7 +3,11 @@ package service
 import (
 	"context"
 	"encoding/json"
+	"fmt"
+	"io"
+	"net/http"
 	"sync"
+	"time"
 
 	"github.com/go-kratos/kratos/v2/log"
 	paginationV1 "github.com/tx7do/go-crud/api/gen/go/pagination/v1"
@@ -68,11 +72,71 @@ func (s *CurrencyService) List(ctx context.Context, req *paginationV1.PagingRequ
 	return &ledgerV1.ListCurrencyResponse{Items: list, Total: uint64(len(s.currencies))}, nil
 }
 
+// exchangeRateAPIResponse is the JSON structure returned by the free
+// exchange rate API (https://api.exchangerate-api.com/v4/latest/USD).
+type exchangeRateAPIResponse struct {
+	Rates map[string]float64 `json:"rates"`
+}
+
+// exchangeRateAPIURL is the endpoint for fetching live exchange rates.
+// Free tier: no API key required, updates daily.
+const exchangeRateAPIURL = "https://api.exchangerate-api.com/v4/latest/USD"
+
+// httpClient is a shared client with a reasonable timeout for external API calls.
+var httpClient = &http.Client{Timeout: 10 * time.Second}
+
 func (s *CurrencyService) Refresh(ctx context.Context, req *ledgerV1.RefreshCurrencyRequest) (*ledgerV1.ListCurrencyResponse, error) {
-	// TODO: In production, call external API like https://api.exchangerate-api.com/v4/latest/USD
-	// For now, return the current currency list (seed rates remain unchanged).
-	s.log.Infof("currency refresh requested - using seed rates (external API not yet configured)")
-	return s.ListAll(ctx, &ledgerV1.ListAllCurrencyRequest{})
+	liveRates, err := fetchLiveRates(ctx)
+	if err != nil {
+		s.log.Warnf("failed to fetch live exchange rates, keeping seed rates: %v", err)
+		return s.ListAll(ctx, &ledgerV1.ListAllCurrencyRequest{})
+	}
+
+	s.mu.Lock()
+	defer s.mu.Unlock()
+
+	updated := 0
+	for _, c := range s.currencies {
+		code := c.GetCode()
+		if rate, ok := liveRates[code]; ok && rate > 0 {
+			s := formatFloat(rate)
+			c.Rate = &s
+			updated++
+		}
+	}
+
+	s.log.Infof("currency rates refreshed: %d/%d updated from API", updated, len(s.currencies))
+	return &ledgerV1.ListCurrencyResponse{Items: s.currencies, Total: uint64(len(s.currencies))}, nil
+}
+
+// fetchLiveRates calls the exchange rate API and returns a map of currency code → rate to USD.
+func fetchLiveRates(ctx context.Context) (map[string]float64, error) {
+	req, err := http.NewRequestWithContext(ctx, http.MethodGet, exchangeRateAPIURL, nil)
+	if err != nil {
+		return nil, fmt.Errorf("create request: %w", err)
+	}
+
+	resp, err := httpClient.Do(req)
+	if err != nil {
+		return nil, fmt.Errorf("http get: %w", err)
+	}
+	defer resp.Body.Close()
+
+	if resp.StatusCode != http.StatusOK {
+		body, _ := io.ReadAll(io.LimitReader(resp.Body, 1024))
+		return nil, fmt.Errorf("unexpected status %d: %s", resp.StatusCode, string(body))
+	}
+
+	var result exchangeRateAPIResponse
+	if err := json.NewDecoder(resp.Body).Decode(&result); err != nil {
+		return nil, fmt.Errorf("decode response: %w", err)
+	}
+
+	if result.Rates == nil {
+		return nil, fmt.Errorf("empty rates in API response")
+	}
+
+	return result.Rates, nil
 }
 
 func (s *CurrencyService) Convert(ctx context.Context, req *ledgerV1.ConvertCurrencyRequest) (*ledgerV1.ConvertCurrencyResponse, error) {
