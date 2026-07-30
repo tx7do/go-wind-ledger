@@ -48,7 +48,7 @@ class _RegisterPageState extends State<RegisterPage> {
   Future<void> _handleRegister() async {
     if (!_formKey.currentState!.validate()) return;
 
-    EasyLoading.show(status: '注册中...');
+    EasyLoading.show(status: S.of(context).processing);
 
     final result = await _service.register(
       _usernameController.text.trim(),
@@ -65,14 +65,14 @@ class _RegisterPageState extends State<RegisterPage> {
     if (!mounted) return;
 
     if (result is LedgerAuthResponse) {
-      EasyLoading.showSuccess('注册成功');
+      EasyLoading.showSuccess(S.of(context).registerSuccess);
       context.go('/login');
     } else if (result is Status) {
       EasyLoading.showError(
-        result.getMessage.isEmpty ? '注册失败' : result.getMessage,
+        result.getMessage.isEmpty ? S.of(context).registerFailed : result.getMessage,
       );
     } else {
-      EasyLoading.showError('注册失败');
+      EasyLoading.showError(S.of(context).registerFailed);
     }
   }
 
@@ -160,7 +160,7 @@ class _RegisterPageState extends State<RegisterPage> {
                           ),
                           SizedBox(height: isMobile ? 4.h : 6),
                           Text(
-                            '创建账号，开启记账之旅',
+                            loc.registerSubtitle,
                             style: TextStyle(
                               fontSize: isMobile ? 13.sp : 14,
                               color: theme.colorScheme.onSurface.withAlpha(140),
@@ -221,7 +221,7 @@ class _RegisterPageState extends State<RegisterPage> {
                                 return loc.passwordHint;
                               }
                               if (value.length < _minPasswordLength) {
-                                return '密码长度不能少于 $_minPasswordLength 位';
+                                return loc.passwordMinLength(_minPasswordLength);
                               }
                               return null;
                             },
@@ -233,8 +233,8 @@ class _RegisterPageState extends State<RegisterPage> {
                             controller: _confirmPasswordController,
                             obscureText: _obscureConfirmPassword,
                             decoration: InputDecoration(
-                              labelText: '确认密码',
-                              hintText: '请再次输入密码',
+                              labelText: loc.confirmPassword,
+                              hintText: loc.confirmPasswordHint,
                               prefixIcon: const Icon(Icons.lock_outline),
                               suffixIcon: IconButton(
                                 icon: Icon(
@@ -257,10 +257,10 @@ class _RegisterPageState extends State<RegisterPage> {
                             ),
                             validator: (value) {
                               if (value == null || value.isEmpty) {
-                                return '请再次输入密码';
+                                return loc.confirmPasswordHint;
                               }
                               if (value != _passwordController.text) {
-                                return '两次输入的密码不一致';
+                                return loc.passwordMismatch;
                               }
                               return null;
                             },
@@ -272,8 +272,8 @@ class _RegisterPageState extends State<RegisterPage> {
                           TextFormField(
                             controller: _nickNameController,
                             decoration: InputDecoration(
-                              labelText: '昵称（可选）',
-                              hintText: '请输入昵称',
+                              labelText: loc.fieldNickname,
+                              hintText: loc.fieldNicknameHint,
                               prefixIcon: const Icon(Icons.badge_outlined),
                               border: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(
@@ -288,8 +288,8 @@ class _RegisterPageState extends State<RegisterPage> {
                           TextFormField(
                             controller: _inviteCodeController,
                             decoration: InputDecoration(
-                              labelText: '邀请码（可选）',
-                              hintText: '请输入邀请码',
+                              labelText: loc.fieldInviteCode,
+                              hintText: loc.fieldInviteCodeHint,
                               prefixIcon:
                                   const Icon(Icons.card_giftcard_outlined),
                               border: OutlineInputBorder(
@@ -315,7 +315,7 @@ class _RegisterPageState extends State<RegisterPage> {
                                 ),
                               ),
                               child: Text(
-                                '注册',
+                                loc.registerTitle,
                                 style: TextStyle(
                                   fontSize: isMobile ? 16.sp : 16,
                                   fontWeight: FontWeight.w600,
@@ -330,7 +330,7 @@ class _RegisterPageState extends State<RegisterPage> {
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               Text(
-                                '已有账号？',
+                                loc.haveAccount,
                                 style: TextStyle(
                                   fontSize: isMobile ? 13.sp : 14,
                                   color: theme.colorScheme.onSurface
@@ -340,7 +340,7 @@ class _RegisterPageState extends State<RegisterPage> {
                               GestureDetector(
                                 onTap: () => context.go('/login'),
                                 child: Text(
-                                  '去登录',
+                                  loc.goLogin,
                                   style: TextStyle(
                                     fontSize: isMobile ? 13.sp : 14,
                                     color: theme.colorScheme.primary,

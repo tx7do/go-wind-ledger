@@ -3,10 +3,11 @@ import 'package:go_router/go_router.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 
 import 'package:flutter_app/generated/api/app/service/v1/index.dart'
-    show
-        LedgerServiceV1OverviewResponse,
-        LedgerServiceV1AccountAsset;
+    show LedgerServiceV1OverviewResponse, LedgerServiceV1AccountAsset;
 
+import 'package:flutter_app/generated/l10n.dart';
+import 'package:flutter_app/src/core/themes/const.dart';
+import 'package:flutter_app/src/core/themes/semantic_colors.dart';
 import 'package:flutter_app/src/core/transport/http/status.dart';
 import 'package:flutter_app/src/features/ledger/services/account_service.dart';
 
@@ -35,6 +36,7 @@ class _AccountOverviewPageState extends State<AccountOverviewPage> {
   }
 
   Future<void> _loadData() async {
+    final loc = S.of(context);
     setState(() => _loading = true);
     final result = await _service.overview();
     if (!mounted) return;
@@ -46,50 +48,51 @@ class _AccountOverviewPageState extends State<AccountOverviewPage> {
     } else if (result is Status) {
       setState(() => _loading = false);
       EasyLoading.showError(
-          result.getMessage.isEmpty ? '加载失败' : result.getMessage);
+        result.getMessage.isEmpty ? loc.loadFailed : result.getMessage,
+      );
     }
   }
 
   @override
   Widget build(BuildContext context) {
+    final loc = S.of(context);
     final theme = Theme.of(context);
     return Scaffold(
-      appBar: widget.embedded
-          ? null
-          : AppBar(title: const Text('账户概览')),
+      appBar: widget.embedded ? null : AppBar(title: Text(loc.accountOverview)),
       body: _loading
           ? const Center(child: CircularProgressIndicator())
           : _overview == null
-              ? _buildEmpty(theme)
-              : RefreshIndicator(
-                  onRefresh: _loadData,
-                  child: ListView(
-                    padding: const EdgeInsets.only(bottom: 16),
-                    children: [
-                      if (!widget.embedded) const SizedBox(height: 8),
-                      _buildSummaryCard(theme),
-                      const SizedBox(height: 8),
-                      _buildSection(
-                        theme,
-                        title: '资产明细',
-                        icon: Icons.trending_up_outlined,
-                        items: _overview!.assets ?? [],
-                        valueColor: Colors.green,
-                      ),
-                      _buildSection(
-                        theme,
-                        title: '负债明细',
-                        icon: Icons.trending_down_outlined,
-                        items: _overview!.debts ?? [],
-                        valueColor: Colors.red,
-                      ),
-                    ],
+          ? _buildEmpty(theme)
+          : RefreshIndicator(
+              onRefresh: _loadData,
+              child: ListView(
+                padding: const EdgeInsets.only(bottom: 16),
+                children: [
+                  if (!widget.embedded) const SizedBox(height: 8),
+                  _buildSummaryCard(theme),
+                  const SizedBox(height: 8),
+                  _buildSection(
+                    theme,
+                    title: loc.assetDetails,
+                    icon: Icons.trending_up_outlined,
+                    items: _overview!.assets ?? [],
+                    valueColor: SemanticColors.income(context),
                   ),
-                ),
+                  _buildSection(
+                    theme,
+                    title: loc.debtDetails,
+                    icon: Icons.trending_down_outlined,
+                    items: _overview!.debts ?? [],
+                    valueColor: SemanticColors.expense(context),
+                  ),
+                ],
+              ),
+            ),
     );
   }
 
   Widget _buildSummaryCard(ThemeData theme) {
+    final loc = S.of(context);
     final assets = double.tryParse(_overview!.totalAssets ?? '0') ?? 0;
     final debts = double.tryParse(_overview!.totalDebts ?? '0') ?? 0;
     final net = double.tryParse(_overview!.netWorth ?? '0') ?? 0;
@@ -102,12 +105,17 @@ class _AccountOverviewPageState extends State<AccountOverviewPage> {
           children: [
             Row(
               children: [
-                Icon(Icons.account_balance_outlined,
-                    color: theme.colorScheme.primary),
+                Icon(
+                  Icons.account_balance_outlined,
+                  color: theme.colorScheme.primary,
+                ),
                 const SizedBox(width: 8),
-                Text('资产负债概览',
-                    style: theme.textTheme.titleMedium
-                        ?.copyWith(fontWeight: FontWeight.bold)),
+                Text(
+                  loc.balanceSheetTitle,
+                  style: theme.textTheme.titleMedium?.copyWith(
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
               ],
             ),
             const SizedBox(height: 16),
@@ -116,9 +124,9 @@ class _AccountOverviewPageState extends State<AccountOverviewPage> {
                 Expanded(
                   child: _summaryTile(
                     theme,
-                    label: '总资产',
+                    label: loc.totalAssets,
                     value: assets,
-                    color: Colors.green,
+                    color: SemanticColors.income(context),
                     icon: Icons.savings_outlined,
                   ),
                 ),
@@ -126,9 +134,9 @@ class _AccountOverviewPageState extends State<AccountOverviewPage> {
                 Expanded(
                   child: _summaryTile(
                     theme,
-                    label: '总负债',
+                    label: loc.totalDebts,
                     value: debts,
-                    color: Colors.red,
+                    color: SemanticColors.expense(context),
                     icon: Icons.credit_card_outlined,
                   ),
                 ),
@@ -140,7 +148,7 @@ class _AccountOverviewPageState extends State<AccountOverviewPage> {
                 Expanded(
                   child: _summaryTile(
                     theme,
-                    label: '净资产',
+                    label: loc.netWorth,
                     value: net,
                     color: theme.colorScheme.primary,
                     icon: Icons.account_balance_wallet_outlined,
@@ -179,8 +187,9 @@ class _AccountOverviewPageState extends State<AccountOverviewPage> {
               const SizedBox(width: 6),
               Text(
                 label,
-                style: theme.textTheme.bodySmall
-                    ?.copyWith(color: theme.colorScheme.onSurfaceVariant),
+                style: theme.textTheme.bodySmall?.copyWith(
+                  color: theme.colorScheme.onSurfaceVariant,
+                ),
               ),
             ],
           ),
@@ -204,6 +213,7 @@ class _AccountOverviewPageState extends State<AccountOverviewPage> {
     required List<LedgerServiceV1AccountAsset> items,
     required Color valueColor,
   }) {
+    final loc = S.of(context);
     return Card(
       margin: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
       child: ExpansionTile(
@@ -211,16 +221,17 @@ class _AccountOverviewPageState extends State<AccountOverviewPage> {
         leading: Icon(icon, color: valueColor),
         title: Text(
           title,
-          style: theme.textTheme.titleSmall
-              ?.copyWith(fontWeight: FontWeight.w600),
+          style: theme.textTheme.titleSmall?.copyWith(
+            fontWeight: FontWeight.w600,
+          ),
         ),
-        subtitle: Text('${items.length} 项'),
+        subtitle: Text(loc.itemCount(items.length)),
         children: items.isEmpty
             ? [
-                const Padding(
-                  padding: EdgeInsets.all(16),
-                  child: Text('暂无数据'),
-                )
+                Padding(
+                  padding: const EdgeInsets.all(16),
+                  child: Text(loc.noData),
+                ),
               ]
             : items.map((a) => _buildAssetTile(theme, a, valueColor)).toList(),
       ),
@@ -232,6 +243,7 @@ class _AccountOverviewPageState extends State<AccountOverviewPage> {
     LedgerServiceV1AccountAsset asset,
     Color valueColor,
   ) {
+    final loc = S.of(context);
     final balance = double.tryParse(asset.balance ?? '0') ?? 0;
     return ListTile(
       leading: CircleAvatar(
@@ -239,7 +251,7 @@ class _AccountOverviewPageState extends State<AccountOverviewPage> {
         foregroundColor: valueColor,
         child: const Icon(Icons.account_balance_wallet_outlined, size: 20),
       ),
-      title: Text(asset.name ?? '未命名'),
+      title: Text(asset.name ?? loc.unnamed),
       subtitle: Text(
         [
           if ((asset.type ?? '').isNotEmpty) asset.type!,
@@ -258,21 +270,28 @@ class _AccountOverviewPageState extends State<AccountOverviewPage> {
   }
 
   Widget _buildEmpty(ThemeData theme) {
+    final loc = S.of(context);
     return Center(
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          Icon(Icons.account_balance_outlined,
-              size: 64, color: theme.colorScheme.outline),
+          Icon(
+            Icons.account_balance_outlined,
+            size: 64,
+            color: theme.colorScheme.outline,
+          ),
           const SizedBox(height: 12),
-          Text('暂无概览数据',
-              style: theme.textTheme.bodyLarge
-                  ?.copyWith(color: theme.colorScheme.outline)),
+          Text(
+            loc.noOverviewData,
+            style: theme.textTheme.bodyLarge?.copyWith(
+              color: theme.colorScheme.outline,
+            ),
+          ),
           const SizedBox(height: 16),
           FilledButton.tonalIcon(
             onPressed: () => context.pop(),
             icon: const Icon(Icons.arrow_back),
-            label: const Text('返回'),
+            label: Text(loc.back),
           ),
         ],
       ),

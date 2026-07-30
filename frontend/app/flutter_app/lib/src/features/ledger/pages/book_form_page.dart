@@ -10,6 +10,8 @@ import 'package:flutter_app/generated/api/app/service/v1/index.dart'
         LedgerServiceV1ListCurrencyResponse,
         LedgerServiceV1ListBookTemplateResponse;
 
+import 'package:flutter_app/generated/l10n.dart';
+import 'package:flutter_app/src/core/themes/const.dart';
 import 'package:flutter_app/src/core/transport/http/status.dart';
 import 'package:flutter_app/src/features/ledger/services/book_service.dart';
 import 'package:flutter_app/src/features/ledger/services/currency_service.dart';
@@ -97,9 +99,10 @@ class _BookFormPageState extends State<BookFormPage> {
   }
 
   Future<void> _submit() async {
+    final loc = S.of(context);
     if (!_formKey.currentState!.validate()) return;
     setState(() => _saving = true);
-    EasyLoading.show(status: '保存中...');
+    EasyLoading.show(status: loc.processing);
 
     final name = _nameCtrl.text.trim();
     final notes = _notesCtrl.text.trim().isEmpty
@@ -138,22 +141,25 @@ class _BookFormPageState extends State<BookFormPage> {
     setState(() => _saving = false);
 
     if (result is LedgerServiceV1Book) {
-      EasyLoading.showSuccess('保存成功');
+      EasyLoading.showSuccess(loc.saveSuccess);
       if (context.canPop()) {
         context.pop();
       } else {
         context.go('/ledger/books');
       }
     } else if (result is Status) {
-      EasyLoading.showError(result.getMessage.isEmpty ? '保存失败' : result.getMessage);
+      EasyLoading.showError(
+        result.getMessage.isEmpty ? loc.saveFailed : result.getMessage,
+      );
     }
   }
 
   @override
   Widget build(BuildContext context) {
+    final loc = S.of(context);
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget.editId == null ? '新建账本' : '编辑账本'),
+        title: Text(widget.editId == null ? loc.create : loc.edit),
       ),
       body: _loading
           ? const Center(child: CircularProgressIndicator())
@@ -166,27 +172,30 @@ class _BookFormPageState extends State<BookFormPage> {
                   children: [
                     TextFormField(
                       controller: _nameCtrl,
-                      decoration: const InputDecoration(
-                        labelText: '账本名称',
+                      decoration: InputDecoration(
+                        labelText: loc.fieldBookName,
                         prefixIcon: Icon(Icons.menu_book_outlined),
                         border: OutlineInputBorder(),
                       ),
-                      validator: (v) =>
-                          (v == null || v.trim().isEmpty) ? '请输入账本名称' : null,
+                      validator: (v) => (v == null || v.trim().isEmpty)
+                          ? loc.enterBookName
+                          : null,
                     ),
                     const SizedBox(height: 12),
                     DropdownButtonFormField<String>(
                       value: _defaultCurrencyCode,
-                      decoration: const InputDecoration(
-                        labelText: '默认币种',
+                      decoration: InputDecoration(
+                        labelText: loc.fieldDefaultCurrency,
                         prefixIcon: Icon(Icons.currency_exchange_outlined),
                         border: OutlineInputBorder(),
                       ),
                       items: _currencies
-                          .map((c) => DropdownMenuItem(
-                                value: c.code,
-                                child: Text('${c.code} - ${c.name ?? ''}'),
-                              ))
+                          .map(
+                            (c) => DropdownMenuItem(
+                              value: c.code,
+                              child: Text('${c.code} - ${c.name ?? ''}'),
+                            ),
+                          )
                           .toList(),
                       onChanged: (v) {
                         if (v != null) {
@@ -198,21 +207,23 @@ class _BookFormPageState extends State<BookFormPage> {
                       const SizedBox(height: 12),
                       DropdownButtonFormField<int?>(
                         value: _templateId,
-                        decoration: const InputDecoration(
-                          labelText: '从模板创建（可选）',
+                        decoration: InputDecoration(
+                          labelText: loc.fieldTemplate,
                           prefixIcon: Icon(Icons.dashboard_customize_outlined),
                           border: OutlineInputBorder(),
-                          helperText: '选择模板将一并创建其中的分类/标签/收款人',
+                          helperText: loc.templateHelper,
                         ),
                         items: [
-                          const DropdownMenuItem<int?>(
+                          DropdownMenuItem<int?>(
                             value: null,
-                            child: Text('不使用模板'),
+                            child: Text(loc.noTemplate),
                           ),
-                          ..._templates.map((t) => DropdownMenuItem<int?>(
-                                value: t.id,
-                                child: Text(t.name ?? '未命名模板'),
-                              )),
+                          ..._templates.map(
+                            (t) => DropdownMenuItem<int?>(
+                              value: t.id,
+                              child: Text(t.name ?? loc.unnamedTemplate),
+                            ),
+                          ),
                         ],
                         onChanged: (v) => setState(() => _templateId = v),
                       ),
@@ -221,8 +232,8 @@ class _BookFormPageState extends State<BookFormPage> {
                     TextFormField(
                       controller: _notesCtrl,
                       maxLines: 3,
-                      decoration: const InputDecoration(
-                        labelText: '说明',
+                      decoration: InputDecoration(
+                        labelText: loc.fieldDescription,
                         prefixIcon: Icon(Icons.notes),
                         border: OutlineInputBorder(),
                       ),
@@ -233,7 +244,9 @@ class _BookFormPageState extends State<BookFormPage> {
                       style: FilledButton.styleFrom(
                         padding: const EdgeInsets.symmetric(vertical: 14),
                       ),
-                      child: Text(widget.editId == null ? '保存' : '更新'),
+                      child: Text(
+                        widget.editId == null ? loc.flowSave : loc.flowUpdate,
+                      ),
                     ),
                   ],
                 ),

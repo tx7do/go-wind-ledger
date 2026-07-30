@@ -10,6 +10,8 @@ import 'package:flutter_app/generated/api/app/service/v1/index.dart'
         LedgerServiceV1ListBookResponse,
         LedgerServiceV1ListCategoryResponse;
 
+import 'package:flutter_app/generated/l10n.dart';
+import 'package:flutter_app/src/core/themes/const.dart';
 import 'package:flutter_app/src/core/transport/http/status.dart';
 import 'package:flutter_app/src/features/ledger/services/book_service.dart';
 import 'package:flutter_app/src/features/ledger/services/category_service.dart';
@@ -106,9 +108,10 @@ class _CategoryFormPageState extends State<CategoryFormPage> {
   }
 
   Future<void> _submit() async {
+    final loc = S.of(context);
     if (!_formKey.currentState!.validate()) return;
     setState(() => _saving = true);
-    EasyLoading.show(status: '保存中...');
+    EasyLoading.show(status: loc.processing);
 
     final data = LedgerServiceV1Category(
       name: _nameCtrl.text.trim(),
@@ -128,22 +131,23 @@ class _CategoryFormPageState extends State<CategoryFormPage> {
     setState(() => _saving = false);
 
     if (result is LedgerServiceV1Category) {
-      EasyLoading.showSuccess('保存成功');
+      EasyLoading.showSuccess(loc.saveSuccess);
       if (context.canPop()) {
         context.pop();
       } else {
         context.go('/ledger/categories');
       }
     } else if (result is Status) {
-      EasyLoading.showError(result.getMessage.isEmpty ? '保存失败' : result.getMessage);
+      EasyLoading.showError(result.getMessage.isEmpty ? loc.saveFailed : result.getMessage);
     }
   }
 
   @override
   Widget build(BuildContext context) {
+    final loc = S.of(context);
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget.editId == null ? '新建分类' : '编辑分类'),
+        title: Text(widget.editId == null ? loc.create : loc.edit),
       ),
       body: _loading
           ? const Center(child: CircularProgressIndicator())
@@ -156,32 +160,32 @@ class _CategoryFormPageState extends State<CategoryFormPage> {
                   children: [
                     TextFormField(
                       controller: _nameCtrl,
-                      decoration: const InputDecoration(
-                        labelText: '分类名称',
+                      decoration: InputDecoration(
+                        labelText: loc.fieldCategoryName,
                         prefixIcon: Icon(Icons.label_outline),
                         border: OutlineInputBorder(),
                       ),
                       validator: (v) =>
-                          (v == null || v.trim().isEmpty) ? '请输入分类名称' : null,
+                          (v == null || v.trim().isEmpty) ? loc.enterCategoryName : null,
                     ),
                     const SizedBox(height: 12),
                     DropdownButtonFormField<LedgerServiceV1CategoryType>(
                       value: _type,
-                      decoration: const InputDecoration(
-                        labelText: '分类类型',
+                      decoration: InputDecoration(
+                        labelText: loc.fieldCategoryType,
                         prefixIcon: Icon(Icons.category_outlined),
                         border: OutlineInputBorder(),
                       ),
-                      items: const [
+                      items: [
                         DropdownMenuItem(
                           value: LedgerServiceV1CategoryType
                               .categoryTypeExpense,
-                          child: Text('支出'),
+                          child: Text(loc.flowFilterExpense),
                         ),
                         DropdownMenuItem(
                           value: LedgerServiceV1CategoryType
                               .categoryTypeIncome,
-                          child: Text('收入'),
+                          child: Text(loc.flowFilterIncome),
                         ),
                       ],
                       onChanged: (v) {
@@ -191,15 +195,15 @@ class _CategoryFormPageState extends State<CategoryFormPage> {
                     const SizedBox(height: 12),
                     DropdownButtonFormField<int>(
                       value: _bookId,
-                      decoration: const InputDecoration(
-                        labelText: '所属账本',
+                      decoration: InputDecoration(
+                        labelText: loc.fieldBook,
                         prefixIcon: Icon(Icons.menu_book_outlined),
                         border: OutlineInputBorder(),
                       ),
                       items: _books
                           .map((b) => DropdownMenuItem(
                                 value: b.id,
-                                child: Text(b.name ?? '未命名'),
+                                child: Text(b.name ?? loc.unnamed),
                               ))
                           .toList(),
                       onChanged: (v) => setState(() => _bookId = v),
@@ -207,21 +211,21 @@ class _CategoryFormPageState extends State<CategoryFormPage> {
                     const SizedBox(height: 12),
                     DropdownButtonFormField<int>(
                       value: _parentId,
-                      decoration: const InputDecoration(
-                        labelText: '父分类（可选）',
+                      decoration: InputDecoration(
+                        labelText: loc.fieldParentCategory,
                         prefixIcon: Icon(Icons.account_tree_outlined),
                         border: OutlineInputBorder(),
                       ),
                       items: [
-                        const DropdownMenuItem<int>(
+                        DropdownMenuItem<int>(
                           value: null,
-                          child: Text('无（顶级分类）'),
+                          child: Text(loc.noParentCategory),
                         ),
                         ..._allCategories
                             .where((c) => c.id != widget.editId)
                             .map((c) => DropdownMenuItem(
                                   value: c.id,
-                                  child: Text(c.name ?? '未命名'),
+                                  child: Text(c.name ?? loc.unnamed),
                                 )),
                       ],
                       onChanged: (v) => setState(() => _parentId = v),
@@ -230,8 +234,8 @@ class _CategoryFormPageState extends State<CategoryFormPage> {
                     TextFormField(
                       controller: _sortOrderCtrl,
                       keyboardType: TextInputType.number,
-                      decoration: const InputDecoration(
-                        labelText: '排序（可选）',
+                      decoration: InputDecoration(
+                        labelText: loc.fieldSortOrder,
                         prefixIcon: Icon(Icons.sort),
                         border: OutlineInputBorder(),
                       ),
@@ -240,8 +244,8 @@ class _CategoryFormPageState extends State<CategoryFormPage> {
                     TextFormField(
                       controller: _notesCtrl,
                       maxLines: 3,
-                      decoration: const InputDecoration(
-                        labelText: '说明',
+                      decoration: InputDecoration(
+                        labelText: loc.fieldDescription,
                         prefixIcon: Icon(Icons.notes),
                         border: OutlineInputBorder(),
                       ),
@@ -252,7 +256,7 @@ class _CategoryFormPageState extends State<CategoryFormPage> {
                       style: FilledButton.styleFrom(
                         padding: const EdgeInsets.symmetric(vertical: 14),
                       ),
-                      child: Text(widget.editId == null ? '保存' : '更新'),
+                      child: Text(widget.editId == null ? loc.flowSave : loc.flowUpdate),
                     ),
                   ],
                 ),

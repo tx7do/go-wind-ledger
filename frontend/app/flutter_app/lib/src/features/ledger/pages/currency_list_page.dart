@@ -7,6 +7,8 @@ import 'package:flutter_app/generated/api/app/service/v1/index.dart'
         LedgerServiceV1ListCurrencyResponse,
         LedgerServiceV1ConvertCurrencyResponse;
 
+import 'package:flutter_app/generated/l10n.dart';
+import 'package:flutter_app/src/core/themes/const.dart';
 import 'package:flutter_app/src/core/transport/http/status.dart';
 import 'package:flutter_app/src/features/ledger/services/currency_service.dart';
 
@@ -42,6 +44,7 @@ class _CurrencyListPageState extends State<CurrencyListPage> {
   }
 
   Future<void> _loadData() async {
+    final loc = S.of(context);
     setState(() => _loading = true);
     final result = await _service.listAll();
     if (!mounted) return;
@@ -58,36 +61,38 @@ class _CurrencyListPageState extends State<CurrencyListPage> {
       });
     } else if (result is Status) {
       setState(() => _loading = false);
-      EasyLoading.showError(result.getMessage.isEmpty ? '加载失败' : result.getMessage);
+      EasyLoading.showError(result.getMessage.isEmpty ? loc.loadFailed : result.getMessage);
     }
   }
 
   Future<void> _refreshRates() async {
-    EasyLoading.show(status: '刷新汇率中...');
+    final loc = S.of(context);
+    EasyLoading.show(status: loc.refreshingRates);
     final result = await _service.refresh();
     EasyLoading.dismiss();
     if (!mounted) return;
     if (result is LedgerServiceV1ListCurrencyResponse) {
-      EasyLoading.showSuccess('汇率已更新');
+      EasyLoading.showSuccess(loc.ratesUpdated);
       setState(() => _currencies = result.items ?? []);
     } else if (result is Status) {
-      EasyLoading.showError(result.getMessage.isEmpty ? '刷新失败' : result.getMessage);
+      EasyLoading.showError(result.getMessage.isEmpty ? loc.refreshFailed : result.getMessage);
     }
   }
 
   Future<void> _convert() async {
+    final loc = S.of(context);
     final amount = _amountCtrl.text.trim();
     final from = _fromCode;
     final to = _toCode;
     if (amount.isEmpty || from == null || to == null) {
-      EasyLoading.showError('请填写金额并选择币种');
+      EasyLoading.showError(loc.enterAmountAndCurrency);
       return;
     }
     if (from == to) {
-      setState(() => _resultText = '源币种与目标币种相同，换算结果：$amount $from');
+      setState(() => _resultText = loc.sameCurrencyResult(amount, from));
       return;
     }
-    EasyLoading.show(status: '换算中...');
+    EasyLoading.show(status: loc.converting);
     final result = await _service.convert(amount: amount, from: from, to: to);
     EasyLoading.dismiss();
     if (!mounted) return;
@@ -95,23 +100,24 @@ class _CurrencyListPageState extends State<CurrencyListPage> {
       final converted = result.amount ?? '-';
       final rate = result.rate ?? '-';
       setState(() => _resultText =
-          '$amount $from = $converted $to\n参考汇率: 1 $from = $rate $to');
+          loc.convertFormula(amount, from, converted, to, rate));
     } else if (result is Status) {
       EasyLoading.showError(
-          result.getMessage.isEmpty ? '换算失败' : result.getMessage);
+          result.getMessage.isEmpty ? loc.convertFailed : result.getMessage);
     }
   }
 
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final loc = S.of(context);
     return Scaffold(
       appBar: AppBar(
-        title: const Text('币种管理'),
+        title: Text(loc.currencyManagement),
         actions: [
           IconButton(
             icon: const Icon(Icons.refresh),
-            tooltip: '刷新汇率',
+            tooltip: loc.refreshRates,
             onPressed: _refreshRates,
           ),
         ],
@@ -136,6 +142,7 @@ class _CurrencyListPageState extends State<CurrencyListPage> {
   }
 
   Widget _buildConverterCard(ThemeData theme) {
+    final loc = S.of(context);
     final codes = _currencies
         .map((c) => c.code)
         .where((c) => (c ?? '').isNotEmpty)
@@ -161,7 +168,7 @@ class _CurrencyListPageState extends State<CurrencyListPage> {
                     color: theme.colorScheme.primary),
                 const SizedBox(width: 8),
                 Text(
-                  '汇率换算',
+                  loc.rateConvert,
                   style: theme.textTheme.titleMedium
                       ?.copyWith(fontWeight: FontWeight.bold),
                 ),
@@ -172,8 +179,8 @@ class _CurrencyListPageState extends State<CurrencyListPage> {
               controller: _amountCtrl,
               keyboardType:
                   const TextInputType.numberWithOptions(decimal: true),
-              decoration: const InputDecoration(
-                labelText: '金额',
+              decoration: InputDecoration(
+                labelText: loc.fieldFlowAmount,
                 prefixIcon: Icon(Icons.attach_money_outlined),
                 border: OutlineInputBorder(),
                 isDense: true,
@@ -185,8 +192,8 @@ class _CurrencyListPageState extends State<CurrencyListPage> {
                 Expanded(
                   child: DropdownButtonFormField<String>(
                     value: fromValue,
-                    decoration: const InputDecoration(
-                      labelText: '源币种',
+                    decoration: InputDecoration(
+                      labelText: loc.sourceCurrency,
                       prefixIcon: Icon(Icons.arrow_outward),
                       border: OutlineInputBorder(),
                       isDense: true,
@@ -207,8 +214,8 @@ class _CurrencyListPageState extends State<CurrencyListPage> {
                 Expanded(
                   child: DropdownButtonFormField<String>(
                     value: toValue,
-                    decoration: const InputDecoration(
-                      labelText: '目标币种',
+                    decoration: InputDecoration(
+                      labelText: loc.targetCurrency,
                       prefixIcon: Icon(Icons.arrow_outward),
                       border: OutlineInputBorder(),
                       isDense: true,
@@ -228,7 +235,7 @@ class _CurrencyListPageState extends State<CurrencyListPage> {
             FilledButton.icon(
               onPressed: _convert,
               icon: const Icon(Icons.calculate_outlined),
-              label: const Text('换算'),
+              label: Text(loc.convert),
             ),
             if (_resultText.isNotEmpty) ...[
               const SizedBox(height: 12),
@@ -254,6 +261,7 @@ class _CurrencyListPageState extends State<CurrencyListPage> {
   }
 
   Widget _buildCurrencyTile(ThemeData theme, LedgerServiceV1Currency currency) {
+    final loc = S.of(context);
     final rate = double.tryParse(currency.rate ?? '0') ?? 0;
     return Card(
       margin: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
@@ -272,7 +280,7 @@ class _CurrencyListPageState extends State<CurrencyListPage> {
           style: theme.textTheme.bodySmall,
         ),
         trailing: Text(
-          '汇率 ${rate.toStringAsFixed(4)}',
+          loc.rateValue(rate.toStringAsFixed(4)),
           style: theme.textTheme.bodyMedium?.copyWith(
             color: theme.colorScheme.onSurfaceVariant,
           ),
@@ -282,6 +290,7 @@ class _CurrencyListPageState extends State<CurrencyListPage> {
   }
 
   Widget _buildEmpty(ThemeData theme) {
+    final loc = S.of(context);
     return Center(
       child: Column(
         mainAxisSize: MainAxisSize.min,
@@ -289,14 +298,14 @@ class _CurrencyListPageState extends State<CurrencyListPage> {
           Icon(Icons.currency_exchange_outlined,
               size: 64, color: theme.colorScheme.outline),
           const SizedBox(height: 12),
-          Text('暂无币种数据',
+          Text(loc.noCurrenciesData,
               style: theme.textTheme.bodyLarge
                   ?.copyWith(color: theme.colorScheme.outline)),
           const SizedBox(height: 16),
           FilledButton.icon(
             onPressed: _refreshRates,
             icon: const Icon(Icons.refresh),
-            label: const Text('刷新汇率'),
+            label: Text(loc.refreshRates),
           ),
         ],
       ),

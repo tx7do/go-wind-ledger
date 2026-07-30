@@ -4,6 +4,9 @@ import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_app/generated/api/app/service/v1/index.dart'
     show InitStateResponse, IdentityServiceV1Tenant;
 
+import 'package:flutter_app/src/core/themes/semantic_colors.dart';
+import 'package:flutter_app/generated/l10n.dart';
+import 'package:flutter_app/src/core/themes/const.dart';
 import 'package:flutter_app/src/core/transport/http/status.dart';
 import 'package:flutter_app/src/features/ledger/services/ledger_auth_service.dart';
 import 'package:flutter_app/src/features/ledger/services/tenant_member_service.dart';
@@ -34,6 +37,7 @@ class _MemberListPageState extends State<MemberListPage> {
   }
 
   Future<void> _loadInitial() async {
+    final loc = S.of(context);
     setState(() => _loading = true);
     final result = await _authService.initState();
     if (!mounted) return;
@@ -50,11 +54,12 @@ class _MemberListPageState extends State<MemberListPage> {
     } else if (result is Status) {
       setState(() => _loading = false);
       EasyLoading.showError(
-          result.getMessage.isEmpty ? '加载失败' : result.getMessage);
+          result.getMessage.isEmpty ? loc.loadFailed : result.getMessage);
     }
   }
 
   Future<void> _loadMembers() async {
+    final loc = S.of(context);
     if (_tenantId == null) return;
     setState(() => _loading = true);
     final result = await _memberService.listMembers(_tenantId!);
@@ -67,22 +72,23 @@ class _MemberListPageState extends State<MemberListPage> {
     } else if (result is Status) {
       setState(() => _loading = false);
       EasyLoading.showError(
-          result.getMessage.isEmpty ? '加载失败' : result.getMessage);
+          result.getMessage.isEmpty ? loc.loadFailed : result.getMessage);
     }
   }
 
   Future<void> _showInviteDialog() async {
+    final loc = S.of(context);
     if (_tenantId == null) return;
     final usernameCtrl = TextEditingController();
     final result = await showDialog<String>(
       context: context,
       builder: (ctx) => AlertDialog(
-        title: const Text('邀请成员'),
+        title: Text(loc.inviteMember),
         content: TextField(
           controller: usernameCtrl,
           autofocus: true,
-          decoration: const InputDecoration(
-            labelText: '用户名',
+          decoration: InputDecoration(
+            labelText: loc.username,
             prefixIcon: Icon(Icons.person_outline),
             border: OutlineInputBorder(),
           ),
@@ -90,7 +96,7 @@ class _MemberListPageState extends State<MemberListPage> {
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(ctx),
-            child: const Text('取消'),
+            child: Text(loc.cancel),
           ),
           FilledButton(
             onPressed: () {
@@ -98,13 +104,13 @@ class _MemberListPageState extends State<MemberListPage> {
               if (v.isEmpty) return;
               Navigator.pop(ctx, v);
             },
-            child: const Text('邀请'),
+            child: Text(loc.invite),
           ),
         ],
       ),
     );
     if (result == null) return;
-    EasyLoading.show(status: '邀请中...');
+    EasyLoading.show(status: loc.inviting);
     final res = await _memberService.inviteMember(
       tenantId: _tenantId!,
       username: result,
@@ -112,37 +118,38 @@ class _MemberListPageState extends State<MemberListPage> {
     EasyLoading.dismiss();
     if (!mounted) return;
     if (res is MemberInfo) {
-      EasyLoading.showSuccess('邀请已发送');
+      EasyLoading.showSuccess(loc.inviteSent);
       _loadMembers();
     } else if (res is Status) {
       EasyLoading.showError(
-          res.getMessage.isEmpty ? '邀请失败' : res.getMessage);
+          res.getMessage.isEmpty ? loc.inviteFailed : res.getMessage);
     }
   }
 
   Future<void> _remove(MemberInfo member) async {
+    final loc = S.of(context);
     final tenantId = _tenantId;
     final userId = member.userId;
     if (tenantId == null || userId == null) return;
     final ok = await showDialog<bool>(
       context: context,
       builder: (ctx) => AlertDialog(
-        title: const Text('移除成员'),
-        content: Text('确定移除成员「${member.nickname ?? member.username ?? ''}」？'),
+        title: Text(loc.removeMemberTitle),
+        content: Text(loc.removeMemberMsg(member.nickname ?? member.username ?? '')),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(ctx, false),
-            child: const Text('取消'),
+            child: Text(loc.cancel),
           ),
           TextButton(
             onPressed: () => Navigator.pop(ctx, true),
-            child: const Text('移除'),
+            child: Text(loc.removeMember),
           ),
         ],
       ),
     );
     if (ok != true) return;
-    EasyLoading.show(status: '处理中...');
+    EasyLoading.show(status: loc.processing);
     final res = await _memberService.removeMember(
       tenantId: tenantId,
       userId: userId,
@@ -150,34 +157,49 @@ class _MemberListPageState extends State<MemberListPage> {
     EasyLoading.dismiss();
     if (!mounted) return;
     if (res == null) {
-      EasyLoading.showSuccess('已移除');
+      EasyLoading.showSuccess(loc.removed);
       _loadMembers();
     } else if (res is Status) {
       EasyLoading.showError(
-          res.getMessage.isEmpty ? '操作失败' : res.getMessage);
+          res.getMessage.isEmpty ? loc.operationFailed : res.getMessage);
     }
   }
 
-  (String, Color) _statusDescriptor(MemberStatus s) {
+  Color _statusColor(MemberStatus s) {
     switch (s) {
       case MemberStatus.active:
-        return ('正常', const Color(0xFF2E7D32));
+        return SemanticColors.memberActive(context);
       case MemberStatus.invited:
-        return ('待接受', const Color(0xFFE65100));
+        return SemanticColors.memberPending(context);
       case MemberStatus.disabled:
-        return ('已禁用', const Color(0xFFC62828));
+        return SemanticColors.memberDisabled(context);
+      default:
+        return SemanticColors.grey(context);
+    }
+  }
+
+  String _statusLabel(MemberStatus s) {
+    final loc = S.of(context);
+    switch (s) {
+      case MemberStatus.active:
+        return loc.memberActive;
+      case MemberStatus.invited:
+        return loc.memberInvited;
+      case MemberStatus.disabled:
+        return loc.memberDisabled;
       case MemberStatus.left:
-        return ('已退出', Colors.grey);
+        return loc.memberLeft;
       case MemberStatus.unspecified:
-        return ('未知', Colors.grey);
+        return loc.unknownUser;
     }
   }
 
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final loc = S.of(context);
     return Scaffold(
-      appBar: AppBar(title: const Text('成员管理')),
+      appBar: AppBar(title: Text(loc.memberManagement)),
       body: _loading
           ? const Center(child: CircularProgressIndicator())
           : _tenantId == null
@@ -205,19 +227,20 @@ class _MemberListPageState extends State<MemberListPage> {
           : FloatingActionButton.extended(
               onPressed: _showInviteDialog,
               icon: const Icon(Icons.person_add_outlined),
-              label: const Text('邀请成员'),
+              label: Text(loc.inviteMember),
             ),
     );
   }
 
   Widget _buildTenantSwitcher(ThemeData theme) {
+    final loc = S.of(context);
     return Container(
       width: double.infinity,
       padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
       child: DropdownButtonFormField<int>(
         value: _tenantId,
-        decoration: const InputDecoration(
-          labelText: '当前租户',
+        decoration: InputDecoration(
+          labelText: loc.currentTenant,
           prefixIcon: Icon(Icons.apartment_outlined),
           border: OutlineInputBorder(),
           isDense: true,
@@ -225,7 +248,7 @@ class _MemberListPageState extends State<MemberListPage> {
         items: _tenants
             .map((t) => DropdownMenuItem<int>(
                   value: t.id,
-                  child: Text(t.name ?? '未命名租户'),
+                  child: Text(t.name ?? loc.unnamedTenant),
                 ))
             .toList(),
         onChanged: (v) {
@@ -239,10 +262,12 @@ class _MemberListPageState extends State<MemberListPage> {
   }
 
   Widget _buildMemberTile(ThemeData theme, MemberInfo member) {
-    final (statusLabel, statusColor) = _statusDescriptor(member.status);
+    final loc = S.of(context);
+    final statusLabel = _statusLabel(member.status);
+    final statusColor = _statusColor(member.status);
     final displayName = member.nickname?.isNotEmpty == true
         ? member.nickname!
-        : (member.username ?? '未知用户');
+        : (member.username ?? loc.unknownUser);
     return Card(
       margin: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
       child: ListTile(
@@ -277,7 +302,7 @@ class _MemberListPageState extends State<MemberListPage> {
             ),
             if (member.isPrimary != true)
               IconButton(
-                tooltip: '移除成员',
+                tooltip: loc.removeMember,
                 icon: const Icon(Icons.remove_circle_outline, size: 20),
                 onPressed: () => _remove(member),
               ),
@@ -288,6 +313,7 @@ class _MemberListPageState extends State<MemberListPage> {
   }
 
   Widget _buildEmpty(ThemeData theme) {
+    final loc = S.of(context);
     return Center(
       child: Column(
         mainAxisSize: MainAxisSize.min,
@@ -295,14 +321,14 @@ class _MemberListPageState extends State<MemberListPage> {
           Icon(Icons.group_outlined,
               size: 64, color: theme.colorScheme.outline),
           const SizedBox(height: 12),
-          Text('暂无成员',
+          Text(loc.noMembers,
               style: theme.textTheme.bodyLarge
                   ?.copyWith(color: theme.colorScheme.outline)),
           const SizedBox(height: 16),
           FilledButton.icon(
             onPressed: _showInviteDialog,
             icon: const Icon(Icons.person_add_outlined),
-            label: const Text('邀请成员'),
+            label: Text(loc.inviteMember),
           ),
         ],
       ),
@@ -310,6 +336,7 @@ class _MemberListPageState extends State<MemberListPage> {
   }
 
   Widget _buildNoTenant(ThemeData theme) {
+    final loc = S.of(context);
     return Center(
       child: Column(
         mainAxisSize: MainAxisSize.min,
@@ -317,7 +344,7 @@ class _MemberListPageState extends State<MemberListPage> {
           Icon(Icons.apartment_outlined,
               size: 64, color: theme.colorScheme.outline),
           const SizedBox(height: 12),
-          Text('暂无可用租户',
+          Text(loc.noTenants,
               style: theme.textTheme.bodyLarge
                   ?.copyWith(color: theme.colorScheme.outline)),
         ],

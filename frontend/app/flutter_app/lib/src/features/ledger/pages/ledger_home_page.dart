@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
+import 'package:flutter_app/generated/l10n.dart';
+import 'package:flutter_app/src/core/utils/responsive_utils.dart';
 import 'package:flutter_app/src/features/ledger/widgets/ledger_bottom_nav.dart';
 import 'package:flutter_app/src/features/ledger/pages/balance_flow_list_page.dart';
 import 'package:flutter_app/src/features/ledger/pages/report_page.dart';
@@ -25,7 +27,14 @@ class _LedgerHomePageState extends State<LedgerHomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: _buildBody(),
+      body: Center(
+        child: ConstrainedBox(
+          constraints: BoxConstraints(
+            maxWidth: ResponsiveUtils.contentMaxWidth(context),
+          ),
+          child: _buildBody(),
+        ),
+      ),
       bottomNavigationBar: LedgerBottomNav(
         current: _current,
         onTap: (tab) => setState(() => _current = tab),
@@ -49,59 +58,60 @@ class _LedgerHomePageState extends State<LedgerHomePage> {
 
   Widget _buildMinePage() {
     final theme = Theme.of(context);
+    final loc = S.of(context);
     final entries = <_MenuEntry>[
       _MenuEntry(
         icon: Icons.menu_book_outlined,
-        title: '账本管理',
-        subtitle: '管理记账账本',
+        title: loc.bookManagement,
+        subtitle: loc.manageBooksDesc,
         route: '/ledger/books',
       ),
       _MenuEntry(
         icon: Icons.savings_outlined,
-        title: '预算管理',
-        subtitle: '管理收支预算',
+        title: loc.budgetManagement,
+        subtitle: loc.manageBudgetsDesc,
         route: '/ledger/budgets',
       ),
       _MenuEntry(
         icon: Icons.group_outlined,
-        title: '成员管理',
-        subtitle: '邀请与管理租户成员',
+        title: loc.memberManagement,
+        subtitle: loc.manageMembersDesc,
         route: '/ledger/members',
       ),
       _MenuEntry(
         icon: Icons.category_outlined,
-        title: '分类管理',
-        subtitle: '管理收支分类',
+        title: loc.categoryManagement,
+        subtitle: loc.manageCategoriesDesc,
         route: '/ledger/categories',
       ),
       _MenuEntry(
         icon: Icons.label_outlined,
-        title: '标签管理',
-        subtitle: '管理流水标签',
+        title: loc.tagManagement,
+        subtitle: loc.manageTagsDesc,
         route: '/ledger/tags',
       ),
       _MenuEntry(
         icon: Icons.person_outline,
-        title: '收款人管理',
-        subtitle: '管理收款人信息',
+        title: loc.payeeManagement,
+        subtitle: loc.managePayeesDesc,
         route: '/ledger/payees',
       ),
       _MenuEntry(
         icon: Icons.notifications_active_outlined,
-        title: '定期提醒',
-        subtitle: '管理定期记账提醒',
+        title: loc.noteDayManagement,
+        subtitle: loc.manageNoteDaysDesc,
         route: '/ledger/note-days',
       ),
       _MenuEntry(
         icon: Icons.currency_exchange_outlined,
-        title: '币种管理',
-        subtitle: '查看币种与汇率',
+        title: loc.currencyManagement,
+        subtitle: loc.manageCurrenciesDesc,
         route: '/ledger/currencies',
       ),
       _MenuEntry(
         icon: Icons.settings_outlined,
-        title: '设置',
-        subtitle: '切换默认租户与账本',
+        title: loc.mySettings,
+        subtitle: loc.switchDefaultTenant,
         route: '/ledger/settings',
       ),
     ];
@@ -112,7 +122,7 @@ class _LedgerHomePageState extends State<LedgerHomePage> {
           Padding(
             padding: const EdgeInsets.fromLTRB(16, 8, 16, 12),
             child: Text(
-              '我的',
+              loc.myProfile,
               style: theme.textTheme.headlineSmall
                   ?.copyWith(fontWeight: FontWeight.bold),
             ),

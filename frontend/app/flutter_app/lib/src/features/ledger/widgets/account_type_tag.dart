@@ -2,10 +2,12 @@ import 'package:flutter/material.dart';
 
 import 'package:flutter_app/generated/api/app/service/v1/index.dart'
     show LedgerServiceV1AccountType;
+import 'package:flutter_app/generated/l10n.dart';
+import 'package:flutter_app/src/core/themes/semantic_colors.dart';
 
 /// 账户类型标签。
 ///
-/// 以不同颜色的 [Chip] 展示账户类型（资产/活期/信用/负债）。
+/// 以不同颜色的 [Chip] 展示账户类型(资产/活期/信用/负债)。
 class AccountTypeTag extends StatelessWidget {
   /// 账户类型。
   final LedgerServiceV1AccountType type;
@@ -14,7 +16,7 @@ class AccountTypeTag extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final (label, color) = _descriptor(type);
+    final (label, color) = _descriptor(context, type);
     final theme = Theme.of(context);
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
@@ -30,18 +32,26 @@ class AccountTypeTag extends StatelessWidget {
     );
   }
 
-  (String, Color) _descriptor(LedgerServiceV1AccountType type) {
+  (String, Color) _descriptor(
+    BuildContext context,
+    LedgerServiceV1AccountType type,
+  ) {
+    final loc = S.of(context);
+
     switch (type) {
       case LedgerServiceV1AccountType.accountTypeAsset:
-        return ('资产', const Color(0xFF1976D2));
+        return (loc.accountTypeAsset, SemanticColors.accountAsset(context));
       case LedgerServiceV1AccountType.accountTypeChecking:
-        return ('活期', const Color(0xFF2E7D32));
+        return (
+          loc.accountTypeChecking,
+          SemanticColors.accountChecking(context),
+        );
       case LedgerServiceV1AccountType.accountTypeCredit:
-        return ('信用', const Color(0xFFE65100));
+        return (loc.accountTypeCredit, SemanticColors.accountCredit(context));
       case LedgerServiceV1AccountType.accountTypeDebt:
-        return ('负债', const Color(0xFFC62828));
+        return (loc.accountTypeDebt, SemanticColors.accountDebt(context));
       case LedgerServiceV1AccountType.accountTypeUnspecified:
-        return ('其他', Colors.grey);
+        return (loc.accountTypeOther, SemanticColors.grey(context));
     }
   }
 }

@@ -9,6 +9,8 @@ import 'package:flutter_app/generated/api/app/service/v1/index.dart'
         LedgerServiceV1Currency,
         LedgerServiceV1ListCurrencyResponse;
 
+import 'package:flutter_app/generated/l10n.dart';
+import 'package:flutter_app/src/core/themes/const.dart';
 import 'package:flutter_app/src/core/transport/http/status.dart';
 import 'package:flutter_app/src/features/ledger/services/account_service.dart';
 import 'package:flutter_app/src/features/ledger/services/currency_service.dart';
@@ -114,9 +116,10 @@ class _AccountFormPageState extends State<AccountFormPage> {
   }
 
   Future<void> _submit() async {
+    final loc = S.of(context);
     if (!_formKey.currentState!.validate()) return;
     setState(() => _saving = true);
-    EasyLoading.show(status: '保存中...');
+    EasyLoading.show(status: loc.processing);
 
     final data = LedgerServiceV1Account(
       name: _nameCtrl.text.trim(),
@@ -148,23 +151,24 @@ class _AccountFormPageState extends State<AccountFormPage> {
     setState(() => _saving = false);
 
     if (result is LedgerServiceV1Account) {
-      EasyLoading.showSuccess('保存成功');
+      EasyLoading.showSuccess(loc.saveSuccess);
       if (context.canPop()) {
         context.pop();
       } else {
         context.go('/ledger/accounts');
       }
     } else if (result is Status) {
-      EasyLoading.showError(result.getMessage.isEmpty ? '保存失败' : result.getMessage);
+      EasyLoading.showError(result.getMessage.isEmpty ? loc.saveFailed : result.getMessage);
     }
   }
 
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final loc = S.of(context);
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget.editId == null ? '新建账户' : '编辑账户'),
+        title: Text(widget.editId == null ? loc.create : loc.edit),
       ),
       body: _loading
           ? const Center(child: CircularProgressIndicator())
@@ -177,35 +181,35 @@ class _AccountFormPageState extends State<AccountFormPage> {
                   children: [
                     _buildTextField(
                       controller: _nameCtrl,
-                      label: '账户名称',
+                      label: loc.fieldBookName,
                       icon: Icons.label_outline,
                       required: true,
                     ),
                     const SizedBox(height: 12),
                     DropdownButtonFormField<LedgerServiceV1AccountType>(
                       value: _type,
-                      decoration: const InputDecoration(
-                        labelText: '账户类型',
+                      decoration: InputDecoration(
+                        labelText: loc.fieldAccountType,
                         prefixIcon: Icon(Icons.category_outlined),
                         border: OutlineInputBorder(),
                       ),
-                      items: const [
+                      items: [
                         DropdownMenuItem(
                             value: LedgerServiceV1AccountType
                                 .accountTypeChecking,
-                            child: Text('活期')),
+                            child: Text(loc.accountTypeChecking)),
                         DropdownMenuItem(
                             value: LedgerServiceV1AccountType
                                 .accountTypeAsset,
-                            child: Text('资产')),
+                            child: Text(loc.accountTypeAsset)),
                         DropdownMenuItem(
                             value: LedgerServiceV1AccountType
                                 .accountTypeCredit,
-                            child: Text('信用')),
+                            child: Text(loc.accountTypeCredit)),
                         DropdownMenuItem(
                             value: LedgerServiceV1AccountType
                                 .accountTypeDebt,
-                            child: Text('负债')),
+                            child: Text(loc.accountTypeDebt)),
                       ],
                       onChanged: (v) {
                         if (v != null) setState(() => _type = v);
@@ -214,8 +218,8 @@ class _AccountFormPageState extends State<AccountFormPage> {
                     const SizedBox(height: 12),
                     DropdownButtonFormField<String>(
                       value: _currencyCode,
-                      decoration: const InputDecoration(
-                        labelText: '币种',
+                      decoration: InputDecoration(
+                        labelText: loc.fieldCurrency,
                         prefixIcon: Icon(Icons.currency_exchange_outlined),
                         border: OutlineInputBorder(),
                       ),
@@ -232,47 +236,47 @@ class _AccountFormPageState extends State<AccountFormPage> {
                     const SizedBox(height: 12),
                     _buildTextField(
                       controller: _initialBalanceCtrl,
-                      label: '初始余额',
+                      label: loc.fieldOpeningBalance,
                       icon: Icons.account_balance_outlined,
                       numeric: true,
                     ),
                     const SizedBox(height: 12),
                     _buildTextField(
                       controller: _creditLimitCtrl,
-                      label: '信用额度',
+                      label: loc.fieldCreditLimit,
                       icon: Icons.credit_card_outlined,
                       numeric: true,
                     ),
                     const SizedBox(height: 12),
                     _buildTextField(
                       controller: _aprCtrl,
-                      label: '年化利率',
+                      label: loc.fieldAnnualRate,
                       icon: Icons.percent_outlined,
                       numeric: true,
                     ),
                     const SizedBox(height: 12),
                     _buildTextField(
                       controller: _noCtrl,
-                      label: '账号尾号',
+                      label: loc.fieldAccountNumberTail,
                       icon: Icons.numbers_outlined,
                     ),
                     const SizedBox(height: 12),
                     _buildTextField(
                       controller: _notesCtrl,
-                      label: '说明',
+                      label: loc.fieldDescription,
                       icon: Icons.notes,
                       maxLines: 3,
                     ),
                     const SizedBox(height: 12),
-                    _buildSwitchTile('允许支出', _canExpense,
+                    _buildSwitchTile(loc.fieldAllowExpense, _canExpense,
                         (v) => setState(() => _canExpense = v)),
-                    _buildSwitchTile('允许收入', _canIncome,
+                    _buildSwitchTile(loc.fieldAllowIncome, _canIncome,
                         (v) => setState(() => _canIncome = v)),
-                    _buildSwitchTile('允许转出', _canTransferFrom,
+                    _buildSwitchTile(loc.fieldAllowTransferOut, _canTransferFrom,
                         (v) => setState(() => _canTransferFrom = v)),
-                    _buildSwitchTile('允许转入', _canTransferTo,
+                    _buildSwitchTile(loc.fieldAllowTransferIn, _canTransferTo,
                         (v) => setState(() => _canTransferTo = v)),
-                    _buildSwitchTile('纳入资产统计', _include,
+                    _buildSwitchTile(loc.fieldIncludeInAssets, _include,
                         (v) => setState(() => _include = v)),
                     const SizedBox(height: 24),
                     FilledButton(
@@ -280,7 +284,7 @@ class _AccountFormPageState extends State<AccountFormPage> {
                       style: FilledButton.styleFrom(
                         padding: const EdgeInsets.symmetric(vertical: 14),
                       ),
-                      child: Text(widget.editId == null ? '保存' : '更新'),
+                      child: Text(widget.editId == null ? loc.flowSave : loc.flowUpdate),
                     ),
                   ],
                 ),
@@ -297,6 +301,7 @@ class _AccountFormPageState extends State<AccountFormPage> {
     int maxLines = 1,
     bool required = false,
   }) {
+    final loc = S.of(context);
     return TextFormField(
       controller: controller,
       keyboardType: numeric
@@ -309,7 +314,7 @@ class _AccountFormPageState extends State<AccountFormPage> {
         border: const OutlineInputBorder(),
       ),
       validator: required
-          ? (v) => (v == null || v.trim().isEmpty) ? '请输入$label' : null
+          ? (v) => (v == null || v.trim().isEmpty) ? loc.enterField(label) : null
           : null,
     );
   }

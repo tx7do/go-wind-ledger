@@ -9,6 +9,8 @@ import 'package:flutter_app/generated/api/app/service/v1/index.dart'
         LedgerServiceV1AccountType,
         InitStateResponse;
 
+import 'package:flutter_app/generated/l10n.dart';
+import 'package:flutter_app/src/core/themes/const.dart';
 import 'package:flutter_app/src/core/transport/http/status.dart';
 import 'package:flutter_app/src/features/ledger/services/account_service.dart';
 import 'package:flutter_app/src/features/ledger/services/ledger_auth_service.dart';
@@ -39,6 +41,7 @@ class _AccountListPageState extends State<AccountListPage> {
   }
 
   Future<void> _loadData() async {
+    final loc = S.of(context);
     setState(() => _loading = true);
     final result = await _service.listAll(includeDisabled: false);
     if (!mounted) return;
@@ -49,64 +52,73 @@ class _AccountListPageState extends State<AccountListPage> {
       });
     } else if (result is Status) {
       setState(() => _loading = false);
-      EasyLoading.showError(result.getMessage.isEmpty ? '加载失败' : result.getMessage);
+      EasyLoading.showError(
+        result.getMessage.isEmpty ? loc.loadFailed : result.getMessage,
+      );
     }
   }
 
   Future<void> _toggle(LedgerServiceV1Account acc) async {
+    final loc = S.of(context);
     final id = acc.id;
     if (id == null) return;
-    EasyLoading.show(status: '处理中...');
+    EasyLoading.show(status: loc.processing);
     final result = await _service.toggle(id);
     EasyLoading.dismiss();
     if (!mounted) return;
     if (result is LedgerServiceV1Account) {
-      EasyLoading.showSuccess('已更新');
+      EasyLoading.showSuccess(loc.updated);
       _loadData();
     } else if (result is Status) {
-      EasyLoading.showError(result.getMessage.isEmpty ? '操作失败' : result.getMessage);
+      EasyLoading.showError(
+        result.getMessage.isEmpty ? loc.operationFailed : result.getMessage,
+      );
     }
   }
 
   /// 获取当前默认账本 ID（用于余额调整）。
   Future<int?> _fetchDefaultBookId() async {
+    final loc = S.of(context);
     final result = await LedgerAuthService().initState();
     if (result is InitStateResponse) {
       return result.book?.id;
     }
     if (result is Status) {
       EasyLoading.showError(
-          result.getMessage.isEmpty ? '获取默认账本失败' : result.getMessage);
+        result.getMessage.isEmpty ? loc.loadFailed : result.getMessage,
+      );
     }
     return null;
   }
 
   Future<void> _adjustBalance(LedgerServiceV1Account acc) async {
+    final loc = S.of(context);
     final id = acc.id;
     if (id == null) return;
     final defaultBookId = await _fetchDefaultBookId();
     if (!mounted) return;
 
-    final balanceCtrl =
-        TextEditingController(text: acc.balance ?? '0');
+    final balanceCtrl = TextEditingController(text: acc.balance ?? '0');
     final bookCtrl = TextEditingController(
-        text: defaultBookId?.toString() ?? '');
+      text: defaultBookId?.toString() ?? '',
+    );
 
     final result = await showDialog<(String, String)>(
       context: context,
       builder: (ctx) => AlertDialog(
-        title: Text('调整余额 · ${acc.name ?? ''}'),
+        title: Text(loc.adjustBalanceTitle(acc.name ?? '')),
         content: SingleChildScrollView(
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
               TextField(
                 controller: balanceCtrl,
-                keyboardType:
-                    const TextInputType.numberWithOptions(decimal: true),
+                keyboardType: const TextInputType.numberWithOptions(
+                  decimal: true,
+                ),
                 autofocus: true,
-                decoration: const InputDecoration(
-                  labelText: '目标余额',
+                decoration: InputDecoration(
+                  labelText: loc.fieldTargetBalance,
                   prefixIcon: Icon(Icons.account_balance_wallet_outlined),
                   border: OutlineInputBorder(),
                 ),
@@ -115,10 +127,10 @@ class _AccountListPageState extends State<AccountListPage> {
               TextField(
                 controller: bookCtrl,
                 keyboardType: TextInputType.number,
-                decoration: const InputDecoration(
-                  labelText: '账本 ID',
+                decoration: InputDecoration(
+                  labelText: loc.fieldBookId,
                   prefixIcon: Icon(Icons.menu_book_outlined),
-                  helperText: '默认填充当前默认账本，可手动修改',
+                  helperText: loc.bookIdHelper,
                   border: OutlineInputBorder(),
                 ),
               ),
@@ -128,7 +140,7 @@ class _AccountListPageState extends State<AccountListPage> {
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(ctx),
-            child: const Text('取消'),
+            child: Text(loc.cancel),
           ),
           FilledButton(
             onPressed: () {
@@ -137,7 +149,7 @@ class _AccountListPageState extends State<AccountListPage> {
               if (balance.isEmpty || bookStr.isEmpty) return;
               Navigator.pop(ctx, (balance, bookStr));
             },
-            child: const Text('确认调整'),
+            child: Text(loc.confirmAdjust),
           ),
         ],
       ),
@@ -147,11 +159,11 @@ class _AccountListPageState extends State<AccountListPage> {
     final (balance, bookStr) = result;
     final bookId = int.tryParse(bookStr);
     if (bookId == null) {
-      EasyLoading.showError('账本 ID 无效');
+      EasyLoading.showError(loc.adjustFailed);
       return;
     }
 
-    EasyLoading.show(status: '调整中...');
+    EasyLoading.show(status: loc.adjusting);
     final res = await _service.adjustBalance(
       id: id,
       balance: balance,
@@ -160,11 +172,12 @@ class _AccountListPageState extends State<AccountListPage> {
     EasyLoading.dismiss();
     if (!mounted) return;
     if (res is LedgerServiceV1Account) {
-      EasyLoading.showSuccess('余额已调整');
+      EasyLoading.showSuccess(loc.adjustSuccess);
       _loadData();
     } else if (res is Status) {
       EasyLoading.showError(
-          res.getMessage.isEmpty ? '调整失败' : res.getMessage);
+        res.getMessage.isEmpty ? loc.adjustFailed : res.getMessage,
+      );
     }
   }
 
@@ -180,38 +193,38 @@ class _AccountListPageState extends State<AccountListPage> {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final loc = S.of(context);
     return Scaffold(
       appBar: widget.embedded
           ? null
           : AppBar(
-              title: const Text('账户管理'),
+              title: Text(loc.accountOverview),
               actions: [
                 IconButton(
-                  tooltip: '账户概览',
+                  tooltip: loc.accountOverview,
                   icon: const Icon(Icons.account_balance_outlined),
-                  onPressed: () =>
-                      context.push('/ledger/accounts/overview'),
+                  onPressed: () => context.push('/ledger/accounts/overview'),
                 ),
               ],
             ),
       body: _loading
           ? const Center(child: CircularProgressIndicator())
           : _accounts.isEmpty
-              ? _buildEmpty(theme)
-              : RefreshIndicator(
-                  onRefresh: _loadData,
-                  child: ListView(
-                    padding: const EdgeInsets.only(bottom: 16),
-                    children: _buildGrouped(theme),
-                  ),
-                ),
+          ? _buildEmpty(theme)
+          : RefreshIndicator(
+              onRefresh: _loadData,
+              child: ListView(
+                padding: const EdgeInsets.only(bottom: 16),
+                children: _buildGrouped(theme),
+              ),
+            ),
       floatingActionButton: FloatingActionButton.extended(
         onPressed: () async {
           await context.push('/ledger/accounts/create');
           _loadData();
         },
         icon: const Icon(Icons.add),
-        label: const Text('新建账户'),
+        label: Text(loc.create),
       ),
     );
   }
@@ -228,8 +241,12 @@ class _AccountListPageState extends State<AccountListPage> {
     return widgets;
   }
 
-  Widget _buildGroupHeader(ThemeData theme, LedgerServiceV1AccountType type,
-      List<LedgerServiceV1Account> accounts) {
+  Widget _buildGroupHeader(
+    ThemeData theme,
+    LedgerServiceV1AccountType type,
+    List<LedgerServiceV1Account> accounts,
+  ) {
+    final loc = S.of(context);
     final total = accounts.fold<double>(
       0,
       (sum, a) => sum + (double.tryParse(a.balance ?? '0') ?? 0),
@@ -241,9 +258,10 @@ class _AccountListPageState extends State<AccountListPage> {
           AccountTypeTag(type: type),
           const SizedBox(width: 8),
           Text(
-            '合计 ${total.toStringAsFixed(2)}',
-            style: theme.textTheme.bodySmall
-                ?.copyWith(color: theme.colorScheme.onSurfaceVariant),
+            loc.groupTotal(total.toStringAsFixed(2)),
+            style: theme.textTheme.bodySmall?.copyWith(
+              color: theme.colorScheme.onSurfaceVariant,
+            ),
           ),
         ],
       ),
@@ -251,6 +269,7 @@ class _AccountListPageState extends State<AccountListPage> {
   }
 
   Widget _buildAccountTile(ThemeData theme, LedgerServiceV1Account acc) {
+    final loc = S.of(context);
     final balance = double.tryParse(acc.balance ?? '0') ?? 0;
     return Card(
       margin: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
@@ -260,7 +279,7 @@ class _AccountListPageState extends State<AccountListPage> {
           foregroundColor: theme.colorScheme.onPrimaryContainer,
           child: const Icon(Icons.account_balance_wallet_outlined),
         ),
-        title: Text(acc.name ?? '未命名'),
+        title: Text(acc.name ?? loc.unnamed),
         subtitle: Text(
           acc.currencyCode ?? '',
           style: theme.textTheme.bodySmall,
@@ -272,7 +291,9 @@ class _AccountListPageState extends State<AccountListPage> {
               balance.toStringAsFixed(2),
               style: theme.textTheme.titleMedium?.copyWith(
                 fontWeight: FontWeight.w700,
-                color: balance >= 0 ? theme.colorScheme.primary : theme.colorScheme.error,
+                color: balance >= 0
+                    ? theme.colorScheme.primary
+                    : theme.colorScheme.error,
               ),
             ),
             PopupMenuButton<String>(
@@ -288,12 +309,11 @@ class _AccountListPageState extends State<AccountListPage> {
                 }
               },
               itemBuilder: (ctx) => [
-                const PopupMenuItem(value: 'edit', child: Text('编辑')),
-                const PopupMenuItem(
-                    value: 'adjust', child: Text('调整余额')),
+                PopupMenuItem(value: 'edit', child: Text(loc.edit)),
+                PopupMenuItem(value: 'adjust', child: Text(loc.editFlow)),
                 PopupMenuItem(
                   value: 'toggle',
-                  child: Text(acc.enable == false ? '启用' : '禁用'),
+                  child: Text(acc.enable == false ? loc.enable : loc.disable),
                 ),
               ],
             ),
@@ -308,16 +328,23 @@ class _AccountListPageState extends State<AccountListPage> {
   }
 
   Widget _buildEmpty(ThemeData theme) {
+    final loc = S.of(context);
     return Center(
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          Icon(Icons.account_balance_wallet_outlined,
-              size: 64, color: theme.colorScheme.outline),
+          Icon(
+            Icons.account_balance_wallet_outlined,
+            size: 64,
+            color: theme.colorScheme.outline,
+          ),
           const SizedBox(height: 12),
-          Text('暂无账户',
-              style: theme.textTheme.bodyLarge
-                  ?.copyWith(color: theme.colorScheme.outline)),
+          Text(
+            loc.noAccounts,
+            style: theme.textTheme.bodyLarge?.copyWith(
+              color: theme.colorScheme.outline,
+            ),
+          ),
           const SizedBox(height: 16),
           FilledButton.icon(
             onPressed: () async {
@@ -325,7 +352,7 @@ class _AccountListPageState extends State<AccountListPage> {
               _loadData();
             },
             icon: const Icon(Icons.add),
-            label: const Text('新建账户'),
+            label: Text(loc.create),
           ),
         ],
       ),

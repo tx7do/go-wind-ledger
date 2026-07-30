@@ -5,6 +5,8 @@ import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_app/generated/api/app/service/v1/index.dart'
     show LedgerServiceV1Payee, LedgerServiceV1Book, LedgerServiceV1ListBookResponse;
 
+import 'package:flutter_app/generated/l10n.dart';
+import 'package:flutter_app/src/core/themes/const.dart';
 import 'package:flutter_app/src/core/transport/http/status.dart';
 import 'package:flutter_app/src/features/ledger/services/book_service.dart';
 import 'package:flutter_app/src/features/ledger/services/payee_service.dart';
@@ -86,9 +88,10 @@ class _PayeeFormPageState extends State<PayeeFormPage> {
   }
 
   Future<void> _submit() async {
+    final loc = S.of(context);
     if (!_formKey.currentState!.validate()) return;
     setState(() => _saving = true);
-    EasyLoading.show(status: '保存中...');
+    EasyLoading.show(status: loc.processing);
 
     final data = LedgerServiceV1Payee(
       name: _nameCtrl.text.trim(),
@@ -108,22 +111,23 @@ class _PayeeFormPageState extends State<PayeeFormPage> {
     setState(() => _saving = false);
 
     if (result is LedgerServiceV1Payee) {
-      EasyLoading.showSuccess('保存成功');
+      EasyLoading.showSuccess(loc.saveSuccess);
       if (context.canPop()) {
         context.pop();
       } else {
         context.go('/ledger/payees');
       }
     } else if (result is Status) {
-      EasyLoading.showError(result.getMessage.isEmpty ? '保存失败' : result.getMessage);
+      EasyLoading.showError(result.getMessage.isEmpty ? loc.saveFailed : result.getMessage);
     }
   }
 
   @override
   Widget build(BuildContext context) {
+    final loc = S.of(context);
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget.editId == null ? '新建收款人' : '编辑收款人'),
+        title: Text(widget.editId == null ? loc.create : loc.edit),
       ),
       body: _loading
           ? const Center(child: CircularProgressIndicator())
@@ -136,38 +140,38 @@ class _PayeeFormPageState extends State<PayeeFormPage> {
                   children: [
                     TextFormField(
                       controller: _nameCtrl,
-                      decoration: const InputDecoration(
-                        labelText: '收款人名称',
+                      decoration: InputDecoration(
+                        labelText: loc.fieldPayeeName,
                         prefixIcon: Icon(Icons.person_outline),
                         border: OutlineInputBorder(),
                       ),
                       validator: (v) =>
-                          (v == null || v.trim().isEmpty) ? '请输入收款人名称' : null,
+                          (v == null || v.trim().isEmpty) ? loc.enterPayeeName : null,
                     ),
                     const SizedBox(height: 12),
                     DropdownButtonFormField<int>(
                       value: _bookId,
-                      decoration: const InputDecoration(
-                        labelText: '所属账本',
+                      decoration: InputDecoration(
+                        labelText: loc.fieldBook,
                         prefixIcon: Icon(Icons.menu_book_outlined),
                         border: OutlineInputBorder(),
                       ),
                       items: _books
                           .map((b) => DropdownMenuItem(
                                 value: b.id,
-                                child: Text(b.name ?? '未命名'),
+                                child: Text(b.name ?? loc.unnamed),
                               ))
                           .toList(),
                       onChanged: (v) => setState(() => _bookId = v),
                     ),
                     const SizedBox(height: 12),
                     SwitchListTile(
-                      title: const Text('可用于支出'),
+                      title: Text(loc.fieldUsableExpense),
                       value: _canExpense,
                       onChanged: (v) => setState(() => _canExpense = v),
                     ),
                     SwitchListTile(
-                      title: const Text('可用于收入'),
+                      title: Text(loc.fieldUsableIncome),
                       value: _canIncome,
                       onChanged: (v) => setState(() => _canIncome = v),
                     ),
@@ -175,8 +179,8 @@ class _PayeeFormPageState extends State<PayeeFormPage> {
                     TextFormField(
                       controller: _sortOrderCtrl,
                       keyboardType: TextInputType.number,
-                      decoration: const InputDecoration(
-                        labelText: '排序（可选）',
+                      decoration: InputDecoration(
+                        labelText: loc.fieldSortOrder,
                         prefixIcon: Icon(Icons.sort),
                         border: OutlineInputBorder(),
                       ),
@@ -185,8 +189,8 @@ class _PayeeFormPageState extends State<PayeeFormPage> {
                     TextFormField(
                       controller: _notesCtrl,
                       maxLines: 3,
-                      decoration: const InputDecoration(
-                        labelText: '说明',
+                      decoration: InputDecoration(
+                        labelText: loc.fieldDescription,
                         prefixIcon: Icon(Icons.notes),
                         border: OutlineInputBorder(),
                       ),
@@ -197,7 +201,7 @@ class _PayeeFormPageState extends State<PayeeFormPage> {
                       style: FilledButton.styleFrom(
                         padding: const EdgeInsets.symmetric(vertical: 14),
                       ),
-                      child: Text(widget.editId == null ? '保存' : '更新'),
+                      child: Text(widget.editId == null ? loc.flowSave : loc.flowUpdate),
                     ),
                   ],
                 ),

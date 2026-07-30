@@ -12,6 +12,8 @@ import 'package:flutter_app/generated/api/app/service/v1/index.dart'
         LedgerServiceV1ListCategoryResponse,
         LedgerServiceV1CategoryType;
 
+import 'package:flutter_app/generated/l10n.dart';
+import 'package:flutter_app/src/core/themes/const.dart';
 import 'package:flutter_app/src/core/transport/http/status.dart';
 import 'package:flutter_app/src/features/ledger/services/budget_service.dart';
 import 'package:flutter_app/src/features/ledger/services/book_service.dart';
@@ -155,15 +157,16 @@ class _BudgetFormPageState extends State<BudgetFormPage> {
   }
 
   Future<void> _submit() async {
+    final loc = S.of(context);
     if (!_formKey.currentState!.validate()) return;
     final amount = double.tryParse(_amountCtrl.text);
     if (amount == null || amount <= 0) {
-      EasyLoading.showError('请输入有效金额');
+      EasyLoading.showError(loc.enterAmount);
       return;
     }
 
     setState(() => _saving = true);
-    EasyLoading.show(status: '保存中...');
+    EasyLoading.show(status: loc.processing);
 
     final data = Budget(
       name: _nameCtrl.text.trim(),
@@ -188,7 +191,7 @@ class _BudgetFormPageState extends State<BudgetFormPage> {
     setState(() => _saving = false);
 
     if (result is Budget) {
-      EasyLoading.showSuccess('保存成功');
+      EasyLoading.showSuccess(loc.saveSuccess);
       if (context.canPop()) {
         context.pop();
       } else {
@@ -196,16 +199,17 @@ class _BudgetFormPageState extends State<BudgetFormPage> {
       }
     } else if (result is Status) {
       EasyLoading.showError(
-          result.getMessage.isEmpty ? '保存失败' : result.getMessage);
+          result.getMessage.isEmpty ? loc.saveFailed : result.getMessage);
     }
   }
 
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final loc = S.of(context);
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget.editId == null ? '新建预算' : '编辑预算'),
+        title: Text(widget.editId == null ? loc.create : loc.edit),
       ),
       body: _loading
           ? const Center(child: CircularProgressIndicator())
@@ -218,40 +222,40 @@ class _BudgetFormPageState extends State<BudgetFormPage> {
                   children: [
                     TextFormField(
                       controller: _nameCtrl,
-                      decoration: const InputDecoration(
-                        labelText: '预算名称',
+                      decoration: InputDecoration(
+                        labelText: loc.fieldBudgetName,
                         prefixIcon: Icon(Icons.savings_outlined),
                         border: OutlineInputBorder(),
                       ),
                       validator: (v) => (v == null || v.trim().isEmpty)
-                          ? '请输入预算名称'
+                          ? loc.enterBudgetName
                           : null,
                     ),
                     const SizedBox(height: 12),
                     _buildDropdown<int>(
-                      label: '账本',
+                      label: loc.defaultBook,
                       value: _bookId,
                       items: _books
                           .map((b) => _DropdownItem(
                                 value: b.id!,
-                                label: b.name ?? '未命名',
+                                label: b.name ?? loc.unnamed,
                               ))
                           .toList(),
                       onChanged: (v) => setState(() => _bookId = v),
                     ),
                     const SizedBox(height: 12),
                     _buildDropdown<BudgetPeriod>(
-                      label: '周期',
+                      label: loc.budgetPeriod,
                       value: _period,
-                      items: const [
+                      items: [
                         _DropdownItem(
-                            value: BudgetPeriod.monthly, label: '月度'),
+                            value: BudgetPeriod.monthly, label: loc.periodMonthly),
                         _DropdownItem(
-                            value: BudgetPeriod.quarterly, label: '季度'),
+                            value: BudgetPeriod.quarterly, label: loc.periodQuarterly),
                         _DropdownItem(
-                            value: BudgetPeriod.yearly, label: '年度'),
+                            value: BudgetPeriod.yearly, label: loc.periodYearly),
                         _DropdownItem(
-                            value: BudgetPeriod.weekly, label: '周'),
+                            value: BudgetPeriod.weekly, label: loc.periodWeekly),
                       ],
                       onChanged: (v) {
                         if (v != null) setState(() => _period = v);
@@ -262,39 +266,39 @@ class _BudgetFormPageState extends State<BudgetFormPage> {
                       controller: _amountCtrl,
                       keyboardType: const TextInputType.numberWithOptions(
                           decimal: true, signed: false),
-                      decoration: const InputDecoration(
-                        labelText: '预算金额',
+                      decoration: InputDecoration(
+                        labelText: loc.fieldBudgetAmount,
                         prefixIcon: Icon(Icons.payments_outlined),
                         border: OutlineInputBorder(),
                       ),
                       validator: (v) {
                         final value = v ?? '';
-                        if (value.isEmpty) return '请输入金额';
+                        if (value.isEmpty) return loc.enterAmount;
                         final n = double.tryParse(value);
-                        if (n == null || n <= 0) return '请输入有效金额';
+                        if (n == null || n <= 0) return loc.enterAmount;
                         return null;
                       },
                     ),
                     const SizedBox(height: 12),
                     _buildDropdown<int>(
-                      label: '分类',
+                      label: loc.categoryManagement,
                       value: _categoryId,
                       items: _categories
                           .map((c) => _DropdownItem(
                                 value: c.id!,
-                                label: c.name ?? '未分类',
+                                label: c.name ?? loc.unnamed,
                               ))
                           .toList(),
                       onChanged: (v) => setState(() => _categoryId = v),
                     ),
                     const SizedBox(height: 12),
                     _buildDropdown<int>(
-                      label: '账户',
+                      label: loc.accountOverview,
                       value: _accountId,
                       items: _accounts
                           .map((a) => _DropdownItem(
                                 value: a.id!,
-                                label: a.name ?? '未命名',
+                                label: a.name ?? loc.unnamed,
                               ))
                           .toList(),
                       onChanged: (v) => setState(() => _accountId = v),
@@ -305,7 +309,7 @@ class _BudgetFormPageState extends State<BudgetFormPage> {
                         Expanded(
                           child: _buildDateField(
                             theme,
-                            label: '开始日期',
+                            label: loc.fieldStartDate,
                             date: _startDate,
                             onTap: () => _pickDate(isStart: true),
                           ),
@@ -314,7 +318,7 @@ class _BudgetFormPageState extends State<BudgetFormPage> {
                         Expanded(
                           child: _buildDateField(
                             theme,
-                            label: '结束日期',
+                            label: loc.fieldEndDate,
                             date: _endDate,
                             onTap: () => _pickDate(isStart: false),
                           ),
@@ -323,12 +327,12 @@ class _BudgetFormPageState extends State<BudgetFormPage> {
                     ),
                     const SizedBox(height: 8),
                     SwitchListTile(
-                      title: const Text('启用预算'),
+                      title: Text(loc.enableBudget),
                       value: _enable,
                       onChanged: (v) => setState(() => _enable = v),
                     ),
                     SwitchListTile(
-                      title: const Text('超支通知'),
+                      title: Text(loc.budgetOverrunNotify),
                       value: _notify,
                       onChanged: (v) => setState(() => _notify = v),
                     ),
@@ -336,8 +340,8 @@ class _BudgetFormPageState extends State<BudgetFormPage> {
                     TextFormField(
                       controller: _notesCtrl,
                       maxLines: 3,
-                      decoration: const InputDecoration(
-                        labelText: '说明',
+                      decoration: InputDecoration(
+                        labelText: loc.fieldDescription,
                         prefixIcon: Icon(Icons.notes),
                         border: OutlineInputBorder(),
                       ),
@@ -348,7 +352,7 @@ class _BudgetFormPageState extends State<BudgetFormPage> {
                       style: FilledButton.styleFrom(
                         padding: const EdgeInsets.symmetric(vertical: 14),
                       ),
-                      child: Text(widget.editId == null ? '保存' : '更新'),
+                      child: Text(widget.editId == null ? loc.flowSave : loc.flowUpdate),
                     ),
                   ],
                 ),

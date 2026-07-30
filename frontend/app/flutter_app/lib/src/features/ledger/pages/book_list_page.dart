@@ -5,6 +5,8 @@ import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_app/generated/api/app/service/v1/index.dart'
     show LedgerServiceV1Book, LedgerServiceV1ListBookResponse;
 
+import 'package:flutter_app/generated/l10n.dart';
+import 'package:flutter_app/src/core/themes/const.dart';
 import 'package:flutter_app/src/core/transport/http/status.dart';
 import 'package:flutter_app/src/features/ledger/services/book_service.dart';
 
@@ -28,6 +30,7 @@ class _BookListPageState extends State<BookListPage> {
   }
 
   Future<void> _loadData() async {
+    final loc = S.of(context);
     setState(() => _loading = true);
     final result = await _service.listAll();
     if (!mounted) return;
@@ -38,63 +41,66 @@ class _BookListPageState extends State<BookListPage> {
       });
     } else if (result is Status) {
       setState(() => _loading = false);
-      EasyLoading.showError(result.getMessage.isEmpty ? '加载失败' : result.getMessage);
+      EasyLoading.showError(result.getMessage.isEmpty ? loc.loadFailed : result.getMessage);
     }
   }
 
   Future<void> _toggle(LedgerServiceV1Book book) async {
+    final loc = S.of(context);
     final id = book.id;
     if (id == null) return;
-    EasyLoading.show(status: '处理中...');
+    EasyLoading.show(status: loc.processing);
     final result = await _service.toggle(id);
     EasyLoading.dismiss();
     if (!mounted) return;
     if (result is LedgerServiceV1Book) {
-      EasyLoading.showSuccess('已更新');
+      EasyLoading.showSuccess(loc.updated);
       _loadData();
     } else if (result is Status) {
-      EasyLoading.showError(result.getMessage.isEmpty ? '操作失败' : result.getMessage);
+      EasyLoading.showError(result.getMessage.isEmpty ? loc.operationFailed : result.getMessage);
     }
   }
 
   Future<void> _delete(LedgerServiceV1Book book) async {
+    final loc = S.of(context);
     final id = book.id;
     if (id == null) return;
     final ok = await showDialog<bool>(
       context: context,
       builder: (ctx) => AlertDialog(
-        title: const Text('删除账本'),
-        content: Text('确定删除账本「${book.name ?? ''}」？'),
+        title: Text(loc.deleteBookTitle),
+        content: Text(loc.deleteBookMsg(book.name ?? '')),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(ctx, false),
-            child: const Text('取消'),
+            child: Text(loc.cancel),
           ),
           TextButton(
             onPressed: () => Navigator.pop(ctx, true),
-            child: const Text('删除'),
+            child: Text(loc.delete),
           ),
         ],
       ),
     );
     if (ok != true) return;
-    EasyLoading.show(status: '删除中...');
+    EasyLoading.show(status: loc.deleting);
     final result = await _service.delete(id);
     EasyLoading.dismiss();
     if (!mounted) return;
     if (result == null) {
-      EasyLoading.showSuccess('已删除');
+      EasyLoading.showSuccess(loc.deleted);
       _loadData();
     } else if (result is Status) {
-      EasyLoading.showError(result.getMessage.isEmpty ? '删除失败' : result.getMessage);
+      EasyLoading.showError(result.getMessage.isEmpty ? loc.loadFailed : result.getMessage);
     }
   }
 
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final loc = S.of(context);
     return Scaffold(
-      appBar: AppBar(title: const Text('账本管理')),
+      appBar: AppBar(title: Text(loc.bookManagement)),
       body: _loading
           ? const Center(child: CircularProgressIndicator())
           : _books.isEmpty
@@ -114,12 +120,13 @@ class _BookListPageState extends State<BookListPage> {
           _loadData();
         },
         icon: const Icon(Icons.add),
-        label: const Text('新建账本'),
+        label: Text(loc.newBook),
       ),
     );
   }
 
   Widget _buildBookTile(ThemeData theme, LedgerServiceV1Book book) {
+    final loc = S.of(context);
     final enabled = book.enable != false;
     return Card(
       margin: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
@@ -134,13 +141,13 @@ class _BookListPageState extends State<BookListPage> {
           child: const Icon(Icons.menu_book_outlined),
         ),
         title: Text(
-          book.name ?? '未命名',
+          book.name ?? loc.unnamed,
           style: TextStyle(
             color: enabled ? null : theme.colorScheme.outline,
           ),
         ),
         subtitle: Text(
-          '默认币种: ${book.defaultCurrencyCode ?? '-'}',
+          loc.defaultCurrencyLabel(book.defaultCurrencyCode ?? '-'),
           style: theme.textTheme.bodySmall,
         ),
         trailing: PopupMenuButton<String>(
@@ -156,12 +163,12 @@ class _BookListPageState extends State<BookListPage> {
             }
           },
           itemBuilder: (ctx) => [
-            const PopupMenuItem(value: 'edit', child: Text('编辑')),
+            PopupMenuItem(value: 'edit', child: Text(loc.edit)),
             PopupMenuItem(
               value: 'toggle',
-              child: Text(enabled ? '禁用' : '启用'),
+              child: Text(enabled ? loc.disable : loc.enable),
             ),
-            const PopupMenuItem(value: 'delete', child: Text('删除')),
+            PopupMenuItem(value: 'delete', child: Text(loc.delete)),
           ],
         ),
         onTap: () async {
@@ -173,6 +180,7 @@ class _BookListPageState extends State<BookListPage> {
   }
 
   Widget _buildEmpty(ThemeData theme) {
+    final loc = S.of(context);
     return Center(
       child: Column(
         mainAxisSize: MainAxisSize.min,
@@ -180,7 +188,7 @@ class _BookListPageState extends State<BookListPage> {
           Icon(Icons.menu_book_outlined,
               size: 64, color: theme.colorScheme.outline),
           const SizedBox(height: 12),
-          Text('暂无账本',
+          Text(loc.noBooks,
               style: theme.textTheme.bodyLarge
                   ?.copyWith(color: theme.colorScheme.outline)),
           const SizedBox(height: 16),
@@ -190,7 +198,7 @@ class _BookListPageState extends State<BookListPage> {
               _loadData();
             },
             icon: const Icon(Icons.add),
-            label: const Text('新建账本'),
+            label: Text(loc.newBook),
           ),
         ],
       ),

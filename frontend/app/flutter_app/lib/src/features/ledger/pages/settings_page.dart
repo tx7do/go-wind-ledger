@@ -7,7 +7,9 @@ import 'package:flutter_app/generated/api/app/service/v1/index.dart'
     show InitStateResponse, LedgerServiceV1Book, IdentityServiceV1Tenant;
 
 import 'package:flutter_app/src/core/transport/http/status.dart';
+import 'package:flutter_app/generated/l10n.dart';
 import 'package:flutter_app/src/core/themes/cubit/app_theme_cubit.dart';
+import 'package:flutter_app/src/core/utils/responsive_utils.dart';
 import 'package:flutter_app/src/features/ledger/services/ledger_auth_service.dart';
 import 'package:flutter_app/src/features/auth/cubit/auth_cubit.dart';
 
@@ -68,83 +70,91 @@ class _SettingsPageState extends State<SettingsPage> {
     } else if (result is Status) {
       setState(() => _loading = false);
       EasyLoading.showError(
-          result.getMessage.isEmpty ? '加载失败' : result.getMessage);
+          result.getMessage.isEmpty ? S.of(context).loadFailed : result.getMessage);
     }
   }
 
   Future<void> _switchTenant(int? tenantId) async {
     if (tenantId == null || tenantId == _tenantId) return;
-    EasyLoading.show(status: '切换中...');
+    EasyLoading.show(status: S.of(context).switching);
     final result = await _authService.setDefaultTenant(tenantId);
     EasyLoading.dismiss();
     if (!mounted) return;
     if (result is Status) {
       EasyLoading.showError(
-          result.getMessage.isEmpty ? '切换失败' : result.getMessage);
+          result.getMessage.isEmpty ? S.of(context).switchFailed : result.getMessage);
       return;
     }
-    EasyLoading.showSuccess('默认租户已切换');
+    EasyLoading.showSuccess(S.of(context).tenantSwitched);
     await _loadInitial();
   }
 
   Future<void> _switchBook(int? bookId) async {
     if (bookId == null || bookId == _bookId) return;
-    EasyLoading.show(status: '切换中...');
+    EasyLoading.show(status: S.of(context).switching);
     final result = await _authService.setDefaultBook(bookId);
     EasyLoading.dismiss();
     if (!mounted) return;
     if (result is Status) {
       EasyLoading.showError(
-          result.getMessage.isEmpty ? '切换失败' : result.getMessage);
+          result.getMessage.isEmpty ? S.of(context).switchFailed : result.getMessage);
       return;
     }
-    EasyLoading.showSuccess('默认账本已切换');
+    EasyLoading.showSuccess(S.of(context).bookSwitched);
     await _loadInitial();
   }
 
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final loc = S.of(context);
     return Scaffold(
-      appBar: AppBar(title: const Text('设置')),
+      appBar: AppBar(title: Text(loc.settings)),
       body: _loading
           ? const Center(child: CircularProgressIndicator())
           : RefreshIndicator(
               onRefresh: _loadInitial,
-              child: ListView(
-                padding: const EdgeInsets.symmetric(vertical: 12),
-                children: [
-                  _buildUserCard(theme),
-                  _buildThemeModeSwitcher(theme),
-                  _buildColorPicker(theme),
-                  _buildLanguageSwitcher(theme),
-                  _buildSectionHeader(theme, '当前默认'),
+              child: Center(
+                child: ConstrainedBox(
+                  constraints: BoxConstraints(
+                    maxWidth: ResponsiveUtils.contentMaxWidth(context),
+                  ),
+                  child: ListView(
+                    padding: const EdgeInsets.symmetric(vertical: 12),
+                    children: [
+                  _buildUserCard(theme, loc),
+                  _buildThemeModeSwitcher(theme, loc),
+                  _buildColorPicker(theme, loc),
+                  _buildLanguageSwitcher(theme, loc),
+                  _buildSectionHeader(theme, loc.currentDefault),
                   _buildInfoTile(
                     theme,
                     icon: Icons.apartment_outlined,
-                    label: '默认租户',
-                    value: _state?.tenant?.name ?? '未设置',
+                    label: loc.defaultTenant,
+                    value: _state?.tenant?.name ?? loc.notSet,
                   ),
                   _buildInfoTile(
                     theme,
                     icon: Icons.menu_book_outlined,
-                    label: '默认账本',
-                    value: _state?.book?.name ?? '未设置',
+                    label: loc.defaultBook,
+                    value: _state?.book?.name ?? loc.notSet,
                   ),
-                  _buildTenantSwitcher(theme),
-                  _buildBookSwitcher(theme),
-                  _buildLogoutSection(theme),
+                  _buildTenantSwitcher(theme, loc),
+                  _buildBookSwitcher(theme, loc),
+                  _buildLogoutSection(theme, loc),
                 ],
               ),
             ),
+          ),
+        ),
     );
   }
 
-  Widget _buildUserCard(ThemeData theme) {
+  Widget _buildUserCard(ThemeData theme, S loc) {
     final user = _state?.user;
     final displayName = (user?.nickname?.isNotEmpty == true)
         ? user!.nickname!
-        : (user?.username ?? '未登录');
+        : (user?.username ?? loc.unknownUser);
     return Card(
       margin: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
       child: ListTile(
@@ -193,30 +203,30 @@ class _SettingsPageState extends State<SettingsPage> {
     );
   }
 
-  Widget _buildTenantSwitcher(ThemeData theme) {
+  Widget _buildTenantSwitcher(ThemeData theme, S loc) {
     return Padding(
       padding: const EdgeInsets.fromLTRB(16, 16, 16, 0),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            '切换默认租户',
+            loc.switchDefaultTenant,
             style: theme.textTheme.titleSmall
                 ?.copyWith(fontWeight: FontWeight.bold),
           ),
           const SizedBox(height: 8),
           DropdownButtonFormField<int>(
             value: _tenantId,
-            decoration: const InputDecoration(
-              labelText: '默认租户',
-              prefixIcon: Icon(Icons.apartment_outlined),
-              border: OutlineInputBorder(),
+            decoration: InputDecoration(
+              labelText: loc.defaultTenant,
+              prefixIcon: const Icon(Icons.apartment_outlined),
+              border: const OutlineInputBorder(),
               isDense: true,
             ),
             items: _tenants
                 .map((t) => DropdownMenuItem<int>(
                       value: t.id,
-                      child: Text(t.name ?? '未命名租户'),
+                      child: Text(t.name ?? loc.unnamed),
                     ))
                 .toList(),
             onChanged: _switchTenant,
@@ -226,30 +236,30 @@ class _SettingsPageState extends State<SettingsPage> {
     );
   }
 
-  Widget _buildBookSwitcher(ThemeData theme) {
+  Widget _buildBookSwitcher(ThemeData theme, S loc) {
     return Padding(
       padding: const EdgeInsets.fromLTRB(16, 16, 16, 16),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            '切换默认账本',
+            loc.switchDefaultBook,
             style: theme.textTheme.titleSmall
                 ?.copyWith(fontWeight: FontWeight.bold),
           ),
           const SizedBox(height: 8),
           DropdownButtonFormField<int>(
             value: _bookId,
-            decoration: const InputDecoration(
-              labelText: '默认账本',
-              prefixIcon: Icon(Icons.menu_book_outlined),
-              border: OutlineInputBorder(),
+            decoration: InputDecoration(
+              labelText: loc.defaultBook,
+              prefixIcon: const Icon(Icons.menu_book_outlined),
+              border: const OutlineInputBorder(),
               isDense: true,
             ),
             items: _books
                 .map((b) => DropdownMenuItem<int>(
                       value: b.id,
-                      child: Text(b.name ?? '未命名账本'),
+                      child: Text(b.name ?? loc.unnamed),
                     ))
                 .toList(),
             onChanged: _switchBook,
@@ -270,7 +280,7 @@ class _SettingsPageState extends State<SettingsPage> {
     Color(0xFFC62828), // 赤红
   ];
 
-  Widget _buildThemeModeSwitcher(ThemeData theme) {
+  Widget _buildThemeModeSwitcher(ThemeData theme, S loc) {
     final cubit = context.watch<AppThemeCubit>();
     final currentMode = cubit.themeMode;
 
@@ -286,28 +296,28 @@ class _SettingsPageState extends State<SettingsPage> {
                 Icon(Icons.brightness_6_outlined,
                     size: 20, color: theme.colorScheme.primary),
                 const SizedBox(width: 8),
-                Text('主题模式',
+                Text(loc.themeMode,
                     style: theme.textTheme.titleSmall
                         ?.copyWith(fontWeight: FontWeight.bold)),
               ],
             ),
             const SizedBox(height: 12),
             SegmentedButton<ThemeMode>(
-              segments: const [
+              segments: [
                 ButtonSegment(
                   value: ThemeMode.light,
-                  icon: Icon(Icons.light_mode_outlined, size: 18),
-                  label: Text('亮色'),
+                  icon: const Icon(Icons.light_mode_outlined, size: 18),
+                  label: Text(loc.light),
                 ),
                 ButtonSegment(
                   value: ThemeMode.dark,
-                  icon: Icon(Icons.dark_mode_outlined, size: 18),
-                  label: Text('暗色'),
+                  icon: const Icon(Icons.dark_mode_outlined, size: 18),
+                  label: Text(loc.dark),
                 ),
                 ButtonSegment(
                   value: ThemeMode.system,
-                  icon: Icon(Icons.settings_suggest_outlined, size: 18),
-                  label: Text('跟随系统'),
+                  icon: const Icon(Icons.settings_suggest_outlined, size: 18),
+                  label: Text(loc.followSystem),
                 ),
               ],
               selected: {currentMode},
@@ -323,7 +333,7 @@ class _SettingsPageState extends State<SettingsPage> {
     );
   }
 
-  Widget _buildColorPicker(ThemeData theme) {
+  Widget _buildColorPicker(ThemeData theme, S loc) {
     final cubit = context.watch<AppThemeCubit>();
     final currentColor = cubit.currentSeedColor;
 
@@ -339,7 +349,7 @@ class _SettingsPageState extends State<SettingsPage> {
                 Icon(Icons.palette_outlined,
                     size: 20, color: theme.colorScheme.primary),
                 const SizedBox(width: 8),
-                Text('主题色',
+                Text(loc.themeColor,
                     style: theme.textTheme.titleSmall
                         ?.copyWith(fontWeight: FontWeight.bold)),
               ],
@@ -388,7 +398,7 @@ class _SettingsPageState extends State<SettingsPage> {
     );
   }
 
-  Widget _buildLanguageSwitcher(ThemeData theme) {
+  Widget _buildLanguageSwitcher(ThemeData theme, S loc) {
     final cubit = context.watch<AppThemeCubit>();
     final currentLocale = cubit.currentLocale;
     final supported = cubit.supportedLocales;
@@ -405,7 +415,7 @@ class _SettingsPageState extends State<SettingsPage> {
                 Icon(Icons.translate_outlined,
                     size: 20, color: theme.colorScheme.primary),
                 const SizedBox(width: 8),
-                Text('语言',
+                Text(loc.language,
                     style: theme.textTheme.titleSmall
                         ?.copyWith(fontWeight: FontWeight.bold)),
               ],
@@ -413,7 +423,7 @@ class _SettingsPageState extends State<SettingsPage> {
             const SizedBox(height: 12),
             SegmentedButton<Locale>(
               segments: supported.map((locale) {
-                final label = locale.languageCode == 'zh' ? '中文' : 'English';
+                final label = locale.languageCode == 'zh' ? loc.languageZh : 'English';
                 return ButtonSegment(value: locale, label: Text(label));
               }).toList(),
               selected: {currentLocale},
@@ -432,16 +442,16 @@ class _SettingsPageState extends State<SettingsPage> {
 
   // ─── 退出登录 ──────────────────────────────────
 
-  Widget _buildLogoutSection(ThemeData theme) {
+  Widget _buildLogoutSection(ThemeData theme, S loc) {
     return Padding(
       padding: const EdgeInsets.fromLTRB(16, 8, 16, 32),
       child: SizedBox(
         width: double.infinity,
         height: 48,
         child: OutlinedButton.icon(
-          onPressed: () => _handleLogout(),
+          onPressed: () => _handleLogout(loc),
           icon: const Icon(Icons.logout, size: 20),
-          label: const Text('退出登录'),
+          label: Text(loc.logout),
           style: OutlinedButton.styleFrom(
             foregroundColor: theme.colorScheme.error,
             side: BorderSide(color: theme.colorScheme.error.withAlpha(100)),
@@ -454,16 +464,16 @@ class _SettingsPageState extends State<SettingsPage> {
     );
   }
 
-  void _handleLogout() {
+  void _handleLogout(S loc) {
     showDialog(
       context: context,
       builder: (ctx) => AlertDialog(
-        title: const Text('确认退出'),
-        content: const Text('退出登录后需要重新登录才能使用。'),
+        title: Text(loc.logoutConfirmTitle),
+        content: Text(loc.logoutConfirmMsg),
         actions: [
           TextButton(
             onPressed: () => Navigator.of(ctx).pop(),
-            child: const Text('取消'),
+            child: Text(loc.cancel),
           ),
           FilledButton(
             onPressed: () async {
@@ -472,7 +482,7 @@ class _SettingsPageState extends State<SettingsPage> {
               if (!mounted) return;
               context.go('/login');
             },
-            child: const Text('退出'),
+            child: Text(loc.logout),
           ),
         ],
       ),

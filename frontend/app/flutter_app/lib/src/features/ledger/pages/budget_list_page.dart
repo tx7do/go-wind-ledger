@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 
+import 'package:flutter_app/generated/l10n.dart';
+import 'package:flutter_app/src/core/themes/const.dart';
 import 'package:flutter_app/src/core/transport/http/status.dart';
 import 'package:flutter_app/src/features/ledger/services/budget_service.dart';
 
@@ -29,6 +31,7 @@ class _BudgetListPageState extends State<BudgetListPage> {
   }
 
   Future<void> _loadData() async {
+    final loc = S.of(context);
     setState(() => _loading = true);
     final result = await _service.listAll();
     if (!mounted) return;
@@ -41,7 +44,7 @@ class _BudgetListPageState extends State<BudgetListPage> {
     } else if (result is Status) {
       setState(() => _loading = false);
       EasyLoading.showError(
-          result.getMessage.isEmpty ? '加载失败' : result.getMessage);
+          result.getMessage.isEmpty ? loc.loadFailed : result.getMessage);
     }
   }
 
@@ -58,59 +61,62 @@ class _BudgetListPageState extends State<BudgetListPage> {
   }
 
   Future<void> _delete(Budget budget) async {
+    final loc = S.of(context);
     final id = budget.id;
     if (id == null) return;
     final ok = await showDialog<bool>(
       context: context,
       builder: (ctx) => AlertDialog(
-        title: const Text('删除预算'),
-        content: Text('确定删除预算「${budget.name ?? ''}」？'),
+        title: Text(loc.deleteBudgetTitle),
+        content: Text(loc.deleteBudgetMsg(budget.name ?? '')),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(ctx, false),
-            child: const Text('取消'),
+            child: Text(loc.cancel),
           ),
           TextButton(
             onPressed: () => Navigator.pop(ctx, true),
-            child: const Text('删除'),
+            child: Text(loc.delete),
           ),
         ],
       ),
     );
     if (ok != true) return;
-    EasyLoading.show(status: '删除中...');
+    EasyLoading.show(status: loc.deleting);
     final result = await _service.delete(id);
     EasyLoading.dismiss();
     if (!mounted) return;
     if (result == null) {
-      EasyLoading.showSuccess('已删除');
+      EasyLoading.showSuccess(loc.deleted);
       _loadData();
     } else if (result is Status) {
       EasyLoading.showError(
-          result.getMessage.isEmpty ? '删除失败' : result.getMessage);
+          result.getMessage.isEmpty ? loc.loadFailed : result.getMessage);
     }
   }
 
   String _periodLabel(BudgetPeriod p) {
+    final loc = S.of(context);
     switch (p) {
       case BudgetPeriod.monthly:
-        return '月度';
+        return loc.periodMonthly;
       case BudgetPeriod.yearly:
-        return '年度';
+        return loc.periodYearly;
       case BudgetPeriod.quarterly:
-        return '季度';
+        return loc.periodQuarterly;
       case BudgetPeriod.weekly:
-        return '周';
+        return loc.periodWeekly;
       case BudgetPeriod.unspecified:
-        return '未指定';
+        return loc.budgetUnspecified;
     }
   }
 
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final loc = S.of(context);
     return Scaffold(
-      appBar: AppBar(title: const Text('预算管理')),
+      appBar: AppBar(title: Text(loc.budgetManagement)),
       body: _loading
           ? const Center(child: CircularProgressIndicator())
           : _budgets.isEmpty
@@ -130,12 +136,13 @@ class _BudgetListPageState extends State<BudgetListPage> {
           _loadData();
         },
         icon: const Icon(Icons.add),
-        label: const Text('新建预算'),
+        label: Text(loc.newBudget),
       ),
     );
   }
 
   Widget _buildBudgetCard(ThemeData theme, Budget budget) {
+    final loc = S.of(context);
     final id = budget.id;
     final progress = id != null ? _progress[id] : null;
     final amount = double.tryParse(budget.amount ?? '0') ?? 0;
@@ -167,7 +174,7 @@ class _BudgetListPageState extends State<BudgetListPage> {
                   const SizedBox(width: 8),
                   Expanded(
                     child: Text(
-                      budget.name ?? '未命名预算',
+                      budget.name ?? loc.unnamedBudget,
                       style: theme.textTheme.titleMedium
                           ?.copyWith(fontWeight: FontWeight.w600),
                     ),
@@ -182,16 +189,16 @@ class _BudgetListPageState extends State<BudgetListPage> {
                         _delete(budget);
                       }
                     },
-                    itemBuilder: (ctx) => const [
-                      PopupMenuItem(value: 'edit', child: Text('编辑')),
-                      PopupMenuItem(value: 'delete', child: Text('删除')),
+                    itemBuilder: (ctx) => [
+                      PopupMenuItem(value: 'edit', child: Text(loc.edit)),
+                      PopupMenuItem(value: 'delete', child: Text(loc.delete)),
                     ],
                   ),
                 ],
               ),
               const SizedBox(height: 4),
               Text(
-                '${_periodLabel(budget.period)} · 已用 ${used.toStringAsFixed(2)} / ${amount.toStringAsFixed(2)}',
+                loc.budgetUsage(_periodLabel(budget.period), used.toStringAsFixed(2), amount.toStringAsFixed(2)),
                 style: theme.textTheme.bodySmall
                     ?.copyWith(color: theme.colorScheme.onSurfaceVariant),
               ),
@@ -216,13 +223,13 @@ class _BudgetListPageState extends State<BudgetListPage> {
                   ),
                   if (exceeded)
                     Text(
-                      '已超支',
+                      loc.budgetOverran,
                       style: theme.textTheme.labelSmall
                           ?.copyWith(color: theme.colorScheme.error),
                     )
                   else if (budget.enable == false)
                     Text(
-                      '已停用',
+                      loc.budgetDisabled,
                       style: theme.textTheme.labelSmall
                           ?.copyWith(color: theme.colorScheme.outline),
                     ),
@@ -236,6 +243,7 @@ class _BudgetListPageState extends State<BudgetListPage> {
   }
 
   Widget _buildEmpty(ThemeData theme) {
+    final loc = S.of(context);
     return Center(
       child: Column(
         mainAxisSize: MainAxisSize.min,
@@ -243,7 +251,7 @@ class _BudgetListPageState extends State<BudgetListPage> {
           Icon(Icons.savings_outlined,
               size: 64, color: theme.colorScheme.outline),
           const SizedBox(height: 12),
-          Text('暂无预算',
+          Text(loc.noBudgets,
               style: theme.textTheme.bodyLarge
                   ?.copyWith(color: theme.colorScheme.outline)),
           const SizedBox(height: 16),
@@ -253,7 +261,7 @@ class _BudgetListPageState extends State<BudgetListPage> {
               _loadData();
             },
             icon: const Icon(Icons.add),
-            label: const Text('新建预算'),
+            label: Text(loc.newBudget),
           ),
         ],
       ),

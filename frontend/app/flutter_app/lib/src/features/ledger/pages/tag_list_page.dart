@@ -5,6 +5,8 @@ import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_app/generated/api/app/service/v1/index.dart'
     show LedgerServiceV1Tag, LedgerServiceV1ListTagResponse;
 
+import 'package:flutter_app/generated/l10n.dart';
+import 'package:flutter_app/src/core/themes/const.dart';
 import 'package:flutter_app/src/core/transport/http/status.dart';
 import 'package:flutter_app/src/features/ledger/services/tag_service.dart';
 
@@ -28,6 +30,7 @@ class _TagListPageState extends State<TagListPage> {
   }
 
   Future<void> _loadData() async {
+    final loc = S.of(context);
     setState(() => _loading = true);
     final result = await _service.listAll();
     if (!mounted) return;
@@ -38,63 +41,66 @@ class _TagListPageState extends State<TagListPage> {
       });
     } else if (result is Status) {
       setState(() => _loading = false);
-      EasyLoading.showError(result.getMessage.isEmpty ? '加载失败' : result.getMessage);
+      EasyLoading.showError(result.getMessage.isEmpty ? loc.loadFailed : result.getMessage);
     }
   }
 
   Future<void> _toggle(LedgerServiceV1Tag tag) async {
+    final loc = S.of(context);
     final id = tag.id;
     if (id == null) return;
-    EasyLoading.show(status: '处理中...');
+    EasyLoading.show(status: loc.processing);
     final result = await _service.toggle(id);
     EasyLoading.dismiss();
     if (!mounted) return;
     if (result is LedgerServiceV1Tag) {
-      EasyLoading.showSuccess('已更新');
+      EasyLoading.showSuccess(loc.updated);
       _loadData();
     } else if (result is Status) {
-      EasyLoading.showError(result.getMessage.isEmpty ? '操作失败' : result.getMessage);
+      EasyLoading.showError(result.getMessage.isEmpty ? loc.operationFailed : result.getMessage);
     }
   }
 
   Future<void> _delete(LedgerServiceV1Tag tag) async {
+    final loc = S.of(context);
     final id = tag.id;
     if (id == null) return;
     final ok = await showDialog<bool>(
       context: context,
       builder: (ctx) => AlertDialog(
-        title: const Text('删除标签'),
-        content: Text('确定删除标签「${tag.name ?? ''}」？'),
+        title: Text(loc.deleteTagTitle),
+        content: Text(loc.deleteTagMsg(tag.name ?? '')),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(ctx, false),
-            child: const Text('取消'),
+            child: Text(loc.cancel),
           ),
           TextButton(
             onPressed: () => Navigator.pop(ctx, true),
-            child: const Text('删除'),
+            child: Text(loc.delete),
           ),
         ],
       ),
     );
     if (ok != true) return;
-    EasyLoading.show(status: '删除中...');
+    EasyLoading.show(status: loc.deleting);
     final result = await _service.delete(id);
     EasyLoading.dismiss();
     if (!mounted) return;
     if (result == null) {
-      EasyLoading.showSuccess('已删除');
+      EasyLoading.showSuccess(loc.deleted);
       _loadData();
     } else if (result is Status) {
-      EasyLoading.showError(result.getMessage.isEmpty ? '删除失败' : result.getMessage);
+      EasyLoading.showError(result.getMessage.isEmpty ? loc.loadFailed : result.getMessage);
     }
   }
 
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final loc = S.of(context);
     return Scaffold(
-      appBar: AppBar(title: const Text('标签管理')),
+      appBar: AppBar(title: Text(loc.tagManagement)),
       body: _loading
           ? const Center(child: CircularProgressIndicator())
           : _tags.isEmpty
@@ -114,12 +120,13 @@ class _TagListPageState extends State<TagListPage> {
           _loadData();
         },
         icon: const Icon(Icons.add),
-        label: const Text('新建标签'),
+        label: Text(loc.newTag),
       ),
     );
   }
 
   Widget _buildTagTile(ThemeData theme, LedgerServiceV1Tag tag) {
+    final loc = S.of(context);
     final enabled = tag.enable != false;
     return Card(
       margin: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
@@ -130,7 +137,7 @@ class _TagListPageState extends State<TagListPage> {
           child: const Icon(Icons.label_outlined),
         ),
         title: Text(
-          tag.name ?? '未命名',
+          tag.name ?? loc.unnamed,
           style: TextStyle(
             color: enabled ? null : theme.colorScheme.outline,
           ),
@@ -138,9 +145,9 @@ class _TagListPageState extends State<TagListPage> {
         subtitle: Wrap(
           spacing: 6,
           children: [
-            if (tag.canExpense == true) _capability('支出', theme),
-            if (tag.canIncome == true) _capability('收入', theme),
-            if (tag.canTransfer == true) _capability('转账', theme),
+            if (tag.canExpense == true) _capability(loc.flowFilterExpense, theme),
+            if (tag.canIncome == true) _capability(loc.flowFilterIncome, theme),
+            if (tag.canTransfer == true) _capability(loc.flowFilterTransfer, theme),
           ],
         ),
         trailing: PopupMenuButton<String>(
@@ -156,12 +163,12 @@ class _TagListPageState extends State<TagListPage> {
             }
           },
           itemBuilder: (ctx) => [
-            const PopupMenuItem(value: 'edit', child: Text('编辑')),
+            PopupMenuItem(value: 'edit', child: Text(loc.edit)),
             PopupMenuItem(
               value: 'toggle',
-              child: Text(enabled ? '禁用' : '启用'),
+              child: Text(enabled ? loc.disable : loc.enable),
             ),
-            const PopupMenuItem(value: 'delete', child: Text('删除')),
+            PopupMenuItem(value: 'delete', child: Text(loc.delete)),
           ],
         ),
         onTap: () async {
@@ -188,6 +195,7 @@ class _TagListPageState extends State<TagListPage> {
   }
 
   Widget _buildEmpty(ThemeData theme) {
+    final loc = S.of(context);
     return Center(
       child: Column(
         mainAxisSize: MainAxisSize.min,
@@ -195,7 +203,7 @@ class _TagListPageState extends State<TagListPage> {
           Icon(Icons.label_outlined,
               size: 64, color: theme.colorScheme.outline),
           const SizedBox(height: 12),
-          Text('暂无标签',
+          Text(loc.noTags,
               style: theme.textTheme.bodyLarge
                   ?.copyWith(color: theme.colorScheme.outline)),
           const SizedBox(height: 16),
@@ -205,7 +213,7 @@ class _TagListPageState extends State<TagListPage> {
               _loadData();
             },
             icon: const Icon(Icons.add),
-            label: const Text('新建标签'),
+            label: Text(loc.newTag),
           ),
         ],
       ),

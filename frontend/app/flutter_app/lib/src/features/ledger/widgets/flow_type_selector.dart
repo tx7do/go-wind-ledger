@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:flutter_app/generated/api/app/service/v1/index.dart'
     show LedgerServiceV1FlowType;
+import 'package:flutter_app/generated/l10n.dart';
 
 /// 流水类型选择器：支出/收入/转账。
 ///
@@ -25,7 +26,11 @@ class FlowTypeSelector extends StatelessWidget {
     LedgerServiceV1FlowType.flowTypeTransfer,
   ];
 
-  static const _labels = <String>['支出', '收入', '转账'];
+  static List<String> _labels(BuildContext c) => [
+        S.of(c).flowFilterExpense,
+        S.of(c).flowFilterIncome,
+        S.of(c).flowFilterTransfer,
+      ];
   static const _icons = <IconData>[
     Icons.south_west,
     Icons.north_east,
@@ -35,6 +40,7 @@ class FlowTypeSelector extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final loc = S.of(context);
     return Container(
       padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 12),
       decoration: BoxDecoration(
@@ -68,7 +74,7 @@ class FlowTypeSelector extends StatelessWidget {
                         Icon(_icons[i], size: 18, color: color),
                         const SizedBox(width: 6),
                         Text(
-                          _labels[i],
+                          _labels(context)[i],
                           style: theme.textTheme.titleSmall?.copyWith(
                             color: color,
                             fontWeight: selected

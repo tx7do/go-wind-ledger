@@ -5,6 +5,8 @@ import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_app/generated/api/app/service/v1/index.dart'
     show LedgerServiceV1NoteDay;
 
+import 'package:flutter_app/generated/l10n.dart';
+import 'package:flutter_app/src/core/themes/const.dart';
 import 'package:flutter_app/src/core/transport/http/status.dart';
 import 'package:flutter_app/src/features/ledger/services/note_day_service.dart';
 
@@ -102,9 +104,10 @@ class _NoteDayFormPageState extends State<NoteDayFormPage> {
   }
 
   Future<void> _submit() async {
+    final loc = S.of(context);
     if (!_formKey.currentState!.validate()) return;
     setState(() => _saving = true);
-    EasyLoading.show(status: '保存中...');
+    EasyLoading.show(status: loc.processing);
 
     final data = LedgerServiceV1NoteDay(
       title: _titleCtrl.text.trim(),
@@ -125,22 +128,23 @@ class _NoteDayFormPageState extends State<NoteDayFormPage> {
     setState(() => _saving = false);
 
     if (result is LedgerServiceV1NoteDay) {
-      EasyLoading.showSuccess('保存成功');
+      EasyLoading.showSuccess(loc.saveSuccess);
       if (context.canPop()) {
         context.pop();
       } else {
         context.go('/ledger/note-days');
       }
     } else if (result is Status) {
-      EasyLoading.showError(result.getMessage.isEmpty ? '保存失败' : result.getMessage);
+      EasyLoading.showError(result.getMessage.isEmpty ? loc.saveFailed : result.getMessage);
     }
   }
 
   @override
   Widget build(BuildContext context) {
+    final loc = S.of(context);
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget.editId == null ? '新建提醒' : '编辑提醒'),
+        title: Text(widget.editId == null ? loc.create : loc.edit),
       ),
       body: _loading
           ? const Center(child: CircularProgressIndicator())
@@ -153,28 +157,28 @@ class _NoteDayFormPageState extends State<NoteDayFormPage> {
                   children: [
                     TextFormField(
                       controller: _titleCtrl,
-                      decoration: const InputDecoration(
-                        labelText: '标题',
+                      decoration: InputDecoration(
+                        labelText: loc.fieldNoteTitle,
                         prefixIcon: Icon(Icons.title),
                         border: OutlineInputBorder(),
                       ),
                       validator: (v) =>
-                          (v == null || v.trim().isEmpty) ? '请输入标题' : null,
+                          (v == null || v.trim().isEmpty) ? loc.enterNoteTitle : null,
                     ),
                     const SizedBox(height: 12),
                     DropdownButtonFormField<int>(
                       value: _repeatType,
-                      decoration: const InputDecoration(
-                        labelText: '重复类型',
+                      decoration: InputDecoration(
+                        labelText: loc.fieldRepeatType,
                         prefixIcon: Icon(Icons.repeat),
                         border: OutlineInputBorder(),
                       ),
-                      items: const [
-                        DropdownMenuItem(value: 0, child: Text('一次性')),
-                        DropdownMenuItem(value: 1, child: Text('按天')),
-                        DropdownMenuItem(value: 2, child: Text('按周')),
-                        DropdownMenuItem(value: 3, child: Text('按月')),
-                        DropdownMenuItem(value: 4, child: Text('按年')),
+                      items: [
+                        DropdownMenuItem(value: 0, child: Text(loc.repeatOnce)),
+                        DropdownMenuItem(value: 1, child: Text(loc.repeatDaily)),
+                        DropdownMenuItem(value: 2, child: Text(loc.repeatWeekly)),
+                        DropdownMenuItem(value: 3, child: Text(loc.repeatMonthly)),
+                        DropdownMenuItem(value: 4, child: Text(loc.repeatYearly)),
                       ],
                       onChanged: (v) {
                         if (v != null) setState(() => _repeatType = v);
@@ -184,8 +188,8 @@ class _NoteDayFormPageState extends State<NoteDayFormPage> {
                     TextFormField(
                       controller: _intervalCtrl,
                       keyboardType: TextInputType.number,
-                      decoration: const InputDecoration(
-                        labelText: '间隔（如每 N 天/周/月）',
+                      decoration: InputDecoration(
+                        labelText: loc.fieldInterval,
                         prefixIcon: Icon(Icons.date_range_outlined),
                         border: OutlineInputBorder(),
                       ),
@@ -195,8 +199,8 @@ class _NoteDayFormPageState extends State<NoteDayFormPage> {
                       onTap: () => _pickDate(true),
                       borderRadius: BorderRadius.circular(12),
                       child: InputDecorator(
-                        decoration: const InputDecoration(
-                          labelText: '开始日期',
+                        decoration: InputDecoration(
+                          labelText: loc.fieldStartDate,
                           prefixIcon: Icon(Icons.calendar_today_outlined),
                           border: OutlineInputBorder(),
                         ),
@@ -208,13 +212,13 @@ class _NoteDayFormPageState extends State<NoteDayFormPage> {
                       onTap: () => _pickDate(false),
                       borderRadius: BorderRadius.circular(12),
                       child: InputDecorator(
-                        decoration: const InputDecoration(
-                          labelText: '结束日期（可选）',
+                        decoration: InputDecoration(
+                          labelText: loc.fieldEndDate,
                           prefixIcon: Icon(Icons.event_available_outlined),
                           border: OutlineInputBorder(),
                         ),
                         child: Text(
-                          _endDate == null ? '不限' : _formatDate(_endDate!),
+                          _endDate == null ? loc.repeatUnlimited : _formatDate(_endDate!),
                         ),
                       ),
                     ),
@@ -222,8 +226,8 @@ class _NoteDayFormPageState extends State<NoteDayFormPage> {
                     TextFormField(
                       controller: _totalCountCtrl,
                       keyboardType: TextInputType.number,
-                      decoration: const InputDecoration(
-                        labelText: '总执行次数（可选）',
+                      decoration: InputDecoration(
+                        labelText: loc.fieldTotalRuns,
                         prefixIcon: Icon(Icons.exposure_outlined),
                         border: OutlineInputBorder(),
                       ),
@@ -232,8 +236,8 @@ class _NoteDayFormPageState extends State<NoteDayFormPage> {
                     TextFormField(
                       controller: _notesCtrl,
                       maxLines: 3,
-                      decoration: const InputDecoration(
-                        labelText: '说明',
+                      decoration: InputDecoration(
+                        labelText: loc.fieldDescription,
                         prefixIcon: Icon(Icons.notes),
                         border: OutlineInputBorder(),
                       ),
@@ -244,7 +248,7 @@ class _NoteDayFormPageState extends State<NoteDayFormPage> {
                       style: FilledButton.styleFrom(
                         padding: const EdgeInsets.symmetric(vertical: 14),
                       ),
-                      child: Text(widget.editId == null ? '保存' : '更新'),
+                      child: Text(widget.editId == null ? loc.flowSave : loc.flowUpdate),
                     ),
                   ],
                 ),

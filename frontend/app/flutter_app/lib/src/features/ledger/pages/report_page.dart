@@ -8,6 +8,9 @@ import 'package:flutter_app/generated/api/app/service/v1/index.dart'
         LedgerServiceV1ListBookResponse,
         LedgerServiceV1Book;
 
+import 'package:flutter_app/src/core/themes/semantic_colors.dart';
+import 'package:flutter_app/generated/l10n.dart';
+import 'package:flutter_app/src/core/themes/const.dart';
 import 'package:flutter_app/src/core/transport/http/status.dart';
 import 'package:flutter_app/src/features/ledger/services/report_service.dart';
 import 'package:flutter_app/src/features/ledger/services/book_service.dart';
@@ -32,21 +35,6 @@ class _ReportPageState extends State<ReportPage> {
 
   List<LedgerServiceV1Book> _books = [];
   int? _bookId;
-
-  final List<_ReportKind> _kinds = const [
-    _ReportKind('expense_category', '支出 - 按分类', Icons.south_west,
-        Colors.red),
-    _ReportKind('income_category', '收入 - 按分类', Icons.north_east,
-        Colors.green),
-    _ReportKind('expense_tag', '支出 - 按标签', Icons.label_outlined,
-        Colors.red),
-    _ReportKind('income_tag', '收入 - 按标签', Icons.label_outlined,
-        Colors.green),
-    _ReportKind('expense_payee', '支出 - 按收款人', Icons.person_outline,
-        Colors.red),
-    _ReportKind('income_payee', '收入 - 按收款人', Icons.person_outline,
-        Colors.green),
-  ];
 
   final Map<String, List<LedgerServiceV1ChartPoint>> _data = {};
   LedgerServiceV1BalanceReportResponse? _balance;
@@ -111,10 +99,25 @@ class _ReportPageState extends State<ReportPage> {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final loc = S.of(context);
+    final kinds = <_ReportKind>[
+      _ReportKind('expense_category', loc.expenseByCategory, Icons.south_west,
+          isExpense: true),
+      _ReportKind('income_category', loc.incomeByCategory, Icons.north_east,
+          isExpense: false),
+      _ReportKind('expense_tag', loc.expenseByTag, Icons.label_outlined,
+          isExpense: true),
+      _ReportKind('income_tag', loc.incomeByTag, Icons.label_outlined,
+          isExpense: false),
+      _ReportKind('expense_payee', loc.expenseByPayee, Icons.person_outline,
+          isExpense: true),
+      _ReportKind('income_payee', loc.incomeByPayee, Icons.person_outline,
+          isExpense: false),
+    ];
     return Scaffold(
       appBar: widget.embedded
           ? null
-          : AppBar(title: const Text('统计报表')),
+          : AppBar(title: Text(loc.reportTitle)),
       body: _loading
           ? const Center(child: CircularProgressIndicator())
           : RefreshIndicator(
@@ -125,7 +128,7 @@ class _ReportPageState extends State<ReportPage> {
                   if (!widget.embedded) const SizedBox(height: 8),
                   if (_balance != null) _buildBalanceCard(theme),
                   const SizedBox(height: 8),
-                  ..._kinds.map((k) => _buildReportSection(theme, k)),
+                  ...kinds.map((k) => _buildReportSection(theme, k)),
                 ],
               ),
             ),
@@ -133,6 +136,7 @@ class _ReportPageState extends State<ReportPage> {
   }
 
   Widget _buildBalanceCard(ThemeData theme) {
+    final loc = S.of(context);
     final net = double.tryParse(_balance!.netWorth ?? '0') ?? 0;
     final assets = _sum(_balance!.assets);
     final debts = _sum(_balance!.debts);
@@ -148,16 +152,16 @@ class _ReportPageState extends State<ReportPage> {
                 Icon(Icons.account_balance_outlined,
                     color: theme.colorScheme.primary),
                 const SizedBox(width: 8),
-                Text('资产负债概览',
+                Text(loc.balanceSheetTitle,
                     style: theme.textTheme.titleMedium
                         ?.copyWith(fontWeight: FontWeight.bold)),
               ],
             ),
             const SizedBox(height: 12),
-            _balanceRow(theme, '总资产', assets, Colors.green),
-            _balanceRow(theme, '总负债', debts, Colors.red),
+            _balanceRow(theme, loc.totalAssets, assets, SemanticColors.income(context)),
+            _balanceRow(theme, loc.totalDebts, debts, SemanticColors.expense(context)),
             const Divider(height: 24),
-            _balanceRow(theme, '净资产', net, theme.colorScheme.primary),
+            _balanceRow(theme, loc.netWorth, net, theme.colorScheme.primary),
           ],
         ),
       ),
@@ -184,24 +188,28 @@ class _ReportPageState extends State<ReportPage> {
   }
 
   Widget _buildReportSection(ThemeData theme, _ReportKind kind) {
+    final loc = S.of(context);
     final points = _data[kind.key] ?? [];
+    final color = kind.isExpense
+        ? SemanticColors.expense(context)
+        : SemanticColors.income(context);
     return Card(
       margin: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
       child: ExpansionTile(
         initiallyExpanded: kind.key == 'expense_category',
-        leading: Icon(kind.icon, color: kind.color),
+        leading: Icon(kind.icon, color: color),
         title: Text(kind.title,
             style: theme.textTheme.titleSmall
                 ?.copyWith(fontWeight: FontWeight.w600)),
-        subtitle: Text('${points.length} 项'),
+        subtitle: Text(loc.itemCount(points.length)),
         children: points.isEmpty
             ? [
-                const Padding(
-                  padding: EdgeInsets.all(16),
-                  child: Text('暂无数据'),
+                Padding(
+                  padding: const EdgeInsets.all(16),
+                  child: Text(loc.noData),
                 )
               ]
-            : _buildPointBars(theme, points, kind.color),
+            : _buildPointBars(theme, points, color),
       ),
     );
   }
@@ -265,6 +273,6 @@ class _ReportKind {
   final String key;
   final String title;
   final IconData icon;
-  final Color color;
-  const _ReportKind(this.key, this.title, this.icon, this.color);
+  final bool isExpense;
+  const _ReportKind(this.key, this.title, this.icon, {required this.isExpense});
 }

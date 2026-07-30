@@ -19,6 +19,8 @@ import 'package:flutter_app/generated/api/app/service/v1/index.dart'
         LedgerServiceV1FlowType,
         LedgerServiceV1CategoryType;
 
+import 'package:flutter_app/generated/l10n.dart';
+import 'package:flutter_app/src/core/themes/const.dart';
 import 'package:flutter_app/src/core/transport/http/status.dart';
 import 'package:flutter_app/src/features/ledger/services/book_service.dart';
 import 'package:flutter_app/src/features/ledger/services/account_service.dart';
@@ -111,36 +113,38 @@ class _BalanceFlowFormPageState extends State<BalanceFlowFormPage> {
   }
 
   Future<void> _deleteAttachment(LedgerServiceV1FlowFile file) async {
+    final loc = S.of(context);
     final id = file.id;
     if (id == null) return;
     final ok = await showDialog<bool>(
       context: context,
       builder: (ctx) => AlertDialog(
-        title: const Text('删除附件'),
-        content: Text('确定删除附件「${file.originalName ?? ''}」？'),
+        title: Text(loc.deleteAttachmentTitle),
+        content: Text(loc.deleteAttachmentMsg(file.originalName ?? '')),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(ctx, false),
-            child: const Text('取消'),
+            child: Text(loc.cancel),
           ),
           TextButton(
             onPressed: () => Navigator.pop(ctx, true),
-            child: const Text('删除'),
+            child: Text(loc.delete),
           ),
         ],
       ),
     );
     if (ok != true) return;
-    EasyLoading.show(status: '删除中...');
+    EasyLoading.show(status: loc.deleting);
     final result = await _flowFileService.delete(id);
     EasyLoading.dismiss();
     if (!mounted) return;
     if (result == null) {
-      EasyLoading.showSuccess('已删除');
+      EasyLoading.showSuccess(loc.deleted);
       _loadAttachments();
     } else if (result is Status) {
       EasyLoading.showError(
-          result.getMessage.isEmpty ? '删除失败' : result.getMessage);
+        result.getMessage.isEmpty ? loc.loadFailed : result.getMessage,
+      );
     }
   }
 
@@ -236,25 +240,26 @@ class _BalanceFlowFormPageState extends State<BalanceFlowFormPage> {
   }
 
   Future<void> _submit() async {
+    final loc = S.of(context);
     if (!_formKey.currentState!.validate()) return;
     final amount = double.tryParse(_amountCtrl.text);
     if (amount == null || amount <= 0) {
-      EasyLoading.showError('请输入有效金额');
+      EasyLoading.showError(loc.enterAmount);
       return;
     }
     if (_type != LedgerServiceV1FlowType.flowTypeTransfer &&
         _accountId == null) {
-      EasyLoading.showError('请选择账户');
+      EasyLoading.showError(loc.selectAccount);
       return;
     }
     if (_type == LedgerServiceV1FlowType.flowTypeTransfer &&
         (_accountId == null || _toAccountId == null)) {
-      EasyLoading.showError('请选择转出与转入账户');
+      EasyLoading.showError(loc.selectAccounts);
       return;
     }
 
     setState(() => _saving = true);
-    EasyLoading.show(status: '保存中...');
+    EasyLoading.show(status: loc.processing);
 
     final flow = LedgerServiceV1BalanceFlow(
       type: _type,
@@ -289,23 +294,26 @@ class _BalanceFlowFormPageState extends State<BalanceFlowFormPage> {
     setState(() => _saving = false);
 
     if (result is LedgerServiceV1BalanceFlow) {
-      EasyLoading.showSuccess('保存成功');
+      EasyLoading.showSuccess(loc.saveSuccess);
       if (context.canPop()) {
         context.pop();
       } else {
         context.go('/ledger/flows');
       }
     } else if (result is Status) {
-      EasyLoading.showError(result.getMessage.isEmpty ? '保存失败' : result.getMessage);
+      EasyLoading.showError(
+        result.getMessage.isEmpty ? loc.saveFailed : result.getMessage,
+      );
     }
   }
 
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final loc = S.of(context);
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget.editId == null ? '记一笔' : '编辑流水'),
+        title: Text(widget.editId == null ? loc.flowCreate : loc.editFlow),
       ),
       body: _loading
           ? const Center(child: CircularProgressIndicator())
@@ -316,22 +324,21 @@ class _BalanceFlowFormPageState extends State<BalanceFlowFormPage> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
-                    FlowTypeSelector(
-                      value: _type,
-                      onChanged: _changeType,
-                    ),
+                    FlowTypeSelector(value: _type, onChanged: _changeType),
                     const SizedBox(height: 16),
                     _buildAmountField(theme),
                     const SizedBox(height: 12),
                     _buildDropdown(
                       theme,
-                      label: '账本',
+                      label: loc.defaultBook,
                       value: _bookId,
                       items: _books
-                          .map((b) => _DropdownItem(
-                                value: b.id!,
-                                label: b.name ?? '未命名',
-                              ))
+                          .map(
+                            (b) => _DropdownItem(
+                              value: b.id!,
+                              label: b.name ?? loc.unnamed,
+                            ),
+                          )
                           .toList(),
                       onChanged: (v) => setState(() => _bookId = v),
                     ),
@@ -339,65 +346,75 @@ class _BalanceFlowFormPageState extends State<BalanceFlowFormPage> {
                     if (_type == LedgerServiceV1FlowType.flowTypeTransfer) ...[
                       _buildDropdown(
                         theme,
-                        label: '转出账户',
+                        label: loc.fieldTransferOutAccount,
                         value: _accountId,
                         items: _accounts
-                            .map((a) => _DropdownItem(
-                                  value: a.id!,
-                                  label: a.name ?? '未命名',
-                                ))
+                            .map(
+                              (a) => _DropdownItem(
+                                value: a.id!,
+                                label: a.name ?? loc.unnamed,
+                              ),
+                            )
                             .toList(),
                         onChanged: (v) => setState(() => _accountId = v),
                       ),
                       const SizedBox(height: 12),
                       _buildDropdown(
                         theme,
-                        label: '转入账户',
+                        label: loc.fieldTransferInAccount,
                         value: _toAccountId,
                         items: _accounts
-                            .map((a) => _DropdownItem(
-                                  value: a.id!,
-                                  label: a.name ?? '未命名',
-                                ))
+                            .map(
+                              (a) => _DropdownItem(
+                                value: a.id!,
+                                label: a.name ?? loc.unnamed,
+                              ),
+                            )
                             .toList(),
                         onChanged: (v) => setState(() => _toAccountId = v),
                       ),
                     ] else ...[
                       _buildDropdown(
                         theme,
-                        label: '账户',
+                        label: loc.accountOverview,
                         value: _accountId,
                         items: _accounts
-                            .map((a) => _DropdownItem(
-                                  value: a.id!,
-                                  label: a.name ?? '未命名',
-                                ))
+                            .map(
+                              (a) => _DropdownItem(
+                                value: a.id!,
+                                label: a.name ?? loc.unnamed,
+                              ),
+                            )
                             .toList(),
                         onChanged: (v) => setState(() => _accountId = v),
                       ),
                       const SizedBox(height: 12),
                       _buildDropdown(
                         theme,
-                        label: '分类',
+                        label: loc.categoryManagement,
                         value: _categoryId,
                         items: _categories
-                            .map((c) => _DropdownItem(
-                                  value: c.id!,
-                                  label: c.name ?? '未分类',
-                                ))
+                            .map(
+                              (c) => _DropdownItem(
+                                value: c.id!,
+                                label: c.name ?? loc.unnamed,
+                              ),
+                            )
                             .toList(),
                         onChanged: (v) => setState(() => _categoryId = v),
                       ),
                       const SizedBox(height: 12),
                       _buildDropdown(
                         theme,
-                        label: '收款人',
+                        label: loc.payeeManagement,
                         value: _payeeId,
                         items: _payees
-                            .map((p) => _DropdownItem(
-                                  value: p.id!,
-                                  label: p.name ?? '未知',
-                                ))
+                            .map(
+                              (p) => _DropdownItem(
+                                value: p.id!,
+                                label: p.name ?? loc.unknownUser,
+                              ),
+                            )
                             .toList(),
                         onChanged: (v) => setState(() => _payeeId = v),
                       ),
@@ -418,7 +435,9 @@ class _BalanceFlowFormPageState extends State<BalanceFlowFormPage> {
                       style: FilledButton.styleFrom(
                         padding: const EdgeInsets.symmetric(vertical: 14),
                       ),
-                      child: Text(widget.editId == null ? '保存' : '更新'),
+                      child: Text(
+                        widget.editId == null ? loc.flowSave : loc.flowUpdate,
+                      ),
                     ),
                   ],
                 ),
@@ -428,30 +447,34 @@ class _BalanceFlowFormPageState extends State<BalanceFlowFormPage> {
   }
 
   Widget _buildAmountField(ThemeData theme) {
+    final loc = S.of(context);
     return TextFormField(
       controller: _amountCtrl,
-      keyboardType:
-          const TextInputType.numberWithOptions(decimal: true, signed: false),
-      decoration: const InputDecoration(
-        labelText: '金额',
+      keyboardType: const TextInputType.numberWithOptions(
+        decimal: true,
+        signed: false,
+      ),
+      decoration: InputDecoration(
+        labelText: loc.fieldFlowAmount,
         prefixIcon: Icon(Icons.payments_outlined),
         border: OutlineInputBorder(),
       ),
       validator: (v) {
         final value = v ?? '';
-        if (value.isEmpty) return '请输入金额';
+        if (value.isEmpty) return loc.enterAmount;
         final n = double.tryParse(value);
-        if (n == null || n <= 0) return '请输入有效金额';
+        if (n == null || n <= 0) return loc.enterAmount;
         return null;
       },
     );
   }
 
   Widget _buildTitleField(ThemeData theme) {
+    final loc = S.of(context);
     return TextFormField(
       controller: _titleCtrl,
-      decoration: const InputDecoration(
-        labelText: '备注/标题',
+      decoration: InputDecoration(
+        labelText: loc.fieldFlowTitle,
         prefixIcon: Icon(Icons.edit_outlined),
         border: OutlineInputBorder(),
       ),
@@ -460,11 +483,12 @@ class _BalanceFlowFormPageState extends State<BalanceFlowFormPage> {
   }
 
   Widget _buildNotesField(ThemeData theme) {
+    final loc = S.of(context);
     return TextFormField(
       controller: _notesCtrl,
       maxLines: 3,
-      decoration: const InputDecoration(
-        labelText: '说明',
+      decoration: InputDecoration(
+        labelText: loc.fieldDescription,
         prefixIcon: Icon(Icons.notes),
         border: OutlineInputBorder(),
       ),
@@ -472,6 +496,7 @@ class _BalanceFlowFormPageState extends State<BalanceFlowFormPage> {
   }
 
   Widget _buildAttachmentsSection(ThemeData theme) {
+    final loc = S.of(context);
     return Card(
       margin: EdgeInsets.zero,
       child: Padding(
@@ -481,19 +506,25 @@ class _BalanceFlowFormPageState extends State<BalanceFlowFormPage> {
           children: [
             Row(
               children: [
-                Icon(Icons.attach_file_outlined,
-                    size: 20, color: theme.colorScheme.primary),
+                Icon(
+                  Icons.attach_file_outlined,
+                  size: 20,
+                  color: theme.colorScheme.primary,
+                ),
                 const SizedBox(width: 8),
-                Text('附件',
-                    style: theme.textTheme.titleSmall
-                        ?.copyWith(fontWeight: FontWeight.w600)),
+                Text(
+                  loc.attachments,
+                  style: theme.textTheme.titleSmall?.copyWith(
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
                 const Spacer(),
                 OutlinedButton.icon(
                   // 上传能力待 app BFF 补齐 flow-file 上传路由后接入，
                   // 当前预留按钮，点击给出提示。
-                  onPressed: () => EasyLoading.showInfo('附件上传即将上线'),
+                  onPressed: () => EasyLoading.showInfo(loc.attachmentComing),
                   icon: const Icon(Icons.upload_outlined, size: 18),
-                  label: const Text('上传'),
+                  label: Text(loc.uploadAttachments),
                 ),
               ],
             ),
@@ -501,9 +532,12 @@ class _BalanceFlowFormPageState extends State<BalanceFlowFormPage> {
             if (_attachments.isEmpty)
               Padding(
                 padding: const EdgeInsets.symmetric(vertical: 8),
-                child: Text('暂无附件',
-                    style: theme.textTheme.bodySmall
-                        ?.copyWith(color: theme.colorScheme.outline)),
+                child: Text(
+                  loc.noAttachments,
+                  style: theme.textTheme.bodySmall?.copyWith(
+                    color: theme.colorScheme.outline,
+                  ),
+                ),
               )
             else
               ..._attachments.map((f) => _buildAttachmentTile(theme, f)),
@@ -513,23 +547,24 @@ class _BalanceFlowFormPageState extends State<BalanceFlowFormPage> {
     );
   }
 
-  Widget _buildAttachmentTile(
-    ThemeData theme,
-    LedgerServiceV1FlowFile file,
-  ) {
+  Widget _buildAttachmentTile(ThemeData theme, LedgerServiceV1FlowFile file) {
+    final loc = S.of(context);
     final size = file.size ?? 0;
     final sizeText = size > 1024 * 1024
         ? '${(size / 1024 / 1024).toStringAsFixed(1)} MB'
         : size > 1024
-            ? '${(size / 1024).toStringAsFixed(1)} KB'
-            : '$size B';
+        ? '${(size / 1024).toStringAsFixed(1)} KB'
+        : '$size B';
     return ListTile(
       dense: true,
       contentPadding: EdgeInsets.zero,
-      leading: Icon(_iconForType(file.contentType),
-          color: theme.colorScheme.primary, size: 22),
+      leading: Icon(
+        _iconForType(file.contentType),
+        color: theme.colorScheme.primary,
+        size: 22,
+      ),
       title: Text(
-        file.originalName ?? '未命名附件',
+        file.originalName ?? loc.unnamedAttachment,
         maxLines: 1,
         overflow: TextOverflow.ellipsis,
       ),
@@ -541,7 +576,7 @@ class _BalanceFlowFormPageState extends State<BalanceFlowFormPage> {
         style: theme.textTheme.bodySmall,
       ),
       trailing: IconButton(
-        tooltip: '删除附件',
+        tooltip: loc.deleteAttachment,
         icon: const Icon(Icons.delete_outline, size: 20),
         onPressed: () => _deleteAttachment(file),
       ),
@@ -559,6 +594,7 @@ class _BalanceFlowFormPageState extends State<BalanceFlowFormPage> {
   }
 
   Widget _buildDateField(ThemeData theme) {
+    final loc = S.of(context);
     String two(int n) => n.toString().padLeft(2, '0');
     final text =
         '${_selectedDate.year}-${two(_selectedDate.month)}-${two(_selectedDate.day)}';
@@ -566,8 +602,8 @@ class _BalanceFlowFormPageState extends State<BalanceFlowFormPage> {
       onTap: _pickDate,
       borderRadius: BorderRadius.circular(12),
       child: InputDecorator(
-        decoration: const InputDecoration(
-          labelText: '日期',
+        decoration: InputDecoration(
+          labelText: loc.fieldFlowDate,
           prefixIcon: Icon(Icons.calendar_today_outlined),
           border: OutlineInputBorder(),
         ),
@@ -590,10 +626,12 @@ class _BalanceFlowFormPageState extends State<BalanceFlowFormPage> {
         border: const OutlineInputBorder(),
       ),
       items: items
-          .map((item) => DropdownMenuItem<int>(
-                value: item.value,
-                child: Text(item.label),
-              ))
+          .map(
+            (item) => DropdownMenuItem<int>(
+              value: item.value,
+              child: Text(item.label),
+            ),
+          )
           .toList(),
       onChanged: onChanged,
     );
@@ -603,5 +641,6 @@ class _BalanceFlowFormPageState extends State<BalanceFlowFormPage> {
 class _DropdownItem {
   final int value;
   final String label;
+
   const _DropdownItem({required this.value, required this.label});
 }

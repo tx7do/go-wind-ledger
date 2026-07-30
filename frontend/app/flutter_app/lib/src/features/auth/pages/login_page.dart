@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 import 'package:cached_query/cached_query.dart' show MutationSuccess;
 
 import 'package:flutter_app/generated/l10n.dart';
+import 'package:flutter_app/src/core/themes/app_theme_extension.dart';
 import 'package:flutter_app/src/core/utils/responsive_utils.dart';
 import 'package:flutter_app/src/features/auth/services/authentication_service.dart';
 import 'package:flutter_app/generated/api/app/service/v1/index.dart'
@@ -53,7 +54,10 @@ class _LoginPageState extends State<LoginPage> {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
             content: Text(S.of(context).loginSuccess),
-            backgroundColor: Colors.green,
+            backgroundColor: Theme.of(context)
+                .extension<AppThemeExtension>()
+                ?.snackBarColor
+                .success,
           ),
         );
         // 登录后回跳到来源页面（或默认首页）
@@ -72,10 +76,14 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   void _showLoginFailed() {
+    final loc = S.of(context);
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
         content: Text(S.of(context).loginFailed),
-        backgroundColor: Colors.red,
+        backgroundColor: Theme.of(context)
+            .extension<AppThemeExtension>()
+            ?.snackBarColor
+            .error,
       ),
     );
   }
@@ -259,7 +267,7 @@ class _LoginPageState extends State<LoginPage> {
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               Text(
-                                '没有账号？',
+                                loc.noAccount,
                                 style: TextStyle(
                                   fontSize: isMobile ? 13.sp : 14,
                                   color: theme.colorScheme.onSurface
@@ -269,7 +277,7 @@ class _LoginPageState extends State<LoginPage> {
                               GestureDetector(
                                 onTap: () => context.go('/register'),
                                 child: Text(
-                                  '去注册',
+                                  loc.goRegister,
                                   style: TextStyle(
                                     fontSize: isMobile ? 13.sp : 14,
                                     color: theme.colorScheme.primary,

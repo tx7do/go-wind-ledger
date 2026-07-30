@@ -10,6 +10,10 @@ import 'package:flutter_app/generated/api/app/service/v1/index.dart'
         LedgerServiceV1FlowType;
 
 import 'package:flutter_app/src/core/services/pagination_query.dart';
+import 'package:flutter_app/src/core/themes/const.dart';
+import 'package:flutter_app/src/core/themes/semantic_colors.dart';
+import 'package:flutter_app/generated/l10n.dart';
+import 'package:flutter_app/src/core/themes/const.dart';
 import 'package:flutter_app/src/core/transport/http/status.dart';
 import 'package:flutter_app/src/features/ledger/services/balance_flow_service.dart';
 import 'package:flutter_app/src/features/ledger/widgets/statistics_card.dart';
@@ -146,8 +150,9 @@ class _BalanceFlowListPageState extends State<BalanceFlowListPage> {
   }
 
   void _showError(String message) {
+    final loc = S.of(context);
     if (!mounted) return;
-    EasyLoading.showError(message.isEmpty ? '加载失败' : message);
+    EasyLoading.showError(message.isEmpty ? loc.loadFailed : message);
   }
 
   void _changeFilter(LedgerServiceV1FlowType? type) {
@@ -157,14 +162,15 @@ class _BalanceFlowListPageState extends State<BalanceFlowListPage> {
   }
 
   Future<void> _confirmFlow(LedgerServiceV1BalanceFlow flow) async {
+    final loc = S.of(context);
     final id = flow.id;
     if (id == null) return;
-    EasyLoading.show(status: '确认中...');
+    EasyLoading.show(status: loc.confirming);
     final result = await _service.confirm(id);
     EasyLoading.dismiss();
     if (!mounted) return;
     if (result is LedgerServiceV1BalanceFlow) {
-      EasyLoading.showSuccess('已确认');
+      EasyLoading.showSuccess(loc.confirmed);
       _refresh();
     } else if (result is Status) {
       _showError(result.getMessage);
@@ -172,32 +178,33 @@ class _BalanceFlowListPageState extends State<BalanceFlowListPage> {
   }
 
   Future<void> _deleteFlow(LedgerServiceV1BalanceFlow flow) async {
+    final loc = S.of(context);
     final id = flow.id;
     if (id == null) return;
     final ok = await showDialog<bool>(
       context: context,
       builder: (ctx) => AlertDialog(
-        title: const Text('删除流水'),
-        content: const Text('确定删除该流水？此操作不可撤销。'),
+        title: Text(loc.deleteFlowTitle),
+        content: Text(loc.deleteFlowMsg),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(ctx, false),
-            child: const Text('取消'),
+            child: Text(loc.cancel),
           ),
           TextButton(
             onPressed: () => Navigator.pop(ctx, true),
-            child: const Text('删除'),
+            child: Text(loc.delete),
           ),
         ],
       ),
     );
     if (ok != true) return;
-    EasyLoading.show(status: '删除中...');
+    EasyLoading.show(status: loc.deleting);
     final result = await _service.delete(id);
     EasyLoading.dismiss();
     if (!mounted) return;
     if (result == null) {
-      EasyLoading.showSuccess('已删除');
+      EasyLoading.showSuccess(loc.deleted);
       _refresh();
     } else if (result is Status) {
       _showError(result.getMessage);
@@ -207,15 +214,16 @@ class _BalanceFlowListPageState extends State<BalanceFlowListPage> {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final loc = S.of(context);
     return Scaffold(
       appBar: widget.embedded
           ? null
           : AppBar(
-              title: const Text('收支流水'),
+              title: Text(loc.flowListTitle),
               actions: [
                 IconButton(
                   icon: const Icon(Icons.add),
-                  tooltip: '记一笔',
+                  tooltip: loc.flowCreate,
                   onPressed: () => context.push('/ledger/flows/create'),
                 ),
               ],
@@ -236,14 +244,15 @@ class _BalanceFlowListPageState extends State<BalanceFlowListPage> {
   }
 
   Widget _buildFilterBar(ThemeData theme) {
-    const filters = <_FilterItem>[
-      _FilterItem(label: '全部', type: null),
+    final loc = S.of(context);
+    final filters = <_FilterItem>[
+      _FilterItem(label: loc.flowFilterAll, type: null),
       _FilterItem(
-          label: '支出', type: LedgerServiceV1FlowType.flowTypeExpense),
+          label: loc.flowFilterExpense, type: LedgerServiceV1FlowType.flowTypeExpense),
       _FilterItem(
-          label: '收入', type: LedgerServiceV1FlowType.flowTypeIncome),
+          label: loc.flowFilterIncome, type: LedgerServiceV1FlowType.flowTypeIncome),
       _FilterItem(
-          label: '转账', type: LedgerServiceV1FlowType.flowTypeTransfer),
+          label: loc.flowFilterTransfer, type: LedgerServiceV1FlowType.flowTypeTransfer),
     ];
     return SizedBox(
       height: 44,
@@ -293,12 +302,17 @@ class _BalanceFlowListPageState extends State<BalanceFlowListPage> {
   }
 
   Widget _buildFlowTile(ThemeData theme, LedgerServiceV1BalanceFlow flow) {
+    final loc = S.of(context);
     final type = flow.type;
-    final (typeLabel, typeColor) = _typeDescriptor(type);
+    final typeLabel = _typeLabel(type);
+    final typeColor = _typeColor(type);
     final amount = double.tryParse(flow.amount ?? '0') ?? 0;
     final sign = type == LedgerServiceV1FlowType.flowTypeIncome ? '+' : '-';
     return Card(
-      margin: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
+      margin: const EdgeInsets.symmetric(
+        horizontal: kListMarginH,
+        vertical: kListMarginV,
+      ),
       child: ListTile(
         leading: CircleAvatar(
           backgroundColor: typeColor.withAlpha(30),
@@ -336,11 +350,11 @@ class _BalanceFlowListPageState extends State<BalanceFlowListPage> {
                 }
               },
               itemBuilder: (ctx) => [
-                const PopupMenuItem(value: 'edit', child: Text('编辑')),
+                PopupMenuItem(value: 'edit', child: Text(loc.edit)),
                 if (flow.confirm != true)
-                  const PopupMenuItem(
-                      value: 'confirm', child: Text('确认入账')),
-                const PopupMenuItem(value: 'delete', child: Text('删除')),
+                  PopupMenuItem(
+                      value: 'confirm', child: Text(loc.confirmFlow)),
+                PopupMenuItem(value: 'delete', child: Text(loc.delete)),
               ],
             ),
           ],
@@ -351,6 +365,7 @@ class _BalanceFlowListPageState extends State<BalanceFlowListPage> {
   }
 
   Widget _buildEmpty(ThemeData theme) {
+    final loc = S.of(context);
     return Center(
       child: Column(
         mainAxisSize: MainAxisSize.min,
@@ -358,32 +373,48 @@ class _BalanceFlowListPageState extends State<BalanceFlowListPage> {
           Icon(Icons.receipt_long_outlined,
               size: 64, color: theme.colorScheme.outline),
           const SizedBox(height: 12),
-          Text('暂无流水记录',
+          Text(loc.noFlows,
               style: theme.textTheme.bodyLarge
                   ?.copyWith(color: theme.colorScheme.outline)),
           const SizedBox(height: 16),
           FilledButton.icon(
             onPressed: () => context.push('/ledger/flows/create'),
             icon: const Icon(Icons.add),
-            label: const Text('记一笔'),
+            label: Text(loc.flowCreate),
           ),
         ],
       ),
     );
   }
 
-  (String, Color) _typeDescriptor(LedgerServiceV1FlowType? type) {
+  Color _typeColor(LedgerServiceV1FlowType? type) {
     switch (type) {
       case LedgerServiceV1FlowType.flowTypeExpense:
-        return ('支出', Colors.red);
+        return SemanticColors.expense(context);
       case LedgerServiceV1FlowType.flowTypeIncome:
-        return ('收入', Colors.green);
+        return SemanticColors.income(context);
       case LedgerServiceV1FlowType.flowTypeTransfer:
-        return ('转账', Colors.blue);
+        return SemanticColors.transfer(context);
       case LedgerServiceV1FlowType.flowTypeAdjust:
-        return ('余额调整', Colors.orange);
+        return SemanticColors.adjust(context);
       default:
-        return ('流水', Colors.grey);
+        return SemanticColors.grey(context);
+    }
+  }
+
+  String _typeLabel(LedgerServiceV1FlowType? type) {
+    final loc = S.of(context);
+    switch (type) {
+      case LedgerServiceV1FlowType.flowTypeExpense:
+        return loc.flowFilterExpense;
+      case LedgerServiceV1FlowType.flowTypeIncome:
+        return loc.flowFilterIncome;
+      case LedgerServiceV1FlowType.flowTypeTransfer:
+        return loc.flowFilterTransfer;
+      case LedgerServiceV1FlowType.flowTypeAdjust:
+        return loc.flowTypeAdjust;
+      default:
+        return loc.flowType;
     }
   }
 

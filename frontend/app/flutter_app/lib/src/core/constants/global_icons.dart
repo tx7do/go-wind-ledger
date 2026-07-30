@@ -11,7 +11,7 @@ class GlobalIcons {
   static const Icon navigateBefore = Icon(Icons.navigate_before);
 
   /// 错误
-  static Icon error({double? size = 50.0, Color? color = Colors.red}) {
+  static Icon error({double? size = 50.0, Color? color}) {
     return Icon(Icons.error_outline, color: color, size: size);
   }
 

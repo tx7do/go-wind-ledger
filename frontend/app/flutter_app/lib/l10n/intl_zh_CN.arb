@@ -199,5 +199,405 @@
   "termsContent3Title": "禁止行为",
   "termsContent3Desc": "用户不得试图未经授权访问我们的系统、干扰平台运营或使用自动化工具未经许可抓取或收集数据。",
   "termsContent4Title": "条款修改",
-  "termsContent4Desc": "我们保留随时修改本条款的权利。在条款变更后继续使用本平台，即表示您接受修改后的条款。"
+  "termsContent4Desc": "我们保留随时修改本条款的权利。在条款变更后继续使用本平台，即表示您接受修改后的条款。",
+
+  "_ledger_comment": "──── ledger 模块 ────",
+  "flowListTitle": "收支流水",
+  "flowCreate": "记一笔",
+  "flowFilterAll": "全部",
+  "flowFilterExpense": "支出",
+  "flowFilterIncome": "收入",
+  "flowFilterTransfer": "转账",
+  "flowTypeAdjust": "余额调整",
+  "noFlows": "暂无流水记录",
+  "deleteFlowTitle": "删除流水",
+  "deleteFlowMsg": "确定删除该流水？此操作不可撤销。",
+  "confirmFlow": "确认入账",
+  "enterAmount": "请输入有效金额",
+  "selectAccount": "请选择账户",
+  "selectAccounts": "请选择转出与转入账户",
+  "flowAmount": "金额",
+  "flowTitle": "备注/标题",
+  "flowNotes": "说明",
+  "flowDate": "日期",
+  "flowType": "流水",
+  "flowSave": "保存",
+  "flowUpdate": "更新",
+  "editFlow": "编辑流水",
+  "noData": "暂无数据",
+
+  "_management_comment": "──── 管理页 ────",
+  "bookManagement": "账本管理",
+  "budgetManagement": "预算管理",
+  "memberManagement": "成员管理",
+  "categoryManagement": "分类管理",
+  "tagManagement": "标签管理",
+  "payeeManagement": "收款人管理",
+  "noteDayManagement": "定期提醒",
+  "currencyManagement": "币种管理",
+  "manageBooksDesc": "管理记账账本",
+  "manageBudgetsDesc": "管理收支预算",
+  "manageMembersDesc": "邀请与管理租户成员",
+  "manageCategoriesDesc": "管理收支分类",
+  "manageTagsDesc": "管理流水标签",
+  "managePayeesDesc": "管理收款人信息",
+  "manageNoteDaysDesc": "管理定期记账提醒",
+  "manageCurrenciesDesc": "查看币种与汇率",
+  "myProfile": "我的",
+  "mySettings": "设置",
+
+  "_settings_comment": "──── 设置页 ────",
+  "currentDefault": "当前默认",
+  "defaultBook": "默认账本",
+  "defaultTenant": "默认租户",
+  "notSet": "未设置",
+  "themeMode": "主题模式",
+  "switchDefaultBook": "切换默认账本",
+  "switchDefaultTenant": "切换默认租户",
+  "switching": "切换中...",
+  "tenantSwitched": "默认租户已切换",
+  "bookSwitched": "默认账本已切换",
+  "switchFailed": "切换失败",
+  "logoutConfirmTitle": "确认退出",
+  "logoutConfirmMsg": "退出登录后需要重新登录才能使用。",
+
+  "_category_comment": "──── 分类管理 ────",
+  "expenseCategory": "支出分类",
+  "incomeCategory": "收入分类",
+  "noCategories": "暂无分类",
+  "newCategory": "新建分类",
+  "deleteCategoryTitle": "删除分类",
+  "deleteCategoryMsg": "确定删除分类「{name}」？",
+  "@deleteCategoryMsg": {
+    "placeholders": {
+      "name": {"type": "String"}
+    }
+  },
+  "addSubcategory": "添加子分类",
+  "enable": "启用",
+  "disable": "禁用",
+
+  "_account_comment": "──── 账户管理 ────",
+  "accountOverview": "账户概览",
+  "assetDetails": "资产明细",
+  "debtDetails": "负债明细",
+  "totalAssets": "总资产",
+  "totalDebts": "总负债",
+  "netWorth": "净资产",
+  "noOverviewData": "暂无概览数据",
+  "balanceSheetTitle": "资产负债概览",
+  "noAccounts": "暂无账户",
+
+  "_member_comment": "──── 成员管理 ────",
+  "inviteMember": "邀请成员",
+  "noMembers": "暂无成员",
+  "inviteSent": "邀请已发送",
+  "inviteFailed": "邀请失败",
+  "removeMemberTitle": "移除成员",
+  "removeMemberMsg": "确定移除成员「{name}」？",
+  "@removeMemberMsg": {
+    "placeholders": {
+      "name": {"type": "String"}
+    }
+  },
+  "removed": "已移除",
+  "noTenants": "暂无可用租户",
+  "currentTenant": "当前租户",
+  "memberActive": "正常",
+  "memberInvited": "待接受",
+  "memberDisabled": "已禁用",
+  "memberLeft": "已退出",
+  "memberUnknown": "未知",
+
+  "_report_comment": "──── 报表 ────",
+  "reportTitle": "统计报表",
+  "expenseByCategory": "支出 - 按分类",
+  "incomeByCategory": "收入 - 按分类",
+  "expenseByTag": "支出 - 按标签",
+  "incomeByTag": "收入 - 按标签",
+  "expenseByPayee": "支出 - 按收款人",
+  "incomeByPayee": "收入 - 按收款人",
+  "itemCount": "{count} 项",
+  "@itemCount": {
+    "placeholders": {
+      "count": {"type": "int"}
+    }
+  },
+
+  "_budget_comment": "──── 预算 ────",
+  "noBudgets": "暂无预算",
+  "newBudget": "新建预算",
+  "deleteBudgetTitle": "删除预算",
+  "deleteBudgetMsg": "确定删除预算「{name}」？",
+  "@deleteBudgetMsg": {
+    "placeholders": {
+      "name": {"type": "String"}
+    }
+  },
+
+  "_common_comment": "──── 通用 ────",
+  "create": "新建",
+  "save": "保存",
+  "delete": "删除",
+  "edit": "编辑",
+  "back": "返回",
+  "loading": "加载中...",
+  "loadFailed": "加载失败",
+  "saveSuccess": "保存成功",
+  "saveFailed": "保存失败",
+  "deleted": "已删除",
+  "deleting": "删除中...",
+  "confirming": "确认中...",
+  "confirmed": "已确认",
+  "processing": "处理中...",
+  "operationFailed": "操作失败",
+  "updated": "已更新",
+  "unnamed": "未命名",
+  "unknownUser": "未知用户",
+  "removeMember": "移除成员",
+
+  "_attachment_comment": "──── 附件 ────",
+  "attachments": "附件",
+  "noAttachments": "暂无附件",
+  "uploadAttachments": "上传",
+  "attachmentComing": "附件上传即将上线",
+  "deleteAttachmentTitle": "删除附件",
+  "deleteAttachmentMsg": "确定删除附件「{name}」？",
+  "@deleteAttachmentMsg": {
+    "placeholders": {
+      "name": {"type": "String"}
+    }
+  },
+  "unnamedAttachment": "未命名附件",
+  "deleteAttachment": "删除附件",
+
+  "_auth_comment": "──── 认证 ────",
+  "noAccount": "没有账号？",
+  "goRegister": "去注册",
+  "haveAccount": "已有账号？",
+  "goLogin": "去登录",
+  "registerTitle": "注册",
+  "registerButton": "注册",
+  "registerSuccess": "注册成功",
+  "registerFailed": "注册失败，请稍后重试",
+  "passwordMismatch": "两次输入的密码不一致",
+  "confirmPassword": "确认密码",
+  "confirmPasswordHint": "请再次输入密码",
+  "invite": "邀请",
+
+  "_tag_payee_note_comment": "──── 标签/收款人/提醒/币种/账本 ────",
+  "noTags": "暂无标签",
+  "newTag": "新建标签",
+  "noPayees": "暂无收款人",
+  "newPayee": "新建收款人",
+  "noBooks": "暂无账本",
+  "newBook": "新建账本",
+  "noCurrencies": "暂无币种",
+  "noNoteDays": "暂无定期提醒",
+  "newNoteDay": "新建提醒",
+  "deleteBookTitle": "删除账本",
+  "deleteBookMsg": "确定删除账本「{name}」？",
+  "@deleteBookMsg": {
+    "placeholders": {
+      "name": {"type": "String"}
+    }
+  },
+  "deleteTagTitle": "删除标签",
+  "deleteTagMsg": "确定删除标签「{name}」？",
+  "@deleteTagMsg": {
+    "placeholders": {
+      "name": {"type": "String"}
+    }
+  },
+  "deletePayeeTitle": "删除收款人",
+  "deletePayeeMsg": "确定删除收款人「{name}」？",
+  "@deletePayeeMsg": {
+    "placeholders": {
+      "name": {"type": "String"}
+    }
+  },
+  "accountTypeAsset": "资产",
+  "accountTypeChecking": "活期",
+  "accountTypeCredit": "信用",
+  "accountTypeDebt": "负债",
+  "accountTypeOther": "其他",
+
+  "_tag_note_reminder": "──── 提醒 ────",
+  "deleteNoteDayTitle": "删除提醒",
+  "deleteNoteDayMsg": "确定删除定期提醒「{name}」？",
+  "@deleteNoteDayMsg": {
+    "placeholders": {
+      "name": {"type": "String"}
+    }
+  },
+
+  "_field_labels": "──── 字段标签 ────",
+  "fieldAccountType": "账户类型",
+  "fieldCurrency": "币种",
+  "fieldDefaultCurrency": "默认币种",
+  "fieldBookName": "账本名称",
+  "fieldBudgetName": "预算名称",
+  "fieldBudgetAmount": "预算金额",
+  "fieldCategoryName": "分类名称",
+  "fieldCategoryType": "分类类型",
+  "fieldParentCategory": "父分类（可选）",
+  "fieldBook": "所属账本",
+  "fieldTagName": "标签名称",
+  "fieldPayeeName": "收款人名称",
+  "fieldNoteTitle": "标题",
+  "fieldRepeatType": "重复类型",
+  "fieldInterval": "间隔（如每 N 天/周/月）",
+  "fieldStartDate": "开始日期",
+  "fieldEndDate": "结束日期（可选）",
+  "fieldTotalRuns": "总执行次数（可选）",
+  "fieldDescription": "说明",
+  "fieldFlowTitle": "备注/标题",
+  "fieldFlowAmount": "金额",
+  "fieldFlowDate": "日期",
+  "fieldTemplate": "从模板创建（可选）",
+  "fieldSortOrder": "排序（可选）",
+  "registerSubtitle": "创建账号，开启记账之旅",
+  "fieldNickname": "昵称（可选）",
+  "fieldNicknameHint": "请输入昵称",
+  "fieldInviteCode": "邀请码（可选）",
+  "fieldInviteCodeHint": "请输入邀请码",
+  "fieldCreditLimit": "信用额度",
+  "fieldOpeningBalance": "初始余额",
+  "fieldAnnualRate": "年化利率",
+  "fieldAccountNumberTail": "账号尾号",
+  "fieldAccountName": "账户名称",
+  "fieldAllowExpense": "允许支出",
+  "fieldAllowIncome": "允许收入",
+  "fieldAllowTransferIn": "允许转入",
+  "fieldAllowTransferOut": "允许转出",
+  "fieldIncludeInAssets": "纳入资产统计",
+  "adjustSuccess": "余额已调整",
+  "fieldTargetBalance": "目标余额",
+  "confirmAdjust": "确认调整",
+  "adjusting": "调整中...",
+  "adjustFailed": "调整失败",
+  "fieldBookId": "账本 ID",
+  "bookIdHelper": "默认填充当前默认账本，可手动修改",
+  "noTemplate": "不使用模板",
+  "unnamedTemplate": "未命名模板",
+  "enterBookName": "请输入账本名称",
+  "templateHelper": "选择模板将一并创建其中的分类/标签/收款人",
+  "enableBudget": "启用预算",
+  "budgetPeriod": "周期",
+  "periodWeekly": "周",
+  "periodMonthly": "月度",
+  "periodQuarterly": "季度",
+  "periodYearly": "年度",
+  "budgetOverrunNotify": "超支通知",
+  "enterBudgetName": "请输入预算名称",
+  "budgetDisabled": "已停用",
+  "budgetOverran": "已超支",
+  "budgetUnspecified": "未指定",
+  "unnamedBudget": "未命名预算",
+  "unnamedTenant": "未命名租户",
+  "refreshFailed": "刷新失败",
+  "refreshRates": "刷新汇率",
+  "refreshingRates": "刷新汇率中...",
+  "convert": "换算",
+  "converting": "换算中...",
+  "convertFailed": "换算失败",
+  "noCurrenciesData": "暂无币种数据",
+  "rateConvert": "汇率换算",
+  "sourceCurrency": "源币种",
+  "targetCurrency": "目标币种",
+  "enterAmountAndCurrency": "请填写金额并选择币种",
+  "ratesUpdated": "汇率已更新",
+  "repeatOnce": "一次性",
+  "repeatUnlimited": "不限",
+  "repeatWeekly": "按周",
+  "repeatDaily": "按天",
+  "repeatYearly": "按年",
+  "repeatMonthly": "按月",
+  "enterNoteTitle": "请输入标题",
+  "executed": "已执行",
+  "revoked": "已撤回",
+  "executing": "执行中...",
+  "revoking": "撤回中...",
+  "revokeExecution": "撤回执行",
+  "executeNow": "立即执行",
+  "fieldUsableExpense": "可用于支出",
+  "fieldUsableIncome": "可用于收入",
+  "fieldUsableTransfer": "可用于转账",
+  "enterPayeeName": "请输入收款人名称",
+  "enterTagName": "请输入标签名称",
+  "enterCategoryName": "请输入分类名称",
+  "noParentCategory": "无（顶级分类）",
+  "inviting": "邀请中...",
+  "languageZh": "中文",
+  "fieldTransferOutAccount": "转出账户",
+  "fieldTransferInAccount": "转入账户",
+  "adjustBalanceTitle": "调整余额 · {name}",
+  "@adjustBalanceTitle": {
+    "placeholders": {
+      "name": {"type": "String"}
+    }
+  },
+  "groupTotal": "合计 {total}",
+  "@groupTotal": {
+    "placeholders": {
+      "total": {"type": "String"}
+    }
+  },
+  "defaultCurrencyLabel": "默认币种: {code}",
+  "@defaultCurrencyLabel": {
+    "placeholders": {
+      "code": {"type": "String"}
+    }
+  },
+  "rateValue": "汇率 {rate}",
+  "@rateValue": {
+    "placeholders": {
+      "rate": {"type": "String"}
+    }
+  },
+  "passwordMinLength": "密码长度不能少于 {min} 位",
+  "@passwordMinLength": {
+    "placeholders": {
+      "min": {"type": "int"}
+    }
+  },
+  "enterField": "请输入{label}",
+  "@enterField": {
+    "placeholders": {
+      "label": {"type": "String"}
+    }
+  },
+  "sameCurrencyResult": "源币种与目标币种相同，换算结果：{amount} {from}",
+  "@sameCurrencyResult": {
+    "placeholders": {
+      "amount": {"type": "String"},
+      "from": {"type": "String"}
+    }
+  },
+  "convertFormula": "{amount} {from} = {converted} {to}\n参考汇率: 1 {from} = {rate} {to}",
+  "@convertFormula": {
+    "placeholders": {
+      "amount": {"type": "String"},
+      "from": {"type": "String"},
+      "converted": {"type": "String"},
+      "to": {"type": "String"},
+      "rate": {"type": "String"}
+    }
+  },
+  "budgetUsage": "{period} · 已用 {used} / {amount}",
+  "@budgetUsage": {
+    "placeholders": {
+      "period": {"type": "String"},
+      "used": {"type": "String"},
+      "amount": {"type": "String"}
+    }
+  },
+  "nextRunInfo": "下次: {next} · 已执行 {executed}/{total}",
+  "@nextRunInfo": {
+    "placeholders": {
+      "next": {"type": "String"},
+      "executed": {"type": "String"},
+      "total": {"type": "String"}
+    }
+  }
 }

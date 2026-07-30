@@ -5,6 +5,8 @@ import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_app/generated/api/app/service/v1/index.dart'
     show LedgerServiceV1NoteDay, LedgerServiceV1ListNoteDayResponse;
 
+import 'package:flutter_app/generated/l10n.dart';
+import 'package:flutter_app/src/core/themes/const.dart';
 import 'package:flutter_app/src/core/transport/http/status.dart';
 import 'package:flutter_app/src/features/ledger/services/note_day_service.dart';
 
@@ -28,6 +30,7 @@ class _NoteDayListPageState extends State<NoteDayListPage> {
   }
 
   Future<void> _loadData() async {
+    final loc = S.of(context);
     setState(() => _loading = true);
     final result = await _service.list();
     if (!mounted) return;
@@ -38,78 +41,82 @@ class _NoteDayListPageState extends State<NoteDayListPage> {
       });
     } else if (result is Status) {
       setState(() => _loading = false);
-      EasyLoading.showError(result.getMessage.isEmpty ? '加载失败' : result.getMessage);
+      EasyLoading.showError(result.getMessage.isEmpty ? loc.loadFailed : result.getMessage);
     }
   }
 
   Future<void> _run(LedgerServiceV1NoteDay item) async {
+    final loc = S.of(context);
     final id = item.id;
     if (id == null) return;
-    EasyLoading.show(status: '执行中...');
+    EasyLoading.show(status: loc.executing);
     final result = await _service.run(id);
     EasyLoading.dismiss();
     if (!mounted) return;
     if (result is LedgerServiceV1NoteDay) {
-      EasyLoading.showSuccess('已执行');
+      EasyLoading.showSuccess(loc.executed);
       _loadData();
     } else if (result is Status) {
-      EasyLoading.showError(result.getMessage.isEmpty ? '操作失败' : result.getMessage);
+      EasyLoading.showError(result.getMessage.isEmpty ? loc.operationFailed : result.getMessage);
     }
   }
 
   Future<void> _recall(LedgerServiceV1NoteDay item) async {
+    final loc = S.of(context);
     final id = item.id;
     if (id == null) return;
-    EasyLoading.show(status: '撤回中...');
+    EasyLoading.show(status: loc.revoking);
     final result = await _service.recall(id);
     EasyLoading.dismiss();
     if (!mounted) return;
     if (result is LedgerServiceV1NoteDay) {
-      EasyLoading.showSuccess('已撤回');
+      EasyLoading.showSuccess(loc.revoked);
       _loadData();
     } else if (result is Status) {
-      EasyLoading.showError(result.getMessage.isEmpty ? '操作失败' : result.getMessage);
+      EasyLoading.showError(result.getMessage.isEmpty ? loc.operationFailed : result.getMessage);
     }
   }
 
   Future<void> _delete(LedgerServiceV1NoteDay item) async {
+    final loc = S.of(context);
     final id = item.id;
     if (id == null) return;
     final ok = await showDialog<bool>(
       context: context,
       builder: (ctx) => AlertDialog(
-        title: const Text('删除提醒'),
-        content: Text('确定删除提醒「${item.title ?? ''}」？'),
+        title: Text(loc.deleteNoteDayTitle),
+        content: Text(loc.deleteNoteDayMsg(item.title ?? '')),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(ctx, false),
-            child: const Text('取消'),
+            child: Text(loc.cancel),
           ),
           TextButton(
             onPressed: () => Navigator.pop(ctx, true),
-            child: const Text('删除'),
+            child: Text(loc.delete),
           ),
         ],
       ),
     );
     if (ok != true) return;
-    EasyLoading.show(status: '删除中...');
+    EasyLoading.show(status: loc.deleting);
     final result = await _service.delete(id);
     EasyLoading.dismiss();
     if (!mounted) return;
     if (result == null) {
-      EasyLoading.showSuccess('已删除');
+      EasyLoading.showSuccess(loc.deleted);
       _loadData();
     } else if (result is Status) {
-      EasyLoading.showError(result.getMessage.isEmpty ? '删除失败' : result.getMessage);
+      EasyLoading.showError(result.getMessage.isEmpty ? loc.loadFailed : result.getMessage);
     }
   }
 
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final loc = S.of(context);
     return Scaffold(
-      appBar: AppBar(title: const Text('定期提醒')),
+      appBar: AppBar(title: Text(loc.noteDayManagement)),
       body: _loading
           ? const Center(child: CircularProgressIndicator())
           : _items.isEmpty
@@ -129,12 +136,13 @@ class _NoteDayListPageState extends State<NoteDayListPage> {
           _loadData();
         },
         icon: const Icon(Icons.add),
-        label: const Text('新建提醒'),
+        label: Text(loc.newNoteDay),
       ),
     );
   }
 
   Widget _buildItemTile(ThemeData theme, LedgerServiceV1NoteDay item) {
+    final loc = S.of(context);
     return Card(
       margin: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
       child: ListTile(
@@ -143,9 +151,9 @@ class _NoteDayListPageState extends State<NoteDayListPage> {
           foregroundColor: theme.colorScheme.onPrimaryContainer,
           child: const Icon(Icons.notifications_active_outlined),
         ),
-        title: Text(item.title ?? '未命名'),
+        title: Text(item.title ?? loc.unnamed),
         subtitle: Text(
-          '下次: ${_formatTime(item.nextDate)} · 已执行 ${item.runCount ?? 0}/${item.totalCount ?? 0}',
+          loc.nextRunInfo(_formatTime(item.nextDate), (item.runCount ?? 0).toString(), (item.totalCount ?? 0).toString()),
           style: theme.textTheme.bodySmall,
         ),
         trailing: PopupMenuButton<String>(
@@ -163,10 +171,10 @@ class _NoteDayListPageState extends State<NoteDayListPage> {
             }
           },
           itemBuilder: (ctx) => [
-            const PopupMenuItem(value: 'edit', child: Text('编辑')),
-            const PopupMenuItem(value: 'run', child: Text('立即执行')),
-            const PopupMenuItem(value: 'recall', child: Text('撤回执行')),
-            const PopupMenuItem(value: 'delete', child: Text('删除')),
+            PopupMenuItem(value: 'edit', child: Text(loc.edit)),
+            PopupMenuItem(value: 'run', child: Text(loc.executeNow)),
+            PopupMenuItem(value: 'recall', child: Text(loc.revokeExecution)),
+            PopupMenuItem(value: 'delete', child: Text(loc.delete)),
           ],
         ),
         onTap: () async {
@@ -185,6 +193,7 @@ class _NoteDayListPageState extends State<NoteDayListPage> {
   }
 
   Widget _buildEmpty(ThemeData theme) {
+    final loc = S.of(context);
     return Center(
       child: Column(
         mainAxisSize: MainAxisSize.min,
@@ -192,7 +201,7 @@ class _NoteDayListPageState extends State<NoteDayListPage> {
           Icon(Icons.notifications_active_outlined,
               size: 64, color: theme.colorScheme.outline),
           const SizedBox(height: 12),
-          Text('暂无提醒',
+          Text(loc.noNoteDays,
               style: theme.textTheme.bodyLarge
                   ?.copyWith(color: theme.colorScheme.outline)),
           const SizedBox(height: 16),
@@ -202,7 +211,7 @@ class _NoteDayListPageState extends State<NoteDayListPage> {
               _loadData();
             },
             icon: const Icon(Icons.add),
-            label: const Text('新建提醒'),
+            label: Text(loc.newNoteDay),
           ),
         ],
       ),

@@ -1,8 +1,6 @@
 {
   "appName": "GoWind CMS",
-
   "@@locale": "en_US",
-
   "home": "Home",
   "discover": "Discover",
   "bookmarks": "Bookmarks",
@@ -10,7 +8,6 @@
   "search": "Search",
   "settings": "Settings",
   "login": "Login",
-
   "latestPosts": "Latest Posts",
   "relatedArticles": "Related Articles",
   "allPosts": "All Posts",
@@ -18,52 +15,59 @@
   "browseCategories": "Browse Categories",
   "hotTags": "Hot Tags",
   "recommend": "Recommend",
-
   "postsCount": "{count} posts",
   "@postsCount": {
     "placeholders": {
-      "count": {"type": "int"}
+      "count": {
+        "type": "int"
+      }
     }
   },
-
   "postsCountFull": "{count} articles",
   "@postsCountFull": {
     "placeholders": {
-      "count": {"type": "int"}
+      "count": {
+        "type": "int"
+      }
     }
   },
-
   "myBookmarks": "My Bookmarks",
   "bookmarkedCount": "Bookmarked {count} articles",
   "@bookmarkedCount": {
     "placeholders": {
-      "count": {"type": "int"}
+      "count": {
+        "type": "int"
+      }
     }
   },
   "noBookmarks": "No bookmarked articles yet",
   "bookmarkHint": "Tap the bookmark button while reading to save",
-
   "searchHint": "Search articles, tags...",
   "hotSearch": "Hot Searches",
   "recommendedReading": "Recommended Reading",
   "noSearchResults": "No results found for \"{query}\"",
   "@noSearchResults": {
     "placeholders": {
-      "query": {"type": "String"}
+      "query": {
+        "type": "String"
+      }
     }
   },
   "relatedTags": "Related Tags",
   "relatedPostsCount": "Related Articles ({count})",
   "@relatedPostsCount": {
     "placeholders": {
-      "count": {"type": "int"}
+      "count": {
+        "type": "int"
+      }
     }
   },
-
   "commentsCount": "Comments ({count})",
   "@commentsCount": {
     "placeholders": {
-      "count": {"type": "int"}
+      "count": {
+        "type": "int"
+      }
     }
   },
   "views": "Views",
@@ -72,45 +76,58 @@
   "share": "Share",
   "reply": "Reply",
   "writeComment": "Write your comment...",
-
   "today": "Today",
   "yesterday": "Yesterday",
   "daysAgo": "{days} days ago",
   "@daysAgo": {
     "placeholders": {
-      "days": {"type": "int"}
+      "days": {
+        "type": "int"
+      }
     }
   },
   "weeksAgo": "{weeks} weeks ago",
   "@weeksAgo": {
     "placeholders": {
-      "weeks": {"type": "int"}
+      "weeks": {
+        "type": "int"
+      }
     }
   },
   "monthDay": "{month}/{day}",
   "@monthDay": {
     "placeholders": {
-      "month": {"type": "int"},
-      "day": {"type": "int"}
+      "month": {
+        "type": "int"
+      },
+      "day": {
+        "type": "int"
+      }
     }
   },
   "yearMonthDay": "{year}/{month}/{day}",
   "@yearMonthDay": {
     "placeholders": {
-      "year": {"type": "int"},
-      "month": {"type": "int"},
-      "day": {"type": "int"}
+      "year": {
+        "type": "int"
+      },
+      "month": {
+        "type": "int"
+      },
+      "day": {
+        "type": "int"
+      }
     }
   },
-
   "relatedPostsCountFull": "{count} related articles",
   "@relatedPostsCountFull": {
     "placeholders": {
-      "count": {"type": "int"}
+      "count": {
+        "type": "int"
+      }
     }
   },
   "noRelatedPosts": "No related articles yet",
-
   "guestUser": "Guest",
   "loginForMore": "Login for more features",
   "appearance": "Appearance",
@@ -134,13 +151,10 @@
   "bookmarkedPostsLabel": "Bookmarked",
   "readingTime": "Reading Time",
   "noCommentsYet": "No comments yet",
-
   "errorOccurred": "Error Occurred!",
-
   "pageNotFound": "Page Not Found",
   "pageNotFoundDesc": "Sorry, the page you are looking for does not exist or has been moved.",
   "backToHome": "Back to Home",
-
   "username": "Username",
   "password": "Password",
   "usernameHint": "Enter username",
@@ -155,7 +169,6 @@
   "featureNotAvailable": "This feature is coming soon",
   "welcomeBack": "Welcome back",
   "footerText": "© 2026 GoWind CMS  ·  Powered by Flutter",
-
   "aboutSubtitle": "A modern content management system powered by Go and Flutter",
   "aboutFeature1Title": "Content Management",
   "aboutFeature1Desc": "Create, edit and publish content with an intuitive and powerful editor",
@@ -164,7 +177,6 @@
   "aboutFeature3Title": "Cross-platform",
   "aboutFeature3Desc": "Seamless experience across Web, iOS, Android and desktop platforms",
   "aboutTechStack": "Built with",
-
   "contactUs": "Contact Us",
   "contactEmail": "Email",
   "contactEmailDesc": "You can reach us via email at support@gowind.dev for any questions, suggestions or feedback. We typically respond within 1-2 business days.",
@@ -172,7 +184,6 @@
   "contactWebsiteDesc": "Visit our official website gowind.dev for the latest updates, documentation, and community resources.",
   "contactCommunity": "Community",
   "contactCommunityDesc": "Join our developer community on GitHub to report issues, share ideas, and contribute to the project.",
-
   "disclaimer": "Disclaimer",
   "disclaimerContent1Title": "Content Accuracy",
   "disclaimerContent1Desc": "The information provided on this platform is for general informational purposes only. We make no warranties about the completeness, accuracy, or reliability of the content. Any action you take upon the information is strictly at your own risk.",
@@ -180,7 +191,6 @@
   "disclaimerContent2Desc": "This platform may contain links to external websites. We have no control over the content and nature of these sites and are not responsible for any damages from browsing or using them.",
   "disclaimerContent3Title": "Limitation of Liability",
   "disclaimerContent3Desc": "In no event shall we be liable for any direct, indirect, incidental, consequential, or special damages arising out of or in connection with the use of this platform.",
-
   "privacyPolicy": "Privacy Policy",
   "privacyContent1Title": "Information Collection",
   "privacyContent1Desc": "We collect minimal personal information necessary to provide our services. This may include your email address, username, and usage preferences. We do not sell or share your personal data with third parties.",
@@ -190,7 +200,6 @@
   "privacyContent3Desc": "We use essential cookies to ensure the proper functioning of the platform. Analytics cookies may be used to improve user experience, which can be disabled in your browser settings.",
   "privacyContent4Title": "Your Rights",
   "privacyContent4Desc": "You have the right to access, correct, or delete your personal data at any time. Contact our support team for any privacy-related requests.",
-
   "termsOfService": "Terms of Service",
   "termsContent1Title": "Acceptance of Terms",
   "termsContent1Desc": "By accessing and using this platform, you agree to be bound by these Terms of Service. If you do not agree with any part of these terms, you must not use the platform.",
@@ -199,5 +208,361 @@
   "termsContent3Title": "Prohibited Activities",
   "termsContent3Desc": "Users must not attempt to gain unauthorized access to our systems, interfere with the platform's operation, or use automated tools to scrape or collect data without permission.",
   "termsContent4Title": "Modifications",
-  "termsContent4Desc": "We reserve the right to modify these terms at any time. Continued use of the platform after changes constitutes acceptance of the updated terms."
+  "termsContent4Desc": "We reserve the right to modify these terms at any time. Continued use of the platform after changes constitutes acceptance of the updated terms.",
+  "accountOverview": "Account Overview",
+  "accountTypeAsset": "Asset",
+  "accountTypeChecking": "Checking",
+  "accountTypeCredit": "Credit",
+  "accountTypeDebt": "Debt",
+  "accountTypeOther": "Other",
+  "addSubcategory": "Add Subcategory",
+  "adjustBalanceTitle": "Adjust Balance · {name}",
+  "@adjustBalanceTitle": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "adjustFailed": "Adjust failed",
+  "adjustSuccess": "Balance adjusted",
+  "adjusting": "Adjusting...",
+  "assetDetails": "Asset Details",
+  "attachmentComing": "File upload coming soon",
+  "attachments": "Attachments",
+  "back": "Back",
+  "balanceSheetTitle": "Balance Sheet",
+  "bookIdHelper": "Defaults to current book, editable",
+  "bookManagement": "Book Management",
+  "bookSwitched": "Default book switched",
+  "fieldTransferOutAccount": "Source Account",
+  "fieldTransferInAccount": "Target Account",
+  "convertFormula": "{amount} {from} = {converted} {to}\nReference rate: 1 {from} = {rate} {to}",
+  "@convertFormula": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      },
+      "from": {
+        "type": "String"
+      },
+      "converted": {
+        "type": "String"
+      },
+      "to": {
+        "type": "String"
+      },
+      "rate": {
+        "type": "String"
+      }
+    }
+  },
+  "sameCurrencyResult": "Source and target currencies are identical, result: {amount} {from}",
+  "@sameCurrencyResult": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      },
+      "from": {
+        "type": "String"
+      }
+    }
+  },
+  "budgetUsage": "{period} · Used {used} / {amount}",
+  "@budgetUsage": {
+    "placeholders": {
+      "period": {
+        "type": "String"
+      },
+      "used": {
+        "type": "String"
+      },
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "nextRunInfo": "Next: {next} · Executed {executed}/{total}",
+  "@nextRunInfo": {
+    "placeholders": {
+      "next": {
+        "type": "String"
+      },
+      "executed": {
+        "type": "String"
+      },
+      "total": {
+        "type": "String"
+      }
+    }
+  },
+  "passwordMinLength": "Password must be at least {min} characters",
+  "@passwordMinLength": {
+    "placeholders": {
+      "min": {
+        "type": "int"
+      }
+    }
+  },
+  "enterField": "Please enter {label}",
+  "@enterField": {
+    "placeholders": {
+      "label": {
+        "type": "String"
+      }
+    }
+  },
+  "groupTotal": "Total {total}",
+  "@groupTotal": {
+    "placeholders": {
+      "total": {
+        "type": "String"
+      }
+    }
+  },
+  "defaultCurrencyLabel": "Default Currency: {code}",
+  "@defaultCurrencyLabel": {
+    "placeholders": {
+      "code": {
+        "type": "String"
+      }
+    }
+  },
+  "rateValue": "Rate {rate}",
+  "@rateValue": {
+    "placeholders": {
+      "rate": {
+        "type": "String"
+      }
+    }
+  },
+  "unnamedTemplate": "Unnamed Template",
+  "unnamedBudget": "Unnamed Budget",
+  "unnamedTenant": "Unnamed Tenant",
+  "registerSubtitle": "Create an account to start bookkeeping",
+  "fieldNickname": "Nickname (optional)",
+  "fieldNicknameHint": "Please enter nickname",
+  "fieldInviteCode": "Invite Code (optional)",
+  "fieldInviteCodeHint": "Please enter invite code",
+  "fieldCreditLimit": "Credit Limit",
+  "fieldOpeningBalance": "Opening Balance",
+  "fieldAnnualRate": "Annual Rate",
+  "fieldAccountNumberTail": "Account Number Suffix",
+  "fieldAccountName": "Account Name",
+  "fieldAllowExpense": "Allow Expense",
+  "fieldAllowIncome": "Allow Income",
+  "fieldAllowTransferIn": "Allow Transfer In",
+  "fieldAllowTransferOut": "Allow Transfer Out",
+  "fieldIncludeInAssets": "Include in Asset Statistics",
+  "fieldTargetBalance": "Target Balance",
+  "confirmAdjust": "Confirm Adjust",
+  "fieldBookId": "Book ID",
+  "noTemplate": "No Template",
+  "enterBookName": "Please enter book name",
+  "templateHelper": "Selecting a template will create its categories/tags/payees",
+  "enableBudget": "Enable Budget",
+  "budgetPeriod": "Period",
+  "periodWeekly": "Weekly",
+  "periodMonthly": "Monthly",
+  "periodQuarterly": "Quarterly",
+  "periodYearly": "Yearly",
+  "budgetOverrunNotify": "Overrun Notification",
+  "enterBudgetName": "Please enter budget name",
+  "budgetDisabled": "Disabled",
+  "budgetOverran": "Overran",
+  "budgetUnspecified": "Unspecified",
+  "refreshFailed": "Refresh failed",
+  "refreshRates": "Refresh Rates",
+  "refreshingRates": "Refreshing rates...",
+  "convert": "Convert",
+  "converting": "Converting...",
+  "convertFailed": "Convert failed",
+  "noCurrenciesData": "No currency data",
+  "rateConvert": "Rate Convert",
+  "sourceCurrency": "Source Currency",
+  "targetCurrency": "Target Currency",
+  "enterAmountAndCurrency": "Please enter amount and select currency",
+  "ratesUpdated": "Rates updated",
+  "repeatOnce": "Once",
+  "repeatUnlimited": "Unlimited",
+  "repeatWeekly": "Weekly",
+  "repeatDaily": "Daily",
+  "repeatYearly": "Yearly",
+  "repeatMonthly": "Monthly",
+  "enterNoteTitle": "Please enter title",
+  "executed": "Executed",
+  "revoked": "Revoked",
+  "executing": "Executing...",
+  "revoking": "Revoking...",
+  "revokeExecution": "Revoke Execution",
+  "executeNow": "Execute Now",
+  "fieldUsableExpense": "Usable for Expense",
+  "fieldUsableIncome": "Usable for Income",
+  "fieldUsableTransfer": "Usable for Transfer",
+  "enterPayeeName": "Please enter payee name",
+  "enterTagName": "Please enter tag name",
+  "enterCategoryName": "Please enter category name",
+  "noParentCategory": "None (top-level)",
+  "removeMember": "Remove Member",
+  "inviting": "Inviting...",
+  "inviteFailed": "Invitation failed",
+  "languageZh": "中文",
+  "flowListTitle": "Cash Flow",
+  "flowCreate": "New Transaction",
+  "flowFilterAll": "All",
+  "flowFilterExpense": "Expense",
+  "flowFilterIncome": "Income",
+  "flowFilterTransfer": "Transfer",
+  "flowTypeAdjust": "Balance Adjustment",
+  "noFlows": "No transactions yet",
+  "deleteFlowTitle": "Delete Transaction",
+  "deleteFlowMsg": "Delete this transaction? This cannot be undone.",
+  "confirmFlow": "Confirm Transaction",
+  "enterAmount": "Please enter a valid amount",
+  "selectAccount": "Please select an account",
+  "selectAccounts": "Please select source and target accounts",
+  "flowAmount": "Amount",
+  "flowTitle": "Note / Title",
+  "flowNotes": "Description",
+  "flowDate": "Date",
+  "flowType": "Transaction",
+  "flowSave": "Save",
+  "flowUpdate": "Update",
+  "editFlow": "Edit Transaction",
+  "noData": "No data",
+  "budgetManagement": "Budget Management",
+  "memberManagement": "Member Management",
+  "categoryManagement": "Category Management",
+  "tagManagement": "Tag Management",
+  "payeeManagement": "Payee Management",
+  "noteDayManagement": "Recurring Reminders",
+  "currencyManagement": "Currency Management",
+  "manageBooksDesc": "Manage books",
+  "manageBudgetsDesc": "Manage budgets",
+  "manageMembersDesc": "Invite and manage tenant members",
+  "manageCategoriesDesc": "Manage categories",
+  "manageTagsDesc": "Manage tags",
+  "managePayeesDesc": "Manage payee info",
+  "manageNoteDaysDesc": "Manage recurring reminders",
+  "manageCurrenciesDesc": "View currencies and rates",
+  "myProfile": "My",
+  "mySettings": "Settings",
+  "currentDefault": "Current Default",
+  "defaultBook": "Default Book",
+  "defaultTenant": "Default Tenant",
+  "notSet": "Not set",
+  "themeMode": "Theme Mode",
+  "switchDefaultBook": "Switch Default Book",
+  "switchDefaultTenant": "Switch Default Tenant",
+  "switching": "Switching...",
+  "tenantSwitched": "Default tenant switched",
+  "switchFailed": "Failed to switch",
+  "logoutConfirmTitle": "Confirm Logout",
+  "logoutConfirmMsg": "You will need to log in again after logging out.",
+  "expenseCategory": "Expense Category",
+  "incomeCategory": "Income Category",
+  "noCategories": "No categories",
+  "newCategory": "New Category",
+  "deleteCategoryTitle": "Delete Category",
+  "enable": "Enable",
+  "disable": "Disable",
+  "debtDetails": "Debt Details",
+  "totalAssets": "Total Assets",
+  "totalDebts": "Total Debts",
+  "netWorth": "Net Worth",
+  "noOverviewData": "No overview data",
+  "noAccounts": "No accounts",
+  "inviteMember": "Invite Member",
+  "noMembers": "No members",
+  "inviteSent": "Invitation sent",
+  "removeMemberTitle": "Remove Member",
+  "removed": "Removed",
+  "noTenants": "No available tenants",
+  "currentTenant": "Current Tenant",
+  "memberActive": "Active",
+  "memberInvited": "Invited",
+  "memberDisabled": "Disabled",
+  "memberLeft": "Left",
+  "memberUnknown": "Unknown",
+  "reportTitle": "Statistics Report",
+  "expenseByCategory": "Expense by Category",
+  "incomeByCategory": "Income by Category",
+  "expenseByTag": "Expense by Tag",
+  "incomeByTag": "Income by Tag",
+  "expenseByPayee": "Expense by Payee",
+  "incomeByPayee": "Income by Payee",
+  "noBudgets": "No budgets",
+  "newBudget": "New Budget",
+  "deleteBudgetTitle": "Delete Budget",
+  "create": "New",
+  "save": "Save",
+  "delete": "Delete",
+  "edit": "Edit",
+  "loading": "Loading...",
+  "loadFailed": "Failed to load",
+  "saveSuccess": "Saved successfully",
+  "saveFailed": "Failed to save",
+  "deleted": "Deleted",
+  "deleting": "Deleting...",
+  "confirming": "Confirming...",
+  "confirmed": "Confirmed",
+  "processing": "Processing...",
+  "operationFailed": "Operation failed",
+  "updated": "Updated",
+  "unnamed": "Unnamed",
+  "unknownUser": "Unknown user",
+  "noAttachments": "No attachments",
+  "uploadAttachments": "Upload",
+  "deleteAttachmentTitle": "Delete Attachment",
+  "unnamedAttachment": "Unnamed file",
+  "deleteAttachment": "Delete Attachment",
+  "noAccount": "Don't have an account?",
+  "goRegister": "Sign up",
+  "haveAccount": "Already have an account?",
+  "goLogin": "Sign in",
+  "registerTitle": "Register",
+  "registerButton": "Sign Up",
+  "registerSuccess": "Registration successful",
+  "registerFailed": "Registration failed, please try again later",
+  "passwordMismatch": "Passwords do not match",
+  "confirmPassword": "Confirm Password",
+  "confirmPasswordHint": "Please enter your password again",
+  "invite": "Invite",
+  "noTags": "No tags",
+  "newTag": "New Tag",
+  "noPayees": "No payees",
+  "newPayee": "New Payee",
+  "noBooks": "No books",
+  "newBook": "New Book",
+  "noCurrencies": "No currencies",
+  "noNoteDays": "No reminders",
+  "newNoteDay": "New Reminder",
+  "deleteBookTitle": "Delete Book",
+  "deleteTagTitle": "Delete Tag",
+  "deletePayeeTitle": "Delete Payee",
+  "deleteNoteDayTitle": "Delete Reminder",
+  "fieldAccountType": "Account Type",
+  "fieldCurrency": "Currency",
+  "fieldDefaultCurrency": "Default Currency",
+  "fieldBookName": "Book Name",
+  "fieldBudgetName": "Budget Name",
+  "fieldBudgetAmount": "Budget Amount",
+  "fieldCategoryName": "Category Name",
+  "fieldCategoryType": "Category Type",
+  "fieldParentCategory": "Parent Category (optional)",
+  "fieldBook": "Book",
+  "fieldTagName": "Tag Name",
+  "fieldPayeeName": "Payee Name",
+  "fieldNoteTitle": "Title",
+  "fieldRepeatType": "Repeat Type",
+  "fieldInterval": "Interval (e.g. every N days/weeks/months)",
+  "fieldStartDate": "Start Date",
+  "fieldEndDate": "End Date (optional)",
+  "fieldTotalRuns": "Total Runs (optional)",
+  "fieldDescription": "Description",
+  "fieldFlowTitle": "Note / Title",
+  "fieldFlowAmount": "Amount",
+  "fieldFlowDate": "Date",
+  "fieldTemplate": "Create from Template (optional)",
+  "fieldSortOrder": "Sort Order (optional)"
 }

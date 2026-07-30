@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 
+import 'package:flutter_app/generated/l10n.dart';
+import 'package:flutter_app/src/core/themes/const.dart';
+
 /// 记账模块底部导航栏的目标 Tab。
 enum LedgerTab { flows, statistics, accounts, mine }
 
@@ -27,6 +30,7 @@ class LedgerBottomNav extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final loc = S.of(context);
     return Container(
       decoration: BoxDecoration(
         border: Border(
@@ -45,30 +49,30 @@ class LedgerBottomNav extends StatelessWidget {
                 context,
                 icon: Icons.receipt_long_outlined,
                 activeIcon: Icons.receipt_long,
-                label: '流水',
+                label: loc.flowListTitle,
                 tab: LedgerTab.flows,
               ),
               _buildItem(
                 context,
                 icon: Icons.pie_chart_outline,
                 activeIcon: Icons.pie_chart,
-                label: '统计',
+                label: loc.reportTitle,
                 tab: LedgerTab.statistics,
               ),
-              // 中间“记一笔”浮动按钮
+              // 中间”记一笔”浮动按钮
               _buildCreateButton(context),
               _buildItem(
                 context,
                 icon: Icons.account_balance_wallet_outlined,
                 activeIcon: Icons.account_balance_wallet,
-                label: '账户',
+                label: loc.accountOverview,
                 tab: LedgerTab.accounts,
               ),
               _buildItem(
                 context,
                 icon: Icons.person_outline,
                 activeIcon: Icons.person,
-                label: '我的',
+                label: loc.myProfile,
                 tab: LedgerTab.mine,
               ),
             ],
@@ -117,6 +121,7 @@ class LedgerBottomNav extends StatelessWidget {
   }
 
   Widget _buildCreateButton(BuildContext context) {
+    final loc = S.of(context);
     final theme = Theme.of(context);
     return Expanded(
       child: Center(
@@ -137,7 +142,7 @@ class LedgerBottomNav extends StatelessWidget {
             iconSize: 28,
             color: theme.colorScheme.onPrimary,
             icon: const Icon(Icons.add),
-            tooltip: '记一笔',
+            tooltip: S.of(context).flowCreate,
           ),
         ),
       ),

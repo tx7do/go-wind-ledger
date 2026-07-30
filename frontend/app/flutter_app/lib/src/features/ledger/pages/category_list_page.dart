@@ -8,6 +8,9 @@ import 'package:flutter_app/generated/api/app/service/v1/index.dart'
         LedgerServiceV1CategoryType,
         LedgerServiceV1ListCategoryResponse;
 
+import 'package:flutter_app/src/core/themes/semantic_colors.dart';
+import 'package:flutter_app/generated/l10n.dart';
+import 'package:flutter_app/src/core/themes/const.dart';
 import 'package:flutter_app/src/core/transport/http/status.dart';
 import 'package:flutter_app/src/features/ledger/services/category_service.dart';
 
@@ -36,6 +39,7 @@ class _CategoryListPageState extends State<CategoryListPage> {
   }
 
   Future<void> _loadData() async {
+    final loc = S.of(context);
     setState(() => _loading = true);
     final result = await _service.listAll();
     if (!mounted) return;
@@ -46,7 +50,7 @@ class _CategoryListPageState extends State<CategoryListPage> {
       });
     } else if (result is Status) {
       setState(() => _loading = false);
-      EasyLoading.showError(result.getMessage.isEmpty ? '加载失败' : result.getMessage);
+      EasyLoading.showError(result.getMessage.isEmpty ? loc.loadFailed : result.getMessage);
     }
   }
 
@@ -68,58 +72,61 @@ class _CategoryListPageState extends State<CategoryListPage> {
   }
 
   Future<void> _toggle(LedgerServiceV1Category cat) async {
+    final loc = S.of(context);
     final id = cat.id;
     if (id == null) return;
-    EasyLoading.show(status: '处理中...');
+    EasyLoading.show(status: loc.processing);
     final result = await _service.toggle(id);
     EasyLoading.dismiss();
     if (!mounted) return;
     if (result is LedgerServiceV1Category) {
-      EasyLoading.showSuccess('已更新');
+      EasyLoading.showSuccess(loc.updated);
       _loadData();
     } else if (result is Status) {
-      EasyLoading.showError(result.getMessage.isEmpty ? '操作失败' : result.getMessage);
+      EasyLoading.showError(result.getMessage.isEmpty ? loc.operationFailed : result.getMessage);
     }
   }
 
   Future<void> _delete(LedgerServiceV1Category cat) async {
+    final loc = S.of(context);
     final id = cat.id;
     if (id == null) return;
     final ok = await showDialog<bool>(
       context: context,
       builder: (ctx) => AlertDialog(
-        title: const Text('删除分类'),
-        content: Text('确定删除分类「${cat.name ?? ''}」？'),
+        title: Text(loc.deleteCategoryTitle),
+        content: Text(loc.deleteCategoryMsg(cat.name ?? '')),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(ctx, false),
-            child: const Text('取消'),
+            child: Text(loc.cancel),
           ),
           TextButton(
             onPressed: () => Navigator.pop(ctx, true),
-            child: const Text('删除'),
+            child: Text(loc.delete),
           ),
         ],
       ),
     );
     if (ok != true) return;
-    EasyLoading.show(status: '删除中...');
+    EasyLoading.show(status: loc.deleting);
     final result = await _service.delete(id);
     EasyLoading.dismiss();
     if (!mounted) return;
     if (result == null) {
-      EasyLoading.showSuccess('已删除');
+      EasyLoading.showSuccess(loc.deleted);
       _loadData();
     } else if (result is Status) {
-      EasyLoading.showError(result.getMessage.isEmpty ? '删除失败' : result.getMessage);
+      EasyLoading.showError(result.getMessage.isEmpty ? loc.loadFailed : result.getMessage);
     }
   }
 
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final loc = S.of(context);
     return Scaffold(
-      appBar: AppBar(title: const Text('分类管理')),
+      appBar: AppBar(title: Text(loc.categoryManagement)),
       body: _loading
           ? const Center(child: CircularProgressIndicator())
           : _rootCategories.isEmpty
@@ -139,18 +146,21 @@ class _CategoryListPageState extends State<CategoryListPage> {
           _loadData();
         },
         icon: const Icon(Icons.add),
-        label: const Text('新建分类'),
+        label: Text(loc.newCategory),
       ),
     );
   }
 
   Widget _buildCategoryTile(ThemeData theme, LedgerServiceV1Category cat,
       int depth) {
+    final loc = S.of(context);
     final hasChildren = cat.children?.isNotEmpty == true;
     final expanded = _expanded.contains(cat.id ?? -1);
     final isExpense =
         cat.type == LedgerServiceV1CategoryType.categoryTypeExpense;
-    final color = isExpense ? Colors.red : Colors.green;
+    final color = isExpense
+        ? SemanticColors.expense(context)
+        : SemanticColors.income(context);
 
     return Column(
       children: [
@@ -179,9 +189,9 @@ class _CategoryListPageState extends State<CategoryListPage> {
                     },
                   )
                 : Icon(Icons.circle, size: 8, color: color),
-            title: Text(cat.name ?? '未命名'),
+            title: Text(cat.name ?? loc.unnamed),
             subtitle: Text(
-              isExpense ? '支出分类' : '收入分类',
+              isExpense ? loc.expenseCategory : loc.incomeCategory,
               style: theme.textTheme.bodySmall,
             ),
             trailing: PopupMenuButton<String>(
@@ -201,13 +211,13 @@ class _CategoryListPageState extends State<CategoryListPage> {
                 }
               },
               itemBuilder: (ctx) => [
-                const PopupMenuItem(value: 'edit', child: Text('编辑')),
-                const PopupMenuItem(value: 'add', child: Text('添加子分类')),
+                PopupMenuItem(value: 'edit', child: Text(loc.edit)),
+                PopupMenuItem(value: 'add', child: Text(loc.addSubcategory)),
                 PopupMenuItem(
                   value: 'toggle',
-                  child: Text(cat.enable == false ? '启用' : '禁用'),
+                  child: Text(cat.enable == false ? loc.enable : loc.disable),
                 ),
-                const PopupMenuItem(value: 'delete', child: Text('删除')),
+                PopupMenuItem(value: 'delete', child: Text(loc.delete)),
               ],
             ),
             onTap: () async {
@@ -225,6 +235,7 @@ class _CategoryListPageState extends State<CategoryListPage> {
   }
 
   Widget _buildEmpty(ThemeData theme) {
+    final loc = S.of(context);
     return Center(
       child: Column(
         mainAxisSize: MainAxisSize.min,
@@ -232,7 +243,7 @@ class _CategoryListPageState extends State<CategoryListPage> {
           Icon(Icons.category_outlined,
               size: 64, color: theme.colorScheme.outline),
           const SizedBox(height: 12),
-          Text('暂无分类',
+          Text(loc.noCategories,
               style: theme.textTheme.bodyLarge
                   ?.copyWith(color: theme.colorScheme.outline)),
           const SizedBox(height: 16),
@@ -242,7 +253,7 @@ class _CategoryListPageState extends State<CategoryListPage> {
               _loadData();
             },
             icon: const Icon(Icons.add),
-            label: const Text('新建分类'),
+            label: Text(loc.newCategory),
           ),
         ],
       ),

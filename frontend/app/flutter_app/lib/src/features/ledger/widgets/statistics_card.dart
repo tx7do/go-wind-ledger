@@ -1,17 +1,21 @@
 import 'package:flutter/material.dart';
 
+import 'package:flutter_app/src/core/themes/semantic_colors.dart';
+import 'package:flutter_app/generated/l10n.dart';
+import 'package:flutter_app/src/core/themes/const.dart';
+
 /// 统计卡片：展示支出/收入/净额。
 ///
 /// 用于流水列表顶部的汇总信息。金额来自
-/// [LedgerServiceV1StatisticsResponse]（字符串形式的小数）。
+/// [LedgerServiceV1StatisticsResponse](字符串形式的小数)。
 class StatisticsCard extends StatelessWidget {
-  /// 支出金额（字符串，如 "1234.56"）。
+  /// 支出金额(字符串,如 "1234.56")。
   final String expense;
 
-  /// 收入金额（字符串）。
+  /// 收入金额(字符串)。
   final String income;
 
-  /// 净额（字符串，可为负）。
+  /// 净额(字符串,可为负)。
   final String net;
 
   /// 是否正在加载。
@@ -28,29 +32,36 @@ class StatisticsCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final loc = S.of(context);
     return Card(
-      margin: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+      margin: const EdgeInsets.symmetric(
+        horizontal: kCardMarginH,
+        vertical: kCardMarginV,
+      ),
       child: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 8),
+        padding: const EdgeInsets.symmetric(
+          vertical: kDefaultPadding,
+          horizontal: 8,
+        ),
         child: Row(
           children: [
             _buildCell(
               context,
-              label: '支出',
+              label: loc.flowFilterExpense,
               value: loading ? '--' : expense,
-              color: theme.colorScheme.error,
+              color: SemanticColors.expense(context),
             ),
             _divider(theme),
             _buildCell(
               context,
-              label: '收入',
+              label: loc.flowFilterIncome,
               value: loading ? '--' : income,
-              color: Colors.green,
+              color: SemanticColors.income(context),
             ),
             _divider(theme),
             _buildCell(
               context,
-              label: '净额',
+              label: loc.netWorth,
               value: loading ? '--' : net,
               color: theme.colorScheme.primary,
             ),
