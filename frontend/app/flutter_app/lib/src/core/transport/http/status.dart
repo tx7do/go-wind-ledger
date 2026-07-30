@@ -5,9 +5,9 @@ class Status {
   final String? message;
   final Map<String, String>? metadata;
 
-  get getMessage => message ?? '';
+  String get getMessage => message ?? '';
 
-  get getReason => reason ?? '';
+  String get getReason => reason ?? '';
 
   Status({
     this.code,

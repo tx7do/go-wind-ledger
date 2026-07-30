@@ -21,6 +21,7 @@ import 'package:flutter_app/src/features/ledger/services/budget_service.dart';
 import 'package:flutter_app/src/features/ledger/services/book_service.dart';
 import 'package:flutter_app/src/features/ledger/services/account_service.dart';
 import 'package:flutter_app/src/features/ledger/services/category_service.dart';
+import 'package:flutter_app/src/core/widgets/dropdown_item.dart';
 
 /// 预算表单页（新建/编辑）。
 class BudgetFormPage extends StatefulWidget {
@@ -177,15 +178,15 @@ class _BudgetFormPageState extends State<BudgetFormPage> {
               ),
               const SizedBox(height: 12),
               _buildDropdown<int>(label: loc.defaultBook, value: _bookId,
-                items: _books.map((b) => _DropdownItem(value: b.id!, label: b.name ?? loc.unnamed)).toList(),
+                items: _books.map((b) => DropdownItem(value: b.id!, label: b.name ?? loc.unnamed)).toList(),
                 onChanged: (v) => setState(() => _bookId = v)),
               const SizedBox(height: 12),
               _buildDropdown<BudgetPeriod>(label: loc.budgetPeriod, value: _period,
                 items: [
-                  _DropdownItem(value: BudgetPeriod.monthly, label: loc.periodMonthly),
-                  _DropdownItem(value: BudgetPeriod.quarterly, label: loc.periodQuarterly),
-                  _DropdownItem(value: BudgetPeriod.yearly, label: loc.periodYearly),
-                  _DropdownItem(value: BudgetPeriod.weekly, label: loc.periodWeekly),
+                  DropdownItem(value: BudgetPeriod.monthly, label: loc.periodMonthly),
+                  DropdownItem(value: BudgetPeriod.quarterly, label: loc.periodQuarterly),
+                  DropdownItem(value: BudgetPeriod.yearly, label: loc.periodYearly),
+                  DropdownItem(value: BudgetPeriod.weekly, label: loc.periodWeekly),
                 ],
                 onChanged: (v) { if (v != null) setState(() => _period = v); }),
               const SizedBox(height: 12),
@@ -197,11 +198,11 @@ class _BudgetFormPageState extends State<BudgetFormPage> {
               ),
               const SizedBox(height: 12),
               _buildDropdown<int>(label: loc.categoryManagement, value: _categoryId,
-                items: _categories.map((c) => _DropdownItem(value: c.id!, label: c.name ?? loc.unnamed)).toList(),
+                items: _categories.map((c) => DropdownItem(value: c.id!, label: c.name ?? loc.unnamed)).toList(),
                 onChanged: (v) => setState(() => _categoryId = v)),
               const SizedBox(height: 12),
               _buildDropdown<int>(label: loc.accountOverview, value: _accountId,
-                items: _accounts.map((a) => _DropdownItem(value: a.id!, label: a.name ?? loc.unnamed)).toList(),
+                items: _accounts.map((a) => DropdownItem(value: a.id!, label: a.name ?? loc.unnamed)).toList(),
                 onChanged: (v) => setState(() => _accountId = v)),
               const SizedBox(height: 12),
               Row(children: [
@@ -256,7 +257,7 @@ class _BudgetFormPageState extends State<BudgetFormPage> {
     );
   }
 
-  Widget _buildDropdown<T>({required String label, required T? value, required List<_DropdownItem<T>> items, required ValueChanged<T?> onChanged}) {
+  Widget _buildDropdown<T>({required String label, required T? value, required List<DropdownItem<T>> items, required ValueChanged<T?> onChanged}) {
     return DropdownButtonFormField<T>(
       value: value,
       decoration: InputDecoration(labelText: label, border: const OutlineInputBorder()),
@@ -277,8 +278,3 @@ class _BudgetFormPageState extends State<BudgetFormPage> {
   }
 }
 
-class _DropdownItem<T> {
-  final T value;
-  final String label;
-  const _DropdownItem({required this.value, required this.label});
-}

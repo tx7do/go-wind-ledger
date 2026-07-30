@@ -31,6 +31,7 @@ import 'package:flutter_app/src/features/ledger/services/payee_service.dart';
 import 'package:flutter_app/src/features/ledger/services/balance_flow_service.dart';
 import 'package:flutter_app/src/features/ledger/services/flow_file_service.dart';
 import 'package:flutter_app/src/features/ledger/widgets/flow_type_selector.dart';
+import 'package:flutter_app/src/core/widgets/dropdown_item.dart';
 
 /// 记账表单页（支出/收入/转账）。
 class BalanceFlowFormPage extends StatefulWidget {
@@ -252,28 +253,28 @@ class _BalanceFlowFormPageState extends State<BalanceFlowFormPage> {
               _buildAmountField(theme),
               const SizedBox(height: 12),
               _buildDropdown(theme, label: loc.defaultBook, value: _bookId,
-                items: _books.map((b) => _DropdownItem(value: b.id!, label: b.name ?? loc.unnamed)).toList(),
+                items: _books.map((b) => DropdownItem(value: b.id!, label: b.name ?? loc.unnamed)).toList(),
                 onChanged: (v) => setState(() => _bookId = v)),
               const SizedBox(height: 12),
               if (_type == LedgerServiceV1FlowType.flowTypeTransfer) ...[
                 _buildDropdown(theme, label: loc.fieldTransferOutAccount, value: _accountId,
-                  items: _accounts.map((a) => _DropdownItem(value: a.id!, label: a.name ?? loc.unnamed)).toList(),
+                  items: _accounts.map((a) => DropdownItem(value: a.id!, label: a.name ?? loc.unnamed)).toList(),
                   onChanged: (v) => setState(() => _accountId = v)),
                 const SizedBox(height: 12),
                 _buildDropdown(theme, label: loc.fieldTransferInAccount, value: _toAccountId,
-                  items: _accounts.map((a) => _DropdownItem(value: a.id!, label: a.name ?? loc.unnamed)).toList(),
+                  items: _accounts.map((a) => DropdownItem(value: a.id!, label: a.name ?? loc.unnamed)).toList(),
                   onChanged: (v) => setState(() => _toAccountId = v)),
               ] else ...[
                 _buildDropdown(theme, label: loc.accountOverview, value: _accountId,
-                  items: _accounts.map((a) => _DropdownItem(value: a.id!, label: a.name ?? loc.unnamed)).toList(),
+                  items: _accounts.map((a) => DropdownItem(value: a.id!, label: a.name ?? loc.unnamed)).toList(),
                   onChanged: (v) => setState(() => _accountId = v)),
                 const SizedBox(height: 12),
                 _buildDropdown(theme, label: loc.categoryManagement, value: _categoryId,
-                  items: _categories.map((c) => _DropdownItem(value: c.id!, label: c.name ?? loc.unnamed)).toList(),
+                  items: _categories.map((c) => DropdownItem(value: c.id!, label: c.name ?? loc.unnamed)).toList(),
                   onChanged: (v) => setState(() => _categoryId = v)),
                 const SizedBox(height: 12),
                 _buildDropdown(theme, label: loc.payeeManagement, value: _payeeId,
-                  items: _payees.map((p) => _DropdownItem(value: p.id!, label: p.name ?? loc.unknownUser)).toList(),
+                  items: _payees.map((p) => DropdownItem(value: p.id!, label: p.name ?? loc.unknownUser)).toList(),
                   onChanged: (v) => setState(() => _payeeId = v)),
               ],
               const SizedBox(height: 12),
@@ -427,7 +428,7 @@ class _BalanceFlowFormPageState extends State<BalanceFlowFormPage> {
     );
   }
 
-  Widget _buildDropdown(ThemeData theme, {required String label, required int? value, required List<_DropdownItem> items, required ValueChanged<int?> onChanged}) {
+  Widget _buildDropdown(ThemeData theme, {required String label, required int? value, required List<DropdownItem> items, required ValueChanged<int?> onChanged}) {
     return DropdownButtonFormField<int>(
       value: value,
       decoration: InputDecoration(labelText: label, border: const OutlineInputBorder()),
@@ -437,8 +438,3 @@ class _BalanceFlowFormPageState extends State<BalanceFlowFormPage> {
   }
 }
 
-class _DropdownItem {
-  final int value;
-  final String label;
-  const _DropdownItem({required this.value, required this.label});
-}
