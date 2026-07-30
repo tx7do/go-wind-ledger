@@ -135,7 +135,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "adjusting": MessageLookupByLibrary.simpleMessage("调整中..."),
     "allLoaded": MessageLookupByLibrary.simpleMessage("— 已加载全部 —"),
     "allPosts": MessageLookupByLibrary.simpleMessage("全部文章"),
-    "appName": MessageLookupByLibrary.simpleMessage("GoWind CMS"),
+    "appName": MessageLookupByLibrary.simpleMessage("GoWind Ledger"),
     "appearance": MessageLookupByLibrary.simpleMessage("外观设置"),
     "assetDetails": MessageLookupByLibrary.simpleMessage("资产明细"),
     "attachmentComing": MessageLookupByLibrary.simpleMessage("附件上传即将上线"),
@@ -318,7 +318,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "flowUpdate": MessageLookupByLibrary.simpleMessage("更新"),
     "followSystem": MessageLookupByLibrary.simpleMessage("跟随系统"),
     "footerText": MessageLookupByLibrary.simpleMessage(
-      "© 2026 GoWind CMS  ·  Powered by Flutter",
+      "© 2026 GoWind Ledger  ·  Powered by Flutter",
     ),
     "goLogin": MessageLookupByLibrary.simpleMessage("去登录"),
     "goRegister": MessageLookupByLibrary.simpleMessage("去注册"),

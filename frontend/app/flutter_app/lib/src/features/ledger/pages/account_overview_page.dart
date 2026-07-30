@@ -36,10 +36,10 @@ class _AccountOverviewPageState extends State<AccountOverviewPage> {
   }
 
   Future<void> _loadData() async {
-    final loc = S.of(context);
     setState(() => _loading = true);
     final result = await _service.overview();
     if (!mounted) return;
+    final loc = S.of(context);
     if (result is LedgerServiceV1OverviewResponse) {
       setState(() {
         _overview = result;

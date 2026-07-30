@@ -376,12 +376,6 @@ class _BalanceFlowListPageState extends State<BalanceFlowListPage> {
           Text(loc.noFlows,
               style: theme.textTheme.bodyLarge
                   ?.copyWith(color: theme.colorScheme.outline)),
-          const SizedBox(height: 16),
-          FilledButton.icon(
-            onPressed: () => context.push('/ledger/flows/create'),
-            icon: const Icon(Icons.add),
-            label: Text(loc.flowCreate),
-          ),
         ],
       ),
     );

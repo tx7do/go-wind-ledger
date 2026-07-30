@@ -170,9 +170,8 @@ ThemeData _buildLightTheme(Color seedColor) {
     cardTheme: CardThemeData(
       elevation: 0,
       shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.all(Radius.circular(14)),
+        borderRadius: BorderRadius.all(Radius.circular(kCardRadius)),
       ),
-      color: Colors.white,
     ),
     chipTheme: const ChipThemeData(
       side: BorderSide.none,

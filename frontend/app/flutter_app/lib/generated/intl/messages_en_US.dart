@@ -104,7 +104,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "adjusting": MessageLookupByLibrary.simpleMessage("Adjusting..."),
     "allLoaded": MessageLookupByLibrary.simpleMessage("— All Loaded —"),
     "allPosts": MessageLookupByLibrary.simpleMessage("All Posts"),
-    "appName": MessageLookupByLibrary.simpleMessage("GoWind CMS"),
+    "appName": MessageLookupByLibrary.simpleMessage("GoWind Ledger"),
     "appearance": MessageLookupByLibrary.simpleMessage("Appearance"),
     "assetDetails": MessageLookupByLibrary.simpleMessage("Asset Details"),
     "attachmentComing": MessageLookupByLibrary.simpleMessage(
@@ -380,7 +380,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "flowUpdate": MessageLookupByLibrary.simpleMessage("Update"),
     "followSystem": MessageLookupByLibrary.simpleMessage("System"),
     "footerText": MessageLookupByLibrary.simpleMessage(
-      "© 2026 GoWind CMS  ·  Powered by Flutter",
+      "© 2026 GoWind Ledger  ·  Powered by Flutter",
     ),
     "goLogin": MessageLookupByLibrary.simpleMessage("Sign in"),
     "goRegister": MessageLookupByLibrary.simpleMessage("Sign up"),

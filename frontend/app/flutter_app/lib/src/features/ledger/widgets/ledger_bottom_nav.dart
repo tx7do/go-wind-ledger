@@ -1,15 +1,18 @@
 import 'package:flutter/material.dart';
 
 import 'package:flutter_app/generated/l10n.dart';
-import 'package:flutter_app/src/core/themes/const.dart';
 
 /// 记账模块底部导航栏的目标 Tab。
 enum LedgerTab { flows, statistics, accounts, mine }
 
 /// 记账模块底部导航栏。
 ///
-/// 4 个普通 Tab（流水/统计/账户/我的）+ 中间凸起的“记一笔”浮动按钮。
-/// 使用 [FloatingActionButton] 风格的中间按钮嵌入到 [NavigationBar]。
+/// 使用 MD3 标准 [NavigationBar]，4 个等宽 Tab（流水/统计/账户/我的）。
+/// 颜色、选中态指示器、动效全部由 [NavigationBarThemeData]（已存在于
+/// light/dark theme）接管，随主题色联动，无需手写颜色。
+///
+/// “记一笔”入口由宿主 [Scaffold] 的 [FloatingActionButton] 承担
+/// （见 [LedgerHomePage]），不再嵌入导航栏。
 class LedgerBottomNav extends StatelessWidget {
   /// 当前选中的 Tab。
   final LedgerTab current;
@@ -17,135 +20,41 @@ class LedgerBottomNav extends StatelessWidget {
   /// Tab 切换回调。
   final ValueChanged<LedgerTab> onTap;
 
-  /// 点击“记一笔”按钮的回调。
-  final VoidCallback onCreate;
-
   const LedgerBottomNav({
     super.key,
     required this.current,
     required this.onTap,
-    required this.onCreate,
   });
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
     final loc = S.of(context);
-    return Container(
-      decoration: BoxDecoration(
-        border: Border(
-          top: BorderSide(
-            color: theme.colorScheme.outlineVariant.withAlpha(80),
-          ),
+    final index = current.index;
+    return NavigationBar(
+      selectedIndex: index,
+      onDestinationSelected: (i) => onTap(LedgerTab.values[i]),
+      destinations: [
+        NavigationDestination(
+          icon: const Icon(Icons.receipt_long_outlined),
+          selectedIcon: const Icon(Icons.receipt_long),
+          label: loc.flowListTitle,
         ),
-      ),
-      child: SafeArea(
-        top: false,
-        child: SizedBox(
-          height: 64,
-          child: Row(
-            children: [
-              _buildItem(
-                context,
-                icon: Icons.receipt_long_outlined,
-                activeIcon: Icons.receipt_long,
-                label: loc.flowListTitle,
-                tab: LedgerTab.flows,
-              ),
-              _buildItem(
-                context,
-                icon: Icons.pie_chart_outline,
-                activeIcon: Icons.pie_chart,
-                label: loc.reportTitle,
-                tab: LedgerTab.statistics,
-              ),
-              // 中间”记一笔”浮动按钮
-              _buildCreateButton(context),
-              _buildItem(
-                context,
-                icon: Icons.account_balance_wallet_outlined,
-                activeIcon: Icons.account_balance_wallet,
-                label: loc.accountOverview,
-                tab: LedgerTab.accounts,
-              ),
-              _buildItem(
-                context,
-                icon: Icons.person_outline,
-                activeIcon: Icons.person,
-                label: loc.myProfile,
-                tab: LedgerTab.mine,
-              ),
-            ],
-          ),
+        NavigationDestination(
+          icon: const Icon(Icons.pie_chart_outline),
+          selectedIcon: const Icon(Icons.pie_chart),
+          label: loc.reportTitle,
         ),
-      ),
-    );
-  }
-
-  Widget _buildItem(
-    BuildContext context, {
-    required IconData icon,
-    required IconData activeIcon,
-    required String label,
-    required LedgerTab tab,
-  }) {
-    final theme = Theme.of(context);
-    final selected = current == tab;
-    final color = selected
-        ? theme.colorScheme.primary
-        : theme.colorScheme.onSurfaceVariant;
-    return Expanded(
-      child: InkWell(
-        onTap: () => onTap(tab),
-        borderRadius: BorderRadius.circular(12),
-        child: Padding(
-          padding: const EdgeInsets.symmetric(vertical: 6),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Icon(selected ? activeIcon : icon, color: color, size: 24),
-              const SizedBox(height: 2),
-              Text(
-                label,
-                style: theme.textTheme.labelSmall?.copyWith(
-                  color: color,
-                  fontWeight: selected ? FontWeight.w600 : FontWeight.w400,
-                ),
-              ),
-            ],
-          ),
+        NavigationDestination(
+          icon: const Icon(Icons.account_balance_wallet_outlined),
+          selectedIcon: const Icon(Icons.account_balance_wallet),
+          label: loc.accountOverview,
         ),
-      ),
-    );
-  }
-
-  Widget _buildCreateButton(BuildContext context) {
-    final loc = S.of(context);
-    final theme = Theme.of(context);
-    return Expanded(
-      child: Center(
-        child: Container(
-          decoration: BoxDecoration(
-            color: theme.colorScheme.primary,
-            shape: BoxShape.circle,
-            boxShadow: [
-              BoxShadow(
-                color: theme.colorScheme.primary.withAlpha(80),
-                blurRadius: 8,
-                offset: const Offset(0, 2),
-              ),
-            ],
-          ),
-          child: IconButton(
-            onPressed: onCreate,
-            iconSize: 28,
-            color: theme.colorScheme.onPrimary,
-            icon: const Icon(Icons.add),
-            tooltip: S.of(context).flowCreate,
-          ),
+        NavigationDestination(
+          icon: const Icon(Icons.person_outline),
+          selectedIcon: const Icon(Icons.person),
+          label: loc.myProfile,
         ),
-      ),
+      ],
     );
   }
 }

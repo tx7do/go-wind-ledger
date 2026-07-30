@@ -41,10 +41,10 @@ class _AccountListPageState extends State<AccountListPage> {
   }
 
   Future<void> _loadData() async {
-    final loc = S.of(context);
     setState(() => _loading = true);
     final result = await _service.listAll(includeDisabled: false);
     if (!mounted) return;
+    final loc = S.of(context);
     if (result is LedgerServiceV1ListAccountResponse) {
       setState(() {
         _accounts = result.items ?? [];
@@ -218,14 +218,16 @@ class _AccountListPageState extends State<AccountListPage> {
                 children: _buildGrouped(theme),
               ),
             ),
-      floatingActionButton: FloatingActionButton.extended(
-        onPressed: () async {
-          await context.push('/ledger/accounts/create');
-          _loadData();
-        },
-        icon: const Icon(Icons.add),
-        label: Text(loc.create),
-      ),
+      floatingActionButton: widget.embedded
+          ? null
+          : FloatingActionButton.extended(
+              onPressed: () async {
+                await context.push('/ledger/accounts/create');
+                _loadData();
+              },
+              icon: const Icon(Icons.add),
+              label: Text(loc.create),
+            ),
     );
   }
 

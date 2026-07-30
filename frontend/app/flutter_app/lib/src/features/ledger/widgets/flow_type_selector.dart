@@ -6,7 +6,8 @@ import 'package:flutter_app/generated/l10n.dart';
 
 /// 流水类型选择器：支出/收入/转账。
 ///
-/// 以 [ToggleButtons] 形式展示，用于记账表单顶部切换类型。
+/// 使用 MD3 原生 [SegmentedButton]，选中态自动绑定 `primaryContainer`，
+/// 颜色、动效、触控热区均随主题联动，无需手写。
 class FlowTypeSelector extends StatelessWidget {
   /// 当前选中的流水类型。
   final LedgerServiceV1FlowType value;
@@ -26,71 +27,42 @@ class FlowTypeSelector extends StatelessWidget {
     LedgerServiceV1FlowType.flowTypeTransfer,
   ];
 
-  static List<String> _labels(BuildContext c) => [
-        S.of(c).flowFilterExpense,
-        S.of(c).flowFilterIncome,
-        S.of(c).flowFilterTransfer,
-      ];
   static const _icons = <IconData>[
     Icons.south_west,
     Icons.north_east,
     Icons.swap_horiz,
   ];
 
+  static List<String> _labels(BuildContext c) => [
+        S.of(c).flowFilterExpense,
+        S.of(c).flowFilterIncome,
+        S.of(c).flowFilterTransfer,
+      ];
+
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-    final loc = S.of(context);
-    return Container(
-      padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 12),
-      decoration: BoxDecoration(
-        color: theme.colorScheme.surfaceContainerHighest.withAlpha(80),
-        borderRadius: BorderRadius.circular(12),
+    final labels = _labels(context);
+    final segments = List<ButtonSegment<LedgerServiceV1FlowType>>.generate(
+      _types.length,
+      (i) => ButtonSegment<LedgerServiceV1FlowType>(
+        value: _types[i],
+        icon: Icon(_icons[i]),
+        label: Text(labels[i]),
       ),
-      child: Row(
-        children: List.generate(_types.length, (i) {
-          final type = _types[i];
-          final selected = type == value;
-          final color = selected
-              ? theme.colorScheme.onPrimary
-              : theme.colorScheme.onSurfaceVariant;
-          final bg = selected ? theme.colorScheme.primary : Colors.transparent;
-          return Expanded(
-            child: Padding(
-              padding: EdgeInsets.symmetric(
-                horizontal: i == 0 || i == _types.length - 1 ? 0 : 4,
-              ),
-              child: Material(
-                color: bg,
-                borderRadius: BorderRadius.circular(10),
-                child: InkWell(
-                  borderRadius: BorderRadius.circular(10),
-                  onTap: () => onChanged(type),
-                  child: Container(
-                    padding: const EdgeInsets.symmetric(vertical: 10),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Icon(_icons[i], size: 18, color: color),
-                        const SizedBox(width: 6),
-                        Text(
-                          _labels(context)[i],
-                          style: theme.textTheme.titleSmall?.copyWith(
-                            color: color,
-                            fontWeight: selected
-                                ? FontWeight.w700
-                                : FontWeight.w500,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-              ),
-            ),
-          );
-        }),
+    );
+
+    return SegmentedButton<LedgerServiceV1FlowType>(
+      style: const ButtonStyle(
+        visualDensity: VisualDensity(horizontal: -3, vertical: -3),
       ),
+      segments: segments,
+      selected: {value},
+      onSelectionChanged: (selection) {
+        final next = selection.first;
+        if (next != value) onChanged(next);
+      },
+      showSelectedIcon: false,
+      multiSelectionEnabled: false,
     );
   }
 }

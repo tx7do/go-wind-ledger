@@ -1,5 +1,5 @@
 {
-  "appName": "GoWind CMS",
+  "appName": "GoWind Ledger",
   "@@locale": "en_US",
   "home": "Home",
   "discover": "Discover",
@@ -168,7 +168,7 @@
   "confirm": "Confirm",
   "featureNotAvailable": "This feature is coming soon",
   "welcomeBack": "Welcome back",
-  "footerText": "© 2026 GoWind CMS  ·  Powered by Flutter",
+  "footerText": "© 2026 GoWind Ledger  ·  Powered by Flutter",
   "aboutSubtitle": "A modern content management system powered by Go and Flutter",
   "aboutFeature1Title": "Content Management",
   "aboutFeature1Desc": "Create, edit and publish content with an intuitive and powerful editor",

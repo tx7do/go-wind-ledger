@@ -30,10 +30,10 @@ class _BookListPageState extends State<BookListPage> {
   }
 
   Future<void> _loadData() async {
-    final loc = S.of(context);
     setState(() => _loading = true);
     final result = await _service.listAll();
     if (!mounted) return;
+    final loc = S.of(context);
     if (result is LedgerServiceV1ListBookResponse) {
       setState(() {
         _books = result.items ?? [];

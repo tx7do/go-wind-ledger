@@ -37,10 +37,10 @@ class _MemberListPageState extends State<MemberListPage> {
   }
 
   Future<void> _loadInitial() async {
-    final loc = S.of(context);
     setState(() => _loading = true);
     final result = await _authService.initState();
     if (!mounted) return;
+    final loc = S.of(context);
     if (result is InitStateResponse) {
       setState(() {
         _tenants = result.availableTenants ?? [];

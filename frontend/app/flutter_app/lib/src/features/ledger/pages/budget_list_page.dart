@@ -31,10 +31,10 @@ class _BudgetListPageState extends State<BudgetListPage> {
   }
 
   Future<void> _loadData() async {
-    final loc = S.of(context);
     setState(() => _loading = true);
     final result = await _service.listAll();
     if (!mounted) return;
+    final loc = S.of(context);
     if (result is ListBudgetResponse) {
       setState(() {
         _budgets = result.items;
