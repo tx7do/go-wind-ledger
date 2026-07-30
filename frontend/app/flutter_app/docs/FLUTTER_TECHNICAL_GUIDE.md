@@ -1,4 +1,4 @@
-# 基于 Flutter 的 Headless CMS 全平台前端架构：技术解析与二次开发导引
+# 基于 Flutter 的 Headless Ledger 全平台前端架构：技术解析与二次开发导引
 
 > 本文面向希望基于此项目进行二次开发的 Flutter 工程师，从技术栈选型、核心架构设计、关键模块实现到二开实践路径，提供一份完整的技术地图。
 
@@ -6,7 +6,7 @@
 
 ## 一、技术栈总览
 
-本项目是一个 **Flutter 全平台** CMS 内容展示前端，一套 Dart 代码同时编译为 iOS、Android、Web、macOS、Windows 等多端应用：
+本项目是一个 **Flutter 全平台** Ledger 内容展示前端，一套 Dart 代码同时编译为 iOS、Android、Web、macOS、Windows 等多端应用：
 
 | 层面       | 技术                       | 版本               | 用途                      |
 |----------|--------------------------|------------------|-------------------------|
@@ -251,7 +251,7 @@ void main() async {
   runApp(
     MultiBlocProvider(
       providers: [BlocProvider(create: (_) => AppThemeCubit())],
-      child: const CMSApp(),
+      child: const LedgerApp(),
     ),
   );
 }
@@ -484,7 +484,7 @@ final footerItems = getFlatNavItems(navigations, NavigationLocation.footer);
 lib/
 ├── main.dart                    # 程序入口（init + MultiBlocProvider）
 ├── src/
-│   ├── app.dart                 # CMSApp（ScreenUtilInit + MaterialApp.router）
+│   ├── app.dart                 # LedgerApp（ScreenUtilInit + MaterialApp.router）
 │   ├── init.dart                # 应用初始化（环境变量、传输层、仓库）
 │   ├── init_thirdparty_plugins.dart # 第三方插件初始化
 │   ├── app_router/
@@ -540,7 +540,7 @@ lib/
 │       │   └── services/
 │       │       └── authentication_service.dart # 认证服务
 │       └── cms/
-│           ├── pages/                 # CMS 页面
+│           ├── pages/                 # Ledger 页面
 │           │   ├── home/              #   首页（Web 三栏 + Mobile 单栏）
 │           │   ├── explore/           #   发现/分类页
 │           │   ├── post_detail/       #   文章详情页
@@ -555,13 +555,13 @@ lib/
 │           │   ├── my_comments/       #   我的评论
 │           │   ├── about/             #   关于页
 │           │   └── legal/             #   法律/信息页
-│           ├── services/              # CMS 服务层
+│           ├── services/              # Ledger 服务层
 │           │   ├── post_service.dart  #   文章服务
 │           │   ├── category_service.dart # 分类服务
 │           │   ├── tag_service.dart    #   标签服务
 │           │   ├── comment_service.dart # 评论服务
 │           │   └── navigation_service.dart # 导航服务
-│           └── widgets/               # CMS 共享组件
+│           └── widgets/               # Ledger 共享组件
 │               ├── post_card.dart     #   文章卡片
 │               ├── featured_carousel.dart # 轮播图
 │               ├── content_viewer.dart #  内容渲染器
