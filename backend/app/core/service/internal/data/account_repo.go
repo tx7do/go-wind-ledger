@@ -55,6 +55,7 @@ func (r *AccountRepo) init() {
 	](r.mapper)
 	r.mapper.AppendConverters(copierutil.NewTimeStringConverterPair())
 	r.mapper.AppendConverters(copierutil.NewTimeTimestamppbConverterPair())
+	r.mapper.AppendConverters(float64StringConverters)
 }
 
 func (r *AccountRepo) List(ctx context.Context, req *paginationV1.PagingRequest) (*ledgerV1.ListAccountResponse, error) {

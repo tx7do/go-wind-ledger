@@ -59,6 +59,7 @@ func (r *BalanceFlowRepo) init() {
 	](r.mapper)
 	r.mapper.AppendConverters(copierutil.NewTimeStringConverterPair())
 	r.mapper.AppendConverters(copierutil.NewTimeTimestamppbConverterPair())
+	r.mapper.AppendConverters(float64StringConverters)
 }
 
 func (r *BalanceFlowRepo) List(ctx context.Context, req *paginationV1.PagingRequest) (*ledgerV1.ListBalanceFlowResponse, error) {
@@ -237,10 +238,16 @@ func (r *BalanceFlowRepo) RefundBalance(ctx context.Context, flow *ent.BalanceFl
 	return nil
 }
 
-// Statistics computes [expense, income, net] for given book.
+// Statistics computes [expense, income, net] for the given book.
+//
+// book_id 作用域与 List 保持一致：当 bookID 为 0（调用方未指定，例如前端统计接口未传
+// bookId）时不施加 book 过滤，避免 WHERE book_id = 0 把所有真实流水（book_id != 0）
+// 排除在外导致统计恒为 0。多账本作用域的收口应通过鉴权层统一注入，不应在此处默认按 0 过滤。
 func (r *BalanceFlowRepo) Statistics(ctx context.Context, bookID uint32, confirmedOnly bool) (expense, income, net float64, err error) {
-	baseQuery := r.entClient.Client().BalanceFlow.Query().
-		Where(balanceflow.BookIDEQ(bookID))
+	baseQuery := r.entClient.Client().BalanceFlow.Query()
+	if bookID != 0 {
+		baseQuery = baseQuery.Where(balanceflow.BookIDEQ(bookID))
+	}
 	if confirmedOnly {
 		baseQuery = baseQuery.Where(balanceflow.ConfirmEQ(true))
 	}

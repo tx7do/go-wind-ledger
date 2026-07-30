@@ -58,6 +58,7 @@ func (r *BudgetRepo) init() {
 	](r.mapper)
 	r.mapper.AppendConverters(copierutil.NewTimeStringConverterPair())
 	r.mapper.AppendConverters(copierutil.NewTimeTimestamppbConverterPair())
+	r.mapper.AppendConverters(float64StringConverters)
 }
 
 // List 分页查询预算
