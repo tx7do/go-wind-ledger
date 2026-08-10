@@ -343,6 +343,7 @@
   "back": "返回",
   "loading": "加载中...",
   "loadFailed": "加载失败",
+  "retry": "重试",
   "saveSuccess": "保存成功",
   "saveFailed": "保存失败",
   "deleted": "已删除",

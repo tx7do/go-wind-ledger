@@ -477,6 +477,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "repeatYearly": MessageLookupByLibrary.simpleMessage("按年"),
     "reply": MessageLookupByLibrary.simpleMessage("回复"),
     "reportTitle": MessageLookupByLibrary.simpleMessage("统计报表"),
+    "retry": MessageLookupByLibrary.simpleMessage("重试"),
     "revokeExecution": MessageLookupByLibrary.simpleMessage("撤回执行"),
     "revoked": MessageLookupByLibrary.simpleMessage("已撤回"),
     "revoking": MessageLookupByLibrary.simpleMessage("撤回中..."),

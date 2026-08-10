@@ -500,6 +500,7 @@
   "edit": "Edit",
   "loading": "Loading...",
   "loadFailed": "Failed to load",
+  "retry": "Retry",
   "saveSuccess": "Saved successfully",
   "saveFailed": "Failed to save",
   "deleted": "Deleted",

@@ -1594,6 +1594,11 @@ class S {
     return Intl.message('加载失败', name: 'loadFailed', desc: '', args: []);
   }
 
+  /// `重试`
+  String get retry {
+    return Intl.message('重试', name: 'retry', desc: '', args: []);
+  }
+
   /// `保存成功`
   String get saveSuccess {
     return Intl.message('保存成功', name: 'saveSuccess', desc: '', args: []);
