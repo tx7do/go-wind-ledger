@@ -172,15 +172,13 @@ class _AccountListPageState extends State<AccountListPage> {
     return Scaffold(
       appBar: widget.embedded
           ? null
-          : AppBar(
-              title: Text(loc.accountOverview),
-              actions: [
-                IconButton(
+          : CupertinoNavigationBar(
+              middle: Text(loc.accountOverview),
+              trailing: IconButton(
                   tooltip: loc.accountOverview,
                   icon: const Icon(Icons.account_balance_outlined),
                   onPressed: () => context.push('/ledger/accounts/overview'),
                 ),
-              ],
             ),
       body: BlocBuilder<ListApiCubit<Account>, ApiResponse<List<Account>>>(
         bloc: _cubit,

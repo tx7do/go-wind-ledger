@@ -101,7 +101,7 @@ class _BudgetListPageState extends State<BudgetListPage> {
     final theme = Theme.of(context);
     final loc = S.of(context);
     return Scaffold(
-      appBar: AppBar(title: Text(loc.budgetManagement)),
+      appBar: CupertinoNavigationBar(middle: Text(loc.budgetManagement)),
       body: BlocBuilder<ListApiCubit<Budget>, ApiResponse<List<Budget>>>(
         bloc: _cubit,
         builder: (context, state) => switch (state) {

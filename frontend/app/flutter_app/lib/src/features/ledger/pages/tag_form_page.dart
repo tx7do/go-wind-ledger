@@ -124,7 +124,7 @@ class _TagFormPageState extends State<TagFormPage> {
   Widget _buildForm(BuildContext context) {
     final loc = S.of(context);
     return Scaffold(
-      appBar: AppBar(title: Text(widget.editId == null ? loc.create : loc.edit)),
+      appBar: CupertinoNavigationBar(middle: Text(widget.editId == null ? loc.create : loc.edit)),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(16),
         child: Form(
@@ -175,7 +175,7 @@ class _TagFormPageState extends State<TagFormPage> {
     final loc = S.of(context);
     final msg = _formCubit.errorMessage;
     return Scaffold(
-      appBar: AppBar(title: Text(widget.editId == null ? loc.create : loc.edit)),
+      appBar: CupertinoNavigationBar(middle: Text(widget.editId == null ? loc.create : loc.edit)),
       body: Center(
         child: Column(
           mainAxisSize: MainAxisSize.min,

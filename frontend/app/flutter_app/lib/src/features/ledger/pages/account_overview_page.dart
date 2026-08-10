@@ -64,7 +64,7 @@ class _AccountOverviewPageState extends State<AccountOverviewPage> {
     final theme = Theme.of(context);
     final loc = S.of(context);
     return Scaffold(
-      appBar: widget.embedded ? null : AppBar(title: Text(loc.accountOverview)),
+      appBar: widget.embedded ? null : CupertinoNavigationBar(middle: Text(loc.accountOverview)),
       body: RefreshIndicator(
         onRefresh: () => _formCubit.loadInitial(_doLoad),
         child: ListView(
@@ -85,7 +85,7 @@ class _AccountOverviewPageState extends State<AccountOverviewPage> {
     final loc = S.of(context);
     final msg = _formCubit.errorMessage;
     return Scaffold(
-      appBar: widget.embedded ? null : AppBar(title: Text(loc.accountOverview)),
+      appBar: widget.embedded ? null : CupertinoNavigationBar(middle: Text(loc.accountOverview)),
       body: Center(
         child: Column(
           mainAxisSize: MainAxisSize.min,
@@ -167,7 +167,7 @@ class _AccountOverviewPageState extends State<AccountOverviewPage> {
     final loc = S.of(context);
     final theme = Theme.of(context);
     return Scaffold(
-      appBar: widget.embedded ? null : AppBar(title: Text(loc.accountOverview)),
+      appBar: widget.embedded ? null : CupertinoNavigationBar(middle: Text(loc.accountOverview)),
       body: Center(
         child: Column(mainAxisSize: MainAxisSize.min, children: [
           Icon(Icons.account_balance_outlined, size: 64, color: theme.colorScheme.outline),

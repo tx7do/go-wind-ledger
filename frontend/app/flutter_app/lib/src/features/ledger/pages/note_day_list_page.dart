@@ -44,7 +44,7 @@ class _NoteDayListView extends StatelessWidget {
     final cubit = context.read<ListApiCubit<NoteDay>>();
 
     return Scaffold(
-      appBar: AppBar(title: Text(loc.noteDayManagement)),
+      appBar: CupertinoNavigationBar(middle: Text(loc.noteDayManagement)),
       body: BlocBuilder<ListApiCubit<NoteDay>, ApiResponse<List<NoteDay>>>(
         builder: (context, state) => switch (state) {
           Initial() || Loading() => const Center(child: CupertinoActivityIndicator()),

@@ -44,7 +44,7 @@ class _TagListView extends StatelessWidget {
     final cubit = context.read<ListApiCubit<Tag>>();
 
     return Scaffold(
-      appBar: AppBar(title: Text(loc.tagManagement)),
+      appBar: CupertinoNavigationBar(middle: Text(loc.tagManagement)),
       body: BlocBuilder<ListApiCubit<Tag>, ApiResponse<List<Tag>>>(
         builder: (context, state) => switch (state) {
           Initial() || Loading() => const Center(child: CupertinoActivityIndicator()),

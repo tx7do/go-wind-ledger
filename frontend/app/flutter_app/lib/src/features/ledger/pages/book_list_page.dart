@@ -44,7 +44,7 @@ class _BookListView extends StatelessWidget {
     final cubit = context.read<ListApiCubit<Book>>();
 
     return Scaffold(
-      appBar: AppBar(title: Text(loc.bookManagement)),
+      appBar: CupertinoNavigationBar(middle: Text(loc.bookManagement)),
       body: BlocBuilder<ListApiCubit<Book>, ApiResponse<List<Book>>>(
         builder: (context, state) => switch (state) {
           Initial() || Loading() => const Center(child: CupertinoActivityIndicator()),

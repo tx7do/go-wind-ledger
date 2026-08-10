@@ -44,7 +44,7 @@ class _PayeeListView extends StatelessWidget {
     final cubit = context.read<ListApiCubit<Payee>>();
 
     return Scaffold(
-      appBar: AppBar(title: Text(loc.payeeManagement)),
+      appBar: CupertinoNavigationBar(middle: Text(loc.payeeManagement)),
       body: BlocBuilder<ListApiCubit<Payee>, ApiResponse<List<Payee>>>(
         builder: (context, state) => switch (state) {
           Initial() || Loading() => const Center(child: CupertinoActivityIndicator()),

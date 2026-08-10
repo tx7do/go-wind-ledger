@@ -169,7 +169,7 @@ class _MemberListPageState extends State<MemberListPage> {
     final theme = Theme.of(context);
     final loc = S.of(context);
     return Scaffold(
-      appBar: AppBar(title: Text(loc.memberManagement)),
+      appBar: CupertinoNavigationBar(middle: Text(loc.memberManagement)),
       body: _initialLoading
           ? const Center(child: CupertinoActivityIndicator())
           : _tenantId == null

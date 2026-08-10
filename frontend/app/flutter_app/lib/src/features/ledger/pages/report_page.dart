@@ -109,7 +109,7 @@ class _ReportPageState extends State<ReportPage> {
       _ReportKind('income_payee', loc.incomeByPayee, Icons.person_outline, isExpense: false),
     ];
     return Scaffold(
-      appBar: widget.embedded ? null : AppBar(title: Text(loc.reportTitle)),
+      appBar: widget.embedded ? null : CupertinoNavigationBar(middle: Text(loc.reportTitle)),
       body: RefreshIndicator(
         onRefresh: () => _formCubit.loadInitial(() async {
           await _loadBooks();
@@ -140,7 +140,7 @@ class _ReportPageState extends State<ReportPage> {
     final loc = S.of(context);
     final msg = _formCubit.errorMessage;
     return Scaffold(
-      appBar: widget.embedded ? null : AppBar(title: Text(loc.reportTitle)),
+      appBar: widget.embedded ? null : CupertinoNavigationBar(middle: Text(loc.reportTitle)),
       body: Center(
         child: Column(
           mainAxisSize: MainAxisSize.min,

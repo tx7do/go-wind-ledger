@@ -108,7 +108,7 @@ class _SettingsPageState extends State<SettingsPage> {
     final theme = Theme.of(context);
     final loc = S.of(context);
     return Scaffold(
-      appBar: AppBar(title: Text(loc.settings)),
+      appBar: CupertinoNavigationBar(middle: Text(loc.settings)),
       body: RefreshIndicator(
         onRefresh: () => _formCubit.loadInitial(_doLoad),
         child: Center(
@@ -139,7 +139,7 @@ class _SettingsPageState extends State<SettingsPage> {
     final loc = S.of(context);
     final msg = _formCubit.errorMessage;
     return Scaffold(
-      appBar: AppBar(title: Text(loc.settings)),
+      appBar: CupertinoNavigationBar(middle: Text(loc.settings)),
       body: Center(
         child: Column(
           mainAxisSize: MainAxisSize.min,

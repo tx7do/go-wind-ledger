@@ -105,11 +105,9 @@ class _CurrencyListPageState extends State<CurrencyListPage> {
     final theme = Theme.of(context);
     final loc = S.of(context);
     return Scaffold(
-      appBar: AppBar(
-        title: Text(loc.currencyManagement),
-        actions: [
-          IconButton(icon: const Icon(Icons.refresh), tooltip: loc.refreshRates, onPressed: _refreshRates),
-        ],
+      appBar: CupertinoNavigationBar(
+        middle: Text(loc.currencyManagement),
+        trailing: IconButton(icon: const Icon(Icons.refresh), tooltip: loc.refreshRates, onPressed: _refreshRates),
       ),
       body: BlocBuilder<ListApiCubit<Currency>, ApiResponse<List<Currency>>>(
         bloc: _cubit,

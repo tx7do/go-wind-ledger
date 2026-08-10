@@ -116,7 +116,7 @@ class _CategoryListPageState extends State<CategoryListPage> {
     final theme = Theme.of(context);
     final loc = S.of(context);
     return Scaffold(
-      appBar: AppBar(title: Text(loc.categoryManagement)),
+      appBar: CupertinoNavigationBar(middle: Text(loc.categoryManagement)),
       body: BlocBuilder<ListApiCubit<Category>, ApiResponse<List<Category>>>(
         bloc: _cubit,
         builder: (context, state) => switch (state) {
