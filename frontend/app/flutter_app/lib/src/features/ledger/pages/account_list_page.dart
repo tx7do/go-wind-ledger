@@ -89,9 +89,9 @@ class _AccountListPageState extends State<AccountListPage> {
     final balanceCtrl = TextEditingController(text: acc.balance ?? '0');
     final bookCtrl = TextEditingController(text: defaultBookId?.toString() ?? '');
 
-    final result = await showDialog<(String, String)>(
+    final result = await showCupertinoDialog<(String, String)>(
       context: context,
-      builder: (ctx) => AlertDialog(
+      builder: (ctx) => CupertinoAlertDialog(
         title: Text(loc.adjustBalanceTitle(acc.name ?? '')),
         content: SingleChildScrollView(
           child: Column(
@@ -122,8 +122,8 @@ class _AccountListPageState extends State<AccountListPage> {
           ),
         ),
         actions: [
-          TextButton(onPressed: () => Navigator.pop(ctx), child: Text(loc.cancel)),
-          FilledButton(
+          CupertinoDialogAction(onPressed: () => Navigator.pop(ctx), child: Text(loc.cancel)),
+          CupertinoDialogAction(
             onPressed: () {
               final balance = balanceCtrl.text.trim();
               final bookStr = bookCtrl.text.trim();

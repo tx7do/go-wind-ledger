@@ -323,14 +323,14 @@ class _SettingsPageState extends State<SettingsPage> {
   }
 
   void _handleLogout(S loc) {
-    showDialog(
+    showCupertinoDialog(
       context: context,
-      builder: (ctx) => AlertDialog(
+      builder: (ctx) => CupertinoAlertDialog(
         title: Text(loc.logoutConfirmTitle),
         content: Text(loc.logoutConfirmMsg),
         actions: [
-          TextButton(onPressed: () => Navigator.of(ctx).pop(), child: Text(loc.cancel)),
-          FilledButton(onPressed: () async {
+          CupertinoDialogAction(onPressed: () => Navigator.of(ctx).pop(), child: Text(loc.cancel)),
+          CupertinoDialogAction(onPressed: () async {
             Navigator.of(ctx).pop();
             await context.read<AuthCubit>().logout();
             if (!mounted) return;

@@ -87,14 +87,14 @@ class _CategoryListPageState extends State<CategoryListPage> {
     final loc = S.of(context);
     final id = cat.id;
     if (id == null) return;
-    final ok = await showDialog<bool>(
+    final ok = await showCupertinoDialog<bool>(
       context: context,
-      builder: (ctx) => AlertDialog(
+      builder: (ctx) => CupertinoAlertDialog(
         title: Text(loc.deleteCategoryTitle),
         content: Text(loc.deleteCategoryMsg(cat.name ?? '')),
         actions: [
-          TextButton(onPressed: () => Navigator.pop(ctx, false), child: Text(loc.cancel)),
-          TextButton(onPressed: () => Navigator.pop(ctx, true), child: Text(loc.delete)),
+          CupertinoDialogAction(onPressed: () => Navigator.pop(ctx, false), child: Text(loc.cancel)),
+          CupertinoDialogAction(onPressed: () => Navigator.pop(ctx, true), child: Text(loc.delete)),
         ],
       ),
     );

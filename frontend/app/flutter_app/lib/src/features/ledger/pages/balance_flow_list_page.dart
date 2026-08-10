@@ -133,17 +133,17 @@ class _BalanceFlowListPageState extends State<BalanceFlowListPage> {
     final loc = S.of(context);
     final id = flow.id;
     if (id == null) return;
-    final ok = await showDialog<bool>(
+    final ok = await showCupertinoDialog<bool>(
       context: context,
-      builder: (ctx) => AlertDialog(
+      builder: (ctx) => CupertinoAlertDialog(
         title: Text(loc.deleteFlowTitle),
         content: Text(loc.deleteFlowMsg),
         actions: [
-          TextButton(
+          CupertinoDialogAction(
             onPressed: () => Navigator.pop(ctx, false),
             child: Text(loc.cancel),
           ),
-          TextButton(
+          CupertinoDialogAction(
             onPressed: () => Navigator.pop(ctx, true),
             child: Text(loc.delete),
           ),

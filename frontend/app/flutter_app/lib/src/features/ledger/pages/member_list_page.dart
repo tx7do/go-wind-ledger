@@ -80,9 +80,9 @@ class _MemberListPageState extends State<MemberListPage> {
     final loc = S.of(context);
     if (_tenantId == null) return;
     final usernameCtrl = TextEditingController();
-    final result = await showDialog<String>(
+    final result = await showCupertinoDialog<String>(
       context: context,
-      builder: (ctx) => AlertDialog(
+      builder: (ctx) => CupertinoAlertDialog(
         title: Text(loc.inviteMember),
         content: TextField(
           controller: usernameCtrl,
@@ -90,8 +90,8 @@ class _MemberListPageState extends State<MemberListPage> {
           decoration: InputDecoration(labelText: loc.username, prefixIcon: Icon(Icons.person_outline), border: OutlineInputBorder()),
         ),
         actions: [
-          TextButton(onPressed: () => Navigator.pop(ctx), child: Text(loc.cancel)),
-          FilledButton(
+          CupertinoDialogAction(onPressed: () => Navigator.pop(ctx), child: Text(loc.cancel)),
+          CupertinoDialogAction(
             onPressed: () {
               final v = usernameCtrl.text.trim();
               if (v.isEmpty) return;
@@ -120,14 +120,14 @@ class _MemberListPageState extends State<MemberListPage> {
     final tenantId = _tenantId;
     final userId = member.userId;
     if (tenantId == null || userId == null) return;
-    final ok = await showDialog<bool>(
+    final ok = await showCupertinoDialog<bool>(
       context: context,
-      builder: (ctx) => AlertDialog(
+      builder: (ctx) => CupertinoAlertDialog(
         title: Text(loc.removeMemberTitle),
         content: Text(loc.removeMemberMsg(member.nickname ?? member.username ?? '')),
         actions: [
-          TextButton(onPressed: () => Navigator.pop(ctx, false), child: Text(loc.cancel)),
-          TextButton(onPressed: () => Navigator.pop(ctx, true), child: Text(loc.removeMember)),
+          CupertinoDialogAction(onPressed: () => Navigator.pop(ctx, false), child: Text(loc.cancel)),
+          CupertinoDialogAction(onPressed: () => Navigator.pop(ctx, true), child: Text(loc.removeMember)),
         ],
       ),
     );
