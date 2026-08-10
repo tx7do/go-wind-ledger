@@ -113,7 +113,7 @@ class _CurrencyListPageState extends State<CurrencyListPage> {
         bloc: _cubit,
         builder: (context, state) => switch (state) {
           Initial() || Loading() => const Center(child: CupertinoActivityIndicator()),
-          Success(data) => data.isEmpty
+          Success(:final data) => data.isEmpty
               ? _buildEmpty(theme)
               : RefreshIndicator(
                   onRefresh: _cubit.refresh,
@@ -126,7 +126,7 @@ class _CurrencyListPageState extends State<CurrencyListPage> {
                     ],
                   ),
                 ),
-          Error(msg) => _buildError(theme, msg),
+          Error(:final errorMessage) => _buildError(theme, errorMessage),
         },
       ),
     );

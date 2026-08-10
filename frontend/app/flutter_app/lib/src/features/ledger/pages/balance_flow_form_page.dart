@@ -249,7 +249,7 @@ class _BalanceFlowFormPageState extends State<BalanceFlowFormPage> {
     return BlocBuilder<FormCubit, FormLoadState>(
       bloc: _formCubit,
       builder: (context, state) => switch (state) {
-        FormLoadState.initial || FormLoadState.loading => const Center(child: CupertinoActivityIndicator()),
+        FormLoadState.initial || FormLoadState.loading || FormLoadState.saving => const Center(child: CupertinoActivityIndicator()),
         FormLoadState.loaded => _buildForm(context),
         FormLoadState.error => _buildError(context),
       },

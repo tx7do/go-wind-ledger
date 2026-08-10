@@ -184,7 +184,7 @@ class _AccountListPageState extends State<AccountListPage> {
         bloc: _cubit,
         builder: (context, state) => switch (state) {
           Initial() || Loading() => const Center(child: CupertinoActivityIndicator()),
-          Success(data) => data.isEmpty
+          Success(:final data) => data.isEmpty
               ? _buildEmpty(theme)
               : RefreshIndicator(
                   onRefresh: _cubit.refresh,
@@ -193,7 +193,7 @@ class _AccountListPageState extends State<AccountListPage> {
                     children: _buildGrouped(theme, data),
                   ),
                 ),
-          Error(msg) => _buildError(theme, msg),
+          Error(:final errorMessage) => _buildError(theme, errorMessage),
         },
       ),
       floatingActionButton: widget.embedded

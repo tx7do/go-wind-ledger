@@ -90,7 +90,7 @@ class _ReportPageState extends State<ReportPage> {
     return BlocBuilder<FormCubit, FormLoadState>(
       bloc: _formCubit,
       builder: (context, state) => switch (state) {
-        FormLoadState.initial || FormLoadState.loading => const Center(child: CupertinoActivityIndicator()),
+        FormLoadState.initial || FormLoadState.loading || FormLoadState.saving => const Center(child: CupertinoActivityIndicator()),
         FormLoadState.loaded => _buildContent(context),
         FormLoadState.error => _buildError(context),
       },

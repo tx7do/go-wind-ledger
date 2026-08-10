@@ -106,7 +106,7 @@ class _BudgetListPageState extends State<BudgetListPage> {
         bloc: _cubit,
         builder: (context, state) => switch (state) {
           Initial() || Loading() => const Center(child: CupertinoActivityIndicator()),
-          Success(data) => data.isEmpty
+          Success(:final data) => data.isEmpty
               ? _buildEmpty(theme)
               : RefreshIndicator(
                   onRefresh: () async {
@@ -119,7 +119,7 @@ class _BudgetListPageState extends State<BudgetListPage> {
                     itemBuilder: (_, i) => _buildBudgetCard(theme, data[i]),
                   ),
                 ),
-          Error(msg) => _buildError(theme, msg),
+          Error(:final errorMessage) => _buildError(theme, errorMessage),
         },
       ),
       floatingActionButton: FloatingActionButton.extended(

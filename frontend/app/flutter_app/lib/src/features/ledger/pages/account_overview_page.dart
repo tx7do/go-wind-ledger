@@ -53,7 +53,7 @@ class _AccountOverviewPageState extends State<AccountOverviewPage> {
     return BlocBuilder<FormCubit, FormLoadState>(
       bloc: _formCubit,
       builder: (context, state) => switch (state) {
-        FormLoadState.initial || FormLoadState.loading => const Center(child: CupertinoActivityIndicator()),
+        FormLoadState.initial || FormLoadState.loading || FormLoadState.saving => const Center(child: CupertinoActivityIndicator()),
         FormLoadState.loaded => _overview == null ? _buildEmpty() : _buildContent(context),
         FormLoadState.error => _buildError(context),
       },

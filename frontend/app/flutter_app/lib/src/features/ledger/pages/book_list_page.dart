@@ -48,7 +48,7 @@ class _BookListView extends StatelessWidget {
       body: BlocBuilder<ListApiCubit<Book>, ApiResponse<List<Book>>>(
         builder: (context, state) => switch (state) {
           Initial() || Loading() => const Center(child: CupertinoActivityIndicator()),
-          Success(data) => data.isEmpty
+          Success(:final data) => data.isEmpty
               ? _buildEmpty(context, theme)
               : RefreshIndicator(
                   onRefresh: cubit.refresh,
@@ -58,7 +58,7 @@ class _BookListView extends StatelessWidget {
                     itemBuilder: (_, i) => _buildBookTile(context, theme, data[i]),
                   ),
                 ),
-          Error(msg) => _buildError(context, theme, msg),
+          Error(:final errorMessage) => _buildError(context, theme, errorMessage),
         },
       ),
       floatingActionButton: FloatingActionButton.extended(

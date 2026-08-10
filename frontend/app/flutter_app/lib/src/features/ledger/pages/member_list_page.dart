@@ -197,7 +197,7 @@ class _MemberListPageState extends State<MemberListPage> {
       bloc: cubit,
       builder: (context, state) => switch (state) {
         Initial() || Loading() => const Center(child: CupertinoActivityIndicator()),
-        Success(data) => data.isEmpty
+        Success(:final data) => data.isEmpty
             ? _buildEmpty(theme)
             : RefreshIndicator(
                 onRefresh: cubit.refresh,
@@ -207,7 +207,7 @@ class _MemberListPageState extends State<MemberListPage> {
                   itemBuilder: (_, i) => _buildMemberTile(theme, data[i]),
                 ),
               ),
-        Error(msg) => _buildError(theme, msg),
+        Error(:final errorMessage) => _buildError(theme, errorMessage),
       },
     );
   }

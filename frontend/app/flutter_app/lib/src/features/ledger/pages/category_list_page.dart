@@ -121,7 +121,7 @@ class _CategoryListPageState extends State<CategoryListPage> {
         bloc: _cubit,
         builder: (context, state) => switch (state) {
           Initial() || Loading() => const Center(child: CupertinoActivityIndicator()),
-          Success(data) => data.isEmpty
+          Success(:final data) => data.isEmpty
               ? _buildEmpty(theme)
               : RefreshIndicator(
                   onRefresh: _cubit.refresh,
@@ -131,7 +131,7 @@ class _CategoryListPageState extends State<CategoryListPage> {
                     itemBuilder: (_, i) => _buildCategoryTile(theme, data[i], 0),
                   ),
                 ),
-          Error(msg) => _buildError(theme, msg),
+          Error(:final errorMessage) => _buildError(theme, errorMessage),
         },
       ),
       floatingActionButton: FloatingActionButton.extended(
