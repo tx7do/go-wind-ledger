@@ -15,25 +15,25 @@ class SemanticColors {
   /// 支出 — 红色系
   static Color expense(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
-    return isDark ? const Color(0xFFEF5350) : const Color(0xFFC62828);
+    return isDark ? const Color(0xFFFF453A) : const Color(0xFFFF3B30);
   }
 
   /// 收入 — 绿色系
   static Color income(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
-    return isDark ? const Color(0xFF66BB6A) : const Color(0xFF2E7D32);
+    return isDark ? const Color(0xFF30D158) : const Color(0xFF34C759);
   }
 
   /// 转账 — 蓝色系
   static Color transfer(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
-    return isDark ? const Color(0xFF42A5F5) : const Color(0xFF1565C0);
+    return isDark ? const Color(0xFF0A84FF) : const Color(0xFF007AFF);
   }
 
   /// 余额调整 — 橙色系
   static Color adjust(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
-    return isDark ? const Color(0xFFFF8A65) : const Color(0xFFE65100);
+    return isDark ? const Color(0xFFFF9F0A) : const Color(0xFFFF9500);
   }
 
   // ─── 账户类型 ────────────────────────────────────────
@@ -41,7 +41,7 @@ class SemanticColors {
   /// 资产账户 — 蓝色
   static Color accountAsset(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
-    return isDark ? const Color(0xFF42A5F5) : const Color(0xFF1976D2);
+    return isDark ? const Color(0xFF0A84FF) : const Color(0xFF007AFF);
   }
 
   /// 活期账户 — 绿色

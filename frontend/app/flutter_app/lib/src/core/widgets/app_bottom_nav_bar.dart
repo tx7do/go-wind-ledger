@@ -40,7 +40,7 @@ class AppBottomNavBar extends StatelessWidget {
 
     return Container(
       decoration: BoxDecoration(
-        color: theme.colorScheme.surface,
+        color: theme.scaffoldBackgroundColor,
         border: Border(
           top: BorderSide(
             color: theme.colorScheme.onSurface.withAlpha((0.08 * 255).round()),
@@ -64,7 +64,7 @@ class AppBottomNavBar extends StatelessWidget {
               height: 60.h,
               backgroundColor: Colors.transparent,
               elevation: 0,
-              indicatorColor: theme.colorScheme.primaryContainer,
+              indicatorColor: Colors.transparent,
               surfaceTintColor: Colors.transparent,
               labelBehavior: NavigationDestinationLabelBehavior.alwaysShow,
               destinations: items.map((item) {

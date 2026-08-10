@@ -10,8 +10,8 @@ double kMainLineWidth(bool isDarkMode) => isDarkMode ? 0.5 : 1.0;
 
 // ─── 统一圆角常量 ──────────────────────────────────────
 
-/// 卡片圆角
-const double kCardRadius = 14.0;
+/// 卡片圆角（iOS grouped 表观）
+const double kCardRadius = 10.0;
 
 /// 输入框圆角
 const double kInputRadius = 12.0;

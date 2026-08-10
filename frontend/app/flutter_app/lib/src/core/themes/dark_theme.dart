@@ -1,16 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-
 import 'const.dart';
 import 'fonts.dart';
 import 'snackbar_color.dart' show SnackBarColor;
 import 'app_theme_extension.dart';
 
 class DarkColor {
-  static const Color bgColor = Color.fromRGBO(18, 18, 18, 1.0);
+  static const Color bgColor = Color.fromRGBO(0, 0, 0, 1.0);
   static const Color surfaceColor = Color.fromRGBO(28, 28, 30, 1.0);
-  static const Color cardColor = Color.fromRGBO(35, 35, 38, 1.0);
-  static const Color onSurface = Color.fromRGBO(232, 232, 234, 1.0);
+  static const Color onSurface = Color.fromRGBO(255, 255, 255, 1.0);
   static const Color cursorColor = Color(0xFF3A7CA5);
 }
 
@@ -18,7 +16,7 @@ ColorScheme _buildDarkColorScheme(Color seedColor) => ColorScheme.fromSeed(
   brightness: Brightness.dark,
   seedColor: seedColor,
 
-  /// 主色调，用于突出显示和主要操作
+  /// 主色调，由用户种子色驱动
   primary: seedColor,
 
   /// 主色调上的文字或图标颜色
@@ -36,18 +34,14 @@ ColorScheme _buildDarkColorScheme(Color seedColor) => ColorScheme.fromSeed(
     Colors.white,
   ),
 
-  /// 背景颜色
+  /// secondarySystemGroupedBackground（卡片/行表面）
   surface: DarkColor.surfaceColor,
-
-  /// 容器表面色（卡片等）。与 surface 取相同色值，消除卡片与背景的色差，
-  /// 避免列表多卡片叠出“格子化”。两端正反一致处理。
-  /// 卡片层级改由圆角与间距隐约区分。
   surfaceContainer: DarkColor.surfaceColor,
 
-  /// 背景颜色上的文字或图标颜色
+  /// label
   onSurface: DarkColor.onSurface,
 
-  /// 次级容器
+  /// 次级容器（保留既有语义色，未列入本次重塑范围）
   secondaryContainer: Color.alphaBlend(
     seedColor.withAlpha((0.15 * 255).round()),
     DarkColor.surfaceColor,
@@ -57,10 +51,8 @@ ColorScheme _buildDarkColorScheme(Color seedColor) => ColorScheme.fromSeed(
     Colors.white,
   ),
 
-  /// 错误状态的颜色
-  error: const Color.fromRGBO(242, 80, 80, 1.0),
-
-  /// 错误状态上的文字或图标颜色
+  /// iOS systemRed
+  error: const Color(0xFFFF453A),
   onError: Colors.white,
 );
 
@@ -78,24 +70,44 @@ AppBarTheme _buildAppBarTheme(ColorScheme colorScheme) => AppBarTheme(
   iconTheme: IconThemeData(color: DarkColor.onSurface),
 );
 
-/// 凸出按钮主题
-ElevatedButtonThemeData _buildElevatedButtonTheme(ColorScheme colorScheme) =>
-    ElevatedButtonThemeData(
-      style: ButtonStyle(
-        elevation: WidgetStateProperty.all(0),
-        backgroundColor: WidgetStateProperty.all(colorScheme.primary),
-        foregroundColor: WidgetStateProperty.all(Colors.white),
-        textStyle: WidgetStateProperty.all(
-          TextStyle(
-            fontSize: 16.sp,
-            fontWeight: FontWeight.w600,
-          ),
-        ),
-        shape: WidgetStateProperty.all(
-          RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-        ),
-      ),
-    );
+/// 主操作按钮样式（Elevated / Filled 共用）
+ButtonStyle _primaryButtonStyle(ColorScheme cs) => ButtonStyle(
+  elevation: WidgetStateProperty.all(0),
+  backgroundColor: WidgetStateProperty.all(cs.primary),
+  foregroundColor: WidgetStateProperty.all(cs.onPrimary),
+  textStyle: WidgetStateProperty.all(
+    TextStyle(fontSize: 16.sp, fontWeight: FontWeight.w600),
+  ),
+  shape: WidgetStateProperty.all(
+    RoundedRectangleBorder(borderRadius: BorderRadius.circular(kButtonRadius)),
+  ),
+);
+
+/// 次级文本按钮样式
+ButtonStyle _textButtonStyle(ColorScheme cs) => ButtonStyle(
+  elevation: WidgetStateProperty.all(0),
+  backgroundColor: WidgetStateProperty.all(Colors.transparent),
+  foregroundColor: WidgetStateProperty.all(cs.primary),
+  textStyle: WidgetStateProperty.all(
+    TextStyle(fontSize: 16.sp, fontWeight: FontWeight.w600),
+  ),
+  shape: WidgetStateProperty.all(
+    RoundedRectangleBorder(borderRadius: BorderRadius.circular(kButtonRadius)),
+  ),
+);
+
+/// 描边按钮样式
+ButtonStyle _outlinedButtonStyle(ColorScheme cs) => ButtonStyle(
+  elevation: WidgetStateProperty.all(0),
+  backgroundColor: WidgetStateProperty.all(Colors.transparent),
+  foregroundColor: WidgetStateProperty.all(cs.primary),
+  shape: WidgetStateProperty.all(
+    RoundedRectangleBorder(
+      borderRadius: BorderRadius.circular(kButtonRadius),
+      side: BorderSide(color: cs.primary),
+    ),
+  ),
+);
 
 /// 文本选择
 TextSelectionThemeData _buildTextSelectionTheme(Color seedColor) =>
@@ -120,7 +132,7 @@ const _snackBarColor = SnackBarColor(
 
 /// 顶部搜索栏
 final _searchBarTheme = SearchBarThemeData(
-  backgroundColor: WidgetStateProperty.all(DarkColor.cardColor),
+  backgroundColor: WidgetStateProperty.all(DarkColor.surfaceColor),
   elevation: WidgetStateProperty.all(0),
   shape: WidgetStateProperty.all(
     RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
@@ -129,38 +141,87 @@ final _searchBarTheme = SearchBarThemeData(
 
 /// 弹出菜单
 PopupMenuThemeData _buildPopupMenuTheme(Color seedColor) => PopupMenuThemeData(
-  color: DarkColor.cardColor,
+  color: DarkColor.surfaceColor,
   iconColor: seedColor,
   elevation: 4,
 );
 
-/// 分割线
+/// 分割线（iOS separator）
 const _dividerTheme = DividerThemeData(
-  color: Color.fromRGBO(55, 55, 58, 1.0),
+  color: Color(0xFF38383A),
 );
 
-/// 构建 Scrollbar 主题
+/// Scrollbar 主题（中性灰，贴近 iOS 观感）
 ScrollbarThemeData _buildScrollbarTheme(Color seedColor) => ScrollbarThemeData(
-  thumbColor: WidgetStateProperty.resolveWith((states) {
-    if (states.contains(WidgetState.hovered)) {
-      return seedColor.withAlpha((0.5 * 255).round());
-    }
-    return seedColor.withAlpha((0.3 * 255).round());
-  }),
+  thumbColor: WidgetStateProperty.all(const Color(0xFF38383A)),
   radius: const Radius.circular(4),
   thickness: WidgetStateProperty.all(6),
   thumbVisibility: WidgetStateProperty.all(true),
 );
 
-///
+/// 输入框主题（iOS 风格描边）
 InputDecorationTheme _buildInputDecorationTheme(Color seedColor) =>
-    const InputDecorationTheme(
-      labelStyle: TextStyle(
-        color: DarkColor.onSurface,
+    InputDecorationTheme(
+      border: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(kInputRadius),
+        borderSide: const BorderSide(color: Color(0xFF38383A)),
+      ),
+      enabledBorder: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(kInputRadius),
+        borderSide: const BorderSide(color: Color(0xFF38383A)),
+      ),
+      focusedBorder: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(kInputRadius),
+        borderSide: BorderSide(color: seedColor),
       ),
     );
 
-const _textTheme = TextTheme();
+/// iOS 风格字阶（标题偏大、正文/标签收敛以兼顾现有布局密度）。
+/// 仅设定字号与字重，颜色留空交由 ambient 决定。
+TextTheme _buildTextTheme() => TextTheme(
+  displayLarge: TextStyle(fontSize: 28.sp, fontWeight: FontWeight.w700),
+  displayMedium: TextStyle(fontSize: 22.sp, fontWeight: FontWeight.w700),
+  displaySmall: TextStyle(fontSize: 20.sp, fontWeight: FontWeight.w500),
+  headlineLarge: TextStyle(fontSize: 17.sp, fontWeight: FontWeight.w500),
+  headlineMedium: TextStyle(fontSize: 17.sp, fontWeight: FontWeight.w400),
+  headlineSmall: TextStyle(fontSize: 16.sp, fontWeight: FontWeight.w400),
+  titleLarge: TextStyle(fontSize: 17.sp, fontWeight: FontWeight.w500),
+  titleMedium: TextStyle(fontSize: 15.sp, fontWeight: FontWeight.w400),
+  titleSmall: TextStyle(fontSize: 13.sp, fontWeight: FontWeight.w400),
+  bodyLarge: TextStyle(fontSize: 15.sp, fontWeight: FontWeight.w400),
+  bodyMedium: TextStyle(fontSize: 14.sp, fontWeight: FontWeight.w400),
+  bodySmall: TextStyle(fontSize: 12.sp, fontWeight: FontWeight.w400),
+  labelLarge: TextStyle(fontSize: 13.sp, fontWeight: FontWeight.w400),
+  labelMedium: TextStyle(fontSize: 12.sp, fontWeight: FontWeight.w400),
+  labelSmall: TextStyle(fontSize: 11.sp, fontWeight: FontWeight.w400),
+);
+
+/// 底部 Tab 栏主题（无 M3 选中胶囊，选中=种子色，未选中=中性灰）
+NavigationBarThemeData _buildNavigationBarTheme(ColorScheme cs) =>
+    NavigationBarThemeData(
+      indicatorColor: Colors.transparent,
+      backgroundColor: DarkColor.surfaceColor,
+      labelTextStyle: WidgetStateProperty.resolveWith((states) {
+        if (states.contains(WidgetState.selected)) {
+          return TextStyle(
+            fontSize: 12.sp,
+            fontWeight: FontWeight.w600,
+            color: cs.primary,
+          );
+        }
+        return TextStyle(
+          fontSize: 12.sp,
+          fontWeight: FontWeight.w400,
+          color: const Color(0xFF8E8E93),
+        );
+      }),
+      iconTheme: WidgetStateProperty.resolveWith((states) {
+        if (states.contains(WidgetState.selected)) {
+          return IconThemeData(size: 24.sp, color: cs.primary);
+        }
+        return const IconThemeData(size: 24.0, color: Color(0xFF8E8E93));
+      }),
+    );
 
 ///
 ThemeData _buildDarkTheme(Color seedColor) {
@@ -170,13 +231,20 @@ ThemeData _buildDarkTheme(Color seedColor) {
     useMaterial3: true,
     fontFamily: kDefaultFontFamily,
     fontFamilyFallback: AppFont.fontFamilyFallback,
-    textTheme: _textTheme,
+    textTheme: _buildTextTheme(),
     colorScheme: colorScheme,
     scaffoldBackgroundColor: DarkColor.bgColor,
     primaryColor: colorScheme.primary,
     appBarTheme: _buildAppBarTheme(colorScheme),
     textSelectionTheme: _buildTextSelectionTheme(seedColor),
-    elevatedButtonTheme: _buildElevatedButtonTheme(colorScheme),
+    elevatedButtonTheme:
+        ElevatedButtonThemeData(style: _primaryButtonStyle(colorScheme)),
+    filledButtonTheme:
+        FilledButtonThemeData(style: _primaryButtonStyle(colorScheme)),
+    textButtonTheme:
+        TextButtonThemeData(style: _textButtonStyle(colorScheme)),
+    outlinedButtonTheme:
+        OutlinedButtonThemeData(style: _outlinedButtonStyle(colorScheme)),
     iconTheme: _iconTheme,
     searchBarTheme: _searchBarTheme,
     popupMenuTheme: _buildPopupMenuTheme(seedColor),
@@ -192,36 +260,7 @@ ThemeData _buildDarkTheme(Color seedColor) {
     chipTheme: const ChipThemeData(
       side: BorderSide.none,
     ),
-    navigationBarTheme: NavigationBarThemeData(
-      backgroundColor: DarkColor.surfaceColor,
-      indicatorColor: colorScheme.primaryContainer,
-      labelTextStyle: WidgetStateProperty.resolveWith((states) {
-        if (states.contains(WidgetState.selected)) {
-          return TextStyle(
-            fontSize: 12.sp,
-            fontWeight: FontWeight.w600,
-            color: colorScheme.primary,
-          );
-        }
-        return TextStyle(
-          fontSize: 12.sp,
-          fontWeight: FontWeight.w400,
-          color: DarkColor.onSurface.withAlpha((0.6 * 255).round()),
-        );
-      }),
-      iconTheme: WidgetStateProperty.resolveWith((states) {
-        if (states.contains(WidgetState.selected)) {
-          return IconThemeData(
-            size: 24.sp,
-            color: colorScheme.primary,
-          );
-        }
-        return IconThemeData(
-          size: 24.sp,
-          color: DarkColor.onSurface.withAlpha((0.6 * 255).round()),
-        );
-      }),
-    ),
+    navigationBarTheme: _buildNavigationBarTheme(colorScheme),
     extensions: const <ThemeExtension<dynamic>>[
       AppThemeExtension(snackBarColor: _snackBarColor),
     ],

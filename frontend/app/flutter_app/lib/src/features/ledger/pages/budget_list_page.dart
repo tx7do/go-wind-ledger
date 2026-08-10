@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:go_router/go_router.dart';
@@ -104,7 +105,7 @@ class _BudgetListPageState extends State<BudgetListPage> {
       body: BlocBuilder<ListApiCubit<Budget>, ApiResponse<List<Budget>>>(
         bloc: _cubit,
         builder: (context, state) => switch (state) {
-          Initial() || Loading() => const Center(child: CircularProgressIndicator()),
+          Initial() || Loading() => const Center(child: CupertinoActivityIndicator()),
           Success(data) => data.isEmpty
               ? _buildEmpty(theme)
               : RefreshIndicator(

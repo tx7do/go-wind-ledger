@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:go_router/go_router.dart';
@@ -96,7 +97,7 @@ class _SettingsPageState extends State<SettingsPage> {
     return BlocBuilder<FormCubit, FormLoadState>(
       bloc: _formCubit,
       builder: (context, state) => switch (state) {
-        FormLoadState.initial || FormLoadState.loading => const Center(child: CircularProgressIndicator()),
+        FormLoadState.initial || FormLoadState.loading => const Center(child: CupertinoActivityIndicator()),
         FormLoadState.loaded => _buildContent(context),
         FormLoadState.error => _buildError(context),
       },

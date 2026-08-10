@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:flutter_app/generated/api/app/service/v1/index.dart'
@@ -89,7 +90,7 @@ class _ReportPageState extends State<ReportPage> {
     return BlocBuilder<FormCubit, FormLoadState>(
       bloc: _formCubit,
       builder: (context, state) => switch (state) {
-        FormLoadState.initial || FormLoadState.loading => const Center(child: CircularProgressIndicator()),
+        FormLoadState.initial || FormLoadState.loading => const Center(child: CupertinoActivityIndicator()),
         FormLoadState.loaded => _buildContent(context),
         FormLoadState.error => _buildError(context),
       },

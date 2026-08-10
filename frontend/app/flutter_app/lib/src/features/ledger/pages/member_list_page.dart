@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 
@@ -170,7 +171,7 @@ class _MemberListPageState extends State<MemberListPage> {
     return Scaffold(
       appBar: AppBar(title: Text(loc.memberManagement)),
       body: _initialLoading
-          ? const Center(child: CircularProgressIndicator())
+          ? const Center(child: CupertinoActivityIndicator())
           : _tenantId == null
               ? _buildNoTenant(theme)
               : Column(
@@ -195,7 +196,7 @@ class _MemberListPageState extends State<MemberListPage> {
     return BlocBuilder<ListApiCubit<MemberInfo>, ApiResponse<List<MemberInfo>>>(
       bloc: cubit,
       builder: (context, state) => switch (state) {
-        Initial() || Loading() => const Center(child: CircularProgressIndicator()),
+        Initial() || Loading() => const Center(child: CupertinoActivityIndicator()),
         Success(data) => data.isEmpty
             ? _buildEmpty(theme)
             : RefreshIndicator(

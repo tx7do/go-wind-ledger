@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:go_router/go_router.dart';
@@ -229,7 +230,7 @@ class _BalanceFlowListPageState extends State<BalanceFlowListPage> {
       bloc: _listCubit,
       builder: (context, state) => switch (state) {
         PaginatedInitial() || PaginatedLoading() =>
-          const Center(child: CircularProgressIndicator()),
+          const Center(child: CupertinoActivityIndicator()),
         PaginatedLoaded(:final items, :final loadingMore) => items.isEmpty
             ? _buildEmpty(theme)
             : RefreshIndicator(
@@ -245,7 +246,7 @@ class _BalanceFlowListPageState extends State<BalanceFlowListPage> {
                     if (index >= items.length) {
                       return const Padding(
                         padding: EdgeInsets.all(16),
-                        child: Center(child: CircularProgressIndicator()),
+                        child: Center(child: CupertinoActivityIndicator()),
                       );
                     }
                     return _buildFlowTile(theme, items[index]);
