@@ -56,7 +56,7 @@ class BookService extends BaseService {
 
   /// 获取账本列表（分页）
   Future<dynamic> list([PaginationQuery? query]) {
-    final q = query ?? const PaginationQuery();  return call(() => _api.list(q.toPagingRequest()););
+    final q = query ?? const PaginationQuery();  return call(() => _api.list(q.toPagingRequest()));
   }
 
   /// 获取所有账本（不分页）

@@ -32,7 +32,7 @@ class CategoryService extends BaseService {
 
   /// 获取分类列表（分页）
   Future<dynamic> list([PaginationQuery? query]) {
-    final q = query ?? const PaginationQuery();  return call(() => _api.list(q.toPagingRequest()););
+    final q = query ?? const PaginationQuery();  return call(() => _api.list(q.toPagingRequest()));
   }
 
   /// 获取所有分类（不分页，可按账本/类型过滤）

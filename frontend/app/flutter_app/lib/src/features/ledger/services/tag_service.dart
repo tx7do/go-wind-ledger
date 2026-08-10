@@ -31,7 +31,7 @@ class TagService extends BaseService {
 
   /// 获取标签列表（分页）
   Future<dynamic> list([PaginationQuery? query]) {
-    final q = query ?? const PaginationQuery();  return call(() => _api.list(q.toPagingRequest()););
+    final q = query ?? const PaginationQuery();  return call(() => _api.list(q.toPagingRequest()));
   }
 
   /// 获取所有标签（不分页，可按账本过滤）

@@ -30,7 +30,7 @@ class PayeeService extends BaseService {
 
   /// 获取收款人列表（分页）
   Future<dynamic> list([PaginationQuery? query]) {
-    final q = query ?? const PaginationQuery();  return call(() => _api.list(q.toPagingRequest()););
+    final q = query ?? const PaginationQuery();  return call(() => _api.list(q.toPagingRequest()));
   }
 
   /// 获取所有收款人（不分页，可按账本过滤）

@@ -44,7 +44,7 @@ class LedgerAuthService extends BaseService {
       password: password,
       inviteCode: inviteCode,
       nickName: nickName,
-    );  return call(() => _api.register(request););
+    );  return call(() => _api.register(request));
   }
 
   /// 初始化状态（返回当前用户/租户/账本聚合信息）
@@ -56,11 +56,11 @@ class LedgerAuthService extends BaseService {
 
   /// 设置默认账本
   Future<dynamic> setDefaultBook(int bookId) {
-    final request = SetDefaultBookRequest(bookId: bookId);  return call(() => _api.setDefaultBook(request););
+    final request = SetDefaultBookRequest(bookId: bookId);  return call(() => _api.setDefaultBook(request));
   }
 
   /// 设置默认租户
   Future<dynamic> setDefaultTenant(int tenantId) {
-    final request = SetDefaultTenantRequest(tenantId: tenantId);  return call(() => _api.setDefaultTenant(request););
+    final request = SetDefaultTenantRequest(tenantId: tenantId);  return call(() => _api.setDefaultTenant(request));
   }
 }
