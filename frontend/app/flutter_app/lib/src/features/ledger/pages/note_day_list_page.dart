@@ -44,7 +44,17 @@ class _NoteDayListView extends StatelessWidget {
     final cubit = context.read<ListApiCubit<NoteDay>>();
 
     return Scaffold(
-      appBar: CupertinoNavigationBar(middle: Text(loc.noteDayManagement)),
+      appBar: CupertinoNavigationBar(
+        middle: Text(loc.noteDayManagement),
+        trailing: IconButton(
+          icon: const Icon(Icons.add),
+          tooltip: loc.newNoteDay,
+          onPressed: () async {
+            await context.push('/ledger/note-days/create');
+            cubit.refresh();
+          },
+        ),
+      ),
       body: BlocBuilder<ListApiCubit<NoteDay>, ApiResponse<List<NoteDay>>>(
         builder: (context, state) => switch (state) {
           Initial() || Loading() => const Center(child: CupertinoActivityIndicator()),
@@ -64,14 +74,6 @@ class _NoteDayListView extends StatelessWidget {
                 ),
           Error(:final errorMessage) => _buildError(context, theme, errorMessage),
         },
-      ),
-      floatingActionButton: FloatingActionButton.extended(
-        onPressed: () async {
-          await context.push('/ledger/note-days/create');
-          cubit.refresh();
-        },
-        icon: const Icon(Icons.add),
-        label: Text(loc.newNoteDay),
       ),
     );
   }

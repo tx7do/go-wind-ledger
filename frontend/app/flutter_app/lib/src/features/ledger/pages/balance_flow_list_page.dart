@@ -169,16 +169,14 @@ class _BalanceFlowListPageState extends State<BalanceFlowListPage> {
     final theme = Theme.of(context);
     final loc = S.of(context);
     return Scaffold(
-      appBar: widget.embedded
-          ? null
-          : CupertinoNavigationBar(
-              middle: Text(loc.flowListTitle),
-              trailing: IconButton(
-                  icon: const Icon(Icons.add),
-                  tooltip: loc.flowCreate,
-                  onPressed: () => context.push('/ledger/flows/create'),
-                ),
-            ),
+      appBar: CupertinoNavigationBar(
+        middle: Text(loc.flowListTitle),
+        trailing: IconButton(
+          icon: const Icon(Icons.add),
+          tooltip: loc.flowCreate,
+          onPressed: () => context.push('/ledger/flows/create'),
+        ),
+      ),
       body: Column(
         children: [
           StatisticsCard(

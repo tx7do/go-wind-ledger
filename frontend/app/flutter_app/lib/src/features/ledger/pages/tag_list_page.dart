@@ -44,7 +44,17 @@ class _TagListView extends StatelessWidget {
     final cubit = context.read<ListApiCubit<Tag>>();
 
     return Scaffold(
-      appBar: CupertinoNavigationBar(middle: Text(loc.tagManagement)),
+      appBar: CupertinoNavigationBar(
+        middle: Text(loc.tagManagement),
+        trailing: IconButton(
+          icon: const Icon(Icons.add),
+          tooltip: loc.newTag,
+          onPressed: () async {
+            await context.push('/ledger/tags/create');
+            cubit.refresh();
+          },
+        ),
+      ),
       body: BlocBuilder<ListApiCubit<Tag>, ApiResponse<List<Tag>>>(
         builder: (context, state) => switch (state) {
           Initial() || Loading() => const Center(child: CupertinoActivityIndicator()),
@@ -64,14 +74,6 @@ class _TagListView extends StatelessWidget {
                 ),
           Error(:final errorMessage) => _buildError(context, theme, errorMessage),
         },
-      ),
-      floatingActionButton: FloatingActionButton.extended(
-        onPressed: () async {
-          await context.push('/ledger/tags/create');
-          cubit.refresh();
-        },
-        icon: const Icon(Icons.add),
-        label: Text(loc.newTag),
       ),
     );
   }

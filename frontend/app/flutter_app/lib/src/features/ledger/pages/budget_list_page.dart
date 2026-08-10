@@ -101,7 +101,18 @@ class _BudgetListPageState extends State<BudgetListPage> {
     final theme = Theme.of(context);
     final loc = S.of(context);
     return Scaffold(
-      appBar: CupertinoNavigationBar(middle: Text(loc.budgetManagement)),
+      appBar: CupertinoNavigationBar(
+        middle: Text(loc.budgetManagement),
+        trailing: IconButton(
+          icon: const Icon(Icons.add),
+          tooltip: loc.newBudget,
+          onPressed: () async {
+            await context.push('/ledger/budgets/create');
+            _progress.clear();
+            _cubit.refresh();
+          },
+        ),
+      ),
       body: BlocBuilder<ListApiCubit<Budget>, ApiResponse<List<Budget>>>(
         bloc: _cubit,
         builder: (context, state) => switch (state) {
@@ -121,15 +132,6 @@ class _BudgetListPageState extends State<BudgetListPage> {
                 ),
           Error(:final errorMessage) => _buildError(theme, errorMessage),
         },
-      ),
-      floatingActionButton: FloatingActionButton.extended(
-        onPressed: () async {
-          await context.push('/ledger/budgets/create');
-          _progress.clear();
-          _cubit.refresh();
-        },
-        icon: const Icon(Icons.add),
-        label: Text(loc.newBudget),
       ),
     );
   }

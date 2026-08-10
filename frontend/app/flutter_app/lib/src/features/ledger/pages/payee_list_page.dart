@@ -44,7 +44,17 @@ class _PayeeListView extends StatelessWidget {
     final cubit = context.read<ListApiCubit<Payee>>();
 
     return Scaffold(
-      appBar: CupertinoNavigationBar(middle: Text(loc.payeeManagement)),
+      appBar: CupertinoNavigationBar(
+        middle: Text(loc.payeeManagement),
+        trailing: IconButton(
+          icon: const Icon(Icons.add),
+          tooltip: loc.newPayee,
+          onPressed: () async {
+            await context.push('/ledger/payees/create');
+            cubit.refresh();
+          },
+        ),
+      ),
       body: BlocBuilder<ListApiCubit<Payee>, ApiResponse<List<Payee>>>(
         builder: (context, state) => switch (state) {
           Initial() || Loading() => const Center(child: CupertinoActivityIndicator()),
@@ -64,14 +74,6 @@ class _PayeeListView extends StatelessWidget {
                 ),
           Error(:final errorMessage) => _buildError(context, theme, errorMessage),
         },
-      ),
-      floatingActionButton: FloatingActionButton.extended(
-        onPressed: () async {
-          await context.push('/ledger/payees/create');
-          cubit.refresh();
-        },
-        icon: const Icon(Icons.add),
-        label: Text(loc.newPayee),
       ),
     );
   }

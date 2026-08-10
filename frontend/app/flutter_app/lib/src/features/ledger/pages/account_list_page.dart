@@ -174,11 +174,24 @@ class _AccountListPageState extends State<AccountListPage> {
           ? null
           : CupertinoNavigationBar(
               middle: Text(loc.accountOverview),
-              trailing: IconButton(
-                  tooltip: loc.accountOverview,
-                  icon: const Icon(Icons.account_balance_outlined),
-                  onPressed: () => context.push('/ledger/accounts/overview'),
-                ),
+              trailing: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  IconButton(
+                    tooltip: loc.accountOverview,
+                    icon: const Icon(Icons.account_balance_outlined),
+                    onPressed: () => context.push('/ledger/accounts/overview'),
+                  ),
+                  IconButton(
+                    icon: const Icon(Icons.add),
+                    tooltip: loc.create,
+                    onPressed: () async {
+                      await context.push('/ledger/accounts/create');
+                      _cubit.refresh();
+                    },
+                  ),
+                ],
+              ),
             ),
       body: BlocBuilder<ListApiCubit<Account>, ApiResponse<List<Account>>>(
         bloc: _cubit,
@@ -196,16 +209,6 @@ class _AccountListPageState extends State<AccountListPage> {
           Error(:final errorMessage) => _buildError(theme, errorMessage),
         },
       ),
-      floatingActionButton: widget.embedded
-          ? null
-          : FloatingActionButton.extended(
-              onPressed: () async {
-                await context.push('/ledger/accounts/create');
-                _cubit.refresh();
-              },
-              icon: const Icon(Icons.add),
-              label: Text(loc.create),
-            ),
     );
   }
 

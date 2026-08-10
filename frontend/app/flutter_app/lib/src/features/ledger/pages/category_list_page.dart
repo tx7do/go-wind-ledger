@@ -116,7 +116,17 @@ class _CategoryListPageState extends State<CategoryListPage> {
     final theme = Theme.of(context);
     final loc = S.of(context);
     return Scaffold(
-      appBar: CupertinoNavigationBar(middle: Text(loc.categoryManagement)),
+      appBar: CupertinoNavigationBar(
+        middle: Text(loc.categoryManagement),
+        trailing: IconButton(
+          icon: const Icon(Icons.add),
+          tooltip: loc.newCategory,
+          onPressed: () async {
+            await context.push('/ledger/categories/create');
+            _cubit.refresh();
+          },
+        ),
+      ),
       body: BlocBuilder<ListApiCubit<Category>, ApiResponse<List<Category>>>(
         bloc: _cubit,
         builder: (context, state) => switch (state) {
@@ -133,14 +143,6 @@ class _CategoryListPageState extends State<CategoryListPage> {
                 ),
           Error(:final errorMessage) => _buildError(theme, errorMessage),
         },
-      ),
-      floatingActionButton: FloatingActionButton.extended(
-        onPressed: () async {
-          await context.push('/ledger/categories/create');
-          _cubit.refresh();
-        },
-        icon: const Icon(Icons.add),
-        label: Text(loc.newCategory),
       ),
     );
   }

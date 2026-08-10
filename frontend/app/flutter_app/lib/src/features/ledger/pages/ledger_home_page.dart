@@ -40,18 +40,6 @@ class _LedgerHomePageState extends State<LedgerHomePage> {
         current: _current,
         onTap: (tab) => setState(() => _current = tab),
       ),
-      floatingActionButton:
-          _current == LedgerTab.flows
-              ? FloatingActionButton(
-                  onPressed: () => context.push('/ledger/flows/create'),
-                  tooltip: S.of(context).flowCreate,
-                  child: const Icon(Icons.add),
-                )
-              : null,
-      floatingActionButtonLocation:
-          _current == LedgerTab.flows
-              ? FloatingActionButtonLocation.endFloat
-              : null,
     );
   }
 

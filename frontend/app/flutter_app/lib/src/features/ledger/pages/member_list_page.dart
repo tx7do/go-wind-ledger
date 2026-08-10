@@ -169,7 +169,16 @@ class _MemberListPageState extends State<MemberListPage> {
     final theme = Theme.of(context);
     final loc = S.of(context);
     return Scaffold(
-      appBar: CupertinoNavigationBar(middle: Text(loc.memberManagement)),
+      appBar: CupertinoNavigationBar(
+        middle: Text(loc.memberManagement),
+        trailing: _tenantId == null
+            ? null
+            : IconButton(
+                icon: const Icon(Icons.person_add_outlined),
+                tooltip: loc.inviteMember,
+                onPressed: _showInviteDialog,
+              ),
+      ),
       body: _initialLoading
           ? const Center(child: CupertinoActivityIndicator())
           : _tenantId == null
@@ -180,13 +189,6 @@ class _MemberListPageState extends State<MemberListPage> {
                     Expanded(child: _buildMemberList(theme)),
                   ],
                 ),
-      floatingActionButton: _tenantId == null
-          ? null
-          : FloatingActionButton.extended(
-              onPressed: _showInviteDialog,
-              icon: const Icon(Icons.person_add_outlined),
-              label: Text(loc.inviteMember),
-            ),
     );
   }
 

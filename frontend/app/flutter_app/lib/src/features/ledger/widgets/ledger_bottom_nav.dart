@@ -12,8 +12,8 @@ enum LedgerTab { flows, statistics, accounts, mine }
 /// 选中/未选中前景色由 [CupertinoTheme]（桥接 Material 种子色）与系统默认灰决定，
 /// 随主题色联动，无需手写颜色。
 ///
-/// “记一笔”入口由宿主 [Scaffold] 的 [FloatingActionButton] 承担
-/// （见 [LedgerHomePage]），不嵌入导航栏。
+/// “记一笔”入口由 [BalanceFlowListPage] 的 [CupertinoNavigationBar]
+/// trailing 按钮承担（embedded 与独立模式均一致），不嵌入底部导航栏。
 class LedgerBottomNav extends StatelessWidget {
   /// 当前选中的 Tab。
   final LedgerTab current;

@@ -44,7 +44,17 @@ class _BookListView extends StatelessWidget {
     final cubit = context.read<ListApiCubit<Book>>();
 
     return Scaffold(
-      appBar: CupertinoNavigationBar(middle: Text(loc.bookManagement)),
+      appBar: CupertinoNavigationBar(
+        middle: Text(loc.bookManagement),
+        trailing: IconButton(
+          icon: const Icon(Icons.add),
+          tooltip: loc.newBook,
+          onPressed: () async {
+            await context.push('/ledger/books/create');
+            cubit.refresh();
+          },
+        ),
+      ),
       body: BlocBuilder<ListApiCubit<Book>, ApiResponse<List<Book>>>(
         builder: (context, state) => switch (state) {
           Initial() || Loading() => const Center(child: CupertinoActivityIndicator()),
@@ -64,14 +74,6 @@ class _BookListView extends StatelessWidget {
                 ),
           Error(:final errorMessage) => _buildError(context, theme, errorMessage),
         },
-      ),
-      floatingActionButton: FloatingActionButton.extended(
-        onPressed: () async {
-          await context.push('/ledger/books/create');
-          cubit.refresh();
-        },
-        icon: const Icon(Icons.add),
-        label: Text(loc.newBook),
       ),
     );
   }
