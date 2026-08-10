@@ -111,11 +111,35 @@ class _BudgetFormPageState extends State<BudgetFormPage> {
   }
 
   Future<void> _pickDate({required bool isStart}) async {
-    final picked = await showDatePicker(
-      context: context, initialDate: isStart ? _startDate : _endDate,
-      firstDate: DateTime(2000), lastDate: DateTime(2100),
+    await showCupertinoModalPopup<void>(
+      context: context,
+      builder: (ctx) => Container(
+        height: 216,
+        padding: const EdgeInsets.only(top: 6),
+        margin: EdgeInsets.only(
+          bottom: MediaQuery.of(ctx).viewInsets.bottom,
+        ),
+        color: CupertinoColors.systemBackground.resolveFrom(ctx),
+        child: SafeArea(
+          top: false,
+          child: CupertinoDatePicker(
+            mode: CupertinoDatePickerMode.date,
+            initialDateTime: isStart ? _startDate : _endDate,
+            minimumDate: DateTime(2000),
+            maximumDate: DateTime(2100),
+            onDateTimeChanged: (DateTime picked) {
+              setState(() {
+                if (isStart) {
+                  _startDate = picked;
+                } else {
+                  _endDate = picked;
+                }
+              });
+            },
+          ),
+        ),
+      ),
     );
-    if (picked != null) setState(() { if (isStart) { _startDate = picked; } else { _endDate = picked; } });
   }
 
   Future<void> _submit() async {

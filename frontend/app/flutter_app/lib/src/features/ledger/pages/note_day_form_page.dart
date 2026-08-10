@@ -80,15 +80,35 @@ class _NoteDayFormPageState extends State<NoteDayFormPage> {
   }
 
   Future<void> _pickDate(bool isStart) async {
-    final picked = await showDatePicker(
+    await showCupertinoModalPopup<void>(
       context: context,
-      initialDate: isStart ? _startDate : (_endDate ?? _startDate),
-      firstDate: DateTime(2000),
-      lastDate: DateTime(2100),
+      builder: (ctx) => Container(
+        height: 216,
+        padding: const EdgeInsets.only(top: 6),
+        margin: EdgeInsets.only(
+          bottom: MediaQuery.of(ctx).viewInsets.bottom,
+        ),
+        color: CupertinoColors.systemBackground.resolveFrom(ctx),
+        child: SafeArea(
+          top: false,
+          child: CupertinoDatePicker(
+            mode: CupertinoDatePickerMode.date,
+            initialDateTime: isStart ? _startDate : (_endDate ?? _startDate),
+            minimumDate: DateTime(2000),
+            maximumDate: DateTime(2100),
+            onDateTimeChanged: (DateTime picked) {
+              setState(() {
+                if (isStart) {
+                  _startDate = picked;
+                } else {
+                  _endDate = picked;
+                }
+              });
+            },
+          ),
+        ),
+      ),
     );
-    if (picked != null) {
-      setState(() { if (isStart) { _startDate = picked; } else { _endDate = picked; } });
-    }
   }
 
   Future<void> _submit() async {
