@@ -213,10 +213,13 @@ class _AccountListPageState extends State<AccountListPage> {
     final grouped = _groupByType(accounts);
     final widgets = <Widget>[];
     for (final entry in grouped.entries) {
-      widgets.add(_buildGroupHeader(theme, entry.key, entry.value));
-      for (final acc in entry.value) {
-        widgets.add(_buildAccountTile(theme, acc));
-      }
+      if (entry.value.isEmpty) continue;
+      widgets.add(
+        CupertinoListSection.insetGrouped(
+          header: _buildGroupHeader(theme, entry.key, entry.value),
+          children: entry.value.map((acc) => _buildAccountTile(theme, acc)).toList(),
+        ),
+      );
     }
     return widgets;
   }
@@ -224,59 +227,54 @@ class _AccountListPageState extends State<AccountListPage> {
   Widget _buildGroupHeader(ThemeData theme, LedgerServiceV1AccountType type, List<Account> accounts) {
     final loc = S.of(context);
     final total = accounts.fold<double>(0, (sum, a) => sum + (double.tryParse(a.balance ?? '0') ?? 0));
-    return Padding(
-      padding: const EdgeInsets.fromLTRB(16, 12, 16, 4),
-      child: Row(
-        children: [
-          AccountTypeTag(type: type),
-          const SizedBox(width: 8),
-          Text(loc.groupTotal(total.toStringAsFixed(2)),
-              style: theme.textTheme.bodySmall?.copyWith(color: theme.colorScheme.onSurfaceVariant)),
-        ],
-      ),
+    return Row(
+      children: [
+        AccountTypeTag(type: type),
+        const SizedBox(width: 8),
+        Text(loc.groupTotal(total.toStringAsFixed(2)),
+            style: theme.textTheme.bodySmall?.copyWith(color: theme.colorScheme.onSurfaceVariant)),
+      ],
     );
   }
 
   Widget _buildAccountTile(ThemeData theme, Account acc) {
     final loc = S.of(context);
     final balance = double.tryParse(acc.balance ?? '0') ?? 0;
-    return Card(
-      margin: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
-      child: ListTile(
-        leading: CircleAvatar(
-          backgroundColor: theme.colorScheme.primaryContainer,
-          foregroundColor: theme.colorScheme.onPrimaryContainer,
-          child: const Icon(Icons.account_balance_wallet_outlined),
-        ),
-        title: Text(acc.name ?? loc.unnamed),
-        subtitle: Text(acc.currencyCode ?? '', style: theme.textTheme.bodySmall),
-        trailing: Row(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Text(
-              balance.toStringAsFixed(2),
-              style: theme.textTheme.titleMedium?.copyWith(
-                fontWeight: FontWeight.w700,
-                color: balance >= 0 ? theme.colorScheme.primary : theme.colorScheme.error,
-              ),
+    return CupertinoListTile.notched(
+      leading: CircleAvatar(
+        backgroundColor: theme.colorScheme.primaryContainer,
+        foregroundColor: theme.colorScheme.onPrimaryContainer,
+        child: const Icon(Icons.account_balance_wallet_outlined),
+      ),
+      title: Text(acc.name ?? loc.unnamed),
+      subtitle: Text(acc.currencyCode ?? '', style: theme.textTheme.bodySmall),
+      trailing: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Text(
+            balance.toStringAsFixed(2),
+            style: theme.textTheme.titleMedium?.copyWith(
+              fontWeight: FontWeight.w700,
+              color: balance >= 0 ? theme.colorScheme.primary : theme.colorScheme.error,
             ),
-            PopupMenuButton<String>(
-              icon: const Icon(Icons.more_vert, size: 20),
-              onSelected: (v) async {
-                if (v == 'edit') {
-                  await context.push('/ledger/accounts/create?id=${acc.id}');
-                  _cubit.refresh();
-                } else if (v == 'toggle') {
-                  _toggle(acc);
-                } else if (v == 'adjust') {
-                  _adjustBalance(acc);
-                }
-              },
-              itemBuilder: (ctx) => [
-                PopupMenuItem(value: 'edit', child: Text(loc.edit)),
-                PopupMenuItem(value: 'adjust', child: Text(loc.editFlow)),
-                PopupMenuItem(value: 'toggle', child: Text(acc.enable == false ? loc.enable : loc.disable)),
-              ],
+          ),
+          PopupMenuButton<String>(
+            icon: const Icon(Icons.more_vert, size: 20),
+            onSelected: (v) async {
+              if (v == 'edit') {
+                await context.push('/ledger/accounts/create?id=${acc.id}');
+                _cubit.refresh();
+              } else if (v == 'toggle') {
+                _toggle(acc);
+              } else if (v == 'adjust') {
+                _adjustBalance(acc);
+              }
+            },
+            itemBuilder: (ctx) => [
+              PopupMenuItem(value: 'edit', child: Text(loc.edit)),
+              PopupMenuItem(value: 'adjust', child: Text(loc.editFlow)),
+              PopupMenuItem(value: 'toggle', child: Text(acc.enable == false ? loc.enable : loc.disable)),
+            ],
             ),
           ],
         ),
@@ -284,7 +282,6 @@ class _AccountListPageState extends State<AccountListPage> {
           await context.push('/ledger/accounts/create?id=${acc.id}');
           _cubit.refresh();
         },
-      ),
     );
   }
 

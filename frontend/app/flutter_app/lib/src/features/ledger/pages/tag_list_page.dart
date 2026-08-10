@@ -52,10 +52,14 @@ class _TagListView extends StatelessWidget {
               ? _buildEmpty(context, theme)
               : RefreshIndicator(
                   onRefresh: cubit.refresh,
-                  child: ListView.builder(
+                  child: ListView(
                     padding: const EdgeInsets.only(bottom: 80),
-                    itemCount: data.length,
-                    itemBuilder: (_, i) => _buildTagTile(context, theme, data[i]),
+                    children: [
+                      CupertinoListSection.insetGrouped(
+                        children:
+                            data.map((t) => _buildTagTile(context, theme, t)).toList(),
+                      ),
+                    ],
                   ),
                 ),
           Error(:final errorMessage) => _buildError(context, theme, errorMessage),
@@ -123,46 +127,43 @@ class _TagListView extends StatelessWidget {
   static Widget _buildTagTile(BuildContext context, ThemeData theme, Tag tag) {
     final loc = S.of(context);
     final enabled = tag.enable != false;
-    return Card(
-      margin: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
-      child: ListTile(
-        leading: CircleAvatar(
-          backgroundColor: theme.colorScheme.secondaryContainer,
-          foregroundColor: theme.colorScheme.onSecondaryContainer,
-          child: const Icon(Icons.label_outlined),
-        ),
-        title: Text(tag.name ?? loc.unnamed, style: TextStyle(color: enabled ? null : theme.colorScheme.outline)),
-        subtitle: Wrap(
-          spacing: 6,
-          children: [
-            if (tag.canExpense == true) _capability(loc.flowFilterExpense, theme),
-            if (tag.canIncome == true) _capability(loc.flowFilterIncome, theme),
-            if (tag.canTransfer == true) _capability(loc.flowFilterTransfer, theme),
-          ],
-        ),
-        trailing: PopupMenuButton<String>(
-          icon: const Icon(Icons.more_vert, size: 20),
-          onSelected: (v) async {
-            if (v == 'edit') {
-              await context.push('/ledger/tags/create?id=${tag.id}');
-              context.read<ListApiCubit<Tag>>().refresh();
-            } else if (v == 'toggle') {
-              _toggle(context, tag);
-            } else if (v == 'delete') {
-              _delete(context, tag);
-            }
-          },
-          itemBuilder: (ctx) => [
-            PopupMenuItem(value: 'edit', child: Text(loc.edit)),
-            PopupMenuItem(value: 'toggle', child: Text(enabled ? loc.disable : loc.enable)),
-            PopupMenuItem(value: 'delete', child: Text(loc.delete)),
-          ],
-        ),
-        onTap: () async {
-          await context.push('/ledger/tags/create?id=${tag.id}');
-          context.read<ListApiCubit<Tag>>().refresh();
-        },
+    return CupertinoListTile.notched(
+      leading: CircleAvatar(
+        backgroundColor: theme.colorScheme.secondaryContainer,
+        foregroundColor: theme.colorScheme.onSecondaryContainer,
+        child: const Icon(Icons.label_outlined),
       ),
+      title: Text(tag.name ?? loc.unnamed, style: TextStyle(color: enabled ? null : theme.colorScheme.outline)),
+      subtitle: Wrap(
+        spacing: 6,
+        children: [
+          if (tag.canExpense == true) _capability(loc.flowFilterExpense, theme),
+          if (tag.canIncome == true) _capability(loc.flowFilterIncome, theme),
+          if (tag.canTransfer == true) _capability(loc.flowFilterTransfer, theme),
+        ],
+      ),
+      trailing: PopupMenuButton<String>(
+        icon: const Icon(Icons.more_vert, size: 20),
+        onSelected: (v) async {
+          if (v == 'edit') {
+            await context.push('/ledger/tags/create?id=${tag.id}');
+            context.read<ListApiCubit<Tag>>().refresh();
+          } else if (v == 'toggle') {
+            _toggle(context, tag);
+          } else if (v == 'delete') {
+            _delete(context, tag);
+          }
+        },
+        itemBuilder: (ctx) => [
+          PopupMenuItem(value: 'edit', child: Text(loc.edit)),
+          PopupMenuItem(value: 'toggle', child: Text(enabled ? loc.disable : loc.enable)),
+          PopupMenuItem(value: 'delete', child: Text(loc.delete)),
+        ],
+      ),
+      onTap: () async {
+        await context.push('/ledger/tags/create?id=${tag.id}');
+        context.read<ListApiCubit<Tag>>().refresh();
+      },
     );
   }
 

@@ -52,10 +52,14 @@ class _BookListView extends StatelessWidget {
               ? _buildEmpty(context, theme)
               : RefreshIndicator(
                   onRefresh: cubit.refresh,
-                  child: ListView.builder(
+                  child: ListView(
                     padding: const EdgeInsets.only(bottom: 80),
-                    itemCount: data.length,
-                    itemBuilder: (_, i) => _buildBookTile(context, theme, data[i]),
+                    children: [
+                      CupertinoListSection.insetGrouped(
+                        children:
+                            data.map((b) => _buildBookTile(context, theme, b)).toList(),
+                      ),
+                    ],
                   ),
                 ),
           Error(:final errorMessage) => _buildError(context, theme, errorMessage),
@@ -129,45 +133,42 @@ class _BookListView extends StatelessWidget {
   static Widget _buildBookTile(BuildContext context, ThemeData theme, Book book) {
     final loc = S.of(context);
     final enabled = book.enable != false;
-    return Card(
-      margin: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
-      child: ListTile(
-        leading: CircleAvatar(
-          backgroundColor: (enabled ? theme.colorScheme.primary : theme.colorScheme.outline).withAlpha(30),
-          foregroundColor: enabled ? theme.colorScheme.primary : theme.colorScheme.outline,
-          child: const Icon(Icons.menu_book_outlined),
-        ),
-        title: Text(
-          book.name ?? loc.unnamed,
-          style: TextStyle(color: enabled ? null : theme.colorScheme.outline),
-        ),
-        subtitle: Text(
-          loc.defaultCurrencyLabel(book.defaultCurrencyCode ?? '-'),
-          style: theme.textTheme.bodySmall,
-        ),
-        trailing: PopupMenuButton<String>(
-          icon: const Icon(Icons.more_vert, size: 20),
-          onSelected: (v) async {
-            if (v == 'edit') {
-              await context.push('/ledger/books/create?id=${book.id}');
-              context.read<ListApiCubit<Book>>().refresh();
-            } else if (v == 'toggle') {
-              _toggle(context, book);
-            } else if (v == 'delete') {
-              _delete(context, book);
-            }
-          },
-          itemBuilder: (ctx) => [
-            PopupMenuItem(value: 'edit', child: Text(loc.edit)),
-            PopupMenuItem(value: 'toggle', child: Text(enabled ? loc.disable : loc.enable)),
-            PopupMenuItem(value: 'delete', child: Text(loc.delete)),
-          ],
-        ),
-        onTap: () async {
-          await context.push('/ledger/books/create?id=${book.id}');
-          context.read<ListApiCubit<Book>>().refresh();
-        },
+    return CupertinoListTile.notched(
+      leading: CircleAvatar(
+        backgroundColor: (enabled ? theme.colorScheme.primary : theme.colorScheme.outline).withAlpha(30),
+        foregroundColor: enabled ? theme.colorScheme.primary : theme.colorScheme.outline,
+        child: const Icon(Icons.menu_book_outlined),
       ),
+      title: Text(
+        book.name ?? loc.unnamed,
+        style: TextStyle(color: enabled ? null : theme.colorScheme.outline),
+      ),
+      subtitle: Text(
+        loc.defaultCurrencyLabel(book.defaultCurrencyCode ?? '-'),
+        style: theme.textTheme.bodySmall,
+      ),
+      trailing: PopupMenuButton<String>(
+        icon: const Icon(Icons.more_vert, size: 20),
+        onSelected: (v) async {
+          if (v == 'edit') {
+            await context.push('/ledger/books/create?id=${book.id}');
+            context.read<ListApiCubit<Book>>().refresh();
+          } else if (v == 'toggle') {
+            _toggle(context, book);
+          } else if (v == 'delete') {
+            _delete(context, book);
+          }
+        },
+        itemBuilder: (ctx) => [
+          PopupMenuItem(value: 'edit', child: Text(loc.edit)),
+          PopupMenuItem(value: 'toggle', child: Text(enabled ? loc.disable : loc.enable)),
+          PopupMenuItem(value = 'delete', child: Text(loc.delete)),
+        ],
+      ),
+      onTap: () async {
+        await context.push('/ledger/books/create?id=${book.id}');
+        context.read<ListApiCubit<Book>>().refresh();
+      },
     );
   }
 

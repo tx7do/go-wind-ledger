@@ -201,10 +201,13 @@ class _MemberListPageState extends State<MemberListPage> {
             ? _buildEmpty(theme)
             : RefreshIndicator(
                 onRefresh: cubit.refresh,
-                child: ListView.builder(
+                child: ListView(
                   padding: const EdgeInsets.only(bottom: 80),
-                  itemCount: data.length,
-                  itemBuilder: (_, i) => _buildMemberTile(theme, data[i]),
+                  children: [
+                    CupertinoListSection.insetGrouped(
+                      children: data.map((m) => _buildMemberTile(theme, m)).toList(),
+                    ),
+                  ],
                 ),
               ),
         Error(:final errorMessage) => _buildError(theme, errorMessage),
@@ -236,35 +239,32 @@ class _MemberListPageState extends State<MemberListPage> {
     final statusLabel = _statusLabel(member.status);
     final statusColor = _statusColor(member.status);
     final displayName = member.nickname?.isNotEmpty == true ? member.nickname! : (member.username ?? loc.unknownUser);
-    return Card(
-      margin: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
-      child: ListTile(
-        leading: CircleAvatar(
-          backgroundColor: theme.colorScheme.primaryContainer,
-          foregroundColor: theme.colorScheme.onPrimaryContainer,
-          child: const Icon(Icons.person_outline),
-        ),
-        title: Text(displayName),
-        subtitle: Text(
-          [if ((member.username ?? '').isNotEmpty) '@${member.username}', if ((member.roleName ?? '').isNotEmpty) member.roleName!].join(' · '),
-          style: theme.textTheme.bodySmall,
-        ),
-        trailing: Row(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Container(
-              padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
-              decoration: BoxDecoration(
-                color: statusColor.withAlpha(30),
-                borderRadius: BorderRadius.circular(6),
-                border: Border.all(color: statusColor.withAlpha(120), width: 0.8),
-              ),
-              child: Text(statusLabel, style: theme.textTheme.labelSmall?.copyWith(color: statusColor)),
+    return CupertinoListTile.notched(
+      leading: CircleAvatar(
+        backgroundColor: theme.colorScheme.primaryContainer,
+        foregroundColor: theme.colorScheme.onPrimaryContainer,
+        child: const Icon(Icons.person_outline),
+      ),
+      title: Text(displayName),
+      subtitle: Text(
+        [if ((member.username ?? '').isNotEmpty) '@${member.username}', if ((member.roleName ?? '').isNotEmpty) member.roleName!].join(' · '),
+        style: theme.textTheme.bodySmall,
+      ),
+      trailing: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Container(
+            padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
+            decoration: BoxDecoration(
+              color: statusColor.withAlpha(30),
+              borderRadius: BorderRadius.circular(6),
+              border: Border.all(color: statusColor.withAlpha(120), width: 0.8),
             ),
-            if (member.isPrimary != true)
-              IconButton(tooltip: loc.removeMember, icon: const Icon(Icons.remove_circle_outline, size: 20), onPressed: () => _remove(member)),
-          ],
-        ),
+            child: Text(statusLabel, style: theme.textTheme.labelSmall?.copyWith(color: statusColor)),
+          ),
+          if (member.isPrimary != true)
+            IconButton(tooltip: loc.removeMember, icon: const Icon(Icons.remove_circle_outline, size: 20), onPressed: () => _remove(member)),
+        ],
       ),
     );
   }

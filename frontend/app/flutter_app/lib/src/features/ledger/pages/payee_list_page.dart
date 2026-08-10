@@ -52,10 +52,14 @@ class _PayeeListView extends StatelessWidget {
               ? _buildEmpty(context, theme)
               : RefreshIndicator(
                   onRefresh: cubit.refresh,
-                  child: ListView.builder(
+                  child: ListView(
                     padding: const EdgeInsets.only(bottom: 80),
-                    itemCount: data.length,
-                    itemBuilder: (_, i) => _buildPayeeTile(context, theme, data[i]),
+                    children: [
+                      CupertinoListSection.insetGrouped(
+                        children:
+                            data.map((p) => _buildPayeeTile(context, theme, p)).toList(),
+                      ),
+                    ],
                   ),
                 ),
           Error(:final errorMessage) => _buildError(context, theme, errorMessage),
@@ -123,42 +127,39 @@ class _PayeeListView extends StatelessWidget {
   static Widget _buildPayeeTile(BuildContext context, ThemeData theme, Payee payee) {
     final loc = S.of(context);
     final enabled = payee.enable != false;
-    return Card(
-      margin: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
-      child: ListTile(
-        leading: CircleAvatar(
-          backgroundColor: theme.colorScheme.tertiaryContainer,
-          foregroundColor: theme.colorScheme.onTertiaryContainer,
-          child: const Icon(Icons.person_outline),
-        ),
-        title: Text(payee.name ?? loc.unnamed, style: TextStyle(color: enabled ? null : theme.colorScheme.outline)),
-        subtitle: Text(
-          [if (payee.canExpense == true) loc.flowFilterExpense, if (payee.canIncome == true) loc.flowFilterIncome].join(' / '),
-          style: theme.textTheme.bodySmall,
-        ),
-        trailing: PopupMenuButton<String>(
-          icon: const Icon(Icons.more_vert, size: 20),
-          onSelected: (v) async {
-            if (v == 'edit') {
-              await context.push('/ledger/payees/create?id=${payee.id}');
-              context.read<ListApiCubit<Payee>>().refresh();
-            } else if (v == 'toggle') {
-              _toggle(context, payee);
-            } else if (v == 'delete') {
-              _delete(context, payee);
-            }
-          },
-          itemBuilder: (ctx) => [
-            PopupMenuItem(value: 'edit', child: Text(loc.edit)),
-            PopupMenuItem(value: 'toggle', child: Text(enabled ? loc.disable : loc.enable)),
-            PopupMenuItem(value: 'delete', child: Text(loc.delete)),
-          ],
-        ),
-        onTap: () async {
-          await context.push('/ledger/payees/create?id=${payee.id}');
-          context.read<ListApiCubit<Payee>>().refresh();
-        },
+    return CupertinoListTile.notched(
+      leading: CircleAvatar(
+        backgroundColor: theme.colorScheme.tertiaryContainer,
+        foregroundColor: theme.colorScheme.onTertiaryContainer,
+        child: const Icon(Icons.person_outline),
       ),
+      title: Text(payee.name ?? loc.unnamed, style: TextStyle(color: enabled ? null : theme.colorScheme.outline)),
+      subtitle: Text(
+        [if (payee.canExpense == true) loc.flowFilterExpense, if (payee.canIncome == true) loc.flowFilterIncome].join(' / '),
+        style: theme.textTheme.bodySmall,
+      ),
+      trailing: PopupMenuButton<String>(
+        icon: const Icon(Icons.more_vert, size: 20),
+        onSelected: (v) async {
+          if (v == 'edit') {
+            await context.push('/ledger/payees/create?id=${payee.id}');
+            context.read<ListApiCubit<Payee>>().refresh();
+          } else if (v == 'toggle') {
+            _toggle(context, payee);
+          } else if (v == 'delete') {
+            _delete(context, payee);
+          }
+        },
+        itemBuilder: (ctx) => [
+          PopupMenuItem(value: 'edit', child: Text(loc.edit)),
+          PopupMenuItem(value: 'toggle', child: Text(enabled ? loc.disable : loc.enable)),
+          PopupMenuItem(value: 'delete', child: Text(loc.delete)),
+        ],
+      ),
+      onTap: () async {
+        await context.push('/ledger/payees/create?id=${payee.id}');
+        context.read<ListApiCubit<Payee>>().refresh();
+      },
     );
   }
 

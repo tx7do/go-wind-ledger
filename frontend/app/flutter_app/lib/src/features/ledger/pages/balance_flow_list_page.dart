@@ -236,19 +236,19 @@ class _BalanceFlowListPageState extends State<BalanceFlowListPage> {
                   await _listCubit.refresh();
                   _loadStatistics();
                 },
-                child: ListView.builder(
+                child: ListView(
                   controller: _scrollController,
                   padding: const EdgeInsets.only(bottom: 80),
-                  itemCount: items.length + (loadingMore ? 1 : 0),
-                  itemBuilder: (context, index) {
-                    if (index >= items.length) {
-                      return const Padding(
+                  children: [
+                    CupertinoListSection.insetGrouped(
+                      children: items.map((f) => _buildFlowTile(theme, f)).toList(),
+                    ),
+                    if (loadingMore)
+                      const Padding(
                         padding: EdgeInsets.all(16),
                         child: Center(child: CupertinoActivityIndicator()),
-                      );
-                    }
-                    return _buildFlowTile(theme, items[index]);
-                  },
+                      ),
+                  ],
                 ),
               ),
         PaginatedError(:final message) => _buildError(theme, message),
@@ -263,59 +263,55 @@ class _BalanceFlowListPageState extends State<BalanceFlowListPage> {
     final typeColor = _typeColor(type);
     final amount = (double.tryParse(flow.amount ?? '0') ?? 0).abs();
     final sign = type == FlowType.flowTypeIncome ? '+' : '-';
-    return Card(
-      margin: const EdgeInsets.symmetric(horizontal: kListMarginH, vertical: kListMarginV),
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(kCardRadius)),
-      child: ListTile(
-        leading: CircleAvatar(
-          backgroundColor: typeColor.withAlpha(30),
-          foregroundColor: typeColor,
-          child: Icon(_typeIcon(type)),
-        ),
-        title: Text(
-          flow.title?.isNotEmpty == true ? flow.title! : typeLabel,
-          maxLines: 1,
-          overflow: TextOverflow.ellipsis,
-        ),
-        subtitle: Text(
-          _formatTime(flow.createdAt, flow.createTime),
-          style: theme.textTheme.bodySmall,
-        ),
-        trailing: Row(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Text(
-              '$sign${amount.toStringAsFixed(2)}',
-              style: theme.textTheme.titleMedium?.copyWith(
-                color: typeColor,
-                fontWeight: FontWeight.w700,
-              ),
-            ),
-            PopupMenuButton<String>(
-              icon: Icon(Icons.more_vert, size: 24),
-              iconSize: 24,
-              padding: EdgeInsets.zero,
-              constraints: const BoxConstraints(minWidth: 48, minHeight: 48),
-              onSelected: (v) {
-                if (v == 'edit') {
-                  context.push('/ledger/flows/create?id=${flow.id}');
-                } else if (v == 'confirm') {
-                  _confirmFlow(flow);
-                } else if (v == 'delete') {
-                  _deleteFlow(flow);
-                }
-              },
-              itemBuilder: (ctx) => [
-                PopupMenuItem(value: 'edit', child: Text(loc.edit)),
-                if (flow.confirm != true)
-                  PopupMenuItem(value: 'confirm', child: Text(loc.confirmFlow)),
-                PopupMenuItem(value: 'delete', child: Text(loc.delete)),
-              ],
-            ),
-          ],
-        ),
-        onTap: () => context.push('/ledger/flows/create?id=${flow.id}'),
+    return CupertinoListTile.notched(
+      leading: CircleAvatar(
+        backgroundColor: typeColor.withAlpha(30),
+        foregroundColor: typeColor,
+        child: Icon(_typeIcon(type)),
       ),
+      title: Text(
+        flow.title?.isNotEmpty == true ? flow.title! : typeLabel,
+        maxLines: 1,
+        overflow: TextOverflow.ellipsis,
+      ),
+      subtitle: Text(
+        _formatTime(flow.createdAt, flow.createTime),
+        style: theme.textTheme.bodySmall,
+      ),
+      trailing: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Text(
+            '$sign${amount.toStringAsFixed(2)}',
+            style: theme.textTheme.titleMedium?.copyWith(
+              color: typeColor,
+              fontWeight: FontWeight.w700,
+            ),
+          ),
+          PopupMenuButton<String>(
+            icon: Icon(Icons.more_vert, size: 24),
+            iconSize: 24,
+            padding: EdgeInsets.zero,
+            constraints: const BoxConstraints(minWidth: 48, minHeight: 48),
+            onSelected: (v) {
+              if (v == 'edit') {
+                context.push('/ledger/flows/create?id=${flow.id}');
+              } else if (v == 'confirm') {
+                _confirmFlow(flow);
+              } else if (v == 'delete') {
+                _deleteFlow(flow);
+              }
+            },
+            itemBuilder: (ctx) => [
+              PopupMenuItem(value: 'edit', child: Text(loc.edit)),
+              if (flow.confirm != true)
+                PopupMenuItem(value: 'confirm', child: Text(loc.confirmFlow)),
+              PopupMenuItem(value: 'delete', child: Text(loc.delete)),
+            ],
+          ),
+        ],
+      ),
+      onTap: () => context.push('/ledger/flows/create?id=${flow.id}'),
     );
   }
 

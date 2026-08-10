@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
@@ -138,26 +139,25 @@ class _LedgerHomePageState extends State<LedgerHomePage> {
                   ?.copyWith(fontWeight: FontWeight.bold),
             ),
           ),
-          ...entries.map((e) => _buildMenuTile(theme, e)),
+          CupertinoListSection.insetGrouped(
+            children: entries.map((e) => _buildMenuTile(theme, e)).toList(),
+          ),
         ],
       ),
     );
   }
 
   Widget _buildMenuTile(ThemeData theme, _MenuEntry entry) {
-    return Card(
-      margin: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
-      child: ListTile(
-        leading: Icon(entry.icon, color: theme.colorScheme.primary),
-        title: Text(entry.title),
-        subtitle: Text(
-          entry.subtitle,
-          style: theme.textTheme.bodySmall
-              ?.copyWith(color: theme.colorScheme.onSurfaceVariant),
-        ),
-        trailing: const Icon(Icons.chevron_right),
-        onTap: () => context.push(entry.route),
+    return CupertinoListTile.notched(
+      leading: Icon(entry.icon, color: theme.colorScheme.primary),
+      title: Text(entry.title),
+      subtitle: Text(
+        entry.subtitle,
+        style: theme.textTheme.bodySmall
+            ?.copyWith(color: theme.colorScheme.onSurfaceVariant),
       ),
+      trailing: const CupertinoListTileChevron(),
+      onTap: () => context.push(entry.route),
     );
   }
 }

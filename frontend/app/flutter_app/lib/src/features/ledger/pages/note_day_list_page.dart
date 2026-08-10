@@ -52,10 +52,14 @@ class _NoteDayListView extends StatelessWidget {
               ? _buildEmpty(context, theme)
               : RefreshIndicator(
                   onRefresh: cubit.refresh,
-                  child: ListView.builder(
+                  child: ListView(
                     padding: const EdgeInsets.only(bottom: 80),
-                    itemCount: data.length,
-                    itemBuilder: (_, i) => _buildItemTile(context, theme, data[i]),
+                    children: [
+                      CupertinoListSection.insetGrouped(
+                        children:
+                            data.map((i) => _buildItemTile(context, theme, i)).toList(),
+                      ),
+                    ],
                   ),
                 ),
           Error(:final errorMessage) => _buildError(context, theme, errorMessage),
@@ -138,45 +142,42 @@ class _NoteDayListView extends StatelessWidget {
 
   static Widget _buildItemTile(BuildContext context, ThemeData theme, NoteDay item) {
     final loc = S.of(context);
-    return Card(
-      margin: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
-      child: ListTile(
-        leading: CircleAvatar(
-          backgroundColor: theme.colorScheme.primaryContainer,
-          foregroundColor: theme.colorScheme.onPrimaryContainer,
-          child: const Icon(Icons.notifications_active_outlined),
-        ),
-        title: Text(item.title ?? loc.unnamed),
-        subtitle: Text(
-          loc.nextRunInfo(_formatTime(item.nextDate), (item.runCount ?? 0).toString(), (item.totalCount ?? 0).toString()),
-          style: theme.textTheme.bodySmall,
-        ),
-        trailing: PopupMenuButton<String>(
-          icon: const Icon(Icons.more_vert, size: 20),
-          onSelected: (v) async {
-            if (v == 'edit') {
-              await context.push('/ledger/note-days/create?id=${item.id}');
-              context.read<ListApiCubit<NoteDay>>().refresh();
-            } else if (v == 'run') {
-              _run(context, item);
-            } else if (v == 'recall') {
-              _recall(context, item);
-            } else if (v == 'delete') {
-              _delete(context, item);
-            }
-          },
-          itemBuilder: (ctx) => [
-            PopupMenuItem(value: 'edit', child: Text(loc.edit)),
-            PopupMenuItem(value: 'run', child: Text(loc.executeNow)),
-            PopupMenuItem(value: 'recall', child: Text(loc.revokeExecution)),
-            PopupMenuItem(value: 'delete', child: Text(loc.delete)),
-          ],
-        ),
-        onTap: () async {
-          await context.push('/ledger/note-days/create?id=${item.id}');
-          context.read<ListApiCubit<NoteDay>>().refresh();
-        },
+    return CupertinoListTile.notched(
+      leading: CircleAvatar(
+        backgroundColor: theme.colorScheme.primaryContainer,
+        foregroundColor: theme.colorScheme.onPrimaryContainer,
+        child: const Icon(Icons.notifications_active_outlined),
       ),
+      title: Text(item.title ?? loc.unnamed),
+      subtitle: Text(
+        loc.nextRunInfo(_formatTime(item.nextDate), (item.runCount ?? 0).toString(), (item.totalCount ?? 0).toString()),
+        style: theme.textTheme.bodySmall,
+      ),
+      trailing: PopupMenuButton<String>(
+        icon: const Icon(Icons.more_vert, size: 20),
+        onSelected: (v) async {
+          if (v == 'edit') {
+            await context.push('/ledger/note-days/create?id=${item.id}');
+            context.read<ListApiCubit<NoteDay>>().refresh();
+          } else if (v == 'run') {
+            _run(context, item);
+          } else if (v == 'recall') {
+            _recall(context, item);
+          } else if (v == 'delete') {
+            _delete(context, item);
+          }
+        },
+        itemBuilder: (ctx) => [
+          PopupMenuItem(value: 'edit', child: Text(loc.edit)),
+          PopupMenuItem(value: 'run', child: Text(loc.executeNow)),
+          PopupMenuItem(value: 'recall', child: Text(loc.revokeExecution)),
+          PopupMenuItem(value: 'delete', child: Text(loc.delete)),
+        ],
+      ),
+      onTap: () async {
+        await context.push('/ledger/note-days/create?id=${item.id}');
+        context.read<ListApiCubit<NoteDay>>().refresh();
+      },
     );
   }
 
