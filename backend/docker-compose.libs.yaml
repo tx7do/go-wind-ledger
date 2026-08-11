@@ -65,30 +65,6 @@ services:
 #    volumes:
 #      - ${APP_ROOT:-/root/app}/redis/data:/bitnami/redis/data
 
-  opensearch:
-    image: docker.io/opensearchproject/opensearch:latest
-    container_name: opensearch
-    hostname: opensearch
-    restart: always
-    ports:
-      - "9200:9200"
-      - "9600:9600"
-    networks:
-      - app-tier
-    environment:
-      - cluster.name=opensearch-cluster
-      - discovery.type=single-node
-      - plugins.security.disabled=false
-      - plugins.security.ssl.http.enabled=false
-      - OPENSEARCH_INITIAL_ADMIN_PASSWORD=@Abcd#123456
-    ulimits:
-      memlock:
-        soft: -1
-        hard: -1
-#    volumes:
-#      - /data/opensearch/data:/usr/share/opensearch/data
-#      - /data/opensearch/logs:/usr/share/opensearch/logs
-
   minio:
     image: docker.io/minio/minio:latest
     restart: always

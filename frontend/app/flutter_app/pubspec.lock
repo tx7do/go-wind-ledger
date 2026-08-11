@@ -169,14 +169,6 @@ packages:
       url: "https://pub.flutter-io.cn"
     source: hosted
     version: "3.7.0"
-  cached_query_flutter:
-    dependency: "direct main"
-    description:
-      name: cached_query_flutter
-      sha256: "5c67d003529df230d714ac66ba75738c3dcb3948516b82e45325f38fd1fafbc0"
-      url: "https://pub.flutter-io.cn"
-    source: hosted
-    version: "3.4.0"
   camera:
     dependency: "direct main"
     description:

@@ -14,15 +14,17 @@ import (
 	"github.com/google/wire"
 
 	"go-wind-ledger/app/core/service/internal/data"
+	"go-wind-ledger/app/core/service/internal/data/client"
 
 	"go-wind-ledger/pkg/authorizer"
 )
 
 // ProviderSet is the Wire provider set for data layer.
 var ProviderSet = wire.NewSet(
-	data.NewRedisClient,
-	data.NewEntClient,
-	data.NewDiscovery,
+	client.NewRedisClient,
+	client.NewEntClient,
+	client.NewDiscovery,
+	client.NewMinIoClient,
 
 	authorizer.NewAuthorizer,
 
@@ -31,8 +33,6 @@ var ProviderSet = wire.NewSet(
 	data.NewUserTokenCache,
 
 	data.NewPasswordCrypto,
-
-	data.NewMinIoClient,
 
 	data.NewLanguageRepo,
 	data.NewDictTypeRepo,
