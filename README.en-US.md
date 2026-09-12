@@ -1,8 +1,8 @@
 <div align="center">
 
-# GoWind Ledger
+<img src="docs/brand/vortex-tile.svg" width="120" alt="GoWind Ledger" />
 
-### FengXing Ledger · Out-of-the-Box Personal/Family Full-Stack Bookkeeping Platform
+# GoWind Ledger
 
 [![License](https://img.shields.io/badge/License-MIT-blue.svg)](./LICENSE)
 [![Go Version](https://img.shields.io/badge/Go-1.25+-00ADD8?logo=go&logoColor=white)](https://go.dev/)
@@ -11,7 +11,7 @@
 [![Kratos](https://img.shields.io/badge/Kratos-2.9-00ADD8?logo=go&logoColor=white)](https://go-kratos.dev/)
 [![Ent](https://img.shields.io/badge/Ent-0.14-00ADD8?logo=go&logoColor=white)](https://entgo.io/)
 
-**English** · **[中文](./README.md)** · **[日本語](./README.ja-JP.md)**
+**English** | [中文](./README.md) | [日本語](./README.ja-JP.md)
 
 </div>
 
@@ -154,6 +154,7 @@ FengXing Ledger (GoWind Ledger) is a full-stack personal/family bookkeeping plat
 |:----------------|:---------------------------------------------------------------------|
 | Book Management | Multi-tenant books, default account/category config, enable/disable  |
 | Account Types   | Checking/credit/asset/debt, capability flags, balance adjustment    |
+| Balance Adjustment | Balance adjustments automatically create ADJUST transaction records, retaining an audit trail of adjustments |
 | Currency        | Built-in currency rates, refresh and conversion                      |
 
 ### Category System

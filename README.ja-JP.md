@@ -1,8 +1,8 @@
 <div align="center">
 
-# GoWind Ledger
+<img src="docs/brand/vortex-tile.svg" width="120" alt="GoWind Ledger" />
 
-### 風行家計簿 · すぐに使える個人・家庭向けフルスタック家計管理プラットフォーム
+# GoWind Ledger
 
 [![License](https://img.shields.io/badge/License-MIT-blue.svg)](./LICENSE)
 [![Go Version](https://img.shields.io/badge/Go-1.25+-00ADD8?logo=go&logoColor=white)](https://go.dev/)
@@ -11,7 +11,7 @@
 [![Kratos](https://img.shields.io/badge/Kratos-2.9-00ADD8?logo=go&logoColor=white)](https://go-kratos.dev/)
 [![Ent](https://img.shields.io/badge/Ent-0.14-00ADD8?logo=go&logoColor=white)](https://entgo.io/)
 
-**[English](./README.en-US.md)** · **[中文](./README.md)** · **日本語**
+[English](./README.en-US.md) | [中文](./README.md) | **日本語**
 
 </div>
 
