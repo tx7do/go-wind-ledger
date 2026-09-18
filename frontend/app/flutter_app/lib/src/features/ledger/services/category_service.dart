@@ -16,7 +16,6 @@ import 'package:flutter_app/generated/api/app/service/v1/index.dart'
 
 import 'package:flutter_app/src/core/services/base_service.dart';
 import 'package:flutter_app/src/core/services/pagination_query.dart';
-import 'package:flutter_app/src/core/transport/http/index.dart';
 
 typedef Category = LedgerServiceV1Category;
 typedef ListCategoryResponse = LedgerServiceV1ListCategoryResponse;

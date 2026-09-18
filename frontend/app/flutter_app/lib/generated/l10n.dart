@@ -1,6 +1,7 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+
 import 'intl/messages_all.dart';
 
 // **************************************************************************
@@ -2673,6 +2674,36 @@ class S {
       desc: '',
       args: [next, executed, total],
     );
+  }
+
+  /// `基本信息`
+  String get sectionBasic {
+    return Intl.message('基本信息', name: 'sectionBasic', desc: '', args: []);
+  }
+
+  /// `金额信息`
+  String get sectionAmount {
+    return Intl.message('金额信息', name: 'sectionAmount', desc: '', args: []);
+  }
+
+  /// `使用权限`
+  String get sectionPermission {
+    return Intl.message('使用权限', name: 'sectionPermission', desc: '', args: []);
+  }
+
+  /// `重复规则`
+  String get sectionRepeat {
+    return Intl.message('重复规则', name: 'sectionRepeat', desc: '', args: []);
+  }
+
+  /// `汇率换算`
+  String get sectionConvert {
+    return Intl.message('汇率换算', name: 'sectionConvert', desc: '', args: []);
+  }
+
+  /// `账户信息`
+  String get sectionAccount {
+    return Intl.message('账户信息', name: 'sectionAccount', desc: '', args: []);
   }
 }
 

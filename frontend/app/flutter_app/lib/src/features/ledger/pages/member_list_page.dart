@@ -11,6 +11,8 @@ import 'package:flutter_app/src/core/logic/api/list_api_cubit.dart';
 import 'package:flutter_app/src/core/themes/const.dart';
 import 'package:flutter_app/src/core/themes/semantic_colors.dart';
 import 'package:flutter_app/src/core/transport/http/status.dart';
+import 'package:flutter_app/src/core/widgets/app_button.dart';
+import 'package:flutter_app/src/core/widgets/app_pull_refresh.dart';
 import 'package:flutter_app/src/features/ledger/services/ledger_auth_service.dart';
 import 'package:flutter_app/src/features/ledger/services/tenant_member_service.dart';
 
@@ -84,10 +86,25 @@ class _MemberListPageState extends State<MemberListPage> {
       context: context,
       builder: (ctx) => CupertinoAlertDialog(
         title: Text(loc.inviteMember),
-        content: TextField(
-          controller: usernameCtrl,
-          autofocus: true,
-          decoration: InputDecoration(labelText: loc.username, prefixIcon: Icon(Icons.person_outline), border: OutlineInputBorder()),
+        content: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            const SizedBox(height: 8),
+            CupertinoTextField(
+              controller: usernameCtrl,
+              autofocus: true,
+              placeholder: loc.username,
+              prefix: Padding(
+                padding: const EdgeInsets.only(left: 12),
+                child: Icon(Icons.person_outline, size: 20, color: CupertinoColors.secondaryLabel.resolveFrom(context)),
+              ),
+              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 12),
+              decoration: BoxDecoration(
+                color: CupertinoColors.tertiarySystemFill.resolveFrom(context),
+                borderRadius: BorderRadius.circular(kInputRadius),
+              ),
+            ),
+          ],
         ),
         actions: [
           CupertinoDialogAction(onPressed: () => Navigator.pop(ctx), child: Text(loc.cancel)),
@@ -173,9 +190,8 @@ class _MemberListPageState extends State<MemberListPage> {
         middle: Text(loc.memberManagement),
         trailing: _tenantId == null
             ? null
-            : IconButton(
-                icon: const Icon(Icons.person_add_outlined),
-                tooltip: loc.inviteMember,
+            : AppNavIconButton(
+                icon: Icons.person_add_outlined,
                 onPressed: _showInviteDialog,
               ),
       ),
@@ -201,16 +217,14 @@ class _MemberListPageState extends State<MemberListPage> {
         Initial() || Loading() => const Center(child: CupertinoActivityIndicator()),
         Success(:final data) => data.isEmpty
             ? _buildEmpty(theme)
-            : RefreshIndicator(
+            : AppPullRefresh(
                 onRefresh: cubit.refresh,
-                child: ListView(
-                  padding: const EdgeInsets.only(bottom: 80),
-                  children: [
-                    CupertinoListSection.insetGrouped(
-                      children: data.map((m) => _buildMemberTile(theme, m)).toList(),
-                    ),
-                  ],
-                ),
+                padding: const EdgeInsets.only(bottom: 80),
+                children: [
+                  CupertinoListSection.insetGrouped(
+                    children: data.map((m) => _buildMemberTile(theme, m)).toList(),
+                  ),
+                ],
               ),
         Error(:final errorMessage) => _buildError(theme, errorMessage),
       },
@@ -219,19 +233,92 @@ class _MemberListPageState extends State<MemberListPage> {
 
   Widget _buildTenantSwitcher(ThemeData theme) {
     final loc = S.of(context);
-    return Container(
-      width: double.infinity,
+    String currentName = loc.unnamedTenant;
+    for (final t in _tenants) {
+      if (t.id == _tenantId) {
+        currentName = t.name ?? loc.unnamedTenant;
+        break;
+      }
+    }
+    return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-      child: DropdownButtonFormField<int>(
-        value: _tenantId,
-        decoration: InputDecoration(labelText: loc.currentTenant, prefixIcon: Icon(Icons.apartment_outlined), border: OutlineInputBorder(), isDense: true),
-        items: _tenants.map((t) => DropdownMenuItem<int>(value: t.id, child: Text(t.name ?? loc.unnamedTenant))).toList(),
-        onChanged: (v) {
-          if (v != null && v != _tenantId) {
-            setState(() => _tenantId = v);
+      child: CupertinoButton(
+        padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
+        color: CupertinoColors.secondarySystemGroupedBackground.resolveFrom(context),
+        borderRadius: BorderRadius.circular(kInputRadius),
+        onPressed: () async {
+          final tenants = _tenants;
+          if (tenants.isEmpty) return;
+          final codes = tenants.map((t) => t.id).toList();
+          var selected = _tenantId;
+          await showCupertinoModalPopup<void>(
+            context: context,
+            builder: (ctx) => Container(
+              height: 280,
+              color: CupertinoColors.systemBackground.resolveFrom(ctx),
+              child: SafeArea(
+                top: false,
+                child: Column(
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        CupertinoButton(
+                          onPressed: () => Navigator.of(ctx).pop(),
+                          child: Text(
+                            loc.confirm,
+                            style: TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.w600,
+                              color: CupertinoTheme.of(ctx).primaryColor,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                    Expanded(
+                      child: CupertinoPicker(
+                        scrollController: FixedExtentScrollController(
+                          initialItem:
+                              (codes.contains(_tenantId)) ? codes.indexOf(_tenantId) : 0,
+                        ),
+                        itemExtent: 40,
+                        useMagnifier: true,
+                        magnification: 1.05,
+                        onSelectedItemChanged: (i) => selected = codes[i],
+                        children: tenants
+                            .map((t) => Center(
+                                  child: Text(t.name ?? loc.unnamedTenant,
+                                      style: const TextStyle(fontSize: 18)),
+                                ))
+                            .toList(),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          );
+          if (selected != null && selected != _tenantId) {
+            setState(() => _tenantId = selected);
             _createAndLoadCubit();
           }
         },
+        child: Row(
+          children: [
+            Icon(Icons.apartment_outlined, size: 20, color: theme.colorScheme.primary),
+            const SizedBox(width: 8),
+            Expanded(
+              child: Text(
+                '${loc.currentTenant} · $currentName',
+                style: theme.textTheme.titleMedium,
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+              ),
+            ),
+            const CupertinoListTileChevron(),
+          ],
+        ),
       ),
     );
   }
@@ -265,7 +352,12 @@ class _MemberListPageState extends State<MemberListPage> {
             child: Text(statusLabel, style: theme.textTheme.labelSmall?.copyWith(color: statusColor)),
           ),
           if (member.isPrimary != true)
-            IconButton(tooltip: loc.removeMember, icon: const Icon(Icons.remove_circle_outline, size: 20), onPressed: () => _remove(member)),
+            CupertinoButton(
+              padding: const EdgeInsets.all(4),
+              minimumSize: Size.zero,
+              onPressed: () => _remove(member),
+              child: Icon(Icons.remove_circle_outline, size: 20, color: CupertinoColors.systemRed.resolveFrom(context)),
+            ),
         ],
       ),
     );
@@ -281,7 +373,12 @@ class _MemberListPageState extends State<MemberListPage> {
           const SizedBox(height: 12),
           Text(loc.noMembers, style: theme.textTheme.bodyLarge?.copyWith(color: theme.colorScheme.outline)),
           const SizedBox(height: 16),
-          FilledButton.icon(onPressed: _showInviteDialog, icon: const Icon(Icons.person_add_outlined), label: Text(loc.inviteMember)),
+          AppFilledButton(
+            label: loc.inviteMember,
+            expanded: false,
+            icon: Icons.person_add_outlined,
+            onPressed: _showInviteDialog,
+          ),
         ],
       ),
     );
@@ -312,7 +409,11 @@ class _MemberListPageState extends State<MemberListPage> {
           Text(message.isNotEmpty ? message : loc.loadFailed,
               style: theme.textTheme.bodyLarge?.copyWith(color: theme.colorScheme.error)),
           const SizedBox(height: 16),
-          FilledButton.icon(onPressed: () => _cubit?.refresh(), icon: const Icon(Icons.refresh), label: Text(loc.retry)),
+          AppGhostButton(
+            label: loc.retry,
+            icon: Icons.refresh,
+            onPressed: () => _cubit?.refresh(),
+          ),
         ],
       ),
     );

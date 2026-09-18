@@ -1,10 +1,12 @@
-import 'package:flutter/material.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart' show Theme;
 
 import 'package:flutter_app/src/core/themes/semantic_colors.dart';
 import 'package:flutter_app/generated/l10n.dart';
 import 'package:flutter_app/src/core/themes/const.dart';
+import 'package:flutter_app/src/core/widgets/app_form_rows.dart';
 
-/// 统计卡片：展示支出/收入/净额。
+/// 统计卡片：展示支出/收入/净额（iOS 圆角卡片 + 发丝分隔线）。
 ///
 /// 用于流水列表顶部的汇总信息。金额来自
 /// [LedgerServiceV1StatisticsResponse](字符串形式的小数)。
@@ -33,40 +35,38 @@ class StatisticsCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final loc = S.of(context);
-    return Card(
+    return AppCard(
       margin: const EdgeInsets.symmetric(
         horizontal: kCardMarginH,
         vertical: kCardMarginV,
       ),
-      child: Padding(
-        padding: const EdgeInsets.symmetric(
-          vertical: kDefaultPadding,
-          horizontal: 8,
-        ),
-        child: Row(
-          children: [
-            _buildCell(
-              context,
-              label: loc.flowFilterExpense,
-              value: loading ? '--' : expense,
-              color: SemanticColors.expense(context),
-            ),
-            _divider(),
-            _buildCell(
-              context,
-              label: loc.flowFilterIncome,
-              value: loading ? '--' : income,
-              color: SemanticColors.income(context),
-            ),
-            _divider(),
-            _buildCell(
-              context,
-              label: loc.netWorth,
-              value: loading ? '--' : net,
-              color: theme.colorScheme.primary,
-            ),
-          ],
-        ),
+      padding: const EdgeInsets.symmetric(
+        vertical: kDefaultPadding,
+        horizontal: 8,
+      ),
+      child: Row(
+        children: [
+          _buildCell(
+            context,
+            label: loc.flowFilterExpense,
+            value: loading ? '--' : expense,
+            color: SemanticColors.expense(context),
+          ),
+          _divider(context),
+          _buildCell(
+            context,
+            label: loc.flowFilterIncome,
+            value: loading ? '--' : income,
+            color: SemanticColors.income(context),
+          ),
+          _divider(context),
+          _buildCell(
+            context,
+            label: loc.netWorth,
+            value: loading ? '--' : net,
+            color: theme.colorScheme.primary,
+          ),
+        ],
       ),
     );
   }
@@ -103,10 +103,10 @@ class StatisticsCard extends StatelessWidget {
     );
   }
 
-  Widget _divider() {
-    return const VerticalDivider(
-      width: 1,
-      thickness: 1,
+  Widget _divider(BuildContext context) {
+    return Container(
+      width: 0.5,
+      color: CupertinoColors.separator.resolveFrom(context),
     );
   }
 

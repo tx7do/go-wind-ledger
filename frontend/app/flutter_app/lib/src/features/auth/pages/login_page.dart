@@ -1,16 +1,18 @@
-import 'package:flutter/material.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart' show Icons, Theme, Scaffold, SafeArea;
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:cached_query/cached_query.dart' show MutationSuccess;
 
 import 'package:flutter_app/generated/l10n.dart';
-import 'package:flutter_app/src/core/themes/app_theme_extension.dart';
 import 'package:flutter_app/src/core/utils/responsive_utils.dart';
+import 'package:flutter_app/src/core/widgets/app_button.dart';
 import 'package:flutter_app/src/features/auth/services/authentication_service.dart';
 import 'package:flutter_app/generated/api/app/service/v1/index.dart'
     show AuthenticationServiceV1LoginResponse;
 
-/// 登录页面
+/// 登录页面（iOS 风格：圆角填充输入框 + 填充主按钮）
 class LoginPage extends StatefulWidget {
   /// 登录成功后重定向到的路径（由路由守卫传入）
   final String? redirectTo;
@@ -22,7 +24,6 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
-  final _formKey = GlobalKey<FormState>();
   final _usernameController = TextEditingController();
   final _passwordController = TextEditingController();
   final _authService = AuthenticationService();
@@ -35,31 +36,37 @@ class _LoginPageState extends State<LoginPage> {
     super.dispose();
   }
 
+  /// iOS 输入框通用装饰（灰底圆角，微信/支付宝登录样式）
+  BoxDecoration _fieldDecoration(BuildContext context, bool isMobile) =>
+      BoxDecoration(
+        color: CupertinoColors.tertiarySystemFill.resolveFrom(context),
+        borderRadius: BorderRadius.circular(isMobile ? 12.r : 14),
+      );
+
   Future<void> _handleLogin() async {
-    if (!_formKey.currentState!.validate()) return;
+    final loc = S.of(context);
+    final username = _usernameController.text.trim();
+    final password = _passwordController.text;
+    if (username.isEmpty) {
+      EasyLoading.showError(loc.usernameHint);
+      return;
+    }
+    if (password.isEmpty) {
+      EasyLoading.showError(loc.passwordHint);
+      return;
+    }
 
     final mutation = _authService.loginMutation();
     try {
       final result = await mutation.mutate(
-        LoginParams(
-          username: _usernameController.text.trim(),
-          password: _passwordController.text,
-        ),
+        LoginParams(username: username, password: password),
       );
 
       if (!mounted) return;
 
       if (result is MutationSuccess<AuthenticationServiceV1LoginResponse?> &&
           result.data != null) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text(S.of(context).loginSuccess),
-            backgroundColor: Theme.of(context)
-                .extension<AppThemeExtension>()
-                ?.snackBarColor
-                .success,
-          ),
-        );
+        EasyLoading.showSuccess(loc.loginSuccess);
         // 登录后回跳到来源页面（或默认首页）
         final redirect = (widget.redirectTo != null &&
                 widget.redirectTo!.isNotEmpty)
@@ -76,16 +83,7 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   void _showLoginFailed() {
-    final loc = S.of(context);
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: Text(S.of(context).loginFailed),
-        backgroundColor: Theme.of(context)
-            .extension<AppThemeExtension>()
-            ?.snackBarColor
-            .error,
-      ),
-    );
+    EasyLoading.showError(S.of(context).loginFailed);
   }
 
   @override
@@ -103,12 +101,15 @@ class _LoginPageState extends State<LoginPage> {
             Positioned(
               top: isMobile ? 8 : 16,
               left: isMobile ? 8 : 16,
-              child: IconButton(
-                icon: const Icon(Icons.arrow_back_ios_new, size: 20),
+              child: CupertinoButton(
+                padding: const EdgeInsets.all(8),
+                borderRadius: BorderRadius.circular(20),
+                color: theme.colorScheme.onSurface.withAlpha(15),
                 onPressed: () => context.go('/'),
-                tooltip: loc.backToHome,
-                style: IconButton.styleFrom(
-                  backgroundColor: theme.colorScheme.onSurface.withAlpha(15),
+                child: Icon(
+                  Icons.arrow_back_ios_new,
+                  size: 18,
+                  color: theme.colorScheme.onSurface,
                 ),
               ),
             ),
@@ -129,7 +130,7 @@ class _LoginPageState extends State<LoginPage> {
                     borderRadius: BorderRadius.circular(isMobile ? 20.r : 24),
                     boxShadow: [
                       BoxShadow(
-                        color: Colors.black.withAlpha((0.06 * 255).round()),
+                        color: CupertinoColors.black.withAlpha((0.06 * 255).round()),
                         blurRadius: 32,
                         offset: const Offset(0, 8),
                       ),
@@ -140,155 +141,135 @@ class _LoginPageState extends State<LoginPage> {
                       horizontal: isMobile ? 28.w : 40,
                       vertical: isMobile ? 32.h : 48,
                     ),
-                    child: Form(
-                      key: _formKey,
-                      child: Column(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          // Logo
-                          Container(
-                            width: isMobile ? 64.w : 72,
-                            height: isMobile ? 64.w : 72,
-                            decoration: BoxDecoration(
-                              color: theme.colorScheme.primaryContainer,
-                              borderRadius: BorderRadius.circular(
-                                isMobile ? 18.r : 20,
-                              ),
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        // Logo
+                        Container(
+                          width: isMobile ? 64.w : 72,
+                          height: isMobile ? 64.w : 72,
+                          decoration: BoxDecoration(
+                            color: theme.colorScheme.primaryContainer,
+                            borderRadius: BorderRadius.circular(
+                              isMobile ? 18.r : 20,
                             ),
+                          ),
+                          child: Icon(
+                            Icons.article_outlined,
+                            size: isMobile ? 32.sp : 36,
+                            color: theme.colorScheme.primary,
+                          ),
+                        ),
+                        SizedBox(height: isMobile ? 20.h : 24),
+                        Text(
+                          loc.appName,
+                          style: TextStyle(
+                            fontSize: isMobile ? 22.sp : 24,
+                            fontWeight: FontWeight.bold,
+                            color: theme.colorScheme.onSurface,
+                          ),
+                        ),
+                        SizedBox(height: isMobile ? 4.h : 6),
+                        Text(
+                          loc.loginForMore,
+                          style: TextStyle(
+                            fontSize: isMobile ? 13.sp : 14,
+                            color: theme.colorScheme.onSurface.withAlpha(140),
+                          ),
+                        ),
+                        SizedBox(height: isMobile ? 32.h : 40),
+
+                        // Username
+                        CupertinoTextField(
+                          controller: _usernameController,
+                          placeholder: loc.usernameHint,
+                          prefix: Padding(
+                            padding: const EdgeInsets.only(left: 14),
                             child: Icon(
-                              Icons.article_outlined,
-                              size: isMobile ? 32.sp : 36,
-                              color: theme.colorScheme.primary,
+                              Icons.person_outline,
+                              size: 20,
+                              color: CupertinoColors.secondaryLabel
+                                  .resolveFrom(context),
                             ),
                           ),
-                          SizedBox(height: isMobile ? 20.h : 24),
-                          Text(
-                            loc.appName,
-                            style: TextStyle(
-                              fontSize: isMobile ? 22.sp : 24,
-                              fontWeight: FontWeight.bold,
-                              color: theme.colorScheme.onSurface,
-                            ),
+                          padding: EdgeInsets.symmetric(
+                            horizontal: 10,
+                            vertical: isMobile ? 14.h : 15,
                           ),
-                          SizedBox(height: isMobile ? 4.h : 6),
-                          Text(
-                            loc.loginForMore,
-                            style: TextStyle(
-                              fontSize: isMobile ? 13.sp : 14,
-                              color: theme.colorScheme.onSurface.withAlpha(140),
-                            ),
-                          ),
-                          SizedBox(height: isMobile ? 32.h : 40),
+                          decoration: _fieldDecoration(context, isMobile),
+                        ),
+                        SizedBox(height: isMobile ? 16.h : 18),
 
-                          // Username
-                          TextFormField(
-                            controller: _usernameController,
-                            decoration: InputDecoration(
-                              labelText: loc.username,
-                              hintText: loc.usernameHint,
-                              prefixIcon: const Icon(Icons.person_outline),
-                              border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(
-                                  isMobile ? 12.r : 14,
-                                ),
+                        // Password
+                        CupertinoTextField(
+                          controller: _passwordController,
+                          placeholder: loc.passwordHint,
+                          obscureText: _obscurePassword,
+                          prefix: Padding(
+                            padding: const EdgeInsets.only(left: 14),
+                            child: Icon(
+                              Icons.lock_outline,
+                              size: 20,
+                              color: CupertinoColors.secondaryLabel
+                                  .resolveFrom(context),
+                            ),
+                          ),
+                          suffix: CupertinoButton(
+                            padding: const EdgeInsets.only(right: 8),
+                            minimumSize: Size.zero,
+                            onPressed: () => setState(
+                                () => _obscurePassword = !_obscurePassword),
+                            child: Icon(
+                              _obscurePassword
+                                  ? Icons.visibility_off_outlined
+                                  : Icons.visibility_outlined,
+                              size: 20,
+                              color: CupertinoColors.secondaryLabel
+                                  .resolveFrom(context),
+                            ),
+                          ),
+                          padding: EdgeInsets.symmetric(
+                            horizontal: 10,
+                            vertical: isMobile ? 14.h : 15,
+                          ),
+                          decoration: _fieldDecoration(context, isMobile),
+                          onSubmitted: (_) => _handleLogin(),
+                        ),
+                        SizedBox(height: isMobile ? 28.h : 32),
+
+                        // Login Button
+                        AppFilledButton(
+                          label: loc.loginButton,
+                          onPressed: _handleLogin,
+                        ),
+                        SizedBox(height: isMobile ? 16.h : 18),
+
+                        // 没有账号？去注册
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text(
+                              loc.noAccount,
+                              style: TextStyle(
+                                fontSize: isMobile ? 13.sp : 14,
+                                color: theme.colorScheme.onSurface
+                                    .withAlpha(140),
                               ),
                             ),
-                            validator: (value) {
-                              if (value == null || value.trim().isEmpty) {
-                                return loc.usernameHint;
-                              }
-                              return null;
-                            },
-                          ),
-                          SizedBox(height: isMobile ? 16.h : 18),
-
-                          // Password
-                          TextFormField(
-                            controller: _passwordController,
-                            obscureText: _obscurePassword,
-                            decoration: InputDecoration(
-                              labelText: loc.password,
-                              hintText: loc.passwordHint,
-                              prefixIcon: const Icon(Icons.lock_outline),
-                              suffixIcon: IconButton(
-                                icon: Icon(
-                                  _obscurePassword
-                                      ? Icons.visibility_off_outlined
-                                      : Icons.visibility_outlined,
-                                ),
-                                onPressed: () {
-                                  setState(() {
-                                    _obscurePassword = !_obscurePassword;
-                                  });
-                                },
-                              ),
-                              border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(
-                                  isMobile ? 12.r : 14,
-                                ),
-                              ),
-                            ),
-                            validator: (value) {
-                              if (value == null || value.isEmpty) {
-                                return loc.passwordHint;
-                              }
-                              return null;
-                            },
-                            onFieldSubmitted: (_) => _handleLogin(),
-                          ),
-                          SizedBox(height: isMobile ? 28.h : 32),
-
-                          // Login Button
-                          SizedBox(
-                            width: double.infinity,
-                            height: isMobile ? 48.h : 50,
-                            child: FilledButton(
-                              onPressed: _handleLogin,
-                              style: FilledButton.styleFrom(
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(
-                                    isMobile ? 12.r : 14,
-                                  ),
-                                ),
-                              ),
+                            GestureDetector(
+                              onTap: () => context.go('/register'),
                               child: Text(
-                                loc.loginButton,
+                                loc.goRegister,
                                 style: TextStyle(
-                                  fontSize: isMobile ? 16.sp : 16,
+                                  fontSize: isMobile ? 13.sp : 14,
+                                  color: theme.colorScheme.primary,
                                   fontWeight: FontWeight.w600,
                                 ),
                               ),
                             ),
-                          ),
-                          SizedBox(height: isMobile ? 16.h : 18),
-
-                          // 没有账号？去注册
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Text(
-                                loc.noAccount,
-                                style: TextStyle(
-                                  fontSize: isMobile ? 13.sp : 14,
-                                  color: theme.colorScheme.onSurface
-                                      .withAlpha(140),
-                                ),
-                              ),
-                              GestureDetector(
-                                onTap: () => context.go('/register'),
-                                child: Text(
-                                  loc.goRegister,
-                                  style: TextStyle(
-                                    fontSize: isMobile ? 13.sp : 14,
-                                    color: theme.colorScheme.primary,
-                                    fontWeight: FontWeight.w600,
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ],
-                      ),
+                          ],
+                        ),
+                      ],
                     ),
                   ),
                 ),

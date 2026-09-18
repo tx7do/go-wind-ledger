@@ -9,9 +9,12 @@ import 'package:flutter_app/generated/api/app/service/v1/index.dart'
 
 import 'package:flutter_app/generated/l10n.dart';
 import 'package:flutter_app/src/core/logic/api/list_api_cubit.dart';
-import 'package:flutter_app/src/core/themes/const.dart';
 import 'package:flutter_app/src/core/themes/semantic_colors.dart';
 import 'package:flutter_app/src/core/transport/http/status.dart';
+import 'package:flutter_app/src/core/widgets/app_button.dart';
+import 'package:flutter_app/src/core/widgets/app_action_sheet.dart';
+import 'package:flutter_app/src/core/widgets/app_form_rows.dart';
+import 'package:flutter_app/src/core/widgets/app_pull_refresh.dart';
 import 'package:flutter_app/src/features/ledger/services/category_service.dart';
 
 typedef Category = LedgerServiceV1Category;
@@ -118,9 +121,8 @@ class _CategoryListPageState extends State<CategoryListPage> {
     return Scaffold(
       appBar: CupertinoNavigationBar(
         middle: Text(loc.categoryManagement),
-        trailing: IconButton(
-          icon: const Icon(Icons.add),
-          tooltip: loc.newCategory,
+        trailing: AppNavIconButton(
+          icon: Icons.add,
           onPressed: () async {
             await context.push('/ledger/categories/create');
             _cubit.refresh();
@@ -133,13 +135,10 @@ class _CategoryListPageState extends State<CategoryListPage> {
           Initial() || Loading() => const Center(child: CupertinoActivityIndicator()),
           Success(:final data) => data.isEmpty
               ? _buildEmpty(theme)
-              : RefreshIndicator(
+              : AppPullRefresh(
                   onRefresh: _cubit.refresh,
-                  child: ListView.builder(
-                    padding: const EdgeInsets.only(bottom: 80),
-                    itemCount: data.length,
-                    itemBuilder: (_, i) => _buildCategoryTile(theme, data[i], 0),
-                  ),
+                  padding: const EdgeInsets.only(top: 4, bottom: 80),
+                  children: data.map((c) => _buildCategoryTile(theme, c, 0)).toList(),
                 ),
           Error(:final errorMessage) => _buildError(theme, errorMessage),
         },
@@ -156,46 +155,72 @@ class _CategoryListPageState extends State<CategoryListPage> {
 
     return Column(
       children: [
-        Card(
-          margin: EdgeInsets.only(left: 12 + depth * 16.0, right: 12, top: 4, bottom: 4),
-          child: ListTile(
-            leading: hasChildren
-                ? IconButton(
-                    icon: Icon(expanded ? Icons.expand_less : Icons.expand_more),
+        GestureDetector(
+          onTap: () async {
+            await context.push('/ledger/categories/create?id=${cat.id}');
+            _cubit.refresh();
+          },
+          child: AppCard(
+            margin: EdgeInsets.only(left: 12 + depth * 16.0, right: 12, top: 4, bottom: 4),
+            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+            child: Row(
+              children: [
+                if (hasChildren)
+                  CupertinoButton(
+                    padding: const EdgeInsets.all(4),
+                    minimumSize: Size.zero,
                     onPressed: () => setState(() {
                       final id = cat.id ?? -1;
                       expanded ? _expanded.remove(id) : _expanded.add(id);
                     }),
+                    child: Icon(expanded ? Icons.expand_less : Icons.expand_more,
+                        color: CupertinoTheme.of(context).primaryColor),
                   )
-                : Icon(Icons.circle, size: 8, color: color),
-            title: Text(cat.name ?? loc.unnamed),
-            subtitle: Text(isExpense ? loc.expenseCategory : loc.incomeCategory, style: theme.textTheme.bodySmall),
-            trailing: PopupMenuButton<String>(
-              icon: const Icon(Icons.more_vert, size: 20),
-              onSelected: (v) async {
-                if (v == 'edit') {
-                  await context.push('/ledger/categories/create?id=${cat.id}');
-                  _cubit.refresh();
-                } else if (v == 'add') {
-                  await context.push('/ledger/categories/create?parentId=${cat.id}');
-                  _cubit.refresh();
-                } else if (v == 'toggle') {
-                  _toggle(cat);
-                } else if (v == 'delete') {
-                  _delete(cat);
-                }
-              },
-              itemBuilder: (ctx) => [
-                PopupMenuItem(value: 'edit', child: Text(loc.edit)),
-                PopupMenuItem(value: 'add', child: Text(loc.addSubcategory)),
-                PopupMenuItem(value: 'toggle', child: Text(cat.enable == false ? loc.enable : loc.disable)),
-                PopupMenuItem(value: 'delete', child: Text(loc.delete)),
+                else
+                  Icon(Icons.circle, size: 8, color: color),
+                const SizedBox(width: 10),
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(cat.name ?? loc.unnamed, style: theme.textTheme.titleMedium),
+                      Text(isExpense ? loc.expenseCategory : loc.incomeCategory,
+                          style: theme.textTheme.bodySmall),
+                    ],
+                  ),
+                ),
+                AppNavIconButton(
+                  icon: Icons.more_horiz,
+                  onPressed: () async {
+                    final v = await showAppActionSheet<String>(
+                      context,
+                      actions: [
+                        AppActionSheetItem(value: 'edit', label: loc.edit, icon: Icons.edit_outlined),
+                        AppActionSheetItem(value: 'add', label: loc.addSubcategory, icon: Icons.add),
+                        AppActionSheetItem(
+                          value: 'toggle',
+                          label: cat.enable == false ? loc.enable : loc.disable,
+                          icon: Icons.power_settings_new_outlined,
+                        ),
+                        AppActionSheetItem(value: 'delete', label: loc.delete, icon: Icons.delete_outline, destructive: true),
+                      ],
+                    );
+                    if (v == null || !context.mounted) return;
+                    if (v == 'edit') {
+                      await context.push('/ledger/categories/create?id=${cat.id}');
+                      _cubit.refresh();
+                    } else if (v == 'add') {
+                      await context.push('/ledger/categories/create?parentId=${cat.id}');
+                      _cubit.refresh();
+                    } else if (v == 'toggle') {
+                      _toggle(cat);
+                    } else if (v == 'delete') {
+                      _delete(cat);
+                    }
+                  },
+                ),
               ],
             ),
-            onTap: () async {
-              await context.push('/ledger/categories/create?id=${cat.id}');
-              _cubit.refresh();
-            },
           ),
         ),
         if (hasChildren && expanded)
@@ -214,13 +239,14 @@ class _CategoryListPageState extends State<CategoryListPage> {
           const SizedBox(height: 12),
           Text(loc.noCategories, style: theme.textTheme.bodyLarge?.copyWith(color: theme.colorScheme.outline)),
           const SizedBox(height: 16),
-          FilledButton.icon(
+          AppFilledButton(
+            label: loc.newCategory,
+            expanded: false,
+            icon: Icons.add,
             onPressed: () async {
               await context.push('/ledger/categories/create');
               _cubit.refresh();
             },
-            icon: const Icon(Icons.add),
-            label: Text(loc.newCategory),
           ),
         ],
       ),
@@ -238,10 +264,10 @@ class _CategoryListPageState extends State<CategoryListPage> {
           Text(message.isNotEmpty ? message : loc.loadFailed,
               style: theme.textTheme.bodyLarge?.copyWith(color: theme.colorScheme.error)),
           const SizedBox(height: 16),
-          FilledButton.icon(
+          AppGhostButton(
+            label: loc.retry,
+            icon: Icons.refresh,
             onPressed: _cubit.refresh,
-            icon: const Icon(Icons.refresh),
-            label: Text(loc.retry),
           ),
         ],
       ),

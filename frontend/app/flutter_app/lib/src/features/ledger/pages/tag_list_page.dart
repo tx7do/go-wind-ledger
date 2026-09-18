@@ -9,8 +9,10 @@ import 'package:flutter_app/generated/api/app/service/v1/index.dart'
 
 import 'package:flutter_app/generated/l10n.dart';
 import 'package:flutter_app/src/core/logic/api/list_api_cubit.dart';
-import 'package:flutter_app/src/core/themes/const.dart';
 import 'package:flutter_app/src/core/transport/http/status.dart';
+import 'package:flutter_app/src/core/widgets/app_button.dart';
+import 'package:flutter_app/src/core/widgets/app_action_sheet.dart';
+import 'package:flutter_app/src/core/widgets/app_pull_refresh.dart';
 import 'package:flutter_app/src/features/ledger/services/tag_service.dart';
 
 typedef Tag = LedgerServiceV1Tag;
@@ -46,9 +48,8 @@ class _TagListView extends StatelessWidget {
     return Scaffold(
       appBar: CupertinoNavigationBar(
         middle: Text(loc.tagManagement),
-        trailing: IconButton(
-          icon: const Icon(Icons.add),
-          tooltip: loc.newTag,
+        trailing: AppNavIconButton(
+          icon: Icons.add,
           onPressed: () async {
             await context.push('/ledger/tags/create');
             cubit.refresh();
@@ -60,17 +61,15 @@ class _TagListView extends StatelessWidget {
           Initial() || Loading() => const Center(child: CupertinoActivityIndicator()),
           Success(:final data) => data.isEmpty
               ? _buildEmpty(context, theme)
-              : RefreshIndicator(
+              : AppPullRefresh(
                   onRefresh: cubit.refresh,
-                  child: ListView(
-                    padding: const EdgeInsets.only(bottom: 80),
-                    children: [
-                      CupertinoListSection.insetGrouped(
-                        children:
-                            data.map((t) => _buildTagTile(context, theme, t)).toList(),
-                      ),
-                    ],
-                  ),
+                  padding: const EdgeInsets.only(bottom: 80),
+                  children: [
+                    CupertinoListSection.insetGrouped(
+                      children:
+                          data.map((t) => _buildTagTile(context, theme, t)).toList(),
+                    ),
+                  ],
                 ),
           Error(:final errorMessage) => _buildError(context, theme, errorMessage),
         },
@@ -144,9 +143,22 @@ class _TagListView extends StatelessWidget {
           if (tag.canTransfer == true) _capability(loc.flowFilterTransfer, theme),
         ],
       ),
-      trailing: PopupMenuButton<String>(
-        icon: const Icon(Icons.more_vert, size: 20),
-        onSelected: (v) async {
+      trailing: AppNavIconButton(
+        icon: Icons.more_horiz,
+        onPressed: () async {
+          final v = await showAppActionSheet<String>(
+            context,
+            actions: [
+              AppActionSheetItem(value: 'edit', label: loc.edit, icon: Icons.edit_outlined),
+              AppActionSheetItem(
+                value: 'toggle',
+                label: enabled ? loc.disable : loc.enable,
+                icon: Icons.power_settings_new_outlined,
+              ),
+              AppActionSheetItem(value: 'delete', label: loc.delete, icon: Icons.delete_outline, destructive: true),
+            ],
+          );
+          if (v == null || !context.mounted) return;
           if (v == 'edit') {
             await context.push('/ledger/tags/create?id=${tag.id}');
             context.read<ListApiCubit<Tag>>().refresh();
@@ -156,11 +168,6 @@ class _TagListView extends StatelessWidget {
             _delete(context, tag);
           }
         },
-        itemBuilder: (ctx) => [
-          PopupMenuItem(value: 'edit', child: Text(loc.edit)),
-          PopupMenuItem(value: 'toggle', child: Text(enabled ? loc.disable : loc.enable)),
-          PopupMenuItem(value: 'delete', child: Text(loc.delete)),
-        ],
       ),
       onTap: () async {
         await context.push('/ledger/tags/create?id=${tag.id}');
@@ -190,13 +197,14 @@ class _TagListView extends StatelessWidget {
           const SizedBox(height: 12),
           Text(loc.noTags, style: theme.textTheme.bodyLarge?.copyWith(color: theme.colorScheme.outline)),
           const SizedBox(height: 16),
-          FilledButton.icon(
+          AppFilledButton(
+            label: loc.newTag,
+            expanded: false,
+            icon: Icons.add,
             onPressed: () async {
               await context.push('/ledger/tags/create');
               context.read<ListApiCubit<Tag>>().refresh();
             },
-            icon: const Icon(Icons.add),
-            label: Text(loc.newTag),
           ),
         ],
       ),
@@ -214,10 +222,10 @@ class _TagListView extends StatelessWidget {
           Text(message.isNotEmpty ? message : loc.loadFailed,
               style: theme.textTheme.bodyLarge?.copyWith(color: theme.colorScheme.error)),
           const SizedBox(height: 16),
-          FilledButton.icon(
+          AppGhostButton(
+            label: loc.retry,
+            icon: Icons.refresh,
             onPressed: () => context.read<ListApiCubit<Tag>>().refresh(),
-            icon: const Icon(Icons.refresh),
-            label: Text(loc.retry),
           ),
         ],
       ),

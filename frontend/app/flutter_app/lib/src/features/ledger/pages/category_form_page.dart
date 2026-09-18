@@ -15,7 +15,8 @@ import 'package:flutter_app/generated/api/app/service/v1/index.dart'
 import 'package:flutter_app/generated/l10n.dart';
 import 'package:flutter_app/src/core/logic/api/form_cubit.dart';
 import 'package:flutter_app/src/core/themes/const.dart';
-import 'package:flutter_app/src/core/transport/http/status.dart';
+import 'package:flutter_app/src/core/widgets/app_button.dart';
+import 'package:flutter_app/src/core/widgets/app_form_rows.dart';
 import 'package:flutter_app/src/features/ledger/services/book_service.dart';
 import 'package:flutter_app/src/features/ledger/services/category_service.dart';
 
@@ -132,62 +133,70 @@ class _CategoryFormPageState extends State<CategoryFormPage> {
     final loc = S.of(context);
     return Scaffold(
       appBar: CupertinoNavigationBar(middle: Text(widget.editId == null ? loc.create : loc.edit)),
-      body: SingleChildScrollView(
-        padding: const EdgeInsets.all(16),
+      body: SafeArea(
         child: Form(
           key: _formKey,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              TextFormField(
-                controller: _nameCtrl,
-                decoration: InputDecoration(labelText: loc.fieldCategoryName, prefixIcon: Icon(Icons.label_outline), border: OutlineInputBorder()),
-                validator: (v) => (v == null || v.trim().isEmpty) ? loc.enterCategoryName : null,
-              ),
-              const SizedBox(height: 12),
-              DropdownButtonFormField<LedgerServiceV1CategoryType>(
-                value: _type,
-                decoration: InputDecoration(labelText: loc.fieldCategoryType, prefixIcon: Icon(Icons.category_outlined), border: OutlineInputBorder()),
-                items: [
-                  DropdownMenuItem(value: LedgerServiceV1CategoryType.categoryTypeExpense, child: Text(loc.flowFilterExpense)),
-                  DropdownMenuItem(value: LedgerServiceV1CategoryType.categoryTypeIncome, child: Text(loc.flowFilterIncome)),
-                ],
-                onChanged: (v) { if (v != null) setState(() => _type = v); },
-              ),
-              const SizedBox(height: 12),
-              DropdownButtonFormField<int>(
-                value: _bookId,
-                decoration: InputDecoration(labelText: loc.fieldBook, prefixIcon: Icon(Icons.menu_book_outlined), border: OutlineInputBorder()),
-                items: _books.map((b) => DropdownMenuItem(value: b.id, child: Text(b.name ?? loc.unnamed))).toList(),
-                onChanged: (v) => setState(() => _bookId = v),
-              ),
-              const SizedBox(height: 12),
-              DropdownButtonFormField<int>(
-                value: _parentId,
-                decoration: InputDecoration(labelText: loc.fieldParentCategory, prefixIcon: Icon(Icons.account_tree_outlined), border: OutlineInputBorder()),
-                items: [
-                  DropdownMenuItem<int>(value: null, child: Text(loc.noParentCategory)),
-                  ..._allCategories.where((c) => c.id != widget.editId).map((c) => DropdownMenuItem(value: c.id, child: Text(c.name ?? loc.unnamed))),
-                ],
-                onChanged: (v) => setState(() => _parentId = v),
-              ),
-              const SizedBox(height: 12),
-              TextFormField(
-                controller: _sortOrderCtrl, keyboardType: TextInputType.number,
-                decoration: InputDecoration(labelText: loc.fieldSortOrder, prefixIcon: Icon(Icons.sort), border: OutlineInputBorder()),
-              ),
-              const SizedBox(height: 12),
-              TextFormField(
-                controller: _notesCtrl, maxLines: 3,
-                decoration: InputDecoration(labelText: loc.fieldDescription, prefixIcon: Icon(Icons.notes), border: OutlineInputBorder()),
-              ),
-              const SizedBox(height: 24),
-              FilledButton(
-                onPressed: _formCubit.state == FormLoadState.saving ? null : _submit,
-                style: FilledButton.styleFrom(padding: const EdgeInsets.symmetric(vertical: 14)),
-                child: Text(widget.editId == null ? loc.flowSave : loc.flowUpdate),
-              ),
-            ],
+          child: SingleChildScrollView(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                AppFormSection(header: loc.sectionBasic, children: [
+                  CupertinoTextFormFieldRow(
+                    prefix: Text(loc.fieldCategoryName),
+                    controller: _nameCtrl,
+                    validator: (v) => (v == null || v.trim().isEmpty) ? loc.enterCategoryName : null,
+                  ),
+                  AppSelectRow<LedgerServiceV1CategoryType>(
+                    label: loc.fieldCategoryType,
+                    icon: Icons.category_outlined,
+                    value: _type,
+                    options: [
+                      AppSelectOption(value: LedgerServiceV1CategoryType.categoryTypeExpense, label: loc.flowFilterExpense),
+                      AppSelectOption(value: LedgerServiceV1CategoryType.categoryTypeIncome, label: loc.flowFilterIncome),
+                    ],
+                    onChanged: (v) => setState(() => _type = v),
+                  ),
+                  AppSelectRow<int?>(
+                    label: loc.fieldBook,
+                    icon: Icons.menu_book_outlined,
+                    value: _bookId,
+                    options: _books
+                        .map((b) => AppSelectOption<int?>(value: b.id, label: b.name ?? loc.unnamed))
+                        .toList(),
+                    onChanged: (v) => setState(() => _bookId = v),
+                  ),
+                  AppSelectRow<int?>(
+                    label: loc.fieldParentCategory,
+                    icon: Icons.account_tree_outlined,
+                    value: _parentId,
+                    options: [
+                      AppSelectOption<int?>(value: null, label: loc.noParentCategory),
+                      ..._allCategories
+                          .where((c) => c.id != widget.editId)
+                          .map((c) => AppSelectOption<int?>(value: c.id, label: c.name ?? loc.unnamed)),
+                    ],
+                    onChanged: (v) => setState(() => _parentId = v),
+                  ),
+                  CupertinoTextFormFieldRow(
+                    prefix: Text(loc.fieldSortOrder),
+                    controller: _sortOrderCtrl,
+                    keyboardType: TextInputType.number,
+                  ),
+                  CupertinoTextFormFieldRow(
+                    prefix: Text(loc.fieldDescription),
+                    controller: _notesCtrl,
+                    maxLines: 3,
+                  ),
+                ]),
+                Padding(
+                  padding: const EdgeInsets.all(kDefaultPadding),
+                  child: AppFilledButton(
+                    label: widget.editId == null ? loc.flowSave : loc.flowUpdate,
+                    onPressed: _formCubit.state == FormLoadState.saving ? null : _submit,
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
       ),
@@ -208,13 +217,14 @@ class _CategoryFormPageState extends State<CategoryFormPage> {
             Text(msg.isNotEmpty ? msg : loc.loadFailed,
                 style: Theme.of(context).textTheme.bodyLarge?.copyWith(color: Theme.of(context).colorScheme.error)),
             const SizedBox(height: 16),
-            FilledButton.icon(
+            AppGhostButton(
+              label: loc.retry,
+              icon: Icons.refresh,
               onPressed: () => _formCubit.loadInitial(() async {
                 await Future.wait([_loadBooks(), _loadAllCategories()]);
                 if (widget.editId != null) { await _loadEditTarget(); }
                 else if (widget.parentId != null) { _parentId = widget.parentId; }
               }),
-              icon: const Icon(Icons.refresh), label: Text(loc.retry),
             ),
           ],
         ),

@@ -12,9 +12,10 @@ import 'package:flutter_app/generated/api/app/service/v1/index.dart'
 
 import 'package:flutter_app/generated/l10n.dart';
 import 'package:flutter_app/src/core/logic/api/form_cubit.dart';
-import 'package:flutter_app/src/core/themes/const.dart';
 import 'package:flutter_app/src/core/themes/semantic_colors.dart';
-import 'package:flutter_app/src/core/transport/http/status.dart';
+import 'package:flutter_app/src/core/widgets/app_button.dart';
+import 'package:flutter_app/src/core/widgets/app_form_rows.dart';
+import 'package:flutter_app/src/core/widgets/app_pull_refresh.dart';
 import 'package:flutter_app/src/features/ledger/services/report_service.dart';
 import 'package:flutter_app/src/features/ledger/services/book_service.dart';
 
@@ -36,6 +37,7 @@ class _ReportPageState extends State<ReportPage> {
 
   final Map<String, List<LedgerServiceV1ChartPoint>> _data = {};
   LedgerServiceV1BalanceReportResponse? _balance;
+  final Set<String> _expandedKinds = {'expense_category'};
 
   late final FormCubit _formCubit;
 
@@ -110,7 +112,7 @@ class _ReportPageState extends State<ReportPage> {
     ];
     return Scaffold(
       appBar: widget.embedded ? null : CupertinoNavigationBar(middle: Text(loc.reportTitle)),
-      body: RefreshIndicator(
+      body: AppPullRefresh(
         onRefresh: () => _formCubit.loadInitial(() async {
           await _loadBooks();
           await Future.wait([
@@ -123,15 +125,12 @@ class _ReportPageState extends State<ReportPage> {
             _loadBalance(),
           ]);
         }),
-        child: ListView(
-          padding: const EdgeInsets.only(bottom: 24),
-          children: [
-            if (!widget.embedded) const SizedBox(height: 8),
-            if (_balance != null) _buildBalanceCard(theme),
-            const SizedBox(height: 8),
-            ...kinds.map((k) => _buildReportSection(theme, k)),
-          ],
-        ),
+        padding: const EdgeInsets.only(top: 8, bottom: 24),
+        children: [
+          if (_balance != null) _buildBalanceCard(theme),
+          const SizedBox(height: 8),
+          ...kinds.map((k) => _buildReportSection(theme, k)),
+        ],
       ),
     );
   }
@@ -150,7 +149,10 @@ class _ReportPageState extends State<ReportPage> {
             Text(msg.isNotEmpty ? msg : loc.loadFailed,
                 style: Theme.of(context).textTheme.bodyLarge?.copyWith(color: Theme.of(context).colorScheme.error)),
             const SizedBox(height: 16),
-            FilledButton.icon(onPressed: () => _formCubit.loadInitial(() async {
+            AppGhostButton(
+              label: loc.retry,
+              icon: Icons.refresh,
+              onPressed: () => _formCubit.loadInitial(() async {
               await _loadBooks();
               await Future.wait([
                 _loadKind('expense_category', (_) => _service.expenseCategory(bookId: _bookId)),
@@ -161,7 +163,8 @@ class _ReportPageState extends State<ReportPage> {
                 _loadKind('income_payee', (_) => _service.incomePayee(bookId: _bookId)),
                 _loadBalance(),
               ]);
-            }), icon: const Icon(Icons.refresh), label: Text(loc.retry)),
+            }),
+            ),
           ],
         ),
       ),
@@ -175,25 +178,26 @@ class _ReportPageState extends State<ReportPage> {
     final net = double.tryParse(_balance!.netWorth ?? '0') ?? 0;
     final assets = _sum(_balance!.assets);
     final debts = _sum(_balance!.debts);
-    return Card(
+    return AppCard(
       margin: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-      child: Padding(
-        padding: const EdgeInsets.all(16),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Row(children: [
-              Icon(Icons.account_balance_outlined, color: theme.colorScheme.primary),
-              const SizedBox(width: 8),
-              Text(loc.balanceSheetTitle, style: theme.textTheme.titleMedium?.copyWith(fontWeight: FontWeight.bold)),
-            ]),
-            const SizedBox(height: 12),
-            _balanceRow(theme, loc.totalAssets, assets, SemanticColors.income(context)),
-            _balanceRow(theme, loc.totalDebts, debts, SemanticColors.expense(context)),
-            const Divider(height: 24),
-            _balanceRow(theme, loc.netWorth, net, theme.colorScheme.primary),
-          ],
-        ),
+      padding: const EdgeInsets.all(16),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(children: [
+            Icon(Icons.account_balance_outlined, color: theme.colorScheme.primary),
+            const SizedBox(width: 8),
+            Text(loc.balanceSheetTitle, style: theme.textTheme.titleMedium?.copyWith(fontWeight: FontWeight.bold)),
+          ]),
+          const SizedBox(height: 12),
+          _balanceRow(theme, loc.totalAssets, assets, SemanticColors.income(context)),
+          _balanceRow(theme, loc.totalDebts, debts, SemanticColors.expense(context)),
+          Padding(
+            padding: const EdgeInsets.symmetric(vertical: 12),
+            child: Container(height: 0.5, color: CupertinoColors.separator.resolveFrom(context)),
+          ),
+          _balanceRow(theme, loc.netWorth, net, theme.colorScheme.primary),
+        ],
       ),
     );
   }
@@ -212,16 +216,57 @@ class _ReportPageState extends State<ReportPage> {
     final loc = S.of(context);
     final points = _data[kind.key] ?? [];
     final color = kind.isExpense ? SemanticColors.expense(context) : SemanticColors.income(context);
-    return Card(
-      margin: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-      child: ExpansionTile(
-        initiallyExpanded: kind.key == 'expense_category',
-        leading: Icon(kind.icon, color: color),
-        title: Text(kind.title, style: theme.textTheme.titleSmall?.copyWith(fontWeight: FontWeight.w600)),
-        subtitle: Text(loc.itemCount(points.length)),
-        children: points.isEmpty
-            ? [Padding(padding: const EdgeInsets.all(16), child: Text(loc.noData))]
-            : _buildPointBars(theme, points, color),
+    final expanded = _expandedKinds.contains(kind.key);
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+      child: AppCard(
+        padding: EdgeInsets.zero,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            GestureDetector(
+              behavior: HitTestBehavior.opaque,
+              onTap: () => setState(() {
+                expanded ? _expandedKinds.remove(kind.key) : _expandedKinds.add(kind.key);
+              }),
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                child: Row(
+                  children: [
+                    Icon(kind.icon, color: color, size: 20),
+                    const SizedBox(width: 10),
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(kind.title, style: theme.textTheme.titleSmall?.copyWith(fontWeight: FontWeight.w600)),
+                          Text(loc.itemCount(points.length), style: theme.textTheme.bodySmall),
+                        ],
+                      ),
+                    ),
+                    AnimatedRotation(
+                      turns: expanded ? 0 : -0.25,
+                      duration: const Duration(milliseconds: 200),
+                      child: Icon(Icons.expand_more, size: 20, color: CupertinoColors.secondaryLabel.resolveFrom(context)),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+            AnimatedCrossFade(
+              duration: const Duration(milliseconds: 200),
+              sizeCurve: Curves.easeInOut,
+              crossFadeState: expanded ? CrossFadeState.showFirst : CrossFadeState.showSecond,
+              firstChild: Padding(
+                padding: const EdgeInsets.only(bottom: 8),
+                child: points.isEmpty
+                    ? Padding(padding: const EdgeInsets.all(16), child: Text(loc.noData))
+                    : Column(children: _buildPointBars(theme, points, color)),
+              ),
+              secondChild: const SizedBox(width: double.infinity),
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -243,7 +288,18 @@ class _ReportPageState extends State<ReportPage> {
           const SizedBox(height: 6),
           ClipRRect(
             borderRadius: BorderRadius.circular(4),
-            child: LinearProgressIndicator(value: percent.clamp(0.0, 1.0), minHeight: 8, backgroundColor: color.withAlpha(30), color: color),
+            child: SizedBox(
+              height: 8,
+              child: Stack(
+                children: [
+                  Container(color: color.withAlpha(30)),
+                  FractionallySizedBox(
+                    widthFactor: percent.clamp(0.0, 1.0).toDouble(),
+                    child: Container(color: color),
+                  ),
+                ],
+              ),
+            ),
           ),
         ]),
       );

@@ -9,8 +9,10 @@ import 'package:flutter_app/generated/api/app/service/v1/index.dart'
 
 import 'package:flutter_app/generated/l10n.dart';
 import 'package:flutter_app/src/core/logic/api/list_api_cubit.dart';
-import 'package:flutter_app/src/core/themes/const.dart';
 import 'package:flutter_app/src/core/transport/http/status.dart';
+import 'package:flutter_app/src/core/widgets/app_button.dart';
+import 'package:flutter_app/src/core/widgets/app_action_sheet.dart';
+import 'package:flutter_app/src/core/widgets/app_pull_refresh.dart';
 import 'package:flutter_app/src/features/ledger/services/note_day_service.dart';
 
 typedef NoteDay = LedgerServiceV1NoteDay;
@@ -46,9 +48,8 @@ class _NoteDayListView extends StatelessWidget {
     return Scaffold(
       appBar: CupertinoNavigationBar(
         middle: Text(loc.noteDayManagement),
-        trailing: IconButton(
-          icon: const Icon(Icons.add),
-          tooltip: loc.newNoteDay,
+        trailing: AppNavIconButton(
+          icon: Icons.add,
           onPressed: () async {
             await context.push('/ledger/note-days/create');
             cubit.refresh();
@@ -60,17 +61,15 @@ class _NoteDayListView extends StatelessWidget {
           Initial() || Loading() => const Center(child: CupertinoActivityIndicator()),
           Success(:final data) => data.isEmpty
               ? _buildEmpty(context, theme)
-              : RefreshIndicator(
+              : AppPullRefresh(
                   onRefresh: cubit.refresh,
-                  child: ListView(
-                    padding: const EdgeInsets.only(bottom: 80),
-                    children: [
-                      CupertinoListSection.insetGrouped(
-                        children:
-                            data.map((i) => _buildItemTile(context, theme, i)).toList(),
-                      ),
-                    ],
-                  ),
+                  padding: const EdgeInsets.only(bottom: 80),
+                  children: [
+                    CupertinoListSection.insetGrouped(
+                      children:
+                          data.map((i) => _buildItemTile(context, theme, i)).toList(),
+                    ),
+                  ],
                 ),
           Error(:final errorMessage) => _buildError(context, theme, errorMessage),
         },
@@ -155,9 +154,19 @@ class _NoteDayListView extends StatelessWidget {
         loc.nextRunInfo(_formatTime(item.nextDate), (item.runCount ?? 0).toString(), (item.totalCount ?? 0).toString()),
         style: theme.textTheme.bodySmall,
       ),
-      trailing: PopupMenuButton<String>(
-        icon: const Icon(Icons.more_vert, size: 20),
-        onSelected: (v) async {
+      trailing: AppNavIconButton(
+        icon: Icons.more_horiz,
+        onPressed: () async {
+          final v = await showAppActionSheet<String>(
+            context,
+            actions: [
+              AppActionSheetItem(value: 'edit', label: loc.edit, icon: Icons.edit_outlined),
+              AppActionSheetItem(value: 'run', label: loc.executeNow, icon: Icons.play_arrow_outlined),
+              AppActionSheetItem(value: 'recall', label: loc.revokeExecution, icon: Icons.undo_outlined),
+              AppActionSheetItem(value: 'delete', label: loc.delete, icon: Icons.delete_outline, destructive: true),
+            ],
+          );
+          if (v == null || !context.mounted) return;
           if (v == 'edit') {
             await context.push('/ledger/note-days/create?id=${item.id}');
             context.read<ListApiCubit<NoteDay>>().refresh();
@@ -169,12 +178,6 @@ class _NoteDayListView extends StatelessWidget {
             _delete(context, item);
           }
         },
-        itemBuilder: (ctx) => [
-          PopupMenuItem(value: 'edit', child: Text(loc.edit)),
-          PopupMenuItem(value: 'run', child: Text(loc.executeNow)),
-          PopupMenuItem(value: 'recall', child: Text(loc.revokeExecution)),
-          PopupMenuItem(value: 'delete', child: Text(loc.delete)),
-        ],
       ),
       onTap: () async {
         await context.push('/ledger/note-days/create?id=${item.id}');
@@ -200,13 +203,14 @@ class _NoteDayListView extends StatelessWidget {
           const SizedBox(height: 12),
           Text(loc.noNoteDays, style: theme.textTheme.bodyLarge?.copyWith(color: theme.colorScheme.outline)),
           const SizedBox(height: 16),
-          FilledButton.icon(
+          AppFilledButton(
+            label: loc.newNoteDay,
+            expanded: false,
+            icon: Icons.add,
             onPressed: () async {
               await context.push('/ledger/note-days/create');
               context.read<ListApiCubit<NoteDay>>().refresh();
             },
-            icon: const Icon(Icons.add),
-            label: Text(loc.newNoteDay),
           ),
         ],
       ),
@@ -224,10 +228,10 @@ class _NoteDayListView extends StatelessWidget {
           Text(message.isNotEmpty ? message : loc.loadFailed,
               style: theme.textTheme.bodyLarge?.copyWith(color: theme.colorScheme.error)),
           const SizedBox(height: 16),
-          FilledButton.icon(
+          AppGhostButton(
+            label: loc.retry,
+            icon: Icons.refresh,
             onPressed: () => context.read<ListApiCubit<NoteDay>>().refresh(),
-            icon: const Icon(Icons.refresh),
-            label: Text(loc.retry),
           ),
         ],
       ),

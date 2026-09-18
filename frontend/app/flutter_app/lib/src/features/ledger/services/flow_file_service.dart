@@ -10,7 +10,6 @@ import 'package:flutter_app/generated/api/app/service/v1/index.dart'
         LedgerServiceV1DeleteFlowFileRequest;
 
 import 'package:flutter_app/src/core/services/base_service.dart';
-import 'package:flutter_app/src/core/transport/http/index.dart';
 
 typedef FlowFile = LedgerServiceV1FlowFile;
 typedef ListFlowFileResponse = LedgerServiceV1ListFlowFileResponse;

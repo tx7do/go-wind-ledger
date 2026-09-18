@@ -14,9 +14,11 @@ import 'package:flutter_app/generated/api/app/service/v1/index.dart'
 import 'package:flutter_app/generated/l10n.dart';
 import 'package:flutter_app/src/core/logic/api/paginated_list_cubit.dart';
 import 'package:flutter_app/src/core/services/pagination_query.dart';
-import 'package:flutter_app/src/core/themes/const.dart';
 import 'package:flutter_app/src/core/themes/semantic_colors.dart';
 import 'package:flutter_app/src/core/transport/http/status.dart';
+import 'package:flutter_app/src/core/widgets/app_button.dart';
+import 'package:flutter_app/src/core/widgets/app_action_sheet.dart';
+import 'package:flutter_app/src/core/widgets/app_pull_refresh.dart';
 import 'package:flutter_app/src/features/ledger/services/balance_flow_service.dart';
 import 'package:flutter_app/src/features/ledger/widgets/statistics_card.dart';
 
@@ -171,10 +173,13 @@ class _BalanceFlowListPageState extends State<BalanceFlowListPage> {
     return Scaffold(
       appBar: CupertinoNavigationBar(
         middle: Text(loc.flowListTitle),
-        trailing: IconButton(
-          icon: const Icon(Icons.add),
-          tooltip: loc.flowCreate,
-          onPressed: () => context.push('/ledger/flows/create'),
+        trailing: AppNavIconButton(
+          icon: Icons.add,
+          onPressed: () async {
+            await context.push('/ledger/flows/create');
+            _listCubit.refresh();
+            _loadStatistics();
+          },
         ),
       ),
       body: Column(
@@ -209,11 +214,24 @@ class _BalanceFlowListPageState extends State<BalanceFlowListPage> {
           final selected = _filterType == f.type;
           return Padding(
             padding: const EdgeInsets.only(right: 8, top: 6, bottom: 6),
-            child: FilterChip(
-              label: Text(f.label),
-              selected: selected,
-              onSelected: (_) => _changeFilter(f.type),
-              showCheckmark: false,
+            child: CupertinoButton(
+              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
+              minimumSize: Size.zero,
+              borderRadius: BorderRadius.circular(16),
+              color: selected
+                  ? CupertinoTheme.of(context).primaryColor
+                  : CupertinoColors.tertiarySystemFill.resolveFrom(context),
+              onPressed: () => _changeFilter(f.type),
+              child: Text(
+                f.label,
+                style: TextStyle(
+                  fontSize: 13,
+                  fontWeight: selected ? FontWeight.w600 : FontWeight.w400,
+                  color: selected
+                      ? CupertinoColors.white
+                      : CupertinoColors.label.resolveFrom(context),
+                ),
+              ),
             ),
           );
         }).toList(),
@@ -229,25 +247,23 @@ class _BalanceFlowListPageState extends State<BalanceFlowListPage> {
           const Center(child: CupertinoActivityIndicator()),
         PaginatedLoaded(:final items, :final loadingMore) => items.isEmpty
             ? _buildEmpty(theme)
-            : RefreshIndicator(
+            : AppPullRefresh(
+                controller: _scrollController,
                 onRefresh: () async {
                   await _listCubit.refresh();
                   _loadStatistics();
                 },
-                child: ListView(
-                  controller: _scrollController,
-                  padding: const EdgeInsets.only(bottom: 80),
-                  children: [
-                    CupertinoListSection.insetGrouped(
-                      children: items.map((f) => _buildFlowTile(theme, f)).toList(),
+                padding: const EdgeInsets.only(bottom: 80),
+                children: [
+                  CupertinoListSection.insetGrouped(
+                    children: items.map((f) => _buildFlowTile(theme, f)).toList(),
+                  ),
+                  if (loadingMore)
+                    const Padding(
+                      padding: EdgeInsets.all(16),
+                      child: Center(child: CupertinoActivityIndicator()),
                     ),
-                    if (loadingMore)
-                      const Padding(
-                        padding: EdgeInsets.all(16),
-                        child: Center(child: CupertinoActivityIndicator()),
-                      ),
-                  ],
-                ),
+                ],
               ),
         PaginatedError(:final message) => _buildError(theme, message),
       },
@@ -286,12 +302,17 @@ class _BalanceFlowListPageState extends State<BalanceFlowListPage> {
               fontWeight: FontWeight.w700,
             ),
           ),
-          PopupMenuButton<String>(
-            icon: Icon(Icons.more_vert, size: 24),
-            iconSize: 24,
-            padding: EdgeInsets.zero,
-            constraints: const BoxConstraints(minWidth: 48, minHeight: 48),
-            onSelected: (v) {
+          AppNavIconButton(
+            icon: Icons.more_horiz,
+            onPressed: () async {
+              final actions = <AppActionSheetItem<String>>[
+                AppActionSheetItem(value: 'edit', label: loc.edit, icon: Icons.edit_outlined),
+                if (flow.confirm != true)
+                  AppActionSheetItem(value: 'confirm', label: loc.confirmFlow, icon: Icons.check_circle_outline),
+                AppActionSheetItem(value: 'delete', label: loc.delete, icon: Icons.delete_outline, destructive: true),
+              ];
+              final v = await showAppActionSheet<String>(context, actions: actions);
+              if (v == null || !context.mounted) return;
               if (v == 'edit') {
                 context.push('/ledger/flows/create?id=${flow.id}');
               } else if (v == 'confirm') {
@@ -300,12 +321,6 @@ class _BalanceFlowListPageState extends State<BalanceFlowListPage> {
                 _deleteFlow(flow);
               }
             },
-            itemBuilder: (ctx) => [
-              PopupMenuItem(value: 'edit', child: Text(loc.edit)),
-              if (flow.confirm != true)
-                PopupMenuItem(value: 'confirm', child: Text(loc.confirmFlow)),
-              PopupMenuItem(value: 'delete', child: Text(loc.delete)),
-            ],
           ),
         ],
       ),
@@ -339,10 +354,10 @@ class _BalanceFlowListPageState extends State<BalanceFlowListPage> {
           Text(message.isNotEmpty ? message : loc.loadFailed,
               style: theme.textTheme.bodyLarge?.copyWith(color: theme.colorScheme.error)),
           const SizedBox(height: 16),
-          FilledButton.icon(
+          AppGhostButton(
+            label: loc.retry,
+            icon: Icons.refresh,
             onPressed: () => _listCubit.refresh(),
-            icon: const Icon(Icons.refresh),
-            label: Text(loc.retry),
           ),
         ],
       ),

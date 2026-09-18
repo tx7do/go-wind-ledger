@@ -17,12 +17,12 @@ import 'package:flutter_app/generated/api/app/service/v1/index.dart'
 import 'package:flutter_app/generated/l10n.dart';
 import 'package:flutter_app/src/core/logic/api/form_cubit.dart';
 import 'package:flutter_app/src/core/themes/const.dart';
-import 'package:flutter_app/src/core/transport/http/status.dart';
+import 'package:flutter_app/src/core/widgets/app_button.dart';
+import 'package:flutter_app/src/core/widgets/app_form_rows.dart';
 import 'package:flutter_app/src/features/ledger/services/budget_service.dart';
 import 'package:flutter_app/src/features/ledger/services/book_service.dart';
 import 'package:flutter_app/src/features/ledger/services/account_service.dart';
 import 'package:flutter_app/src/features/ledger/services/category_service.dart';
-import 'package:flutter_app/src/core/widgets/dropdown_item.dart';
 
 /// 预算表单页（新建/编辑）。
 class BudgetFormPage extends StatefulWidget {
@@ -110,38 +110,6 @@ class _BudgetFormPageState extends State<BudgetFormPage> {
     }
   }
 
-  Future<void> _pickDate({required bool isStart}) async {
-    await showCupertinoModalPopup<void>(
-      context: context,
-      builder: (ctx) => Container(
-        height: 216,
-        padding: const EdgeInsets.only(top: 6),
-        margin: EdgeInsets.only(
-          bottom: MediaQuery.of(ctx).viewInsets.bottom,
-        ),
-        color: CupertinoColors.systemBackground.resolveFrom(ctx),
-        child: SafeArea(
-          top: false,
-          child: CupertinoDatePicker(
-            mode: CupertinoDatePickerMode.date,
-            initialDateTime: isStart ? _startDate : _endDate,
-            minimumDate: DateTime(2000),
-            maximumDate: DateTime(2100),
-            onDateTimeChanged: (DateTime picked) {
-              setState(() {
-                if (isStart) {
-                  _startDate = picked;
-                } else {
-                  _endDate = picked;
-                }
-              });
-            },
-          ),
-        ),
-      ),
-    );
-  }
-
   Future<void> _submit() async {
     final loc = S.of(context);
     if (!_formKey.currentState!.validate()) return;
@@ -185,71 +153,98 @@ class _BudgetFormPageState extends State<BudgetFormPage> {
   }
 
   Widget _buildForm(BuildContext context) {
-    final theme = Theme.of(context);
     final loc = S.of(context);
     return Scaffold(
       appBar: CupertinoNavigationBar(middle: Text(widget.editId == null ? loc.create : loc.edit)),
-      body: SingleChildScrollView(
-        padding: const EdgeInsets.all(16),
+      body: SafeArea(
         child: Form(
           key: _formKey,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              TextFormField(
-                controller: _nameCtrl,
-                decoration: InputDecoration(labelText: loc.fieldBudgetName, prefixIcon: Icon(Icons.savings_outlined), border: OutlineInputBorder()),
-                validator: (v) => (v == null || v.trim().isEmpty) ? loc.enterBudgetName : null,
-              ),
-              const SizedBox(height: 12),
-              _buildDropdown<int>(label: loc.defaultBook, value: _bookId,
-                items: _books.map((b) => DropdownItem(value: b.id!, label: b.name ?? loc.unnamed)).toList(),
-                onChanged: (v) => setState(() => _bookId = v)),
-              const SizedBox(height: 12),
-              _buildDropdown<BudgetPeriod>(label: loc.budgetPeriod, value: _period,
-                items: [
-                  DropdownItem(value: BudgetPeriod.monthly, label: loc.periodMonthly),
-                  DropdownItem(value: BudgetPeriod.quarterly, label: loc.periodQuarterly),
-                  DropdownItem(value: BudgetPeriod.yearly, label: loc.periodYearly),
-                  DropdownItem(value: BudgetPeriod.weekly, label: loc.periodWeekly),
-                ],
-                onChanged: (v) { if (v != null) setState(() => _period = v); }),
-              const SizedBox(height: 12),
-              TextFormField(
-                controller: _amountCtrl,
-                keyboardType: const TextInputType.numberWithOptions(decimal: true, signed: false),
-                decoration: InputDecoration(labelText: loc.fieldBudgetAmount, prefixIcon: Icon(Icons.payments_outlined), border: OutlineInputBorder()),
-                validator: (v) { final n = double.tryParse(v ?? ''); return (n == null || n <= 0) ? loc.enterAmount : null; },
-              ),
-              const SizedBox(height: 12),
-              _buildDropdown<int>(label: loc.categoryManagement, value: _categoryId,
-                items: _categories.map((c) => DropdownItem(value: c.id!, label: c.name ?? loc.unnamed)).toList(),
-                onChanged: (v) => setState(() => _categoryId = v)),
-              const SizedBox(height: 12),
-              _buildDropdown<int>(label: loc.accountOverview, value: _accountId,
-                items: _accounts.map((a) => DropdownItem(value: a.id!, label: a.name ?? loc.unnamed)).toList(),
-                onChanged: (v) => setState(() => _accountId = v)),
-              const SizedBox(height: 12),
-              Row(children: [
-                Expanded(child: _buildDateField(theme, label: loc.fieldStartDate, date: _startDate, onTap: () => _pickDate(isStart: true))),
-                const SizedBox(width: 12),
-                Expanded(child: _buildDateField(theme, label: loc.fieldEndDate, date: _endDate, onTap: () => _pickDate(isStart: false))),
-              ]),
-              const SizedBox(height: 8),
-              SwitchListTile(title: Text(loc.enableBudget), value: _enable, onChanged: (v) => setState(() => _enable = v)),
-              SwitchListTile(title: Text(loc.budgetOverrunNotify), value: _notify, onChanged: (v) => setState(() => _notify = v)),
-              const SizedBox(height: 12),
-              TextFormField(
-                controller: _notesCtrl, maxLines: 3,
-                decoration: InputDecoration(labelText: loc.fieldDescription, prefixIcon: Icon(Icons.notes), border: OutlineInputBorder()),
-              ),
-              const SizedBox(height: 24),
-              FilledButton(
-                onPressed: _formCubit.state == FormLoadState.saving ? null : _submit,
-                style: FilledButton.styleFrom(padding: const EdgeInsets.symmetric(vertical: 14)),
-                child: Text(widget.editId == null ? loc.flowSave : loc.flowUpdate),
-              ),
-            ],
+          child: SingleChildScrollView(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                AppFormSection(header: loc.sectionBasic, children: [
+                  CupertinoTextFormFieldRow(
+                    prefix: Text(loc.fieldBudgetName),
+                    controller: _nameCtrl,
+                    validator: (v) => (v == null || v.trim().isEmpty) ? loc.enterBudgetName : null,
+                  ),
+                  AppSelectRow<int?>(
+                    label: loc.defaultBook,
+                    icon: Icons.menu_book_outlined,
+                    value: _bookId,
+                    options: _books
+                        .map((b) => AppSelectOption<int?>(value: b.id, label: b.name ?? loc.unnamed))
+                        .toList(),
+                    onChanged: (v) => setState(() => _bookId = v),
+                  ),
+                  AppSelectRow<BudgetPeriod>(
+                    label: loc.budgetPeriod,
+                    icon: Icons.event_repeat_outlined,
+                    value: _period,
+                    options: [
+                      AppSelectOption(value: BudgetPeriod.monthly, label: loc.periodMonthly),
+                      AppSelectOption(value: BudgetPeriod.quarterly, label: loc.periodQuarterly),
+                      AppSelectOption(value: BudgetPeriod.yearly, label: loc.periodYearly),
+                      AppSelectOption(value: BudgetPeriod.weekly, label: loc.periodWeekly),
+                    ],
+                    onChanged: (v) => setState(() => _period = v),
+                  ),
+                  CupertinoTextFormFieldRow(
+                    prefix: Text(loc.fieldBudgetAmount),
+                    controller: _amountCtrl,
+                    keyboardType: const TextInputType.numberWithOptions(decimal: true, signed: false),
+                    validator: (v) { final n = double.tryParse(v ?? ''); return (n == null || n <= 0) ? loc.enterAmount : null; },
+                  ),
+                  AppSelectRow<int?>(
+                    label: loc.categoryManagement,
+                    icon: Icons.category_outlined,
+                    value: _categoryId,
+                    options: _categories
+                        .map((c) => AppSelectOption<int?>(value: c.id, label: c.name ?? loc.unnamed))
+                        .toList(),
+                    onChanged: (v) => setState(() => _categoryId = v),
+                  ),
+                  AppSelectRow<int?>(
+                    label: loc.accountOverview,
+                    icon: Icons.account_balance_wallet_outlined,
+                    value: _accountId,
+                    options: _accounts
+                        .map((a) => AppSelectOption<int?>(value: a.id, label: a.name ?? loc.unnamed))
+                        .toList(),
+                    onChanged: (v) => setState(() => _accountId = v),
+                  ),
+                ]),
+                AppFormSection(header: loc.sectionRepeat, children: [
+                  AppDateRow(
+                    label: loc.fieldStartDate,
+                    icon: Icons.calendar_today_outlined,
+                    date: _startDate,
+                    onChanged: (d) => setState(() => _startDate = d),
+                  ),
+                  AppDateRow(
+                    label: loc.fieldEndDate,
+                    icon: Icons.event_available_outlined,
+                    date: _endDate,
+                    onChanged: (d) => setState(() => _endDate = d),
+                  ),
+                  AppSwitchRow(label: loc.enableBudget, value: _enable, onChanged: (v) => setState(() => _enable = v)),
+                  AppSwitchRow(label: loc.budgetOverrunNotify, value: _notify, onChanged: (v) => setState(() => _notify = v)),
+                  CupertinoTextFormFieldRow(
+                    prefix: Text(loc.fieldDescription),
+                    controller: _notesCtrl,
+                    maxLines: 3,
+                  ),
+                ]),
+                Padding(
+                  padding: const EdgeInsets.all(kDefaultPadding),
+                  child: AppFilledButton(
+                    label: widget.editId == null ? loc.flowSave : loc.flowUpdate,
+                    onPressed: _formCubit.state == FormLoadState.saving ? null : _submit,
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
       ),
@@ -270,34 +265,15 @@ class _BudgetFormPageState extends State<BudgetFormPage> {
             Text(msg.isNotEmpty ? msg : loc.loadFailed,
                 style: Theme.of(context).textTheme.bodyLarge?.copyWith(color: Theme.of(context).colorScheme.error)),
             const SizedBox(height: 16),
-            FilledButton.icon(
+            AppGhostButton(
+              label: loc.retry,
+              icon: Icons.refresh,
               onPressed: () => _formCubit.loadInitial(() async {
                 await Future.wait([_loadBooks(), _loadAccounts(), _loadCategories(), if (widget.editId != null) _loadEditTarget()]);
               }),
-              icon: const Icon(Icons.refresh), label: Text(loc.retry),
             ),
           ],
         ),
-      ),
-    );
-  }
-
-  Widget _buildDropdown<T>({required String label, required T? value, required List<DropdownItem<T>> items, required ValueChanged<T?> onChanged}) {
-    return DropdownButtonFormField<T>(
-      value: value,
-      decoration: InputDecoration(labelText: label, border: const OutlineInputBorder()),
-      items: items.map((item) => DropdownMenuItem<T>(value: item.value, child: Text(item.label))).toList(),
-      onChanged: onChanged,
-    );
-  }
-
-  Widget _buildDateField(ThemeData theme, {required String label, required DateTime date, required VoidCallback onTap}) {
-    String two(int n) => n.toString().padLeft(2, '0');
-    return InkWell(
-      onTap: onTap, borderRadius: BorderRadius.circular(12),
-      child: InputDecorator(
-        decoration: InputDecoration(labelText: label, prefixIcon: const Icon(Icons.calendar_today_outlined), border: const OutlineInputBorder()),
-        child: Text('${date.year}-${two(date.month)}-${two(date.day)}'),
       ),
     );
   }

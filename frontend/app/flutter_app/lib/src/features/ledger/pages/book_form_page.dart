@@ -15,7 +15,8 @@ import 'package:flutter_app/generated/api/app/service/v1/index.dart'
 import 'package:flutter_app/generated/l10n.dart';
 import 'package:flutter_app/src/core/logic/api/form_cubit.dart';
 import 'package:flutter_app/src/core/themes/const.dart';
-import 'package:flutter_app/src/core/transport/http/status.dart';
+import 'package:flutter_app/src/core/widgets/app_button.dart';
+import 'package:flutter_app/src/core/widgets/app_form_rows.dart';
 import 'package:flutter_app/src/features/ledger/services/book_service.dart';
 import 'package:flutter_app/src/features/ledger/services/currency_service.dart';
 
@@ -148,49 +149,54 @@ class _BookFormPageState extends State<BookFormPage> {
     final loc = S.of(context);
     return Scaffold(
       appBar: CupertinoNavigationBar(middle: Text(widget.editId == null ? loc.create : loc.edit)),
-      body: SingleChildScrollView(
-        padding: const EdgeInsets.all(16),
+      body: SafeArea(
         child: Form(
           key: _formKey,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              TextFormField(
-                controller: _nameCtrl,
-                decoration: InputDecoration(labelText: loc.fieldBookName, prefixIcon: Icon(Icons.menu_book_outlined), border: OutlineInputBorder()),
-                validator: (v) => (v == null || v.trim().isEmpty) ? loc.enterBookName : null,
-              ),
-              const SizedBox(height: 12),
-              DropdownButtonFormField<String>(
-                value: _defaultCurrencyCode,
-                decoration: InputDecoration(labelText: loc.fieldDefaultCurrency, prefixIcon: Icon(Icons.currency_exchange_outlined), border: OutlineInputBorder()),
-                items: _currencies.map((c) => DropdownMenuItem(value: c.code, child: Text('${c.code} - ${c.name ?? ''}'))).toList(),
-                onChanged: (v) { if (v != null) setState(() => _defaultCurrencyCode = v); },
-              ),
-              if (widget.editId == null && _templates.isNotEmpty) ...[
-                const SizedBox(height: 12),
-                DropdownButtonFormField<int?>(
-                  value: _templateId,
-                  decoration: InputDecoration(labelText: loc.fieldTemplate, prefixIcon: Icon(Icons.dashboard_customize_outlined), border: OutlineInputBorder(), helperText: loc.templateHelper),
-                  items: [
-                    DropdownMenuItem<int?>(value: null, child: Text(loc.noTemplate)),
-                    ..._templates.map((t) => DropdownMenuItem<int?>(value: t.id, child: Text(t.name ?? loc.unnamedTemplate))),
-                  ],
-                  onChanged: (v) => setState(() => _templateId = v),
+          child: SingleChildScrollView(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                AppFormSection(header: loc.sectionBasic, children: [
+                  CupertinoTextFormFieldRow(
+                    prefix: Text(loc.fieldBookName),
+                    controller: _nameCtrl,
+                    validator: (v) => (v == null || v.trim().isEmpty) ? loc.enterBookName : null,
+                  ),
+                  AppSelectRow<String?>(
+                    label: loc.fieldDefaultCurrency,
+                    icon: Icons.currency_exchange_outlined,
+                    value: _defaultCurrencyCode,
+                    options: _currencies
+                        .map((c) => AppSelectOption(value: c.code, label: '${c.code} - ${c.name ?? ''}'))
+                        .toList(),
+                    onChanged: (v) { if (v != null) setState(() => _defaultCurrencyCode = v); },
+                  ),
+                  if (widget.editId == null && _templates.isNotEmpty)
+                    AppSelectRow<int?>(
+                      label: loc.fieldTemplate,
+                      icon: Icons.dashboard_customize_outlined,
+                      value: _templateId,
+                      options: [
+                        AppSelectOption<int?>(value: null, label: loc.noTemplate),
+                        ..._templates.map((t) => AppSelectOption<int?>(value: t.id, label: t.name ?? loc.unnamedTemplate)),
+                      ],
+                      onChanged: (v) => setState(() => _templateId = v),
+                    ),
+                  CupertinoTextFormFieldRow(
+                    prefix: Text(loc.fieldDescription),
+                    controller: _notesCtrl,
+                    maxLines: 3,
+                  ),
+                ]),
+                Padding(
+                  padding: const EdgeInsets.all(kDefaultPadding),
+                  child: AppFilledButton(
+                    label: widget.editId == null ? loc.flowSave : loc.flowUpdate,
+                    onPressed: _formCubit.state == FormLoadState.saving ? null : _submit,
+                  ),
                 ),
               ],
-              const SizedBox(height: 12),
-              TextFormField(
-                controller: _notesCtrl, maxLines: 3,
-                decoration: InputDecoration(labelText: loc.fieldDescription, prefixIcon: Icon(Icons.notes), border: OutlineInputBorder()),
-              ),
-              const SizedBox(height: 24),
-              FilledButton(
-                onPressed: _formCubit.state == FormLoadState.saving ? null : _submit,
-                style: FilledButton.styleFrom(padding: const EdgeInsets.symmetric(vertical: 14)),
-                child: Text(widget.editId == null ? loc.flowSave : loc.flowUpdate),
-              ),
-            ],
+            ),
           ),
         ),
       ),
@@ -211,11 +217,12 @@ class _BookFormPageState extends State<BookFormPage> {
             Text(msg.isNotEmpty ? msg : loc.loadFailed,
                 style: Theme.of(context).textTheme.bodyLarge?.copyWith(color: Theme.of(context).colorScheme.error)),
             const SizedBox(height: 16),
-            FilledButton.icon(
+            AppGhostButton(
+              label: loc.retry,
+              icon: Icons.refresh,
               onPressed: () => _formCubit.loadInitial(() async {
                 await Future.wait([_loadCurrencies(), _loadTemplates(), if (widget.editId != null) _loadEditTarget()]);
               }),
-              icon: const Icon(Icons.refresh), label: Text(loc.retry),
             ),
           ],
         ),

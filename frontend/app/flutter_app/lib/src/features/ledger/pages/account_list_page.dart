@@ -15,6 +15,9 @@ import 'package:flutter_app/generated/l10n.dart';
 import 'package:flutter_app/src/core/logic/api/list_api_cubit.dart';
 import 'package:flutter_app/src/core/themes/const.dart';
 import 'package:flutter_app/src/core/transport/http/status.dart';
+import 'package:flutter_app/src/core/widgets/app_button.dart';
+import 'package:flutter_app/src/core/widgets/app_action_sheet.dart';
+import 'package:flutter_app/src/core/widgets/app_pull_refresh.dart';
 import 'package:flutter_app/src/features/ledger/services/account_service.dart';
 import 'package:flutter_app/src/features/ledger/services/ledger_auth_service.dart';
 import 'package:flutter_app/src/features/ledger/widgets/account_type_tag.dart';
@@ -97,25 +100,26 @@ class _AccountListPageState extends State<AccountListPage> {
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              TextField(
+              CupertinoTextField(
                 controller: balanceCtrl,
                 keyboardType: const TextInputType.numberWithOptions(decimal: true),
                 autofocus: true,
-                decoration: InputDecoration(
-                  labelText: loc.fieldTargetBalance,
-                  prefixIcon: Icon(Icons.account_balance_wallet_outlined),
-                  border: OutlineInputBorder(),
+                placeholder: loc.fieldTargetBalance,
+                padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 12),
+                decoration: BoxDecoration(
+                  color: CupertinoColors.tertiarySystemFill.resolveFrom(ctx),
+                  borderRadius: BorderRadius.circular(kInputRadius),
                 ),
               ),
               const SizedBox(height: 12),
-              TextField(
+              CupertinoTextField(
                 controller: bookCtrl,
                 keyboardType: TextInputType.number,
-                decoration: InputDecoration(
-                  labelText: loc.fieldBookId,
-                  prefixIcon: Icon(Icons.menu_book_outlined),
-                  helperText: loc.bookIdHelper,
-                  border: OutlineInputBorder(),
+                placeholder: loc.fieldBookId,
+                padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 12),
+                decoration: BoxDecoration(
+                  color: CupertinoColors.tertiarySystemFill.resolveFrom(ctx),
+                  borderRadius: BorderRadius.circular(kInputRadius),
                 ),
               ),
             ],
@@ -177,14 +181,12 @@ class _AccountListPageState extends State<AccountListPage> {
               trailing: Row(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  IconButton(
-                    tooltip: loc.accountOverview,
-                    icon: const Icon(Icons.account_balance_outlined),
+                  AppNavIconButton(
+                    icon: Icons.pie_chart_outline,
                     onPressed: () => context.push('/ledger/accounts/overview'),
                   ),
-                  IconButton(
-                    icon: const Icon(Icons.add),
-                    tooltip: loc.create,
+                  AppNavIconButton(
+                    icon: Icons.add,
                     onPressed: () async {
                       await context.push('/ledger/accounts/create');
                       _cubit.refresh();
@@ -199,12 +201,10 @@ class _AccountListPageState extends State<AccountListPage> {
           Initial() || Loading() => const Center(child: CupertinoActivityIndicator()),
           Success(:final data) => data.isEmpty
               ? _buildEmpty(theme)
-              : RefreshIndicator(
+              : AppPullRefresh(
                   onRefresh: _cubit.refresh,
-                  child: ListView(
-                    padding: const EdgeInsets.only(bottom: 16),
-                    children: _buildGrouped(theme, data),
-                  ),
+                  padding: const EdgeInsets.only(top: 4, bottom: 16),
+                  children: _buildGrouped(theme, data),
                 ),
           Error(:final errorMessage) => _buildError(theme, errorMessage),
         },
@@ -261,9 +261,22 @@ class _AccountListPageState extends State<AccountListPage> {
               color: balance >= 0 ? theme.colorScheme.primary : theme.colorScheme.error,
             ),
           ),
-          PopupMenuButton<String>(
-            icon: const Icon(Icons.more_vert, size: 20),
-            onSelected: (v) async {
+          AppNavIconButton(
+            icon: Icons.more_horiz,
+            onPressed: () async {
+              final v = await showAppActionSheet<String>(
+                context,
+                actions: [
+                  AppActionSheetItem(value: 'edit', label: loc.edit, icon: Icons.edit_outlined),
+                  AppActionSheetItem(value: 'adjust', label: loc.editFlow, icon: Icons.tune),
+                  AppActionSheetItem(
+                    value: 'toggle',
+                    label: acc.enable == false ? loc.enable : loc.disable,
+                    icon: Icons.power_settings_new_outlined,
+                  ),
+                ],
+              );
+              if (v == null || !context.mounted) return;
               if (v == 'edit') {
                 await context.push('/ledger/accounts/create?id=${acc.id}');
                 _cubit.refresh();
@@ -273,12 +286,7 @@ class _AccountListPageState extends State<AccountListPage> {
                 _adjustBalance(acc);
               }
             },
-            itemBuilder: (ctx) => [
-              PopupMenuItem(value: 'edit', child: Text(loc.edit)),
-              PopupMenuItem(value: 'adjust', child: Text(loc.editFlow)),
-              PopupMenuItem(value: 'toggle', child: Text(acc.enable == false ? loc.enable : loc.disable)),
-            ],
-            ),
+          ),
           ],
         ),
         onTap: () async {
@@ -298,13 +306,14 @@ class _AccountListPageState extends State<AccountListPage> {
           const SizedBox(height: 12),
           Text(loc.noAccounts, style: theme.textTheme.bodyLarge?.copyWith(color: theme.colorScheme.outline)),
           const SizedBox(height: 16),
-          FilledButton.icon(
+          AppFilledButton(
+            label: loc.create,
+            expanded: false,
+            icon: Icons.add,
             onPressed: () async {
               await context.push('/ledger/accounts/create');
               _cubit.refresh();
             },
-            icon: const Icon(Icons.add),
-            label: Text(loc.create),
           ),
         ],
       ),
@@ -322,10 +331,10 @@ class _AccountListPageState extends State<AccountListPage> {
           Text(message.isNotEmpty ? message : loc.loadFailed,
               style: theme.textTheme.bodyLarge?.copyWith(color: theme.colorScheme.error)),
           const SizedBox(height: 16),
-          FilledButton.icon(
+          AppGhostButton(
+            label: loc.retry,
+            icon: Icons.refresh,
             onPressed: _cubit.refresh,
-            icon: const Icon(Icons.refresh),
-            label: Text(loc.retry),
           ),
         ],
       ),

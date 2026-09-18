@@ -25,6 +25,8 @@ import 'package:flutter_app/generated/l10n.dart';
 import 'package:flutter_app/src/core/logic/api/form_cubit.dart';
 import 'package:flutter_app/src/core/themes/const.dart';
 import 'package:flutter_app/src/core/transport/http/status.dart';
+import 'package:flutter_app/src/core/widgets/app_button.dart';
+import 'package:flutter_app/src/core/widgets/app_form_rows.dart';
 import 'package:flutter_app/src/features/ledger/services/book_service.dart';
 import 'package:flutter_app/src/features/ledger/services/account_service.dart';
 import 'package:flutter_app/src/features/ledger/services/category_service.dart';
@@ -32,7 +34,6 @@ import 'package:flutter_app/src/features/ledger/services/payee_service.dart';
 import 'package:flutter_app/src/features/ledger/services/balance_flow_service.dart';
 import 'package:flutter_app/src/features/ledger/services/flow_file_service.dart';
 import 'package:flutter_app/src/features/ledger/widgets/flow_type_selector.dart';
-import 'package:flutter_app/src/core/widgets/dropdown_item.dart';
 
 /// 记账表单页（支出/收入/转账）。
 class BalanceFlowFormPage extends StatefulWidget {
@@ -183,32 +184,6 @@ class _BalanceFlowFormPageState extends State<BalanceFlowFormPage> {
     await _loadCategories();
   }
 
-  Future<void> _pickDate() async {
-    await showCupertinoModalPopup<void>(
-      context: context,
-      builder: (ctx) => Container(
-        height: 216,
-        padding: const EdgeInsets.only(top: 6),
-        margin: EdgeInsets.only(
-          bottom: MediaQuery.of(ctx).viewInsets.bottom,
-        ),
-        color: CupertinoColors.systemBackground.resolveFrom(ctx),
-        child: SafeArea(
-          top: false,
-          child: CupertinoDatePicker(
-            mode: CupertinoDatePickerMode.date,
-            initialDateTime: _selectedDate,
-            minimumDate: DateTime(2000),
-            maximumDate: DateTime(2100),
-            onDateTimeChanged: (DateTime picked) {
-              setState(() => _selectedDate = picked);
-            },
-          ),
-        ),
-      ),
-    );
-  }
-
   Future<void> _submit() async {
     final loc = S.of(context);
     if (!_formKey.currentState!.validate()) return;
@@ -257,63 +232,111 @@ class _BalanceFlowFormPageState extends State<BalanceFlowFormPage> {
   }
 
   Widget _buildForm(BuildContext context) {
-    final theme = Theme.of(context);
     final loc = S.of(context);
     return Scaffold(
       appBar: CupertinoNavigationBar(middle: Text(widget.editId == null ? loc.flowCreate : loc.editFlow)),
-      body: SingleChildScrollView(
-        padding: const EdgeInsets.all(16),
+      body: SafeArea(
         child: Form(
           key: _formKey,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              FlowTypeSelector(value: _type, onChanged: _changeType),
-              const SizedBox(height: 16),
-              _buildAmountField(theme),
-              const SizedBox(height: 12),
-              _buildDropdown(theme, label: loc.defaultBook, value: _bookId,
-                items: _books.map((b) => DropdownItem(value: b.id!, label: b.name ?? loc.unnamed)).toList(),
-                onChanged: (v) => setState(() => _bookId = v)),
-              const SizedBox(height: 12),
-              if (_type == LedgerServiceV1FlowType.flowTypeTransfer) ...[
-                _buildDropdown(theme, label: loc.fieldTransferOutAccount, value: _accountId,
-                  items: _accounts.map((a) => DropdownItem(value: a.id!, label: a.name ?? loc.unnamed)).toList(),
-                  onChanged: (v) => setState(() => _accountId = v)),
-                const SizedBox(height: 12),
-                _buildDropdown(theme, label: loc.fieldTransferInAccount, value: _toAccountId,
-                  items: _accounts.map((a) => DropdownItem(value: a.id!, label: a.name ?? loc.unnamed)).toList(),
-                  onChanged: (v) => setState(() => _toAccountId = v)),
-              ] else ...[
-                _buildDropdown(theme, label: loc.accountOverview, value: _accountId,
-                  items: _accounts.map((a) => DropdownItem(value: a.id!, label: a.name ?? loc.unnamed)).toList(),
-                  onChanged: (v) => setState(() => _accountId = v)),
-                const SizedBox(height: 12),
-                _buildDropdown(theme, label: loc.categoryManagement, value: _categoryId,
-                  items: _categories.map((c) => DropdownItem(value: c.id!, label: c.name ?? loc.unnamed)).toList(),
-                  onChanged: (v) => setState(() => _categoryId = v)),
-                const SizedBox(height: 12),
-                _buildDropdown(theme, label: loc.payeeManagement, value: _payeeId,
-                  items: _payees.map((p) => DropdownItem(value: p.id!, label: p.name ?? loc.unknownUser)).toList(),
-                  onChanged: (v) => setState(() => _payeeId = v)),
+          child: SingleChildScrollView(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(kDefaultPadding, 4, kDefaultPadding, 12),
+                  child: FlowTypeSelector(value: _type, onChanged: _changeType),
+                ),
+                AppFormSection(header: loc.sectionBasic, children: [
+                  CupertinoTextFormFieldRow(
+                    prefix: Text(loc.fieldFlowAmount),
+                    controller: _amountCtrl,
+                    keyboardType: const TextInputType.numberWithOptions(decimal: true, signed: false),
+                    validator: (v) { final n = double.tryParse(v ?? ''); return (n == null || n <= 0) ? loc.enterAmount : null; },
+                  ),
+                  AppSelectRow<int?>(
+                    label: loc.defaultBook,
+                    icon: Icons.menu_book_outlined,
+                    value: _bookId,
+                    options: _books
+                        .map((b) => AppSelectOption<int?>(value: b.id, label: b.name ?? loc.unnamed))
+                        .toList(),
+                    onChanged: (v) => setState(() => _bookId = v),
+                  ),
+                  if (_type == LedgerServiceV1FlowType.flowTypeTransfer) ...[
+                    AppSelectRow<int?>(
+                      label: loc.fieldTransferOutAccount,
+                      icon: Icons.logout_outlined,
+                      value: _accountId,
+                      options: _accounts
+                          .map((a) => AppSelectOption<int?>(value: a.id, label: a.name ?? loc.unnamed))
+                          .toList(),
+                      onChanged: (v) => setState(() => _accountId = v),
+                    ),
+                    AppSelectRow<int?>(
+                      label: loc.fieldTransferInAccount,
+                      icon: Icons.login_outlined,
+                      value: _toAccountId,
+                      options: _accounts
+                          .map((a) => AppSelectOption<int?>(value: a.id, label: a.name ?? loc.unnamed))
+                          .toList(),
+                      onChanged: (v) => setState(() => _toAccountId = v),
+                    ),
+                  ] else ...[
+                    AppSelectRow<int?>(
+                      label: loc.accountOverview,
+                      icon: Icons.account_balance_wallet_outlined,
+                      value: _accountId,
+                      options: _accounts
+                          .map((a) => AppSelectOption<int?>(value: a.id, label: a.name ?? loc.unnamed))
+                          .toList(),
+                      onChanged: (v) => setState(() => _accountId = v),
+                    ),
+                    AppSelectRow<int?>(
+                      label: loc.categoryManagement,
+                      icon: Icons.category_outlined,
+                      value: _categoryId,
+                      options: _categories
+                          .map((c) => AppSelectOption<int?>(value: c.id, label: c.name ?? loc.unnamed))
+                          .toList(),
+                      onChanged: (v) => setState(() => _categoryId = v),
+                    ),
+                    AppSelectRow<int?>(
+                      label: loc.payeeManagement,
+                      icon: Icons.person_outline,
+                      value: _payeeId,
+                      options: _payees
+                          .map((p) => AppSelectOption<int?>(value: p.id, label: p.name ?? loc.unknownUser))
+                          .toList(),
+                      onChanged: (v) => setState(() => _payeeId = v),
+                    ),
+                  ],
+                  CupertinoTextFormFieldRow(
+                    prefix: Text(loc.fieldFlowTitle),
+                    controller: _titleCtrl,
+                    maxLength: 64,
+                  ),
+                  AppDateRow(
+                    label: loc.fieldFlowDate,
+                    icon: Icons.calendar_today_outlined,
+                    date: _selectedDate,
+                    onChanged: (d) => setState(() => _selectedDate = d),
+                  ),
+                  CupertinoTextFormFieldRow(
+                    prefix: Text(loc.fieldDescription),
+                    controller: _notesCtrl,
+                    maxLines: 3,
+                  ),
+                ]),
+                if (widget.editId != null) _buildAttachmentsSection(context),
+                Padding(
+                  padding: const EdgeInsets.all(kDefaultPadding),
+                  child: AppFilledButton(
+                    label: widget.editId == null ? loc.flowSave : loc.flowUpdate,
+                    onPressed: _formCubit.state == FormLoadState.saving ? null : _submit,
+                  ),
+                ),
               ],
-              const SizedBox(height: 12),
-              _buildTitleField(theme),
-              const SizedBox(height: 12),
-              _buildDateField(theme),
-              const SizedBox(height: 12),
-              _buildNotesField(theme),
-              if (widget.editId != null) ...[
-                const SizedBox(height: 16),
-                _buildAttachmentsSection(theme),
-              ],
-              const SizedBox(height: 24),
-              FilledButton(
-                onPressed: _formCubit.state == FormLoadState.saving ? null : _submit,
-                style: FilledButton.styleFrom(padding: const EdgeInsets.symmetric(vertical: 14)),
-                child: Text(widget.editId == null ? loc.flowSave : loc.flowUpdate),
-              ),
-            ],
+            ),
           ),
         ),
       ),
@@ -334,7 +357,9 @@ class _BalanceFlowFormPageState extends State<BalanceFlowFormPage> {
             Text(msg.isNotEmpty ? msg : loc.loadFailed,
                 style: Theme.of(context).textTheme.bodyLarge?.copyWith(color: Theme.of(context).colorScheme.error)),
             const SizedBox(height: 16),
-            FilledButton.icon(
+            AppGhostButton(
+              label: loc.retry,
+              icon: Icons.refresh,
               onPressed: () => _formCubit.loadInitial(() async {
                 await Future.wait([
                   _loadBooks(), _loadAccounts(), _loadCategories(), _loadPayees(),
@@ -342,7 +367,6 @@ class _BalanceFlowFormPageState extends State<BalanceFlowFormPage> {
                   if (widget.editId != null) _loadAttachments(),
                 ]);
               }),
-              icon: const Icon(Icons.refresh), label: Text(loc.retry),
             ),
           ],
         ),
@@ -352,38 +376,12 @@ class _BalanceFlowFormPageState extends State<BalanceFlowFormPage> {
 
   // ---- field builders ----
 
-  Widget _buildAmountField(ThemeData theme) {
+  Widget _buildAttachmentsSection(BuildContext context) {
     final loc = S.of(context);
-    return TextFormField(
-      controller: _amountCtrl,
-      keyboardType: const TextInputType.numberWithOptions(decimal: true, signed: false),
-      decoration: InputDecoration(labelText: loc.fieldFlowAmount, prefixIcon: Icon(Icons.payments_outlined), border: OutlineInputBorder()),
-      validator: (v) { final n = double.tryParse(v ?? ''); return (n == null || n <= 0) ? loc.enterAmount : null; },
-    );
-  }
-
-  Widget _buildTitleField(ThemeData theme) {
-    final loc = S.of(context);
-    return TextFormField(
-      controller: _titleCtrl,
-      decoration: InputDecoration(labelText: loc.fieldFlowTitle, prefixIcon: Icon(Icons.edit_outlined), border: OutlineInputBorder()),
-      maxLength: 64,
-    );
-  }
-
-  Widget _buildNotesField(ThemeData theme) {
-    final loc = S.of(context);
-    return TextFormField(
-      controller: _notesCtrl, maxLines: 3,
-      decoration: InputDecoration(labelText: loc.fieldDescription, prefixIcon: Icon(Icons.notes), border: OutlineInputBorder()),
-    );
-  }
-
-  Widget _buildAttachmentsSection(ThemeData theme) {
-    final loc = S.of(context);
-    return Card(
-      margin: EdgeInsets.zero,
-      child: Padding(
+    final theme = Theme.of(context);
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(kDefaultPadding, 0, kDefaultPadding, 0),
+      child: AppCard(
         padding: const EdgeInsets.all(12),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -393,10 +391,10 @@ class _BalanceFlowFormPageState extends State<BalanceFlowFormPage> {
               const SizedBox(width: 8),
               Text(loc.attachments, style: theme.textTheme.titleSmall?.copyWith(fontWeight: FontWeight.w600)),
               const Spacer(),
-              OutlinedButton.icon(
+              AppGhostButton(
+                label: loc.uploadAttachments,
+                icon: Icons.upload_outlined,
                 onPressed: () => EasyLoading.showInfo(loc.attachmentComing),
-                icon: const Icon(Icons.upload_outlined, size: 18),
-                label: Text(loc.uploadAttachments),
               ),
             ]),
             const SizedBox(height: 8),
@@ -418,12 +416,27 @@ class _BalanceFlowFormPageState extends State<BalanceFlowFormPage> {
     final sizeText = size > 1024 * 1024
         ? '${(size / 1024 / 1024).toStringAsFixed(1)} MB'
         : size > 1024 ? '${(size / 1024).toStringAsFixed(1)} KB' : '$size B';
-    return ListTile(
-      dense: true, contentPadding: EdgeInsets.zero,
-      leading: Icon(_iconForType(file.contentType), color: theme.colorScheme.primary, size: 22),
-      title: Text(file.originalName ?? '', maxLines: 1, overflow: TextOverflow.ellipsis),
-      subtitle: Text([sizeText, if ((file.contentType ?? '').isNotEmpty) file.contentType!].join(' · '), style: theme.textTheme.bodySmall),
-      trailing: IconButton(tooltip: S.of(context).deleteAttachment, icon: const Icon(Icons.delete_outline, size: 20), onPressed: () => _deleteAttachment(file)),
+    return Row(
+      children: [
+        Icon(_iconForType(file.contentType), color: theme.colorScheme.primary, size: 22),
+        const SizedBox(width: 10),
+        Expanded(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(file.originalName ?? '', maxLines: 1, overflow: TextOverflow.ellipsis),
+              Text([sizeText, if ((file.contentType ?? '').isNotEmpty) file.contentType!].join(' · '),
+                  style: theme.textTheme.bodySmall),
+            ],
+          ),
+        ),
+        CupertinoButton(
+          padding: const EdgeInsets.all(6),
+          minimumSize: Size.zero,
+          onPressed: () => _deleteAttachment(file),
+          child: Icon(Icons.delete_outline, size: 20, color: CupertinoColors.systemRed.resolveFrom(context)),
+        ),
+      ],
     );
   }
 
@@ -433,28 +446,6 @@ class _BalanceFlowFormPageState extends State<BalanceFlowFormPage> {
     if (ct.contains('pdf')) return Icons.picture_as_pdf_outlined;
     if (ct.contains('zip') || ct.contains('compressed')) return Icons.folder_zip_outlined;
     return Icons.insert_drive_file_outlined;
-  }
-
-  Widget _buildDateField(ThemeData theme) {
-    final loc = S.of(context);
-    String two(int n) => n.toString().padLeft(2, '0');
-    final text = '${_selectedDate.year}-${two(_selectedDate.month)}-${two(_selectedDate.day)}';
-    return InkWell(
-      onTap: _pickDate, borderRadius: BorderRadius.circular(12),
-      child: InputDecorator(
-        decoration: InputDecoration(labelText: loc.fieldFlowDate, prefixIcon: Icon(Icons.calendar_today_outlined), border: OutlineInputBorder()),
-        child: Text(text),
-      ),
-    );
-  }
-
-  Widget _buildDropdown(ThemeData theme, {required String label, required int? value, required List<DropdownItem> items, required ValueChanged<int?> onChanged}) {
-    return DropdownButtonFormField<int>(
-      value: value,
-      decoration: InputDecoration(labelText: label, border: const OutlineInputBorder()),
-      items: items.map((item) => DropdownMenuItem<int>(value: item.value, child: Text(item.label))).toList(),
-      onChanged: onChanged,
-    );
   }
 }
 

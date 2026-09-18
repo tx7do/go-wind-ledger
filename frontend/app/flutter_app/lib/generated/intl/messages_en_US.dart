@@ -605,6 +605,12 @@ class MessageLookup extends MessageLookupByLibrary {
     "searchHint": MessageLookupByLibrary.simpleMessage(
       "Search articles, tags...",
     ),
+    "sectionAccount": MessageLookupByLibrary.simpleMessage("Account"),
+    "sectionAmount": MessageLookupByLibrary.simpleMessage("Amounts"),
+    "sectionBasic": MessageLookupByLibrary.simpleMessage("General"),
+    "sectionConvert": MessageLookupByLibrary.simpleMessage("Rate Conversion"),
+    "sectionPermission": MessageLookupByLibrary.simpleMessage("Permissions"),
+    "sectionRepeat": MessageLookupByLibrary.simpleMessage("Repeat Rule"),
     "selectAccount": MessageLookupByLibrary.simpleMessage(
       "Please select an account",
     ),

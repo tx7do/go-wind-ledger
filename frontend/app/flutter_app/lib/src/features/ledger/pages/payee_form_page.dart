@@ -10,7 +10,8 @@ import 'package:flutter_app/generated/api/app/service/v1/index.dart'
 import 'package:flutter_app/generated/l10n.dart';
 import 'package:flutter_app/src/core/logic/api/form_cubit.dart';
 import 'package:flutter_app/src/core/themes/const.dart';
-import 'package:flutter_app/src/core/transport/http/status.dart';
+import 'package:flutter_app/src/core/widgets/app_button.dart';
+import 'package:flutter_app/src/core/widgets/app_form_rows.dart';
 import 'package:flutter_app/src/features/ledger/services/book_service.dart';
 import 'package:flutter_app/src/features/ledger/services/payee_service.dart';
 
@@ -122,45 +123,52 @@ class _PayeeFormPageState extends State<PayeeFormPage> {
     final loc = S.of(context);
     return Scaffold(
       appBar: CupertinoNavigationBar(middle: Text(widget.editId == null ? loc.create : loc.edit)),
-      body: SingleChildScrollView(
-        padding: const EdgeInsets.all(16),
+      body: SafeArea(
         child: Form(
           key: _formKey,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              TextFormField(
-                controller: _nameCtrl,
-                decoration: InputDecoration(labelText: loc.fieldPayeeName, prefixIcon: Icon(Icons.person_outline), border: OutlineInputBorder()),
-                validator: (v) => (v == null || v.trim().isEmpty) ? loc.enterPayeeName : null,
-              ),
-              const SizedBox(height: 12),
-              DropdownButtonFormField<int>(
-                value: _bookId,
-                decoration: InputDecoration(labelText: loc.fieldBook, prefixIcon: Icon(Icons.menu_book_outlined), border: OutlineInputBorder()),
-                items: _books.map((b) => DropdownMenuItem(value: b.id, child: Text(b.name ?? loc.unnamed))).toList(),
-                onChanged: (v) => setState(() => _bookId = v),
-              ),
-              const SizedBox(height: 12),
-              SwitchListTile(title: Text(loc.fieldUsableExpense), value: _canExpense, onChanged: (v) => setState(() => _canExpense = v)),
-              SwitchListTile(title: Text(loc.fieldUsableIncome), value: _canIncome, onChanged: (v) => setState(() => _canIncome = v)),
-              const SizedBox(height: 12),
-              TextFormField(
-                controller: _sortOrderCtrl, keyboardType: TextInputType.number,
-                decoration: InputDecoration(labelText: loc.fieldSortOrder, prefixIcon: Icon(Icons.sort), border: OutlineInputBorder()),
-              ),
-              const SizedBox(height: 12),
-              TextFormField(
-                controller: _notesCtrl, maxLines: 3,
-                decoration: InputDecoration(labelText: loc.fieldDescription, prefixIcon: Icon(Icons.notes), border: OutlineInputBorder()),
-              ),
-              const SizedBox(height: 24),
-              FilledButton(
-                onPressed: _formCubit.state == FormLoadState.saving ? null : _submit,
-                style: FilledButton.styleFrom(padding: const EdgeInsets.symmetric(vertical: 14)),
-                child: Text(widget.editId == null ? loc.flowSave : loc.flowUpdate),
-              ),
-            ],
+          child: SingleChildScrollView(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                AppFormSection(header: loc.sectionBasic, children: [
+                  CupertinoTextFormFieldRow(
+                    prefix: Text(loc.fieldPayeeName),
+                    controller: _nameCtrl,
+                    validator: (v) => (v == null || v.trim().isEmpty) ? loc.enterPayeeName : null,
+                  ),
+                  AppSelectRow<int?>(
+                    label: loc.fieldBook,
+                    icon: Icons.menu_book_outlined,
+                    value: _bookId,
+                    options: _books
+                        .map((b) => AppSelectOption<int?>(value: b.id, label: b.name ?? loc.unnamed))
+                        .toList(),
+                    onChanged: (v) => setState(() => _bookId = v),
+                  ),
+                  CupertinoTextFormFieldRow(
+                    prefix: Text(loc.fieldSortOrder),
+                    controller: _sortOrderCtrl,
+                    keyboardType: TextInputType.number,
+                  ),
+                  CupertinoTextFormFieldRow(
+                    prefix: Text(loc.fieldDescription),
+                    controller: _notesCtrl,
+                    maxLines: 3,
+                  ),
+                ]),
+                AppFormSection(header: loc.sectionPermission, children: [
+                  AppSwitchRow(label: loc.fieldUsableExpense, value: _canExpense, onChanged: (v) => setState(() => _canExpense = v)),
+                  AppSwitchRow(label: loc.fieldUsableIncome, value: _canIncome, onChanged: (v) => setState(() => _canIncome = v)),
+                ]),
+                Padding(
+                  padding: const EdgeInsets.all(kDefaultPadding),
+                  child: AppFilledButton(
+                    label: widget.editId == null ? loc.flowSave : loc.flowUpdate,
+                    onPressed: _formCubit.state == FormLoadState.saving ? null : _submit,
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
       ),
@@ -181,12 +189,13 @@ class _PayeeFormPageState extends State<PayeeFormPage> {
             Text(msg.isNotEmpty ? msg : loc.loadFailed,
                 style: Theme.of(context).textTheme.bodyLarge?.copyWith(color: Theme.of(context).colorScheme.error)),
             const SizedBox(height: 16),
-            FilledButton.icon(
+            AppGhostButton(
+              label: loc.retry,
+              icon: Icons.refresh,
               onPressed: () => _formCubit.loadInitial(() async {
                 await _loadBooks();
                 if (widget.editId != null) await _loadEditTarget();
               }),
-              icon: const Icon(Icons.refresh), label: Text(loc.retry),
             ),
           ],
         ),

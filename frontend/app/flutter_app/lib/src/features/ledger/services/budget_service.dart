@@ -2,7 +2,6 @@ import 'package:dio/dio.dart' show Dio, DioException;
 import 'package:get_it/get_it.dart' show GetIt;
 
 import 'package:flutter_app/src/core/services/base_service.dart';
-import 'package:flutter_app/src/core/transport/http/index.dart';
 import 'package:flutter_app/src/core/utilities/convert.dart' show parseInt;
 
 /// 预算周期类型。
@@ -234,12 +233,12 @@ class BudgetService extends BaseService {
     }
   }
 
-  /// 创建预算
+  /// 创建预算（REST 契约：CreateBudgetRequest{data}）
   Future<dynamic> create(Budget data) async {
     try {
       final resp = await _dio.post<dynamic>(
         _base,
-        data: data.toJson(),
+        data: {'data': data.toJson()},
       );
       final body = resp.data;
       if (body is Map<String, dynamic>) {
@@ -257,7 +256,7 @@ class BudgetService extends BaseService {
     try {
       final resp = await _dio.put<dynamic>(
         '$_base/$id',
-        data: data.toJson(),
+        data: {'data': data.toJson()},
       );
       final body = resp.data;
       if (body is Map<String, dynamic>) {

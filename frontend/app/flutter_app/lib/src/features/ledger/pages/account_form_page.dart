@@ -14,7 +14,8 @@ import 'package:flutter_app/generated/api/app/service/v1/index.dart'
 import 'package:flutter_app/generated/l10n.dart';
 import 'package:flutter_app/src/core/logic/api/form_cubit.dart';
 import 'package:flutter_app/src/core/themes/const.dart';
-import 'package:flutter_app/src/core/transport/http/status.dart';
+import 'package:flutter_app/src/core/widgets/app_button.dart';
+import 'package:flutter_app/src/core/widgets/app_form_rows.dart';
 import 'package:flutter_app/src/features/ledger/services/account_service.dart';
 import 'package:flutter_app/src/features/ledger/services/currency_service.dart';
 
@@ -145,56 +146,83 @@ class _AccountFormPageState extends State<AccountFormPage> {
     final loc = S.of(context);
     return Scaffold(
       appBar: CupertinoNavigationBar(middle: Text(widget.editId == null ? loc.create : loc.edit)),
-      body: SingleChildScrollView(
-        padding: const EdgeInsets.all(16),
+      body: SafeArea(
         child: Form(
           key: _formKey,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              _buildTextField(controller: _nameCtrl, label: loc.fieldBookName, icon: Icons.label_outline, required: true),
-              const SizedBox(height: 12),
-              DropdownButtonFormField<LedgerServiceV1AccountType>(
-                value: _type,
-                decoration: InputDecoration(labelText: loc.fieldAccountType, prefixIcon: Icon(Icons.category_outlined), border: OutlineInputBorder()),
-                items: [
-                  DropdownMenuItem(value: LedgerServiceV1AccountType.accountTypeChecking, child: Text(loc.accountTypeChecking)),
-                  DropdownMenuItem(value: LedgerServiceV1AccountType.accountTypeAsset, child: Text(loc.accountTypeAsset)),
-                  DropdownMenuItem(value: LedgerServiceV1AccountType.accountTypeCredit, child: Text(loc.accountTypeCredit)),
-                  DropdownMenuItem(value: LedgerServiceV1AccountType.accountTypeDebt, child: Text(loc.accountTypeDebt)),
-                ],
-                onChanged: (v) { if (v != null) setState(() => _type = v); },
-              ),
-              const SizedBox(height: 12),
-              DropdownButtonFormField<String>(
-                value: _currencyCode,
-                decoration: InputDecoration(labelText: loc.fieldCurrency, prefixIcon: Icon(Icons.currency_exchange_outlined), border: OutlineInputBorder()),
-                items: _currencies.map((c) => DropdownMenuItem(value: c.code, child: Text('${c.code} - ${c.name ?? ''}'))).toList(),
-                onChanged: (v) { if (v != null) setState(() => _currencyCode = v); },
-              ),
-              const SizedBox(height: 12),
-              _buildTextField(controller: _initialBalanceCtrl, label: loc.fieldOpeningBalance, icon: Icons.account_balance_outlined, numeric: true),
-              const SizedBox(height: 12),
-              _buildTextField(controller: _creditLimitCtrl, label: loc.fieldCreditLimit, icon: Icons.credit_card_outlined, numeric: true),
-              const SizedBox(height: 12),
-              _buildTextField(controller: _aprCtrl, label: loc.fieldAnnualRate, icon: Icons.percent_outlined, numeric: true),
-              const SizedBox(height: 12),
-              _buildTextField(controller: _noCtrl, label: loc.fieldAccountNumberTail, icon: Icons.numbers_outlined),
-              const SizedBox(height: 12),
-              _buildTextField(controller: _notesCtrl, label: loc.fieldDescription, icon: Icons.notes, maxLines: 3),
-              const SizedBox(height: 12),
-              _buildSwitchTile(loc.fieldAllowExpense, _canExpense, (v) => setState(() => _canExpense = v)),
-              _buildSwitchTile(loc.fieldAllowIncome, _canIncome, (v) => setState(() => _canIncome = v)),
-              _buildSwitchTile(loc.fieldAllowTransferOut, _canTransferFrom, (v) => setState(() => _canTransferFrom = v)),
-              _buildSwitchTile(loc.fieldAllowTransferIn, _canTransferTo, (v) => setState(() => _canTransferTo = v)),
-              _buildSwitchTile(loc.fieldIncludeInAssets, _include, (v) => setState(() => _include = v)),
-              const SizedBox(height: 24),
-              FilledButton(
-                onPressed: _formCubit.state == FormLoadState.saving ? null : _submit,
-                style: FilledButton.styleFrom(padding: const EdgeInsets.symmetric(vertical: 14)),
-                child: Text(widget.editId == null ? loc.flowSave : loc.flowUpdate),
-              ),
-            ],
+          child: SingleChildScrollView(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                AppFormSection(header: loc.sectionAccount, children: [
+                  CupertinoTextFormFieldRow(
+                    prefix: Text(loc.fieldAccountName),
+                    controller: _nameCtrl,
+                    validator: (v) => (v == null || v.trim().isEmpty) ? loc.enterField(loc.fieldBookName) : null,
+                  ),
+                  AppSelectRow<LedgerServiceV1AccountType>(
+                    label: loc.fieldAccountType,
+                    icon: Icons.category_outlined,
+                    value: _type,
+                    options: [
+                      AppSelectOption(value: LedgerServiceV1AccountType.accountTypeChecking, label: loc.accountTypeChecking),
+                      AppSelectOption(value: LedgerServiceV1AccountType.accountTypeAsset, label: loc.accountTypeAsset),
+                      AppSelectOption(value: LedgerServiceV1AccountType.accountTypeCredit, label: loc.accountTypeCredit),
+                      AppSelectOption(value: LedgerServiceV1AccountType.accountTypeDebt, label: loc.accountTypeDebt),
+                    ],
+                    onChanged: (v) => setState(() => _type = v),
+                  ),
+                  AppSelectRow<String?>(
+                    label: loc.fieldCurrency,
+                    icon: Icons.currency_exchange_outlined,
+                    value: _currencyCode,
+                    options: _currencies
+                        .map((c) => AppSelectOption(value: c.code, label: '${c.code} - ${c.name ?? ''}'))
+                        .toList(),
+                    onChanged: (v) { if (v != null) setState(() => _currencyCode = v); },
+                  ),
+                  CupertinoTextFormFieldRow(
+                    prefix: Text(loc.fieldAccountNumberTail),
+                    controller: _noCtrl,
+                  ),
+                  CupertinoTextFormFieldRow(
+                    prefix: Text(loc.fieldDescription),
+                    controller: _notesCtrl,
+                    maxLines: 3,
+                  ),
+                ]),
+                AppFormSection(header: loc.sectionAmount, children: [
+                  CupertinoTextFormFieldRow(
+                    prefix: Text(loc.fieldOpeningBalance),
+                    controller: _initialBalanceCtrl,
+                    keyboardType: const TextInputType.numberWithOptions(decimal: true),
+                  ),
+                  CupertinoTextFormFieldRow(
+                    prefix: Text(loc.fieldCreditLimit),
+                    controller: _creditLimitCtrl,
+                    keyboardType: const TextInputType.numberWithOptions(decimal: true),
+                  ),
+                  CupertinoTextFormFieldRow(
+                    prefix: Text(loc.fieldAnnualRate),
+                    controller: _aprCtrl,
+                    keyboardType: const TextInputType.numberWithOptions(decimal: true),
+                  ),
+                ]),
+                AppFormSection(header: loc.sectionPermission, children: [
+                  AppSwitchRow(label: loc.fieldAllowExpense, value: _canExpense, onChanged: (v) => setState(() => _canExpense = v)),
+                  AppSwitchRow(label: loc.fieldAllowIncome, value: _canIncome, onChanged: (v) => setState(() => _canIncome = v)),
+                  AppSwitchRow(label: loc.fieldAllowTransferOut, value: _canTransferFrom, onChanged: (v) => setState(() => _canTransferFrom = v)),
+                  AppSwitchRow(label: loc.fieldAllowTransferIn, value: _canTransferTo, onChanged: (v) => setState(() => _canTransferTo = v)),
+                  AppSwitchRow(label: loc.fieldIncludeInAssets, value: _include, onChanged: (v) => setState(() => _include = v)),
+                ]),
+                Padding(
+                  padding: const EdgeInsets.all(kDefaultPadding),
+                  child: AppFilledButton(
+                    label: widget.editId == null ? loc.flowSave : loc.flowUpdate,
+                    onPressed: _formCubit.state == FormLoadState.saving ? null : _submit,
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
       ),
@@ -215,31 +243,17 @@ class _AccountFormPageState extends State<AccountFormPage> {
             Text(msg.isNotEmpty ? msg : loc.loadFailed,
                 style: Theme.of(context).textTheme.bodyLarge?.copyWith(color: Theme.of(context).colorScheme.error)),
             const SizedBox(height: 16),
-            FilledButton.icon(
+            AppGhostButton(
+              label: loc.retry,
+              icon: Icons.refresh,
               onPressed: () => _formCubit.loadInitial(() async {
                 await _loadCurrencies();
                 if (widget.editId != null) await _loadEditTarget();
               }),
-              icon: const Icon(Icons.refresh), label: Text(loc.retry),
             ),
           ],
         ),
       ),
     );
-  }
-
-  Widget _buildTextField({required TextEditingController controller, required String label, required IconData icon, bool numeric = false, int maxLines = 1, bool required = false}) {
-    final loc = S.of(context);
-    return TextFormField(
-      controller: controller,
-      keyboardType: numeric ? const TextInputType.numberWithOptions(decimal: true) : TextInputType.text,
-      maxLines: maxLines,
-      decoration: InputDecoration(labelText: label, prefixIcon: Icon(icon), border: const OutlineInputBorder()),
-      validator: required ? (v) => (v == null || v.trim().isEmpty) ? loc.enterField(label) : null : null,
-    );
-  }
-
-  Widget _buildSwitchTile(String title, bool value, ValueChanged<bool> onChanged) {
-    return SwitchListTile(title: Text(title), value: value, onChanged: onChanged);
   }
 }

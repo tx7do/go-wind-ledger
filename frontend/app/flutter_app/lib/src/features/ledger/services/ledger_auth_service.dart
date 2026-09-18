@@ -11,7 +11,6 @@ import 'package:flutter_app/generated/api/app/service/v1/index.dart'
         SetDefaultTenantRequest;
 
 import 'package:flutter_app/src/core/services/base_service.dart';
-import 'package:flutter_app/src/core/transport/http/index.dart';
 
 /// 记账认证服务
 ///

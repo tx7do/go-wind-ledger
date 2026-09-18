@@ -1,4 +1,5 @@
-import 'package:flutter/material.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart' show Icons;
 
 import 'package:flutter_app/generated/api/app/service/v1/index.dart'
     show LedgerServiceV1FlowType;
@@ -6,8 +7,8 @@ import 'package:flutter_app/generated/l10n.dart';
 
 /// 流水类型选择器：支出/收入/转账。
 ///
-/// 使用 MD3 原生 [SegmentedButton]，选中态自动绑定 `primaryContainer`，
-/// 颜色、动效、触控热区均随主题联动，无需手写。
+/// 使用 iOS 原生 [CupertinoSlidingSegmentedControl]，选中态滑动过渡，
+/// 颜色随主题种子色联动，无需手写。
 class FlowTypeSelector extends StatelessWidget {
   /// 当前选中的流水类型。
   final LedgerServiceV1FlowType value;
@@ -42,27 +43,27 @@ class FlowTypeSelector extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final labels = _labels(context);
-    final segments = List<ButtonSegment<LedgerServiceV1FlowType>>.generate(
-      _types.length,
-      (i) => ButtonSegment<LedgerServiceV1FlowType>(
-        value: _types[i],
-        icon: Icon(_icons[i]),
-        label: Text(labels[i]),
-      ),
-    );
 
-    return SegmentedButton<LedgerServiceV1FlowType>(
-      style: const ButtonStyle(
-        visualDensity: VisualDensity(horizontal: -3, vertical: -3),
-      ),
-      segments: segments,
-      selected: {value},
-      onSelectionChanged: (selection) {
-        final next = selection.first;
-        if (next != value) onChanged(next);
+    return CupertinoSlidingSegmentedControl<LedgerServiceV1FlowType>(
+      groupValue: value,
+      onValueChanged: (next) {
+        if (next != null && next != value) onChanged(next);
       },
-      showSelectedIcon: false,
-      multiSelectionEnabled: false,
+      children: {
+        for (var i = 0; i < _types.length; i++)
+          _types[i]: Padding(
+            padding: const EdgeInsets.symmetric(vertical: 6),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Icon(_icons[i], size: 16),
+                const SizedBox(width: 4),
+                Text(labels[i], style: const TextStyle(fontSize: 14)),
+              ],
+            ),
+          ),
+      },
     );
   }
 }

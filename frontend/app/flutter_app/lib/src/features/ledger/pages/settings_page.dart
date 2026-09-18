@@ -1,5 +1,5 @@
-import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:go_router/go_router.dart';
@@ -12,10 +12,13 @@ import 'package:flutter_app/src/core/logic/api/form_cubit.dart';
 import 'package:flutter_app/src/core/themes/cubit/app_theme_cubit.dart';
 import 'package:flutter_app/src/core/transport/http/status.dart';
 import 'package:flutter_app/src/core/utils/responsive_utils.dart';
+import 'package:flutter_app/src/core/widgets/app_button.dart';
+import 'package:flutter_app/src/core/widgets/app_form_rows.dart';
+import 'package:flutter_app/src/core/widgets/app_pull_refresh.dart';
 import 'package:flutter_app/src/features/auth/cubit/auth_cubit.dart';
 import 'package:flutter_app/src/features/ledger/services/ledger_auth_service.dart';
 
-/// 记账设置页。
+/// 记账设置页（iOS 分组列表风格）。
 class SettingsPage extends StatefulWidget {
   const SettingsPage({super.key});
 
@@ -105,32 +108,33 @@ class _SettingsPageState extends State<SettingsPage> {
   }
 
   Widget _buildContent(BuildContext context) {
-    final theme = Theme.of(context);
     final loc = S.of(context);
     return Scaffold(
       appBar: CupertinoNavigationBar(middle: Text(loc.settings)),
-      body: RefreshIndicator(
+      body: AppPullRefresh(
         onRefresh: () => _formCubit.loadInitial(_doLoad),
-        child: Center(
-          child: ConstrainedBox(
-            constraints: BoxConstraints(maxWidth: ResponsiveUtils.contentMaxWidth(context)),
-            child: ListView(
-              padding: const EdgeInsets.symmetric(vertical: 12),
-              children: [
-                _buildUserCard(theme, loc),
-                _buildThemeModeSwitcher(theme, loc),
-                _buildColorPicker(theme, loc),
-                _buildLanguageSwitcher(theme, loc),
-                _buildSectionHeader(theme, loc.currentDefault),
-                _buildInfoTile(theme, icon: Icons.apartment_outlined, label: loc.defaultTenant, value: _state?.tenant?.name ?? loc.notSet),
-                _buildInfoTile(theme, icon: Icons.menu_book_outlined, label: loc.defaultBook, value: _state?.book?.name ?? loc.notSet),
-                _buildTenantSwitcher(theme, loc),
-                _buildBookSwitcher(theme, loc),
-                _buildLogoutSection(theme, loc),
-              ],
+        children: [
+          Center(
+            child: ConstrainedBox(
+              constraints: BoxConstraints(maxWidth: ResponsiveUtils.contentMaxWidth(context)),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  _buildUserCard(context),
+                  _buildThemeModeSwitcher(context),
+                  _buildColorPicker(context),
+                  _buildLanguageSwitcher(context),
+                  _buildSectionHeader(context, loc.currentDefault),
+                  _buildInfoTile(context, icon: Icons.apartment_outlined, label: loc.defaultTenant, value: _state?.tenant?.name ?? loc.notSet),
+                  _buildInfoTile(context, icon: Icons.menu_book_outlined, label: loc.defaultBook, value: _state?.book?.name ?? loc.notSet),
+                  _buildTenantSwitcher(context),
+                  _buildBookSwitcher(context),
+                  _buildLogoutSection(context),
+                ],
+              ),
             ),
           ),
-        ),
+        ],
       ),
     );
   }
@@ -149,73 +153,189 @@ class _SettingsPageState extends State<SettingsPage> {
             Text(msg.isNotEmpty ? msg : loc.loadFailed,
                 style: Theme.of(context).textTheme.bodyLarge?.copyWith(color: Theme.of(context).colorScheme.error)),
             const SizedBox(height: 16),
-            FilledButton.icon(onPressed: () => _formCubit.loadInitial(_doLoad), icon: const Icon(Icons.refresh), label: Text(loc.retry)),
+            AppGhostButton(
+              label: loc.retry,
+              icon: Icons.refresh,
+              onPressed: () => _formCubit.loadInitial(_doLoad),
+            ),
           ],
         ),
       ),
     );
   }
 
-  // ---- UI helpers (unchanged below) ----
+  // ---- UI helpers ----
 
-  Widget _buildUserCard(ThemeData theme, S loc) {
+  Widget _buildUserCard(BuildContext context) {
+    final theme = Theme.of(context);
+    final loc = S.of(context);
     final user = _state?.user;
     final displayName = (user?.nickname?.isNotEmpty == true) ? user!.nickname! : (user?.username ?? loc.unknownUser);
-    return Card(
-      margin: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
-      child: ListTile(
-        leading: CircleAvatar(backgroundColor: theme.colorScheme.primaryContainer, foregroundColor: theme.colorScheme.onPrimaryContainer, child: const Icon(Icons.person_outline)),
-        title: Text(displayName),
-        subtitle: Text((user?.username ?? '').isNotEmpty ? '@${user!.username}' : '', style: theme.textTheme.bodySmall),
-      ),
+    return CupertinoListSection.insetGrouped(
+      children: [
+        CupertinoListTile(
+          leading: CircleAvatar(backgroundColor: theme.colorScheme.primaryContainer, foregroundColor: theme.colorScheme.onPrimaryContainer, child: const Icon(Icons.person_outline)),
+          title: Text(displayName),
+          subtitle: Text((user?.username ?? '').isNotEmpty ? '@${user!.username}' : '', style: theme.textTheme.bodySmall),
+        ),
+      ],
     );
   }
 
-  Widget _buildSectionHeader(ThemeData theme, String text) {
+  Widget _buildSectionHeader(BuildContext context, String text) {
+    final theme = Theme.of(context);
     return Padding(
       padding: const EdgeInsets.fromLTRB(16, 16, 16, 4),
       child: Text(text, style: theme.textTheme.titleSmall?.copyWith(fontWeight: FontWeight.bold)),
     );
   }
 
-  Widget _buildInfoTile(ThemeData theme, {required IconData icon, required String label, required String value}) {
-    return Card(
-      margin: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
-      child: ListTile(
-        leading: Icon(icon, color: theme.colorScheme.primary),
-        title: Text(label, style: theme.textTheme.bodySmall),
-        subtitle: Text(value, style: theme.textTheme.titleMedium?.copyWith(fontWeight: FontWeight.w600)),
-      ),
+  Widget _buildInfoTile(BuildContext context, {required IconData icon, required String label, required String value}) {
+    final theme = Theme.of(context);
+    return CupertinoListSection.insetGrouped(
+      children: [
+        CupertinoListTile(
+          leading: Icon(icon, color: theme.colorScheme.primary),
+          title: Text(label, style: theme.textTheme.bodySmall),
+          subtitle: Text(value, style: theme.textTheme.titleMedium?.copyWith(fontWeight: FontWeight.w600)),
+        ),
+      ],
     );
   }
 
-  Widget _buildTenantSwitcher(ThemeData theme, S loc) {
+  /// 通用底部滚轮选择器（租户/账本切换共用）。
+  Future<void> _showIdPicker<T>({
+    required List<T> items,
+    required T? current,
+    required String Function(T) labelOf,
+    required ValueChanged<T> onPicked,
+  }) async {
+    final loc = S.of(context);
+    if (items.isEmpty) return;
+    T? selected = current;
+    await showCupertinoModalPopup<void>(
+      context: context,
+      builder: (ctx) => Container(
+        height: 280,
+        color: CupertinoColors.systemBackground.resolveFrom(ctx),
+        child: SafeArea(
+          top: false,
+          child: Column(
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  CupertinoButton(
+                    onPressed: () => Navigator.of(ctx).pop(),
+                    child: Text(
+                      loc.confirm,
+                      style: TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.w600,
+                        color: CupertinoTheme.of(ctx).primaryColor,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+              Expanded(
+                child: CupertinoPicker(
+                  scrollController: FixedExtentScrollController(
+                    initialItem: (current != null && items.contains(current)) ? items.indexOf(current) : 0,
+                  ),
+                  itemExtent: 40,
+                  useMagnifier: true,
+                  magnification: 1.05,
+                  onSelectedItemChanged: (i) => selected = items[i],
+                  children: items
+                      .map((v) => Center(child: Text(labelOf(v), style: const TextStyle(fontSize: 18))))
+                      .toList(),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+    if (selected != null && selected != current) onPicked(selected as T);
+  }
+
+  T? _firstWhereOrNull<T>(Iterable<T> items, bool Function(T) test) {
+    for (final item in items) {
+      if (test(item)) return item;
+    }
+    return null;
+  }
+
+  Widget _buildTenantSwitcher(BuildContext context) {
+    final theme = Theme.of(context);
+    final loc = S.of(context);
     return Padding(
       padding: const EdgeInsets.fromLTRB(16, 16, 16, 0),
       child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
         Text(loc.switchDefaultTenant, style: theme.textTheme.titleSmall?.copyWith(fontWeight: FontWeight.bold)),
         const SizedBox(height: 8),
-        DropdownButtonFormField<int>(
-          value: _tenantId,
-          decoration: InputDecoration(labelText: loc.defaultTenant, prefixIcon: const Icon(Icons.apartment_outlined), border: const OutlineInputBorder(), isDense: true),
-          items: _tenants.map((t) => DropdownMenuItem<int>(value: t.id, child: Text(t.name ?? loc.unnamed))).toList(),
-          onChanged: _switchTenant,
+        CupertinoButton(
+          padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
+          color: CupertinoColors.secondarySystemGroupedBackground.resolveFrom(context),
+          borderRadius: BorderRadius.circular(12),
+          onPressed: () => _showIdPicker<IdentityServiceV1Tenant>(
+            items: _tenants,
+            current: _firstWhereOrNull(_tenants, (t) => t.id == _tenantId),
+            labelOf: (t) => t.name ?? loc.unnamed,
+            onPicked: (t) => _switchTenant(t.id),
+          ),
+          child: Row(
+            children: [
+              Icon(Icons.apartment_outlined, size: 20, color: theme.colorScheme.primary),
+              const SizedBox(width: 8),
+              Expanded(
+                child: Text(
+                  _firstWhereOrNull(_tenants, (t) => t.id == _tenantId)?.name ?? loc.notSet,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                ),
+              ),
+              const CupertinoListTileChevron(),
+            ],
+          ),
         ),
       ]),
     );
   }
 
-  Widget _buildBookSwitcher(ThemeData theme, S loc) {
+  Widget _buildBookSwitcher(BuildContext context) {
+    final theme = Theme.of(context);
+    final loc = S.of(context);
     return Padding(
       padding: const EdgeInsets.fromLTRB(16, 16, 16, 16),
       child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
         Text(loc.switchDefaultBook, style: theme.textTheme.titleSmall?.copyWith(fontWeight: FontWeight.bold)),
         const SizedBox(height: 8),
-        DropdownButtonFormField<int>(
-          value: _bookId,
-          decoration: InputDecoration(labelText: loc.defaultBook, prefixIcon: const Icon(Icons.menu_book_outlined), border: const OutlineInputBorder(), isDense: true),
-          items: _books.map((b) => DropdownMenuItem<int>(value: b.id, child: Text(b.name ?? loc.unnamed))).toList(),
-          onChanged: _switchBook,
+        CupertinoButton(
+          padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
+          color: CupertinoColors.secondarySystemGroupedBackground.resolveFrom(context),
+          borderRadius: BorderRadius.circular(12),
+          onPressed: () => _showIdPicker<LedgerServiceV1Book>(
+            items: _books,
+            current: _firstWhereOrNull(_books, (b) => b.id == _bookId),
+            labelOf: (b) => b.name ?? loc.unnamed,
+            onPicked: (b) => _switchBook(b.id),
+          ),
+          child: Row(
+            children: [
+              Icon(Icons.menu_book_outlined, size: 20, color: theme.colorScheme.primary),
+              const SizedBox(width: 8),
+              Expanded(
+                child: Text(
+                  _firstWhereOrNull(_books, (b) => b.id == _bookId)?.name ?? loc.notSet,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                ),
+              ),
+              const CupertinoListTileChevron(),
+            ],
+          ),
         ),
       ]),
     );
@@ -228,36 +348,54 @@ class _SettingsPageState extends State<SettingsPage> {
     Color(0xFFE65100), Color(0xFF00838F), Color(0xFFC62828),
   ];
 
-  Widget _buildThemeModeSwitcher(ThemeData theme, S loc) {
+  Widget _buildThemeModeSwitcher(BuildContext context) {
+    final theme = Theme.of(context);
+    final loc = S.of(context);
     final cubit = context.watch<AppThemeCubit>();
-    return Card(
-      margin: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
-      child: Padding(
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(16, 12, 16, 0),
+      child: AppCard(
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
         child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
           Row(children: [Icon(Icons.brightness_6_outlined, size: 20, color: theme.colorScheme.primary), const SizedBox(width: 8), Text(loc.themeMode, style: theme.textTheme.titleSmall?.copyWith(fontWeight: FontWeight.bold))]),
           const SizedBox(height: 12),
-          SegmentedButton<ThemeMode>(
-            segments: [
-              ButtonSegment(value: ThemeMode.light, icon: const Icon(Icons.light_mode_outlined, size: 18), label: Text(loc.light)),
-              ButtonSegment(value: ThemeMode.dark, icon: const Icon(Icons.dark_mode_outlined, size: 18), label: Text(loc.dark)),
-              ButtonSegment(value: ThemeMode.system, icon: const Icon(Icons.settings_suggest_outlined, size: 18), label: Text(loc.followSystem)),
-            ],
-            selected: {cubit.themeMode},
-            onSelectionChanged: (mode) => cubit.modify(mode.first),
-            style: ButtonStyle(visualDensity: VisualDensity.compact, tapTargetSize: MaterialTapTargetSize.shrinkWrap),
+          CupertinoSlidingSegmentedControl<ThemeMode>(
+            groupValue: cubit.themeMode,
+            onValueChanged: (mode) { if (mode != null) cubit.modify(mode); },
+            children: {
+              ThemeMode.light: _segmentIconText(Icons.light_mode_outlined, loc.light),
+              ThemeMode.dark: _segmentIconText(Icons.dark_mode_outlined, loc.dark),
+              ThemeMode.system: _segmentIconText(Icons.settings_suggest_outlined, loc.followSystem),
+            },
           ),
         ]),
       ),
     );
   }
 
-  Widget _buildColorPicker(ThemeData theme, S loc) {
+  Widget _segmentIconText(IconData icon, String label) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 4),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Icon(icon, size: 16),
+          const SizedBox(width: 4),
+          Text(label, style: const TextStyle(fontSize: 13)),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildColorPicker(BuildContext context) {
+    final theme = Theme.of(context);
+    final loc = S.of(context);
     final cubit = context.watch<AppThemeCubit>();
     final currentColor = cubit.currentSeedColor;
-    return Card(
-      margin: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
-      child: Padding(
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(16, 12, 16, 0),
+      child: AppCard(
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
         child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
           Row(children: [Icon(Icons.palette_outlined, size: 20, color: theme.colorScheme.primary), const SizedBox(width: 8), Text(loc.themeColor, style: theme.textTheme.titleSmall?.copyWith(fontWeight: FontWeight.bold))]),
@@ -282,42 +420,44 @@ class _SettingsPageState extends State<SettingsPage> {
     );
   }
 
-  Widget _buildLanguageSwitcher(ThemeData theme, S loc) {
+  Widget _buildLanguageSwitcher(BuildContext context) {
+    final theme = Theme.of(context);
+    final loc = S.of(context);
     final cubit = context.watch<AppThemeCubit>();
-    return Card(
-      margin: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
-      child: Padding(
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(16, 12, 16, 0),
+      child: AppCard(
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
         child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
           Row(children: [Icon(Icons.translate_outlined, size: 20, color: theme.colorScheme.primary), const SizedBox(width: 8), Text(loc.language, style: theme.textTheme.titleSmall?.copyWith(fontWeight: FontWeight.bold))]),
           const SizedBox(height: 12),
-          SegmentedButton<Locale>(
-            segments: cubit.supportedLocales.map((locale) {
-              return ButtonSegment(value: locale, label: Text(locale.languageCode == 'zh' ? loc.languageZh : 'English'));
-            }).toList(),
-            selected: {cubit.currentLocale},
-            onSelectionChanged: (locale) => cubit.modifyLocale(locale.first),
-            style: ButtonStyle(visualDensity: VisualDensity.compact, tapTargetSize: MaterialTapTargetSize.shrinkWrap),
+          CupertinoSlidingSegmentedControl<Locale>(
+            groupValue: cubit.currentLocale,
+            onValueChanged: (locale) { if (locale != null) cubit.modifyLocale(locale); },
+            children: {
+              for (final locale in cubit.supportedLocales)
+                locale: Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 4),
+                  child: Text(
+                    locale.languageCode == 'zh' ? loc.languageZh : 'English',
+                    style: const TextStyle(fontSize: 13),
+                  ),
+                ),
+            },
           ),
         ]),
       ),
     );
   }
 
-  Widget _buildLogoutSection(ThemeData theme, S loc) {
+  Widget _buildLogoutSection(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.fromLTRB(16, 8, 16, 32),
-      child: SizedBox(
-        width: double.infinity, height: 48,
-        child: OutlinedButton.icon(
-          onPressed: () => _handleLogout(loc),
-          icon: const Icon(Icons.logout, size: 20), label: Text(loc.logout),
-          style: OutlinedButton.styleFrom(
-            foregroundColor: theme.colorScheme.error,
-            side: BorderSide(color: theme.colorScheme.error.withAlpha(100)),
-            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-          ),
-        ),
+      child: AppFilledButton(
+        label: S.of(context).logout,
+        icon: Icons.logout,
+        destructive: true,
+        onPressed: () => _handleLogout(S.of(context)),
       ),
     );
   }

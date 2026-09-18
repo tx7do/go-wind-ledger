@@ -9,8 +9,10 @@ import 'package:flutter_app/generated/api/app/service/v1/index.dart'
 
 import 'package:flutter_app/generated/l10n.dart';
 import 'package:flutter_app/src/core/logic/api/list_api_cubit.dart';
-import 'package:flutter_app/src/core/themes/const.dart';
 import 'package:flutter_app/src/core/transport/http/status.dart';
+import 'package:flutter_app/src/core/widgets/app_button.dart';
+import 'package:flutter_app/src/core/widgets/app_action_sheet.dart';
+import 'package:flutter_app/src/core/widgets/app_pull_refresh.dart';
 import 'package:flutter_app/src/features/ledger/services/book_service.dart';
 
 typedef Book = LedgerServiceV1Book;
@@ -46,9 +48,8 @@ class _BookListView extends StatelessWidget {
     return Scaffold(
       appBar: CupertinoNavigationBar(
         middle: Text(loc.bookManagement),
-        trailing: IconButton(
-          icon: const Icon(Icons.add),
-          tooltip: loc.newBook,
+        trailing: AppNavIconButton(
+          icon: Icons.add,
           onPressed: () async {
             await context.push('/ledger/books/create');
             cubit.refresh();
@@ -60,17 +61,15 @@ class _BookListView extends StatelessWidget {
           Initial() || Loading() => const Center(child: CupertinoActivityIndicator()),
           Success(:final data) => data.isEmpty
               ? _buildEmpty(context, theme)
-              : RefreshIndicator(
+              : AppPullRefresh(
                   onRefresh: cubit.refresh,
-                  child: ListView(
-                    padding: const EdgeInsets.only(bottom: 80),
-                    children: [
-                      CupertinoListSection.insetGrouped(
-                        children:
-                            data.map((b) => _buildBookTile(context, theme, b)).toList(),
-                      ),
-                    ],
-                  ),
+                  padding: const EdgeInsets.only(bottom: 80),
+                  children: [
+                    CupertinoListSection.insetGrouped(
+                      children:
+                          data.map((b) => _buildBookTile(context, theme, b)).toList(),
+                    ),
+                  ],
                 ),
           Error(:final errorMessage) => _buildError(context, theme, errorMessage),
         },
@@ -149,9 +148,22 @@ class _BookListView extends StatelessWidget {
         loc.defaultCurrencyLabel(book.defaultCurrencyCode ?? '-'),
         style: theme.textTheme.bodySmall,
       ),
-      trailing: PopupMenuButton<String>(
-        icon: const Icon(Icons.more_vert, size: 20),
-        onSelected: (v) async {
+      trailing: AppNavIconButton(
+        icon: Icons.more_horiz,
+        onPressed: () async {
+          final v = await showAppActionSheet<String>(
+            context,
+            actions: [
+              AppActionSheetItem(value: 'edit', label: loc.edit, icon: Icons.edit_outlined),
+              AppActionSheetItem(
+                value: 'toggle',
+                label: enabled ? loc.disable : loc.enable,
+                icon: Icons.power_settings_new_outlined,
+              ),
+              AppActionSheetItem(value: 'delete', label: loc.delete, icon: Icons.delete_outline, destructive: true),
+            ],
+          );
+          if (v == null || !context.mounted) return;
           if (v == 'edit') {
             await context.push('/ledger/books/create?id=${book.id}');
             context.read<ListApiCubit<Book>>().refresh();
@@ -161,11 +173,6 @@ class _BookListView extends StatelessWidget {
             _delete(context, book);
           }
         },
-        itemBuilder: (ctx) => [
-          PopupMenuItem(value: 'edit', child: Text(loc.edit)),
-          PopupMenuItem(value: 'toggle', child: Text(enabled ? loc.disable : loc.enable)),
-          PopupMenuItem(value = 'delete', child: Text(loc.delete)),
-        ],
       ),
       onTap: () async {
         await context.push('/ledger/books/create?id=${book.id}');
@@ -185,13 +192,14 @@ class _BookListView extends StatelessWidget {
           Text(loc.noBooks,
               style: theme.textTheme.bodyLarge?.copyWith(color: theme.colorScheme.outline)),
           const SizedBox(height: 16),
-          FilledButton.icon(
+          AppFilledButton(
+            label: loc.newBook,
+            expanded: false,
+            icon: Icons.add,
             onPressed: () async {
               await context.push('/ledger/books/create');
               context.read<ListApiCubit<Book>>().refresh();
             },
-            icon: const Icon(Icons.add),
-            label: Text(loc.newBook),
           ),
         ],
       ),
@@ -209,10 +217,10 @@ class _BookListView extends StatelessWidget {
           Text(message.isNotEmpty ? message : loc.loadFailed,
               style: theme.textTheme.bodyLarge?.copyWith(color: theme.colorScheme.error)),
           const SizedBox(height: 16),
-          FilledButton.icon(
+          AppGhostButton(
+            label: loc.retry,
+            icon: Icons.refresh,
             onPressed: () => context.read<ListApiCubit<Book>>().refresh(),
-            icon: const Icon(Icons.refresh),
-            label: Text(loc.retry),
           ),
         ],
       ),

@@ -13,6 +13,9 @@ import 'package:flutter_app/generated/l10n.dart';
 import 'package:flutter_app/src/core/logic/api/list_api_cubit.dart';
 import 'package:flutter_app/src/core/themes/const.dart';
 import 'package:flutter_app/src/core/transport/http/status.dart';
+import 'package:flutter_app/src/core/widgets/app_button.dart';
+import 'package:flutter_app/src/core/widgets/app_pull_refresh.dart';
+import 'package:flutter_app/src/core/widgets/app_form_rows.dart';
 import 'package:flutter_app/src/features/ledger/services/currency_service.dart';
 
 typedef Currency = LedgerServiceV1Currency;
@@ -107,7 +110,7 @@ class _CurrencyListPageState extends State<CurrencyListPage> {
     return Scaffold(
       appBar: CupertinoNavigationBar(
         middle: Text(loc.currencyManagement),
-        trailing: IconButton(icon: const Icon(Icons.refresh), tooltip: loc.refreshRates, onPressed: _refreshRates),
+        trailing: AppNavIconButton(icon: Icons.refresh, onPressed: _refreshRates),
       ),
       body: BlocBuilder<ListApiCubit<Currency>, ApiResponse<List<Currency>>>(
         bloc: _cubit,
@@ -115,16 +118,16 @@ class _CurrencyListPageState extends State<CurrencyListPage> {
           Initial() || Loading() => const Center(child: CupertinoActivityIndicator()),
           Success(:final data) => data.isEmpty
               ? _buildEmpty(theme)
-              : RefreshIndicator(
+              : AppPullRefresh(
                   onRefresh: _cubit.refresh,
-                  child: ListView(
-                    children: [
-                      ...data.map((c) => _buildCurrencyTile(theme, c)),
-                      const SizedBox(height: 12),
-                      _buildConverterCard(theme, data),
-                      const SizedBox(height: 16),
-                    ],
-                  ),
+                  padding: const EdgeInsets.only(top: 8, bottom: 16),
+                  children: [
+                    CupertinoListSection.insetGrouped(
+                      children: data.map((c) => _buildCurrencyTile(theme, c)).toList(),
+                    ),
+                    _buildConverterCard(theme, data),
+                    const SizedBox(height: 16),
+                  ],
                 ),
           Error(:final errorMessage) => _buildError(theme, errorMessage),
         },
@@ -138,10 +141,9 @@ class _CurrencyListPageState extends State<CurrencyListPage> {
     final fromValue = codes.contains(_fromCode) ? _fromCode : null;
     final toValue = codes.contains(_toCode) ? _toCode : null;
 
-    return Card(
-      margin: const EdgeInsets.symmetric(horizontal: 12),
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
-      child: Padding(
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 12),
+      child: AppCard(
         padding: const EdgeInsets.all(16),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -154,40 +156,46 @@ class _CurrencyListPageState extends State<CurrencyListPage> {
               ],
             ),
             const SizedBox(height: 12),
-            TextField(
+            CupertinoTextField(
               controller: _amountCtrl,
               keyboardType: const TextInputType.numberWithOptions(decimal: true),
-              decoration: InputDecoration(
-                labelText: loc.fieldFlowAmount,
-                prefixIcon: Icon(Icons.attach_money_outlined),
-                border: OutlineInputBorder(),
-                isDense: true,
+              placeholder: loc.fieldFlowAmount,
+              prefix: Padding(
+                padding: const EdgeInsets.only(left: 12),
+                child: Icon(Icons.attach_money_outlined, size: 20, color: CupertinoColors.secondaryLabel.resolveFrom(context)),
+              ),
+              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 12),
+              decoration: BoxDecoration(
+                color: CupertinoColors.tertiarySystemFill.resolveFrom(context),
+                borderRadius: BorderRadius.circular(kInputRadius),
               ),
             ),
             const SizedBox(height: 12),
             Row(
               children: [
                 Expanded(
-                  child: DropdownButtonFormField<String>(
+                  child: _currencyPickerButton(
+                    theme,
+                    label: loc.sourceCurrency,
                     value: fromValue,
-                    decoration: InputDecoration(labelText: loc.sourceCurrency, prefixIcon: Icon(Icons.arrow_outward), border: OutlineInputBorder(), isDense: true),
-                    items: codes.map((c) => DropdownMenuItem<String>(value: c, child: Text(c))).toList(),
+                    codes: codes,
                     onChanged: (v) => setState(() => _fromCode = v),
                   ),
                 ),
                 const Padding(padding: EdgeInsets.symmetric(horizontal: 8), child: Icon(Icons.arrow_forward)),
                 Expanded(
-                  child: DropdownButtonFormField<String>(
+                  child: _currencyPickerButton(
+                    theme,
+                    label: loc.targetCurrency,
                     value: toValue,
-                    decoration: InputDecoration(labelText: loc.targetCurrency, prefixIcon: Icon(Icons.arrow_outward), border: OutlineInputBorder(), isDense: true),
-                    items: codes.map((c) => DropdownMenuItem<String>(value: c, child: Text(c))).toList(),
+                    codes: codes,
                     onChanged: (v) => setState(() => _toCode = v),
                   ),
                 ),
               ],
             ),
             const SizedBox(height: 12),
-            FilledButton.icon(onPressed: _convert, icon: const Icon(Icons.calculate_outlined), label: Text(loc.convert)),
+            AppFilledButton(label: loc.convert, expanded: false, icon: Icons.calculate_outlined, onPressed: _convert),
             if (_resultText.isNotEmpty) ...[
               const SizedBox(height: 12),
               Container(
@@ -206,18 +214,96 @@ class _CurrencyListPageState extends State<CurrencyListPage> {
   Widget _buildCurrencyTile(ThemeData theme, Currency currency) {
     final loc = S.of(context);
     final rate = double.tryParse(currency.rate ?? '0') ?? 0;
-    return Card(
-      margin: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
-      child: ListTile(
-        leading: CircleAvatar(
-          backgroundColor: theme.colorScheme.secondaryContainer,
-          foregroundColor: theme.colorScheme.onSecondaryContainer,
-          child: Text((currency.code ?? '?').substring(0, 1), style: const TextStyle(fontWeight: FontWeight.bold)),
-        ),
-        title: Text(currency.code ?? ''),
-        subtitle: Text(currency.name ?? '', style: theme.textTheme.bodySmall),
-        trailing: Text(loc.rateValue(rate.toStringAsFixed(4)),
-            style: theme.textTheme.bodyMedium?.copyWith(color: theme.colorScheme.onSurfaceVariant)),
+    return CupertinoListTile(
+      leading: CircleAvatar(
+        backgroundColor: theme.colorScheme.secondaryContainer,
+        foregroundColor: theme.colorScheme.onSecondaryContainer,
+        child: Text((currency.code ?? '?').substring(0, 1), style: const TextStyle(fontWeight: FontWeight.bold)),
+      ),
+      title: Text(currency.code ?? ''),
+      subtitle: Text(currency.name ?? '', style: theme.textTheme.bodySmall),
+      trailing: Text(loc.rateValue(rate.toStringAsFixed(4)),
+          style: theme.textTheme.bodyMedium?.copyWith(color: theme.colorScheme.onSurfaceVariant)),
+    );
+  }
+
+  /// 币种选择按钮：标签 + 当前值 + chevron，点按弹出底部滚轮选择器。
+  Widget _currencyPickerButton(
+    ThemeData theme, {
+    required String label,
+    required String? value,
+    required List<String> codes,
+    required ValueChanged<String> onChanged,
+  }) {
+    return CupertinoButton(
+      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+      color: CupertinoColors.tertiarySystemFill.resolveFrom(context),
+      borderRadius: BorderRadius.circular(kInputRadius),
+      onPressed: () async {
+        if (codes.isEmpty) return;
+        var selected = value ?? codes.first;
+        await showCupertinoModalPopup<void>(
+          context: context,
+          builder: (ctx) => Container(
+            height: 280,
+            color: CupertinoColors.systemBackground.resolveFrom(ctx),
+            child: SafeArea(
+              top: false,
+              child: Column(
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      CupertinoButton(
+                        onPressed: () => Navigator.of(ctx).pop(),
+                        child: Text(
+                          S.of(context).confirm,
+                          style: TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.w600,
+                            color: CupertinoTheme.of(ctx).primaryColor,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                  Expanded(
+                    child: CupertinoPicker(
+                      scrollController: FixedExtentScrollController(
+                        initialItem:
+                            (value != null && codes.contains(value)) ? codes.indexOf(value) : 0,
+                      ),
+                      itemExtent: 40,
+                      useMagnifier: true,
+                      magnification: 1.05,
+                      onSelectedItemChanged: (i) => selected = codes[i],
+                      children: codes
+                          .map((c) => Center(child: Text(c, style: const TextStyle(fontSize: 18))))
+                          .toList(),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        );
+        if (selected != value) onChanged(selected);
+      },
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(label, style: theme.textTheme.bodySmall?.copyWith(color: theme.colorScheme.onSurfaceVariant)),
+          const SizedBox(height: 2),
+          Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Text(value ?? '-', style: theme.textTheme.titleMedium),
+              const SizedBox(width: 4),
+              const CupertinoListTileChevron(),
+            ],
+          ),
+        ],
       ),
     );
   }
@@ -232,7 +318,7 @@ class _CurrencyListPageState extends State<CurrencyListPage> {
           const SizedBox(height: 12),
           Text(loc.noCurrenciesData, style: theme.textTheme.bodyLarge?.copyWith(color: theme.colorScheme.outline)),
           const SizedBox(height: 16),
-          FilledButton.icon(onPressed: _refreshRates, icon: const Icon(Icons.refresh), label: Text(loc.refreshRates)),
+          AppFilledButton(label: loc.refreshRates, expanded: false, icon: Icons.refresh, onPressed: _refreshRates),
         ],
       ),
     );
@@ -249,7 +335,11 @@ class _CurrencyListPageState extends State<CurrencyListPage> {
           Text(message.isNotEmpty ? message : loc.loadFailed,
               style: theme.textTheme.bodyLarge?.copyWith(color: theme.colorScheme.error)),
           const SizedBox(height: 16),
-          FilledButton.icon(onPressed: _cubit.refresh, icon: const Icon(Icons.refresh), label: Text(loc.retry)),
+          AppGhostButton(
+            label: loc.retry,
+            icon: Icons.refresh,
+            onPressed: _cubit.refresh,
+          ),
         ],
       ),
     );

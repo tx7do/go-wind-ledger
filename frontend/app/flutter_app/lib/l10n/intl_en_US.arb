@@ -565,5 +565,11 @@
   "fieldFlowAmount": "Amount",
   "fieldFlowDate": "Date",
   "fieldTemplate": "Create from Template (optional)",
-  "fieldSortOrder": "Sort Order (optional)"
+  "fieldSortOrder": "Sort Order (optional)",
+  "sectionBasic": "General",
+  "sectionAmount": "Amounts",
+  "sectionPermission": "Permissions",
+  "sectionRepeat": "Repeat Rule",
+  "sectionConvert": "Rate Conversion",
+  "sectionAccount": "Account"
 }

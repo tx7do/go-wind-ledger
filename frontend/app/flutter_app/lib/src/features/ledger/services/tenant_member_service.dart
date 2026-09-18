@@ -2,7 +2,6 @@ import 'package:dio/dio.dart' show Dio, DioException;
 import 'package:get_it/get_it.dart' show GetIt;
 
 import 'package:flutter_app/src/core/services/base_service.dart';
-import 'package:flutter_app/src/core/transport/http/index.dart';
 import 'package:flutter_app/src/core/utilities/convert.dart' show parseInt;
 
 /// 成员状态（对应 identity.service.v1.Membership.Status）。

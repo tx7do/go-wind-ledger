@@ -1,7 +1,9 @@
-import 'package:flutter/material.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart' show Icons, Theme, Scaffold, SafeArea;
 import 'package:go_router/go_router.dart';
 
 import 'package:flutter_app/generated/l10n.dart';
+import 'package:flutter_app/src/core/widgets/app_button.dart';
 
 /// 404 页面未找到
 ///
@@ -51,22 +53,10 @@ class NotFoundPage extends StatelessWidget {
                 ),
                 const SizedBox(height: 32),
                 // 返回首页按钮
-                FilledButton.tonal(
+                AppGhostButton(
                   onPressed: () => context.go('/'),
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 16,
-                      vertical: 8,
-                    ),
-                    child: Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        const Icon(Icons.home_outlined, size: 20),
-                        const SizedBox(width: 8),
-                        Text(loc.backToHome),
-                      ],
-                    ),
-                  ),
+                  icon: Icons.home_outlined,
+                  label: loc.backToHome,
                 ),
               ],
             ),

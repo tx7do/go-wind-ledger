@@ -600,5 +600,11 @@
       "executed": {"type": "String"},
       "total": {"type": "String"}
     }
-  }
+  },
+  "sectionBasic": "基本信息",
+  "sectionAmount": "金额信息",
+  "sectionPermission": "使用权限",
+  "sectionRepeat": "重复规则",
+  "sectionConvert": "汇率换算",
+  "sectionAccount": "账户信息"
 }

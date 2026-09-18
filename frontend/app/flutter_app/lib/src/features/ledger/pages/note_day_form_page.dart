@@ -10,7 +10,8 @@ import 'package:flutter_app/generated/api/app/service/v1/index.dart'
 import 'package:flutter_app/generated/l10n.dart';
 import 'package:flutter_app/src/core/logic/api/form_cubit.dart';
 import 'package:flutter_app/src/core/themes/const.dart';
-import 'package:flutter_app/src/core/transport/http/status.dart';
+import 'package:flutter_app/src/core/widgets/app_button.dart';
+import 'package:flutter_app/src/core/widgets/app_form_rows.dart';
 import 'package:flutter_app/src/features/ledger/services/note_day_service.dart';
 
 /// 定期提醒表单页（新建/编辑）。
@@ -79,38 +80,6 @@ class _NoteDayFormPageState extends State<NoteDayFormPage> {
     }
   }
 
-  Future<void> _pickDate(bool isStart) async {
-    await showCupertinoModalPopup<void>(
-      context: context,
-      builder: (ctx) => Container(
-        height: 216,
-        padding: const EdgeInsets.only(top: 6),
-        margin: EdgeInsets.only(
-          bottom: MediaQuery.of(ctx).viewInsets.bottom,
-        ),
-        color: CupertinoColors.systemBackground.resolveFrom(ctx),
-        child: SafeArea(
-          top: false,
-          child: CupertinoDatePicker(
-            mode: CupertinoDatePickerMode.date,
-            initialDateTime: isStart ? _startDate : (_endDate ?? _startDate),
-            minimumDate: DateTime(2000),
-            maximumDate: DateTime(2100),
-            onDateTimeChanged: (DateTime picked) {
-              setState(() {
-                if (isStart) {
-                  _startDate = picked;
-                } else {
-                  _endDate = picked;
-                }
-              });
-            },
-          ),
-        ),
-      ),
-    );
-  }
-
   Future<void> _submit() async {
     final loc = S.of(context);
     if (!_formKey.currentState!.validate()) return;
@@ -155,69 +124,70 @@ class _NoteDayFormPageState extends State<NoteDayFormPage> {
     final loc = S.of(context);
     return Scaffold(
       appBar: CupertinoNavigationBar(middle: Text(widget.editId == null ? loc.create : loc.edit)),
-      body: SingleChildScrollView(
-        padding: const EdgeInsets.all(16),
+      body: SafeArea(
         child: Form(
           key: _formKey,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              TextFormField(
-                controller: _titleCtrl,
-                decoration: InputDecoration(labelText: loc.fieldNoteTitle, prefixIcon: Icon(Icons.title), border: OutlineInputBorder()),
-                validator: (v) => (v == null || v.trim().isEmpty) ? loc.enterNoteTitle : null,
-              ),
-              const SizedBox(height: 12),
-              DropdownButtonFormField<int>(
-                value: _repeatType,
-                decoration: InputDecoration(labelText: loc.fieldRepeatType, prefixIcon: Icon(Icons.repeat), border: OutlineInputBorder()),
-                items: [
-                  DropdownMenuItem(value: 0, child: Text(loc.repeatOnce)),
-                  DropdownMenuItem(value: 1, child: Text(loc.repeatDaily)),
-                  DropdownMenuItem(value: 2, child: Text(loc.repeatWeekly)),
-                  DropdownMenuItem(value: 3, child: Text(loc.repeatMonthly)),
-                  DropdownMenuItem(value: 4, child: Text(loc.repeatYearly)),
-                ],
-                onChanged: (v) { if (v != null) setState(() => _repeatType = v); },
-              ),
-              const SizedBox(height: 12),
-              TextFormField(
-                controller: _intervalCtrl, keyboardType: TextInputType.number,
-                decoration: InputDecoration(labelText: loc.fieldInterval, prefixIcon: Icon(Icons.date_range_outlined), border: OutlineInputBorder()),
-              ),
-              const SizedBox(height: 12),
-              InkWell(
-                onTap: () => _pickDate(true), borderRadius: BorderRadius.circular(12),
-                child: InputDecorator(
-                  decoration: InputDecoration(labelText: loc.fieldStartDate, prefixIcon: Icon(Icons.calendar_today_outlined), border: OutlineInputBorder()),
-                  child: Text(_formatDate(_startDate)),
+          child: SingleChildScrollView(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                AppFormSection(header: loc.sectionBasic, children: [
+                  CupertinoTextFormFieldRow(
+                    prefix: Text(loc.fieldNoteTitle),
+                    controller: _titleCtrl,
+                    validator: (v) => (v == null || v.trim().isEmpty) ? loc.enterNoteTitle : null,
+                  ),
+                  AppSelectRow<int>(
+                    label: loc.fieldRepeatType,
+                    icon: Icons.repeat,
+                    value: _repeatType,
+                    options: [
+                      AppSelectOption(value: 0, label: loc.repeatOnce),
+                      AppSelectOption(value: 1, label: loc.repeatDaily),
+                      AppSelectOption(value: 2, label: loc.repeatWeekly),
+                      AppSelectOption(value: 3, label: loc.repeatMonthly),
+                      AppSelectOption(value: 4, label: loc.repeatYearly),
+                    ],
+                    onChanged: (v) => setState(() => _repeatType = v),
+                  ),
+                  CupertinoTextFormFieldRow(
+                    prefix: Text(loc.fieldInterval),
+                    controller: _intervalCtrl,
+                    keyboardType: TextInputType.number,
+                  ),
+                  AppDateRow(
+                    label: loc.fieldStartDate,
+                    icon: Icons.calendar_today_outlined,
+                    date: _startDate,
+                    onChanged: (d) => setState(() => _startDate = d),
+                  ),
+                  AppDateRow(
+                    label: loc.fieldEndDate,
+                    icon: Icons.event_available_outlined,
+                    date: _endDate,
+                    placeholder: loc.repeatUnlimited,
+                    onChanged: (d) => setState(() => _endDate = d),
+                  ),
+                  CupertinoTextFormFieldRow(
+                    prefix: Text(loc.fieldTotalRuns),
+                    controller: _totalCountCtrl,
+                    keyboardType: TextInputType.number,
+                  ),
+                  CupertinoTextFormFieldRow(
+                    prefix: Text(loc.fieldDescription),
+                    controller: _notesCtrl,
+                    maxLines: 3,
+                  ),
+                ]),
+                Padding(
+                  padding: const EdgeInsets.all(kDefaultPadding),
+                  child: AppFilledButton(
+                    label: widget.editId == null ? loc.flowSave : loc.flowUpdate,
+                    onPressed: _formCubit.state == FormLoadState.saving ? null : _submit,
+                  ),
                 ),
-              ),
-              const SizedBox(height: 12),
-              InkWell(
-                onTap: () => _pickDate(false), borderRadius: BorderRadius.circular(12),
-                child: InputDecorator(
-                  decoration: InputDecoration(labelText: loc.fieldEndDate, prefixIcon: Icon(Icons.event_available_outlined), border: OutlineInputBorder()),
-                  child: Text(_endDate == null ? loc.repeatUnlimited : _formatDate(_endDate!)),
-                ),
-              ),
-              const SizedBox(height: 12),
-              TextFormField(
-                controller: _totalCountCtrl, keyboardType: TextInputType.number,
-                decoration: InputDecoration(labelText: loc.fieldTotalRuns, prefixIcon: Icon(Icons.exposure_outlined), border: OutlineInputBorder()),
-              ),
-              const SizedBox(height: 12),
-              TextFormField(
-                controller: _notesCtrl, maxLines: 3,
-                decoration: InputDecoration(labelText: loc.fieldDescription, prefixIcon: Icon(Icons.notes), border: OutlineInputBorder()),
-              ),
-              const SizedBox(height: 24),
-              FilledButton(
-                onPressed: _formCubit.state == FormLoadState.saving ? null : _submit,
-                style: FilledButton.styleFrom(padding: const EdgeInsets.symmetric(vertical: 14)),
-                child: Text(widget.editId == null ? loc.flowSave : loc.flowUpdate),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),
@@ -238,20 +208,16 @@ class _NoteDayFormPageState extends State<NoteDayFormPage> {
             Text(msg.isNotEmpty ? msg : loc.loadFailed,
                 style: Theme.of(context).textTheme.bodyLarge?.copyWith(color: Theme.of(context).colorScheme.error)),
             const SizedBox(height: 16),
-            FilledButton.icon(
+            AppGhostButton(
+              label: loc.retry,
+              icon: Icons.refresh,
               onPressed: () => _formCubit.loadInitial(() async {
                 if (widget.editId != null) { await _loadEditTarget(); } else { _intervalCtrl.text = '1'; }
               }),
-              icon: const Icon(Icons.refresh), label: Text(loc.retry),
             ),
           ],
         ),
       ),
     );
-  }
-
-  String _formatDate(DateTime dt) {
-    String two(int n) => n.toString().padLeft(2, '0');
-    return '${dt.year}-${two(dt.month)}-${two(dt.day)}';
   }
 }

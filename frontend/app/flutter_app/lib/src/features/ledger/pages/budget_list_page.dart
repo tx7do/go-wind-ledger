@@ -6,8 +6,11 @@ import 'package:go_router/go_router.dart';
 
 import 'package:flutter_app/generated/l10n.dart';
 import 'package:flutter_app/src/core/logic/api/list_api_cubit.dart';
-import 'package:flutter_app/src/core/themes/const.dart';
 import 'package:flutter_app/src/core/transport/http/status.dart';
+import 'package:flutter_app/src/core/widgets/app_button.dart';
+import 'package:flutter_app/src/core/widgets/app_action_sheet.dart';
+import 'package:flutter_app/src/core/widgets/app_form_rows.dart';
+import 'package:flutter_app/src/core/widgets/app_pull_refresh.dart';
 import 'package:flutter_app/src/features/ledger/services/budget_service.dart';
 
 /// 预算管理列表页。
@@ -103,9 +106,8 @@ class _BudgetListPageState extends State<BudgetListPage> {
     return Scaffold(
       appBar: CupertinoNavigationBar(
         middle: Text(loc.budgetManagement),
-        trailing: IconButton(
-          icon: const Icon(Icons.add),
-          tooltip: loc.newBudget,
+        trailing: AppNavIconButton(
+          icon: Icons.add,
           onPressed: () async {
             await context.push('/ledger/budgets/create');
             _progress.clear();
@@ -119,16 +121,13 @@ class _BudgetListPageState extends State<BudgetListPage> {
           Initial() || Loading() => const Center(child: CupertinoActivityIndicator()),
           Success(:final data) => data.isEmpty
               ? _buildEmpty(theme)
-              : RefreshIndicator(
+              : AppPullRefresh(
                   onRefresh: () async {
                     _progress.clear();
                     await _cubit.refresh();
                   },
-                  child: ListView.builder(
-                    padding: const EdgeInsets.only(bottom: 80),
-                    itemCount: data.length,
-                    itemBuilder: (_, i) => _buildBudgetCard(theme, data[i]),
-                  ),
+                  padding: const EdgeInsets.only(top: 4, bottom: 80),
+                  children: data.map((b) => _buildBudgetCard(theme, b)).toList(),
                 ),
           Error(:final errorMessage) => _buildError(theme, errorMessage),
         },
@@ -148,20 +147,18 @@ class _BudgetListPageState extends State<BudgetListPage> {
     final exceeded = progress?.exceeded == true || percent >= 1;
     final color = exceeded ? theme.colorScheme.error : theme.colorScheme.primary;
 
-    return Card(
-      margin: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
-      child: InkWell(
-        borderRadius: BorderRadius.circular(12),
-        onTap: () async {
-          if (id != null) {
-            await context.push('/ledger/budgets/create?id=$id');
-            _progress.clear();
-            _cubit.refresh();
-          }
-        },
-        child: Padding(
-          padding: const EdgeInsets.all(16),
-          child: Column(
+    return GestureDetector(
+      onTap: () async {
+        if (id != null) {
+          await context.push('/ledger/budgets/create?id=$id');
+          _progress.clear();
+          _cubit.refresh();
+        }
+      },
+      child: AppCard(
+        margin: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
+        padding: const EdgeInsets.all(16),
+        child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Row(
@@ -172,9 +169,17 @@ class _BudgetListPageState extends State<BudgetListPage> {
                     child: Text(budget.name ?? loc.unnamedBudget,
                         style: theme.textTheme.titleMedium?.copyWith(fontWeight: FontWeight.w600)),
                   ),
-                  PopupMenuButton<String>(
-                    icon: const Icon(Icons.more_vert, size: 20),
-                    onSelected: (v) async {
+                  AppNavIconButton(
+                    icon: Icons.more_horiz,
+                    onPressed: () async {
+                      final v = await showAppActionSheet<String>(
+                        context,
+                        actions: [
+                          AppActionSheetItem(value: 'edit', label: loc.edit, icon: Icons.edit_outlined),
+                          AppActionSheetItem(value: 'delete', label: loc.delete, icon: Icons.delete_outline, destructive: true),
+                        ],
+                      );
+                      if (v == null || !context.mounted) return;
                       if (v == 'edit' && id != null) {
                         await context.push('/ledger/budgets/create?id=$id');
                         _progress.clear();
@@ -183,10 +188,6 @@ class _BudgetListPageState extends State<BudgetListPage> {
                         _delete(budget);
                       }
                     },
-                    itemBuilder: (ctx) => [
-                      PopupMenuItem(value: 'edit', child: Text(loc.edit)),
-                      PopupMenuItem(value: 'delete', child: Text(loc.delete)),
-                    ],
                   ),
                 ],
               ),
@@ -198,11 +199,17 @@ class _BudgetListPageState extends State<BudgetListPage> {
               const SizedBox(height: 10),
               ClipRRect(
                 borderRadius: BorderRadius.circular(6),
-                child: LinearProgressIndicator(
-                  value: percent.clamp(0.0, 1.0).toDouble(),
-                  minHeight: 10,
-                  backgroundColor: color.withAlpha(30),
-                  color: color,
+                child: SizedBox(
+                  height: 10,
+                  child: Stack(
+                    children: [
+                      Container(color: color.withAlpha(30)),
+                      FractionallySizedBox(
+                        widthFactor: percent.clamp(0.0, 1.0).toDouble(),
+                        child: Container(color: color),
+                      ),
+                    ],
+                  ),
                 ),
               ),
               const SizedBox(height: 4),
@@ -220,8 +227,7 @@ class _BudgetListPageState extends State<BudgetListPage> {
             ],
           ),
         ),
-      ),
-    );
+      );
   }
 
   Widget _buildEmpty(ThemeData theme) {
@@ -234,14 +240,15 @@ class _BudgetListPageState extends State<BudgetListPage> {
           const SizedBox(height: 12),
           Text(loc.noBudgets, style: theme.textTheme.bodyLarge?.copyWith(color: theme.colorScheme.outline)),
           const SizedBox(height: 16),
-          FilledButton.icon(
+          AppFilledButton(
+            label: loc.newBudget,
+            expanded: false,
+            icon: Icons.add,
             onPressed: () async {
               await context.push('/ledger/budgets/create');
               _progress.clear();
               _cubit.refresh();
             },
-            icon: const Icon(Icons.add),
-            label: Text(loc.newBudget),
           ),
         ],
       ),
@@ -259,10 +266,10 @@ class _BudgetListPageState extends State<BudgetListPage> {
           Text(message.isNotEmpty ? message : loc.loadFailed,
               style: theme.textTheme.bodyLarge?.copyWith(color: theme.colorScheme.error)),
           const SizedBox(height: 16),
-          FilledButton.icon(
+          AppGhostButton(
+            label: loc.retry,
+            icon: Icons.refresh,
             onPressed: _cubit.refresh,
-            icon: const Icon(Icons.refresh),
-            label: Text(loc.retry),
           ),
         ],
       ),

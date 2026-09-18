@@ -8,9 +8,11 @@ import 'package:flutter_app/generated/api/app/service/v1/index.dart'
 
 import 'package:flutter_app/generated/l10n.dart';
 import 'package:flutter_app/src/core/logic/api/form_cubit.dart';
-import 'package:flutter_app/src/core/themes/const.dart';
 import 'package:flutter_app/src/core/themes/semantic_colors.dart';
 import 'package:flutter_app/src/core/transport/http/status.dart';
+import 'package:flutter_app/src/core/widgets/app_button.dart';
+import 'package:flutter_app/src/core/widgets/app_form_rows.dart';
+import 'package:flutter_app/src/core/widgets/app_pull_refresh.dart';
 import 'package:flutter_app/src/features/ledger/services/account_service.dart';
 
 /// 账户概览页。
@@ -65,18 +67,15 @@ class _AccountOverviewPageState extends State<AccountOverviewPage> {
     final loc = S.of(context);
     return Scaffold(
       appBar: widget.embedded ? null : CupertinoNavigationBar(middle: Text(loc.accountOverview)),
-      body: RefreshIndicator(
+      body: AppPullRefresh(
         onRefresh: () => _formCubit.loadInitial(_doLoad),
-        child: ListView(
-          padding: const EdgeInsets.only(bottom: 16),
-          children: [
-            if (!widget.embedded) const SizedBox(height: 8),
-            _buildSummaryCard(theme),
-            const SizedBox(height: 8),
-            _buildSection(theme, title: loc.assetDetails, icon: Icons.trending_up_outlined, items: _overview!.assets ?? [], valueColor: SemanticColors.income(context)),
-            _buildSection(theme, title: loc.debtDetails, icon: Icons.trending_down_outlined, items: _overview!.debts ?? [], valueColor: SemanticColors.expense(context)),
-          ],
-        ),
+        padding: const EdgeInsets.only(top: 8, bottom: 16),
+        children: [
+          _buildSummaryCard(theme),
+          const SizedBox(height: 8),
+          _buildSection(theme, title: loc.assetDetails, icon: Icons.trending_up_outlined, items: _overview!.assets ?? [], valueColor: SemanticColors.income(context)),
+          _buildSection(theme, title: loc.debtDetails, icon: Icons.trending_down_outlined, items: _overview!.debts ?? [], valueColor: SemanticColors.expense(context)),
+        ],
       ),
     );
   }
@@ -95,7 +94,11 @@ class _AccountOverviewPageState extends State<AccountOverviewPage> {
             Text(msg.isNotEmpty ? msg : loc.loadFailed,
                 style: Theme.of(context).textTheme.bodyLarge?.copyWith(color: Theme.of(context).colorScheme.error)),
             const SizedBox(height: 16),
-            FilledButton.icon(onPressed: () => _formCubit.loadInitial(_doLoad), icon: const Icon(Icons.refresh), label: Text(loc.retry)),
+            AppGhostButton(
+              label: loc.retry,
+              icon: Icons.refresh,
+              onPressed: () => _formCubit.loadInitial(_doLoad),
+            ),
           ],
         ),
       ),
@@ -107,22 +110,20 @@ class _AccountOverviewPageState extends State<AccountOverviewPage> {
     final assets = double.tryParse(_overview!.totalAssets ?? '0') ?? 0;
     final debts = double.tryParse(_overview!.totalDebts ?? '0') ?? 0;
     final net = double.tryParse(_overview!.netWorth ?? '0') ?? 0;
-    return Card(
+    return AppCard(
       margin: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-      child: Padding(
-        padding: const EdgeInsets.all(16),
-        child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-          Row(children: [Icon(Icons.account_balance_outlined, color: theme.colorScheme.primary), const SizedBox(width: 8), Text(loc.balanceSheetTitle, style: theme.textTheme.titleMedium?.copyWith(fontWeight: FontWeight.bold))]),
-          const SizedBox(height: 16),
-          Row(children: [
-            Expanded(child: _summaryTile(theme, label: loc.totalAssets, value: assets, color: SemanticColors.income(context), icon: Icons.savings_outlined)),
-            const SizedBox(width: 12),
-            Expanded(child: _summaryTile(theme, label: loc.totalDebts, value: debts, color: SemanticColors.expense(context), icon: Icons.credit_card_outlined)),
-          ]),
-          const SizedBox(height: 12),
-          Row(children: [Expanded(child: _summaryTile(theme, label: loc.netWorth, value: net, color: theme.colorScheme.primary, icon: Icons.account_balance_wallet_outlined, highlight: true))]),
+      padding: const EdgeInsets.all(16),
+      child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+        Row(children: [Icon(Icons.account_balance_outlined, color: theme.colorScheme.primary), const SizedBox(width: 8), Text(loc.balanceSheetTitle, style: theme.textTheme.titleMedium?.copyWith(fontWeight: FontWeight.bold))]),
+        const SizedBox(height: 16),
+        Row(children: [
+          Expanded(child: _summaryTile(theme, label: loc.totalAssets, value: assets, color: SemanticColors.income(context), icon: Icons.savings_outlined)),
+          const SizedBox(width: 12),
+          Expanded(child: _summaryTile(theme, label: loc.totalDebts, value: debts, color: SemanticColors.expense(context), icon: Icons.credit_card_outlined)),
         ]),
-      ),
+        const SizedBox(height: 12),
+        Row(children: [Expanded(child: _summaryTile(theme, label: loc.netWorth, value: net, color: theme.colorScheme.primary, icon: Icons.account_balance_wallet_outlined, highlight: true))]),
+      ]),
     );
   }
 
@@ -140,22 +141,27 @@ class _AccountOverviewPageState extends State<AccountOverviewPage> {
 
   Widget _buildSection(ThemeData theme, {required String title, required IconData icon, required List<LedgerServiceV1AccountAsset> items, required Color valueColor}) {
     final loc = S.of(context);
-    return Card(
-      margin: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-      child: ExpansionTile(
-        initiallyExpanded: true,
-        leading: Icon(icon, color: valueColor),
-        title: Text(title, style: theme.textTheme.titleSmall?.copyWith(fontWeight: FontWeight.w600)),
-        subtitle: Text(loc.itemCount(items.length)),
-        children: items.isEmpty ? [Padding(padding: const EdgeInsets.all(16), child: Text(loc.noData))] : items.map((a) => _buildAssetTile(theme, a, valueColor)).toList(),
+    return CupertinoListSection.insetGrouped(
+      header: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Icon(icon, color: valueColor, size: 18),
+          const SizedBox(width: 6),
+          Text(title),
+          const SizedBox(width: 6),
+          Text(loc.itemCount(items.length), style: theme.textTheme.bodySmall),
+        ],
       ),
+      children: items.isEmpty
+          ? [Padding(padding: const EdgeInsets.all(16), child: Text(loc.noData))]
+          : items.map((a) => _buildAssetTile(theme, a, valueColor)).toList(),
     );
   }
 
   Widget _buildAssetTile(ThemeData theme, LedgerServiceV1AccountAsset asset, Color valueColor) {
     final loc = S.of(context);
     final balance = double.tryParse(asset.balance ?? '0') ?? 0;
-    return ListTile(
+    return CupertinoListTile(
       leading: CircleAvatar(backgroundColor: valueColor.withAlpha(30), foregroundColor: valueColor, child: const Icon(Icons.account_balance_wallet_outlined, size: 20)),
       title: Text(asset.name ?? loc.unnamed),
       subtitle: Text([if ((asset.type ?? '').isNotEmpty) asset.type!, if ((asset.currencyCode ?? '').isNotEmpty) asset.currencyCode!].join(' · '), style: theme.textTheme.bodySmall),
@@ -174,7 +180,11 @@ class _AccountOverviewPageState extends State<AccountOverviewPage> {
           const SizedBox(height: 12),
           Text(loc.noOverviewData, style: theme.textTheme.bodyLarge?.copyWith(color: theme.colorScheme.outline)),
           const SizedBox(height: 16),
-          FilledButton.tonalIcon(onPressed: () => context.pop(), icon: const Icon(Icons.arrow_back), label: Text(loc.back)),
+          AppGhostButton(
+            label: loc.back,
+            icon: Icons.arrow_back,
+            onPressed: () => context.pop(),
+          ),
         ]),
       ),
     );
