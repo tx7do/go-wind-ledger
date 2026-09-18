@@ -80,7 +80,11 @@ func (r *CategoryRepo) List(ctx context.Context, req *paginationV1.PagingRequest
 
 func (r *CategoryRepo) ListAll(ctx context.Context, bookID uint32, typ *ledgerV1.CategoryType) (*ledgerV1.ListCategoryResponse, error) {
 	q := r.entClient.Client().Category.Query().
-		Where(category.BookIDEQ(bookID), category.EnableEQ(true))
+		Where(category.EnableEQ(true))
+	// bookID 为 0 表示不过滤账本（查询当前租户全部分类）
+	if bookID > 0 {
+		q = q.Where(category.BookIDEQ(bookID))
+	}
 	if typ != nil && *typ != ledgerV1.CategoryType_CATEGORY_TYPE_UNSPECIFIED {
 		q = q.Where(category.TypeEQ(category.Type(typ.String())))
 	}

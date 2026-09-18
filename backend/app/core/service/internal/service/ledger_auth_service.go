@@ -2,9 +2,12 @@ package service
 
 import (
 	"context"
+	"encoding/base64"
 	"time"
 
 	"github.com/go-kratos/kratos/v2/log"
+	"github.com/tx7do/go-utils/crypto"
+	"github.com/tx7do/go-utils/password"
 	"github.com/tx7do/go-utils/trans"
 	"github.com/tx7do/kratos-bootstrap/bootstrap"
 	"google.golang.org/protobuf/types/known/emptypb"
@@ -18,6 +21,7 @@ import (
 	"go-wind-ledger/app/core/service/internal/data/ent/book"
 	"go-wind-ledger/app/core/service/internal/data/ent/membership"
 	"go-wind-ledger/app/core/service/internal/data/ent/privacy"
+	"go-wind-ledger/app/core/service/internal/data/ent/role"
 	"go-wind-ledger/app/core/service/internal/data/ent/tenant"
 	"go-wind-ledger/app/core/service/internal/data/ent/user"
 	"go-wind-ledger/app/core/service/internal/data/ent/usercredential"
@@ -33,11 +37,14 @@ import (
 // defaultInviteCode 默认邀请码（未配置时使用）
 const defaultInviteCode = "111111"
 
+// defaultRegisterRoleCode 注册默认绑定的角色编码（租户管理员模板）
+const defaultRegisterRoleCode = "template:tenant:manager"
+
 // defaultCurrencyCode 默认币种代码
 const defaultCurrencyCode = "CNY"
 
-// userCredentialIdentityType 用户凭证身份类型（与现有 VerifyCredential 查询保持一致：空串）
-const userCredentialIdentityType = ""
+// userCredentialIdentityType 用户凭证身份类型（与 doGrantTypePassword 的 VerifyCredential 查询保持一致：USERNAME）
+const userCredentialIdentityType = "USERNAME"
 
 // userCredentialCredentialType 用户凭证凭据类型（PASSWORD_HASH，与现有 verifyCredential 分支一致）
 const userCredentialCredentialType = "PASSWORD_HASH"
@@ -141,8 +148,9 @@ func (s *LedgerAuthService) Register(ctx context.Context, req *appV1.LedgerRegis
 	}()
 
 	// 3. 创建默认租户（先于用户创建，以便绑定 user.tenant_id 外键）
+	// 租户名全局唯一（idx_sys_tenant_name），拼接用户名避免多用户注册时冲突
 	tenantEntity, err := tx.Tenant.Create().
-		SetNillableName(trans.Ptr("我的账本")).
+		SetNillableName(trans.Ptr(username + "的账本")).
 		SetDefaultCurrencyCode(defaultCurrencyCode).
 		SetCreatedAt(time.Now()).
 		Save(privacyCtx)
@@ -168,20 +176,47 @@ func (s *LedgerAuthService) Register(ctx context.Context, req *appV1.LedgerRegis
 		return nil, identityV1.ErrorInternalServerError("create user failed")
 	}
 
+	// 4.1 绑定默认角色（租户管理员模板）：登录授权需要角色-权限链，
+	// 否则新注册用户因角色为空被拒绝（insufficient authority）。
+	roleEntity, roleErr := tx.Role.Query().
+		Where(role.CodeEQ(defaultRegisterRoleCode)).
+		Only(privacyCtx)
+	if roleErr != nil {
+		s.log.Errorf("query default register role failed: %s", roleErr.Error())
+		return nil, identityV1.ErrorInternalServerError("query default register role failed")
+	}
+	if _, roleErr = tx.UserRole.Create().
+		SetUserID(userEntity.ID).
+		SetRoleID(roleEntity.ID).
+		Save(privacyCtx); roleErr != nil {
+		s.log.Errorf("bind default register role failed: %s", roleErr.Error())
+		return nil, identityV1.ErrorInternalServerError("bind default register role failed")
+	}
+
 	// 5. 创建用户凭证（密码）
-	// 注意：ent schema 中 identity_type/credential_type 为 plain string，status 为 string 枚举。
-	// 与现有 VerifyCredential 查询保持一致：identity_type 存空串、credential_type 存 "PASSWORD_HASH"。
-	// 密码以明文写入（与现有 prepareCredential default 分支一致）；完整 bcrypt 哈希由
-	// userCredentialRepo.CreateWithTx 处理（该路径在 PrepareCredential 中对 PASSWORD_HASH 加密）。
-	// 这里为保持事务一致性直接写入明文，登录时 VerifyCredential 默认不走 PASSWORD_HASH 哈希校验分支
-	// 仅当 NeedDecrypt=true 时走明文比对，故需保持与现有 RegisterUser 一致的明文存储。
+	// 传输层密码为 AES-CBC 加密（Base64），先解密还原明文（与登录 VerifyCredential 的
+	// NeedDecrypt 解密语义一致），再 bcrypt 哈希入库（credential_type=PASSWORD_HASH）。
+	encryptedBytes, decErr := base64.StdEncoding.DecodeString(req.GetPassword())
+	if decErr != nil {
+		return nil, identityV1.ErrorBadRequest("invalid credential format")
+	}
+	plainPassword, decErr := crypto.AesDecrypt(encryptedBytes, crypto.DefaultAESKey, nil)
+	if decErr != nil {
+		return nil, identityV1.ErrorBadRequest("decrypt credential failed")
+	}
+	bcryptCrypto := password.NewBCryptCrypto()
+	hashedPassword, hashErr := bcryptCrypto.Encrypt(string(plainPassword))
+	if hashErr != nil {
+		s.log.Errorf("hash password failed: %s", hashErr.Error())
+		return nil, identityV1.ErrorInternalServerError("hash password failed")
+	}
 	if err = tx.UserCredential.Create().
 		SetUserID(userEntity.ID).
 		SetTenantID(tenantEntity.ID).
 		SetIdentifier(username).
 		SetIdentityType(userCredentialIdentityType).
 		SetCredentialType(userCredentialCredentialType).
-		SetCredential(req.GetPassword()).
+		SetCredential(hashedPassword).
 		SetStatus(usercredential.StatusEnabled).
 		SetIsPrimary(true).
 		SetCreatedAt(time.Now()).

@@ -47,6 +47,17 @@ func (s *AuthenticationService) Login(ctx context.Context, req *authenticationV1
 	return s.authenticationServiceClient.Login(ctx, req)
 }
 
+// RefreshToken 刷新认证令牌
+func (s *AuthenticationService) RefreshToken(ctx context.Context, req *authenticationV1.LoginRequest) (*authenticationV1.LoginResponse, error) {
+	if req == nil {
+		return nil, authenticationV1.ErrorBadRequest("invalid request")
+	}
+
+	req.ClientType = trans.Ptr(authenticationV1.ClientType_app)
+
+	return s.authenticationServiceClient.RefreshToken(ctx, req)
+}
+
 // Logout 登出
 func (s *AuthenticationService) Logout(ctx context.Context, _ *emptypb.Empty) (*emptypb.Empty, error) {
 	operator, err := auth.FromContext(ctx)

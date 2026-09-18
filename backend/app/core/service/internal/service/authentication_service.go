@@ -18,6 +18,8 @@ import (
 	identityV1 "go-wind-ledger/api/gen/go/identity/service/v1"
 	"go-wind-ledger/pkg/constants"
 	"go-wind-ledger/pkg/metadata"
+
+	appViewer "go-wind-ledger/pkg/entgo/viewer"
 )
 
 type AuthenticationService struct {
@@ -236,6 +238,10 @@ func (s *AuthenticationService) doGrantTypePassword(ctx context.Context, req *au
 
 // doGrantTypeRefreshToken 处理授权类型 - 刷新令牌
 func (s *AuthenticationService) doGrantTypeRefreshToken(ctx context.Context, req *authenticationV1.LoginRequest) (*authenticationV1.LoginResponse, error) {
+	// 刷新为匿名操作（无 operator metadata，ent 中间件不会挂载 viewer），
+	// 直接注入系统 viewer，供令牌校验与用户查询的隐私规则使用。
+	ctx = appViewer.NewSystemViewerContext(ctx)
+
 	// 验证刷新令牌（自验证 JWT）：身份（uid/jti）从令牌自身解析，
 	// 不再依赖请求参数 req.GetUserId()/req.GetJti()，并原子吊销旧令牌对。
 	uid, _, err := s.authenticator.VerifyRefreshToken(ctx, req.GetClientType(), req.GetRefreshToken())
