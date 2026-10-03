@@ -135,6 +135,8 @@ func NewRestServer(
 	internalMessageService          *service.InternalMessageService,
 	internalMessageCategoryService *service.InternalMessageCategoryService,
 	internalMessageRecipientService *service.InternalMessageRecipientService,
+
+	// register:rest-param ── 新模块服务形参在此行后追加(make register 工具锚点,勿删)
 ) *http.Server {
 	cfg := ctx.GetConfig()
 
@@ -177,6 +179,8 @@ func NewRestServer(
 	adminV1.RegisterPolicyEvaluationLogServiceHTTPServer(srv, policyEvaluationLogService)
 
 	adminV1.RegisterFileServiceHTTPServer(srv, fileSvc)
+
+	// register:rest-route ── 新模块服务路由在此行后注册(make register 工具锚点,勿删)
 
 		// === 记账系统 Admin REST API ===
 		adminV1.RegisterBookServiceHTTPServer(srv, bookService)

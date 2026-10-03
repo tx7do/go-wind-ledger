@@ -95,6 +95,8 @@ func NewRestServer(
 
 	// === 记账认证服务 ===
 	ledgerAuthService *service.LedgerAuthService,
+
+	// register:rest-param ── 新模块服务形参在此行后追加(make register 工具锚点,勿删)
 ) *http.Server {
 	cfg := ctx.GetConfig()
 
@@ -127,6 +129,8 @@ func NewRestServer(
 
 	// === 记账认证服务 HTTP 注册 ===
 	appV1.RegisterLedgerAuthServiceHTTPServer(srv, ledgerAuthService)
+
+	// register:rest-route ── 新模块服务路由在此行后注册(make register 工具锚点,勿删)
 
 	if cfg.GetServer().GetRest().GetEnableSwagger() {
 		swaggerUI.RegisterSwaggerUIServerWithOption(

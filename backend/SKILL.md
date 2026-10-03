@@ -6,7 +6,7 @@
 
 ## skill: add-proto-service
 
-**描述**: 按 Proto-first 工作流新增一个后端微服务模块（含 proto 定义、ent schema、repo、service、wire 注入）。
+**描述**: 按 Proto-first 工作流新增一个后端微服务模块（含 proto 定义、ent schema、repo、service、装配登记）。
 
 **前置条件**: 已确定领域（domain）名称和实体（entity）名称。
 
@@ -32,30 +32,23 @@ Step 5: 实现 repo
   定义接口（大写）→ 实现（小写）→ 事务 defer 闭包模式
   构造函数 NewXxxRepo(...) UserRepo 返回接口类型
 
-Step 6: 注册 repo 到 wire
-  在 app/core/service/internal/data/providers/wire_set.go 添加 NewXxxRepo
-
-Step 7: 实现 core service
+Step 6: 实现 core service
   在 app/core/service/internal/service/{entity}_service.go
   嵌入 UnimplementedXxxServer → 注入 repo 接口 → 实现业务方法
 
-Step 8: 注册 service 到 wire
-  在 app/core/service/internal/service/providers/wire_set.go 添加 NewXxxService
+Step 7: 装配登记（core）
+  cd backend && make register ENTITY={entity} SVC=core PKG={domainV1}
+  经 register:* 锚点注入 wiring.go 仓储/服务构造行与实参、grpc_server.go 形参与路由注册
 
-Step 9: 注册 gRPC service
-  在 app/core/service/internal/server/grpc_server.go 调用 RegisterXxxServer
-
-Step 10: （BFF 网关）实现转发 service
+Step 8: （BFF 网关）实现转发 service
   在 app/admin/service/internal/service/{entity}_service.go（admin 网关）
   注入 XxxServiceClient → 参数校验 → gRPC 转发到 core
 
-Step 11: 注册 HTTP 路由
-  在 app/admin/service/internal/server/rest_server.go 调用 RegisterXxxHTTPServer
+Step 9: 装配登记（BFF）
+  cd backend && make register ENTITY={entity} SVC=admin|app
+  经 register:* 锚点注入 wiring.go 客户端/服务构造行与实参、rest_server.go 形参与路由注册
 
-Step 12: wire 生成
-  cd backend && make wire
-
-Step 13: 编译验证
+Step 10: 编译验证
   cd backend && make build && make run
 ```
 
@@ -89,14 +82,11 @@ Step 3: 实现 BFF service
   注入 XxxServiceClient → 参数校验 → 直接转发到 core
   模板见 backend/AGENTS.md 的 "service 层（业务逻辑）" 章节
 
-Step 4: 注册 HTTP 路由
-  在 app/admin/service/internal/server/rest_server.go
-  调用 adminV1.RegisterXxxHTTPServer(srv, xxxService)
+Step 4: 装配登记
+  cd backend && make register ENTITY={entity} SVC=admin|app
+  经 register:* 锚点注入 wiring.go 客户端/服务构造行与实参、rest_server.go 形参与路由注册
 
-Step 5: wire 生成
-  cd backend && make wire
-
-Step 6: 编译验证
+Step 5: 编译验证
   cd backend && make build && make run
 ```
 
@@ -144,7 +134,7 @@ Step 5: 更新 repo DTO 转换（如有自定义映射）
 | 错误信息 | 诊断 | 解决 |
 |----------|------|------|
 | `undefined: xxxV1.Xxx` | proto 未生成或 import 路径错误 | `make api`；检查 go_package |
-| `cannot use xxx as XxxRepo` | wire 注入类型不匹配 | 检查 ProviderSet 是否注册 + 构造函数返回类型 |
+| `cannot use xxx as XxxRepo` | wiring.go 构造行传参类型不匹配 | 检查 wiring.go 分层小节构造行传参 + 构造函数返回类型 |
 | `no schema for xxx` | ent schema 未生成 | `make ent`；确认 schema 在正确目录 |
 | `import cycle not allowed` | 循环依赖 | 检查 proto import / Go import；抽取公共接口到 pkg |
-| `NewXxxRepo redeclared` | 构造函数重复 | 检查 wire_set.go 是否重复注册 |
+| `NewXxxRepo redeclared` | 构造函数重复 | 检查 wiring.go 分层小节是否重复构造行 |

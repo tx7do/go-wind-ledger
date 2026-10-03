@@ -70,6 +70,8 @@ func NewGrpcServer(
 	operationAuditLogService *service.OperationAuditLogService,
 	dataAccessAuditLogService *service.DataAccessAuditLogService,
 
+	// register:grpc-param ── 新模块服务形参在此行后追加(make register 工具锚点,勿删)
+
 	// === 记账系统 Services ===
 	bookService          *service.BookService,
 	accountService       *service.AccountService,
@@ -150,6 +152,8 @@ func NewGrpcServer(
 
 	// === 记账认证服务 gRPC 注册 ===
 	appV1.RegisterLedgerAuthServiceServer(srv, ledgerAuthService)
+
+	// register:grpc-route ── 新模块服务路由在此行后注册(make register 工具锚点,勿删)
 
 	return srv, nil
 }

@@ -106,7 +106,7 @@
 |:-------|:-------------------------------------------------------------------|:--------------|
 | 语言     | [Go 1.25+](https://go.dev/)                                        | 高性能编译型语言      |
 | 框架     | [go-kratos](https://go-kratos.dev/)                                | B 站开源微服务框架    |
-| 依赖注入   | [Wire](https://github.com/google/wire)                             | 编译时依赖注入       |
+| 依赖注入   | 手写装配（wiring.go）                                                                  | 无 DI 框架，`make register` 辅助登记 |
 | ORM    | [Ent](https://entgo.io/)                                           | Go 实体框架       |
 | 数据库    | [PostgreSQL](https://www.postgresql.org/) / [MySQL](https://www.mysql.com/) | 关系型数据库 |
 | 缓存     | [Redis](https://redis.io/)                                         | 内存数据库         |
@@ -277,10 +277,10 @@ flutter run
 
 | 命令                | 说明                          |
 |:------------------|:----------------------------|
-| `make gen`        | 全量代码生成（ent + wire + api + openapi） |
+| `make gen`        | 全量代码生成（ent + api + openapi） |
 | `make api`        | Proto → Go 代码生成             |
 | `make ent`        | Ent ORM 代码生成                |
-| `make wire`       | Wire 依赖注入代码生成               |
+| `make register`   | 新模块装配登记（见 backend/AGENTS.md「依赖装配」章节） |
 | `make build`      | 编译所有服务                     |
 | `make run`        | 运行所有服务                     |
 | `make compose-up` | Docker Compose 启动全部         |
@@ -319,7 +319,7 @@ flutter run
 <details>
 <summary><b>如何新增一个记账领域实体？</b></summary>
 
-完整流程见 [backend/AGENTS.md · 新增业务模块 Checklist](./backend/AGENTS.md#新增业务模块-checklist以-user-模块为模板)。概要：proto → make api → ent schema → make ent → repo → service → wire → 网关转发。
+完整流程见 [backend/AGENTS.md · 新增业务模块 Checklist](./backend/AGENTS.md#新增业务模块-checklist以-user-模块为模板)。概要：proto → make api → ent schema → make ent → repo → service → 网关转发。
 </details>
 
 <details>

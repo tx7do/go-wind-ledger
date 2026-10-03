@@ -106,7 +106,7 @@
 |:-------|:-------------------------------------------------------------------|:------------------------|
 | 言語     | [Go 1.25+](https://go.dev/)                                        | 高性能コンパイル言語             |
 | フレームワーク | [go-kratos](https://go-kratos.dev/)                                | Bilibili オープンソースマイクロサービス |
-| DI     | [Wire](https://github.com/google/wire)                             | コンパイル時依存性注入            |
+| DI | 手書きアセンブリ (`wiring.go`) | DI フレームワークなし。`make register` が登録を補助 |
 | ORM    | [Ent](https://entgo.io/)                                           | Go エンティティフレームワーク       |
 | データベース | [PostgreSQL](https://www.postgresql.org/) / [MySQL](https://www.mysql.com/) | リレーショナルデータベース |
 | キャッシュ  | [Redis](https://redis.io/)                                         | インメモリデータベース           |
@@ -277,10 +277,10 @@ flutter run
 
 | コマンド              | 説明                                 |
 |:------------------|:-----------------------------------|
-| `make gen`        | 全コード生成（ent + wire + api + openapi）   |
+| `make gen`        | 全コード生成（ent + api + openapi）   |
 | `make api`        | Proto → Go コード生成                  |
 | `make ent`        | Ent ORM コード生成                    |
-| `make wire`       | Wire DI コード生成                    |
+| `make register` | 新規モジュールのアセンブリ登録（backend/AGENTS.md のアセンブリ章を参照） |
 | `make build`      | 全サービスコンパイル                       |
 | `make run`        | 全サービス実行                         |
 | `make compose-up` | Docker Compose 全起動                |
@@ -319,7 +319,7 @@ flutter run
 <details>
 <summary><b>新しい家計簿エンティティを追加するには？</b></summary>
 
-完全なワークフローは [backend/AGENTS.md · 新規モジュールチェックリスト](./backend/AGENTS.md#新增业务模块-checklist以-user-模块为模板) を参照。概要：proto → make api → ent schema → make ent → repo → service → wire → ゲートウェイ転送。
+完全なワークフローは [backend/AGENTS.md · 新規モジュールチェックリスト](./backend/AGENTS.md#新增业务模块-checklist以-user-模块为模板) を参照。概要：proto → make api → ent schema → make ent → repo → service → ゲートウェイ転送。
 </details>
 
 <details>

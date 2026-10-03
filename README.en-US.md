@@ -106,7 +106,7 @@ FengXing Ledger (GoWind Ledger) is a full-stack personal/family bookkeeping plat
 |:------------|:---------------------------------------------------------------------------|:-------------------------------|
 | Language    | [Go 1.25+](https://go.dev/)                                                | High-performance compiled lang |
 | Framework   | [go-kratos](https://go-kratos.dev/)                                        | Bilibili microservice framework|
-| DI          | [Wire](https://github.com/google/wire)                                     | Compile-time dependency injection |
+| DI | Hand-written assembly (`wiring.go`) | No DI framework; `make register` assists module registration |
 | ORM         | [Ent](https://entgo.io/)                                                   | Go entity framework            |
 | Database    | [PostgreSQL](https://www.postgresql.org/) / [MySQL](https://www.mysql.com/) | Relational database           |
 | Cache       | [Redis](https://redis.io/)                                                 | In-memory database            |
@@ -277,10 +277,10 @@ flutter run
 
 | Command          | Description                              |
 |:-----------------|:-----------------------------------------|
-| `make gen`       | Full codegen (ent + wire + api + openapi)|
+| `make gen`       | Full codegen (ent + api + openapi)|
 | `make api`       | Proto → Go code generation               |
 | `make ent`       | Ent ORM code generation                  |
-| `make wire`      | Wire DI code generation                  |
+| `make register` | New-module assembly registration (see the assembly chapter in backend/AGENTS.md) |
 | `make build`     | Build all services                      |
 | `make run`       | Run all services                        |
 | `make compose-up`| Docker Compose start all                |
@@ -319,7 +319,7 @@ Modify the `server.http.addr` field in the corresponding service's `configs/serv
 <details>
 <summary><b>How to add a new ledger domain entity?</b></summary>
 
-Full workflow in [backend/AGENTS.md · New Module Checklist](./backend/AGENTS.md#新增业务模块-checklist以-user-模块为模板). Summary: proto → make api → ent schema → make ent → repo → service → wire → gateway forwarding.
+Full workflow in [backend/AGENTS.md · New Module Checklist](./backend/AGENTS.md#新增业务模块-checklist以-user-模块为模板). Summary: proto → make api → ent schema → make ent → repo → service → gateway forwarding.
 </details>
 
 <details>
