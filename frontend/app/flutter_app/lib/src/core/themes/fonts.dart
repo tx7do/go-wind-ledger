@@ -63,6 +63,9 @@ class AppFont {
   static List<String> get fontFamilyFallback {
     return [
       systemFont,
+      // Web 端没有系统字体目录可挂载，回退到 pubspec 内置的 Noto Sans SC，
+      // 否则 CanvasKit 渲染缺 CJK 字形显示为方块。
+      if (PlatformUtils.isWeb) 'Noto Sans SC',
       if (PlatformUtils.isApple) ...appleFontFamily,
       if (PlatformUtils.isAndroid) ...xiaomiFontFamily,
       if (PlatformUtils.isWindows) ...windowsFontFamily,

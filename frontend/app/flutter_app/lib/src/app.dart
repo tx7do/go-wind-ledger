@@ -1,5 +1,6 @@
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:provider/provider.dart';
 
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -10,6 +11,7 @@ import 'package:flutter_app/generated/l10n.dart' as l10n;
 
 import 'package:flutter_app/src/core/extensions/app_localizations_context.dart';
 import 'package:flutter_app/src/core/constants/breakpoints.dart';
+import 'package:flutter_app/src/core/themes/fonts.dart';
 import 'package:flutter_app/src/core/themes/index.dart' as theme;
 import 'package:flutter_app/src/core/utilities/logger.dart' show debug;
 
@@ -78,6 +80,31 @@ class _LedgerAppState extends State<LedgerApp> {
       themeMode: context.watch<theme.AppThemeCubit>().themeMode,
       locale: context.watch<theme.AppThemeCubit>().currentLocale,
       builder: (context, routerChild) {
+        // Web 端 Cupertino 组件（按钮/输入框等）内部默认 'CupertinoSystemText'
+        // 字体族，CanvasKit 拿不到系统级 CJK 回退会渲染为方块；给全部
+        // Cupertino 文本样式注入 pubspec 内置的 Noto Sans SC 作为回退字体族。
+        if (kIsWeb) {
+          const defaults = CupertinoTextThemeData();
+          TextStyle patch(TextStyle s) =>
+              s.copyWith(fontFamilyFallback: AppFont.fontFamilyFallback);
+          routerChild = CupertinoTheme(
+            data: CupertinoThemeData(
+              textTheme: CupertinoTextThemeData(
+                textStyle: patch(defaults.textStyle),
+                actionTextStyle: patch(defaults.actionTextStyle),
+                actionSmallTextStyle: patch(defaults.actionSmallTextStyle),
+                navTitleTextStyle: patch(defaults.navTitleTextStyle),
+                navLargeTitleTextStyle: patch(defaults.navLargeTitleTextStyle),
+                navActionTextStyle: patch(defaults.navActionTextStyle),
+                pickerTextStyle: patch(defaults.pickerTextStyle),
+                dateTimePickerTextStyle:
+                    patch(defaults.dateTimePickerTextStyle),
+                tabLabelTextStyle: patch(defaults.tabLabelTextStyle),
+              ),
+            ),
+            child: routerChild!,
+          );
+        }
         // EasyLoading 作为路由的外部包装
         final easyLoadingBuilder = EasyLoading.init();
         return easyLoadingBuilder(context, routerChild);
