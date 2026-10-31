@@ -20,6 +20,7 @@
 ## 目次
 
 - [概要](#概要)
+- [スクリーンショット](#スクリーンショット)
 - [ロール別クイックスタート](#ロール別クイックスタート)
 - [システムアーキテクチャ](#システムアーキテクチャ)
 - [技術スタック](#技術スタック)
@@ -47,6 +48,30 @@
 - **定期リマインダー** — 毎日/毎月/毎年の繰り返しリマインダー、実行と取り消し操作をサポート
 - **マイクロサービス** — go-kratos ベース、Admin BFF + App BFF + Core の 3 サービスアーキテクチャ
 - **API ファースト** — Protobuf コントラクト駆動、RESTful + gRPC デュアルプロトコル、OpenAPI ドキュメント自動生成
+
+## スクリーンショット
+
+### Admin 管理コンソール
+
+**分析ページ**
+
+![Admin 分析ページ](./docs/screenshots/admin-dashboard.png)
+
+**収支明細**
+
+![Admin 収支明細](./docs/screenshots/admin-balance-flows.png)
+
+**統計レポート**
+
+![Admin 統計レポート](./docs/screenshots/admin-reports.png)
+
+### Flutter モバイルアプリ
+
+<p align="center">
+  <img src="./docs/screenshots/app-flows.png" width="270" alt="収支明細" />
+  <img src="./docs/screenshots/app-stats.png" width="270" alt="統計レポート" />
+  <img src="./docs/screenshots/app-accounts.png" width="270" alt="アカウント概要" />
+</p>
 
 ## ロール別クイックスタート
 

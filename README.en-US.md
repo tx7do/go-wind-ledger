@@ -20,6 +20,7 @@
 ## Table of Contents
 
 - [Overview](#overview)
+- [Screenshots](#screenshots)
 - [Quick Start by Role](#quick-start-by-role)
 - [System Architecture](#system-architecture)
 - [Tech Stack](#tech-stack)
@@ -47,6 +48,30 @@ FengXing Ledger (GoWind Ledger) is a full-stack personal/family bookkeeping plat
 - **Recurring Reminders** — Daily/monthly/yearly recurring reminders with run/recall operations
 - **Microservices** — Built on go-kratos with Admin BFF + App BFF + Core three-service architecture
 - **API First** — Protobuf contract-driven, RESTful + gRPC dual protocol, auto-generated OpenAPI docs
+
+## Screenshots
+
+### Admin Console
+
+**Analytics Dashboard**
+
+![Admin Analytics](./docs/screenshots/admin-dashboard.png)
+
+**Balance Flows**
+
+![Admin Balance Flows](./docs/screenshots/admin-balance-flows.png)
+
+**Reports & Analytics**
+
+![Admin Reports](./docs/screenshots/admin-reports.png)
+
+### Flutter Mobile App
+
+<p align="center">
+  <img src="./docs/screenshots/app-flows.png" width="270" alt="Balance Flows" />
+  <img src="./docs/screenshots/app-stats.png" width="270" alt="Reports & Analytics" />
+  <img src="./docs/screenshots/app-accounts.png" width="270" alt="Account Overview" />
+</p>
 
 ## Quick Start by Role
 

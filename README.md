@@ -20,6 +20,7 @@
 ## 目录
 
 - [项目简介](#项目简介)
+- [界面预览](#界面预览)
 - [按角色快速开始](#按角色快速开始)
 - [系统架构](#系统架构)
 - [技术栈](#技术栈)
@@ -47,6 +48,30 @@
 - **定期提醒** — 按每天/每月/每年重复提醒，支持执行与撤回操作
 - **微服务架构** — 基于 go-kratos，Admin BFF + App BFF + Core 三服务架构
 - **API 优先** — Protobuf 合约驱动，RESTful + gRPC 双协议，OpenAPI 文档自动生成
+
+## 界面预览
+
+### Admin 管理后台
+
+**分析页**
+
+![Admin 分析页](./docs/screenshots/admin-dashboard.png)
+
+**收支流水**
+
+![Admin 收支流水](./docs/screenshots/admin-balance-flows.png)
+
+**统计报表**
+
+![Admin 统计报表](./docs/screenshots/admin-reports.png)
+
+### Flutter 移动端
+
+<p align="center">
+  <img src="./docs/screenshots/app-flows.png" width="270" alt="App 收支流水" />
+  <img src="./docs/screenshots/app-stats.png" width="270" alt="App 统计报表" />
+  <img src="./docs/screenshots/app-accounts.png" width="270" alt="App 账户概览" />
+</p>
 
 ## 按角色快速开始
 
