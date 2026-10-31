@@ -22,6 +22,13 @@ export function formatDate(time: number | string, format = 'YYYY-MM-DD') {
     return dateUtil(time).format(format);
   }
 
+  // int64 时间戳经 protobuf JSON 序列化后是纯数字字符串，dayjs 会按
+  // YYYYMMDDHHmmss 逐位解析导致年份错乱（如 1719878400000 → 1726-05-23），
+  // 这里先还原为数值时间戳再交给 dayjs。
+  if (typeof time === 'string' && /^\d{10,}$/.test(time.trim())) {
+    return dateUtil(Number(time.trim())).format(format);
+  }
+
   try {
     const date = dateUtil(time);
     if (!date.isValid()) {

@@ -78,4 +78,3 @@ export const LucideSettings = createIconifyIcon('lucide:settings');
 
 export const LucideUpload = createIconifyIcon('lucide:upload');
 export const LucidePaperclip = createIconifyIcon('lucide:paperclip');
-export const LucideEye = createIconifyIcon('lucide:eye');
