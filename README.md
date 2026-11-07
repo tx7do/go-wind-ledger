@@ -114,7 +114,7 @@
 │  └────────┘ └────────┘ └────────┘ └────────┘ └──────────┘     │
 │         │                                                        │
 │         │ Ent ORM → PostgreSQL                                   │
-│         │ Redis · MinIO · ElasticSearch · etcd                  │
+│         │ Redis · SeaweedFS · ElasticSearch · etcd              │
 └─────────┴────────────────────────────────────────────────────────┘
 ```
 
@@ -135,7 +135,7 @@
 | ORM    | [Ent](https://entgo.io/)                                           | Go 实体框架       |
 | 数据库    | [PostgreSQL](https://www.postgresql.org/) / [MySQL](https://www.mysql.com/) | 关系型数据库 |
 | 缓存     | [Redis](https://redis.io/)                                         | 内存数据库         |
-| 对象存储   | [MinIO](https://min.io/)                                           | 兼容 S3 的对象存储   |
+| 对象存储   | [SeaweedFS](https://github.com/chrislusf/seaweedfs)                | S3 兼容对象存储（MinIO 社区版停维护后的替代，容器服务名沿用 minio） |
 | 服务注册   | [Etcd](https://etcd.io/)                                           | 服务发现与配置       |
 | 链路追踪   | [Jaeger](https://www.jaegertracing.io/) + [OpenTelemetry](https://opentelemetry.io/) | 分布式可观测 |
 | API 定义 | [Protobuf](https://protobuf.dev/) + [buf.build](https://buf.build/) | 接口契约优先        |
@@ -259,7 +259,7 @@ go-wind-ledger/
 - Node.js 20+ / pnpm 9+
 - Flutter 3.12+ / Dart 3.12+
 - Docker & Docker Compose
-- PostgreSQL 15+ / Redis 7+ / MinIO / etcd
+- PostgreSQL 15+ / Redis 7+ / SeaweedFS / etcd
 
 ### 1. 启动基础设施
 

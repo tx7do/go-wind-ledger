@@ -114,7 +114,7 @@ FengXing Ledger (GoWind Ledger) is a full-stack personal/family bookkeeping plat
 │  └────────┘ └────────┘ └────────┘ └────────┘ └──────────┘     │
 │         │                                                        │
 │         │ Ent ORM → PostgreSQL                                   │
-│         │ Redis · MinIO · ElasticSearch · etcd                  │
+│         │ Redis · SeaweedFS · ElasticSearch · etcd              │
 └─────────┴────────────────────────────────────────────────────────┘
 ```
 
@@ -135,7 +135,7 @@ FengXing Ledger (GoWind Ledger) is a full-stack personal/family bookkeeping plat
 | ORM         | [Ent](https://entgo.io/)                                                   | Go entity framework            |
 | Database    | [PostgreSQL](https://www.postgresql.org/) / [MySQL](https://www.mysql.com/) | Relational database           |
 | Cache       | [Redis](https://redis.io/)                                                 | In-memory database            |
-| Storage     | [MinIO](https://min.io/)                                                   | S3-compatible object storage  |
+| Storage     | [SeaweedFS](https://github.com/chrislusf/seaweedfs)                        | S3-compatible object storage — the replacement after MinIO Community went unmaintained; the container service name stays `minio` |
 | Discovery   | [Etcd](https://etcd.io/)                                                   | Service discovery & config    |
 | Tracing     | [Jaeger](https://www.jaegertracing.io/) + [OpenTelemetry](https://opentelemetry.io/) | Distributed observability |
 | API Def     | [Protobuf](https://protobuf.dev/) + [buf.build](https://buf.build/)        | Contract-first API            |
@@ -259,7 +259,7 @@ go-wind-ledger/
 - Node.js 20+ / pnpm 9+
 - Flutter 3.12+ / Dart 3.12+
 - Docker & Docker Compose
-- PostgreSQL 15+ / Redis 7+ / MinIO / etcd
+- PostgreSQL 15+ / Redis 7+ / SeaweedFS / etcd
 
 ### 1. Start Infrastructure
 

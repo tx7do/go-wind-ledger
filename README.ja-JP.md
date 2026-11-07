@@ -114,7 +114,7 @@
 │  └────────┘ └────────┘ └────────┘ └────────┘ └──────────┘     │
 │         │                                                        │
 │         │ Ent ORM → PostgreSQL                                   │
-│         │ Redis · MinIO · ElasticSearch · etcd                  │
+│         │ Redis · SeaweedFS · ElasticSearch · etcd              │
 └─────────┴────────────────────────────────────────────────────────┘
 ```
 
@@ -135,7 +135,7 @@
 | ORM    | [Ent](https://entgo.io/)                                           | Go エンティティフレームワーク       |
 | データベース | [PostgreSQL](https://www.postgresql.org/) / [MySQL](https://www.mysql.com/) | リレーショナルデータベース |
 | キャッシュ  | [Redis](https://redis.io/)                                         | インメモリデータベース           |
-| オブジェクトストレージ | [MinIO](https://min.io/)                                       | S3 互換オブジェクトストレージ      |
+| オブジェクトストレージ | [SeaweedFS](https://github.com/chrislusf/seaweedfs)            | S3 互換オブジェクトストレージ。MinIO コミュニティ版の保守終了後の代替で、コンテナサービス名は minio を継続使用 |
 | サービス探索 | [Etcd](https://etcd.io/)                                           | サービスディスカバリと設定        |
 | 分散トレーシング | [Jaeger](https://www.jaegertracing.io/) + [OpenTelemetry](https://opentelemetry.io/) | 分散可観測性 |
 | API 定義 | [Protobuf](https://protobuf.dev/) + [buf.build](https://buf.build/) | コントラクトファースト API      |
@@ -259,7 +259,7 @@ go-wind-ledger/
 - Node.js 20+ / pnpm 9+
 - Flutter 3.12+ / Dart 3.12+
 - Docker & Docker Compose
-- PostgreSQL 15+ / Redis 7+ / MinIO / etcd
+- PostgreSQL 15+ / Redis 7+ / SeaweedFS / etcd
 
 ### 1. インフラストラクチャの起動
 
