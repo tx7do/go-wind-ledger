@@ -9,57 +9,57 @@ import (
 )
 
 // ID filters vertices based on their ID field.
-func ID(id uint32) predicate.CategoryRelation {
+func ID(id int64) predicate.CategoryRelation {
 	return predicate.CategoryRelation(sql.FieldEQ(FieldID, id))
 }
 
 // IDEQ applies the EQ predicate on the ID field.
-func IDEQ(id uint32) predicate.CategoryRelation {
+func IDEQ(id int64) predicate.CategoryRelation {
 	return predicate.CategoryRelation(sql.FieldEQ(FieldID, id))
 }
 
 // IDNEQ applies the NEQ predicate on the ID field.
-func IDNEQ(id uint32) predicate.CategoryRelation {
+func IDNEQ(id int64) predicate.CategoryRelation {
 	return predicate.CategoryRelation(sql.FieldNEQ(FieldID, id))
 }
 
 // IDIn applies the In predicate on the ID field.
-func IDIn(ids ...uint32) predicate.CategoryRelation {
+func IDIn(ids ...int64) predicate.CategoryRelation {
 	return predicate.CategoryRelation(sql.FieldIn(FieldID, ids...))
 }
 
 // IDNotIn applies the NotIn predicate on the ID field.
-func IDNotIn(ids ...uint32) predicate.CategoryRelation {
+func IDNotIn(ids ...int64) predicate.CategoryRelation {
 	return predicate.CategoryRelation(sql.FieldNotIn(FieldID, ids...))
 }
 
 // IDGT applies the GT predicate on the ID field.
-func IDGT(id uint32) predicate.CategoryRelation {
+func IDGT(id int64) predicate.CategoryRelation {
 	return predicate.CategoryRelation(sql.FieldGT(FieldID, id))
 }
 
 // IDGTE applies the GTE predicate on the ID field.
-func IDGTE(id uint32) predicate.CategoryRelation {
+func IDGTE(id int64) predicate.CategoryRelation {
 	return predicate.CategoryRelation(sql.FieldGTE(FieldID, id))
 }
 
 // IDLT applies the LT predicate on the ID field.
-func IDLT(id uint32) predicate.CategoryRelation {
+func IDLT(id int64) predicate.CategoryRelation {
 	return predicate.CategoryRelation(sql.FieldLT(FieldID, id))
 }
 
 // IDLTE applies the LTE predicate on the ID field.
-func IDLTE(id uint32) predicate.CategoryRelation {
+func IDLTE(id int64) predicate.CategoryRelation {
 	return predicate.CategoryRelation(sql.FieldLTE(FieldID, id))
 }
 
 // CategoryID applies equality check predicate on the "category_id" field. It's identical to CategoryIDEQ.
-func CategoryID(v uint32) predicate.CategoryRelation {
+func CategoryID(v int64) predicate.CategoryRelation {
 	return predicate.CategoryRelation(sql.FieldEQ(FieldCategoryID, v))
 }
 
 // BalanceFlowID applies equality check predicate on the "balance_flow_id" field. It's identical to BalanceFlowIDEQ.
-func BalanceFlowID(v uint32) predicate.CategoryRelation {
+func BalanceFlowID(v int64) predicate.CategoryRelation {
 	return predicate.CategoryRelation(sql.FieldEQ(FieldBalanceFlowID, v))
 }
 
@@ -74,42 +74,42 @@ func ConvertedAmount(v float64) predicate.CategoryRelation {
 }
 
 // CategoryIDEQ applies the EQ predicate on the "category_id" field.
-func CategoryIDEQ(v uint32) predicate.CategoryRelation {
+func CategoryIDEQ(v int64) predicate.CategoryRelation {
 	return predicate.CategoryRelation(sql.FieldEQ(FieldCategoryID, v))
 }
 
 // CategoryIDNEQ applies the NEQ predicate on the "category_id" field.
-func CategoryIDNEQ(v uint32) predicate.CategoryRelation {
+func CategoryIDNEQ(v int64) predicate.CategoryRelation {
 	return predicate.CategoryRelation(sql.FieldNEQ(FieldCategoryID, v))
 }
 
 // CategoryIDIn applies the In predicate on the "category_id" field.
-func CategoryIDIn(vs ...uint32) predicate.CategoryRelation {
+func CategoryIDIn(vs ...int64) predicate.CategoryRelation {
 	return predicate.CategoryRelation(sql.FieldIn(FieldCategoryID, vs...))
 }
 
 // CategoryIDNotIn applies the NotIn predicate on the "category_id" field.
-func CategoryIDNotIn(vs ...uint32) predicate.CategoryRelation {
+func CategoryIDNotIn(vs ...int64) predicate.CategoryRelation {
 	return predicate.CategoryRelation(sql.FieldNotIn(FieldCategoryID, vs...))
 }
 
 // CategoryIDGT applies the GT predicate on the "category_id" field.
-func CategoryIDGT(v uint32) predicate.CategoryRelation {
+func CategoryIDGT(v int64) predicate.CategoryRelation {
 	return predicate.CategoryRelation(sql.FieldGT(FieldCategoryID, v))
 }
 
 // CategoryIDGTE applies the GTE predicate on the "category_id" field.
-func CategoryIDGTE(v uint32) predicate.CategoryRelation {
+func CategoryIDGTE(v int64) predicate.CategoryRelation {
 	return predicate.CategoryRelation(sql.FieldGTE(FieldCategoryID, v))
 }
 
 // CategoryIDLT applies the LT predicate on the "category_id" field.
-func CategoryIDLT(v uint32) predicate.CategoryRelation {
+func CategoryIDLT(v int64) predicate.CategoryRelation {
 	return predicate.CategoryRelation(sql.FieldLT(FieldCategoryID, v))
 }
 
 // CategoryIDLTE applies the LTE predicate on the "category_id" field.
-func CategoryIDLTE(v uint32) predicate.CategoryRelation {
+func CategoryIDLTE(v int64) predicate.CategoryRelation {
 	return predicate.CategoryRelation(sql.FieldLTE(FieldCategoryID, v))
 }
 
@@ -124,42 +124,42 @@ func CategoryIDNotNil() predicate.CategoryRelation {
 }
 
 // BalanceFlowIDEQ applies the EQ predicate on the "balance_flow_id" field.
-func BalanceFlowIDEQ(v uint32) predicate.CategoryRelation {
+func BalanceFlowIDEQ(v int64) predicate.CategoryRelation {
 	return predicate.CategoryRelation(sql.FieldEQ(FieldBalanceFlowID, v))
 }
 
 // BalanceFlowIDNEQ applies the NEQ predicate on the "balance_flow_id" field.
-func BalanceFlowIDNEQ(v uint32) predicate.CategoryRelation {
+func BalanceFlowIDNEQ(v int64) predicate.CategoryRelation {
 	return predicate.CategoryRelation(sql.FieldNEQ(FieldBalanceFlowID, v))
 }
 
 // BalanceFlowIDIn applies the In predicate on the "balance_flow_id" field.
-func BalanceFlowIDIn(vs ...uint32) predicate.CategoryRelation {
+func BalanceFlowIDIn(vs ...int64) predicate.CategoryRelation {
 	return predicate.CategoryRelation(sql.FieldIn(FieldBalanceFlowID, vs...))
 }
 
 // BalanceFlowIDNotIn applies the NotIn predicate on the "balance_flow_id" field.
-func BalanceFlowIDNotIn(vs ...uint32) predicate.CategoryRelation {
+func BalanceFlowIDNotIn(vs ...int64) predicate.CategoryRelation {
 	return predicate.CategoryRelation(sql.FieldNotIn(FieldBalanceFlowID, vs...))
 }
 
 // BalanceFlowIDGT applies the GT predicate on the "balance_flow_id" field.
-func BalanceFlowIDGT(v uint32) predicate.CategoryRelation {
+func BalanceFlowIDGT(v int64) predicate.CategoryRelation {
 	return predicate.CategoryRelation(sql.FieldGT(FieldBalanceFlowID, v))
 }
 
 // BalanceFlowIDGTE applies the GTE predicate on the "balance_flow_id" field.
-func BalanceFlowIDGTE(v uint32) predicate.CategoryRelation {
+func BalanceFlowIDGTE(v int64) predicate.CategoryRelation {
 	return predicate.CategoryRelation(sql.FieldGTE(FieldBalanceFlowID, v))
 }
 
 // BalanceFlowIDLT applies the LT predicate on the "balance_flow_id" field.
-func BalanceFlowIDLT(v uint32) predicate.CategoryRelation {
+func BalanceFlowIDLT(v int64) predicate.CategoryRelation {
 	return predicate.CategoryRelation(sql.FieldLT(FieldBalanceFlowID, v))
 }
 
 // BalanceFlowIDLTE applies the LTE predicate on the "balance_flow_id" field.
-func BalanceFlowIDLTE(v uint32) predicate.CategoryRelation {
+func BalanceFlowIDLTE(v int64) predicate.CategoryRelation {
 	return predicate.CategoryRelation(sql.FieldLTE(FieldBalanceFlowID, v))
 }
 

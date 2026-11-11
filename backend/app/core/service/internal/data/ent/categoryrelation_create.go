@@ -22,13 +22,13 @@ type CategoryRelationCreate struct {
 }
 
 // SetCategoryID sets the "category_id" field.
-func (_c *CategoryRelationCreate) SetCategoryID(v uint32) *CategoryRelationCreate {
+func (_c *CategoryRelationCreate) SetCategoryID(v int64) *CategoryRelationCreate {
 	_c.mutation.SetCategoryID(v)
 	return _c
 }
 
 // SetNillableCategoryID sets the "category_id" field if the given value is not nil.
-func (_c *CategoryRelationCreate) SetNillableCategoryID(v *uint32) *CategoryRelationCreate {
+func (_c *CategoryRelationCreate) SetNillableCategoryID(v *int64) *CategoryRelationCreate {
 	if v != nil {
 		_c.SetCategoryID(*v)
 	}
@@ -36,13 +36,13 @@ func (_c *CategoryRelationCreate) SetNillableCategoryID(v *uint32) *CategoryRela
 }
 
 // SetBalanceFlowID sets the "balance_flow_id" field.
-func (_c *CategoryRelationCreate) SetBalanceFlowID(v uint32) *CategoryRelationCreate {
+func (_c *CategoryRelationCreate) SetBalanceFlowID(v int64) *CategoryRelationCreate {
 	_c.mutation.SetBalanceFlowID(v)
 	return _c
 }
 
 // SetNillableBalanceFlowID sets the "balance_flow_id" field if the given value is not nil.
-func (_c *CategoryRelationCreate) SetNillableBalanceFlowID(v *uint32) *CategoryRelationCreate {
+func (_c *CategoryRelationCreate) SetNillableBalanceFlowID(v *int64) *CategoryRelationCreate {
 	if v != nil {
 		_c.SetBalanceFlowID(*v)
 	}
@@ -78,7 +78,7 @@ func (_c *CategoryRelationCreate) SetNillableConvertedAmount(v *float64) *Catego
 }
 
 // SetID sets the "id" field.
-func (_c *CategoryRelationCreate) SetID(v uint32) *CategoryRelationCreate {
+func (_c *CategoryRelationCreate) SetID(v int64) *CategoryRelationCreate {
 	_c.mutation.SetID(v)
 	return _c
 }
@@ -138,7 +138,7 @@ func (_c *CategoryRelationCreate) sqlSave(ctx context.Context) (*CategoryRelatio
 	}
 	if _spec.ID.Value != _node.ID {
 		id := _spec.ID.Value.(int64)
-		_node.ID = uint32(id)
+		_node.ID = int64(id)
 	}
 	_c.mutation.id = &_node.ID
 	_c.mutation.done = true
@@ -148,7 +148,7 @@ func (_c *CategoryRelationCreate) sqlSave(ctx context.Context) (*CategoryRelatio
 func (_c *CategoryRelationCreate) createSpec() (*CategoryRelation, *sqlgraph.CreateSpec) {
 	var (
 		_node = &CategoryRelation{config: _c.config}
-		_spec = sqlgraph.NewCreateSpec(categoryrelation.Table, sqlgraph.NewFieldSpec(categoryrelation.FieldID, field.TypeUint32))
+		_spec = sqlgraph.NewCreateSpec(categoryrelation.Table, sqlgraph.NewFieldSpec(categoryrelation.FieldID, field.TypeInt64))
 	)
 	_spec.OnConflict = _c.conflict
 	if id, ok := _c.mutation.ID(); ok {
@@ -156,11 +156,11 @@ func (_c *CategoryRelationCreate) createSpec() (*CategoryRelation, *sqlgraph.Cre
 		_spec.ID.Value = id
 	}
 	if value, ok := _c.mutation.CategoryID(); ok {
-		_spec.SetField(categoryrelation.FieldCategoryID, field.TypeUint32, value)
+		_spec.SetField(categoryrelation.FieldCategoryID, field.TypeInt64, value)
 		_node.CategoryID = &value
 	}
 	if value, ok := _c.mutation.BalanceFlowID(); ok {
-		_spec.SetField(categoryrelation.FieldBalanceFlowID, field.TypeUint32, value)
+		_spec.SetField(categoryrelation.FieldBalanceFlowID, field.TypeInt64, value)
 		_node.BalanceFlowID = &value
 	}
 	if value, ok := _c.mutation.Amount(); ok {
@@ -224,7 +224,7 @@ type (
 )
 
 // SetCategoryID sets the "category_id" field.
-func (u *CategoryRelationUpsert) SetCategoryID(v uint32) *CategoryRelationUpsert {
+func (u *CategoryRelationUpsert) SetCategoryID(v int64) *CategoryRelationUpsert {
 	u.Set(categoryrelation.FieldCategoryID, v)
 	return u
 }
@@ -236,7 +236,7 @@ func (u *CategoryRelationUpsert) UpdateCategoryID() *CategoryRelationUpsert {
 }
 
 // AddCategoryID adds v to the "category_id" field.
-func (u *CategoryRelationUpsert) AddCategoryID(v uint32) *CategoryRelationUpsert {
+func (u *CategoryRelationUpsert) AddCategoryID(v int64) *CategoryRelationUpsert {
 	u.Add(categoryrelation.FieldCategoryID, v)
 	return u
 }
@@ -248,7 +248,7 @@ func (u *CategoryRelationUpsert) ClearCategoryID() *CategoryRelationUpsert {
 }
 
 // SetBalanceFlowID sets the "balance_flow_id" field.
-func (u *CategoryRelationUpsert) SetBalanceFlowID(v uint32) *CategoryRelationUpsert {
+func (u *CategoryRelationUpsert) SetBalanceFlowID(v int64) *CategoryRelationUpsert {
 	u.Set(categoryrelation.FieldBalanceFlowID, v)
 	return u
 }
@@ -260,7 +260,7 @@ func (u *CategoryRelationUpsert) UpdateBalanceFlowID() *CategoryRelationUpsert {
 }
 
 // AddBalanceFlowID adds v to the "balance_flow_id" field.
-func (u *CategoryRelationUpsert) AddBalanceFlowID(v uint32) *CategoryRelationUpsert {
+func (u *CategoryRelationUpsert) AddBalanceFlowID(v int64) *CategoryRelationUpsert {
 	u.Add(categoryrelation.FieldBalanceFlowID, v)
 	return u
 }
@@ -368,14 +368,14 @@ func (u *CategoryRelationUpsertOne) Update(set func(*CategoryRelationUpsert)) *C
 }
 
 // SetCategoryID sets the "category_id" field.
-func (u *CategoryRelationUpsertOne) SetCategoryID(v uint32) *CategoryRelationUpsertOne {
+func (u *CategoryRelationUpsertOne) SetCategoryID(v int64) *CategoryRelationUpsertOne {
 	return u.Update(func(s *CategoryRelationUpsert) {
 		s.SetCategoryID(v)
 	})
 }
 
 // AddCategoryID adds v to the "category_id" field.
-func (u *CategoryRelationUpsertOne) AddCategoryID(v uint32) *CategoryRelationUpsertOne {
+func (u *CategoryRelationUpsertOne) AddCategoryID(v int64) *CategoryRelationUpsertOne {
 	return u.Update(func(s *CategoryRelationUpsert) {
 		s.AddCategoryID(v)
 	})
@@ -396,14 +396,14 @@ func (u *CategoryRelationUpsertOne) ClearCategoryID() *CategoryRelationUpsertOne
 }
 
 // SetBalanceFlowID sets the "balance_flow_id" field.
-func (u *CategoryRelationUpsertOne) SetBalanceFlowID(v uint32) *CategoryRelationUpsertOne {
+func (u *CategoryRelationUpsertOne) SetBalanceFlowID(v int64) *CategoryRelationUpsertOne {
 	return u.Update(func(s *CategoryRelationUpsert) {
 		s.SetBalanceFlowID(v)
 	})
 }
 
 // AddBalanceFlowID adds v to the "balance_flow_id" field.
-func (u *CategoryRelationUpsertOne) AddBalanceFlowID(v uint32) *CategoryRelationUpsertOne {
+func (u *CategoryRelationUpsertOne) AddBalanceFlowID(v int64) *CategoryRelationUpsertOne {
 	return u.Update(func(s *CategoryRelationUpsert) {
 		s.AddBalanceFlowID(v)
 	})
@@ -495,7 +495,7 @@ func (u *CategoryRelationUpsertOne) ExecX(ctx context.Context) {
 }
 
 // Exec executes the UPSERT query and returns the inserted/updated ID.
-func (u *CategoryRelationUpsertOne) ID(ctx context.Context) (id uint32, err error) {
+func (u *CategoryRelationUpsertOne) ID(ctx context.Context) (id int64, err error) {
 	node, err := u.create.Save(ctx)
 	if err != nil {
 		return id, err
@@ -504,7 +504,7 @@ func (u *CategoryRelationUpsertOne) ID(ctx context.Context) (id uint32, err erro
 }
 
 // IDX is like ID, but panics if an error occurs.
-func (u *CategoryRelationUpsertOne) IDX(ctx context.Context) uint32 {
+func (u *CategoryRelationUpsertOne) IDX(ctx context.Context) int64 {
 	id, err := u.ID(ctx)
 	if err != nil {
 		panic(err)
@@ -560,7 +560,7 @@ func (_c *CategoryRelationCreateBulk) Save(ctx context.Context) ([]*CategoryRela
 				mutation.id = &nodes[i].ID
 				if specs[i].ID.Value != nil && nodes[i].ID == 0 {
 					id := specs[i].ID.Value.(int64)
-					nodes[i].ID = uint32(id)
+					nodes[i].ID = int64(id)
 				}
 				mutation.done = true
 				return nodes[i], nil
@@ -693,14 +693,14 @@ func (u *CategoryRelationUpsertBulk) Update(set func(*CategoryRelationUpsert)) *
 }
 
 // SetCategoryID sets the "category_id" field.
-func (u *CategoryRelationUpsertBulk) SetCategoryID(v uint32) *CategoryRelationUpsertBulk {
+func (u *CategoryRelationUpsertBulk) SetCategoryID(v int64) *CategoryRelationUpsertBulk {
 	return u.Update(func(s *CategoryRelationUpsert) {
 		s.SetCategoryID(v)
 	})
 }
 
 // AddCategoryID adds v to the "category_id" field.
-func (u *CategoryRelationUpsertBulk) AddCategoryID(v uint32) *CategoryRelationUpsertBulk {
+func (u *CategoryRelationUpsertBulk) AddCategoryID(v int64) *CategoryRelationUpsertBulk {
 	return u.Update(func(s *CategoryRelationUpsert) {
 		s.AddCategoryID(v)
 	})
@@ -721,14 +721,14 @@ func (u *CategoryRelationUpsertBulk) ClearCategoryID() *CategoryRelationUpsertBu
 }
 
 // SetBalanceFlowID sets the "balance_flow_id" field.
-func (u *CategoryRelationUpsertBulk) SetBalanceFlowID(v uint32) *CategoryRelationUpsertBulk {
+func (u *CategoryRelationUpsertBulk) SetBalanceFlowID(v int64) *CategoryRelationUpsertBulk {
 	return u.Update(func(s *CategoryRelationUpsert) {
 		s.SetBalanceFlowID(v)
 	})
 }
 
 // AddBalanceFlowID adds v to the "balance_flow_id" field.
-func (u *CategoryRelationUpsertBulk) AddBalanceFlowID(v uint32) *CategoryRelationUpsertBulk {
+func (u *CategoryRelationUpsertBulk) AddBalanceFlowID(v int64) *CategoryRelationUpsertBulk {
 	return u.Update(func(s *CategoryRelationUpsert) {
 		s.AddBalanceFlowID(v)
 	})

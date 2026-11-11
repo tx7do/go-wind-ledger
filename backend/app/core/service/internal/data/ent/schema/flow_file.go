@@ -20,12 +20,12 @@ func (FlowFile) Annotations() []schema.Annotation {
 	}
 }
 
-func (FlowFile) Mixin() []ent.Mixin { return []ent.Mixin{mixin.AutoIncrementId{}, mixin.TimeAt{}} }
+func (FlowFile) Mixin() []ent.Mixin { return []ent.Mixin{mixin.AutoIncrementId64{}, mixin.TimeAt{}} }
 
 func (FlowFile) Fields() []ent.Field {
 	return []ent.Field{
-		field.Uint32("flow_id").Optional().Nillable(),
-		field.Uint32("creator_id").Optional().Nillable(),
+		field.Int64("flow_id").Optional().Nillable(),
+		field.Int64("creator_id").Optional().Nillable(),
 		field.Int64("create_time").Optional().Nillable(),
 		field.String("content_type").MaxLen(32).Optional().Nillable(),
 		field.Int64("size").Optional().Nillable(),

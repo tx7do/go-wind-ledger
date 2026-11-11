@@ -10,47 +10,47 @@ import (
 )
 
 // ID filters vertices based on their ID field.
-func ID(id uint32) predicate.FlowFile {
+func ID(id int64) predicate.FlowFile {
 	return predicate.FlowFile(sql.FieldEQ(FieldID, id))
 }
 
 // IDEQ applies the EQ predicate on the ID field.
-func IDEQ(id uint32) predicate.FlowFile {
+func IDEQ(id int64) predicate.FlowFile {
 	return predicate.FlowFile(sql.FieldEQ(FieldID, id))
 }
 
 // IDNEQ applies the NEQ predicate on the ID field.
-func IDNEQ(id uint32) predicate.FlowFile {
+func IDNEQ(id int64) predicate.FlowFile {
 	return predicate.FlowFile(sql.FieldNEQ(FieldID, id))
 }
 
 // IDIn applies the In predicate on the ID field.
-func IDIn(ids ...uint32) predicate.FlowFile {
+func IDIn(ids ...int64) predicate.FlowFile {
 	return predicate.FlowFile(sql.FieldIn(FieldID, ids...))
 }
 
 // IDNotIn applies the NotIn predicate on the ID field.
-func IDNotIn(ids ...uint32) predicate.FlowFile {
+func IDNotIn(ids ...int64) predicate.FlowFile {
 	return predicate.FlowFile(sql.FieldNotIn(FieldID, ids...))
 }
 
 // IDGT applies the GT predicate on the ID field.
-func IDGT(id uint32) predicate.FlowFile {
+func IDGT(id int64) predicate.FlowFile {
 	return predicate.FlowFile(sql.FieldGT(FieldID, id))
 }
 
 // IDGTE applies the GTE predicate on the ID field.
-func IDGTE(id uint32) predicate.FlowFile {
+func IDGTE(id int64) predicate.FlowFile {
 	return predicate.FlowFile(sql.FieldGTE(FieldID, id))
 }
 
 // IDLT applies the LT predicate on the ID field.
-func IDLT(id uint32) predicate.FlowFile {
+func IDLT(id int64) predicate.FlowFile {
 	return predicate.FlowFile(sql.FieldLT(FieldID, id))
 }
 
 // IDLTE applies the LTE predicate on the ID field.
-func IDLTE(id uint32) predicate.FlowFile {
+func IDLTE(id int64) predicate.FlowFile {
 	return predicate.FlowFile(sql.FieldLTE(FieldID, id))
 }
 
@@ -70,12 +70,12 @@ func DeletedAt(v time.Time) predicate.FlowFile {
 }
 
 // FlowID applies equality check predicate on the "flow_id" field. It's identical to FlowIDEQ.
-func FlowID(v uint32) predicate.FlowFile {
+func FlowID(v int64) predicate.FlowFile {
 	return predicate.FlowFile(sql.FieldEQ(FieldFlowID, v))
 }
 
 // CreatorID applies equality check predicate on the "creator_id" field. It's identical to CreatorIDEQ.
-func CreatorID(v uint32) predicate.FlowFile {
+func CreatorID(v int64) predicate.FlowFile {
 	return predicate.FlowFile(sql.FieldEQ(FieldCreatorID, v))
 }
 
@@ -255,42 +255,42 @@ func DeletedAtNotNil() predicate.FlowFile {
 }
 
 // FlowIDEQ applies the EQ predicate on the "flow_id" field.
-func FlowIDEQ(v uint32) predicate.FlowFile {
+func FlowIDEQ(v int64) predicate.FlowFile {
 	return predicate.FlowFile(sql.FieldEQ(FieldFlowID, v))
 }
 
 // FlowIDNEQ applies the NEQ predicate on the "flow_id" field.
-func FlowIDNEQ(v uint32) predicate.FlowFile {
+func FlowIDNEQ(v int64) predicate.FlowFile {
 	return predicate.FlowFile(sql.FieldNEQ(FieldFlowID, v))
 }
 
 // FlowIDIn applies the In predicate on the "flow_id" field.
-func FlowIDIn(vs ...uint32) predicate.FlowFile {
+func FlowIDIn(vs ...int64) predicate.FlowFile {
 	return predicate.FlowFile(sql.FieldIn(FieldFlowID, vs...))
 }
 
 // FlowIDNotIn applies the NotIn predicate on the "flow_id" field.
-func FlowIDNotIn(vs ...uint32) predicate.FlowFile {
+func FlowIDNotIn(vs ...int64) predicate.FlowFile {
 	return predicate.FlowFile(sql.FieldNotIn(FieldFlowID, vs...))
 }
 
 // FlowIDGT applies the GT predicate on the "flow_id" field.
-func FlowIDGT(v uint32) predicate.FlowFile {
+func FlowIDGT(v int64) predicate.FlowFile {
 	return predicate.FlowFile(sql.FieldGT(FieldFlowID, v))
 }
 
 // FlowIDGTE applies the GTE predicate on the "flow_id" field.
-func FlowIDGTE(v uint32) predicate.FlowFile {
+func FlowIDGTE(v int64) predicate.FlowFile {
 	return predicate.FlowFile(sql.FieldGTE(FieldFlowID, v))
 }
 
 // FlowIDLT applies the LT predicate on the "flow_id" field.
-func FlowIDLT(v uint32) predicate.FlowFile {
+func FlowIDLT(v int64) predicate.FlowFile {
 	return predicate.FlowFile(sql.FieldLT(FieldFlowID, v))
 }
 
 // FlowIDLTE applies the LTE predicate on the "flow_id" field.
-func FlowIDLTE(v uint32) predicate.FlowFile {
+func FlowIDLTE(v int64) predicate.FlowFile {
 	return predicate.FlowFile(sql.FieldLTE(FieldFlowID, v))
 }
 
@@ -305,42 +305,42 @@ func FlowIDNotNil() predicate.FlowFile {
 }
 
 // CreatorIDEQ applies the EQ predicate on the "creator_id" field.
-func CreatorIDEQ(v uint32) predicate.FlowFile {
+func CreatorIDEQ(v int64) predicate.FlowFile {
 	return predicate.FlowFile(sql.FieldEQ(FieldCreatorID, v))
 }
 
 // CreatorIDNEQ applies the NEQ predicate on the "creator_id" field.
-func CreatorIDNEQ(v uint32) predicate.FlowFile {
+func CreatorIDNEQ(v int64) predicate.FlowFile {
 	return predicate.FlowFile(sql.FieldNEQ(FieldCreatorID, v))
 }
 
 // CreatorIDIn applies the In predicate on the "creator_id" field.
-func CreatorIDIn(vs ...uint32) predicate.FlowFile {
+func CreatorIDIn(vs ...int64) predicate.FlowFile {
 	return predicate.FlowFile(sql.FieldIn(FieldCreatorID, vs...))
 }
 
 // CreatorIDNotIn applies the NotIn predicate on the "creator_id" field.
-func CreatorIDNotIn(vs ...uint32) predicate.FlowFile {
+func CreatorIDNotIn(vs ...int64) predicate.FlowFile {
 	return predicate.FlowFile(sql.FieldNotIn(FieldCreatorID, vs...))
 }
 
 // CreatorIDGT applies the GT predicate on the "creator_id" field.
-func CreatorIDGT(v uint32) predicate.FlowFile {
+func CreatorIDGT(v int64) predicate.FlowFile {
 	return predicate.FlowFile(sql.FieldGT(FieldCreatorID, v))
 }
 
 // CreatorIDGTE applies the GTE predicate on the "creator_id" field.
-func CreatorIDGTE(v uint32) predicate.FlowFile {
+func CreatorIDGTE(v int64) predicate.FlowFile {
 	return predicate.FlowFile(sql.FieldGTE(FieldCreatorID, v))
 }
 
 // CreatorIDLT applies the LT predicate on the "creator_id" field.
-func CreatorIDLT(v uint32) predicate.FlowFile {
+func CreatorIDLT(v int64) predicate.FlowFile {
 	return predicate.FlowFile(sql.FieldLT(FieldCreatorID, v))
 }
 
 // CreatorIDLTE applies the LTE predicate on the "creator_id" field.
-func CreatorIDLTE(v uint32) predicate.FlowFile {
+func CreatorIDLTE(v int64) predicate.FlowFile {
 	return predicate.FlowFile(sql.FieldLTE(FieldCreatorID, v))
 }
 

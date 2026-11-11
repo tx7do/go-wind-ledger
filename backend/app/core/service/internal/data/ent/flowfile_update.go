@@ -70,14 +70,14 @@ func (_u *FlowFileUpdate) ClearDeletedAt() *FlowFileUpdate {
 }
 
 // SetFlowID sets the "flow_id" field.
-func (_u *FlowFileUpdate) SetFlowID(v uint32) *FlowFileUpdate {
+func (_u *FlowFileUpdate) SetFlowID(v int64) *FlowFileUpdate {
 	_u.mutation.ResetFlowID()
 	_u.mutation.SetFlowID(v)
 	return _u
 }
 
 // SetNillableFlowID sets the "flow_id" field if the given value is not nil.
-func (_u *FlowFileUpdate) SetNillableFlowID(v *uint32) *FlowFileUpdate {
+func (_u *FlowFileUpdate) SetNillableFlowID(v *int64) *FlowFileUpdate {
 	if v != nil {
 		_u.SetFlowID(*v)
 	}
@@ -85,7 +85,7 @@ func (_u *FlowFileUpdate) SetNillableFlowID(v *uint32) *FlowFileUpdate {
 }
 
 // AddFlowID adds value to the "flow_id" field.
-func (_u *FlowFileUpdate) AddFlowID(v int32) *FlowFileUpdate {
+func (_u *FlowFileUpdate) AddFlowID(v int64) *FlowFileUpdate {
 	_u.mutation.AddFlowID(v)
 	return _u
 }
@@ -97,14 +97,14 @@ func (_u *FlowFileUpdate) ClearFlowID() *FlowFileUpdate {
 }
 
 // SetCreatorID sets the "creator_id" field.
-func (_u *FlowFileUpdate) SetCreatorID(v uint32) *FlowFileUpdate {
+func (_u *FlowFileUpdate) SetCreatorID(v int64) *FlowFileUpdate {
 	_u.mutation.ResetCreatorID()
 	_u.mutation.SetCreatorID(v)
 	return _u
 }
 
 // SetNillableCreatorID sets the "creator_id" field if the given value is not nil.
-func (_u *FlowFileUpdate) SetNillableCreatorID(v *uint32) *FlowFileUpdate {
+func (_u *FlowFileUpdate) SetNillableCreatorID(v *int64) *FlowFileUpdate {
 	if v != nil {
 		_u.SetCreatorID(*v)
 	}
@@ -112,7 +112,7 @@ func (_u *FlowFileUpdate) SetNillableCreatorID(v *uint32) *FlowFileUpdate {
 }
 
 // AddCreatorID adds value to the "creator_id" field.
-func (_u *FlowFileUpdate) AddCreatorID(v int32) *FlowFileUpdate {
+func (_u *FlowFileUpdate) AddCreatorID(v int64) *FlowFileUpdate {
 	_u.mutation.AddCreatorID(v)
 	return _u
 }
@@ -299,7 +299,7 @@ func (_u *FlowFileUpdate) sqlSave(ctx context.Context) (_node int, err error) {
 	if err := _u.check(); err != nil {
 		return _node, err
 	}
-	_spec := sqlgraph.NewUpdateSpec(flowfile.Table, flowfile.Columns, sqlgraph.NewFieldSpec(flowfile.FieldID, field.TypeUint32))
+	_spec := sqlgraph.NewUpdateSpec(flowfile.Table, flowfile.Columns, sqlgraph.NewFieldSpec(flowfile.FieldID, field.TypeInt64))
 	if ps := _u.mutation.predicates; len(ps) > 0 {
 		_spec.Predicate = func(selector *sql.Selector) {
 			for i := range ps {
@@ -323,22 +323,22 @@ func (_u *FlowFileUpdate) sqlSave(ctx context.Context) (_node int, err error) {
 		_spec.ClearField(flowfile.FieldDeletedAt, field.TypeTime)
 	}
 	if value, ok := _u.mutation.FlowID(); ok {
-		_spec.SetField(flowfile.FieldFlowID, field.TypeUint32, value)
+		_spec.SetField(flowfile.FieldFlowID, field.TypeInt64, value)
 	}
 	if value, ok := _u.mutation.AddedFlowID(); ok {
-		_spec.AddField(flowfile.FieldFlowID, field.TypeUint32, value)
+		_spec.AddField(flowfile.FieldFlowID, field.TypeInt64, value)
 	}
 	if _u.mutation.FlowIDCleared() {
-		_spec.ClearField(flowfile.FieldFlowID, field.TypeUint32)
+		_spec.ClearField(flowfile.FieldFlowID, field.TypeInt64)
 	}
 	if value, ok := _u.mutation.CreatorID(); ok {
-		_spec.SetField(flowfile.FieldCreatorID, field.TypeUint32, value)
+		_spec.SetField(flowfile.FieldCreatorID, field.TypeInt64, value)
 	}
 	if value, ok := _u.mutation.AddedCreatorID(); ok {
-		_spec.AddField(flowfile.FieldCreatorID, field.TypeUint32, value)
+		_spec.AddField(flowfile.FieldCreatorID, field.TypeInt64, value)
 	}
 	if _u.mutation.CreatorIDCleared() {
-		_spec.ClearField(flowfile.FieldCreatorID, field.TypeUint32)
+		_spec.ClearField(flowfile.FieldCreatorID, field.TypeInt64)
 	}
 	if value, ok := _u.mutation.CreateTime(); ok {
 		_spec.SetField(flowfile.FieldCreateTime, field.TypeInt64, value)
@@ -439,14 +439,14 @@ func (_u *FlowFileUpdateOne) ClearDeletedAt() *FlowFileUpdateOne {
 }
 
 // SetFlowID sets the "flow_id" field.
-func (_u *FlowFileUpdateOne) SetFlowID(v uint32) *FlowFileUpdateOne {
+func (_u *FlowFileUpdateOne) SetFlowID(v int64) *FlowFileUpdateOne {
 	_u.mutation.ResetFlowID()
 	_u.mutation.SetFlowID(v)
 	return _u
 }
 
 // SetNillableFlowID sets the "flow_id" field if the given value is not nil.
-func (_u *FlowFileUpdateOne) SetNillableFlowID(v *uint32) *FlowFileUpdateOne {
+func (_u *FlowFileUpdateOne) SetNillableFlowID(v *int64) *FlowFileUpdateOne {
 	if v != nil {
 		_u.SetFlowID(*v)
 	}
@@ -454,7 +454,7 @@ func (_u *FlowFileUpdateOne) SetNillableFlowID(v *uint32) *FlowFileUpdateOne {
 }
 
 // AddFlowID adds value to the "flow_id" field.
-func (_u *FlowFileUpdateOne) AddFlowID(v int32) *FlowFileUpdateOne {
+func (_u *FlowFileUpdateOne) AddFlowID(v int64) *FlowFileUpdateOne {
 	_u.mutation.AddFlowID(v)
 	return _u
 }
@@ -466,14 +466,14 @@ func (_u *FlowFileUpdateOne) ClearFlowID() *FlowFileUpdateOne {
 }
 
 // SetCreatorID sets the "creator_id" field.
-func (_u *FlowFileUpdateOne) SetCreatorID(v uint32) *FlowFileUpdateOne {
+func (_u *FlowFileUpdateOne) SetCreatorID(v int64) *FlowFileUpdateOne {
 	_u.mutation.ResetCreatorID()
 	_u.mutation.SetCreatorID(v)
 	return _u
 }
 
 // SetNillableCreatorID sets the "creator_id" field if the given value is not nil.
-func (_u *FlowFileUpdateOne) SetNillableCreatorID(v *uint32) *FlowFileUpdateOne {
+func (_u *FlowFileUpdateOne) SetNillableCreatorID(v *int64) *FlowFileUpdateOne {
 	if v != nil {
 		_u.SetCreatorID(*v)
 	}
@@ -481,7 +481,7 @@ func (_u *FlowFileUpdateOne) SetNillableCreatorID(v *uint32) *FlowFileUpdateOne 
 }
 
 // AddCreatorID adds value to the "creator_id" field.
-func (_u *FlowFileUpdateOne) AddCreatorID(v int32) *FlowFileUpdateOne {
+func (_u *FlowFileUpdateOne) AddCreatorID(v int64) *FlowFileUpdateOne {
 	_u.mutation.AddCreatorID(v)
 	return _u
 }
@@ -681,7 +681,7 @@ func (_u *FlowFileUpdateOne) sqlSave(ctx context.Context) (_node *FlowFile, err 
 	if err := _u.check(); err != nil {
 		return _node, err
 	}
-	_spec := sqlgraph.NewUpdateSpec(flowfile.Table, flowfile.Columns, sqlgraph.NewFieldSpec(flowfile.FieldID, field.TypeUint32))
+	_spec := sqlgraph.NewUpdateSpec(flowfile.Table, flowfile.Columns, sqlgraph.NewFieldSpec(flowfile.FieldID, field.TypeInt64))
 	id, ok := _u.mutation.ID()
 	if !ok {
 		return nil, &ValidationError{Name: "id", err: errors.New(`ent: missing "FlowFile.id" for update`)}
@@ -722,22 +722,22 @@ func (_u *FlowFileUpdateOne) sqlSave(ctx context.Context) (_node *FlowFile, err 
 		_spec.ClearField(flowfile.FieldDeletedAt, field.TypeTime)
 	}
 	if value, ok := _u.mutation.FlowID(); ok {
-		_spec.SetField(flowfile.FieldFlowID, field.TypeUint32, value)
+		_spec.SetField(flowfile.FieldFlowID, field.TypeInt64, value)
 	}
 	if value, ok := _u.mutation.AddedFlowID(); ok {
-		_spec.AddField(flowfile.FieldFlowID, field.TypeUint32, value)
+		_spec.AddField(flowfile.FieldFlowID, field.TypeInt64, value)
 	}
 	if _u.mutation.FlowIDCleared() {
-		_spec.ClearField(flowfile.FieldFlowID, field.TypeUint32)
+		_spec.ClearField(flowfile.FieldFlowID, field.TypeInt64)
 	}
 	if value, ok := _u.mutation.CreatorID(); ok {
-		_spec.SetField(flowfile.FieldCreatorID, field.TypeUint32, value)
+		_spec.SetField(flowfile.FieldCreatorID, field.TypeInt64, value)
 	}
 	if value, ok := _u.mutation.AddedCreatorID(); ok {
-		_spec.AddField(flowfile.FieldCreatorID, field.TypeUint32, value)
+		_spec.AddField(flowfile.FieldCreatorID, field.TypeInt64, value)
 	}
 	if _u.mutation.CreatorIDCleared() {
-		_spec.ClearField(flowfile.FieldCreatorID, field.TypeUint32)
+		_spec.ClearField(flowfile.FieldCreatorID, field.TypeInt64)
 	}
 	if value, ok := _u.mutation.CreateTime(); ok {
 		_spec.SetField(flowfile.FieldCreateTime, field.TypeInt64, value)

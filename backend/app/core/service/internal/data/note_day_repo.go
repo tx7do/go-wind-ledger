@@ -72,7 +72,7 @@ func (r *NoteDayRepo) List(ctx context.Context, req *paginationV1.PagingRequest)
 	return &ledgerV1.ListNoteDayResponse{Total: ret.Total, Items: ret.Items}, nil
 }
 
-func (r *NoteDayRepo) Get(ctx context.Context, id uint32) (*ledgerV1.NoteDay, error) {
+func (r *NoteDayRepo) Get(ctx context.Context, id int64) (*ledgerV1.NoteDay, error) {
 	entity, err := r.entClient.Client().NoteDay.Query().Where(noteday.IDEQ(id)).Only(ctx)
 	if err != nil {
 		if ent.IsNotFound(err) {
@@ -107,7 +107,7 @@ func (r *NoteDayRepo) Create(ctx context.Context, data *ledgerV1.NoteDay) (*ledg
 	return r.mapper.ToDTO(saved), nil
 }
 
-func (r *NoteDayRepo) Update(ctx context.Context, id uint32, data *ledgerV1.NoteDay, mask *fieldmaskpb.FieldMask) (*ledgerV1.NoteDay, error) {
+func (r *NoteDayRepo) Update(ctx context.Context, id int64, data *ledgerV1.NoteDay, mask *fieldmaskpb.FieldMask) (*ledgerV1.NoteDay, error) {
 	if data == nil {
 		return nil, ledgerV1.ErrorBadRequest("invalid parameter")
 	}
@@ -130,11 +130,11 @@ func (r *NoteDayRepo) Update(ctx context.Context, id uint32, data *ledgerV1.Note
 	return r.mapper.ToDTO(updated), nil
 }
 
-func (r *NoteDayRepo) Delete(ctx context.Context, id uint32) error {
+func (r *NoteDayRepo) Delete(ctx context.Context, id int64) error {
 	return r.entClient.Client().NoteDay.DeleteOneID(id).Exec(ctx)
 }
 
-func (r *NoteDayRepo) UpdateNextDate(ctx context.Context, id uint32, nextDate int64, runCount int32) error {
+func (r *NoteDayRepo) UpdateNextDate(ctx context.Context, id int64, nextDate int64, runCount int32) error {
 	_, err := r.entClient.Client().NoteDay.UpdateOneID(id).
 		SetNextDate(nextDate).SetRunCount(runCount).Save(ctx)
 	return err

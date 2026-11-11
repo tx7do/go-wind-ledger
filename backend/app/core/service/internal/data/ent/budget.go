@@ -17,9 +17,9 @@ type Budget struct {
 	config `json:"-"`
 	// ID of the ent.
 	// id
-	ID uint32 `json:"id,omitempty"`
+	ID int64 `json:"id,omitempty"`
 	// 租户ID
-	TenantID *uint32 `json:"tenant_id,omitempty"`
+	TenantID *int64 `json:"tenant_id,omitempty"`
 	// 创建时间
 	CreatedAt *time.Time `json:"created_at,omitempty"`
 	// 更新时间
@@ -27,13 +27,13 @@ type Budget struct {
 	// 删除时间
 	DeletedAt *time.Time `json:"deleted_at,omitempty"`
 	// 创建者ID
-	CreatedBy *uint32 `json:"created_by,omitempty"`
+	CreatedBy *int64 `json:"created_by,omitempty"`
 	// 更新者ID
-	UpdatedBy *uint32 `json:"updated_by,omitempty"`
+	UpdatedBy *int64 `json:"updated_by,omitempty"`
 	// 删除者ID
-	DeletedBy *uint32 `json:"deleted_by,omitempty"`
+	DeletedBy *int64 `json:"deleted_by,omitempty"`
 	// 所属账本ID
-	BookID *uint32 `json:"book_id,omitempty"`
+	BookID *int64 `json:"book_id,omitempty"`
 	// 预算名称
 	Name *string `json:"name,omitempty"`
 	// 预算周期
@@ -43,9 +43,9 @@ type Budget struct {
 	// 已用金额（缓存值，定期从流水汇总更新）
 	UsedAmount *float64 `json:"used_amount,omitempty"`
 	// 关联分类ID（可选，按分类预算）
-	CategoryID *uint32 `json:"category_id,omitempty"`
+	CategoryID *int64 `json:"category_id,omitempty"`
 	// 关联账户ID（可选，按账户预算）
-	AccountID *uint32 `json:"account_id,omitempty"`
+	AccountID *int64 `json:"account_id,omitempty"`
 	// 预算周期开始时间（epoch 毫秒）
 	StartDate *int64 `json:"start_date,omitempty"`
 	// 预算周期结束时间（epoch 毫秒）
@@ -94,13 +94,13 @@ func (_m *Budget) assignValues(columns []string, values []any) error {
 			if !ok {
 				return fmt.Errorf("unexpected type %T for field id", value)
 			}
-			_m.ID = uint32(value.Int64)
+			_m.ID = int64(value.Int64)
 		case budget.FieldTenantID:
 			if value, ok := values[i].(*sql.NullInt64); !ok {
 				return fmt.Errorf("unexpected type %T for field tenant_id", values[i])
 			} else if value.Valid {
-				_m.TenantID = new(uint32)
-				*_m.TenantID = uint32(value.Int64)
+				_m.TenantID = new(int64)
+				*_m.TenantID = value.Int64
 			}
 		case budget.FieldCreatedAt:
 			if value, ok := values[i].(*sql.NullTime); !ok {
@@ -127,29 +127,29 @@ func (_m *Budget) assignValues(columns []string, values []any) error {
 			if value, ok := values[i].(*sql.NullInt64); !ok {
 				return fmt.Errorf("unexpected type %T for field created_by", values[i])
 			} else if value.Valid {
-				_m.CreatedBy = new(uint32)
-				*_m.CreatedBy = uint32(value.Int64)
+				_m.CreatedBy = new(int64)
+				*_m.CreatedBy = value.Int64
 			}
 		case budget.FieldUpdatedBy:
 			if value, ok := values[i].(*sql.NullInt64); !ok {
 				return fmt.Errorf("unexpected type %T for field updated_by", values[i])
 			} else if value.Valid {
-				_m.UpdatedBy = new(uint32)
-				*_m.UpdatedBy = uint32(value.Int64)
+				_m.UpdatedBy = new(int64)
+				*_m.UpdatedBy = value.Int64
 			}
 		case budget.FieldDeletedBy:
 			if value, ok := values[i].(*sql.NullInt64); !ok {
 				return fmt.Errorf("unexpected type %T for field deleted_by", values[i])
 			} else if value.Valid {
-				_m.DeletedBy = new(uint32)
-				*_m.DeletedBy = uint32(value.Int64)
+				_m.DeletedBy = new(int64)
+				*_m.DeletedBy = value.Int64
 			}
 		case budget.FieldBookID:
 			if value, ok := values[i].(*sql.NullInt64); !ok {
 				return fmt.Errorf("unexpected type %T for field book_id", values[i])
 			} else if value.Valid {
-				_m.BookID = new(uint32)
-				*_m.BookID = uint32(value.Int64)
+				_m.BookID = new(int64)
+				*_m.BookID = value.Int64
 			}
 		case budget.FieldName:
 			if value, ok := values[i].(*sql.NullString); !ok {
@@ -183,15 +183,15 @@ func (_m *Budget) assignValues(columns []string, values []any) error {
 			if value, ok := values[i].(*sql.NullInt64); !ok {
 				return fmt.Errorf("unexpected type %T for field category_id", values[i])
 			} else if value.Valid {
-				_m.CategoryID = new(uint32)
-				*_m.CategoryID = uint32(value.Int64)
+				_m.CategoryID = new(int64)
+				*_m.CategoryID = value.Int64
 			}
 		case budget.FieldAccountID:
 			if value, ok := values[i].(*sql.NullInt64); !ok {
 				return fmt.Errorf("unexpected type %T for field account_id", values[i])
 			} else if value.Valid {
-				_m.AccountID = new(uint32)
-				*_m.AccountID = uint32(value.Int64)
+				_m.AccountID = new(int64)
+				*_m.AccountID = value.Int64
 			}
 		case budget.FieldStartDate:
 			if value, ok := values[i].(*sql.NullInt64); !ok {

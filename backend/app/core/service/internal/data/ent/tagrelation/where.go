@@ -9,57 +9,57 @@ import (
 )
 
 // ID filters vertices based on their ID field.
-func ID(id uint32) predicate.TagRelation {
+func ID(id int64) predicate.TagRelation {
 	return predicate.TagRelation(sql.FieldEQ(FieldID, id))
 }
 
 // IDEQ applies the EQ predicate on the ID field.
-func IDEQ(id uint32) predicate.TagRelation {
+func IDEQ(id int64) predicate.TagRelation {
 	return predicate.TagRelation(sql.FieldEQ(FieldID, id))
 }
 
 // IDNEQ applies the NEQ predicate on the ID field.
-func IDNEQ(id uint32) predicate.TagRelation {
+func IDNEQ(id int64) predicate.TagRelation {
 	return predicate.TagRelation(sql.FieldNEQ(FieldID, id))
 }
 
 // IDIn applies the In predicate on the ID field.
-func IDIn(ids ...uint32) predicate.TagRelation {
+func IDIn(ids ...int64) predicate.TagRelation {
 	return predicate.TagRelation(sql.FieldIn(FieldID, ids...))
 }
 
 // IDNotIn applies the NotIn predicate on the ID field.
-func IDNotIn(ids ...uint32) predicate.TagRelation {
+func IDNotIn(ids ...int64) predicate.TagRelation {
 	return predicate.TagRelation(sql.FieldNotIn(FieldID, ids...))
 }
 
 // IDGT applies the GT predicate on the ID field.
-func IDGT(id uint32) predicate.TagRelation {
+func IDGT(id int64) predicate.TagRelation {
 	return predicate.TagRelation(sql.FieldGT(FieldID, id))
 }
 
 // IDGTE applies the GTE predicate on the ID field.
-func IDGTE(id uint32) predicate.TagRelation {
+func IDGTE(id int64) predicate.TagRelation {
 	return predicate.TagRelation(sql.FieldGTE(FieldID, id))
 }
 
 // IDLT applies the LT predicate on the ID field.
-func IDLT(id uint32) predicate.TagRelation {
+func IDLT(id int64) predicate.TagRelation {
 	return predicate.TagRelation(sql.FieldLT(FieldID, id))
 }
 
 // IDLTE applies the LTE predicate on the ID field.
-func IDLTE(id uint32) predicate.TagRelation {
+func IDLTE(id int64) predicate.TagRelation {
 	return predicate.TagRelation(sql.FieldLTE(FieldID, id))
 }
 
 // TagID applies equality check predicate on the "tag_id" field. It's identical to TagIDEQ.
-func TagID(v uint32) predicate.TagRelation {
+func TagID(v int64) predicate.TagRelation {
 	return predicate.TagRelation(sql.FieldEQ(FieldTagID, v))
 }
 
 // BalanceFlowID applies equality check predicate on the "balance_flow_id" field. It's identical to BalanceFlowIDEQ.
-func BalanceFlowID(v uint32) predicate.TagRelation {
+func BalanceFlowID(v int64) predicate.TagRelation {
 	return predicate.TagRelation(sql.FieldEQ(FieldBalanceFlowID, v))
 }
 
@@ -74,42 +74,42 @@ func ConvertedAmount(v float64) predicate.TagRelation {
 }
 
 // TagIDEQ applies the EQ predicate on the "tag_id" field.
-func TagIDEQ(v uint32) predicate.TagRelation {
+func TagIDEQ(v int64) predicate.TagRelation {
 	return predicate.TagRelation(sql.FieldEQ(FieldTagID, v))
 }
 
 // TagIDNEQ applies the NEQ predicate on the "tag_id" field.
-func TagIDNEQ(v uint32) predicate.TagRelation {
+func TagIDNEQ(v int64) predicate.TagRelation {
 	return predicate.TagRelation(sql.FieldNEQ(FieldTagID, v))
 }
 
 // TagIDIn applies the In predicate on the "tag_id" field.
-func TagIDIn(vs ...uint32) predicate.TagRelation {
+func TagIDIn(vs ...int64) predicate.TagRelation {
 	return predicate.TagRelation(sql.FieldIn(FieldTagID, vs...))
 }
 
 // TagIDNotIn applies the NotIn predicate on the "tag_id" field.
-func TagIDNotIn(vs ...uint32) predicate.TagRelation {
+func TagIDNotIn(vs ...int64) predicate.TagRelation {
 	return predicate.TagRelation(sql.FieldNotIn(FieldTagID, vs...))
 }
 
 // TagIDGT applies the GT predicate on the "tag_id" field.
-func TagIDGT(v uint32) predicate.TagRelation {
+func TagIDGT(v int64) predicate.TagRelation {
 	return predicate.TagRelation(sql.FieldGT(FieldTagID, v))
 }
 
 // TagIDGTE applies the GTE predicate on the "tag_id" field.
-func TagIDGTE(v uint32) predicate.TagRelation {
+func TagIDGTE(v int64) predicate.TagRelation {
 	return predicate.TagRelation(sql.FieldGTE(FieldTagID, v))
 }
 
 // TagIDLT applies the LT predicate on the "tag_id" field.
-func TagIDLT(v uint32) predicate.TagRelation {
+func TagIDLT(v int64) predicate.TagRelation {
 	return predicate.TagRelation(sql.FieldLT(FieldTagID, v))
 }
 
 // TagIDLTE applies the LTE predicate on the "tag_id" field.
-func TagIDLTE(v uint32) predicate.TagRelation {
+func TagIDLTE(v int64) predicate.TagRelation {
 	return predicate.TagRelation(sql.FieldLTE(FieldTagID, v))
 }
 
@@ -124,42 +124,42 @@ func TagIDNotNil() predicate.TagRelation {
 }
 
 // BalanceFlowIDEQ applies the EQ predicate on the "balance_flow_id" field.
-func BalanceFlowIDEQ(v uint32) predicate.TagRelation {
+func BalanceFlowIDEQ(v int64) predicate.TagRelation {
 	return predicate.TagRelation(sql.FieldEQ(FieldBalanceFlowID, v))
 }
 
 // BalanceFlowIDNEQ applies the NEQ predicate on the "balance_flow_id" field.
-func BalanceFlowIDNEQ(v uint32) predicate.TagRelation {
+func BalanceFlowIDNEQ(v int64) predicate.TagRelation {
 	return predicate.TagRelation(sql.FieldNEQ(FieldBalanceFlowID, v))
 }
 
 // BalanceFlowIDIn applies the In predicate on the "balance_flow_id" field.
-func BalanceFlowIDIn(vs ...uint32) predicate.TagRelation {
+func BalanceFlowIDIn(vs ...int64) predicate.TagRelation {
 	return predicate.TagRelation(sql.FieldIn(FieldBalanceFlowID, vs...))
 }
 
 // BalanceFlowIDNotIn applies the NotIn predicate on the "balance_flow_id" field.
-func BalanceFlowIDNotIn(vs ...uint32) predicate.TagRelation {
+func BalanceFlowIDNotIn(vs ...int64) predicate.TagRelation {
 	return predicate.TagRelation(sql.FieldNotIn(FieldBalanceFlowID, vs...))
 }
 
 // BalanceFlowIDGT applies the GT predicate on the "balance_flow_id" field.
-func BalanceFlowIDGT(v uint32) predicate.TagRelation {
+func BalanceFlowIDGT(v int64) predicate.TagRelation {
 	return predicate.TagRelation(sql.FieldGT(FieldBalanceFlowID, v))
 }
 
 // BalanceFlowIDGTE applies the GTE predicate on the "balance_flow_id" field.
-func BalanceFlowIDGTE(v uint32) predicate.TagRelation {
+func BalanceFlowIDGTE(v int64) predicate.TagRelation {
 	return predicate.TagRelation(sql.FieldGTE(FieldBalanceFlowID, v))
 }
 
 // BalanceFlowIDLT applies the LT predicate on the "balance_flow_id" field.
-func BalanceFlowIDLT(v uint32) predicate.TagRelation {
+func BalanceFlowIDLT(v int64) predicate.TagRelation {
 	return predicate.TagRelation(sql.FieldLT(FieldBalanceFlowID, v))
 }
 
 // BalanceFlowIDLTE applies the LTE predicate on the "balance_flow_id" field.
-func BalanceFlowIDLTE(v uint32) predicate.TagRelation {
+func BalanceFlowIDLTE(v int64) predicate.TagRelation {
 	return predicate.TagRelation(sql.FieldLTE(FieldBalanceFlowID, v))
 }
 

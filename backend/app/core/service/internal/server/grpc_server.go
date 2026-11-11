@@ -14,10 +14,10 @@ import (
 	authenticationV1 "go-wind-ledger/api/gen/go/authentication/service/v1"
 	dictV1 "go-wind-ledger/api/gen/go/dict/service/v1"
 	identityV1 "go-wind-ledger/api/gen/go/identity/service/v1"
+	internalMessageV1 "go-wind-ledger/api/gen/go/internal_message/service/v1"
 	ledgerV1 "go-wind-ledger/api/gen/go/ledger/service/v1"
 	permissionV1 "go-wind-ledger/api/gen/go/permission/service/v1"
 	storageV1 "go-wind-ledger/api/gen/go/storage/service/v1"
-	internalMessageV1 "go-wind-ledger/api/gen/go/internal_message/service/v1"
 	taskV1 "go-wind-ledger/api/gen/go/task/service/v1"
 
 	appV1 "go-wind-ledger/api/gen/go/app/service/v1"
@@ -73,23 +73,23 @@ func NewGrpcServer(
 	// register:grpc-param ── 新模块服务形参在此行后追加(make register 工具锚点,勿删)
 
 	// === 记账系统 Services ===
-	bookService          *service.BookService,
-	accountService       *service.AccountService,
-	categoryService      *service.CategoryService,
-	tagService           *service.TagService,
-	payeeService         *service.PayeeService,
-	balanceFlowService   *service.BalanceFlowService,
-	noteDayService       *service.NoteDayService,
-	currencyService      *service.CurrencyService,
-	reportService        *service.ReportService,
-	flowFileService      *service.FlowFileService,
-		membershipService    *service.MembershipService,
-		budgetService        *service.BudgetService,
-		bookTemplateService  *service.BookTemplateService,
+	bookService *service.BookService,
+	accountService *service.AccountService,
+	categoryService *service.CategoryService,
+	tagService *service.TagService,
+	payeeService *service.PayeeService,
+	balanceFlowService *service.BalanceFlowService,
+	noteDayService *service.NoteDayService,
+	currencyService *service.CurrencyService,
+	reportService *service.ReportService,
+	flowFileService *service.FlowFileService,
+	membershipService *service.MembershipService,
+	budgetService *service.BudgetService,
+	bookTemplateService *service.BookTemplateService,
 
-		// === 记账认证服务 ===
-		ledgerAuthService *service.LedgerAuthService,
-	) (*grpc.Server, error) {
+	// === 记账认证服务 ===
+	ledgerAuthService *service.LedgerAuthService,
+) (*grpc.Server, error) {
 	cfg := ctx.GetConfig()
 
 	if cfg == nil || cfg.Server == nil || cfg.Server.Grpc == nil {

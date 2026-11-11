@@ -16,7 +16,7 @@ service BookTemplateService {
 
 // 账本模板
 message BookTemplate {
-  optional uint32 id = 1 [json_name = "id"];
+  optional int64 id = 1 [json_name = "id"];
 
   optional string name = 2 [
     json_name = "name",
@@ -62,5 +62,5 @@ message ListBookTemplateResponse {
 
 // 请求 - 获取单个账本模板
 message GetBookTemplateRequest {
-  uint32 id = 1 [json_name = "id"];
+  int64 id = 1 [json_name = "id"];
 }

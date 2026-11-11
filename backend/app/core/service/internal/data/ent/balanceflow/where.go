@@ -10,52 +10,52 @@ import (
 )
 
 // ID filters vertices based on their ID field.
-func ID(id uint32) predicate.BalanceFlow {
+func ID(id int64) predicate.BalanceFlow {
 	return predicate.BalanceFlow(sql.FieldEQ(FieldID, id))
 }
 
 // IDEQ applies the EQ predicate on the ID field.
-func IDEQ(id uint32) predicate.BalanceFlow {
+func IDEQ(id int64) predicate.BalanceFlow {
 	return predicate.BalanceFlow(sql.FieldEQ(FieldID, id))
 }
 
 // IDNEQ applies the NEQ predicate on the ID field.
-func IDNEQ(id uint32) predicate.BalanceFlow {
+func IDNEQ(id int64) predicate.BalanceFlow {
 	return predicate.BalanceFlow(sql.FieldNEQ(FieldID, id))
 }
 
 // IDIn applies the In predicate on the ID field.
-func IDIn(ids ...uint32) predicate.BalanceFlow {
+func IDIn(ids ...int64) predicate.BalanceFlow {
 	return predicate.BalanceFlow(sql.FieldIn(FieldID, ids...))
 }
 
 // IDNotIn applies the NotIn predicate on the ID field.
-func IDNotIn(ids ...uint32) predicate.BalanceFlow {
+func IDNotIn(ids ...int64) predicate.BalanceFlow {
 	return predicate.BalanceFlow(sql.FieldNotIn(FieldID, ids...))
 }
 
 // IDGT applies the GT predicate on the ID field.
-func IDGT(id uint32) predicate.BalanceFlow {
+func IDGT(id int64) predicate.BalanceFlow {
 	return predicate.BalanceFlow(sql.FieldGT(FieldID, id))
 }
 
 // IDGTE applies the GTE predicate on the ID field.
-func IDGTE(id uint32) predicate.BalanceFlow {
+func IDGTE(id int64) predicate.BalanceFlow {
 	return predicate.BalanceFlow(sql.FieldGTE(FieldID, id))
 }
 
 // IDLT applies the LT predicate on the ID field.
-func IDLT(id uint32) predicate.BalanceFlow {
+func IDLT(id int64) predicate.BalanceFlow {
 	return predicate.BalanceFlow(sql.FieldLT(FieldID, id))
 }
 
 // IDLTE applies the LTE predicate on the ID field.
-func IDLTE(id uint32) predicate.BalanceFlow {
+func IDLTE(id int64) predicate.BalanceFlow {
 	return predicate.BalanceFlow(sql.FieldLTE(FieldID, id))
 }
 
 // TenantID applies equality check predicate on the "tenant_id" field. It's identical to TenantIDEQ.
-func TenantID(v uint32) predicate.BalanceFlow {
+func TenantID(v int64) predicate.BalanceFlow {
 	return predicate.BalanceFlow(sql.FieldEQ(FieldTenantID, v))
 }
 
@@ -75,22 +75,22 @@ func DeletedAt(v time.Time) predicate.BalanceFlow {
 }
 
 // CreatedBy applies equality check predicate on the "created_by" field. It's identical to CreatedByEQ.
-func CreatedBy(v uint32) predicate.BalanceFlow {
+func CreatedBy(v int64) predicate.BalanceFlow {
 	return predicate.BalanceFlow(sql.FieldEQ(FieldCreatedBy, v))
 }
 
 // UpdatedBy applies equality check predicate on the "updated_by" field. It's identical to UpdatedByEQ.
-func UpdatedBy(v uint32) predicate.BalanceFlow {
+func UpdatedBy(v int64) predicate.BalanceFlow {
 	return predicate.BalanceFlow(sql.FieldEQ(FieldUpdatedBy, v))
 }
 
 // DeletedBy applies equality check predicate on the "deleted_by" field. It's identical to DeletedByEQ.
-func DeletedBy(v uint32) predicate.BalanceFlow {
+func DeletedBy(v int64) predicate.BalanceFlow {
 	return predicate.BalanceFlow(sql.FieldEQ(FieldDeletedBy, v))
 }
 
 // BookID applies equality check predicate on the "book_id" field. It's identical to BookIDEQ.
-func BookID(v uint32) predicate.BalanceFlow {
+func BookID(v int64) predicate.BalanceFlow {
 	return predicate.BalanceFlow(sql.FieldEQ(FieldBookID, v))
 }
 
@@ -105,22 +105,22 @@ func ConvertedAmount(v float64) predicate.BalanceFlow {
 }
 
 // AccountID applies equality check predicate on the "account_id" field. It's identical to AccountIDEQ.
-func AccountID(v uint32) predicate.BalanceFlow {
+func AccountID(v int64) predicate.BalanceFlow {
 	return predicate.BalanceFlow(sql.FieldEQ(FieldAccountID, v))
 }
 
 // ToAccountID applies equality check predicate on the "to_account_id" field. It's identical to ToAccountIDEQ.
-func ToAccountID(v uint32) predicate.BalanceFlow {
+func ToAccountID(v int64) predicate.BalanceFlow {
 	return predicate.BalanceFlow(sql.FieldEQ(FieldToAccountID, v))
 }
 
 // PayeeID applies equality check predicate on the "payee_id" field. It's identical to PayeeIDEQ.
-func PayeeID(v uint32) predicate.BalanceFlow {
+func PayeeID(v int64) predicate.BalanceFlow {
 	return predicate.BalanceFlow(sql.FieldEQ(FieldPayeeID, v))
 }
 
 // CreatorID applies equality check predicate on the "creator_id" field. It's identical to CreatorIDEQ.
-func CreatorID(v uint32) predicate.BalanceFlow {
+func CreatorID(v int64) predicate.BalanceFlow {
 	return predicate.BalanceFlow(sql.FieldEQ(FieldCreatorID, v))
 }
 
@@ -155,42 +155,42 @@ func InsertAt(v int64) predicate.BalanceFlow {
 }
 
 // TenantIDEQ applies the EQ predicate on the "tenant_id" field.
-func TenantIDEQ(v uint32) predicate.BalanceFlow {
+func TenantIDEQ(v int64) predicate.BalanceFlow {
 	return predicate.BalanceFlow(sql.FieldEQ(FieldTenantID, v))
 }
 
 // TenantIDNEQ applies the NEQ predicate on the "tenant_id" field.
-func TenantIDNEQ(v uint32) predicate.BalanceFlow {
+func TenantIDNEQ(v int64) predicate.BalanceFlow {
 	return predicate.BalanceFlow(sql.FieldNEQ(FieldTenantID, v))
 }
 
 // TenantIDIn applies the In predicate on the "tenant_id" field.
-func TenantIDIn(vs ...uint32) predicate.BalanceFlow {
+func TenantIDIn(vs ...int64) predicate.BalanceFlow {
 	return predicate.BalanceFlow(sql.FieldIn(FieldTenantID, vs...))
 }
 
 // TenantIDNotIn applies the NotIn predicate on the "tenant_id" field.
-func TenantIDNotIn(vs ...uint32) predicate.BalanceFlow {
+func TenantIDNotIn(vs ...int64) predicate.BalanceFlow {
 	return predicate.BalanceFlow(sql.FieldNotIn(FieldTenantID, vs...))
 }
 
 // TenantIDGT applies the GT predicate on the "tenant_id" field.
-func TenantIDGT(v uint32) predicate.BalanceFlow {
+func TenantIDGT(v int64) predicate.BalanceFlow {
 	return predicate.BalanceFlow(sql.FieldGT(FieldTenantID, v))
 }
 
 // TenantIDGTE applies the GTE predicate on the "tenant_id" field.
-func TenantIDGTE(v uint32) predicate.BalanceFlow {
+func TenantIDGTE(v int64) predicate.BalanceFlow {
 	return predicate.BalanceFlow(sql.FieldGTE(FieldTenantID, v))
 }
 
 // TenantIDLT applies the LT predicate on the "tenant_id" field.
-func TenantIDLT(v uint32) predicate.BalanceFlow {
+func TenantIDLT(v int64) predicate.BalanceFlow {
 	return predicate.BalanceFlow(sql.FieldLT(FieldTenantID, v))
 }
 
 // TenantIDLTE applies the LTE predicate on the "tenant_id" field.
-func TenantIDLTE(v uint32) predicate.BalanceFlow {
+func TenantIDLTE(v int64) predicate.BalanceFlow {
 	return predicate.BalanceFlow(sql.FieldLTE(FieldTenantID, v))
 }
 
@@ -355,42 +355,42 @@ func DeletedAtNotNil() predicate.BalanceFlow {
 }
 
 // CreatedByEQ applies the EQ predicate on the "created_by" field.
-func CreatedByEQ(v uint32) predicate.BalanceFlow {
+func CreatedByEQ(v int64) predicate.BalanceFlow {
 	return predicate.BalanceFlow(sql.FieldEQ(FieldCreatedBy, v))
 }
 
 // CreatedByNEQ applies the NEQ predicate on the "created_by" field.
-func CreatedByNEQ(v uint32) predicate.BalanceFlow {
+func CreatedByNEQ(v int64) predicate.BalanceFlow {
 	return predicate.BalanceFlow(sql.FieldNEQ(FieldCreatedBy, v))
 }
 
 // CreatedByIn applies the In predicate on the "created_by" field.
-func CreatedByIn(vs ...uint32) predicate.BalanceFlow {
+func CreatedByIn(vs ...int64) predicate.BalanceFlow {
 	return predicate.BalanceFlow(sql.FieldIn(FieldCreatedBy, vs...))
 }
 
 // CreatedByNotIn applies the NotIn predicate on the "created_by" field.
-func CreatedByNotIn(vs ...uint32) predicate.BalanceFlow {
+func CreatedByNotIn(vs ...int64) predicate.BalanceFlow {
 	return predicate.BalanceFlow(sql.FieldNotIn(FieldCreatedBy, vs...))
 }
 
 // CreatedByGT applies the GT predicate on the "created_by" field.
-func CreatedByGT(v uint32) predicate.BalanceFlow {
+func CreatedByGT(v int64) predicate.BalanceFlow {
 	return predicate.BalanceFlow(sql.FieldGT(FieldCreatedBy, v))
 }
 
 // CreatedByGTE applies the GTE predicate on the "created_by" field.
-func CreatedByGTE(v uint32) predicate.BalanceFlow {
+func CreatedByGTE(v int64) predicate.BalanceFlow {
 	return predicate.BalanceFlow(sql.FieldGTE(FieldCreatedBy, v))
 }
 
 // CreatedByLT applies the LT predicate on the "created_by" field.
-func CreatedByLT(v uint32) predicate.BalanceFlow {
+func CreatedByLT(v int64) predicate.BalanceFlow {
 	return predicate.BalanceFlow(sql.FieldLT(FieldCreatedBy, v))
 }
 
 // CreatedByLTE applies the LTE predicate on the "created_by" field.
-func CreatedByLTE(v uint32) predicate.BalanceFlow {
+func CreatedByLTE(v int64) predicate.BalanceFlow {
 	return predicate.BalanceFlow(sql.FieldLTE(FieldCreatedBy, v))
 }
 
@@ -405,42 +405,42 @@ func CreatedByNotNil() predicate.BalanceFlow {
 }
 
 // UpdatedByEQ applies the EQ predicate on the "updated_by" field.
-func UpdatedByEQ(v uint32) predicate.BalanceFlow {
+func UpdatedByEQ(v int64) predicate.BalanceFlow {
 	return predicate.BalanceFlow(sql.FieldEQ(FieldUpdatedBy, v))
 }
 
 // UpdatedByNEQ applies the NEQ predicate on the "updated_by" field.
-func UpdatedByNEQ(v uint32) predicate.BalanceFlow {
+func UpdatedByNEQ(v int64) predicate.BalanceFlow {
 	return predicate.BalanceFlow(sql.FieldNEQ(FieldUpdatedBy, v))
 }
 
 // UpdatedByIn applies the In predicate on the "updated_by" field.
-func UpdatedByIn(vs ...uint32) predicate.BalanceFlow {
+func UpdatedByIn(vs ...int64) predicate.BalanceFlow {
 	return predicate.BalanceFlow(sql.FieldIn(FieldUpdatedBy, vs...))
 }
 
 // UpdatedByNotIn applies the NotIn predicate on the "updated_by" field.
-func UpdatedByNotIn(vs ...uint32) predicate.BalanceFlow {
+func UpdatedByNotIn(vs ...int64) predicate.BalanceFlow {
 	return predicate.BalanceFlow(sql.FieldNotIn(FieldUpdatedBy, vs...))
 }
 
 // UpdatedByGT applies the GT predicate on the "updated_by" field.
-func UpdatedByGT(v uint32) predicate.BalanceFlow {
+func UpdatedByGT(v int64) predicate.BalanceFlow {
 	return predicate.BalanceFlow(sql.FieldGT(FieldUpdatedBy, v))
 }
 
 // UpdatedByGTE applies the GTE predicate on the "updated_by" field.
-func UpdatedByGTE(v uint32) predicate.BalanceFlow {
+func UpdatedByGTE(v int64) predicate.BalanceFlow {
 	return predicate.BalanceFlow(sql.FieldGTE(FieldUpdatedBy, v))
 }
 
 // UpdatedByLT applies the LT predicate on the "updated_by" field.
-func UpdatedByLT(v uint32) predicate.BalanceFlow {
+func UpdatedByLT(v int64) predicate.BalanceFlow {
 	return predicate.BalanceFlow(sql.FieldLT(FieldUpdatedBy, v))
 }
 
 // UpdatedByLTE applies the LTE predicate on the "updated_by" field.
-func UpdatedByLTE(v uint32) predicate.BalanceFlow {
+func UpdatedByLTE(v int64) predicate.BalanceFlow {
 	return predicate.BalanceFlow(sql.FieldLTE(FieldUpdatedBy, v))
 }
 
@@ -455,42 +455,42 @@ func UpdatedByNotNil() predicate.BalanceFlow {
 }
 
 // DeletedByEQ applies the EQ predicate on the "deleted_by" field.
-func DeletedByEQ(v uint32) predicate.BalanceFlow {
+func DeletedByEQ(v int64) predicate.BalanceFlow {
 	return predicate.BalanceFlow(sql.FieldEQ(FieldDeletedBy, v))
 }
 
 // DeletedByNEQ applies the NEQ predicate on the "deleted_by" field.
-func DeletedByNEQ(v uint32) predicate.BalanceFlow {
+func DeletedByNEQ(v int64) predicate.BalanceFlow {
 	return predicate.BalanceFlow(sql.FieldNEQ(FieldDeletedBy, v))
 }
 
 // DeletedByIn applies the In predicate on the "deleted_by" field.
-func DeletedByIn(vs ...uint32) predicate.BalanceFlow {
+func DeletedByIn(vs ...int64) predicate.BalanceFlow {
 	return predicate.BalanceFlow(sql.FieldIn(FieldDeletedBy, vs...))
 }
 
 // DeletedByNotIn applies the NotIn predicate on the "deleted_by" field.
-func DeletedByNotIn(vs ...uint32) predicate.BalanceFlow {
+func DeletedByNotIn(vs ...int64) predicate.BalanceFlow {
 	return predicate.BalanceFlow(sql.FieldNotIn(FieldDeletedBy, vs...))
 }
 
 // DeletedByGT applies the GT predicate on the "deleted_by" field.
-func DeletedByGT(v uint32) predicate.BalanceFlow {
+func DeletedByGT(v int64) predicate.BalanceFlow {
 	return predicate.BalanceFlow(sql.FieldGT(FieldDeletedBy, v))
 }
 
 // DeletedByGTE applies the GTE predicate on the "deleted_by" field.
-func DeletedByGTE(v uint32) predicate.BalanceFlow {
+func DeletedByGTE(v int64) predicate.BalanceFlow {
 	return predicate.BalanceFlow(sql.FieldGTE(FieldDeletedBy, v))
 }
 
 // DeletedByLT applies the LT predicate on the "deleted_by" field.
-func DeletedByLT(v uint32) predicate.BalanceFlow {
+func DeletedByLT(v int64) predicate.BalanceFlow {
 	return predicate.BalanceFlow(sql.FieldLT(FieldDeletedBy, v))
 }
 
 // DeletedByLTE applies the LTE predicate on the "deleted_by" field.
-func DeletedByLTE(v uint32) predicate.BalanceFlow {
+func DeletedByLTE(v int64) predicate.BalanceFlow {
 	return predicate.BalanceFlow(sql.FieldLTE(FieldDeletedBy, v))
 }
 
@@ -505,42 +505,42 @@ func DeletedByNotNil() predicate.BalanceFlow {
 }
 
 // BookIDEQ applies the EQ predicate on the "book_id" field.
-func BookIDEQ(v uint32) predicate.BalanceFlow {
+func BookIDEQ(v int64) predicate.BalanceFlow {
 	return predicate.BalanceFlow(sql.FieldEQ(FieldBookID, v))
 }
 
 // BookIDNEQ applies the NEQ predicate on the "book_id" field.
-func BookIDNEQ(v uint32) predicate.BalanceFlow {
+func BookIDNEQ(v int64) predicate.BalanceFlow {
 	return predicate.BalanceFlow(sql.FieldNEQ(FieldBookID, v))
 }
 
 // BookIDIn applies the In predicate on the "book_id" field.
-func BookIDIn(vs ...uint32) predicate.BalanceFlow {
+func BookIDIn(vs ...int64) predicate.BalanceFlow {
 	return predicate.BalanceFlow(sql.FieldIn(FieldBookID, vs...))
 }
 
 // BookIDNotIn applies the NotIn predicate on the "book_id" field.
-func BookIDNotIn(vs ...uint32) predicate.BalanceFlow {
+func BookIDNotIn(vs ...int64) predicate.BalanceFlow {
 	return predicate.BalanceFlow(sql.FieldNotIn(FieldBookID, vs...))
 }
 
 // BookIDGT applies the GT predicate on the "book_id" field.
-func BookIDGT(v uint32) predicate.BalanceFlow {
+func BookIDGT(v int64) predicate.BalanceFlow {
 	return predicate.BalanceFlow(sql.FieldGT(FieldBookID, v))
 }
 
 // BookIDGTE applies the GTE predicate on the "book_id" field.
-func BookIDGTE(v uint32) predicate.BalanceFlow {
+func BookIDGTE(v int64) predicate.BalanceFlow {
 	return predicate.BalanceFlow(sql.FieldGTE(FieldBookID, v))
 }
 
 // BookIDLT applies the LT predicate on the "book_id" field.
-func BookIDLT(v uint32) predicate.BalanceFlow {
+func BookIDLT(v int64) predicate.BalanceFlow {
 	return predicate.BalanceFlow(sql.FieldLT(FieldBookID, v))
 }
 
 // BookIDLTE applies the LTE predicate on the "book_id" field.
-func BookIDLTE(v uint32) predicate.BalanceFlow {
+func BookIDLTE(v int64) predicate.BalanceFlow {
 	return predicate.BalanceFlow(sql.FieldLTE(FieldBookID, v))
 }
 
@@ -685,42 +685,42 @@ func ConvertedAmountNotNil() predicate.BalanceFlow {
 }
 
 // AccountIDEQ applies the EQ predicate on the "account_id" field.
-func AccountIDEQ(v uint32) predicate.BalanceFlow {
+func AccountIDEQ(v int64) predicate.BalanceFlow {
 	return predicate.BalanceFlow(sql.FieldEQ(FieldAccountID, v))
 }
 
 // AccountIDNEQ applies the NEQ predicate on the "account_id" field.
-func AccountIDNEQ(v uint32) predicate.BalanceFlow {
+func AccountIDNEQ(v int64) predicate.BalanceFlow {
 	return predicate.BalanceFlow(sql.FieldNEQ(FieldAccountID, v))
 }
 
 // AccountIDIn applies the In predicate on the "account_id" field.
-func AccountIDIn(vs ...uint32) predicate.BalanceFlow {
+func AccountIDIn(vs ...int64) predicate.BalanceFlow {
 	return predicate.BalanceFlow(sql.FieldIn(FieldAccountID, vs...))
 }
 
 // AccountIDNotIn applies the NotIn predicate on the "account_id" field.
-func AccountIDNotIn(vs ...uint32) predicate.BalanceFlow {
+func AccountIDNotIn(vs ...int64) predicate.BalanceFlow {
 	return predicate.BalanceFlow(sql.FieldNotIn(FieldAccountID, vs...))
 }
 
 // AccountIDGT applies the GT predicate on the "account_id" field.
-func AccountIDGT(v uint32) predicate.BalanceFlow {
+func AccountIDGT(v int64) predicate.BalanceFlow {
 	return predicate.BalanceFlow(sql.FieldGT(FieldAccountID, v))
 }
 
 // AccountIDGTE applies the GTE predicate on the "account_id" field.
-func AccountIDGTE(v uint32) predicate.BalanceFlow {
+func AccountIDGTE(v int64) predicate.BalanceFlow {
 	return predicate.BalanceFlow(sql.FieldGTE(FieldAccountID, v))
 }
 
 // AccountIDLT applies the LT predicate on the "account_id" field.
-func AccountIDLT(v uint32) predicate.BalanceFlow {
+func AccountIDLT(v int64) predicate.BalanceFlow {
 	return predicate.BalanceFlow(sql.FieldLT(FieldAccountID, v))
 }
 
 // AccountIDLTE applies the LTE predicate on the "account_id" field.
-func AccountIDLTE(v uint32) predicate.BalanceFlow {
+func AccountIDLTE(v int64) predicate.BalanceFlow {
 	return predicate.BalanceFlow(sql.FieldLTE(FieldAccountID, v))
 }
 
@@ -735,42 +735,42 @@ func AccountIDNotNil() predicate.BalanceFlow {
 }
 
 // ToAccountIDEQ applies the EQ predicate on the "to_account_id" field.
-func ToAccountIDEQ(v uint32) predicate.BalanceFlow {
+func ToAccountIDEQ(v int64) predicate.BalanceFlow {
 	return predicate.BalanceFlow(sql.FieldEQ(FieldToAccountID, v))
 }
 
 // ToAccountIDNEQ applies the NEQ predicate on the "to_account_id" field.
-func ToAccountIDNEQ(v uint32) predicate.BalanceFlow {
+func ToAccountIDNEQ(v int64) predicate.BalanceFlow {
 	return predicate.BalanceFlow(sql.FieldNEQ(FieldToAccountID, v))
 }
 
 // ToAccountIDIn applies the In predicate on the "to_account_id" field.
-func ToAccountIDIn(vs ...uint32) predicate.BalanceFlow {
+func ToAccountIDIn(vs ...int64) predicate.BalanceFlow {
 	return predicate.BalanceFlow(sql.FieldIn(FieldToAccountID, vs...))
 }
 
 // ToAccountIDNotIn applies the NotIn predicate on the "to_account_id" field.
-func ToAccountIDNotIn(vs ...uint32) predicate.BalanceFlow {
+func ToAccountIDNotIn(vs ...int64) predicate.BalanceFlow {
 	return predicate.BalanceFlow(sql.FieldNotIn(FieldToAccountID, vs...))
 }
 
 // ToAccountIDGT applies the GT predicate on the "to_account_id" field.
-func ToAccountIDGT(v uint32) predicate.BalanceFlow {
+func ToAccountIDGT(v int64) predicate.BalanceFlow {
 	return predicate.BalanceFlow(sql.FieldGT(FieldToAccountID, v))
 }
 
 // ToAccountIDGTE applies the GTE predicate on the "to_account_id" field.
-func ToAccountIDGTE(v uint32) predicate.BalanceFlow {
+func ToAccountIDGTE(v int64) predicate.BalanceFlow {
 	return predicate.BalanceFlow(sql.FieldGTE(FieldToAccountID, v))
 }
 
 // ToAccountIDLT applies the LT predicate on the "to_account_id" field.
-func ToAccountIDLT(v uint32) predicate.BalanceFlow {
+func ToAccountIDLT(v int64) predicate.BalanceFlow {
 	return predicate.BalanceFlow(sql.FieldLT(FieldToAccountID, v))
 }
 
 // ToAccountIDLTE applies the LTE predicate on the "to_account_id" field.
-func ToAccountIDLTE(v uint32) predicate.BalanceFlow {
+func ToAccountIDLTE(v int64) predicate.BalanceFlow {
 	return predicate.BalanceFlow(sql.FieldLTE(FieldToAccountID, v))
 }
 
@@ -785,42 +785,42 @@ func ToAccountIDNotNil() predicate.BalanceFlow {
 }
 
 // PayeeIDEQ applies the EQ predicate on the "payee_id" field.
-func PayeeIDEQ(v uint32) predicate.BalanceFlow {
+func PayeeIDEQ(v int64) predicate.BalanceFlow {
 	return predicate.BalanceFlow(sql.FieldEQ(FieldPayeeID, v))
 }
 
 // PayeeIDNEQ applies the NEQ predicate on the "payee_id" field.
-func PayeeIDNEQ(v uint32) predicate.BalanceFlow {
+func PayeeIDNEQ(v int64) predicate.BalanceFlow {
 	return predicate.BalanceFlow(sql.FieldNEQ(FieldPayeeID, v))
 }
 
 // PayeeIDIn applies the In predicate on the "payee_id" field.
-func PayeeIDIn(vs ...uint32) predicate.BalanceFlow {
+func PayeeIDIn(vs ...int64) predicate.BalanceFlow {
 	return predicate.BalanceFlow(sql.FieldIn(FieldPayeeID, vs...))
 }
 
 // PayeeIDNotIn applies the NotIn predicate on the "payee_id" field.
-func PayeeIDNotIn(vs ...uint32) predicate.BalanceFlow {
+func PayeeIDNotIn(vs ...int64) predicate.BalanceFlow {
 	return predicate.BalanceFlow(sql.FieldNotIn(FieldPayeeID, vs...))
 }
 
 // PayeeIDGT applies the GT predicate on the "payee_id" field.
-func PayeeIDGT(v uint32) predicate.BalanceFlow {
+func PayeeIDGT(v int64) predicate.BalanceFlow {
 	return predicate.BalanceFlow(sql.FieldGT(FieldPayeeID, v))
 }
 
 // PayeeIDGTE applies the GTE predicate on the "payee_id" field.
-func PayeeIDGTE(v uint32) predicate.BalanceFlow {
+func PayeeIDGTE(v int64) predicate.BalanceFlow {
 	return predicate.BalanceFlow(sql.FieldGTE(FieldPayeeID, v))
 }
 
 // PayeeIDLT applies the LT predicate on the "payee_id" field.
-func PayeeIDLT(v uint32) predicate.BalanceFlow {
+func PayeeIDLT(v int64) predicate.BalanceFlow {
 	return predicate.BalanceFlow(sql.FieldLT(FieldPayeeID, v))
 }
 
 // PayeeIDLTE applies the LTE predicate on the "payee_id" field.
-func PayeeIDLTE(v uint32) predicate.BalanceFlow {
+func PayeeIDLTE(v int64) predicate.BalanceFlow {
 	return predicate.BalanceFlow(sql.FieldLTE(FieldPayeeID, v))
 }
 
@@ -835,42 +835,42 @@ func PayeeIDNotNil() predicate.BalanceFlow {
 }
 
 // CreatorIDEQ applies the EQ predicate on the "creator_id" field.
-func CreatorIDEQ(v uint32) predicate.BalanceFlow {
+func CreatorIDEQ(v int64) predicate.BalanceFlow {
 	return predicate.BalanceFlow(sql.FieldEQ(FieldCreatorID, v))
 }
 
 // CreatorIDNEQ applies the NEQ predicate on the "creator_id" field.
-func CreatorIDNEQ(v uint32) predicate.BalanceFlow {
+func CreatorIDNEQ(v int64) predicate.BalanceFlow {
 	return predicate.BalanceFlow(sql.FieldNEQ(FieldCreatorID, v))
 }
 
 // CreatorIDIn applies the In predicate on the "creator_id" field.
-func CreatorIDIn(vs ...uint32) predicate.BalanceFlow {
+func CreatorIDIn(vs ...int64) predicate.BalanceFlow {
 	return predicate.BalanceFlow(sql.FieldIn(FieldCreatorID, vs...))
 }
 
 // CreatorIDNotIn applies the NotIn predicate on the "creator_id" field.
-func CreatorIDNotIn(vs ...uint32) predicate.BalanceFlow {
+func CreatorIDNotIn(vs ...int64) predicate.BalanceFlow {
 	return predicate.BalanceFlow(sql.FieldNotIn(FieldCreatorID, vs...))
 }
 
 // CreatorIDGT applies the GT predicate on the "creator_id" field.
-func CreatorIDGT(v uint32) predicate.BalanceFlow {
+func CreatorIDGT(v int64) predicate.BalanceFlow {
 	return predicate.BalanceFlow(sql.FieldGT(FieldCreatorID, v))
 }
 
 // CreatorIDGTE applies the GTE predicate on the "creator_id" field.
-func CreatorIDGTE(v uint32) predicate.BalanceFlow {
+func CreatorIDGTE(v int64) predicate.BalanceFlow {
 	return predicate.BalanceFlow(sql.FieldGTE(FieldCreatorID, v))
 }
 
 // CreatorIDLT applies the LT predicate on the "creator_id" field.
-func CreatorIDLT(v uint32) predicate.BalanceFlow {
+func CreatorIDLT(v int64) predicate.BalanceFlow {
 	return predicate.BalanceFlow(sql.FieldLT(FieldCreatorID, v))
 }
 
 // CreatorIDLTE applies the LTE predicate on the "creator_id" field.
-func CreatorIDLTE(v uint32) predicate.BalanceFlow {
+func CreatorIDLTE(v int64) predicate.BalanceFlow {
 	return predicate.BalanceFlow(sql.FieldLTE(FieldCreatorID, v))
 }
 

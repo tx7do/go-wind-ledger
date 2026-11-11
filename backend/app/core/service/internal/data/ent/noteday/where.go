@@ -10,47 +10,47 @@ import (
 )
 
 // ID filters vertices based on their ID field.
-func ID(id uint32) predicate.NoteDay {
+func ID(id int64) predicate.NoteDay {
 	return predicate.NoteDay(sql.FieldEQ(FieldID, id))
 }
 
 // IDEQ applies the EQ predicate on the ID field.
-func IDEQ(id uint32) predicate.NoteDay {
+func IDEQ(id int64) predicate.NoteDay {
 	return predicate.NoteDay(sql.FieldEQ(FieldID, id))
 }
 
 // IDNEQ applies the NEQ predicate on the ID field.
-func IDNEQ(id uint32) predicate.NoteDay {
+func IDNEQ(id int64) predicate.NoteDay {
 	return predicate.NoteDay(sql.FieldNEQ(FieldID, id))
 }
 
 // IDIn applies the In predicate on the ID field.
-func IDIn(ids ...uint32) predicate.NoteDay {
+func IDIn(ids ...int64) predicate.NoteDay {
 	return predicate.NoteDay(sql.FieldIn(FieldID, ids...))
 }
 
 // IDNotIn applies the NotIn predicate on the ID field.
-func IDNotIn(ids ...uint32) predicate.NoteDay {
+func IDNotIn(ids ...int64) predicate.NoteDay {
 	return predicate.NoteDay(sql.FieldNotIn(FieldID, ids...))
 }
 
 // IDGT applies the GT predicate on the ID field.
-func IDGT(id uint32) predicate.NoteDay {
+func IDGT(id int64) predicate.NoteDay {
 	return predicate.NoteDay(sql.FieldGT(FieldID, id))
 }
 
 // IDGTE applies the GTE predicate on the ID field.
-func IDGTE(id uint32) predicate.NoteDay {
+func IDGTE(id int64) predicate.NoteDay {
 	return predicate.NoteDay(sql.FieldGTE(FieldID, id))
 }
 
 // IDLT applies the LT predicate on the ID field.
-func IDLT(id uint32) predicate.NoteDay {
+func IDLT(id int64) predicate.NoteDay {
 	return predicate.NoteDay(sql.FieldLT(FieldID, id))
 }
 
 // IDLTE applies the LTE predicate on the ID field.
-func IDLTE(id uint32) predicate.NoteDay {
+func IDLTE(id int64) predicate.NoteDay {
 	return predicate.NoteDay(sql.FieldLTE(FieldID, id))
 }
 
@@ -70,22 +70,22 @@ func DeletedAt(v time.Time) predicate.NoteDay {
 }
 
 // CreatedBy applies equality check predicate on the "created_by" field. It's identical to CreatedByEQ.
-func CreatedBy(v uint32) predicate.NoteDay {
+func CreatedBy(v int64) predicate.NoteDay {
 	return predicate.NoteDay(sql.FieldEQ(FieldCreatedBy, v))
 }
 
 // UpdatedBy applies equality check predicate on the "updated_by" field. It's identical to UpdatedByEQ.
-func UpdatedBy(v uint32) predicate.NoteDay {
+func UpdatedBy(v int64) predicate.NoteDay {
 	return predicate.NoteDay(sql.FieldEQ(FieldUpdatedBy, v))
 }
 
 // DeletedBy applies equality check predicate on the "deleted_by" field. It's identical to DeletedByEQ.
-func DeletedBy(v uint32) predicate.NoteDay {
+func DeletedBy(v int64) predicate.NoteDay {
 	return predicate.NoteDay(sql.FieldEQ(FieldDeletedBy, v))
 }
 
 // UserID applies equality check predicate on the "user_id" field. It's identical to UserIDEQ.
-func UserID(v uint32) predicate.NoteDay {
+func UserID(v int64) predicate.NoteDay {
 	return predicate.NoteDay(sql.FieldEQ(FieldUserID, v))
 }
 
@@ -285,42 +285,42 @@ func DeletedAtNotNil() predicate.NoteDay {
 }
 
 // CreatedByEQ applies the EQ predicate on the "created_by" field.
-func CreatedByEQ(v uint32) predicate.NoteDay {
+func CreatedByEQ(v int64) predicate.NoteDay {
 	return predicate.NoteDay(sql.FieldEQ(FieldCreatedBy, v))
 }
 
 // CreatedByNEQ applies the NEQ predicate on the "created_by" field.
-func CreatedByNEQ(v uint32) predicate.NoteDay {
+func CreatedByNEQ(v int64) predicate.NoteDay {
 	return predicate.NoteDay(sql.FieldNEQ(FieldCreatedBy, v))
 }
 
 // CreatedByIn applies the In predicate on the "created_by" field.
-func CreatedByIn(vs ...uint32) predicate.NoteDay {
+func CreatedByIn(vs ...int64) predicate.NoteDay {
 	return predicate.NoteDay(sql.FieldIn(FieldCreatedBy, vs...))
 }
 
 // CreatedByNotIn applies the NotIn predicate on the "created_by" field.
-func CreatedByNotIn(vs ...uint32) predicate.NoteDay {
+func CreatedByNotIn(vs ...int64) predicate.NoteDay {
 	return predicate.NoteDay(sql.FieldNotIn(FieldCreatedBy, vs...))
 }
 
 // CreatedByGT applies the GT predicate on the "created_by" field.
-func CreatedByGT(v uint32) predicate.NoteDay {
+func CreatedByGT(v int64) predicate.NoteDay {
 	return predicate.NoteDay(sql.FieldGT(FieldCreatedBy, v))
 }
 
 // CreatedByGTE applies the GTE predicate on the "created_by" field.
-func CreatedByGTE(v uint32) predicate.NoteDay {
+func CreatedByGTE(v int64) predicate.NoteDay {
 	return predicate.NoteDay(sql.FieldGTE(FieldCreatedBy, v))
 }
 
 // CreatedByLT applies the LT predicate on the "created_by" field.
-func CreatedByLT(v uint32) predicate.NoteDay {
+func CreatedByLT(v int64) predicate.NoteDay {
 	return predicate.NoteDay(sql.FieldLT(FieldCreatedBy, v))
 }
 
 // CreatedByLTE applies the LTE predicate on the "created_by" field.
-func CreatedByLTE(v uint32) predicate.NoteDay {
+func CreatedByLTE(v int64) predicate.NoteDay {
 	return predicate.NoteDay(sql.FieldLTE(FieldCreatedBy, v))
 }
 
@@ -335,42 +335,42 @@ func CreatedByNotNil() predicate.NoteDay {
 }
 
 // UpdatedByEQ applies the EQ predicate on the "updated_by" field.
-func UpdatedByEQ(v uint32) predicate.NoteDay {
+func UpdatedByEQ(v int64) predicate.NoteDay {
 	return predicate.NoteDay(sql.FieldEQ(FieldUpdatedBy, v))
 }
 
 // UpdatedByNEQ applies the NEQ predicate on the "updated_by" field.
-func UpdatedByNEQ(v uint32) predicate.NoteDay {
+func UpdatedByNEQ(v int64) predicate.NoteDay {
 	return predicate.NoteDay(sql.FieldNEQ(FieldUpdatedBy, v))
 }
 
 // UpdatedByIn applies the In predicate on the "updated_by" field.
-func UpdatedByIn(vs ...uint32) predicate.NoteDay {
+func UpdatedByIn(vs ...int64) predicate.NoteDay {
 	return predicate.NoteDay(sql.FieldIn(FieldUpdatedBy, vs...))
 }
 
 // UpdatedByNotIn applies the NotIn predicate on the "updated_by" field.
-func UpdatedByNotIn(vs ...uint32) predicate.NoteDay {
+func UpdatedByNotIn(vs ...int64) predicate.NoteDay {
 	return predicate.NoteDay(sql.FieldNotIn(FieldUpdatedBy, vs...))
 }
 
 // UpdatedByGT applies the GT predicate on the "updated_by" field.
-func UpdatedByGT(v uint32) predicate.NoteDay {
+func UpdatedByGT(v int64) predicate.NoteDay {
 	return predicate.NoteDay(sql.FieldGT(FieldUpdatedBy, v))
 }
 
 // UpdatedByGTE applies the GTE predicate on the "updated_by" field.
-func UpdatedByGTE(v uint32) predicate.NoteDay {
+func UpdatedByGTE(v int64) predicate.NoteDay {
 	return predicate.NoteDay(sql.FieldGTE(FieldUpdatedBy, v))
 }
 
 // UpdatedByLT applies the LT predicate on the "updated_by" field.
-func UpdatedByLT(v uint32) predicate.NoteDay {
+func UpdatedByLT(v int64) predicate.NoteDay {
 	return predicate.NoteDay(sql.FieldLT(FieldUpdatedBy, v))
 }
 
 // UpdatedByLTE applies the LTE predicate on the "updated_by" field.
-func UpdatedByLTE(v uint32) predicate.NoteDay {
+func UpdatedByLTE(v int64) predicate.NoteDay {
 	return predicate.NoteDay(sql.FieldLTE(FieldUpdatedBy, v))
 }
 
@@ -385,42 +385,42 @@ func UpdatedByNotNil() predicate.NoteDay {
 }
 
 // DeletedByEQ applies the EQ predicate on the "deleted_by" field.
-func DeletedByEQ(v uint32) predicate.NoteDay {
+func DeletedByEQ(v int64) predicate.NoteDay {
 	return predicate.NoteDay(sql.FieldEQ(FieldDeletedBy, v))
 }
 
 // DeletedByNEQ applies the NEQ predicate on the "deleted_by" field.
-func DeletedByNEQ(v uint32) predicate.NoteDay {
+func DeletedByNEQ(v int64) predicate.NoteDay {
 	return predicate.NoteDay(sql.FieldNEQ(FieldDeletedBy, v))
 }
 
 // DeletedByIn applies the In predicate on the "deleted_by" field.
-func DeletedByIn(vs ...uint32) predicate.NoteDay {
+func DeletedByIn(vs ...int64) predicate.NoteDay {
 	return predicate.NoteDay(sql.FieldIn(FieldDeletedBy, vs...))
 }
 
 // DeletedByNotIn applies the NotIn predicate on the "deleted_by" field.
-func DeletedByNotIn(vs ...uint32) predicate.NoteDay {
+func DeletedByNotIn(vs ...int64) predicate.NoteDay {
 	return predicate.NoteDay(sql.FieldNotIn(FieldDeletedBy, vs...))
 }
 
 // DeletedByGT applies the GT predicate on the "deleted_by" field.
-func DeletedByGT(v uint32) predicate.NoteDay {
+func DeletedByGT(v int64) predicate.NoteDay {
 	return predicate.NoteDay(sql.FieldGT(FieldDeletedBy, v))
 }
 
 // DeletedByGTE applies the GTE predicate on the "deleted_by" field.
-func DeletedByGTE(v uint32) predicate.NoteDay {
+func DeletedByGTE(v int64) predicate.NoteDay {
 	return predicate.NoteDay(sql.FieldGTE(FieldDeletedBy, v))
 }
 
 // DeletedByLT applies the LT predicate on the "deleted_by" field.
-func DeletedByLT(v uint32) predicate.NoteDay {
+func DeletedByLT(v int64) predicate.NoteDay {
 	return predicate.NoteDay(sql.FieldLT(FieldDeletedBy, v))
 }
 
 // DeletedByLTE applies the LTE predicate on the "deleted_by" field.
-func DeletedByLTE(v uint32) predicate.NoteDay {
+func DeletedByLTE(v int64) predicate.NoteDay {
 	return predicate.NoteDay(sql.FieldLTE(FieldDeletedBy, v))
 }
 
@@ -435,42 +435,42 @@ func DeletedByNotNil() predicate.NoteDay {
 }
 
 // UserIDEQ applies the EQ predicate on the "user_id" field.
-func UserIDEQ(v uint32) predicate.NoteDay {
+func UserIDEQ(v int64) predicate.NoteDay {
 	return predicate.NoteDay(sql.FieldEQ(FieldUserID, v))
 }
 
 // UserIDNEQ applies the NEQ predicate on the "user_id" field.
-func UserIDNEQ(v uint32) predicate.NoteDay {
+func UserIDNEQ(v int64) predicate.NoteDay {
 	return predicate.NoteDay(sql.FieldNEQ(FieldUserID, v))
 }
 
 // UserIDIn applies the In predicate on the "user_id" field.
-func UserIDIn(vs ...uint32) predicate.NoteDay {
+func UserIDIn(vs ...int64) predicate.NoteDay {
 	return predicate.NoteDay(sql.FieldIn(FieldUserID, vs...))
 }
 
 // UserIDNotIn applies the NotIn predicate on the "user_id" field.
-func UserIDNotIn(vs ...uint32) predicate.NoteDay {
+func UserIDNotIn(vs ...int64) predicate.NoteDay {
 	return predicate.NoteDay(sql.FieldNotIn(FieldUserID, vs...))
 }
 
 // UserIDGT applies the GT predicate on the "user_id" field.
-func UserIDGT(v uint32) predicate.NoteDay {
+func UserIDGT(v int64) predicate.NoteDay {
 	return predicate.NoteDay(sql.FieldGT(FieldUserID, v))
 }
 
 // UserIDGTE applies the GTE predicate on the "user_id" field.
-func UserIDGTE(v uint32) predicate.NoteDay {
+func UserIDGTE(v int64) predicate.NoteDay {
 	return predicate.NoteDay(sql.FieldGTE(FieldUserID, v))
 }
 
 // UserIDLT applies the LT predicate on the "user_id" field.
-func UserIDLT(v uint32) predicate.NoteDay {
+func UserIDLT(v int64) predicate.NoteDay {
 	return predicate.NoteDay(sql.FieldLT(FieldUserID, v))
 }
 
 // UserIDLTE applies the LTE predicate on the "user_id" field.
-func UserIDLTE(v uint32) predicate.NoteDay {
+func UserIDLTE(v int64) predicate.NoteDay {
 	return predicate.NoteDay(sql.FieldLTE(FieldUserID, v))
 }
 

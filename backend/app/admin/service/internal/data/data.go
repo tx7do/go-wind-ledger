@@ -17,9 +17,9 @@ import (
 	authenticationV1 "go-wind-ledger/api/gen/go/authentication/service/v1"
 	dictV1 "go-wind-ledger/api/gen/go/dict/service/v1"
 	identityV1 "go-wind-ledger/api/gen/go/identity/service/v1"
+	internalMessageV1 "go-wind-ledger/api/gen/go/internal_message/service/v1"
 	ledgerV1 "go-wind-ledger/api/gen/go/ledger/service/v1"
 	permissionV1 "go-wind-ledger/api/gen/go/permission/service/v1"
-	internalMessageV1 "go-wind-ledger/api/gen/go/internal_message/service/v1"
 	storageV1 "go-wind-ledger/api/gen/go/storage/service/v1"
 	taskV1 "go-wind-ledger/api/gen/go/task/service/v1"
 
@@ -146,9 +146,6 @@ func NewPositionServiceClient(ctx *bootstrap.Context, r registry.Discovery) iden
 
 	return identityV1.NewPositionServiceClient(cli)
 }
-
-
-
 
 func NewOssServiceClient(ctx *bootstrap.Context, r registry.Discovery) storageV1.OssServiceClient {
 	cli, err := rpc.CreateGrpcClient(ctx.Context(), r, serviceid.NewDiscoveryName(serviceid.CoreService), ctx.GetConfig())
@@ -293,17 +290,6 @@ func NewTaskServiceClient(ctx *bootstrap.Context, r registry.Discovery) taskV1.T
 
 	return taskV1.NewTaskServiceClient(cli)
 }
-
-
-
-
-
-
-
-
-
-
-
 
 // === 记账系统 gRPC Clients ===
 

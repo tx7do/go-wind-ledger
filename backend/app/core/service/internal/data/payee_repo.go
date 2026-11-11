@@ -72,7 +72,7 @@ func (r *PayeeRepo) List(ctx context.Context, req *paginationV1.PagingRequest) (
 	return &ledgerV1.ListPayeeResponse{Total: ret.Total, Items: ret.Items}, nil
 }
 
-func (r *PayeeRepo) ListAll(ctx context.Context, bookID uint32) (*ledgerV1.ListPayeeResponse, error) {
+func (r *PayeeRepo) ListAll(ctx context.Context, bookID int64) (*ledgerV1.ListPayeeResponse, error) {
 	q := r.entClient.Client().Payee.Query().Where(payee.BookIDEQ(bookID), payee.EnableEQ(true))
 	entities, err := q.All(ctx)
 	if err != nil {
@@ -82,10 +82,10 @@ func (r *PayeeRepo) ListAll(ctx context.Context, bookID uint32) (*ledgerV1.ListP
 	for _, e := range entities {
 		items = append(items, r.mapper.ToDTO(e))
 	}
-	return &ledgerV1.ListPayeeResponse{Items: items, Total: uint64(len(items))}, nil
+	return &ledgerV1.ListPayeeResponse{Items: items, Total: int64(len(items))}, nil
 }
 
-func (r *PayeeRepo) Get(ctx context.Context, id uint32) (*ledgerV1.Payee, error) {
+func (r *PayeeRepo) Get(ctx context.Context, id int64) (*ledgerV1.Payee, error) {
 	entity, err := r.entClient.Client().Payee.Query().Where(payee.IDEQ(id)).Only(ctx)
 	if err != nil {
 		if ent.IsNotFound(err) {
@@ -116,7 +116,7 @@ func (r *PayeeRepo) Create(ctx context.Context, data *ledgerV1.Payee) (*ledgerV1
 	return r.mapper.ToDTO(saved), nil
 }
 
-func (r *PayeeRepo) Update(ctx context.Context, id uint32, data *ledgerV1.Payee, mask *fieldmaskpb.FieldMask) (*ledgerV1.Payee, error) {
+func (r *PayeeRepo) Update(ctx context.Context, id int64, data *ledgerV1.Payee, mask *fieldmaskpb.FieldMask) (*ledgerV1.Payee, error) {
 	if data == nil {
 		return nil, ledgerV1.ErrorBadRequest("invalid parameter")
 	}
@@ -135,11 +135,11 @@ func (r *PayeeRepo) Update(ctx context.Context, id uint32, data *ledgerV1.Payee,
 	return r.mapper.ToDTO(updated), nil
 }
 
-func (r *PayeeRepo) Delete(ctx context.Context, id uint32) error {
+func (r *PayeeRepo) Delete(ctx context.Context, id int64) error {
 	return r.entClient.Client().Payee.DeleteOneID(id).Exec(ctx)
 }
 
-func (r *PayeeRepo) Toggle(ctx context.Context, id uint32) (*ledgerV1.Payee, error) {
+func (r *PayeeRepo) Toggle(ctx context.Context, id int64) (*ledgerV1.Payee, error) {
 	entity, err := r.entClient.Client().Payee.Query().Where(payee.IDEQ(id)).Only(ctx)
 	if err != nil {
 		if ent.IsNotFound(err) {
@@ -151,7 +151,7 @@ func (r *PayeeRepo) Toggle(ctx context.Context, id uint32) (*ledgerV1.Payee, err
 	return r.mapper.ToDTO(updated), nil
 }
 
-func (r *PayeeRepo) ToggleCanExpense(ctx context.Context, id uint32) (*ledgerV1.Payee, error) {
+func (r *PayeeRepo) ToggleCanExpense(ctx context.Context, id int64) (*ledgerV1.Payee, error) {
 	entity, err := r.entClient.Client().Payee.Query().Where(payee.IDEQ(id)).Only(ctx)
 	if err != nil {
 		if ent.IsNotFound(err) {
@@ -163,7 +163,7 @@ func (r *PayeeRepo) ToggleCanExpense(ctx context.Context, id uint32) (*ledgerV1.
 	return r.mapper.ToDTO(updated), nil
 }
 
-func (r *PayeeRepo) ToggleCanIncome(ctx context.Context, id uint32) (*ledgerV1.Payee, error) {
+func (r *PayeeRepo) ToggleCanIncome(ctx context.Context, id int64) (*ledgerV1.Payee, error) {
 	entity, err := r.entClient.Client().Payee.Query().Where(payee.IDEQ(id)).Only(ctx)
 	if err != nil {
 		if ent.IsNotFound(err) {

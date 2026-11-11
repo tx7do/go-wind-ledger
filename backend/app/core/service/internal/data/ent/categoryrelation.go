@@ -16,11 +16,11 @@ type CategoryRelation struct {
 	config `json:"-"`
 	// ID of the ent.
 	// id
-	ID uint32 `json:"id,omitempty"`
+	ID int64 `json:"id,omitempty"`
 	// CategoryID holds the value of the "category_id" field.
-	CategoryID *uint32 `json:"category_id,omitempty"`
+	CategoryID *int64 `json:"category_id,omitempty"`
 	// BalanceFlowID holds the value of the "balance_flow_id" field.
-	BalanceFlowID *uint32 `json:"balance_flow_id,omitempty"`
+	BalanceFlowID *int64 `json:"balance_flow_id,omitempty"`
 	// Amount holds the value of the "amount" field.
 	Amount *float64 `json:"amount,omitempty"`
 	// ConvertedAmount holds the value of the "converted_amount" field.
@@ -57,20 +57,20 @@ func (_m *CategoryRelation) assignValues(columns []string, values []any) error {
 			if !ok {
 				return fmt.Errorf("unexpected type %T for field id", value)
 			}
-			_m.ID = uint32(value.Int64)
+			_m.ID = int64(value.Int64)
 		case categoryrelation.FieldCategoryID:
 			if value, ok := values[i].(*sql.NullInt64); !ok {
 				return fmt.Errorf("unexpected type %T for field category_id", values[i])
 			} else if value.Valid {
-				_m.CategoryID = new(uint32)
-				*_m.CategoryID = uint32(value.Int64)
+				_m.CategoryID = new(int64)
+				*_m.CategoryID = value.Int64
 			}
 		case categoryrelation.FieldBalanceFlowID:
 			if value, ok := values[i].(*sql.NullInt64); !ok {
 				return fmt.Errorf("unexpected type %T for field balance_flow_id", values[i])
 			} else if value.Valid {
-				_m.BalanceFlowID = new(uint32)
-				*_m.BalanceFlowID = uint32(value.Int64)
+				_m.BalanceFlowID = new(int64)
+				*_m.BalanceFlowID = value.Int64
 			}
 		case categoryrelation.FieldAmount:
 			if value, ok := values[i].(*sql.NullFloat64); !ok {

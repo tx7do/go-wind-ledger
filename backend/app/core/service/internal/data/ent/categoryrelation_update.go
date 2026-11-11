@@ -29,14 +29,14 @@ func (_u *CategoryRelationUpdate) Where(ps ...predicate.CategoryRelation) *Categ
 }
 
 // SetCategoryID sets the "category_id" field.
-func (_u *CategoryRelationUpdate) SetCategoryID(v uint32) *CategoryRelationUpdate {
+func (_u *CategoryRelationUpdate) SetCategoryID(v int64) *CategoryRelationUpdate {
 	_u.mutation.ResetCategoryID()
 	_u.mutation.SetCategoryID(v)
 	return _u
 }
 
 // SetNillableCategoryID sets the "category_id" field if the given value is not nil.
-func (_u *CategoryRelationUpdate) SetNillableCategoryID(v *uint32) *CategoryRelationUpdate {
+func (_u *CategoryRelationUpdate) SetNillableCategoryID(v *int64) *CategoryRelationUpdate {
 	if v != nil {
 		_u.SetCategoryID(*v)
 	}
@@ -44,7 +44,7 @@ func (_u *CategoryRelationUpdate) SetNillableCategoryID(v *uint32) *CategoryRela
 }
 
 // AddCategoryID adds value to the "category_id" field.
-func (_u *CategoryRelationUpdate) AddCategoryID(v int32) *CategoryRelationUpdate {
+func (_u *CategoryRelationUpdate) AddCategoryID(v int64) *CategoryRelationUpdate {
 	_u.mutation.AddCategoryID(v)
 	return _u
 }
@@ -56,14 +56,14 @@ func (_u *CategoryRelationUpdate) ClearCategoryID() *CategoryRelationUpdate {
 }
 
 // SetBalanceFlowID sets the "balance_flow_id" field.
-func (_u *CategoryRelationUpdate) SetBalanceFlowID(v uint32) *CategoryRelationUpdate {
+func (_u *CategoryRelationUpdate) SetBalanceFlowID(v int64) *CategoryRelationUpdate {
 	_u.mutation.ResetBalanceFlowID()
 	_u.mutation.SetBalanceFlowID(v)
 	return _u
 }
 
 // SetNillableBalanceFlowID sets the "balance_flow_id" field if the given value is not nil.
-func (_u *CategoryRelationUpdate) SetNillableBalanceFlowID(v *uint32) *CategoryRelationUpdate {
+func (_u *CategoryRelationUpdate) SetNillableBalanceFlowID(v *int64) *CategoryRelationUpdate {
 	if v != nil {
 		_u.SetBalanceFlowID(*v)
 	}
@@ -71,7 +71,7 @@ func (_u *CategoryRelationUpdate) SetNillableBalanceFlowID(v *uint32) *CategoryR
 }
 
 // AddBalanceFlowID adds value to the "balance_flow_id" field.
-func (_u *CategoryRelationUpdate) AddBalanceFlowID(v int32) *CategoryRelationUpdate {
+func (_u *CategoryRelationUpdate) AddBalanceFlowID(v int64) *CategoryRelationUpdate {
 	_u.mutation.AddBalanceFlowID(v)
 	return _u
 }
@@ -175,7 +175,7 @@ func (_u *CategoryRelationUpdate) Modify(modifiers ...func(u *sql.UpdateBuilder)
 }
 
 func (_u *CategoryRelationUpdate) sqlSave(ctx context.Context) (_node int, err error) {
-	_spec := sqlgraph.NewUpdateSpec(categoryrelation.Table, categoryrelation.Columns, sqlgraph.NewFieldSpec(categoryrelation.FieldID, field.TypeUint32))
+	_spec := sqlgraph.NewUpdateSpec(categoryrelation.Table, categoryrelation.Columns, sqlgraph.NewFieldSpec(categoryrelation.FieldID, field.TypeInt64))
 	if ps := _u.mutation.predicates; len(ps) > 0 {
 		_spec.Predicate = func(selector *sql.Selector) {
 			for i := range ps {
@@ -184,22 +184,22 @@ func (_u *CategoryRelationUpdate) sqlSave(ctx context.Context) (_node int, err e
 		}
 	}
 	if value, ok := _u.mutation.CategoryID(); ok {
-		_spec.SetField(categoryrelation.FieldCategoryID, field.TypeUint32, value)
+		_spec.SetField(categoryrelation.FieldCategoryID, field.TypeInt64, value)
 	}
 	if value, ok := _u.mutation.AddedCategoryID(); ok {
-		_spec.AddField(categoryrelation.FieldCategoryID, field.TypeUint32, value)
+		_spec.AddField(categoryrelation.FieldCategoryID, field.TypeInt64, value)
 	}
 	if _u.mutation.CategoryIDCleared() {
-		_spec.ClearField(categoryrelation.FieldCategoryID, field.TypeUint32)
+		_spec.ClearField(categoryrelation.FieldCategoryID, field.TypeInt64)
 	}
 	if value, ok := _u.mutation.BalanceFlowID(); ok {
-		_spec.SetField(categoryrelation.FieldBalanceFlowID, field.TypeUint32, value)
+		_spec.SetField(categoryrelation.FieldBalanceFlowID, field.TypeInt64, value)
 	}
 	if value, ok := _u.mutation.AddedBalanceFlowID(); ok {
-		_spec.AddField(categoryrelation.FieldBalanceFlowID, field.TypeUint32, value)
+		_spec.AddField(categoryrelation.FieldBalanceFlowID, field.TypeInt64, value)
 	}
 	if _u.mutation.BalanceFlowIDCleared() {
-		_spec.ClearField(categoryrelation.FieldBalanceFlowID, field.TypeUint32)
+		_spec.ClearField(categoryrelation.FieldBalanceFlowID, field.TypeInt64)
 	}
 	if value, ok := _u.mutation.Amount(); ok {
 		_spec.SetField(categoryrelation.FieldAmount, field.TypeFloat64, value)
@@ -242,14 +242,14 @@ type CategoryRelationUpdateOne struct {
 }
 
 // SetCategoryID sets the "category_id" field.
-func (_u *CategoryRelationUpdateOne) SetCategoryID(v uint32) *CategoryRelationUpdateOne {
+func (_u *CategoryRelationUpdateOne) SetCategoryID(v int64) *CategoryRelationUpdateOne {
 	_u.mutation.ResetCategoryID()
 	_u.mutation.SetCategoryID(v)
 	return _u
 }
 
 // SetNillableCategoryID sets the "category_id" field if the given value is not nil.
-func (_u *CategoryRelationUpdateOne) SetNillableCategoryID(v *uint32) *CategoryRelationUpdateOne {
+func (_u *CategoryRelationUpdateOne) SetNillableCategoryID(v *int64) *CategoryRelationUpdateOne {
 	if v != nil {
 		_u.SetCategoryID(*v)
 	}
@@ -257,7 +257,7 @@ func (_u *CategoryRelationUpdateOne) SetNillableCategoryID(v *uint32) *CategoryR
 }
 
 // AddCategoryID adds value to the "category_id" field.
-func (_u *CategoryRelationUpdateOne) AddCategoryID(v int32) *CategoryRelationUpdateOne {
+func (_u *CategoryRelationUpdateOne) AddCategoryID(v int64) *CategoryRelationUpdateOne {
 	_u.mutation.AddCategoryID(v)
 	return _u
 }
@@ -269,14 +269,14 @@ func (_u *CategoryRelationUpdateOne) ClearCategoryID() *CategoryRelationUpdateOn
 }
 
 // SetBalanceFlowID sets the "balance_flow_id" field.
-func (_u *CategoryRelationUpdateOne) SetBalanceFlowID(v uint32) *CategoryRelationUpdateOne {
+func (_u *CategoryRelationUpdateOne) SetBalanceFlowID(v int64) *CategoryRelationUpdateOne {
 	_u.mutation.ResetBalanceFlowID()
 	_u.mutation.SetBalanceFlowID(v)
 	return _u
 }
 
 // SetNillableBalanceFlowID sets the "balance_flow_id" field if the given value is not nil.
-func (_u *CategoryRelationUpdateOne) SetNillableBalanceFlowID(v *uint32) *CategoryRelationUpdateOne {
+func (_u *CategoryRelationUpdateOne) SetNillableBalanceFlowID(v *int64) *CategoryRelationUpdateOne {
 	if v != nil {
 		_u.SetBalanceFlowID(*v)
 	}
@@ -284,7 +284,7 @@ func (_u *CategoryRelationUpdateOne) SetNillableBalanceFlowID(v *uint32) *Catego
 }
 
 // AddBalanceFlowID adds value to the "balance_flow_id" field.
-func (_u *CategoryRelationUpdateOne) AddBalanceFlowID(v int32) *CategoryRelationUpdateOne {
+func (_u *CategoryRelationUpdateOne) AddBalanceFlowID(v int64) *CategoryRelationUpdateOne {
 	_u.mutation.AddBalanceFlowID(v)
 	return _u
 }
@@ -401,7 +401,7 @@ func (_u *CategoryRelationUpdateOne) Modify(modifiers ...func(u *sql.UpdateBuild
 }
 
 func (_u *CategoryRelationUpdateOne) sqlSave(ctx context.Context) (_node *CategoryRelation, err error) {
-	_spec := sqlgraph.NewUpdateSpec(categoryrelation.Table, categoryrelation.Columns, sqlgraph.NewFieldSpec(categoryrelation.FieldID, field.TypeUint32))
+	_spec := sqlgraph.NewUpdateSpec(categoryrelation.Table, categoryrelation.Columns, sqlgraph.NewFieldSpec(categoryrelation.FieldID, field.TypeInt64))
 	id, ok := _u.mutation.ID()
 	if !ok {
 		return nil, &ValidationError{Name: "id", err: errors.New(`ent: missing "CategoryRelation.id" for update`)}
@@ -427,22 +427,22 @@ func (_u *CategoryRelationUpdateOne) sqlSave(ctx context.Context) (_node *Catego
 		}
 	}
 	if value, ok := _u.mutation.CategoryID(); ok {
-		_spec.SetField(categoryrelation.FieldCategoryID, field.TypeUint32, value)
+		_spec.SetField(categoryrelation.FieldCategoryID, field.TypeInt64, value)
 	}
 	if value, ok := _u.mutation.AddedCategoryID(); ok {
-		_spec.AddField(categoryrelation.FieldCategoryID, field.TypeUint32, value)
+		_spec.AddField(categoryrelation.FieldCategoryID, field.TypeInt64, value)
 	}
 	if _u.mutation.CategoryIDCleared() {
-		_spec.ClearField(categoryrelation.FieldCategoryID, field.TypeUint32)
+		_spec.ClearField(categoryrelation.FieldCategoryID, field.TypeInt64)
 	}
 	if value, ok := _u.mutation.BalanceFlowID(); ok {
-		_spec.SetField(categoryrelation.FieldBalanceFlowID, field.TypeUint32, value)
+		_spec.SetField(categoryrelation.FieldBalanceFlowID, field.TypeInt64, value)
 	}
 	if value, ok := _u.mutation.AddedBalanceFlowID(); ok {
-		_spec.AddField(categoryrelation.FieldBalanceFlowID, field.TypeUint32, value)
+		_spec.AddField(categoryrelation.FieldBalanceFlowID, field.TypeInt64, value)
 	}
 	if _u.mutation.BalanceFlowIDCleared() {
-		_spec.ClearField(categoryrelation.FieldBalanceFlowID, field.TypeUint32)
+		_spec.ClearField(categoryrelation.FieldBalanceFlowID, field.TypeInt64)
 	}
 	if value, ok := _u.mutation.Amount(); ok {
 		_spec.SetField(categoryrelation.FieldAmount, field.TypeFloat64, value)

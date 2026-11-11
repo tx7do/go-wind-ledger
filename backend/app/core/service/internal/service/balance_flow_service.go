@@ -64,7 +64,7 @@ func (s *BalanceFlowService) Create(ctx context.Context, req *ledgerV1.CreateBal
 			return nil, ledgerV1.ErrorBadRequest("max 10 categories per flow")
 		}
 		// Check for duplicate category IDs
-		seen := make(map[uint32]bool)
+		seen := make(map[int64]bool)
 		for _, cat := range d.Categories {
 			if seen[cat.GetCategoryId()] {
 				return nil, ledgerV1.ErrorBadRequest("duplicate category in flow")
@@ -271,7 +271,7 @@ func (s *BalanceFlowService) Statistics(ctx context.Context, req *ledgerV1.Stati
 }
 
 // oGetEntity gets raw ent entity (for refundBalance)
-func (s *BalanceFlowService) oGetEntity(ctx context.Context, id uint32) (*ent.BalanceFlow, error) {
+func (s *BalanceFlowService) oGetEntity(ctx context.Context, id int64) (*ent.BalanceFlow, error) {
 	return s.flowRepo.GetRawEntity(ctx, id)
 }
 

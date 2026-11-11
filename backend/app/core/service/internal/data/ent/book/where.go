@@ -10,52 +10,52 @@ import (
 )
 
 // ID filters vertices based on their ID field.
-func ID(id uint32) predicate.Book {
+func ID(id int64) predicate.Book {
 	return predicate.Book(sql.FieldEQ(FieldID, id))
 }
 
 // IDEQ applies the EQ predicate on the ID field.
-func IDEQ(id uint32) predicate.Book {
+func IDEQ(id int64) predicate.Book {
 	return predicate.Book(sql.FieldEQ(FieldID, id))
 }
 
 // IDNEQ applies the NEQ predicate on the ID field.
-func IDNEQ(id uint32) predicate.Book {
+func IDNEQ(id int64) predicate.Book {
 	return predicate.Book(sql.FieldNEQ(FieldID, id))
 }
 
 // IDIn applies the In predicate on the ID field.
-func IDIn(ids ...uint32) predicate.Book {
+func IDIn(ids ...int64) predicate.Book {
 	return predicate.Book(sql.FieldIn(FieldID, ids...))
 }
 
 // IDNotIn applies the NotIn predicate on the ID field.
-func IDNotIn(ids ...uint32) predicate.Book {
+func IDNotIn(ids ...int64) predicate.Book {
 	return predicate.Book(sql.FieldNotIn(FieldID, ids...))
 }
 
 // IDGT applies the GT predicate on the ID field.
-func IDGT(id uint32) predicate.Book {
+func IDGT(id int64) predicate.Book {
 	return predicate.Book(sql.FieldGT(FieldID, id))
 }
 
 // IDGTE applies the GTE predicate on the ID field.
-func IDGTE(id uint32) predicate.Book {
+func IDGTE(id int64) predicate.Book {
 	return predicate.Book(sql.FieldGTE(FieldID, id))
 }
 
 // IDLT applies the LT predicate on the ID field.
-func IDLT(id uint32) predicate.Book {
+func IDLT(id int64) predicate.Book {
 	return predicate.Book(sql.FieldLT(FieldID, id))
 }
 
 // IDLTE applies the LTE predicate on the ID field.
-func IDLTE(id uint32) predicate.Book {
+func IDLTE(id int64) predicate.Book {
 	return predicate.Book(sql.FieldLTE(FieldID, id))
 }
 
 // TenantID applies equality check predicate on the "tenant_id" field. It's identical to TenantIDEQ.
-func TenantID(v uint32) predicate.Book {
+func TenantID(v int64) predicate.Book {
 	return predicate.Book(sql.FieldEQ(FieldTenantID, v))
 }
 
@@ -75,17 +75,17 @@ func DeletedAt(v time.Time) predicate.Book {
 }
 
 // CreatedBy applies equality check predicate on the "created_by" field. It's identical to CreatedByEQ.
-func CreatedBy(v uint32) predicate.Book {
+func CreatedBy(v int64) predicate.Book {
 	return predicate.Book(sql.FieldEQ(FieldCreatedBy, v))
 }
 
 // UpdatedBy applies equality check predicate on the "updated_by" field. It's identical to UpdatedByEQ.
-func UpdatedBy(v uint32) predicate.Book {
+func UpdatedBy(v int64) predicate.Book {
 	return predicate.Book(sql.FieldEQ(FieldUpdatedBy, v))
 }
 
 // DeletedBy applies equality check predicate on the "deleted_by" field. It's identical to DeletedByEQ.
-func DeletedBy(v uint32) predicate.Book {
+func DeletedBy(v int64) predicate.Book {
 	return predicate.Book(sql.FieldEQ(FieldDeletedBy, v))
 }
 
@@ -120,72 +120,72 @@ func ExportAt(v int64) predicate.Book {
 }
 
 // DefaultExpenseAccountID applies equality check predicate on the "default_expense_account_id" field. It's identical to DefaultExpenseAccountIDEQ.
-func DefaultExpenseAccountID(v uint32) predicate.Book {
+func DefaultExpenseAccountID(v int64) predicate.Book {
 	return predicate.Book(sql.FieldEQ(FieldDefaultExpenseAccountID, v))
 }
 
 // DefaultIncomeAccountID applies equality check predicate on the "default_income_account_id" field. It's identical to DefaultIncomeAccountIDEQ.
-func DefaultIncomeAccountID(v uint32) predicate.Book {
+func DefaultIncomeAccountID(v int64) predicate.Book {
 	return predicate.Book(sql.FieldEQ(FieldDefaultIncomeAccountID, v))
 }
 
 // DefaultTransferFromAccountID applies equality check predicate on the "default_transfer_from_account_id" field. It's identical to DefaultTransferFromAccountIDEQ.
-func DefaultTransferFromAccountID(v uint32) predicate.Book {
+func DefaultTransferFromAccountID(v int64) predicate.Book {
 	return predicate.Book(sql.FieldEQ(FieldDefaultTransferFromAccountID, v))
 }
 
 // DefaultTransferToAccountID applies equality check predicate on the "default_transfer_to_account_id" field. It's identical to DefaultTransferToAccountIDEQ.
-func DefaultTransferToAccountID(v uint32) predicate.Book {
+func DefaultTransferToAccountID(v int64) predicate.Book {
 	return predicate.Book(sql.FieldEQ(FieldDefaultTransferToAccountID, v))
 }
 
 // DefaultExpenseCategoryID applies equality check predicate on the "default_expense_category_id" field. It's identical to DefaultExpenseCategoryIDEQ.
-func DefaultExpenseCategoryID(v uint32) predicate.Book {
+func DefaultExpenseCategoryID(v int64) predicate.Book {
 	return predicate.Book(sql.FieldEQ(FieldDefaultExpenseCategoryID, v))
 }
 
 // DefaultIncomeCategoryID applies equality check predicate on the "default_income_category_id" field. It's identical to DefaultIncomeCategoryIDEQ.
-func DefaultIncomeCategoryID(v uint32) predicate.Book {
+func DefaultIncomeCategoryID(v int64) predicate.Book {
 	return predicate.Book(sql.FieldEQ(FieldDefaultIncomeCategoryID, v))
 }
 
 // TenantIDEQ applies the EQ predicate on the "tenant_id" field.
-func TenantIDEQ(v uint32) predicate.Book {
+func TenantIDEQ(v int64) predicate.Book {
 	return predicate.Book(sql.FieldEQ(FieldTenantID, v))
 }
 
 // TenantIDNEQ applies the NEQ predicate on the "tenant_id" field.
-func TenantIDNEQ(v uint32) predicate.Book {
+func TenantIDNEQ(v int64) predicate.Book {
 	return predicate.Book(sql.FieldNEQ(FieldTenantID, v))
 }
 
 // TenantIDIn applies the In predicate on the "tenant_id" field.
-func TenantIDIn(vs ...uint32) predicate.Book {
+func TenantIDIn(vs ...int64) predicate.Book {
 	return predicate.Book(sql.FieldIn(FieldTenantID, vs...))
 }
 
 // TenantIDNotIn applies the NotIn predicate on the "tenant_id" field.
-func TenantIDNotIn(vs ...uint32) predicate.Book {
+func TenantIDNotIn(vs ...int64) predicate.Book {
 	return predicate.Book(sql.FieldNotIn(FieldTenantID, vs...))
 }
 
 // TenantIDGT applies the GT predicate on the "tenant_id" field.
-func TenantIDGT(v uint32) predicate.Book {
+func TenantIDGT(v int64) predicate.Book {
 	return predicate.Book(sql.FieldGT(FieldTenantID, v))
 }
 
 // TenantIDGTE applies the GTE predicate on the "tenant_id" field.
-func TenantIDGTE(v uint32) predicate.Book {
+func TenantIDGTE(v int64) predicate.Book {
 	return predicate.Book(sql.FieldGTE(FieldTenantID, v))
 }
 
 // TenantIDLT applies the LT predicate on the "tenant_id" field.
-func TenantIDLT(v uint32) predicate.Book {
+func TenantIDLT(v int64) predicate.Book {
 	return predicate.Book(sql.FieldLT(FieldTenantID, v))
 }
 
 // TenantIDLTE applies the LTE predicate on the "tenant_id" field.
-func TenantIDLTE(v uint32) predicate.Book {
+func TenantIDLTE(v int64) predicate.Book {
 	return predicate.Book(sql.FieldLTE(FieldTenantID, v))
 }
 
@@ -350,42 +350,42 @@ func DeletedAtNotNil() predicate.Book {
 }
 
 // CreatedByEQ applies the EQ predicate on the "created_by" field.
-func CreatedByEQ(v uint32) predicate.Book {
+func CreatedByEQ(v int64) predicate.Book {
 	return predicate.Book(sql.FieldEQ(FieldCreatedBy, v))
 }
 
 // CreatedByNEQ applies the NEQ predicate on the "created_by" field.
-func CreatedByNEQ(v uint32) predicate.Book {
+func CreatedByNEQ(v int64) predicate.Book {
 	return predicate.Book(sql.FieldNEQ(FieldCreatedBy, v))
 }
 
 // CreatedByIn applies the In predicate on the "created_by" field.
-func CreatedByIn(vs ...uint32) predicate.Book {
+func CreatedByIn(vs ...int64) predicate.Book {
 	return predicate.Book(sql.FieldIn(FieldCreatedBy, vs...))
 }
 
 // CreatedByNotIn applies the NotIn predicate on the "created_by" field.
-func CreatedByNotIn(vs ...uint32) predicate.Book {
+func CreatedByNotIn(vs ...int64) predicate.Book {
 	return predicate.Book(sql.FieldNotIn(FieldCreatedBy, vs...))
 }
 
 // CreatedByGT applies the GT predicate on the "created_by" field.
-func CreatedByGT(v uint32) predicate.Book {
+func CreatedByGT(v int64) predicate.Book {
 	return predicate.Book(sql.FieldGT(FieldCreatedBy, v))
 }
 
 // CreatedByGTE applies the GTE predicate on the "created_by" field.
-func CreatedByGTE(v uint32) predicate.Book {
+func CreatedByGTE(v int64) predicate.Book {
 	return predicate.Book(sql.FieldGTE(FieldCreatedBy, v))
 }
 
 // CreatedByLT applies the LT predicate on the "created_by" field.
-func CreatedByLT(v uint32) predicate.Book {
+func CreatedByLT(v int64) predicate.Book {
 	return predicate.Book(sql.FieldLT(FieldCreatedBy, v))
 }
 
 // CreatedByLTE applies the LTE predicate on the "created_by" field.
-func CreatedByLTE(v uint32) predicate.Book {
+func CreatedByLTE(v int64) predicate.Book {
 	return predicate.Book(sql.FieldLTE(FieldCreatedBy, v))
 }
 
@@ -400,42 +400,42 @@ func CreatedByNotNil() predicate.Book {
 }
 
 // UpdatedByEQ applies the EQ predicate on the "updated_by" field.
-func UpdatedByEQ(v uint32) predicate.Book {
+func UpdatedByEQ(v int64) predicate.Book {
 	return predicate.Book(sql.FieldEQ(FieldUpdatedBy, v))
 }
 
 // UpdatedByNEQ applies the NEQ predicate on the "updated_by" field.
-func UpdatedByNEQ(v uint32) predicate.Book {
+func UpdatedByNEQ(v int64) predicate.Book {
 	return predicate.Book(sql.FieldNEQ(FieldUpdatedBy, v))
 }
 
 // UpdatedByIn applies the In predicate on the "updated_by" field.
-func UpdatedByIn(vs ...uint32) predicate.Book {
+func UpdatedByIn(vs ...int64) predicate.Book {
 	return predicate.Book(sql.FieldIn(FieldUpdatedBy, vs...))
 }
 
 // UpdatedByNotIn applies the NotIn predicate on the "updated_by" field.
-func UpdatedByNotIn(vs ...uint32) predicate.Book {
+func UpdatedByNotIn(vs ...int64) predicate.Book {
 	return predicate.Book(sql.FieldNotIn(FieldUpdatedBy, vs...))
 }
 
 // UpdatedByGT applies the GT predicate on the "updated_by" field.
-func UpdatedByGT(v uint32) predicate.Book {
+func UpdatedByGT(v int64) predicate.Book {
 	return predicate.Book(sql.FieldGT(FieldUpdatedBy, v))
 }
 
 // UpdatedByGTE applies the GTE predicate on the "updated_by" field.
-func UpdatedByGTE(v uint32) predicate.Book {
+func UpdatedByGTE(v int64) predicate.Book {
 	return predicate.Book(sql.FieldGTE(FieldUpdatedBy, v))
 }
 
 // UpdatedByLT applies the LT predicate on the "updated_by" field.
-func UpdatedByLT(v uint32) predicate.Book {
+func UpdatedByLT(v int64) predicate.Book {
 	return predicate.Book(sql.FieldLT(FieldUpdatedBy, v))
 }
 
 // UpdatedByLTE applies the LTE predicate on the "updated_by" field.
-func UpdatedByLTE(v uint32) predicate.Book {
+func UpdatedByLTE(v int64) predicate.Book {
 	return predicate.Book(sql.FieldLTE(FieldUpdatedBy, v))
 }
 
@@ -450,42 +450,42 @@ func UpdatedByNotNil() predicate.Book {
 }
 
 // DeletedByEQ applies the EQ predicate on the "deleted_by" field.
-func DeletedByEQ(v uint32) predicate.Book {
+func DeletedByEQ(v int64) predicate.Book {
 	return predicate.Book(sql.FieldEQ(FieldDeletedBy, v))
 }
 
 // DeletedByNEQ applies the NEQ predicate on the "deleted_by" field.
-func DeletedByNEQ(v uint32) predicate.Book {
+func DeletedByNEQ(v int64) predicate.Book {
 	return predicate.Book(sql.FieldNEQ(FieldDeletedBy, v))
 }
 
 // DeletedByIn applies the In predicate on the "deleted_by" field.
-func DeletedByIn(vs ...uint32) predicate.Book {
+func DeletedByIn(vs ...int64) predicate.Book {
 	return predicate.Book(sql.FieldIn(FieldDeletedBy, vs...))
 }
 
 // DeletedByNotIn applies the NotIn predicate on the "deleted_by" field.
-func DeletedByNotIn(vs ...uint32) predicate.Book {
+func DeletedByNotIn(vs ...int64) predicate.Book {
 	return predicate.Book(sql.FieldNotIn(FieldDeletedBy, vs...))
 }
 
 // DeletedByGT applies the GT predicate on the "deleted_by" field.
-func DeletedByGT(v uint32) predicate.Book {
+func DeletedByGT(v int64) predicate.Book {
 	return predicate.Book(sql.FieldGT(FieldDeletedBy, v))
 }
 
 // DeletedByGTE applies the GTE predicate on the "deleted_by" field.
-func DeletedByGTE(v uint32) predicate.Book {
+func DeletedByGTE(v int64) predicate.Book {
 	return predicate.Book(sql.FieldGTE(FieldDeletedBy, v))
 }
 
 // DeletedByLT applies the LT predicate on the "deleted_by" field.
-func DeletedByLT(v uint32) predicate.Book {
+func DeletedByLT(v int64) predicate.Book {
 	return predicate.Book(sql.FieldLT(FieldDeletedBy, v))
 }
 
 // DeletedByLTE applies the LTE predicate on the "deleted_by" field.
-func DeletedByLTE(v uint32) predicate.Book {
+func DeletedByLTE(v int64) predicate.Book {
 	return predicate.Book(sql.FieldLTE(FieldDeletedBy, v))
 }
 
@@ -845,42 +845,42 @@ func ExportAtNotNil() predicate.Book {
 }
 
 // DefaultExpenseAccountIDEQ applies the EQ predicate on the "default_expense_account_id" field.
-func DefaultExpenseAccountIDEQ(v uint32) predicate.Book {
+func DefaultExpenseAccountIDEQ(v int64) predicate.Book {
 	return predicate.Book(sql.FieldEQ(FieldDefaultExpenseAccountID, v))
 }
 
 // DefaultExpenseAccountIDNEQ applies the NEQ predicate on the "default_expense_account_id" field.
-func DefaultExpenseAccountIDNEQ(v uint32) predicate.Book {
+func DefaultExpenseAccountIDNEQ(v int64) predicate.Book {
 	return predicate.Book(sql.FieldNEQ(FieldDefaultExpenseAccountID, v))
 }
 
 // DefaultExpenseAccountIDIn applies the In predicate on the "default_expense_account_id" field.
-func DefaultExpenseAccountIDIn(vs ...uint32) predicate.Book {
+func DefaultExpenseAccountIDIn(vs ...int64) predicate.Book {
 	return predicate.Book(sql.FieldIn(FieldDefaultExpenseAccountID, vs...))
 }
 
 // DefaultExpenseAccountIDNotIn applies the NotIn predicate on the "default_expense_account_id" field.
-func DefaultExpenseAccountIDNotIn(vs ...uint32) predicate.Book {
+func DefaultExpenseAccountIDNotIn(vs ...int64) predicate.Book {
 	return predicate.Book(sql.FieldNotIn(FieldDefaultExpenseAccountID, vs...))
 }
 
 // DefaultExpenseAccountIDGT applies the GT predicate on the "default_expense_account_id" field.
-func DefaultExpenseAccountIDGT(v uint32) predicate.Book {
+func DefaultExpenseAccountIDGT(v int64) predicate.Book {
 	return predicate.Book(sql.FieldGT(FieldDefaultExpenseAccountID, v))
 }
 
 // DefaultExpenseAccountIDGTE applies the GTE predicate on the "default_expense_account_id" field.
-func DefaultExpenseAccountIDGTE(v uint32) predicate.Book {
+func DefaultExpenseAccountIDGTE(v int64) predicate.Book {
 	return predicate.Book(sql.FieldGTE(FieldDefaultExpenseAccountID, v))
 }
 
 // DefaultExpenseAccountIDLT applies the LT predicate on the "default_expense_account_id" field.
-func DefaultExpenseAccountIDLT(v uint32) predicate.Book {
+func DefaultExpenseAccountIDLT(v int64) predicate.Book {
 	return predicate.Book(sql.FieldLT(FieldDefaultExpenseAccountID, v))
 }
 
 // DefaultExpenseAccountIDLTE applies the LTE predicate on the "default_expense_account_id" field.
-func DefaultExpenseAccountIDLTE(v uint32) predicate.Book {
+func DefaultExpenseAccountIDLTE(v int64) predicate.Book {
 	return predicate.Book(sql.FieldLTE(FieldDefaultExpenseAccountID, v))
 }
 
@@ -895,42 +895,42 @@ func DefaultExpenseAccountIDNotNil() predicate.Book {
 }
 
 // DefaultIncomeAccountIDEQ applies the EQ predicate on the "default_income_account_id" field.
-func DefaultIncomeAccountIDEQ(v uint32) predicate.Book {
+func DefaultIncomeAccountIDEQ(v int64) predicate.Book {
 	return predicate.Book(sql.FieldEQ(FieldDefaultIncomeAccountID, v))
 }
 
 // DefaultIncomeAccountIDNEQ applies the NEQ predicate on the "default_income_account_id" field.
-func DefaultIncomeAccountIDNEQ(v uint32) predicate.Book {
+func DefaultIncomeAccountIDNEQ(v int64) predicate.Book {
 	return predicate.Book(sql.FieldNEQ(FieldDefaultIncomeAccountID, v))
 }
 
 // DefaultIncomeAccountIDIn applies the In predicate on the "default_income_account_id" field.
-func DefaultIncomeAccountIDIn(vs ...uint32) predicate.Book {
+func DefaultIncomeAccountIDIn(vs ...int64) predicate.Book {
 	return predicate.Book(sql.FieldIn(FieldDefaultIncomeAccountID, vs...))
 }
 
 // DefaultIncomeAccountIDNotIn applies the NotIn predicate on the "default_income_account_id" field.
-func DefaultIncomeAccountIDNotIn(vs ...uint32) predicate.Book {
+func DefaultIncomeAccountIDNotIn(vs ...int64) predicate.Book {
 	return predicate.Book(sql.FieldNotIn(FieldDefaultIncomeAccountID, vs...))
 }
 
 // DefaultIncomeAccountIDGT applies the GT predicate on the "default_income_account_id" field.
-func DefaultIncomeAccountIDGT(v uint32) predicate.Book {
+func DefaultIncomeAccountIDGT(v int64) predicate.Book {
 	return predicate.Book(sql.FieldGT(FieldDefaultIncomeAccountID, v))
 }
 
 // DefaultIncomeAccountIDGTE applies the GTE predicate on the "default_income_account_id" field.
-func DefaultIncomeAccountIDGTE(v uint32) predicate.Book {
+func DefaultIncomeAccountIDGTE(v int64) predicate.Book {
 	return predicate.Book(sql.FieldGTE(FieldDefaultIncomeAccountID, v))
 }
 
 // DefaultIncomeAccountIDLT applies the LT predicate on the "default_income_account_id" field.
-func DefaultIncomeAccountIDLT(v uint32) predicate.Book {
+func DefaultIncomeAccountIDLT(v int64) predicate.Book {
 	return predicate.Book(sql.FieldLT(FieldDefaultIncomeAccountID, v))
 }
 
 // DefaultIncomeAccountIDLTE applies the LTE predicate on the "default_income_account_id" field.
-func DefaultIncomeAccountIDLTE(v uint32) predicate.Book {
+func DefaultIncomeAccountIDLTE(v int64) predicate.Book {
 	return predicate.Book(sql.FieldLTE(FieldDefaultIncomeAccountID, v))
 }
 
@@ -945,42 +945,42 @@ func DefaultIncomeAccountIDNotNil() predicate.Book {
 }
 
 // DefaultTransferFromAccountIDEQ applies the EQ predicate on the "default_transfer_from_account_id" field.
-func DefaultTransferFromAccountIDEQ(v uint32) predicate.Book {
+func DefaultTransferFromAccountIDEQ(v int64) predicate.Book {
 	return predicate.Book(sql.FieldEQ(FieldDefaultTransferFromAccountID, v))
 }
 
 // DefaultTransferFromAccountIDNEQ applies the NEQ predicate on the "default_transfer_from_account_id" field.
-func DefaultTransferFromAccountIDNEQ(v uint32) predicate.Book {
+func DefaultTransferFromAccountIDNEQ(v int64) predicate.Book {
 	return predicate.Book(sql.FieldNEQ(FieldDefaultTransferFromAccountID, v))
 }
 
 // DefaultTransferFromAccountIDIn applies the In predicate on the "default_transfer_from_account_id" field.
-func DefaultTransferFromAccountIDIn(vs ...uint32) predicate.Book {
+func DefaultTransferFromAccountIDIn(vs ...int64) predicate.Book {
 	return predicate.Book(sql.FieldIn(FieldDefaultTransferFromAccountID, vs...))
 }
 
 // DefaultTransferFromAccountIDNotIn applies the NotIn predicate on the "default_transfer_from_account_id" field.
-func DefaultTransferFromAccountIDNotIn(vs ...uint32) predicate.Book {
+func DefaultTransferFromAccountIDNotIn(vs ...int64) predicate.Book {
 	return predicate.Book(sql.FieldNotIn(FieldDefaultTransferFromAccountID, vs...))
 }
 
 // DefaultTransferFromAccountIDGT applies the GT predicate on the "default_transfer_from_account_id" field.
-func DefaultTransferFromAccountIDGT(v uint32) predicate.Book {
+func DefaultTransferFromAccountIDGT(v int64) predicate.Book {
 	return predicate.Book(sql.FieldGT(FieldDefaultTransferFromAccountID, v))
 }
 
 // DefaultTransferFromAccountIDGTE applies the GTE predicate on the "default_transfer_from_account_id" field.
-func DefaultTransferFromAccountIDGTE(v uint32) predicate.Book {
+func DefaultTransferFromAccountIDGTE(v int64) predicate.Book {
 	return predicate.Book(sql.FieldGTE(FieldDefaultTransferFromAccountID, v))
 }
 
 // DefaultTransferFromAccountIDLT applies the LT predicate on the "default_transfer_from_account_id" field.
-func DefaultTransferFromAccountIDLT(v uint32) predicate.Book {
+func DefaultTransferFromAccountIDLT(v int64) predicate.Book {
 	return predicate.Book(sql.FieldLT(FieldDefaultTransferFromAccountID, v))
 }
 
 // DefaultTransferFromAccountIDLTE applies the LTE predicate on the "default_transfer_from_account_id" field.
-func DefaultTransferFromAccountIDLTE(v uint32) predicate.Book {
+func DefaultTransferFromAccountIDLTE(v int64) predicate.Book {
 	return predicate.Book(sql.FieldLTE(FieldDefaultTransferFromAccountID, v))
 }
 
@@ -995,42 +995,42 @@ func DefaultTransferFromAccountIDNotNil() predicate.Book {
 }
 
 // DefaultTransferToAccountIDEQ applies the EQ predicate on the "default_transfer_to_account_id" field.
-func DefaultTransferToAccountIDEQ(v uint32) predicate.Book {
+func DefaultTransferToAccountIDEQ(v int64) predicate.Book {
 	return predicate.Book(sql.FieldEQ(FieldDefaultTransferToAccountID, v))
 }
 
 // DefaultTransferToAccountIDNEQ applies the NEQ predicate on the "default_transfer_to_account_id" field.
-func DefaultTransferToAccountIDNEQ(v uint32) predicate.Book {
+func DefaultTransferToAccountIDNEQ(v int64) predicate.Book {
 	return predicate.Book(sql.FieldNEQ(FieldDefaultTransferToAccountID, v))
 }
 
 // DefaultTransferToAccountIDIn applies the In predicate on the "default_transfer_to_account_id" field.
-func DefaultTransferToAccountIDIn(vs ...uint32) predicate.Book {
+func DefaultTransferToAccountIDIn(vs ...int64) predicate.Book {
 	return predicate.Book(sql.FieldIn(FieldDefaultTransferToAccountID, vs...))
 }
 
 // DefaultTransferToAccountIDNotIn applies the NotIn predicate on the "default_transfer_to_account_id" field.
-func DefaultTransferToAccountIDNotIn(vs ...uint32) predicate.Book {
+func DefaultTransferToAccountIDNotIn(vs ...int64) predicate.Book {
 	return predicate.Book(sql.FieldNotIn(FieldDefaultTransferToAccountID, vs...))
 }
 
 // DefaultTransferToAccountIDGT applies the GT predicate on the "default_transfer_to_account_id" field.
-func DefaultTransferToAccountIDGT(v uint32) predicate.Book {
+func DefaultTransferToAccountIDGT(v int64) predicate.Book {
 	return predicate.Book(sql.FieldGT(FieldDefaultTransferToAccountID, v))
 }
 
 // DefaultTransferToAccountIDGTE applies the GTE predicate on the "default_transfer_to_account_id" field.
-func DefaultTransferToAccountIDGTE(v uint32) predicate.Book {
+func DefaultTransferToAccountIDGTE(v int64) predicate.Book {
 	return predicate.Book(sql.FieldGTE(FieldDefaultTransferToAccountID, v))
 }
 
 // DefaultTransferToAccountIDLT applies the LT predicate on the "default_transfer_to_account_id" field.
-func DefaultTransferToAccountIDLT(v uint32) predicate.Book {
+func DefaultTransferToAccountIDLT(v int64) predicate.Book {
 	return predicate.Book(sql.FieldLT(FieldDefaultTransferToAccountID, v))
 }
 
 // DefaultTransferToAccountIDLTE applies the LTE predicate on the "default_transfer_to_account_id" field.
-func DefaultTransferToAccountIDLTE(v uint32) predicate.Book {
+func DefaultTransferToAccountIDLTE(v int64) predicate.Book {
 	return predicate.Book(sql.FieldLTE(FieldDefaultTransferToAccountID, v))
 }
 
@@ -1045,42 +1045,42 @@ func DefaultTransferToAccountIDNotNil() predicate.Book {
 }
 
 // DefaultExpenseCategoryIDEQ applies the EQ predicate on the "default_expense_category_id" field.
-func DefaultExpenseCategoryIDEQ(v uint32) predicate.Book {
+func DefaultExpenseCategoryIDEQ(v int64) predicate.Book {
 	return predicate.Book(sql.FieldEQ(FieldDefaultExpenseCategoryID, v))
 }
 
 // DefaultExpenseCategoryIDNEQ applies the NEQ predicate on the "default_expense_category_id" field.
-func DefaultExpenseCategoryIDNEQ(v uint32) predicate.Book {
+func DefaultExpenseCategoryIDNEQ(v int64) predicate.Book {
 	return predicate.Book(sql.FieldNEQ(FieldDefaultExpenseCategoryID, v))
 }
 
 // DefaultExpenseCategoryIDIn applies the In predicate on the "default_expense_category_id" field.
-func DefaultExpenseCategoryIDIn(vs ...uint32) predicate.Book {
+func DefaultExpenseCategoryIDIn(vs ...int64) predicate.Book {
 	return predicate.Book(sql.FieldIn(FieldDefaultExpenseCategoryID, vs...))
 }
 
 // DefaultExpenseCategoryIDNotIn applies the NotIn predicate on the "default_expense_category_id" field.
-func DefaultExpenseCategoryIDNotIn(vs ...uint32) predicate.Book {
+func DefaultExpenseCategoryIDNotIn(vs ...int64) predicate.Book {
 	return predicate.Book(sql.FieldNotIn(FieldDefaultExpenseCategoryID, vs...))
 }
 
 // DefaultExpenseCategoryIDGT applies the GT predicate on the "default_expense_category_id" field.
-func DefaultExpenseCategoryIDGT(v uint32) predicate.Book {
+func DefaultExpenseCategoryIDGT(v int64) predicate.Book {
 	return predicate.Book(sql.FieldGT(FieldDefaultExpenseCategoryID, v))
 }
 
 // DefaultExpenseCategoryIDGTE applies the GTE predicate on the "default_expense_category_id" field.
-func DefaultExpenseCategoryIDGTE(v uint32) predicate.Book {
+func DefaultExpenseCategoryIDGTE(v int64) predicate.Book {
 	return predicate.Book(sql.FieldGTE(FieldDefaultExpenseCategoryID, v))
 }
 
 // DefaultExpenseCategoryIDLT applies the LT predicate on the "default_expense_category_id" field.
-func DefaultExpenseCategoryIDLT(v uint32) predicate.Book {
+func DefaultExpenseCategoryIDLT(v int64) predicate.Book {
 	return predicate.Book(sql.FieldLT(FieldDefaultExpenseCategoryID, v))
 }
 
 // DefaultExpenseCategoryIDLTE applies the LTE predicate on the "default_expense_category_id" field.
-func DefaultExpenseCategoryIDLTE(v uint32) predicate.Book {
+func DefaultExpenseCategoryIDLTE(v int64) predicate.Book {
 	return predicate.Book(sql.FieldLTE(FieldDefaultExpenseCategoryID, v))
 }
 
@@ -1095,42 +1095,42 @@ func DefaultExpenseCategoryIDNotNil() predicate.Book {
 }
 
 // DefaultIncomeCategoryIDEQ applies the EQ predicate on the "default_income_category_id" field.
-func DefaultIncomeCategoryIDEQ(v uint32) predicate.Book {
+func DefaultIncomeCategoryIDEQ(v int64) predicate.Book {
 	return predicate.Book(sql.FieldEQ(FieldDefaultIncomeCategoryID, v))
 }
 
 // DefaultIncomeCategoryIDNEQ applies the NEQ predicate on the "default_income_category_id" field.
-func DefaultIncomeCategoryIDNEQ(v uint32) predicate.Book {
+func DefaultIncomeCategoryIDNEQ(v int64) predicate.Book {
 	return predicate.Book(sql.FieldNEQ(FieldDefaultIncomeCategoryID, v))
 }
 
 // DefaultIncomeCategoryIDIn applies the In predicate on the "default_income_category_id" field.
-func DefaultIncomeCategoryIDIn(vs ...uint32) predicate.Book {
+func DefaultIncomeCategoryIDIn(vs ...int64) predicate.Book {
 	return predicate.Book(sql.FieldIn(FieldDefaultIncomeCategoryID, vs...))
 }
 
 // DefaultIncomeCategoryIDNotIn applies the NotIn predicate on the "default_income_category_id" field.
-func DefaultIncomeCategoryIDNotIn(vs ...uint32) predicate.Book {
+func DefaultIncomeCategoryIDNotIn(vs ...int64) predicate.Book {
 	return predicate.Book(sql.FieldNotIn(FieldDefaultIncomeCategoryID, vs...))
 }
 
 // DefaultIncomeCategoryIDGT applies the GT predicate on the "default_income_category_id" field.
-func DefaultIncomeCategoryIDGT(v uint32) predicate.Book {
+func DefaultIncomeCategoryIDGT(v int64) predicate.Book {
 	return predicate.Book(sql.FieldGT(FieldDefaultIncomeCategoryID, v))
 }
 
 // DefaultIncomeCategoryIDGTE applies the GTE predicate on the "default_income_category_id" field.
-func DefaultIncomeCategoryIDGTE(v uint32) predicate.Book {
+func DefaultIncomeCategoryIDGTE(v int64) predicate.Book {
 	return predicate.Book(sql.FieldGTE(FieldDefaultIncomeCategoryID, v))
 }
 
 // DefaultIncomeCategoryIDLT applies the LT predicate on the "default_income_category_id" field.
-func DefaultIncomeCategoryIDLT(v uint32) predicate.Book {
+func DefaultIncomeCategoryIDLT(v int64) predicate.Book {
 	return predicate.Book(sql.FieldLT(FieldDefaultIncomeCategoryID, v))
 }
 
 // DefaultIncomeCategoryIDLTE applies the LTE predicate on the "default_income_category_id" field.
-func DefaultIncomeCategoryIDLTE(v uint32) predicate.Book {
+func DefaultIncomeCategoryIDLTE(v int64) predicate.Book {
 	return predicate.Book(sql.FieldLTE(FieldDefaultIncomeCategoryID, v))
 }
 

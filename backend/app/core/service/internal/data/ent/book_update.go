@@ -70,14 +70,14 @@ func (_u *BookUpdate) ClearDeletedAt() *BookUpdate {
 }
 
 // SetCreatedBy sets the "created_by" field.
-func (_u *BookUpdate) SetCreatedBy(v uint32) *BookUpdate {
+func (_u *BookUpdate) SetCreatedBy(v int64) *BookUpdate {
 	_u.mutation.ResetCreatedBy()
 	_u.mutation.SetCreatedBy(v)
 	return _u
 }
 
 // SetNillableCreatedBy sets the "created_by" field if the given value is not nil.
-func (_u *BookUpdate) SetNillableCreatedBy(v *uint32) *BookUpdate {
+func (_u *BookUpdate) SetNillableCreatedBy(v *int64) *BookUpdate {
 	if v != nil {
 		_u.SetCreatedBy(*v)
 	}
@@ -85,7 +85,7 @@ func (_u *BookUpdate) SetNillableCreatedBy(v *uint32) *BookUpdate {
 }
 
 // AddCreatedBy adds value to the "created_by" field.
-func (_u *BookUpdate) AddCreatedBy(v int32) *BookUpdate {
+func (_u *BookUpdate) AddCreatedBy(v int64) *BookUpdate {
 	_u.mutation.AddCreatedBy(v)
 	return _u
 }
@@ -97,14 +97,14 @@ func (_u *BookUpdate) ClearCreatedBy() *BookUpdate {
 }
 
 // SetUpdatedBy sets the "updated_by" field.
-func (_u *BookUpdate) SetUpdatedBy(v uint32) *BookUpdate {
+func (_u *BookUpdate) SetUpdatedBy(v int64) *BookUpdate {
 	_u.mutation.ResetUpdatedBy()
 	_u.mutation.SetUpdatedBy(v)
 	return _u
 }
 
 // SetNillableUpdatedBy sets the "updated_by" field if the given value is not nil.
-func (_u *BookUpdate) SetNillableUpdatedBy(v *uint32) *BookUpdate {
+func (_u *BookUpdate) SetNillableUpdatedBy(v *int64) *BookUpdate {
 	if v != nil {
 		_u.SetUpdatedBy(*v)
 	}
@@ -112,7 +112,7 @@ func (_u *BookUpdate) SetNillableUpdatedBy(v *uint32) *BookUpdate {
 }
 
 // AddUpdatedBy adds value to the "updated_by" field.
-func (_u *BookUpdate) AddUpdatedBy(v int32) *BookUpdate {
+func (_u *BookUpdate) AddUpdatedBy(v int64) *BookUpdate {
 	_u.mutation.AddUpdatedBy(v)
 	return _u
 }
@@ -124,14 +124,14 @@ func (_u *BookUpdate) ClearUpdatedBy() *BookUpdate {
 }
 
 // SetDeletedBy sets the "deleted_by" field.
-func (_u *BookUpdate) SetDeletedBy(v uint32) *BookUpdate {
+func (_u *BookUpdate) SetDeletedBy(v int64) *BookUpdate {
 	_u.mutation.ResetDeletedBy()
 	_u.mutation.SetDeletedBy(v)
 	return _u
 }
 
 // SetNillableDeletedBy sets the "deleted_by" field if the given value is not nil.
-func (_u *BookUpdate) SetNillableDeletedBy(v *uint32) *BookUpdate {
+func (_u *BookUpdate) SetNillableDeletedBy(v *int64) *BookUpdate {
 	if v != nil {
 		_u.SetDeletedBy(*v)
 	}
@@ -139,7 +139,7 @@ func (_u *BookUpdate) SetNillableDeletedBy(v *uint32) *BookUpdate {
 }
 
 // AddDeletedBy adds value to the "deleted_by" field.
-func (_u *BookUpdate) AddDeletedBy(v int32) *BookUpdate {
+func (_u *BookUpdate) AddDeletedBy(v int64) *BookUpdate {
 	_u.mutation.AddDeletedBy(v)
 	return _u
 }
@@ -285,14 +285,14 @@ func (_u *BookUpdate) ClearExportAt() *BookUpdate {
 }
 
 // SetDefaultExpenseAccountID sets the "default_expense_account_id" field.
-func (_u *BookUpdate) SetDefaultExpenseAccountID(v uint32) *BookUpdate {
+func (_u *BookUpdate) SetDefaultExpenseAccountID(v int64) *BookUpdate {
 	_u.mutation.ResetDefaultExpenseAccountID()
 	_u.mutation.SetDefaultExpenseAccountID(v)
 	return _u
 }
 
 // SetNillableDefaultExpenseAccountID sets the "default_expense_account_id" field if the given value is not nil.
-func (_u *BookUpdate) SetNillableDefaultExpenseAccountID(v *uint32) *BookUpdate {
+func (_u *BookUpdate) SetNillableDefaultExpenseAccountID(v *int64) *BookUpdate {
 	if v != nil {
 		_u.SetDefaultExpenseAccountID(*v)
 	}
@@ -300,7 +300,7 @@ func (_u *BookUpdate) SetNillableDefaultExpenseAccountID(v *uint32) *BookUpdate 
 }
 
 // AddDefaultExpenseAccountID adds value to the "default_expense_account_id" field.
-func (_u *BookUpdate) AddDefaultExpenseAccountID(v int32) *BookUpdate {
+func (_u *BookUpdate) AddDefaultExpenseAccountID(v int64) *BookUpdate {
 	_u.mutation.AddDefaultExpenseAccountID(v)
 	return _u
 }
@@ -312,14 +312,14 @@ func (_u *BookUpdate) ClearDefaultExpenseAccountID() *BookUpdate {
 }
 
 // SetDefaultIncomeAccountID sets the "default_income_account_id" field.
-func (_u *BookUpdate) SetDefaultIncomeAccountID(v uint32) *BookUpdate {
+func (_u *BookUpdate) SetDefaultIncomeAccountID(v int64) *BookUpdate {
 	_u.mutation.ResetDefaultIncomeAccountID()
 	_u.mutation.SetDefaultIncomeAccountID(v)
 	return _u
 }
 
 // SetNillableDefaultIncomeAccountID sets the "default_income_account_id" field if the given value is not nil.
-func (_u *BookUpdate) SetNillableDefaultIncomeAccountID(v *uint32) *BookUpdate {
+func (_u *BookUpdate) SetNillableDefaultIncomeAccountID(v *int64) *BookUpdate {
 	if v != nil {
 		_u.SetDefaultIncomeAccountID(*v)
 	}
@@ -327,7 +327,7 @@ func (_u *BookUpdate) SetNillableDefaultIncomeAccountID(v *uint32) *BookUpdate {
 }
 
 // AddDefaultIncomeAccountID adds value to the "default_income_account_id" field.
-func (_u *BookUpdate) AddDefaultIncomeAccountID(v int32) *BookUpdate {
+func (_u *BookUpdate) AddDefaultIncomeAccountID(v int64) *BookUpdate {
 	_u.mutation.AddDefaultIncomeAccountID(v)
 	return _u
 }
@@ -339,14 +339,14 @@ func (_u *BookUpdate) ClearDefaultIncomeAccountID() *BookUpdate {
 }
 
 // SetDefaultTransferFromAccountID sets the "default_transfer_from_account_id" field.
-func (_u *BookUpdate) SetDefaultTransferFromAccountID(v uint32) *BookUpdate {
+func (_u *BookUpdate) SetDefaultTransferFromAccountID(v int64) *BookUpdate {
 	_u.mutation.ResetDefaultTransferFromAccountID()
 	_u.mutation.SetDefaultTransferFromAccountID(v)
 	return _u
 }
 
 // SetNillableDefaultTransferFromAccountID sets the "default_transfer_from_account_id" field if the given value is not nil.
-func (_u *BookUpdate) SetNillableDefaultTransferFromAccountID(v *uint32) *BookUpdate {
+func (_u *BookUpdate) SetNillableDefaultTransferFromAccountID(v *int64) *BookUpdate {
 	if v != nil {
 		_u.SetDefaultTransferFromAccountID(*v)
 	}
@@ -354,7 +354,7 @@ func (_u *BookUpdate) SetNillableDefaultTransferFromAccountID(v *uint32) *BookUp
 }
 
 // AddDefaultTransferFromAccountID adds value to the "default_transfer_from_account_id" field.
-func (_u *BookUpdate) AddDefaultTransferFromAccountID(v int32) *BookUpdate {
+func (_u *BookUpdate) AddDefaultTransferFromAccountID(v int64) *BookUpdate {
 	_u.mutation.AddDefaultTransferFromAccountID(v)
 	return _u
 }
@@ -366,14 +366,14 @@ func (_u *BookUpdate) ClearDefaultTransferFromAccountID() *BookUpdate {
 }
 
 // SetDefaultTransferToAccountID sets the "default_transfer_to_account_id" field.
-func (_u *BookUpdate) SetDefaultTransferToAccountID(v uint32) *BookUpdate {
+func (_u *BookUpdate) SetDefaultTransferToAccountID(v int64) *BookUpdate {
 	_u.mutation.ResetDefaultTransferToAccountID()
 	_u.mutation.SetDefaultTransferToAccountID(v)
 	return _u
 }
 
 // SetNillableDefaultTransferToAccountID sets the "default_transfer_to_account_id" field if the given value is not nil.
-func (_u *BookUpdate) SetNillableDefaultTransferToAccountID(v *uint32) *BookUpdate {
+func (_u *BookUpdate) SetNillableDefaultTransferToAccountID(v *int64) *BookUpdate {
 	if v != nil {
 		_u.SetDefaultTransferToAccountID(*v)
 	}
@@ -381,7 +381,7 @@ func (_u *BookUpdate) SetNillableDefaultTransferToAccountID(v *uint32) *BookUpda
 }
 
 // AddDefaultTransferToAccountID adds value to the "default_transfer_to_account_id" field.
-func (_u *BookUpdate) AddDefaultTransferToAccountID(v int32) *BookUpdate {
+func (_u *BookUpdate) AddDefaultTransferToAccountID(v int64) *BookUpdate {
 	_u.mutation.AddDefaultTransferToAccountID(v)
 	return _u
 }
@@ -393,14 +393,14 @@ func (_u *BookUpdate) ClearDefaultTransferToAccountID() *BookUpdate {
 }
 
 // SetDefaultExpenseCategoryID sets the "default_expense_category_id" field.
-func (_u *BookUpdate) SetDefaultExpenseCategoryID(v uint32) *BookUpdate {
+func (_u *BookUpdate) SetDefaultExpenseCategoryID(v int64) *BookUpdate {
 	_u.mutation.ResetDefaultExpenseCategoryID()
 	_u.mutation.SetDefaultExpenseCategoryID(v)
 	return _u
 }
 
 // SetNillableDefaultExpenseCategoryID sets the "default_expense_category_id" field if the given value is not nil.
-func (_u *BookUpdate) SetNillableDefaultExpenseCategoryID(v *uint32) *BookUpdate {
+func (_u *BookUpdate) SetNillableDefaultExpenseCategoryID(v *int64) *BookUpdate {
 	if v != nil {
 		_u.SetDefaultExpenseCategoryID(*v)
 	}
@@ -408,7 +408,7 @@ func (_u *BookUpdate) SetNillableDefaultExpenseCategoryID(v *uint32) *BookUpdate
 }
 
 // AddDefaultExpenseCategoryID adds value to the "default_expense_category_id" field.
-func (_u *BookUpdate) AddDefaultExpenseCategoryID(v int32) *BookUpdate {
+func (_u *BookUpdate) AddDefaultExpenseCategoryID(v int64) *BookUpdate {
 	_u.mutation.AddDefaultExpenseCategoryID(v)
 	return _u
 }
@@ -420,14 +420,14 @@ func (_u *BookUpdate) ClearDefaultExpenseCategoryID() *BookUpdate {
 }
 
 // SetDefaultIncomeCategoryID sets the "default_income_category_id" field.
-func (_u *BookUpdate) SetDefaultIncomeCategoryID(v uint32) *BookUpdate {
+func (_u *BookUpdate) SetDefaultIncomeCategoryID(v int64) *BookUpdate {
 	_u.mutation.ResetDefaultIncomeCategoryID()
 	_u.mutation.SetDefaultIncomeCategoryID(v)
 	return _u
 }
 
 // SetNillableDefaultIncomeCategoryID sets the "default_income_category_id" field if the given value is not nil.
-func (_u *BookUpdate) SetNillableDefaultIncomeCategoryID(v *uint32) *BookUpdate {
+func (_u *BookUpdate) SetNillableDefaultIncomeCategoryID(v *int64) *BookUpdate {
 	if v != nil {
 		_u.SetDefaultIncomeCategoryID(*v)
 	}
@@ -435,7 +435,7 @@ func (_u *BookUpdate) SetNillableDefaultIncomeCategoryID(v *uint32) *BookUpdate 
 }
 
 // AddDefaultIncomeCategoryID adds value to the "default_income_category_id" field.
-func (_u *BookUpdate) AddDefaultIncomeCategoryID(v int32) *BookUpdate {
+func (_u *BookUpdate) AddDefaultIncomeCategoryID(v int64) *BookUpdate {
 	_u.mutation.AddDefaultIncomeCategoryID(v)
 	return _u
 }
@@ -508,7 +508,7 @@ func (_u *BookUpdate) sqlSave(ctx context.Context) (_node int, err error) {
 	if err := _u.check(); err != nil {
 		return _node, err
 	}
-	_spec := sqlgraph.NewUpdateSpec(book.Table, book.Columns, sqlgraph.NewFieldSpec(book.FieldID, field.TypeUint32))
+	_spec := sqlgraph.NewUpdateSpec(book.Table, book.Columns, sqlgraph.NewFieldSpec(book.FieldID, field.TypeInt64))
 	if ps := _u.mutation.predicates; len(ps) > 0 {
 		_spec.Predicate = func(selector *sql.Selector) {
 			for i := range ps {
@@ -517,7 +517,7 @@ func (_u *BookUpdate) sqlSave(ctx context.Context) (_node int, err error) {
 		}
 	}
 	if _u.mutation.TenantIDCleared() {
-		_spec.ClearField(book.FieldTenantID, field.TypeUint32)
+		_spec.ClearField(book.FieldTenantID, field.TypeInt64)
 	}
 	if _u.mutation.CreatedAtCleared() {
 		_spec.ClearField(book.FieldCreatedAt, field.TypeTime)
@@ -535,31 +535,31 @@ func (_u *BookUpdate) sqlSave(ctx context.Context) (_node int, err error) {
 		_spec.ClearField(book.FieldDeletedAt, field.TypeTime)
 	}
 	if value, ok := _u.mutation.CreatedBy(); ok {
-		_spec.SetField(book.FieldCreatedBy, field.TypeUint32, value)
+		_spec.SetField(book.FieldCreatedBy, field.TypeInt64, value)
 	}
 	if value, ok := _u.mutation.AddedCreatedBy(); ok {
-		_spec.AddField(book.FieldCreatedBy, field.TypeUint32, value)
+		_spec.AddField(book.FieldCreatedBy, field.TypeInt64, value)
 	}
 	if _u.mutation.CreatedByCleared() {
-		_spec.ClearField(book.FieldCreatedBy, field.TypeUint32)
+		_spec.ClearField(book.FieldCreatedBy, field.TypeInt64)
 	}
 	if value, ok := _u.mutation.UpdatedBy(); ok {
-		_spec.SetField(book.FieldUpdatedBy, field.TypeUint32, value)
+		_spec.SetField(book.FieldUpdatedBy, field.TypeInt64, value)
 	}
 	if value, ok := _u.mutation.AddedUpdatedBy(); ok {
-		_spec.AddField(book.FieldUpdatedBy, field.TypeUint32, value)
+		_spec.AddField(book.FieldUpdatedBy, field.TypeInt64, value)
 	}
 	if _u.mutation.UpdatedByCleared() {
-		_spec.ClearField(book.FieldUpdatedBy, field.TypeUint32)
+		_spec.ClearField(book.FieldUpdatedBy, field.TypeInt64)
 	}
 	if value, ok := _u.mutation.DeletedBy(); ok {
-		_spec.SetField(book.FieldDeletedBy, field.TypeUint32, value)
+		_spec.SetField(book.FieldDeletedBy, field.TypeInt64, value)
 	}
 	if value, ok := _u.mutation.AddedDeletedBy(); ok {
-		_spec.AddField(book.FieldDeletedBy, field.TypeUint32, value)
+		_spec.AddField(book.FieldDeletedBy, field.TypeInt64, value)
 	}
 	if _u.mutation.DeletedByCleared() {
-		_spec.ClearField(book.FieldDeletedBy, field.TypeUint32)
+		_spec.ClearField(book.FieldDeletedBy, field.TypeInt64)
 	}
 	if value, ok := _u.mutation.SortOrder(); ok {
 		_spec.SetField(book.FieldSortOrder, field.TypeUint32, value)
@@ -604,58 +604,58 @@ func (_u *BookUpdate) sqlSave(ctx context.Context) (_node int, err error) {
 		_spec.ClearField(book.FieldExportAt, field.TypeInt64)
 	}
 	if value, ok := _u.mutation.DefaultExpenseAccountID(); ok {
-		_spec.SetField(book.FieldDefaultExpenseAccountID, field.TypeUint32, value)
+		_spec.SetField(book.FieldDefaultExpenseAccountID, field.TypeInt64, value)
 	}
 	if value, ok := _u.mutation.AddedDefaultExpenseAccountID(); ok {
-		_spec.AddField(book.FieldDefaultExpenseAccountID, field.TypeUint32, value)
+		_spec.AddField(book.FieldDefaultExpenseAccountID, field.TypeInt64, value)
 	}
 	if _u.mutation.DefaultExpenseAccountIDCleared() {
-		_spec.ClearField(book.FieldDefaultExpenseAccountID, field.TypeUint32)
+		_spec.ClearField(book.FieldDefaultExpenseAccountID, field.TypeInt64)
 	}
 	if value, ok := _u.mutation.DefaultIncomeAccountID(); ok {
-		_spec.SetField(book.FieldDefaultIncomeAccountID, field.TypeUint32, value)
+		_spec.SetField(book.FieldDefaultIncomeAccountID, field.TypeInt64, value)
 	}
 	if value, ok := _u.mutation.AddedDefaultIncomeAccountID(); ok {
-		_spec.AddField(book.FieldDefaultIncomeAccountID, field.TypeUint32, value)
+		_spec.AddField(book.FieldDefaultIncomeAccountID, field.TypeInt64, value)
 	}
 	if _u.mutation.DefaultIncomeAccountIDCleared() {
-		_spec.ClearField(book.FieldDefaultIncomeAccountID, field.TypeUint32)
+		_spec.ClearField(book.FieldDefaultIncomeAccountID, field.TypeInt64)
 	}
 	if value, ok := _u.mutation.DefaultTransferFromAccountID(); ok {
-		_spec.SetField(book.FieldDefaultTransferFromAccountID, field.TypeUint32, value)
+		_spec.SetField(book.FieldDefaultTransferFromAccountID, field.TypeInt64, value)
 	}
 	if value, ok := _u.mutation.AddedDefaultTransferFromAccountID(); ok {
-		_spec.AddField(book.FieldDefaultTransferFromAccountID, field.TypeUint32, value)
+		_spec.AddField(book.FieldDefaultTransferFromAccountID, field.TypeInt64, value)
 	}
 	if _u.mutation.DefaultTransferFromAccountIDCleared() {
-		_spec.ClearField(book.FieldDefaultTransferFromAccountID, field.TypeUint32)
+		_spec.ClearField(book.FieldDefaultTransferFromAccountID, field.TypeInt64)
 	}
 	if value, ok := _u.mutation.DefaultTransferToAccountID(); ok {
-		_spec.SetField(book.FieldDefaultTransferToAccountID, field.TypeUint32, value)
+		_spec.SetField(book.FieldDefaultTransferToAccountID, field.TypeInt64, value)
 	}
 	if value, ok := _u.mutation.AddedDefaultTransferToAccountID(); ok {
-		_spec.AddField(book.FieldDefaultTransferToAccountID, field.TypeUint32, value)
+		_spec.AddField(book.FieldDefaultTransferToAccountID, field.TypeInt64, value)
 	}
 	if _u.mutation.DefaultTransferToAccountIDCleared() {
-		_spec.ClearField(book.FieldDefaultTransferToAccountID, field.TypeUint32)
+		_spec.ClearField(book.FieldDefaultTransferToAccountID, field.TypeInt64)
 	}
 	if value, ok := _u.mutation.DefaultExpenseCategoryID(); ok {
-		_spec.SetField(book.FieldDefaultExpenseCategoryID, field.TypeUint32, value)
+		_spec.SetField(book.FieldDefaultExpenseCategoryID, field.TypeInt64, value)
 	}
 	if value, ok := _u.mutation.AddedDefaultExpenseCategoryID(); ok {
-		_spec.AddField(book.FieldDefaultExpenseCategoryID, field.TypeUint32, value)
+		_spec.AddField(book.FieldDefaultExpenseCategoryID, field.TypeInt64, value)
 	}
 	if _u.mutation.DefaultExpenseCategoryIDCleared() {
-		_spec.ClearField(book.FieldDefaultExpenseCategoryID, field.TypeUint32)
+		_spec.ClearField(book.FieldDefaultExpenseCategoryID, field.TypeInt64)
 	}
 	if value, ok := _u.mutation.DefaultIncomeCategoryID(); ok {
-		_spec.SetField(book.FieldDefaultIncomeCategoryID, field.TypeUint32, value)
+		_spec.SetField(book.FieldDefaultIncomeCategoryID, field.TypeInt64, value)
 	}
 	if value, ok := _u.mutation.AddedDefaultIncomeCategoryID(); ok {
-		_spec.AddField(book.FieldDefaultIncomeCategoryID, field.TypeUint32, value)
+		_spec.AddField(book.FieldDefaultIncomeCategoryID, field.TypeInt64, value)
 	}
 	if _u.mutation.DefaultIncomeCategoryIDCleared() {
-		_spec.ClearField(book.FieldDefaultIncomeCategoryID, field.TypeUint32)
+		_spec.ClearField(book.FieldDefaultIncomeCategoryID, field.TypeInt64)
 	}
 	_spec.AddModifiers(_u.modifiers...)
 	if _node, err = sqlgraph.UpdateNodes(ctx, _u.driver, _spec); err != nil {
@@ -720,14 +720,14 @@ func (_u *BookUpdateOne) ClearDeletedAt() *BookUpdateOne {
 }
 
 // SetCreatedBy sets the "created_by" field.
-func (_u *BookUpdateOne) SetCreatedBy(v uint32) *BookUpdateOne {
+func (_u *BookUpdateOne) SetCreatedBy(v int64) *BookUpdateOne {
 	_u.mutation.ResetCreatedBy()
 	_u.mutation.SetCreatedBy(v)
 	return _u
 }
 
 // SetNillableCreatedBy sets the "created_by" field if the given value is not nil.
-func (_u *BookUpdateOne) SetNillableCreatedBy(v *uint32) *BookUpdateOne {
+func (_u *BookUpdateOne) SetNillableCreatedBy(v *int64) *BookUpdateOne {
 	if v != nil {
 		_u.SetCreatedBy(*v)
 	}
@@ -735,7 +735,7 @@ func (_u *BookUpdateOne) SetNillableCreatedBy(v *uint32) *BookUpdateOne {
 }
 
 // AddCreatedBy adds value to the "created_by" field.
-func (_u *BookUpdateOne) AddCreatedBy(v int32) *BookUpdateOne {
+func (_u *BookUpdateOne) AddCreatedBy(v int64) *BookUpdateOne {
 	_u.mutation.AddCreatedBy(v)
 	return _u
 }
@@ -747,14 +747,14 @@ func (_u *BookUpdateOne) ClearCreatedBy() *BookUpdateOne {
 }
 
 // SetUpdatedBy sets the "updated_by" field.
-func (_u *BookUpdateOne) SetUpdatedBy(v uint32) *BookUpdateOne {
+func (_u *BookUpdateOne) SetUpdatedBy(v int64) *BookUpdateOne {
 	_u.mutation.ResetUpdatedBy()
 	_u.mutation.SetUpdatedBy(v)
 	return _u
 }
 
 // SetNillableUpdatedBy sets the "updated_by" field if the given value is not nil.
-func (_u *BookUpdateOne) SetNillableUpdatedBy(v *uint32) *BookUpdateOne {
+func (_u *BookUpdateOne) SetNillableUpdatedBy(v *int64) *BookUpdateOne {
 	if v != nil {
 		_u.SetUpdatedBy(*v)
 	}
@@ -762,7 +762,7 @@ func (_u *BookUpdateOne) SetNillableUpdatedBy(v *uint32) *BookUpdateOne {
 }
 
 // AddUpdatedBy adds value to the "updated_by" field.
-func (_u *BookUpdateOne) AddUpdatedBy(v int32) *BookUpdateOne {
+func (_u *BookUpdateOne) AddUpdatedBy(v int64) *BookUpdateOne {
 	_u.mutation.AddUpdatedBy(v)
 	return _u
 }
@@ -774,14 +774,14 @@ func (_u *BookUpdateOne) ClearUpdatedBy() *BookUpdateOne {
 }
 
 // SetDeletedBy sets the "deleted_by" field.
-func (_u *BookUpdateOne) SetDeletedBy(v uint32) *BookUpdateOne {
+func (_u *BookUpdateOne) SetDeletedBy(v int64) *BookUpdateOne {
 	_u.mutation.ResetDeletedBy()
 	_u.mutation.SetDeletedBy(v)
 	return _u
 }
 
 // SetNillableDeletedBy sets the "deleted_by" field if the given value is not nil.
-func (_u *BookUpdateOne) SetNillableDeletedBy(v *uint32) *BookUpdateOne {
+func (_u *BookUpdateOne) SetNillableDeletedBy(v *int64) *BookUpdateOne {
 	if v != nil {
 		_u.SetDeletedBy(*v)
 	}
@@ -789,7 +789,7 @@ func (_u *BookUpdateOne) SetNillableDeletedBy(v *uint32) *BookUpdateOne {
 }
 
 // AddDeletedBy adds value to the "deleted_by" field.
-func (_u *BookUpdateOne) AddDeletedBy(v int32) *BookUpdateOne {
+func (_u *BookUpdateOne) AddDeletedBy(v int64) *BookUpdateOne {
 	_u.mutation.AddDeletedBy(v)
 	return _u
 }
@@ -935,14 +935,14 @@ func (_u *BookUpdateOne) ClearExportAt() *BookUpdateOne {
 }
 
 // SetDefaultExpenseAccountID sets the "default_expense_account_id" field.
-func (_u *BookUpdateOne) SetDefaultExpenseAccountID(v uint32) *BookUpdateOne {
+func (_u *BookUpdateOne) SetDefaultExpenseAccountID(v int64) *BookUpdateOne {
 	_u.mutation.ResetDefaultExpenseAccountID()
 	_u.mutation.SetDefaultExpenseAccountID(v)
 	return _u
 }
 
 // SetNillableDefaultExpenseAccountID sets the "default_expense_account_id" field if the given value is not nil.
-func (_u *BookUpdateOne) SetNillableDefaultExpenseAccountID(v *uint32) *BookUpdateOne {
+func (_u *BookUpdateOne) SetNillableDefaultExpenseAccountID(v *int64) *BookUpdateOne {
 	if v != nil {
 		_u.SetDefaultExpenseAccountID(*v)
 	}
@@ -950,7 +950,7 @@ func (_u *BookUpdateOne) SetNillableDefaultExpenseAccountID(v *uint32) *BookUpda
 }
 
 // AddDefaultExpenseAccountID adds value to the "default_expense_account_id" field.
-func (_u *BookUpdateOne) AddDefaultExpenseAccountID(v int32) *BookUpdateOne {
+func (_u *BookUpdateOne) AddDefaultExpenseAccountID(v int64) *BookUpdateOne {
 	_u.mutation.AddDefaultExpenseAccountID(v)
 	return _u
 }
@@ -962,14 +962,14 @@ func (_u *BookUpdateOne) ClearDefaultExpenseAccountID() *BookUpdateOne {
 }
 
 // SetDefaultIncomeAccountID sets the "default_income_account_id" field.
-func (_u *BookUpdateOne) SetDefaultIncomeAccountID(v uint32) *BookUpdateOne {
+func (_u *BookUpdateOne) SetDefaultIncomeAccountID(v int64) *BookUpdateOne {
 	_u.mutation.ResetDefaultIncomeAccountID()
 	_u.mutation.SetDefaultIncomeAccountID(v)
 	return _u
 }
 
 // SetNillableDefaultIncomeAccountID sets the "default_income_account_id" field if the given value is not nil.
-func (_u *BookUpdateOne) SetNillableDefaultIncomeAccountID(v *uint32) *BookUpdateOne {
+func (_u *BookUpdateOne) SetNillableDefaultIncomeAccountID(v *int64) *BookUpdateOne {
 	if v != nil {
 		_u.SetDefaultIncomeAccountID(*v)
 	}
@@ -977,7 +977,7 @@ func (_u *BookUpdateOne) SetNillableDefaultIncomeAccountID(v *uint32) *BookUpdat
 }
 
 // AddDefaultIncomeAccountID adds value to the "default_income_account_id" field.
-func (_u *BookUpdateOne) AddDefaultIncomeAccountID(v int32) *BookUpdateOne {
+func (_u *BookUpdateOne) AddDefaultIncomeAccountID(v int64) *BookUpdateOne {
 	_u.mutation.AddDefaultIncomeAccountID(v)
 	return _u
 }
@@ -989,14 +989,14 @@ func (_u *BookUpdateOne) ClearDefaultIncomeAccountID() *BookUpdateOne {
 }
 
 // SetDefaultTransferFromAccountID sets the "default_transfer_from_account_id" field.
-func (_u *BookUpdateOne) SetDefaultTransferFromAccountID(v uint32) *BookUpdateOne {
+func (_u *BookUpdateOne) SetDefaultTransferFromAccountID(v int64) *BookUpdateOne {
 	_u.mutation.ResetDefaultTransferFromAccountID()
 	_u.mutation.SetDefaultTransferFromAccountID(v)
 	return _u
 }
 
 // SetNillableDefaultTransferFromAccountID sets the "default_transfer_from_account_id" field if the given value is not nil.
-func (_u *BookUpdateOne) SetNillableDefaultTransferFromAccountID(v *uint32) *BookUpdateOne {
+func (_u *BookUpdateOne) SetNillableDefaultTransferFromAccountID(v *int64) *BookUpdateOne {
 	if v != nil {
 		_u.SetDefaultTransferFromAccountID(*v)
 	}
@@ -1004,7 +1004,7 @@ func (_u *BookUpdateOne) SetNillableDefaultTransferFromAccountID(v *uint32) *Boo
 }
 
 // AddDefaultTransferFromAccountID adds value to the "default_transfer_from_account_id" field.
-func (_u *BookUpdateOne) AddDefaultTransferFromAccountID(v int32) *BookUpdateOne {
+func (_u *BookUpdateOne) AddDefaultTransferFromAccountID(v int64) *BookUpdateOne {
 	_u.mutation.AddDefaultTransferFromAccountID(v)
 	return _u
 }
@@ -1016,14 +1016,14 @@ func (_u *BookUpdateOne) ClearDefaultTransferFromAccountID() *BookUpdateOne {
 }
 
 // SetDefaultTransferToAccountID sets the "default_transfer_to_account_id" field.
-func (_u *BookUpdateOne) SetDefaultTransferToAccountID(v uint32) *BookUpdateOne {
+func (_u *BookUpdateOne) SetDefaultTransferToAccountID(v int64) *BookUpdateOne {
 	_u.mutation.ResetDefaultTransferToAccountID()
 	_u.mutation.SetDefaultTransferToAccountID(v)
 	return _u
 }
 
 // SetNillableDefaultTransferToAccountID sets the "default_transfer_to_account_id" field if the given value is not nil.
-func (_u *BookUpdateOne) SetNillableDefaultTransferToAccountID(v *uint32) *BookUpdateOne {
+func (_u *BookUpdateOne) SetNillableDefaultTransferToAccountID(v *int64) *BookUpdateOne {
 	if v != nil {
 		_u.SetDefaultTransferToAccountID(*v)
 	}
@@ -1031,7 +1031,7 @@ func (_u *BookUpdateOne) SetNillableDefaultTransferToAccountID(v *uint32) *BookU
 }
 
 // AddDefaultTransferToAccountID adds value to the "default_transfer_to_account_id" field.
-func (_u *BookUpdateOne) AddDefaultTransferToAccountID(v int32) *BookUpdateOne {
+func (_u *BookUpdateOne) AddDefaultTransferToAccountID(v int64) *BookUpdateOne {
 	_u.mutation.AddDefaultTransferToAccountID(v)
 	return _u
 }
@@ -1043,14 +1043,14 @@ func (_u *BookUpdateOne) ClearDefaultTransferToAccountID() *BookUpdateOne {
 }
 
 // SetDefaultExpenseCategoryID sets the "default_expense_category_id" field.
-func (_u *BookUpdateOne) SetDefaultExpenseCategoryID(v uint32) *BookUpdateOne {
+func (_u *BookUpdateOne) SetDefaultExpenseCategoryID(v int64) *BookUpdateOne {
 	_u.mutation.ResetDefaultExpenseCategoryID()
 	_u.mutation.SetDefaultExpenseCategoryID(v)
 	return _u
 }
 
 // SetNillableDefaultExpenseCategoryID sets the "default_expense_category_id" field if the given value is not nil.
-func (_u *BookUpdateOne) SetNillableDefaultExpenseCategoryID(v *uint32) *BookUpdateOne {
+func (_u *BookUpdateOne) SetNillableDefaultExpenseCategoryID(v *int64) *BookUpdateOne {
 	if v != nil {
 		_u.SetDefaultExpenseCategoryID(*v)
 	}
@@ -1058,7 +1058,7 @@ func (_u *BookUpdateOne) SetNillableDefaultExpenseCategoryID(v *uint32) *BookUpd
 }
 
 // AddDefaultExpenseCategoryID adds value to the "default_expense_category_id" field.
-func (_u *BookUpdateOne) AddDefaultExpenseCategoryID(v int32) *BookUpdateOne {
+func (_u *BookUpdateOne) AddDefaultExpenseCategoryID(v int64) *BookUpdateOne {
 	_u.mutation.AddDefaultExpenseCategoryID(v)
 	return _u
 }
@@ -1070,14 +1070,14 @@ func (_u *BookUpdateOne) ClearDefaultExpenseCategoryID() *BookUpdateOne {
 }
 
 // SetDefaultIncomeCategoryID sets the "default_income_category_id" field.
-func (_u *BookUpdateOne) SetDefaultIncomeCategoryID(v uint32) *BookUpdateOne {
+func (_u *BookUpdateOne) SetDefaultIncomeCategoryID(v int64) *BookUpdateOne {
 	_u.mutation.ResetDefaultIncomeCategoryID()
 	_u.mutation.SetDefaultIncomeCategoryID(v)
 	return _u
 }
 
 // SetNillableDefaultIncomeCategoryID sets the "default_income_category_id" field if the given value is not nil.
-func (_u *BookUpdateOne) SetNillableDefaultIncomeCategoryID(v *uint32) *BookUpdateOne {
+func (_u *BookUpdateOne) SetNillableDefaultIncomeCategoryID(v *int64) *BookUpdateOne {
 	if v != nil {
 		_u.SetDefaultIncomeCategoryID(*v)
 	}
@@ -1085,7 +1085,7 @@ func (_u *BookUpdateOne) SetNillableDefaultIncomeCategoryID(v *uint32) *BookUpda
 }
 
 // AddDefaultIncomeCategoryID adds value to the "default_income_category_id" field.
-func (_u *BookUpdateOne) AddDefaultIncomeCategoryID(v int32) *BookUpdateOne {
+func (_u *BookUpdateOne) AddDefaultIncomeCategoryID(v int64) *BookUpdateOne {
 	_u.mutation.AddDefaultIncomeCategoryID(v)
 	return _u
 }
@@ -1171,7 +1171,7 @@ func (_u *BookUpdateOne) sqlSave(ctx context.Context) (_node *Book, err error) {
 	if err := _u.check(); err != nil {
 		return _node, err
 	}
-	_spec := sqlgraph.NewUpdateSpec(book.Table, book.Columns, sqlgraph.NewFieldSpec(book.FieldID, field.TypeUint32))
+	_spec := sqlgraph.NewUpdateSpec(book.Table, book.Columns, sqlgraph.NewFieldSpec(book.FieldID, field.TypeInt64))
 	id, ok := _u.mutation.ID()
 	if !ok {
 		return nil, &ValidationError{Name: "id", err: errors.New(`ent: missing "Book.id" for update`)}
@@ -1197,7 +1197,7 @@ func (_u *BookUpdateOne) sqlSave(ctx context.Context) (_node *Book, err error) {
 		}
 	}
 	if _u.mutation.TenantIDCleared() {
-		_spec.ClearField(book.FieldTenantID, field.TypeUint32)
+		_spec.ClearField(book.FieldTenantID, field.TypeInt64)
 	}
 	if _u.mutation.CreatedAtCleared() {
 		_spec.ClearField(book.FieldCreatedAt, field.TypeTime)
@@ -1215,31 +1215,31 @@ func (_u *BookUpdateOne) sqlSave(ctx context.Context) (_node *Book, err error) {
 		_spec.ClearField(book.FieldDeletedAt, field.TypeTime)
 	}
 	if value, ok := _u.mutation.CreatedBy(); ok {
-		_spec.SetField(book.FieldCreatedBy, field.TypeUint32, value)
+		_spec.SetField(book.FieldCreatedBy, field.TypeInt64, value)
 	}
 	if value, ok := _u.mutation.AddedCreatedBy(); ok {
-		_spec.AddField(book.FieldCreatedBy, field.TypeUint32, value)
+		_spec.AddField(book.FieldCreatedBy, field.TypeInt64, value)
 	}
 	if _u.mutation.CreatedByCleared() {
-		_spec.ClearField(book.FieldCreatedBy, field.TypeUint32)
+		_spec.ClearField(book.FieldCreatedBy, field.TypeInt64)
 	}
 	if value, ok := _u.mutation.UpdatedBy(); ok {
-		_spec.SetField(book.FieldUpdatedBy, field.TypeUint32, value)
+		_spec.SetField(book.FieldUpdatedBy, field.TypeInt64, value)
 	}
 	if value, ok := _u.mutation.AddedUpdatedBy(); ok {
-		_spec.AddField(book.FieldUpdatedBy, field.TypeUint32, value)
+		_spec.AddField(book.FieldUpdatedBy, field.TypeInt64, value)
 	}
 	if _u.mutation.UpdatedByCleared() {
-		_spec.ClearField(book.FieldUpdatedBy, field.TypeUint32)
+		_spec.ClearField(book.FieldUpdatedBy, field.TypeInt64)
 	}
 	if value, ok := _u.mutation.DeletedBy(); ok {
-		_spec.SetField(book.FieldDeletedBy, field.TypeUint32, value)
+		_spec.SetField(book.FieldDeletedBy, field.TypeInt64, value)
 	}
 	if value, ok := _u.mutation.AddedDeletedBy(); ok {
-		_spec.AddField(book.FieldDeletedBy, field.TypeUint32, value)
+		_spec.AddField(book.FieldDeletedBy, field.TypeInt64, value)
 	}
 	if _u.mutation.DeletedByCleared() {
-		_spec.ClearField(book.FieldDeletedBy, field.TypeUint32)
+		_spec.ClearField(book.FieldDeletedBy, field.TypeInt64)
 	}
 	if value, ok := _u.mutation.SortOrder(); ok {
 		_spec.SetField(book.FieldSortOrder, field.TypeUint32, value)
@@ -1284,58 +1284,58 @@ func (_u *BookUpdateOne) sqlSave(ctx context.Context) (_node *Book, err error) {
 		_spec.ClearField(book.FieldExportAt, field.TypeInt64)
 	}
 	if value, ok := _u.mutation.DefaultExpenseAccountID(); ok {
-		_spec.SetField(book.FieldDefaultExpenseAccountID, field.TypeUint32, value)
+		_spec.SetField(book.FieldDefaultExpenseAccountID, field.TypeInt64, value)
 	}
 	if value, ok := _u.mutation.AddedDefaultExpenseAccountID(); ok {
-		_spec.AddField(book.FieldDefaultExpenseAccountID, field.TypeUint32, value)
+		_spec.AddField(book.FieldDefaultExpenseAccountID, field.TypeInt64, value)
 	}
 	if _u.mutation.DefaultExpenseAccountIDCleared() {
-		_spec.ClearField(book.FieldDefaultExpenseAccountID, field.TypeUint32)
+		_spec.ClearField(book.FieldDefaultExpenseAccountID, field.TypeInt64)
 	}
 	if value, ok := _u.mutation.DefaultIncomeAccountID(); ok {
-		_spec.SetField(book.FieldDefaultIncomeAccountID, field.TypeUint32, value)
+		_spec.SetField(book.FieldDefaultIncomeAccountID, field.TypeInt64, value)
 	}
 	if value, ok := _u.mutation.AddedDefaultIncomeAccountID(); ok {
-		_spec.AddField(book.FieldDefaultIncomeAccountID, field.TypeUint32, value)
+		_spec.AddField(book.FieldDefaultIncomeAccountID, field.TypeInt64, value)
 	}
 	if _u.mutation.DefaultIncomeAccountIDCleared() {
-		_spec.ClearField(book.FieldDefaultIncomeAccountID, field.TypeUint32)
+		_spec.ClearField(book.FieldDefaultIncomeAccountID, field.TypeInt64)
 	}
 	if value, ok := _u.mutation.DefaultTransferFromAccountID(); ok {
-		_spec.SetField(book.FieldDefaultTransferFromAccountID, field.TypeUint32, value)
+		_spec.SetField(book.FieldDefaultTransferFromAccountID, field.TypeInt64, value)
 	}
 	if value, ok := _u.mutation.AddedDefaultTransferFromAccountID(); ok {
-		_spec.AddField(book.FieldDefaultTransferFromAccountID, field.TypeUint32, value)
+		_spec.AddField(book.FieldDefaultTransferFromAccountID, field.TypeInt64, value)
 	}
 	if _u.mutation.DefaultTransferFromAccountIDCleared() {
-		_spec.ClearField(book.FieldDefaultTransferFromAccountID, field.TypeUint32)
+		_spec.ClearField(book.FieldDefaultTransferFromAccountID, field.TypeInt64)
 	}
 	if value, ok := _u.mutation.DefaultTransferToAccountID(); ok {
-		_spec.SetField(book.FieldDefaultTransferToAccountID, field.TypeUint32, value)
+		_spec.SetField(book.FieldDefaultTransferToAccountID, field.TypeInt64, value)
 	}
 	if value, ok := _u.mutation.AddedDefaultTransferToAccountID(); ok {
-		_spec.AddField(book.FieldDefaultTransferToAccountID, field.TypeUint32, value)
+		_spec.AddField(book.FieldDefaultTransferToAccountID, field.TypeInt64, value)
 	}
 	if _u.mutation.DefaultTransferToAccountIDCleared() {
-		_spec.ClearField(book.FieldDefaultTransferToAccountID, field.TypeUint32)
+		_spec.ClearField(book.FieldDefaultTransferToAccountID, field.TypeInt64)
 	}
 	if value, ok := _u.mutation.DefaultExpenseCategoryID(); ok {
-		_spec.SetField(book.FieldDefaultExpenseCategoryID, field.TypeUint32, value)
+		_spec.SetField(book.FieldDefaultExpenseCategoryID, field.TypeInt64, value)
 	}
 	if value, ok := _u.mutation.AddedDefaultExpenseCategoryID(); ok {
-		_spec.AddField(book.FieldDefaultExpenseCategoryID, field.TypeUint32, value)
+		_spec.AddField(book.FieldDefaultExpenseCategoryID, field.TypeInt64, value)
 	}
 	if _u.mutation.DefaultExpenseCategoryIDCleared() {
-		_spec.ClearField(book.FieldDefaultExpenseCategoryID, field.TypeUint32)
+		_spec.ClearField(book.FieldDefaultExpenseCategoryID, field.TypeInt64)
 	}
 	if value, ok := _u.mutation.DefaultIncomeCategoryID(); ok {
-		_spec.SetField(book.FieldDefaultIncomeCategoryID, field.TypeUint32, value)
+		_spec.SetField(book.FieldDefaultIncomeCategoryID, field.TypeInt64, value)
 	}
 	if value, ok := _u.mutation.AddedDefaultIncomeCategoryID(); ok {
-		_spec.AddField(book.FieldDefaultIncomeCategoryID, field.TypeUint32, value)
+		_spec.AddField(book.FieldDefaultIncomeCategoryID, field.TypeInt64, value)
 	}
 	if _u.mutation.DefaultIncomeCategoryIDCleared() {
-		_spec.ClearField(book.FieldDefaultIncomeCategoryID, field.TypeUint32)
+		_spec.ClearField(book.FieldDefaultIncomeCategoryID, field.TypeInt64)
 	}
 	_spec.AddModifiers(_u.modifiers...)
 	_node = &Book{config: _u.config}

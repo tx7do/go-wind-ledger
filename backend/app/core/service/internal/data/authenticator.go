@@ -253,7 +253,7 @@ func (a *Authenticator) CreateUserToken(
 }
 
 // RevokeUserToken 撤销用户令牌
-func (a *Authenticator) RevokeUserToken(ctx context.Context, clientType authenticationV1.ClientType, userId uint32) error {
+func (a *Authenticator) RevokeUserToken(ctx context.Context, clientType authenticationV1.ClientType, userId int64) error {
 	if a.userTokenCache == nil {
 		a.log.Error("userTokenCache is nil")
 		return authenticationV1.ErrorServiceUnavailable("token cache unavailable")
@@ -275,7 +275,7 @@ func (a *Authenticator) RevokeUserToken(ctx context.Context, clientType authenti
 	return nil
 }
 
-func (a *Authenticator) RevokeTokenByJti(ctx context.Context, clientType *authenticationV1.ClientType, userId uint32, jti string) error {
+func (a *Authenticator) RevokeTokenByJti(ctx context.Context, clientType *authenticationV1.ClientType, userId int64, jti string) error {
 	if clientType != nil {
 		if _, err := a.getAuthenticator(*clientType); err != nil {
 			return err
@@ -300,7 +300,7 @@ func (a *Authenticator) VerifyRefreshToken(
 	ctx context.Context,
 	clientType authenticationV1.ClientType,
 	refreshToken string,
-) (uid uint32, jti string, err error) {
+) (uid int64, jti string, err error) {
 	if a.userTokenCache == nil {
 		a.log.Error("userTokenCache is nil")
 		return 0, "", authenticationV1.ErrorServiceUnavailable("token cache unavailable")
@@ -328,7 +328,7 @@ func (a *Authenticator) VerifyRefreshToken(
 	}
 
 	// 从令牌自身解析 uid/jti，不再信任请求参数。
-	uid, err = claims.GetUint32(jwt.ClaimFieldUserID)
+	uid, err = claims.GetInt64(jwt.ClaimFieldUserID)
 	if err != nil || uid == 0 {
 		a.log.Errorf("parse uid from refresh token failed: [%v]", err)
 		return 0, "", authenticationV1.ErrorUnauthorized("invalid refresh token payload")
@@ -358,7 +358,7 @@ func (a *Authenticator) VerifyRefreshToken(
 func (a *Authenticator) GetAccessTokens(
 	ctx context.Context,
 	clientType authenticationV1.ClientType,
-	userId uint32,
+	userId int64,
 ) []string {
 	return a.userTokenCache.GetAccessTokens(ctx, clientType, userId)
 }

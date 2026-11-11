@@ -1,0 +1,25 @@
+[    1401ms] [INFO] DDC is about to load 1/2 scripts with pool size = 1000 @ http://127.0.0.1:8765/ddc_module_loader.js:1014
+[    1588ms] [INFO] DDC is about to load 1106/1106 scripts with pool size = 1000 @ http://127.0.0.1:8765/ddc_module_loader.js:1014
+[   10284ms] [LOG] Starting application from main method in: org-dartlang-app:///web_entrypoint.dart. @ http://127.0.0.1:8765/ddc_module_loader.js:1585
+[   10645ms] [WARNING] Found an existing <meta name="viewport"> tag. Flutter Web uses its own viewport configuration for better compatibility with Flutter. This tag will be replaced. @ http://127.0.0.1:8765/dart_sdk.js:245799
+[   10943ms] [LOG] ┌─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────── @ http://127.0.0.1:8765/dart_sdk.js:26345
+[   10944ms] [LOG] │ 🐛 im :: locale list: [zh_CN, zh] @ http://127.0.0.1:8765/dart_sdk.js:26345
+[   10944ms] [LOG] └─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────── @ http://127.0.0.1:8765/dart_sdk.js:26345
+[   10963ms] [LOG] ┌─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────── @ http://127.0.0.1:8765/dart_sdk.js:26345
+[   10963ms] [LOG] │ 🐛 im :: locale list: [zh_CN] @ http://127.0.0.1:8765/dart_sdk.js:26345
+[   10964ms] [LOG] └─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────── @ http://127.0.0.1:8765/dart_sdk.js:26345
+[   11401ms] [LOG] ┌─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────── @ http://127.0.0.1:8765/dart_sdk.js:26345
+[   11401ms] [LOG] │ 🐛 im :: locale list: [zh_CN] @ http://127.0.0.1:8765/dart_sdk.js:26345
+[   11402ms] [LOG] └─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────── @ http://127.0.0.1:8765/dart_sdk.js:26345
+[   73571ms] [LOG] ┌─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────── @ http://127.0.0.1:8765/dart_sdk.js:26345
+[   73571ms] [LOG] │ 🐛 DioClientTransport :: unary AuthenticationService.Login POST /app/v1/login @ http://127.0.0.1:8765/dart_sdk.js:26345
+[   73572ms] [LOG] └─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────── @ http://127.0.0.1:8765/dart_sdk.js:26345
+[   75008ms] [LOG] ┌─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────── @ http://127.0.0.1:8765/dart_sdk.js:26345
+[   75008ms] [LOG] │ 🐛 DioClientTransport :: unary AuthenticationService.Login POST /app/v1/login @ http://127.0.0.1:8765/dart_sdk.js:26345
+[   75008ms] [LOG] └─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────── @ http://127.0.0.1:8765/dart_sdk.js:26345
+[   75944ms] [ERROR] Failed to load resource: net::ERR_CONNECTION_REFUSED @ http://localhost:6700/app/v1/login:0
+[   76207ms] [ERROR] Failed to load resource: net::ERR_CONNECTION_REFUSED @ http://localhost:6700/app/v1/login:0
+[  247324ms] [LOG] ┌─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────── @ http://127.0.0.1:8765/dart_sdk.js:26345
+[  247324ms] [LOG] │ 🐛 DioClientTransport :: unary AuthenticationService.Login POST /app/v1/login @ http://127.0.0.1:8765/dart_sdk.js:26345
+[  247324ms] [LOG] └─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────── @ http://127.0.0.1:8765/dart_sdk.js:26345
+[  249708ms] [ERROR] Failed to load resource: net::ERR_CONNECTION_REFUSED @ http://localhost:6700/app/v1/login:0

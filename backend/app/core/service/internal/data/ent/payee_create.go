@@ -23,13 +23,13 @@ type PayeeCreate struct {
 }
 
 // SetTenantID sets the "tenant_id" field.
-func (_c *PayeeCreate) SetTenantID(v uint32) *PayeeCreate {
+func (_c *PayeeCreate) SetTenantID(v int64) *PayeeCreate {
 	_c.mutation.SetTenantID(v)
 	return _c
 }
 
 // SetNillableTenantID sets the "tenant_id" field if the given value is not nil.
-func (_c *PayeeCreate) SetNillableTenantID(v *uint32) *PayeeCreate {
+func (_c *PayeeCreate) SetNillableTenantID(v *int64) *PayeeCreate {
 	if v != nil {
 		_c.SetTenantID(*v)
 	}
@@ -79,13 +79,13 @@ func (_c *PayeeCreate) SetNillableDeletedAt(v *time.Time) *PayeeCreate {
 }
 
 // SetCreatedBy sets the "created_by" field.
-func (_c *PayeeCreate) SetCreatedBy(v uint32) *PayeeCreate {
+func (_c *PayeeCreate) SetCreatedBy(v int64) *PayeeCreate {
 	_c.mutation.SetCreatedBy(v)
 	return _c
 }
 
 // SetNillableCreatedBy sets the "created_by" field if the given value is not nil.
-func (_c *PayeeCreate) SetNillableCreatedBy(v *uint32) *PayeeCreate {
+func (_c *PayeeCreate) SetNillableCreatedBy(v *int64) *PayeeCreate {
 	if v != nil {
 		_c.SetCreatedBy(*v)
 	}
@@ -93,13 +93,13 @@ func (_c *PayeeCreate) SetNillableCreatedBy(v *uint32) *PayeeCreate {
 }
 
 // SetUpdatedBy sets the "updated_by" field.
-func (_c *PayeeCreate) SetUpdatedBy(v uint32) *PayeeCreate {
+func (_c *PayeeCreate) SetUpdatedBy(v int64) *PayeeCreate {
 	_c.mutation.SetUpdatedBy(v)
 	return _c
 }
 
 // SetNillableUpdatedBy sets the "updated_by" field if the given value is not nil.
-func (_c *PayeeCreate) SetNillableUpdatedBy(v *uint32) *PayeeCreate {
+func (_c *PayeeCreate) SetNillableUpdatedBy(v *int64) *PayeeCreate {
 	if v != nil {
 		_c.SetUpdatedBy(*v)
 	}
@@ -107,13 +107,13 @@ func (_c *PayeeCreate) SetNillableUpdatedBy(v *uint32) *PayeeCreate {
 }
 
 // SetDeletedBy sets the "deleted_by" field.
-func (_c *PayeeCreate) SetDeletedBy(v uint32) *PayeeCreate {
+func (_c *PayeeCreate) SetDeletedBy(v int64) *PayeeCreate {
 	_c.mutation.SetDeletedBy(v)
 	return _c
 }
 
 // SetNillableDeletedBy sets the "deleted_by" field if the given value is not nil.
-func (_c *PayeeCreate) SetNillableDeletedBy(v *uint32) *PayeeCreate {
+func (_c *PayeeCreate) SetNillableDeletedBy(v *int64) *PayeeCreate {
 	if v != nil {
 		_c.SetDeletedBy(*v)
 	}
@@ -135,13 +135,13 @@ func (_c *PayeeCreate) SetNillableSortOrder(v *uint32) *PayeeCreate {
 }
 
 // SetBookID sets the "book_id" field.
-func (_c *PayeeCreate) SetBookID(v uint32) *PayeeCreate {
+func (_c *PayeeCreate) SetBookID(v int64) *PayeeCreate {
 	_c.mutation.SetBookID(v)
 	return _c
 }
 
 // SetNillableBookID sets the "book_id" field if the given value is not nil.
-func (_c *PayeeCreate) SetNillableBookID(v *uint32) *PayeeCreate {
+func (_c *PayeeCreate) SetNillableBookID(v *int64) *PayeeCreate {
 	if v != nil {
 		_c.SetBookID(*v)
 	}
@@ -219,7 +219,7 @@ func (_c *PayeeCreate) SetNillableCanIncome(v *bool) *PayeeCreate {
 }
 
 // SetID sets the "id" field.
-func (_c *PayeeCreate) SetID(v uint32) *PayeeCreate {
+func (_c *PayeeCreate) SetID(v int64) *PayeeCreate {
 	_c.mutation.SetID(v)
 	return _c
 }
@@ -317,7 +317,7 @@ func (_c *PayeeCreate) sqlSave(ctx context.Context) (*Payee, error) {
 	}
 	if _spec.ID.Value != _node.ID {
 		id := _spec.ID.Value.(int64)
-		_node.ID = uint32(id)
+		_node.ID = int64(id)
 	}
 	_c.mutation.id = &_node.ID
 	_c.mutation.done = true
@@ -327,7 +327,7 @@ func (_c *PayeeCreate) sqlSave(ctx context.Context) (*Payee, error) {
 func (_c *PayeeCreate) createSpec() (*Payee, *sqlgraph.CreateSpec) {
 	var (
 		_node = &Payee{config: _c.config}
-		_spec = sqlgraph.NewCreateSpec(payee.Table, sqlgraph.NewFieldSpec(payee.FieldID, field.TypeUint32))
+		_spec = sqlgraph.NewCreateSpec(payee.Table, sqlgraph.NewFieldSpec(payee.FieldID, field.TypeInt64))
 	)
 	_spec.OnConflict = _c.conflict
 	if id, ok := _c.mutation.ID(); ok {
@@ -335,7 +335,7 @@ func (_c *PayeeCreate) createSpec() (*Payee, *sqlgraph.CreateSpec) {
 		_spec.ID.Value = id
 	}
 	if value, ok := _c.mutation.TenantID(); ok {
-		_spec.SetField(payee.FieldTenantID, field.TypeUint32, value)
+		_spec.SetField(payee.FieldTenantID, field.TypeInt64, value)
 		_node.TenantID = &value
 	}
 	if value, ok := _c.mutation.CreatedAt(); ok {
@@ -351,15 +351,15 @@ func (_c *PayeeCreate) createSpec() (*Payee, *sqlgraph.CreateSpec) {
 		_node.DeletedAt = &value
 	}
 	if value, ok := _c.mutation.CreatedBy(); ok {
-		_spec.SetField(payee.FieldCreatedBy, field.TypeUint32, value)
+		_spec.SetField(payee.FieldCreatedBy, field.TypeInt64, value)
 		_node.CreatedBy = &value
 	}
 	if value, ok := _c.mutation.UpdatedBy(); ok {
-		_spec.SetField(payee.FieldUpdatedBy, field.TypeUint32, value)
+		_spec.SetField(payee.FieldUpdatedBy, field.TypeInt64, value)
 		_node.UpdatedBy = &value
 	}
 	if value, ok := _c.mutation.DeletedBy(); ok {
-		_spec.SetField(payee.FieldDeletedBy, field.TypeUint32, value)
+		_spec.SetField(payee.FieldDeletedBy, field.TypeInt64, value)
 		_node.DeletedBy = &value
 	}
 	if value, ok := _c.mutation.SortOrder(); ok {
@@ -367,7 +367,7 @@ func (_c *PayeeCreate) createSpec() (*Payee, *sqlgraph.CreateSpec) {
 		_node.SortOrder = &value
 	}
 	if value, ok := _c.mutation.BookID(); ok {
-		_spec.SetField(payee.FieldBookID, field.TypeUint32, value)
+		_spec.SetField(payee.FieldBookID, field.TypeInt64, value)
 		_node.BookID = &value
 	}
 	if value, ok := _c.mutation.Name(); ok {
@@ -479,7 +479,7 @@ func (u *PayeeUpsert) ClearDeletedAt() *PayeeUpsert {
 }
 
 // SetCreatedBy sets the "created_by" field.
-func (u *PayeeUpsert) SetCreatedBy(v uint32) *PayeeUpsert {
+func (u *PayeeUpsert) SetCreatedBy(v int64) *PayeeUpsert {
 	u.Set(payee.FieldCreatedBy, v)
 	return u
 }
@@ -491,7 +491,7 @@ func (u *PayeeUpsert) UpdateCreatedBy() *PayeeUpsert {
 }
 
 // AddCreatedBy adds v to the "created_by" field.
-func (u *PayeeUpsert) AddCreatedBy(v uint32) *PayeeUpsert {
+func (u *PayeeUpsert) AddCreatedBy(v int64) *PayeeUpsert {
 	u.Add(payee.FieldCreatedBy, v)
 	return u
 }
@@ -503,7 +503,7 @@ func (u *PayeeUpsert) ClearCreatedBy() *PayeeUpsert {
 }
 
 // SetUpdatedBy sets the "updated_by" field.
-func (u *PayeeUpsert) SetUpdatedBy(v uint32) *PayeeUpsert {
+func (u *PayeeUpsert) SetUpdatedBy(v int64) *PayeeUpsert {
 	u.Set(payee.FieldUpdatedBy, v)
 	return u
 }
@@ -515,7 +515,7 @@ func (u *PayeeUpsert) UpdateUpdatedBy() *PayeeUpsert {
 }
 
 // AddUpdatedBy adds v to the "updated_by" field.
-func (u *PayeeUpsert) AddUpdatedBy(v uint32) *PayeeUpsert {
+func (u *PayeeUpsert) AddUpdatedBy(v int64) *PayeeUpsert {
 	u.Add(payee.FieldUpdatedBy, v)
 	return u
 }
@@ -527,7 +527,7 @@ func (u *PayeeUpsert) ClearUpdatedBy() *PayeeUpsert {
 }
 
 // SetDeletedBy sets the "deleted_by" field.
-func (u *PayeeUpsert) SetDeletedBy(v uint32) *PayeeUpsert {
+func (u *PayeeUpsert) SetDeletedBy(v int64) *PayeeUpsert {
 	u.Set(payee.FieldDeletedBy, v)
 	return u
 }
@@ -539,7 +539,7 @@ func (u *PayeeUpsert) UpdateDeletedBy() *PayeeUpsert {
 }
 
 // AddDeletedBy adds v to the "deleted_by" field.
-func (u *PayeeUpsert) AddDeletedBy(v uint32) *PayeeUpsert {
+func (u *PayeeUpsert) AddDeletedBy(v int64) *PayeeUpsert {
 	u.Add(payee.FieldDeletedBy, v)
 	return u
 }
@@ -764,14 +764,14 @@ func (u *PayeeUpsertOne) ClearDeletedAt() *PayeeUpsertOne {
 }
 
 // SetCreatedBy sets the "created_by" field.
-func (u *PayeeUpsertOne) SetCreatedBy(v uint32) *PayeeUpsertOne {
+func (u *PayeeUpsertOne) SetCreatedBy(v int64) *PayeeUpsertOne {
 	return u.Update(func(s *PayeeUpsert) {
 		s.SetCreatedBy(v)
 	})
 }
 
 // AddCreatedBy adds v to the "created_by" field.
-func (u *PayeeUpsertOne) AddCreatedBy(v uint32) *PayeeUpsertOne {
+func (u *PayeeUpsertOne) AddCreatedBy(v int64) *PayeeUpsertOne {
 	return u.Update(func(s *PayeeUpsert) {
 		s.AddCreatedBy(v)
 	})
@@ -792,14 +792,14 @@ func (u *PayeeUpsertOne) ClearCreatedBy() *PayeeUpsertOne {
 }
 
 // SetUpdatedBy sets the "updated_by" field.
-func (u *PayeeUpsertOne) SetUpdatedBy(v uint32) *PayeeUpsertOne {
+func (u *PayeeUpsertOne) SetUpdatedBy(v int64) *PayeeUpsertOne {
 	return u.Update(func(s *PayeeUpsert) {
 		s.SetUpdatedBy(v)
 	})
 }
 
 // AddUpdatedBy adds v to the "updated_by" field.
-func (u *PayeeUpsertOne) AddUpdatedBy(v uint32) *PayeeUpsertOne {
+func (u *PayeeUpsertOne) AddUpdatedBy(v int64) *PayeeUpsertOne {
 	return u.Update(func(s *PayeeUpsert) {
 		s.AddUpdatedBy(v)
 	})
@@ -820,14 +820,14 @@ func (u *PayeeUpsertOne) ClearUpdatedBy() *PayeeUpsertOne {
 }
 
 // SetDeletedBy sets the "deleted_by" field.
-func (u *PayeeUpsertOne) SetDeletedBy(v uint32) *PayeeUpsertOne {
+func (u *PayeeUpsertOne) SetDeletedBy(v int64) *PayeeUpsertOne {
 	return u.Update(func(s *PayeeUpsert) {
 		s.SetDeletedBy(v)
 	})
 }
 
 // AddDeletedBy adds v to the "deleted_by" field.
-func (u *PayeeUpsertOne) AddDeletedBy(v uint32) *PayeeUpsertOne {
+func (u *PayeeUpsertOne) AddDeletedBy(v int64) *PayeeUpsertOne {
 	return u.Update(func(s *PayeeUpsert) {
 		s.AddDeletedBy(v)
 	})
@@ -996,7 +996,7 @@ func (u *PayeeUpsertOne) ExecX(ctx context.Context) {
 }
 
 // Exec executes the UPSERT query and returns the inserted/updated ID.
-func (u *PayeeUpsertOne) ID(ctx context.Context) (id uint32, err error) {
+func (u *PayeeUpsertOne) ID(ctx context.Context) (id int64, err error) {
 	node, err := u.create.Save(ctx)
 	if err != nil {
 		return id, err
@@ -1005,7 +1005,7 @@ func (u *PayeeUpsertOne) ID(ctx context.Context) (id uint32, err error) {
 }
 
 // IDX is like ID, but panics if an error occurs.
-func (u *PayeeUpsertOne) IDX(ctx context.Context) uint32 {
+func (u *PayeeUpsertOne) IDX(ctx context.Context) int64 {
 	id, err := u.ID(ctx)
 	if err != nil {
 		panic(err)
@@ -1062,7 +1062,7 @@ func (_c *PayeeCreateBulk) Save(ctx context.Context) ([]*Payee, error) {
 				mutation.id = &nodes[i].ID
 				if specs[i].ID.Value != nil && nodes[i].ID == 0 {
 					id := specs[i].ID.Value.(int64)
-					nodes[i].ID = uint32(id)
+					nodes[i].ID = int64(id)
 				}
 				mutation.done = true
 				return nodes[i], nil
@@ -1246,14 +1246,14 @@ func (u *PayeeUpsertBulk) ClearDeletedAt() *PayeeUpsertBulk {
 }
 
 // SetCreatedBy sets the "created_by" field.
-func (u *PayeeUpsertBulk) SetCreatedBy(v uint32) *PayeeUpsertBulk {
+func (u *PayeeUpsertBulk) SetCreatedBy(v int64) *PayeeUpsertBulk {
 	return u.Update(func(s *PayeeUpsert) {
 		s.SetCreatedBy(v)
 	})
 }
 
 // AddCreatedBy adds v to the "created_by" field.
-func (u *PayeeUpsertBulk) AddCreatedBy(v uint32) *PayeeUpsertBulk {
+func (u *PayeeUpsertBulk) AddCreatedBy(v int64) *PayeeUpsertBulk {
 	return u.Update(func(s *PayeeUpsert) {
 		s.AddCreatedBy(v)
 	})
@@ -1274,14 +1274,14 @@ func (u *PayeeUpsertBulk) ClearCreatedBy() *PayeeUpsertBulk {
 }
 
 // SetUpdatedBy sets the "updated_by" field.
-func (u *PayeeUpsertBulk) SetUpdatedBy(v uint32) *PayeeUpsertBulk {
+func (u *PayeeUpsertBulk) SetUpdatedBy(v int64) *PayeeUpsertBulk {
 	return u.Update(func(s *PayeeUpsert) {
 		s.SetUpdatedBy(v)
 	})
 }
 
 // AddUpdatedBy adds v to the "updated_by" field.
-func (u *PayeeUpsertBulk) AddUpdatedBy(v uint32) *PayeeUpsertBulk {
+func (u *PayeeUpsertBulk) AddUpdatedBy(v int64) *PayeeUpsertBulk {
 	return u.Update(func(s *PayeeUpsert) {
 		s.AddUpdatedBy(v)
 	})
@@ -1302,14 +1302,14 @@ func (u *PayeeUpsertBulk) ClearUpdatedBy() *PayeeUpsertBulk {
 }
 
 // SetDeletedBy sets the "deleted_by" field.
-func (u *PayeeUpsertBulk) SetDeletedBy(v uint32) *PayeeUpsertBulk {
+func (u *PayeeUpsertBulk) SetDeletedBy(v int64) *PayeeUpsertBulk {
 	return u.Update(func(s *PayeeUpsert) {
 		s.SetDeletedBy(v)
 	})
 }
 
 // AddDeletedBy adds v to the "deleted_by" field.
-func (u *PayeeUpsertBulk) AddDeletedBy(v uint32) *PayeeUpsertBulk {
+func (u *PayeeUpsertBulk) AddDeletedBy(v int64) *PayeeUpsertBulk {
 	return u.Update(func(s *PayeeUpsert) {
 		s.AddDeletedBy(v)
 	})

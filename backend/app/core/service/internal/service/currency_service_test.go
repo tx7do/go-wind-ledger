@@ -27,7 +27,7 @@ func TestCurrencyService_ListAll(t *testing.T) {
 	assert.NoError(t, err)
 	assert.NotNil(t, resp)
 	assert.Len(t, resp.Items, 10)
-	assert.Equal(t, uint64(10), resp.Total)
+	assert.Equal(t, int64(10), resp.Total)
 }
 
 // ─── List (pagination) ────────────────────────────────
@@ -40,7 +40,7 @@ func TestCurrencyService_List_FirstPage(t *testing.T) {
 	})
 	assert.NoError(t, err)
 	assert.Len(t, resp.Items, 5)
-	assert.Equal(t, uint64(10), resp.Total)
+	assert.Equal(t, int64(10), resp.Total)
 }
 
 func TestCurrencyService_List_SecondPage(t *testing.T) {
@@ -61,7 +61,7 @@ func TestCurrencyService_List_OutOfRange(t *testing.T) {
 	})
 	assert.NoError(t, err)
 	assert.Empty(t, resp.Items)
-	assert.Equal(t, uint64(10), resp.Total)
+	assert.Equal(t, int64(10), resp.Total)
 }
 
 func TestCurrencyService_List_PageSizeLargerThanTotal(t *testing.T) {

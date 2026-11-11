@@ -22,13 +22,13 @@ type TagRelationCreate struct {
 }
 
 // SetTagID sets the "tag_id" field.
-func (_c *TagRelationCreate) SetTagID(v uint32) *TagRelationCreate {
+func (_c *TagRelationCreate) SetTagID(v int64) *TagRelationCreate {
 	_c.mutation.SetTagID(v)
 	return _c
 }
 
 // SetNillableTagID sets the "tag_id" field if the given value is not nil.
-func (_c *TagRelationCreate) SetNillableTagID(v *uint32) *TagRelationCreate {
+func (_c *TagRelationCreate) SetNillableTagID(v *int64) *TagRelationCreate {
 	if v != nil {
 		_c.SetTagID(*v)
 	}
@@ -36,13 +36,13 @@ func (_c *TagRelationCreate) SetNillableTagID(v *uint32) *TagRelationCreate {
 }
 
 // SetBalanceFlowID sets the "balance_flow_id" field.
-func (_c *TagRelationCreate) SetBalanceFlowID(v uint32) *TagRelationCreate {
+func (_c *TagRelationCreate) SetBalanceFlowID(v int64) *TagRelationCreate {
 	_c.mutation.SetBalanceFlowID(v)
 	return _c
 }
 
 // SetNillableBalanceFlowID sets the "balance_flow_id" field if the given value is not nil.
-func (_c *TagRelationCreate) SetNillableBalanceFlowID(v *uint32) *TagRelationCreate {
+func (_c *TagRelationCreate) SetNillableBalanceFlowID(v *int64) *TagRelationCreate {
 	if v != nil {
 		_c.SetBalanceFlowID(*v)
 	}
@@ -78,7 +78,7 @@ func (_c *TagRelationCreate) SetNillableConvertedAmount(v *float64) *TagRelation
 }
 
 // SetID sets the "id" field.
-func (_c *TagRelationCreate) SetID(v uint32) *TagRelationCreate {
+func (_c *TagRelationCreate) SetID(v int64) *TagRelationCreate {
 	_c.mutation.SetID(v)
 	return _c
 }
@@ -138,7 +138,7 @@ func (_c *TagRelationCreate) sqlSave(ctx context.Context) (*TagRelation, error) 
 	}
 	if _spec.ID.Value != _node.ID {
 		id := _spec.ID.Value.(int64)
-		_node.ID = uint32(id)
+		_node.ID = int64(id)
 	}
 	_c.mutation.id = &_node.ID
 	_c.mutation.done = true
@@ -148,7 +148,7 @@ func (_c *TagRelationCreate) sqlSave(ctx context.Context) (*TagRelation, error) 
 func (_c *TagRelationCreate) createSpec() (*TagRelation, *sqlgraph.CreateSpec) {
 	var (
 		_node = &TagRelation{config: _c.config}
-		_spec = sqlgraph.NewCreateSpec(tagrelation.Table, sqlgraph.NewFieldSpec(tagrelation.FieldID, field.TypeUint32))
+		_spec = sqlgraph.NewCreateSpec(tagrelation.Table, sqlgraph.NewFieldSpec(tagrelation.FieldID, field.TypeInt64))
 	)
 	_spec.OnConflict = _c.conflict
 	if id, ok := _c.mutation.ID(); ok {
@@ -156,11 +156,11 @@ func (_c *TagRelationCreate) createSpec() (*TagRelation, *sqlgraph.CreateSpec) {
 		_spec.ID.Value = id
 	}
 	if value, ok := _c.mutation.TagID(); ok {
-		_spec.SetField(tagrelation.FieldTagID, field.TypeUint32, value)
+		_spec.SetField(tagrelation.FieldTagID, field.TypeInt64, value)
 		_node.TagID = &value
 	}
 	if value, ok := _c.mutation.BalanceFlowID(); ok {
-		_spec.SetField(tagrelation.FieldBalanceFlowID, field.TypeUint32, value)
+		_spec.SetField(tagrelation.FieldBalanceFlowID, field.TypeInt64, value)
 		_node.BalanceFlowID = &value
 	}
 	if value, ok := _c.mutation.Amount(); ok {
@@ -224,7 +224,7 @@ type (
 )
 
 // SetTagID sets the "tag_id" field.
-func (u *TagRelationUpsert) SetTagID(v uint32) *TagRelationUpsert {
+func (u *TagRelationUpsert) SetTagID(v int64) *TagRelationUpsert {
 	u.Set(tagrelation.FieldTagID, v)
 	return u
 }
@@ -236,7 +236,7 @@ func (u *TagRelationUpsert) UpdateTagID() *TagRelationUpsert {
 }
 
 // AddTagID adds v to the "tag_id" field.
-func (u *TagRelationUpsert) AddTagID(v uint32) *TagRelationUpsert {
+func (u *TagRelationUpsert) AddTagID(v int64) *TagRelationUpsert {
 	u.Add(tagrelation.FieldTagID, v)
 	return u
 }
@@ -248,7 +248,7 @@ func (u *TagRelationUpsert) ClearTagID() *TagRelationUpsert {
 }
 
 // SetBalanceFlowID sets the "balance_flow_id" field.
-func (u *TagRelationUpsert) SetBalanceFlowID(v uint32) *TagRelationUpsert {
+func (u *TagRelationUpsert) SetBalanceFlowID(v int64) *TagRelationUpsert {
 	u.Set(tagrelation.FieldBalanceFlowID, v)
 	return u
 }
@@ -260,7 +260,7 @@ func (u *TagRelationUpsert) UpdateBalanceFlowID() *TagRelationUpsert {
 }
 
 // AddBalanceFlowID adds v to the "balance_flow_id" field.
-func (u *TagRelationUpsert) AddBalanceFlowID(v uint32) *TagRelationUpsert {
+func (u *TagRelationUpsert) AddBalanceFlowID(v int64) *TagRelationUpsert {
 	u.Add(tagrelation.FieldBalanceFlowID, v)
 	return u
 }
@@ -368,14 +368,14 @@ func (u *TagRelationUpsertOne) Update(set func(*TagRelationUpsert)) *TagRelation
 }
 
 // SetTagID sets the "tag_id" field.
-func (u *TagRelationUpsertOne) SetTagID(v uint32) *TagRelationUpsertOne {
+func (u *TagRelationUpsertOne) SetTagID(v int64) *TagRelationUpsertOne {
 	return u.Update(func(s *TagRelationUpsert) {
 		s.SetTagID(v)
 	})
 }
 
 // AddTagID adds v to the "tag_id" field.
-func (u *TagRelationUpsertOne) AddTagID(v uint32) *TagRelationUpsertOne {
+func (u *TagRelationUpsertOne) AddTagID(v int64) *TagRelationUpsertOne {
 	return u.Update(func(s *TagRelationUpsert) {
 		s.AddTagID(v)
 	})
@@ -396,14 +396,14 @@ func (u *TagRelationUpsertOne) ClearTagID() *TagRelationUpsertOne {
 }
 
 // SetBalanceFlowID sets the "balance_flow_id" field.
-func (u *TagRelationUpsertOne) SetBalanceFlowID(v uint32) *TagRelationUpsertOne {
+func (u *TagRelationUpsertOne) SetBalanceFlowID(v int64) *TagRelationUpsertOne {
 	return u.Update(func(s *TagRelationUpsert) {
 		s.SetBalanceFlowID(v)
 	})
 }
 
 // AddBalanceFlowID adds v to the "balance_flow_id" field.
-func (u *TagRelationUpsertOne) AddBalanceFlowID(v uint32) *TagRelationUpsertOne {
+func (u *TagRelationUpsertOne) AddBalanceFlowID(v int64) *TagRelationUpsertOne {
 	return u.Update(func(s *TagRelationUpsert) {
 		s.AddBalanceFlowID(v)
 	})
@@ -495,7 +495,7 @@ func (u *TagRelationUpsertOne) ExecX(ctx context.Context) {
 }
 
 // Exec executes the UPSERT query and returns the inserted/updated ID.
-func (u *TagRelationUpsertOne) ID(ctx context.Context) (id uint32, err error) {
+func (u *TagRelationUpsertOne) ID(ctx context.Context) (id int64, err error) {
 	node, err := u.create.Save(ctx)
 	if err != nil {
 		return id, err
@@ -504,7 +504,7 @@ func (u *TagRelationUpsertOne) ID(ctx context.Context) (id uint32, err error) {
 }
 
 // IDX is like ID, but panics if an error occurs.
-func (u *TagRelationUpsertOne) IDX(ctx context.Context) uint32 {
+func (u *TagRelationUpsertOne) IDX(ctx context.Context) int64 {
 	id, err := u.ID(ctx)
 	if err != nil {
 		panic(err)
@@ -560,7 +560,7 @@ func (_c *TagRelationCreateBulk) Save(ctx context.Context) ([]*TagRelation, erro
 				mutation.id = &nodes[i].ID
 				if specs[i].ID.Value != nil && nodes[i].ID == 0 {
 					id := specs[i].ID.Value.(int64)
-					nodes[i].ID = uint32(id)
+					nodes[i].ID = int64(id)
 				}
 				mutation.done = true
 				return nodes[i], nil
@@ -693,14 +693,14 @@ func (u *TagRelationUpsertBulk) Update(set func(*TagRelationUpsert)) *TagRelatio
 }
 
 // SetTagID sets the "tag_id" field.
-func (u *TagRelationUpsertBulk) SetTagID(v uint32) *TagRelationUpsertBulk {
+func (u *TagRelationUpsertBulk) SetTagID(v int64) *TagRelationUpsertBulk {
 	return u.Update(func(s *TagRelationUpsert) {
 		s.SetTagID(v)
 	})
 }
 
 // AddTagID adds v to the "tag_id" field.
-func (u *TagRelationUpsertBulk) AddTagID(v uint32) *TagRelationUpsertBulk {
+func (u *TagRelationUpsertBulk) AddTagID(v int64) *TagRelationUpsertBulk {
 	return u.Update(func(s *TagRelationUpsert) {
 		s.AddTagID(v)
 	})
@@ -721,14 +721,14 @@ func (u *TagRelationUpsertBulk) ClearTagID() *TagRelationUpsertBulk {
 }
 
 // SetBalanceFlowID sets the "balance_flow_id" field.
-func (u *TagRelationUpsertBulk) SetBalanceFlowID(v uint32) *TagRelationUpsertBulk {
+func (u *TagRelationUpsertBulk) SetBalanceFlowID(v int64) *TagRelationUpsertBulk {
 	return u.Update(func(s *TagRelationUpsert) {
 		s.SetBalanceFlowID(v)
 	})
 }
 
 // AddBalanceFlowID adds v to the "balance_flow_id" field.
-func (u *TagRelationUpsertBulk) AddBalanceFlowID(v uint32) *TagRelationUpsertBulk {
+func (u *TagRelationUpsertBulk) AddBalanceFlowID(v int64) *TagRelationUpsertBulk {
 	return u.Update(func(s *TagRelationUpsert) {
 		s.AddBalanceFlowID(v)
 	})

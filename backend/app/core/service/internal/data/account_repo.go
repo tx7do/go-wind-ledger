@@ -21,11 +21,11 @@ import (
 )
 
 type AccountRepo struct {
-	entClient  *entCrud.EntClient[*ent.Client]
-	log        *log.Helper
-	mapper     *mapper.CopierMapper[ledgerV1.Account, ent.Account]
+	entClient     *entCrud.EntClient[*ent.Client]
+	log           *log.Helper
+	mapper        *mapper.CopierMapper[ledgerV1.Account, ent.Account]
 	typeConverter *mapper.EnumTypeConverter[ledgerV1.AccountType, account.Type]
-	repository *entCrud.Repository[
+	repository    *entCrud.Repository[
 		ent.AccountQuery, ent.AccountSelect,
 		ent.AccountCreate, ent.AccountCreateBulk,
 		ent.AccountUpdate, ent.AccountUpdateOne,
@@ -91,10 +91,10 @@ func (r *AccountRepo) ListAll(ctx context.Context, includeDisabled bool) (*ledge
 	for _, e := range entities {
 		items = append(items, r.mapper.ToDTO(e))
 	}
-	return &ledgerV1.ListAccountResponse{Items: items, Total: uint64(len(items))}, nil
+	return &ledgerV1.ListAccountResponse{Items: items, Total: int64(len(items))}, nil
 }
 
-func (r *AccountRepo) Get(ctx context.Context, id uint32) (*ledgerV1.Account, error) {
+func (r *AccountRepo) Get(ctx context.Context, id int64) (*ledgerV1.Account, error) {
 	entity, err := r.entClient.Client().Account.Query().Where(account.IDEQ(id)).Only(ctx)
 	if err != nil {
 		if ent.IsNotFound(err) {
@@ -139,7 +139,7 @@ func (r *AccountRepo) Create(ctx context.Context, data *ledgerV1.Account) (*ledg
 	return r.mapper.ToDTO(saved), nil
 }
 
-func (r *AccountRepo) Update(ctx context.Context, id uint32, data *ledgerV1.Account, mask *fieldmaskpb.FieldMask) (*ledgerV1.Account, error) {
+func (r *AccountRepo) Update(ctx context.Context, id int64, data *ledgerV1.Account, mask *fieldmaskpb.FieldMask) (*ledgerV1.Account, error) {
 	if data == nil {
 		return nil, ledgerV1.ErrorBadRequest("invalid parameter")
 	}
@@ -167,11 +167,11 @@ func (r *AccountRepo) Update(ctx context.Context, id uint32, data *ledgerV1.Acco
 	return r.mapper.ToDTO(updated), nil
 }
 
-func (r *AccountRepo) Delete(ctx context.Context, id uint32) error {
+func (r *AccountRepo) Delete(ctx context.Context, id int64) error {
 	return r.entClient.Client().Account.DeleteOneID(id).Exec(ctx)
 }
 
-func (r *AccountRepo) Toggle(ctx context.Context, id uint32) (*ledgerV1.Account, error) {
+func (r *AccountRepo) Toggle(ctx context.Context, id int64) (*ledgerV1.Account, error) {
 	entity, err := r.entClient.Client().Account.Query().Where(account.IDEQ(id)).Only(ctx)
 	if err != nil {
 		if ent.IsNotFound(err) {
@@ -183,7 +183,7 @@ func (r *AccountRepo) Toggle(ctx context.Context, id uint32) (*ledgerV1.Account,
 	return r.mapper.ToDTO(updated), nil
 }
 
-func (r *AccountRepo) ToggleInclude(ctx context.Context, id uint32) (*ledgerV1.Account, error) {
+func (r *AccountRepo) ToggleInclude(ctx context.Context, id int64) (*ledgerV1.Account, error) {
 	entity, err := r.entClient.Client().Account.Query().Where(account.IDEQ(id)).Only(ctx)
 	if err != nil {
 		if ent.IsNotFound(err) {
@@ -195,7 +195,7 @@ func (r *AccountRepo) ToggleInclude(ctx context.Context, id uint32) (*ledgerV1.A
 	return r.mapper.ToDTO(updated), nil
 }
 
-func (r *AccountRepo) ToggleCanExpense(ctx context.Context, id uint32) (*ledgerV1.Account, error) {
+func (r *AccountRepo) ToggleCanExpense(ctx context.Context, id int64) (*ledgerV1.Account, error) {
 	entity, err := r.entClient.Client().Account.Query().Where(account.IDEQ(id)).Only(ctx)
 	if err != nil {
 		if ent.IsNotFound(err) {
@@ -207,7 +207,7 @@ func (r *AccountRepo) ToggleCanExpense(ctx context.Context, id uint32) (*ledgerV
 	return r.mapper.ToDTO(updated), nil
 }
 
-func (r *AccountRepo) ToggleCanIncome(ctx context.Context, id uint32) (*ledgerV1.Account, error) {
+func (r *AccountRepo) ToggleCanIncome(ctx context.Context, id int64) (*ledgerV1.Account, error) {
 	entity, err := r.entClient.Client().Account.Query().Where(account.IDEQ(id)).Only(ctx)
 	if err != nil {
 		if ent.IsNotFound(err) {
@@ -219,7 +219,7 @@ func (r *AccountRepo) ToggleCanIncome(ctx context.Context, id uint32) (*ledgerV1
 	return r.mapper.ToDTO(updated), nil
 }
 
-func (r *AccountRepo) ToggleCanTransferFrom(ctx context.Context, id uint32) (*ledgerV1.Account, error) {
+func (r *AccountRepo) ToggleCanTransferFrom(ctx context.Context, id int64) (*ledgerV1.Account, error) {
 	entity, err := r.entClient.Client().Account.Query().Where(account.IDEQ(id)).Only(ctx)
 	if err != nil {
 		if ent.IsNotFound(err) {
@@ -231,7 +231,7 @@ func (r *AccountRepo) ToggleCanTransferFrom(ctx context.Context, id uint32) (*le
 	return r.mapper.ToDTO(updated), nil
 }
 
-func (r *AccountRepo) ToggleCanTransferTo(ctx context.Context, id uint32) (*ledgerV1.Account, error) {
+func (r *AccountRepo) ToggleCanTransferTo(ctx context.Context, id int64) (*ledgerV1.Account, error) {
 	entity, err := r.entClient.Client().Account.Query().Where(account.IDEQ(id)).Only(ctx)
 	if err != nil {
 		if ent.IsNotFound(err) {
@@ -243,7 +243,7 @@ func (r *AccountRepo) ToggleCanTransferTo(ctx context.Context, id uint32) (*ledg
 	return r.mapper.ToDTO(updated), nil
 }
 
-func (r *AccountRepo) UpdateBalance(ctx context.Context, id uint32, newBalance float64) error {
+func (r *AccountRepo) UpdateBalance(ctx context.Context, id int64, newBalance float64) error {
 	_, err := r.entClient.Client().Account.UpdateOneID(id).SetBalance(newBalance).Save(ctx)
 	return err
 }
@@ -369,4 +369,3 @@ func (r *AccountRepo) Statistics(ctx context.Context, currencyCode string) (*led
 		TotalAvailable:   FloatToStr(totalBalance + totalCreditLimit),
 	}, nil
 }
-

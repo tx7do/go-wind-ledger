@@ -17,9 +17,9 @@ type Book struct {
 	config `json:"-"`
 	// ID of the ent.
 	// id
-	ID uint32 `json:"id,omitempty"`
+	ID int64 `json:"id,omitempty"`
 	// 租户ID
-	TenantID *uint32 `json:"tenant_id,omitempty"`
+	TenantID *int64 `json:"tenant_id,omitempty"`
 	// 创建时间
 	CreatedAt *time.Time `json:"created_at,omitempty"`
 	// 更新时间
@@ -27,11 +27,11 @@ type Book struct {
 	// 删除时间
 	DeletedAt *time.Time `json:"deleted_at,omitempty"`
 	// 创建者ID
-	CreatedBy *uint32 `json:"created_by,omitempty"`
+	CreatedBy *int64 `json:"created_by,omitempty"`
 	// 更新者ID
-	UpdatedBy *uint32 `json:"updated_by,omitempty"`
+	UpdatedBy *int64 `json:"updated_by,omitempty"`
 	// 删除者ID
-	DeletedBy *uint32 `json:"deleted_by,omitempty"`
+	DeletedBy *int64 `json:"deleted_by,omitempty"`
 	// 排序值（越小越靠前）
 	SortOrder *uint32 `json:"sort_order,omitempty"`
 	// 账本名称
@@ -45,17 +45,17 @@ type Book struct {
 	// 上次导出时间
 	ExportAt *int64 `json:"export_at,omitempty"`
 	// DefaultExpenseAccountID holds the value of the "default_expense_account_id" field.
-	DefaultExpenseAccountID *uint32 `json:"default_expense_account_id,omitempty"`
+	DefaultExpenseAccountID *int64 `json:"default_expense_account_id,omitempty"`
 	// DefaultIncomeAccountID holds the value of the "default_income_account_id" field.
-	DefaultIncomeAccountID *uint32 `json:"default_income_account_id,omitempty"`
+	DefaultIncomeAccountID *int64 `json:"default_income_account_id,omitempty"`
 	// DefaultTransferFromAccountID holds the value of the "default_transfer_from_account_id" field.
-	DefaultTransferFromAccountID *uint32 `json:"default_transfer_from_account_id,omitempty"`
+	DefaultTransferFromAccountID *int64 `json:"default_transfer_from_account_id,omitempty"`
 	// DefaultTransferToAccountID holds the value of the "default_transfer_to_account_id" field.
-	DefaultTransferToAccountID *uint32 `json:"default_transfer_to_account_id,omitempty"`
+	DefaultTransferToAccountID *int64 `json:"default_transfer_to_account_id,omitempty"`
 	// DefaultExpenseCategoryID holds the value of the "default_expense_category_id" field.
-	DefaultExpenseCategoryID *uint32 `json:"default_expense_category_id,omitempty"`
+	DefaultExpenseCategoryID *int64 `json:"default_expense_category_id,omitempty"`
 	// DefaultIncomeCategoryID holds the value of the "default_income_category_id" field.
-	DefaultIncomeCategoryID *uint32 `json:"default_income_category_id,omitempty"`
+	DefaultIncomeCategoryID *int64 `json:"default_income_category_id,omitempty"`
 	selectValues            sql.SelectValues
 }
 
@@ -92,13 +92,13 @@ func (_m *Book) assignValues(columns []string, values []any) error {
 			if !ok {
 				return fmt.Errorf("unexpected type %T for field id", value)
 			}
-			_m.ID = uint32(value.Int64)
+			_m.ID = int64(value.Int64)
 		case book.FieldTenantID:
 			if value, ok := values[i].(*sql.NullInt64); !ok {
 				return fmt.Errorf("unexpected type %T for field tenant_id", values[i])
 			} else if value.Valid {
-				_m.TenantID = new(uint32)
-				*_m.TenantID = uint32(value.Int64)
+				_m.TenantID = new(int64)
+				*_m.TenantID = value.Int64
 			}
 		case book.FieldCreatedAt:
 			if value, ok := values[i].(*sql.NullTime); !ok {
@@ -125,22 +125,22 @@ func (_m *Book) assignValues(columns []string, values []any) error {
 			if value, ok := values[i].(*sql.NullInt64); !ok {
 				return fmt.Errorf("unexpected type %T for field created_by", values[i])
 			} else if value.Valid {
-				_m.CreatedBy = new(uint32)
-				*_m.CreatedBy = uint32(value.Int64)
+				_m.CreatedBy = new(int64)
+				*_m.CreatedBy = value.Int64
 			}
 		case book.FieldUpdatedBy:
 			if value, ok := values[i].(*sql.NullInt64); !ok {
 				return fmt.Errorf("unexpected type %T for field updated_by", values[i])
 			} else if value.Valid {
-				_m.UpdatedBy = new(uint32)
-				*_m.UpdatedBy = uint32(value.Int64)
+				_m.UpdatedBy = new(int64)
+				*_m.UpdatedBy = value.Int64
 			}
 		case book.FieldDeletedBy:
 			if value, ok := values[i].(*sql.NullInt64); !ok {
 				return fmt.Errorf("unexpected type %T for field deleted_by", values[i])
 			} else if value.Valid {
-				_m.DeletedBy = new(uint32)
-				*_m.DeletedBy = uint32(value.Int64)
+				_m.DeletedBy = new(int64)
+				*_m.DeletedBy = value.Int64
 			}
 		case book.FieldSortOrder:
 			if value, ok := values[i].(*sql.NullInt64); !ok {
@@ -188,43 +188,43 @@ func (_m *Book) assignValues(columns []string, values []any) error {
 			if value, ok := values[i].(*sql.NullInt64); !ok {
 				return fmt.Errorf("unexpected type %T for field default_expense_account_id", values[i])
 			} else if value.Valid {
-				_m.DefaultExpenseAccountID = new(uint32)
-				*_m.DefaultExpenseAccountID = uint32(value.Int64)
+				_m.DefaultExpenseAccountID = new(int64)
+				*_m.DefaultExpenseAccountID = value.Int64
 			}
 		case book.FieldDefaultIncomeAccountID:
 			if value, ok := values[i].(*sql.NullInt64); !ok {
 				return fmt.Errorf("unexpected type %T for field default_income_account_id", values[i])
 			} else if value.Valid {
-				_m.DefaultIncomeAccountID = new(uint32)
-				*_m.DefaultIncomeAccountID = uint32(value.Int64)
+				_m.DefaultIncomeAccountID = new(int64)
+				*_m.DefaultIncomeAccountID = value.Int64
 			}
 		case book.FieldDefaultTransferFromAccountID:
 			if value, ok := values[i].(*sql.NullInt64); !ok {
 				return fmt.Errorf("unexpected type %T for field default_transfer_from_account_id", values[i])
 			} else if value.Valid {
-				_m.DefaultTransferFromAccountID = new(uint32)
-				*_m.DefaultTransferFromAccountID = uint32(value.Int64)
+				_m.DefaultTransferFromAccountID = new(int64)
+				*_m.DefaultTransferFromAccountID = value.Int64
 			}
 		case book.FieldDefaultTransferToAccountID:
 			if value, ok := values[i].(*sql.NullInt64); !ok {
 				return fmt.Errorf("unexpected type %T for field default_transfer_to_account_id", values[i])
 			} else if value.Valid {
-				_m.DefaultTransferToAccountID = new(uint32)
-				*_m.DefaultTransferToAccountID = uint32(value.Int64)
+				_m.DefaultTransferToAccountID = new(int64)
+				*_m.DefaultTransferToAccountID = value.Int64
 			}
 		case book.FieldDefaultExpenseCategoryID:
 			if value, ok := values[i].(*sql.NullInt64); !ok {
 				return fmt.Errorf("unexpected type %T for field default_expense_category_id", values[i])
 			} else if value.Valid {
-				_m.DefaultExpenseCategoryID = new(uint32)
-				*_m.DefaultExpenseCategoryID = uint32(value.Int64)
+				_m.DefaultExpenseCategoryID = new(int64)
+				*_m.DefaultExpenseCategoryID = value.Int64
 			}
 		case book.FieldDefaultIncomeCategoryID:
 			if value, ok := values[i].(*sql.NullInt64); !ok {
 				return fmt.Errorf("unexpected type %T for field default_income_category_id", values[i])
 			} else if value.Valid {
-				_m.DefaultIncomeCategoryID = new(uint32)
-				*_m.DefaultIncomeCategoryID = uint32(value.Int64)
+				_m.DefaultIncomeCategoryID = new(int64)
+				*_m.DefaultIncomeCategoryID = value.Int64
 			}
 		default:
 			_m.selectValues.Set(columns[i], values[i])

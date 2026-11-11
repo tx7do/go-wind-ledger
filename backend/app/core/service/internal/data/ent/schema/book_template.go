@@ -22,7 +22,7 @@ func (BookTemplate) Annotations() []schema.Annotation {
 
 func (BookTemplate) Mixin() []ent.Mixin {
 	return []ent.Mixin{
-		mixin.AutoIncrementId{},
+		mixin.AutoIncrementId64{},
 		mixin.TimeAt{},
 	}
 }

@@ -4,69 +4,75 @@
 
 import 'dart:async';
 import 'dart:convert';
+import 'dart:typed_data';
 import '../../../transport.dart';
+import '../../../proto_wire.dart';
 
 /// 前台应用错误定义
 enum AppErrorReason {
-  badGateway('BAD_GATEWAY'),
-  badRequest('BAD_REQUEST'),
-  conflict('CONFLICT'),
-  expectationFailed('EXPECTATION_FAILED'),
-  failedDependency('FAILED_DEPENDENCY'),
-  forbidden('FORBIDDEN'),
-  gatewayTimeout('GATEWAY_TIMEOUT'),
-  gone('GONE'),
-  httpVersionNotSupported('HTTP_VERSION_NOT_SUPPORTED'),
-  imATeapot('IM_A_TEAPOT'),
-  incorrectAccessToken('INCORRECT_ACCESS_TOKEN'),
-  incorrectAppSecret('INCORRECT_APP_SECRET'),
-  incorrectRefreshToken('INCORRECT_REFRESH_TOKEN'),
-  insufficientStorage('INSUFFICIENT_STORAGE'),
-  internalServerError('INTERNAL_SERVER_ERROR'),
-  invalidGrantType('INVALID_GRANT_TYPE'),
-  invalidPassword('INVALID_PASSWORD'),
-  invalidToken('INVALID_TOKEN'),
-  invalidUserid('INVALID_USERID'),
-  lengthRequired('LENGTH_REQUIRED'),
-  locked('LOCKED'),
-  loopDetected('LOOP_DETECTED'),
-  methodNotAllowed('METHOD_NOT_ALLOWED'),
-  misdirectedRequest('MISDIRECTED_REQUEST'),
-  networkAuthenticationRequired('NETWORK_AUTHENTICATION_REQUIRED'),
-  networkConnectTimeoutError('NETWORK_CONNECT_TIMEOUT_ERROR'),
-  networkReadTimeoutError('NETWORK_READ_TIMEOUT_ERROR'),
-  notAcceptable('NOT_ACCEPTABLE'),
-  notExtended('NOT_EXTENDED'),
-  notFound('NOT_FOUND'),
-  notImplemented('NOT_IMPLEMENTED'),
-  payloadTooLarge('PAYLOAD_TOO_LARGE'),
-  paymentRequired('PAYMENT_REQUIRED'),
-  preconditionFailed('PRECONDITION_FAILED'),
-  preconditionRequired('PRECONDITION_REQUIRED'),
-  proxyAuthenticationRequired('PROXY_AUTHENTICATION_REQUIRED'),
-  rangeNotSatisfiable('RANGE_NOT_SATISFIABLE'),
-  requestHeaderFieldsTooLarge('REQUEST_HEADER_FIELDS_TOO_LARGE'),
-  requestTimeout('REQUEST_TIMEOUT'),
-  serviceUnavailable('SERVICE_UNAVAILABLE'),
-  tokenExpired('TOKEN_EXPIRED'),
-  tokenNotExist('TOKEN_NOT_EXIST'),
-  tooEarly('TOO_EARLY'),
-  tooManyRequests('TOO_MANY_REQUESTS'),
-  unauthorized('UNAUTHORIZED'),
-  unavailableForLegalReasons('UNAVAILABLE_FOR_LEGAL_REASONS'),
-  unprocessableEntity('UNPROCESSABLE_ENTITY'),
-  unsupportedMediaType('UNSUPPORTED_MEDIA_TYPE'),
-  upgradeRequired('UPGRADE_REQUIRED'),
-  uriTooLong('URI_TOO_LONG'),
-  userFreeze('USER_FREEZE'),
-  userNotFound('USER_NOT_FOUND'),
-  variantAlsoNegotiates('VARIANT_ALSO_NEGOTIATES');
+  badGateway('BAD_GATEWAY', 2200),
+  badRequest('BAD_REQUEST', 0),
+  conflict('CONFLICT', 900),
+  expectationFailed('EXPECTATION_FAILED', 1070),
+  failedDependency('FAILED_DEPENDENCY', 1120),
+  forbidden('FORBIDDEN', 300),
+  gatewayTimeout('GATEWAY_TIMEOUT', 2400),
+  gone('GONE', 1000),
+  httpVersionNotSupported('HTTP_VERSION_NOT_SUPPORTED', 2500),
+  imATeapot('IM_A_TEAPOT', 1080),
+  incorrectAccessToken('INCORRECT_ACCESS_TOKEN', 104),
+  incorrectAppSecret('INCORRECT_APP_SECRET', 103),
+  incorrectRefreshToken('INCORRECT_REFRESH_TOKEN', 105),
+  insufficientStorage('INSUFFICIENT_STORAGE', 2700),
+  internalServerError('INTERNAL_SERVER_ERROR', 2000),
+  invalidGrantType('INVALID_GRANT_TYPE', 1),
+  invalidPassword('INVALID_PASSWORD', 4),
+  invalidToken('INVALID_TOKEN', 3),
+  invalidUserid('INVALID_USERID', 2),
+  lengthRequired('LENGTH_REQUIRED', 1010),
+  locked('LOCKED', 1110),
+  loopDetected('LOOP_DETECTED', 2800),
+  methodNotAllowed('METHOD_NOT_ALLOWED', 500),
+  misdirectedRequest('MISDIRECTED_REQUEST', 1090),
+  networkAuthenticationRequired('NETWORK_AUTHENTICATION_REQUIRED', 3000),
+  networkConnectTimeoutError('NETWORK_CONNECT_TIMEOUT_ERROR', 3200),
+  networkReadTimeoutError('NETWORK_READ_TIMEOUT_ERROR', 3100),
+  notAcceptable('NOT_ACCEPTABLE', 600),
+  notExtended('NOT_EXTENDED', 2900),
+  notFound('NOT_FOUND', 400),
+  notImplemented('NOT_IMPLEMENTED', 2100),
+  payloadTooLarge('PAYLOAD_TOO_LARGE', 1030),
+  paymentRequired('PAYMENT_REQUIRED', 200),
+  preconditionFailed('PRECONDITION_FAILED', 1020),
+  preconditionRequired('PRECONDITION_REQUIRED', 1150),
+  proxyAuthenticationRequired('PROXY_AUTHENTICATION_REQUIRED', 700),
+  rangeNotSatisfiable('RANGE_NOT_SATISFIABLE', 1060),
+  requestHeaderFieldsTooLarge('REQUEST_HEADER_FIELDS_TOO_LARGE', 1170),
+  requestTimeout('REQUEST_TIMEOUT', 800),
+  serviceUnavailable('SERVICE_UNAVAILABLE', 2300),
+  tokenExpired('TOKEN_EXPIRED', 106),
+  tokenNotExist('TOKEN_NOT_EXIST', 107),
+  tooEarly('TOO_EARLY', 1130),
+  tooManyRequests('TOO_MANY_REQUESTS', 1160),
+  unauthorized('UNAUTHORIZED', 100),
+  unavailableForLegalReasons('UNAVAILABLE_FOR_LEGAL_REASONS', 1180),
+  unprocessableEntity('UNPROCESSABLE_ENTITY', 1100),
+  unsupportedMediaType('UNSUPPORTED_MEDIA_TYPE', 1050),
+  upgradeRequired('UPGRADE_REQUIRED', 1140),
+  uriTooLong('URI_TOO_LONG', 1040),
+  userFreeze('USER_FREEZE', 101),
+  userNotFound('USER_NOT_FOUND', 401),
+  variantAlsoNegotiates('VARIANT_ALSO_NEGOTIATES', 2600);
 
   final String value;
-  const AppErrorReason(this.value);
+  /// proto 枚举数值（二进制 wire 编解码用，与 JSON 的 value 字符串互补）
+  final int wire;
+  const AppErrorReason(this.value, this.wire);
 
   static AppErrorReason fromString(String v) =>
     values.firstWhere((e) => e.value == v, orElse: () => throw ArgumentError('Unknown AppErrorReason value: ' + v));
+  static AppErrorReason fromWire(int v) =>
+    values.firstWhere((e) => e.wire == v, orElse: () => throw ArgumentError('Unknown AppErrorReason wire value: ' + v.toString()));
   @override
   String toString() => value;
 }
@@ -175,7 +181,9 @@ class AccountServiceClient {
       throw ArgumentError('missing required field request.id');
     }
     final path = '/app/v1/accounts/${request.id}';
-    final body = jsonEncode(request.toJson());
+    final bodyMap = request.toJson();
+    bodyMap.remove('id');
+    final body = jsonEncode(bodyMap);
     final result = await _transport.unary(path, 'PUT', body, TransportMeta(
       service: 'AccountService',
       method: 'Update',
@@ -200,7 +208,9 @@ class AccountServiceClient {
       throw ArgumentError('missing required field request.id');
     }
     final path = '/app/v1/accounts/${request.id}/toggle';
-    final body = jsonEncode(request.toJson());
+    final bodyMap = request.toJson();
+    bodyMap.remove('id');
+    final body = jsonEncode(bodyMap);
     final result = await _transport.unary(path, 'PATCH', body, TransportMeta(
       service: 'AccountService',
       method: 'Toggle',
@@ -213,7 +223,9 @@ class AccountServiceClient {
       throw ArgumentError('missing required field request.id');
     }
     final path = '/app/v1/accounts/${request.id}/adjust';
-    final body = jsonEncode(request.toJson());
+    final bodyMap = request.toJson();
+    bodyMap.remove('id');
+    final body = jsonEncode(bodyMap);
     final result = await _transport.unary(path, 'POST', body, TransportMeta(
       service: 'AccountService',
       method: 'AdjustBalance',
@@ -403,6 +415,153 @@ class PaginationPagingRequest {
       token: token ?? this.token,
     );
   }
+
+  /// 二进制 proto 编码（MQTT 等二进制传输用；字段按编号升序写出）
+  Uint8List writeToBuffer() {
+    final w = ProtoWireWriter();
+    _writeTo(w);
+    return w.toBuffer();
+  }
+
+  void _writeTo(ProtoWireWriter w) {
+    // field 1: page
+    final f1 = page;
+    if (f1 != null) {
+      w.writeUint32(1, f1);
+    }
+    // field 2: pageSize
+    final f2 = pageSize;
+    if (f2 != null) {
+      w.writeUint32(2, f2);
+    }
+    // field 3: offset
+    final f3 = offset;
+    if (f3 != null) {
+      w.writeUint64(3, f3);
+    }
+    // field 4: limit
+    final f4 = limit;
+    if (f4 != null) {
+      w.writeUint32(4, f4);
+    }
+    // field 5: token
+    final f5 = token;
+    if (f5 != null) {
+      w.writeString(5, f5);
+    }
+    // field 6: noPaging
+    final f6 = noPaging;
+    if (f6 != null) {
+      w.writeBool(6, f6);
+    }
+    // field 10: query
+    final f10 = query;
+    if (f10 != null) {
+      w.writeString(10, f10);
+    }
+    // field 11: filter
+    final f11 = filter;
+    if (f11 != null) {
+      w.writeString(11, f11);
+    }
+    // field 12: filterExpr
+    final f12 = filterExpr;
+    if (f12 != null) {
+      final cw = ProtoWireWriter(); f12._writeTo(cw); w.writeRaw(12, cw.toBuffer()); // PaginationFilterExpr
+    }
+    // field 20: orderBy
+    final f20 = orderBy;
+    if (f20 != null) {
+      w.writeString(20, f20);
+    }
+    // field 21: sorting
+    final f21 = sorting;
+    if (f21 != null) {
+      for (final e in f21) { final cw = ProtoWireWriter(); e._writeTo(cw); w.writeRaw(21, cw.toBuffer()); }
+    }
+    // field 30: fieldMask
+    final f30 = fieldMask;
+    if (f30 != null) {
+      w.writeFieldMask(30, f30);
+    }
+  }
+
+  factory PaginationPagingRequest.fromBuffer(List<int> bytes) {
+    return PaginationPagingRequest._readFrom(ProtoWireReader(bytes));
+  }
+
+  static PaginationPagingRequest _readFrom(ProtoWireReader r) {
+    final m = PaginationPagingRequest();
+    while (r.next()) {
+      switch (r.fieldNumber) {
+        // field 1: page
+        case 1: {
+          m.page = r.readUint32();
+          break;
+        }
+        // field 2: pageSize
+        case 2: {
+          m.pageSize = r.readUint32();
+          break;
+        }
+        // field 3: offset
+        case 3: {
+          m.offset = r.readUint64();
+          break;
+        }
+        // field 4: limit
+        case 4: {
+          m.limit = r.readUint32();
+          break;
+        }
+        // field 5: token
+        case 5: {
+          m.token = r.readString();
+          break;
+        }
+        // field 6: noPaging
+        case 6: {
+          m.noPaging = r.readBool();
+          break;
+        }
+        // field 10: query
+        case 10: {
+          m.query = r.readString();
+          break;
+        }
+        // field 11: filter
+        case 11: {
+          m.filter = r.readString();
+          break;
+        }
+        // field 12: filterExpr
+        case 12: {
+          m.filterExpr = PaginationFilterExpr._readFrom(r.readNested());
+          break;
+        }
+        // field 20: orderBy
+        case 20: {
+          m.orderBy = r.readString();
+          break;
+        }
+        // field 21: sorting
+        case 21: {
+          m.sorting = r.readNestedList().map(PaginationSorting._readFrom).toList();
+          break;
+        }
+        // field 30: fieldMask
+        case 30: {
+          m.fieldMask = r.readFieldMaskText();
+          break;
+        }
+        default: {
+          r.skip();
+        }
+      }
+    }
+    return m;
+  }
+
 }
 
 /// 过滤表达式
@@ -469,19 +628,80 @@ class PaginationFilterExpr {
       type: type ?? this.type,
     );
   }
+
+  /// 二进制 proto 编码（MQTT 等二进制传输用；字段按编号升序写出）
+  Uint8List writeToBuffer() {
+    final w = ProtoWireWriter();
+    _writeTo(w);
+    return w.toBuffer();
+  }
+
+  void _writeTo(ProtoWireWriter w) {
+    // field 1: type
+    final f1 = type;
+    if (f1 != null) {
+      w.writeEnum(1, f1.wire); // PaginationExprType
+    }
+    // field 2: conditions
+    final f2 = conditions;
+    if (f2 != null) {
+      for (final e in f2) { final cw = ProtoWireWriter(); e._writeTo(cw); w.writeRaw(2, cw.toBuffer()); }
+    }
+    // field 3: groups
+    final f3 = groups;
+    if (f3 != null) {
+      for (final e in f3) { final cw = ProtoWireWriter(); e._writeTo(cw); w.writeRaw(3, cw.toBuffer()); }
+    }
+  }
+
+  factory PaginationFilterExpr.fromBuffer(List<int> bytes) {
+    return PaginationFilterExpr._readFrom(ProtoWireReader(bytes));
+  }
+
+  static PaginationFilterExpr _readFrom(ProtoWireReader r) {
+    final m = PaginationFilterExpr();
+    while (r.next()) {
+      switch (r.fieldNumber) {
+        // field 1: type
+        case 1: {
+          m.type = PaginationExprType.fromWire(r.readEnum());
+          break;
+        }
+        // field 2: conditions
+        case 2: {
+          m.conditions = r.readNestedList().map(PaginationFilterCondition._readFrom).toList();
+          break;
+        }
+        // field 3: groups
+        case 3: {
+          m.groups = r.readNestedList().map(PaginationFilterExpr._readFrom).toList();
+          break;
+        }
+        default: {
+          r.skip();
+        }
+      }
+    }
+    return m;
+  }
+
 }
 
 /// 过滤表达式类型
 enum PaginationExprType {
-  and('AND'),
-  exprTypeUnspecified('EXPR_TYPE_UNSPECIFIED'),
-  or('OR');
+  and('AND', 1),
+  exprTypeUnspecified('EXPR_TYPE_UNSPECIFIED', 0),
+  or('OR', 2);
 
   final String value;
-  const PaginationExprType(this.value);
+  /// proto 枚举数值（二进制 wire 编解码用，与 JSON 的 value 字符串互补）
+  final int wire;
+  const PaginationExprType(this.value, this.wire);
 
   static PaginationExprType fromString(String v) =>
     values.firstWhere((e) => e.value == v, orElse: () => throw ArgumentError('Unknown PaginationExprType value: ' + v));
+  static PaginationExprType fromWire(int v) =>
+    values.firstWhere((e) => e.wire == v, orElse: () => throw ArgumentError('Unknown PaginationExprType wire value: ' + v.toString()));
   @override
   String toString() => value;
 }
@@ -588,45 +808,145 @@ class PaginationFilterCondition {
       values: values ?? this.values,
     );
   }
+
+  /// 二进制 proto 编码（MQTT 等二进制传输用；字段按编号升序写出）
+  Uint8List writeToBuffer() {
+    final w = ProtoWireWriter();
+    _writeTo(w);
+    return w.toBuffer();
+  }
+
+  void _writeTo(ProtoWireWriter w) {
+    // field 1: field
+    final f1 = field;
+    if (f1 != null) {
+      w.writeString(1, f1);
+    }
+    // field 2: op
+    final f2 = op;
+    if (f2 != null) {
+      w.writeEnum(2, f2.wire); // PaginationOperator
+    }
+    // field 3: value
+    final f3 = value;
+    if (f3 != null) {
+      w.writeString(3, f3);
+    }
+    // field 4: values
+    final f4 = values;
+    if (f4 != null) {
+      w.writeStringList(4, f4);
+    }
+    // field 5: datePart
+    final f5 = datePart;
+    if (f5 != null) {
+      w.writeEnum(5, f5.wire); // PaginationDatePart
+    }
+    // field 6: jsonPath
+    final f6 = jsonPath;
+    if (f6 != null) {
+      w.writeString(6, f6);
+    }
+    // field 7: jsonValue
+    final f7 = jsonValue;
+    if (f7 != null) {
+      throw UnsupportedError('dart-http wire: google.protobuf.Value not supported');
+    }
+  }
+
+  factory PaginationFilterCondition.fromBuffer(List<int> bytes) {
+    return PaginationFilterCondition._readFrom(ProtoWireReader(bytes));
+  }
+
+  static PaginationFilterCondition _readFrom(ProtoWireReader r) {
+    final m = PaginationFilterCondition();
+    while (r.next()) {
+      switch (r.fieldNumber) {
+        // field 1: field
+        case 1: {
+          m.field = r.readString();
+          break;
+        }
+        // field 2: op
+        case 2: {
+          m.op = PaginationOperator.fromWire(r.readEnum());
+          break;
+        }
+        // field 3: value
+        case 3: {
+          m.value = r.readString();
+          break;
+        }
+        // field 4: values
+        case 4: {
+          m.values = r.readStringList();
+          break;
+        }
+        // field 5: datePart
+        case 5: {
+          m.datePart = PaginationDatePart.fromWire(r.readEnum());
+          break;
+        }
+        // field 6: jsonPath
+        case 6: {
+          m.jsonPath = r.readString();
+          break;
+        }
+        // field 7: jsonValue
+        case 7: {
+          throw UnsupportedError('dart-http wire: google.protobuf.Value not supported');
+        }
+        default: {
+          r.skip();
+        }
+      }
+    }
+    return m;
+  }
+
 }
 
 /// 操作符枚举
 enum PaginationOperator {
-  arrayContains('ARRAY_CONTAINS'),
-  between('BETWEEN'),
-  contains('CONTAINS'),
-  endsWith('ENDS_WITH'),
-  eq('EQ'),
-  exact('EXACT'),
-  exists('EXISTS'),
-  gt('GT'),
-  gte('GTE'),
-  icontains('ICONTAINS'),
-  iendsWith('IENDS_WITH'),
-  iexact('IEXACT'),
-  ilike('ILIKE'),
-  in_('IN'),
-  iregexp('IREGEXP'),
-  isNotNull('IS_NOT_NULL'),
-  isNull('IS_NULL'),
-  istartsWith('ISTARTS_WITH'),
-  jsonContains('JSON_CONTAINS'),
-  like('LIKE'),
-  lt('LT'),
-  lte('LTE'),
-  neq('NEQ'),
-  nin('NIN'),
-  notLike('NOT_LIKE'),
-  operatorUnspecified('OPERATOR_UNSPECIFIED'),
-  regexp('REGEXP'),
-  search('SEARCH'),
-  startsWith('STARTS_WITH');
+  arrayContains('ARRAY_CONTAINS', 24),
+  between('BETWEEN', 14),
+  contains('CONTAINS', 17),
+  endsWith('ENDS_WITH', 19),
+  eq('EQ', 1),
+  exact('EXACT', 27),
+  exists('EXISTS', 25),
+  gt('GT', 3),
+  gte('GTE', 4),
+  icontains('ICONTAINS', 20),
+  iendsWith('IENDS_WITH', 22),
+  iexact('IEXACT', 28),
+  ilike('ILIKE', 8),
+  in_('IN', 10),
+  iregexp('IREGEXP', 16),
+  isNotNull('IS_NOT_NULL', 13),
+  isNull('IS_NULL', 12),
+  istartsWith('ISTARTS_WITH', 21),
+  jsonContains('JSON_CONTAINS', 23),
+  like('LIKE', 7),
+  lt('LT', 5),
+  lte('LTE', 6),
+  neq('NEQ', 2),
+  nin('NIN', 11),
+  notLike('NOT_LIKE', 9),
+  operatorUnspecified('OPERATOR_UNSPECIFIED', 0),
+  regexp('REGEXP', 15),
+  search('SEARCH', 26),
+  startsWith('STARTS_WITH', 18);
 
   final String value;
-  const PaginationOperator(this.value);
+  /// proto 枚举数值（二进制 wire 编解码用，与 JSON 的 value 字符串互补）
+  final int wire;
+  const PaginationOperator(this.value, this.wire);
 
   static PaginationOperator fromString(String v) =>
     values.firstWhere((e) => e.value == v, orElse: () => throw ArgumentError('Unknown PaginationOperator value: ' + v));
+  static PaginationOperator fromWire(int v) =>
+    values.firstWhere((e) => e.wire == v, orElse: () => throw ArgumentError('Unknown PaginationOperator wire value: ' + v.toString()));
   @override
   String toString() => value;
 }
@@ -637,27 +957,31 @@ enum PaginationOperator {
 
 /// 日期时间部分枚举
 enum PaginationDatePart {
-  date('DATE'),
-  datePartUnspecified('DATE_PART_UNSPECIFIED'),
-  day('DAY'),
-  hour('HOUR'),
-  isoWeekDay('ISO_WEEK_DAY'),
-  isoYear('ISO_YEAR'),
-  microsecond('MICROSECOND'),
-  minute('MINUTE'),
-  month('MONTH'),
-  quarter('QUARTER'),
-  second('SECOND'),
-  time('TIME'),
-  week('WEEK'),
-  weekDay('WEEK_DAY'),
-  year('YEAR');
+  date('DATE', 1),
+  datePartUnspecified('DATE_PART_UNSPECIFIED', 0),
+  day('DAY', 9),
+  hour('HOUR', 11),
+  isoWeekDay('ISO_WEEK_DAY', 8),
+  isoYear('ISO_YEAR', 3),
+  microsecond('MICROSECOND', 14),
+  minute('MINUTE', 12),
+  month('MONTH', 5),
+  quarter('QUARTER', 4),
+  second('SECOND', 13),
+  time('TIME', 10),
+  week('WEEK', 6),
+  weekDay('WEEK_DAY', 7),
+  year('YEAR', 2);
 
   final String value;
-  const PaginationDatePart(this.value);
+  /// proto 枚举数值（二进制 wire 编解码用，与 JSON 的 value 字符串互补）
+  final int wire;
+  const PaginationDatePart(this.value, this.wire);
 
   static PaginationDatePart fromString(String v) =>
     values.firstWhere((e) => e.value == v, orElse: () => throw ArgumentError('Unknown PaginationDatePart value: ' + v));
+  static PaginationDatePart fromWire(int v) =>
+    values.firstWhere((e) => e.wire == v, orElse: () => throw ArgumentError('Unknown PaginationDatePart wire value: ' + v.toString()));
   @override
   String toString() => value;
 }
@@ -717,18 +1041,69 @@ class PaginationSorting {
       field: field ?? this.field,
     );
   }
+
+  /// 二进制 proto 编码（MQTT 等二进制传输用；字段按编号升序写出）
+  Uint8List writeToBuffer() {
+    final w = ProtoWireWriter();
+    _writeTo(w);
+    return w.toBuffer();
+  }
+
+  void _writeTo(ProtoWireWriter w) {
+    // field 1: field
+    final f1 = field;
+    if (f1 != null) {
+      w.writeString(1, f1);
+    }
+    // field 2: direction
+    final f2 = direction;
+    if (f2 != null) {
+      w.writeEnum(2, f2.wire); // PaginationSorting$Direction
+    }
+  }
+
+  factory PaginationSorting.fromBuffer(List<int> bytes) {
+    return PaginationSorting._readFrom(ProtoWireReader(bytes));
+  }
+
+  static PaginationSorting _readFrom(ProtoWireReader r) {
+    final m = PaginationSorting();
+    while (r.next()) {
+      switch (r.fieldNumber) {
+        // field 1: field
+        case 1: {
+          m.field = r.readString();
+          break;
+        }
+        // field 2: direction
+        case 2: {
+          m.direction = PaginationSorting$Direction.fromWire(r.readEnum());
+          break;
+        }
+        default: {
+          r.skip();
+        }
+      }
+    }
+    return m;
+  }
+
 }
 
 /// 排序方向（ASC/DESC，默认ASC）
 enum PaginationSorting$Direction {
-  asc('ASC'),
-  desc('DESC');
+  asc('ASC', 0),
+  desc('DESC', 1);
 
   final String value;
-  const PaginationSorting$Direction(this.value);
+  /// proto 枚举数值（二进制 wire 编解码用，与 JSON 的 value 字符串互补）
+  final int wire;
+  const PaginationSorting$Direction(this.value, this.wire);
 
   static PaginationSorting$Direction fromString(String v) =>
     values.firstWhere((e) => e.value == v, orElse: () => throw ArgumentError('Unknown PaginationSorting\$Direction value: ' + v));
+  static PaginationSorting$Direction fromWire(int v) =>
+    values.firstWhere((e) => e.wire == v, orElse: () => throw ArgumentError('Unknown PaginationSorting\$Direction wire value: ' + v.toString()));
   @override
   String toString() => value;
 }
@@ -790,6 +1165,53 @@ class LedgerServiceV1ListAccountResponse {
       total: total ?? this.total,
     );
   }
+
+  /// 二进制 proto 编码（MQTT 等二进制传输用；字段按编号升序写出）
+  Uint8List writeToBuffer() {
+    final w = ProtoWireWriter();
+    _writeTo(w);
+    return w.toBuffer();
+  }
+
+  void _writeTo(ProtoWireWriter w) {
+    // field 1: items
+    final f1 = items;
+    if (f1 != null) {
+      for (final e in f1) { final cw = ProtoWireWriter(); e._writeTo(cw); w.writeRaw(1, cw.toBuffer()); }
+    }
+    // field 2: total
+    final f2 = total;
+    if (f2 != null) {
+      w.writeInt64(2, f2);
+    }
+  }
+
+  factory LedgerServiceV1ListAccountResponse.fromBuffer(List<int> bytes) {
+    return LedgerServiceV1ListAccountResponse._readFrom(ProtoWireReader(bytes));
+  }
+
+  static LedgerServiceV1ListAccountResponse _readFrom(ProtoWireReader r) {
+    final m = LedgerServiceV1ListAccountResponse();
+    while (r.next()) {
+      switch (r.fieldNumber) {
+        // field 1: items
+        case 1: {
+          m.items = r.readNestedList().map(LedgerServiceV1Account._readFrom).toList();
+          break;
+        }
+        // field 2: total
+        case 2: {
+          m.total = r.readInt64();
+          break;
+        }
+        default: {
+          r.skip();
+        }
+      }
+    }
+    return m;
+  }
+
 }
 
 /// 账户
@@ -858,23 +1280,23 @@ class LedgerServiceV1Account {
       canTransferFrom: json['canTransferFrom'] as bool?,
       canTransferTo: json['canTransferTo'] as bool?,
       createdAt: json['createdAt'] as String?,
-      createdBy: json['createdBy'] as int?,
+      createdBy: json['createdBy'] != null ? int.parse(json['createdBy'].toString()) : null,
       creditLimit: json['creditLimit'] as String?,
       currencyCode: json['currencyCode'] as String?,
       deletedAt: json['deletedAt'] as String?,
-      deletedBy: json['deletedBy'] as int?,
+      deletedBy: json['deletedBy'] != null ? int.parse(json['deletedBy'].toString()) : null,
       enable: json['enable'] as bool?,
-      id: json['id'] as int?,
+      id: json['id'] != null ? int.parse(json['id'].toString()) : null,
       include: json['include'] as bool?,
       initialBalance: json['initialBalance'] as String?,
       name: json['name'] as String?,
       no: json['no'] as String?,
       notes: json['notes'] as String?,
       sortOrder: json['sortOrder'] as int?,
-      tenantId: json['tenantId'] as int?,
+      tenantId: json['tenantId'] != null ? int.parse(json['tenantId'].toString()) : null,
       type: json['type'] != null ? LedgerServiceV1AccountType.fromString(json['type'] as String) : null,
       updatedAt: json['updatedAt'] as String?,
-      updatedBy: json['updatedBy'] as int?,
+      updatedBy: json['updatedBy'] != null ? int.parse(json['updatedBy'].toString()) : null,
     );
   }
 
@@ -888,23 +1310,23 @@ class LedgerServiceV1Account {
     if (canTransferFrom != null) json['canTransferFrom'] = canTransferFrom;
     if (canTransferTo != null) json['canTransferTo'] = canTransferTo;
     if (createdAt != null) json['createdAt'] = createdAt;
-    if (createdBy != null) json['createdBy'] = createdBy;
+    if (createdBy != null) json['createdBy'] = createdBy.toString();
     if (creditLimit != null) json['creditLimit'] = creditLimit;
     if (currencyCode != null) json['currencyCode'] = currencyCode;
     if (deletedAt != null) json['deletedAt'] = deletedAt;
-    if (deletedBy != null) json['deletedBy'] = deletedBy;
+    if (deletedBy != null) json['deletedBy'] = deletedBy.toString();
     if (enable != null) json['enable'] = enable;
-    if (id != null) json['id'] = id;
+    if (id != null) json['id'] = id.toString();
     if (include != null) json['include'] = include;
     if (initialBalance != null) json['initialBalance'] = initialBalance;
     if (name != null) json['name'] = name;
     if (no != null) json['no'] = no;
     if (notes != null) json['notes'] = notes;
     if (sortOrder != null) json['sortOrder'] = sortOrder;
-    if (tenantId != null) json['tenantId'] = tenantId;
+    if (tenantId != null) json['tenantId'] = tenantId.toString();
     if (type != null) json['type'] = type!.value;
     if (updatedAt != null) json['updatedAt'] = updatedAt;
-    if (updatedBy != null) json['updatedBy'] = updatedBy;
+    if (updatedBy != null) json['updatedBy'] = updatedBy.toString();
     return json;
   }
 
@@ -1029,21 +1451,302 @@ class LedgerServiceV1Account {
       updatedBy: updatedBy ?? this.updatedBy,
     );
   }
+
+  /// 二进制 proto 编码（MQTT 等二进制传输用；字段按编号升序写出）
+  Uint8List writeToBuffer() {
+    final w = ProtoWireWriter();
+    _writeTo(w);
+    return w.toBuffer();
+  }
+
+  void _writeTo(ProtoWireWriter w) {
+    // field 1: id
+    final f1 = id;
+    if (f1 != null) {
+      w.writeInt64(1, f1);
+    }
+    // field 2: tenantId
+    final f2 = tenantId;
+    if (f2 != null) {
+      w.writeInt64(2, f2);
+    }
+    // field 10: name
+    final f10 = name;
+    if (f10 != null) {
+      w.writeString(10, f10);
+    }
+    // field 11: type
+    final f11 = type;
+    if (f11 != null) {
+      w.writeEnum(11, f11.wire); // LedgerServiceV1AccountType
+    }
+    // field 12: balance
+    final f12 = balance;
+    if (f12 != null) {
+      w.writeString(12, f12);
+    }
+    // field 13: initialBalance
+    final f13 = initialBalance;
+    if (f13 != null) {
+      w.writeString(13, f13);
+    }
+    // field 14: creditLimit
+    final f14 = creditLimit;
+    if (f14 != null) {
+      w.writeString(14, f14);
+    }
+    // field 15: billDay
+    final f15 = billDay;
+    if (f15 != null) {
+      w.writeInt32(15, f15);
+    }
+    // field 16: apr
+    final f16 = apr;
+    if (f16 != null) {
+      w.writeString(16, f16);
+    }
+    // field 17: currencyCode
+    final f17 = currencyCode;
+    if (f17 != null) {
+      w.writeString(17, f17);
+    }
+    // field 18: no
+    final f18 = no;
+    if (f18 != null) {
+      w.writeString(18, f18);
+    }
+    // field 19: include
+    final f19 = include;
+    if (f19 != null) {
+      w.writeBool(19, f19);
+    }
+    // field 20: canExpense
+    final f20 = canExpense;
+    if (f20 != null) {
+      w.writeBool(20, f20);
+    }
+    // field 21: canIncome
+    final f21 = canIncome;
+    if (f21 != null) {
+      w.writeBool(21, f21);
+    }
+    // field 22: canTransferFrom
+    final f22 = canTransferFrom;
+    if (f22 != null) {
+      w.writeBool(22, f22);
+    }
+    // field 23: canTransferTo
+    final f23 = canTransferTo;
+    if (f23 != null) {
+      w.writeBool(23, f23);
+    }
+    // field 24: notes
+    final f24 = notes;
+    if (f24 != null) {
+      w.writeString(24, f24);
+    }
+    // field 25: enable
+    final f25 = enable;
+    if (f25 != null) {
+      w.writeBool(25, f25);
+    }
+    // field 26: sortOrder
+    final f26 = sortOrder;
+    if (f26 != null) {
+      w.writeInt32(26, f26);
+    }
+    // field 100: createdBy
+    final f100 = createdBy;
+    if (f100 != null) {
+      w.writeInt64(100, f100);
+    }
+    // field 101: updatedBy
+    final f101 = updatedBy;
+    if (f101 != null) {
+      w.writeInt64(101, f101);
+    }
+    // field 102: deletedBy
+    final f102 = deletedBy;
+    if (f102 != null) {
+      w.writeInt64(102, f102);
+    }
+    // field 200: createdAt
+    final f200 = createdAt;
+    if (f200 != null) {
+      w.writeTimestamp(200, f200);
+    }
+    // field 201: updatedAt
+    final f201 = updatedAt;
+    if (f201 != null) {
+      w.writeTimestamp(201, f201);
+    }
+    // field 202: deletedAt
+    final f202 = deletedAt;
+    if (f202 != null) {
+      w.writeTimestamp(202, f202);
+    }
+  }
+
+  factory LedgerServiceV1Account.fromBuffer(List<int> bytes) {
+    return LedgerServiceV1Account._readFrom(ProtoWireReader(bytes));
+  }
+
+  static LedgerServiceV1Account _readFrom(ProtoWireReader r) {
+    final m = LedgerServiceV1Account();
+    while (r.next()) {
+      switch (r.fieldNumber) {
+        // field 1: id
+        case 1: {
+          m.id = r.readInt64();
+          break;
+        }
+        // field 2: tenantId
+        case 2: {
+          m.tenantId = r.readInt64();
+          break;
+        }
+        // field 10: name
+        case 10: {
+          m.name = r.readString();
+          break;
+        }
+        // field 11: type
+        case 11: {
+          m.type = LedgerServiceV1AccountType.fromWire(r.readEnum());
+          break;
+        }
+        // field 12: balance
+        case 12: {
+          m.balance = r.readString();
+          break;
+        }
+        // field 13: initialBalance
+        case 13: {
+          m.initialBalance = r.readString();
+          break;
+        }
+        // field 14: creditLimit
+        case 14: {
+          m.creditLimit = r.readString();
+          break;
+        }
+        // field 15: billDay
+        case 15: {
+          m.billDay = r.readInt32();
+          break;
+        }
+        // field 16: apr
+        case 16: {
+          m.apr = r.readString();
+          break;
+        }
+        // field 17: currencyCode
+        case 17: {
+          m.currencyCode = r.readString();
+          break;
+        }
+        // field 18: no
+        case 18: {
+          m.no = r.readString();
+          break;
+        }
+        // field 19: include
+        case 19: {
+          m.include = r.readBool();
+          break;
+        }
+        // field 20: canExpense
+        case 20: {
+          m.canExpense = r.readBool();
+          break;
+        }
+        // field 21: canIncome
+        case 21: {
+          m.canIncome = r.readBool();
+          break;
+        }
+        // field 22: canTransferFrom
+        case 22: {
+          m.canTransferFrom = r.readBool();
+          break;
+        }
+        // field 23: canTransferTo
+        case 23: {
+          m.canTransferTo = r.readBool();
+          break;
+        }
+        // field 24: notes
+        case 24: {
+          m.notes = r.readString();
+          break;
+        }
+        // field 25: enable
+        case 25: {
+          m.enable = r.readBool();
+          break;
+        }
+        // field 26: sortOrder
+        case 26: {
+          m.sortOrder = r.readInt32();
+          break;
+        }
+        // field 100: createdBy
+        case 100: {
+          m.createdBy = r.readInt64();
+          break;
+        }
+        // field 101: updatedBy
+        case 101: {
+          m.updatedBy = r.readInt64();
+          break;
+        }
+        // field 102: deletedBy
+        case 102: {
+          m.deletedBy = r.readInt64();
+          break;
+        }
+        // field 200: createdAt
+        case 200: {
+          m.createdAt = r.readTimestampIso();
+          break;
+        }
+        // field 201: updatedAt
+        case 201: {
+          m.updatedAt = r.readTimestampIso();
+          break;
+        }
+        // field 202: deletedAt
+        case 202: {
+          m.deletedAt = r.readTimestampIso();
+          break;
+        }
+        default: {
+          r.skip();
+        }
+      }
+    }
+    return m;
+  }
+
 }
 
 /// 账户类型 — 对应 Java AccountType
 enum LedgerServiceV1AccountType {
-  accountTypeAsset('ACCOUNT_TYPE_ASSET'),
-  accountTypeChecking('ACCOUNT_TYPE_CHECKING'),
-  accountTypeCredit('ACCOUNT_TYPE_CREDIT'),
-  accountTypeDebt('ACCOUNT_TYPE_DEBT'),
-  accountTypeUnspecified('ACCOUNT_TYPE_UNSPECIFIED');
+  accountTypeAsset('ACCOUNT_TYPE_ASSET', 300),
+  accountTypeChecking('ACCOUNT_TYPE_CHECKING', 100),
+  accountTypeCredit('ACCOUNT_TYPE_CREDIT', 200),
+  accountTypeDebt('ACCOUNT_TYPE_DEBT', 400),
+  accountTypeUnspecified('ACCOUNT_TYPE_UNSPECIFIED', 0);
 
   final String value;
-  const LedgerServiceV1AccountType(this.value);
+  /// proto 枚举数值（二进制 wire 编解码用，与 JSON 的 value 字符串互补）
+  final int wire;
+  const LedgerServiceV1AccountType(this.value, this.wire);
 
   static LedgerServiceV1AccountType fromString(String v) =>
     values.firstWhere((e) => e.value == v, orElse: () => throw ArgumentError('Unknown LedgerServiceV1AccountType value: ' + v));
+  static LedgerServiceV1AccountType fromWire(int v) =>
+    values.firstWhere((e) => e.wire == v, orElse: () => throw ArgumentError('Unknown LedgerServiceV1AccountType wire value: ' + v.toString()));
   @override
   String toString() => value;
 }
@@ -1097,6 +1800,43 @@ class LedgerServiceV1ListAllAccountRequest {
       includeDisabled: includeDisabled ?? this.includeDisabled,
     );
   }
+
+  /// 二进制 proto 编码（MQTT 等二进制传输用；字段按编号升序写出）
+  Uint8List writeToBuffer() {
+    final w = ProtoWireWriter();
+    _writeTo(w);
+    return w.toBuffer();
+  }
+
+  void _writeTo(ProtoWireWriter w) {
+    // field 1: includeDisabled
+    final f1 = includeDisabled;
+    if (f1 != null) {
+      w.writeBool(1, f1);
+    }
+  }
+
+  factory LedgerServiceV1ListAllAccountRequest.fromBuffer(List<int> bytes) {
+    return LedgerServiceV1ListAllAccountRequest._readFrom(ProtoWireReader(bytes));
+  }
+
+  static LedgerServiceV1ListAllAccountRequest _readFrom(ProtoWireReader r) {
+    final m = LedgerServiceV1ListAllAccountRequest();
+    while (r.next()) {
+      switch (r.fieldNumber) {
+        // field 1: includeDisabled
+        case 1: {
+          m.includeDisabled = r.readBool();
+          break;
+        }
+        default: {
+          r.skip();
+        }
+      }
+    }
+    return m;
+  }
+
 }
 
 /// 请求 - 账户数据
@@ -1111,14 +1851,14 @@ class LedgerServiceV1GetAccountRequest {
 
   factory LedgerServiceV1GetAccountRequest.fromJson(Map<String, dynamic> json) {
     return LedgerServiceV1GetAccountRequest(
-      id: json['id'] as int?,
+      id: json['id'] != null ? int.parse(json['id'].toString()) : null,
       viewMask: json['viewMask'] as String?,
     );
   }
 
   Map<String, dynamic> toJson() {
     final json = <String, dynamic>{};
-    if (id != null) json['id'] = id;
+    if (id != null) json['id'] = id.toString();
     if (viewMask != null) json['viewMask'] = viewMask;
     return json;
   }
@@ -1152,6 +1892,53 @@ class LedgerServiceV1GetAccountRequest {
       viewMask: viewMask ?? this.viewMask,
     );
   }
+
+  /// 二进制 proto 编码（MQTT 等二进制传输用；字段按编号升序写出）
+  Uint8List writeToBuffer() {
+    final w = ProtoWireWriter();
+    _writeTo(w);
+    return w.toBuffer();
+  }
+
+  void _writeTo(ProtoWireWriter w) {
+    // field 1: id
+    final f1 = id;
+    if (f1 != null) {
+      w.writeInt64(1, f1);
+    }
+    // field 100: viewMask
+    final f100 = viewMask;
+    if (f100 != null) {
+      w.writeFieldMask(100, f100);
+    }
+  }
+
+  factory LedgerServiceV1GetAccountRequest.fromBuffer(List<int> bytes) {
+    return LedgerServiceV1GetAccountRequest._readFrom(ProtoWireReader(bytes));
+  }
+
+  static LedgerServiceV1GetAccountRequest _readFrom(ProtoWireReader r) {
+    final m = LedgerServiceV1GetAccountRequest();
+    while (r.next()) {
+      switch (r.fieldNumber) {
+        // field 1: id
+        case 1: {
+          m.id = r.readInt64();
+          break;
+        }
+        // field 100: viewMask
+        case 100: {
+          m.viewMask = r.readFieldMaskText();
+          break;
+        }
+        default: {
+          r.skip();
+        }
+      }
+    }
+    return m;
+  }
+
 }
 
 /// 请求 - 创建账户
@@ -1199,6 +1986,43 @@ class LedgerServiceV1CreateAccountRequest {
       data: data ?? this.data,
     );
   }
+
+  /// 二进制 proto 编码（MQTT 等二进制传输用；字段按编号升序写出）
+  Uint8List writeToBuffer() {
+    final w = ProtoWireWriter();
+    _writeTo(w);
+    return w.toBuffer();
+  }
+
+  void _writeTo(ProtoWireWriter w) {
+    // field 1: data
+    final f1 = data;
+    if (f1 != null) {
+      final cw = ProtoWireWriter(); f1._writeTo(cw); w.writeRaw(1, cw.toBuffer()); // LedgerServiceV1Account
+    }
+  }
+
+  factory LedgerServiceV1CreateAccountRequest.fromBuffer(List<int> bytes) {
+    return LedgerServiceV1CreateAccountRequest._readFrom(ProtoWireReader(bytes));
+  }
+
+  static LedgerServiceV1CreateAccountRequest _readFrom(ProtoWireReader r) {
+    final m = LedgerServiceV1CreateAccountRequest();
+    while (r.next()) {
+      switch (r.fieldNumber) {
+        // field 1: data
+        case 1: {
+          m.data = LedgerServiceV1Account._readFrom(r.readNested());
+          break;
+        }
+        default: {
+          r.skip();
+        }
+      }
+    }
+    return m;
+  }
+
 }
 
 /// 请求 - 更新账户
@@ -1219,7 +2043,7 @@ class LedgerServiceV1UpdateAccountRequest {
     return LedgerServiceV1UpdateAccountRequest(
       allowMissing: json['allowMissing'] as bool?,
       data: json['data'] != null ? LedgerServiceV1Account.fromJson(json['data'] as Map<String, dynamic>) : null,
-      id: json['id'] as int?,
+      id: json['id'] != null ? int.parse(json['id'].toString()) : null,
       updateMask: json['updateMask'] as String?,
     );
   }
@@ -1228,7 +2052,7 @@ class LedgerServiceV1UpdateAccountRequest {
     final json = <String, dynamic>{};
     if (allowMissing != null) json['allowMissing'] = allowMissing;
     if (data != null) json['data'] = data!.toJson();
-    if (id != null) json['id'] = id;
+    if (id != null) json['id'] = id.toString();
     if (updateMask != null) json['updateMask'] = updateMask;
     return json;
   }
@@ -1270,6 +2094,73 @@ class LedgerServiceV1UpdateAccountRequest {
       updateMask: updateMask ?? this.updateMask,
     );
   }
+
+  /// 二进制 proto 编码（MQTT 等二进制传输用；字段按编号升序写出）
+  Uint8List writeToBuffer() {
+    final w = ProtoWireWriter();
+    _writeTo(w);
+    return w.toBuffer();
+  }
+
+  void _writeTo(ProtoWireWriter w) {
+    // field 1: id
+    final f1 = id;
+    if (f1 != null) {
+      w.writeInt64(1, f1);
+    }
+    // field 2: data
+    final f2 = data;
+    if (f2 != null) {
+      final cw = ProtoWireWriter(); f2._writeTo(cw); w.writeRaw(2, cw.toBuffer()); // LedgerServiceV1Account
+    }
+    // field 3: updateMask
+    final f3 = updateMask;
+    if (f3 != null) {
+      w.writeFieldMask(3, f3);
+    }
+    // field 4: allowMissing
+    final f4 = allowMissing;
+    if (f4 != null) {
+      w.writeBool(4, f4);
+    }
+  }
+
+  factory LedgerServiceV1UpdateAccountRequest.fromBuffer(List<int> bytes) {
+    return LedgerServiceV1UpdateAccountRequest._readFrom(ProtoWireReader(bytes));
+  }
+
+  static LedgerServiceV1UpdateAccountRequest _readFrom(ProtoWireReader r) {
+    final m = LedgerServiceV1UpdateAccountRequest();
+    while (r.next()) {
+      switch (r.fieldNumber) {
+        // field 1: id
+        case 1: {
+          m.id = r.readInt64();
+          break;
+        }
+        // field 2: data
+        case 2: {
+          m.data = LedgerServiceV1Account._readFrom(r.readNested());
+          break;
+        }
+        // field 3: updateMask
+        case 3: {
+          m.updateMask = r.readFieldMaskText();
+          break;
+        }
+        // field 4: allowMissing
+        case 4: {
+          m.allowMissing = r.readBool();
+          break;
+        }
+        default: {
+          r.skip();
+        }
+      }
+    }
+    return m;
+  }
+
 }
 
 /// 请求 - 删除账户
@@ -1282,13 +2173,13 @@ class LedgerServiceV1DeleteAccountRequest {
 
   factory LedgerServiceV1DeleteAccountRequest.fromJson(Map<String, dynamic> json) {
     return LedgerServiceV1DeleteAccountRequest(
-      id: json['id'] as int?,
+      id: json['id'] != null ? int.parse(json['id'].toString()) : null,
     );
   }
 
   Map<String, dynamic> toJson() {
     final json = <String, dynamic>{};
-    if (id != null) json['id'] = id;
+    if (id != null) json['id'] = id.toString();
     return json;
   }
 
@@ -1317,6 +2208,43 @@ class LedgerServiceV1DeleteAccountRequest {
       id: id ?? this.id,
     );
   }
+
+  /// 二进制 proto 编码（MQTT 等二进制传输用；字段按编号升序写出）
+  Uint8List writeToBuffer() {
+    final w = ProtoWireWriter();
+    _writeTo(w);
+    return w.toBuffer();
+  }
+
+  void _writeTo(ProtoWireWriter w) {
+    // field 1: id
+    final f1 = id;
+    if (f1 != null) {
+      w.writeInt64(1, f1);
+    }
+  }
+
+  factory LedgerServiceV1DeleteAccountRequest.fromBuffer(List<int> bytes) {
+    return LedgerServiceV1DeleteAccountRequest._readFrom(ProtoWireReader(bytes));
+  }
+
+  static LedgerServiceV1DeleteAccountRequest _readFrom(ProtoWireReader r) {
+    final m = LedgerServiceV1DeleteAccountRequest();
+    while (r.next()) {
+      switch (r.fieldNumber) {
+        // field 1: id
+        case 1: {
+          m.id = r.readInt64();
+          break;
+        }
+        default: {
+          r.skip();
+        }
+      }
+    }
+    return m;
+  }
+
 }
 
 /// Well-known type: Empty
@@ -1333,13 +2261,13 @@ class LedgerServiceV1ToggleAccountRequest {
 
   factory LedgerServiceV1ToggleAccountRequest.fromJson(Map<String, dynamic> json) {
     return LedgerServiceV1ToggleAccountRequest(
-      id: json['id'] as int?,
+      id: json['id'] != null ? int.parse(json['id'].toString()) : null,
     );
   }
 
   Map<String, dynamic> toJson() {
     final json = <String, dynamic>{};
-    if (id != null) json['id'] = id;
+    if (id != null) json['id'] = id.toString();
     return json;
   }
 
@@ -1368,6 +2296,43 @@ class LedgerServiceV1ToggleAccountRequest {
       id: id ?? this.id,
     );
   }
+
+  /// 二进制 proto 编码（MQTT 等二进制传输用；字段按编号升序写出）
+  Uint8List writeToBuffer() {
+    final w = ProtoWireWriter();
+    _writeTo(w);
+    return w.toBuffer();
+  }
+
+  void _writeTo(ProtoWireWriter w) {
+    // field 1: id
+    final f1 = id;
+    if (f1 != null) {
+      w.writeInt64(1, f1);
+    }
+  }
+
+  factory LedgerServiceV1ToggleAccountRequest.fromBuffer(List<int> bytes) {
+    return LedgerServiceV1ToggleAccountRequest._readFrom(ProtoWireReader(bytes));
+  }
+
+  static LedgerServiceV1ToggleAccountRequest _readFrom(ProtoWireReader r) {
+    final m = LedgerServiceV1ToggleAccountRequest();
+    while (r.next()) {
+      switch (r.fieldNumber) {
+        // field 1: id
+        case 1: {
+          m.id = r.readInt64();
+          break;
+        }
+        default: {
+          r.skip();
+        }
+      }
+    }
+    return m;
+  }
+
 }
 
 /// 请求 - 余额调整
@@ -1393,9 +2358,9 @@ class LedgerServiceV1AdjustBalanceRequest {
   factory LedgerServiceV1AdjustBalanceRequest.fromJson(Map<String, dynamic> json) {
     return LedgerServiceV1AdjustBalanceRequest(
       balance: json['balance'] as String?,
-      bookId: json['bookId'] as int?,
+      bookId: json['bookId'] != null ? int.parse(json['bookId'].toString()) : null,
       createTime: json['createTime'] != null ? int.parse(json['createTime'].toString()) : null,
-      id: json['id'] as int?,
+      id: json['id'] != null ? int.parse(json['id'].toString()) : null,
       notes: json['notes'] as String?,
       title: json['title'] as String?,
     );
@@ -1404,9 +2369,9 @@ class LedgerServiceV1AdjustBalanceRequest {
   Map<String, dynamic> toJson() {
     final json = <String, dynamic>{};
     if (balance != null) json['balance'] = balance;
-    if (bookId != null) json['bookId'] = bookId;
+    if (bookId != null) json['bookId'] = bookId.toString();
     if (createTime != null) json['createTime'] = createTime.toString();
-    if (id != null) json['id'] = id;
+    if (id != null) json['id'] = id.toString();
     if (notes != null) json['notes'] = notes;
     if (title != null) json['title'] = title;
     return json;
@@ -1457,6 +2422,93 @@ class LedgerServiceV1AdjustBalanceRequest {
       title: title ?? this.title,
     );
   }
+
+  /// 二进制 proto 编码（MQTT 等二进制传输用；字段按编号升序写出）
+  Uint8List writeToBuffer() {
+    final w = ProtoWireWriter();
+    _writeTo(w);
+    return w.toBuffer();
+  }
+
+  void _writeTo(ProtoWireWriter w) {
+    // field 1: id
+    final f1 = id;
+    if (f1 != null) {
+      w.writeInt64(1, f1);
+    }
+    // field 10: balance
+    final f10 = balance;
+    if (f10 != null) {
+      w.writeString(10, f10);
+    }
+    // field 11: bookId
+    final f11 = bookId;
+    if (f11 != null) {
+      w.writeInt64(11, f11);
+    }
+    // field 12: title
+    final f12 = title;
+    if (f12 != null) {
+      w.writeString(12, f12);
+    }
+    // field 13: notes
+    final f13 = notes;
+    if (f13 != null) {
+      w.writeString(13, f13);
+    }
+    // field 14: createTime
+    final f14 = createTime;
+    if (f14 != null) {
+      w.writeInt64(14, f14);
+    }
+  }
+
+  factory LedgerServiceV1AdjustBalanceRequest.fromBuffer(List<int> bytes) {
+    return LedgerServiceV1AdjustBalanceRequest._readFrom(ProtoWireReader(bytes));
+  }
+
+  static LedgerServiceV1AdjustBalanceRequest _readFrom(ProtoWireReader r) {
+    final m = LedgerServiceV1AdjustBalanceRequest();
+    while (r.next()) {
+      switch (r.fieldNumber) {
+        // field 1: id
+        case 1: {
+          m.id = r.readInt64();
+          break;
+        }
+        // field 10: balance
+        case 10: {
+          m.balance = r.readString();
+          break;
+        }
+        // field 11: bookId
+        case 11: {
+          m.bookId = r.readInt64();
+          break;
+        }
+        // field 12: title
+        case 12: {
+          m.title = r.readString();
+          break;
+        }
+        // field 13: notes
+        case 13: {
+          m.notes = r.readString();
+          break;
+        }
+        // field 14: createTime
+        case 14: {
+          m.createTime = r.readInt64();
+          break;
+        }
+        default: {
+          r.skip();
+        }
+      }
+    }
+    return m;
+  }
+
 }
 
 /// 请求 - 账户概览
@@ -1504,6 +2556,43 @@ class LedgerServiceV1OverviewRequest {
       currencyCode: currencyCode ?? this.currencyCode,
     );
   }
+
+  /// 二进制 proto 编码（MQTT 等二进制传输用；字段按编号升序写出）
+  Uint8List writeToBuffer() {
+    final w = ProtoWireWriter();
+    _writeTo(w);
+    return w.toBuffer();
+  }
+
+  void _writeTo(ProtoWireWriter w) {
+    // field 1: currencyCode
+    final f1 = currencyCode;
+    if (f1 != null) {
+      w.writeString(1, f1);
+    }
+  }
+
+  factory LedgerServiceV1OverviewRequest.fromBuffer(List<int> bytes) {
+    return LedgerServiceV1OverviewRequest._readFrom(ProtoWireReader(bytes));
+  }
+
+  static LedgerServiceV1OverviewRequest _readFrom(ProtoWireReader r) {
+    final m = LedgerServiceV1OverviewRequest();
+    while (r.next()) {
+      switch (r.fieldNumber) {
+        // field 1: currencyCode
+        case 1: {
+          m.currencyCode = r.readString();
+          break;
+        }
+        default: {
+          r.skip();
+        }
+      }
+    }
+    return m;
+  }
+
 }
 
 /// 回应 - 账户概览
@@ -1583,6 +2672,83 @@ class LedgerServiceV1OverviewResponse {
       totalDebts: totalDebts ?? this.totalDebts,
     );
   }
+
+  /// 二进制 proto 编码（MQTT 等二进制传输用；字段按编号升序写出）
+  Uint8List writeToBuffer() {
+    final w = ProtoWireWriter();
+    _writeTo(w);
+    return w.toBuffer();
+  }
+
+  void _writeTo(ProtoWireWriter w) {
+    // field 1: totalAssets
+    final f1 = totalAssets;
+    if (f1 != null) {
+      w.writeString(1, f1);
+    }
+    // field 2: totalDebts
+    final f2 = totalDebts;
+    if (f2 != null) {
+      w.writeString(2, f2);
+    }
+    // field 3: netWorth
+    final f3 = netWorth;
+    if (f3 != null) {
+      w.writeString(3, f3);
+    }
+    // field 4: assets
+    final f4 = assets;
+    if (f4 != null) {
+      for (final e in f4) { final cw = ProtoWireWriter(); e._writeTo(cw); w.writeRaw(4, cw.toBuffer()); }
+    }
+    // field 5: debts
+    final f5 = debts;
+    if (f5 != null) {
+      for (final e in f5) { final cw = ProtoWireWriter(); e._writeTo(cw); w.writeRaw(5, cw.toBuffer()); }
+    }
+  }
+
+  factory LedgerServiceV1OverviewResponse.fromBuffer(List<int> bytes) {
+    return LedgerServiceV1OverviewResponse._readFrom(ProtoWireReader(bytes));
+  }
+
+  static LedgerServiceV1OverviewResponse _readFrom(ProtoWireReader r) {
+    final m = LedgerServiceV1OverviewResponse();
+    while (r.next()) {
+      switch (r.fieldNumber) {
+        // field 1: totalAssets
+        case 1: {
+          m.totalAssets = r.readString();
+          break;
+        }
+        // field 2: totalDebts
+        case 2: {
+          m.totalDebts = r.readString();
+          break;
+        }
+        // field 3: netWorth
+        case 3: {
+          m.netWorth = r.readString();
+          break;
+        }
+        // field 4: assets
+        case 4: {
+          m.assets = r.readNestedList().map(LedgerServiceV1AccountAsset._readFrom).toList();
+          break;
+        }
+        // field 5: debts
+        case 5: {
+          m.debts = r.readNestedList().map(LedgerServiceV1AccountAsset._readFrom).toList();
+          break;
+        }
+        default: {
+          r.skip();
+        }
+      }
+    }
+    return m;
+  }
+
 }
 
 /// 账户资产/负债明细
@@ -1654,6 +2820,73 @@ class LedgerServiceV1AccountAsset {
       type: type ?? this.type,
     );
   }
+
+  /// 二进制 proto 编码（MQTT 等二进制传输用；字段按编号升序写出）
+  Uint8List writeToBuffer() {
+    final w = ProtoWireWriter();
+    _writeTo(w);
+    return w.toBuffer();
+  }
+
+  void _writeTo(ProtoWireWriter w) {
+    // field 1: name
+    final f1 = name;
+    if (f1 != null) {
+      w.writeString(1, f1);
+    }
+    // field 2: type
+    final f2 = type;
+    if (f2 != null) {
+      w.writeString(2, f2);
+    }
+    // field 3: balance
+    final f3 = balance;
+    if (f3 != null) {
+      w.writeString(3, f3);
+    }
+    // field 4: currencyCode
+    final f4 = currencyCode;
+    if (f4 != null) {
+      w.writeString(4, f4);
+    }
+  }
+
+  factory LedgerServiceV1AccountAsset.fromBuffer(List<int> bytes) {
+    return LedgerServiceV1AccountAsset._readFrom(ProtoWireReader(bytes));
+  }
+
+  static LedgerServiceV1AccountAsset _readFrom(ProtoWireReader r) {
+    final m = LedgerServiceV1AccountAsset();
+    while (r.next()) {
+      switch (r.fieldNumber) {
+        // field 1: name
+        case 1: {
+          m.name = r.readString();
+          break;
+        }
+        // field 2: type
+        case 2: {
+          m.type = r.readString();
+          break;
+        }
+        // field 3: balance
+        case 3: {
+          m.balance = r.readString();
+          break;
+        }
+        // field 4: currencyCode
+        case 4: {
+          m.currencyCode = r.readString();
+          break;
+        }
+        default: {
+          r.skip();
+        }
+      }
+    }
+    return m;
+  }
+
 }
 
 /// 请求 - 账户统计
@@ -1701,6 +2934,43 @@ class LedgerServiceV1AccountStatisticsRequest {
       currencyCode: currencyCode ?? this.currencyCode,
     );
   }
+
+  /// 二进制 proto 编码（MQTT 等二进制传输用；字段按编号升序写出）
+  Uint8List writeToBuffer() {
+    final w = ProtoWireWriter();
+    _writeTo(w);
+    return w.toBuffer();
+  }
+
+  void _writeTo(ProtoWireWriter w) {
+    // field 1: currencyCode
+    final f1 = currencyCode;
+    if (f1 != null) {
+      w.writeString(1, f1);
+    }
+  }
+
+  factory LedgerServiceV1AccountStatisticsRequest.fromBuffer(List<int> bytes) {
+    return LedgerServiceV1AccountStatisticsRequest._readFrom(ProtoWireReader(bytes));
+  }
+
+  static LedgerServiceV1AccountStatisticsRequest _readFrom(ProtoWireReader r) {
+    final m = LedgerServiceV1AccountStatisticsRequest();
+    while (r.next()) {
+      switch (r.fieldNumber) {
+        // field 1: currencyCode
+        case 1: {
+          m.currencyCode = r.readString();
+          break;
+        }
+        default: {
+          r.skip();
+        }
+      }
+    }
+    return m;
+  }
+
 }
 
 /// 回应 - 账户统计
@@ -1764,6 +3034,63 @@ class LedgerServiceV1AccountStatisticsResponse {
       totalCreditLimit: totalCreditLimit ?? this.totalCreditLimit,
     );
   }
+
+  /// 二进制 proto 编码（MQTT 等二进制传输用；字段按编号升序写出）
+  Uint8List writeToBuffer() {
+    final w = ProtoWireWriter();
+    _writeTo(w);
+    return w.toBuffer();
+  }
+
+  void _writeTo(ProtoWireWriter w) {
+    // field 1: totalBalance
+    final f1 = totalBalance;
+    if (f1 != null) {
+      w.writeString(1, f1);
+    }
+    // field 2: totalCreditLimit
+    final f2 = totalCreditLimit;
+    if (f2 != null) {
+      w.writeString(2, f2);
+    }
+    // field 3: totalAvailable
+    final f3 = totalAvailable;
+    if (f3 != null) {
+      w.writeString(3, f3);
+    }
+  }
+
+  factory LedgerServiceV1AccountStatisticsResponse.fromBuffer(List<int> bytes) {
+    return LedgerServiceV1AccountStatisticsResponse._readFrom(ProtoWireReader(bytes));
+  }
+
+  static LedgerServiceV1AccountStatisticsResponse _readFrom(ProtoWireReader r) {
+    final m = LedgerServiceV1AccountStatisticsResponse();
+    while (r.next()) {
+      switch (r.fieldNumber) {
+        // field 1: totalBalance
+        case 1: {
+          m.totalBalance = r.readString();
+          break;
+        }
+        // field 2: totalCreditLimit
+        case 2: {
+          m.totalCreditLimit = r.readString();
+          break;
+        }
+        // field 3: totalAvailable
+        case 3: {
+          m.totalAvailable = r.readString();
+          break;
+        }
+        default: {
+          r.skip();
+        }
+      }
+    }
+    return m;
+  }
+
 }
 
 /// 用户前台登录认证服务
@@ -1859,7 +3186,7 @@ class AuthenticationServiceV1LoginRequest {
       redirect_uri: json['redirect_uri'] as String?,
       refresh_token: json['refresh_token'] as String?,
       scope: json['scope'] as String?,
-      user_id: json['user_id'] as int?,
+      user_id: json['user_id'] != null ? int.parse(json['user_id'].toString()) : null,
       username: json['username'] as String?,
     );
   }
@@ -1879,7 +3206,7 @@ class AuthenticationServiceV1LoginRequest {
     if (redirect_uri != null) json['redirect_uri'] = redirect_uri;
     if (refresh_token != null) json['refresh_token'] = refresh_token;
     if (scope != null) json['scope'] = scope;
-    if (user_id != null) json['user_id'] = user_id;
+    if (user_id != null) json['user_id'] = user_id.toString();
     if (username != null) json['username'] = username;
     return json;
   }
@@ -1965,35 +3292,220 @@ class AuthenticationServiceV1LoginRequest {
       username: username ?? this.username,
     );
   }
+
+  /// 二进制 proto 编码（MQTT 等二进制传输用；字段按编号升序写出）
+  Uint8List writeToBuffer() {
+    final w = ProtoWireWriter();
+    _writeTo(w);
+    return w.toBuffer();
+  }
+
+  void _writeTo(ProtoWireWriter w) {
+    // field 1: grant_type
+    final f1 = grant_type;
+    if (f1 != null) {
+      w.writeEnum(1, f1.wire); // AuthenticationServiceV1GrantType
+    }
+    // field 2: client_id
+    final f2 = client_id;
+    if (f2 != null) {
+      w.writeString(2, f2);
+    }
+    // field 3: client_secret
+    final f3 = client_secret;
+    if (f3 != null) {
+      w.writeString(3, f3);
+    }
+    // field 4: scope
+    final f4 = scope;
+    if (f4 != null) {
+      w.writeString(4, f4);
+    }
+    // field 5: redirect_uri
+    final f5 = redirect_uri;
+    if (f5 != null) {
+      w.writeString(5, f5);
+    }
+    // field 6: user_id
+    final f6 = user_id;
+    if (f6 != null) {
+      w.writeInt64(6, f6);
+    }
+    // field 10: username
+    final f10 = username;
+    if (f10 != null) {
+      w.writeString(10, f10);
+    }
+    // field 11: email
+    final f11 = email;
+    if (f11 != null) {
+      w.writeString(11, f11);
+    }
+    // field 12: mobile
+    final f12 = mobile;
+    if (f12 != null) {
+      w.writeString(12, f12);
+    }
+    // field 19: password
+    final f19 = password;
+    if (f19 != null) {
+      w.writeString(19, f19);
+    }
+    // field 20: refresh_token
+    final f20 = refresh_token;
+    if (f20 != null) {
+      w.writeString(20, f20);
+    }
+    // field 30: code
+    final f30 = code;
+    if (f30 != null) {
+      w.writeString(30, f30);
+    }
+    // field 40: client_type
+    final f40 = client_type;
+    if (f40 != null) {
+      w.writeEnum(40, f40.wire); // AuthenticationServiceV1ClientType
+    }
+    // field 50: device_id
+    final f50 = device_id;
+    if (f50 != null) {
+      w.writeString(50, f50);
+    }
+    // field 60: jti
+    final f60 = jti;
+    if (f60 != null) {
+      w.writeString(60, f60);
+    }
+  }
+
+  factory AuthenticationServiceV1LoginRequest.fromBuffer(List<int> bytes) {
+    return AuthenticationServiceV1LoginRequest._readFrom(ProtoWireReader(bytes));
+  }
+
+  static AuthenticationServiceV1LoginRequest _readFrom(ProtoWireReader r) {
+    final m = AuthenticationServiceV1LoginRequest();
+    while (r.next()) {
+      switch (r.fieldNumber) {
+        // field 1: grant_type
+        case 1: {
+          m.grant_type = AuthenticationServiceV1GrantType.fromWire(r.readEnum());
+          break;
+        }
+        // field 2: client_id
+        case 2: {
+          m.client_id = r.readString();
+          break;
+        }
+        // field 3: client_secret
+        case 3: {
+          m.client_secret = r.readString();
+          break;
+        }
+        // field 4: scope
+        case 4: {
+          m.scope = r.readString();
+          break;
+        }
+        // field 5: redirect_uri
+        case 5: {
+          m.redirect_uri = r.readString();
+          break;
+        }
+        // field 6: user_id
+        case 6: {
+          m.user_id = r.readInt64();
+          break;
+        }
+        // field 10: username
+        case 10: {
+          m.username = r.readString();
+          break;
+        }
+        // field 11: email
+        case 11: {
+          m.email = r.readString();
+          break;
+        }
+        // field 12: mobile
+        case 12: {
+          m.mobile = r.readString();
+          break;
+        }
+        // field 19: password
+        case 19: {
+          m.password = r.readString();
+          break;
+        }
+        // field 20: refresh_token
+        case 20: {
+          m.refresh_token = r.readString();
+          break;
+        }
+        // field 30: code
+        case 30: {
+          m.code = r.readString();
+          break;
+        }
+        // field 40: client_type
+        case 40: {
+          m.client_type = AuthenticationServiceV1ClientType.fromWire(r.readEnum());
+          break;
+        }
+        // field 50: device_id
+        case 50: {
+          m.device_id = r.readString();
+          break;
+        }
+        // field 60: jti
+        case 60: {
+          m.jti = r.readString();
+          break;
+        }
+        default: {
+          r.skip();
+        }
+      }
+    }
+    return m;
+  }
+
 }
 
 /// 授权类型
 enum AuthenticationServiceV1GrantType {
-  authorizationCode('authorization_code'),
-  clientCredentials('client_credentials'),
-  implicit('implicit'),
-  password('password'),
-  refreshToken('refresh_token');
+  authorizationCode('authorization_code', 2),
+  clientCredentials('client_credentials', 1),
+  implicit('implicit', 4),
+  password('password', 0),
+  refreshToken('refresh_token', 3);
 
   final String value;
-  const AuthenticationServiceV1GrantType(this.value);
+  /// proto 枚举数值（二进制 wire 编解码用，与 JSON 的 value 字符串互补）
+  final int wire;
+  const AuthenticationServiceV1GrantType(this.value, this.wire);
 
   static AuthenticationServiceV1GrantType fromString(String v) =>
     values.firstWhere((e) => e.value == v, orElse: () => throw ArgumentError('Unknown AuthenticationServiceV1GrantType value: ' + v));
+  static AuthenticationServiceV1GrantType fromWire(int v) =>
+    values.firstWhere((e) => e.wire == v, orElse: () => throw ArgumentError('Unknown AuthenticationServiceV1GrantType wire value: ' + v.toString()));
   @override
   String toString() => value;
 }
 
 /// 客户端类型
 enum AuthenticationServiceV1ClientType {
-  admin('admin'),
-  app('app');
+  admin('admin', 0),
+  app('app', 1);
 
   final String value;
-  const AuthenticationServiceV1ClientType(this.value);
+  /// proto 枚举数值（二进制 wire 编解码用，与 JSON 的 value 字符串互补）
+  final int wire;
+  const AuthenticationServiceV1ClientType(this.value, this.wire);
 
   static AuthenticationServiceV1ClientType fromString(String v) =>
     values.firstWhere((e) => e.value == v, orElse: () => throw ArgumentError('Unknown AuthenticationServiceV1ClientType value: ' + v));
+  static AuthenticationServiceV1ClientType fromWire(int v) =>
+    values.firstWhere((e) => e.wire == v, orElse: () => throw ArgumentError('Unknown AuthenticationServiceV1ClientType wire value: ' + v.toString()));
   @override
   String toString() => value;
 }
@@ -2091,18 +3603,119 @@ class AuthenticationServiceV1LoginResponse {
       token_type: token_type ?? this.token_type,
     );
   }
+
+  /// 二进制 proto 编码（MQTT 等二进制传输用；字段按编号升序写出）
+  Uint8List writeToBuffer() {
+    final w = ProtoWireWriter();
+    _writeTo(w);
+    return w.toBuffer();
+  }
+
+  void _writeTo(ProtoWireWriter w) {
+    // field 1: token_type
+    final f1 = token_type;
+    if (f1 != null) {
+      w.writeEnum(1, f1.wire); // AuthenticationServiceV1TokenType
+    }
+    // field 2: access_token
+    final f2 = access_token;
+    if (f2 != null) {
+      w.writeString(2, f2);
+    }
+    // field 3: expires_in
+    final f3 = expires_in;
+    if (f3 != null) {
+      w.writeInt64(3, f3);
+    }
+    // field 4: refresh_token
+    final f4 = refresh_token;
+    if (f4 != null) {
+      w.writeString(4, f4);
+    }
+    // field 5: scope
+    final f5 = scope;
+    if (f5 != null) {
+      w.writeString(5, f5);
+    }
+    // field 6: refresh_expires_in
+    final f6 = refresh_expires_in;
+    if (f6 != null) {
+      w.writeInt64(6, f6);
+    }
+    // field 7: id_token
+    final f7 = id_token;
+    if (f7 != null) {
+      w.writeString(7, f7);
+    }
+  }
+
+  factory AuthenticationServiceV1LoginResponse.fromBuffer(List<int> bytes) {
+    return AuthenticationServiceV1LoginResponse._readFrom(ProtoWireReader(bytes));
+  }
+
+  static AuthenticationServiceV1LoginResponse _readFrom(ProtoWireReader r) {
+    final m = AuthenticationServiceV1LoginResponse();
+    while (r.next()) {
+      switch (r.fieldNumber) {
+        // field 1: token_type
+        case 1: {
+          m.token_type = AuthenticationServiceV1TokenType.fromWire(r.readEnum());
+          break;
+        }
+        // field 2: access_token
+        case 2: {
+          m.access_token = r.readString();
+          break;
+        }
+        // field 3: expires_in
+        case 3: {
+          m.expires_in = r.readInt64();
+          break;
+        }
+        // field 4: refresh_token
+        case 4: {
+          m.refresh_token = r.readString();
+          break;
+        }
+        // field 5: scope
+        case 5: {
+          m.scope = r.readString();
+          break;
+        }
+        // field 6: refresh_expires_in
+        case 6: {
+          m.refresh_expires_in = r.readInt64();
+          break;
+        }
+        // field 7: id_token
+        case 7: {
+          m.id_token = r.readString();
+          break;
+        }
+        default: {
+          r.skip();
+        }
+      }
+    }
+    return m;
+  }
+
 }
 
 /// 令牌类型
 enum AuthenticationServiceV1TokenType {
-  bearer('bearer'),
-  mac('mac');
+  bearer('bearer', 0),
+  mac('mac', 1);
 
   final String value;
-  const AuthenticationServiceV1TokenType(this.value);
+  /// proto 枚举数值（二进制 wire 编解码用，与 JSON 的 value 字符串互补）
+  final int wire;
+  const AuthenticationServiceV1TokenType(this.value, this.wire);
 
   static AuthenticationServiceV1TokenType fromString(String v) =>
     values.firstWhere((e) => e.value == v, orElse: () => throw ArgumentError('Unknown AuthenticationServiceV1TokenType value: ' + v));
+  static AuthenticationServiceV1TokenType fromWire(int v) =>
+    values.firstWhere((e) => e.wire == v, orElse: () => throw ArgumentError('Unknown AuthenticationServiceV1TokenType wire value: ' + v.toString()));
   @override
   String toString() => value;
 }
@@ -2194,7 +3807,9 @@ class BalanceFlowServiceClient {
       throw ArgumentError('missing required field request.id');
     }
     final path = '/app/v1/balance-flows/${request.id}';
-    final body = jsonEncode(request.toJson());
+    final bodyMap = request.toJson();
+    bodyMap.remove('id');
+    final body = jsonEncode(bodyMap);
     final result = await _transport.unary(path, 'PUT', body, TransportMeta(
       service: 'BalanceFlowService',
       method: 'Update',
@@ -2219,7 +3834,9 @@ class BalanceFlowServiceClient {
       throw ArgumentError('missing required field request.id');
     }
     final path = '/app/v1/balance-flows/${request.id}/confirm';
-    final body = jsonEncode(request.toJson());
+    final bodyMap = request.toJson();
+    bodyMap.remove('id');
+    final body = jsonEncode(bodyMap);
     final result = await _transport.unary(path, 'PATCH', body, TransportMeta(
       service: 'BalanceFlowService',
       method: 'Confirm',
@@ -2335,6 +3952,53 @@ class LedgerServiceV1ListBalanceFlowResponse {
       total: total ?? this.total,
     );
   }
+
+  /// 二进制 proto 编码（MQTT 等二进制传输用；字段按编号升序写出）
+  Uint8List writeToBuffer() {
+    final w = ProtoWireWriter();
+    _writeTo(w);
+    return w.toBuffer();
+  }
+
+  void _writeTo(ProtoWireWriter w) {
+    // field 1: items
+    final f1 = items;
+    if (f1 != null) {
+      for (final e in f1) { final cw = ProtoWireWriter(); e._writeTo(cw); w.writeRaw(1, cw.toBuffer()); }
+    }
+    // field 2: total
+    final f2 = total;
+    if (f2 != null) {
+      w.writeInt64(2, f2);
+    }
+  }
+
+  factory LedgerServiceV1ListBalanceFlowResponse.fromBuffer(List<int> bytes) {
+    return LedgerServiceV1ListBalanceFlowResponse._readFrom(ProtoWireReader(bytes));
+  }
+
+  static LedgerServiceV1ListBalanceFlowResponse _readFrom(ProtoWireReader r) {
+    final m = LedgerServiceV1ListBalanceFlowResponse();
+    while (r.next()) {
+      switch (r.fieldNumber) {
+        // field 1: items
+        case 1: {
+          m.items = r.readNestedList().map(LedgerServiceV1BalanceFlow._readFrom).toList();
+          break;
+        }
+        // field 2: total
+        case 2: {
+          m.total = r.readInt64();
+          break;
+        }
+        default: {
+          r.skip();
+        }
+      }
+    }
+    return m;
+  }
+
 }
 
 /// 余额流水
@@ -2395,59 +4059,59 @@ class LedgerServiceV1BalanceFlow {
 
   factory LedgerServiceV1BalanceFlow.fromJson(Map<String, dynamic> json) {
     return LedgerServiceV1BalanceFlow(
-      accountId: json['accountId'] as int?,
+      accountId: json['accountId'] != null ? int.parse(json['accountId'].toString()) : null,
       amount: json['amount'] as String?,
-      bookId: json['bookId'] as int?,
+      bookId: json['bookId'] != null ? int.parse(json['bookId'].toString()) : null,
       categories: (json['categories'] as List<dynamic>?)?.map((e) => LedgerServiceV1CategoryRelation.fromJson(e as Map<String, dynamic>)).toList(),
       confirm: json['confirm'] as bool?,
       convertedAmount: json['convertedAmount'] as String?,
       createdAt: json['createdAt'] as String?,
-      createdBy: json['createdBy'] as int?,
+      createdBy: json['createdBy'] != null ? int.parse(json['createdBy'].toString()) : null,
       createTime: json['createTime'] != null ? int.parse(json['createTime'].toString()) : null,
-      creatorId: json['creatorId'] as int?,
+      creatorId: json['creatorId'] != null ? int.parse(json['creatorId'].toString()) : null,
       deletedAt: json['deletedAt'] as String?,
-      deletedBy: json['deletedBy'] as int?,
-      id: json['id'] as int?,
+      deletedBy: json['deletedBy'] != null ? int.parse(json['deletedBy'].toString()) : null,
+      id: json['id'] != null ? int.parse(json['id'].toString()) : null,
       include: json['include'] as bool?,
       insertAt: json['insertAt'] != null ? int.parse(json['insertAt'].toString()) : null,
       notes: json['notes'] as String?,
-      payeeId: json['payeeId'] as int?,
+      payeeId: json['payeeId'] != null ? int.parse(json['payeeId'].toString()) : null,
       tags: (json['tags'] as List<dynamic>?)?.map((e) => LedgerServiceV1TagRelation.fromJson(e as Map<String, dynamic>)).toList(),
-      tenantId: json['tenantId'] as int?,
+      tenantId: json['tenantId'] != null ? int.parse(json['tenantId'].toString()) : null,
       title: json['title'] as String?,
-      toAccountId: json['toAccountId'] as int?,
+      toAccountId: json['toAccountId'] != null ? int.parse(json['toAccountId'].toString()) : null,
       type: json['type'] != null ? LedgerServiceV1FlowType.fromString(json['type'] as String) : null,
       updatedAt: json['updatedAt'] as String?,
-      updatedBy: json['updatedBy'] as int?,
+      updatedBy: json['updatedBy'] != null ? int.parse(json['updatedBy'].toString()) : null,
     );
   }
 
   Map<String, dynamic> toJson() {
     final json = <String, dynamic>{};
-    if (accountId != null) json['accountId'] = accountId;
+    if (accountId != null) json['accountId'] = accountId.toString();
     if (amount != null) json['amount'] = amount;
-    if (bookId != null) json['bookId'] = bookId;
+    if (bookId != null) json['bookId'] = bookId.toString();
     if (categories != null) json['categories'] = categories!.map((e) => e.toJson()).toList();
     if (confirm != null) json['confirm'] = confirm;
     if (convertedAmount != null) json['convertedAmount'] = convertedAmount;
     if (createdAt != null) json['createdAt'] = createdAt;
-    if (createdBy != null) json['createdBy'] = createdBy;
+    if (createdBy != null) json['createdBy'] = createdBy.toString();
     if (createTime != null) json['createTime'] = createTime.toString();
-    if (creatorId != null) json['creatorId'] = creatorId;
+    if (creatorId != null) json['creatorId'] = creatorId.toString();
     if (deletedAt != null) json['deletedAt'] = deletedAt;
-    if (deletedBy != null) json['deletedBy'] = deletedBy;
-    if (id != null) json['id'] = id;
+    if (deletedBy != null) json['deletedBy'] = deletedBy.toString();
+    if (id != null) json['id'] = id.toString();
     if (include != null) json['include'] = include;
     if (insertAt != null) json['insertAt'] = insertAt.toString();
     if (notes != null) json['notes'] = notes;
-    if (payeeId != null) json['payeeId'] = payeeId;
+    if (payeeId != null) json['payeeId'] = payeeId.toString();
     if (tags != null) json['tags'] = tags!.map((e) => e.toJson()).toList();
-    if (tenantId != null) json['tenantId'] = tenantId;
+    if (tenantId != null) json['tenantId'] = tenantId.toString();
     if (title != null) json['title'] = title;
-    if (toAccountId != null) json['toAccountId'] = toAccountId;
+    if (toAccountId != null) json['toAccountId'] = toAccountId.toString();
     if (type != null) json['type'] = type!.value;
     if (updatedAt != null) json['updatedAt'] = updatedAt;
-    if (updatedBy != null) json['updatedBy'] = updatedBy;
+    if (updatedBy != null) json['updatedBy'] = updatedBy.toString();
     return json;
   }
 
@@ -2568,21 +4232,292 @@ class LedgerServiceV1BalanceFlow {
       updatedBy: updatedBy ?? this.updatedBy,
     );
   }
+
+  /// 二进制 proto 编码（MQTT 等二进制传输用；字段按编号升序写出）
+  Uint8List writeToBuffer() {
+    final w = ProtoWireWriter();
+    _writeTo(w);
+    return w.toBuffer();
+  }
+
+  void _writeTo(ProtoWireWriter w) {
+    // field 1: id
+    final f1 = id;
+    if (f1 != null) {
+      w.writeInt64(1, f1);
+    }
+    // field 2: tenantId
+    final f2 = tenantId;
+    if (f2 != null) {
+      w.writeInt64(2, f2);
+    }
+    // field 3: bookId
+    final f3 = bookId;
+    if (f3 != null) {
+      w.writeInt64(3, f3);
+    }
+    // field 10: type
+    final f10 = type;
+    if (f10 != null) {
+      w.writeEnum(10, f10.wire); // LedgerServiceV1FlowType
+    }
+    // field 11: amount
+    final f11 = amount;
+    if (f11 != null) {
+      w.writeString(11, f11);
+    }
+    // field 12: convertedAmount
+    final f12 = convertedAmount;
+    if (f12 != null) {
+      w.writeString(12, f12);
+    }
+    // field 13: accountId
+    final f13 = accountId;
+    if (f13 != null) {
+      w.writeInt64(13, f13);
+    }
+    // field 14: toAccountId
+    final f14 = toAccountId;
+    if (f14 != null) {
+      w.writeInt64(14, f14);
+    }
+    // field 15: payeeId
+    final f15 = payeeId;
+    if (f15 != null) {
+      w.writeInt64(15, f15);
+    }
+    // field 16: creatorId
+    final f16 = creatorId;
+    if (f16 != null) {
+      w.writeInt64(16, f16);
+    }
+    // field 17: createTime
+    final f17 = createTime;
+    if (f17 != null) {
+      w.writeInt64(17, f17);
+    }
+    // field 18: title
+    final f18 = title;
+    if (f18 != null) {
+      w.writeString(18, f18);
+    }
+    // field 19: notes
+    final f19 = notes;
+    if (f19 != null) {
+      w.writeString(19, f19);
+    }
+    // field 20: confirm
+    final f20 = confirm;
+    if (f20 != null) {
+      w.writeBool(20, f20);
+    }
+    // field 21: include
+    final f21 = include;
+    if (f21 != null) {
+      w.writeBool(21, f21);
+    }
+    // field 22: insertAt
+    final f22 = insertAt;
+    if (f22 != null) {
+      w.writeInt64(22, f22);
+    }
+    // field 30: categories
+    final f30 = categories;
+    if (f30 != null) {
+      for (final e in f30) { final cw = ProtoWireWriter(); e._writeTo(cw); w.writeRaw(30, cw.toBuffer()); }
+    }
+    // field 31: tags
+    final f31 = tags;
+    if (f31 != null) {
+      for (final e in f31) { final cw = ProtoWireWriter(); e._writeTo(cw); w.writeRaw(31, cw.toBuffer()); }
+    }
+    // field 100: createdBy
+    final f100 = createdBy;
+    if (f100 != null) {
+      w.writeInt64(100, f100);
+    }
+    // field 101: updatedBy
+    final f101 = updatedBy;
+    if (f101 != null) {
+      w.writeInt64(101, f101);
+    }
+    // field 102: deletedBy
+    final f102 = deletedBy;
+    if (f102 != null) {
+      w.writeInt64(102, f102);
+    }
+    // field 200: createdAt
+    final f200 = createdAt;
+    if (f200 != null) {
+      w.writeTimestamp(200, f200);
+    }
+    // field 201: updatedAt
+    final f201 = updatedAt;
+    if (f201 != null) {
+      w.writeTimestamp(201, f201);
+    }
+    // field 202: deletedAt
+    final f202 = deletedAt;
+    if (f202 != null) {
+      w.writeTimestamp(202, f202);
+    }
+  }
+
+  factory LedgerServiceV1BalanceFlow.fromBuffer(List<int> bytes) {
+    return LedgerServiceV1BalanceFlow._readFrom(ProtoWireReader(bytes));
+  }
+
+  static LedgerServiceV1BalanceFlow _readFrom(ProtoWireReader r) {
+    final m = LedgerServiceV1BalanceFlow();
+    while (r.next()) {
+      switch (r.fieldNumber) {
+        // field 1: id
+        case 1: {
+          m.id = r.readInt64();
+          break;
+        }
+        // field 2: tenantId
+        case 2: {
+          m.tenantId = r.readInt64();
+          break;
+        }
+        // field 3: bookId
+        case 3: {
+          m.bookId = r.readInt64();
+          break;
+        }
+        // field 10: type
+        case 10: {
+          m.type = LedgerServiceV1FlowType.fromWire(r.readEnum());
+          break;
+        }
+        // field 11: amount
+        case 11: {
+          m.amount = r.readString();
+          break;
+        }
+        // field 12: convertedAmount
+        case 12: {
+          m.convertedAmount = r.readString();
+          break;
+        }
+        // field 13: accountId
+        case 13: {
+          m.accountId = r.readInt64();
+          break;
+        }
+        // field 14: toAccountId
+        case 14: {
+          m.toAccountId = r.readInt64();
+          break;
+        }
+        // field 15: payeeId
+        case 15: {
+          m.payeeId = r.readInt64();
+          break;
+        }
+        // field 16: creatorId
+        case 16: {
+          m.creatorId = r.readInt64();
+          break;
+        }
+        // field 17: createTime
+        case 17: {
+          m.createTime = r.readInt64();
+          break;
+        }
+        // field 18: title
+        case 18: {
+          m.title = r.readString();
+          break;
+        }
+        // field 19: notes
+        case 19: {
+          m.notes = r.readString();
+          break;
+        }
+        // field 20: confirm
+        case 20: {
+          m.confirm = r.readBool();
+          break;
+        }
+        // field 21: include
+        case 21: {
+          m.include = r.readBool();
+          break;
+        }
+        // field 22: insertAt
+        case 22: {
+          m.insertAt = r.readInt64();
+          break;
+        }
+        // field 30: categories
+        case 30: {
+          m.categories = r.readNestedList().map(LedgerServiceV1CategoryRelation._readFrom).toList();
+          break;
+        }
+        // field 31: tags
+        case 31: {
+          m.tags = r.readNestedList().map(LedgerServiceV1TagRelation._readFrom).toList();
+          break;
+        }
+        // field 100: createdBy
+        case 100: {
+          m.createdBy = r.readInt64();
+          break;
+        }
+        // field 101: updatedBy
+        case 101: {
+          m.updatedBy = r.readInt64();
+          break;
+        }
+        // field 102: deletedBy
+        case 102: {
+          m.deletedBy = r.readInt64();
+          break;
+        }
+        // field 200: createdAt
+        case 200: {
+          m.createdAt = r.readTimestampIso();
+          break;
+        }
+        // field 201: updatedAt
+        case 201: {
+          m.updatedAt = r.readTimestampIso();
+          break;
+        }
+        // field 202: deletedAt
+        case 202: {
+          m.deletedAt = r.readTimestampIso();
+          break;
+        }
+        default: {
+          r.skip();
+        }
+      }
+    }
+    return m;
+  }
+
 }
 
 /// 流水类型 — 对应 Java FlowType
 enum LedgerServiceV1FlowType {
-  flowTypeAdjust('FLOW_TYPE_ADJUST'),
-  flowTypeExpense('FLOW_TYPE_EXPENSE'),
-  flowTypeIncome('FLOW_TYPE_INCOME'),
-  flowTypeTransfer('FLOW_TYPE_TRANSFER'),
-  flowTypeUnspecified('FLOW_TYPE_UNSPECIFIED');
+  flowTypeAdjust('FLOW_TYPE_ADJUST', 400),
+  flowTypeExpense('FLOW_TYPE_EXPENSE', 100),
+  flowTypeIncome('FLOW_TYPE_INCOME', 200),
+  flowTypeTransfer('FLOW_TYPE_TRANSFER', 300),
+  flowTypeUnspecified('FLOW_TYPE_UNSPECIFIED', 0);
 
   final String value;
-  const LedgerServiceV1FlowType(this.value);
+  /// proto 枚举数值（二进制 wire 编解码用，与 JSON 的 value 字符串互补）
+  final int wire;
+  const LedgerServiceV1FlowType(this.value, this.wire);
 
   static LedgerServiceV1FlowType fromString(String v) =>
     values.firstWhere((e) => e.value == v, orElse: () => throw ArgumentError('Unknown LedgerServiceV1FlowType value: ' + v));
+  static LedgerServiceV1FlowType fromWire(int v) =>
+    values.firstWhere((e) => e.wire == v, orElse: () => throw ArgumentError('Unknown LedgerServiceV1FlowType wire value: ' + v.toString()));
   @override
   String toString() => value;
 }
@@ -2604,18 +4539,18 @@ class LedgerServiceV1CategoryRelation {
   factory LedgerServiceV1CategoryRelation.fromJson(Map<String, dynamic> json) {
     return LedgerServiceV1CategoryRelation(
       amount: json['amount'] as String?,
-      categoryId: json['categoryId'] as int?,
+      categoryId: json['categoryId'] != null ? int.parse(json['categoryId'].toString()) : null,
       convertedAmount: json['convertedAmount'] as String?,
-      id: json['id'] as int?,
+      id: json['id'] != null ? int.parse(json['id'].toString()) : null,
     );
   }
 
   Map<String, dynamic> toJson() {
     final json = <String, dynamic>{};
     if (amount != null) json['amount'] = amount;
-    if (categoryId != null) json['categoryId'] = categoryId;
+    if (categoryId != null) json['categoryId'] = categoryId.toString();
     if (convertedAmount != null) json['convertedAmount'] = convertedAmount;
-    if (id != null) json['id'] = id;
+    if (id != null) json['id'] = id.toString();
     return json;
   }
 
@@ -2656,6 +4591,73 @@ class LedgerServiceV1CategoryRelation {
       id: id ?? this.id,
     );
   }
+
+  /// 二进制 proto 编码（MQTT 等二进制传输用；字段按编号升序写出）
+  Uint8List writeToBuffer() {
+    final w = ProtoWireWriter();
+    _writeTo(w);
+    return w.toBuffer();
+  }
+
+  void _writeTo(ProtoWireWriter w) {
+    // field 1: id
+    final f1 = id;
+    if (f1 != null) {
+      w.writeInt64(1, f1);
+    }
+    // field 2: categoryId
+    final f2 = categoryId;
+    if (f2 != null) {
+      w.writeInt64(2, f2);
+    }
+    // field 3: amount
+    final f3 = amount;
+    if (f3 != null) {
+      w.writeString(3, f3);
+    }
+    // field 4: convertedAmount
+    final f4 = convertedAmount;
+    if (f4 != null) {
+      w.writeString(4, f4);
+    }
+  }
+
+  factory LedgerServiceV1CategoryRelation.fromBuffer(List<int> bytes) {
+    return LedgerServiceV1CategoryRelation._readFrom(ProtoWireReader(bytes));
+  }
+
+  static LedgerServiceV1CategoryRelation _readFrom(ProtoWireReader r) {
+    final m = LedgerServiceV1CategoryRelation();
+    while (r.next()) {
+      switch (r.fieldNumber) {
+        // field 1: id
+        case 1: {
+          m.id = r.readInt64();
+          break;
+        }
+        // field 2: categoryId
+        case 2: {
+          m.categoryId = r.readInt64();
+          break;
+        }
+        // field 3: amount
+        case 3: {
+          m.amount = r.readString();
+          break;
+        }
+        // field 4: convertedAmount
+        case 4: {
+          m.convertedAmount = r.readString();
+          break;
+        }
+        default: {
+          r.skip();
+        }
+      }
+    }
+    return m;
+  }
+
 }
 
 /// 标签关系
@@ -2676,8 +4678,8 @@ class LedgerServiceV1TagRelation {
     return LedgerServiceV1TagRelation(
       amount: json['amount'] as String?,
       convertedAmount: json['convertedAmount'] as String?,
-      id: json['id'] as int?,
-      tagId: json['tagId'] as int?,
+      id: json['id'] != null ? int.parse(json['id'].toString()) : null,
+      tagId: json['tagId'] != null ? int.parse(json['tagId'].toString()) : null,
     );
   }
 
@@ -2685,8 +4687,8 @@ class LedgerServiceV1TagRelation {
     final json = <String, dynamic>{};
     if (amount != null) json['amount'] = amount;
     if (convertedAmount != null) json['convertedAmount'] = convertedAmount;
-    if (id != null) json['id'] = id;
-    if (tagId != null) json['tagId'] = tagId;
+    if (id != null) json['id'] = id.toString();
+    if (tagId != null) json['tagId'] = tagId.toString();
     return json;
   }
 
@@ -2727,6 +4729,73 @@ class LedgerServiceV1TagRelation {
       tagId: tagId ?? this.tagId,
     );
   }
+
+  /// 二进制 proto 编码（MQTT 等二进制传输用；字段按编号升序写出）
+  Uint8List writeToBuffer() {
+    final w = ProtoWireWriter();
+    _writeTo(w);
+    return w.toBuffer();
+  }
+
+  void _writeTo(ProtoWireWriter w) {
+    // field 1: id
+    final f1 = id;
+    if (f1 != null) {
+      w.writeInt64(1, f1);
+    }
+    // field 2: tagId
+    final f2 = tagId;
+    if (f2 != null) {
+      w.writeInt64(2, f2);
+    }
+    // field 3: amount
+    final f3 = amount;
+    if (f3 != null) {
+      w.writeString(3, f3);
+    }
+    // field 4: convertedAmount
+    final f4 = convertedAmount;
+    if (f4 != null) {
+      w.writeString(4, f4);
+    }
+  }
+
+  factory LedgerServiceV1TagRelation.fromBuffer(List<int> bytes) {
+    return LedgerServiceV1TagRelation._readFrom(ProtoWireReader(bytes));
+  }
+
+  static LedgerServiceV1TagRelation _readFrom(ProtoWireReader r) {
+    final m = LedgerServiceV1TagRelation();
+    while (r.next()) {
+      switch (r.fieldNumber) {
+        // field 1: id
+        case 1: {
+          m.id = r.readInt64();
+          break;
+        }
+        // field 2: tagId
+        case 2: {
+          m.tagId = r.readInt64();
+          break;
+        }
+        // field 3: amount
+        case 3: {
+          m.amount = r.readString();
+          break;
+        }
+        // field 4: convertedAmount
+        case 4: {
+          m.convertedAmount = r.readString();
+          break;
+        }
+        default: {
+          r.skip();
+        }
+      }
+    }
+    return m;
+  }
+
 }
 
 /// 请求 - 流水数据
@@ -2741,14 +4810,14 @@ class LedgerServiceV1GetBalanceFlowRequest {
 
   factory LedgerServiceV1GetBalanceFlowRequest.fromJson(Map<String, dynamic> json) {
     return LedgerServiceV1GetBalanceFlowRequest(
-      id: json['id'] as int?,
+      id: json['id'] != null ? int.parse(json['id'].toString()) : null,
       viewMask: json['viewMask'] as String?,
     );
   }
 
   Map<String, dynamic> toJson() {
     final json = <String, dynamic>{};
-    if (id != null) json['id'] = id;
+    if (id != null) json['id'] = id.toString();
     if (viewMask != null) json['viewMask'] = viewMask;
     return json;
   }
@@ -2782,6 +4851,53 @@ class LedgerServiceV1GetBalanceFlowRequest {
       viewMask: viewMask ?? this.viewMask,
     );
   }
+
+  /// 二进制 proto 编码（MQTT 等二进制传输用；字段按编号升序写出）
+  Uint8List writeToBuffer() {
+    final w = ProtoWireWriter();
+    _writeTo(w);
+    return w.toBuffer();
+  }
+
+  void _writeTo(ProtoWireWriter w) {
+    // field 1: id
+    final f1 = id;
+    if (f1 != null) {
+      w.writeInt64(1, f1);
+    }
+    // field 100: viewMask
+    final f100 = viewMask;
+    if (f100 != null) {
+      w.writeFieldMask(100, f100);
+    }
+  }
+
+  factory LedgerServiceV1GetBalanceFlowRequest.fromBuffer(List<int> bytes) {
+    return LedgerServiceV1GetBalanceFlowRequest._readFrom(ProtoWireReader(bytes));
+  }
+
+  static LedgerServiceV1GetBalanceFlowRequest _readFrom(ProtoWireReader r) {
+    final m = LedgerServiceV1GetBalanceFlowRequest();
+    while (r.next()) {
+      switch (r.fieldNumber) {
+        // field 1: id
+        case 1: {
+          m.id = r.readInt64();
+          break;
+        }
+        // field 100: viewMask
+        case 100: {
+          m.viewMask = r.readFieldMaskText();
+          break;
+        }
+        default: {
+          r.skip();
+        }
+      }
+    }
+    return m;
+  }
+
 }
 
 /// 请求 - 创建流水
@@ -2829,6 +4945,43 @@ class LedgerServiceV1CreateBalanceFlowRequest {
       data: data ?? this.data,
     );
   }
+
+  /// 二进制 proto 编码（MQTT 等二进制传输用；字段按编号升序写出）
+  Uint8List writeToBuffer() {
+    final w = ProtoWireWriter();
+    _writeTo(w);
+    return w.toBuffer();
+  }
+
+  void _writeTo(ProtoWireWriter w) {
+    // field 1: data
+    final f1 = data;
+    if (f1 != null) {
+      final cw = ProtoWireWriter(); f1._writeTo(cw); w.writeRaw(1, cw.toBuffer()); // LedgerServiceV1BalanceFlow
+    }
+  }
+
+  factory LedgerServiceV1CreateBalanceFlowRequest.fromBuffer(List<int> bytes) {
+    return LedgerServiceV1CreateBalanceFlowRequest._readFrom(ProtoWireReader(bytes));
+  }
+
+  static LedgerServiceV1CreateBalanceFlowRequest _readFrom(ProtoWireReader r) {
+    final m = LedgerServiceV1CreateBalanceFlowRequest();
+    while (r.next()) {
+      switch (r.fieldNumber) {
+        // field 1: data
+        case 1: {
+          m.data = LedgerServiceV1BalanceFlow._readFrom(r.readNested());
+          break;
+        }
+        default: {
+          r.skip();
+        }
+      }
+    }
+    return m;
+  }
+
 }
 
 /// 请求 - 更新流水
@@ -2849,7 +5002,7 @@ class LedgerServiceV1UpdateBalanceFlowRequest {
     return LedgerServiceV1UpdateBalanceFlowRequest(
       allowMissing: json['allowMissing'] as bool?,
       data: json['data'] != null ? LedgerServiceV1BalanceFlow.fromJson(json['data'] as Map<String, dynamic>) : null,
-      id: json['id'] as int?,
+      id: json['id'] != null ? int.parse(json['id'].toString()) : null,
       updateMask: json['updateMask'] as String?,
     );
   }
@@ -2858,7 +5011,7 @@ class LedgerServiceV1UpdateBalanceFlowRequest {
     final json = <String, dynamic>{};
     if (allowMissing != null) json['allowMissing'] = allowMissing;
     if (data != null) json['data'] = data!.toJson();
-    if (id != null) json['id'] = id;
+    if (id != null) json['id'] = id.toString();
     if (updateMask != null) json['updateMask'] = updateMask;
     return json;
   }
@@ -2900,6 +5053,73 @@ class LedgerServiceV1UpdateBalanceFlowRequest {
       updateMask: updateMask ?? this.updateMask,
     );
   }
+
+  /// 二进制 proto 编码（MQTT 等二进制传输用；字段按编号升序写出）
+  Uint8List writeToBuffer() {
+    final w = ProtoWireWriter();
+    _writeTo(w);
+    return w.toBuffer();
+  }
+
+  void _writeTo(ProtoWireWriter w) {
+    // field 1: id
+    final f1 = id;
+    if (f1 != null) {
+      w.writeInt64(1, f1);
+    }
+    // field 2: data
+    final f2 = data;
+    if (f2 != null) {
+      final cw = ProtoWireWriter(); f2._writeTo(cw); w.writeRaw(2, cw.toBuffer()); // LedgerServiceV1BalanceFlow
+    }
+    // field 3: updateMask
+    final f3 = updateMask;
+    if (f3 != null) {
+      w.writeFieldMask(3, f3);
+    }
+    // field 4: allowMissing
+    final f4 = allowMissing;
+    if (f4 != null) {
+      w.writeBool(4, f4);
+    }
+  }
+
+  factory LedgerServiceV1UpdateBalanceFlowRequest.fromBuffer(List<int> bytes) {
+    return LedgerServiceV1UpdateBalanceFlowRequest._readFrom(ProtoWireReader(bytes));
+  }
+
+  static LedgerServiceV1UpdateBalanceFlowRequest _readFrom(ProtoWireReader r) {
+    final m = LedgerServiceV1UpdateBalanceFlowRequest();
+    while (r.next()) {
+      switch (r.fieldNumber) {
+        // field 1: id
+        case 1: {
+          m.id = r.readInt64();
+          break;
+        }
+        // field 2: data
+        case 2: {
+          m.data = LedgerServiceV1BalanceFlow._readFrom(r.readNested());
+          break;
+        }
+        // field 3: updateMask
+        case 3: {
+          m.updateMask = r.readFieldMaskText();
+          break;
+        }
+        // field 4: allowMissing
+        case 4: {
+          m.allowMissing = r.readBool();
+          break;
+        }
+        default: {
+          r.skip();
+        }
+      }
+    }
+    return m;
+  }
+
 }
 
 /// 请求 - 删除流水
@@ -2912,13 +5132,13 @@ class LedgerServiceV1DeleteBalanceFlowRequest {
 
   factory LedgerServiceV1DeleteBalanceFlowRequest.fromJson(Map<String, dynamic> json) {
     return LedgerServiceV1DeleteBalanceFlowRequest(
-      id: json['id'] as int?,
+      id: json['id'] != null ? int.parse(json['id'].toString()) : null,
     );
   }
 
   Map<String, dynamic> toJson() {
     final json = <String, dynamic>{};
-    if (id != null) json['id'] = id;
+    if (id != null) json['id'] = id.toString();
     return json;
   }
 
@@ -2947,6 +5167,43 @@ class LedgerServiceV1DeleteBalanceFlowRequest {
       id: id ?? this.id,
     );
   }
+
+  /// 二进制 proto 编码（MQTT 等二进制传输用；字段按编号升序写出）
+  Uint8List writeToBuffer() {
+    final w = ProtoWireWriter();
+    _writeTo(w);
+    return w.toBuffer();
+  }
+
+  void _writeTo(ProtoWireWriter w) {
+    // field 1: id
+    final f1 = id;
+    if (f1 != null) {
+      w.writeInt64(1, f1);
+    }
+  }
+
+  factory LedgerServiceV1DeleteBalanceFlowRequest.fromBuffer(List<int> bytes) {
+    return LedgerServiceV1DeleteBalanceFlowRequest._readFrom(ProtoWireReader(bytes));
+  }
+
+  static LedgerServiceV1DeleteBalanceFlowRequest _readFrom(ProtoWireReader r) {
+    final m = LedgerServiceV1DeleteBalanceFlowRequest();
+    while (r.next()) {
+      switch (r.fieldNumber) {
+        // field 1: id
+        case 1: {
+          m.id = r.readInt64();
+          break;
+        }
+        default: {
+          r.skip();
+        }
+      }
+    }
+    return m;
+  }
+
 }
 
 /// 请求 - 确认流水（更新账户余额）
@@ -2959,13 +5216,13 @@ class LedgerServiceV1ConfirmBalanceFlowRequest {
 
   factory LedgerServiceV1ConfirmBalanceFlowRequest.fromJson(Map<String, dynamic> json) {
     return LedgerServiceV1ConfirmBalanceFlowRequest(
-      id: json['id'] as int?,
+      id: json['id'] != null ? int.parse(json['id'].toString()) : null,
     );
   }
 
   Map<String, dynamic> toJson() {
     final json = <String, dynamic>{};
-    if (id != null) json['id'] = id;
+    if (id != null) json['id'] = id.toString();
     return json;
   }
 
@@ -2994,6 +5251,43 @@ class LedgerServiceV1ConfirmBalanceFlowRequest {
       id: id ?? this.id,
     );
   }
+
+  /// 二进制 proto 编码（MQTT 等二进制传输用；字段按编号升序写出）
+  Uint8List writeToBuffer() {
+    final w = ProtoWireWriter();
+    _writeTo(w);
+    return w.toBuffer();
+  }
+
+  void _writeTo(ProtoWireWriter w) {
+    // field 1: id
+    final f1 = id;
+    if (f1 != null) {
+      w.writeInt64(1, f1);
+    }
+  }
+
+  factory LedgerServiceV1ConfirmBalanceFlowRequest.fromBuffer(List<int> bytes) {
+    return LedgerServiceV1ConfirmBalanceFlowRequest._readFrom(ProtoWireReader(bytes));
+  }
+
+  static LedgerServiceV1ConfirmBalanceFlowRequest _readFrom(ProtoWireReader r) {
+    final m = LedgerServiceV1ConfirmBalanceFlowRequest();
+    while (r.next()) {
+      switch (r.fieldNumber) {
+        // field 1: id
+        case 1: {
+          m.id = r.readInt64();
+          break;
+        }
+        default: {
+          r.skip();
+        }
+      }
+    }
+    return m;
+  }
+
 }
 
 /// 请求 - 统计
@@ -3028,16 +5322,16 @@ class LedgerServiceV1StatisticsRequest {
 
   factory LedgerServiceV1StatisticsRequest.fromJson(Map<String, dynamic> json) {
     return LedgerServiceV1StatisticsRequest(
-      accountId: json['accountId'] as int?,
-      bookId: json['bookId'] as int?,
-      categoryIds: (json['categoryIds'] as List<dynamic>?)?.map((e) => e as int).toList(),
+      accountId: json['accountId'] != null ? int.parse(json['accountId'].toString()) : null,
+      bookId: json['bookId'] != null ? int.parse(json['bookId'].toString()) : null,
+      categoryIds: (json['categoryIds'] as List<dynamic>?)?.map((e) => int.parse(e.toString())).toList(),
       confirm: json['confirm'] as bool?,
       include: json['include'] as bool?,
       maxAmount: json['maxAmount'] as String?,
       maxTime: json['maxTime'] != null ? int.parse(json['maxTime'].toString()) : null,
       minAmount: json['minAmount'] as String?,
       minTime: json['minTime'] != null ? int.parse(json['minTime'].toString()) : null,
-      tagIds: (json['tagIds'] as List<dynamic>?)?.map((e) => e as int).toList(),
+      tagIds: (json['tagIds'] as List<dynamic>?)?.map((e) => int.parse(e.toString())).toList(),
       title: json['title'] as String?,
       type: json['type'] != null ? LedgerServiceV1FlowType.fromString(json['type'] as String) : null,
     );
@@ -3045,16 +5339,16 @@ class LedgerServiceV1StatisticsRequest {
 
   Map<String, dynamic> toJson() {
     final json = <String, dynamic>{};
-    if (accountId != null) json['accountId'] = accountId;
-    if (bookId != null) json['bookId'] = bookId;
-    if (categoryIds != null) json['categoryIds'] = categoryIds;
+    if (accountId != null) json['accountId'] = accountId.toString();
+    if (bookId != null) json['bookId'] = bookId.toString();
+    if (categoryIds != null) json['categoryIds'] = categoryIds!.map((e) => e.toString()).toList();
     if (confirm != null) json['confirm'] = confirm;
     if (include != null) json['include'] = include;
     if (maxAmount != null) json['maxAmount'] = maxAmount;
     if (maxTime != null) json['maxTime'] = maxTime.toString();
     if (minAmount != null) json['minAmount'] = minAmount;
     if (minTime != null) json['minTime'] = minTime.toString();
-    if (tagIds != null) json['tagIds'] = tagIds;
+    if (tagIds != null) json['tagIds'] = tagIds!.map((e) => e.toString()).toList();
     if (title != null) json['title'] = title;
     if (type != null) json['type'] = type!.value;
     return json;
@@ -3129,6 +5423,153 @@ class LedgerServiceV1StatisticsRequest {
       type: type ?? this.type,
     );
   }
+
+  /// 二进制 proto 编码（MQTT 等二进制传输用；字段按编号升序写出）
+  Uint8List writeToBuffer() {
+    final w = ProtoWireWriter();
+    _writeTo(w);
+    return w.toBuffer();
+  }
+
+  void _writeTo(ProtoWireWriter w) {
+    // field 1: bookId
+    final f1 = bookId;
+    if (f1 != null) {
+      w.writeInt64(1, f1);
+    }
+    // field 2: type
+    final f2 = type;
+    if (f2 != null) {
+      w.writeEnum(2, f2.wire); // LedgerServiceV1FlowType
+    }
+    // field 3: title
+    final f3 = title;
+    if (f3 != null) {
+      w.writeString(3, f3);
+    }
+    // field 4: minAmount
+    final f4 = minAmount;
+    if (f4 != null) {
+      w.writeString(4, f4);
+    }
+    // field 5: maxAmount
+    final f5 = maxAmount;
+    if (f5 != null) {
+      w.writeString(5, f5);
+    }
+    // field 6: minTime
+    final f6 = minTime;
+    if (f6 != null) {
+      w.writeInt64(6, f6);
+    }
+    // field 7: maxTime
+    final f7 = maxTime;
+    if (f7 != null) {
+      w.writeInt64(7, f7);
+    }
+    // field 8: accountId
+    final f8 = accountId;
+    if (f8 != null) {
+      w.writeInt64(8, f8);
+    }
+    // field 9: categoryIds
+    final f9 = categoryIds;
+    if (f9 != null) {
+      w.writePackedVarintList(9, f9);
+    }
+    // field 10: tagIds
+    final f10 = tagIds;
+    if (f10 != null) {
+      w.writePackedVarintList(10, f10);
+    }
+    // field 11: confirm
+    final f11 = confirm;
+    if (f11 != null) {
+      w.writeBool(11, f11);
+    }
+    // field 12: include
+    final f12 = include;
+    if (f12 != null) {
+      w.writeBool(12, f12);
+    }
+  }
+
+  factory LedgerServiceV1StatisticsRequest.fromBuffer(List<int> bytes) {
+    return LedgerServiceV1StatisticsRequest._readFrom(ProtoWireReader(bytes));
+  }
+
+  static LedgerServiceV1StatisticsRequest _readFrom(ProtoWireReader r) {
+    final m = LedgerServiceV1StatisticsRequest();
+    while (r.next()) {
+      switch (r.fieldNumber) {
+        // field 1: bookId
+        case 1: {
+          m.bookId = r.readInt64();
+          break;
+        }
+        // field 2: type
+        case 2: {
+          m.type = LedgerServiceV1FlowType.fromWire(r.readEnum());
+          break;
+        }
+        // field 3: title
+        case 3: {
+          m.title = r.readString();
+          break;
+        }
+        // field 4: minAmount
+        case 4: {
+          m.minAmount = r.readString();
+          break;
+        }
+        // field 5: maxAmount
+        case 5: {
+          m.maxAmount = r.readString();
+          break;
+        }
+        // field 6: minTime
+        case 6: {
+          m.minTime = r.readInt64();
+          break;
+        }
+        // field 7: maxTime
+        case 7: {
+          m.maxTime = r.readInt64();
+          break;
+        }
+        // field 8: accountId
+        case 8: {
+          m.accountId = r.readInt64();
+          break;
+        }
+        // field 9: categoryIds
+        case 9: {
+          m.categoryIds = r.readVarintList();
+          break;
+        }
+        // field 10: tagIds
+        case 10: {
+          m.tagIds = r.readVarintList();
+          break;
+        }
+        // field 11: confirm
+        case 11: {
+          m.confirm = r.readBool();
+          break;
+        }
+        // field 12: include
+        case 12: {
+          m.include = r.readBool();
+          break;
+        }
+        default: {
+          r.skip();
+        }
+      }
+    }
+    return m;
+  }
+
 }
 
 /// 回应 - 统计
@@ -3192,6 +5633,63 @@ class LedgerServiceV1StatisticsResponse {
       net: net ?? this.net,
     );
   }
+
+  /// 二进制 proto 编码（MQTT 等二进制传输用；字段按编号升序写出）
+  Uint8List writeToBuffer() {
+    final w = ProtoWireWriter();
+    _writeTo(w);
+    return w.toBuffer();
+  }
+
+  void _writeTo(ProtoWireWriter w) {
+    // field 1: expense
+    final f1 = expense;
+    if (f1 != null) {
+      w.writeString(1, f1);
+    }
+    // field 2: income
+    final f2 = income;
+    if (f2 != null) {
+      w.writeString(2, f2);
+    }
+    // field 3: net
+    final f3 = net;
+    if (f3 != null) {
+      w.writeString(3, f3);
+    }
+  }
+
+  factory LedgerServiceV1StatisticsResponse.fromBuffer(List<int> bytes) {
+    return LedgerServiceV1StatisticsResponse._readFrom(ProtoWireReader(bytes));
+  }
+
+  static LedgerServiceV1StatisticsResponse _readFrom(ProtoWireReader r) {
+    final m = LedgerServiceV1StatisticsResponse();
+    while (r.next()) {
+      switch (r.fieldNumber) {
+        // field 1: expense
+        case 1: {
+          m.expense = r.readString();
+          break;
+        }
+        // field 2: income
+        case 2: {
+          m.income = r.readString();
+          break;
+        }
+        // field 3: net
+        case 3: {
+          m.net = r.readString();
+          break;
+        }
+        default: {
+          r.skip();
+        }
+      }
+    }
+    return m;
+  }
+
 }
 
 class BookServiceClient {
@@ -3298,7 +5796,9 @@ class BookServiceClient {
       throw ArgumentError('missing required field request.id');
     }
     final path = '/app/v1/books/${request.id}';
-    final body = jsonEncode(request.toJson());
+    final bodyMap = request.toJson();
+    bodyMap.remove('id');
+    final body = jsonEncode(bodyMap);
     final result = await _transport.unary(path, 'PUT', body, TransportMeta(
       service: 'BookService',
       method: 'Update',
@@ -3323,7 +5823,9 @@ class BookServiceClient {
       throw ArgumentError('missing required field request.id');
     }
     final path = '/app/v1/books/${request.id}/toggle';
-    final body = jsonEncode(request.toJson());
+    final bodyMap = request.toJson();
+    bodyMap.remove('id');
+    final body = jsonEncode(bodyMap);
     final result = await _transport.unary(path, 'PATCH', body, TransportMeta(
       service: 'BookService',
       method: 'Toggle',
@@ -3434,6 +5936,53 @@ class LedgerServiceV1ListBookResponse {
       total: total ?? this.total,
     );
   }
+
+  /// 二进制 proto 编码（MQTT 等二进制传输用；字段按编号升序写出）
+  Uint8List writeToBuffer() {
+    final w = ProtoWireWriter();
+    _writeTo(w);
+    return w.toBuffer();
+  }
+
+  void _writeTo(ProtoWireWriter w) {
+    // field 1: items
+    final f1 = items;
+    if (f1 != null) {
+      for (final e in f1) { final cw = ProtoWireWriter(); e._writeTo(cw); w.writeRaw(1, cw.toBuffer()); }
+    }
+    // field 2: total
+    final f2 = total;
+    if (f2 != null) {
+      w.writeInt64(2, f2);
+    }
+  }
+
+  factory LedgerServiceV1ListBookResponse.fromBuffer(List<int> bytes) {
+    return LedgerServiceV1ListBookResponse._readFrom(ProtoWireReader(bytes));
+  }
+
+  static LedgerServiceV1ListBookResponse _readFrom(ProtoWireReader r) {
+    final m = LedgerServiceV1ListBookResponse();
+    while (r.next()) {
+      switch (r.fieldNumber) {
+        // field 1: items
+        case 1: {
+          m.items = r.readNestedList().map(LedgerServiceV1Book._readFrom).toList();
+          break;
+        }
+        // field 2: total
+        case 2: {
+          m.total = r.readInt64();
+          break;
+        }
+        default: {
+          r.skip();
+        }
+      }
+    }
+    return m;
+  }
+
 }
 
 /// 账本
@@ -3487,50 +6036,50 @@ class LedgerServiceV1Book {
   factory LedgerServiceV1Book.fromJson(Map<String, dynamic> json) {
     return LedgerServiceV1Book(
       createdAt: json['createdAt'] as String?,
-      createdBy: json['createdBy'] as int?,
+      createdBy: json['createdBy'] != null ? int.parse(json['createdBy'].toString()) : null,
       defaultCurrencyCode: json['defaultCurrencyCode'] as String?,
-      defaultExpenseAccountId: json['defaultExpenseAccountId'] as int?,
-      defaultExpenseCategoryId: json['defaultExpenseCategoryId'] as int?,
-      defaultIncomeAccountId: json['defaultIncomeAccountId'] as int?,
-      defaultIncomeCategoryId: json['defaultIncomeCategoryId'] as int?,
-      defaultTransferFromAccountId: json['defaultTransferFromAccountId'] as int?,
-      defaultTransferToAccountId: json['defaultTransferToAccountId'] as int?,
+      defaultExpenseAccountId: json['defaultExpenseAccountId'] != null ? int.parse(json['defaultExpenseAccountId'].toString()) : null,
+      defaultExpenseCategoryId: json['defaultExpenseCategoryId'] != null ? int.parse(json['defaultExpenseCategoryId'].toString()) : null,
+      defaultIncomeAccountId: json['defaultIncomeAccountId'] != null ? int.parse(json['defaultIncomeAccountId'].toString()) : null,
+      defaultIncomeCategoryId: json['defaultIncomeCategoryId'] != null ? int.parse(json['defaultIncomeCategoryId'].toString()) : null,
+      defaultTransferFromAccountId: json['defaultTransferFromAccountId'] != null ? int.parse(json['defaultTransferFromAccountId'].toString()) : null,
+      defaultTransferToAccountId: json['defaultTransferToAccountId'] != null ? int.parse(json['defaultTransferToAccountId'].toString()) : null,
       deletedAt: json['deletedAt'] as String?,
-      deletedBy: json['deletedBy'] as int?,
+      deletedBy: json['deletedBy'] != null ? int.parse(json['deletedBy'].toString()) : null,
       enable: json['enable'] as bool?,
       exportAt: json['exportAt'] != null ? int.parse(json['exportAt'].toString()) : null,
-      id: json['id'] as int?,
+      id: json['id'] != null ? int.parse(json['id'].toString()) : null,
       name: json['name'] as String?,
       notes: json['notes'] as String?,
       sortOrder: json['sortOrder'] as int?,
-      tenantId: json['tenantId'] as int?,
+      tenantId: json['tenantId'] != null ? int.parse(json['tenantId'].toString()) : null,
       updatedAt: json['updatedAt'] as String?,
-      updatedBy: json['updatedBy'] as int?,
+      updatedBy: json['updatedBy'] != null ? int.parse(json['updatedBy'].toString()) : null,
     );
   }
 
   Map<String, dynamic> toJson() {
     final json = <String, dynamic>{};
     if (createdAt != null) json['createdAt'] = createdAt;
-    if (createdBy != null) json['createdBy'] = createdBy;
+    if (createdBy != null) json['createdBy'] = createdBy.toString();
     if (defaultCurrencyCode != null) json['defaultCurrencyCode'] = defaultCurrencyCode;
-    if (defaultExpenseAccountId != null) json['defaultExpenseAccountId'] = defaultExpenseAccountId;
-    if (defaultExpenseCategoryId != null) json['defaultExpenseCategoryId'] = defaultExpenseCategoryId;
-    if (defaultIncomeAccountId != null) json['defaultIncomeAccountId'] = defaultIncomeAccountId;
-    if (defaultIncomeCategoryId != null) json['defaultIncomeCategoryId'] = defaultIncomeCategoryId;
-    if (defaultTransferFromAccountId != null) json['defaultTransferFromAccountId'] = defaultTransferFromAccountId;
-    if (defaultTransferToAccountId != null) json['defaultTransferToAccountId'] = defaultTransferToAccountId;
+    if (defaultExpenseAccountId != null) json['defaultExpenseAccountId'] = defaultExpenseAccountId.toString();
+    if (defaultExpenseCategoryId != null) json['defaultExpenseCategoryId'] = defaultExpenseCategoryId.toString();
+    if (defaultIncomeAccountId != null) json['defaultIncomeAccountId'] = defaultIncomeAccountId.toString();
+    if (defaultIncomeCategoryId != null) json['defaultIncomeCategoryId'] = defaultIncomeCategoryId.toString();
+    if (defaultTransferFromAccountId != null) json['defaultTransferFromAccountId'] = defaultTransferFromAccountId.toString();
+    if (defaultTransferToAccountId != null) json['defaultTransferToAccountId'] = defaultTransferToAccountId.toString();
     if (deletedAt != null) json['deletedAt'] = deletedAt;
-    if (deletedBy != null) json['deletedBy'] = deletedBy;
+    if (deletedBy != null) json['deletedBy'] = deletedBy.toString();
     if (enable != null) json['enable'] = enable;
     if (exportAt != null) json['exportAt'] = exportAt.toString();
-    if (id != null) json['id'] = id;
+    if (id != null) json['id'] = id.toString();
     if (name != null) json['name'] = name;
     if (notes != null) json['notes'] = notes;
     if (sortOrder != null) json['sortOrder'] = sortOrder;
-    if (tenantId != null) json['tenantId'] = tenantId;
+    if (tenantId != null) json['tenantId'] = tenantId.toString();
     if (updatedAt != null) json['updatedAt'] = updatedAt;
-    if (updatedBy != null) json['updatedBy'] = updatedBy;
+    if (updatedBy != null) json['updatedBy'] = updatedBy.toString();
     return json;
   }
 
@@ -3635,6 +6184,233 @@ class LedgerServiceV1Book {
       updatedBy: updatedBy ?? this.updatedBy,
     );
   }
+
+  /// 二进制 proto 编码（MQTT 等二进制传输用；字段按编号升序写出）
+  Uint8List writeToBuffer() {
+    final w = ProtoWireWriter();
+    _writeTo(w);
+    return w.toBuffer();
+  }
+
+  void _writeTo(ProtoWireWriter w) {
+    // field 1: id
+    final f1 = id;
+    if (f1 != null) {
+      w.writeInt64(1, f1);
+    }
+    // field 2: tenantId
+    final f2 = tenantId;
+    if (f2 != null) {
+      w.writeInt64(2, f2);
+    }
+    // field 10: name
+    final f10 = name;
+    if (f10 != null) {
+      w.writeString(10, f10);
+    }
+    // field 11: defaultCurrencyCode
+    final f11 = defaultCurrencyCode;
+    if (f11 != null) {
+      w.writeString(11, f11);
+    }
+    // field 12: notes
+    final f12 = notes;
+    if (f12 != null) {
+      w.writeString(12, f12);
+    }
+    // field 13: enable
+    final f13 = enable;
+    if (f13 != null) {
+      w.writeBool(13, f13);
+    }
+    // field 14: sortOrder
+    final f14 = sortOrder;
+    if (f14 != null) {
+      w.writeInt32(14, f14);
+    }
+    // field 15: exportAt
+    final f15 = exportAt;
+    if (f15 != null) {
+      w.writeInt64(15, f15);
+    }
+    // field 20: defaultExpenseAccountId
+    final f20 = defaultExpenseAccountId;
+    if (f20 != null) {
+      w.writeInt64(20, f20);
+    }
+    // field 21: defaultIncomeAccountId
+    final f21 = defaultIncomeAccountId;
+    if (f21 != null) {
+      w.writeInt64(21, f21);
+    }
+    // field 22: defaultTransferFromAccountId
+    final f22 = defaultTransferFromAccountId;
+    if (f22 != null) {
+      w.writeInt64(22, f22);
+    }
+    // field 23: defaultTransferToAccountId
+    final f23 = defaultTransferToAccountId;
+    if (f23 != null) {
+      w.writeInt64(23, f23);
+    }
+    // field 30: defaultExpenseCategoryId
+    final f30 = defaultExpenseCategoryId;
+    if (f30 != null) {
+      w.writeInt64(30, f30);
+    }
+    // field 31: defaultIncomeCategoryId
+    final f31 = defaultIncomeCategoryId;
+    if (f31 != null) {
+      w.writeInt64(31, f31);
+    }
+    // field 100: createdBy
+    final f100 = createdBy;
+    if (f100 != null) {
+      w.writeInt64(100, f100);
+    }
+    // field 101: updatedBy
+    final f101 = updatedBy;
+    if (f101 != null) {
+      w.writeInt64(101, f101);
+    }
+    // field 102: deletedBy
+    final f102 = deletedBy;
+    if (f102 != null) {
+      w.writeInt64(102, f102);
+    }
+    // field 200: createdAt
+    final f200 = createdAt;
+    if (f200 != null) {
+      w.writeTimestamp(200, f200);
+    }
+    // field 201: updatedAt
+    final f201 = updatedAt;
+    if (f201 != null) {
+      w.writeTimestamp(201, f201);
+    }
+    // field 202: deletedAt
+    final f202 = deletedAt;
+    if (f202 != null) {
+      w.writeTimestamp(202, f202);
+    }
+  }
+
+  factory LedgerServiceV1Book.fromBuffer(List<int> bytes) {
+    return LedgerServiceV1Book._readFrom(ProtoWireReader(bytes));
+  }
+
+  static LedgerServiceV1Book _readFrom(ProtoWireReader r) {
+    final m = LedgerServiceV1Book();
+    while (r.next()) {
+      switch (r.fieldNumber) {
+        // field 1: id
+        case 1: {
+          m.id = r.readInt64();
+          break;
+        }
+        // field 2: tenantId
+        case 2: {
+          m.tenantId = r.readInt64();
+          break;
+        }
+        // field 10: name
+        case 10: {
+          m.name = r.readString();
+          break;
+        }
+        // field 11: defaultCurrencyCode
+        case 11: {
+          m.defaultCurrencyCode = r.readString();
+          break;
+        }
+        // field 12: notes
+        case 12: {
+          m.notes = r.readString();
+          break;
+        }
+        // field 13: enable
+        case 13: {
+          m.enable = r.readBool();
+          break;
+        }
+        // field 14: sortOrder
+        case 14: {
+          m.sortOrder = r.readInt32();
+          break;
+        }
+        // field 15: exportAt
+        case 15: {
+          m.exportAt = r.readInt64();
+          break;
+        }
+        // field 20: defaultExpenseAccountId
+        case 20: {
+          m.defaultExpenseAccountId = r.readInt64();
+          break;
+        }
+        // field 21: defaultIncomeAccountId
+        case 21: {
+          m.defaultIncomeAccountId = r.readInt64();
+          break;
+        }
+        // field 22: defaultTransferFromAccountId
+        case 22: {
+          m.defaultTransferFromAccountId = r.readInt64();
+          break;
+        }
+        // field 23: defaultTransferToAccountId
+        case 23: {
+          m.defaultTransferToAccountId = r.readInt64();
+          break;
+        }
+        // field 30: defaultExpenseCategoryId
+        case 30: {
+          m.defaultExpenseCategoryId = r.readInt64();
+          break;
+        }
+        // field 31: defaultIncomeCategoryId
+        case 31: {
+          m.defaultIncomeCategoryId = r.readInt64();
+          break;
+        }
+        // field 100: createdBy
+        case 100: {
+          m.createdBy = r.readInt64();
+          break;
+        }
+        // field 101: updatedBy
+        case 101: {
+          m.updatedBy = r.readInt64();
+          break;
+        }
+        // field 102: deletedBy
+        case 102: {
+          m.deletedBy = r.readInt64();
+          break;
+        }
+        // field 200: createdAt
+        case 200: {
+          m.createdAt = r.readTimestampIso();
+          break;
+        }
+        // field 201: updatedAt
+        case 201: {
+          m.updatedAt = r.readTimestampIso();
+          break;
+        }
+        // field 202: deletedAt
+        case 202: {
+          m.deletedAt = r.readTimestampIso();
+          break;
+        }
+        default: {
+          r.skip();
+        }
+      }
+    }
+    return m;
+  }
+
 }
 
 /// 请求 - 获取所有账本
@@ -3682,6 +6458,43 @@ class LedgerServiceV1ListAllBookRequest {
       includeDisabled: includeDisabled ?? this.includeDisabled,
     );
   }
+
+  /// 二进制 proto 编码（MQTT 等二进制传输用；字段按编号升序写出）
+  Uint8List writeToBuffer() {
+    final w = ProtoWireWriter();
+    _writeTo(w);
+    return w.toBuffer();
+  }
+
+  void _writeTo(ProtoWireWriter w) {
+    // field 1: includeDisabled
+    final f1 = includeDisabled;
+    if (f1 != null) {
+      w.writeBool(1, f1);
+    }
+  }
+
+  factory LedgerServiceV1ListAllBookRequest.fromBuffer(List<int> bytes) {
+    return LedgerServiceV1ListAllBookRequest._readFrom(ProtoWireReader(bytes));
+  }
+
+  static LedgerServiceV1ListAllBookRequest _readFrom(ProtoWireReader r) {
+    final m = LedgerServiceV1ListAllBookRequest();
+    while (r.next()) {
+      switch (r.fieldNumber) {
+        // field 1: includeDisabled
+        case 1: {
+          m.includeDisabled = r.readBool();
+          break;
+        }
+        default: {
+          r.skip();
+        }
+      }
+    }
+    return m;
+  }
+
 }
 
 /// 请求 - 账本数据
@@ -3696,14 +6509,14 @@ class LedgerServiceV1GetBookRequest {
 
   factory LedgerServiceV1GetBookRequest.fromJson(Map<String, dynamic> json) {
     return LedgerServiceV1GetBookRequest(
-      id: json['id'] as int?,
+      id: json['id'] != null ? int.parse(json['id'].toString()) : null,
       viewMask: json['viewMask'] as String?,
     );
   }
 
   Map<String, dynamic> toJson() {
     final json = <String, dynamic>{};
-    if (id != null) json['id'] = id;
+    if (id != null) json['id'] = id.toString();
     if (viewMask != null) json['viewMask'] = viewMask;
     return json;
   }
@@ -3737,6 +6550,53 @@ class LedgerServiceV1GetBookRequest {
       viewMask: viewMask ?? this.viewMask,
     );
   }
+
+  /// 二进制 proto 编码（MQTT 等二进制传输用；字段按编号升序写出）
+  Uint8List writeToBuffer() {
+    final w = ProtoWireWriter();
+    _writeTo(w);
+    return w.toBuffer();
+  }
+
+  void _writeTo(ProtoWireWriter w) {
+    // field 1: id
+    final f1 = id;
+    if (f1 != null) {
+      w.writeInt64(1, f1);
+    }
+    // field 100: viewMask
+    final f100 = viewMask;
+    if (f100 != null) {
+      w.writeFieldMask(100, f100);
+    }
+  }
+
+  factory LedgerServiceV1GetBookRequest.fromBuffer(List<int> bytes) {
+    return LedgerServiceV1GetBookRequest._readFrom(ProtoWireReader(bytes));
+  }
+
+  static LedgerServiceV1GetBookRequest _readFrom(ProtoWireReader r) {
+    final m = LedgerServiceV1GetBookRequest();
+    while (r.next()) {
+      switch (r.fieldNumber) {
+        // field 1: id
+        case 1: {
+          m.id = r.readInt64();
+          break;
+        }
+        // field 100: viewMask
+        case 100: {
+          m.viewMask = r.readFieldMaskText();
+          break;
+        }
+        default: {
+          r.skip();
+        }
+      }
+    }
+    return m;
+  }
+
 }
 
 /// 请求 - 创建账本
@@ -3784,6 +6644,43 @@ class LedgerServiceV1CreateBookRequest {
       data: data ?? this.data,
     );
   }
+
+  /// 二进制 proto 编码（MQTT 等二进制传输用；字段按编号升序写出）
+  Uint8List writeToBuffer() {
+    final w = ProtoWireWriter();
+    _writeTo(w);
+    return w.toBuffer();
+  }
+
+  void _writeTo(ProtoWireWriter w) {
+    // field 1: data
+    final f1 = data;
+    if (f1 != null) {
+      final cw = ProtoWireWriter(); f1._writeTo(cw); w.writeRaw(1, cw.toBuffer()); // LedgerServiceV1Book
+    }
+  }
+
+  factory LedgerServiceV1CreateBookRequest.fromBuffer(List<int> bytes) {
+    return LedgerServiceV1CreateBookRequest._readFrom(ProtoWireReader(bytes));
+  }
+
+  static LedgerServiceV1CreateBookRequest _readFrom(ProtoWireReader r) {
+    final m = LedgerServiceV1CreateBookRequest();
+    while (r.next()) {
+      switch (r.fieldNumber) {
+        // field 1: data
+        case 1: {
+          m.data = LedgerServiceV1Book._readFrom(r.readNested());
+          break;
+        }
+        default: {
+          r.skip();
+        }
+      }
+    }
+    return m;
+  }
+
 }
 
 /// 请求 - 更新账本
@@ -3804,7 +6701,7 @@ class LedgerServiceV1UpdateBookRequest {
     return LedgerServiceV1UpdateBookRequest(
       allowMissing: json['allowMissing'] as bool?,
       data: json['data'] != null ? LedgerServiceV1Book.fromJson(json['data'] as Map<String, dynamic>) : null,
-      id: json['id'] as int?,
+      id: json['id'] != null ? int.parse(json['id'].toString()) : null,
       updateMask: json['updateMask'] as String?,
     );
   }
@@ -3813,7 +6710,7 @@ class LedgerServiceV1UpdateBookRequest {
     final json = <String, dynamic>{};
     if (allowMissing != null) json['allowMissing'] = allowMissing;
     if (data != null) json['data'] = data!.toJson();
-    if (id != null) json['id'] = id;
+    if (id != null) json['id'] = id.toString();
     if (updateMask != null) json['updateMask'] = updateMask;
     return json;
   }
@@ -3855,6 +6752,73 @@ class LedgerServiceV1UpdateBookRequest {
       updateMask: updateMask ?? this.updateMask,
     );
   }
+
+  /// 二进制 proto 编码（MQTT 等二进制传输用；字段按编号升序写出）
+  Uint8List writeToBuffer() {
+    final w = ProtoWireWriter();
+    _writeTo(w);
+    return w.toBuffer();
+  }
+
+  void _writeTo(ProtoWireWriter w) {
+    // field 1: id
+    final f1 = id;
+    if (f1 != null) {
+      w.writeInt64(1, f1);
+    }
+    // field 2: data
+    final f2 = data;
+    if (f2 != null) {
+      final cw = ProtoWireWriter(); f2._writeTo(cw); w.writeRaw(2, cw.toBuffer()); // LedgerServiceV1Book
+    }
+    // field 3: updateMask
+    final f3 = updateMask;
+    if (f3 != null) {
+      w.writeFieldMask(3, f3);
+    }
+    // field 4: allowMissing
+    final f4 = allowMissing;
+    if (f4 != null) {
+      w.writeBool(4, f4);
+    }
+  }
+
+  factory LedgerServiceV1UpdateBookRequest.fromBuffer(List<int> bytes) {
+    return LedgerServiceV1UpdateBookRequest._readFrom(ProtoWireReader(bytes));
+  }
+
+  static LedgerServiceV1UpdateBookRequest _readFrom(ProtoWireReader r) {
+    final m = LedgerServiceV1UpdateBookRequest();
+    while (r.next()) {
+      switch (r.fieldNumber) {
+        // field 1: id
+        case 1: {
+          m.id = r.readInt64();
+          break;
+        }
+        // field 2: data
+        case 2: {
+          m.data = LedgerServiceV1Book._readFrom(r.readNested());
+          break;
+        }
+        // field 3: updateMask
+        case 3: {
+          m.updateMask = r.readFieldMaskText();
+          break;
+        }
+        // field 4: allowMissing
+        case 4: {
+          m.allowMissing = r.readBool();
+          break;
+        }
+        default: {
+          r.skip();
+        }
+      }
+    }
+    return m;
+  }
+
 }
 
 /// 请求 - 删除账本
@@ -3867,13 +6831,13 @@ class LedgerServiceV1DeleteBookRequest {
 
   factory LedgerServiceV1DeleteBookRequest.fromJson(Map<String, dynamic> json) {
     return LedgerServiceV1DeleteBookRequest(
-      id: json['id'] as int?,
+      id: json['id'] != null ? int.parse(json['id'].toString()) : null,
     );
   }
 
   Map<String, dynamic> toJson() {
     final json = <String, dynamic>{};
-    if (id != null) json['id'] = id;
+    if (id != null) json['id'] = id.toString();
     return json;
   }
 
@@ -3902,6 +6866,43 @@ class LedgerServiceV1DeleteBookRequest {
       id: id ?? this.id,
     );
   }
+
+  /// 二进制 proto 编码（MQTT 等二进制传输用；字段按编号升序写出）
+  Uint8List writeToBuffer() {
+    final w = ProtoWireWriter();
+    _writeTo(w);
+    return w.toBuffer();
+  }
+
+  void _writeTo(ProtoWireWriter w) {
+    // field 1: id
+    final f1 = id;
+    if (f1 != null) {
+      w.writeInt64(1, f1);
+    }
+  }
+
+  factory LedgerServiceV1DeleteBookRequest.fromBuffer(List<int> bytes) {
+    return LedgerServiceV1DeleteBookRequest._readFrom(ProtoWireReader(bytes));
+  }
+
+  static LedgerServiceV1DeleteBookRequest _readFrom(ProtoWireReader r) {
+    final m = LedgerServiceV1DeleteBookRequest();
+    while (r.next()) {
+      switch (r.fieldNumber) {
+        // field 1: id
+        case 1: {
+          m.id = r.readInt64();
+          break;
+        }
+        default: {
+          r.skip();
+        }
+      }
+    }
+    return m;
+  }
+
 }
 
 /// 请求 - 切换启用/禁用
@@ -3914,13 +6915,13 @@ class LedgerServiceV1ToggleBookRequest {
 
   factory LedgerServiceV1ToggleBookRequest.fromJson(Map<String, dynamic> json) {
     return LedgerServiceV1ToggleBookRequest(
-      id: json['id'] as int?,
+      id: json['id'] != null ? int.parse(json['id'].toString()) : null,
     );
   }
 
   Map<String, dynamic> toJson() {
     final json = <String, dynamic>{};
-    if (id != null) json['id'] = id;
+    if (id != null) json['id'] = id.toString();
     return json;
   }
 
@@ -3949,6 +6950,43 @@ class LedgerServiceV1ToggleBookRequest {
       id: id ?? this.id,
     );
   }
+
+  /// 二进制 proto 编码（MQTT 等二进制传输用；字段按编号升序写出）
+  Uint8List writeToBuffer() {
+    final w = ProtoWireWriter();
+    _writeTo(w);
+    return w.toBuffer();
+  }
+
+  void _writeTo(ProtoWireWriter w) {
+    // field 1: id
+    final f1 = id;
+    if (f1 != null) {
+      w.writeInt64(1, f1);
+    }
+  }
+
+  factory LedgerServiceV1ToggleBookRequest.fromBuffer(List<int> bytes) {
+    return LedgerServiceV1ToggleBookRequest._readFrom(ProtoWireReader(bytes));
+  }
+
+  static LedgerServiceV1ToggleBookRequest _readFrom(ProtoWireReader r) {
+    final m = LedgerServiceV1ToggleBookRequest();
+    while (r.next()) {
+      switch (r.fieldNumber) {
+        // field 1: id
+        case 1: {
+          m.id = r.readInt64();
+          break;
+        }
+        default: {
+          r.skip();
+        }
+      }
+    }
+    return m;
+  }
+
 }
 
 /// 请求 - 从模板创建账本
@@ -3970,7 +7008,7 @@ class LedgerServiceV1CreateBookByTemplateRequest {
       defaultCurrencyCode: json['defaultCurrencyCode'] as String?,
       name: json['name'] as String?,
       notes: json['notes'] as String?,
-      templateId: json['templateId'] as int?,
+      templateId: json['templateId'] != null ? int.parse(json['templateId'].toString()) : null,
     );
   }
 
@@ -3979,7 +7017,7 @@ class LedgerServiceV1CreateBookByTemplateRequest {
     if (defaultCurrencyCode != null) json['defaultCurrencyCode'] = defaultCurrencyCode;
     if (name != null) json['name'] = name;
     if (notes != null) json['notes'] = notes;
-    if (templateId != null) json['templateId'] = templateId;
+    if (templateId != null) json['templateId'] = templateId.toString();
     return json;
   }
 
@@ -4020,6 +7058,73 @@ class LedgerServiceV1CreateBookByTemplateRequest {
       templateId: templateId ?? this.templateId,
     );
   }
+
+  /// 二进制 proto 编码（MQTT 等二进制传输用；字段按编号升序写出）
+  Uint8List writeToBuffer() {
+    final w = ProtoWireWriter();
+    _writeTo(w);
+    return w.toBuffer();
+  }
+
+  void _writeTo(ProtoWireWriter w) {
+    // field 1: name
+    final f1 = name;
+    if (f1 != null) {
+      w.writeString(1, f1);
+    }
+    // field 2: defaultCurrencyCode
+    final f2 = defaultCurrencyCode;
+    if (f2 != null) {
+      w.writeString(2, f2);
+    }
+    // field 3: templateId
+    final f3 = templateId;
+    if (f3 != null) {
+      w.writeInt64(3, f3);
+    }
+    // field 4: notes
+    final f4 = notes;
+    if (f4 != null) {
+      w.writeString(4, f4);
+    }
+  }
+
+  factory LedgerServiceV1CreateBookByTemplateRequest.fromBuffer(List<int> bytes) {
+    return LedgerServiceV1CreateBookByTemplateRequest._readFrom(ProtoWireReader(bytes));
+  }
+
+  static LedgerServiceV1CreateBookByTemplateRequest _readFrom(ProtoWireReader r) {
+    final m = LedgerServiceV1CreateBookByTemplateRequest();
+    while (r.next()) {
+      switch (r.fieldNumber) {
+        // field 1: name
+        case 1: {
+          m.name = r.readString();
+          break;
+        }
+        // field 2: defaultCurrencyCode
+        case 2: {
+          m.defaultCurrencyCode = r.readString();
+          break;
+        }
+        // field 3: templateId
+        case 3: {
+          m.templateId = r.readInt64();
+          break;
+        }
+        // field 4: notes
+        case 4: {
+          m.notes = r.readString();
+          break;
+        }
+        default: {
+          r.skip();
+        }
+      }
+    }
+    return m;
+  }
+
 }
 
 /// 请求 - 复制账本
@@ -4038,7 +7143,7 @@ class LedgerServiceV1CopyBookRequest {
     return LedgerServiceV1CopyBookRequest(
       name: json['name'] as String?,
       notes: json['notes'] as String?,
-      sourceBookId: json['sourceBookId'] as int?,
+      sourceBookId: json['sourceBookId'] != null ? int.parse(json['sourceBookId'].toString()) : null,
     );
   }
 
@@ -4046,7 +7151,7 @@ class LedgerServiceV1CopyBookRequest {
     final json = <String, dynamic>{};
     if (name != null) json['name'] = name;
     if (notes != null) json['notes'] = notes;
-    if (sourceBookId != null) json['sourceBookId'] = sourceBookId;
+    if (sourceBookId != null) json['sourceBookId'] = sourceBookId.toString();
     return json;
   }
 
@@ -4083,6 +7188,63 @@ class LedgerServiceV1CopyBookRequest {
       sourceBookId: sourceBookId ?? this.sourceBookId,
     );
   }
+
+  /// 二进制 proto 编码（MQTT 等二进制传输用；字段按编号升序写出）
+  Uint8List writeToBuffer() {
+    final w = ProtoWireWriter();
+    _writeTo(w);
+    return w.toBuffer();
+  }
+
+  void _writeTo(ProtoWireWriter w) {
+    // field 1: sourceBookId
+    final f1 = sourceBookId;
+    if (f1 != null) {
+      w.writeInt64(1, f1);
+    }
+    // field 2: name
+    final f2 = name;
+    if (f2 != null) {
+      w.writeString(2, f2);
+    }
+    // field 3: notes
+    final f3 = notes;
+    if (f3 != null) {
+      w.writeString(3, f3);
+    }
+  }
+
+  factory LedgerServiceV1CopyBookRequest.fromBuffer(List<int> bytes) {
+    return LedgerServiceV1CopyBookRequest._readFrom(ProtoWireReader(bytes));
+  }
+
+  static LedgerServiceV1CopyBookRequest _readFrom(ProtoWireReader r) {
+    final m = LedgerServiceV1CopyBookRequest();
+    while (r.next()) {
+      switch (r.fieldNumber) {
+        // field 1: sourceBookId
+        case 1: {
+          m.sourceBookId = r.readInt64();
+          break;
+        }
+        // field 2: name
+        case 2: {
+          m.name = r.readString();
+          break;
+        }
+        // field 3: notes
+        case 3: {
+          m.notes = r.readString();
+          break;
+        }
+        default: {
+          r.skip();
+        }
+      }
+    }
+    return m;
+  }
+
 }
 
 /// 请求 - 导出账本流水
@@ -4097,14 +7259,14 @@ class LedgerServiceV1ExportBookRequest {
 
   factory LedgerServiceV1ExportBookRequest.fromJson(Map<String, dynamic> json) {
     return LedgerServiceV1ExportBookRequest(
-      id: json['id'] as int?,
+      id: json['id'] != null ? int.parse(json['id'].toString()) : null,
       timeZoneOffset: json['timeZoneOffset'] as int?,
     );
   }
 
   Map<String, dynamic> toJson() {
     final json = <String, dynamic>{};
-    if (id != null) json['id'] = id;
+    if (id != null) json['id'] = id.toString();
     if (timeZoneOffset != null) json['timeZoneOffset'] = timeZoneOffset;
     return json;
   }
@@ -4138,6 +7300,53 @@ class LedgerServiceV1ExportBookRequest {
       timeZoneOffset: timeZoneOffset ?? this.timeZoneOffset,
     );
   }
+
+  /// 二进制 proto 编码（MQTT 等二进制传输用；字段按编号升序写出）
+  Uint8List writeToBuffer() {
+    final w = ProtoWireWriter();
+    _writeTo(w);
+    return w.toBuffer();
+  }
+
+  void _writeTo(ProtoWireWriter w) {
+    // field 1: id
+    final f1 = id;
+    if (f1 != null) {
+      w.writeInt64(1, f1);
+    }
+    // field 2: timeZoneOffset
+    final f2 = timeZoneOffset;
+    if (f2 != null) {
+      w.writeInt32(2, f2);
+    }
+  }
+
+  factory LedgerServiceV1ExportBookRequest.fromBuffer(List<int> bytes) {
+    return LedgerServiceV1ExportBookRequest._readFrom(ProtoWireReader(bytes));
+  }
+
+  static LedgerServiceV1ExportBookRequest _readFrom(ProtoWireReader r) {
+    final m = LedgerServiceV1ExportBookRequest();
+    while (r.next()) {
+      switch (r.fieldNumber) {
+        // field 1: id
+        case 1: {
+          m.id = r.readInt64();
+          break;
+        }
+        // field 2: timeZoneOffset
+        case 2: {
+          m.timeZoneOffset = r.readInt32();
+          break;
+        }
+        default: {
+          r.skip();
+        }
+      }
+    }
+    return m;
+  }
+
 }
 
 /// 回应 - 导出账本流水
@@ -4201,6 +7410,63 @@ class LedgerServiceV1ExportBookResponse {
       fileName: fileName ?? this.fileName,
     );
   }
+
+  /// 二进制 proto 编码（MQTT 等二进制传输用；字段按编号升序写出）
+  Uint8List writeToBuffer() {
+    final w = ProtoWireWriter();
+    _writeTo(w);
+    return w.toBuffer();
+  }
+
+  void _writeTo(ProtoWireWriter w) {
+    // field 1: fileName
+    final f1 = fileName;
+    if (f1 != null) {
+      w.writeString(1, f1);
+    }
+    // field 2: contentType
+    final f2 = contentType;
+    if (f2 != null) {
+      w.writeString(2, f2);
+    }
+    // field 3: data
+    final f3 = data;
+    if (f3 != null) {
+      throw UnsupportedError('dart-http wire: field ledger.service.v1.ExportBookResponse.data');
+    }
+  }
+
+  factory LedgerServiceV1ExportBookResponse.fromBuffer(List<int> bytes) {
+    return LedgerServiceV1ExportBookResponse._readFrom(ProtoWireReader(bytes));
+  }
+
+  static LedgerServiceV1ExportBookResponse _readFrom(ProtoWireReader r) {
+    final m = LedgerServiceV1ExportBookResponse();
+    while (r.next()) {
+      switch (r.fieldNumber) {
+        // field 1: fileName
+        case 1: {
+          m.fileName = r.readString();
+          break;
+        }
+        // field 2: contentType
+        case 2: {
+          m.contentType = r.readString();
+          break;
+        }
+        // field 3: data
+        case 3: {
+          r.skip();
+          break;
+        }
+        default: {
+          r.skip();
+        }
+      }
+    }
+    return m;
+  }
+
 }
 
 /// 账本模板服务（App BFF）
@@ -4276,6 +7542,43 @@ class LedgerServiceV1ListBookTemplateResponse {
       items: items ?? this.items,
     );
   }
+
+  /// 二进制 proto 编码（MQTT 等二进制传输用；字段按编号升序写出）
+  Uint8List writeToBuffer() {
+    final w = ProtoWireWriter();
+    _writeTo(w);
+    return w.toBuffer();
+  }
+
+  void _writeTo(ProtoWireWriter w) {
+    // field 1: items
+    final f1 = items;
+    if (f1 != null) {
+      for (final e in f1) { final cw = ProtoWireWriter(); e._writeTo(cw); w.writeRaw(1, cw.toBuffer()); }
+    }
+  }
+
+  factory LedgerServiceV1ListBookTemplateResponse.fromBuffer(List<int> bytes) {
+    return LedgerServiceV1ListBookTemplateResponse._readFrom(ProtoWireReader(bytes));
+  }
+
+  static LedgerServiceV1ListBookTemplateResponse _readFrom(ProtoWireReader r) {
+    final m = LedgerServiceV1ListBookTemplateResponse();
+    while (r.next()) {
+      switch (r.fieldNumber) {
+        // field 1: items
+        case 1: {
+          m.items = r.readNestedList().map(LedgerServiceV1BookTemplate._readFrom).toList();
+          break;
+        }
+        default: {
+          r.skip();
+        }
+      }
+    }
+    return m;
+  }
+
 }
 
 /// 账本模板
@@ -4301,7 +7604,7 @@ class LedgerServiceV1BookTemplate {
   factory LedgerServiceV1BookTemplate.fromJson(Map<String, dynamic> json) {
     return LedgerServiceV1BookTemplate(
       categories: (json['categories'] as List<dynamic>?)?.map((e) => LedgerServiceV1CategoryTemplate.fromJson(e as Map<String, dynamic>)).toList(),
-      id: json['id'] as int?,
+      id: json['id'] != null ? int.parse(json['id'].toString()) : null,
       locale: json['locale'] as String?,
       name: json['name'] as String?,
       payees: (json['payees'] as List<dynamic>?)?.map((e) => LedgerServiceV1PayeeTemplate.fromJson(e as Map<String, dynamic>)).toList(),
@@ -4313,7 +7616,7 @@ class LedgerServiceV1BookTemplate {
   Map<String, dynamic> toJson() {
     final json = <String, dynamic>{};
     if (categories != null) json['categories'] = categories!.map((e) => e.toJson()).toList();
-    if (id != null) json['id'] = id;
+    if (id != null) json['id'] = id.toString();
     if (locale != null) json['locale'] = locale;
     if (name != null) json['name'] = name;
     if (payees != null) json['payees'] = payees!.map((e) => e.toJson()).toList();
@@ -4371,6 +7674,103 @@ class LedgerServiceV1BookTemplate {
       thumbnail: thumbnail ?? this.thumbnail,
     );
   }
+
+  /// 二进制 proto 编码（MQTT 等二进制传输用；字段按编号升序写出）
+  Uint8List writeToBuffer() {
+    final w = ProtoWireWriter();
+    _writeTo(w);
+    return w.toBuffer();
+  }
+
+  void _writeTo(ProtoWireWriter w) {
+    // field 1: id
+    final f1 = id;
+    if (f1 != null) {
+      w.writeInt64(1, f1);
+    }
+    // field 2: name
+    final f2 = name;
+    if (f2 != null) {
+      w.writeString(2, f2);
+    }
+    // field 3: locale
+    final f3 = locale;
+    if (f3 != null) {
+      w.writeString(3, f3);
+    }
+    // field 4: thumbnail
+    final f4 = thumbnail;
+    if (f4 != null) {
+      w.writeString(4, f4);
+    }
+    // field 10: categories
+    final f10 = categories;
+    if (f10 != null) {
+      for (final e in f10) { final cw = ProtoWireWriter(); e._writeTo(cw); w.writeRaw(10, cw.toBuffer()); }
+    }
+    // field 11: tags
+    final f11 = tags;
+    if (f11 != null) {
+      for (final e in f11) { final cw = ProtoWireWriter(); e._writeTo(cw); w.writeRaw(11, cw.toBuffer()); }
+    }
+    // field 12: payees
+    final f12 = payees;
+    if (f12 != null) {
+      for (final e in f12) { final cw = ProtoWireWriter(); e._writeTo(cw); w.writeRaw(12, cw.toBuffer()); }
+    }
+  }
+
+  factory LedgerServiceV1BookTemplate.fromBuffer(List<int> bytes) {
+    return LedgerServiceV1BookTemplate._readFrom(ProtoWireReader(bytes));
+  }
+
+  static LedgerServiceV1BookTemplate _readFrom(ProtoWireReader r) {
+    final m = LedgerServiceV1BookTemplate();
+    while (r.next()) {
+      switch (r.fieldNumber) {
+        // field 1: id
+        case 1: {
+          m.id = r.readInt64();
+          break;
+        }
+        // field 2: name
+        case 2: {
+          m.name = r.readString();
+          break;
+        }
+        // field 3: locale
+        case 3: {
+          m.locale = r.readString();
+          break;
+        }
+        // field 4: thumbnail
+        case 4: {
+          m.thumbnail = r.readString();
+          break;
+        }
+        // field 10: categories
+        case 10: {
+          m.categories = r.readNestedList().map(LedgerServiceV1CategoryTemplate._readFrom).toList();
+          break;
+        }
+        // field 11: tags
+        case 11: {
+          m.tags = r.readNestedList().map(LedgerServiceV1TagTemplate._readFrom).toList();
+          break;
+        }
+        // field 12: payees
+        case 12: {
+          m.payees = r.readNestedList().map(LedgerServiceV1PayeeTemplate._readFrom).toList();
+          break;
+        }
+        default: {
+          r.skip();
+        }
+      }
+    }
+    return m;
+  }
+
 }
 
 /// 分类模板
@@ -4434,6 +7834,63 @@ class LedgerServiceV1CategoryTemplate {
       type: type ?? this.type,
     );
   }
+
+  /// 二进制 proto 编码（MQTT 等二进制传输用；字段按编号升序写出）
+  Uint8List writeToBuffer() {
+    final w = ProtoWireWriter();
+    _writeTo(w);
+    return w.toBuffer();
+  }
+
+  void _writeTo(ProtoWireWriter w) {
+    // field 1: name
+    final f1 = name;
+    if (f1 != null) {
+      w.writeString(1, f1);
+    }
+    // field 2: type
+    final f2 = type;
+    if (f2 != null) {
+      w.writeString(2, f2);
+    }
+    // field 3: level
+    final f3 = level;
+    if (f3 != null) {
+      w.writeUint32(3, f3);
+    }
+  }
+
+  factory LedgerServiceV1CategoryTemplate.fromBuffer(List<int> bytes) {
+    return LedgerServiceV1CategoryTemplate._readFrom(ProtoWireReader(bytes));
+  }
+
+  static LedgerServiceV1CategoryTemplate _readFrom(ProtoWireReader r) {
+    final m = LedgerServiceV1CategoryTemplate();
+    while (r.next()) {
+      switch (r.fieldNumber) {
+        // field 1: name
+        case 1: {
+          m.name = r.readString();
+          break;
+        }
+        // field 2: type
+        case 2: {
+          m.type = r.readString();
+          break;
+        }
+        // field 3: level
+        case 3: {
+          m.level = r.readUint32();
+          break;
+        }
+        default: {
+          r.skip();
+        }
+      }
+    }
+    return m;
+  }
+
 }
 
 /// 标签模板
@@ -4481,6 +7938,43 @@ class LedgerServiceV1TagTemplate {
       name: name ?? this.name,
     );
   }
+
+  /// 二进制 proto 编码（MQTT 等二进制传输用；字段按编号升序写出）
+  Uint8List writeToBuffer() {
+    final w = ProtoWireWriter();
+    _writeTo(w);
+    return w.toBuffer();
+  }
+
+  void _writeTo(ProtoWireWriter w) {
+    // field 1: name
+    final f1 = name;
+    if (f1 != null) {
+      w.writeString(1, f1);
+    }
+  }
+
+  factory LedgerServiceV1TagTemplate.fromBuffer(List<int> bytes) {
+    return LedgerServiceV1TagTemplate._readFrom(ProtoWireReader(bytes));
+  }
+
+  static LedgerServiceV1TagTemplate _readFrom(ProtoWireReader r) {
+    final m = LedgerServiceV1TagTemplate();
+    while (r.next()) {
+      switch (r.fieldNumber) {
+        // field 1: name
+        case 1: {
+          m.name = r.readString();
+          break;
+        }
+        default: {
+          r.skip();
+        }
+      }
+    }
+    return m;
+  }
+
 }
 
 /// 收款人模板
@@ -4528,6 +8022,43 @@ class LedgerServiceV1PayeeTemplate {
       name: name ?? this.name,
     );
   }
+
+  /// 二进制 proto 编码（MQTT 等二进制传输用；字段按编号升序写出）
+  Uint8List writeToBuffer() {
+    final w = ProtoWireWriter();
+    _writeTo(w);
+    return w.toBuffer();
+  }
+
+  void _writeTo(ProtoWireWriter w) {
+    // field 1: name
+    final f1 = name;
+    if (f1 != null) {
+      w.writeString(1, f1);
+    }
+  }
+
+  factory LedgerServiceV1PayeeTemplate.fromBuffer(List<int> bytes) {
+    return LedgerServiceV1PayeeTemplate._readFrom(ProtoWireReader(bytes));
+  }
+
+  static LedgerServiceV1PayeeTemplate _readFrom(ProtoWireReader r) {
+    final m = LedgerServiceV1PayeeTemplate();
+    while (r.next()) {
+      switch (r.fieldNumber) {
+        // field 1: name
+        case 1: {
+          m.name = r.readString();
+          break;
+        }
+        default: {
+          r.skip();
+        }
+      }
+    }
+    return m;
+  }
+
 }
 
 /// 请求 - 获取单个账本模板
@@ -4540,13 +8071,13 @@ class LedgerServiceV1GetBookTemplateRequest {
 
   factory LedgerServiceV1GetBookTemplateRequest.fromJson(Map<String, dynamic> json) {
     return LedgerServiceV1GetBookTemplateRequest(
-      id: json['id'] as int?,
+      id: json['id'] != null ? int.parse(json['id'].toString()) : null,
     );
   }
 
   Map<String, dynamic> toJson() {
     final json = <String, dynamic>{};
-    if (id != null) json['id'] = id;
+    if (id != null) json['id'] = id.toString();
     return json;
   }
 
@@ -4575,6 +8106,43 @@ class LedgerServiceV1GetBookTemplateRequest {
       id: id ?? this.id,
     );
   }
+
+  /// 二进制 proto 编码（MQTT 等二进制传输用；字段按编号升序写出）
+  Uint8List writeToBuffer() {
+    final w = ProtoWireWriter();
+    _writeTo(w);
+    return w.toBuffer();
+  }
+
+  void _writeTo(ProtoWireWriter w) {
+    // field 1: id
+    final f1 = id;
+    if (f1 != null) {
+      w.writeInt64(1, f1);
+    }
+  }
+
+  factory LedgerServiceV1GetBookTemplateRequest.fromBuffer(List<int> bytes) {
+    return LedgerServiceV1GetBookTemplateRequest._readFrom(ProtoWireReader(bytes));
+  }
+
+  static LedgerServiceV1GetBookTemplateRequest _readFrom(ProtoWireReader r) {
+    final m = LedgerServiceV1GetBookTemplateRequest();
+    while (r.next()) {
+      switch (r.fieldNumber) {
+        // field 1: id
+        case 1: {
+          m.id = r.readInt64();
+          break;
+        }
+        default: {
+          r.skip();
+        }
+      }
+    }
+    return m;
+  }
+
 }
 
 /// 预算服务（App BFF）
@@ -4674,7 +8242,9 @@ class BudgetServiceClient {
       throw ArgumentError('missing required field request.id');
     }
     final path = '/app/v1/budgets/${request.id}';
-    final body = jsonEncode(request.toJson());
+    final bodyMap = request.toJson();
+    bodyMap.remove('id');
+    final body = jsonEncode(bodyMap);
     final result = await _transport.unary(path, 'PUT', body, TransportMeta(
       service: 'BudgetService',
       method: 'Update',
@@ -4760,6 +8330,53 @@ class LedgerServiceV1ListBudgetResponse {
       total: total ?? this.total,
     );
   }
+
+  /// 二进制 proto 编码（MQTT 等二进制传输用；字段按编号升序写出）
+  Uint8List writeToBuffer() {
+    final w = ProtoWireWriter();
+    _writeTo(w);
+    return w.toBuffer();
+  }
+
+  void _writeTo(ProtoWireWriter w) {
+    // field 1: items
+    final f1 = items;
+    if (f1 != null) {
+      for (final e in f1) { final cw = ProtoWireWriter(); e._writeTo(cw); w.writeRaw(1, cw.toBuffer()); }
+    }
+    // field 2: total
+    final f2 = total;
+    if (f2 != null) {
+      w.writeInt64(2, f2);
+    }
+  }
+
+  factory LedgerServiceV1ListBudgetResponse.fromBuffer(List<int> bytes) {
+    return LedgerServiceV1ListBudgetResponse._readFrom(ProtoWireReader(bytes));
+  }
+
+  static LedgerServiceV1ListBudgetResponse _readFrom(ProtoWireReader r) {
+    final m = LedgerServiceV1ListBudgetResponse();
+    while (r.next()) {
+      switch (r.fieldNumber) {
+        // field 1: items
+        case 1: {
+          m.items = r.readNestedList().map(LedgerServiceV1Budget._readFrom).toList();
+          break;
+        }
+        // field 2: total
+        case 2: {
+          m.total = r.readInt64();
+          break;
+        }
+        default: {
+          r.skip();
+        }
+      }
+    }
+    return m;
+  }
+
 }
 
 /// 预算
@@ -4806,46 +8423,46 @@ class LedgerServiceV1Budget {
 
   factory LedgerServiceV1Budget.fromJson(Map<String, dynamic> json) {
     return LedgerServiceV1Budget(
-      accountId: json['accountId'] as int?,
+      accountId: json['accountId'] != null ? int.parse(json['accountId'].toString()) : null,
       amount: json['amount'] as String?,
-      bookId: json['bookId'] as int?,
-      categoryId: json['categoryId'] as int?,
+      bookId: json['bookId'] != null ? int.parse(json['bookId'].toString()) : null,
+      categoryId: json['categoryId'] != null ? int.parse(json['categoryId'].toString()) : null,
       createdAt: json['createdAt'] as String?,
-      createdBy: json['createdBy'] as int?,
+      createdBy: json['createdBy'] != null ? int.parse(json['createdBy'].toString()) : null,
       enable: json['enable'] as bool?,
       endDate: json['endDate'] != null ? int.parse(json['endDate'].toString()) : null,
-      id: json['id'] as int?,
+      id: json['id'] != null ? int.parse(json['id'].toString()) : null,
       name: json['name'] as String?,
       notes: json['notes'] as String?,
       notify: json['notify'] as bool?,
       period: json['period'] != null ? LedgerServiceV1BudgetPeriod.fromString(json['period'] as String) : null,
       startDate: json['startDate'] != null ? int.parse(json['startDate'].toString()) : null,
-      tenantId: json['tenantId'] as int?,
+      tenantId: json['tenantId'] != null ? int.parse(json['tenantId'].toString()) : null,
       updatedAt: json['updatedAt'] as String?,
-      updatedBy: json['updatedBy'] as int?,
+      updatedBy: json['updatedBy'] != null ? int.parse(json['updatedBy'].toString()) : null,
       usedAmount: json['usedAmount'] as String?,
     );
   }
 
   Map<String, dynamic> toJson() {
     final json = <String, dynamic>{};
-    if (accountId != null) json['accountId'] = accountId;
+    if (accountId != null) json['accountId'] = accountId.toString();
     if (amount != null) json['amount'] = amount;
-    if (bookId != null) json['bookId'] = bookId;
-    if (categoryId != null) json['categoryId'] = categoryId;
+    if (bookId != null) json['bookId'] = bookId.toString();
+    if (categoryId != null) json['categoryId'] = categoryId.toString();
     if (createdAt != null) json['createdAt'] = createdAt;
-    if (createdBy != null) json['createdBy'] = createdBy;
+    if (createdBy != null) json['createdBy'] = createdBy.toString();
     if (enable != null) json['enable'] = enable;
     if (endDate != null) json['endDate'] = endDate.toString();
-    if (id != null) json['id'] = id;
+    if (id != null) json['id'] = id.toString();
     if (name != null) json['name'] = name;
     if (notes != null) json['notes'] = notes;
     if (notify != null) json['notify'] = notify;
     if (period != null) json['period'] = period!.value;
     if (startDate != null) json['startDate'] = startDate.toString();
-    if (tenantId != null) json['tenantId'] = tenantId;
+    if (tenantId != null) json['tenantId'] = tenantId.toString();
     if (updatedAt != null) json['updatedAt'] = updatedAt;
-    if (updatedBy != null) json['updatedBy'] = updatedBy;
+    if (updatedBy != null) json['updatedBy'] = updatedBy.toString();
     if (usedAmount != null) json['usedAmount'] = usedAmount;
     return json;
   }
@@ -4943,21 +8560,232 @@ class LedgerServiceV1Budget {
       usedAmount: usedAmount ?? this.usedAmount,
     );
   }
+
+  /// 二进制 proto 编码（MQTT 等二进制传输用；字段按编号升序写出）
+  Uint8List writeToBuffer() {
+    final w = ProtoWireWriter();
+    _writeTo(w);
+    return w.toBuffer();
+  }
+
+  void _writeTo(ProtoWireWriter w) {
+    // field 1: id
+    final f1 = id;
+    if (f1 != null) {
+      w.writeInt64(1, f1);
+    }
+    // field 2: tenantId
+    final f2 = tenantId;
+    if (f2 != null) {
+      w.writeInt64(2, f2);
+    }
+    // field 3: bookId
+    final f3 = bookId;
+    if (f3 != null) {
+      w.writeInt64(3, f3);
+    }
+    // field 10: name
+    final f10 = name;
+    if (f10 != null) {
+      w.writeString(10, f10);
+    }
+    // field 11: period
+    final f11 = period;
+    if (f11 != null) {
+      w.writeEnum(11, f11.wire); // LedgerServiceV1BudgetPeriod
+    }
+    // field 12: amount
+    final f12 = amount;
+    if (f12 != null) {
+      w.writeString(12, f12);
+    }
+    // field 13: usedAmount
+    final f13 = usedAmount;
+    if (f13 != null) {
+      w.writeString(13, f13);
+    }
+    // field 14: categoryId
+    final f14 = categoryId;
+    if (f14 != null) {
+      w.writeInt64(14, f14);
+    }
+    // field 15: accountId
+    final f15 = accountId;
+    if (f15 != null) {
+      w.writeInt64(15, f15);
+    }
+    // field 16: startDate
+    final f16 = startDate;
+    if (f16 != null) {
+      w.writeInt64(16, f16);
+    }
+    // field 17: endDate
+    final f17 = endDate;
+    if (f17 != null) {
+      w.writeInt64(17, f17);
+    }
+    // field 18: enable
+    final f18 = enable;
+    if (f18 != null) {
+      w.writeBool(18, f18);
+    }
+    // field 19: notify
+    final f19 = notify;
+    if (f19 != null) {
+      w.writeBool(19, f19);
+    }
+    // field 20: notes
+    final f20 = notes;
+    if (f20 != null) {
+      w.writeString(20, f20);
+    }
+    // field 100: createdBy
+    final f100 = createdBy;
+    if (f100 != null) {
+      w.writeInt64(100, f100);
+    }
+    // field 101: updatedBy
+    final f101 = updatedBy;
+    if (f101 != null) {
+      w.writeInt64(101, f101);
+    }
+    // field 200: createdAt
+    final f200 = createdAt;
+    if (f200 != null) {
+      w.writeTimestamp(200, f200);
+    }
+    // field 201: updatedAt
+    final f201 = updatedAt;
+    if (f201 != null) {
+      w.writeTimestamp(201, f201);
+    }
+  }
+
+  factory LedgerServiceV1Budget.fromBuffer(List<int> bytes) {
+    return LedgerServiceV1Budget._readFrom(ProtoWireReader(bytes));
+  }
+
+  static LedgerServiceV1Budget _readFrom(ProtoWireReader r) {
+    final m = LedgerServiceV1Budget();
+    while (r.next()) {
+      switch (r.fieldNumber) {
+        // field 1: id
+        case 1: {
+          m.id = r.readInt64();
+          break;
+        }
+        // field 2: tenantId
+        case 2: {
+          m.tenantId = r.readInt64();
+          break;
+        }
+        // field 3: bookId
+        case 3: {
+          m.bookId = r.readInt64();
+          break;
+        }
+        // field 10: name
+        case 10: {
+          m.name = r.readString();
+          break;
+        }
+        // field 11: period
+        case 11: {
+          m.period = LedgerServiceV1BudgetPeriod.fromWire(r.readEnum());
+          break;
+        }
+        // field 12: amount
+        case 12: {
+          m.amount = r.readString();
+          break;
+        }
+        // field 13: usedAmount
+        case 13: {
+          m.usedAmount = r.readString();
+          break;
+        }
+        // field 14: categoryId
+        case 14: {
+          m.categoryId = r.readInt64();
+          break;
+        }
+        // field 15: accountId
+        case 15: {
+          m.accountId = r.readInt64();
+          break;
+        }
+        // field 16: startDate
+        case 16: {
+          m.startDate = r.readInt64();
+          break;
+        }
+        // field 17: endDate
+        case 17: {
+          m.endDate = r.readInt64();
+          break;
+        }
+        // field 18: enable
+        case 18: {
+          m.enable = r.readBool();
+          break;
+        }
+        // field 19: notify
+        case 19: {
+          m.notify = r.readBool();
+          break;
+        }
+        // field 20: notes
+        case 20: {
+          m.notes = r.readString();
+          break;
+        }
+        // field 100: createdBy
+        case 100: {
+          m.createdBy = r.readInt64();
+          break;
+        }
+        // field 101: updatedBy
+        case 101: {
+          m.updatedBy = r.readInt64();
+          break;
+        }
+        // field 200: createdAt
+        case 200: {
+          m.createdAt = r.readTimestampIso();
+          break;
+        }
+        // field 201: updatedAt
+        case 201: {
+          m.updatedAt = r.readTimestampIso();
+          break;
+        }
+        default: {
+          r.skip();
+        }
+      }
+    }
+    return m;
+  }
+
 }
 
 /// 预算周期类型
 enum LedgerServiceV1BudgetPeriod {
-  budgetPeriodMonthly('BUDGET_PERIOD_MONTHLY'),
-  budgetPeriodQuarterly('BUDGET_PERIOD_QUARTERLY'),
-  budgetPeriodUnspecified('BUDGET_PERIOD_UNSPECIFIED'),
-  budgetPeriodWeekly('BUDGET_PERIOD_WEEKLY'),
-  budgetPeriodYearly('BUDGET_PERIOD_YEARLY');
+  budgetPeriodMonthly('BUDGET_PERIOD_MONTHLY', 100),
+  budgetPeriodQuarterly('BUDGET_PERIOD_QUARTERLY', 300),
+  budgetPeriodUnspecified('BUDGET_PERIOD_UNSPECIFIED', 0),
+  budgetPeriodWeekly('BUDGET_PERIOD_WEEKLY', 400),
+  budgetPeriodYearly('BUDGET_PERIOD_YEARLY', 200);
 
   final String value;
-  const LedgerServiceV1BudgetPeriod(this.value);
+  /// proto 枚举数值（二进制 wire 编解码用，与 JSON 的 value 字符串互补）
+  final int wire;
+  const LedgerServiceV1BudgetPeriod(this.value, this.wire);
 
   static LedgerServiceV1BudgetPeriod fromString(String v) =>
     values.firstWhere((e) => e.value == v, orElse: () => throw ArgumentError('Unknown LedgerServiceV1BudgetPeriod value: ' + v));
+  static LedgerServiceV1BudgetPeriod fromWire(int v) =>
+    values.firstWhere((e) => e.wire == v, orElse: () => throw ArgumentError('Unknown LedgerServiceV1BudgetPeriod wire value: ' + v.toString()));
   @override
   String toString() => value;
 }
@@ -4972,13 +8800,13 @@ class LedgerServiceV1ListAllBudgetRequest {
 
   factory LedgerServiceV1ListAllBudgetRequest.fromJson(Map<String, dynamic> json) {
     return LedgerServiceV1ListAllBudgetRequest(
-      bookId: json['bookId'] as int?,
+      bookId: json['bookId'] != null ? int.parse(json['bookId'].toString()) : null,
     );
   }
 
   Map<String, dynamic> toJson() {
     final json = <String, dynamic>{};
-    if (bookId != null) json['bookId'] = bookId;
+    if (bookId != null) json['bookId'] = bookId.toString();
     return json;
   }
 
@@ -5007,6 +8835,43 @@ class LedgerServiceV1ListAllBudgetRequest {
       bookId: bookId ?? this.bookId,
     );
   }
+
+  /// 二进制 proto 编码（MQTT 等二进制传输用；字段按编号升序写出）
+  Uint8List writeToBuffer() {
+    final w = ProtoWireWriter();
+    _writeTo(w);
+    return w.toBuffer();
+  }
+
+  void _writeTo(ProtoWireWriter w) {
+    // field 1: bookId
+    final f1 = bookId;
+    if (f1 != null) {
+      w.writeInt64(1, f1);
+    }
+  }
+
+  factory LedgerServiceV1ListAllBudgetRequest.fromBuffer(List<int> bytes) {
+    return LedgerServiceV1ListAllBudgetRequest._readFrom(ProtoWireReader(bytes));
+  }
+
+  static LedgerServiceV1ListAllBudgetRequest _readFrom(ProtoWireReader r) {
+    final m = LedgerServiceV1ListAllBudgetRequest();
+    while (r.next()) {
+      switch (r.fieldNumber) {
+        // field 1: bookId
+        case 1: {
+          m.bookId = r.readInt64();
+          break;
+        }
+        default: {
+          r.skip();
+        }
+      }
+    }
+    return m;
+  }
+
 }
 
 /// 请求 - 预算数据
@@ -5019,13 +8884,13 @@ class LedgerServiceV1GetBudgetRequest {
 
   factory LedgerServiceV1GetBudgetRequest.fromJson(Map<String, dynamic> json) {
     return LedgerServiceV1GetBudgetRequest(
-      id: json['id'] as int?,
+      id: json['id'] != null ? int.parse(json['id'].toString()) : null,
     );
   }
 
   Map<String, dynamic> toJson() {
     final json = <String, dynamic>{};
-    if (id != null) json['id'] = id;
+    if (id != null) json['id'] = id.toString();
     return json;
   }
 
@@ -5054,6 +8919,43 @@ class LedgerServiceV1GetBudgetRequest {
       id: id ?? this.id,
     );
   }
+
+  /// 二进制 proto 编码（MQTT 等二进制传输用；字段按编号升序写出）
+  Uint8List writeToBuffer() {
+    final w = ProtoWireWriter();
+    _writeTo(w);
+    return w.toBuffer();
+  }
+
+  void _writeTo(ProtoWireWriter w) {
+    // field 1: id
+    final f1 = id;
+    if (f1 != null) {
+      w.writeInt64(1, f1);
+    }
+  }
+
+  factory LedgerServiceV1GetBudgetRequest.fromBuffer(List<int> bytes) {
+    return LedgerServiceV1GetBudgetRequest._readFrom(ProtoWireReader(bytes));
+  }
+
+  static LedgerServiceV1GetBudgetRequest _readFrom(ProtoWireReader r) {
+    final m = LedgerServiceV1GetBudgetRequest();
+    while (r.next()) {
+      switch (r.fieldNumber) {
+        // field 1: id
+        case 1: {
+          m.id = r.readInt64();
+          break;
+        }
+        default: {
+          r.skip();
+        }
+      }
+    }
+    return m;
+  }
+
 }
 
 /// 请求 - 创建预算
@@ -5101,6 +9003,43 @@ class LedgerServiceV1CreateBudgetRequest {
       data: data ?? this.data,
     );
   }
+
+  /// 二进制 proto 编码（MQTT 等二进制传输用；字段按编号升序写出）
+  Uint8List writeToBuffer() {
+    final w = ProtoWireWriter();
+    _writeTo(w);
+    return w.toBuffer();
+  }
+
+  void _writeTo(ProtoWireWriter w) {
+    // field 1: data
+    final f1 = data;
+    if (f1 != null) {
+      final cw = ProtoWireWriter(); f1._writeTo(cw); w.writeRaw(1, cw.toBuffer()); // LedgerServiceV1Budget
+    }
+  }
+
+  factory LedgerServiceV1CreateBudgetRequest.fromBuffer(List<int> bytes) {
+    return LedgerServiceV1CreateBudgetRequest._readFrom(ProtoWireReader(bytes));
+  }
+
+  static LedgerServiceV1CreateBudgetRequest _readFrom(ProtoWireReader r) {
+    final m = LedgerServiceV1CreateBudgetRequest();
+    while (r.next()) {
+      switch (r.fieldNumber) {
+        // field 1: data
+        case 1: {
+          m.data = LedgerServiceV1Budget._readFrom(r.readNested());
+          break;
+        }
+        default: {
+          r.skip();
+        }
+      }
+    }
+    return m;
+  }
+
 }
 
 /// 请求 - 更新预算
@@ -5121,7 +9060,7 @@ class LedgerServiceV1UpdateBudgetRequest {
     return LedgerServiceV1UpdateBudgetRequest(
       allowMissing: json['allowMissing'] as bool?,
       data: json['data'] != null ? LedgerServiceV1Budget.fromJson(json['data'] as Map<String, dynamic>) : null,
-      id: json['id'] as int?,
+      id: json['id'] != null ? int.parse(json['id'].toString()) : null,
       updateMask: json['updateMask'] as String?,
     );
   }
@@ -5130,7 +9069,7 @@ class LedgerServiceV1UpdateBudgetRequest {
     final json = <String, dynamic>{};
     if (allowMissing != null) json['allowMissing'] = allowMissing;
     if (data != null) json['data'] = data!.toJson();
-    if (id != null) json['id'] = id;
+    if (id != null) json['id'] = id.toString();
     if (updateMask != null) json['updateMask'] = updateMask;
     return json;
   }
@@ -5172,6 +9111,73 @@ class LedgerServiceV1UpdateBudgetRequest {
       updateMask: updateMask ?? this.updateMask,
     );
   }
+
+  /// 二进制 proto 编码（MQTT 等二进制传输用；字段按编号升序写出）
+  Uint8List writeToBuffer() {
+    final w = ProtoWireWriter();
+    _writeTo(w);
+    return w.toBuffer();
+  }
+
+  void _writeTo(ProtoWireWriter w) {
+    // field 1: id
+    final f1 = id;
+    if (f1 != null) {
+      w.writeInt64(1, f1);
+    }
+    // field 2: data
+    final f2 = data;
+    if (f2 != null) {
+      final cw = ProtoWireWriter(); f2._writeTo(cw); w.writeRaw(2, cw.toBuffer()); // LedgerServiceV1Budget
+    }
+    // field 3: updateMask
+    final f3 = updateMask;
+    if (f3 != null) {
+      w.writeFieldMask(3, f3);
+    }
+    // field 4: allowMissing
+    final f4 = allowMissing;
+    if (f4 != null) {
+      w.writeBool(4, f4);
+    }
+  }
+
+  factory LedgerServiceV1UpdateBudgetRequest.fromBuffer(List<int> bytes) {
+    return LedgerServiceV1UpdateBudgetRequest._readFrom(ProtoWireReader(bytes));
+  }
+
+  static LedgerServiceV1UpdateBudgetRequest _readFrom(ProtoWireReader r) {
+    final m = LedgerServiceV1UpdateBudgetRequest();
+    while (r.next()) {
+      switch (r.fieldNumber) {
+        // field 1: id
+        case 1: {
+          m.id = r.readInt64();
+          break;
+        }
+        // field 2: data
+        case 2: {
+          m.data = LedgerServiceV1Budget._readFrom(r.readNested());
+          break;
+        }
+        // field 3: updateMask
+        case 3: {
+          m.updateMask = r.readFieldMaskText();
+          break;
+        }
+        // field 4: allowMissing
+        case 4: {
+          m.allowMissing = r.readBool();
+          break;
+        }
+        default: {
+          r.skip();
+        }
+      }
+    }
+    return m;
+  }
+
 }
 
 /// 请求 - 删除预算
@@ -5184,13 +9190,13 @@ class LedgerServiceV1DeleteBudgetRequest {
 
   factory LedgerServiceV1DeleteBudgetRequest.fromJson(Map<String, dynamic> json) {
     return LedgerServiceV1DeleteBudgetRequest(
-      id: json['id'] as int?,
+      id: json['id'] != null ? int.parse(json['id'].toString()) : null,
     );
   }
 
   Map<String, dynamic> toJson() {
     final json = <String, dynamic>{};
-    if (id != null) json['id'] = id;
+    if (id != null) json['id'] = id.toString();
     return json;
   }
 
@@ -5219,6 +9225,43 @@ class LedgerServiceV1DeleteBudgetRequest {
       id: id ?? this.id,
     );
   }
+
+  /// 二进制 proto 编码（MQTT 等二进制传输用；字段按编号升序写出）
+  Uint8List writeToBuffer() {
+    final w = ProtoWireWriter();
+    _writeTo(w);
+    return w.toBuffer();
+  }
+
+  void _writeTo(ProtoWireWriter w) {
+    // field 1: id
+    final f1 = id;
+    if (f1 != null) {
+      w.writeInt64(1, f1);
+    }
+  }
+
+  factory LedgerServiceV1DeleteBudgetRequest.fromBuffer(List<int> bytes) {
+    return LedgerServiceV1DeleteBudgetRequest._readFrom(ProtoWireReader(bytes));
+  }
+
+  static LedgerServiceV1DeleteBudgetRequest _readFrom(ProtoWireReader r) {
+    final m = LedgerServiceV1DeleteBudgetRequest();
+    while (r.next()) {
+      switch (r.fieldNumber) {
+        // field 1: id
+        case 1: {
+          m.id = r.readInt64();
+          break;
+        }
+        default: {
+          r.skip();
+        }
+      }
+    }
+    return m;
+  }
+
 }
 
 /// 请求 - 预算进度
@@ -5231,13 +9274,13 @@ class LedgerServiceV1GetBudgetProgressRequest {
 
   factory LedgerServiceV1GetBudgetProgressRequest.fromJson(Map<String, dynamic> json) {
     return LedgerServiceV1GetBudgetProgressRequest(
-      id: json['id'] as int?,
+      id: json['id'] != null ? int.parse(json['id'].toString()) : null,
     );
   }
 
   Map<String, dynamic> toJson() {
     final json = <String, dynamic>{};
-    if (id != null) json['id'] = id;
+    if (id != null) json['id'] = id.toString();
     return json;
   }
 
@@ -5266,6 +9309,43 @@ class LedgerServiceV1GetBudgetProgressRequest {
       id: id ?? this.id,
     );
   }
+
+  /// 二进制 proto 编码（MQTT 等二进制传输用；字段按编号升序写出）
+  Uint8List writeToBuffer() {
+    final w = ProtoWireWriter();
+    _writeTo(w);
+    return w.toBuffer();
+  }
+
+  void _writeTo(ProtoWireWriter w) {
+    // field 1: id
+    final f1 = id;
+    if (f1 != null) {
+      w.writeInt64(1, f1);
+    }
+  }
+
+  factory LedgerServiceV1GetBudgetProgressRequest.fromBuffer(List<int> bytes) {
+    return LedgerServiceV1GetBudgetProgressRequest._readFrom(ProtoWireReader(bytes));
+  }
+
+  static LedgerServiceV1GetBudgetProgressRequest _readFrom(ProtoWireReader r) {
+    final m = LedgerServiceV1GetBudgetProgressRequest();
+    while (r.next()) {
+      switch (r.fieldNumber) {
+        // field 1: id
+        case 1: {
+          m.id = r.readInt64();
+          break;
+        }
+        default: {
+          r.skip();
+        }
+      }
+    }
+    return m;
+  }
+
 }
 
 /// 预算进度
@@ -5295,7 +9375,7 @@ class LedgerServiceV1BudgetProgress {
   factory LedgerServiceV1BudgetProgress.fromJson(Map<String, dynamic> json) {
     return LedgerServiceV1BudgetProgress(
       amount: json['amount'] as String?,
-      budgetId: json['budgetId'] as int?,
+      budgetId: json['budgetId'] != null ? int.parse(json['budgetId'].toString()) : null,
       budgetName: json['budgetName'] as String?,
       exceeded: json['exceeded'] as bool?,
       periodEnd: json['periodEnd'] != null ? int.parse(json['periodEnd'].toString()) : null,
@@ -5309,7 +9389,7 @@ class LedgerServiceV1BudgetProgress {
   Map<String, dynamic> toJson() {
     final json = <String, dynamic>{};
     if (amount != null) json['amount'] = amount;
-    if (budgetId != null) json['budgetId'] = budgetId;
+    if (budgetId != null) json['budgetId'] = budgetId.toString();
     if (budgetName != null) json['budgetName'] = budgetName;
     if (exceeded != null) json['exceeded'] = exceeded;
     if (periodEnd != null) json['periodEnd'] = periodEnd.toString();
@@ -5377,6 +9457,123 @@ class LedgerServiceV1BudgetProgress {
       usedAmount: usedAmount ?? this.usedAmount,
     );
   }
+
+  /// 二进制 proto 编码（MQTT 等二进制传输用；字段按编号升序写出）
+  Uint8List writeToBuffer() {
+    final w = ProtoWireWriter();
+    _writeTo(w);
+    return w.toBuffer();
+  }
+
+  void _writeTo(ProtoWireWriter w) {
+    // field 1: budgetId
+    final f1 = budgetId;
+    if (f1 != null) {
+      w.writeInt64(1, f1);
+    }
+    // field 2: budgetName
+    final f2 = budgetName;
+    if (f2 != null) {
+      w.writeString(2, f2);
+    }
+    // field 3: amount
+    final f3 = amount;
+    if (f3 != null) {
+      w.writeString(3, f3);
+    }
+    // field 4: usedAmount
+    final f4 = usedAmount;
+    if (f4 != null) {
+      w.writeString(4, f4);
+    }
+    // field 5: remaining
+    final f5 = remaining;
+    if (f5 != null) {
+      w.writeString(5, f5);
+    }
+    // field 6: usagePercent
+    final f6 = usagePercent;
+    if (f6 != null) {
+      w.writeString(6, f6);
+    }
+    // field 7: exceeded
+    final f7 = exceeded;
+    if (f7 != null) {
+      w.writeBool(7, f7);
+    }
+    // field 8: periodStart
+    final f8 = periodStart;
+    if (f8 != null) {
+      w.writeInt64(8, f8);
+    }
+    // field 9: periodEnd
+    final f9 = periodEnd;
+    if (f9 != null) {
+      w.writeInt64(9, f9);
+    }
+  }
+
+  factory LedgerServiceV1BudgetProgress.fromBuffer(List<int> bytes) {
+    return LedgerServiceV1BudgetProgress._readFrom(ProtoWireReader(bytes));
+  }
+
+  static LedgerServiceV1BudgetProgress _readFrom(ProtoWireReader r) {
+    final m = LedgerServiceV1BudgetProgress();
+    while (r.next()) {
+      switch (r.fieldNumber) {
+        // field 1: budgetId
+        case 1: {
+          m.budgetId = r.readInt64();
+          break;
+        }
+        // field 2: budgetName
+        case 2: {
+          m.budgetName = r.readString();
+          break;
+        }
+        // field 3: amount
+        case 3: {
+          m.amount = r.readString();
+          break;
+        }
+        // field 4: usedAmount
+        case 4: {
+          m.usedAmount = r.readString();
+          break;
+        }
+        // field 5: remaining
+        case 5: {
+          m.remaining = r.readString();
+          break;
+        }
+        // field 6: usagePercent
+        case 6: {
+          m.usagePercent = r.readString();
+          break;
+        }
+        // field 7: exceeded
+        case 7: {
+          m.exceeded = r.readBool();
+          break;
+        }
+        // field 8: periodStart
+        case 8: {
+          m.periodStart = r.readInt64();
+          break;
+        }
+        // field 9: periodEnd
+        case 9: {
+          m.periodEnd = r.readInt64();
+          break;
+        }
+        default: {
+          r.skip();
+        }
+      }
+    }
+    return m;
+  }
+
 }
 
 class CurrencyServiceClient {
@@ -5486,7 +9683,9 @@ class CurrencyServiceClient {
       throw ArgumentError('missing required field request.id');
     }
     final path = '/app/v1/currencies/${request.id}/rate';
-    final body = jsonEncode(request.toJson());
+    final bodyMap = request.toJson();
+    bodyMap.remove('id');
+    final body = jsonEncode(bodyMap);
     final result = await _transport.unary(path, 'PUT', body, TransportMeta(
       service: 'CurrencyService',
       method: 'ChangeRate',
@@ -5540,6 +9739,43 @@ class LedgerServiceV1ListAllCurrencyRequest {
       include_inactive: include_inactive ?? this.include_inactive,
     );
   }
+
+  /// 二进制 proto 编码（MQTT 等二进制传输用；字段按编号升序写出）
+  Uint8List writeToBuffer() {
+    final w = ProtoWireWriter();
+    _writeTo(w);
+    return w.toBuffer();
+  }
+
+  void _writeTo(ProtoWireWriter w) {
+    // field 1: include_inactive
+    final f1 = include_inactive;
+    if (f1 != null) {
+      w.writeBool(1, f1);
+    }
+  }
+
+  factory LedgerServiceV1ListAllCurrencyRequest.fromBuffer(List<int> bytes) {
+    return LedgerServiceV1ListAllCurrencyRequest._readFrom(ProtoWireReader(bytes));
+  }
+
+  static LedgerServiceV1ListAllCurrencyRequest _readFrom(ProtoWireReader r) {
+    final m = LedgerServiceV1ListAllCurrencyRequest();
+    while (r.next()) {
+      switch (r.fieldNumber) {
+        // field 1: include_inactive
+        case 1: {
+          m.include_inactive = r.readBool();
+          break;
+        }
+        default: {
+          r.skip();
+        }
+      }
+    }
+    return m;
+  }
+
 }
 
 /// 回应 - 币种列表
@@ -5595,6 +9831,53 @@ class LedgerServiceV1ListCurrencyResponse {
       total: total ?? this.total,
     );
   }
+
+  /// 二进制 proto 编码（MQTT 等二进制传输用；字段按编号升序写出）
+  Uint8List writeToBuffer() {
+    final w = ProtoWireWriter();
+    _writeTo(w);
+    return w.toBuffer();
+  }
+
+  void _writeTo(ProtoWireWriter w) {
+    // field 1: items
+    final f1 = items;
+    if (f1 != null) {
+      for (final e in f1) { final cw = ProtoWireWriter(); e._writeTo(cw); w.writeRaw(1, cw.toBuffer()); }
+    }
+    // field 2: total
+    final f2 = total;
+    if (f2 != null) {
+      w.writeInt64(2, f2);
+    }
+  }
+
+  factory LedgerServiceV1ListCurrencyResponse.fromBuffer(List<int> bytes) {
+    return LedgerServiceV1ListCurrencyResponse._readFrom(ProtoWireReader(bytes));
+  }
+
+  static LedgerServiceV1ListCurrencyResponse _readFrom(ProtoWireReader r) {
+    final m = LedgerServiceV1ListCurrencyResponse();
+    while (r.next()) {
+      switch (r.fieldNumber) {
+        // field 1: items
+        case 1: {
+          m.items = r.readNestedList().map(LedgerServiceV1Currency._readFrom).toList();
+          break;
+        }
+        // field 2: total
+        case 2: {
+          m.total = r.readInt64();
+          break;
+        }
+        default: {
+          r.skip();
+        }
+      }
+    }
+    return m;
+  }
+
 }
 
 /// 币种
@@ -5614,7 +9897,7 @@ class LedgerServiceV1Currency {
   factory LedgerServiceV1Currency.fromJson(Map<String, dynamic> json) {
     return LedgerServiceV1Currency(
       code: json['code'] as String?,
-      id: json['id'] as int?,
+      id: json['id'] != null ? int.parse(json['id'].toString()) : null,
       name: json['name'] as String?,
       rate: json['rate'] as String?,
     );
@@ -5623,7 +9906,7 @@ class LedgerServiceV1Currency {
   Map<String, dynamic> toJson() {
     final json = <String, dynamic>{};
     if (code != null) json['code'] = code;
-    if (id != null) json['id'] = id;
+    if (id != null) json['id'] = id.toString();
     if (name != null) json['name'] = name;
     if (rate != null) json['rate'] = rate;
     return json;
@@ -5666,6 +9949,73 @@ class LedgerServiceV1Currency {
       rate: rate ?? this.rate,
     );
   }
+
+  /// 二进制 proto 编码（MQTT 等二进制传输用；字段按编号升序写出）
+  Uint8List writeToBuffer() {
+    final w = ProtoWireWriter();
+    _writeTo(w);
+    return w.toBuffer();
+  }
+
+  void _writeTo(ProtoWireWriter w) {
+    // field 1: id
+    final f1 = id;
+    if (f1 != null) {
+      w.writeInt64(1, f1);
+    }
+    // field 2: code
+    final f2 = code;
+    if (f2 != null) {
+      w.writeString(2, f2);
+    }
+    // field 3: name
+    final f3 = name;
+    if (f3 != null) {
+      w.writeString(3, f3);
+    }
+    // field 4: rate
+    final f4 = rate;
+    if (f4 != null) {
+      w.writeString(4, f4);
+    }
+  }
+
+  factory LedgerServiceV1Currency.fromBuffer(List<int> bytes) {
+    return LedgerServiceV1Currency._readFrom(ProtoWireReader(bytes));
+  }
+
+  static LedgerServiceV1Currency _readFrom(ProtoWireReader r) {
+    final m = LedgerServiceV1Currency();
+    while (r.next()) {
+      switch (r.fieldNumber) {
+        // field 1: id
+        case 1: {
+          m.id = r.readInt64();
+          break;
+        }
+        // field 2: code
+        case 2: {
+          m.code = r.readString();
+          break;
+        }
+        // field 3: name
+        case 3: {
+          m.name = r.readString();
+          break;
+        }
+        // field 4: rate
+        case 4: {
+          m.rate = r.readString();
+          break;
+        }
+        default: {
+          r.skip();
+        }
+      }
+    }
+    return m;
+  }
+
 }
 
 /// 请求 - 刷新汇率
@@ -5713,6 +10063,43 @@ class LedgerServiceV1RefreshCurrencyRequest {
       force: force ?? this.force,
     );
   }
+
+  /// 二进制 proto 编码（MQTT 等二进制传输用；字段按编号升序写出）
+  Uint8List writeToBuffer() {
+    final w = ProtoWireWriter();
+    _writeTo(w);
+    return w.toBuffer();
+  }
+
+  void _writeTo(ProtoWireWriter w) {
+    // field 1: force
+    final f1 = force;
+    if (f1 != null) {
+      w.writeBool(1, f1);
+    }
+  }
+
+  factory LedgerServiceV1RefreshCurrencyRequest.fromBuffer(List<int> bytes) {
+    return LedgerServiceV1RefreshCurrencyRequest._readFrom(ProtoWireReader(bytes));
+  }
+
+  static LedgerServiceV1RefreshCurrencyRequest _readFrom(ProtoWireReader r) {
+    final m = LedgerServiceV1RefreshCurrencyRequest();
+    while (r.next()) {
+      switch (r.fieldNumber) {
+        // field 1: force
+        case 1: {
+          m.force = r.readBool();
+          break;
+        }
+        default: {
+          r.skip();
+        }
+      }
+    }
+    return m;
+  }
+
 }
 
 /// 请求 - 币种转换
@@ -5776,6 +10163,63 @@ class LedgerServiceV1ConvertCurrencyRequest {
       to: to ?? this.to,
     );
   }
+
+  /// 二进制 proto 编码（MQTT 等二进制传输用；字段按编号升序写出）
+  Uint8List writeToBuffer() {
+    final w = ProtoWireWriter();
+    _writeTo(w);
+    return w.toBuffer();
+  }
+
+  void _writeTo(ProtoWireWriter w) {
+    // field 1: amount
+    final f1 = amount;
+    if (f1 != null) {
+      w.writeString(1, f1);
+    }
+    // field 2: from
+    final f2 = from;
+    if (f2 != null) {
+      w.writeString(2, f2);
+    }
+    // field 3: to
+    final f3 = to;
+    if (f3 != null) {
+      w.writeString(3, f3);
+    }
+  }
+
+  factory LedgerServiceV1ConvertCurrencyRequest.fromBuffer(List<int> bytes) {
+    return LedgerServiceV1ConvertCurrencyRequest._readFrom(ProtoWireReader(bytes));
+  }
+
+  static LedgerServiceV1ConvertCurrencyRequest _readFrom(ProtoWireReader r) {
+    final m = LedgerServiceV1ConvertCurrencyRequest();
+    while (r.next()) {
+      switch (r.fieldNumber) {
+        // field 1: amount
+        case 1: {
+          m.amount = r.readString();
+          break;
+        }
+        // field 2: from
+        case 2: {
+          m.from = r.readString();
+          break;
+        }
+        // field 3: to
+        case 3: {
+          m.to = r.readString();
+          break;
+        }
+        default: {
+          r.skip();
+        }
+      }
+    }
+    return m;
+  }
+
 }
 
 /// 回应 - 币种转换
@@ -5831,6 +10275,53 @@ class LedgerServiceV1ConvertCurrencyResponse {
       rate: rate ?? this.rate,
     );
   }
+
+  /// 二进制 proto 编码（MQTT 等二进制传输用；字段按编号升序写出）
+  Uint8List writeToBuffer() {
+    final w = ProtoWireWriter();
+    _writeTo(w);
+    return w.toBuffer();
+  }
+
+  void _writeTo(ProtoWireWriter w) {
+    // field 1: amount
+    final f1 = amount;
+    if (f1 != null) {
+      w.writeString(1, f1);
+    }
+    // field 2: rate
+    final f2 = rate;
+    if (f2 != null) {
+      w.writeString(2, f2);
+    }
+  }
+
+  factory LedgerServiceV1ConvertCurrencyResponse.fromBuffer(List<int> bytes) {
+    return LedgerServiceV1ConvertCurrencyResponse._readFrom(ProtoWireReader(bytes));
+  }
+
+  static LedgerServiceV1ConvertCurrencyResponse _readFrom(ProtoWireReader r) {
+    final m = LedgerServiceV1ConvertCurrencyResponse();
+    while (r.next()) {
+      switch (r.fieldNumber) {
+        // field 1: amount
+        case 1: {
+          m.amount = r.readString();
+          break;
+        }
+        // field 2: rate
+        case 2: {
+          m.rate = r.readString();
+          break;
+        }
+        default: {
+          r.skip();
+        }
+      }
+    }
+    return m;
+  }
+
 }
 
 /// 请求 - 手动修改币种汇率
@@ -5845,14 +10336,14 @@ class LedgerServiceV1ChangeRateRequest {
 
   factory LedgerServiceV1ChangeRateRequest.fromJson(Map<String, dynamic> json) {
     return LedgerServiceV1ChangeRateRequest(
-      id: json['id'] as int?,
+      id: json['id'] != null ? int.parse(json['id'].toString()) : null,
       rate: json['rate'] as String?,
     );
   }
 
   Map<String, dynamic> toJson() {
     final json = <String, dynamic>{};
-    if (id != null) json['id'] = id;
+    if (id != null) json['id'] = id.toString();
     if (rate != null) json['rate'] = rate;
     return json;
   }
@@ -5886,6 +10377,53 @@ class LedgerServiceV1ChangeRateRequest {
       rate: rate ?? this.rate,
     );
   }
+
+  /// 二进制 proto 编码（MQTT 等二进制传输用；字段按编号升序写出）
+  Uint8List writeToBuffer() {
+    final w = ProtoWireWriter();
+    _writeTo(w);
+    return w.toBuffer();
+  }
+
+  void _writeTo(ProtoWireWriter w) {
+    // field 1: id
+    final f1 = id;
+    if (f1 != null) {
+      w.writeInt64(1, f1);
+    }
+    // field 2: rate
+    final f2 = rate;
+    if (f2 != null) {
+      w.writeString(2, f2);
+    }
+  }
+
+  factory LedgerServiceV1ChangeRateRequest.fromBuffer(List<int> bytes) {
+    return LedgerServiceV1ChangeRateRequest._readFrom(ProtoWireReader(bytes));
+  }
+
+  static LedgerServiceV1ChangeRateRequest _readFrom(ProtoWireReader r) {
+    final m = LedgerServiceV1ChangeRateRequest();
+    while (r.next()) {
+      switch (r.fieldNumber) {
+        // field 1: id
+        case 1: {
+          m.id = r.readInt64();
+          break;
+        }
+        // field 2: rate
+        case 2: {
+          m.rate = r.readString();
+          break;
+        }
+        default: {
+          r.skip();
+        }
+      }
+    }
+    return m;
+  }
+
 }
 
 /// 文件传输服务
@@ -5995,7 +10533,7 @@ class StorageServiceV1DownloadFileRequest {
       acceptMime: json['acceptMime'] as String?,
       disposition: json['disposition'] as String?,
       downloadUrl: json['downloadUrl'] as String?,
-      fileId: json['fileId'] as int?,
+      fileId: json['fileId'] != null ? int.parse(json['fileId'].toString()) : null,
       preferPresignedUrl: json['preferPresignedUrl'] as bool?,
       presignExpireSeconds: json['presignExpireSeconds'] as int?,
       rangeEnd: json['rangeEnd'] != null ? int.parse(json['rangeEnd'].toString()) : null,
@@ -6009,7 +10547,7 @@ class StorageServiceV1DownloadFileRequest {
     if (acceptMime != null) json['acceptMime'] = acceptMime;
     if (disposition != null) json['disposition'] = disposition;
     if (downloadUrl != null) json['downloadUrl'] = downloadUrl;
-    if (fileId != null) json['fileId'] = fileId;
+    if (fileId != null) json['fileId'] = fileId.toString();
     if (preferPresignedUrl != null) json['preferPresignedUrl'] = preferPresignedUrl;
     if (presignExpireSeconds != null) json['presignExpireSeconds'] = presignExpireSeconds;
     if (rangeEnd != null) json['rangeEnd'] = rangeEnd.toString();
@@ -6075,6 +10613,123 @@ class StorageServiceV1DownloadFileRequest {
       storageObject: storageObject ?? this.storageObject,
     );
   }
+
+  /// 二进制 proto 编码（MQTT 等二进制传输用；字段按编号升序写出）
+  Uint8List writeToBuffer() {
+    final w = ProtoWireWriter();
+    _writeTo(w);
+    return w.toBuffer();
+  }
+
+  void _writeTo(ProtoWireWriter w) {
+    // field 1: fileId
+    final f1 = fileId;
+    if (f1 != null) {
+      w.writeInt64(1, f1);
+    }
+    // field 2: storageObject
+    final f2 = storageObject;
+    if (f2 != null) {
+      final cw = ProtoWireWriter(); f2._writeTo(cw); w.writeRaw(2, cw.toBuffer()); // StorageServiceV1StorageObject
+    }
+    // field 3: downloadUrl
+    final f3 = downloadUrl;
+    if (f3 != null) {
+      w.writeString(3, f3);
+    }
+    // field 4: rangeStart
+    final f4 = rangeStart;
+    if (f4 != null) {
+      w.writeInt64(4, f4);
+    }
+    // field 5: rangeEnd
+    final f5 = rangeEnd;
+    if (f5 != null) {
+      w.writeInt64(5, f5);
+    }
+    // field 6: preferPresignedUrl
+    final f6 = preferPresignedUrl;
+    if (f6 != null) {
+      w.writeBool(6, f6);
+    }
+    // field 7: presignExpireSeconds
+    final f7 = presignExpireSeconds;
+    if (f7 != null) {
+      w.writeInt32(7, f7);
+    }
+    // field 8: disposition
+    final f8 = disposition;
+    if (f8 != null) {
+      w.writeString(8, f8);
+    }
+    // field 9: acceptMime
+    final f9 = acceptMime;
+    if (f9 != null) {
+      w.writeString(9, f9);
+    }
+  }
+
+  factory StorageServiceV1DownloadFileRequest.fromBuffer(List<int> bytes) {
+    return StorageServiceV1DownloadFileRequest._readFrom(ProtoWireReader(bytes));
+  }
+
+  static StorageServiceV1DownloadFileRequest _readFrom(ProtoWireReader r) {
+    final m = StorageServiceV1DownloadFileRequest();
+    while (r.next()) {
+      switch (r.fieldNumber) {
+        // field 1: fileId
+        case 1: {
+          m.fileId = r.readInt64();
+          break;
+        }
+        // field 2: storageObject
+        case 2: {
+          m.storageObject = StorageServiceV1StorageObject._readFrom(r.readNested());
+          break;
+        }
+        // field 3: downloadUrl
+        case 3: {
+          m.downloadUrl = r.readString();
+          break;
+        }
+        // field 4: rangeStart
+        case 4: {
+          m.rangeStart = r.readInt64();
+          break;
+        }
+        // field 5: rangeEnd
+        case 5: {
+          m.rangeEnd = r.readInt64();
+          break;
+        }
+        // field 6: preferPresignedUrl
+        case 6: {
+          m.preferPresignedUrl = r.readBool();
+          break;
+        }
+        // field 7: presignExpireSeconds
+        case 7: {
+          m.presignExpireSeconds = r.readInt32();
+          break;
+        }
+        // field 8: disposition
+        case 8: {
+          m.disposition = r.readString();
+          break;
+        }
+        // field 9: acceptMime
+        case 9: {
+          m.acceptMime = r.readString();
+          break;
+        }
+        default: {
+          r.skip();
+        }
+      }
+    }
+    return m;
+  }
+
 }
 
 /// 对象存储对象
@@ -6138,6 +10793,63 @@ class StorageServiceV1StorageObject {
       objectName: objectName ?? this.objectName,
     );
   }
+
+  /// 二进制 proto 编码（MQTT 等二进制传输用；字段按编号升序写出）
+  Uint8List writeToBuffer() {
+    final w = ProtoWireWriter();
+    _writeTo(w);
+    return w.toBuffer();
+  }
+
+  void _writeTo(ProtoWireWriter w) {
+    // field 1: bucketName
+    final f1 = bucketName;
+    if (f1 != null) {
+      w.writeString(1, f1);
+    }
+    // field 2: fileDirectory
+    final f2 = fileDirectory;
+    if (f2 != null) {
+      w.writeString(2, f2);
+    }
+    // field 3: objectName
+    final f3 = objectName;
+    if (f3 != null) {
+      w.writeString(3, f3);
+    }
+  }
+
+  factory StorageServiceV1StorageObject.fromBuffer(List<int> bytes) {
+    return StorageServiceV1StorageObject._readFrom(ProtoWireReader(bytes));
+  }
+
+  static StorageServiceV1StorageObject _readFrom(ProtoWireReader r) {
+    final m = StorageServiceV1StorageObject();
+    while (r.next()) {
+      switch (r.fieldNumber) {
+        // field 1: bucketName
+        case 1: {
+          m.bucketName = r.readString();
+          break;
+        }
+        // field 2: fileDirectory
+        case 2: {
+          m.fileDirectory = r.readString();
+          break;
+        }
+        // field 3: objectName
+        case 3: {
+          m.objectName = r.readString();
+          break;
+        }
+        default: {
+          r.skip();
+        }
+      }
+    }
+    return m;
+  }
+
 }
 
 /// 文件下载响应
@@ -6241,6 +10953,113 @@ class StorageServiceV1DownloadFileResponse {
       updatedAt: updatedAt ?? this.updatedAt,
     );
   }
+
+  /// 二进制 proto 编码（MQTT 等二进制传输用；字段按编号升序写出）
+  Uint8List writeToBuffer() {
+    final w = ProtoWireWriter();
+    _writeTo(w);
+    return w.toBuffer();
+  }
+
+  void _writeTo(ProtoWireWriter w) {
+    // field 1: file
+    final f1 = file;
+    if (f1 != null) {
+      throw UnsupportedError('dart-http wire: field storage.service.v1.DownloadFileResponse.file');
+    }
+    // field 2: downloadUrl
+    final f2 = downloadUrl;
+    if (f2 != null) {
+      w.writeString(2, f2);
+    }
+    // field 3: sourceFileName
+    final f3 = sourceFileName;
+    if (f3 != null) {
+      w.writeString(3, f3);
+    }
+    // field 4: mime
+    final f4 = mime;
+    if (f4 != null) {
+      w.writeString(4, f4);
+    }
+    // field 5: size
+    final f5 = size;
+    if (f5 != null) {
+      w.writeInt64(5, f5);
+    }
+    // field 6: checksum
+    final f6 = checksum;
+    if (f6 != null) {
+      w.writeString(6, f6);
+    }
+    // field 7: storagePath
+    final f7 = storagePath;
+    if (f7 != null) {
+      w.writeString(7, f7);
+    }
+    // field 8: updatedAt
+    final f8 = updatedAt;
+    if (f8 != null) {
+      w.writeTimestamp(8, f8);
+    }
+  }
+
+  factory StorageServiceV1DownloadFileResponse.fromBuffer(List<int> bytes) {
+    return StorageServiceV1DownloadFileResponse._readFrom(ProtoWireReader(bytes));
+  }
+
+  static StorageServiceV1DownloadFileResponse _readFrom(ProtoWireReader r) {
+    final m = StorageServiceV1DownloadFileResponse();
+    while (r.next()) {
+      switch (r.fieldNumber) {
+        // field 1: file
+        case 1: {
+          r.skip();
+          break;
+        }
+        // field 2: downloadUrl
+        case 2: {
+          m.downloadUrl = r.readString();
+          break;
+        }
+        // field 3: sourceFileName
+        case 3: {
+          m.sourceFileName = r.readString();
+          break;
+        }
+        // field 4: mime
+        case 4: {
+          m.mime = r.readString();
+          break;
+        }
+        // field 5: size
+        case 5: {
+          m.size = r.readInt64();
+          break;
+        }
+        // field 6: checksum
+        case 6: {
+          m.checksum = r.readString();
+          break;
+        }
+        // field 7: storagePath
+        case 7: {
+          m.storagePath = r.readString();
+          break;
+        }
+        // field 8: updatedAt
+        case 8: {
+          m.updatedAt = r.readTimestampIso();
+          break;
+        }
+        default: {
+          r.skip();
+        }
+      }
+    }
+    return m;
+  }
+
 }
 
 class StorageServiceV1UploadFileRequest {
@@ -6272,8 +11091,8 @@ class StorageServiceV1UploadFileRequest {
       size: json['size'] != null ? int.parse(json['size'].toString()) : null,
       sourceFileName: json['sourceFileName'] as String?,
       storageObject: json['storageObject'] != null ? StorageServiceV1StorageObject.fromJson(json['storageObject'] as Map<String, dynamic>) : null,
-      tenantId: json['tenantId'] as int?,
-      userId: json['userId'] as int?,
+      tenantId: json['tenantId'] != null ? int.parse(json['tenantId'].toString()) : null,
+      userId: json['userId'] != null ? int.parse(json['userId'].toString()) : null,
     );
   }
 
@@ -6285,8 +11104,8 @@ class StorageServiceV1UploadFileRequest {
     if (size != null) json['size'] = size.toString();
     if (sourceFileName != null) json['sourceFileName'] = sourceFileName;
     if (storageObject != null) json['storageObject'] = storageObject!.toJson();
-    if (tenantId != null) json['tenantId'] = tenantId;
-    if (userId != null) json['userId'] = userId;
+    if (tenantId != null) json['tenantId'] = tenantId.toString();
+    if (userId != null) json['userId'] = userId.toString();
     return json;
   }
 
@@ -6343,6 +11162,113 @@ class StorageServiceV1UploadFileRequest {
       userId: userId ?? this.userId,
     );
   }
+
+  /// 二进制 proto 编码（MQTT 等二进制传输用；字段按编号升序写出）
+  Uint8List writeToBuffer() {
+    final w = ProtoWireWriter();
+    _writeTo(w);
+    return w.toBuffer();
+  }
+
+  void _writeTo(ProtoWireWriter w) {
+    // field 1: storageObject
+    final f1 = storageObject;
+    if (f1 != null) {
+      final cw = ProtoWireWriter(); f1._writeTo(cw); w.writeRaw(1, cw.toBuffer()); // StorageServiceV1StorageObject
+    }
+    // field 2: file
+    final f2 = file;
+    if (f2 != null) {
+      throw UnsupportedError('dart-http wire: field storage.service.v1.UploadFileRequest.file');
+    }
+    // field 3: presign
+    final f3 = presign;
+    if (f3 != null) {
+      final cw = ProtoWireWriter(); f3._writeTo(cw); w.writeRaw(3, cw.toBuffer()); // StorageServiceV1PresignOption
+    }
+    // field 4: sourceFileName
+    final f4 = sourceFileName;
+    if (f4 != null) {
+      w.writeString(4, f4);
+    }
+    // field 5: mime
+    final f5 = mime;
+    if (f5 != null) {
+      w.writeString(5, f5);
+    }
+    // field 6: size
+    final f6 = size;
+    if (f6 != null) {
+      w.writeInt64(6, f6);
+    }
+    // field 10: tenantId
+    final f10 = tenantId;
+    if (f10 != null) {
+      w.writeInt64(10, f10);
+    }
+    // field 11: userId
+    final f11 = userId;
+    if (f11 != null) {
+      w.writeInt64(11, f11);
+    }
+  }
+
+  factory StorageServiceV1UploadFileRequest.fromBuffer(List<int> bytes) {
+    return StorageServiceV1UploadFileRequest._readFrom(ProtoWireReader(bytes));
+  }
+
+  static StorageServiceV1UploadFileRequest _readFrom(ProtoWireReader r) {
+    final m = StorageServiceV1UploadFileRequest();
+    while (r.next()) {
+      switch (r.fieldNumber) {
+        // field 1: storageObject
+        case 1: {
+          m.storageObject = StorageServiceV1StorageObject._readFrom(r.readNested());
+          break;
+        }
+        // field 2: file
+        case 2: {
+          r.skip();
+          break;
+        }
+        // field 3: presign
+        case 3: {
+          m.presign = StorageServiceV1PresignOption._readFrom(r.readNested());
+          break;
+        }
+        // field 4: sourceFileName
+        case 4: {
+          m.sourceFileName = r.readString();
+          break;
+        }
+        // field 5: mime
+        case 5: {
+          m.mime = r.readString();
+          break;
+        }
+        // field 6: size
+        case 6: {
+          m.size = r.readInt64();
+          break;
+        }
+        // field 10: tenantId
+        case 10: {
+          m.tenantId = r.readInt64();
+          break;
+        }
+        // field 11: userId
+        case 11: {
+          m.userId = r.readInt64();
+          break;
+        }
+        default: {
+          r.skip();
+        }
+      }
+    }
+    return m;
+  }
+
 }
 
 /// 预签名选项
@@ -6406,6 +11332,63 @@ class StorageServiceV1PresignOption {
       method: method ?? this.method,
     );
   }
+
+  /// 二进制 proto 编码（MQTT 等二进制传输用；字段按编号升序写出）
+  Uint8List writeToBuffer() {
+    final w = ProtoWireWriter();
+    _writeTo(w);
+    return w.toBuffer();
+  }
+
+  void _writeTo(ProtoWireWriter w) {
+    // field 1: method
+    final f1 = method;
+    if (f1 != null) {
+      w.writeString(1, f1);
+    }
+    // field 2: expireSeconds
+    final f2 = expireSeconds;
+    if (f2 != null) {
+      w.writeInt32(2, f2);
+    }
+    // field 3: contentType
+    final f3 = contentType;
+    if (f3 != null) {
+      w.writeString(3, f3);
+    }
+  }
+
+  factory StorageServiceV1PresignOption.fromBuffer(List<int> bytes) {
+    return StorageServiceV1PresignOption._readFrom(ProtoWireReader(bytes));
+  }
+
+  static StorageServiceV1PresignOption _readFrom(ProtoWireReader r) {
+    final m = StorageServiceV1PresignOption();
+    while (r.next()) {
+      switch (r.fieldNumber) {
+        // field 1: method
+        case 1: {
+          m.method = r.readString();
+          break;
+        }
+        // field 2: expireSeconds
+        case 2: {
+          m.expireSeconds = r.readInt32();
+          break;
+        }
+        // field 3: contentType
+        case 3: {
+          m.contentType = r.readString();
+          break;
+        }
+        default: {
+          r.skip();
+        }
+      }
+    }
+    return m;
+  }
+
 }
 
 class StorageServiceV1UploadFileResponse {
@@ -6460,6 +11443,53 @@ class StorageServiceV1UploadFileResponse {
       presignedUrl: presignedUrl ?? this.presignedUrl,
     );
   }
+
+  /// 二进制 proto 编码（MQTT 等二进制传输用；字段按编号升序写出）
+  Uint8List writeToBuffer() {
+    final w = ProtoWireWriter();
+    _writeTo(w);
+    return w.toBuffer();
+  }
+
+  void _writeTo(ProtoWireWriter w) {
+    // field 1: objectName
+    final f1 = objectName;
+    if (f1 != null) {
+      w.writeString(1, f1);
+    }
+    // field 2: presignedUrl
+    final f2 = presignedUrl;
+    if (f2 != null) {
+      w.writeString(2, f2);
+    }
+  }
+
+  factory StorageServiceV1UploadFileResponse.fromBuffer(List<int> bytes) {
+    return StorageServiceV1UploadFileResponse._readFrom(ProtoWireReader(bytes));
+  }
+
+  static StorageServiceV1UploadFileResponse _readFrom(ProtoWireReader r) {
+    final m = StorageServiceV1UploadFileResponse();
+    while (r.next()) {
+      switch (r.fieldNumber) {
+        // field 1: objectName
+        case 1: {
+          m.objectName = r.readString();
+          break;
+        }
+        // field 2: presignedUrl
+        case 2: {
+          m.presignedUrl = r.readString();
+          break;
+        }
+        default: {
+          r.skip();
+        }
+      }
+    }
+    return m;
+  }
+
 }
 
 class FlowFileServiceClient {
@@ -6537,13 +11567,13 @@ class LedgerServiceV1ListFlowFileRequest {
 
   factory LedgerServiceV1ListFlowFileRequest.fromJson(Map<String, dynamic> json) {
     return LedgerServiceV1ListFlowFileRequest(
-      flowId: json['flowId'] as int?,
+      flowId: json['flowId'] != null ? int.parse(json['flowId'].toString()) : null,
     );
   }
 
   Map<String, dynamic> toJson() {
     final json = <String, dynamic>{};
-    if (flowId != null) json['flowId'] = flowId;
+    if (flowId != null) json['flowId'] = flowId.toString();
     return json;
   }
 
@@ -6572,6 +11602,43 @@ class LedgerServiceV1ListFlowFileRequest {
       flowId: flowId ?? this.flowId,
     );
   }
+
+  /// 二进制 proto 编码（MQTT 等二进制传输用；字段按编号升序写出）
+  Uint8List writeToBuffer() {
+    final w = ProtoWireWriter();
+    _writeTo(w);
+    return w.toBuffer();
+  }
+
+  void _writeTo(ProtoWireWriter w) {
+    // field 1: flowId
+    final f1 = flowId;
+    if (f1 != null) {
+      w.writeInt64(1, f1);
+    }
+  }
+
+  factory LedgerServiceV1ListFlowFileRequest.fromBuffer(List<int> bytes) {
+    return LedgerServiceV1ListFlowFileRequest._readFrom(ProtoWireReader(bytes));
+  }
+
+  static LedgerServiceV1ListFlowFileRequest _readFrom(ProtoWireReader r) {
+    final m = LedgerServiceV1ListFlowFileRequest();
+    while (r.next()) {
+      switch (r.fieldNumber) {
+        // field 1: flowId
+        case 1: {
+          m.flowId = r.readInt64();
+          break;
+        }
+        default: {
+          r.skip();
+        }
+      }
+    }
+    return m;
+  }
+
 }
 
 /// 回应 - 附件列表
@@ -6619,6 +11686,43 @@ class LedgerServiceV1ListFlowFileResponse {
       items: items ?? this.items,
     );
   }
+
+  /// 二进制 proto 编码（MQTT 等二进制传输用；字段按编号升序写出）
+  Uint8List writeToBuffer() {
+    final w = ProtoWireWriter();
+    _writeTo(w);
+    return w.toBuffer();
+  }
+
+  void _writeTo(ProtoWireWriter w) {
+    // field 1: items
+    final f1 = items;
+    if (f1 != null) {
+      for (final e in f1) { final cw = ProtoWireWriter(); e._writeTo(cw); w.writeRaw(1, cw.toBuffer()); }
+    }
+  }
+
+  factory LedgerServiceV1ListFlowFileResponse.fromBuffer(List<int> bytes) {
+    return LedgerServiceV1ListFlowFileResponse._readFrom(ProtoWireReader(bytes));
+  }
+
+  static LedgerServiceV1ListFlowFileResponse _readFrom(ProtoWireReader r) {
+    final m = LedgerServiceV1ListFlowFileResponse();
+    while (r.next()) {
+      switch (r.fieldNumber) {
+        // field 1: items
+        case 1: {
+          m.items = r.readNestedList().map(LedgerServiceV1FlowFile._readFrom).toList();
+          break;
+        }
+        default: {
+          r.skip();
+        }
+      }
+    }
+    return m;
+  }
+
 }
 
 /// 流水附件
@@ -6645,9 +11749,9 @@ class LedgerServiceV1FlowFile {
     return LedgerServiceV1FlowFile(
       contentType: json['contentType'] as String?,
       createTime: json['createTime'] != null ? int.parse(json['createTime'].toString()) : null,
-      creatorId: json['creatorId'] as int?,
-      flowId: json['flowId'] as int?,
-      id: json['id'] as int?,
+      creatorId: json['creatorId'] != null ? int.parse(json['creatorId'].toString()) : null,
+      flowId: json['flowId'] != null ? int.parse(json['flowId'].toString()) : null,
+      id: json['id'] != null ? int.parse(json['id'].toString()) : null,
       originalName: json['originalName'] as String?,
       size: json['size'] != null ? int.parse(json['size'].toString()) : null,
     );
@@ -6657,9 +11761,9 @@ class LedgerServiceV1FlowFile {
     final json = <String, dynamic>{};
     if (contentType != null) json['contentType'] = contentType;
     if (createTime != null) json['createTime'] = createTime.toString();
-    if (creatorId != null) json['creatorId'] = creatorId;
-    if (flowId != null) json['flowId'] = flowId;
-    if (id != null) json['id'] = id;
+    if (creatorId != null) json['creatorId'] = creatorId.toString();
+    if (flowId != null) json['flowId'] = flowId.toString();
+    if (id != null) json['id'] = id.toString();
     if (originalName != null) json['originalName'] = originalName;
     if (size != null) json['size'] = size.toString();
     return json;
@@ -6714,6 +11818,103 @@ class LedgerServiceV1FlowFile {
       size: size ?? this.size,
     );
   }
+
+  /// 二进制 proto 编码（MQTT 等二进制传输用；字段按编号升序写出）
+  Uint8List writeToBuffer() {
+    final w = ProtoWireWriter();
+    _writeTo(w);
+    return w.toBuffer();
+  }
+
+  void _writeTo(ProtoWireWriter w) {
+    // field 1: id
+    final f1 = id;
+    if (f1 != null) {
+      w.writeInt64(1, f1);
+    }
+    // field 2: flowId
+    final f2 = flowId;
+    if (f2 != null) {
+      w.writeInt64(2, f2);
+    }
+    // field 3: creatorId
+    final f3 = creatorId;
+    if (f3 != null) {
+      w.writeInt64(3, f3);
+    }
+    // field 10: createTime
+    final f10 = createTime;
+    if (f10 != null) {
+      w.writeInt64(10, f10);
+    }
+    // field 11: contentType
+    final f11 = contentType;
+    if (f11 != null) {
+      w.writeString(11, f11);
+    }
+    // field 12: size
+    final f12 = size;
+    if (f12 != null) {
+      w.writeInt64(12, f12);
+    }
+    // field 13: originalName
+    final f13 = originalName;
+    if (f13 != null) {
+      w.writeString(13, f13);
+    }
+  }
+
+  factory LedgerServiceV1FlowFile.fromBuffer(List<int> bytes) {
+    return LedgerServiceV1FlowFile._readFrom(ProtoWireReader(bytes));
+  }
+
+  static LedgerServiceV1FlowFile _readFrom(ProtoWireReader r) {
+    final m = LedgerServiceV1FlowFile();
+    while (r.next()) {
+      switch (r.fieldNumber) {
+        // field 1: id
+        case 1: {
+          m.id = r.readInt64();
+          break;
+        }
+        // field 2: flowId
+        case 2: {
+          m.flowId = r.readInt64();
+          break;
+        }
+        // field 3: creatorId
+        case 3: {
+          m.creatorId = r.readInt64();
+          break;
+        }
+        // field 10: createTime
+        case 10: {
+          m.createTime = r.readInt64();
+          break;
+        }
+        // field 11: contentType
+        case 11: {
+          m.contentType = r.readString();
+          break;
+        }
+        // field 12: size
+        case 12: {
+          m.size = r.readInt64();
+          break;
+        }
+        // field 13: originalName
+        case 13: {
+          m.originalName = r.readString();
+          break;
+        }
+        default: {
+          r.skip();
+        }
+      }
+    }
+    return m;
+  }
+
 }
 
 /// 请求 - 删除附件
@@ -6726,13 +11927,13 @@ class LedgerServiceV1DeleteFlowFileRequest {
 
   factory LedgerServiceV1DeleteFlowFileRequest.fromJson(Map<String, dynamic> json) {
     return LedgerServiceV1DeleteFlowFileRequest(
-      id: json['id'] as int?,
+      id: json['id'] != null ? int.parse(json['id'].toString()) : null,
     );
   }
 
   Map<String, dynamic> toJson() {
     final json = <String, dynamic>{};
-    if (id != null) json['id'] = id;
+    if (id != null) json['id'] = id.toString();
     return json;
   }
 
@@ -6761,6 +11962,43 @@ class LedgerServiceV1DeleteFlowFileRequest {
       id: id ?? this.id,
     );
   }
+
+  /// 二进制 proto 编码（MQTT 等二进制传输用；字段按编号升序写出）
+  Uint8List writeToBuffer() {
+    final w = ProtoWireWriter();
+    _writeTo(w);
+    return w.toBuffer();
+  }
+
+  void _writeTo(ProtoWireWriter w) {
+    // field 1: id
+    final f1 = id;
+    if (f1 != null) {
+      w.writeInt64(1, f1);
+    }
+  }
+
+  factory LedgerServiceV1DeleteFlowFileRequest.fromBuffer(List<int> bytes) {
+    return LedgerServiceV1DeleteFlowFileRequest._readFrom(ProtoWireReader(bytes));
+  }
+
+  static LedgerServiceV1DeleteFlowFileRequest _readFrom(ProtoWireReader r) {
+    final m = LedgerServiceV1DeleteFlowFileRequest();
+    while (r.next()) {
+      switch (r.fieldNumber) {
+        // field 1: id
+        case 1: {
+          m.id = r.readInt64();
+          break;
+        }
+        default: {
+          r.skip();
+        }
+      }
+    }
+    return m;
+  }
+
 }
 
 /// 请求 - 上传附件
@@ -6784,7 +12022,7 @@ class LedgerServiceV1UploadFlowFileRequest {
       contentType: json['contentType'] as String?,
       data: json['data'] as String?,
       fileName: json['fileName'] as String?,
-      flowId: json['flowId'] as int?,
+      flowId: json['flowId'] != null ? int.parse(json['flowId'].toString()) : null,
       size: json['size'] != null ? int.parse(json['size'].toString()) : null,
     );
   }
@@ -6794,7 +12032,7 @@ class LedgerServiceV1UploadFlowFileRequest {
     if (contentType != null) json['contentType'] = contentType;
     if (data != null) json['data'] = data;
     if (fileName != null) json['fileName'] = fileName;
-    if (flowId != null) json['flowId'] = flowId;
+    if (flowId != null) json['flowId'] = flowId.toString();
     if (size != null) json['size'] = size.toString();
     return json;
   }
@@ -6840,6 +12078,83 @@ class LedgerServiceV1UploadFlowFileRequest {
       size: size ?? this.size,
     );
   }
+
+  /// 二进制 proto 编码（MQTT 等二进制传输用；字段按编号升序写出）
+  Uint8List writeToBuffer() {
+    final w = ProtoWireWriter();
+    _writeTo(w);
+    return w.toBuffer();
+  }
+
+  void _writeTo(ProtoWireWriter w) {
+    // field 1: flowId
+    final f1 = flowId;
+    if (f1 != null) {
+      w.writeInt64(1, f1);
+    }
+    // field 2: fileName
+    final f2 = fileName;
+    if (f2 != null) {
+      w.writeString(2, f2);
+    }
+    // field 3: contentType
+    final f3 = contentType;
+    if (f3 != null) {
+      w.writeString(3, f3);
+    }
+    // field 4: size
+    final f4 = size;
+    if (f4 != null) {
+      w.writeInt64(4, f4);
+    }
+    // field 5: data
+    final f5 = data;
+    if (f5 != null) {
+      throw UnsupportedError('dart-http wire: field ledger.service.v1.UploadFlowFileRequest.data');
+    }
+  }
+
+  factory LedgerServiceV1UploadFlowFileRequest.fromBuffer(List<int> bytes) {
+    return LedgerServiceV1UploadFlowFileRequest._readFrom(ProtoWireReader(bytes));
+  }
+
+  static LedgerServiceV1UploadFlowFileRequest _readFrom(ProtoWireReader r) {
+    final m = LedgerServiceV1UploadFlowFileRequest();
+    while (r.next()) {
+      switch (r.fieldNumber) {
+        // field 1: flowId
+        case 1: {
+          m.flowId = r.readInt64();
+          break;
+        }
+        // field 2: fileName
+        case 2: {
+          m.fileName = r.readString();
+          break;
+        }
+        // field 3: contentType
+        case 3: {
+          m.contentType = r.readString();
+          break;
+        }
+        // field 4: size
+        case 4: {
+          m.size = r.readInt64();
+          break;
+        }
+        // field 5: data
+        case 5: {
+          r.skip();
+          break;
+        }
+        default: {
+          r.skip();
+        }
+      }
+    }
+    return m;
+  }
+
 }
 
 /// 请求 - 查看附件（公开免认证，按 create_time 安全验证）
@@ -6855,14 +12170,14 @@ class LedgerServiceV1ViewFlowFileRequest {
   factory LedgerServiceV1ViewFlowFileRequest.fromJson(Map<String, dynamic> json) {
     return LedgerServiceV1ViewFlowFileRequest(
       createTime: json['createTime'] != null ? int.parse(json['createTime'].toString()) : null,
-      id: json['id'] as int?,
+      id: json['id'] != null ? int.parse(json['id'].toString()) : null,
     );
   }
 
   Map<String, dynamic> toJson() {
     final json = <String, dynamic>{};
     if (createTime != null) json['createTime'] = createTime.toString();
-    if (id != null) json['id'] = id;
+    if (id != null) json['id'] = id.toString();
     return json;
   }
 
@@ -6895,6 +12210,53 @@ class LedgerServiceV1ViewFlowFileRequest {
       id: id ?? this.id,
     );
   }
+
+  /// 二进制 proto 编码（MQTT 等二进制传输用；字段按编号升序写出）
+  Uint8List writeToBuffer() {
+    final w = ProtoWireWriter();
+    _writeTo(w);
+    return w.toBuffer();
+  }
+
+  void _writeTo(ProtoWireWriter w) {
+    // field 1: id
+    final f1 = id;
+    if (f1 != null) {
+      w.writeInt64(1, f1);
+    }
+    // field 2: createTime
+    final f2 = createTime;
+    if (f2 != null) {
+      w.writeInt64(2, f2);
+    }
+  }
+
+  factory LedgerServiceV1ViewFlowFileRequest.fromBuffer(List<int> bytes) {
+    return LedgerServiceV1ViewFlowFileRequest._readFrom(ProtoWireReader(bytes));
+  }
+
+  static LedgerServiceV1ViewFlowFileRequest _readFrom(ProtoWireReader r) {
+    final m = LedgerServiceV1ViewFlowFileRequest();
+    while (r.next()) {
+      switch (r.fieldNumber) {
+        // field 1: id
+        case 1: {
+          m.id = r.readInt64();
+          break;
+        }
+        // field 2: createTime
+        case 2: {
+          m.createTime = r.readInt64();
+          break;
+        }
+        default: {
+          r.skip();
+        }
+      }
+    }
+    return m;
+  }
+
 }
 
 /// 回应 - 查看附件（返回文件内容）
@@ -6958,6 +12320,63 @@ class LedgerServiceV1ViewFlowFileResponse {
       originalName: originalName ?? this.originalName,
     );
   }
+
+  /// 二进制 proto 编码（MQTT 等二进制传输用；字段按编号升序写出）
+  Uint8List writeToBuffer() {
+    final w = ProtoWireWriter();
+    _writeTo(w);
+    return w.toBuffer();
+  }
+
+  void _writeTo(ProtoWireWriter w) {
+    // field 1: contentType
+    final f1 = contentType;
+    if (f1 != null) {
+      w.writeString(1, f1);
+    }
+    // field 2: originalName
+    final f2 = originalName;
+    if (f2 != null) {
+      w.writeString(2, f2);
+    }
+    // field 3: data
+    final f3 = data;
+    if (f3 != null) {
+      throw UnsupportedError('dart-http wire: field ledger.service.v1.ViewFlowFileResponse.data');
+    }
+  }
+
+  factory LedgerServiceV1ViewFlowFileResponse.fromBuffer(List<int> bytes) {
+    return LedgerServiceV1ViewFlowFileResponse._readFrom(ProtoWireReader(bytes));
+  }
+
+  static LedgerServiceV1ViewFlowFileResponse _readFrom(ProtoWireReader r) {
+    final m = LedgerServiceV1ViewFlowFileResponse();
+    while (r.next()) {
+      switch (r.fieldNumber) {
+        // field 1: contentType
+        case 1: {
+          m.contentType = r.readString();
+          break;
+        }
+        // field 2: originalName
+        case 2: {
+          m.originalName = r.readString();
+          break;
+        }
+        // field 3: data
+        case 3: {
+          r.skip();
+          break;
+        }
+        default: {
+          r.skip();
+        }
+      }
+    }
+    return m;
+  }
+
 }
 
 /// 注册请求
@@ -7029,6 +12448,73 @@ class LedgerRegisterRequest {
       username: username ?? this.username,
     );
   }
+
+  /// 二进制 proto 编码（MQTT 等二进制传输用；字段按编号升序写出）
+  Uint8List writeToBuffer() {
+    final w = ProtoWireWriter();
+    _writeTo(w);
+    return w.toBuffer();
+  }
+
+  void _writeTo(ProtoWireWriter w) {
+    // field 1: username
+    final f1 = username;
+    if (f1 != null) {
+      w.writeString(1, f1);
+    }
+    // field 2: password
+    final f2 = password;
+    if (f2 != null) {
+      w.writeString(2, f2);
+    }
+    // field 3: inviteCode
+    final f3 = inviteCode;
+    if (f3 != null) {
+      w.writeString(3, f3);
+    }
+    // field 4: nickName
+    final f4 = nickName;
+    if (f4 != null) {
+      w.writeString(4, f4);
+    }
+  }
+
+  factory LedgerRegisterRequest.fromBuffer(List<int> bytes) {
+    return LedgerRegisterRequest._readFrom(ProtoWireReader(bytes));
+  }
+
+  static LedgerRegisterRequest _readFrom(ProtoWireReader r) {
+    final m = LedgerRegisterRequest();
+    while (r.next()) {
+      switch (r.fieldNumber) {
+        // field 1: username
+        case 1: {
+          m.username = r.readString();
+          break;
+        }
+        // field 2: password
+        case 2: {
+          m.password = r.readString();
+          break;
+        }
+        // field 3: inviteCode
+        case 3: {
+          m.inviteCode = r.readString();
+          break;
+        }
+        // field 4: nickName
+        case 4: {
+          m.nickName = r.readString();
+          break;
+        }
+        default: {
+          r.skip();
+        }
+      }
+    }
+    return m;
+  }
+
 }
 
 /// 认证响应
@@ -7092,6 +12578,63 @@ class LedgerAuthResponse {
       username: username ?? this.username,
     );
   }
+
+  /// 二进制 proto 编码（MQTT 等二进制传输用；字段按编号升序写出）
+  Uint8List writeToBuffer() {
+    final w = ProtoWireWriter();
+    _writeTo(w);
+    return w.toBuffer();
+  }
+
+  void _writeTo(ProtoWireWriter w) {
+    // field 1: accessToken
+    final f1 = accessToken;
+    if (f1 != null) {
+      w.writeString(1, f1);
+    }
+    // field 2: refreshToken
+    final f2 = refreshToken;
+    if (f2 != null) {
+      w.writeString(2, f2);
+    }
+    // field 3: username
+    final f3 = username;
+    if (f3 != null) {
+      w.writeString(3, f3);
+    }
+  }
+
+  factory LedgerAuthResponse.fromBuffer(List<int> bytes) {
+    return LedgerAuthResponse._readFrom(ProtoWireReader(bytes));
+  }
+
+  static LedgerAuthResponse _readFrom(ProtoWireReader r) {
+    final m = LedgerAuthResponse();
+    while (r.next()) {
+      switch (r.fieldNumber) {
+        // field 1: accessToken
+        case 1: {
+          m.accessToken = r.readString();
+          break;
+        }
+        // field 2: refreshToken
+        case 2: {
+          m.refreshToken = r.readString();
+          break;
+        }
+        // field 3: username
+        case 3: {
+          m.username = r.readString();
+          break;
+        }
+        default: {
+          r.skip();
+        }
+      }
+    }
+    return m;
+  }
+
 }
 
 /// 初始化状态响应
@@ -7171,6 +12714,83 @@ class InitStateResponse {
       user: user ?? this.user,
     );
   }
+
+  /// 二进制 proto 编码（MQTT 等二进制传输用；字段按编号升序写出）
+  Uint8List writeToBuffer() {
+    final w = ProtoWireWriter();
+    _writeTo(w);
+    return w.toBuffer();
+  }
+
+  void _writeTo(ProtoWireWriter w) {
+    // field 1: user
+    final f1 = user;
+    if (f1 != null) {
+      final cw = ProtoWireWriter(); f1._writeTo(cw); w.writeRaw(1, cw.toBuffer()); // IdentityServiceV1User
+    }
+    // field 2: tenant
+    final f2 = tenant;
+    if (f2 != null) {
+      final cw = ProtoWireWriter(); f2._writeTo(cw); w.writeRaw(2, cw.toBuffer()); // IdentityServiceV1Tenant
+    }
+    // field 3: book
+    final f3 = book;
+    if (f3 != null) {
+      final cw = ProtoWireWriter(); f3._writeTo(cw); w.writeRaw(3, cw.toBuffer()); // LedgerServiceV1Book
+    }
+    // field 4: availableBooks
+    final f4 = availableBooks;
+    if (f4 != null) {
+      for (final e in f4) { final cw = ProtoWireWriter(); e._writeTo(cw); w.writeRaw(4, cw.toBuffer()); }
+    }
+    // field 5: availableTenants
+    final f5 = availableTenants;
+    if (f5 != null) {
+      for (final e in f5) { final cw = ProtoWireWriter(); e._writeTo(cw); w.writeRaw(5, cw.toBuffer()); }
+    }
+  }
+
+  factory InitStateResponse.fromBuffer(List<int> bytes) {
+    return InitStateResponse._readFrom(ProtoWireReader(bytes));
+  }
+
+  static InitStateResponse _readFrom(ProtoWireReader r) {
+    final m = InitStateResponse();
+    while (r.next()) {
+      switch (r.fieldNumber) {
+        // field 1: user
+        case 1: {
+          m.user = IdentityServiceV1User._readFrom(r.readNested());
+          break;
+        }
+        // field 2: tenant
+        case 2: {
+          m.tenant = IdentityServiceV1Tenant._readFrom(r.readNested());
+          break;
+        }
+        // field 3: book
+        case 3: {
+          m.book = LedgerServiceV1Book._readFrom(r.readNested());
+          break;
+        }
+        // field 4: availableBooks
+        case 4: {
+          m.availableBooks = r.readNestedList().map(LedgerServiceV1Book._readFrom).toList();
+          break;
+        }
+        // field 5: availableTenants
+        case 5: {
+          m.availableTenants = r.readNestedList().map(IdentityServiceV1Tenant._readFrom).toList();
+          break;
+        }
+        default: {
+          r.skip();
+        }
+      }
+    }
+    return m;
+  }
+
 }
 
 /// 用户
@@ -7269,43 +12889,43 @@ class IdentityServiceV1User {
       avatar: json['avatar'] as String?,
       commentCount: json['commentCount'] != null ? int.parse(json['commentCount'].toString()) : null,
       createdAt: json['createdAt'] as String?,
-      createdBy: json['createdBy'] as int?,
+      createdBy: json['createdBy'] != null ? int.parse(json['createdBy'].toString()) : null,
       deletedAt: json['deletedAt'] as String?,
-      deletedBy: json['deletedBy'] as int?,
+      deletedBy: json['deletedBy'] != null ? int.parse(json['deletedBy'].toString()) : null,
       description: json['description'] as String?,
       email: json['email'] as String?,
       followers: json['followers'] != null ? int.parse(json['followers'].toString()) : null,
       following: json['following'] != null ? int.parse(json['following'].toString()) : null,
       gender: json['gender'] != null ? IdentityServiceV1User$Gender.fromString(json['gender'] as String) : null,
-      id: json['id'] as int?,
+      id: json['id'] != null ? int.parse(json['id'].toString()) : null,
       lastLoginAt: json['lastLoginAt'] as String?,
       lastLoginIp: json['lastLoginIp'] as String?,
       likeCount: json['likeCount'] != null ? int.parse(json['likeCount'].toString()) : null,
       lockedUntil: json['lockedUntil'] as String?,
       mobile: json['mobile'] as String?,
       nickname: json['nickname'] as String?,
-      orgUnitId: json['orgUnitId'] as int?,
-      orgUnitIds: (json['orgUnitIds'] as List<dynamic>?)?.map((e) => e as int).toList(),
+      orgUnitId: json['orgUnitId'] != null ? int.parse(json['orgUnitId'].toString()) : null,
+      orgUnitIds: (json['orgUnitIds'] as List<dynamic>?)?.map((e) => int.parse(e.toString())).toList(),
       orgUnitName: json['orgUnitName'] as String?,
       orgUnitNames: (json['orgUnitNames'] as List<dynamic>?)?.map((e) => e as String).toList(),
-      positionId: json['positionId'] as int?,
-      positionIds: (json['positionIds'] as List<dynamic>?)?.map((e) => e as int).toList(),
+      positionId: json['positionId'] != null ? int.parse(json['positionId'].toString()) : null,
+      positionIds: (json['positionIds'] as List<dynamic>?)?.map((e) => int.parse(e.toString())).toList(),
       positionName: json['positionName'] as String?,
       positionNames: (json['positionNames'] as List<dynamic>?)?.map((e) => e as String).toList(),
       postCount: json['postCount'] != null ? int.parse(json['postCount'].toString()) : null,
       realname: json['realname'] as String?,
       region: json['region'] as String?,
       remark: json['remark'] as String?,
-      roleId: json['roleId'] as int?,
-      roleIds: (json['roleIds'] as List<dynamic>?)?.map((e) => e as int).toList(),
+      roleId: json['roleId'] != null ? int.parse(json['roleId'].toString()) : null,
+      roleIds: (json['roleIds'] as List<dynamic>?)?.map((e) => int.parse(e.toString())).toList(),
       roleNames: (json['roleNames'] as List<dynamic>?)?.map((e) => e as String).toList(),
       roles: (json['roles'] as List<dynamic>?)?.map((e) => e as String).toList(),
       status: json['status'] != null ? IdentityServiceV1User$Status.fromString(json['status'] as String) : null,
       telephone: json['telephone'] as String?,
-      tenantId: json['tenantId'] as int?,
+      tenantId: json['tenantId'] != null ? int.parse(json['tenantId'].toString()) : null,
       tenantName: json['tenantName'] as String?,
       updatedAt: json['updatedAt'] as String?,
-      updatedBy: json['updatedBy'] as int?,
+      updatedBy: json['updatedBy'] != null ? int.parse(json['updatedBy'].toString()) : null,
       username: json['username'] as String?,
     );
   }
@@ -7316,43 +12936,43 @@ class IdentityServiceV1User {
     if (avatar != null) json['avatar'] = avatar;
     if (commentCount != null) json['commentCount'] = commentCount.toString();
     if (createdAt != null) json['createdAt'] = createdAt;
-    if (createdBy != null) json['createdBy'] = createdBy;
+    if (createdBy != null) json['createdBy'] = createdBy.toString();
     if (deletedAt != null) json['deletedAt'] = deletedAt;
-    if (deletedBy != null) json['deletedBy'] = deletedBy;
+    if (deletedBy != null) json['deletedBy'] = deletedBy.toString();
     if (description != null) json['description'] = description;
     if (email != null) json['email'] = email;
     if (followers != null) json['followers'] = followers.toString();
     if (following != null) json['following'] = following.toString();
     if (gender != null) json['gender'] = gender!.value;
-    if (id != null) json['id'] = id;
+    if (id != null) json['id'] = id.toString();
     if (lastLoginAt != null) json['lastLoginAt'] = lastLoginAt;
     if (lastLoginIp != null) json['lastLoginIp'] = lastLoginIp;
     if (likeCount != null) json['likeCount'] = likeCount.toString();
     if (lockedUntil != null) json['lockedUntil'] = lockedUntil;
     if (mobile != null) json['mobile'] = mobile;
     if (nickname != null) json['nickname'] = nickname;
-    if (orgUnitId != null) json['orgUnitId'] = orgUnitId;
-    if (orgUnitIds != null) json['orgUnitIds'] = orgUnitIds;
+    if (orgUnitId != null) json['orgUnitId'] = orgUnitId.toString();
+    if (orgUnitIds != null) json['orgUnitIds'] = orgUnitIds!.map((e) => e.toString()).toList();
     if (orgUnitName != null) json['orgUnitName'] = orgUnitName;
     if (orgUnitNames != null) json['orgUnitNames'] = orgUnitNames;
-    if (positionId != null) json['positionId'] = positionId;
-    if (positionIds != null) json['positionIds'] = positionIds;
+    if (positionId != null) json['positionId'] = positionId.toString();
+    if (positionIds != null) json['positionIds'] = positionIds!.map((e) => e.toString()).toList();
     if (positionName != null) json['positionName'] = positionName;
     if (positionNames != null) json['positionNames'] = positionNames;
     if (postCount != null) json['postCount'] = postCount.toString();
     if (realname != null) json['realname'] = realname;
     if (region != null) json['region'] = region;
     if (remark != null) json['remark'] = remark;
-    if (roleId != null) json['roleId'] = roleId;
-    if (roleIds != null) json['roleIds'] = roleIds;
+    if (roleId != null) json['roleId'] = roleId.toString();
+    if (roleIds != null) json['roleIds'] = roleIds!.map((e) => e.toString()).toList();
     if (roleNames != null) json['roleNames'] = roleNames;
     if (roles != null) json['roles'] = roles;
     if (status != null) json['status'] = status!.value;
     if (telephone != null) json['telephone'] = telephone;
-    if (tenantId != null) json['tenantId'] = tenantId;
+    if (tenantId != null) json['tenantId'] = tenantId.toString();
     if (tenantName != null) json['tenantName'] = tenantName;
     if (updatedAt != null) json['updatedAt'] = updatedAt;
-    if (updatedBy != null) json['updatedBy'] = updatedBy;
+    if (updatedBy != null) json['updatedBy'] = updatedBy.toString();
     if (username != null) json['username'] = username;
     return json;
   }
@@ -7546,37 +13166,492 @@ class IdentityServiceV1User {
       username: username ?? this.username,
     );
   }
+
+  /// 二进制 proto 编码（MQTT 等二进制传输用；字段按编号升序写出）
+  Uint8List writeToBuffer() {
+    final w = ProtoWireWriter();
+    _writeTo(w);
+    return w.toBuffer();
+  }
+
+  void _writeTo(ProtoWireWriter w) {
+    // field 1: id
+    final f1 = id;
+    if (f1 != null) {
+      w.writeInt64(1, f1);
+    }
+    // field 2: tenantId
+    final f2 = tenantId;
+    if (f2 != null) {
+      w.writeInt64(2, f2);
+    }
+    // field 3: tenantName
+    final f3 = tenantName;
+    if (f3 != null) {
+      w.writeString(3, f3);
+    }
+    // field 4: orgUnitId
+    final f4 = orgUnitId;
+    if (f4 != null) {
+      w.writeInt64(4, f4);
+    }
+    // field 5: orgUnitIds
+    final f5 = orgUnitIds;
+    if (f5 != null) {
+      w.writePackedVarintList(5, f5);
+    }
+    // field 6: orgUnitName
+    final f6 = orgUnitName;
+    if (f6 != null) {
+      w.writeString(6, f6);
+    }
+    // field 7: orgUnitNames
+    final f7 = orgUnitNames;
+    if (f7 != null) {
+      w.writeStringList(7, f7);
+    }
+    // field 8: positionId
+    final f8 = positionId;
+    if (f8 != null) {
+      w.writeInt64(8, f8);
+    }
+    // field 9: positionIds
+    final f9 = positionIds;
+    if (f9 != null) {
+      w.writePackedVarintList(9, f9);
+    }
+    // field 10: positionName
+    final f10 = positionName;
+    if (f10 != null) {
+      w.writeString(10, f10);
+    }
+    // field 11: positionNames
+    final f11 = positionNames;
+    if (f11 != null) {
+      w.writeStringList(11, f11);
+    }
+    // field 12: roleId
+    final f12 = roleId;
+    if (f12 != null) {
+      w.writeInt64(12, f12);
+    }
+    // field 13: roleIds
+    final f13 = roleIds;
+    if (f13 != null) {
+      w.writePackedVarintList(13, f13);
+    }
+    // field 14: roles
+    final f14 = roles;
+    if (f14 != null) {
+      w.writeStringList(14, f14);
+    }
+    // field 15: roleNames
+    final f15 = roleNames;
+    if (f15 != null) {
+      w.writeStringList(15, f15);
+    }
+    // field 20: username
+    final f20 = username;
+    if (f20 != null) {
+      w.writeString(20, f20);
+    }
+    // field 21: nickname
+    final f21 = nickname;
+    if (f21 != null) {
+      w.writeString(21, f21);
+    }
+    // field 22: realname
+    final f22 = realname;
+    if (f22 != null) {
+      w.writeString(22, f22);
+    }
+    // field 23: avatar
+    final f23 = avatar;
+    if (f23 != null) {
+      w.writeString(23, f23);
+    }
+    // field 24: email
+    final f24 = email;
+    if (f24 != null) {
+      w.writeString(24, f24);
+    }
+    // field 25: mobile
+    final f25 = mobile;
+    if (f25 != null) {
+      w.writeString(25, f25);
+    }
+    // field 26: telephone
+    final f26 = telephone;
+    if (f26 != null) {
+      w.writeString(26, f26);
+    }
+    // field 27: gender
+    final f27 = gender;
+    if (f27 != null) {
+      w.writeEnum(27, f27.wire); // IdentityServiceV1User$Gender
+    }
+    // field 28: address
+    final f28 = address;
+    if (f28 != null) {
+      w.writeString(28, f28);
+    }
+    // field 29: region
+    final f29 = region;
+    if (f29 != null) {
+      w.writeString(29, f29);
+    }
+    // field 30: description
+    final f30 = description;
+    if (f30 != null) {
+      w.writeString(30, f30);
+    }
+    // field 31: remark
+    final f31 = remark;
+    if (f31 != null) {
+      w.writeString(31, f31);
+    }
+    // field 50: lastLoginAt
+    final f50 = lastLoginAt;
+    if (f50 != null) {
+      w.writeTimestamp(50, f50);
+    }
+    // field 51: lastLoginIp
+    final f51 = lastLoginIp;
+    if (f51 != null) {
+      w.writeString(51, f51);
+    }
+    // field 52: status
+    final f52 = status;
+    if (f52 != null) {
+      w.writeEnum(52, f52.wire); // IdentityServiceV1User$Status
+    }
+    // field 53: lockedUntil
+    final f53 = lockedUntil;
+    if (f53 != null) {
+      w.writeTimestamp(53, f53);
+    }
+    // field 80: followers
+    final f80 = followers;
+    if (f80 != null) {
+      w.writeInt64(80, f80);
+    }
+    // field 81: following
+    final f81 = following;
+    if (f81 != null) {
+      w.writeInt64(81, f81);
+    }
+    // field 90: postCount
+    final f90 = postCount;
+    if (f90 != null) {
+      w.writeInt64(90, f90);
+    }
+    // field 91: commentCount
+    final f91 = commentCount;
+    if (f91 != null) {
+      w.writeInt64(91, f91);
+    }
+    // field 92: likeCount
+    final f92 = likeCount;
+    if (f92 != null) {
+      w.writeInt64(92, f92);
+    }
+    // field 100: createdBy
+    final f100 = createdBy;
+    if (f100 != null) {
+      w.writeInt64(100, f100);
+    }
+    // field 101: updatedBy
+    final f101 = updatedBy;
+    if (f101 != null) {
+      w.writeInt64(101, f101);
+    }
+    // field 102: deletedBy
+    final f102 = deletedBy;
+    if (f102 != null) {
+      w.writeInt64(102, f102);
+    }
+    // field 200: createdAt
+    final f200 = createdAt;
+    if (f200 != null) {
+      w.writeTimestamp(200, f200);
+    }
+    // field 201: updatedAt
+    final f201 = updatedAt;
+    if (f201 != null) {
+      w.writeTimestamp(201, f201);
+    }
+    // field 202: deletedAt
+    final f202 = deletedAt;
+    if (f202 != null) {
+      w.writeTimestamp(202, f202);
+    }
+  }
+
+  factory IdentityServiceV1User.fromBuffer(List<int> bytes) {
+    return IdentityServiceV1User._readFrom(ProtoWireReader(bytes));
+  }
+
+  static IdentityServiceV1User _readFrom(ProtoWireReader r) {
+    final m = IdentityServiceV1User();
+    while (r.next()) {
+      switch (r.fieldNumber) {
+        // field 1: id
+        case 1: {
+          m.id = r.readInt64();
+          break;
+        }
+        // field 2: tenantId
+        case 2: {
+          m.tenantId = r.readInt64();
+          break;
+        }
+        // field 3: tenantName
+        case 3: {
+          m.tenantName = r.readString();
+          break;
+        }
+        // field 4: orgUnitId
+        case 4: {
+          m.orgUnitId = r.readInt64();
+          break;
+        }
+        // field 5: orgUnitIds
+        case 5: {
+          m.orgUnitIds = r.readVarintList();
+          break;
+        }
+        // field 6: orgUnitName
+        case 6: {
+          m.orgUnitName = r.readString();
+          break;
+        }
+        // field 7: orgUnitNames
+        case 7: {
+          m.orgUnitNames = r.readStringList();
+          break;
+        }
+        // field 8: positionId
+        case 8: {
+          m.positionId = r.readInt64();
+          break;
+        }
+        // field 9: positionIds
+        case 9: {
+          m.positionIds = r.readVarintList();
+          break;
+        }
+        // field 10: positionName
+        case 10: {
+          m.positionName = r.readString();
+          break;
+        }
+        // field 11: positionNames
+        case 11: {
+          m.positionNames = r.readStringList();
+          break;
+        }
+        // field 12: roleId
+        case 12: {
+          m.roleId = r.readInt64();
+          break;
+        }
+        // field 13: roleIds
+        case 13: {
+          m.roleIds = r.readVarintList();
+          break;
+        }
+        // field 14: roles
+        case 14: {
+          m.roles = r.readStringList();
+          break;
+        }
+        // field 15: roleNames
+        case 15: {
+          m.roleNames = r.readStringList();
+          break;
+        }
+        // field 20: username
+        case 20: {
+          m.username = r.readString();
+          break;
+        }
+        // field 21: nickname
+        case 21: {
+          m.nickname = r.readString();
+          break;
+        }
+        // field 22: realname
+        case 22: {
+          m.realname = r.readString();
+          break;
+        }
+        // field 23: avatar
+        case 23: {
+          m.avatar = r.readString();
+          break;
+        }
+        // field 24: email
+        case 24: {
+          m.email = r.readString();
+          break;
+        }
+        // field 25: mobile
+        case 25: {
+          m.mobile = r.readString();
+          break;
+        }
+        // field 26: telephone
+        case 26: {
+          m.telephone = r.readString();
+          break;
+        }
+        // field 27: gender
+        case 27: {
+          m.gender = IdentityServiceV1User$Gender.fromWire(r.readEnum());
+          break;
+        }
+        // field 28: address
+        case 28: {
+          m.address = r.readString();
+          break;
+        }
+        // field 29: region
+        case 29: {
+          m.region = r.readString();
+          break;
+        }
+        // field 30: description
+        case 30: {
+          m.description = r.readString();
+          break;
+        }
+        // field 31: remark
+        case 31: {
+          m.remark = r.readString();
+          break;
+        }
+        // field 50: lastLoginAt
+        case 50: {
+          m.lastLoginAt = r.readTimestampIso();
+          break;
+        }
+        // field 51: lastLoginIp
+        case 51: {
+          m.lastLoginIp = r.readString();
+          break;
+        }
+        // field 52: status
+        case 52: {
+          m.status = IdentityServiceV1User$Status.fromWire(r.readEnum());
+          break;
+        }
+        // field 53: lockedUntil
+        case 53: {
+          m.lockedUntil = r.readTimestampIso();
+          break;
+        }
+        // field 80: followers
+        case 80: {
+          m.followers = r.readInt64();
+          break;
+        }
+        // field 81: following
+        case 81: {
+          m.following = r.readInt64();
+          break;
+        }
+        // field 90: postCount
+        case 90: {
+          m.postCount = r.readInt64();
+          break;
+        }
+        // field 91: commentCount
+        case 91: {
+          m.commentCount = r.readInt64();
+          break;
+        }
+        // field 92: likeCount
+        case 92: {
+          m.likeCount = r.readInt64();
+          break;
+        }
+        // field 100: createdBy
+        case 100: {
+          m.createdBy = r.readInt64();
+          break;
+        }
+        // field 101: updatedBy
+        case 101: {
+          m.updatedBy = r.readInt64();
+          break;
+        }
+        // field 102: deletedBy
+        case 102: {
+          m.deletedBy = r.readInt64();
+          break;
+        }
+        // field 200: createdAt
+        case 200: {
+          m.createdAt = r.readTimestampIso();
+          break;
+        }
+        // field 201: updatedAt
+        case 201: {
+          m.updatedAt = r.readTimestampIso();
+          break;
+        }
+        // field 202: deletedAt
+        case 202: {
+          m.deletedAt = r.readTimestampIso();
+          break;
+        }
+        default: {
+          r.skip();
+        }
+      }
+    }
+    return m;
+  }
+
 }
 
 /// 用户性别
 enum IdentityServiceV1User$Gender {
-  female('FEMALE'),
-  male('MALE'),
-  secret('SECRET');
+  female('FEMALE', 2),
+  male('MALE', 1),
+  secret('SECRET', 0);
 
   final String value;
-  const IdentityServiceV1User$Gender(this.value);
+  /// proto 枚举数值（二进制 wire 编解码用，与 JSON 的 value 字符串互补）
+  final int wire;
+  const IdentityServiceV1User$Gender(this.value, this.wire);
 
   static IdentityServiceV1User$Gender fromString(String v) =>
     values.firstWhere((e) => e.value == v, orElse: () => throw ArgumentError('Unknown IdentityServiceV1User\$Gender value: ' + v));
+  static IdentityServiceV1User$Gender fromWire(int v) =>
+    values.firstWhere((e) => e.wire == v, orElse: () => throw ArgumentError('Unknown IdentityServiceV1User\$Gender wire value: ' + v.toString()));
   @override
   String toString() => value;
 }
 
 /// 用户状态
 enum IdentityServiceV1User$Status {
-  closed('CLOSED'),
-  disabled('DISABLED'),
-  expired('EXPIRED'),
-  locked('LOCKED'),
-  normal('NORMAL'),
-  pending('PENDING');
+  closed('CLOSED', 9),
+  disabled('DISABLED', 0),
+  expired('EXPIRED', 4),
+  locked('LOCKED', 3),
+  normal('NORMAL', 1),
+  pending('PENDING', 2);
 
   final String value;
-  const IdentityServiceV1User$Status(this.value);
+  /// proto 枚举数值（二进制 wire 编解码用，与 JSON 的 value 字符串互补）
+  final int wire;
+  const IdentityServiceV1User$Status(this.value, this.wire);
 
   static IdentityServiceV1User$Status fromString(String v) =>
     values.firstWhere((e) => e.value == v, orElse: () => throw ArgumentError('Unknown IdentityServiceV1User\$Status value: ' + v));
+  static IdentityServiceV1User$Status fromWire(int v) =>
+    values.firstWhere((e) => e.wire == v, orElse: () => throw ArgumentError('Unknown IdentityServiceV1User\$Status wire value: ' + v.toString()));
   @override
   String toString() => value;
 }
@@ -7635,17 +13710,17 @@ class IdentityServiceV1Tenant {
 
   factory IdentityServiceV1Tenant.fromJson(Map<String, dynamic> json) {
     return IdentityServiceV1Tenant(
-      adminUserId: json['adminUserId'] as int?,
+      adminUserId: json['adminUserId'] != null ? int.parse(json['adminUserId'].toString()) : null,
       adminUserName: json['adminUserName'] as String?,
       auditStatus: json['auditStatus'] != null ? IdentityServiceV1Tenant$AuditStatus.fromString(json['auditStatus'] as String) : null,
       code: json['code'] as String?,
       createdAt: json['createdAt'] as String?,
-      createdBy: json['createdBy'] as int?,
+      createdBy: json['createdBy'] != null ? int.parse(json['createdBy'].toString()) : null,
       deletedAt: json['deletedAt'] as String?,
-      deletedBy: json['deletedBy'] as int?,
+      deletedBy: json['deletedBy'] != null ? int.parse(json['deletedBy'].toString()) : null,
       domain: json['domain'] as String?,
       expiredAt: json['expiredAt'] as String?,
-      id: json['id'] as int?,
+      id: json['id'] != null ? int.parse(json['id'].toString()) : null,
       industry: json['industry'] as String?,
       logoUrl: json['logoUrl'] as String?,
       memberCount: json['memberCount'] as int?,
@@ -7657,23 +13732,23 @@ class IdentityServiceV1Tenant {
       type: json['type'] != null ? IdentityServiceV1Tenant$Type.fromString(json['type'] as String) : null,
       unsubscribeAt: json['unsubscribeAt'] as String?,
       updatedAt: json['updatedAt'] as String?,
-      updatedBy: json['updatedBy'] as int?,
+      updatedBy: json['updatedBy'] != null ? int.parse(json['updatedBy'].toString()) : null,
     );
   }
 
   Map<String, dynamic> toJson() {
     final json = <String, dynamic>{};
-    if (adminUserId != null) json['adminUserId'] = adminUserId;
+    if (adminUserId != null) json['adminUserId'] = adminUserId.toString();
     if (adminUserName != null) json['adminUserName'] = adminUserName;
     if (auditStatus != null) json['auditStatus'] = auditStatus!.value;
     if (code != null) json['code'] = code;
     if (createdAt != null) json['createdAt'] = createdAt;
-    if (createdBy != null) json['createdBy'] = createdBy;
+    if (createdBy != null) json['createdBy'] = createdBy.toString();
     if (deletedAt != null) json['deletedAt'] = deletedAt;
-    if (deletedBy != null) json['deletedBy'] = deletedBy;
+    if (deletedBy != null) json['deletedBy'] = deletedBy.toString();
     if (domain != null) json['domain'] = domain;
     if (expiredAt != null) json['expiredAt'] = expiredAt;
-    if (id != null) json['id'] = id;
+    if (id != null) json['id'] = id.toString();
     if (industry != null) json['industry'] = industry;
     if (logoUrl != null) json['logoUrl'] = logoUrl;
     if (memberCount != null) json['memberCount'] = memberCount;
@@ -7685,7 +13760,7 @@ class IdentityServiceV1Tenant {
     if (type != null) json['type'] = type!.value;
     if (unsubscribeAt != null) json['unsubscribeAt'] = unsubscribeAt;
     if (updatedAt != null) json['updatedAt'] = updatedAt;
-    if (updatedBy != null) json['updatedBy'] = updatedBy;
+    if (updatedBy != null) json['updatedBy'] = updatedBy.toString();
     return json;
   }
 
@@ -7802,54 +13877,323 @@ class IdentityServiceV1Tenant {
       updatedBy: updatedBy ?? this.updatedBy,
     );
   }
+
+  /// 二进制 proto 编码（MQTT 等二进制传输用；字段按编号升序写出）
+  Uint8List writeToBuffer() {
+    final w = ProtoWireWriter();
+    _writeTo(w);
+    return w.toBuffer();
+  }
+
+  void _writeTo(ProtoWireWriter w) {
+    // field 1: id
+    final f1 = id;
+    if (f1 != null) {
+      w.writeInt64(1, f1);
+    }
+    // field 2: name
+    final f2 = name;
+    if (f2 != null) {
+      w.writeString(2, f2);
+    }
+    // field 3: code
+    final f3 = code;
+    if (f3 != null) {
+      w.writeString(3, f3);
+    }
+    // field 4: domain
+    final f4 = domain;
+    if (f4 != null) {
+      w.writeString(4, f4);
+    }
+    // field 5: logoUrl
+    final f5 = logoUrl;
+    if (f5 != null) {
+      w.writeString(5, f5);
+    }
+    // field 6: industry
+    final f6 = industry;
+    if (f6 != null) {
+      w.writeString(6, f6);
+    }
+    // field 7: type
+    final f7 = type;
+    if (f7 != null) {
+      w.writeEnum(7, f7.wire); // IdentityServiceV1Tenant$Type
+    }
+    // field 8: remark
+    final f8 = remark;
+    if (f8 != null) {
+      w.writeString(8, f8);
+    }
+    // field 10: adminUserId
+    final f10 = adminUserId;
+    if (f10 != null) {
+      w.writeInt64(10, f10);
+    }
+    // field 11: adminUserName
+    final f11 = adminUserName;
+    if (f11 != null) {
+      w.writeString(11, f11);
+    }
+    // field 20: subscriptionAt
+    final f20 = subscriptionAt;
+    if (f20 != null) {
+      w.writeTimestamp(20, f20);
+    }
+    // field 21: unsubscribeAt
+    final f21 = unsubscribeAt;
+    if (f21 != null) {
+      w.writeTimestamp(21, f21);
+    }
+    // field 22: expiredAt
+    final f22 = expiredAt;
+    if (f22 != null) {
+      w.writeTimestamp(22, f22);
+    }
+    // field 23: subscriptionPlan
+    final f23 = subscriptionPlan;
+    if (f23 != null) {
+      w.writeString(23, f23);
+    }
+    // field 30: memberCount
+    final f30 = memberCount;
+    if (f30 != null) {
+      w.writeInt32(30, f30);
+    }
+    // field 31: status
+    final f31 = status;
+    if (f31 != null) {
+      w.writeEnum(31, f31.wire); // IdentityServiceV1Tenant$Status
+    }
+    // field 32: auditStatus
+    final f32 = auditStatus;
+    if (f32 != null) {
+      w.writeEnum(32, f32.wire); // IdentityServiceV1Tenant$AuditStatus
+    }
+    // field 100: createdBy
+    final f100 = createdBy;
+    if (f100 != null) {
+      w.writeInt64(100, f100);
+    }
+    // field 101: updatedBy
+    final f101 = updatedBy;
+    if (f101 != null) {
+      w.writeInt64(101, f101);
+    }
+    // field 102: deletedBy
+    final f102 = deletedBy;
+    if (f102 != null) {
+      w.writeInt64(102, f102);
+    }
+    // field 200: createdAt
+    final f200 = createdAt;
+    if (f200 != null) {
+      w.writeTimestamp(200, f200);
+    }
+    // field 201: updatedAt
+    final f201 = updatedAt;
+    if (f201 != null) {
+      w.writeTimestamp(201, f201);
+    }
+    // field 202: deletedAt
+    final f202 = deletedAt;
+    if (f202 != null) {
+      w.writeTimestamp(202, f202);
+    }
+  }
+
+  factory IdentityServiceV1Tenant.fromBuffer(List<int> bytes) {
+    return IdentityServiceV1Tenant._readFrom(ProtoWireReader(bytes));
+  }
+
+  static IdentityServiceV1Tenant _readFrom(ProtoWireReader r) {
+    final m = IdentityServiceV1Tenant();
+    while (r.next()) {
+      switch (r.fieldNumber) {
+        // field 1: id
+        case 1: {
+          m.id = r.readInt64();
+          break;
+        }
+        // field 2: name
+        case 2: {
+          m.name = r.readString();
+          break;
+        }
+        // field 3: code
+        case 3: {
+          m.code = r.readString();
+          break;
+        }
+        // field 4: domain
+        case 4: {
+          m.domain = r.readString();
+          break;
+        }
+        // field 5: logoUrl
+        case 5: {
+          m.logoUrl = r.readString();
+          break;
+        }
+        // field 6: industry
+        case 6: {
+          m.industry = r.readString();
+          break;
+        }
+        // field 7: type
+        case 7: {
+          m.type = IdentityServiceV1Tenant$Type.fromWire(r.readEnum());
+          break;
+        }
+        // field 8: remark
+        case 8: {
+          m.remark = r.readString();
+          break;
+        }
+        // field 10: adminUserId
+        case 10: {
+          m.adminUserId = r.readInt64();
+          break;
+        }
+        // field 11: adminUserName
+        case 11: {
+          m.adminUserName = r.readString();
+          break;
+        }
+        // field 20: subscriptionAt
+        case 20: {
+          m.subscriptionAt = r.readTimestampIso();
+          break;
+        }
+        // field 21: unsubscribeAt
+        case 21: {
+          m.unsubscribeAt = r.readTimestampIso();
+          break;
+        }
+        // field 22: expiredAt
+        case 22: {
+          m.expiredAt = r.readTimestampIso();
+          break;
+        }
+        // field 23: subscriptionPlan
+        case 23: {
+          m.subscriptionPlan = r.readString();
+          break;
+        }
+        // field 30: memberCount
+        case 30: {
+          m.memberCount = r.readInt32();
+          break;
+        }
+        // field 31: status
+        case 31: {
+          m.status = IdentityServiceV1Tenant$Status.fromWire(r.readEnum());
+          break;
+        }
+        // field 32: auditStatus
+        case 32: {
+          m.auditStatus = IdentityServiceV1Tenant$AuditStatus.fromWire(r.readEnum());
+          break;
+        }
+        // field 100: createdBy
+        case 100: {
+          m.createdBy = r.readInt64();
+          break;
+        }
+        // field 101: updatedBy
+        case 101: {
+          m.updatedBy = r.readInt64();
+          break;
+        }
+        // field 102: deletedBy
+        case 102: {
+          m.deletedBy = r.readInt64();
+          break;
+        }
+        // field 200: createdAt
+        case 200: {
+          m.createdAt = r.readTimestampIso();
+          break;
+        }
+        // field 201: updatedAt
+        case 201: {
+          m.updatedAt = r.readTimestampIso();
+          break;
+        }
+        // field 202: deletedAt
+        case 202: {
+          m.deletedAt = r.readTimestampIso();
+          break;
+        }
+        default: {
+          r.skip();
+        }
+      }
+    }
+    return m;
+  }
+
 }
 
 /// 租户类型
 enum IdentityServiceV1Tenant$Type {
-  custom('CUSTOM'),
-  internal('INTERNAL'),
-  paid('PAID'),
-  partner('PARTNER'),
-  tenantTypeUnspecified('TENANT_TYPE_UNSPECIFIED'),
-  trial('TRIAL');
+  custom('CUSTOM', 5),
+  internal('INTERNAL', 3),
+  paid('PAID', 2),
+  partner('PARTNER', 4),
+  tenantTypeUnspecified('TENANT_TYPE_UNSPECIFIED', 0),
+  trial('TRIAL', 1);
 
   final String value;
-  const IdentityServiceV1Tenant$Type(this.value);
+  /// proto 枚举数值（二进制 wire 编解码用，与 JSON 的 value 字符串互补）
+  final int wire;
+  const IdentityServiceV1Tenant$Type(this.value, this.wire);
 
   static IdentityServiceV1Tenant$Type fromString(String v) =>
     values.firstWhere((e) => e.value == v, orElse: () => throw ArgumentError('Unknown IdentityServiceV1Tenant\$Type value: ' + v));
+  static IdentityServiceV1Tenant$Type fromWire(int v) =>
+    values.firstWhere((e) => e.wire == v, orElse: () => throw ArgumentError('Unknown IdentityServiceV1Tenant\$Type wire value: ' + v.toString()));
   @override
   String toString() => value;
 }
 
 /// 租户状态
 enum IdentityServiceV1Tenant$Status {
-  expired('EXPIRED'),
-  freeze('FREEZE'),
-  off('OFF'),
-  on('ON');
+  expired('EXPIRED', 2),
+  freeze('FREEZE', 3),
+  off('OFF', 0),
+  on('ON', 1);
 
   final String value;
-  const IdentityServiceV1Tenant$Status(this.value);
+  /// proto 枚举数值（二进制 wire 编解码用，与 JSON 的 value 字符串互补）
+  final int wire;
+  const IdentityServiceV1Tenant$Status(this.value, this.wire);
 
   static IdentityServiceV1Tenant$Status fromString(String v) =>
     values.firstWhere((e) => e.value == v, orElse: () => throw ArgumentError('Unknown IdentityServiceV1Tenant\$Status value: ' + v));
+  static IdentityServiceV1Tenant$Status fromWire(int v) =>
+    values.firstWhere((e) => e.wire == v, orElse: () => throw ArgumentError('Unknown IdentityServiceV1Tenant\$Status wire value: ' + v.toString()));
   @override
   String toString() => value;
 }
 
 /// 租户审核状态
 enum IdentityServiceV1Tenant$AuditStatus {
-  approved('APPROVED'),
-  pending('PENDING'),
-  rejected('REJECTED'),
-  tenantAuditStatusUnspecified('TENANT_AUDIT_STATUS_UNSPECIFIED');
+  approved('APPROVED', 2),
+  pending('PENDING', 1),
+  rejected('REJECTED', 3),
+  tenantAuditStatusUnspecified('TENANT_AUDIT_STATUS_UNSPECIFIED', 0);
 
   final String value;
-  const IdentityServiceV1Tenant$AuditStatus(this.value);
+  /// proto 枚举数值（二进制 wire 编解码用，与 JSON 的 value 字符串互补）
+  final int wire;
+  const IdentityServiceV1Tenant$AuditStatus(this.value, this.wire);
 
   static IdentityServiceV1Tenant$AuditStatus fromString(String v) =>
     values.firstWhere((e) => e.value == v, orElse: () => throw ArgumentError('Unknown IdentityServiceV1Tenant\$AuditStatus value: ' + v));
+  static IdentityServiceV1Tenant$AuditStatus fromWire(int v) =>
+    values.firstWhere((e) => e.wire == v, orElse: () => throw ArgumentError('Unknown IdentityServiceV1Tenant\$AuditStatus wire value: ' + v.toString()));
   @override
   String toString() => value;
 }
@@ -7864,13 +14208,13 @@ class SetDefaultBookRequest {
 
   factory SetDefaultBookRequest.fromJson(Map<String, dynamic> json) {
     return SetDefaultBookRequest(
-      bookId: json['bookId'] as int?,
+      bookId: json['bookId'] != null ? int.parse(json['bookId'].toString()) : null,
     );
   }
 
   Map<String, dynamic> toJson() {
     final json = <String, dynamic>{};
-    if (bookId != null) json['bookId'] = bookId;
+    if (bookId != null) json['bookId'] = bookId.toString();
     return json;
   }
 
@@ -7899,6 +14243,43 @@ class SetDefaultBookRequest {
       bookId: bookId ?? this.bookId,
     );
   }
+
+  /// 二进制 proto 编码（MQTT 等二进制传输用；字段按编号升序写出）
+  Uint8List writeToBuffer() {
+    final w = ProtoWireWriter();
+    _writeTo(w);
+    return w.toBuffer();
+  }
+
+  void _writeTo(ProtoWireWriter w) {
+    // field 1: bookId
+    final f1 = bookId;
+    if (f1 != null) {
+      w.writeInt64(1, f1);
+    }
+  }
+
+  factory SetDefaultBookRequest.fromBuffer(List<int> bytes) {
+    return SetDefaultBookRequest._readFrom(ProtoWireReader(bytes));
+  }
+
+  static SetDefaultBookRequest _readFrom(ProtoWireReader r) {
+    final m = SetDefaultBookRequest();
+    while (r.next()) {
+      switch (r.fieldNumber) {
+        // field 1: bookId
+        case 1: {
+          m.bookId = r.readInt64();
+          break;
+        }
+        default: {
+          r.skip();
+        }
+      }
+    }
+    return m;
+  }
+
 }
 
 /// 设置默认租户请求
@@ -7911,13 +14292,13 @@ class SetDefaultTenantRequest {
 
   factory SetDefaultTenantRequest.fromJson(Map<String, dynamic> json) {
     return SetDefaultTenantRequest(
-      tenantId: json['tenantId'] as int?,
+      tenantId: json['tenantId'] != null ? int.parse(json['tenantId'].toString()) : null,
     );
   }
 
   Map<String, dynamic> toJson() {
     final json = <String, dynamic>{};
-    if (tenantId != null) json['tenantId'] = tenantId;
+    if (tenantId != null) json['tenantId'] = tenantId.toString();
     return json;
   }
 
@@ -7946,6 +14327,43 @@ class SetDefaultTenantRequest {
       tenantId: tenantId ?? this.tenantId,
     );
   }
+
+  /// 二进制 proto 编码（MQTT 等二进制传输用；字段按编号升序写出）
+  Uint8List writeToBuffer() {
+    final w = ProtoWireWriter();
+    _writeTo(w);
+    return w.toBuffer();
+  }
+
+  void _writeTo(ProtoWireWriter w) {
+    // field 1: tenantId
+    final f1 = tenantId;
+    if (f1 != null) {
+      w.writeInt64(1, f1);
+    }
+  }
+
+  factory SetDefaultTenantRequest.fromBuffer(List<int> bytes) {
+    return SetDefaultTenantRequest._readFrom(ProtoWireReader(bytes));
+  }
+
+  static SetDefaultTenantRequest _readFrom(ProtoWireReader r) {
+    final m = SetDefaultTenantRequest();
+    while (r.next()) {
+      switch (r.fieldNumber) {
+        // field 1: tenantId
+        case 1: {
+          m.tenantId = r.readInt64();
+          break;
+        }
+        default: {
+          r.skip();
+        }
+      }
+    }
+    return m;
+  }
+
 }
 
 /// 记账认证服务（App BFF）— 扩展注册/初始化/切换
@@ -7981,7 +14399,9 @@ class LedgerAuthServiceClient {
       throw ArgumentError('missing required field request.book_id');
     }
     final path = '/app/v1/auth/set-default-book/${request.bookId}';
-    final body = jsonEncode(request.toJson());
+    final bodyMap = request.toJson();
+    bodyMap.remove('bookId');
+    final body = jsonEncode(bodyMap);
     final result = await _transport.unary(path, 'PATCH', body, TransportMeta(
       service: 'LedgerAuthService',
       method: 'SetDefaultBook',
@@ -7995,7 +14415,9 @@ class LedgerAuthServiceClient {
       throw ArgumentError('missing required field request.tenant_id');
     }
     final path = '/app/v1/auth/set-default-tenant/${request.tenantId}';
-    final body = jsonEncode(request.toJson());
+    final bodyMap = request.toJson();
+    bodyMap.remove('tenantId');
+    final body = jsonEncode(bodyMap);
     final result = await _transport.unary(path, 'PATCH', body, TransportMeta(
       service: 'LedgerAuthService',
       method: 'SetDefaultTenant',
@@ -8111,7 +14533,9 @@ class LedgerCategoryServiceClient {
       throw ArgumentError('missing required field request.id');
     }
     final path = '/app/v1/ledger-categories/${request.id}';
-    final body = jsonEncode(request.toJson());
+    final bodyMap = request.toJson();
+    bodyMap.remove('id');
+    final body = jsonEncode(bodyMap);
     final result = await _transport.unary(path, 'PUT', body, TransportMeta(
       service: 'LedgerCategoryService',
       method: 'Update',
@@ -8136,7 +14560,9 @@ class LedgerCategoryServiceClient {
       throw ArgumentError('missing required field request.id');
     }
     final path = '/app/v1/ledger-categories/${request.id}/toggle';
-    final body = jsonEncode(request.toJson());
+    final bodyMap = request.toJson();
+    bodyMap.remove('id');
+    final body = jsonEncode(bodyMap);
     final result = await _transport.unary(path, 'PATCH', body, TransportMeta(
       service: 'LedgerCategoryService',
       method: 'Toggle',
@@ -8198,6 +14624,53 @@ class LedgerServiceV1ListCategoryResponse {
       total: total ?? this.total,
     );
   }
+
+  /// 二进制 proto 编码（MQTT 等二进制传输用；字段按编号升序写出）
+  Uint8List writeToBuffer() {
+    final w = ProtoWireWriter();
+    _writeTo(w);
+    return w.toBuffer();
+  }
+
+  void _writeTo(ProtoWireWriter w) {
+    // field 1: items
+    final f1 = items;
+    if (f1 != null) {
+      for (final e in f1) { final cw = ProtoWireWriter(); e._writeTo(cw); w.writeRaw(1, cw.toBuffer()); }
+    }
+    // field 2: total
+    final f2 = total;
+    if (f2 != null) {
+      w.writeInt64(2, f2);
+    }
+  }
+
+  factory LedgerServiceV1ListCategoryResponse.fromBuffer(List<int> bytes) {
+    return LedgerServiceV1ListCategoryResponse._readFrom(ProtoWireReader(bytes));
+  }
+
+  static LedgerServiceV1ListCategoryResponse _readFrom(ProtoWireReader r) {
+    final m = LedgerServiceV1ListCategoryResponse();
+    while (r.next()) {
+      switch (r.fieldNumber) {
+        // field 1: items
+        case 1: {
+          m.items = r.readNestedList().map(LedgerServiceV1Category._readFrom).toList();
+          break;
+        }
+        // field 2: total
+        case 2: {
+          m.total = r.readInt64();
+          break;
+        }
+        default: {
+          r.skip();
+        }
+      }
+    }
+    return m;
+  }
+
 }
 
 /// 分类
@@ -8245,47 +14718,47 @@ class LedgerServiceV1Category {
 
   factory LedgerServiceV1Category.fromJson(Map<String, dynamic> json) {
     return LedgerServiceV1Category(
-      bookId: json['bookId'] as int?,
+      bookId: json['bookId'] != null ? int.parse(json['bookId'].toString()) : null,
       children: (json['children'] as List<dynamic>?)?.map((e) => LedgerServiceV1Category.fromJson(e as Map<String, dynamic>)).toList(),
       createdAt: json['createdAt'] as String?,
-      createdBy: json['createdBy'] as int?,
+      createdBy: json['createdBy'] != null ? int.parse(json['createdBy'].toString()) : null,
       deletedAt: json['deletedAt'] as String?,
-      deletedBy: json['deletedBy'] as int?,
+      deletedBy: json['deletedBy'] != null ? int.parse(json['deletedBy'].toString()) : null,
       depth: json['depth'] as int?,
       enable: json['enable'] as bool?,
-      id: json['id'] as int?,
+      id: json['id'] != null ? int.parse(json['id'].toString()) : null,
       name: json['name'] as String?,
       notes: json['notes'] as String?,
-      parentId: json['parentId'] as int?,
+      parentId: json['parentId'] != null ? int.parse(json['parentId'].toString()) : null,
       path: json['path'] as String?,
       sortOrder: json['sortOrder'] as int?,
-      tenantId: json['tenantId'] as int?,
+      tenantId: json['tenantId'] != null ? int.parse(json['tenantId'].toString()) : null,
       type: json['type'] != null ? LedgerServiceV1CategoryType.fromString(json['type'] as String) : null,
       updatedAt: json['updatedAt'] as String?,
-      updatedBy: json['updatedBy'] as int?,
+      updatedBy: json['updatedBy'] != null ? int.parse(json['updatedBy'].toString()) : null,
     );
   }
 
   Map<String, dynamic> toJson() {
     final json = <String, dynamic>{};
-    if (bookId != null) json['bookId'] = bookId;
+    if (bookId != null) json['bookId'] = bookId.toString();
     if (children != null) json['children'] = children!.map((e) => e.toJson()).toList();
     if (createdAt != null) json['createdAt'] = createdAt;
-    if (createdBy != null) json['createdBy'] = createdBy;
+    if (createdBy != null) json['createdBy'] = createdBy.toString();
     if (deletedAt != null) json['deletedAt'] = deletedAt;
-    if (deletedBy != null) json['deletedBy'] = deletedBy;
+    if (deletedBy != null) json['deletedBy'] = deletedBy.toString();
     if (depth != null) json['depth'] = depth;
     if (enable != null) json['enable'] = enable;
-    if (id != null) json['id'] = id;
+    if (id != null) json['id'] = id.toString();
     if (name != null) json['name'] = name;
     if (notes != null) json['notes'] = notes;
-    if (parentId != null) json['parentId'] = parentId;
+    if (parentId != null) json['parentId'] = parentId.toString();
     if (path != null) json['path'] = path;
     if (sortOrder != null) json['sortOrder'] = sortOrder;
-    if (tenantId != null) json['tenantId'] = tenantId;
+    if (tenantId != null) json['tenantId'] = tenantId.toString();
     if (type != null) json['type'] = type!.value;
     if (updatedAt != null) json['updatedAt'] = updatedAt;
-    if (updatedBy != null) json['updatedBy'] = updatedBy;
+    if (updatedBy != null) json['updatedBy'] = updatedBy.toString();
     return json;
   }
 
@@ -8382,19 +14855,230 @@ class LedgerServiceV1Category {
       updatedBy: updatedBy ?? this.updatedBy,
     );
   }
+
+  /// 二进制 proto 编码（MQTT 等二进制传输用；字段按编号升序写出）
+  Uint8List writeToBuffer() {
+    final w = ProtoWireWriter();
+    _writeTo(w);
+    return w.toBuffer();
+  }
+
+  void _writeTo(ProtoWireWriter w) {
+    // field 1: id
+    final f1 = id;
+    if (f1 != null) {
+      w.writeInt64(1, f1);
+    }
+    // field 2: tenantId
+    final f2 = tenantId;
+    if (f2 != null) {
+      w.writeInt64(2, f2);
+    }
+    // field 3: bookId
+    final f3 = bookId;
+    if (f3 != null) {
+      w.writeInt64(3, f3);
+    }
+    // field 10: name
+    final f10 = name;
+    if (f10 != null) {
+      w.writeString(10, f10);
+    }
+    // field 11: type
+    final f11 = type;
+    if (f11 != null) {
+      w.writeEnum(11, f11.wire); // LedgerServiceV1CategoryType
+    }
+    // field 12: notes
+    final f12 = notes;
+    if (f12 != null) {
+      w.writeString(12, f12);
+    }
+    // field 13: enable
+    final f13 = enable;
+    if (f13 != null) {
+      w.writeBool(13, f13);
+    }
+    // field 14: sortOrder
+    final f14 = sortOrder;
+    if (f14 != null) {
+      w.writeInt32(14, f14);
+    }
+    // field 60: parentId
+    final f60 = parentId;
+    if (f60 != null) {
+      w.writeInt64(60, f60);
+    }
+    // field 61: children
+    final f61 = children;
+    if (f61 != null) {
+      for (final e in f61) { final cw = ProtoWireWriter(); e._writeTo(cw); w.writeRaw(61, cw.toBuffer()); }
+    }
+    // field 62: depth
+    final f62 = depth;
+    if (f62 != null) {
+      w.writeInt32(62, f62);
+    }
+    // field 63: path
+    final f63 = path;
+    if (f63 != null) {
+      w.writeString(63, f63);
+    }
+    // field 100: createdBy
+    final f100 = createdBy;
+    if (f100 != null) {
+      w.writeInt64(100, f100);
+    }
+    // field 101: updatedBy
+    final f101 = updatedBy;
+    if (f101 != null) {
+      w.writeInt64(101, f101);
+    }
+    // field 102: deletedBy
+    final f102 = deletedBy;
+    if (f102 != null) {
+      w.writeInt64(102, f102);
+    }
+    // field 200: createdAt
+    final f200 = createdAt;
+    if (f200 != null) {
+      w.writeTimestamp(200, f200);
+    }
+    // field 201: updatedAt
+    final f201 = updatedAt;
+    if (f201 != null) {
+      w.writeTimestamp(201, f201);
+    }
+    // field 202: deletedAt
+    final f202 = deletedAt;
+    if (f202 != null) {
+      w.writeTimestamp(202, f202);
+    }
+  }
+
+  factory LedgerServiceV1Category.fromBuffer(List<int> bytes) {
+    return LedgerServiceV1Category._readFrom(ProtoWireReader(bytes));
+  }
+
+  static LedgerServiceV1Category _readFrom(ProtoWireReader r) {
+    final m = LedgerServiceV1Category();
+    while (r.next()) {
+      switch (r.fieldNumber) {
+        // field 1: id
+        case 1: {
+          m.id = r.readInt64();
+          break;
+        }
+        // field 2: tenantId
+        case 2: {
+          m.tenantId = r.readInt64();
+          break;
+        }
+        // field 3: bookId
+        case 3: {
+          m.bookId = r.readInt64();
+          break;
+        }
+        // field 10: name
+        case 10: {
+          m.name = r.readString();
+          break;
+        }
+        // field 11: type
+        case 11: {
+          m.type = LedgerServiceV1CategoryType.fromWire(r.readEnum());
+          break;
+        }
+        // field 12: notes
+        case 12: {
+          m.notes = r.readString();
+          break;
+        }
+        // field 13: enable
+        case 13: {
+          m.enable = r.readBool();
+          break;
+        }
+        // field 14: sortOrder
+        case 14: {
+          m.sortOrder = r.readInt32();
+          break;
+        }
+        // field 60: parentId
+        case 60: {
+          m.parentId = r.readInt64();
+          break;
+        }
+        // field 61: children
+        case 61: {
+          m.children = r.readNestedList().map(LedgerServiceV1Category._readFrom).toList();
+          break;
+        }
+        // field 62: depth
+        case 62: {
+          m.depth = r.readInt32();
+          break;
+        }
+        // field 63: path
+        case 63: {
+          m.path = r.readString();
+          break;
+        }
+        // field 100: createdBy
+        case 100: {
+          m.createdBy = r.readInt64();
+          break;
+        }
+        // field 101: updatedBy
+        case 101: {
+          m.updatedBy = r.readInt64();
+          break;
+        }
+        // field 102: deletedBy
+        case 102: {
+          m.deletedBy = r.readInt64();
+          break;
+        }
+        // field 200: createdAt
+        case 200: {
+          m.createdAt = r.readTimestampIso();
+          break;
+        }
+        // field 201: updatedAt
+        case 201: {
+          m.updatedAt = r.readTimestampIso();
+          break;
+        }
+        // field 202: deletedAt
+        case 202: {
+          m.deletedAt = r.readTimestampIso();
+          break;
+        }
+        default: {
+          r.skip();
+        }
+      }
+    }
+    return m;
+  }
+
 }
 
 /// 分类类型 — 对应 Java CategoryType
 enum LedgerServiceV1CategoryType {
-  categoryTypeExpense('CATEGORY_TYPE_EXPENSE'),
-  categoryTypeIncome('CATEGORY_TYPE_INCOME'),
-  categoryTypeUnspecified('CATEGORY_TYPE_UNSPECIFIED');
+  categoryTypeExpense('CATEGORY_TYPE_EXPENSE', 100),
+  categoryTypeIncome('CATEGORY_TYPE_INCOME', 200),
+  categoryTypeUnspecified('CATEGORY_TYPE_UNSPECIFIED', 0);
 
   final String value;
-  const LedgerServiceV1CategoryType(this.value);
+  /// proto 枚举数值（二进制 wire 编解码用，与 JSON 的 value 字符串互补）
+  final int wire;
+  const LedgerServiceV1CategoryType(this.value, this.wire);
 
   static LedgerServiceV1CategoryType fromString(String v) =>
     values.firstWhere((e) => e.value == v, orElse: () => throw ArgumentError('Unknown LedgerServiceV1CategoryType value: ' + v));
+  static LedgerServiceV1CategoryType fromWire(int v) =>
+    values.firstWhere((e) => e.wire == v, orElse: () => throw ArgumentError('Unknown LedgerServiceV1CategoryType wire value: ' + v.toString()));
   @override
   String toString() => value;
 }
@@ -8411,14 +15095,14 @@ class LedgerServiceV1ListAllCategoryRequest {
 
   factory LedgerServiceV1ListAllCategoryRequest.fromJson(Map<String, dynamic> json) {
     return LedgerServiceV1ListAllCategoryRequest(
-      bookId: json['bookId'] as int?,
+      bookId: json['bookId'] != null ? int.parse(json['bookId'].toString()) : null,
       type: json['type'] != null ? LedgerServiceV1CategoryType.fromString(json['type'] as String) : null,
     );
   }
 
   Map<String, dynamic> toJson() {
     final json = <String, dynamic>{};
-    if (bookId != null) json['bookId'] = bookId;
+    if (bookId != null) json['bookId'] = bookId.toString();
     if (type != null) json['type'] = type!.value;
     return json;
   }
@@ -8452,6 +15136,53 @@ class LedgerServiceV1ListAllCategoryRequest {
       type: type ?? this.type,
     );
   }
+
+  /// 二进制 proto 编码（MQTT 等二进制传输用；字段按编号升序写出）
+  Uint8List writeToBuffer() {
+    final w = ProtoWireWriter();
+    _writeTo(w);
+    return w.toBuffer();
+  }
+
+  void _writeTo(ProtoWireWriter w) {
+    // field 1: bookId
+    final f1 = bookId;
+    if (f1 != null) {
+      w.writeInt64(1, f1);
+    }
+    // field 2: type
+    final f2 = type;
+    if (f2 != null) {
+      w.writeEnum(2, f2.wire); // LedgerServiceV1CategoryType
+    }
+  }
+
+  factory LedgerServiceV1ListAllCategoryRequest.fromBuffer(List<int> bytes) {
+    return LedgerServiceV1ListAllCategoryRequest._readFrom(ProtoWireReader(bytes));
+  }
+
+  static LedgerServiceV1ListAllCategoryRequest _readFrom(ProtoWireReader r) {
+    final m = LedgerServiceV1ListAllCategoryRequest();
+    while (r.next()) {
+      switch (r.fieldNumber) {
+        // field 1: bookId
+        case 1: {
+          m.bookId = r.readInt64();
+          break;
+        }
+        // field 2: type
+        case 2: {
+          m.type = LedgerServiceV1CategoryType.fromWire(r.readEnum());
+          break;
+        }
+        default: {
+          r.skip();
+        }
+      }
+    }
+    return m;
+  }
+
 }
 
 /// 请求 - 分类数据
@@ -8466,14 +15197,14 @@ class LedgerServiceV1GetCategoryRequest {
 
   factory LedgerServiceV1GetCategoryRequest.fromJson(Map<String, dynamic> json) {
     return LedgerServiceV1GetCategoryRequest(
-      id: json['id'] as int?,
+      id: json['id'] != null ? int.parse(json['id'].toString()) : null,
       viewMask: json['viewMask'] as String?,
     );
   }
 
   Map<String, dynamic> toJson() {
     final json = <String, dynamic>{};
-    if (id != null) json['id'] = id;
+    if (id != null) json['id'] = id.toString();
     if (viewMask != null) json['viewMask'] = viewMask;
     return json;
   }
@@ -8507,6 +15238,53 @@ class LedgerServiceV1GetCategoryRequest {
       viewMask: viewMask ?? this.viewMask,
     );
   }
+
+  /// 二进制 proto 编码（MQTT 等二进制传输用；字段按编号升序写出）
+  Uint8List writeToBuffer() {
+    final w = ProtoWireWriter();
+    _writeTo(w);
+    return w.toBuffer();
+  }
+
+  void _writeTo(ProtoWireWriter w) {
+    // field 1: id
+    final f1 = id;
+    if (f1 != null) {
+      w.writeInt64(1, f1);
+    }
+    // field 100: viewMask
+    final f100 = viewMask;
+    if (f100 != null) {
+      w.writeFieldMask(100, f100);
+    }
+  }
+
+  factory LedgerServiceV1GetCategoryRequest.fromBuffer(List<int> bytes) {
+    return LedgerServiceV1GetCategoryRequest._readFrom(ProtoWireReader(bytes));
+  }
+
+  static LedgerServiceV1GetCategoryRequest _readFrom(ProtoWireReader r) {
+    final m = LedgerServiceV1GetCategoryRequest();
+    while (r.next()) {
+      switch (r.fieldNumber) {
+        // field 1: id
+        case 1: {
+          m.id = r.readInt64();
+          break;
+        }
+        // field 100: viewMask
+        case 100: {
+          m.viewMask = r.readFieldMaskText();
+          break;
+        }
+        default: {
+          r.skip();
+        }
+      }
+    }
+    return m;
+  }
+
 }
 
 /// 请求 - 创建分类
@@ -8554,6 +15332,43 @@ class LedgerServiceV1CreateCategoryRequest {
       data: data ?? this.data,
     );
   }
+
+  /// 二进制 proto 编码（MQTT 等二进制传输用；字段按编号升序写出）
+  Uint8List writeToBuffer() {
+    final w = ProtoWireWriter();
+    _writeTo(w);
+    return w.toBuffer();
+  }
+
+  void _writeTo(ProtoWireWriter w) {
+    // field 1: data
+    final f1 = data;
+    if (f1 != null) {
+      final cw = ProtoWireWriter(); f1._writeTo(cw); w.writeRaw(1, cw.toBuffer()); // LedgerServiceV1Category
+    }
+  }
+
+  factory LedgerServiceV1CreateCategoryRequest.fromBuffer(List<int> bytes) {
+    return LedgerServiceV1CreateCategoryRequest._readFrom(ProtoWireReader(bytes));
+  }
+
+  static LedgerServiceV1CreateCategoryRequest _readFrom(ProtoWireReader r) {
+    final m = LedgerServiceV1CreateCategoryRequest();
+    while (r.next()) {
+      switch (r.fieldNumber) {
+        // field 1: data
+        case 1: {
+          m.data = LedgerServiceV1Category._readFrom(r.readNested());
+          break;
+        }
+        default: {
+          r.skip();
+        }
+      }
+    }
+    return m;
+  }
+
 }
 
 /// 请求 - 更新分类
@@ -8574,7 +15389,7 @@ class LedgerServiceV1UpdateCategoryRequest {
     return LedgerServiceV1UpdateCategoryRequest(
       allowMissing: json['allowMissing'] as bool?,
       data: json['data'] != null ? LedgerServiceV1Category.fromJson(json['data'] as Map<String, dynamic>) : null,
-      id: json['id'] as int?,
+      id: json['id'] != null ? int.parse(json['id'].toString()) : null,
       updateMask: json['updateMask'] as String?,
     );
   }
@@ -8583,7 +15398,7 @@ class LedgerServiceV1UpdateCategoryRequest {
     final json = <String, dynamic>{};
     if (allowMissing != null) json['allowMissing'] = allowMissing;
     if (data != null) json['data'] = data!.toJson();
-    if (id != null) json['id'] = id;
+    if (id != null) json['id'] = id.toString();
     if (updateMask != null) json['updateMask'] = updateMask;
     return json;
   }
@@ -8625,6 +15440,73 @@ class LedgerServiceV1UpdateCategoryRequest {
       updateMask: updateMask ?? this.updateMask,
     );
   }
+
+  /// 二进制 proto 编码（MQTT 等二进制传输用；字段按编号升序写出）
+  Uint8List writeToBuffer() {
+    final w = ProtoWireWriter();
+    _writeTo(w);
+    return w.toBuffer();
+  }
+
+  void _writeTo(ProtoWireWriter w) {
+    // field 1: id
+    final f1 = id;
+    if (f1 != null) {
+      w.writeInt64(1, f1);
+    }
+    // field 2: data
+    final f2 = data;
+    if (f2 != null) {
+      final cw = ProtoWireWriter(); f2._writeTo(cw); w.writeRaw(2, cw.toBuffer()); // LedgerServiceV1Category
+    }
+    // field 3: updateMask
+    final f3 = updateMask;
+    if (f3 != null) {
+      w.writeFieldMask(3, f3);
+    }
+    // field 4: allowMissing
+    final f4 = allowMissing;
+    if (f4 != null) {
+      w.writeBool(4, f4);
+    }
+  }
+
+  factory LedgerServiceV1UpdateCategoryRequest.fromBuffer(List<int> bytes) {
+    return LedgerServiceV1UpdateCategoryRequest._readFrom(ProtoWireReader(bytes));
+  }
+
+  static LedgerServiceV1UpdateCategoryRequest _readFrom(ProtoWireReader r) {
+    final m = LedgerServiceV1UpdateCategoryRequest();
+    while (r.next()) {
+      switch (r.fieldNumber) {
+        // field 1: id
+        case 1: {
+          m.id = r.readInt64();
+          break;
+        }
+        // field 2: data
+        case 2: {
+          m.data = LedgerServiceV1Category._readFrom(r.readNested());
+          break;
+        }
+        // field 3: updateMask
+        case 3: {
+          m.updateMask = r.readFieldMaskText();
+          break;
+        }
+        // field 4: allowMissing
+        case 4: {
+          m.allowMissing = r.readBool();
+          break;
+        }
+        default: {
+          r.skip();
+        }
+      }
+    }
+    return m;
+  }
+
 }
 
 /// 请求 - 删除分类
@@ -8637,13 +15519,13 @@ class LedgerServiceV1DeleteCategoryRequest {
 
   factory LedgerServiceV1DeleteCategoryRequest.fromJson(Map<String, dynamic> json) {
     return LedgerServiceV1DeleteCategoryRequest(
-      id: json['id'] as int?,
+      id: json['id'] != null ? int.parse(json['id'].toString()) : null,
     );
   }
 
   Map<String, dynamic> toJson() {
     final json = <String, dynamic>{};
-    if (id != null) json['id'] = id;
+    if (id != null) json['id'] = id.toString();
     return json;
   }
 
@@ -8672,6 +15554,43 @@ class LedgerServiceV1DeleteCategoryRequest {
       id: id ?? this.id,
     );
   }
+
+  /// 二进制 proto 编码（MQTT 等二进制传输用；字段按编号升序写出）
+  Uint8List writeToBuffer() {
+    final w = ProtoWireWriter();
+    _writeTo(w);
+    return w.toBuffer();
+  }
+
+  void _writeTo(ProtoWireWriter w) {
+    // field 1: id
+    final f1 = id;
+    if (f1 != null) {
+      w.writeInt64(1, f1);
+    }
+  }
+
+  factory LedgerServiceV1DeleteCategoryRequest.fromBuffer(List<int> bytes) {
+    return LedgerServiceV1DeleteCategoryRequest._readFrom(ProtoWireReader(bytes));
+  }
+
+  static LedgerServiceV1DeleteCategoryRequest _readFrom(ProtoWireReader r) {
+    final m = LedgerServiceV1DeleteCategoryRequest();
+    while (r.next()) {
+      switch (r.fieldNumber) {
+        // field 1: id
+        case 1: {
+          m.id = r.readInt64();
+          break;
+        }
+        default: {
+          r.skip();
+        }
+      }
+    }
+    return m;
+  }
+
 }
 
 /// 请求 - 切换启用/禁用
@@ -8684,13 +15603,13 @@ class LedgerServiceV1ToggleCategoryRequest {
 
   factory LedgerServiceV1ToggleCategoryRequest.fromJson(Map<String, dynamic> json) {
     return LedgerServiceV1ToggleCategoryRequest(
-      id: json['id'] as int?,
+      id: json['id'] != null ? int.parse(json['id'].toString()) : null,
     );
   }
 
   Map<String, dynamic> toJson() {
     final json = <String, dynamic>{};
-    if (id != null) json['id'] = id;
+    if (id != null) json['id'] = id.toString();
     return json;
   }
 
@@ -8719,6 +15638,43 @@ class LedgerServiceV1ToggleCategoryRequest {
       id: id ?? this.id,
     );
   }
+
+  /// 二进制 proto 编码（MQTT 等二进制传输用；字段按编号升序写出）
+  Uint8List writeToBuffer() {
+    final w = ProtoWireWriter();
+    _writeTo(w);
+    return w.toBuffer();
+  }
+
+  void _writeTo(ProtoWireWriter w) {
+    // field 1: id
+    final f1 = id;
+    if (f1 != null) {
+      w.writeInt64(1, f1);
+    }
+  }
+
+  factory LedgerServiceV1ToggleCategoryRequest.fromBuffer(List<int> bytes) {
+    return LedgerServiceV1ToggleCategoryRequest._readFrom(ProtoWireReader(bytes));
+  }
+
+  static LedgerServiceV1ToggleCategoryRequest _readFrom(ProtoWireReader r) {
+    final m = LedgerServiceV1ToggleCategoryRequest();
+    while (r.next()) {
+      switch (r.fieldNumber) {
+        // field 1: id
+        case 1: {
+          m.id = r.readInt64();
+          break;
+        }
+        default: {
+          r.skip();
+        }
+      }
+    }
+    return m;
+  }
+
 }
 
 class LedgerTagServiceClient {
@@ -8825,7 +15781,9 @@ class LedgerTagServiceClient {
       throw ArgumentError('missing required field request.id');
     }
     final path = '/app/v1/ledger-tags/${request.id}';
-    final body = jsonEncode(request.toJson());
+    final bodyMap = request.toJson();
+    bodyMap.remove('id');
+    final body = jsonEncode(bodyMap);
     final result = await _transport.unary(path, 'PUT', body, TransportMeta(
       service: 'LedgerTagService',
       method: 'Update',
@@ -8850,7 +15808,9 @@ class LedgerTagServiceClient {
       throw ArgumentError('missing required field request.id');
     }
     final path = '/app/v1/ledger-tags/${request.id}/toggle';
-    final body = jsonEncode(request.toJson());
+    final bodyMap = request.toJson();
+    bodyMap.remove('id');
+    final body = jsonEncode(bodyMap);
     final result = await _transport.unary(path, 'PATCH', body, TransportMeta(
       service: 'LedgerTagService',
       method: 'Toggle',
@@ -8911,6 +15871,53 @@ class LedgerServiceV1ListTagResponse {
       total: total ?? this.total,
     );
   }
+
+  /// 二进制 proto 编码（MQTT 等二进制传输用；字段按编号升序写出）
+  Uint8List writeToBuffer() {
+    final w = ProtoWireWriter();
+    _writeTo(w);
+    return w.toBuffer();
+  }
+
+  void _writeTo(ProtoWireWriter w) {
+    // field 1: items
+    final f1 = items;
+    if (f1 != null) {
+      for (final e in f1) { final cw = ProtoWireWriter(); e._writeTo(cw); w.writeRaw(1, cw.toBuffer()); }
+    }
+    // field 2: total
+    final f2 = total;
+    if (f2 != null) {
+      w.writeInt64(2, f2);
+    }
+  }
+
+  factory LedgerServiceV1ListTagResponse.fromBuffer(List<int> bytes) {
+    return LedgerServiceV1ListTagResponse._readFrom(ProtoWireReader(bytes));
+  }
+
+  static LedgerServiceV1ListTagResponse _readFrom(ProtoWireReader r) {
+    final m = LedgerServiceV1ListTagResponse();
+    while (r.next()) {
+      switch (r.fieldNumber) {
+        // field 1: items
+        case 1: {
+          m.items = r.readNestedList().map(LedgerServiceV1Tag._readFrom).toList();
+          break;
+        }
+        // field 2: total
+        case 2: {
+          m.total = r.readInt64();
+          break;
+        }
+        default: {
+          r.skip();
+        }
+      }
+    }
+    return m;
+  }
+
 }
 
 class LedgerServiceV1Tag {
@@ -8961,51 +15968,51 @@ class LedgerServiceV1Tag {
 
   factory LedgerServiceV1Tag.fromJson(Map<String, dynamic> json) {
     return LedgerServiceV1Tag(
-      bookId: json['bookId'] as int?,
+      bookId: json['bookId'] != null ? int.parse(json['bookId'].toString()) : null,
       canExpense: json['canExpense'] as bool?,
       canIncome: json['canIncome'] as bool?,
       canTransfer: json['canTransfer'] as bool?,
       children: (json['children'] as List<dynamic>?)?.map((e) => LedgerServiceV1Tag.fromJson(e as Map<String, dynamic>)).toList(),
       createdAt: json['createdAt'] as String?,
-      createdBy: json['createdBy'] as int?,
+      createdBy: json['createdBy'] != null ? int.parse(json['createdBy'].toString()) : null,
       deletedAt: json['deletedAt'] as String?,
-      deletedBy: json['deletedBy'] as int?,
+      deletedBy: json['deletedBy'] != null ? int.parse(json['deletedBy'].toString()) : null,
       depth: json['depth'] as int?,
       enable: json['enable'] as bool?,
-      id: json['id'] as int?,
+      id: json['id'] != null ? int.parse(json['id'].toString()) : null,
       name: json['name'] as String?,
       notes: json['notes'] as String?,
-      parentId: json['parentId'] as int?,
+      parentId: json['parentId'] != null ? int.parse(json['parentId'].toString()) : null,
       path: json['path'] as String?,
       sortOrder: json['sortOrder'] as int?,
-      tenantId: json['tenantId'] as int?,
+      tenantId: json['tenantId'] != null ? int.parse(json['tenantId'].toString()) : null,
       updatedAt: json['updatedAt'] as String?,
-      updatedBy: json['updatedBy'] as int?,
+      updatedBy: json['updatedBy'] != null ? int.parse(json['updatedBy'].toString()) : null,
     );
   }
 
   Map<String, dynamic> toJson() {
     final json = <String, dynamic>{};
-    if (bookId != null) json['bookId'] = bookId;
+    if (bookId != null) json['bookId'] = bookId.toString();
     if (canExpense != null) json['canExpense'] = canExpense;
     if (canIncome != null) json['canIncome'] = canIncome;
     if (canTransfer != null) json['canTransfer'] = canTransfer;
     if (children != null) json['children'] = children!.map((e) => e.toJson()).toList();
     if (createdAt != null) json['createdAt'] = createdAt;
-    if (createdBy != null) json['createdBy'] = createdBy;
+    if (createdBy != null) json['createdBy'] = createdBy.toString();
     if (deletedAt != null) json['deletedAt'] = deletedAt;
-    if (deletedBy != null) json['deletedBy'] = deletedBy;
+    if (deletedBy != null) json['deletedBy'] = deletedBy.toString();
     if (depth != null) json['depth'] = depth;
     if (enable != null) json['enable'] = enable;
-    if (id != null) json['id'] = id;
+    if (id != null) json['id'] = id.toString();
     if (name != null) json['name'] = name;
     if (notes != null) json['notes'] = notes;
-    if (parentId != null) json['parentId'] = parentId;
+    if (parentId != null) json['parentId'] = parentId.toString();
     if (path != null) json['path'] = path;
     if (sortOrder != null) json['sortOrder'] = sortOrder;
-    if (tenantId != null) json['tenantId'] = tenantId;
+    if (tenantId != null) json['tenantId'] = tenantId.toString();
     if (updatedAt != null) json['updatedAt'] = updatedAt;
-    if (updatedBy != null) json['updatedBy'] = updatedBy;
+    if (updatedBy != null) json['updatedBy'] = updatedBy.toString();
     return json;
   }
 
@@ -9110,6 +16117,233 @@ class LedgerServiceV1Tag {
       updatedBy: updatedBy ?? this.updatedBy,
     );
   }
+
+  /// 二进制 proto 编码（MQTT 等二进制传输用；字段按编号升序写出）
+  Uint8List writeToBuffer() {
+    final w = ProtoWireWriter();
+    _writeTo(w);
+    return w.toBuffer();
+  }
+
+  void _writeTo(ProtoWireWriter w) {
+    // field 1: id
+    final f1 = id;
+    if (f1 != null) {
+      w.writeInt64(1, f1);
+    }
+    // field 2: tenantId
+    final f2 = tenantId;
+    if (f2 != null) {
+      w.writeInt64(2, f2);
+    }
+    // field 3: bookId
+    final f3 = bookId;
+    if (f3 != null) {
+      w.writeInt64(3, f3);
+    }
+    // field 10: name
+    final f10 = name;
+    if (f10 != null) {
+      w.writeString(10, f10);
+    }
+    // field 11: notes
+    final f11 = notes;
+    if (f11 != null) {
+      w.writeString(11, f11);
+    }
+    // field 12: enable
+    final f12 = enable;
+    if (f12 != null) {
+      w.writeBool(12, f12);
+    }
+    // field 13: canExpense
+    final f13 = canExpense;
+    if (f13 != null) {
+      w.writeBool(13, f13);
+    }
+    // field 14: canIncome
+    final f14 = canIncome;
+    if (f14 != null) {
+      w.writeBool(14, f14);
+    }
+    // field 15: canTransfer
+    final f15 = canTransfer;
+    if (f15 != null) {
+      w.writeBool(15, f15);
+    }
+    // field 16: sortOrder
+    final f16 = sortOrder;
+    if (f16 != null) {
+      w.writeInt32(16, f16);
+    }
+    // field 60: parentId
+    final f60 = parentId;
+    if (f60 != null) {
+      w.writeInt64(60, f60);
+    }
+    // field 61: children
+    final f61 = children;
+    if (f61 != null) {
+      for (final e in f61) { final cw = ProtoWireWriter(); e._writeTo(cw); w.writeRaw(61, cw.toBuffer()); }
+    }
+    // field 62: depth
+    final f62 = depth;
+    if (f62 != null) {
+      w.writeInt32(62, f62);
+    }
+    // field 63: path
+    final f63 = path;
+    if (f63 != null) {
+      w.writeString(63, f63);
+    }
+    // field 100: createdBy
+    final f100 = createdBy;
+    if (f100 != null) {
+      w.writeInt64(100, f100);
+    }
+    // field 101: updatedBy
+    final f101 = updatedBy;
+    if (f101 != null) {
+      w.writeInt64(101, f101);
+    }
+    // field 102: deletedBy
+    final f102 = deletedBy;
+    if (f102 != null) {
+      w.writeInt64(102, f102);
+    }
+    // field 200: createdAt
+    final f200 = createdAt;
+    if (f200 != null) {
+      w.writeTimestamp(200, f200);
+    }
+    // field 201: updatedAt
+    final f201 = updatedAt;
+    if (f201 != null) {
+      w.writeTimestamp(201, f201);
+    }
+    // field 202: deletedAt
+    final f202 = deletedAt;
+    if (f202 != null) {
+      w.writeTimestamp(202, f202);
+    }
+  }
+
+  factory LedgerServiceV1Tag.fromBuffer(List<int> bytes) {
+    return LedgerServiceV1Tag._readFrom(ProtoWireReader(bytes));
+  }
+
+  static LedgerServiceV1Tag _readFrom(ProtoWireReader r) {
+    final m = LedgerServiceV1Tag();
+    while (r.next()) {
+      switch (r.fieldNumber) {
+        // field 1: id
+        case 1: {
+          m.id = r.readInt64();
+          break;
+        }
+        // field 2: tenantId
+        case 2: {
+          m.tenantId = r.readInt64();
+          break;
+        }
+        // field 3: bookId
+        case 3: {
+          m.bookId = r.readInt64();
+          break;
+        }
+        // field 10: name
+        case 10: {
+          m.name = r.readString();
+          break;
+        }
+        // field 11: notes
+        case 11: {
+          m.notes = r.readString();
+          break;
+        }
+        // field 12: enable
+        case 12: {
+          m.enable = r.readBool();
+          break;
+        }
+        // field 13: canExpense
+        case 13: {
+          m.canExpense = r.readBool();
+          break;
+        }
+        // field 14: canIncome
+        case 14: {
+          m.canIncome = r.readBool();
+          break;
+        }
+        // field 15: canTransfer
+        case 15: {
+          m.canTransfer = r.readBool();
+          break;
+        }
+        // field 16: sortOrder
+        case 16: {
+          m.sortOrder = r.readInt32();
+          break;
+        }
+        // field 60: parentId
+        case 60: {
+          m.parentId = r.readInt64();
+          break;
+        }
+        // field 61: children
+        case 61: {
+          m.children = r.readNestedList().map(LedgerServiceV1Tag._readFrom).toList();
+          break;
+        }
+        // field 62: depth
+        case 62: {
+          m.depth = r.readInt32();
+          break;
+        }
+        // field 63: path
+        case 63: {
+          m.path = r.readString();
+          break;
+        }
+        // field 100: createdBy
+        case 100: {
+          m.createdBy = r.readInt64();
+          break;
+        }
+        // field 101: updatedBy
+        case 101: {
+          m.updatedBy = r.readInt64();
+          break;
+        }
+        // field 102: deletedBy
+        case 102: {
+          m.deletedBy = r.readInt64();
+          break;
+        }
+        // field 200: createdAt
+        case 200: {
+          m.createdAt = r.readTimestampIso();
+          break;
+        }
+        // field 201: updatedAt
+        case 201: {
+          m.updatedAt = r.readTimestampIso();
+          break;
+        }
+        // field 202: deletedAt
+        case 202: {
+          m.deletedAt = r.readTimestampIso();
+          break;
+        }
+        default: {
+          r.skip();
+        }
+      }
+    }
+    return m;
+  }
+
 }
 
 class LedgerServiceV1ListAllTagRequest {
@@ -9121,13 +16355,13 @@ class LedgerServiceV1ListAllTagRequest {
 
   factory LedgerServiceV1ListAllTagRequest.fromJson(Map<String, dynamic> json) {
     return LedgerServiceV1ListAllTagRequest(
-      bookId: json['bookId'] as int?,
+      bookId: json['bookId'] != null ? int.parse(json['bookId'].toString()) : null,
     );
   }
 
   Map<String, dynamic> toJson() {
     final json = <String, dynamic>{};
-    if (bookId != null) json['bookId'] = bookId;
+    if (bookId != null) json['bookId'] = bookId.toString();
     return json;
   }
 
@@ -9156,6 +16390,43 @@ class LedgerServiceV1ListAllTagRequest {
       bookId: bookId ?? this.bookId,
     );
   }
+
+  /// 二进制 proto 编码（MQTT 等二进制传输用；字段按编号升序写出）
+  Uint8List writeToBuffer() {
+    final w = ProtoWireWriter();
+    _writeTo(w);
+    return w.toBuffer();
+  }
+
+  void _writeTo(ProtoWireWriter w) {
+    // field 1: bookId
+    final f1 = bookId;
+    if (f1 != null) {
+      w.writeInt64(1, f1);
+    }
+  }
+
+  factory LedgerServiceV1ListAllTagRequest.fromBuffer(List<int> bytes) {
+    return LedgerServiceV1ListAllTagRequest._readFrom(ProtoWireReader(bytes));
+  }
+
+  static LedgerServiceV1ListAllTagRequest _readFrom(ProtoWireReader r) {
+    final m = LedgerServiceV1ListAllTagRequest();
+    while (r.next()) {
+      switch (r.fieldNumber) {
+        // field 1: bookId
+        case 1: {
+          m.bookId = r.readInt64();
+          break;
+        }
+        default: {
+          r.skip();
+        }
+      }
+    }
+    return m;
+  }
+
 }
 
 class LedgerServiceV1GetTagRequest {
@@ -9169,14 +16440,14 @@ class LedgerServiceV1GetTagRequest {
 
   factory LedgerServiceV1GetTagRequest.fromJson(Map<String, dynamic> json) {
     return LedgerServiceV1GetTagRequest(
-      id: json['id'] as int?,
+      id: json['id'] != null ? int.parse(json['id'].toString()) : null,
       viewMask: json['viewMask'] as String?,
     );
   }
 
   Map<String, dynamic> toJson() {
     final json = <String, dynamic>{};
-    if (id != null) json['id'] = id;
+    if (id != null) json['id'] = id.toString();
     if (viewMask != null) json['viewMask'] = viewMask;
     return json;
   }
@@ -9210,6 +16481,53 @@ class LedgerServiceV1GetTagRequest {
       viewMask: viewMask ?? this.viewMask,
     );
   }
+
+  /// 二进制 proto 编码（MQTT 等二进制传输用；字段按编号升序写出）
+  Uint8List writeToBuffer() {
+    final w = ProtoWireWriter();
+    _writeTo(w);
+    return w.toBuffer();
+  }
+
+  void _writeTo(ProtoWireWriter w) {
+    // field 1: id
+    final f1 = id;
+    if (f1 != null) {
+      w.writeInt64(1, f1);
+    }
+    // field 100: viewMask
+    final f100 = viewMask;
+    if (f100 != null) {
+      w.writeFieldMask(100, f100);
+    }
+  }
+
+  factory LedgerServiceV1GetTagRequest.fromBuffer(List<int> bytes) {
+    return LedgerServiceV1GetTagRequest._readFrom(ProtoWireReader(bytes));
+  }
+
+  static LedgerServiceV1GetTagRequest _readFrom(ProtoWireReader r) {
+    final m = LedgerServiceV1GetTagRequest();
+    while (r.next()) {
+      switch (r.fieldNumber) {
+        // field 1: id
+        case 1: {
+          m.id = r.readInt64();
+          break;
+        }
+        // field 100: viewMask
+        case 100: {
+          m.viewMask = r.readFieldMaskText();
+          break;
+        }
+        default: {
+          r.skip();
+        }
+      }
+    }
+    return m;
+  }
+
 }
 
 class LedgerServiceV1CreateTagRequest {
@@ -9256,6 +16574,43 @@ class LedgerServiceV1CreateTagRequest {
       data: data ?? this.data,
     );
   }
+
+  /// 二进制 proto 编码（MQTT 等二进制传输用；字段按编号升序写出）
+  Uint8List writeToBuffer() {
+    final w = ProtoWireWriter();
+    _writeTo(w);
+    return w.toBuffer();
+  }
+
+  void _writeTo(ProtoWireWriter w) {
+    // field 1: data
+    final f1 = data;
+    if (f1 != null) {
+      final cw = ProtoWireWriter(); f1._writeTo(cw); w.writeRaw(1, cw.toBuffer()); // LedgerServiceV1Tag
+    }
+  }
+
+  factory LedgerServiceV1CreateTagRequest.fromBuffer(List<int> bytes) {
+    return LedgerServiceV1CreateTagRequest._readFrom(ProtoWireReader(bytes));
+  }
+
+  static LedgerServiceV1CreateTagRequest _readFrom(ProtoWireReader r) {
+    final m = LedgerServiceV1CreateTagRequest();
+    while (r.next()) {
+      switch (r.fieldNumber) {
+        // field 1: data
+        case 1: {
+          m.data = LedgerServiceV1Tag._readFrom(r.readNested());
+          break;
+        }
+        default: {
+          r.skip();
+        }
+      }
+    }
+    return m;
+  }
+
 }
 
 class LedgerServiceV1UpdateTagRequest {
@@ -9275,7 +16630,7 @@ class LedgerServiceV1UpdateTagRequest {
     return LedgerServiceV1UpdateTagRequest(
       allowMissing: json['allowMissing'] as bool?,
       data: json['data'] != null ? LedgerServiceV1Tag.fromJson(json['data'] as Map<String, dynamic>) : null,
-      id: json['id'] as int?,
+      id: json['id'] != null ? int.parse(json['id'].toString()) : null,
       updateMask: json['updateMask'] as String?,
     );
   }
@@ -9284,7 +16639,7 @@ class LedgerServiceV1UpdateTagRequest {
     final json = <String, dynamic>{};
     if (allowMissing != null) json['allowMissing'] = allowMissing;
     if (data != null) json['data'] = data!.toJson();
-    if (id != null) json['id'] = id;
+    if (id != null) json['id'] = id.toString();
     if (updateMask != null) json['updateMask'] = updateMask;
     return json;
   }
@@ -9326,6 +16681,73 @@ class LedgerServiceV1UpdateTagRequest {
       updateMask: updateMask ?? this.updateMask,
     );
   }
+
+  /// 二进制 proto 编码（MQTT 等二进制传输用；字段按编号升序写出）
+  Uint8List writeToBuffer() {
+    final w = ProtoWireWriter();
+    _writeTo(w);
+    return w.toBuffer();
+  }
+
+  void _writeTo(ProtoWireWriter w) {
+    // field 1: id
+    final f1 = id;
+    if (f1 != null) {
+      w.writeInt64(1, f1);
+    }
+    // field 2: data
+    final f2 = data;
+    if (f2 != null) {
+      final cw = ProtoWireWriter(); f2._writeTo(cw); w.writeRaw(2, cw.toBuffer()); // LedgerServiceV1Tag
+    }
+    // field 3: updateMask
+    final f3 = updateMask;
+    if (f3 != null) {
+      w.writeFieldMask(3, f3);
+    }
+    // field 4: allowMissing
+    final f4 = allowMissing;
+    if (f4 != null) {
+      w.writeBool(4, f4);
+    }
+  }
+
+  factory LedgerServiceV1UpdateTagRequest.fromBuffer(List<int> bytes) {
+    return LedgerServiceV1UpdateTagRequest._readFrom(ProtoWireReader(bytes));
+  }
+
+  static LedgerServiceV1UpdateTagRequest _readFrom(ProtoWireReader r) {
+    final m = LedgerServiceV1UpdateTagRequest();
+    while (r.next()) {
+      switch (r.fieldNumber) {
+        // field 1: id
+        case 1: {
+          m.id = r.readInt64();
+          break;
+        }
+        // field 2: data
+        case 2: {
+          m.data = LedgerServiceV1Tag._readFrom(r.readNested());
+          break;
+        }
+        // field 3: updateMask
+        case 3: {
+          m.updateMask = r.readFieldMaskText();
+          break;
+        }
+        // field 4: allowMissing
+        case 4: {
+          m.allowMissing = r.readBool();
+          break;
+        }
+        default: {
+          r.skip();
+        }
+      }
+    }
+    return m;
+  }
+
 }
 
 class LedgerServiceV1DeleteTagRequest {
@@ -9337,13 +16759,13 @@ class LedgerServiceV1DeleteTagRequest {
 
   factory LedgerServiceV1DeleteTagRequest.fromJson(Map<String, dynamic> json) {
     return LedgerServiceV1DeleteTagRequest(
-      id: json['id'] as int?,
+      id: json['id'] != null ? int.parse(json['id'].toString()) : null,
     );
   }
 
   Map<String, dynamic> toJson() {
     final json = <String, dynamic>{};
-    if (id != null) json['id'] = id;
+    if (id != null) json['id'] = id.toString();
     return json;
   }
 
@@ -9372,6 +16794,43 @@ class LedgerServiceV1DeleteTagRequest {
       id: id ?? this.id,
     );
   }
+
+  /// 二进制 proto 编码（MQTT 等二进制传输用；字段按编号升序写出）
+  Uint8List writeToBuffer() {
+    final w = ProtoWireWriter();
+    _writeTo(w);
+    return w.toBuffer();
+  }
+
+  void _writeTo(ProtoWireWriter w) {
+    // field 1: id
+    final f1 = id;
+    if (f1 != null) {
+      w.writeInt64(1, f1);
+    }
+  }
+
+  factory LedgerServiceV1DeleteTagRequest.fromBuffer(List<int> bytes) {
+    return LedgerServiceV1DeleteTagRequest._readFrom(ProtoWireReader(bytes));
+  }
+
+  static LedgerServiceV1DeleteTagRequest _readFrom(ProtoWireReader r) {
+    final m = LedgerServiceV1DeleteTagRequest();
+    while (r.next()) {
+      switch (r.fieldNumber) {
+        // field 1: id
+        case 1: {
+          m.id = r.readInt64();
+          break;
+        }
+        default: {
+          r.skip();
+        }
+      }
+    }
+    return m;
+  }
+
 }
 
 class LedgerServiceV1ToggleTagRequest {
@@ -9383,13 +16842,13 @@ class LedgerServiceV1ToggleTagRequest {
 
   factory LedgerServiceV1ToggleTagRequest.fromJson(Map<String, dynamic> json) {
     return LedgerServiceV1ToggleTagRequest(
-      id: json['id'] as int?,
+      id: json['id'] != null ? int.parse(json['id'].toString()) : null,
     );
   }
 
   Map<String, dynamic> toJson() {
     final json = <String, dynamic>{};
-    if (id != null) json['id'] = id;
+    if (id != null) json['id'] = id.toString();
     return json;
   }
 
@@ -9418,6 +16877,43 @@ class LedgerServiceV1ToggleTagRequest {
       id: id ?? this.id,
     );
   }
+
+  /// 二进制 proto 编码（MQTT 等二进制传输用；字段按编号升序写出）
+  Uint8List writeToBuffer() {
+    final w = ProtoWireWriter();
+    _writeTo(w);
+    return w.toBuffer();
+  }
+
+  void _writeTo(ProtoWireWriter w) {
+    // field 1: id
+    final f1 = id;
+    if (f1 != null) {
+      w.writeInt64(1, f1);
+    }
+  }
+
+  factory LedgerServiceV1ToggleTagRequest.fromBuffer(List<int> bytes) {
+    return LedgerServiceV1ToggleTagRequest._readFrom(ProtoWireReader(bytes));
+  }
+
+  static LedgerServiceV1ToggleTagRequest _readFrom(ProtoWireReader r) {
+    final m = LedgerServiceV1ToggleTagRequest();
+    while (r.next()) {
+      switch (r.fieldNumber) {
+        // field 1: id
+        case 1: {
+          m.id = r.readInt64();
+          break;
+        }
+        default: {
+          r.skip();
+        }
+      }
+    }
+    return m;
+  }
+
 }
 
 class NoteDayServiceClient {
@@ -9499,7 +16995,9 @@ class NoteDayServiceClient {
       throw ArgumentError('missing required field request.id');
     }
     final path = '/app/v1/note-days/${request.id}';
-    final body = jsonEncode(request.toJson());
+    final bodyMap = request.toJson();
+    bodyMap.remove('id');
+    final body = jsonEncode(bodyMap);
     final result = await _transport.unary(path, 'PUT', body, TransportMeta(
       service: 'NoteDayService',
       method: 'Update',
@@ -9524,7 +17022,9 @@ class NoteDayServiceClient {
       throw ArgumentError('missing required field request.id');
     }
     final path = '/app/v1/note-days/${request.id}/run';
-    final body = jsonEncode(request.toJson());
+    final bodyMap = request.toJson();
+    bodyMap.remove('id');
+    final body = jsonEncode(bodyMap);
     final result = await _transport.unary(path, 'PATCH', body, TransportMeta(
       service: 'NoteDayService',
       method: 'Run',
@@ -9537,7 +17037,9 @@ class NoteDayServiceClient {
       throw ArgumentError('missing required field request.id');
     }
     final path = '/app/v1/note-days/${request.id}/recall';
-    final body = jsonEncode(request.toJson());
+    final bodyMap = request.toJson();
+    bodyMap.remove('id');
+    final body = jsonEncode(bodyMap);
     final result = await _transport.unary(path, 'PATCH', body, TransportMeta(
       service: 'NoteDayService',
       method: 'Recall',
@@ -9598,6 +17100,53 @@ class LedgerServiceV1ListNoteDayResponse {
       total: total ?? this.total,
     );
   }
+
+  /// 二进制 proto 编码（MQTT 等二进制传输用；字段按编号升序写出）
+  Uint8List writeToBuffer() {
+    final w = ProtoWireWriter();
+    _writeTo(w);
+    return w.toBuffer();
+  }
+
+  void _writeTo(ProtoWireWriter w) {
+    // field 1: items
+    final f1 = items;
+    if (f1 != null) {
+      for (final e in f1) { final cw = ProtoWireWriter(); e._writeTo(cw); w.writeRaw(1, cw.toBuffer()); }
+    }
+    // field 2: total
+    final f2 = total;
+    if (f2 != null) {
+      w.writeInt64(2, f2);
+    }
+  }
+
+  factory LedgerServiceV1ListNoteDayResponse.fromBuffer(List<int> bytes) {
+    return LedgerServiceV1ListNoteDayResponse._readFrom(ProtoWireReader(bytes));
+  }
+
+  static LedgerServiceV1ListNoteDayResponse _readFrom(ProtoWireReader r) {
+    final m = LedgerServiceV1ListNoteDayResponse();
+    while (r.next()) {
+      switch (r.fieldNumber) {
+        // field 1: items
+        case 1: {
+          m.items = r.readNestedList().map(LedgerServiceV1NoteDay._readFrom).toList();
+          break;
+        }
+        // field 2: total
+        case 2: {
+          m.total = r.readInt64();
+          break;
+        }
+        default: {
+          r.skip();
+        }
+      }
+    }
+    return m;
+  }
+
 }
 
 /// 定期提醒
@@ -9643,11 +17192,11 @@ class LedgerServiceV1NoteDay {
   factory LedgerServiceV1NoteDay.fromJson(Map<String, dynamic> json) {
     return LedgerServiceV1NoteDay(
       createdAt: json['createdAt'] as String?,
-      createdBy: json['createdBy'] as int?,
+      createdBy: json['createdBy'] != null ? int.parse(json['createdBy'].toString()) : null,
       deletedAt: json['deletedAt'] as String?,
-      deletedBy: json['deletedBy'] as int?,
+      deletedBy: json['deletedBy'] != null ? int.parse(json['deletedBy'].toString()) : null,
       endDate: json['endDate'] != null ? int.parse(json['endDate'].toString()) : null,
-      id: json['id'] as int?,
+      id: json['id'] != null ? int.parse(json['id'].toString()) : null,
       interval: json['interval'] as int?,
       nextDate: json['nextDate'] != null ? int.parse(json['nextDate'].toString()) : null,
       notes: json['notes'] as String?,
@@ -9657,19 +17206,19 @@ class LedgerServiceV1NoteDay {
       title: json['title'] as String?,
       totalCount: json['totalCount'] as int?,
       updatedAt: json['updatedAt'] as String?,
-      updatedBy: json['updatedBy'] as int?,
-      userId: json['userId'] as int?,
+      updatedBy: json['updatedBy'] != null ? int.parse(json['updatedBy'].toString()) : null,
+      userId: json['userId'] != null ? int.parse(json['userId'].toString()) : null,
     );
   }
 
   Map<String, dynamic> toJson() {
     final json = <String, dynamic>{};
     if (createdAt != null) json['createdAt'] = createdAt;
-    if (createdBy != null) json['createdBy'] = createdBy;
+    if (createdBy != null) json['createdBy'] = createdBy.toString();
     if (deletedAt != null) json['deletedAt'] = deletedAt;
-    if (deletedBy != null) json['deletedBy'] = deletedBy;
+    if (deletedBy != null) json['deletedBy'] = deletedBy.toString();
     if (endDate != null) json['endDate'] = endDate.toString();
-    if (id != null) json['id'] = id;
+    if (id != null) json['id'] = id.toString();
     if (interval != null) json['interval'] = interval;
     if (nextDate != null) json['nextDate'] = nextDate.toString();
     if (notes != null) json['notes'] = notes;
@@ -9679,8 +17228,8 @@ class LedgerServiceV1NoteDay {
     if (title != null) json['title'] = title;
     if (totalCount != null) json['totalCount'] = totalCount;
     if (updatedAt != null) json['updatedAt'] = updatedAt;
-    if (updatedBy != null) json['updatedBy'] = updatedBy;
-    if (userId != null) json['userId'] = userId;
+    if (updatedBy != null) json['updatedBy'] = updatedBy.toString();
+    if (userId != null) json['userId'] = userId.toString();
     return json;
   }
 
@@ -9773,6 +17322,203 @@ class LedgerServiceV1NoteDay {
       userId: userId ?? this.userId,
     );
   }
+
+  /// 二进制 proto 编码（MQTT 等二进制传输用；字段按编号升序写出）
+  Uint8List writeToBuffer() {
+    final w = ProtoWireWriter();
+    _writeTo(w);
+    return w.toBuffer();
+  }
+
+  void _writeTo(ProtoWireWriter w) {
+    // field 1: id
+    final f1 = id;
+    if (f1 != null) {
+      w.writeInt64(1, f1);
+    }
+    // field 2: userId
+    final f2 = userId;
+    if (f2 != null) {
+      w.writeInt64(2, f2);
+    }
+    // field 10: title
+    final f10 = title;
+    if (f10 != null) {
+      w.writeString(10, f10);
+    }
+    // field 11: notes
+    final f11 = notes;
+    if (f11 != null) {
+      w.writeString(11, f11);
+    }
+    // field 12: startDate
+    final f12 = startDate;
+    if (f12 != null) {
+      w.writeInt64(12, f12);
+    }
+    // field 13: endDate
+    final f13 = endDate;
+    if (f13 != null) {
+      w.writeInt64(13, f13);
+    }
+    // field 14: nextDate
+    final f14 = nextDate;
+    if (f14 != null) {
+      w.writeInt64(14, f14);
+    }
+    // field 15: repeatType
+    final f15 = repeatType;
+    if (f15 != null) {
+      w.writeInt32(15, f15);
+    }
+    // field 16: interval
+    final f16 = interval;
+    if (f16 != null) {
+      w.writeInt32(16, f16);
+    }
+    // field 17: totalCount
+    final f17 = totalCount;
+    if (f17 != null) {
+      w.writeInt32(17, f17);
+    }
+    // field 18: runCount
+    final f18 = runCount;
+    if (f18 != null) {
+      w.writeInt32(18, f18);
+    }
+    // field 100: createdBy
+    final f100 = createdBy;
+    if (f100 != null) {
+      w.writeInt64(100, f100);
+    }
+    // field 101: updatedBy
+    final f101 = updatedBy;
+    if (f101 != null) {
+      w.writeInt64(101, f101);
+    }
+    // field 102: deletedBy
+    final f102 = deletedBy;
+    if (f102 != null) {
+      w.writeInt64(102, f102);
+    }
+    // field 200: createdAt
+    final f200 = createdAt;
+    if (f200 != null) {
+      w.writeTimestamp(200, f200);
+    }
+    // field 201: updatedAt
+    final f201 = updatedAt;
+    if (f201 != null) {
+      w.writeTimestamp(201, f201);
+    }
+    // field 202: deletedAt
+    final f202 = deletedAt;
+    if (f202 != null) {
+      w.writeTimestamp(202, f202);
+    }
+  }
+
+  factory LedgerServiceV1NoteDay.fromBuffer(List<int> bytes) {
+    return LedgerServiceV1NoteDay._readFrom(ProtoWireReader(bytes));
+  }
+
+  static LedgerServiceV1NoteDay _readFrom(ProtoWireReader r) {
+    final m = LedgerServiceV1NoteDay();
+    while (r.next()) {
+      switch (r.fieldNumber) {
+        // field 1: id
+        case 1: {
+          m.id = r.readInt64();
+          break;
+        }
+        // field 2: userId
+        case 2: {
+          m.userId = r.readInt64();
+          break;
+        }
+        // field 10: title
+        case 10: {
+          m.title = r.readString();
+          break;
+        }
+        // field 11: notes
+        case 11: {
+          m.notes = r.readString();
+          break;
+        }
+        // field 12: startDate
+        case 12: {
+          m.startDate = r.readInt64();
+          break;
+        }
+        // field 13: endDate
+        case 13: {
+          m.endDate = r.readInt64();
+          break;
+        }
+        // field 14: nextDate
+        case 14: {
+          m.nextDate = r.readInt64();
+          break;
+        }
+        // field 15: repeatType
+        case 15: {
+          m.repeatType = r.readInt32();
+          break;
+        }
+        // field 16: interval
+        case 16: {
+          m.interval = r.readInt32();
+          break;
+        }
+        // field 17: totalCount
+        case 17: {
+          m.totalCount = r.readInt32();
+          break;
+        }
+        // field 18: runCount
+        case 18: {
+          m.runCount = r.readInt32();
+          break;
+        }
+        // field 100: createdBy
+        case 100: {
+          m.createdBy = r.readInt64();
+          break;
+        }
+        // field 101: updatedBy
+        case 101: {
+          m.updatedBy = r.readInt64();
+          break;
+        }
+        // field 102: deletedBy
+        case 102: {
+          m.deletedBy = r.readInt64();
+          break;
+        }
+        // field 200: createdAt
+        case 200: {
+          m.createdAt = r.readTimestampIso();
+          break;
+        }
+        // field 201: updatedAt
+        case 201: {
+          m.updatedAt = r.readTimestampIso();
+          break;
+        }
+        // field 202: deletedAt
+        case 202: {
+          m.deletedAt = r.readTimestampIso();
+          break;
+        }
+        default: {
+          r.skip();
+        }
+      }
+    }
+    return m;
+  }
+
 }
 
 class LedgerServiceV1GetNoteDayRequest {
@@ -9784,13 +17530,13 @@ class LedgerServiceV1GetNoteDayRequest {
 
   factory LedgerServiceV1GetNoteDayRequest.fromJson(Map<String, dynamic> json) {
     return LedgerServiceV1GetNoteDayRequest(
-      id: json['id'] as int?,
+      id: json['id'] != null ? int.parse(json['id'].toString()) : null,
     );
   }
 
   Map<String, dynamic> toJson() {
     final json = <String, dynamic>{};
-    if (id != null) json['id'] = id;
+    if (id != null) json['id'] = id.toString();
     return json;
   }
 
@@ -9819,6 +17565,43 @@ class LedgerServiceV1GetNoteDayRequest {
       id: id ?? this.id,
     );
   }
+
+  /// 二进制 proto 编码（MQTT 等二进制传输用；字段按编号升序写出）
+  Uint8List writeToBuffer() {
+    final w = ProtoWireWriter();
+    _writeTo(w);
+    return w.toBuffer();
+  }
+
+  void _writeTo(ProtoWireWriter w) {
+    // field 1: id
+    final f1 = id;
+    if (f1 != null) {
+      w.writeInt64(1, f1);
+    }
+  }
+
+  factory LedgerServiceV1GetNoteDayRequest.fromBuffer(List<int> bytes) {
+    return LedgerServiceV1GetNoteDayRequest._readFrom(ProtoWireReader(bytes));
+  }
+
+  static LedgerServiceV1GetNoteDayRequest _readFrom(ProtoWireReader r) {
+    final m = LedgerServiceV1GetNoteDayRequest();
+    while (r.next()) {
+      switch (r.fieldNumber) {
+        // field 1: id
+        case 1: {
+          m.id = r.readInt64();
+          break;
+        }
+        default: {
+          r.skip();
+        }
+      }
+    }
+    return m;
+  }
+
 }
 
 class LedgerServiceV1CreateNoteDayRequest {
@@ -9865,6 +17648,43 @@ class LedgerServiceV1CreateNoteDayRequest {
       data: data ?? this.data,
     );
   }
+
+  /// 二进制 proto 编码（MQTT 等二进制传输用；字段按编号升序写出）
+  Uint8List writeToBuffer() {
+    final w = ProtoWireWriter();
+    _writeTo(w);
+    return w.toBuffer();
+  }
+
+  void _writeTo(ProtoWireWriter w) {
+    // field 1: data
+    final f1 = data;
+    if (f1 != null) {
+      final cw = ProtoWireWriter(); f1._writeTo(cw); w.writeRaw(1, cw.toBuffer()); // LedgerServiceV1NoteDay
+    }
+  }
+
+  factory LedgerServiceV1CreateNoteDayRequest.fromBuffer(List<int> bytes) {
+    return LedgerServiceV1CreateNoteDayRequest._readFrom(ProtoWireReader(bytes));
+  }
+
+  static LedgerServiceV1CreateNoteDayRequest _readFrom(ProtoWireReader r) {
+    final m = LedgerServiceV1CreateNoteDayRequest();
+    while (r.next()) {
+      switch (r.fieldNumber) {
+        // field 1: data
+        case 1: {
+          m.data = LedgerServiceV1NoteDay._readFrom(r.readNested());
+          break;
+        }
+        default: {
+          r.skip();
+        }
+      }
+    }
+    return m;
+  }
+
 }
 
 class LedgerServiceV1UpdateNoteDayRequest {
@@ -9884,7 +17704,7 @@ class LedgerServiceV1UpdateNoteDayRequest {
     return LedgerServiceV1UpdateNoteDayRequest(
       allowMissing: json['allowMissing'] as bool?,
       data: json['data'] != null ? LedgerServiceV1NoteDay.fromJson(json['data'] as Map<String, dynamic>) : null,
-      id: json['id'] as int?,
+      id: json['id'] != null ? int.parse(json['id'].toString()) : null,
       updateMask: json['updateMask'] as String?,
     );
   }
@@ -9893,7 +17713,7 @@ class LedgerServiceV1UpdateNoteDayRequest {
     final json = <String, dynamic>{};
     if (allowMissing != null) json['allowMissing'] = allowMissing;
     if (data != null) json['data'] = data!.toJson();
-    if (id != null) json['id'] = id;
+    if (id != null) json['id'] = id.toString();
     if (updateMask != null) json['updateMask'] = updateMask;
     return json;
   }
@@ -9935,6 +17755,73 @@ class LedgerServiceV1UpdateNoteDayRequest {
       updateMask: updateMask ?? this.updateMask,
     );
   }
+
+  /// 二进制 proto 编码（MQTT 等二进制传输用；字段按编号升序写出）
+  Uint8List writeToBuffer() {
+    final w = ProtoWireWriter();
+    _writeTo(w);
+    return w.toBuffer();
+  }
+
+  void _writeTo(ProtoWireWriter w) {
+    // field 1: id
+    final f1 = id;
+    if (f1 != null) {
+      w.writeInt64(1, f1);
+    }
+    // field 2: data
+    final f2 = data;
+    if (f2 != null) {
+      final cw = ProtoWireWriter(); f2._writeTo(cw); w.writeRaw(2, cw.toBuffer()); // LedgerServiceV1NoteDay
+    }
+    // field 3: updateMask
+    final f3 = updateMask;
+    if (f3 != null) {
+      w.writeFieldMask(3, f3);
+    }
+    // field 4: allowMissing
+    final f4 = allowMissing;
+    if (f4 != null) {
+      w.writeBool(4, f4);
+    }
+  }
+
+  factory LedgerServiceV1UpdateNoteDayRequest.fromBuffer(List<int> bytes) {
+    return LedgerServiceV1UpdateNoteDayRequest._readFrom(ProtoWireReader(bytes));
+  }
+
+  static LedgerServiceV1UpdateNoteDayRequest _readFrom(ProtoWireReader r) {
+    final m = LedgerServiceV1UpdateNoteDayRequest();
+    while (r.next()) {
+      switch (r.fieldNumber) {
+        // field 1: id
+        case 1: {
+          m.id = r.readInt64();
+          break;
+        }
+        // field 2: data
+        case 2: {
+          m.data = LedgerServiceV1NoteDay._readFrom(r.readNested());
+          break;
+        }
+        // field 3: updateMask
+        case 3: {
+          m.updateMask = r.readFieldMaskText();
+          break;
+        }
+        // field 4: allowMissing
+        case 4: {
+          m.allowMissing = r.readBool();
+          break;
+        }
+        default: {
+          r.skip();
+        }
+      }
+    }
+    return m;
+  }
+
 }
 
 class LedgerServiceV1DeleteNoteDayRequest {
@@ -9946,13 +17833,13 @@ class LedgerServiceV1DeleteNoteDayRequest {
 
   factory LedgerServiceV1DeleteNoteDayRequest.fromJson(Map<String, dynamic> json) {
     return LedgerServiceV1DeleteNoteDayRequest(
-      id: json['id'] as int?,
+      id: json['id'] != null ? int.parse(json['id'].toString()) : null,
     );
   }
 
   Map<String, dynamic> toJson() {
     final json = <String, dynamic>{};
-    if (id != null) json['id'] = id;
+    if (id != null) json['id'] = id.toString();
     return json;
   }
 
@@ -9981,6 +17868,43 @@ class LedgerServiceV1DeleteNoteDayRequest {
       id: id ?? this.id,
     );
   }
+
+  /// 二进制 proto 编码（MQTT 等二进制传输用；字段按编号升序写出）
+  Uint8List writeToBuffer() {
+    final w = ProtoWireWriter();
+    _writeTo(w);
+    return w.toBuffer();
+  }
+
+  void _writeTo(ProtoWireWriter w) {
+    // field 1: id
+    final f1 = id;
+    if (f1 != null) {
+      w.writeInt64(1, f1);
+    }
+  }
+
+  factory LedgerServiceV1DeleteNoteDayRequest.fromBuffer(List<int> bytes) {
+    return LedgerServiceV1DeleteNoteDayRequest._readFrom(ProtoWireReader(bytes));
+  }
+
+  static LedgerServiceV1DeleteNoteDayRequest _readFrom(ProtoWireReader r) {
+    final m = LedgerServiceV1DeleteNoteDayRequest();
+    while (r.next()) {
+      switch (r.fieldNumber) {
+        // field 1: id
+        case 1: {
+          m.id = r.readInt64();
+          break;
+        }
+        default: {
+          r.skip();
+        }
+      }
+    }
+    return m;
+  }
+
 }
 
 class LedgerServiceV1RunNoteDayRequest {
@@ -9992,13 +17916,13 @@ class LedgerServiceV1RunNoteDayRequest {
 
   factory LedgerServiceV1RunNoteDayRequest.fromJson(Map<String, dynamic> json) {
     return LedgerServiceV1RunNoteDayRequest(
-      id: json['id'] as int?,
+      id: json['id'] != null ? int.parse(json['id'].toString()) : null,
     );
   }
 
   Map<String, dynamic> toJson() {
     final json = <String, dynamic>{};
-    if (id != null) json['id'] = id;
+    if (id != null) json['id'] = id.toString();
     return json;
   }
 
@@ -10027,6 +17951,43 @@ class LedgerServiceV1RunNoteDayRequest {
       id: id ?? this.id,
     );
   }
+
+  /// 二进制 proto 编码（MQTT 等二进制传输用；字段按编号升序写出）
+  Uint8List writeToBuffer() {
+    final w = ProtoWireWriter();
+    _writeTo(w);
+    return w.toBuffer();
+  }
+
+  void _writeTo(ProtoWireWriter w) {
+    // field 1: id
+    final f1 = id;
+    if (f1 != null) {
+      w.writeInt64(1, f1);
+    }
+  }
+
+  factory LedgerServiceV1RunNoteDayRequest.fromBuffer(List<int> bytes) {
+    return LedgerServiceV1RunNoteDayRequest._readFrom(ProtoWireReader(bytes));
+  }
+
+  static LedgerServiceV1RunNoteDayRequest _readFrom(ProtoWireReader r) {
+    final m = LedgerServiceV1RunNoteDayRequest();
+    while (r.next()) {
+      switch (r.fieldNumber) {
+        // field 1: id
+        case 1: {
+          m.id = r.readInt64();
+          break;
+        }
+        default: {
+          r.skip();
+        }
+      }
+    }
+    return m;
+  }
+
 }
 
 class LedgerServiceV1RecallNoteDayRequest {
@@ -10038,13 +17999,13 @@ class LedgerServiceV1RecallNoteDayRequest {
 
   factory LedgerServiceV1RecallNoteDayRequest.fromJson(Map<String, dynamic> json) {
     return LedgerServiceV1RecallNoteDayRequest(
-      id: json['id'] as int?,
+      id: json['id'] != null ? int.parse(json['id'].toString()) : null,
     );
   }
 
   Map<String, dynamic> toJson() {
     final json = <String, dynamic>{};
-    if (id != null) json['id'] = id;
+    if (id != null) json['id'] = id.toString();
     return json;
   }
 
@@ -10073,6 +18034,43 @@ class LedgerServiceV1RecallNoteDayRequest {
       id: id ?? this.id,
     );
   }
+
+  /// 二进制 proto 编码（MQTT 等二进制传输用；字段按编号升序写出）
+  Uint8List writeToBuffer() {
+    final w = ProtoWireWriter();
+    _writeTo(w);
+    return w.toBuffer();
+  }
+
+  void _writeTo(ProtoWireWriter w) {
+    // field 1: id
+    final f1 = id;
+    if (f1 != null) {
+      w.writeInt64(1, f1);
+    }
+  }
+
+  factory LedgerServiceV1RecallNoteDayRequest.fromBuffer(List<int> bytes) {
+    return LedgerServiceV1RecallNoteDayRequest._readFrom(ProtoWireReader(bytes));
+  }
+
+  static LedgerServiceV1RecallNoteDayRequest _readFrom(ProtoWireReader r) {
+    final m = LedgerServiceV1RecallNoteDayRequest();
+    while (r.next()) {
+      switch (r.fieldNumber) {
+        // field 1: id
+        case 1: {
+          m.id = r.readInt64();
+          break;
+        }
+        default: {
+          r.skip();
+        }
+      }
+    }
+    return m;
+  }
+
 }
 
 class PayeeServiceClient {
@@ -10179,7 +18177,9 @@ class PayeeServiceClient {
       throw ArgumentError('missing required field request.id');
     }
     final path = '/app/v1/payees/${request.id}';
-    final body = jsonEncode(request.toJson());
+    final bodyMap = request.toJson();
+    bodyMap.remove('id');
+    final body = jsonEncode(bodyMap);
     final result = await _transport.unary(path, 'PUT', body, TransportMeta(
       service: 'PayeeService',
       method: 'Update',
@@ -10204,7 +18204,9 @@ class PayeeServiceClient {
       throw ArgumentError('missing required field request.id');
     }
     final path = '/app/v1/payees/${request.id}/toggle';
-    final body = jsonEncode(request.toJson());
+    final bodyMap = request.toJson();
+    bodyMap.remove('id');
+    final body = jsonEncode(bodyMap);
     final result = await _transport.unary(path, 'PATCH', body, TransportMeta(
       service: 'PayeeService',
       method: 'Toggle',
@@ -10265,6 +18267,53 @@ class LedgerServiceV1ListPayeeResponse {
       total: total ?? this.total,
     );
   }
+
+  /// 二进制 proto 编码（MQTT 等二进制传输用；字段按编号升序写出）
+  Uint8List writeToBuffer() {
+    final w = ProtoWireWriter();
+    _writeTo(w);
+    return w.toBuffer();
+  }
+
+  void _writeTo(ProtoWireWriter w) {
+    // field 1: items
+    final f1 = items;
+    if (f1 != null) {
+      for (final e in f1) { final cw = ProtoWireWriter(); e._writeTo(cw); w.writeRaw(1, cw.toBuffer()); }
+    }
+    // field 2: total
+    final f2 = total;
+    if (f2 != null) {
+      w.writeInt64(2, f2);
+    }
+  }
+
+  factory LedgerServiceV1ListPayeeResponse.fromBuffer(List<int> bytes) {
+    return LedgerServiceV1ListPayeeResponse._readFrom(ProtoWireReader(bytes));
+  }
+
+  static LedgerServiceV1ListPayeeResponse _readFrom(ProtoWireReader r) {
+    final m = LedgerServiceV1ListPayeeResponse();
+    while (r.next()) {
+      switch (r.fieldNumber) {
+        // field 1: items
+        case 1: {
+          m.items = r.readNestedList().map(LedgerServiceV1Payee._readFrom).toList();
+          break;
+        }
+        // field 2: total
+        case 2: {
+          m.total = r.readInt64();
+          break;
+        }
+        default: {
+          r.skip();
+        }
+      }
+    }
+    return m;
+  }
+
 }
 
 class LedgerServiceV1Payee {
@@ -10304,41 +18353,41 @@ class LedgerServiceV1Payee {
 
   factory LedgerServiceV1Payee.fromJson(Map<String, dynamic> json) {
     return LedgerServiceV1Payee(
-      bookId: json['bookId'] as int?,
+      bookId: json['bookId'] != null ? int.parse(json['bookId'].toString()) : null,
       canExpense: json['canExpense'] as bool?,
       canIncome: json['canIncome'] as bool?,
       createdAt: json['createdAt'] as String?,
-      createdBy: json['createdBy'] as int?,
+      createdBy: json['createdBy'] != null ? int.parse(json['createdBy'].toString()) : null,
       deletedAt: json['deletedAt'] as String?,
-      deletedBy: json['deletedBy'] as int?,
+      deletedBy: json['deletedBy'] != null ? int.parse(json['deletedBy'].toString()) : null,
       enable: json['enable'] as bool?,
-      id: json['id'] as int?,
+      id: json['id'] != null ? int.parse(json['id'].toString()) : null,
       name: json['name'] as String?,
       notes: json['notes'] as String?,
       sortOrder: json['sortOrder'] as int?,
-      tenantId: json['tenantId'] as int?,
+      tenantId: json['tenantId'] != null ? int.parse(json['tenantId'].toString()) : null,
       updatedAt: json['updatedAt'] as String?,
-      updatedBy: json['updatedBy'] as int?,
+      updatedBy: json['updatedBy'] != null ? int.parse(json['updatedBy'].toString()) : null,
     );
   }
 
   Map<String, dynamic> toJson() {
     final json = <String, dynamic>{};
-    if (bookId != null) json['bookId'] = bookId;
+    if (bookId != null) json['bookId'] = bookId.toString();
     if (canExpense != null) json['canExpense'] = canExpense;
     if (canIncome != null) json['canIncome'] = canIncome;
     if (createdAt != null) json['createdAt'] = createdAt;
-    if (createdBy != null) json['createdBy'] = createdBy;
+    if (createdBy != null) json['createdBy'] = createdBy.toString();
     if (deletedAt != null) json['deletedAt'] = deletedAt;
-    if (deletedBy != null) json['deletedBy'] = deletedBy;
+    if (deletedBy != null) json['deletedBy'] = deletedBy.toString();
     if (enable != null) json['enable'] = enable;
-    if (id != null) json['id'] = id;
+    if (id != null) json['id'] = id.toString();
     if (name != null) json['name'] = name;
     if (notes != null) json['notes'] = notes;
     if (sortOrder != null) json['sortOrder'] = sortOrder;
-    if (tenantId != null) json['tenantId'] = tenantId;
+    if (tenantId != null) json['tenantId'] = tenantId.toString();
     if (updatedAt != null) json['updatedAt'] = updatedAt;
-    if (updatedBy != null) json['updatedBy'] = updatedBy;
+    if (updatedBy != null) json['updatedBy'] = updatedBy.toString();
     return json;
   }
 
@@ -10423,6 +18472,183 @@ class LedgerServiceV1Payee {
       updatedBy: updatedBy ?? this.updatedBy,
     );
   }
+
+  /// 二进制 proto 编码（MQTT 等二进制传输用；字段按编号升序写出）
+  Uint8List writeToBuffer() {
+    final w = ProtoWireWriter();
+    _writeTo(w);
+    return w.toBuffer();
+  }
+
+  void _writeTo(ProtoWireWriter w) {
+    // field 1: id
+    final f1 = id;
+    if (f1 != null) {
+      w.writeInt64(1, f1);
+    }
+    // field 2: tenantId
+    final f2 = tenantId;
+    if (f2 != null) {
+      w.writeInt64(2, f2);
+    }
+    // field 3: bookId
+    final f3 = bookId;
+    if (f3 != null) {
+      w.writeInt64(3, f3);
+    }
+    // field 10: name
+    final f10 = name;
+    if (f10 != null) {
+      w.writeString(10, f10);
+    }
+    // field 11: notes
+    final f11 = notes;
+    if (f11 != null) {
+      w.writeString(11, f11);
+    }
+    // field 12: enable
+    final f12 = enable;
+    if (f12 != null) {
+      w.writeBool(12, f12);
+    }
+    // field 13: canExpense
+    final f13 = canExpense;
+    if (f13 != null) {
+      w.writeBool(13, f13);
+    }
+    // field 14: canIncome
+    final f14 = canIncome;
+    if (f14 != null) {
+      w.writeBool(14, f14);
+    }
+    // field 15: sortOrder
+    final f15 = sortOrder;
+    if (f15 != null) {
+      w.writeInt32(15, f15);
+    }
+    // field 100: createdBy
+    final f100 = createdBy;
+    if (f100 != null) {
+      w.writeInt64(100, f100);
+    }
+    // field 101: updatedBy
+    final f101 = updatedBy;
+    if (f101 != null) {
+      w.writeInt64(101, f101);
+    }
+    // field 102: deletedBy
+    final f102 = deletedBy;
+    if (f102 != null) {
+      w.writeInt64(102, f102);
+    }
+    // field 200: createdAt
+    final f200 = createdAt;
+    if (f200 != null) {
+      w.writeTimestamp(200, f200);
+    }
+    // field 201: updatedAt
+    final f201 = updatedAt;
+    if (f201 != null) {
+      w.writeTimestamp(201, f201);
+    }
+    // field 202: deletedAt
+    final f202 = deletedAt;
+    if (f202 != null) {
+      w.writeTimestamp(202, f202);
+    }
+  }
+
+  factory LedgerServiceV1Payee.fromBuffer(List<int> bytes) {
+    return LedgerServiceV1Payee._readFrom(ProtoWireReader(bytes));
+  }
+
+  static LedgerServiceV1Payee _readFrom(ProtoWireReader r) {
+    final m = LedgerServiceV1Payee();
+    while (r.next()) {
+      switch (r.fieldNumber) {
+        // field 1: id
+        case 1: {
+          m.id = r.readInt64();
+          break;
+        }
+        // field 2: tenantId
+        case 2: {
+          m.tenantId = r.readInt64();
+          break;
+        }
+        // field 3: bookId
+        case 3: {
+          m.bookId = r.readInt64();
+          break;
+        }
+        // field 10: name
+        case 10: {
+          m.name = r.readString();
+          break;
+        }
+        // field 11: notes
+        case 11: {
+          m.notes = r.readString();
+          break;
+        }
+        // field 12: enable
+        case 12: {
+          m.enable = r.readBool();
+          break;
+        }
+        // field 13: canExpense
+        case 13: {
+          m.canExpense = r.readBool();
+          break;
+        }
+        // field 14: canIncome
+        case 14: {
+          m.canIncome = r.readBool();
+          break;
+        }
+        // field 15: sortOrder
+        case 15: {
+          m.sortOrder = r.readInt32();
+          break;
+        }
+        // field 100: createdBy
+        case 100: {
+          m.createdBy = r.readInt64();
+          break;
+        }
+        // field 101: updatedBy
+        case 101: {
+          m.updatedBy = r.readInt64();
+          break;
+        }
+        // field 102: deletedBy
+        case 102: {
+          m.deletedBy = r.readInt64();
+          break;
+        }
+        // field 200: createdAt
+        case 200: {
+          m.createdAt = r.readTimestampIso();
+          break;
+        }
+        // field 201: updatedAt
+        case 201: {
+          m.updatedAt = r.readTimestampIso();
+          break;
+        }
+        // field 202: deletedAt
+        case 202: {
+          m.deletedAt = r.readTimestampIso();
+          break;
+        }
+        default: {
+          r.skip();
+        }
+      }
+    }
+    return m;
+  }
+
 }
 
 class LedgerServiceV1ListAllPayeeRequest {
@@ -10434,13 +18660,13 @@ class LedgerServiceV1ListAllPayeeRequest {
 
   factory LedgerServiceV1ListAllPayeeRequest.fromJson(Map<String, dynamic> json) {
     return LedgerServiceV1ListAllPayeeRequest(
-      bookId: json['bookId'] as int?,
+      bookId: json['bookId'] != null ? int.parse(json['bookId'].toString()) : null,
     );
   }
 
   Map<String, dynamic> toJson() {
     final json = <String, dynamic>{};
-    if (bookId != null) json['bookId'] = bookId;
+    if (bookId != null) json['bookId'] = bookId.toString();
     return json;
   }
 
@@ -10469,6 +18695,43 @@ class LedgerServiceV1ListAllPayeeRequest {
       bookId: bookId ?? this.bookId,
     );
   }
+
+  /// 二进制 proto 编码（MQTT 等二进制传输用；字段按编号升序写出）
+  Uint8List writeToBuffer() {
+    final w = ProtoWireWriter();
+    _writeTo(w);
+    return w.toBuffer();
+  }
+
+  void _writeTo(ProtoWireWriter w) {
+    // field 1: bookId
+    final f1 = bookId;
+    if (f1 != null) {
+      w.writeInt64(1, f1);
+    }
+  }
+
+  factory LedgerServiceV1ListAllPayeeRequest.fromBuffer(List<int> bytes) {
+    return LedgerServiceV1ListAllPayeeRequest._readFrom(ProtoWireReader(bytes));
+  }
+
+  static LedgerServiceV1ListAllPayeeRequest _readFrom(ProtoWireReader r) {
+    final m = LedgerServiceV1ListAllPayeeRequest();
+    while (r.next()) {
+      switch (r.fieldNumber) {
+        // field 1: bookId
+        case 1: {
+          m.bookId = r.readInt64();
+          break;
+        }
+        default: {
+          r.skip();
+        }
+      }
+    }
+    return m;
+  }
+
 }
 
 class LedgerServiceV1GetPayeeRequest {
@@ -10482,14 +18745,14 @@ class LedgerServiceV1GetPayeeRequest {
 
   factory LedgerServiceV1GetPayeeRequest.fromJson(Map<String, dynamic> json) {
     return LedgerServiceV1GetPayeeRequest(
-      id: json['id'] as int?,
+      id: json['id'] != null ? int.parse(json['id'].toString()) : null,
       viewMask: json['viewMask'] as String?,
     );
   }
 
   Map<String, dynamic> toJson() {
     final json = <String, dynamic>{};
-    if (id != null) json['id'] = id;
+    if (id != null) json['id'] = id.toString();
     if (viewMask != null) json['viewMask'] = viewMask;
     return json;
   }
@@ -10523,6 +18786,53 @@ class LedgerServiceV1GetPayeeRequest {
       viewMask: viewMask ?? this.viewMask,
     );
   }
+
+  /// 二进制 proto 编码（MQTT 等二进制传输用；字段按编号升序写出）
+  Uint8List writeToBuffer() {
+    final w = ProtoWireWriter();
+    _writeTo(w);
+    return w.toBuffer();
+  }
+
+  void _writeTo(ProtoWireWriter w) {
+    // field 1: id
+    final f1 = id;
+    if (f1 != null) {
+      w.writeInt64(1, f1);
+    }
+    // field 100: viewMask
+    final f100 = viewMask;
+    if (f100 != null) {
+      w.writeFieldMask(100, f100);
+    }
+  }
+
+  factory LedgerServiceV1GetPayeeRequest.fromBuffer(List<int> bytes) {
+    return LedgerServiceV1GetPayeeRequest._readFrom(ProtoWireReader(bytes));
+  }
+
+  static LedgerServiceV1GetPayeeRequest _readFrom(ProtoWireReader r) {
+    final m = LedgerServiceV1GetPayeeRequest();
+    while (r.next()) {
+      switch (r.fieldNumber) {
+        // field 1: id
+        case 1: {
+          m.id = r.readInt64();
+          break;
+        }
+        // field 100: viewMask
+        case 100: {
+          m.viewMask = r.readFieldMaskText();
+          break;
+        }
+        default: {
+          r.skip();
+        }
+      }
+    }
+    return m;
+  }
+
 }
 
 class LedgerServiceV1CreatePayeeRequest {
@@ -10569,6 +18879,43 @@ class LedgerServiceV1CreatePayeeRequest {
       data: data ?? this.data,
     );
   }
+
+  /// 二进制 proto 编码（MQTT 等二进制传输用；字段按编号升序写出）
+  Uint8List writeToBuffer() {
+    final w = ProtoWireWriter();
+    _writeTo(w);
+    return w.toBuffer();
+  }
+
+  void _writeTo(ProtoWireWriter w) {
+    // field 1: data
+    final f1 = data;
+    if (f1 != null) {
+      final cw = ProtoWireWriter(); f1._writeTo(cw); w.writeRaw(1, cw.toBuffer()); // LedgerServiceV1Payee
+    }
+  }
+
+  factory LedgerServiceV1CreatePayeeRequest.fromBuffer(List<int> bytes) {
+    return LedgerServiceV1CreatePayeeRequest._readFrom(ProtoWireReader(bytes));
+  }
+
+  static LedgerServiceV1CreatePayeeRequest _readFrom(ProtoWireReader r) {
+    final m = LedgerServiceV1CreatePayeeRequest();
+    while (r.next()) {
+      switch (r.fieldNumber) {
+        // field 1: data
+        case 1: {
+          m.data = LedgerServiceV1Payee._readFrom(r.readNested());
+          break;
+        }
+        default: {
+          r.skip();
+        }
+      }
+    }
+    return m;
+  }
+
 }
 
 class LedgerServiceV1UpdatePayeeRequest {
@@ -10588,7 +18935,7 @@ class LedgerServiceV1UpdatePayeeRequest {
     return LedgerServiceV1UpdatePayeeRequest(
       allowMissing: json['allowMissing'] as bool?,
       data: json['data'] != null ? LedgerServiceV1Payee.fromJson(json['data'] as Map<String, dynamic>) : null,
-      id: json['id'] as int?,
+      id: json['id'] != null ? int.parse(json['id'].toString()) : null,
       updateMask: json['updateMask'] as String?,
     );
   }
@@ -10597,7 +18944,7 @@ class LedgerServiceV1UpdatePayeeRequest {
     final json = <String, dynamic>{};
     if (allowMissing != null) json['allowMissing'] = allowMissing;
     if (data != null) json['data'] = data!.toJson();
-    if (id != null) json['id'] = id;
+    if (id != null) json['id'] = id.toString();
     if (updateMask != null) json['updateMask'] = updateMask;
     return json;
   }
@@ -10639,6 +18986,73 @@ class LedgerServiceV1UpdatePayeeRequest {
       updateMask: updateMask ?? this.updateMask,
     );
   }
+
+  /// 二进制 proto 编码（MQTT 等二进制传输用；字段按编号升序写出）
+  Uint8List writeToBuffer() {
+    final w = ProtoWireWriter();
+    _writeTo(w);
+    return w.toBuffer();
+  }
+
+  void _writeTo(ProtoWireWriter w) {
+    // field 1: id
+    final f1 = id;
+    if (f1 != null) {
+      w.writeInt64(1, f1);
+    }
+    // field 2: data
+    final f2 = data;
+    if (f2 != null) {
+      final cw = ProtoWireWriter(); f2._writeTo(cw); w.writeRaw(2, cw.toBuffer()); // LedgerServiceV1Payee
+    }
+    // field 3: updateMask
+    final f3 = updateMask;
+    if (f3 != null) {
+      w.writeFieldMask(3, f3);
+    }
+    // field 4: allowMissing
+    final f4 = allowMissing;
+    if (f4 != null) {
+      w.writeBool(4, f4);
+    }
+  }
+
+  factory LedgerServiceV1UpdatePayeeRequest.fromBuffer(List<int> bytes) {
+    return LedgerServiceV1UpdatePayeeRequest._readFrom(ProtoWireReader(bytes));
+  }
+
+  static LedgerServiceV1UpdatePayeeRequest _readFrom(ProtoWireReader r) {
+    final m = LedgerServiceV1UpdatePayeeRequest();
+    while (r.next()) {
+      switch (r.fieldNumber) {
+        // field 1: id
+        case 1: {
+          m.id = r.readInt64();
+          break;
+        }
+        // field 2: data
+        case 2: {
+          m.data = LedgerServiceV1Payee._readFrom(r.readNested());
+          break;
+        }
+        // field 3: updateMask
+        case 3: {
+          m.updateMask = r.readFieldMaskText();
+          break;
+        }
+        // field 4: allowMissing
+        case 4: {
+          m.allowMissing = r.readBool();
+          break;
+        }
+        default: {
+          r.skip();
+        }
+      }
+    }
+    return m;
+  }
+
 }
 
 class LedgerServiceV1DeletePayeeRequest {
@@ -10650,13 +19064,13 @@ class LedgerServiceV1DeletePayeeRequest {
 
   factory LedgerServiceV1DeletePayeeRequest.fromJson(Map<String, dynamic> json) {
     return LedgerServiceV1DeletePayeeRequest(
-      id: json['id'] as int?,
+      id: json['id'] != null ? int.parse(json['id'].toString()) : null,
     );
   }
 
   Map<String, dynamic> toJson() {
     final json = <String, dynamic>{};
-    if (id != null) json['id'] = id;
+    if (id != null) json['id'] = id.toString();
     return json;
   }
 
@@ -10685,6 +19099,43 @@ class LedgerServiceV1DeletePayeeRequest {
       id: id ?? this.id,
     );
   }
+
+  /// 二进制 proto 编码（MQTT 等二进制传输用；字段按编号升序写出）
+  Uint8List writeToBuffer() {
+    final w = ProtoWireWriter();
+    _writeTo(w);
+    return w.toBuffer();
+  }
+
+  void _writeTo(ProtoWireWriter w) {
+    // field 1: id
+    final f1 = id;
+    if (f1 != null) {
+      w.writeInt64(1, f1);
+    }
+  }
+
+  factory LedgerServiceV1DeletePayeeRequest.fromBuffer(List<int> bytes) {
+    return LedgerServiceV1DeletePayeeRequest._readFrom(ProtoWireReader(bytes));
+  }
+
+  static LedgerServiceV1DeletePayeeRequest _readFrom(ProtoWireReader r) {
+    final m = LedgerServiceV1DeletePayeeRequest();
+    while (r.next()) {
+      switch (r.fieldNumber) {
+        // field 1: id
+        case 1: {
+          m.id = r.readInt64();
+          break;
+        }
+        default: {
+          r.skip();
+        }
+      }
+    }
+    return m;
+  }
+
 }
 
 class LedgerServiceV1TogglePayeeRequest {
@@ -10696,13 +19147,13 @@ class LedgerServiceV1TogglePayeeRequest {
 
   factory LedgerServiceV1TogglePayeeRequest.fromJson(Map<String, dynamic> json) {
     return LedgerServiceV1TogglePayeeRequest(
-      id: json['id'] as int?,
+      id: json['id'] != null ? int.parse(json['id'].toString()) : null,
     );
   }
 
   Map<String, dynamic> toJson() {
     final json = <String, dynamic>{};
-    if (id != null) json['id'] = id;
+    if (id != null) json['id'] = id.toString();
     return json;
   }
 
@@ -10731,6 +19182,43 @@ class LedgerServiceV1TogglePayeeRequest {
       id: id ?? this.id,
     );
   }
+
+  /// 二进制 proto 编码（MQTT 等二进制传输用；字段按编号升序写出）
+  Uint8List writeToBuffer() {
+    final w = ProtoWireWriter();
+    _writeTo(w);
+    return w.toBuffer();
+  }
+
+  void _writeTo(ProtoWireWriter w) {
+    // field 1: id
+    final f1 = id;
+    if (f1 != null) {
+      w.writeInt64(1, f1);
+    }
+  }
+
+  factory LedgerServiceV1TogglePayeeRequest.fromBuffer(List<int> bytes) {
+    return LedgerServiceV1TogglePayeeRequest._readFrom(ProtoWireReader(bytes));
+  }
+
+  static LedgerServiceV1TogglePayeeRequest _readFrom(ProtoWireReader r) {
+    final m = LedgerServiceV1TogglePayeeRequest();
+    while (r.next()) {
+      switch (r.fieldNumber) {
+        // field 1: id
+        case 1: {
+          m.id = r.readInt64();
+          break;
+        }
+        default: {
+          r.skip();
+        }
+      }
+    }
+    return m;
+  }
+
 }
 
 class ReportServiceClient {
@@ -11044,26 +19532,26 @@ class LedgerServiceV1ReportQueryRequest {
 
   factory LedgerServiceV1ReportQueryRequest.fromJson(Map<String, dynamic> json) {
     return LedgerServiceV1ReportQueryRequest(
-      accountId: json['accountId'] as int?,
-      bookId: json['bookId'] as int?,
-      categoryIds: (json['categoryIds'] as List<dynamic>?)?.map((e) => e as int).toList(),
+      accountId: json['accountId'] != null ? int.parse(json['accountId'].toString()) : null,
+      bookId: json['bookId'] != null ? int.parse(json['bookId'].toString()) : null,
+      categoryIds: (json['categoryIds'] as List<dynamic>?)?.map((e) => int.parse(e.toString())).toList(),
       maxTime: json['maxTime'] != null ? int.parse(json['maxTime'].toString()) : null,
       minTime: json['minTime'] != null ? int.parse(json['minTime'].toString()) : null,
-      payeeIds: (json['payeeIds'] as List<dynamic>?)?.map((e) => e as int).toList(),
-      tagIds: (json['tagIds'] as List<dynamic>?)?.map((e) => e as int).toList(),
+      payeeIds: (json['payeeIds'] as List<dynamic>?)?.map((e) => int.parse(e.toString())).toList(),
+      tagIds: (json['tagIds'] as List<dynamic>?)?.map((e) => int.parse(e.toString())).toList(),
       title: json['title'] as String?,
     );
   }
 
   Map<String, dynamic> toJson() {
     final json = <String, dynamic>{};
-    if (accountId != null) json['accountId'] = accountId;
-    if (bookId != null) json['bookId'] = bookId;
-    if (categoryIds != null) json['categoryIds'] = categoryIds;
+    if (accountId != null) json['accountId'] = accountId.toString();
+    if (bookId != null) json['bookId'] = bookId.toString();
+    if (categoryIds != null) json['categoryIds'] = categoryIds!.map((e) => e.toString()).toList();
     if (maxTime != null) json['maxTime'] = maxTime.toString();
     if (minTime != null) json['minTime'] = minTime.toString();
-    if (payeeIds != null) json['payeeIds'] = payeeIds;
-    if (tagIds != null) json['tagIds'] = tagIds;
+    if (payeeIds != null) json['payeeIds'] = payeeIds!.map((e) => e.toString()).toList();
+    if (tagIds != null) json['tagIds'] = tagIds!.map((e) => e.toString()).toList();
     if (title != null) json['title'] = title;
     return json;
   }
@@ -11121,6 +19609,113 @@ class LedgerServiceV1ReportQueryRequest {
       title: title ?? this.title,
     );
   }
+
+  /// 二进制 proto 编码（MQTT 等二进制传输用；字段按编号升序写出）
+  Uint8List writeToBuffer() {
+    final w = ProtoWireWriter();
+    _writeTo(w);
+    return w.toBuffer();
+  }
+
+  void _writeTo(ProtoWireWriter w) {
+    // field 1: bookId
+    final f1 = bookId;
+    if (f1 != null) {
+      w.writeInt64(1, f1);
+    }
+    // field 2: minTime
+    final f2 = minTime;
+    if (f2 != null) {
+      w.writeInt64(2, f2);
+    }
+    // field 3: maxTime
+    final f3 = maxTime;
+    if (f3 != null) {
+      w.writeInt64(3, f3);
+    }
+    // field 4: title
+    final f4 = title;
+    if (f4 != null) {
+      w.writeString(4, f4);
+    }
+    // field 5: categoryIds
+    final f5 = categoryIds;
+    if (f5 != null) {
+      w.writePackedVarintList(5, f5);
+    }
+    // field 6: tagIds
+    final f6 = tagIds;
+    if (f6 != null) {
+      w.writePackedVarintList(6, f6);
+    }
+    // field 7: payeeIds
+    final f7 = payeeIds;
+    if (f7 != null) {
+      w.writePackedVarintList(7, f7);
+    }
+    // field 8: accountId
+    final f8 = accountId;
+    if (f8 != null) {
+      w.writeInt64(8, f8);
+    }
+  }
+
+  factory LedgerServiceV1ReportQueryRequest.fromBuffer(List<int> bytes) {
+    return LedgerServiceV1ReportQueryRequest._readFrom(ProtoWireReader(bytes));
+  }
+
+  static LedgerServiceV1ReportQueryRequest _readFrom(ProtoWireReader r) {
+    final m = LedgerServiceV1ReportQueryRequest();
+    while (r.next()) {
+      switch (r.fieldNumber) {
+        // field 1: bookId
+        case 1: {
+          m.bookId = r.readInt64();
+          break;
+        }
+        // field 2: minTime
+        case 2: {
+          m.minTime = r.readInt64();
+          break;
+        }
+        // field 3: maxTime
+        case 3: {
+          m.maxTime = r.readInt64();
+          break;
+        }
+        // field 4: title
+        case 4: {
+          m.title = r.readString();
+          break;
+        }
+        // field 5: categoryIds
+        case 5: {
+          m.categoryIds = r.readVarintList();
+          break;
+        }
+        // field 6: tagIds
+        case 6: {
+          m.tagIds = r.readVarintList();
+          break;
+        }
+        // field 7: payeeIds
+        case 7: {
+          m.payeeIds = r.readVarintList();
+          break;
+        }
+        // field 8: accountId
+        case 8: {
+          m.accountId = r.readInt64();
+          break;
+        }
+        default: {
+          r.skip();
+        }
+      }
+    }
+    return m;
+  }
+
 }
 
 /// 报表回应
@@ -11168,6 +19763,43 @@ class LedgerServiceV1ReportResponse {
       items: items ?? this.items,
     );
   }
+
+  /// 二进制 proto 编码（MQTT 等二进制传输用；字段按编号升序写出）
+  Uint8List writeToBuffer() {
+    final w = ProtoWireWriter();
+    _writeTo(w);
+    return w.toBuffer();
+  }
+
+  void _writeTo(ProtoWireWriter w) {
+    // field 1: items
+    final f1 = items;
+    if (f1 != null) {
+      for (final e in f1) { final cw = ProtoWireWriter(); e._writeTo(cw); w.writeRaw(1, cw.toBuffer()); }
+    }
+  }
+
+  factory LedgerServiceV1ReportResponse.fromBuffer(List<int> bytes) {
+    return LedgerServiceV1ReportResponse._readFrom(ProtoWireReader(bytes));
+  }
+
+  static LedgerServiceV1ReportResponse _readFrom(ProtoWireReader r) {
+    final m = LedgerServiceV1ReportResponse();
+    while (r.next()) {
+      switch (r.fieldNumber) {
+        // field 1: items
+        case 1: {
+          m.items = r.readNestedList().map(LedgerServiceV1ChartPoint._readFrom).toList();
+          break;
+        }
+        default: {
+          r.skip();
+        }
+      }
+    }
+    return m;
+  }
+
 }
 
 /// 图表数据点
@@ -11231,6 +19863,63 @@ class LedgerServiceV1ChartPoint {
       y: y ?? this.y,
     );
   }
+
+  /// 二进制 proto 编码（MQTT 等二进制传输用；字段按编号升序写出）
+  Uint8List writeToBuffer() {
+    final w = ProtoWireWriter();
+    _writeTo(w);
+    return w.toBuffer();
+  }
+
+  void _writeTo(ProtoWireWriter w) {
+    // field 1: x
+    final f1 = x;
+    if (f1 != null) {
+      w.writeString(1, f1);
+    }
+    // field 2: y
+    final f2 = y;
+    if (f2 != null) {
+      w.writeString(2, f2);
+    }
+    // field 3: percent
+    final f3 = percent;
+    if (f3 != null) {
+      w.writeString(3, f3);
+    }
+  }
+
+  factory LedgerServiceV1ChartPoint.fromBuffer(List<int> bytes) {
+    return LedgerServiceV1ChartPoint._readFrom(ProtoWireReader(bytes));
+  }
+
+  static LedgerServiceV1ChartPoint _readFrom(ProtoWireReader r) {
+    final m = LedgerServiceV1ChartPoint();
+    while (r.next()) {
+      switch (r.fieldNumber) {
+        // field 1: x
+        case 1: {
+          m.x = r.readString();
+          break;
+        }
+        // field 2: y
+        case 2: {
+          m.y = r.readString();
+          break;
+        }
+        // field 3: percent
+        case 3: {
+          m.percent = r.readString();
+          break;
+        }
+        default: {
+          r.skip();
+        }
+      }
+    }
+    return m;
+  }
+
 }
 
 /// 资产负债报表请求
@@ -11243,13 +19932,13 @@ class LedgerServiceV1BalanceReportRequest {
 
   factory LedgerServiceV1BalanceReportRequest.fromJson(Map<String, dynamic> json) {
     return LedgerServiceV1BalanceReportRequest(
-      bookId: json['bookId'] as int?,
+      bookId: json['bookId'] != null ? int.parse(json['bookId'].toString()) : null,
     );
   }
 
   Map<String, dynamic> toJson() {
     final json = <String, dynamic>{};
-    if (bookId != null) json['bookId'] = bookId;
+    if (bookId != null) json['bookId'] = bookId.toString();
     return json;
   }
 
@@ -11278,6 +19967,43 @@ class LedgerServiceV1BalanceReportRequest {
       bookId: bookId ?? this.bookId,
     );
   }
+
+  /// 二进制 proto 编码（MQTT 等二进制传输用；字段按编号升序写出）
+  Uint8List writeToBuffer() {
+    final w = ProtoWireWriter();
+    _writeTo(w);
+    return w.toBuffer();
+  }
+
+  void _writeTo(ProtoWireWriter w) {
+    // field 1: bookId
+    final f1 = bookId;
+    if (f1 != null) {
+      w.writeInt64(1, f1);
+    }
+  }
+
+  factory LedgerServiceV1BalanceReportRequest.fromBuffer(List<int> bytes) {
+    return LedgerServiceV1BalanceReportRequest._readFrom(ProtoWireReader(bytes));
+  }
+
+  static LedgerServiceV1BalanceReportRequest _readFrom(ProtoWireReader r) {
+    final m = LedgerServiceV1BalanceReportRequest();
+    while (r.next()) {
+      switch (r.fieldNumber) {
+        // field 1: bookId
+        case 1: {
+          m.bookId = r.readInt64();
+          break;
+        }
+        default: {
+          r.skip();
+        }
+      }
+    }
+    return m;
+  }
+
 }
 
 /// 资产负债报表回应
@@ -11341,6 +20067,63 @@ class LedgerServiceV1BalanceReportResponse {
       netWorth: netWorth ?? this.netWorth,
     );
   }
+
+  /// 二进制 proto 编码（MQTT 等二进制传输用；字段按编号升序写出）
+  Uint8List writeToBuffer() {
+    final w = ProtoWireWriter();
+    _writeTo(w);
+    return w.toBuffer();
+  }
+
+  void _writeTo(ProtoWireWriter w) {
+    // field 1: assets
+    final f1 = assets;
+    if (f1 != null) {
+      for (final e in f1) { final cw = ProtoWireWriter(); e._writeTo(cw); w.writeRaw(1, cw.toBuffer()); }
+    }
+    // field 2: debts
+    final f2 = debts;
+    if (f2 != null) {
+      for (final e in f2) { final cw = ProtoWireWriter(); e._writeTo(cw); w.writeRaw(2, cw.toBuffer()); }
+    }
+    // field 3: netWorth
+    final f3 = netWorth;
+    if (f3 != null) {
+      w.writeString(3, f3);
+    }
+  }
+
+  factory LedgerServiceV1BalanceReportResponse.fromBuffer(List<int> bytes) {
+    return LedgerServiceV1BalanceReportResponse._readFrom(ProtoWireReader(bytes));
+  }
+
+  static LedgerServiceV1BalanceReportResponse _readFrom(ProtoWireReader r) {
+    final m = LedgerServiceV1BalanceReportResponse();
+    while (r.next()) {
+      switch (r.fieldNumber) {
+        // field 1: assets
+        case 1: {
+          m.assets = r.readNestedList().map(LedgerServiceV1ChartPoint._readFrom).toList();
+          break;
+        }
+        // field 2: debts
+        case 2: {
+          m.debts = r.readNestedList().map(LedgerServiceV1ChartPoint._readFrom).toList();
+          break;
+        }
+        // field 3: netWorth
+        case 3: {
+          m.netWorth = r.readString();
+          break;
+        }
+        default: {
+          r.skip();
+        }
+      }
+    }
+    return m;
+  }
+
 }
 
 /// 成员管理服务（App BFF）
@@ -11384,7 +20167,9 @@ class TenantMemberServiceClient {
       throw ArgumentError('missing required field request.id');
     }
     final path = '/app/v1/tenant-members/${request.id}/accept';
-    final body = jsonEncode(request.toJson());
+    final bodyMap = request.toJson();
+    bodyMap.remove('id');
+    final body = jsonEncode(bodyMap);
     final result = await _transport.unary(path, 'PATCH', body, TransportMeta(
       service: 'TenantMemberService',
       method: 'AcceptInvite',
@@ -11397,7 +20182,9 @@ class TenantMemberServiceClient {
       throw ArgumentError('missing required field request.id');
     }
     final path = '/app/v1/tenant-members/${request.id}/reject';
-    final body = jsonEncode(request.toJson());
+    final bodyMap = request.toJson();
+    bodyMap.remove('id');
+    final body = jsonEncode(bodyMap);
     final result = await _transport.unary(path, 'PATCH', body, TransportMeta(
       service: 'TenantMemberService',
       method: 'RejectInvite',
@@ -11459,7 +20246,9 @@ class TenantMemberServiceClient {
       throw ArgumentError('missing required field request.id');
     }
     final path = '/app/v1/tenant-members/${request.id}';
-    final body = jsonEncode(request.toJson());
+    final bodyMap = request.toJson();
+    bodyMap.remove('id');
+    final body = jsonEncode(bodyMap);
     final result = await _transport.unary(path, 'PUT', body, TransportMeta(
       service: 'TenantMemberService',
       method: 'UpdateMembership',
@@ -11481,14 +20270,14 @@ class IdentityServiceV1ListMembersRequest {
   factory IdentityServiceV1ListMembersRequest.fromJson(Map<String, dynamic> json) {
     return IdentityServiceV1ListMembersRequest(
       status: json['status'] != null ? IdentityServiceV1Membership$Status.fromString(json['status'] as String) : null,
-      tenantId: json['tenantId'] as int?,
+      tenantId: json['tenantId'] != null ? int.parse(json['tenantId'].toString()) : null,
     );
   }
 
   Map<String, dynamic> toJson() {
     final json = <String, dynamic>{};
     if (status != null) json['status'] = status!.value;
-    if (tenantId != null) json['tenantId'] = tenantId;
+    if (tenantId != null) json['tenantId'] = tenantId.toString();
     return json;
   }
 
@@ -11521,22 +20310,73 @@ class IdentityServiceV1ListMembersRequest {
       tenantId: tenantId ?? this.tenantId,
     );
   }
+
+  /// 二进制 proto 编码（MQTT 等二进制传输用；字段按编号升序写出）
+  Uint8List writeToBuffer() {
+    final w = ProtoWireWriter();
+    _writeTo(w);
+    return w.toBuffer();
+  }
+
+  void _writeTo(ProtoWireWriter w) {
+    // field 1: tenantId
+    final f1 = tenantId;
+    if (f1 != null) {
+      w.writeInt64(1, f1);
+    }
+    // field 2: status
+    final f2 = status;
+    if (f2 != null) {
+      w.writeEnum(2, f2.wire); // IdentityServiceV1Membership$Status
+    }
+  }
+
+  factory IdentityServiceV1ListMembersRequest.fromBuffer(List<int> bytes) {
+    return IdentityServiceV1ListMembersRequest._readFrom(ProtoWireReader(bytes));
+  }
+
+  static IdentityServiceV1ListMembersRequest _readFrom(ProtoWireReader r) {
+    final m = IdentityServiceV1ListMembersRequest();
+    while (r.next()) {
+      switch (r.fieldNumber) {
+        // field 1: tenantId
+        case 1: {
+          m.tenantId = r.readInt64();
+          break;
+        }
+        // field 2: status
+        case 2: {
+          m.status = IdentityServiceV1Membership$Status.fromWire(r.readEnum());
+          break;
+        }
+        default: {
+          r.skip();
+        }
+      }
+    }
+    return m;
+  }
+
 }
 
 /// 成员状态
 enum IdentityServiceV1Membership$Status {
-  active('ACTIVE'),
-  disabled('DISABLED'),
-  expired('EXPIRED'),
-  invited('INVITED'),
-  pending('PENDING'),
-  rejected('REJECTED');
+  active('ACTIVE', 1),
+  disabled('DISABLED', 0),
+  expired('EXPIRED', 4),
+  invited('INVITED', 3),
+  pending('PENDING', 2),
+  rejected('REJECTED', 5);
 
   final String value;
-  const IdentityServiceV1Membership$Status(this.value);
+  /// proto 枚举数值（二进制 wire 编解码用，与 JSON 的 value 字符串互补）
+  final int wire;
+  const IdentityServiceV1Membership$Status(this.value, this.wire);
 
   static IdentityServiceV1Membership$Status fromString(String v) =>
     values.firstWhere((e) => e.value == v, orElse: () => throw ArgumentError('Unknown IdentityServiceV1Membership\$Status value: ' + v));
+  static IdentityServiceV1Membership$Status fromWire(int v) =>
+    values.firstWhere((e) => e.wire == v, orElse: () => throw ArgumentError('Unknown IdentityServiceV1Membership\$Status wire value: ' + v.toString()));
   @override
   String toString() => value;
 }
@@ -11594,6 +20434,53 @@ class IdentityServiceV1ListMembersResponse {
       total: total ?? this.total,
     );
   }
+
+  /// 二进制 proto 编码（MQTT 等二进制传输用；字段按编号升序写出）
+  Uint8List writeToBuffer() {
+    final w = ProtoWireWriter();
+    _writeTo(w);
+    return w.toBuffer();
+  }
+
+  void _writeTo(ProtoWireWriter w) {
+    // field 1: items
+    final f1 = items;
+    if (f1 != null) {
+      for (final e in f1) { final cw = ProtoWireWriter(); e._writeTo(cw); w.writeRaw(1, cw.toBuffer()); }
+    }
+    // field 2: total
+    final f2 = total;
+    if (f2 != null) {
+      w.writeInt64(2, f2);
+    }
+  }
+
+  factory IdentityServiceV1ListMembersResponse.fromBuffer(List<int> bytes) {
+    return IdentityServiceV1ListMembersResponse._readFrom(ProtoWireReader(bytes));
+  }
+
+  static IdentityServiceV1ListMembersResponse _readFrom(ProtoWireReader r) {
+    final m = IdentityServiceV1ListMembersResponse();
+    while (r.next()) {
+      switch (r.fieldNumber) {
+        // field 1: items
+        case 1: {
+          m.items = r.readNestedList().map(IdentityServiceV1MemberInfo._readFrom).toList();
+          break;
+        }
+        // field 2: total
+        case 2: {
+          m.total = r.readInt64();
+          break;
+        }
+        default: {
+          r.skip();
+        }
+      }
+    }
+    return m;
+  }
+
 }
 
 /// 成员信息（含用户名/昵称）
@@ -11624,30 +20511,30 @@ class IdentityServiceV1MemberInfo {
 
   factory IdentityServiceV1MemberInfo.fromJson(Map<String, dynamic> json) {
     return IdentityServiceV1MemberInfo(
-      id: json['id'] as int?,
+      id: json['id'] != null ? int.parse(json['id'].toString()) : null,
       isPrimary: json['isPrimary'] as bool?,
       joinedAt: json['joinedAt'] as String?,
       nickname: json['nickname'] as String?,
-      roleId: json['roleId'] as int?,
+      roleId: json['roleId'] != null ? int.parse(json['roleId'].toString()) : null,
       roleName: json['roleName'] as String?,
       status: json['status'] != null ? IdentityServiceV1Membership$Status.fromString(json['status'] as String) : null,
-      tenantId: json['tenantId'] as int?,
-      userId: json['userId'] as int?,
+      tenantId: json['tenantId'] != null ? int.parse(json['tenantId'].toString()) : null,
+      userId: json['userId'] != null ? int.parse(json['userId'].toString()) : null,
       username: json['username'] as String?,
     );
   }
 
   Map<String, dynamic> toJson() {
     final json = <String, dynamic>{};
-    if (id != null) json['id'] = id;
+    if (id != null) json['id'] = id.toString();
     if (isPrimary != null) json['isPrimary'] = isPrimary;
     if (joinedAt != null) json['joinedAt'] = joinedAt;
     if (nickname != null) json['nickname'] = nickname;
-    if (roleId != null) json['roleId'] = roleId;
+    if (roleId != null) json['roleId'] = roleId.toString();
     if (roleName != null) json['roleName'] = roleName;
     if (status != null) json['status'] = status!.value;
-    if (tenantId != null) json['tenantId'] = tenantId;
-    if (userId != null) json['userId'] = userId;
+    if (tenantId != null) json['tenantId'] = tenantId.toString();
+    if (userId != null) json['userId'] = userId.toString();
     if (username != null) json['username'] = username;
     return json;
   }
@@ -11713,6 +20600,133 @@ class IdentityServiceV1MemberInfo {
       username: username ?? this.username,
     );
   }
+
+  /// 二进制 proto 编码（MQTT 等二进制传输用；字段按编号升序写出）
+  Uint8List writeToBuffer() {
+    final w = ProtoWireWriter();
+    _writeTo(w);
+    return w.toBuffer();
+  }
+
+  void _writeTo(ProtoWireWriter w) {
+    // field 1: id
+    final f1 = id;
+    if (f1 != null) {
+      w.writeInt64(1, f1);
+    }
+    // field 2: userId
+    final f2 = userId;
+    if (f2 != null) {
+      w.writeInt64(2, f2);
+    }
+    // field 3: username
+    final f3 = username;
+    if (f3 != null) {
+      w.writeString(3, f3);
+    }
+    // field 4: nickname
+    final f4 = nickname;
+    if (f4 != null) {
+      w.writeString(4, f4);
+    }
+    // field 5: tenantId
+    final f5 = tenantId;
+    if (f5 != null) {
+      w.writeInt64(5, f5);
+    }
+    // field 6: roleId
+    final f6 = roleId;
+    if (f6 != null) {
+      w.writeInt64(6, f6);
+    }
+    // field 7: roleName
+    final f7 = roleName;
+    if (f7 != null) {
+      w.writeString(7, f7);
+    }
+    // field 8: status
+    final f8 = status;
+    if (f8 != null) {
+      w.writeEnum(8, f8.wire); // IdentityServiceV1Membership$Status
+    }
+    // field 9: isPrimary
+    final f9 = isPrimary;
+    if (f9 != null) {
+      w.writeBool(9, f9);
+    }
+    // field 10: joinedAt
+    final f10 = joinedAt;
+    if (f10 != null) {
+      w.writeTimestamp(10, f10);
+    }
+  }
+
+  factory IdentityServiceV1MemberInfo.fromBuffer(List<int> bytes) {
+    return IdentityServiceV1MemberInfo._readFrom(ProtoWireReader(bytes));
+  }
+
+  static IdentityServiceV1MemberInfo _readFrom(ProtoWireReader r) {
+    final m = IdentityServiceV1MemberInfo();
+    while (r.next()) {
+      switch (r.fieldNumber) {
+        // field 1: id
+        case 1: {
+          m.id = r.readInt64();
+          break;
+        }
+        // field 2: userId
+        case 2: {
+          m.userId = r.readInt64();
+          break;
+        }
+        // field 3: username
+        case 3: {
+          m.username = r.readString();
+          break;
+        }
+        // field 4: nickname
+        case 4: {
+          m.nickname = r.readString();
+          break;
+        }
+        // field 5: tenantId
+        case 5: {
+          m.tenantId = r.readInt64();
+          break;
+        }
+        // field 6: roleId
+        case 6: {
+          m.roleId = r.readInt64();
+          break;
+        }
+        // field 7: roleName
+        case 7: {
+          m.roleName = r.readString();
+          break;
+        }
+        // field 8: status
+        case 8: {
+          m.status = IdentityServiceV1Membership$Status.fromWire(r.readEnum());
+          break;
+        }
+        // field 9: isPrimary
+        case 9: {
+          m.isPrimary = r.readBool();
+          break;
+        }
+        // field 10: joinedAt
+        case 10: {
+          m.joinedAt = r.readTimestampIso();
+          break;
+        }
+        default: {
+          r.skip();
+        }
+      }
+    }
+    return m;
+  }
+
 }
 
 /// 请求 - 邀请用户
@@ -11729,16 +20743,16 @@ class IdentityServiceV1InviteMemberRequest {
 
   factory IdentityServiceV1InviteMemberRequest.fromJson(Map<String, dynamic> json) {
     return IdentityServiceV1InviteMemberRequest(
-      roleId: json['roleId'] as int?,
-      tenantId: json['tenantId'] as int?,
+      roleId: json['roleId'] != null ? int.parse(json['roleId'].toString()) : null,
+      tenantId: json['tenantId'] != null ? int.parse(json['tenantId'].toString()) : null,
       username: json['username'] as String?,
     );
   }
 
   Map<String, dynamic> toJson() {
     final json = <String, dynamic>{};
-    if (roleId != null) json['roleId'] = roleId;
-    if (tenantId != null) json['tenantId'] = tenantId;
+    if (roleId != null) json['roleId'] = roleId.toString();
+    if (tenantId != null) json['tenantId'] = tenantId.toString();
     if (username != null) json['username'] = username;
     return json;
   }
@@ -11776,6 +20790,63 @@ class IdentityServiceV1InviteMemberRequest {
       username: username ?? this.username,
     );
   }
+
+  /// 二进制 proto 编码（MQTT 等二进制传输用；字段按编号升序写出）
+  Uint8List writeToBuffer() {
+    final w = ProtoWireWriter();
+    _writeTo(w);
+    return w.toBuffer();
+  }
+
+  void _writeTo(ProtoWireWriter w) {
+    // field 1: tenantId
+    final f1 = tenantId;
+    if (f1 != null) {
+      w.writeInt64(1, f1);
+    }
+    // field 2: username
+    final f2 = username;
+    if (f2 != null) {
+      w.writeString(2, f2);
+    }
+    // field 3: roleId
+    final f3 = roleId;
+    if (f3 != null) {
+      w.writeInt64(3, f3);
+    }
+  }
+
+  factory IdentityServiceV1InviteMemberRequest.fromBuffer(List<int> bytes) {
+    return IdentityServiceV1InviteMemberRequest._readFrom(ProtoWireReader(bytes));
+  }
+
+  static IdentityServiceV1InviteMemberRequest _readFrom(ProtoWireReader r) {
+    final m = IdentityServiceV1InviteMemberRequest();
+    while (r.next()) {
+      switch (r.fieldNumber) {
+        // field 1: tenantId
+        case 1: {
+          m.tenantId = r.readInt64();
+          break;
+        }
+        // field 2: username
+        case 2: {
+          m.username = r.readString();
+          break;
+        }
+        // field 3: roleId
+        case 3: {
+          m.roleId = r.readInt64();
+          break;
+        }
+        default: {
+          r.skip();
+        }
+      }
+    }
+    return m;
+  }
+
 }
 
 /// 成员关联
@@ -11831,54 +20902,54 @@ class IdentityServiceV1Membership {
   factory IdentityServiceV1Membership.fromJson(Map<String, dynamic> json) {
     return IdentityServiceV1Membership(
       assignedAt: json['assignedAt'] as String?,
-      assignedBy: json['assignedBy'] as int?,
+      assignedBy: json['assignedBy'] != null ? int.parse(json['assignedBy'].toString()) : null,
       createdAt: json['createdAt'] as String?,
-      createdBy: json['createdBy'] as int?,
+      createdBy: json['createdBy'] != null ? int.parse(json['createdBy'].toString()) : null,
       deletedAt: json['deletedAt'] as String?,
-      deletedBy: json['deletedBy'] as int?,
+      deletedBy: json['deletedBy'] != null ? int.parse(json['deletedBy'].toString()) : null,
       endAt: json['endAt'] as String?,
-      id: json['id'] as int?,
+      id: json['id'] != null ? int.parse(json['id'].toString()) : null,
       isPrimary: json['isPrimary'] as bool?,
       joinedAt: json['joinedAt'] as String?,
-      orgUnitId: json['orgUnitId'] as int?,
-      orgUnitIds: (json['orgUnitIds'] as List<dynamic>?)?.map((e) => e as int).toList(),
-      positionId: json['positionId'] as int?,
-      positionIds: (json['positionIds'] as List<dynamic>?)?.map((e) => e as int).toList(),
-      roleId: json['roleId'] as int?,
-      roleIds: (json['roleIds'] as List<dynamic>?)?.map((e) => e as int).toList(),
+      orgUnitId: json['orgUnitId'] != null ? int.parse(json['orgUnitId'].toString()) : null,
+      orgUnitIds: (json['orgUnitIds'] as List<dynamic>?)?.map((e) => int.parse(e.toString())).toList(),
+      positionId: json['positionId'] != null ? int.parse(json['positionId'].toString()) : null,
+      positionIds: (json['positionIds'] as List<dynamic>?)?.map((e) => int.parse(e.toString())).toList(),
+      roleId: json['roleId'] != null ? int.parse(json['roleId'].toString()) : null,
+      roleIds: (json['roleIds'] as List<dynamic>?)?.map((e) => int.parse(e.toString())).toList(),
       startAt: json['startAt'] as String?,
       status: json['status'] != null ? IdentityServiceV1Membership$Status.fromString(json['status'] as String) : null,
-      tenantId: json['tenantId'] as int?,
+      tenantId: json['tenantId'] != null ? int.parse(json['tenantId'].toString()) : null,
       updatedAt: json['updatedAt'] as String?,
-      updatedBy: json['updatedBy'] as int?,
-      userId: json['userId'] as int?,
+      updatedBy: json['updatedBy'] != null ? int.parse(json['updatedBy'].toString()) : null,
+      userId: json['userId'] != null ? int.parse(json['userId'].toString()) : null,
     );
   }
 
   Map<String, dynamic> toJson() {
     final json = <String, dynamic>{};
     if (assignedAt != null) json['assignedAt'] = assignedAt;
-    if (assignedBy != null) json['assignedBy'] = assignedBy;
+    if (assignedBy != null) json['assignedBy'] = assignedBy.toString();
     if (createdAt != null) json['createdAt'] = createdAt;
-    if (createdBy != null) json['createdBy'] = createdBy;
+    if (createdBy != null) json['createdBy'] = createdBy.toString();
     if (deletedAt != null) json['deletedAt'] = deletedAt;
-    if (deletedBy != null) json['deletedBy'] = deletedBy;
+    if (deletedBy != null) json['deletedBy'] = deletedBy.toString();
     if (endAt != null) json['endAt'] = endAt;
-    if (id != null) json['id'] = id;
+    if (id != null) json['id'] = id.toString();
     if (isPrimary != null) json['isPrimary'] = isPrimary;
     if (joinedAt != null) json['joinedAt'] = joinedAt;
-    if (orgUnitId != null) json['orgUnitId'] = orgUnitId;
-    if (orgUnitIds != null) json['orgUnitIds'] = orgUnitIds;
-    if (positionId != null) json['positionId'] = positionId;
-    if (positionIds != null) json['positionIds'] = positionIds;
-    if (roleId != null) json['roleId'] = roleId;
-    if (roleIds != null) json['roleIds'] = roleIds;
+    if (orgUnitId != null) json['orgUnitId'] = orgUnitId.toString();
+    if (orgUnitIds != null) json['orgUnitIds'] = orgUnitIds!.map((e) => e.toString()).toList();
+    if (positionId != null) json['positionId'] = positionId.toString();
+    if (positionIds != null) json['positionIds'] = positionIds!.map((e) => e.toString()).toList();
+    if (roleId != null) json['roleId'] = roleId.toString();
+    if (roleIds != null) json['roleIds'] = roleIds!.map((e) => e.toString()).toList();
     if (startAt != null) json['startAt'] = startAt;
     if (status != null) json['status'] = status!.value;
-    if (tenantId != null) json['tenantId'] = tenantId;
+    if (tenantId != null) json['tenantId'] = tenantId.toString();
     if (updatedAt != null) json['updatedAt'] = updatedAt;
-    if (updatedBy != null) json['updatedBy'] = updatedBy;
-    if (userId != null) json['userId'] = userId;
+    if (updatedBy != null) json['updatedBy'] = updatedBy.toString();
+    if (userId != null) json['userId'] = userId.toString();
     return json;
   }
 
@@ -11991,6 +21062,253 @@ class IdentityServiceV1Membership {
       userId: userId ?? this.userId,
     );
   }
+
+  /// 二进制 proto 编码（MQTT 等二进制传输用；字段按编号升序写出）
+  Uint8List writeToBuffer() {
+    final w = ProtoWireWriter();
+    _writeTo(w);
+    return w.toBuffer();
+  }
+
+  void _writeTo(ProtoWireWriter w) {
+    // field 1: id
+    final f1 = id;
+    if (f1 != null) {
+      w.writeInt64(1, f1);
+    }
+    // field 2: userId
+    final f2 = userId;
+    if (f2 != null) {
+      w.writeInt64(2, f2);
+    }
+    // field 3: tenantId
+    final f3 = tenantId;
+    if (f3 != null) {
+      w.writeInt64(3, f3);
+    }
+    // field 4: isPrimary
+    final f4 = isPrimary;
+    if (f4 != null) {
+      w.writeBool(4, f4);
+    }
+    // field 5: status
+    final f5 = status;
+    if (f5 != null) {
+      w.writeEnum(5, f5.wire); // IdentityServiceV1Membership$Status
+    }
+    // field 6: assignedAt
+    final f6 = assignedAt;
+    if (f6 != null) {
+      w.writeTimestamp(6, f6);
+    }
+    // field 7: assignedBy
+    final f7 = assignedBy;
+    if (f7 != null) {
+      w.writeInt64(7, f7);
+    }
+    // field 8: joinedAt
+    final f8 = joinedAt;
+    if (f8 != null) {
+      w.writeTimestamp(8, f8);
+    }
+    // field 9: startAt
+    final f9 = startAt;
+    if (f9 != null) {
+      w.writeTimestamp(9, f9);
+    }
+    // field 10: endAt
+    final f10 = endAt;
+    if (f10 != null) {
+      w.writeTimestamp(10, f10);
+    }
+    // field 20: roleId
+    final f20 = roleId;
+    if (f20 != null) {
+      w.writeInt64(20, f20);
+    }
+    // field 21: roleIds
+    final f21 = roleIds;
+    if (f21 != null) {
+      w.writePackedVarintList(21, f21);
+    }
+    // field 22: positionId
+    final f22 = positionId;
+    if (f22 != null) {
+      w.writeInt64(22, f22);
+    }
+    // field 23: positionIds
+    final f23 = positionIds;
+    if (f23 != null) {
+      w.writePackedVarintList(23, f23);
+    }
+    // field 24: orgUnitId
+    final f24 = orgUnitId;
+    if (f24 != null) {
+      w.writeInt64(24, f24);
+    }
+    // field 25: orgUnitIds
+    final f25 = orgUnitIds;
+    if (f25 != null) {
+      w.writePackedVarintList(25, f25);
+    }
+    // field 100: createdBy
+    final f100 = createdBy;
+    if (f100 != null) {
+      w.writeInt64(100, f100);
+    }
+    // field 101: updatedBy
+    final f101 = updatedBy;
+    if (f101 != null) {
+      w.writeInt64(101, f101);
+    }
+    // field 102: deletedBy
+    final f102 = deletedBy;
+    if (f102 != null) {
+      w.writeInt64(102, f102);
+    }
+    // field 200: createdAt
+    final f200 = createdAt;
+    if (f200 != null) {
+      w.writeTimestamp(200, f200);
+    }
+    // field 201: updatedAt
+    final f201 = updatedAt;
+    if (f201 != null) {
+      w.writeTimestamp(201, f201);
+    }
+    // field 202: deletedAt
+    final f202 = deletedAt;
+    if (f202 != null) {
+      w.writeTimestamp(202, f202);
+    }
+  }
+
+  factory IdentityServiceV1Membership.fromBuffer(List<int> bytes) {
+    return IdentityServiceV1Membership._readFrom(ProtoWireReader(bytes));
+  }
+
+  static IdentityServiceV1Membership _readFrom(ProtoWireReader r) {
+    final m = IdentityServiceV1Membership();
+    while (r.next()) {
+      switch (r.fieldNumber) {
+        // field 1: id
+        case 1: {
+          m.id = r.readInt64();
+          break;
+        }
+        // field 2: userId
+        case 2: {
+          m.userId = r.readInt64();
+          break;
+        }
+        // field 3: tenantId
+        case 3: {
+          m.tenantId = r.readInt64();
+          break;
+        }
+        // field 4: isPrimary
+        case 4: {
+          m.isPrimary = r.readBool();
+          break;
+        }
+        // field 5: status
+        case 5: {
+          m.status = IdentityServiceV1Membership$Status.fromWire(r.readEnum());
+          break;
+        }
+        // field 6: assignedAt
+        case 6: {
+          m.assignedAt = r.readTimestampIso();
+          break;
+        }
+        // field 7: assignedBy
+        case 7: {
+          m.assignedBy = r.readInt64();
+          break;
+        }
+        // field 8: joinedAt
+        case 8: {
+          m.joinedAt = r.readTimestampIso();
+          break;
+        }
+        // field 9: startAt
+        case 9: {
+          m.startAt = r.readTimestampIso();
+          break;
+        }
+        // field 10: endAt
+        case 10: {
+          m.endAt = r.readTimestampIso();
+          break;
+        }
+        // field 20: roleId
+        case 20: {
+          m.roleId = r.readInt64();
+          break;
+        }
+        // field 21: roleIds
+        case 21: {
+          m.roleIds = r.readVarintList();
+          break;
+        }
+        // field 22: positionId
+        case 22: {
+          m.positionId = r.readInt64();
+          break;
+        }
+        // field 23: positionIds
+        case 23: {
+          m.positionIds = r.readVarintList();
+          break;
+        }
+        // field 24: orgUnitId
+        case 24: {
+          m.orgUnitId = r.readInt64();
+          break;
+        }
+        // field 25: orgUnitIds
+        case 25: {
+          m.orgUnitIds = r.readVarintList();
+          break;
+        }
+        // field 100: createdBy
+        case 100: {
+          m.createdBy = r.readInt64();
+          break;
+        }
+        // field 101: updatedBy
+        case 101: {
+          m.updatedBy = r.readInt64();
+          break;
+        }
+        // field 102: deletedBy
+        case 102: {
+          m.deletedBy = r.readInt64();
+          break;
+        }
+        // field 200: createdAt
+        case 200: {
+          m.createdAt = r.readTimestampIso();
+          break;
+        }
+        // field 201: updatedAt
+        case 201: {
+          m.updatedAt = r.readTimestampIso();
+          break;
+        }
+        // field 202: deletedAt
+        case 202: {
+          m.deletedAt = r.readTimestampIso();
+          break;
+        }
+        default: {
+          r.skip();
+        }
+      }
+    }
+    return m;
+  }
+
 }
 
 /// 请求 - 接受邀请
@@ -12003,13 +21321,13 @@ class IdentityServiceV1AcceptInviteRequest {
 
   factory IdentityServiceV1AcceptInviteRequest.fromJson(Map<String, dynamic> json) {
     return IdentityServiceV1AcceptInviteRequest(
-      id: json['id'] as int?,
+      id: json['id'] != null ? int.parse(json['id'].toString()) : null,
     );
   }
 
   Map<String, dynamic> toJson() {
     final json = <String, dynamic>{};
-    if (id != null) json['id'] = id;
+    if (id != null) json['id'] = id.toString();
     return json;
   }
 
@@ -12038,6 +21356,43 @@ class IdentityServiceV1AcceptInviteRequest {
       id: id ?? this.id,
     );
   }
+
+  /// 二进制 proto 编码（MQTT 等二进制传输用；字段按编号升序写出）
+  Uint8List writeToBuffer() {
+    final w = ProtoWireWriter();
+    _writeTo(w);
+    return w.toBuffer();
+  }
+
+  void _writeTo(ProtoWireWriter w) {
+    // field 1: id
+    final f1 = id;
+    if (f1 != null) {
+      w.writeInt64(1, f1);
+    }
+  }
+
+  factory IdentityServiceV1AcceptInviteRequest.fromBuffer(List<int> bytes) {
+    return IdentityServiceV1AcceptInviteRequest._readFrom(ProtoWireReader(bytes));
+  }
+
+  static IdentityServiceV1AcceptInviteRequest _readFrom(ProtoWireReader r) {
+    final m = IdentityServiceV1AcceptInviteRequest();
+    while (r.next()) {
+      switch (r.fieldNumber) {
+        // field 1: id
+        case 1: {
+          m.id = r.readInt64();
+          break;
+        }
+        default: {
+          r.skip();
+        }
+      }
+    }
+    return m;
+  }
+
 }
 
 /// 请求 - 拒绝邀请
@@ -12050,13 +21405,13 @@ class IdentityServiceV1RejectInviteRequest {
 
   factory IdentityServiceV1RejectInviteRequest.fromJson(Map<String, dynamic> json) {
     return IdentityServiceV1RejectInviteRequest(
-      id: json['id'] as int?,
+      id: json['id'] != null ? int.parse(json['id'].toString()) : null,
     );
   }
 
   Map<String, dynamic> toJson() {
     final json = <String, dynamic>{};
-    if (id != null) json['id'] = id;
+    if (id != null) json['id'] = id.toString();
     return json;
   }
 
@@ -12085,6 +21440,43 @@ class IdentityServiceV1RejectInviteRequest {
       id: id ?? this.id,
     );
   }
+
+  /// 二进制 proto 编码（MQTT 等二进制传输用；字段按编号升序写出）
+  Uint8List writeToBuffer() {
+    final w = ProtoWireWriter();
+    _writeTo(w);
+    return w.toBuffer();
+  }
+
+  void _writeTo(ProtoWireWriter w) {
+    // field 1: id
+    final f1 = id;
+    if (f1 != null) {
+      w.writeInt64(1, f1);
+    }
+  }
+
+  factory IdentityServiceV1RejectInviteRequest.fromBuffer(List<int> bytes) {
+    return IdentityServiceV1RejectInviteRequest._readFrom(ProtoWireReader(bytes));
+  }
+
+  static IdentityServiceV1RejectInviteRequest _readFrom(ProtoWireReader r) {
+    final m = IdentityServiceV1RejectInviteRequest();
+    while (r.next()) {
+      switch (r.fieldNumber) {
+        // field 1: id
+        case 1: {
+          m.id = r.readInt64();
+          break;
+        }
+        default: {
+          r.skip();
+        }
+      }
+    }
+    return m;
+  }
+
 }
 
 /// 请求 - 移除成员
@@ -12099,15 +21491,15 @@ class IdentityServiceV1RemoveMemberRequest {
 
   factory IdentityServiceV1RemoveMemberRequest.fromJson(Map<String, dynamic> json) {
     return IdentityServiceV1RemoveMemberRequest(
-      tenantId: json['tenantId'] as int?,
-      userId: json['userId'] as int?,
+      tenantId: json['tenantId'] != null ? int.parse(json['tenantId'].toString()) : null,
+      userId: json['userId'] != null ? int.parse(json['userId'].toString()) : null,
     );
   }
 
   Map<String, dynamic> toJson() {
     final json = <String, dynamic>{};
-    if (tenantId != null) json['tenantId'] = tenantId;
-    if (userId != null) json['userId'] = userId;
+    if (tenantId != null) json['tenantId'] = tenantId.toString();
+    if (userId != null) json['userId'] = userId.toString();
     return json;
   }
 
@@ -12140,6 +21532,53 @@ class IdentityServiceV1RemoveMemberRequest {
       userId: userId ?? this.userId,
     );
   }
+
+  /// 二进制 proto 编码（MQTT 等二进制传输用；字段按编号升序写出）
+  Uint8List writeToBuffer() {
+    final w = ProtoWireWriter();
+    _writeTo(w);
+    return w.toBuffer();
+  }
+
+  void _writeTo(ProtoWireWriter w) {
+    // field 1: tenantId
+    final f1 = tenantId;
+    if (f1 != null) {
+      w.writeInt64(1, f1);
+    }
+    // field 2: userId
+    final f2 = userId;
+    if (f2 != null) {
+      w.writeInt64(2, f2);
+    }
+  }
+
+  factory IdentityServiceV1RemoveMemberRequest.fromBuffer(List<int> bytes) {
+    return IdentityServiceV1RemoveMemberRequest._readFrom(ProtoWireReader(bytes));
+  }
+
+  static IdentityServiceV1RemoveMemberRequest _readFrom(ProtoWireReader r) {
+    final m = IdentityServiceV1RemoveMemberRequest();
+    while (r.next()) {
+      switch (r.fieldNumber) {
+        // field 1: tenantId
+        case 1: {
+          m.tenantId = r.readInt64();
+          break;
+        }
+        // field 2: userId
+        case 2: {
+          m.userId = r.readInt64();
+          break;
+        }
+        default: {
+          r.skip();
+        }
+      }
+    }
+    return m;
+  }
+
 }
 
 /// 请求 - 列出我的租户
@@ -12152,13 +21591,13 @@ class IdentityServiceV1ListMyTenantsRequest {
 
   factory IdentityServiceV1ListMyTenantsRequest.fromJson(Map<String, dynamic> json) {
     return IdentityServiceV1ListMyTenantsRequest(
-      userId: json['userId'] as int?,
+      userId: json['userId'] != null ? int.parse(json['userId'].toString()) : null,
     );
   }
 
   Map<String, dynamic> toJson() {
     final json = <String, dynamic>{};
-    if (userId != null) json['userId'] = userId;
+    if (userId != null) json['userId'] = userId.toString();
     return json;
   }
 
@@ -12187,6 +21626,43 @@ class IdentityServiceV1ListMyTenantsRequest {
       userId: userId ?? this.userId,
     );
   }
+
+  /// 二进制 proto 编码（MQTT 等二进制传输用；字段按编号升序写出）
+  Uint8List writeToBuffer() {
+    final w = ProtoWireWriter();
+    _writeTo(w);
+    return w.toBuffer();
+  }
+
+  void _writeTo(ProtoWireWriter w) {
+    // field 1: userId
+    final f1 = userId;
+    if (f1 != null) {
+      w.writeInt64(1, f1);
+    }
+  }
+
+  factory IdentityServiceV1ListMyTenantsRequest.fromBuffer(List<int> bytes) {
+    return IdentityServiceV1ListMyTenantsRequest._readFrom(ProtoWireReader(bytes));
+  }
+
+  static IdentityServiceV1ListMyTenantsRequest _readFrom(ProtoWireReader r) {
+    final m = IdentityServiceV1ListMyTenantsRequest();
+    while (r.next()) {
+      switch (r.fieldNumber) {
+        // field 1: userId
+        case 1: {
+          m.userId = r.readInt64();
+          break;
+        }
+        default: {
+          r.skip();
+        }
+      }
+    }
+    return m;
+  }
+
 }
 
 /// 回应 - 我的租户列表
@@ -12242,6 +21718,53 @@ class IdentityServiceV1ListMyTenantsResponse {
       total: total ?? this.total,
     );
   }
+
+  /// 二进制 proto 编码（MQTT 等二进制传输用；字段按编号升序写出）
+  Uint8List writeToBuffer() {
+    final w = ProtoWireWriter();
+    _writeTo(w);
+    return w.toBuffer();
+  }
+
+  void _writeTo(ProtoWireWriter w) {
+    // field 1: items
+    final f1 = items;
+    if (f1 != null) {
+      for (final e in f1) { final cw = ProtoWireWriter(); e._writeTo(cw); w.writeRaw(1, cw.toBuffer()); }
+    }
+    // field 2: total
+    final f2 = total;
+    if (f2 != null) {
+      w.writeInt64(2, f2);
+    }
+  }
+
+  factory IdentityServiceV1ListMyTenantsResponse.fromBuffer(List<int> bytes) {
+    return IdentityServiceV1ListMyTenantsResponse._readFrom(ProtoWireReader(bytes));
+  }
+
+  static IdentityServiceV1ListMyTenantsResponse _readFrom(ProtoWireReader r) {
+    final m = IdentityServiceV1ListMyTenantsResponse();
+    while (r.next()) {
+      switch (r.fieldNumber) {
+        // field 1: items
+        case 1: {
+          m.items = r.readNestedList().map(IdentityServiceV1TenantMembershipInfo._readFrom).toList();
+          break;
+        }
+        // field 2: total
+        case 2: {
+          m.total = r.readInt64();
+          break;
+        }
+        default: {
+          r.skip();
+        }
+      }
+    }
+    return m;
+  }
+
 }
 
 /// 租户信息（含成员角色）
@@ -12267,11 +21790,11 @@ class IdentityServiceV1TenantMembershipInfo {
   factory IdentityServiceV1TenantMembershipInfo.fromJson(Map<String, dynamic> json) {
     return IdentityServiceV1TenantMembershipInfo(
       isPrimary: json['isPrimary'] as bool?,
-      membershipId: json['membershipId'] as int?,
-      roleId: json['roleId'] as int?,
+      membershipId: json['membershipId'] != null ? int.parse(json['membershipId'].toString()) : null,
+      roleId: json['roleId'] != null ? int.parse(json['roleId'].toString()) : null,
       roleName: json['roleName'] as String?,
       status: json['status'] != null ? IdentityServiceV1Membership$Status.fromString(json['status'] as String) : null,
-      tenantId: json['tenantId'] as int?,
+      tenantId: json['tenantId'] != null ? int.parse(json['tenantId'].toString()) : null,
       tenantName: json['tenantName'] as String?,
     );
   }
@@ -12279,11 +21802,11 @@ class IdentityServiceV1TenantMembershipInfo {
   Map<String, dynamic> toJson() {
     final json = <String, dynamic>{};
     if (isPrimary != null) json['isPrimary'] = isPrimary;
-    if (membershipId != null) json['membershipId'] = membershipId;
-    if (roleId != null) json['roleId'] = roleId;
+    if (membershipId != null) json['membershipId'] = membershipId.toString();
+    if (roleId != null) json['roleId'] = roleId.toString();
     if (roleName != null) json['roleName'] = roleName;
     if (status != null) json['status'] = status!.value;
-    if (tenantId != null) json['tenantId'] = tenantId;
+    if (tenantId != null) json['tenantId'] = tenantId.toString();
     if (tenantName != null) json['tenantName'] = tenantName;
     return json;
   }
@@ -12337,6 +21860,103 @@ class IdentityServiceV1TenantMembershipInfo {
       tenantName: tenantName ?? this.tenantName,
     );
   }
+
+  /// 二进制 proto 编码（MQTT 等二进制传输用；字段按编号升序写出）
+  Uint8List writeToBuffer() {
+    final w = ProtoWireWriter();
+    _writeTo(w);
+    return w.toBuffer();
+  }
+
+  void _writeTo(ProtoWireWriter w) {
+    // field 1: tenantId
+    final f1 = tenantId;
+    if (f1 != null) {
+      w.writeInt64(1, f1);
+    }
+    // field 2: tenantName
+    final f2 = tenantName;
+    if (f2 != null) {
+      w.writeString(2, f2);
+    }
+    // field 3: membershipId
+    final f3 = membershipId;
+    if (f3 != null) {
+      w.writeInt64(3, f3);
+    }
+    // field 4: roleId
+    final f4 = roleId;
+    if (f4 != null) {
+      w.writeInt64(4, f4);
+    }
+    // field 5: roleName
+    final f5 = roleName;
+    if (f5 != null) {
+      w.writeString(5, f5);
+    }
+    // field 6: status
+    final f6 = status;
+    if (f6 != null) {
+      w.writeEnum(6, f6.wire); // IdentityServiceV1Membership$Status
+    }
+    // field 7: isPrimary
+    final f7 = isPrimary;
+    if (f7 != null) {
+      w.writeBool(7, f7);
+    }
+  }
+
+  factory IdentityServiceV1TenantMembershipInfo.fromBuffer(List<int> bytes) {
+    return IdentityServiceV1TenantMembershipInfo._readFrom(ProtoWireReader(bytes));
+  }
+
+  static IdentityServiceV1TenantMembershipInfo _readFrom(ProtoWireReader r) {
+    final m = IdentityServiceV1TenantMembershipInfo();
+    while (r.next()) {
+      switch (r.fieldNumber) {
+        // field 1: tenantId
+        case 1: {
+          m.tenantId = r.readInt64();
+          break;
+        }
+        // field 2: tenantName
+        case 2: {
+          m.tenantName = r.readString();
+          break;
+        }
+        // field 3: membershipId
+        case 3: {
+          m.membershipId = r.readInt64();
+          break;
+        }
+        // field 4: roleId
+        case 4: {
+          m.roleId = r.readInt64();
+          break;
+        }
+        // field 5: roleName
+        case 5: {
+          m.roleName = r.readString();
+          break;
+        }
+        // field 6: status
+        case 6: {
+          m.status = IdentityServiceV1Membership$Status.fromWire(r.readEnum());
+          break;
+        }
+        // field 7: isPrimary
+        case 7: {
+          m.isPrimary = r.readBool();
+          break;
+        }
+        default: {
+          r.skip();
+        }
+      }
+    }
+    return m;
+  }
+
 }
 
 /// 请求 - 获取成员详情
@@ -12349,13 +21969,13 @@ class IdentityServiceV1GetMembershipRequest {
 
   factory IdentityServiceV1GetMembershipRequest.fromJson(Map<String, dynamic> json) {
     return IdentityServiceV1GetMembershipRequest(
-      id: json['id'] as int?,
+      id: json['id'] != null ? int.parse(json['id'].toString()) : null,
     );
   }
 
   Map<String, dynamic> toJson() {
     final json = <String, dynamic>{};
-    if (id != null) json['id'] = id;
+    if (id != null) json['id'] = id.toString();
     return json;
   }
 
@@ -12384,6 +22004,43 @@ class IdentityServiceV1GetMembershipRequest {
       id: id ?? this.id,
     );
   }
+
+  /// 二进制 proto 编码（MQTT 等二进制传输用；字段按编号升序写出）
+  Uint8List writeToBuffer() {
+    final w = ProtoWireWriter();
+    _writeTo(w);
+    return w.toBuffer();
+  }
+
+  void _writeTo(ProtoWireWriter w) {
+    // field 1: id
+    final f1 = id;
+    if (f1 != null) {
+      w.writeInt64(1, f1);
+    }
+  }
+
+  factory IdentityServiceV1GetMembershipRequest.fromBuffer(List<int> bytes) {
+    return IdentityServiceV1GetMembershipRequest._readFrom(ProtoWireReader(bytes));
+  }
+
+  static IdentityServiceV1GetMembershipRequest _readFrom(ProtoWireReader r) {
+    final m = IdentityServiceV1GetMembershipRequest();
+    while (r.next()) {
+      switch (r.fieldNumber) {
+        // field 1: id
+        case 1: {
+          m.id = r.readInt64();
+          break;
+        }
+        default: {
+          r.skip();
+        }
+      }
+    }
+    return m;
+  }
+
 }
 
 /// 请求 - 更新成员
@@ -12404,7 +22061,7 @@ class IdentityServiceV1UpdateMembershipRequest {
     return IdentityServiceV1UpdateMembershipRequest(
       allowMissing: json['allowMissing'] as bool?,
       data: json['data'] != null ? IdentityServiceV1Membership.fromJson(json['data'] as Map<String, dynamic>) : null,
-      id: json['id'] as int?,
+      id: json['id'] != null ? int.parse(json['id'].toString()) : null,
       updateMask: json['updateMask'] as String?,
     );
   }
@@ -12413,7 +22070,7 @@ class IdentityServiceV1UpdateMembershipRequest {
     final json = <String, dynamic>{};
     if (allowMissing != null) json['allowMissing'] = allowMissing;
     if (data != null) json['data'] = data!.toJson();
-    if (id != null) json['id'] = id;
+    if (id != null) json['id'] = id.toString();
     if (updateMask != null) json['updateMask'] = updateMask;
     return json;
   }
@@ -12455,6 +22112,73 @@ class IdentityServiceV1UpdateMembershipRequest {
       updateMask: updateMask ?? this.updateMask,
     );
   }
+
+  /// 二进制 proto 编码（MQTT 等二进制传输用；字段按编号升序写出）
+  Uint8List writeToBuffer() {
+    final w = ProtoWireWriter();
+    _writeTo(w);
+    return w.toBuffer();
+  }
+
+  void _writeTo(ProtoWireWriter w) {
+    // field 1: id
+    final f1 = id;
+    if (f1 != null) {
+      w.writeInt64(1, f1);
+    }
+    // field 2: data
+    final f2 = data;
+    if (f2 != null) {
+      final cw = ProtoWireWriter(); f2._writeTo(cw); w.writeRaw(2, cw.toBuffer()); // IdentityServiceV1Membership
+    }
+    // field 3: updateMask
+    final f3 = updateMask;
+    if (f3 != null) {
+      w.writeFieldMask(3, f3);
+    }
+    // field 4: allowMissing
+    final f4 = allowMissing;
+    if (f4 != null) {
+      w.writeBool(4, f4);
+    }
+  }
+
+  factory IdentityServiceV1UpdateMembershipRequest.fromBuffer(List<int> bytes) {
+    return IdentityServiceV1UpdateMembershipRequest._readFrom(ProtoWireReader(bytes));
+  }
+
+  static IdentityServiceV1UpdateMembershipRequest _readFrom(ProtoWireReader r) {
+    final m = IdentityServiceV1UpdateMembershipRequest();
+    while (r.next()) {
+      switch (r.fieldNumber) {
+        // field 1: id
+        case 1: {
+          m.id = r.readInt64();
+          break;
+        }
+        // field 2: data
+        case 2: {
+          m.data = IdentityServiceV1Membership._readFrom(r.readNested());
+          break;
+        }
+        // field 3: updateMask
+        case 3: {
+          m.updateMask = r.readFieldMaskText();
+          break;
+        }
+        // field 4: allowMissing
+        case 4: {
+          m.allowMissing = r.readBool();
+          break;
+        }
+        default: {
+          r.skip();
+        }
+      }
+    }
+    return m;
+  }
+
 }
 
 /// 用户个人资料服务
@@ -12561,7 +22285,7 @@ class IdentityServiceV1UpdateUserRequest {
     return IdentityServiceV1UpdateUserRequest(
       allowMissing: json['allowMissing'] as bool?,
       data: json['data'] != null ? IdentityServiceV1User.fromJson(json['data'] as Map<String, dynamic>) : null,
-      id: json['id'] as int?,
+      id: json['id'] != null ? int.parse(json['id'].toString()) : null,
       password: json['password'] as String?,
       updateMask: json['updateMask'] as String?,
     );
@@ -12571,7 +22295,7 @@ class IdentityServiceV1UpdateUserRequest {
     final json = <String, dynamic>{};
     if (allowMissing != null) json['allowMissing'] = allowMissing;
     if (data != null) json['data'] = data!.toJson();
-    if (id != null) json['id'] = id;
+    if (id != null) json['id'] = id.toString();
     if (password != null) json['password'] = password;
     if (updateMask != null) json['updateMask'] = updateMask;
     return json;
@@ -12618,6 +22342,83 @@ class IdentityServiceV1UpdateUserRequest {
       updateMask: updateMask ?? this.updateMask,
     );
   }
+
+  /// 二进制 proto 编码（MQTT 等二进制传输用；字段按编号升序写出）
+  Uint8List writeToBuffer() {
+    final w = ProtoWireWriter();
+    _writeTo(w);
+    return w.toBuffer();
+  }
+
+  void _writeTo(ProtoWireWriter w) {
+    // field 1: id
+    final f1 = id;
+    if (f1 != null) {
+      w.writeInt64(1, f1);
+    }
+    // field 2: data
+    final f2 = data;
+    if (f2 != null) {
+      final cw = ProtoWireWriter(); f2._writeTo(cw); w.writeRaw(2, cw.toBuffer()); // IdentityServiceV1User
+    }
+    // field 3: password
+    final f3 = password;
+    if (f3 != null) {
+      w.writeString(3, f3);
+    }
+    // field 4: updateMask
+    final f4 = updateMask;
+    if (f4 != null) {
+      w.writeFieldMask(4, f4);
+    }
+    // field 5: allowMissing
+    final f5 = allowMissing;
+    if (f5 != null) {
+      w.writeBool(5, f5);
+    }
+  }
+
+  factory IdentityServiceV1UpdateUserRequest.fromBuffer(List<int> bytes) {
+    return IdentityServiceV1UpdateUserRequest._readFrom(ProtoWireReader(bytes));
+  }
+
+  static IdentityServiceV1UpdateUserRequest _readFrom(ProtoWireReader r) {
+    final m = IdentityServiceV1UpdateUserRequest();
+    while (r.next()) {
+      switch (r.fieldNumber) {
+        // field 1: id
+        case 1: {
+          m.id = r.readInt64();
+          break;
+        }
+        // field 2: data
+        case 2: {
+          m.data = IdentityServiceV1User._readFrom(r.readNested());
+          break;
+        }
+        // field 3: password
+        case 3: {
+          m.password = r.readString();
+          break;
+        }
+        // field 4: updateMask
+        case 4: {
+          m.updateMask = r.readFieldMaskText();
+          break;
+        }
+        // field 5: allowMissing
+        case 5: {
+          m.allowMissing = r.readBool();
+          break;
+        }
+        default: {
+          r.skip();
+        }
+      }
+    }
+    return m;
+  }
+
 }
 
 /// 修改用户密码（需要验证旧密码） - 请求
@@ -12673,6 +22474,53 @@ class IdentityServiceV1ChangePasswordRequest {
       oldPassword: oldPassword ?? this.oldPassword,
     );
   }
+
+  /// 二进制 proto 编码（MQTT 等二进制传输用；字段按编号升序写出）
+  Uint8List writeToBuffer() {
+    final w = ProtoWireWriter();
+    _writeTo(w);
+    return w.toBuffer();
+  }
+
+  void _writeTo(ProtoWireWriter w) {
+    // field 1: oldPassword
+    final f1 = oldPassword;
+    if (f1 != null) {
+      w.writeString(1, f1);
+    }
+    // field 2: newPassword
+    final f2 = newPassword;
+    if (f2 != null) {
+      w.writeString(2, f2);
+    }
+  }
+
+  factory IdentityServiceV1ChangePasswordRequest.fromBuffer(List<int> bytes) {
+    return IdentityServiceV1ChangePasswordRequest._readFrom(ProtoWireReader(bytes));
+  }
+
+  static IdentityServiceV1ChangePasswordRequest _readFrom(ProtoWireReader r) {
+    final m = IdentityServiceV1ChangePasswordRequest();
+    while (r.next()) {
+      switch (r.fieldNumber) {
+        // field 1: oldPassword
+        case 1: {
+          m.oldPassword = r.readString();
+          break;
+        }
+        // field 2: newPassword
+        case 2: {
+          m.newPassword = r.readString();
+          break;
+        }
+        default: {
+          r.skip();
+        }
+      }
+    }
+    return m;
+  }
+
 }
 
 class IdentityServiceV1UploadAvatarRequest {
@@ -12727,6 +22575,53 @@ class IdentityServiceV1UploadAvatarRequest {
       imageUrl: imageUrl ?? this.imageUrl,
     );
   }
+
+  /// 二进制 proto 编码（MQTT 等二进制传输用；字段按编号升序写出）
+  Uint8List writeToBuffer() {
+    final w = ProtoWireWriter();
+    _writeTo(w);
+    return w.toBuffer();
+  }
+
+  void _writeTo(ProtoWireWriter w) {
+    // field 1: imageBase64
+    final f1 = imageBase64;
+    if (f1 != null) {
+      w.writeString(1, f1);
+    }
+    // field 2: imageUrl
+    final f2 = imageUrl;
+    if (f2 != null) {
+      w.writeString(2, f2);
+    }
+  }
+
+  factory IdentityServiceV1UploadAvatarRequest.fromBuffer(List<int> bytes) {
+    return IdentityServiceV1UploadAvatarRequest._readFrom(ProtoWireReader(bytes));
+  }
+
+  static IdentityServiceV1UploadAvatarRequest _readFrom(ProtoWireReader r) {
+    final m = IdentityServiceV1UploadAvatarRequest();
+    while (r.next()) {
+      switch (r.fieldNumber) {
+        // field 1: imageBase64
+        case 1: {
+          m.imageBase64 = r.readString();
+          break;
+        }
+        // field 2: imageUrl
+        case 2: {
+          m.imageUrl = r.readString();
+          break;
+        }
+        default: {
+          r.skip();
+        }
+      }
+    }
+    return m;
+  }
+
 }
 
 class IdentityServiceV1UploadAvatarResponse {
@@ -12773,6 +22668,43 @@ class IdentityServiceV1UploadAvatarResponse {
       url: url ?? this.url,
     );
   }
+
+  /// 二进制 proto 编码（MQTT 等二进制传输用；字段按编号升序写出）
+  Uint8List writeToBuffer() {
+    final w = ProtoWireWriter();
+    _writeTo(w);
+    return w.toBuffer();
+  }
+
+  void _writeTo(ProtoWireWriter w) {
+    // field 1: url
+    final f1 = url;
+    if (f1 != null) {
+      w.writeString(1, f1);
+    }
+  }
+
+  factory IdentityServiceV1UploadAvatarResponse.fromBuffer(List<int> bytes) {
+    return IdentityServiceV1UploadAvatarResponse._readFrom(ProtoWireReader(bytes));
+  }
+
+  static IdentityServiceV1UploadAvatarResponse _readFrom(ProtoWireReader r) {
+    final m = IdentityServiceV1UploadAvatarResponse();
+    while (r.next()) {
+      switch (r.fieldNumber) {
+        // field 1: url
+        case 1: {
+          m.url = r.readString();
+          break;
+        }
+        default: {
+          r.skip();
+        }
+      }
+    }
+    return m;
+  }
+
 }
 
 class IdentityServiceV1BindContactRequest {
@@ -12827,6 +22759,53 @@ class IdentityServiceV1BindContactRequest {
       phone: phone ?? this.phone,
     );
   }
+
+  /// 二进制 proto 编码（MQTT 等二进制传输用；字段按编号升序写出）
+  Uint8List writeToBuffer() {
+    final w = ProtoWireWriter();
+    _writeTo(w);
+    return w.toBuffer();
+  }
+
+  void _writeTo(ProtoWireWriter w) {
+    // field 1: phone
+    final f1 = phone;
+    if (f1 != null) {
+      final cw = ProtoWireWriter(); f1._writeTo(cw); w.writeRaw(1, cw.toBuffer()); // IdentityServiceV1BindPhoneRequest
+    }
+    // field 2: email
+    final f2 = email;
+    if (f2 != null) {
+      final cw = ProtoWireWriter(); f2._writeTo(cw); w.writeRaw(2, cw.toBuffer()); // IdentityServiceV1BindEmailRequest
+    }
+  }
+
+  factory IdentityServiceV1BindContactRequest.fromBuffer(List<int> bytes) {
+    return IdentityServiceV1BindContactRequest._readFrom(ProtoWireReader(bytes));
+  }
+
+  static IdentityServiceV1BindContactRequest _readFrom(ProtoWireReader r) {
+    final m = IdentityServiceV1BindContactRequest();
+    while (r.next()) {
+      switch (r.fieldNumber) {
+        // field 1: phone
+        case 1: {
+          m.phone = IdentityServiceV1BindPhoneRequest._readFrom(r.readNested());
+          break;
+        }
+        // field 2: email
+        case 2: {
+          m.email = IdentityServiceV1BindEmailRequest._readFrom(r.readNested());
+          break;
+        }
+        default: {
+          r.skip();
+        }
+      }
+    }
+    return m;
+  }
+
 }
 
 class IdentityServiceV1BindPhoneRequest {
@@ -12881,6 +22860,53 @@ class IdentityServiceV1BindPhoneRequest {
       phone: phone ?? this.phone,
     );
   }
+
+  /// 二进制 proto 编码（MQTT 等二进制传输用；字段按编号升序写出）
+  Uint8List writeToBuffer() {
+    final w = ProtoWireWriter();
+    _writeTo(w);
+    return w.toBuffer();
+  }
+
+  void _writeTo(ProtoWireWriter w) {
+    // field 1: phone
+    final f1 = phone;
+    if (f1 != null) {
+      w.writeString(1, f1);
+    }
+    // field 2: code
+    final f2 = code;
+    if (f2 != null) {
+      w.writeString(2, f2);
+    }
+  }
+
+  factory IdentityServiceV1BindPhoneRequest.fromBuffer(List<int> bytes) {
+    return IdentityServiceV1BindPhoneRequest._readFrom(ProtoWireReader(bytes));
+  }
+
+  static IdentityServiceV1BindPhoneRequest _readFrom(ProtoWireReader r) {
+    final m = IdentityServiceV1BindPhoneRequest();
+    while (r.next()) {
+      switch (r.fieldNumber) {
+        // field 1: phone
+        case 1: {
+          m.phone = r.readString();
+          break;
+        }
+        // field 2: code
+        case 2: {
+          m.code = r.readString();
+          break;
+        }
+        default: {
+          r.skip();
+        }
+      }
+    }
+    return m;
+  }
+
 }
 
 class IdentityServiceV1BindEmailRequest {
@@ -12935,6 +22961,53 @@ class IdentityServiceV1BindEmailRequest {
       verificationCode: verificationCode ?? this.verificationCode,
     );
   }
+
+  /// 二进制 proto 编码（MQTT 等二进制传输用；字段按编号升序写出）
+  Uint8List writeToBuffer() {
+    final w = ProtoWireWriter();
+    _writeTo(w);
+    return w.toBuffer();
+  }
+
+  void _writeTo(ProtoWireWriter w) {
+    // field 1: email
+    final f1 = email;
+    if (f1 != null) {
+      w.writeString(1, f1);
+    }
+    // field 2: verificationCode
+    final f2 = verificationCode;
+    if (f2 != null) {
+      w.writeString(2, f2);
+    }
+  }
+
+  factory IdentityServiceV1BindEmailRequest.fromBuffer(List<int> bytes) {
+    return IdentityServiceV1BindEmailRequest._readFrom(ProtoWireReader(bytes));
+  }
+
+  static IdentityServiceV1BindEmailRequest _readFrom(ProtoWireReader r) {
+    final m = IdentityServiceV1BindEmailRequest();
+    while (r.next()) {
+      switch (r.fieldNumber) {
+        // field 1: email
+        case 1: {
+          m.email = r.readString();
+          break;
+        }
+        // field 2: verificationCode
+        case 2: {
+          m.verificationCode = r.readString();
+          break;
+        }
+        default: {
+          r.skip();
+        }
+      }
+    }
+    return m;
+  }
+
 }
 
 class IdentityServiceV1VerifyContactRequest {
@@ -12998,6 +23071,63 @@ class IdentityServiceV1VerifyContactRequest {
       verificationId: verificationId ?? this.verificationId,
     );
   }
+
+  /// 二进制 proto 编码（MQTT 等二进制传输用；字段按编号升序写出）
+  Uint8List writeToBuffer() {
+    final w = ProtoWireWriter();
+    _writeTo(w);
+    return w.toBuffer();
+  }
+
+  void _writeTo(ProtoWireWriter w) {
+    // field 1: phone
+    final f1 = phone;
+    if (f1 != null) {
+      final cw = ProtoWireWriter(); f1._writeTo(cw); w.writeRaw(1, cw.toBuffer()); // IdentityServiceV1PhoneVerification
+    }
+    // field 2: email
+    final f2 = email;
+    if (f2 != null) {
+      final cw = ProtoWireWriter(); f2._writeTo(cw); w.writeRaw(2, cw.toBuffer()); // IdentityServiceV1EmailVerification
+    }
+    // field 3: verificationId
+    final f3 = verificationId;
+    if (f3 != null) {
+      w.writeString(3, f3);
+    }
+  }
+
+  factory IdentityServiceV1VerifyContactRequest.fromBuffer(List<int> bytes) {
+    return IdentityServiceV1VerifyContactRequest._readFrom(ProtoWireReader(bytes));
+  }
+
+  static IdentityServiceV1VerifyContactRequest _readFrom(ProtoWireReader r) {
+    final m = IdentityServiceV1VerifyContactRequest();
+    while (r.next()) {
+      switch (r.fieldNumber) {
+        // field 1: phone
+        case 1: {
+          m.phone = IdentityServiceV1PhoneVerification._readFrom(r.readNested());
+          break;
+        }
+        // field 2: email
+        case 2: {
+          m.email = IdentityServiceV1EmailVerification._readFrom(r.readNested());
+          break;
+        }
+        // field 3: verificationId
+        case 3: {
+          m.verificationId = r.readString();
+          break;
+        }
+        default: {
+          r.skip();
+        }
+      }
+    }
+    return m;
+  }
+
 }
 
 /// 手机验证
@@ -13055,6 +23185,53 @@ class IdentityServiceV1PhoneVerification {
       phone: phone ?? this.phone,
     );
   }
+
+  /// 二进制 proto 编码（MQTT 等二进制传输用；字段按编号升序写出）
+  Uint8List writeToBuffer() {
+    final w = ProtoWireWriter();
+    _writeTo(w);
+    return w.toBuffer();
+  }
+
+  void _writeTo(ProtoWireWriter w) {
+    // field 1: phone
+    final f1 = phone;
+    if (f1 != null) {
+      w.writeString(1, f1);
+    }
+    // field 2: code
+    final f2 = code;
+    if (f2 != null) {
+      w.writeString(2, f2);
+    }
+  }
+
+  factory IdentityServiceV1PhoneVerification.fromBuffer(List<int> bytes) {
+    return IdentityServiceV1PhoneVerification._readFrom(ProtoWireReader(bytes));
+  }
+
+  static IdentityServiceV1PhoneVerification _readFrom(ProtoWireReader r) {
+    final m = IdentityServiceV1PhoneVerification();
+    while (r.next()) {
+      switch (r.fieldNumber) {
+        // field 1: phone
+        case 1: {
+          m.phone = r.readString();
+          break;
+        }
+        // field 2: code
+        case 2: {
+          m.code = r.readString();
+          break;
+        }
+        default: {
+          r.skip();
+        }
+      }
+    }
+    return m;
+  }
+
 }
 
 /// 邮箱验证
@@ -13112,6 +23289,53 @@ class IdentityServiceV1EmailVerification {
       email: email ?? this.email,
     );
   }
+
+  /// 二进制 proto 编码（MQTT 等二进制传输用；字段按编号升序写出）
+  Uint8List writeToBuffer() {
+    final w = ProtoWireWriter();
+    _writeTo(w);
+    return w.toBuffer();
+  }
+
+  void _writeTo(ProtoWireWriter w) {
+    // field 1: email
+    final f1 = email;
+    if (f1 != null) {
+      w.writeString(1, f1);
+    }
+    // field 2: code
+    final f2 = code;
+    if (f2 != null) {
+      w.writeString(2, f2);
+    }
+  }
+
+  factory IdentityServiceV1EmailVerification.fromBuffer(List<int> bytes) {
+    return IdentityServiceV1EmailVerification._readFrom(ProtoWireReader(bytes));
+  }
+
+  static IdentityServiceV1EmailVerification _readFrom(ProtoWireReader r) {
+    final m = IdentityServiceV1EmailVerification();
+    while (r.next()) {
+      switch (r.fieldNumber) {
+        // field 1: email
+        case 1: {
+          m.email = r.readString();
+          break;
+        }
+        // field 2: code
+        case 2: {
+          m.code = r.readString();
+          break;
+        }
+        default: {
+          r.skip();
+        }
+      }
+    }
+    return m;
+  }
+
 }
 
 class ApiClient {

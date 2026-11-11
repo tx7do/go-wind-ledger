@@ -23,13 +23,13 @@ type TagCreate struct {
 }
 
 // SetTenantID sets the "tenant_id" field.
-func (_c *TagCreate) SetTenantID(v uint32) *TagCreate {
+func (_c *TagCreate) SetTenantID(v int64) *TagCreate {
 	_c.mutation.SetTenantID(v)
 	return _c
 }
 
 // SetNillableTenantID sets the "tenant_id" field if the given value is not nil.
-func (_c *TagCreate) SetNillableTenantID(v *uint32) *TagCreate {
+func (_c *TagCreate) SetNillableTenantID(v *int64) *TagCreate {
 	if v != nil {
 		_c.SetTenantID(*v)
 	}
@@ -79,13 +79,13 @@ func (_c *TagCreate) SetNillableDeletedAt(v *time.Time) *TagCreate {
 }
 
 // SetCreatedBy sets the "created_by" field.
-func (_c *TagCreate) SetCreatedBy(v uint32) *TagCreate {
+func (_c *TagCreate) SetCreatedBy(v int64) *TagCreate {
 	_c.mutation.SetCreatedBy(v)
 	return _c
 }
 
 // SetNillableCreatedBy sets the "created_by" field if the given value is not nil.
-func (_c *TagCreate) SetNillableCreatedBy(v *uint32) *TagCreate {
+func (_c *TagCreate) SetNillableCreatedBy(v *int64) *TagCreate {
 	if v != nil {
 		_c.SetCreatedBy(*v)
 	}
@@ -93,13 +93,13 @@ func (_c *TagCreate) SetNillableCreatedBy(v *uint32) *TagCreate {
 }
 
 // SetUpdatedBy sets the "updated_by" field.
-func (_c *TagCreate) SetUpdatedBy(v uint32) *TagCreate {
+func (_c *TagCreate) SetUpdatedBy(v int64) *TagCreate {
 	_c.mutation.SetUpdatedBy(v)
 	return _c
 }
 
 // SetNillableUpdatedBy sets the "updated_by" field if the given value is not nil.
-func (_c *TagCreate) SetNillableUpdatedBy(v *uint32) *TagCreate {
+func (_c *TagCreate) SetNillableUpdatedBy(v *int64) *TagCreate {
 	if v != nil {
 		_c.SetUpdatedBy(*v)
 	}
@@ -107,13 +107,13 @@ func (_c *TagCreate) SetNillableUpdatedBy(v *uint32) *TagCreate {
 }
 
 // SetDeletedBy sets the "deleted_by" field.
-func (_c *TagCreate) SetDeletedBy(v uint32) *TagCreate {
+func (_c *TagCreate) SetDeletedBy(v int64) *TagCreate {
 	_c.mutation.SetDeletedBy(v)
 	return _c
 }
 
 // SetNillableDeletedBy sets the "deleted_by" field if the given value is not nil.
-func (_c *TagCreate) SetNillableDeletedBy(v *uint32) *TagCreate {
+func (_c *TagCreate) SetNillableDeletedBy(v *int64) *TagCreate {
 	if v != nil {
 		_c.SetDeletedBy(*v)
 	}
@@ -149,13 +149,13 @@ func (_c *TagCreate) SetNillablePath(v *string) *TagCreate {
 }
 
 // SetParentID sets the "parent_id" field.
-func (_c *TagCreate) SetParentID(v uint32) *TagCreate {
+func (_c *TagCreate) SetParentID(v int64) *TagCreate {
 	_c.mutation.SetParentID(v)
 	return _c
 }
 
 // SetNillableParentID sets the "parent_id" field if the given value is not nil.
-func (_c *TagCreate) SetNillableParentID(v *uint32) *TagCreate {
+func (_c *TagCreate) SetNillableParentID(v *int64) *TagCreate {
 	if v != nil {
 		_c.SetParentID(*v)
 	}
@@ -163,13 +163,13 @@ func (_c *TagCreate) SetNillableParentID(v *uint32) *TagCreate {
 }
 
 // SetBookID sets the "book_id" field.
-func (_c *TagCreate) SetBookID(v uint32) *TagCreate {
+func (_c *TagCreate) SetBookID(v int64) *TagCreate {
 	_c.mutation.SetBookID(v)
 	return _c
 }
 
 // SetNillableBookID sets the "book_id" field if the given value is not nil.
-func (_c *TagCreate) SetNillableBookID(v *uint32) *TagCreate {
+func (_c *TagCreate) SetNillableBookID(v *int64) *TagCreate {
 	if v != nil {
 		_c.SetBookID(*v)
 	}
@@ -275,7 +275,7 @@ func (_c *TagCreate) SetNillableDepth(v *int32) *TagCreate {
 }
 
 // SetID sets the "id" field.
-func (_c *TagCreate) SetID(v uint32) *TagCreate {
+func (_c *TagCreate) SetID(v int64) *TagCreate {
 	_c.mutation.SetID(v)
 	return _c
 }
@@ -286,14 +286,14 @@ func (_c *TagCreate) SetParent(v *Tag) *TagCreate {
 }
 
 // AddChildIDs adds the "children" edge to the Tag entity by IDs.
-func (_c *TagCreate) AddChildIDs(ids ...uint32) *TagCreate {
+func (_c *TagCreate) AddChildIDs(ids ...int64) *TagCreate {
 	_c.mutation.AddChildIDs(ids...)
 	return _c
 }
 
 // AddChildren adds the "children" edges to the Tag entity.
 func (_c *TagCreate) AddChildren(v ...*Tag) *TagCreate {
-	ids := make([]uint32, len(v))
+	ids := make([]int64, len(v))
 	for i := range v {
 		ids[i] = v[i].ID
 	}
@@ -406,7 +406,7 @@ func (_c *TagCreate) sqlSave(ctx context.Context) (*Tag, error) {
 	}
 	if _spec.ID.Value != _node.ID {
 		id := _spec.ID.Value.(int64)
-		_node.ID = uint32(id)
+		_node.ID = int64(id)
 	}
 	_c.mutation.id = &_node.ID
 	_c.mutation.done = true
@@ -416,7 +416,7 @@ func (_c *TagCreate) sqlSave(ctx context.Context) (*Tag, error) {
 func (_c *TagCreate) createSpec() (*Tag, *sqlgraph.CreateSpec) {
 	var (
 		_node = &Tag{config: _c.config}
-		_spec = sqlgraph.NewCreateSpec(tag.Table, sqlgraph.NewFieldSpec(tag.FieldID, field.TypeUint32))
+		_spec = sqlgraph.NewCreateSpec(tag.Table, sqlgraph.NewFieldSpec(tag.FieldID, field.TypeInt64))
 	)
 	_spec.OnConflict = _c.conflict
 	if id, ok := _c.mutation.ID(); ok {
@@ -424,7 +424,7 @@ func (_c *TagCreate) createSpec() (*Tag, *sqlgraph.CreateSpec) {
 		_spec.ID.Value = id
 	}
 	if value, ok := _c.mutation.TenantID(); ok {
-		_spec.SetField(tag.FieldTenantID, field.TypeUint32, value)
+		_spec.SetField(tag.FieldTenantID, field.TypeInt64, value)
 		_node.TenantID = &value
 	}
 	if value, ok := _c.mutation.CreatedAt(); ok {
@@ -440,15 +440,15 @@ func (_c *TagCreate) createSpec() (*Tag, *sqlgraph.CreateSpec) {
 		_node.DeletedAt = &value
 	}
 	if value, ok := _c.mutation.CreatedBy(); ok {
-		_spec.SetField(tag.FieldCreatedBy, field.TypeUint32, value)
+		_spec.SetField(tag.FieldCreatedBy, field.TypeInt64, value)
 		_node.CreatedBy = &value
 	}
 	if value, ok := _c.mutation.UpdatedBy(); ok {
-		_spec.SetField(tag.FieldUpdatedBy, field.TypeUint32, value)
+		_spec.SetField(tag.FieldUpdatedBy, field.TypeInt64, value)
 		_node.UpdatedBy = &value
 	}
 	if value, ok := _c.mutation.DeletedBy(); ok {
-		_spec.SetField(tag.FieldDeletedBy, field.TypeUint32, value)
+		_spec.SetField(tag.FieldDeletedBy, field.TypeInt64, value)
 		_node.DeletedBy = &value
 	}
 	if value, ok := _c.mutation.SortOrder(); ok {
@@ -460,7 +460,7 @@ func (_c *TagCreate) createSpec() (*Tag, *sqlgraph.CreateSpec) {
 		_node.Path = &value
 	}
 	if value, ok := _c.mutation.BookID(); ok {
-		_spec.SetField(tag.FieldBookID, field.TypeUint32, value)
+		_spec.SetField(tag.FieldBookID, field.TypeInt64, value)
 		_node.BookID = &value
 	}
 	if value, ok := _c.mutation.Name(); ok {
@@ -499,7 +499,7 @@ func (_c *TagCreate) createSpec() (*Tag, *sqlgraph.CreateSpec) {
 			Columns: []string{tag.ParentColumn},
 			Bidi:    false,
 			Target: &sqlgraph.EdgeTarget{
-				IDSpec: sqlgraph.NewFieldSpec(tag.FieldID, field.TypeUint32),
+				IDSpec: sqlgraph.NewFieldSpec(tag.FieldID, field.TypeInt64),
 			},
 		}
 		for _, k := range nodes {
@@ -516,7 +516,7 @@ func (_c *TagCreate) createSpec() (*Tag, *sqlgraph.CreateSpec) {
 			Columns: []string{tag.ChildrenColumn},
 			Bidi:    false,
 			Target: &sqlgraph.EdgeTarget{
-				IDSpec: sqlgraph.NewFieldSpec(tag.FieldID, field.TypeUint32),
+				IDSpec: sqlgraph.NewFieldSpec(tag.FieldID, field.TypeInt64),
 			},
 		}
 		for _, k := range nodes {
@@ -613,7 +613,7 @@ func (u *TagUpsert) ClearDeletedAt() *TagUpsert {
 }
 
 // SetCreatedBy sets the "created_by" field.
-func (u *TagUpsert) SetCreatedBy(v uint32) *TagUpsert {
+func (u *TagUpsert) SetCreatedBy(v int64) *TagUpsert {
 	u.Set(tag.FieldCreatedBy, v)
 	return u
 }
@@ -625,7 +625,7 @@ func (u *TagUpsert) UpdateCreatedBy() *TagUpsert {
 }
 
 // AddCreatedBy adds v to the "created_by" field.
-func (u *TagUpsert) AddCreatedBy(v uint32) *TagUpsert {
+func (u *TagUpsert) AddCreatedBy(v int64) *TagUpsert {
 	u.Add(tag.FieldCreatedBy, v)
 	return u
 }
@@ -637,7 +637,7 @@ func (u *TagUpsert) ClearCreatedBy() *TagUpsert {
 }
 
 // SetUpdatedBy sets the "updated_by" field.
-func (u *TagUpsert) SetUpdatedBy(v uint32) *TagUpsert {
+func (u *TagUpsert) SetUpdatedBy(v int64) *TagUpsert {
 	u.Set(tag.FieldUpdatedBy, v)
 	return u
 }
@@ -649,7 +649,7 @@ func (u *TagUpsert) UpdateUpdatedBy() *TagUpsert {
 }
 
 // AddUpdatedBy adds v to the "updated_by" field.
-func (u *TagUpsert) AddUpdatedBy(v uint32) *TagUpsert {
+func (u *TagUpsert) AddUpdatedBy(v int64) *TagUpsert {
 	u.Add(tag.FieldUpdatedBy, v)
 	return u
 }
@@ -661,7 +661,7 @@ func (u *TagUpsert) ClearUpdatedBy() *TagUpsert {
 }
 
 // SetDeletedBy sets the "deleted_by" field.
-func (u *TagUpsert) SetDeletedBy(v uint32) *TagUpsert {
+func (u *TagUpsert) SetDeletedBy(v int64) *TagUpsert {
 	u.Set(tag.FieldDeletedBy, v)
 	return u
 }
@@ -673,7 +673,7 @@ func (u *TagUpsert) UpdateDeletedBy() *TagUpsert {
 }
 
 // AddDeletedBy adds v to the "deleted_by" field.
-func (u *TagUpsert) AddDeletedBy(v uint32) *TagUpsert {
+func (u *TagUpsert) AddDeletedBy(v int64) *TagUpsert {
 	u.Add(tag.FieldDeletedBy, v)
 	return u
 }
@@ -727,7 +727,7 @@ func (u *TagUpsert) ClearPath() *TagUpsert {
 }
 
 // SetParentID sets the "parent_id" field.
-func (u *TagUpsert) SetParentID(v uint32) *TagUpsert {
+func (u *TagUpsert) SetParentID(v int64) *TagUpsert {
 	u.Set(tag.FieldParentID, v)
 	return u
 }
@@ -976,14 +976,14 @@ func (u *TagUpsertOne) ClearDeletedAt() *TagUpsertOne {
 }
 
 // SetCreatedBy sets the "created_by" field.
-func (u *TagUpsertOne) SetCreatedBy(v uint32) *TagUpsertOne {
+func (u *TagUpsertOne) SetCreatedBy(v int64) *TagUpsertOne {
 	return u.Update(func(s *TagUpsert) {
 		s.SetCreatedBy(v)
 	})
 }
 
 // AddCreatedBy adds v to the "created_by" field.
-func (u *TagUpsertOne) AddCreatedBy(v uint32) *TagUpsertOne {
+func (u *TagUpsertOne) AddCreatedBy(v int64) *TagUpsertOne {
 	return u.Update(func(s *TagUpsert) {
 		s.AddCreatedBy(v)
 	})
@@ -1004,14 +1004,14 @@ func (u *TagUpsertOne) ClearCreatedBy() *TagUpsertOne {
 }
 
 // SetUpdatedBy sets the "updated_by" field.
-func (u *TagUpsertOne) SetUpdatedBy(v uint32) *TagUpsertOne {
+func (u *TagUpsertOne) SetUpdatedBy(v int64) *TagUpsertOne {
 	return u.Update(func(s *TagUpsert) {
 		s.SetUpdatedBy(v)
 	})
 }
 
 // AddUpdatedBy adds v to the "updated_by" field.
-func (u *TagUpsertOne) AddUpdatedBy(v uint32) *TagUpsertOne {
+func (u *TagUpsertOne) AddUpdatedBy(v int64) *TagUpsertOne {
 	return u.Update(func(s *TagUpsert) {
 		s.AddUpdatedBy(v)
 	})
@@ -1032,14 +1032,14 @@ func (u *TagUpsertOne) ClearUpdatedBy() *TagUpsertOne {
 }
 
 // SetDeletedBy sets the "deleted_by" field.
-func (u *TagUpsertOne) SetDeletedBy(v uint32) *TagUpsertOne {
+func (u *TagUpsertOne) SetDeletedBy(v int64) *TagUpsertOne {
 	return u.Update(func(s *TagUpsert) {
 		s.SetDeletedBy(v)
 	})
 }
 
 // AddDeletedBy adds v to the "deleted_by" field.
-func (u *TagUpsertOne) AddDeletedBy(v uint32) *TagUpsertOne {
+func (u *TagUpsertOne) AddDeletedBy(v int64) *TagUpsertOne {
 	return u.Update(func(s *TagUpsert) {
 		s.AddDeletedBy(v)
 	})
@@ -1109,7 +1109,7 @@ func (u *TagUpsertOne) ClearPath() *TagUpsertOne {
 }
 
 // SetParentID sets the "parent_id" field.
-func (u *TagUpsertOne) SetParentID(v uint32) *TagUpsertOne {
+func (u *TagUpsertOne) SetParentID(v int64) *TagUpsertOne {
 	return u.Update(func(s *TagUpsert) {
 		s.SetParentID(v)
 	})
@@ -1299,7 +1299,7 @@ func (u *TagUpsertOne) ExecX(ctx context.Context) {
 }
 
 // Exec executes the UPSERT query and returns the inserted/updated ID.
-func (u *TagUpsertOne) ID(ctx context.Context) (id uint32, err error) {
+func (u *TagUpsertOne) ID(ctx context.Context) (id int64, err error) {
 	node, err := u.create.Save(ctx)
 	if err != nil {
 		return id, err
@@ -1308,7 +1308,7 @@ func (u *TagUpsertOne) ID(ctx context.Context) (id uint32, err error) {
 }
 
 // IDX is like ID, but panics if an error occurs.
-func (u *TagUpsertOne) IDX(ctx context.Context) uint32 {
+func (u *TagUpsertOne) IDX(ctx context.Context) int64 {
 	id, err := u.ID(ctx)
 	if err != nil {
 		panic(err)
@@ -1365,7 +1365,7 @@ func (_c *TagCreateBulk) Save(ctx context.Context) ([]*Tag, error) {
 				mutation.id = &nodes[i].ID
 				if specs[i].ID.Value != nil && nodes[i].ID == 0 {
 					id := specs[i].ID.Value.(int64)
-					nodes[i].ID = uint32(id)
+					nodes[i].ID = int64(id)
 				}
 				mutation.done = true
 				return nodes[i], nil
@@ -1549,14 +1549,14 @@ func (u *TagUpsertBulk) ClearDeletedAt() *TagUpsertBulk {
 }
 
 // SetCreatedBy sets the "created_by" field.
-func (u *TagUpsertBulk) SetCreatedBy(v uint32) *TagUpsertBulk {
+func (u *TagUpsertBulk) SetCreatedBy(v int64) *TagUpsertBulk {
 	return u.Update(func(s *TagUpsert) {
 		s.SetCreatedBy(v)
 	})
 }
 
 // AddCreatedBy adds v to the "created_by" field.
-func (u *TagUpsertBulk) AddCreatedBy(v uint32) *TagUpsertBulk {
+func (u *TagUpsertBulk) AddCreatedBy(v int64) *TagUpsertBulk {
 	return u.Update(func(s *TagUpsert) {
 		s.AddCreatedBy(v)
 	})
@@ -1577,14 +1577,14 @@ func (u *TagUpsertBulk) ClearCreatedBy() *TagUpsertBulk {
 }
 
 // SetUpdatedBy sets the "updated_by" field.
-func (u *TagUpsertBulk) SetUpdatedBy(v uint32) *TagUpsertBulk {
+func (u *TagUpsertBulk) SetUpdatedBy(v int64) *TagUpsertBulk {
 	return u.Update(func(s *TagUpsert) {
 		s.SetUpdatedBy(v)
 	})
 }
 
 // AddUpdatedBy adds v to the "updated_by" field.
-func (u *TagUpsertBulk) AddUpdatedBy(v uint32) *TagUpsertBulk {
+func (u *TagUpsertBulk) AddUpdatedBy(v int64) *TagUpsertBulk {
 	return u.Update(func(s *TagUpsert) {
 		s.AddUpdatedBy(v)
 	})
@@ -1605,14 +1605,14 @@ func (u *TagUpsertBulk) ClearUpdatedBy() *TagUpsertBulk {
 }
 
 // SetDeletedBy sets the "deleted_by" field.
-func (u *TagUpsertBulk) SetDeletedBy(v uint32) *TagUpsertBulk {
+func (u *TagUpsertBulk) SetDeletedBy(v int64) *TagUpsertBulk {
 	return u.Update(func(s *TagUpsert) {
 		s.SetDeletedBy(v)
 	})
 }
 
 // AddDeletedBy adds v to the "deleted_by" field.
-func (u *TagUpsertBulk) AddDeletedBy(v uint32) *TagUpsertBulk {
+func (u *TagUpsertBulk) AddDeletedBy(v int64) *TagUpsertBulk {
 	return u.Update(func(s *TagUpsert) {
 		s.AddDeletedBy(v)
 	})
@@ -1682,7 +1682,7 @@ func (u *TagUpsertBulk) ClearPath() *TagUpsertBulk {
 }
 
 // SetParentID sets the "parent_id" field.
-func (u *TagUpsertBulk) SetParentID(v uint32) *TagUpsertBulk {
+func (u *TagUpsertBulk) SetParentID(v int64) *TagUpsertBulk {
 	return u.Update(func(s *TagUpsert) {
 		s.SetParentID(v)
 	})

@@ -86,11 +86,11 @@ func (r *BookRepo) ListAll(ctx context.Context, includeDisabled bool) (*ledgerV1
 	for _, e := range entities {
 		items = append(items, r.mapper.ToDTO(e))
 	}
-	return &ledgerV1.ListBookResponse{Items: items, Total: uint64(len(items))}, nil
+	return &ledgerV1.ListBookResponse{Items: items, Total: int64(len(items))}, nil
 }
 
 // ListByTenants returns enabled books belonging to the given tenant IDs.
-func (r *BookRepo) ListByTenants(ctx context.Context, tenantIDs []uint32) (*ledgerV1.ListBookResponse, error) {
+func (r *BookRepo) ListByTenants(ctx context.Context, tenantIDs []int64) (*ledgerV1.ListBookResponse, error) {
 	q := r.entClient.Client().Book.Query().
 		Where(book.EnableEQ(true))
 	if len(tenantIDs) > 0 {
@@ -104,10 +104,10 @@ func (r *BookRepo) ListByTenants(ctx context.Context, tenantIDs []uint32) (*ledg
 	for _, e := range entities {
 		items = append(items, r.mapper.ToDTO(e))
 	}
-	return &ledgerV1.ListBookResponse{Items: items, Total: uint64(len(items))}, nil
+	return &ledgerV1.ListBookResponse{Items: items, Total: int64(len(items))}, nil
 }
 
-func (r *BookRepo) Get(ctx context.Context, id uint32) (*ledgerV1.Book, error) {
+func (r *BookRepo) Get(ctx context.Context, id int64) (*ledgerV1.Book, error) {
 	entity, err := r.entClient.Client().Book.Query().Where(book.IDEQ(id)).Only(ctx)
 	if err != nil {
 		if ent.IsNotFound(err) {
@@ -159,7 +159,7 @@ func (r *BookRepo) Create(ctx context.Context, data *ledgerV1.Book) (*ledgerV1.B
 	return r.mapper.ToDTO(saved), nil
 }
 
-func (r *BookRepo) Update(ctx context.Context, id uint32, data *ledgerV1.Book, mask *fieldmaskpb.FieldMask) (*ledgerV1.Book, error) {
+func (r *BookRepo) Update(ctx context.Context, id int64, data *ledgerV1.Book, mask *fieldmaskpb.FieldMask) (*ledgerV1.Book, error) {
 	if data == nil {
 		return nil, ledgerV1.ErrorBadRequest("invalid parameter")
 	}
@@ -190,11 +190,11 @@ func (r *BookRepo) Update(ctx context.Context, id uint32, data *ledgerV1.Book, m
 	return r.mapper.ToDTO(updated), nil
 }
 
-func (r *BookRepo) Delete(ctx context.Context, id uint32) error {
+func (r *BookRepo) Delete(ctx context.Context, id int64) error {
 	return r.entClient.Client().Book.DeleteOneID(id).Exec(ctx)
 }
 
-func (r *BookRepo) Toggle(ctx context.Context, id uint32) (*ledgerV1.Book, error) {
+func (r *BookRepo) Toggle(ctx context.Context, id int64) (*ledgerV1.Book, error) {
 	entity, err := r.entClient.Client().Book.Query().Where(book.IDEQ(id)).Only(ctx)
 	if err != nil {
 		if ent.IsNotFound(err) {

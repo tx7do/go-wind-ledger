@@ -59,8 +59,8 @@ func (s *MembershipService) ListMembers(ctx context.Context, req *identityV1.Lis
 	}
 
 	// 收集 user_id 与 role_id 用于批量查询
-	userIDs := make([]uint32, 0, len(memberships))
-	roleIDs := make([]uint32, 0, len(memberships))
+	userIDs := make([]int64, 0, len(memberships))
+	roleIDs := make([]int64, 0, len(memberships))
 	for _, m := range memberships {
 		if m.GetUserId() != 0 {
 			userIDs = append(userIDs, m.GetUserId())
@@ -70,7 +70,7 @@ func (s *MembershipService) ListMembers(ctx context.Context, req *identityV1.Lis
 		}
 	}
 
-	userMap := make(map[uint32]*identityV1.User, len(userIDs))
+	userMap := make(map[int64]*identityV1.User, len(userIDs))
 	if len(userIDs) > 0 {
 		users, err := s.userRepo.ListUsersByIds(ctx, userIDs)
 		if err != nil {
@@ -82,7 +82,7 @@ func (s *MembershipService) ListMembers(ctx context.Context, req *identityV1.Lis
 		}
 	}
 
-	roleMap := make(map[uint32]*permissionV1.Role, len(roleIDs))
+	roleMap := make(map[int64]*permissionV1.Role, len(roleIDs))
 	if len(roleIDs) > 0 {
 		roles, err := s.roleRepo.ListRolesByRoleIds(ctx, roleIDs)
 		if err != nil {
@@ -115,7 +115,7 @@ func (s *MembershipService) ListMembers(ctx context.Context, req *identityV1.Lis
 		items = append(items, info)
 	}
 
-	return &identityV1.ListMembersResponse{Items: items, Total: uint64(len(items))}, nil
+	return &identityV1.ListMembersResponse{Items: items, Total: int64(len(items))}, nil
 }
 
 // InviteMember 按 username 查找 user，创建 status=INVITED 的 membership。
@@ -236,8 +236,8 @@ func (s *MembershipService) ListMyTenants(ctx context.Context, req *identityV1.L
 	}
 
 	// 收集 tenant_id 与 role_id 用于批量查询
-	tenantIDs := make([]uint32, 0, len(memberships))
-	roleIDs := make([]uint32, 0, len(memberships))
+	tenantIDs := make([]int64, 0, len(memberships))
+	roleIDs := make([]int64, 0, len(memberships))
 	for _, m := range memberships {
 		if m.GetTenantId() != 0 {
 			tenantIDs = append(tenantIDs, m.GetTenantId())
@@ -247,7 +247,7 @@ func (s *MembershipService) ListMyTenants(ctx context.Context, req *identityV1.L
 		}
 	}
 
-	tenantMap := make(map[uint32]*identityV1.Tenant, len(tenantIDs))
+	tenantMap := make(map[int64]*identityV1.Tenant, len(tenantIDs))
 	if len(tenantIDs) > 0 {
 		tenants, err := s.tenantRepo.ListTenantsByIds(ctx, tenantIDs)
 		if err != nil {
@@ -259,7 +259,7 @@ func (s *MembershipService) ListMyTenants(ctx context.Context, req *identityV1.L
 		}
 	}
 
-	roleMap := make(map[uint32]*permissionV1.Role, len(roleIDs))
+	roleMap := make(map[int64]*permissionV1.Role, len(roleIDs))
 	if len(roleIDs) > 0 {
 		roles, err := s.roleRepo.ListRolesByRoleIds(ctx, roleIDs)
 		if err != nil {
@@ -289,7 +289,7 @@ func (s *MembershipService) ListMyTenants(ctx context.Context, req *identityV1.L
 		items = append(items, info)
 	}
 
-	return &identityV1.ListMyTenantsResponse{Items: items, Total: uint64(len(items))}, nil
+	return &identityV1.ListMyTenantsResponse{Items: items, Total: int64(len(items))}, nil
 }
 
 // GetMembership 获取成员详情。

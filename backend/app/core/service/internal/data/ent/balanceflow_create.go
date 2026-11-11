@@ -23,13 +23,13 @@ type BalanceFlowCreate struct {
 }
 
 // SetTenantID sets the "tenant_id" field.
-func (_c *BalanceFlowCreate) SetTenantID(v uint32) *BalanceFlowCreate {
+func (_c *BalanceFlowCreate) SetTenantID(v int64) *BalanceFlowCreate {
 	_c.mutation.SetTenantID(v)
 	return _c
 }
 
 // SetNillableTenantID sets the "tenant_id" field if the given value is not nil.
-func (_c *BalanceFlowCreate) SetNillableTenantID(v *uint32) *BalanceFlowCreate {
+func (_c *BalanceFlowCreate) SetNillableTenantID(v *int64) *BalanceFlowCreate {
 	if v != nil {
 		_c.SetTenantID(*v)
 	}
@@ -79,13 +79,13 @@ func (_c *BalanceFlowCreate) SetNillableDeletedAt(v *time.Time) *BalanceFlowCrea
 }
 
 // SetCreatedBy sets the "created_by" field.
-func (_c *BalanceFlowCreate) SetCreatedBy(v uint32) *BalanceFlowCreate {
+func (_c *BalanceFlowCreate) SetCreatedBy(v int64) *BalanceFlowCreate {
 	_c.mutation.SetCreatedBy(v)
 	return _c
 }
 
 // SetNillableCreatedBy sets the "created_by" field if the given value is not nil.
-func (_c *BalanceFlowCreate) SetNillableCreatedBy(v *uint32) *BalanceFlowCreate {
+func (_c *BalanceFlowCreate) SetNillableCreatedBy(v *int64) *BalanceFlowCreate {
 	if v != nil {
 		_c.SetCreatedBy(*v)
 	}
@@ -93,13 +93,13 @@ func (_c *BalanceFlowCreate) SetNillableCreatedBy(v *uint32) *BalanceFlowCreate 
 }
 
 // SetUpdatedBy sets the "updated_by" field.
-func (_c *BalanceFlowCreate) SetUpdatedBy(v uint32) *BalanceFlowCreate {
+func (_c *BalanceFlowCreate) SetUpdatedBy(v int64) *BalanceFlowCreate {
 	_c.mutation.SetUpdatedBy(v)
 	return _c
 }
 
 // SetNillableUpdatedBy sets the "updated_by" field if the given value is not nil.
-func (_c *BalanceFlowCreate) SetNillableUpdatedBy(v *uint32) *BalanceFlowCreate {
+func (_c *BalanceFlowCreate) SetNillableUpdatedBy(v *int64) *BalanceFlowCreate {
 	if v != nil {
 		_c.SetUpdatedBy(*v)
 	}
@@ -107,13 +107,13 @@ func (_c *BalanceFlowCreate) SetNillableUpdatedBy(v *uint32) *BalanceFlowCreate 
 }
 
 // SetDeletedBy sets the "deleted_by" field.
-func (_c *BalanceFlowCreate) SetDeletedBy(v uint32) *BalanceFlowCreate {
+func (_c *BalanceFlowCreate) SetDeletedBy(v int64) *BalanceFlowCreate {
 	_c.mutation.SetDeletedBy(v)
 	return _c
 }
 
 // SetNillableDeletedBy sets the "deleted_by" field if the given value is not nil.
-func (_c *BalanceFlowCreate) SetNillableDeletedBy(v *uint32) *BalanceFlowCreate {
+func (_c *BalanceFlowCreate) SetNillableDeletedBy(v *int64) *BalanceFlowCreate {
 	if v != nil {
 		_c.SetDeletedBy(*v)
 	}
@@ -121,13 +121,13 @@ func (_c *BalanceFlowCreate) SetNillableDeletedBy(v *uint32) *BalanceFlowCreate 
 }
 
 // SetBookID sets the "book_id" field.
-func (_c *BalanceFlowCreate) SetBookID(v uint32) *BalanceFlowCreate {
+func (_c *BalanceFlowCreate) SetBookID(v int64) *BalanceFlowCreate {
 	_c.mutation.SetBookID(v)
 	return _c
 }
 
 // SetNillableBookID sets the "book_id" field if the given value is not nil.
-func (_c *BalanceFlowCreate) SetNillableBookID(v *uint32) *BalanceFlowCreate {
+func (_c *BalanceFlowCreate) SetNillableBookID(v *int64) *BalanceFlowCreate {
 	if v != nil {
 		_c.SetBookID(*v)
 	}
@@ -177,13 +177,13 @@ func (_c *BalanceFlowCreate) SetNillableConvertedAmount(v *float64) *BalanceFlow
 }
 
 // SetAccountID sets the "account_id" field.
-func (_c *BalanceFlowCreate) SetAccountID(v uint32) *BalanceFlowCreate {
+func (_c *BalanceFlowCreate) SetAccountID(v int64) *BalanceFlowCreate {
 	_c.mutation.SetAccountID(v)
 	return _c
 }
 
 // SetNillableAccountID sets the "account_id" field if the given value is not nil.
-func (_c *BalanceFlowCreate) SetNillableAccountID(v *uint32) *BalanceFlowCreate {
+func (_c *BalanceFlowCreate) SetNillableAccountID(v *int64) *BalanceFlowCreate {
 	if v != nil {
 		_c.SetAccountID(*v)
 	}
@@ -191,13 +191,13 @@ func (_c *BalanceFlowCreate) SetNillableAccountID(v *uint32) *BalanceFlowCreate 
 }
 
 // SetToAccountID sets the "to_account_id" field.
-func (_c *BalanceFlowCreate) SetToAccountID(v uint32) *BalanceFlowCreate {
+func (_c *BalanceFlowCreate) SetToAccountID(v int64) *BalanceFlowCreate {
 	_c.mutation.SetToAccountID(v)
 	return _c
 }
 
 // SetNillableToAccountID sets the "to_account_id" field if the given value is not nil.
-func (_c *BalanceFlowCreate) SetNillableToAccountID(v *uint32) *BalanceFlowCreate {
+func (_c *BalanceFlowCreate) SetNillableToAccountID(v *int64) *BalanceFlowCreate {
 	if v != nil {
 		_c.SetToAccountID(*v)
 	}
@@ -205,13 +205,13 @@ func (_c *BalanceFlowCreate) SetNillableToAccountID(v *uint32) *BalanceFlowCreat
 }
 
 // SetPayeeID sets the "payee_id" field.
-func (_c *BalanceFlowCreate) SetPayeeID(v uint32) *BalanceFlowCreate {
+func (_c *BalanceFlowCreate) SetPayeeID(v int64) *BalanceFlowCreate {
 	_c.mutation.SetPayeeID(v)
 	return _c
 }
 
 // SetNillablePayeeID sets the "payee_id" field if the given value is not nil.
-func (_c *BalanceFlowCreate) SetNillablePayeeID(v *uint32) *BalanceFlowCreate {
+func (_c *BalanceFlowCreate) SetNillablePayeeID(v *int64) *BalanceFlowCreate {
 	if v != nil {
 		_c.SetPayeeID(*v)
 	}
@@ -219,13 +219,13 @@ func (_c *BalanceFlowCreate) SetNillablePayeeID(v *uint32) *BalanceFlowCreate {
 }
 
 // SetCreatorID sets the "creator_id" field.
-func (_c *BalanceFlowCreate) SetCreatorID(v uint32) *BalanceFlowCreate {
+func (_c *BalanceFlowCreate) SetCreatorID(v int64) *BalanceFlowCreate {
 	_c.mutation.SetCreatorID(v)
 	return _c
 }
 
 // SetNillableCreatorID sets the "creator_id" field if the given value is not nil.
-func (_c *BalanceFlowCreate) SetNillableCreatorID(v *uint32) *BalanceFlowCreate {
+func (_c *BalanceFlowCreate) SetNillableCreatorID(v *int64) *BalanceFlowCreate {
 	if v != nil {
 		_c.SetCreatorID(*v)
 	}
@@ -317,7 +317,7 @@ func (_c *BalanceFlowCreate) SetNillableInsertAt(v *int64) *BalanceFlowCreate {
 }
 
 // SetID sets the "id" field.
-func (_c *BalanceFlowCreate) SetID(v uint32) *BalanceFlowCreate {
+func (_c *BalanceFlowCreate) SetID(v int64) *BalanceFlowCreate {
 	_c.mutation.SetID(v)
 	return _c
 }
@@ -412,7 +412,7 @@ func (_c *BalanceFlowCreate) sqlSave(ctx context.Context) (*BalanceFlow, error) 
 	}
 	if _spec.ID.Value != _node.ID {
 		id := _spec.ID.Value.(int64)
-		_node.ID = uint32(id)
+		_node.ID = int64(id)
 	}
 	_c.mutation.id = &_node.ID
 	_c.mutation.done = true
@@ -422,7 +422,7 @@ func (_c *BalanceFlowCreate) sqlSave(ctx context.Context) (*BalanceFlow, error) 
 func (_c *BalanceFlowCreate) createSpec() (*BalanceFlow, *sqlgraph.CreateSpec) {
 	var (
 		_node = &BalanceFlow{config: _c.config}
-		_spec = sqlgraph.NewCreateSpec(balanceflow.Table, sqlgraph.NewFieldSpec(balanceflow.FieldID, field.TypeUint32))
+		_spec = sqlgraph.NewCreateSpec(balanceflow.Table, sqlgraph.NewFieldSpec(balanceflow.FieldID, field.TypeInt64))
 	)
 	_spec.OnConflict = _c.conflict
 	if id, ok := _c.mutation.ID(); ok {
@@ -430,7 +430,7 @@ func (_c *BalanceFlowCreate) createSpec() (*BalanceFlow, *sqlgraph.CreateSpec) {
 		_spec.ID.Value = id
 	}
 	if value, ok := _c.mutation.TenantID(); ok {
-		_spec.SetField(balanceflow.FieldTenantID, field.TypeUint32, value)
+		_spec.SetField(balanceflow.FieldTenantID, field.TypeInt64, value)
 		_node.TenantID = &value
 	}
 	if value, ok := _c.mutation.CreatedAt(); ok {
@@ -446,19 +446,19 @@ func (_c *BalanceFlowCreate) createSpec() (*BalanceFlow, *sqlgraph.CreateSpec) {
 		_node.DeletedAt = &value
 	}
 	if value, ok := _c.mutation.CreatedBy(); ok {
-		_spec.SetField(balanceflow.FieldCreatedBy, field.TypeUint32, value)
+		_spec.SetField(balanceflow.FieldCreatedBy, field.TypeInt64, value)
 		_node.CreatedBy = &value
 	}
 	if value, ok := _c.mutation.UpdatedBy(); ok {
-		_spec.SetField(balanceflow.FieldUpdatedBy, field.TypeUint32, value)
+		_spec.SetField(balanceflow.FieldUpdatedBy, field.TypeInt64, value)
 		_node.UpdatedBy = &value
 	}
 	if value, ok := _c.mutation.DeletedBy(); ok {
-		_spec.SetField(balanceflow.FieldDeletedBy, field.TypeUint32, value)
+		_spec.SetField(balanceflow.FieldDeletedBy, field.TypeInt64, value)
 		_node.DeletedBy = &value
 	}
 	if value, ok := _c.mutation.BookID(); ok {
-		_spec.SetField(balanceflow.FieldBookID, field.TypeUint32, value)
+		_spec.SetField(balanceflow.FieldBookID, field.TypeInt64, value)
 		_node.BookID = &value
 	}
 	if value, ok := _c.mutation.GetType(); ok {
@@ -474,19 +474,19 @@ func (_c *BalanceFlowCreate) createSpec() (*BalanceFlow, *sqlgraph.CreateSpec) {
 		_node.ConvertedAmount = &value
 	}
 	if value, ok := _c.mutation.AccountID(); ok {
-		_spec.SetField(balanceflow.FieldAccountID, field.TypeUint32, value)
+		_spec.SetField(balanceflow.FieldAccountID, field.TypeInt64, value)
 		_node.AccountID = &value
 	}
 	if value, ok := _c.mutation.ToAccountID(); ok {
-		_spec.SetField(balanceflow.FieldToAccountID, field.TypeUint32, value)
+		_spec.SetField(balanceflow.FieldToAccountID, field.TypeInt64, value)
 		_node.ToAccountID = &value
 	}
 	if value, ok := _c.mutation.PayeeID(); ok {
-		_spec.SetField(balanceflow.FieldPayeeID, field.TypeUint32, value)
+		_spec.SetField(balanceflow.FieldPayeeID, field.TypeInt64, value)
 		_node.PayeeID = &value
 	}
 	if value, ok := _c.mutation.CreatorID(); ok {
-		_spec.SetField(balanceflow.FieldCreatorID, field.TypeUint32, value)
+		_spec.SetField(balanceflow.FieldCreatorID, field.TypeInt64, value)
 		_node.CreatorID = &value
 	}
 	if value, ok := _c.mutation.CreateTime(); ok {
@@ -602,7 +602,7 @@ func (u *BalanceFlowUpsert) ClearDeletedAt() *BalanceFlowUpsert {
 }
 
 // SetCreatedBy sets the "created_by" field.
-func (u *BalanceFlowUpsert) SetCreatedBy(v uint32) *BalanceFlowUpsert {
+func (u *BalanceFlowUpsert) SetCreatedBy(v int64) *BalanceFlowUpsert {
 	u.Set(balanceflow.FieldCreatedBy, v)
 	return u
 }
@@ -614,7 +614,7 @@ func (u *BalanceFlowUpsert) UpdateCreatedBy() *BalanceFlowUpsert {
 }
 
 // AddCreatedBy adds v to the "created_by" field.
-func (u *BalanceFlowUpsert) AddCreatedBy(v uint32) *BalanceFlowUpsert {
+func (u *BalanceFlowUpsert) AddCreatedBy(v int64) *BalanceFlowUpsert {
 	u.Add(balanceflow.FieldCreatedBy, v)
 	return u
 }
@@ -626,7 +626,7 @@ func (u *BalanceFlowUpsert) ClearCreatedBy() *BalanceFlowUpsert {
 }
 
 // SetUpdatedBy sets the "updated_by" field.
-func (u *BalanceFlowUpsert) SetUpdatedBy(v uint32) *BalanceFlowUpsert {
+func (u *BalanceFlowUpsert) SetUpdatedBy(v int64) *BalanceFlowUpsert {
 	u.Set(balanceflow.FieldUpdatedBy, v)
 	return u
 }
@@ -638,7 +638,7 @@ func (u *BalanceFlowUpsert) UpdateUpdatedBy() *BalanceFlowUpsert {
 }
 
 // AddUpdatedBy adds v to the "updated_by" field.
-func (u *BalanceFlowUpsert) AddUpdatedBy(v uint32) *BalanceFlowUpsert {
+func (u *BalanceFlowUpsert) AddUpdatedBy(v int64) *BalanceFlowUpsert {
 	u.Add(balanceflow.FieldUpdatedBy, v)
 	return u
 }
@@ -650,7 +650,7 @@ func (u *BalanceFlowUpsert) ClearUpdatedBy() *BalanceFlowUpsert {
 }
 
 // SetDeletedBy sets the "deleted_by" field.
-func (u *BalanceFlowUpsert) SetDeletedBy(v uint32) *BalanceFlowUpsert {
+func (u *BalanceFlowUpsert) SetDeletedBy(v int64) *BalanceFlowUpsert {
 	u.Set(balanceflow.FieldDeletedBy, v)
 	return u
 }
@@ -662,7 +662,7 @@ func (u *BalanceFlowUpsert) UpdateDeletedBy() *BalanceFlowUpsert {
 }
 
 // AddDeletedBy adds v to the "deleted_by" field.
-func (u *BalanceFlowUpsert) AddDeletedBy(v uint32) *BalanceFlowUpsert {
+func (u *BalanceFlowUpsert) AddDeletedBy(v int64) *BalanceFlowUpsert {
 	u.Add(balanceflow.FieldDeletedBy, v)
 	return u
 }
@@ -674,7 +674,7 @@ func (u *BalanceFlowUpsert) ClearDeletedBy() *BalanceFlowUpsert {
 }
 
 // SetBookID sets the "book_id" field.
-func (u *BalanceFlowUpsert) SetBookID(v uint32) *BalanceFlowUpsert {
+func (u *BalanceFlowUpsert) SetBookID(v int64) *BalanceFlowUpsert {
 	u.Set(balanceflow.FieldBookID, v)
 	return u
 }
@@ -686,7 +686,7 @@ func (u *BalanceFlowUpsert) UpdateBookID() *BalanceFlowUpsert {
 }
 
 // AddBookID adds v to the "book_id" field.
-func (u *BalanceFlowUpsert) AddBookID(v uint32) *BalanceFlowUpsert {
+func (u *BalanceFlowUpsert) AddBookID(v int64) *BalanceFlowUpsert {
 	u.Add(balanceflow.FieldBookID, v)
 	return u
 }
@@ -764,7 +764,7 @@ func (u *BalanceFlowUpsert) ClearConvertedAmount() *BalanceFlowUpsert {
 }
 
 // SetAccountID sets the "account_id" field.
-func (u *BalanceFlowUpsert) SetAccountID(v uint32) *BalanceFlowUpsert {
+func (u *BalanceFlowUpsert) SetAccountID(v int64) *BalanceFlowUpsert {
 	u.Set(balanceflow.FieldAccountID, v)
 	return u
 }
@@ -776,7 +776,7 @@ func (u *BalanceFlowUpsert) UpdateAccountID() *BalanceFlowUpsert {
 }
 
 // AddAccountID adds v to the "account_id" field.
-func (u *BalanceFlowUpsert) AddAccountID(v uint32) *BalanceFlowUpsert {
+func (u *BalanceFlowUpsert) AddAccountID(v int64) *BalanceFlowUpsert {
 	u.Add(balanceflow.FieldAccountID, v)
 	return u
 }
@@ -788,7 +788,7 @@ func (u *BalanceFlowUpsert) ClearAccountID() *BalanceFlowUpsert {
 }
 
 // SetToAccountID sets the "to_account_id" field.
-func (u *BalanceFlowUpsert) SetToAccountID(v uint32) *BalanceFlowUpsert {
+func (u *BalanceFlowUpsert) SetToAccountID(v int64) *BalanceFlowUpsert {
 	u.Set(balanceflow.FieldToAccountID, v)
 	return u
 }
@@ -800,7 +800,7 @@ func (u *BalanceFlowUpsert) UpdateToAccountID() *BalanceFlowUpsert {
 }
 
 // AddToAccountID adds v to the "to_account_id" field.
-func (u *BalanceFlowUpsert) AddToAccountID(v uint32) *BalanceFlowUpsert {
+func (u *BalanceFlowUpsert) AddToAccountID(v int64) *BalanceFlowUpsert {
 	u.Add(balanceflow.FieldToAccountID, v)
 	return u
 }
@@ -812,7 +812,7 @@ func (u *BalanceFlowUpsert) ClearToAccountID() *BalanceFlowUpsert {
 }
 
 // SetPayeeID sets the "payee_id" field.
-func (u *BalanceFlowUpsert) SetPayeeID(v uint32) *BalanceFlowUpsert {
+func (u *BalanceFlowUpsert) SetPayeeID(v int64) *BalanceFlowUpsert {
 	u.Set(balanceflow.FieldPayeeID, v)
 	return u
 }
@@ -824,7 +824,7 @@ func (u *BalanceFlowUpsert) UpdatePayeeID() *BalanceFlowUpsert {
 }
 
 // AddPayeeID adds v to the "payee_id" field.
-func (u *BalanceFlowUpsert) AddPayeeID(v uint32) *BalanceFlowUpsert {
+func (u *BalanceFlowUpsert) AddPayeeID(v int64) *BalanceFlowUpsert {
 	u.Add(balanceflow.FieldPayeeID, v)
 	return u
 }
@@ -836,7 +836,7 @@ func (u *BalanceFlowUpsert) ClearPayeeID() *BalanceFlowUpsert {
 }
 
 // SetCreatorID sets the "creator_id" field.
-func (u *BalanceFlowUpsert) SetCreatorID(v uint32) *BalanceFlowUpsert {
+func (u *BalanceFlowUpsert) SetCreatorID(v int64) *BalanceFlowUpsert {
 	u.Set(balanceflow.FieldCreatorID, v)
 	return u
 }
@@ -848,7 +848,7 @@ func (u *BalanceFlowUpsert) UpdateCreatorID() *BalanceFlowUpsert {
 }
 
 // AddCreatorID adds v to the "creator_id" field.
-func (u *BalanceFlowUpsert) AddCreatorID(v uint32) *BalanceFlowUpsert {
+func (u *BalanceFlowUpsert) AddCreatorID(v int64) *BalanceFlowUpsert {
 	u.Add(balanceflow.FieldCreatorID, v)
 	return u
 }
@@ -1055,14 +1055,14 @@ func (u *BalanceFlowUpsertOne) ClearDeletedAt() *BalanceFlowUpsertOne {
 }
 
 // SetCreatedBy sets the "created_by" field.
-func (u *BalanceFlowUpsertOne) SetCreatedBy(v uint32) *BalanceFlowUpsertOne {
+func (u *BalanceFlowUpsertOne) SetCreatedBy(v int64) *BalanceFlowUpsertOne {
 	return u.Update(func(s *BalanceFlowUpsert) {
 		s.SetCreatedBy(v)
 	})
 }
 
 // AddCreatedBy adds v to the "created_by" field.
-func (u *BalanceFlowUpsertOne) AddCreatedBy(v uint32) *BalanceFlowUpsertOne {
+func (u *BalanceFlowUpsertOne) AddCreatedBy(v int64) *BalanceFlowUpsertOne {
 	return u.Update(func(s *BalanceFlowUpsert) {
 		s.AddCreatedBy(v)
 	})
@@ -1083,14 +1083,14 @@ func (u *BalanceFlowUpsertOne) ClearCreatedBy() *BalanceFlowUpsertOne {
 }
 
 // SetUpdatedBy sets the "updated_by" field.
-func (u *BalanceFlowUpsertOne) SetUpdatedBy(v uint32) *BalanceFlowUpsertOne {
+func (u *BalanceFlowUpsertOne) SetUpdatedBy(v int64) *BalanceFlowUpsertOne {
 	return u.Update(func(s *BalanceFlowUpsert) {
 		s.SetUpdatedBy(v)
 	})
 }
 
 // AddUpdatedBy adds v to the "updated_by" field.
-func (u *BalanceFlowUpsertOne) AddUpdatedBy(v uint32) *BalanceFlowUpsertOne {
+func (u *BalanceFlowUpsertOne) AddUpdatedBy(v int64) *BalanceFlowUpsertOne {
 	return u.Update(func(s *BalanceFlowUpsert) {
 		s.AddUpdatedBy(v)
 	})
@@ -1111,14 +1111,14 @@ func (u *BalanceFlowUpsertOne) ClearUpdatedBy() *BalanceFlowUpsertOne {
 }
 
 // SetDeletedBy sets the "deleted_by" field.
-func (u *BalanceFlowUpsertOne) SetDeletedBy(v uint32) *BalanceFlowUpsertOne {
+func (u *BalanceFlowUpsertOne) SetDeletedBy(v int64) *BalanceFlowUpsertOne {
 	return u.Update(func(s *BalanceFlowUpsert) {
 		s.SetDeletedBy(v)
 	})
 }
 
 // AddDeletedBy adds v to the "deleted_by" field.
-func (u *BalanceFlowUpsertOne) AddDeletedBy(v uint32) *BalanceFlowUpsertOne {
+func (u *BalanceFlowUpsertOne) AddDeletedBy(v int64) *BalanceFlowUpsertOne {
 	return u.Update(func(s *BalanceFlowUpsert) {
 		s.AddDeletedBy(v)
 	})
@@ -1139,14 +1139,14 @@ func (u *BalanceFlowUpsertOne) ClearDeletedBy() *BalanceFlowUpsertOne {
 }
 
 // SetBookID sets the "book_id" field.
-func (u *BalanceFlowUpsertOne) SetBookID(v uint32) *BalanceFlowUpsertOne {
+func (u *BalanceFlowUpsertOne) SetBookID(v int64) *BalanceFlowUpsertOne {
 	return u.Update(func(s *BalanceFlowUpsert) {
 		s.SetBookID(v)
 	})
 }
 
 // AddBookID adds v to the "book_id" field.
-func (u *BalanceFlowUpsertOne) AddBookID(v uint32) *BalanceFlowUpsertOne {
+func (u *BalanceFlowUpsertOne) AddBookID(v int64) *BalanceFlowUpsertOne {
 	return u.Update(func(s *BalanceFlowUpsert) {
 		s.AddBookID(v)
 	})
@@ -1244,14 +1244,14 @@ func (u *BalanceFlowUpsertOne) ClearConvertedAmount() *BalanceFlowUpsertOne {
 }
 
 // SetAccountID sets the "account_id" field.
-func (u *BalanceFlowUpsertOne) SetAccountID(v uint32) *BalanceFlowUpsertOne {
+func (u *BalanceFlowUpsertOne) SetAccountID(v int64) *BalanceFlowUpsertOne {
 	return u.Update(func(s *BalanceFlowUpsert) {
 		s.SetAccountID(v)
 	})
 }
 
 // AddAccountID adds v to the "account_id" field.
-func (u *BalanceFlowUpsertOne) AddAccountID(v uint32) *BalanceFlowUpsertOne {
+func (u *BalanceFlowUpsertOne) AddAccountID(v int64) *BalanceFlowUpsertOne {
 	return u.Update(func(s *BalanceFlowUpsert) {
 		s.AddAccountID(v)
 	})
@@ -1272,14 +1272,14 @@ func (u *BalanceFlowUpsertOne) ClearAccountID() *BalanceFlowUpsertOne {
 }
 
 // SetToAccountID sets the "to_account_id" field.
-func (u *BalanceFlowUpsertOne) SetToAccountID(v uint32) *BalanceFlowUpsertOne {
+func (u *BalanceFlowUpsertOne) SetToAccountID(v int64) *BalanceFlowUpsertOne {
 	return u.Update(func(s *BalanceFlowUpsert) {
 		s.SetToAccountID(v)
 	})
 }
 
 // AddToAccountID adds v to the "to_account_id" field.
-func (u *BalanceFlowUpsertOne) AddToAccountID(v uint32) *BalanceFlowUpsertOne {
+func (u *BalanceFlowUpsertOne) AddToAccountID(v int64) *BalanceFlowUpsertOne {
 	return u.Update(func(s *BalanceFlowUpsert) {
 		s.AddToAccountID(v)
 	})
@@ -1300,14 +1300,14 @@ func (u *BalanceFlowUpsertOne) ClearToAccountID() *BalanceFlowUpsertOne {
 }
 
 // SetPayeeID sets the "payee_id" field.
-func (u *BalanceFlowUpsertOne) SetPayeeID(v uint32) *BalanceFlowUpsertOne {
+func (u *BalanceFlowUpsertOne) SetPayeeID(v int64) *BalanceFlowUpsertOne {
 	return u.Update(func(s *BalanceFlowUpsert) {
 		s.SetPayeeID(v)
 	})
 }
 
 // AddPayeeID adds v to the "payee_id" field.
-func (u *BalanceFlowUpsertOne) AddPayeeID(v uint32) *BalanceFlowUpsertOne {
+func (u *BalanceFlowUpsertOne) AddPayeeID(v int64) *BalanceFlowUpsertOne {
 	return u.Update(func(s *BalanceFlowUpsert) {
 		s.AddPayeeID(v)
 	})
@@ -1328,14 +1328,14 @@ func (u *BalanceFlowUpsertOne) ClearPayeeID() *BalanceFlowUpsertOne {
 }
 
 // SetCreatorID sets the "creator_id" field.
-func (u *BalanceFlowUpsertOne) SetCreatorID(v uint32) *BalanceFlowUpsertOne {
+func (u *BalanceFlowUpsertOne) SetCreatorID(v int64) *BalanceFlowUpsertOne {
 	return u.Update(func(s *BalanceFlowUpsert) {
 		s.SetCreatorID(v)
 	})
 }
 
 // AddCreatorID adds v to the "creator_id" field.
-func (u *BalanceFlowUpsertOne) AddCreatorID(v uint32) *BalanceFlowUpsertOne {
+func (u *BalanceFlowUpsertOne) AddCreatorID(v int64) *BalanceFlowUpsertOne {
 	return u.Update(func(s *BalanceFlowUpsert) {
 		s.AddCreatorID(v)
 	})
@@ -1483,7 +1483,7 @@ func (u *BalanceFlowUpsertOne) ExecX(ctx context.Context) {
 }
 
 // Exec executes the UPSERT query and returns the inserted/updated ID.
-func (u *BalanceFlowUpsertOne) ID(ctx context.Context) (id uint32, err error) {
+func (u *BalanceFlowUpsertOne) ID(ctx context.Context) (id int64, err error) {
 	node, err := u.create.Save(ctx)
 	if err != nil {
 		return id, err
@@ -1492,7 +1492,7 @@ func (u *BalanceFlowUpsertOne) ID(ctx context.Context) (id uint32, err error) {
 }
 
 // IDX is like ID, but panics if an error occurs.
-func (u *BalanceFlowUpsertOne) IDX(ctx context.Context) uint32 {
+func (u *BalanceFlowUpsertOne) IDX(ctx context.Context) int64 {
 	id, err := u.ID(ctx)
 	if err != nil {
 		panic(err)
@@ -1549,7 +1549,7 @@ func (_c *BalanceFlowCreateBulk) Save(ctx context.Context) ([]*BalanceFlow, erro
 				mutation.id = &nodes[i].ID
 				if specs[i].ID.Value != nil && nodes[i].ID == 0 {
 					id := specs[i].ID.Value.(int64)
-					nodes[i].ID = uint32(id)
+					nodes[i].ID = int64(id)
 				}
 				mutation.done = true
 				return nodes[i], nil
@@ -1733,14 +1733,14 @@ func (u *BalanceFlowUpsertBulk) ClearDeletedAt() *BalanceFlowUpsertBulk {
 }
 
 // SetCreatedBy sets the "created_by" field.
-func (u *BalanceFlowUpsertBulk) SetCreatedBy(v uint32) *BalanceFlowUpsertBulk {
+func (u *BalanceFlowUpsertBulk) SetCreatedBy(v int64) *BalanceFlowUpsertBulk {
 	return u.Update(func(s *BalanceFlowUpsert) {
 		s.SetCreatedBy(v)
 	})
 }
 
 // AddCreatedBy adds v to the "created_by" field.
-func (u *BalanceFlowUpsertBulk) AddCreatedBy(v uint32) *BalanceFlowUpsertBulk {
+func (u *BalanceFlowUpsertBulk) AddCreatedBy(v int64) *BalanceFlowUpsertBulk {
 	return u.Update(func(s *BalanceFlowUpsert) {
 		s.AddCreatedBy(v)
 	})
@@ -1761,14 +1761,14 @@ func (u *BalanceFlowUpsertBulk) ClearCreatedBy() *BalanceFlowUpsertBulk {
 }
 
 // SetUpdatedBy sets the "updated_by" field.
-func (u *BalanceFlowUpsertBulk) SetUpdatedBy(v uint32) *BalanceFlowUpsertBulk {
+func (u *BalanceFlowUpsertBulk) SetUpdatedBy(v int64) *BalanceFlowUpsertBulk {
 	return u.Update(func(s *BalanceFlowUpsert) {
 		s.SetUpdatedBy(v)
 	})
 }
 
 // AddUpdatedBy adds v to the "updated_by" field.
-func (u *BalanceFlowUpsertBulk) AddUpdatedBy(v uint32) *BalanceFlowUpsertBulk {
+func (u *BalanceFlowUpsertBulk) AddUpdatedBy(v int64) *BalanceFlowUpsertBulk {
 	return u.Update(func(s *BalanceFlowUpsert) {
 		s.AddUpdatedBy(v)
 	})
@@ -1789,14 +1789,14 @@ func (u *BalanceFlowUpsertBulk) ClearUpdatedBy() *BalanceFlowUpsertBulk {
 }
 
 // SetDeletedBy sets the "deleted_by" field.
-func (u *BalanceFlowUpsertBulk) SetDeletedBy(v uint32) *BalanceFlowUpsertBulk {
+func (u *BalanceFlowUpsertBulk) SetDeletedBy(v int64) *BalanceFlowUpsertBulk {
 	return u.Update(func(s *BalanceFlowUpsert) {
 		s.SetDeletedBy(v)
 	})
 }
 
 // AddDeletedBy adds v to the "deleted_by" field.
-func (u *BalanceFlowUpsertBulk) AddDeletedBy(v uint32) *BalanceFlowUpsertBulk {
+func (u *BalanceFlowUpsertBulk) AddDeletedBy(v int64) *BalanceFlowUpsertBulk {
 	return u.Update(func(s *BalanceFlowUpsert) {
 		s.AddDeletedBy(v)
 	})
@@ -1817,14 +1817,14 @@ func (u *BalanceFlowUpsertBulk) ClearDeletedBy() *BalanceFlowUpsertBulk {
 }
 
 // SetBookID sets the "book_id" field.
-func (u *BalanceFlowUpsertBulk) SetBookID(v uint32) *BalanceFlowUpsertBulk {
+func (u *BalanceFlowUpsertBulk) SetBookID(v int64) *BalanceFlowUpsertBulk {
 	return u.Update(func(s *BalanceFlowUpsert) {
 		s.SetBookID(v)
 	})
 }
 
 // AddBookID adds v to the "book_id" field.
-func (u *BalanceFlowUpsertBulk) AddBookID(v uint32) *BalanceFlowUpsertBulk {
+func (u *BalanceFlowUpsertBulk) AddBookID(v int64) *BalanceFlowUpsertBulk {
 	return u.Update(func(s *BalanceFlowUpsert) {
 		s.AddBookID(v)
 	})
@@ -1922,14 +1922,14 @@ func (u *BalanceFlowUpsertBulk) ClearConvertedAmount() *BalanceFlowUpsertBulk {
 }
 
 // SetAccountID sets the "account_id" field.
-func (u *BalanceFlowUpsertBulk) SetAccountID(v uint32) *BalanceFlowUpsertBulk {
+func (u *BalanceFlowUpsertBulk) SetAccountID(v int64) *BalanceFlowUpsertBulk {
 	return u.Update(func(s *BalanceFlowUpsert) {
 		s.SetAccountID(v)
 	})
 }
 
 // AddAccountID adds v to the "account_id" field.
-func (u *BalanceFlowUpsertBulk) AddAccountID(v uint32) *BalanceFlowUpsertBulk {
+func (u *BalanceFlowUpsertBulk) AddAccountID(v int64) *BalanceFlowUpsertBulk {
 	return u.Update(func(s *BalanceFlowUpsert) {
 		s.AddAccountID(v)
 	})
@@ -1950,14 +1950,14 @@ func (u *BalanceFlowUpsertBulk) ClearAccountID() *BalanceFlowUpsertBulk {
 }
 
 // SetToAccountID sets the "to_account_id" field.
-func (u *BalanceFlowUpsertBulk) SetToAccountID(v uint32) *BalanceFlowUpsertBulk {
+func (u *BalanceFlowUpsertBulk) SetToAccountID(v int64) *BalanceFlowUpsertBulk {
 	return u.Update(func(s *BalanceFlowUpsert) {
 		s.SetToAccountID(v)
 	})
 }
 
 // AddToAccountID adds v to the "to_account_id" field.
-func (u *BalanceFlowUpsertBulk) AddToAccountID(v uint32) *BalanceFlowUpsertBulk {
+func (u *BalanceFlowUpsertBulk) AddToAccountID(v int64) *BalanceFlowUpsertBulk {
 	return u.Update(func(s *BalanceFlowUpsert) {
 		s.AddToAccountID(v)
 	})
@@ -1978,14 +1978,14 @@ func (u *BalanceFlowUpsertBulk) ClearToAccountID() *BalanceFlowUpsertBulk {
 }
 
 // SetPayeeID sets the "payee_id" field.
-func (u *BalanceFlowUpsertBulk) SetPayeeID(v uint32) *BalanceFlowUpsertBulk {
+func (u *BalanceFlowUpsertBulk) SetPayeeID(v int64) *BalanceFlowUpsertBulk {
 	return u.Update(func(s *BalanceFlowUpsert) {
 		s.SetPayeeID(v)
 	})
 }
 
 // AddPayeeID adds v to the "payee_id" field.
-func (u *BalanceFlowUpsertBulk) AddPayeeID(v uint32) *BalanceFlowUpsertBulk {
+func (u *BalanceFlowUpsertBulk) AddPayeeID(v int64) *BalanceFlowUpsertBulk {
 	return u.Update(func(s *BalanceFlowUpsert) {
 		s.AddPayeeID(v)
 	})
@@ -2006,14 +2006,14 @@ func (u *BalanceFlowUpsertBulk) ClearPayeeID() *BalanceFlowUpsertBulk {
 }
 
 // SetCreatorID sets the "creator_id" field.
-func (u *BalanceFlowUpsertBulk) SetCreatorID(v uint32) *BalanceFlowUpsertBulk {
+func (u *BalanceFlowUpsertBulk) SetCreatorID(v int64) *BalanceFlowUpsertBulk {
 	return u.Update(func(s *BalanceFlowUpsert) {
 		s.SetCreatorID(v)
 	})
 }
 
 // AddCreatorID adds v to the "creator_id" field.
-func (u *BalanceFlowUpsertBulk) AddCreatorID(v uint32) *BalanceFlowUpsertBulk {
+func (u *BalanceFlowUpsertBulk) AddCreatorID(v int64) *BalanceFlowUpsertBulk {
 	return u.Update(func(s *BalanceFlowUpsert) {
 		s.AddCreatorID(v)
 	})

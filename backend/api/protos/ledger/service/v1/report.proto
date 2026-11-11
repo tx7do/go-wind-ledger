@@ -32,7 +32,7 @@ service ReportService {
 
 // 报表查询请求
 message ReportQueryRequest {
-  uint32 book_id = 1 [
+  int64 book_id = 1 [
     json_name = "bookId",
     (gnostic.openapi.v3.property) = {description: "账本ID"}
   ];
@@ -40,10 +40,10 @@ message ReportQueryRequest {
   optional int64 min_time = 2 [json_name = "minTime"];
   optional int64 max_time = 3 [json_name = "maxTime"];
   optional string title = 4 [json_name = "title"];
-  repeated uint32 category_ids = 5 [json_name = "categoryIds"];
-  repeated uint32 tag_ids = 6 [json_name = "tagIds"];
-  repeated uint32 payee_ids = 7 [json_name = "payeeIds"];
-  optional uint32 account_id = 8 [json_name = "accountId"];
+  repeated int64 category_ids = 5 [json_name = "categoryIds"];
+  repeated int64 tag_ids = 6 [json_name = "tagIds"];
+  repeated int64 payee_ids = 7 [json_name = "payeeIds"];
+  optional int64 account_id = 8 [json_name = "accountId"];
 }
 
 // 图表数据点
@@ -69,7 +69,7 @@ message ReportResponse {
 
 // 资产负债报表请求
 message BalanceReportRequest {
-  uint32 book_id = 1 [json_name = "bookId"];
+  int64 book_id = 1 [json_name = "bookId"];
 }
 
 // 资产负债报表回应

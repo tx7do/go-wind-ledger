@@ -321,7 +321,7 @@ func (s *LedgerAuthService) InitState(ctx context.Context, _ *emptypb.Empty) (*a
 
 	// 2. 查询用户信息（proto User 不含 default_book_id/default_group_id，需 ent 实体）
 	userEntity, err := s.entClient.Client().User.Query().
-		Where(user.IDEQ(uint32(userID))).
+		Where(user.IDEQ(int64(userID))).
 		Only(privacyCtx)
 	if err != nil {
 		if ent.IsNotFound(err) {
@@ -333,7 +333,7 @@ func (s *LedgerAuthService) InitState(ctx context.Context, _ *emptypb.Empty) (*a
 
 	// proto User 信息（供前端展示）
 	userInfo, err := s.userRepo.Get(privacyCtx, &identityV1.GetUserRequest{
-		QueryBy: &identityV1.GetUserRequest_Id{Id: uint32(userID)},
+		QueryBy: &identityV1.GetUserRequest_Id{Id: int64(userID)},
 	})
 	if err != nil {
 		s.log.Errorf("get user (proto) failed: %s", err.Error())
@@ -343,11 +343,11 @@ func (s *LedgerAuthService) InitState(ctx context.Context, _ *emptypb.Empty) (*a
 	}
 
 	// 3. 查询用户可访问的租户（通过 membership 关联）
-	memberships, err := s.membershipRepo.FindByUser(privacyCtx, uint32(userID))
+	memberships, err := s.membershipRepo.FindByUser(privacyCtx, int64(userID))
 	if err != nil {
 		s.log.Errorf("find memberships by user failed: %s", err.Error())
 	}
-	var availableTenantIDs []uint32
+	var availableTenantIDs []int64
 	for _, m := range memberships {
 		if m.GetTenantId() > 0 {
 			availableTenantIDs = append(availableTenantIDs, m.GetTenantId())
@@ -357,18 +357,18 @@ func (s *LedgerAuthService) InitState(ctx context.Context, _ *emptypb.Empty) (*a
 	// 默认租户：优先使用 user.tenant_id（注册时设置）
 	defaultTenantID := operator.GetTenantId()
 	if defaultTenantID == 0 && userEntity.TenantID != nil {
-		defaultTenantID = uint64(*userEntity.TenantID)
+		defaultTenantID = int64(*userEntity.TenantID)
 	}
 	if defaultTenantID > 0 {
 		if tenantInfo, err := s.tenantRepo.Get(privacyCtx, &identityV1.GetTenantRequest{
-			QueryBy: &identityV1.GetTenantRequest_Id{Id: uint32(defaultTenantID)},
+			QueryBy: &identityV1.GetTenantRequest_Id{Id: int64(defaultTenantID)},
 		}); err == nil {
 			resp.Tenant = tenantInfo
 		}
 	}
 
 	// 4. 查询用户的默认账本（user.default_book_id）
-	defaultBookID := uint32(0)
+	defaultBookID := int64(0)
 	if userEntity.DefaultBookID != nil {
 		defaultBookID = *userEntity.DefaultBookID
 	}
@@ -439,12 +439,12 @@ func (s *LedgerAuthService) SetDefaultBook(ctx context.Context, req *appV1.SetDe
 	}
 
 	// 检查用户是否属于该租户
-	if _, err := s.membershipRepo.FindByTenantAndUser(privacyCtx, *bookEntity.TenantID, uint32(userID)); err != nil {
+	if _, err := s.membershipRepo.FindByTenantAndUser(privacyCtx, *bookEntity.TenantID, int64(userID)); err != nil {
 		return nil, identityV1.ErrorForbidden("book not accessible")
 	}
 
 	// 2. 更新 user.default_book_id
-	if _, err := s.entClient.Client().User.UpdateOneID(uint32(userID)).
+	if _, err := s.entClient.Client().User.UpdateOneID(int64(userID)).
 		SetDefaultBookID(req.GetBookId()).
 		SetUpdatedAt(time.Now()).
 		Save(privacyCtx); err != nil {
@@ -472,7 +472,7 @@ func (s *LedgerAuthService) SetDefaultTenant(ctx context.Context, req *appV1.Set
 	privacyCtx := newPrivacyCtx(ctx)
 
 	// 1. 验证用户属于该租户（membership 存在）
-	if _, err := s.membershipRepo.FindByTenantAndUser(privacyCtx, req.GetTenantId(), uint32(userID)); err != nil {
+	if _, err := s.membershipRepo.FindByTenantAndUser(privacyCtx, req.GetTenantId(), int64(userID)); err != nil {
 		return nil, identityV1.ErrorForbidden("tenant not accessible")
 	}
 
@@ -490,7 +490,7 @@ func (s *LedgerAuthService) SetDefaultTenant(ctx context.Context, req *appV1.Set
 
 	// 3. 更新 user.default_group_id 和 default_book_id
 	// 注：user.tenant_id 不可通过 UpdateOne 修改，仅更新 default_group_id 与 default_book_id 指针
-	userUpdateBuilder := s.entClient.Client().User.UpdateOneID(uint32(userID)).
+	userUpdateBuilder := s.entClient.Client().User.UpdateOneID(int64(userID)).
 		SetDefaultGroupID(req.GetTenantId()).
 		SetUpdatedAt(time.Now())
 

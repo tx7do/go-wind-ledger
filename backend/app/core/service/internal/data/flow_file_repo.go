@@ -48,7 +48,7 @@ func NewFlowFileRepo(
 	}
 }
 
-func (r *FlowFileRepo) ListByFlow(ctx context.Context, flowID uint32) ([]*ledgerV1.FlowFile, error) {
+func (r *FlowFileRepo) ListByFlow(ctx context.Context, flowID int64) ([]*ledgerV1.FlowFile, error) {
 	entities, err := r.entClient.Client().FlowFile.Query().Where(flowfile.FlowIDEQ(flowID)).All(ctx)
 	if err != nil {
 		return nil, ledgerV1.ErrorInternalServerError("query flow files failed")
@@ -76,17 +76,17 @@ func (r *FlowFileRepo) Create(ctx context.Context, data *ledgerV1.FlowFile) (*le
 	return r.mapper.ToDTO(saved), nil
 }
 
-func (r *FlowFileRepo) Delete(ctx context.Context, id uint32) error {
+func (r *FlowFileRepo) Delete(ctx context.Context, id int64) error {
 	return r.entClient.Client().FlowFile.DeleteOneID(id).Exec(ctx)
 }
 
-func (r *FlowFileRepo) DeleteByFlow(ctx context.Context, flowID uint32) error {
+func (r *FlowFileRepo) DeleteByFlow(ctx context.Context, flowID int64) error {
 	_, err := r.entClient.Client().FlowFile.Delete().Where(flowfile.FlowIDEQ(flowID)).Exec(ctx)
 	return err
 }
 
 // ReassignFlow updates all attachments from one flow to another (used by BalanceFlow Update).
-func (r *FlowFileRepo) ReassignFlow(ctx context.Context, oldFlowID uint32, newFlowID uint32) error {
+func (r *FlowFileRepo) ReassignFlow(ctx context.Context, oldFlowID int64, newFlowID int64) error {
 	_, err := r.entClient.Client().FlowFile.Update().
 		Where(flowfile.FlowIDEQ(oldFlowID)).
 		SetFlowID(newFlowID).
@@ -96,7 +96,7 @@ func (r *FlowFileRepo) ReassignFlow(ctx context.Context, oldFlowID uint32, newFl
 
 // UploadFile 上传流水附件：将文件数据写入 MinIO，并落库元数据。
 // creatorID 来自认证上下文（由 Service 层注入）。
-func (r *FlowFileRepo) UploadFile(ctx context.Context, creatorID uint32, req *ledgerV1.UploadFlowFileRequest) (*ledgerV1.FlowFile, error) {
+func (r *FlowFileRepo) UploadFile(ctx context.Context, creatorID int64, req *ledgerV1.UploadFlowFileRequest) (*ledgerV1.FlowFile, error) {
 	if req == nil {
 		return nil, ledgerV1.ErrorBadRequest("invalid request")
 	}

@@ -51,7 +51,7 @@ func (s *FlowFileService) UploadFile(ctx context.Context, req *ledgerV1.UploadFl
 	if creatorID == 0 {
 		return nil, ledgerV1.ErrorBadRequest("invalid creator")
 	}
-	return s.flowFileRepo.UploadFile(ctx, uint32(creatorID), req)
+	return s.flowFileRepo.UploadFile(ctx, int64(creatorID), req)
 }
 
 // ViewFile 查看流水附件（免认证，按 create_time 安全校验）。

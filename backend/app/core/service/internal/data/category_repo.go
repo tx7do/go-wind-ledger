@@ -22,11 +22,11 @@ import (
 )
 
 type CategoryRepo struct {
-	entClient  *entCrud.EntClient[*ent.Client]
-	log        *log.Helper
-	mapper     *mapper.CopierMapper[ledgerV1.Category, ent.Category]
+	entClient     *entCrud.EntClient[*ent.Client]
+	log           *log.Helper
+	mapper        *mapper.CopierMapper[ledgerV1.Category, ent.Category]
 	typeConverter *mapper.EnumTypeConverter[ledgerV1.CategoryType, category.Type]
-	repository *entCrud.Repository[
+	repository    *entCrud.Repository[
 		ent.CategoryQuery, ent.CategorySelect,
 		ent.CategoryCreate, ent.CategoryCreateBulk,
 		ent.CategoryUpdate, ent.CategoryUpdateOne,
@@ -78,7 +78,7 @@ func (r *CategoryRepo) List(ctx context.Context, req *paginationV1.PagingRequest
 	return &ledgerV1.ListCategoryResponse{Total: ret.Total, Items: ret.Items}, nil
 }
 
-func (r *CategoryRepo) ListAll(ctx context.Context, bookID uint32, typ *ledgerV1.CategoryType) (*ledgerV1.ListCategoryResponse, error) {
+func (r *CategoryRepo) ListAll(ctx context.Context, bookID int64, typ *ledgerV1.CategoryType) (*ledgerV1.ListCategoryResponse, error) {
 	q := r.entClient.Client().Category.Query().
 		Where(category.EnableEQ(true))
 	// bookID 为 0 表示不过滤账本（查询当前租户全部分类）
@@ -96,10 +96,10 @@ func (r *CategoryRepo) ListAll(ctx context.Context, bookID uint32, typ *ledgerV1
 	for _, e := range entities {
 		items = append(items, r.mapper.ToDTO(e))
 	}
-	return &ledgerV1.ListCategoryResponse{Items: items, Total: uint64(len(items))}, nil
+	return &ledgerV1.ListCategoryResponse{Items: items, Total: int64(len(items))}, nil
 }
 
-func (r *CategoryRepo) Get(ctx context.Context, id uint32) (*ledgerV1.Category, error) {
+func (r *CategoryRepo) Get(ctx context.Context, id int64) (*ledgerV1.Category, error) {
 	entity, err := r.entClient.Client().Category.Query().Where(category.IDEQ(id)).Only(ctx)
 	if err != nil {
 		if ent.IsNotFound(err) {
@@ -135,7 +135,7 @@ func (r *CategoryRepo) Create(ctx context.Context, data *ledgerV1.Category) (*le
 	return r.mapper.ToDTO(saved), nil
 }
 
-func (r *CategoryRepo) Update(ctx context.Context, id uint32, data *ledgerV1.Category, mask *fieldmaskpb.FieldMask) (*ledgerV1.Category, error) {
+func (r *CategoryRepo) Update(ctx context.Context, id int64, data *ledgerV1.Category, mask *fieldmaskpb.FieldMask) (*ledgerV1.Category, error) {
 	if data == nil {
 		return nil, ledgerV1.ErrorBadRequest("invalid parameter")
 	}
@@ -155,7 +155,7 @@ func (r *CategoryRepo) Update(ctx context.Context, id uint32, data *ledgerV1.Cat
 	return r.mapper.ToDTO(updated), nil
 }
 
-func (r *CategoryRepo) Delete(ctx context.Context, id uint32) error {
+func (r *CategoryRepo) Delete(ctx context.Context, id int64) error {
 	count, _ := r.entClient.Client().CategoryRelation.Query().
 		Where(func(s *sql.Selector) { s.Where(sql.EQ("category_id", id)) }).Count(ctx)
 	if count > 0 {
@@ -164,7 +164,7 @@ func (r *CategoryRepo) Delete(ctx context.Context, id uint32) error {
 	return r.entClient.Client().Category.DeleteOneID(id).Exec(ctx)
 }
 
-func (r *CategoryRepo) Toggle(ctx context.Context, id uint32) (*ledgerV1.Category, error) {
+func (r *CategoryRepo) Toggle(ctx context.Context, id int64) (*ledgerV1.Category, error) {
 	entity, err := r.entClient.Client().Category.Query().Where(category.IDEQ(id)).Only(ctx)
 	if err != nil {
 		if ent.IsNotFound(err) {
@@ -176,7 +176,7 @@ func (r *CategoryRepo) Toggle(ctx context.Context, id uint32) (*ledgerV1.Categor
 	return r.mapper.ToDTO(updated), nil
 }
 
-func (r *CategoryRepo) UnChildren(ctx context.Context, parentID uint32) error {
+func (r *CategoryRepo) UnChildren(ctx context.Context, parentID int64) error {
 	_, err := r.entClient.Client().Category.Update().Where(category.ParentIDEQ(parentID)).ClearParentID().Save(ctx)
 	return err
 }

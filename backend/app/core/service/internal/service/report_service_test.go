@@ -21,8 +21,8 @@ func newTestReportService() *ReportService {
 func TestBuildChartPoints_SingleItem(t *testing.T) {
 	svc := newTestReportService()
 	points := svc.buildChartPoints(
-		map[uint32]float64{1: 100.0},
-		map[uint32]string{1: "Food"},
+		map[int64]float64{1: 100.0},
+		map[int64]string{1: "Food"},
 	)
 	assert.Len(t, points, 1)
 	assert.Equal(t, "Food", points[0].X)
@@ -33,12 +33,12 @@ func TestBuildChartPoints_SingleItem(t *testing.T) {
 func TestBuildChartPoints_MultipleItems_SortedByAmountDesc(t *testing.T) {
 	svc := newTestReportService()
 	points := svc.buildChartPoints(
-		map[uint32]float64{
+		map[int64]float64{
 			1: 50.0,
 			2: 200.0,
 			3: 150.0,
 		},
-		map[uint32]string{1: "A", 2: "B", 3: "C"},
+		map[int64]string{1: "A", 2: "B", 3: "C"},
 	)
 	assert.Len(t, points, 3)
 	assert.Equal(t, "B", points[0].X) // 200
@@ -49,8 +49,8 @@ func TestBuildChartPoints_MultipleItems_SortedByAmountDesc(t *testing.T) {
 func TestBuildChartPoints_Percentages(t *testing.T) {
 	svc := newTestReportService()
 	points := svc.buildChartPoints(
-		map[uint32]float64{1: 25.0, 2: 75.0},
-		map[uint32]string{1: "X", 2: "Y"},
+		map[int64]float64{1: 25.0, 2: 75.0},
+		map[int64]string{1: "X", 2: "Y"},
 	)
 	assert.Len(t, points, 2)
 	// 75% (largest first)
@@ -61,8 +61,8 @@ func TestBuildChartPoints_Percentages(t *testing.T) {
 func TestBuildChartPoints_UnknownName(t *testing.T) {
 	svc := newTestReportService()
 	points := svc.buildChartPoints(
-		map[uint32]float64{1: 42.0},
-		map[uint32]string{}, // no name mapping
+		map[int64]float64{1: 42.0},
+		map[int64]string{}, // no name mapping
 	)
 	assert.Len(t, points, 1)
 	assert.Equal(t, "Unknown", points[0].X)
@@ -72,8 +72,8 @@ func TestBuildChartPoints_UnknownName(t *testing.T) {
 func TestBuildChartPoints_EmptyInput(t *testing.T) {
 	svc := newTestReportService()
 	points := svc.buildChartPoints(
-		map[uint32]float64{},
-		map[uint32]string{},
+		map[int64]float64{},
+		map[int64]string{},
 	)
 	assert.Empty(t, points)
 }
@@ -81,8 +81,8 @@ func TestBuildChartPoints_EmptyInput(t *testing.T) {
 func TestBuildChartPoints_ZeroAmount(t *testing.T) {
 	svc := newTestReportService()
 	points := svc.buildChartPoints(
-		map[uint32]float64{1: 0, 2: 0},
-		map[uint32]string{1: "A", 2: "B"},
+		map[int64]float64{1: 0, 2: 0},
+		map[int64]string{1: "A", 2: "B"},
 	)
 	assert.Len(t, points, 2)
 	// All percentages should be "0" when total is 0
@@ -93,8 +93,8 @@ func TestBuildChartPoints_ZeroAmount(t *testing.T) {
 func TestBuildChartPoints_NegativeAmounts(t *testing.T) {
 	svc := newTestReportService()
 	points := svc.buildChartPoints(
-		map[uint32]float64{1: -100.0, 2: 50.0},
-		map[uint32]string{1: "Loss", 2: "Gain"},
+		map[int64]float64{1: -100.0, 2: 50.0},
+		map[int64]string{1: "Loss", 2: "Gain"},
 	)
 	assert.Len(t, points, 2)
 	// Sorted by amount desc: 50 first, -100 second
@@ -105,8 +105,8 @@ func TestBuildChartPoints_NegativeAmounts(t *testing.T) {
 func TestBuildChartPoints_AmountFormatting(t *testing.T) {
 	svc := newTestReportService()
 	points := svc.buildChartPoints(
-		map[uint32]float64{1: 123.456},
-		map[uint32]string{1: "Item"},
+		map[int64]float64{1: 123.456},
+		map[int64]string{1: "Item"},
 	)
 	assert.Len(t, points, 1)
 	assert.Equal(t, "123.46", points[0].Y) // rounded to 2 decimal places

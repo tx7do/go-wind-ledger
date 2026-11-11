@@ -70,14 +70,14 @@ func (_u *BalanceFlowUpdate) ClearDeletedAt() *BalanceFlowUpdate {
 }
 
 // SetCreatedBy sets the "created_by" field.
-func (_u *BalanceFlowUpdate) SetCreatedBy(v uint32) *BalanceFlowUpdate {
+func (_u *BalanceFlowUpdate) SetCreatedBy(v int64) *BalanceFlowUpdate {
 	_u.mutation.ResetCreatedBy()
 	_u.mutation.SetCreatedBy(v)
 	return _u
 }
 
 // SetNillableCreatedBy sets the "created_by" field if the given value is not nil.
-func (_u *BalanceFlowUpdate) SetNillableCreatedBy(v *uint32) *BalanceFlowUpdate {
+func (_u *BalanceFlowUpdate) SetNillableCreatedBy(v *int64) *BalanceFlowUpdate {
 	if v != nil {
 		_u.SetCreatedBy(*v)
 	}
@@ -85,7 +85,7 @@ func (_u *BalanceFlowUpdate) SetNillableCreatedBy(v *uint32) *BalanceFlowUpdate 
 }
 
 // AddCreatedBy adds value to the "created_by" field.
-func (_u *BalanceFlowUpdate) AddCreatedBy(v int32) *BalanceFlowUpdate {
+func (_u *BalanceFlowUpdate) AddCreatedBy(v int64) *BalanceFlowUpdate {
 	_u.mutation.AddCreatedBy(v)
 	return _u
 }
@@ -97,14 +97,14 @@ func (_u *BalanceFlowUpdate) ClearCreatedBy() *BalanceFlowUpdate {
 }
 
 // SetUpdatedBy sets the "updated_by" field.
-func (_u *BalanceFlowUpdate) SetUpdatedBy(v uint32) *BalanceFlowUpdate {
+func (_u *BalanceFlowUpdate) SetUpdatedBy(v int64) *BalanceFlowUpdate {
 	_u.mutation.ResetUpdatedBy()
 	_u.mutation.SetUpdatedBy(v)
 	return _u
 }
 
 // SetNillableUpdatedBy sets the "updated_by" field if the given value is not nil.
-func (_u *BalanceFlowUpdate) SetNillableUpdatedBy(v *uint32) *BalanceFlowUpdate {
+func (_u *BalanceFlowUpdate) SetNillableUpdatedBy(v *int64) *BalanceFlowUpdate {
 	if v != nil {
 		_u.SetUpdatedBy(*v)
 	}
@@ -112,7 +112,7 @@ func (_u *BalanceFlowUpdate) SetNillableUpdatedBy(v *uint32) *BalanceFlowUpdate 
 }
 
 // AddUpdatedBy adds value to the "updated_by" field.
-func (_u *BalanceFlowUpdate) AddUpdatedBy(v int32) *BalanceFlowUpdate {
+func (_u *BalanceFlowUpdate) AddUpdatedBy(v int64) *BalanceFlowUpdate {
 	_u.mutation.AddUpdatedBy(v)
 	return _u
 }
@@ -124,14 +124,14 @@ func (_u *BalanceFlowUpdate) ClearUpdatedBy() *BalanceFlowUpdate {
 }
 
 // SetDeletedBy sets the "deleted_by" field.
-func (_u *BalanceFlowUpdate) SetDeletedBy(v uint32) *BalanceFlowUpdate {
+func (_u *BalanceFlowUpdate) SetDeletedBy(v int64) *BalanceFlowUpdate {
 	_u.mutation.ResetDeletedBy()
 	_u.mutation.SetDeletedBy(v)
 	return _u
 }
 
 // SetNillableDeletedBy sets the "deleted_by" field if the given value is not nil.
-func (_u *BalanceFlowUpdate) SetNillableDeletedBy(v *uint32) *BalanceFlowUpdate {
+func (_u *BalanceFlowUpdate) SetNillableDeletedBy(v *int64) *BalanceFlowUpdate {
 	if v != nil {
 		_u.SetDeletedBy(*v)
 	}
@@ -139,7 +139,7 @@ func (_u *BalanceFlowUpdate) SetNillableDeletedBy(v *uint32) *BalanceFlowUpdate 
 }
 
 // AddDeletedBy adds value to the "deleted_by" field.
-func (_u *BalanceFlowUpdate) AddDeletedBy(v int32) *BalanceFlowUpdate {
+func (_u *BalanceFlowUpdate) AddDeletedBy(v int64) *BalanceFlowUpdate {
 	_u.mutation.AddDeletedBy(v)
 	return _u
 }
@@ -151,14 +151,14 @@ func (_u *BalanceFlowUpdate) ClearDeletedBy() *BalanceFlowUpdate {
 }
 
 // SetBookID sets the "book_id" field.
-func (_u *BalanceFlowUpdate) SetBookID(v uint32) *BalanceFlowUpdate {
+func (_u *BalanceFlowUpdate) SetBookID(v int64) *BalanceFlowUpdate {
 	_u.mutation.ResetBookID()
 	_u.mutation.SetBookID(v)
 	return _u
 }
 
 // SetNillableBookID sets the "book_id" field if the given value is not nil.
-func (_u *BalanceFlowUpdate) SetNillableBookID(v *uint32) *BalanceFlowUpdate {
+func (_u *BalanceFlowUpdate) SetNillableBookID(v *int64) *BalanceFlowUpdate {
 	if v != nil {
 		_u.SetBookID(*v)
 	}
@@ -166,7 +166,7 @@ func (_u *BalanceFlowUpdate) SetNillableBookID(v *uint32) *BalanceFlowUpdate {
 }
 
 // AddBookID adds value to the "book_id" field.
-func (_u *BalanceFlowUpdate) AddBookID(v int32) *BalanceFlowUpdate {
+func (_u *BalanceFlowUpdate) AddBookID(v int64) *BalanceFlowUpdate {
 	_u.mutation.AddBookID(v)
 	return _u
 }
@@ -252,14 +252,14 @@ func (_u *BalanceFlowUpdate) ClearConvertedAmount() *BalanceFlowUpdate {
 }
 
 // SetAccountID sets the "account_id" field.
-func (_u *BalanceFlowUpdate) SetAccountID(v uint32) *BalanceFlowUpdate {
+func (_u *BalanceFlowUpdate) SetAccountID(v int64) *BalanceFlowUpdate {
 	_u.mutation.ResetAccountID()
 	_u.mutation.SetAccountID(v)
 	return _u
 }
 
 // SetNillableAccountID sets the "account_id" field if the given value is not nil.
-func (_u *BalanceFlowUpdate) SetNillableAccountID(v *uint32) *BalanceFlowUpdate {
+func (_u *BalanceFlowUpdate) SetNillableAccountID(v *int64) *BalanceFlowUpdate {
 	if v != nil {
 		_u.SetAccountID(*v)
 	}
@@ -267,7 +267,7 @@ func (_u *BalanceFlowUpdate) SetNillableAccountID(v *uint32) *BalanceFlowUpdate 
 }
 
 // AddAccountID adds value to the "account_id" field.
-func (_u *BalanceFlowUpdate) AddAccountID(v int32) *BalanceFlowUpdate {
+func (_u *BalanceFlowUpdate) AddAccountID(v int64) *BalanceFlowUpdate {
 	_u.mutation.AddAccountID(v)
 	return _u
 }
@@ -279,14 +279,14 @@ func (_u *BalanceFlowUpdate) ClearAccountID() *BalanceFlowUpdate {
 }
 
 // SetToAccountID sets the "to_account_id" field.
-func (_u *BalanceFlowUpdate) SetToAccountID(v uint32) *BalanceFlowUpdate {
+func (_u *BalanceFlowUpdate) SetToAccountID(v int64) *BalanceFlowUpdate {
 	_u.mutation.ResetToAccountID()
 	_u.mutation.SetToAccountID(v)
 	return _u
 }
 
 // SetNillableToAccountID sets the "to_account_id" field if the given value is not nil.
-func (_u *BalanceFlowUpdate) SetNillableToAccountID(v *uint32) *BalanceFlowUpdate {
+func (_u *BalanceFlowUpdate) SetNillableToAccountID(v *int64) *BalanceFlowUpdate {
 	if v != nil {
 		_u.SetToAccountID(*v)
 	}
@@ -294,7 +294,7 @@ func (_u *BalanceFlowUpdate) SetNillableToAccountID(v *uint32) *BalanceFlowUpdat
 }
 
 // AddToAccountID adds value to the "to_account_id" field.
-func (_u *BalanceFlowUpdate) AddToAccountID(v int32) *BalanceFlowUpdate {
+func (_u *BalanceFlowUpdate) AddToAccountID(v int64) *BalanceFlowUpdate {
 	_u.mutation.AddToAccountID(v)
 	return _u
 }
@@ -306,14 +306,14 @@ func (_u *BalanceFlowUpdate) ClearToAccountID() *BalanceFlowUpdate {
 }
 
 // SetPayeeID sets the "payee_id" field.
-func (_u *BalanceFlowUpdate) SetPayeeID(v uint32) *BalanceFlowUpdate {
+func (_u *BalanceFlowUpdate) SetPayeeID(v int64) *BalanceFlowUpdate {
 	_u.mutation.ResetPayeeID()
 	_u.mutation.SetPayeeID(v)
 	return _u
 }
 
 // SetNillablePayeeID sets the "payee_id" field if the given value is not nil.
-func (_u *BalanceFlowUpdate) SetNillablePayeeID(v *uint32) *BalanceFlowUpdate {
+func (_u *BalanceFlowUpdate) SetNillablePayeeID(v *int64) *BalanceFlowUpdate {
 	if v != nil {
 		_u.SetPayeeID(*v)
 	}
@@ -321,7 +321,7 @@ func (_u *BalanceFlowUpdate) SetNillablePayeeID(v *uint32) *BalanceFlowUpdate {
 }
 
 // AddPayeeID adds value to the "payee_id" field.
-func (_u *BalanceFlowUpdate) AddPayeeID(v int32) *BalanceFlowUpdate {
+func (_u *BalanceFlowUpdate) AddPayeeID(v int64) *BalanceFlowUpdate {
 	_u.mutation.AddPayeeID(v)
 	return _u
 }
@@ -333,14 +333,14 @@ func (_u *BalanceFlowUpdate) ClearPayeeID() *BalanceFlowUpdate {
 }
 
 // SetCreatorID sets the "creator_id" field.
-func (_u *BalanceFlowUpdate) SetCreatorID(v uint32) *BalanceFlowUpdate {
+func (_u *BalanceFlowUpdate) SetCreatorID(v int64) *BalanceFlowUpdate {
 	_u.mutation.ResetCreatorID()
 	_u.mutation.SetCreatorID(v)
 	return _u
 }
 
 // SetNillableCreatorID sets the "creator_id" field if the given value is not nil.
-func (_u *BalanceFlowUpdate) SetNillableCreatorID(v *uint32) *BalanceFlowUpdate {
+func (_u *BalanceFlowUpdate) SetNillableCreatorID(v *int64) *BalanceFlowUpdate {
 	if v != nil {
 		_u.SetCreatorID(*v)
 	}
@@ -348,7 +348,7 @@ func (_u *BalanceFlowUpdate) SetNillableCreatorID(v *uint32) *BalanceFlowUpdate 
 }
 
 // AddCreatorID adds value to the "creator_id" field.
-func (_u *BalanceFlowUpdate) AddCreatorID(v int32) *BalanceFlowUpdate {
+func (_u *BalanceFlowUpdate) AddCreatorID(v int64) *BalanceFlowUpdate {
 	_u.mutation.AddCreatorID(v)
 	return _u
 }
@@ -528,7 +528,7 @@ func (_u *BalanceFlowUpdate) sqlSave(ctx context.Context) (_node int, err error)
 	if err := _u.check(); err != nil {
 		return _node, err
 	}
-	_spec := sqlgraph.NewUpdateSpec(balanceflow.Table, balanceflow.Columns, sqlgraph.NewFieldSpec(balanceflow.FieldID, field.TypeUint32))
+	_spec := sqlgraph.NewUpdateSpec(balanceflow.Table, balanceflow.Columns, sqlgraph.NewFieldSpec(balanceflow.FieldID, field.TypeInt64))
 	if ps := _u.mutation.predicates; len(ps) > 0 {
 		_spec.Predicate = func(selector *sql.Selector) {
 			for i := range ps {
@@ -537,7 +537,7 @@ func (_u *BalanceFlowUpdate) sqlSave(ctx context.Context) (_node int, err error)
 		}
 	}
 	if _u.mutation.TenantIDCleared() {
-		_spec.ClearField(balanceflow.FieldTenantID, field.TypeUint32)
+		_spec.ClearField(balanceflow.FieldTenantID, field.TypeInt64)
 	}
 	if _u.mutation.CreatedAtCleared() {
 		_spec.ClearField(balanceflow.FieldCreatedAt, field.TypeTime)
@@ -555,40 +555,40 @@ func (_u *BalanceFlowUpdate) sqlSave(ctx context.Context) (_node int, err error)
 		_spec.ClearField(balanceflow.FieldDeletedAt, field.TypeTime)
 	}
 	if value, ok := _u.mutation.CreatedBy(); ok {
-		_spec.SetField(balanceflow.FieldCreatedBy, field.TypeUint32, value)
+		_spec.SetField(balanceflow.FieldCreatedBy, field.TypeInt64, value)
 	}
 	if value, ok := _u.mutation.AddedCreatedBy(); ok {
-		_spec.AddField(balanceflow.FieldCreatedBy, field.TypeUint32, value)
+		_spec.AddField(balanceflow.FieldCreatedBy, field.TypeInt64, value)
 	}
 	if _u.mutation.CreatedByCleared() {
-		_spec.ClearField(balanceflow.FieldCreatedBy, field.TypeUint32)
+		_spec.ClearField(balanceflow.FieldCreatedBy, field.TypeInt64)
 	}
 	if value, ok := _u.mutation.UpdatedBy(); ok {
-		_spec.SetField(balanceflow.FieldUpdatedBy, field.TypeUint32, value)
+		_spec.SetField(balanceflow.FieldUpdatedBy, field.TypeInt64, value)
 	}
 	if value, ok := _u.mutation.AddedUpdatedBy(); ok {
-		_spec.AddField(balanceflow.FieldUpdatedBy, field.TypeUint32, value)
+		_spec.AddField(balanceflow.FieldUpdatedBy, field.TypeInt64, value)
 	}
 	if _u.mutation.UpdatedByCleared() {
-		_spec.ClearField(balanceflow.FieldUpdatedBy, field.TypeUint32)
+		_spec.ClearField(balanceflow.FieldUpdatedBy, field.TypeInt64)
 	}
 	if value, ok := _u.mutation.DeletedBy(); ok {
-		_spec.SetField(balanceflow.FieldDeletedBy, field.TypeUint32, value)
+		_spec.SetField(balanceflow.FieldDeletedBy, field.TypeInt64, value)
 	}
 	if value, ok := _u.mutation.AddedDeletedBy(); ok {
-		_spec.AddField(balanceflow.FieldDeletedBy, field.TypeUint32, value)
+		_spec.AddField(balanceflow.FieldDeletedBy, field.TypeInt64, value)
 	}
 	if _u.mutation.DeletedByCleared() {
-		_spec.ClearField(balanceflow.FieldDeletedBy, field.TypeUint32)
+		_spec.ClearField(balanceflow.FieldDeletedBy, field.TypeInt64)
 	}
 	if value, ok := _u.mutation.BookID(); ok {
-		_spec.SetField(balanceflow.FieldBookID, field.TypeUint32, value)
+		_spec.SetField(balanceflow.FieldBookID, field.TypeInt64, value)
 	}
 	if value, ok := _u.mutation.AddedBookID(); ok {
-		_spec.AddField(balanceflow.FieldBookID, field.TypeUint32, value)
+		_spec.AddField(balanceflow.FieldBookID, field.TypeInt64, value)
 	}
 	if _u.mutation.BookIDCleared() {
-		_spec.ClearField(balanceflow.FieldBookID, field.TypeUint32)
+		_spec.ClearField(balanceflow.FieldBookID, field.TypeInt64)
 	}
 	if value, ok := _u.mutation.GetType(); ok {
 		_spec.SetField(balanceflow.FieldType, field.TypeEnum, value)
@@ -615,40 +615,40 @@ func (_u *BalanceFlowUpdate) sqlSave(ctx context.Context) (_node int, err error)
 		_spec.ClearField(balanceflow.FieldConvertedAmount, field.TypeFloat64)
 	}
 	if value, ok := _u.mutation.AccountID(); ok {
-		_spec.SetField(balanceflow.FieldAccountID, field.TypeUint32, value)
+		_spec.SetField(balanceflow.FieldAccountID, field.TypeInt64, value)
 	}
 	if value, ok := _u.mutation.AddedAccountID(); ok {
-		_spec.AddField(balanceflow.FieldAccountID, field.TypeUint32, value)
+		_spec.AddField(balanceflow.FieldAccountID, field.TypeInt64, value)
 	}
 	if _u.mutation.AccountIDCleared() {
-		_spec.ClearField(balanceflow.FieldAccountID, field.TypeUint32)
+		_spec.ClearField(balanceflow.FieldAccountID, field.TypeInt64)
 	}
 	if value, ok := _u.mutation.ToAccountID(); ok {
-		_spec.SetField(balanceflow.FieldToAccountID, field.TypeUint32, value)
+		_spec.SetField(balanceflow.FieldToAccountID, field.TypeInt64, value)
 	}
 	if value, ok := _u.mutation.AddedToAccountID(); ok {
-		_spec.AddField(balanceflow.FieldToAccountID, field.TypeUint32, value)
+		_spec.AddField(balanceflow.FieldToAccountID, field.TypeInt64, value)
 	}
 	if _u.mutation.ToAccountIDCleared() {
-		_spec.ClearField(balanceflow.FieldToAccountID, field.TypeUint32)
+		_spec.ClearField(balanceflow.FieldToAccountID, field.TypeInt64)
 	}
 	if value, ok := _u.mutation.PayeeID(); ok {
-		_spec.SetField(balanceflow.FieldPayeeID, field.TypeUint32, value)
+		_spec.SetField(balanceflow.FieldPayeeID, field.TypeInt64, value)
 	}
 	if value, ok := _u.mutation.AddedPayeeID(); ok {
-		_spec.AddField(balanceflow.FieldPayeeID, field.TypeUint32, value)
+		_spec.AddField(balanceflow.FieldPayeeID, field.TypeInt64, value)
 	}
 	if _u.mutation.PayeeIDCleared() {
-		_spec.ClearField(balanceflow.FieldPayeeID, field.TypeUint32)
+		_spec.ClearField(balanceflow.FieldPayeeID, field.TypeInt64)
 	}
 	if value, ok := _u.mutation.CreatorID(); ok {
-		_spec.SetField(balanceflow.FieldCreatorID, field.TypeUint32, value)
+		_spec.SetField(balanceflow.FieldCreatorID, field.TypeInt64, value)
 	}
 	if value, ok := _u.mutation.AddedCreatorID(); ok {
-		_spec.AddField(balanceflow.FieldCreatorID, field.TypeUint32, value)
+		_spec.AddField(balanceflow.FieldCreatorID, field.TypeInt64, value)
 	}
 	if _u.mutation.CreatorIDCleared() {
-		_spec.ClearField(balanceflow.FieldCreatorID, field.TypeUint32)
+		_spec.ClearField(balanceflow.FieldCreatorID, field.TypeInt64)
 	}
 	if value, ok := _u.mutation.CreateTime(); ok {
 		_spec.SetField(balanceflow.FieldCreateTime, field.TypeInt64, value)
@@ -749,14 +749,14 @@ func (_u *BalanceFlowUpdateOne) ClearDeletedAt() *BalanceFlowUpdateOne {
 }
 
 // SetCreatedBy sets the "created_by" field.
-func (_u *BalanceFlowUpdateOne) SetCreatedBy(v uint32) *BalanceFlowUpdateOne {
+func (_u *BalanceFlowUpdateOne) SetCreatedBy(v int64) *BalanceFlowUpdateOne {
 	_u.mutation.ResetCreatedBy()
 	_u.mutation.SetCreatedBy(v)
 	return _u
 }
 
 // SetNillableCreatedBy sets the "created_by" field if the given value is not nil.
-func (_u *BalanceFlowUpdateOne) SetNillableCreatedBy(v *uint32) *BalanceFlowUpdateOne {
+func (_u *BalanceFlowUpdateOne) SetNillableCreatedBy(v *int64) *BalanceFlowUpdateOne {
 	if v != nil {
 		_u.SetCreatedBy(*v)
 	}
@@ -764,7 +764,7 @@ func (_u *BalanceFlowUpdateOne) SetNillableCreatedBy(v *uint32) *BalanceFlowUpda
 }
 
 // AddCreatedBy adds value to the "created_by" field.
-func (_u *BalanceFlowUpdateOne) AddCreatedBy(v int32) *BalanceFlowUpdateOne {
+func (_u *BalanceFlowUpdateOne) AddCreatedBy(v int64) *BalanceFlowUpdateOne {
 	_u.mutation.AddCreatedBy(v)
 	return _u
 }
@@ -776,14 +776,14 @@ func (_u *BalanceFlowUpdateOne) ClearCreatedBy() *BalanceFlowUpdateOne {
 }
 
 // SetUpdatedBy sets the "updated_by" field.
-func (_u *BalanceFlowUpdateOne) SetUpdatedBy(v uint32) *BalanceFlowUpdateOne {
+func (_u *BalanceFlowUpdateOne) SetUpdatedBy(v int64) *BalanceFlowUpdateOne {
 	_u.mutation.ResetUpdatedBy()
 	_u.mutation.SetUpdatedBy(v)
 	return _u
 }
 
 // SetNillableUpdatedBy sets the "updated_by" field if the given value is not nil.
-func (_u *BalanceFlowUpdateOne) SetNillableUpdatedBy(v *uint32) *BalanceFlowUpdateOne {
+func (_u *BalanceFlowUpdateOne) SetNillableUpdatedBy(v *int64) *BalanceFlowUpdateOne {
 	if v != nil {
 		_u.SetUpdatedBy(*v)
 	}
@@ -791,7 +791,7 @@ func (_u *BalanceFlowUpdateOne) SetNillableUpdatedBy(v *uint32) *BalanceFlowUpda
 }
 
 // AddUpdatedBy adds value to the "updated_by" field.
-func (_u *BalanceFlowUpdateOne) AddUpdatedBy(v int32) *BalanceFlowUpdateOne {
+func (_u *BalanceFlowUpdateOne) AddUpdatedBy(v int64) *BalanceFlowUpdateOne {
 	_u.mutation.AddUpdatedBy(v)
 	return _u
 }
@@ -803,14 +803,14 @@ func (_u *BalanceFlowUpdateOne) ClearUpdatedBy() *BalanceFlowUpdateOne {
 }
 
 // SetDeletedBy sets the "deleted_by" field.
-func (_u *BalanceFlowUpdateOne) SetDeletedBy(v uint32) *BalanceFlowUpdateOne {
+func (_u *BalanceFlowUpdateOne) SetDeletedBy(v int64) *BalanceFlowUpdateOne {
 	_u.mutation.ResetDeletedBy()
 	_u.mutation.SetDeletedBy(v)
 	return _u
 }
 
 // SetNillableDeletedBy sets the "deleted_by" field if the given value is not nil.
-func (_u *BalanceFlowUpdateOne) SetNillableDeletedBy(v *uint32) *BalanceFlowUpdateOne {
+func (_u *BalanceFlowUpdateOne) SetNillableDeletedBy(v *int64) *BalanceFlowUpdateOne {
 	if v != nil {
 		_u.SetDeletedBy(*v)
 	}
@@ -818,7 +818,7 @@ func (_u *BalanceFlowUpdateOne) SetNillableDeletedBy(v *uint32) *BalanceFlowUpda
 }
 
 // AddDeletedBy adds value to the "deleted_by" field.
-func (_u *BalanceFlowUpdateOne) AddDeletedBy(v int32) *BalanceFlowUpdateOne {
+func (_u *BalanceFlowUpdateOne) AddDeletedBy(v int64) *BalanceFlowUpdateOne {
 	_u.mutation.AddDeletedBy(v)
 	return _u
 }
@@ -830,14 +830,14 @@ func (_u *BalanceFlowUpdateOne) ClearDeletedBy() *BalanceFlowUpdateOne {
 }
 
 // SetBookID sets the "book_id" field.
-func (_u *BalanceFlowUpdateOne) SetBookID(v uint32) *BalanceFlowUpdateOne {
+func (_u *BalanceFlowUpdateOne) SetBookID(v int64) *BalanceFlowUpdateOne {
 	_u.mutation.ResetBookID()
 	_u.mutation.SetBookID(v)
 	return _u
 }
 
 // SetNillableBookID sets the "book_id" field if the given value is not nil.
-func (_u *BalanceFlowUpdateOne) SetNillableBookID(v *uint32) *BalanceFlowUpdateOne {
+func (_u *BalanceFlowUpdateOne) SetNillableBookID(v *int64) *BalanceFlowUpdateOne {
 	if v != nil {
 		_u.SetBookID(*v)
 	}
@@ -845,7 +845,7 @@ func (_u *BalanceFlowUpdateOne) SetNillableBookID(v *uint32) *BalanceFlowUpdateO
 }
 
 // AddBookID adds value to the "book_id" field.
-func (_u *BalanceFlowUpdateOne) AddBookID(v int32) *BalanceFlowUpdateOne {
+func (_u *BalanceFlowUpdateOne) AddBookID(v int64) *BalanceFlowUpdateOne {
 	_u.mutation.AddBookID(v)
 	return _u
 }
@@ -931,14 +931,14 @@ func (_u *BalanceFlowUpdateOne) ClearConvertedAmount() *BalanceFlowUpdateOne {
 }
 
 // SetAccountID sets the "account_id" field.
-func (_u *BalanceFlowUpdateOne) SetAccountID(v uint32) *BalanceFlowUpdateOne {
+func (_u *BalanceFlowUpdateOne) SetAccountID(v int64) *BalanceFlowUpdateOne {
 	_u.mutation.ResetAccountID()
 	_u.mutation.SetAccountID(v)
 	return _u
 }
 
 // SetNillableAccountID sets the "account_id" field if the given value is not nil.
-func (_u *BalanceFlowUpdateOne) SetNillableAccountID(v *uint32) *BalanceFlowUpdateOne {
+func (_u *BalanceFlowUpdateOne) SetNillableAccountID(v *int64) *BalanceFlowUpdateOne {
 	if v != nil {
 		_u.SetAccountID(*v)
 	}
@@ -946,7 +946,7 @@ func (_u *BalanceFlowUpdateOne) SetNillableAccountID(v *uint32) *BalanceFlowUpda
 }
 
 // AddAccountID adds value to the "account_id" field.
-func (_u *BalanceFlowUpdateOne) AddAccountID(v int32) *BalanceFlowUpdateOne {
+func (_u *BalanceFlowUpdateOne) AddAccountID(v int64) *BalanceFlowUpdateOne {
 	_u.mutation.AddAccountID(v)
 	return _u
 }
@@ -958,14 +958,14 @@ func (_u *BalanceFlowUpdateOne) ClearAccountID() *BalanceFlowUpdateOne {
 }
 
 // SetToAccountID sets the "to_account_id" field.
-func (_u *BalanceFlowUpdateOne) SetToAccountID(v uint32) *BalanceFlowUpdateOne {
+func (_u *BalanceFlowUpdateOne) SetToAccountID(v int64) *BalanceFlowUpdateOne {
 	_u.mutation.ResetToAccountID()
 	_u.mutation.SetToAccountID(v)
 	return _u
 }
 
 // SetNillableToAccountID sets the "to_account_id" field if the given value is not nil.
-func (_u *BalanceFlowUpdateOne) SetNillableToAccountID(v *uint32) *BalanceFlowUpdateOne {
+func (_u *BalanceFlowUpdateOne) SetNillableToAccountID(v *int64) *BalanceFlowUpdateOne {
 	if v != nil {
 		_u.SetToAccountID(*v)
 	}
@@ -973,7 +973,7 @@ func (_u *BalanceFlowUpdateOne) SetNillableToAccountID(v *uint32) *BalanceFlowUp
 }
 
 // AddToAccountID adds value to the "to_account_id" field.
-func (_u *BalanceFlowUpdateOne) AddToAccountID(v int32) *BalanceFlowUpdateOne {
+func (_u *BalanceFlowUpdateOne) AddToAccountID(v int64) *BalanceFlowUpdateOne {
 	_u.mutation.AddToAccountID(v)
 	return _u
 }
@@ -985,14 +985,14 @@ func (_u *BalanceFlowUpdateOne) ClearToAccountID() *BalanceFlowUpdateOne {
 }
 
 // SetPayeeID sets the "payee_id" field.
-func (_u *BalanceFlowUpdateOne) SetPayeeID(v uint32) *BalanceFlowUpdateOne {
+func (_u *BalanceFlowUpdateOne) SetPayeeID(v int64) *BalanceFlowUpdateOne {
 	_u.mutation.ResetPayeeID()
 	_u.mutation.SetPayeeID(v)
 	return _u
 }
 
 // SetNillablePayeeID sets the "payee_id" field if the given value is not nil.
-func (_u *BalanceFlowUpdateOne) SetNillablePayeeID(v *uint32) *BalanceFlowUpdateOne {
+func (_u *BalanceFlowUpdateOne) SetNillablePayeeID(v *int64) *BalanceFlowUpdateOne {
 	if v != nil {
 		_u.SetPayeeID(*v)
 	}
@@ -1000,7 +1000,7 @@ func (_u *BalanceFlowUpdateOne) SetNillablePayeeID(v *uint32) *BalanceFlowUpdate
 }
 
 // AddPayeeID adds value to the "payee_id" field.
-func (_u *BalanceFlowUpdateOne) AddPayeeID(v int32) *BalanceFlowUpdateOne {
+func (_u *BalanceFlowUpdateOne) AddPayeeID(v int64) *BalanceFlowUpdateOne {
 	_u.mutation.AddPayeeID(v)
 	return _u
 }
@@ -1012,14 +1012,14 @@ func (_u *BalanceFlowUpdateOne) ClearPayeeID() *BalanceFlowUpdateOne {
 }
 
 // SetCreatorID sets the "creator_id" field.
-func (_u *BalanceFlowUpdateOne) SetCreatorID(v uint32) *BalanceFlowUpdateOne {
+func (_u *BalanceFlowUpdateOne) SetCreatorID(v int64) *BalanceFlowUpdateOne {
 	_u.mutation.ResetCreatorID()
 	_u.mutation.SetCreatorID(v)
 	return _u
 }
 
 // SetNillableCreatorID sets the "creator_id" field if the given value is not nil.
-func (_u *BalanceFlowUpdateOne) SetNillableCreatorID(v *uint32) *BalanceFlowUpdateOne {
+func (_u *BalanceFlowUpdateOne) SetNillableCreatorID(v *int64) *BalanceFlowUpdateOne {
 	if v != nil {
 		_u.SetCreatorID(*v)
 	}
@@ -1027,7 +1027,7 @@ func (_u *BalanceFlowUpdateOne) SetNillableCreatorID(v *uint32) *BalanceFlowUpda
 }
 
 // AddCreatorID adds value to the "creator_id" field.
-func (_u *BalanceFlowUpdateOne) AddCreatorID(v int32) *BalanceFlowUpdateOne {
+func (_u *BalanceFlowUpdateOne) AddCreatorID(v int64) *BalanceFlowUpdateOne {
 	_u.mutation.AddCreatorID(v)
 	return _u
 }
@@ -1220,7 +1220,7 @@ func (_u *BalanceFlowUpdateOne) sqlSave(ctx context.Context) (_node *BalanceFlow
 	if err := _u.check(); err != nil {
 		return _node, err
 	}
-	_spec := sqlgraph.NewUpdateSpec(balanceflow.Table, balanceflow.Columns, sqlgraph.NewFieldSpec(balanceflow.FieldID, field.TypeUint32))
+	_spec := sqlgraph.NewUpdateSpec(balanceflow.Table, balanceflow.Columns, sqlgraph.NewFieldSpec(balanceflow.FieldID, field.TypeInt64))
 	id, ok := _u.mutation.ID()
 	if !ok {
 		return nil, &ValidationError{Name: "id", err: errors.New(`ent: missing "BalanceFlow.id" for update`)}
@@ -1246,7 +1246,7 @@ func (_u *BalanceFlowUpdateOne) sqlSave(ctx context.Context) (_node *BalanceFlow
 		}
 	}
 	if _u.mutation.TenantIDCleared() {
-		_spec.ClearField(balanceflow.FieldTenantID, field.TypeUint32)
+		_spec.ClearField(balanceflow.FieldTenantID, field.TypeInt64)
 	}
 	if _u.mutation.CreatedAtCleared() {
 		_spec.ClearField(balanceflow.FieldCreatedAt, field.TypeTime)
@@ -1264,40 +1264,40 @@ func (_u *BalanceFlowUpdateOne) sqlSave(ctx context.Context) (_node *BalanceFlow
 		_spec.ClearField(balanceflow.FieldDeletedAt, field.TypeTime)
 	}
 	if value, ok := _u.mutation.CreatedBy(); ok {
-		_spec.SetField(balanceflow.FieldCreatedBy, field.TypeUint32, value)
+		_spec.SetField(balanceflow.FieldCreatedBy, field.TypeInt64, value)
 	}
 	if value, ok := _u.mutation.AddedCreatedBy(); ok {
-		_spec.AddField(balanceflow.FieldCreatedBy, field.TypeUint32, value)
+		_spec.AddField(balanceflow.FieldCreatedBy, field.TypeInt64, value)
 	}
 	if _u.mutation.CreatedByCleared() {
-		_spec.ClearField(balanceflow.FieldCreatedBy, field.TypeUint32)
+		_spec.ClearField(balanceflow.FieldCreatedBy, field.TypeInt64)
 	}
 	if value, ok := _u.mutation.UpdatedBy(); ok {
-		_spec.SetField(balanceflow.FieldUpdatedBy, field.TypeUint32, value)
+		_spec.SetField(balanceflow.FieldUpdatedBy, field.TypeInt64, value)
 	}
 	if value, ok := _u.mutation.AddedUpdatedBy(); ok {
-		_spec.AddField(balanceflow.FieldUpdatedBy, field.TypeUint32, value)
+		_spec.AddField(balanceflow.FieldUpdatedBy, field.TypeInt64, value)
 	}
 	if _u.mutation.UpdatedByCleared() {
-		_spec.ClearField(balanceflow.FieldUpdatedBy, field.TypeUint32)
+		_spec.ClearField(balanceflow.FieldUpdatedBy, field.TypeInt64)
 	}
 	if value, ok := _u.mutation.DeletedBy(); ok {
-		_spec.SetField(balanceflow.FieldDeletedBy, field.TypeUint32, value)
+		_spec.SetField(balanceflow.FieldDeletedBy, field.TypeInt64, value)
 	}
 	if value, ok := _u.mutation.AddedDeletedBy(); ok {
-		_spec.AddField(balanceflow.FieldDeletedBy, field.TypeUint32, value)
+		_spec.AddField(balanceflow.FieldDeletedBy, field.TypeInt64, value)
 	}
 	if _u.mutation.DeletedByCleared() {
-		_spec.ClearField(balanceflow.FieldDeletedBy, field.TypeUint32)
+		_spec.ClearField(balanceflow.FieldDeletedBy, field.TypeInt64)
 	}
 	if value, ok := _u.mutation.BookID(); ok {
-		_spec.SetField(balanceflow.FieldBookID, field.TypeUint32, value)
+		_spec.SetField(balanceflow.FieldBookID, field.TypeInt64, value)
 	}
 	if value, ok := _u.mutation.AddedBookID(); ok {
-		_spec.AddField(balanceflow.FieldBookID, field.TypeUint32, value)
+		_spec.AddField(balanceflow.FieldBookID, field.TypeInt64, value)
 	}
 	if _u.mutation.BookIDCleared() {
-		_spec.ClearField(balanceflow.FieldBookID, field.TypeUint32)
+		_spec.ClearField(balanceflow.FieldBookID, field.TypeInt64)
 	}
 	if value, ok := _u.mutation.GetType(); ok {
 		_spec.SetField(balanceflow.FieldType, field.TypeEnum, value)
@@ -1324,40 +1324,40 @@ func (_u *BalanceFlowUpdateOne) sqlSave(ctx context.Context) (_node *BalanceFlow
 		_spec.ClearField(balanceflow.FieldConvertedAmount, field.TypeFloat64)
 	}
 	if value, ok := _u.mutation.AccountID(); ok {
-		_spec.SetField(balanceflow.FieldAccountID, field.TypeUint32, value)
+		_spec.SetField(balanceflow.FieldAccountID, field.TypeInt64, value)
 	}
 	if value, ok := _u.mutation.AddedAccountID(); ok {
-		_spec.AddField(balanceflow.FieldAccountID, field.TypeUint32, value)
+		_spec.AddField(balanceflow.FieldAccountID, field.TypeInt64, value)
 	}
 	if _u.mutation.AccountIDCleared() {
-		_spec.ClearField(balanceflow.FieldAccountID, field.TypeUint32)
+		_spec.ClearField(balanceflow.FieldAccountID, field.TypeInt64)
 	}
 	if value, ok := _u.mutation.ToAccountID(); ok {
-		_spec.SetField(balanceflow.FieldToAccountID, field.TypeUint32, value)
+		_spec.SetField(balanceflow.FieldToAccountID, field.TypeInt64, value)
 	}
 	if value, ok := _u.mutation.AddedToAccountID(); ok {
-		_spec.AddField(balanceflow.FieldToAccountID, field.TypeUint32, value)
+		_spec.AddField(balanceflow.FieldToAccountID, field.TypeInt64, value)
 	}
 	if _u.mutation.ToAccountIDCleared() {
-		_spec.ClearField(balanceflow.FieldToAccountID, field.TypeUint32)
+		_spec.ClearField(balanceflow.FieldToAccountID, field.TypeInt64)
 	}
 	if value, ok := _u.mutation.PayeeID(); ok {
-		_spec.SetField(balanceflow.FieldPayeeID, field.TypeUint32, value)
+		_spec.SetField(balanceflow.FieldPayeeID, field.TypeInt64, value)
 	}
 	if value, ok := _u.mutation.AddedPayeeID(); ok {
-		_spec.AddField(balanceflow.FieldPayeeID, field.TypeUint32, value)
+		_spec.AddField(balanceflow.FieldPayeeID, field.TypeInt64, value)
 	}
 	if _u.mutation.PayeeIDCleared() {
-		_spec.ClearField(balanceflow.FieldPayeeID, field.TypeUint32)
+		_spec.ClearField(balanceflow.FieldPayeeID, field.TypeInt64)
 	}
 	if value, ok := _u.mutation.CreatorID(); ok {
-		_spec.SetField(balanceflow.FieldCreatorID, field.TypeUint32, value)
+		_spec.SetField(balanceflow.FieldCreatorID, field.TypeInt64, value)
 	}
 	if value, ok := _u.mutation.AddedCreatorID(); ok {
-		_spec.AddField(balanceflow.FieldCreatorID, field.TypeUint32, value)
+		_spec.AddField(balanceflow.FieldCreatorID, field.TypeInt64, value)
 	}
 	if _u.mutation.CreatorIDCleared() {
-		_spec.ClearField(balanceflow.FieldCreatorID, field.TypeUint32)
+		_spec.ClearField(balanceflow.FieldCreatorID, field.TypeInt64)
 	}
 	if value, ok := _u.mutation.CreateTime(); ok {
 		_spec.SetField(balanceflow.FieldCreateTime, field.TypeInt64, value)

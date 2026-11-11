@@ -41,7 +41,7 @@ func (s *ReportService) reportByCategory(ctx context.Context, req *ledgerV1.Repo
 		return &ledgerV1.ReportResponse{}, nil
 	}
 
-	flowIDs := make([]uint32, 0, len(flows))
+	flowIDs := make([]int64, 0, len(flows))
 	for _, f := range flows {
 		flowIDs = append(flowIDs, f.ID)
 	}
@@ -52,7 +52,7 @@ func (s *ReportService) reportByCategory(ctx context.Context, req *ledgerV1.Repo
 	}
 
 	// Sum by category ID
-	categorySums := make(map[uint32]float64)
+	categorySums := make(map[int64]float64)
 	for _, rel := range relations {
 		if rel.ConvertedAmount != nil && rel.CategoryID != nil {
 			categorySums[*rel.CategoryID] += *rel.ConvertedAmount
@@ -61,7 +61,7 @@ func (s *ReportService) reportByCategory(ctx context.Context, req *ledgerV1.Repo
 
 	// Get category names
 	categories, _ := s.flowRepo.QueryAllCategories(ctx)
-	categoryNames := make(map[uint32]string)
+	categoryNames := make(map[int64]string)
 	for _, c := range categories {
 		if c.Name != nil {
 			categoryNames[c.ID] = *c.Name
@@ -82,7 +82,7 @@ func (s *ReportService) reportByTag(ctx context.Context, req *ledgerV1.ReportQue
 		return &ledgerV1.ReportResponse{}, nil
 	}
 
-	flowIDs := make([]uint32, 0, len(flows))
+	flowIDs := make([]int64, 0, len(flows))
 	for _, f := range flows {
 		flowIDs = append(flowIDs, f.ID)
 	}
@@ -92,7 +92,7 @@ func (s *ReportService) reportByTag(ctx context.Context, req *ledgerV1.ReportQue
 		return nil, ledgerV1.ErrorInternalServerError("query tag relations failed")
 	}
 
-	tagSums := make(map[uint32]float64)
+	tagSums := make(map[int64]float64)
 	for _, rel := range relations {
 		if rel.ConvertedAmount != nil && rel.TagID != nil {
 			tagSums[*rel.TagID] += *rel.ConvertedAmount
@@ -100,7 +100,7 @@ func (s *ReportService) reportByTag(ctx context.Context, req *ledgerV1.ReportQue
 	}
 
 	tags, _ := s.flowRepo.QueryAllTags(ctx)
-	tagNames := make(map[uint32]string)
+	tagNames := make(map[int64]string)
 	for _, t := range tags {
 		if t.Name != nil {
 			tagNames[t.ID] = *t.Name
@@ -122,7 +122,7 @@ func (s *ReportService) reportByPayee(ctx context.Context, req *ledgerV1.ReportQ
 	}
 
 	// Sum by payee ID directly from flows
-	payeeSums := make(map[uint32]float64)
+	payeeSums := make(map[int64]float64)
 	for _, f := range flows {
 		if f.PayeeID != nil && f.ConvertedAmount != nil {
 			payeeSums[*f.PayeeID] += *f.ConvertedAmount
@@ -130,7 +130,7 @@ func (s *ReportService) reportByPayee(ctx context.Context, req *ledgerV1.ReportQ
 	}
 
 	payees, _ := s.flowRepo.QueryAllPayees(ctx)
-	payeeNames := make(map[uint32]string)
+	payeeNames := make(map[int64]string)
 	for _, p := range payees {
 		if p.Name != nil {
 			payeeNames[p.ID] = *p.Name
@@ -142,7 +142,7 @@ func (s *ReportService) reportByPayee(ctx context.Context, req *ledgerV1.ReportQ
 }
 
 // buildChartPoints converts a map of id->amount into sorted ChartPoint slice with percentages.
-func (s *ReportService) buildChartPoints(sums map[uint32]float64, names map[uint32]string) []*ledgerV1.ChartPoint {
+func (s *ReportService) buildChartPoints(sums map[int64]float64, names map[int64]string) []*ledgerV1.ChartPoint {
 	var total float64
 	for _, v := range sums {
 		total += v

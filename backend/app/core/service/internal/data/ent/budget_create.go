@@ -23,13 +23,13 @@ type BudgetCreate struct {
 }
 
 // SetTenantID sets the "tenant_id" field.
-func (_c *BudgetCreate) SetTenantID(v uint32) *BudgetCreate {
+func (_c *BudgetCreate) SetTenantID(v int64) *BudgetCreate {
 	_c.mutation.SetTenantID(v)
 	return _c
 }
 
 // SetNillableTenantID sets the "tenant_id" field if the given value is not nil.
-func (_c *BudgetCreate) SetNillableTenantID(v *uint32) *BudgetCreate {
+func (_c *BudgetCreate) SetNillableTenantID(v *int64) *BudgetCreate {
 	if v != nil {
 		_c.SetTenantID(*v)
 	}
@@ -79,13 +79,13 @@ func (_c *BudgetCreate) SetNillableDeletedAt(v *time.Time) *BudgetCreate {
 }
 
 // SetCreatedBy sets the "created_by" field.
-func (_c *BudgetCreate) SetCreatedBy(v uint32) *BudgetCreate {
+func (_c *BudgetCreate) SetCreatedBy(v int64) *BudgetCreate {
 	_c.mutation.SetCreatedBy(v)
 	return _c
 }
 
 // SetNillableCreatedBy sets the "created_by" field if the given value is not nil.
-func (_c *BudgetCreate) SetNillableCreatedBy(v *uint32) *BudgetCreate {
+func (_c *BudgetCreate) SetNillableCreatedBy(v *int64) *BudgetCreate {
 	if v != nil {
 		_c.SetCreatedBy(*v)
 	}
@@ -93,13 +93,13 @@ func (_c *BudgetCreate) SetNillableCreatedBy(v *uint32) *BudgetCreate {
 }
 
 // SetUpdatedBy sets the "updated_by" field.
-func (_c *BudgetCreate) SetUpdatedBy(v uint32) *BudgetCreate {
+func (_c *BudgetCreate) SetUpdatedBy(v int64) *BudgetCreate {
 	_c.mutation.SetUpdatedBy(v)
 	return _c
 }
 
 // SetNillableUpdatedBy sets the "updated_by" field if the given value is not nil.
-func (_c *BudgetCreate) SetNillableUpdatedBy(v *uint32) *BudgetCreate {
+func (_c *BudgetCreate) SetNillableUpdatedBy(v *int64) *BudgetCreate {
 	if v != nil {
 		_c.SetUpdatedBy(*v)
 	}
@@ -107,13 +107,13 @@ func (_c *BudgetCreate) SetNillableUpdatedBy(v *uint32) *BudgetCreate {
 }
 
 // SetDeletedBy sets the "deleted_by" field.
-func (_c *BudgetCreate) SetDeletedBy(v uint32) *BudgetCreate {
+func (_c *BudgetCreate) SetDeletedBy(v int64) *BudgetCreate {
 	_c.mutation.SetDeletedBy(v)
 	return _c
 }
 
 // SetNillableDeletedBy sets the "deleted_by" field if the given value is not nil.
-func (_c *BudgetCreate) SetNillableDeletedBy(v *uint32) *BudgetCreate {
+func (_c *BudgetCreate) SetNillableDeletedBy(v *int64) *BudgetCreate {
 	if v != nil {
 		_c.SetDeletedBy(*v)
 	}
@@ -121,13 +121,13 @@ func (_c *BudgetCreate) SetNillableDeletedBy(v *uint32) *BudgetCreate {
 }
 
 // SetBookID sets the "book_id" field.
-func (_c *BudgetCreate) SetBookID(v uint32) *BudgetCreate {
+func (_c *BudgetCreate) SetBookID(v int64) *BudgetCreate {
 	_c.mutation.SetBookID(v)
 	return _c
 }
 
 // SetNillableBookID sets the "book_id" field if the given value is not nil.
-func (_c *BudgetCreate) SetNillableBookID(v *uint32) *BudgetCreate {
+func (_c *BudgetCreate) SetNillableBookID(v *int64) *BudgetCreate {
 	if v != nil {
 		_c.SetBookID(*v)
 	}
@@ -191,13 +191,13 @@ func (_c *BudgetCreate) SetNillableUsedAmount(v *float64) *BudgetCreate {
 }
 
 // SetCategoryID sets the "category_id" field.
-func (_c *BudgetCreate) SetCategoryID(v uint32) *BudgetCreate {
+func (_c *BudgetCreate) SetCategoryID(v int64) *BudgetCreate {
 	_c.mutation.SetCategoryID(v)
 	return _c
 }
 
 // SetNillableCategoryID sets the "category_id" field if the given value is not nil.
-func (_c *BudgetCreate) SetNillableCategoryID(v *uint32) *BudgetCreate {
+func (_c *BudgetCreate) SetNillableCategoryID(v *int64) *BudgetCreate {
 	if v != nil {
 		_c.SetCategoryID(*v)
 	}
@@ -205,13 +205,13 @@ func (_c *BudgetCreate) SetNillableCategoryID(v *uint32) *BudgetCreate {
 }
 
 // SetAccountID sets the "account_id" field.
-func (_c *BudgetCreate) SetAccountID(v uint32) *BudgetCreate {
+func (_c *BudgetCreate) SetAccountID(v int64) *BudgetCreate {
 	_c.mutation.SetAccountID(v)
 	return _c
 }
 
 // SetNillableAccountID sets the "account_id" field if the given value is not nil.
-func (_c *BudgetCreate) SetNillableAccountID(v *uint32) *BudgetCreate {
+func (_c *BudgetCreate) SetNillableAccountID(v *int64) *BudgetCreate {
 	if v != nil {
 		_c.SetAccountID(*v)
 	}
@@ -289,7 +289,7 @@ func (_c *BudgetCreate) SetNillableNotes(v *string) *BudgetCreate {
 }
 
 // SetID sets the "id" field.
-func (_c *BudgetCreate) SetID(v uint32) *BudgetCreate {
+func (_c *BudgetCreate) SetID(v int64) *BudgetCreate {
 	_c.mutation.SetID(v)
 	return _c
 }
@@ -392,7 +392,7 @@ func (_c *BudgetCreate) sqlSave(ctx context.Context) (*Budget, error) {
 	}
 	if _spec.ID.Value != _node.ID {
 		id := _spec.ID.Value.(int64)
-		_node.ID = uint32(id)
+		_node.ID = int64(id)
 	}
 	_c.mutation.id = &_node.ID
 	_c.mutation.done = true
@@ -402,7 +402,7 @@ func (_c *BudgetCreate) sqlSave(ctx context.Context) (*Budget, error) {
 func (_c *BudgetCreate) createSpec() (*Budget, *sqlgraph.CreateSpec) {
 	var (
 		_node = &Budget{config: _c.config}
-		_spec = sqlgraph.NewCreateSpec(budget.Table, sqlgraph.NewFieldSpec(budget.FieldID, field.TypeUint32))
+		_spec = sqlgraph.NewCreateSpec(budget.Table, sqlgraph.NewFieldSpec(budget.FieldID, field.TypeInt64))
 	)
 	_spec.OnConflict = _c.conflict
 	if id, ok := _c.mutation.ID(); ok {
@@ -410,7 +410,7 @@ func (_c *BudgetCreate) createSpec() (*Budget, *sqlgraph.CreateSpec) {
 		_spec.ID.Value = id
 	}
 	if value, ok := _c.mutation.TenantID(); ok {
-		_spec.SetField(budget.FieldTenantID, field.TypeUint32, value)
+		_spec.SetField(budget.FieldTenantID, field.TypeInt64, value)
 		_node.TenantID = &value
 	}
 	if value, ok := _c.mutation.CreatedAt(); ok {
@@ -426,19 +426,19 @@ func (_c *BudgetCreate) createSpec() (*Budget, *sqlgraph.CreateSpec) {
 		_node.DeletedAt = &value
 	}
 	if value, ok := _c.mutation.CreatedBy(); ok {
-		_spec.SetField(budget.FieldCreatedBy, field.TypeUint32, value)
+		_spec.SetField(budget.FieldCreatedBy, field.TypeInt64, value)
 		_node.CreatedBy = &value
 	}
 	if value, ok := _c.mutation.UpdatedBy(); ok {
-		_spec.SetField(budget.FieldUpdatedBy, field.TypeUint32, value)
+		_spec.SetField(budget.FieldUpdatedBy, field.TypeInt64, value)
 		_node.UpdatedBy = &value
 	}
 	if value, ok := _c.mutation.DeletedBy(); ok {
-		_spec.SetField(budget.FieldDeletedBy, field.TypeUint32, value)
+		_spec.SetField(budget.FieldDeletedBy, field.TypeInt64, value)
 		_node.DeletedBy = &value
 	}
 	if value, ok := _c.mutation.BookID(); ok {
-		_spec.SetField(budget.FieldBookID, field.TypeUint32, value)
+		_spec.SetField(budget.FieldBookID, field.TypeInt64, value)
 		_node.BookID = &value
 	}
 	if value, ok := _c.mutation.Name(); ok {
@@ -458,11 +458,11 @@ func (_c *BudgetCreate) createSpec() (*Budget, *sqlgraph.CreateSpec) {
 		_node.UsedAmount = &value
 	}
 	if value, ok := _c.mutation.CategoryID(); ok {
-		_spec.SetField(budget.FieldCategoryID, field.TypeUint32, value)
+		_spec.SetField(budget.FieldCategoryID, field.TypeInt64, value)
 		_node.CategoryID = &value
 	}
 	if value, ok := _c.mutation.AccountID(); ok {
-		_spec.SetField(budget.FieldAccountID, field.TypeUint32, value)
+		_spec.SetField(budget.FieldAccountID, field.TypeInt64, value)
 		_node.AccountID = &value
 	}
 	if value, ok := _c.mutation.StartDate(); ok {
@@ -574,7 +574,7 @@ func (u *BudgetUpsert) ClearDeletedAt() *BudgetUpsert {
 }
 
 // SetCreatedBy sets the "created_by" field.
-func (u *BudgetUpsert) SetCreatedBy(v uint32) *BudgetUpsert {
+func (u *BudgetUpsert) SetCreatedBy(v int64) *BudgetUpsert {
 	u.Set(budget.FieldCreatedBy, v)
 	return u
 }
@@ -586,7 +586,7 @@ func (u *BudgetUpsert) UpdateCreatedBy() *BudgetUpsert {
 }
 
 // AddCreatedBy adds v to the "created_by" field.
-func (u *BudgetUpsert) AddCreatedBy(v uint32) *BudgetUpsert {
+func (u *BudgetUpsert) AddCreatedBy(v int64) *BudgetUpsert {
 	u.Add(budget.FieldCreatedBy, v)
 	return u
 }
@@ -598,7 +598,7 @@ func (u *BudgetUpsert) ClearCreatedBy() *BudgetUpsert {
 }
 
 // SetUpdatedBy sets the "updated_by" field.
-func (u *BudgetUpsert) SetUpdatedBy(v uint32) *BudgetUpsert {
+func (u *BudgetUpsert) SetUpdatedBy(v int64) *BudgetUpsert {
 	u.Set(budget.FieldUpdatedBy, v)
 	return u
 }
@@ -610,7 +610,7 @@ func (u *BudgetUpsert) UpdateUpdatedBy() *BudgetUpsert {
 }
 
 // AddUpdatedBy adds v to the "updated_by" field.
-func (u *BudgetUpsert) AddUpdatedBy(v uint32) *BudgetUpsert {
+func (u *BudgetUpsert) AddUpdatedBy(v int64) *BudgetUpsert {
 	u.Add(budget.FieldUpdatedBy, v)
 	return u
 }
@@ -622,7 +622,7 @@ func (u *BudgetUpsert) ClearUpdatedBy() *BudgetUpsert {
 }
 
 // SetDeletedBy sets the "deleted_by" field.
-func (u *BudgetUpsert) SetDeletedBy(v uint32) *BudgetUpsert {
+func (u *BudgetUpsert) SetDeletedBy(v int64) *BudgetUpsert {
 	u.Set(budget.FieldDeletedBy, v)
 	return u
 }
@@ -634,7 +634,7 @@ func (u *BudgetUpsert) UpdateDeletedBy() *BudgetUpsert {
 }
 
 // AddDeletedBy adds v to the "deleted_by" field.
-func (u *BudgetUpsert) AddDeletedBy(v uint32) *BudgetUpsert {
+func (u *BudgetUpsert) AddDeletedBy(v int64) *BudgetUpsert {
 	u.Add(budget.FieldDeletedBy, v)
 	return u
 }
@@ -646,7 +646,7 @@ func (u *BudgetUpsert) ClearDeletedBy() *BudgetUpsert {
 }
 
 // SetBookID sets the "book_id" field.
-func (u *BudgetUpsert) SetBookID(v uint32) *BudgetUpsert {
+func (u *BudgetUpsert) SetBookID(v int64) *BudgetUpsert {
 	u.Set(budget.FieldBookID, v)
 	return u
 }
@@ -658,7 +658,7 @@ func (u *BudgetUpsert) UpdateBookID() *BudgetUpsert {
 }
 
 // AddBookID adds v to the "book_id" field.
-func (u *BudgetUpsert) AddBookID(v uint32) *BudgetUpsert {
+func (u *BudgetUpsert) AddBookID(v int64) *BudgetUpsert {
 	u.Add(budget.FieldBookID, v)
 	return u
 }
@@ -754,7 +754,7 @@ func (u *BudgetUpsert) ClearUsedAmount() *BudgetUpsert {
 }
 
 // SetCategoryID sets the "category_id" field.
-func (u *BudgetUpsert) SetCategoryID(v uint32) *BudgetUpsert {
+func (u *BudgetUpsert) SetCategoryID(v int64) *BudgetUpsert {
 	u.Set(budget.FieldCategoryID, v)
 	return u
 }
@@ -766,7 +766,7 @@ func (u *BudgetUpsert) UpdateCategoryID() *BudgetUpsert {
 }
 
 // AddCategoryID adds v to the "category_id" field.
-func (u *BudgetUpsert) AddCategoryID(v uint32) *BudgetUpsert {
+func (u *BudgetUpsert) AddCategoryID(v int64) *BudgetUpsert {
 	u.Add(budget.FieldCategoryID, v)
 	return u
 }
@@ -778,7 +778,7 @@ func (u *BudgetUpsert) ClearCategoryID() *BudgetUpsert {
 }
 
 // SetAccountID sets the "account_id" field.
-func (u *BudgetUpsert) SetAccountID(v uint32) *BudgetUpsert {
+func (u *BudgetUpsert) SetAccountID(v int64) *BudgetUpsert {
 	u.Set(budget.FieldAccountID, v)
 	return u
 }
@@ -790,7 +790,7 @@ func (u *BudgetUpsert) UpdateAccountID() *BudgetUpsert {
 }
 
 // AddAccountID adds v to the "account_id" field.
-func (u *BudgetUpsert) AddAccountID(v uint32) *BudgetUpsert {
+func (u *BudgetUpsert) AddAccountID(v int64) *BudgetUpsert {
 	u.Add(budget.FieldAccountID, v)
 	return u
 }
@@ -1000,14 +1000,14 @@ func (u *BudgetUpsertOne) ClearDeletedAt() *BudgetUpsertOne {
 }
 
 // SetCreatedBy sets the "created_by" field.
-func (u *BudgetUpsertOne) SetCreatedBy(v uint32) *BudgetUpsertOne {
+func (u *BudgetUpsertOne) SetCreatedBy(v int64) *BudgetUpsertOne {
 	return u.Update(func(s *BudgetUpsert) {
 		s.SetCreatedBy(v)
 	})
 }
 
 // AddCreatedBy adds v to the "created_by" field.
-func (u *BudgetUpsertOne) AddCreatedBy(v uint32) *BudgetUpsertOne {
+func (u *BudgetUpsertOne) AddCreatedBy(v int64) *BudgetUpsertOne {
 	return u.Update(func(s *BudgetUpsert) {
 		s.AddCreatedBy(v)
 	})
@@ -1028,14 +1028,14 @@ func (u *BudgetUpsertOne) ClearCreatedBy() *BudgetUpsertOne {
 }
 
 // SetUpdatedBy sets the "updated_by" field.
-func (u *BudgetUpsertOne) SetUpdatedBy(v uint32) *BudgetUpsertOne {
+func (u *BudgetUpsertOne) SetUpdatedBy(v int64) *BudgetUpsertOne {
 	return u.Update(func(s *BudgetUpsert) {
 		s.SetUpdatedBy(v)
 	})
 }
 
 // AddUpdatedBy adds v to the "updated_by" field.
-func (u *BudgetUpsertOne) AddUpdatedBy(v uint32) *BudgetUpsertOne {
+func (u *BudgetUpsertOne) AddUpdatedBy(v int64) *BudgetUpsertOne {
 	return u.Update(func(s *BudgetUpsert) {
 		s.AddUpdatedBy(v)
 	})
@@ -1056,14 +1056,14 @@ func (u *BudgetUpsertOne) ClearUpdatedBy() *BudgetUpsertOne {
 }
 
 // SetDeletedBy sets the "deleted_by" field.
-func (u *BudgetUpsertOne) SetDeletedBy(v uint32) *BudgetUpsertOne {
+func (u *BudgetUpsertOne) SetDeletedBy(v int64) *BudgetUpsertOne {
 	return u.Update(func(s *BudgetUpsert) {
 		s.SetDeletedBy(v)
 	})
 }
 
 // AddDeletedBy adds v to the "deleted_by" field.
-func (u *BudgetUpsertOne) AddDeletedBy(v uint32) *BudgetUpsertOne {
+func (u *BudgetUpsertOne) AddDeletedBy(v int64) *BudgetUpsertOne {
 	return u.Update(func(s *BudgetUpsert) {
 		s.AddDeletedBy(v)
 	})
@@ -1084,14 +1084,14 @@ func (u *BudgetUpsertOne) ClearDeletedBy() *BudgetUpsertOne {
 }
 
 // SetBookID sets the "book_id" field.
-func (u *BudgetUpsertOne) SetBookID(v uint32) *BudgetUpsertOne {
+func (u *BudgetUpsertOne) SetBookID(v int64) *BudgetUpsertOne {
 	return u.Update(func(s *BudgetUpsert) {
 		s.SetBookID(v)
 	})
 }
 
 // AddBookID adds v to the "book_id" field.
-func (u *BudgetUpsertOne) AddBookID(v uint32) *BudgetUpsertOne {
+func (u *BudgetUpsertOne) AddBookID(v int64) *BudgetUpsertOne {
 	return u.Update(func(s *BudgetUpsert) {
 		s.AddBookID(v)
 	})
@@ -1210,14 +1210,14 @@ func (u *BudgetUpsertOne) ClearUsedAmount() *BudgetUpsertOne {
 }
 
 // SetCategoryID sets the "category_id" field.
-func (u *BudgetUpsertOne) SetCategoryID(v uint32) *BudgetUpsertOne {
+func (u *BudgetUpsertOne) SetCategoryID(v int64) *BudgetUpsertOne {
 	return u.Update(func(s *BudgetUpsert) {
 		s.SetCategoryID(v)
 	})
 }
 
 // AddCategoryID adds v to the "category_id" field.
-func (u *BudgetUpsertOne) AddCategoryID(v uint32) *BudgetUpsertOne {
+func (u *BudgetUpsertOne) AddCategoryID(v int64) *BudgetUpsertOne {
 	return u.Update(func(s *BudgetUpsert) {
 		s.AddCategoryID(v)
 	})
@@ -1238,14 +1238,14 @@ func (u *BudgetUpsertOne) ClearCategoryID() *BudgetUpsertOne {
 }
 
 // SetAccountID sets the "account_id" field.
-func (u *BudgetUpsertOne) SetAccountID(v uint32) *BudgetUpsertOne {
+func (u *BudgetUpsertOne) SetAccountID(v int64) *BudgetUpsertOne {
 	return u.Update(func(s *BudgetUpsert) {
 		s.SetAccountID(v)
 	})
 }
 
 // AddAccountID adds v to the "account_id" field.
-func (u *BudgetUpsertOne) AddAccountID(v uint32) *BudgetUpsertOne {
+func (u *BudgetUpsertOne) AddAccountID(v int64) *BudgetUpsertOne {
 	return u.Update(func(s *BudgetUpsert) {
 		s.AddAccountID(v)
 	})
@@ -1400,7 +1400,7 @@ func (u *BudgetUpsertOne) ExecX(ctx context.Context) {
 }
 
 // Exec executes the UPSERT query and returns the inserted/updated ID.
-func (u *BudgetUpsertOne) ID(ctx context.Context) (id uint32, err error) {
+func (u *BudgetUpsertOne) ID(ctx context.Context) (id int64, err error) {
 	node, err := u.create.Save(ctx)
 	if err != nil {
 		return id, err
@@ -1409,7 +1409,7 @@ func (u *BudgetUpsertOne) ID(ctx context.Context) (id uint32, err error) {
 }
 
 // IDX is like ID, but panics if an error occurs.
-func (u *BudgetUpsertOne) IDX(ctx context.Context) uint32 {
+func (u *BudgetUpsertOne) IDX(ctx context.Context) int64 {
 	id, err := u.ID(ctx)
 	if err != nil {
 		panic(err)
@@ -1466,7 +1466,7 @@ func (_c *BudgetCreateBulk) Save(ctx context.Context) ([]*Budget, error) {
 				mutation.id = &nodes[i].ID
 				if specs[i].ID.Value != nil && nodes[i].ID == 0 {
 					id := specs[i].ID.Value.(int64)
-					nodes[i].ID = uint32(id)
+					nodes[i].ID = int64(id)
 				}
 				mutation.done = true
 				return nodes[i], nil
@@ -1647,14 +1647,14 @@ func (u *BudgetUpsertBulk) ClearDeletedAt() *BudgetUpsertBulk {
 }
 
 // SetCreatedBy sets the "created_by" field.
-func (u *BudgetUpsertBulk) SetCreatedBy(v uint32) *BudgetUpsertBulk {
+func (u *BudgetUpsertBulk) SetCreatedBy(v int64) *BudgetUpsertBulk {
 	return u.Update(func(s *BudgetUpsert) {
 		s.SetCreatedBy(v)
 	})
 }
 
 // AddCreatedBy adds v to the "created_by" field.
-func (u *BudgetUpsertBulk) AddCreatedBy(v uint32) *BudgetUpsertBulk {
+func (u *BudgetUpsertBulk) AddCreatedBy(v int64) *BudgetUpsertBulk {
 	return u.Update(func(s *BudgetUpsert) {
 		s.AddCreatedBy(v)
 	})
@@ -1675,14 +1675,14 @@ func (u *BudgetUpsertBulk) ClearCreatedBy() *BudgetUpsertBulk {
 }
 
 // SetUpdatedBy sets the "updated_by" field.
-func (u *BudgetUpsertBulk) SetUpdatedBy(v uint32) *BudgetUpsertBulk {
+func (u *BudgetUpsertBulk) SetUpdatedBy(v int64) *BudgetUpsertBulk {
 	return u.Update(func(s *BudgetUpsert) {
 		s.SetUpdatedBy(v)
 	})
 }
 
 // AddUpdatedBy adds v to the "updated_by" field.
-func (u *BudgetUpsertBulk) AddUpdatedBy(v uint32) *BudgetUpsertBulk {
+func (u *BudgetUpsertBulk) AddUpdatedBy(v int64) *BudgetUpsertBulk {
 	return u.Update(func(s *BudgetUpsert) {
 		s.AddUpdatedBy(v)
 	})
@@ -1703,14 +1703,14 @@ func (u *BudgetUpsertBulk) ClearUpdatedBy() *BudgetUpsertBulk {
 }
 
 // SetDeletedBy sets the "deleted_by" field.
-func (u *BudgetUpsertBulk) SetDeletedBy(v uint32) *BudgetUpsertBulk {
+func (u *BudgetUpsertBulk) SetDeletedBy(v int64) *BudgetUpsertBulk {
 	return u.Update(func(s *BudgetUpsert) {
 		s.SetDeletedBy(v)
 	})
 }
 
 // AddDeletedBy adds v to the "deleted_by" field.
-func (u *BudgetUpsertBulk) AddDeletedBy(v uint32) *BudgetUpsertBulk {
+func (u *BudgetUpsertBulk) AddDeletedBy(v int64) *BudgetUpsertBulk {
 	return u.Update(func(s *BudgetUpsert) {
 		s.AddDeletedBy(v)
 	})
@@ -1731,14 +1731,14 @@ func (u *BudgetUpsertBulk) ClearDeletedBy() *BudgetUpsertBulk {
 }
 
 // SetBookID sets the "book_id" field.
-func (u *BudgetUpsertBulk) SetBookID(v uint32) *BudgetUpsertBulk {
+func (u *BudgetUpsertBulk) SetBookID(v int64) *BudgetUpsertBulk {
 	return u.Update(func(s *BudgetUpsert) {
 		s.SetBookID(v)
 	})
 }
 
 // AddBookID adds v to the "book_id" field.
-func (u *BudgetUpsertBulk) AddBookID(v uint32) *BudgetUpsertBulk {
+func (u *BudgetUpsertBulk) AddBookID(v int64) *BudgetUpsertBulk {
 	return u.Update(func(s *BudgetUpsert) {
 		s.AddBookID(v)
 	})
@@ -1857,14 +1857,14 @@ func (u *BudgetUpsertBulk) ClearUsedAmount() *BudgetUpsertBulk {
 }
 
 // SetCategoryID sets the "category_id" field.
-func (u *BudgetUpsertBulk) SetCategoryID(v uint32) *BudgetUpsertBulk {
+func (u *BudgetUpsertBulk) SetCategoryID(v int64) *BudgetUpsertBulk {
 	return u.Update(func(s *BudgetUpsert) {
 		s.SetCategoryID(v)
 	})
 }
 
 // AddCategoryID adds v to the "category_id" field.
-func (u *BudgetUpsertBulk) AddCategoryID(v uint32) *BudgetUpsertBulk {
+func (u *BudgetUpsertBulk) AddCategoryID(v int64) *BudgetUpsertBulk {
 	return u.Update(func(s *BudgetUpsert) {
 		s.AddCategoryID(v)
 	})
@@ -1885,14 +1885,14 @@ func (u *BudgetUpsertBulk) ClearCategoryID() *BudgetUpsertBulk {
 }
 
 // SetAccountID sets the "account_id" field.
-func (u *BudgetUpsertBulk) SetAccountID(v uint32) *BudgetUpsertBulk {
+func (u *BudgetUpsertBulk) SetAccountID(v int64) *BudgetUpsertBulk {
 	return u.Update(func(s *BudgetUpsert) {
 		s.SetAccountID(v)
 	})
 }
 
 // AddAccountID adds v to the "account_id" field.
-func (u *BudgetUpsertBulk) AddAccountID(v uint32) *BudgetUpsertBulk {
+func (u *BudgetUpsertBulk) AddAccountID(v int64) *BudgetUpsertBulk {
 	return u.Update(func(s *BudgetUpsert) {
 		s.AddAccountID(v)
 	})

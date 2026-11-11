@@ -81,7 +81,7 @@ func (r *UserCredentialRepo) init() {
 	r.mapper.AppendConverters(r.credentialTypeConverter.NewConverterPair())
 }
 
-func (r *UserCredentialRepo) IsExist(ctx context.Context, id uint32) (bool, error) {
+func (r *UserCredentialRepo) IsExist(ctx context.Context, id int64) (bool, error) {
 	exist, err := r.entClient.Client().UserCredential.Query().
 		Where(usercredential.IDEQ(id)).
 		Exist(ctx)
@@ -247,7 +247,7 @@ func (r *UserCredentialRepo) Update(ctx context.Context, req *authenticationV1.U
 	return err
 }
 
-func (r *UserCredentialRepo) Delete(ctx context.Context, id uint32) error {
+func (r *UserCredentialRepo) Delete(ctx context.Context, id int64) error {
 	builder := r.entClient.Client().UserCredential.Delete()
 	builder.Where(usercredential.IDEQ(id))
 	if affected, err := builder.Exec(ctx); err != nil {
@@ -267,7 +267,7 @@ func (r *UserCredentialRepo) Delete(ctx context.Context, id uint32) error {
 	}
 }
 
-func (r *UserCredentialRepo) DeleteByUserId(ctx context.Context, userId uint32) error {
+func (r *UserCredentialRepo) DeleteByUserId(ctx context.Context, userId int64) error {
 	builder := r.entClient.Client().UserCredential.Delete()
 	builder.Where(usercredential.UserIDEQ(userId))
 	if affected, err := builder.Exec(ctx); err != nil {

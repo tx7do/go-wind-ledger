@@ -19,9 +19,9 @@ import (
 
 // MembershipRepo 成员关系仓库（用于用户-租户关联）
 type MembershipRepo struct {
-	log       *log.Helper
-	entClient *entCrud.EntClient[*ent.Client]
-	mapper    *mapper.CopierMapper[identityV1.Membership, ent.Membership]
+	log             *log.Helper
+	entClient       *entCrud.EntClient[*ent.Client]
+	mapper          *mapper.CopierMapper[identityV1.Membership, ent.Membership]
 	statusConverter *mapper.EnumTypeConverter[identityV1.Membership_Status, membership.Status]
 }
 
@@ -69,7 +69,7 @@ func (r *MembershipRepo) AssignTenantMembershipWithTx(ctx context.Context, tx *e
 }
 
 // GetMembershipByUserTenant 获取用户在指定租户的成员关系
-func (r *MembershipRepo) GetMembershipByUserTenant(ctx context.Context, userID uint32) (*identityV1.Membership, error) {
+func (r *MembershipRepo) GetMembershipByUserTenant(ctx context.Context, userID int64) (*identityV1.Membership, error) {
 	entity, err := r.entClient.Client().Membership.Query().
 		Where(membership.UserIDEQ(userID)).
 		First(ctx)
@@ -83,7 +83,7 @@ func (r *MembershipRepo) GetMembershipByUserTenant(ctx context.Context, userID u
 }
 
 // GetMembershipID 获取用户的成员关系ID
-func (r *MembershipRepo) GetMembershipID(ctx context.Context, userID uint32) (uint32, error) {
+func (r *MembershipRepo) GetMembershipID(ctx context.Context, userID int64) (int64, error) {
 	entity, err := r.entClient.Client().Membership.Query().
 		Where(membership.UserIDEQ(userID)).
 		First(ctx)
@@ -133,7 +133,7 @@ func (r *MembershipRepo) upsertMembership(ctx context.Context, tx *ent.Tx, data 
 // === TenantMember Service 数据访问方法 ===
 
 // ListByTenant 按 tenant_id + 可选 status 过滤查询成员列表
-func (r *MembershipRepo) ListByTenant(ctx context.Context, tenantID uint32, status *identityV1.Membership_Status) ([]*identityV1.Membership, error) {
+func (r *MembershipRepo) ListByTenant(ctx context.Context, tenantID int64, status *identityV1.Membership_Status) ([]*identityV1.Membership, error) {
 	q := r.entClient.Client().Membership.Query().
 		Where(membership.TenantIDEQ(tenantID))
 	if status != nil {
@@ -152,7 +152,7 @@ func (r *MembershipRepo) ListByTenant(ctx context.Context, tenantID uint32, stat
 }
 
 // FindByTenantAndUser 查找特定租户+用户的成员关系
-func (r *MembershipRepo) FindByTenantAndUser(ctx context.Context, tenantID, userID uint32) (*identityV1.Membership, error) {
+func (r *MembershipRepo) FindByTenantAndUser(ctx context.Context, tenantID, userID int64) (*identityV1.Membership, error) {
 	entity, err := r.entClient.Client().Membership.Query().
 		Where(
 			membership.TenantIDEQ(tenantID),
@@ -170,7 +170,7 @@ func (r *MembershipRepo) FindByTenantAndUser(ctx context.Context, tenantID, user
 }
 
 // FindByUser 查找用户所有租户成员关系
-func (r *MembershipRepo) FindByUser(ctx context.Context, userID uint32) ([]*identityV1.Membership, error) {
+func (r *MembershipRepo) FindByUser(ctx context.Context, userID int64) ([]*identityV1.Membership, error) {
 	entities, err := r.entClient.Client().Membership.Query().
 		Where(membership.UserIDEQ(userID)).
 		All(ctx)
@@ -186,7 +186,7 @@ func (r *MembershipRepo) FindByUser(ctx context.Context, userID uint32) ([]*iden
 }
 
 // FindByID 按 id 查询成员关系
-func (r *MembershipRepo) FindByID(ctx context.Context, id uint32) (*identityV1.Membership, error) {
+func (r *MembershipRepo) FindByID(ctx context.Context, id int64) (*identityV1.Membership, error) {
 	entity, err := r.entClient.Client().Membership.Query().
 		Where(membership.IDEQ(id)).
 		Only(ctx)
@@ -233,7 +233,7 @@ func (r *MembershipRepo) Create(ctx context.Context, data *identityV1.Membership
 }
 
 // UpdateStatus 更新成员状态（用于 accept/reject）
-func (r *MembershipRepo) UpdateStatus(ctx context.Context, id uint32, status identityV1.Membership_Status) (*identityV1.Membership, error) {
+func (r *MembershipRepo) UpdateStatus(ctx context.Context, id int64, status identityV1.Membership_Status) (*identityV1.Membership, error) {
 	exist, _ := r.entClient.Client().Membership.Query().Where(membership.IDEQ(id)).Exist(ctx)
 	if !exist {
 		return nil, identityV1.ErrorNotFound("membership not found")
@@ -250,7 +250,7 @@ func (r *MembershipRepo) UpdateStatus(ctx context.Context, id uint32, status ide
 }
 
 // SetJoinedAt 设置成员的加入时间
-func (r *MembershipRepo) SetJoinedAt(ctx context.Context, id uint32, joinedAt time.Time) (*identityV1.Membership, error) {
+func (r *MembershipRepo) SetJoinedAt(ctx context.Context, id int64, joinedAt time.Time) (*identityV1.Membership, error) {
 	updated, err := r.entClient.Client().Membership.UpdateOneID(id).
 		SetJoinedAt(joinedAt).
 		SetUpdatedAt(time.Now()).
@@ -263,7 +263,7 @@ func (r *MembershipRepo) SetJoinedAt(ctx context.Context, id uint32, joinedAt ti
 }
 
 // Update 更新成员信息
-func (r *MembershipRepo) Update(ctx context.Context, id uint32, data *identityV1.Membership, mask *fieldmaskpb.FieldMask) (*identityV1.Membership, error) {
+func (r *MembershipRepo) Update(ctx context.Context, id int64, data *identityV1.Membership, mask *fieldmaskpb.FieldMask) (*identityV1.Membership, error) {
 	if data == nil {
 		return nil, identityV1.ErrorBadRequest("invalid parameter")
 	}
@@ -327,12 +327,12 @@ func (r *MembershipRepo) Update(ctx context.Context, id uint32, data *identityV1
 }
 
 // Delete 删除成员
-func (r *MembershipRepo) Delete(ctx context.Context, id uint32) error {
+func (r *MembershipRepo) Delete(ctx context.Context, id int64) error {
 	return r.entClient.Client().Membership.DeleteOneID(id).Exec(ctx)
 }
 
 // DeleteByTenantAndUser 按 tenant+user 删除成员
-func (r *MembershipRepo) DeleteByTenantAndUser(ctx context.Context, tenantID, userID uint32) error {
+func (r *MembershipRepo) DeleteByTenantAndUser(ctx context.Context, tenantID, userID int64) error {
 	_, err := r.entClient.Client().Membership.Delete().
 		Where(
 			membership.TenantIDEQ(tenantID),

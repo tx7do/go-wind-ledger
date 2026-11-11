@@ -70,14 +70,14 @@ func (_u *TenantUpdate) ClearDeletedAt() *TenantUpdate {
 }
 
 // SetCreatedBy sets the "created_by" field.
-func (_u *TenantUpdate) SetCreatedBy(v uint32) *TenantUpdate {
+func (_u *TenantUpdate) SetCreatedBy(v int64) *TenantUpdate {
 	_u.mutation.ResetCreatedBy()
 	_u.mutation.SetCreatedBy(v)
 	return _u
 }
 
 // SetNillableCreatedBy sets the "created_by" field if the given value is not nil.
-func (_u *TenantUpdate) SetNillableCreatedBy(v *uint32) *TenantUpdate {
+func (_u *TenantUpdate) SetNillableCreatedBy(v *int64) *TenantUpdate {
 	if v != nil {
 		_u.SetCreatedBy(*v)
 	}
@@ -85,7 +85,7 @@ func (_u *TenantUpdate) SetNillableCreatedBy(v *uint32) *TenantUpdate {
 }
 
 // AddCreatedBy adds value to the "created_by" field.
-func (_u *TenantUpdate) AddCreatedBy(v int32) *TenantUpdate {
+func (_u *TenantUpdate) AddCreatedBy(v int64) *TenantUpdate {
 	_u.mutation.AddCreatedBy(v)
 	return _u
 }
@@ -97,14 +97,14 @@ func (_u *TenantUpdate) ClearCreatedBy() *TenantUpdate {
 }
 
 // SetUpdatedBy sets the "updated_by" field.
-func (_u *TenantUpdate) SetUpdatedBy(v uint32) *TenantUpdate {
+func (_u *TenantUpdate) SetUpdatedBy(v int64) *TenantUpdate {
 	_u.mutation.ResetUpdatedBy()
 	_u.mutation.SetUpdatedBy(v)
 	return _u
 }
 
 // SetNillableUpdatedBy sets the "updated_by" field if the given value is not nil.
-func (_u *TenantUpdate) SetNillableUpdatedBy(v *uint32) *TenantUpdate {
+func (_u *TenantUpdate) SetNillableUpdatedBy(v *int64) *TenantUpdate {
 	if v != nil {
 		_u.SetUpdatedBy(*v)
 	}
@@ -112,7 +112,7 @@ func (_u *TenantUpdate) SetNillableUpdatedBy(v *uint32) *TenantUpdate {
 }
 
 // AddUpdatedBy adds value to the "updated_by" field.
-func (_u *TenantUpdate) AddUpdatedBy(v int32) *TenantUpdate {
+func (_u *TenantUpdate) AddUpdatedBy(v int64) *TenantUpdate {
 	_u.mutation.AddUpdatedBy(v)
 	return _u
 }
@@ -124,14 +124,14 @@ func (_u *TenantUpdate) ClearUpdatedBy() *TenantUpdate {
 }
 
 // SetDeletedBy sets the "deleted_by" field.
-func (_u *TenantUpdate) SetDeletedBy(v uint32) *TenantUpdate {
+func (_u *TenantUpdate) SetDeletedBy(v int64) *TenantUpdate {
 	_u.mutation.ResetDeletedBy()
 	_u.mutation.SetDeletedBy(v)
 	return _u
 }
 
 // SetNillableDeletedBy sets the "deleted_by" field if the given value is not nil.
-func (_u *TenantUpdate) SetNillableDeletedBy(v *uint32) *TenantUpdate {
+func (_u *TenantUpdate) SetNillableDeletedBy(v *int64) *TenantUpdate {
 	if v != nil {
 		_u.SetDeletedBy(*v)
 	}
@@ -139,7 +139,7 @@ func (_u *TenantUpdate) SetNillableDeletedBy(v *uint32) *TenantUpdate {
 }
 
 // AddDeletedBy adds value to the "deleted_by" field.
-func (_u *TenantUpdate) AddDeletedBy(v int32) *TenantUpdate {
+func (_u *TenantUpdate) AddDeletedBy(v int64) *TenantUpdate {
 	_u.mutation.AddDeletedBy(v)
 	return _u
 }
@@ -271,14 +271,14 @@ func (_u *TenantUpdate) ClearIndustry() *TenantUpdate {
 }
 
 // SetAdminUserID sets the "admin_user_id" field.
-func (_u *TenantUpdate) SetAdminUserID(v uint32) *TenantUpdate {
+func (_u *TenantUpdate) SetAdminUserID(v int64) *TenantUpdate {
 	_u.mutation.ResetAdminUserID()
 	_u.mutation.SetAdminUserID(v)
 	return _u
 }
 
 // SetNillableAdminUserID sets the "admin_user_id" field if the given value is not nil.
-func (_u *TenantUpdate) SetNillableAdminUserID(v *uint32) *TenantUpdate {
+func (_u *TenantUpdate) SetNillableAdminUserID(v *int64) *TenantUpdate {
 	if v != nil {
 		_u.SetAdminUserID(*v)
 	}
@@ -286,7 +286,7 @@ func (_u *TenantUpdate) SetNillableAdminUserID(v *uint32) *TenantUpdate {
 }
 
 // AddAdminUserID adds value to the "admin_user_id" field.
-func (_u *TenantUpdate) AddAdminUserID(v int32) *TenantUpdate {
+func (_u *TenantUpdate) AddAdminUserID(v int64) *TenantUpdate {
 	_u.mutation.AddAdminUserID(v)
 	return _u
 }
@@ -438,14 +438,14 @@ func (_u *TenantUpdate) ClearDefaultCurrencyCode() *TenantUpdate {
 }
 
 // SetDefaultBookID sets the "default_book_id" field.
-func (_u *TenantUpdate) SetDefaultBookID(v uint32) *TenantUpdate {
+func (_u *TenantUpdate) SetDefaultBookID(v int64) *TenantUpdate {
 	_u.mutation.ResetDefaultBookID()
 	_u.mutation.SetDefaultBookID(v)
 	return _u
 }
 
 // SetNillableDefaultBookID sets the "default_book_id" field if the given value is not nil.
-func (_u *TenantUpdate) SetNillableDefaultBookID(v *uint32) *TenantUpdate {
+func (_u *TenantUpdate) SetNillableDefaultBookID(v *int64) *TenantUpdate {
 	if v != nil {
 		_u.SetDefaultBookID(*v)
 	}
@@ -453,7 +453,7 @@ func (_u *TenantUpdate) SetNillableDefaultBookID(v *uint32) *TenantUpdate {
 }
 
 // AddDefaultBookID adds value to the "default_book_id" field.
-func (_u *TenantUpdate) AddDefaultBookID(v int32) *TenantUpdate {
+func (_u *TenantUpdate) AddDefaultBookID(v int64) *TenantUpdate {
 	_u.mutation.AddDefaultBookID(v)
 	return _u
 }
@@ -561,7 +561,7 @@ func (_u *TenantUpdate) sqlSave(ctx context.Context) (_node int, err error) {
 	if err := _u.check(); err != nil {
 		return _node, err
 	}
-	_spec := sqlgraph.NewUpdateSpec(tenant.Table, tenant.Columns, sqlgraph.NewFieldSpec(tenant.FieldID, field.TypeUint32))
+	_spec := sqlgraph.NewUpdateSpec(tenant.Table, tenant.Columns, sqlgraph.NewFieldSpec(tenant.FieldID, field.TypeInt64))
 	if ps := _u.mutation.predicates; len(ps) > 0 {
 		_spec.Predicate = func(selector *sql.Selector) {
 			for i := range ps {
@@ -585,31 +585,31 @@ func (_u *TenantUpdate) sqlSave(ctx context.Context) (_node int, err error) {
 		_spec.ClearField(tenant.FieldDeletedAt, field.TypeTime)
 	}
 	if value, ok := _u.mutation.CreatedBy(); ok {
-		_spec.SetField(tenant.FieldCreatedBy, field.TypeUint32, value)
+		_spec.SetField(tenant.FieldCreatedBy, field.TypeInt64, value)
 	}
 	if value, ok := _u.mutation.AddedCreatedBy(); ok {
-		_spec.AddField(tenant.FieldCreatedBy, field.TypeUint32, value)
+		_spec.AddField(tenant.FieldCreatedBy, field.TypeInt64, value)
 	}
 	if _u.mutation.CreatedByCleared() {
-		_spec.ClearField(tenant.FieldCreatedBy, field.TypeUint32)
+		_spec.ClearField(tenant.FieldCreatedBy, field.TypeInt64)
 	}
 	if value, ok := _u.mutation.UpdatedBy(); ok {
-		_spec.SetField(tenant.FieldUpdatedBy, field.TypeUint32, value)
+		_spec.SetField(tenant.FieldUpdatedBy, field.TypeInt64, value)
 	}
 	if value, ok := _u.mutation.AddedUpdatedBy(); ok {
-		_spec.AddField(tenant.FieldUpdatedBy, field.TypeUint32, value)
+		_spec.AddField(tenant.FieldUpdatedBy, field.TypeInt64, value)
 	}
 	if _u.mutation.UpdatedByCleared() {
-		_spec.ClearField(tenant.FieldUpdatedBy, field.TypeUint32)
+		_spec.ClearField(tenant.FieldUpdatedBy, field.TypeInt64)
 	}
 	if value, ok := _u.mutation.DeletedBy(); ok {
-		_spec.SetField(tenant.FieldDeletedBy, field.TypeUint32, value)
+		_spec.SetField(tenant.FieldDeletedBy, field.TypeInt64, value)
 	}
 	if value, ok := _u.mutation.AddedDeletedBy(); ok {
-		_spec.AddField(tenant.FieldDeletedBy, field.TypeUint32, value)
+		_spec.AddField(tenant.FieldDeletedBy, field.TypeInt64, value)
 	}
 	if _u.mutation.DeletedByCleared() {
-		_spec.ClearField(tenant.FieldDeletedBy, field.TypeUint32)
+		_spec.ClearField(tenant.FieldDeletedBy, field.TypeInt64)
 	}
 	if value, ok := _u.mutation.Remark(); ok {
 		_spec.SetField(tenant.FieldRemark, field.TypeString, value)
@@ -648,13 +648,13 @@ func (_u *TenantUpdate) sqlSave(ctx context.Context) (_node int, err error) {
 		_spec.ClearField(tenant.FieldIndustry, field.TypeString)
 	}
 	if value, ok := _u.mutation.AdminUserID(); ok {
-		_spec.SetField(tenant.FieldAdminUserID, field.TypeUint32, value)
+		_spec.SetField(tenant.FieldAdminUserID, field.TypeInt64, value)
 	}
 	if value, ok := _u.mutation.AddedAdminUserID(); ok {
-		_spec.AddField(tenant.FieldAdminUserID, field.TypeUint32, value)
+		_spec.AddField(tenant.FieldAdminUserID, field.TypeInt64, value)
 	}
 	if _u.mutation.AdminUserIDCleared() {
-		_spec.ClearField(tenant.FieldAdminUserID, field.TypeUint32)
+		_spec.ClearField(tenant.FieldAdminUserID, field.TypeInt64)
 	}
 	if value, ok := _u.mutation.Status(); ok {
 		_spec.SetField(tenant.FieldStatus, field.TypeEnum, value)
@@ -699,13 +699,13 @@ func (_u *TenantUpdate) sqlSave(ctx context.Context) (_node int, err error) {
 		_spec.ClearField(tenant.FieldDefaultCurrencyCode, field.TypeString)
 	}
 	if value, ok := _u.mutation.DefaultBookID(); ok {
-		_spec.SetField(tenant.FieldDefaultBookID, field.TypeUint32, value)
+		_spec.SetField(tenant.FieldDefaultBookID, field.TypeInt64, value)
 	}
 	if value, ok := _u.mutation.AddedDefaultBookID(); ok {
-		_spec.AddField(tenant.FieldDefaultBookID, field.TypeUint32, value)
+		_spec.AddField(tenant.FieldDefaultBookID, field.TypeInt64, value)
 	}
 	if _u.mutation.DefaultBookIDCleared() {
-		_spec.ClearField(tenant.FieldDefaultBookID, field.TypeUint32)
+		_spec.ClearField(tenant.FieldDefaultBookID, field.TypeInt64)
 	}
 	if value, ok := _u.mutation.ExpiredAt(); ok {
 		_spec.SetField(tenant.FieldExpiredAt, field.TypeTime, value)
@@ -776,14 +776,14 @@ func (_u *TenantUpdateOne) ClearDeletedAt() *TenantUpdateOne {
 }
 
 // SetCreatedBy sets the "created_by" field.
-func (_u *TenantUpdateOne) SetCreatedBy(v uint32) *TenantUpdateOne {
+func (_u *TenantUpdateOne) SetCreatedBy(v int64) *TenantUpdateOne {
 	_u.mutation.ResetCreatedBy()
 	_u.mutation.SetCreatedBy(v)
 	return _u
 }
 
 // SetNillableCreatedBy sets the "created_by" field if the given value is not nil.
-func (_u *TenantUpdateOne) SetNillableCreatedBy(v *uint32) *TenantUpdateOne {
+func (_u *TenantUpdateOne) SetNillableCreatedBy(v *int64) *TenantUpdateOne {
 	if v != nil {
 		_u.SetCreatedBy(*v)
 	}
@@ -791,7 +791,7 @@ func (_u *TenantUpdateOne) SetNillableCreatedBy(v *uint32) *TenantUpdateOne {
 }
 
 // AddCreatedBy adds value to the "created_by" field.
-func (_u *TenantUpdateOne) AddCreatedBy(v int32) *TenantUpdateOne {
+func (_u *TenantUpdateOne) AddCreatedBy(v int64) *TenantUpdateOne {
 	_u.mutation.AddCreatedBy(v)
 	return _u
 }
@@ -803,14 +803,14 @@ func (_u *TenantUpdateOne) ClearCreatedBy() *TenantUpdateOne {
 }
 
 // SetUpdatedBy sets the "updated_by" field.
-func (_u *TenantUpdateOne) SetUpdatedBy(v uint32) *TenantUpdateOne {
+func (_u *TenantUpdateOne) SetUpdatedBy(v int64) *TenantUpdateOne {
 	_u.mutation.ResetUpdatedBy()
 	_u.mutation.SetUpdatedBy(v)
 	return _u
 }
 
 // SetNillableUpdatedBy sets the "updated_by" field if the given value is not nil.
-func (_u *TenantUpdateOne) SetNillableUpdatedBy(v *uint32) *TenantUpdateOne {
+func (_u *TenantUpdateOne) SetNillableUpdatedBy(v *int64) *TenantUpdateOne {
 	if v != nil {
 		_u.SetUpdatedBy(*v)
 	}
@@ -818,7 +818,7 @@ func (_u *TenantUpdateOne) SetNillableUpdatedBy(v *uint32) *TenantUpdateOne {
 }
 
 // AddUpdatedBy adds value to the "updated_by" field.
-func (_u *TenantUpdateOne) AddUpdatedBy(v int32) *TenantUpdateOne {
+func (_u *TenantUpdateOne) AddUpdatedBy(v int64) *TenantUpdateOne {
 	_u.mutation.AddUpdatedBy(v)
 	return _u
 }
@@ -830,14 +830,14 @@ func (_u *TenantUpdateOne) ClearUpdatedBy() *TenantUpdateOne {
 }
 
 // SetDeletedBy sets the "deleted_by" field.
-func (_u *TenantUpdateOne) SetDeletedBy(v uint32) *TenantUpdateOne {
+func (_u *TenantUpdateOne) SetDeletedBy(v int64) *TenantUpdateOne {
 	_u.mutation.ResetDeletedBy()
 	_u.mutation.SetDeletedBy(v)
 	return _u
 }
 
 // SetNillableDeletedBy sets the "deleted_by" field if the given value is not nil.
-func (_u *TenantUpdateOne) SetNillableDeletedBy(v *uint32) *TenantUpdateOne {
+func (_u *TenantUpdateOne) SetNillableDeletedBy(v *int64) *TenantUpdateOne {
 	if v != nil {
 		_u.SetDeletedBy(*v)
 	}
@@ -845,7 +845,7 @@ func (_u *TenantUpdateOne) SetNillableDeletedBy(v *uint32) *TenantUpdateOne {
 }
 
 // AddDeletedBy adds value to the "deleted_by" field.
-func (_u *TenantUpdateOne) AddDeletedBy(v int32) *TenantUpdateOne {
+func (_u *TenantUpdateOne) AddDeletedBy(v int64) *TenantUpdateOne {
 	_u.mutation.AddDeletedBy(v)
 	return _u
 }
@@ -977,14 +977,14 @@ func (_u *TenantUpdateOne) ClearIndustry() *TenantUpdateOne {
 }
 
 // SetAdminUserID sets the "admin_user_id" field.
-func (_u *TenantUpdateOne) SetAdminUserID(v uint32) *TenantUpdateOne {
+func (_u *TenantUpdateOne) SetAdminUserID(v int64) *TenantUpdateOne {
 	_u.mutation.ResetAdminUserID()
 	_u.mutation.SetAdminUserID(v)
 	return _u
 }
 
 // SetNillableAdminUserID sets the "admin_user_id" field if the given value is not nil.
-func (_u *TenantUpdateOne) SetNillableAdminUserID(v *uint32) *TenantUpdateOne {
+func (_u *TenantUpdateOne) SetNillableAdminUserID(v *int64) *TenantUpdateOne {
 	if v != nil {
 		_u.SetAdminUserID(*v)
 	}
@@ -992,7 +992,7 @@ func (_u *TenantUpdateOne) SetNillableAdminUserID(v *uint32) *TenantUpdateOne {
 }
 
 // AddAdminUserID adds value to the "admin_user_id" field.
-func (_u *TenantUpdateOne) AddAdminUserID(v int32) *TenantUpdateOne {
+func (_u *TenantUpdateOne) AddAdminUserID(v int64) *TenantUpdateOne {
 	_u.mutation.AddAdminUserID(v)
 	return _u
 }
@@ -1144,14 +1144,14 @@ func (_u *TenantUpdateOne) ClearDefaultCurrencyCode() *TenantUpdateOne {
 }
 
 // SetDefaultBookID sets the "default_book_id" field.
-func (_u *TenantUpdateOne) SetDefaultBookID(v uint32) *TenantUpdateOne {
+func (_u *TenantUpdateOne) SetDefaultBookID(v int64) *TenantUpdateOne {
 	_u.mutation.ResetDefaultBookID()
 	_u.mutation.SetDefaultBookID(v)
 	return _u
 }
 
 // SetNillableDefaultBookID sets the "default_book_id" field if the given value is not nil.
-func (_u *TenantUpdateOne) SetNillableDefaultBookID(v *uint32) *TenantUpdateOne {
+func (_u *TenantUpdateOne) SetNillableDefaultBookID(v *int64) *TenantUpdateOne {
 	if v != nil {
 		_u.SetDefaultBookID(*v)
 	}
@@ -1159,7 +1159,7 @@ func (_u *TenantUpdateOne) SetNillableDefaultBookID(v *uint32) *TenantUpdateOne 
 }
 
 // AddDefaultBookID adds value to the "default_book_id" field.
-func (_u *TenantUpdateOne) AddDefaultBookID(v int32) *TenantUpdateOne {
+func (_u *TenantUpdateOne) AddDefaultBookID(v int64) *TenantUpdateOne {
 	_u.mutation.AddDefaultBookID(v)
 	return _u
 }
@@ -1280,7 +1280,7 @@ func (_u *TenantUpdateOne) sqlSave(ctx context.Context) (_node *Tenant, err erro
 	if err := _u.check(); err != nil {
 		return _node, err
 	}
-	_spec := sqlgraph.NewUpdateSpec(tenant.Table, tenant.Columns, sqlgraph.NewFieldSpec(tenant.FieldID, field.TypeUint32))
+	_spec := sqlgraph.NewUpdateSpec(tenant.Table, tenant.Columns, sqlgraph.NewFieldSpec(tenant.FieldID, field.TypeInt64))
 	id, ok := _u.mutation.ID()
 	if !ok {
 		return nil, &ValidationError{Name: "id", err: errors.New(`ent: missing "Tenant.id" for update`)}
@@ -1321,31 +1321,31 @@ func (_u *TenantUpdateOne) sqlSave(ctx context.Context) (_node *Tenant, err erro
 		_spec.ClearField(tenant.FieldDeletedAt, field.TypeTime)
 	}
 	if value, ok := _u.mutation.CreatedBy(); ok {
-		_spec.SetField(tenant.FieldCreatedBy, field.TypeUint32, value)
+		_spec.SetField(tenant.FieldCreatedBy, field.TypeInt64, value)
 	}
 	if value, ok := _u.mutation.AddedCreatedBy(); ok {
-		_spec.AddField(tenant.FieldCreatedBy, field.TypeUint32, value)
+		_spec.AddField(tenant.FieldCreatedBy, field.TypeInt64, value)
 	}
 	if _u.mutation.CreatedByCleared() {
-		_spec.ClearField(tenant.FieldCreatedBy, field.TypeUint32)
+		_spec.ClearField(tenant.FieldCreatedBy, field.TypeInt64)
 	}
 	if value, ok := _u.mutation.UpdatedBy(); ok {
-		_spec.SetField(tenant.FieldUpdatedBy, field.TypeUint32, value)
+		_spec.SetField(tenant.FieldUpdatedBy, field.TypeInt64, value)
 	}
 	if value, ok := _u.mutation.AddedUpdatedBy(); ok {
-		_spec.AddField(tenant.FieldUpdatedBy, field.TypeUint32, value)
+		_spec.AddField(tenant.FieldUpdatedBy, field.TypeInt64, value)
 	}
 	if _u.mutation.UpdatedByCleared() {
-		_spec.ClearField(tenant.FieldUpdatedBy, field.TypeUint32)
+		_spec.ClearField(tenant.FieldUpdatedBy, field.TypeInt64)
 	}
 	if value, ok := _u.mutation.DeletedBy(); ok {
-		_spec.SetField(tenant.FieldDeletedBy, field.TypeUint32, value)
+		_spec.SetField(tenant.FieldDeletedBy, field.TypeInt64, value)
 	}
 	if value, ok := _u.mutation.AddedDeletedBy(); ok {
-		_spec.AddField(tenant.FieldDeletedBy, field.TypeUint32, value)
+		_spec.AddField(tenant.FieldDeletedBy, field.TypeInt64, value)
 	}
 	if _u.mutation.DeletedByCleared() {
-		_spec.ClearField(tenant.FieldDeletedBy, field.TypeUint32)
+		_spec.ClearField(tenant.FieldDeletedBy, field.TypeInt64)
 	}
 	if value, ok := _u.mutation.Remark(); ok {
 		_spec.SetField(tenant.FieldRemark, field.TypeString, value)
@@ -1384,13 +1384,13 @@ func (_u *TenantUpdateOne) sqlSave(ctx context.Context) (_node *Tenant, err erro
 		_spec.ClearField(tenant.FieldIndustry, field.TypeString)
 	}
 	if value, ok := _u.mutation.AdminUserID(); ok {
-		_spec.SetField(tenant.FieldAdminUserID, field.TypeUint32, value)
+		_spec.SetField(tenant.FieldAdminUserID, field.TypeInt64, value)
 	}
 	if value, ok := _u.mutation.AddedAdminUserID(); ok {
-		_spec.AddField(tenant.FieldAdminUserID, field.TypeUint32, value)
+		_spec.AddField(tenant.FieldAdminUserID, field.TypeInt64, value)
 	}
 	if _u.mutation.AdminUserIDCleared() {
-		_spec.ClearField(tenant.FieldAdminUserID, field.TypeUint32)
+		_spec.ClearField(tenant.FieldAdminUserID, field.TypeInt64)
 	}
 	if value, ok := _u.mutation.Status(); ok {
 		_spec.SetField(tenant.FieldStatus, field.TypeEnum, value)
@@ -1435,13 +1435,13 @@ func (_u *TenantUpdateOne) sqlSave(ctx context.Context) (_node *Tenant, err erro
 		_spec.ClearField(tenant.FieldDefaultCurrencyCode, field.TypeString)
 	}
 	if value, ok := _u.mutation.DefaultBookID(); ok {
-		_spec.SetField(tenant.FieldDefaultBookID, field.TypeUint32, value)
+		_spec.SetField(tenant.FieldDefaultBookID, field.TypeInt64, value)
 	}
 	if value, ok := _u.mutation.AddedDefaultBookID(); ok {
-		_spec.AddField(tenant.FieldDefaultBookID, field.TypeUint32, value)
+		_spec.AddField(tenant.FieldDefaultBookID, field.TypeInt64, value)
 	}
 	if _u.mutation.DefaultBookIDCleared() {
-		_spec.ClearField(tenant.FieldDefaultBookID, field.TypeUint32)
+		_spec.ClearField(tenant.FieldDefaultBookID, field.TypeInt64)
 	}
 	if value, ok := _u.mutation.ExpiredAt(); ok {
 		_spec.SetField(tenant.FieldExpiredAt, field.TypeTime, value)

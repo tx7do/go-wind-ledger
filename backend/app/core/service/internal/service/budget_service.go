@@ -111,15 +111,15 @@ func (s *BudgetService) GetProgress(ctx context.Context, req *ledgerV1.GetBudget
 	exceeded := used > amount && amount > 0
 
 	progress := &ledgerV1.BudgetProgress{
-		BudgetId:    trans.Ptr(b.GetId()),
-		BudgetName:  b.Name,
-		Amount:      b.Amount,
-		UsedAmount:  trans.Ptr(data.FloatToStr(used)),
-		Remaining:   trans.Ptr(data.FloatToStr(remaining)),
+		BudgetId:     trans.Ptr(b.GetId()),
+		BudgetName:   b.Name,
+		Amount:       b.Amount,
+		UsedAmount:   trans.Ptr(data.FloatToStr(used)),
+		Remaining:    trans.Ptr(data.FloatToStr(remaining)),
 		UsagePercent: trans.Ptr(data.FloatToStr(usagePercent)),
-		Exceeded:    trans.Ptr(exceeded),
-		PeriodStart: b.StartDate,
-		PeriodEnd:   b.EndDate,
+		Exceeded:     trans.Ptr(exceeded),
+		PeriodStart:  b.StartDate,
+		PeriodEnd:    b.EndDate,
 	}
 	return progress, nil
 }

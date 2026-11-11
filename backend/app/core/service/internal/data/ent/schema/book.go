@@ -22,7 +22,7 @@ func (Book) Annotations() []schema.Annotation {
 }
 
 func (Book) Mixin() []ent.Mixin {
-	return []ent.Mixin{mixin.AutoIncrementId{}, mixin.TenantID[uint32]{}, mixin.TimeAt{}, mixin.OperatorID{}, mixin.SortOrder{}}
+	return []ent.Mixin{mixin.AutoIncrementId64{}, mixin.TenantID[int64]{}, mixin.TimeAt{}, mixin.OperatorID64{}, mixin.SortOrder{}}
 }
 
 func (Book) Fields() []ent.Field {
@@ -32,12 +32,12 @@ func (Book) Fields() []ent.Field {
 		field.String("notes").Comment("备注").MaxLen(1024).Optional().Nillable(),
 		field.Bool("enable").Comment("是否启用").Default(true).Optional().Nillable(),
 		field.Int64("export_at").Comment("上次导出时间").Optional().Nillable(),
-		field.Uint32("default_expense_account_id").Optional().Nillable(),
-		field.Uint32("default_income_account_id").Optional().Nillable(),
-		field.Uint32("default_transfer_from_account_id").Optional().Nillable(),
-		field.Uint32("default_transfer_to_account_id").Optional().Nillable(),
-		field.Uint32("default_expense_category_id").Optional().Nillable(),
-		field.Uint32("default_income_category_id").Optional().Nillable(),
+		field.Int64("default_expense_account_id").Optional().Nillable(),
+		field.Int64("default_income_account_id").Optional().Nillable(),
+		field.Int64("default_transfer_from_account_id").Optional().Nillable(),
+		field.Int64("default_transfer_to_account_id").Optional().Nillable(),
+		field.Int64("default_expense_category_id").Optional().Nillable(),
+		field.Int64("default_income_category_id").Optional().Nillable(),
 	}
 }
 

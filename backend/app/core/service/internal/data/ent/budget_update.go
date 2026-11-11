@@ -70,14 +70,14 @@ func (_u *BudgetUpdate) ClearDeletedAt() *BudgetUpdate {
 }
 
 // SetCreatedBy sets the "created_by" field.
-func (_u *BudgetUpdate) SetCreatedBy(v uint32) *BudgetUpdate {
+func (_u *BudgetUpdate) SetCreatedBy(v int64) *BudgetUpdate {
 	_u.mutation.ResetCreatedBy()
 	_u.mutation.SetCreatedBy(v)
 	return _u
 }
 
 // SetNillableCreatedBy sets the "created_by" field if the given value is not nil.
-func (_u *BudgetUpdate) SetNillableCreatedBy(v *uint32) *BudgetUpdate {
+func (_u *BudgetUpdate) SetNillableCreatedBy(v *int64) *BudgetUpdate {
 	if v != nil {
 		_u.SetCreatedBy(*v)
 	}
@@ -85,7 +85,7 @@ func (_u *BudgetUpdate) SetNillableCreatedBy(v *uint32) *BudgetUpdate {
 }
 
 // AddCreatedBy adds value to the "created_by" field.
-func (_u *BudgetUpdate) AddCreatedBy(v int32) *BudgetUpdate {
+func (_u *BudgetUpdate) AddCreatedBy(v int64) *BudgetUpdate {
 	_u.mutation.AddCreatedBy(v)
 	return _u
 }
@@ -97,14 +97,14 @@ func (_u *BudgetUpdate) ClearCreatedBy() *BudgetUpdate {
 }
 
 // SetUpdatedBy sets the "updated_by" field.
-func (_u *BudgetUpdate) SetUpdatedBy(v uint32) *BudgetUpdate {
+func (_u *BudgetUpdate) SetUpdatedBy(v int64) *BudgetUpdate {
 	_u.mutation.ResetUpdatedBy()
 	_u.mutation.SetUpdatedBy(v)
 	return _u
 }
 
 // SetNillableUpdatedBy sets the "updated_by" field if the given value is not nil.
-func (_u *BudgetUpdate) SetNillableUpdatedBy(v *uint32) *BudgetUpdate {
+func (_u *BudgetUpdate) SetNillableUpdatedBy(v *int64) *BudgetUpdate {
 	if v != nil {
 		_u.SetUpdatedBy(*v)
 	}
@@ -112,7 +112,7 @@ func (_u *BudgetUpdate) SetNillableUpdatedBy(v *uint32) *BudgetUpdate {
 }
 
 // AddUpdatedBy adds value to the "updated_by" field.
-func (_u *BudgetUpdate) AddUpdatedBy(v int32) *BudgetUpdate {
+func (_u *BudgetUpdate) AddUpdatedBy(v int64) *BudgetUpdate {
 	_u.mutation.AddUpdatedBy(v)
 	return _u
 }
@@ -124,14 +124,14 @@ func (_u *BudgetUpdate) ClearUpdatedBy() *BudgetUpdate {
 }
 
 // SetDeletedBy sets the "deleted_by" field.
-func (_u *BudgetUpdate) SetDeletedBy(v uint32) *BudgetUpdate {
+func (_u *BudgetUpdate) SetDeletedBy(v int64) *BudgetUpdate {
 	_u.mutation.ResetDeletedBy()
 	_u.mutation.SetDeletedBy(v)
 	return _u
 }
 
 // SetNillableDeletedBy sets the "deleted_by" field if the given value is not nil.
-func (_u *BudgetUpdate) SetNillableDeletedBy(v *uint32) *BudgetUpdate {
+func (_u *BudgetUpdate) SetNillableDeletedBy(v *int64) *BudgetUpdate {
 	if v != nil {
 		_u.SetDeletedBy(*v)
 	}
@@ -139,7 +139,7 @@ func (_u *BudgetUpdate) SetNillableDeletedBy(v *uint32) *BudgetUpdate {
 }
 
 // AddDeletedBy adds value to the "deleted_by" field.
-func (_u *BudgetUpdate) AddDeletedBy(v int32) *BudgetUpdate {
+func (_u *BudgetUpdate) AddDeletedBy(v int64) *BudgetUpdate {
 	_u.mutation.AddDeletedBy(v)
 	return _u
 }
@@ -151,14 +151,14 @@ func (_u *BudgetUpdate) ClearDeletedBy() *BudgetUpdate {
 }
 
 // SetBookID sets the "book_id" field.
-func (_u *BudgetUpdate) SetBookID(v uint32) *BudgetUpdate {
+func (_u *BudgetUpdate) SetBookID(v int64) *BudgetUpdate {
 	_u.mutation.ResetBookID()
 	_u.mutation.SetBookID(v)
 	return _u
 }
 
 // SetNillableBookID sets the "book_id" field if the given value is not nil.
-func (_u *BudgetUpdate) SetNillableBookID(v *uint32) *BudgetUpdate {
+func (_u *BudgetUpdate) SetNillableBookID(v *int64) *BudgetUpdate {
 	if v != nil {
 		_u.SetBookID(*v)
 	}
@@ -166,7 +166,7 @@ func (_u *BudgetUpdate) SetNillableBookID(v *uint32) *BudgetUpdate {
 }
 
 // AddBookID adds value to the "book_id" field.
-func (_u *BudgetUpdate) AddBookID(v int32) *BudgetUpdate {
+func (_u *BudgetUpdate) AddBookID(v int64) *BudgetUpdate {
 	_u.mutation.AddBookID(v)
 	return _u
 }
@@ -272,14 +272,14 @@ func (_u *BudgetUpdate) ClearUsedAmount() *BudgetUpdate {
 }
 
 // SetCategoryID sets the "category_id" field.
-func (_u *BudgetUpdate) SetCategoryID(v uint32) *BudgetUpdate {
+func (_u *BudgetUpdate) SetCategoryID(v int64) *BudgetUpdate {
 	_u.mutation.ResetCategoryID()
 	_u.mutation.SetCategoryID(v)
 	return _u
 }
 
 // SetNillableCategoryID sets the "category_id" field if the given value is not nil.
-func (_u *BudgetUpdate) SetNillableCategoryID(v *uint32) *BudgetUpdate {
+func (_u *BudgetUpdate) SetNillableCategoryID(v *int64) *BudgetUpdate {
 	if v != nil {
 		_u.SetCategoryID(*v)
 	}
@@ -287,7 +287,7 @@ func (_u *BudgetUpdate) SetNillableCategoryID(v *uint32) *BudgetUpdate {
 }
 
 // AddCategoryID adds value to the "category_id" field.
-func (_u *BudgetUpdate) AddCategoryID(v int32) *BudgetUpdate {
+func (_u *BudgetUpdate) AddCategoryID(v int64) *BudgetUpdate {
 	_u.mutation.AddCategoryID(v)
 	return _u
 }
@@ -299,14 +299,14 @@ func (_u *BudgetUpdate) ClearCategoryID() *BudgetUpdate {
 }
 
 // SetAccountID sets the "account_id" field.
-func (_u *BudgetUpdate) SetAccountID(v uint32) *BudgetUpdate {
+func (_u *BudgetUpdate) SetAccountID(v int64) *BudgetUpdate {
 	_u.mutation.ResetAccountID()
 	_u.mutation.SetAccountID(v)
 	return _u
 }
 
 // SetNillableAccountID sets the "account_id" field if the given value is not nil.
-func (_u *BudgetUpdate) SetNillableAccountID(v *uint32) *BudgetUpdate {
+func (_u *BudgetUpdate) SetNillableAccountID(v *int64) *BudgetUpdate {
 	if v != nil {
 		_u.SetAccountID(*v)
 	}
@@ -314,7 +314,7 @@ func (_u *BudgetUpdate) SetNillableAccountID(v *uint32) *BudgetUpdate {
 }
 
 // AddAccountID adds value to the "account_id" field.
-func (_u *BudgetUpdate) AddAccountID(v int32) *BudgetUpdate {
+func (_u *BudgetUpdate) AddAccountID(v int64) *BudgetUpdate {
 	_u.mutation.AddAccountID(v)
 	return _u
 }
@@ -501,7 +501,7 @@ func (_u *BudgetUpdate) sqlSave(ctx context.Context) (_node int, err error) {
 	if err := _u.check(); err != nil {
 		return _node, err
 	}
-	_spec := sqlgraph.NewUpdateSpec(budget.Table, budget.Columns, sqlgraph.NewFieldSpec(budget.FieldID, field.TypeUint32))
+	_spec := sqlgraph.NewUpdateSpec(budget.Table, budget.Columns, sqlgraph.NewFieldSpec(budget.FieldID, field.TypeInt64))
 	if ps := _u.mutation.predicates; len(ps) > 0 {
 		_spec.Predicate = func(selector *sql.Selector) {
 			for i := range ps {
@@ -510,7 +510,7 @@ func (_u *BudgetUpdate) sqlSave(ctx context.Context) (_node int, err error) {
 		}
 	}
 	if _u.mutation.TenantIDCleared() {
-		_spec.ClearField(budget.FieldTenantID, field.TypeUint32)
+		_spec.ClearField(budget.FieldTenantID, field.TypeInt64)
 	}
 	if _u.mutation.CreatedAtCleared() {
 		_spec.ClearField(budget.FieldCreatedAt, field.TypeTime)
@@ -528,40 +528,40 @@ func (_u *BudgetUpdate) sqlSave(ctx context.Context) (_node int, err error) {
 		_spec.ClearField(budget.FieldDeletedAt, field.TypeTime)
 	}
 	if value, ok := _u.mutation.CreatedBy(); ok {
-		_spec.SetField(budget.FieldCreatedBy, field.TypeUint32, value)
+		_spec.SetField(budget.FieldCreatedBy, field.TypeInt64, value)
 	}
 	if value, ok := _u.mutation.AddedCreatedBy(); ok {
-		_spec.AddField(budget.FieldCreatedBy, field.TypeUint32, value)
+		_spec.AddField(budget.FieldCreatedBy, field.TypeInt64, value)
 	}
 	if _u.mutation.CreatedByCleared() {
-		_spec.ClearField(budget.FieldCreatedBy, field.TypeUint32)
+		_spec.ClearField(budget.FieldCreatedBy, field.TypeInt64)
 	}
 	if value, ok := _u.mutation.UpdatedBy(); ok {
-		_spec.SetField(budget.FieldUpdatedBy, field.TypeUint32, value)
+		_spec.SetField(budget.FieldUpdatedBy, field.TypeInt64, value)
 	}
 	if value, ok := _u.mutation.AddedUpdatedBy(); ok {
-		_spec.AddField(budget.FieldUpdatedBy, field.TypeUint32, value)
+		_spec.AddField(budget.FieldUpdatedBy, field.TypeInt64, value)
 	}
 	if _u.mutation.UpdatedByCleared() {
-		_spec.ClearField(budget.FieldUpdatedBy, field.TypeUint32)
+		_spec.ClearField(budget.FieldUpdatedBy, field.TypeInt64)
 	}
 	if value, ok := _u.mutation.DeletedBy(); ok {
-		_spec.SetField(budget.FieldDeletedBy, field.TypeUint32, value)
+		_spec.SetField(budget.FieldDeletedBy, field.TypeInt64, value)
 	}
 	if value, ok := _u.mutation.AddedDeletedBy(); ok {
-		_spec.AddField(budget.FieldDeletedBy, field.TypeUint32, value)
+		_spec.AddField(budget.FieldDeletedBy, field.TypeInt64, value)
 	}
 	if _u.mutation.DeletedByCleared() {
-		_spec.ClearField(budget.FieldDeletedBy, field.TypeUint32)
+		_spec.ClearField(budget.FieldDeletedBy, field.TypeInt64)
 	}
 	if value, ok := _u.mutation.BookID(); ok {
-		_spec.SetField(budget.FieldBookID, field.TypeUint32, value)
+		_spec.SetField(budget.FieldBookID, field.TypeInt64, value)
 	}
 	if value, ok := _u.mutation.AddedBookID(); ok {
-		_spec.AddField(budget.FieldBookID, field.TypeUint32, value)
+		_spec.AddField(budget.FieldBookID, field.TypeInt64, value)
 	}
 	if _u.mutation.BookIDCleared() {
-		_spec.ClearField(budget.FieldBookID, field.TypeUint32)
+		_spec.ClearField(budget.FieldBookID, field.TypeInt64)
 	}
 	if value, ok := _u.mutation.Name(); ok {
 		_spec.SetField(budget.FieldName, field.TypeString, value)
@@ -594,22 +594,22 @@ func (_u *BudgetUpdate) sqlSave(ctx context.Context) (_node int, err error) {
 		_spec.ClearField(budget.FieldUsedAmount, field.TypeFloat64)
 	}
 	if value, ok := _u.mutation.CategoryID(); ok {
-		_spec.SetField(budget.FieldCategoryID, field.TypeUint32, value)
+		_spec.SetField(budget.FieldCategoryID, field.TypeInt64, value)
 	}
 	if value, ok := _u.mutation.AddedCategoryID(); ok {
-		_spec.AddField(budget.FieldCategoryID, field.TypeUint32, value)
+		_spec.AddField(budget.FieldCategoryID, field.TypeInt64, value)
 	}
 	if _u.mutation.CategoryIDCleared() {
-		_spec.ClearField(budget.FieldCategoryID, field.TypeUint32)
+		_spec.ClearField(budget.FieldCategoryID, field.TypeInt64)
 	}
 	if value, ok := _u.mutation.AccountID(); ok {
-		_spec.SetField(budget.FieldAccountID, field.TypeUint32, value)
+		_spec.SetField(budget.FieldAccountID, field.TypeInt64, value)
 	}
 	if value, ok := _u.mutation.AddedAccountID(); ok {
-		_spec.AddField(budget.FieldAccountID, field.TypeUint32, value)
+		_spec.AddField(budget.FieldAccountID, field.TypeInt64, value)
 	}
 	if _u.mutation.AccountIDCleared() {
-		_spec.ClearField(budget.FieldAccountID, field.TypeUint32)
+		_spec.ClearField(budget.FieldAccountID, field.TypeInt64)
 	}
 	if value, ok := _u.mutation.StartDate(); ok {
 		_spec.SetField(budget.FieldStartDate, field.TypeInt64, value)
@@ -710,14 +710,14 @@ func (_u *BudgetUpdateOne) ClearDeletedAt() *BudgetUpdateOne {
 }
 
 // SetCreatedBy sets the "created_by" field.
-func (_u *BudgetUpdateOne) SetCreatedBy(v uint32) *BudgetUpdateOne {
+func (_u *BudgetUpdateOne) SetCreatedBy(v int64) *BudgetUpdateOne {
 	_u.mutation.ResetCreatedBy()
 	_u.mutation.SetCreatedBy(v)
 	return _u
 }
 
 // SetNillableCreatedBy sets the "created_by" field if the given value is not nil.
-func (_u *BudgetUpdateOne) SetNillableCreatedBy(v *uint32) *BudgetUpdateOne {
+func (_u *BudgetUpdateOne) SetNillableCreatedBy(v *int64) *BudgetUpdateOne {
 	if v != nil {
 		_u.SetCreatedBy(*v)
 	}
@@ -725,7 +725,7 @@ func (_u *BudgetUpdateOne) SetNillableCreatedBy(v *uint32) *BudgetUpdateOne {
 }
 
 // AddCreatedBy adds value to the "created_by" field.
-func (_u *BudgetUpdateOne) AddCreatedBy(v int32) *BudgetUpdateOne {
+func (_u *BudgetUpdateOne) AddCreatedBy(v int64) *BudgetUpdateOne {
 	_u.mutation.AddCreatedBy(v)
 	return _u
 }
@@ -737,14 +737,14 @@ func (_u *BudgetUpdateOne) ClearCreatedBy() *BudgetUpdateOne {
 }
 
 // SetUpdatedBy sets the "updated_by" field.
-func (_u *BudgetUpdateOne) SetUpdatedBy(v uint32) *BudgetUpdateOne {
+func (_u *BudgetUpdateOne) SetUpdatedBy(v int64) *BudgetUpdateOne {
 	_u.mutation.ResetUpdatedBy()
 	_u.mutation.SetUpdatedBy(v)
 	return _u
 }
 
 // SetNillableUpdatedBy sets the "updated_by" field if the given value is not nil.
-func (_u *BudgetUpdateOne) SetNillableUpdatedBy(v *uint32) *BudgetUpdateOne {
+func (_u *BudgetUpdateOne) SetNillableUpdatedBy(v *int64) *BudgetUpdateOne {
 	if v != nil {
 		_u.SetUpdatedBy(*v)
 	}
@@ -752,7 +752,7 @@ func (_u *BudgetUpdateOne) SetNillableUpdatedBy(v *uint32) *BudgetUpdateOne {
 }
 
 // AddUpdatedBy adds value to the "updated_by" field.
-func (_u *BudgetUpdateOne) AddUpdatedBy(v int32) *BudgetUpdateOne {
+func (_u *BudgetUpdateOne) AddUpdatedBy(v int64) *BudgetUpdateOne {
 	_u.mutation.AddUpdatedBy(v)
 	return _u
 }
@@ -764,14 +764,14 @@ func (_u *BudgetUpdateOne) ClearUpdatedBy() *BudgetUpdateOne {
 }
 
 // SetDeletedBy sets the "deleted_by" field.
-func (_u *BudgetUpdateOne) SetDeletedBy(v uint32) *BudgetUpdateOne {
+func (_u *BudgetUpdateOne) SetDeletedBy(v int64) *BudgetUpdateOne {
 	_u.mutation.ResetDeletedBy()
 	_u.mutation.SetDeletedBy(v)
 	return _u
 }
 
 // SetNillableDeletedBy sets the "deleted_by" field if the given value is not nil.
-func (_u *BudgetUpdateOne) SetNillableDeletedBy(v *uint32) *BudgetUpdateOne {
+func (_u *BudgetUpdateOne) SetNillableDeletedBy(v *int64) *BudgetUpdateOne {
 	if v != nil {
 		_u.SetDeletedBy(*v)
 	}
@@ -779,7 +779,7 @@ func (_u *BudgetUpdateOne) SetNillableDeletedBy(v *uint32) *BudgetUpdateOne {
 }
 
 // AddDeletedBy adds value to the "deleted_by" field.
-func (_u *BudgetUpdateOne) AddDeletedBy(v int32) *BudgetUpdateOne {
+func (_u *BudgetUpdateOne) AddDeletedBy(v int64) *BudgetUpdateOne {
 	_u.mutation.AddDeletedBy(v)
 	return _u
 }
@@ -791,14 +791,14 @@ func (_u *BudgetUpdateOne) ClearDeletedBy() *BudgetUpdateOne {
 }
 
 // SetBookID sets the "book_id" field.
-func (_u *BudgetUpdateOne) SetBookID(v uint32) *BudgetUpdateOne {
+func (_u *BudgetUpdateOne) SetBookID(v int64) *BudgetUpdateOne {
 	_u.mutation.ResetBookID()
 	_u.mutation.SetBookID(v)
 	return _u
 }
 
 // SetNillableBookID sets the "book_id" field if the given value is not nil.
-func (_u *BudgetUpdateOne) SetNillableBookID(v *uint32) *BudgetUpdateOne {
+func (_u *BudgetUpdateOne) SetNillableBookID(v *int64) *BudgetUpdateOne {
 	if v != nil {
 		_u.SetBookID(*v)
 	}
@@ -806,7 +806,7 @@ func (_u *BudgetUpdateOne) SetNillableBookID(v *uint32) *BudgetUpdateOne {
 }
 
 // AddBookID adds value to the "book_id" field.
-func (_u *BudgetUpdateOne) AddBookID(v int32) *BudgetUpdateOne {
+func (_u *BudgetUpdateOne) AddBookID(v int64) *BudgetUpdateOne {
 	_u.mutation.AddBookID(v)
 	return _u
 }
@@ -912,14 +912,14 @@ func (_u *BudgetUpdateOne) ClearUsedAmount() *BudgetUpdateOne {
 }
 
 // SetCategoryID sets the "category_id" field.
-func (_u *BudgetUpdateOne) SetCategoryID(v uint32) *BudgetUpdateOne {
+func (_u *BudgetUpdateOne) SetCategoryID(v int64) *BudgetUpdateOne {
 	_u.mutation.ResetCategoryID()
 	_u.mutation.SetCategoryID(v)
 	return _u
 }
 
 // SetNillableCategoryID sets the "category_id" field if the given value is not nil.
-func (_u *BudgetUpdateOne) SetNillableCategoryID(v *uint32) *BudgetUpdateOne {
+func (_u *BudgetUpdateOne) SetNillableCategoryID(v *int64) *BudgetUpdateOne {
 	if v != nil {
 		_u.SetCategoryID(*v)
 	}
@@ -927,7 +927,7 @@ func (_u *BudgetUpdateOne) SetNillableCategoryID(v *uint32) *BudgetUpdateOne {
 }
 
 // AddCategoryID adds value to the "category_id" field.
-func (_u *BudgetUpdateOne) AddCategoryID(v int32) *BudgetUpdateOne {
+func (_u *BudgetUpdateOne) AddCategoryID(v int64) *BudgetUpdateOne {
 	_u.mutation.AddCategoryID(v)
 	return _u
 }
@@ -939,14 +939,14 @@ func (_u *BudgetUpdateOne) ClearCategoryID() *BudgetUpdateOne {
 }
 
 // SetAccountID sets the "account_id" field.
-func (_u *BudgetUpdateOne) SetAccountID(v uint32) *BudgetUpdateOne {
+func (_u *BudgetUpdateOne) SetAccountID(v int64) *BudgetUpdateOne {
 	_u.mutation.ResetAccountID()
 	_u.mutation.SetAccountID(v)
 	return _u
 }
 
 // SetNillableAccountID sets the "account_id" field if the given value is not nil.
-func (_u *BudgetUpdateOne) SetNillableAccountID(v *uint32) *BudgetUpdateOne {
+func (_u *BudgetUpdateOne) SetNillableAccountID(v *int64) *BudgetUpdateOne {
 	if v != nil {
 		_u.SetAccountID(*v)
 	}
@@ -954,7 +954,7 @@ func (_u *BudgetUpdateOne) SetNillableAccountID(v *uint32) *BudgetUpdateOne {
 }
 
 // AddAccountID adds value to the "account_id" field.
-func (_u *BudgetUpdateOne) AddAccountID(v int32) *BudgetUpdateOne {
+func (_u *BudgetUpdateOne) AddAccountID(v int64) *BudgetUpdateOne {
 	_u.mutation.AddAccountID(v)
 	return _u
 }
@@ -1154,7 +1154,7 @@ func (_u *BudgetUpdateOne) sqlSave(ctx context.Context) (_node *Budget, err erro
 	if err := _u.check(); err != nil {
 		return _node, err
 	}
-	_spec := sqlgraph.NewUpdateSpec(budget.Table, budget.Columns, sqlgraph.NewFieldSpec(budget.FieldID, field.TypeUint32))
+	_spec := sqlgraph.NewUpdateSpec(budget.Table, budget.Columns, sqlgraph.NewFieldSpec(budget.FieldID, field.TypeInt64))
 	id, ok := _u.mutation.ID()
 	if !ok {
 		return nil, &ValidationError{Name: "id", err: errors.New(`ent: missing "Budget.id" for update`)}
@@ -1180,7 +1180,7 @@ func (_u *BudgetUpdateOne) sqlSave(ctx context.Context) (_node *Budget, err erro
 		}
 	}
 	if _u.mutation.TenantIDCleared() {
-		_spec.ClearField(budget.FieldTenantID, field.TypeUint32)
+		_spec.ClearField(budget.FieldTenantID, field.TypeInt64)
 	}
 	if _u.mutation.CreatedAtCleared() {
 		_spec.ClearField(budget.FieldCreatedAt, field.TypeTime)
@@ -1198,40 +1198,40 @@ func (_u *BudgetUpdateOne) sqlSave(ctx context.Context) (_node *Budget, err erro
 		_spec.ClearField(budget.FieldDeletedAt, field.TypeTime)
 	}
 	if value, ok := _u.mutation.CreatedBy(); ok {
-		_spec.SetField(budget.FieldCreatedBy, field.TypeUint32, value)
+		_spec.SetField(budget.FieldCreatedBy, field.TypeInt64, value)
 	}
 	if value, ok := _u.mutation.AddedCreatedBy(); ok {
-		_spec.AddField(budget.FieldCreatedBy, field.TypeUint32, value)
+		_spec.AddField(budget.FieldCreatedBy, field.TypeInt64, value)
 	}
 	if _u.mutation.CreatedByCleared() {
-		_spec.ClearField(budget.FieldCreatedBy, field.TypeUint32)
+		_spec.ClearField(budget.FieldCreatedBy, field.TypeInt64)
 	}
 	if value, ok := _u.mutation.UpdatedBy(); ok {
-		_spec.SetField(budget.FieldUpdatedBy, field.TypeUint32, value)
+		_spec.SetField(budget.FieldUpdatedBy, field.TypeInt64, value)
 	}
 	if value, ok := _u.mutation.AddedUpdatedBy(); ok {
-		_spec.AddField(budget.FieldUpdatedBy, field.TypeUint32, value)
+		_spec.AddField(budget.FieldUpdatedBy, field.TypeInt64, value)
 	}
 	if _u.mutation.UpdatedByCleared() {
-		_spec.ClearField(budget.FieldUpdatedBy, field.TypeUint32)
+		_spec.ClearField(budget.FieldUpdatedBy, field.TypeInt64)
 	}
 	if value, ok := _u.mutation.DeletedBy(); ok {
-		_spec.SetField(budget.FieldDeletedBy, field.TypeUint32, value)
+		_spec.SetField(budget.FieldDeletedBy, field.TypeInt64, value)
 	}
 	if value, ok := _u.mutation.AddedDeletedBy(); ok {
-		_spec.AddField(budget.FieldDeletedBy, field.TypeUint32, value)
+		_spec.AddField(budget.FieldDeletedBy, field.TypeInt64, value)
 	}
 	if _u.mutation.DeletedByCleared() {
-		_spec.ClearField(budget.FieldDeletedBy, field.TypeUint32)
+		_spec.ClearField(budget.FieldDeletedBy, field.TypeInt64)
 	}
 	if value, ok := _u.mutation.BookID(); ok {
-		_spec.SetField(budget.FieldBookID, field.TypeUint32, value)
+		_spec.SetField(budget.FieldBookID, field.TypeInt64, value)
 	}
 	if value, ok := _u.mutation.AddedBookID(); ok {
-		_spec.AddField(budget.FieldBookID, field.TypeUint32, value)
+		_spec.AddField(budget.FieldBookID, field.TypeInt64, value)
 	}
 	if _u.mutation.BookIDCleared() {
-		_spec.ClearField(budget.FieldBookID, field.TypeUint32)
+		_spec.ClearField(budget.FieldBookID, field.TypeInt64)
 	}
 	if value, ok := _u.mutation.Name(); ok {
 		_spec.SetField(budget.FieldName, field.TypeString, value)
@@ -1264,22 +1264,22 @@ func (_u *BudgetUpdateOne) sqlSave(ctx context.Context) (_node *Budget, err erro
 		_spec.ClearField(budget.FieldUsedAmount, field.TypeFloat64)
 	}
 	if value, ok := _u.mutation.CategoryID(); ok {
-		_spec.SetField(budget.FieldCategoryID, field.TypeUint32, value)
+		_spec.SetField(budget.FieldCategoryID, field.TypeInt64, value)
 	}
 	if value, ok := _u.mutation.AddedCategoryID(); ok {
-		_spec.AddField(budget.FieldCategoryID, field.TypeUint32, value)
+		_spec.AddField(budget.FieldCategoryID, field.TypeInt64, value)
 	}
 	if _u.mutation.CategoryIDCleared() {
-		_spec.ClearField(budget.FieldCategoryID, field.TypeUint32)
+		_spec.ClearField(budget.FieldCategoryID, field.TypeInt64)
 	}
 	if value, ok := _u.mutation.AccountID(); ok {
-		_spec.SetField(budget.FieldAccountID, field.TypeUint32, value)
+		_spec.SetField(budget.FieldAccountID, field.TypeInt64, value)
 	}
 	if value, ok := _u.mutation.AddedAccountID(); ok {
-		_spec.AddField(budget.FieldAccountID, field.TypeUint32, value)
+		_spec.AddField(budget.FieldAccountID, field.TypeInt64, value)
 	}
 	if _u.mutation.AccountIDCleared() {
-		_spec.ClearField(budget.FieldAccountID, field.TypeUint32)
+		_spec.ClearField(budget.FieldAccountID, field.TypeInt64)
 	}
 	if value, ok := _u.mutation.StartDate(); ok {
 		_spec.SetField(budget.FieldStartDate, field.TypeInt64, value)

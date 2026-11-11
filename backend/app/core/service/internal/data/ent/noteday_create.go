@@ -65,13 +65,13 @@ func (_c *NoteDayCreate) SetNillableDeletedAt(v *time.Time) *NoteDayCreate {
 }
 
 // SetCreatedBy sets the "created_by" field.
-func (_c *NoteDayCreate) SetCreatedBy(v uint32) *NoteDayCreate {
+func (_c *NoteDayCreate) SetCreatedBy(v int64) *NoteDayCreate {
 	_c.mutation.SetCreatedBy(v)
 	return _c
 }
 
 // SetNillableCreatedBy sets the "created_by" field if the given value is not nil.
-func (_c *NoteDayCreate) SetNillableCreatedBy(v *uint32) *NoteDayCreate {
+func (_c *NoteDayCreate) SetNillableCreatedBy(v *int64) *NoteDayCreate {
 	if v != nil {
 		_c.SetCreatedBy(*v)
 	}
@@ -79,13 +79,13 @@ func (_c *NoteDayCreate) SetNillableCreatedBy(v *uint32) *NoteDayCreate {
 }
 
 // SetUpdatedBy sets the "updated_by" field.
-func (_c *NoteDayCreate) SetUpdatedBy(v uint32) *NoteDayCreate {
+func (_c *NoteDayCreate) SetUpdatedBy(v int64) *NoteDayCreate {
 	_c.mutation.SetUpdatedBy(v)
 	return _c
 }
 
 // SetNillableUpdatedBy sets the "updated_by" field if the given value is not nil.
-func (_c *NoteDayCreate) SetNillableUpdatedBy(v *uint32) *NoteDayCreate {
+func (_c *NoteDayCreate) SetNillableUpdatedBy(v *int64) *NoteDayCreate {
 	if v != nil {
 		_c.SetUpdatedBy(*v)
 	}
@@ -93,13 +93,13 @@ func (_c *NoteDayCreate) SetNillableUpdatedBy(v *uint32) *NoteDayCreate {
 }
 
 // SetDeletedBy sets the "deleted_by" field.
-func (_c *NoteDayCreate) SetDeletedBy(v uint32) *NoteDayCreate {
+func (_c *NoteDayCreate) SetDeletedBy(v int64) *NoteDayCreate {
 	_c.mutation.SetDeletedBy(v)
 	return _c
 }
 
 // SetNillableDeletedBy sets the "deleted_by" field if the given value is not nil.
-func (_c *NoteDayCreate) SetNillableDeletedBy(v *uint32) *NoteDayCreate {
+func (_c *NoteDayCreate) SetNillableDeletedBy(v *int64) *NoteDayCreate {
 	if v != nil {
 		_c.SetDeletedBy(*v)
 	}
@@ -107,13 +107,13 @@ func (_c *NoteDayCreate) SetNillableDeletedBy(v *uint32) *NoteDayCreate {
 }
 
 // SetUserID sets the "user_id" field.
-func (_c *NoteDayCreate) SetUserID(v uint32) *NoteDayCreate {
+func (_c *NoteDayCreate) SetUserID(v int64) *NoteDayCreate {
 	_c.mutation.SetUserID(v)
 	return _c
 }
 
 // SetNillableUserID sets the "user_id" field if the given value is not nil.
-func (_c *NoteDayCreate) SetNillableUserID(v *uint32) *NoteDayCreate {
+func (_c *NoteDayCreate) SetNillableUserID(v *int64) *NoteDayCreate {
 	if v != nil {
 		_c.SetUserID(*v)
 	}
@@ -247,7 +247,7 @@ func (_c *NoteDayCreate) SetNillableRunCount(v *int32) *NoteDayCreate {
 }
 
 // SetID sets the "id" field.
-func (_c *NoteDayCreate) SetID(v uint32) *NoteDayCreate {
+func (_c *NoteDayCreate) SetID(v int64) *NoteDayCreate {
 	_c.mutation.SetID(v)
 	return _c
 }
@@ -338,7 +338,7 @@ func (_c *NoteDayCreate) sqlSave(ctx context.Context) (*NoteDay, error) {
 	}
 	if _spec.ID.Value != _node.ID {
 		id := _spec.ID.Value.(int64)
-		_node.ID = uint32(id)
+		_node.ID = int64(id)
 	}
 	_c.mutation.id = &_node.ID
 	_c.mutation.done = true
@@ -348,7 +348,7 @@ func (_c *NoteDayCreate) sqlSave(ctx context.Context) (*NoteDay, error) {
 func (_c *NoteDayCreate) createSpec() (*NoteDay, *sqlgraph.CreateSpec) {
 	var (
 		_node = &NoteDay{config: _c.config}
-		_spec = sqlgraph.NewCreateSpec(noteday.Table, sqlgraph.NewFieldSpec(noteday.FieldID, field.TypeUint32))
+		_spec = sqlgraph.NewCreateSpec(noteday.Table, sqlgraph.NewFieldSpec(noteday.FieldID, field.TypeInt64))
 	)
 	_spec.OnConflict = _c.conflict
 	if id, ok := _c.mutation.ID(); ok {
@@ -368,19 +368,19 @@ func (_c *NoteDayCreate) createSpec() (*NoteDay, *sqlgraph.CreateSpec) {
 		_node.DeletedAt = &value
 	}
 	if value, ok := _c.mutation.CreatedBy(); ok {
-		_spec.SetField(noteday.FieldCreatedBy, field.TypeUint32, value)
+		_spec.SetField(noteday.FieldCreatedBy, field.TypeInt64, value)
 		_node.CreatedBy = &value
 	}
 	if value, ok := _c.mutation.UpdatedBy(); ok {
-		_spec.SetField(noteday.FieldUpdatedBy, field.TypeUint32, value)
+		_spec.SetField(noteday.FieldUpdatedBy, field.TypeInt64, value)
 		_node.UpdatedBy = &value
 	}
 	if value, ok := _c.mutation.DeletedBy(); ok {
-		_spec.SetField(noteday.FieldDeletedBy, field.TypeUint32, value)
+		_spec.SetField(noteday.FieldDeletedBy, field.TypeInt64, value)
 		_node.DeletedBy = &value
 	}
 	if value, ok := _c.mutation.UserID(); ok {
-		_spec.SetField(noteday.FieldUserID, field.TypeUint32, value)
+		_spec.SetField(noteday.FieldUserID, field.TypeInt64, value)
 		_node.UserID = &value
 	}
 	if value, ok := _c.mutation.Title(); ok {
@@ -508,7 +508,7 @@ func (u *NoteDayUpsert) ClearDeletedAt() *NoteDayUpsert {
 }
 
 // SetCreatedBy sets the "created_by" field.
-func (u *NoteDayUpsert) SetCreatedBy(v uint32) *NoteDayUpsert {
+func (u *NoteDayUpsert) SetCreatedBy(v int64) *NoteDayUpsert {
 	u.Set(noteday.FieldCreatedBy, v)
 	return u
 }
@@ -520,7 +520,7 @@ func (u *NoteDayUpsert) UpdateCreatedBy() *NoteDayUpsert {
 }
 
 // AddCreatedBy adds v to the "created_by" field.
-func (u *NoteDayUpsert) AddCreatedBy(v uint32) *NoteDayUpsert {
+func (u *NoteDayUpsert) AddCreatedBy(v int64) *NoteDayUpsert {
 	u.Add(noteday.FieldCreatedBy, v)
 	return u
 }
@@ -532,7 +532,7 @@ func (u *NoteDayUpsert) ClearCreatedBy() *NoteDayUpsert {
 }
 
 // SetUpdatedBy sets the "updated_by" field.
-func (u *NoteDayUpsert) SetUpdatedBy(v uint32) *NoteDayUpsert {
+func (u *NoteDayUpsert) SetUpdatedBy(v int64) *NoteDayUpsert {
 	u.Set(noteday.FieldUpdatedBy, v)
 	return u
 }
@@ -544,7 +544,7 @@ func (u *NoteDayUpsert) UpdateUpdatedBy() *NoteDayUpsert {
 }
 
 // AddUpdatedBy adds v to the "updated_by" field.
-func (u *NoteDayUpsert) AddUpdatedBy(v uint32) *NoteDayUpsert {
+func (u *NoteDayUpsert) AddUpdatedBy(v int64) *NoteDayUpsert {
 	u.Add(noteday.FieldUpdatedBy, v)
 	return u
 }
@@ -556,7 +556,7 @@ func (u *NoteDayUpsert) ClearUpdatedBy() *NoteDayUpsert {
 }
 
 // SetDeletedBy sets the "deleted_by" field.
-func (u *NoteDayUpsert) SetDeletedBy(v uint32) *NoteDayUpsert {
+func (u *NoteDayUpsert) SetDeletedBy(v int64) *NoteDayUpsert {
 	u.Set(noteday.FieldDeletedBy, v)
 	return u
 }
@@ -568,7 +568,7 @@ func (u *NoteDayUpsert) UpdateDeletedBy() *NoteDayUpsert {
 }
 
 // AddDeletedBy adds v to the "deleted_by" field.
-func (u *NoteDayUpsert) AddDeletedBy(v uint32) *NoteDayUpsert {
+func (u *NoteDayUpsert) AddDeletedBy(v int64) *NoteDayUpsert {
 	u.Add(noteday.FieldDeletedBy, v)
 	return u
 }
@@ -580,7 +580,7 @@ func (u *NoteDayUpsert) ClearDeletedBy() *NoteDayUpsert {
 }
 
 // SetUserID sets the "user_id" field.
-func (u *NoteDayUpsert) SetUserID(v uint32) *NoteDayUpsert {
+func (u *NoteDayUpsert) SetUserID(v int64) *NoteDayUpsert {
 	u.Set(noteday.FieldUserID, v)
 	return u
 }
@@ -592,7 +592,7 @@ func (u *NoteDayUpsert) UpdateUserID() *NoteDayUpsert {
 }
 
 // AddUserID adds v to the "user_id" field.
-func (u *NoteDayUpsert) AddUserID(v uint32) *NoteDayUpsert {
+func (u *NoteDayUpsert) AddUserID(v int64) *NoteDayUpsert {
 	u.Add(noteday.FieldUserID, v)
 	return u
 }
@@ -901,14 +901,14 @@ func (u *NoteDayUpsertOne) ClearDeletedAt() *NoteDayUpsertOne {
 }
 
 // SetCreatedBy sets the "created_by" field.
-func (u *NoteDayUpsertOne) SetCreatedBy(v uint32) *NoteDayUpsertOne {
+func (u *NoteDayUpsertOne) SetCreatedBy(v int64) *NoteDayUpsertOne {
 	return u.Update(func(s *NoteDayUpsert) {
 		s.SetCreatedBy(v)
 	})
 }
 
 // AddCreatedBy adds v to the "created_by" field.
-func (u *NoteDayUpsertOne) AddCreatedBy(v uint32) *NoteDayUpsertOne {
+func (u *NoteDayUpsertOne) AddCreatedBy(v int64) *NoteDayUpsertOne {
 	return u.Update(func(s *NoteDayUpsert) {
 		s.AddCreatedBy(v)
 	})
@@ -929,14 +929,14 @@ func (u *NoteDayUpsertOne) ClearCreatedBy() *NoteDayUpsertOne {
 }
 
 // SetUpdatedBy sets the "updated_by" field.
-func (u *NoteDayUpsertOne) SetUpdatedBy(v uint32) *NoteDayUpsertOne {
+func (u *NoteDayUpsertOne) SetUpdatedBy(v int64) *NoteDayUpsertOne {
 	return u.Update(func(s *NoteDayUpsert) {
 		s.SetUpdatedBy(v)
 	})
 }
 
 // AddUpdatedBy adds v to the "updated_by" field.
-func (u *NoteDayUpsertOne) AddUpdatedBy(v uint32) *NoteDayUpsertOne {
+func (u *NoteDayUpsertOne) AddUpdatedBy(v int64) *NoteDayUpsertOne {
 	return u.Update(func(s *NoteDayUpsert) {
 		s.AddUpdatedBy(v)
 	})
@@ -957,14 +957,14 @@ func (u *NoteDayUpsertOne) ClearUpdatedBy() *NoteDayUpsertOne {
 }
 
 // SetDeletedBy sets the "deleted_by" field.
-func (u *NoteDayUpsertOne) SetDeletedBy(v uint32) *NoteDayUpsertOne {
+func (u *NoteDayUpsertOne) SetDeletedBy(v int64) *NoteDayUpsertOne {
 	return u.Update(func(s *NoteDayUpsert) {
 		s.SetDeletedBy(v)
 	})
 }
 
 // AddDeletedBy adds v to the "deleted_by" field.
-func (u *NoteDayUpsertOne) AddDeletedBy(v uint32) *NoteDayUpsertOne {
+func (u *NoteDayUpsertOne) AddDeletedBy(v int64) *NoteDayUpsertOne {
 	return u.Update(func(s *NoteDayUpsert) {
 		s.AddDeletedBy(v)
 	})
@@ -985,14 +985,14 @@ func (u *NoteDayUpsertOne) ClearDeletedBy() *NoteDayUpsertOne {
 }
 
 // SetUserID sets the "user_id" field.
-func (u *NoteDayUpsertOne) SetUserID(v uint32) *NoteDayUpsertOne {
+func (u *NoteDayUpsertOne) SetUserID(v int64) *NoteDayUpsertOne {
 	return u.Update(func(s *NoteDayUpsert) {
 		s.SetUserID(v)
 	})
 }
 
 // AddUserID adds v to the "user_id" field.
-func (u *NoteDayUpsertOne) AddUserID(v uint32) *NoteDayUpsertOne {
+func (u *NoteDayUpsertOne) AddUserID(v int64) *NoteDayUpsertOne {
 	return u.Update(func(s *NoteDayUpsert) {
 		s.AddUserID(v)
 	})
@@ -1266,7 +1266,7 @@ func (u *NoteDayUpsertOne) ExecX(ctx context.Context) {
 }
 
 // Exec executes the UPSERT query and returns the inserted/updated ID.
-func (u *NoteDayUpsertOne) ID(ctx context.Context) (id uint32, err error) {
+func (u *NoteDayUpsertOne) ID(ctx context.Context) (id int64, err error) {
 	node, err := u.create.Save(ctx)
 	if err != nil {
 		return id, err
@@ -1275,7 +1275,7 @@ func (u *NoteDayUpsertOne) ID(ctx context.Context) (id uint32, err error) {
 }
 
 // IDX is like ID, but panics if an error occurs.
-func (u *NoteDayUpsertOne) IDX(ctx context.Context) uint32 {
+func (u *NoteDayUpsertOne) IDX(ctx context.Context) int64 {
 	id, err := u.ID(ctx)
 	if err != nil {
 		panic(err)
@@ -1332,7 +1332,7 @@ func (_c *NoteDayCreateBulk) Save(ctx context.Context) ([]*NoteDay, error) {
 				mutation.id = &nodes[i].ID
 				if specs[i].ID.Value != nil && nodes[i].ID == 0 {
 					id := specs[i].ID.Value.(int64)
-					nodes[i].ID = uint32(id)
+					nodes[i].ID = int64(id)
 				}
 				mutation.done = true
 				return nodes[i], nil
@@ -1510,14 +1510,14 @@ func (u *NoteDayUpsertBulk) ClearDeletedAt() *NoteDayUpsertBulk {
 }
 
 // SetCreatedBy sets the "created_by" field.
-func (u *NoteDayUpsertBulk) SetCreatedBy(v uint32) *NoteDayUpsertBulk {
+func (u *NoteDayUpsertBulk) SetCreatedBy(v int64) *NoteDayUpsertBulk {
 	return u.Update(func(s *NoteDayUpsert) {
 		s.SetCreatedBy(v)
 	})
 }
 
 // AddCreatedBy adds v to the "created_by" field.
-func (u *NoteDayUpsertBulk) AddCreatedBy(v uint32) *NoteDayUpsertBulk {
+func (u *NoteDayUpsertBulk) AddCreatedBy(v int64) *NoteDayUpsertBulk {
 	return u.Update(func(s *NoteDayUpsert) {
 		s.AddCreatedBy(v)
 	})
@@ -1538,14 +1538,14 @@ func (u *NoteDayUpsertBulk) ClearCreatedBy() *NoteDayUpsertBulk {
 }
 
 // SetUpdatedBy sets the "updated_by" field.
-func (u *NoteDayUpsertBulk) SetUpdatedBy(v uint32) *NoteDayUpsertBulk {
+func (u *NoteDayUpsertBulk) SetUpdatedBy(v int64) *NoteDayUpsertBulk {
 	return u.Update(func(s *NoteDayUpsert) {
 		s.SetUpdatedBy(v)
 	})
 }
 
 // AddUpdatedBy adds v to the "updated_by" field.
-func (u *NoteDayUpsertBulk) AddUpdatedBy(v uint32) *NoteDayUpsertBulk {
+func (u *NoteDayUpsertBulk) AddUpdatedBy(v int64) *NoteDayUpsertBulk {
 	return u.Update(func(s *NoteDayUpsert) {
 		s.AddUpdatedBy(v)
 	})
@@ -1566,14 +1566,14 @@ func (u *NoteDayUpsertBulk) ClearUpdatedBy() *NoteDayUpsertBulk {
 }
 
 // SetDeletedBy sets the "deleted_by" field.
-func (u *NoteDayUpsertBulk) SetDeletedBy(v uint32) *NoteDayUpsertBulk {
+func (u *NoteDayUpsertBulk) SetDeletedBy(v int64) *NoteDayUpsertBulk {
 	return u.Update(func(s *NoteDayUpsert) {
 		s.SetDeletedBy(v)
 	})
 }
 
 // AddDeletedBy adds v to the "deleted_by" field.
-func (u *NoteDayUpsertBulk) AddDeletedBy(v uint32) *NoteDayUpsertBulk {
+func (u *NoteDayUpsertBulk) AddDeletedBy(v int64) *NoteDayUpsertBulk {
 	return u.Update(func(s *NoteDayUpsert) {
 		s.AddDeletedBy(v)
 	})
@@ -1594,14 +1594,14 @@ func (u *NoteDayUpsertBulk) ClearDeletedBy() *NoteDayUpsertBulk {
 }
 
 // SetUserID sets the "user_id" field.
-func (u *NoteDayUpsertBulk) SetUserID(v uint32) *NoteDayUpsertBulk {
+func (u *NoteDayUpsertBulk) SetUserID(v int64) *NoteDayUpsertBulk {
 	return u.Update(func(s *NoteDayUpsert) {
 		s.SetUserID(v)
 	})
 }
 
 // AddUserID adds v to the "user_id" field.
-func (u *NoteDayUpsertBulk) AddUserID(v uint32) *NoteDayUpsertBulk {
+func (u *NoteDayUpsertBulk) AddUserID(v int64) *NoteDayUpsertBulk {
 	return u.Update(func(s *NoteDayUpsert) {
 		s.AddUserID(v)
 	})

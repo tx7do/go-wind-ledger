@@ -84,7 +84,7 @@ func (r *BalanceFlowRepo) List(ctx context.Context, req *paginationV1.PagingRequ
 	return &ledgerV1.ListBalanceFlowResponse{Total: ret.Total, Items: ret.Items}, nil
 }
 
-func (r *BalanceFlowRepo) Get(ctx context.Context, id uint32) (*ledgerV1.BalanceFlow, error) {
+func (r *BalanceFlowRepo) Get(ctx context.Context, id int64) (*ledgerV1.BalanceFlow, error) {
 	entity, err := r.entClient.Client().BalanceFlow.Query().Where(balanceflow.IDEQ(id)).Only(ctx)
 	if err != nil {
 		if ent.IsNotFound(err) {
@@ -130,7 +130,7 @@ func (r *BalanceFlowRepo) CreateFlow(ctx context.Context, data *ledgerV1.Balance
 	return r.mapper.ToDTO(saved), nil
 }
 
-func (r *BalanceFlowRepo) Update(ctx context.Context, id uint32, data *ledgerV1.BalanceFlow, mask *fieldmaskpb.FieldMask) (*ledgerV1.BalanceFlow, error) {
+func (r *BalanceFlowRepo) Update(ctx context.Context, id int64, data *ledgerV1.BalanceFlow, mask *fieldmaskpb.FieldMask) (*ledgerV1.BalanceFlow, error) {
 	if data == nil {
 		return nil, ledgerV1.ErrorBadRequest("invalid parameter")
 	}
@@ -176,7 +176,7 @@ func (r *BalanceFlowRepo) Update(ctx context.Context, id uint32, data *ledgerV1.
 	return r.mapper.ToDTO(updated), nil
 }
 
-func (r *BalanceFlowRepo) Delete(ctx context.Context, id uint32) error {
+func (r *BalanceFlowRepo) Delete(ctx context.Context, id int64) error {
 	return r.entClient.Client().BalanceFlow.DeleteOneID(id).Exec(ctx)
 }
 
@@ -250,7 +250,7 @@ func (r *BalanceFlowRepo) RefundBalance(ctx context.Context, flow *ent.BalanceFl
 // book_id 作用域与 List 保持一致：当 bookID 为 0（调用方未指定，例如前端统计接口未传
 // bookId）时不施加 book 过滤，避免 WHERE book_id = 0 把所有真实流水（book_id != 0）
 // 排除在外导致统计恒为 0。多账本作用域的收口应通过鉴权层统一注入，不应在此处默认按 0 过滤。
-func (r *BalanceFlowRepo) Statistics(ctx context.Context, bookID uint32, confirmedOnly bool) (expense, income, net float64, err error) {
+func (r *BalanceFlowRepo) Statistics(ctx context.Context, bookID int64, confirmedOnly bool) (expense, income, net float64, err error) {
 	baseQuery := r.entClient.Client().BalanceFlow.Query()
 	if bookID != 0 {
 		baseQuery = baseQuery.Where(balanceflow.BookIDEQ(bookID))
@@ -293,32 +293,32 @@ func (r *BalanceFlowRepo) Statistics(ctx context.Context, bookID uint32, confirm
 	return
 }
 
-func (r *BalanceFlowRepo) UpdateAccountBalance(ctx context.Context, accountID uint32, newBalance float64) error {
+func (r *BalanceFlowRepo) UpdateAccountBalance(ctx context.Context, accountID int64, newBalance float64) error {
 	return r.entClient.Client().Account.UpdateOneID(accountID).SetBalance(newBalance).Exec(ctx)
 }
 
-func (r *BalanceFlowRepo) GetAccount(ctx context.Context, accountID uint32) (*ent.Account, error) {
+func (r *BalanceFlowRepo) GetAccount(ctx context.Context, accountID int64) (*ent.Account, error) {
 	return r.entClient.Client().Account.Query().Where(account.IDEQ(accountID)).Only(ctx)
 }
 
-func (r *BalanceFlowRepo) GetRawEntity(ctx context.Context, id uint32) (*ent.BalanceFlow, error) {
+func (r *BalanceFlowRepo) GetRawEntity(ctx context.Context, id int64) (*ent.BalanceFlow, error) {
 	return r.entClient.Client().BalanceFlow.Query().Where(balanceflow.IDEQ(id)).Only(ctx)
 }
 
 // CategoryRelation helpers
 type CategoryRelationItem struct {
-	CategoryID      uint32
+	CategoryID      int64
 	Amount          float64
 	ConvertedAmount *float64
 }
 
 type TagRelationItem struct {
-	TagID           uint32
+	TagID           int64
 	Amount          float64
 	ConvertedAmount *float64
 }
 
-func (r *BalanceFlowRepo) CreateCategoryRelations(ctx context.Context, flowID uint32, categories []*CategoryRelationItem) error {
+func (r *BalanceFlowRepo) CreateCategoryRelations(ctx context.Context, flowID int64, categories []*CategoryRelationItem) error {
 	bulk := make([]*ent.CategoryRelationCreate, 0, len(categories))
 	for _, c := range categories {
 		bulk = append(bulk, r.entClient.Client().CategoryRelation.Create().
@@ -331,13 +331,13 @@ func (r *BalanceFlowRepo) CreateCategoryRelations(ctx context.Context, flowID ui
 	return err
 }
 
-func (r *BalanceFlowRepo) DeleteCategoryRelationsByFlow(ctx context.Context, flowID uint32) error {
+func (r *BalanceFlowRepo) DeleteCategoryRelationsByFlow(ctx context.Context, flowID int64) error {
 	_, err := r.entClient.Client().CategoryRelation.Delete().
 		Where(func(s *sql.Selector) { s.Where(sql.EQ("balance_flow_id", flowID)) }).Exec(ctx)
 	return err
 }
 
-func (r *BalanceFlowRepo) CreateTagRelations(ctx context.Context, flowID uint32, tags []*TagRelationItem) error {
+func (r *BalanceFlowRepo) CreateTagRelations(ctx context.Context, flowID int64, tags []*TagRelationItem) error {
 	bulk := make([]*ent.TagRelationCreate, 0, len(tags))
 	for _, t := range tags {
 		bulk = append(bulk, r.entClient.Client().TagRelation.Create().
@@ -350,7 +350,7 @@ func (r *BalanceFlowRepo) CreateTagRelations(ctx context.Context, flowID uint32,
 	return err
 }
 
-func (r *BalanceFlowRepo) DeleteTagRelationsByFlow(ctx context.Context, flowID uint32) error {
+func (r *BalanceFlowRepo) DeleteTagRelationsByFlow(ctx context.Context, flowID int64) error {
 	_, err := r.entClient.Client().TagRelation.Delete().
 		Where(func(s *sql.Selector) { s.Where(sql.EQ("balance_flow_id", flowID)) }).Exec(ctx)
 	return err
@@ -359,7 +359,7 @@ func (r *BalanceFlowRepo) DeleteTagRelationsByFlow(ctx context.Context, flowID u
 // === Public query methods for ReportService ===
 
 // QueryFlowsByType returns confirmed+included flows of a given type in a book.
-func (r *BalanceFlowRepo) QueryFlowsByType(ctx context.Context, bookID uint32, flowType balanceflow.Type) ([]*ent.BalanceFlow, error) {
+func (r *BalanceFlowRepo) QueryFlowsByType(ctx context.Context, bookID int64, flowType balanceflow.Type) ([]*ent.BalanceFlow, error) {
 	return r.entClient.Client().BalanceFlow.Query().
 		Where(
 			balanceflow.BookIDEQ(bookID),
@@ -371,7 +371,7 @@ func (r *BalanceFlowRepo) QueryFlowsByType(ctx context.Context, bookID uint32, f
 }
 
 // QueryFlowsByBook returns all flows in a book ordered by create_time ascending.
-func (r *BalanceFlowRepo) QueryFlowsByBook(ctx context.Context, bookID uint32) ([]*ent.BalanceFlow, error) {
+func (r *BalanceFlowRepo) QueryFlowsByBook(ctx context.Context, bookID int64) ([]*ent.BalanceFlow, error) {
 	return r.entClient.Client().BalanceFlow.Query().
 		Where(balanceflow.BookIDEQ(bookID)).
 		Order(ent.Asc(balanceflow.FieldCreateTime)).
@@ -379,14 +379,14 @@ func (r *BalanceFlowRepo) QueryFlowsByBook(ctx context.Context, bookID uint32) (
 }
 
 // QueryCategoryRelationsByFlowIDs returns category relations for the given flow IDs.
-func (r *BalanceFlowRepo) QueryCategoryRelationsByFlowIDs(ctx context.Context, flowIDs []uint32) ([]*ent.CategoryRelation, error) {
+func (r *BalanceFlowRepo) QueryCategoryRelationsByFlowIDs(ctx context.Context, flowIDs []int64) ([]*ent.CategoryRelation, error) {
 	return r.entClient.Client().CategoryRelation.Query().
 		Where(categoryrelation.BalanceFlowIDIn(flowIDs...)).
 		All(ctx)
 }
 
 // QueryTagRelationsByFlowIDs returns tag relations for the given flow IDs.
-func (r *BalanceFlowRepo) QueryTagRelationsByFlowIDs(ctx context.Context, flowIDs []uint32) ([]*ent.TagRelation, error) {
+func (r *BalanceFlowRepo) QueryTagRelationsByFlowIDs(ctx context.Context, flowIDs []int64) ([]*ent.TagRelation, error) {
 	return r.entClient.Client().TagRelation.Query().
 		Where(tagrelation.BalanceFlowIDIn(flowIDs...)).
 		All(ctx)

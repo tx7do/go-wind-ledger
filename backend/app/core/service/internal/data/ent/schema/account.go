@@ -22,7 +22,7 @@ func (Account) Annotations() []schema.Annotation {
 }
 
 func (Account) Mixin() []ent.Mixin {
-	return []ent.Mixin{mixin.AutoIncrementId{}, mixin.TenantID[uint32]{}, mixin.TimeAt{}, mixin.OperatorID{}, mixin.SortOrder{}}
+	return []ent.Mixin{mixin.AutoIncrementId64{}, mixin.TenantID[int64]{}, mixin.TimeAt{}, mixin.OperatorID64{}, mixin.SortOrder{}}
 }
 
 func (Account) Fields() []ent.Field {

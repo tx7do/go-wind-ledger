@@ -169,8 +169,7 @@ paths:
                   in: path
                   required: true
                   schema:
-                    type: integer
-                    format: uint32
+                    type: string
                 - name: viewMask
                   in: query
                   schema:
@@ -192,8 +191,7 @@ paths:
                   in: path
                   required: true
                   schema:
-                    type: integer
-                    format: uint32
+                    type: string
             requestBody:
                 content:
                     application/json:
@@ -216,8 +214,7 @@ paths:
                   in: path
                   required: true
                   schema:
-                    type: integer
-                    format: uint32
+                    type: string
             responses:
                 "200":
                     description: OK
@@ -232,8 +229,7 @@ paths:
                   in: path
                   required: true
                   schema:
-                    type: integer
-                    format: uint32
+                    type: string
             requestBody:
                 content:
                     application/json:
@@ -257,8 +253,7 @@ paths:
                   in: path
                   required: true
                   schema:
-                    type: integer
-                    format: uint32
+                    type: string
             requestBody:
                 content:
                     application/json:
@@ -315,8 +310,7 @@ paths:
                   in: path
                   required: true
                   schema:
-                    type: integer
-                    format: uint32
+                    type: string
             requestBody:
                 content:
                     application/json:
@@ -338,8 +332,7 @@ paths:
                   in: path
                   required: true
                   schema:
-                    type: integer
-                    format: uint32
+                    type: string
             requestBody:
                 content:
                     application/json:
@@ -359,8 +352,7 @@ paths:
                 - name: bookId
                   in: query
                   schema:
-                    type: integer
-                    format: uint32
+                    type: string
                 - name: type
                   in: query
                   schema:
@@ -395,22 +387,19 @@ paths:
                 - name: accountId
                   in: query
                   schema:
-                    type: integer
-                    format: uint32
+                    type: string
                 - name: categoryIds
                   in: query
                   schema:
                     type: array
                     items:
-                        type: integer
-                        format: uint32
+                        type: string
                 - name: tagIds
                   in: query
                   schema:
                     type: array
                     items:
-                        type: integer
-                        format: uint32
+                        type: string
                 - name: confirm
                   in: query
                   schema:
@@ -530,8 +519,7 @@ paths:
                   in: path
                   required: true
                   schema:
-                    type: integer
-                    format: uint32
+                    type: string
                 - name: viewMask
                   in: query
                   schema:
@@ -553,8 +541,7 @@ paths:
                   in: path
                   required: true
                   schema:
-                    type: integer
-                    format: uint32
+                    type: string
             requestBody:
                 content:
                     application/json:
@@ -577,8 +564,7 @@ paths:
                   in: path
                   required: true
                   schema:
-                    type: integer
-                    format: uint32
+                    type: string
             responses:
                 "200":
                     description: OK
@@ -593,8 +579,7 @@ paths:
                   in: path
                   required: true
                   schema:
-                    type: integer
-                    format: uint32
+                    type: string
             requestBody:
                 content:
                     application/json:
@@ -630,8 +615,7 @@ paths:
                   in: path
                   required: true
                   schema:
-                    type: integer
-                    format: uint32
+                    type: string
             responses:
                 "200":
                     description: OK
@@ -808,8 +792,7 @@ paths:
                   in: path
                   required: true
                   schema:
-                    type: integer
-                    format: uint32
+                    type: string
                 - name: viewMask
                   in: query
                   schema:
@@ -831,8 +814,7 @@ paths:
                   in: path
                   required: true
                   schema:
-                    type: integer
-                    format: uint32
+                    type: string
             requestBody:
                 content:
                     application/json:
@@ -855,8 +837,7 @@ paths:
                   in: path
                   required: true
                   schema:
-                    type: integer
-                    format: uint32
+                    type: string
             responses:
                 "200":
                     description: OK
@@ -871,8 +852,7 @@ paths:
                   in: path
                   required: true
                   schema:
-                    type: integer
-                    format: uint32
+                    type: string
                 - name: timeZoneOffset
                   in: query
                   schema:
@@ -895,8 +875,7 @@ paths:
                   in: path
                   required: true
                   schema:
-                    type: integer
-                    format: uint32
+                    type: string
             requestBody:
                 content:
                     application/json:
@@ -1013,8 +992,7 @@ paths:
                 - name: bookId
                   in: query
                   schema:
-                    type: integer
-                    format: uint32
+                    type: string
             responses:
                 "200":
                     description: OK
@@ -1032,8 +1010,7 @@ paths:
                   in: path
                   required: true
                   schema:
-                    type: integer
-                    format: uint32
+                    type: string
             responses:
                 "200":
                     description: OK
@@ -1050,8 +1027,7 @@ paths:
                   in: path
                   required: true
                   schema:
-                    type: integer
-                    format: uint32
+                    type: string
             requestBody:
                 content:
                     application/json:
@@ -1074,8 +1050,7 @@ paths:
                   in: path
                   required: true
                   schema:
-                    type: integer
-                    format: uint32
+                    type: string
             responses:
                 "200":
                     description: OK
@@ -1090,8 +1065,7 @@ paths:
                   in: path
                   required: true
                   schema:
-                    type: integer
-                    format: uint32
+                    type: string
             responses:
                 "200":
                     description: OK
@@ -1246,8 +1220,7 @@ paths:
                   in: path
                   required: true
                   schema:
-                    type: integer
-                    format: uint32
+                    type: string
             requestBody:
                 content:
                     application/json:
@@ -1271,8 +1244,7 @@ paths:
                 - name: fileId
                   in: query
                   schema:
-                    type: integer
-                    format: uint32
+                    type: string
                 - name: storageObject.bucketName
                   in: query
                   schema:
@@ -1368,8 +1340,7 @@ paths:
                 - name: flowId
                   in: query
                   schema:
-                    type: integer
-                    format: uint32
+                    type: string
             responses:
                 "200":
                     description: OK
@@ -1404,8 +1375,7 @@ paths:
                 - name: id
                   in: query
                   schema:
-                    type: integer
-                    format: uint32
+                    type: string
                 - name: createTime
                   in: query
                   schema:
@@ -1427,8 +1397,7 @@ paths:
                   in: path
                   required: true
                   schema:
-                    type: integer
-                    format: uint32
+                    type: string
             responses:
                 "200":
                     description: OK
@@ -1536,8 +1505,7 @@ paths:
                 - name: bookId
                   in: query
                   schema:
-                    type: integer
-                    format: uint32
+                    type: string
                 - name: type
                   in: query
                   schema:
@@ -1564,8 +1532,7 @@ paths:
                   in: path
                   required: true
                   schema:
-                    type: integer
-                    format: uint32
+                    type: string
                 - name: viewMask
                   in: query
                   schema:
@@ -1587,8 +1554,7 @@ paths:
                   in: path
                   required: true
                   schema:
-                    type: integer
-                    format: uint32
+                    type: string
             requestBody:
                 content:
                     application/json:
@@ -1611,8 +1577,7 @@ paths:
                   in: path
                   required: true
                   schema:
-                    type: integer
-                    format: uint32
+                    type: string
             responses:
                 "200":
                     description: OK
@@ -1627,8 +1592,7 @@ paths:
                   in: path
                   required: true
                   schema:
-                    type: integer
-                    format: uint32
+                    type: string
             requestBody:
                 content:
                     application/json:
@@ -1745,8 +1709,7 @@ paths:
                 - name: bookId
                   in: query
                   schema:
-                    type: integer
-                    format: uint32
+                    type: string
             responses:
                 "200":
                     description: OK
@@ -1764,8 +1727,7 @@ paths:
                   in: path
                   required: true
                   schema:
-                    type: integer
-                    format: uint32
+                    type: string
                 - name: viewMask
                   in: query
                   schema:
@@ -1787,8 +1749,7 @@ paths:
                   in: path
                   required: true
                   schema:
-                    type: integer
-                    format: uint32
+                    type: string
             requestBody:
                 content:
                     application/json:
@@ -1811,8 +1772,7 @@ paths:
                   in: path
                   required: true
                   schema:
-                    type: integer
-                    format: uint32
+                    type: string
             responses:
                 "200":
                     description: OK
@@ -1827,8 +1787,7 @@ paths:
                   in: path
                   required: true
                   schema:
-                    type: integer
-                    format: uint32
+                    type: string
             requestBody:
                 content:
                     application/json:
@@ -2085,8 +2044,7 @@ paths:
                   in: path
                   required: true
                   schema:
-                    type: integer
-                    format: uint32
+                    type: string
             responses:
                 "200":
                     description: OK
@@ -2103,8 +2061,7 @@ paths:
                   in: path
                   required: true
                   schema:
-                    type: integer
-                    format: uint32
+                    type: string
             requestBody:
                 content:
                     application/json:
@@ -2127,8 +2084,7 @@ paths:
                   in: path
                   required: true
                   schema:
-                    type: integer
-                    format: uint32
+                    type: string
             responses:
                 "200":
                     description: OK
@@ -2143,8 +2099,7 @@ paths:
                   in: path
                   required: true
                   schema:
-                    type: integer
-                    format: uint32
+                    type: string
             requestBody:
                 content:
                     application/json:
@@ -2168,8 +2123,7 @@ paths:
                   in: path
                   required: true
                   schema:
-                    type: integer
-                    format: uint32
+                    type: string
             requestBody:
                 content:
                     application/json:
@@ -2286,8 +2240,7 @@ paths:
                 - name: bookId
                   in: query
                   schema:
-                    type: integer
-                    format: uint32
+                    type: string
             responses:
                 "200":
                     description: OK
@@ -2305,8 +2258,7 @@ paths:
                   in: path
                   required: true
                   schema:
-                    type: integer
-                    format: uint32
+                    type: string
                 - name: viewMask
                   in: query
                   schema:
@@ -2328,8 +2280,7 @@ paths:
                   in: path
                   required: true
                   schema:
-                    type: integer
-                    format: uint32
+                    type: string
             requestBody:
                 content:
                     application/json:
@@ -2352,8 +2303,7 @@ paths:
                   in: path
                   required: true
                   schema:
-                    type: integer
-                    format: uint32
+                    type: string
             responses:
                 "200":
                     description: OK
@@ -2368,8 +2318,7 @@ paths:
                   in: path
                   required: true
                   schema:
-                    type: integer
-                    format: uint32
+                    type: string
             requestBody:
                 content:
                     application/json:
@@ -2411,8 +2360,7 @@ paths:
                 - name: bookId
                   in: query
                   schema:
-                    type: integer
-                    format: uint32
+                    type: string
             responses:
                 "200":
                     description: OK
@@ -2429,8 +2377,7 @@ paths:
                 - name: bookId
                   in: query
                   schema:
-                    type: integer
-                    format: uint32
+                    type: string
                 - name: minTime
                   in: query
                   schema:
@@ -2448,27 +2395,23 @@ paths:
                   schema:
                     type: array
                     items:
-                        type: integer
-                        format: uint32
+                        type: string
                 - name: tagIds
                   in: query
                   schema:
                     type: array
                     items:
-                        type: integer
-                        format: uint32
+                        type: string
                 - name: payeeIds
                   in: query
                   schema:
                     type: array
                     items:
-                        type: integer
-                        format: uint32
+                        type: string
                 - name: accountId
                   in: query
                   schema:
-                    type: integer
-                    format: uint32
+                    type: string
             responses:
                 "200":
                     description: OK
@@ -2485,8 +2428,7 @@ paths:
                 - name: bookId
                   in: query
                   schema:
-                    type: integer
-                    format: uint32
+                    type: string
                 - name: minTime
                   in: query
                   schema:
@@ -2504,27 +2446,23 @@ paths:
                   schema:
                     type: array
                     items:
-                        type: integer
-                        format: uint32
+                        type: string
                 - name: tagIds
                   in: query
                   schema:
                     type: array
                     items:
-                        type: integer
-                        format: uint32
+                        type: string
                 - name: payeeIds
                   in: query
                   schema:
                     type: array
                     items:
-                        type: integer
-                        format: uint32
+                        type: string
                 - name: accountId
                   in: query
                   schema:
-                    type: integer
-                    format: uint32
+                    type: string
             responses:
                 "200":
                     description: OK
@@ -2541,8 +2479,7 @@ paths:
                 - name: bookId
                   in: query
                   schema:
-                    type: integer
-                    format: uint32
+                    type: string
                 - name: minTime
                   in: query
                   schema:
@@ -2560,27 +2497,23 @@ paths:
                   schema:
                     type: array
                     items:
-                        type: integer
-                        format: uint32
+                        type: string
                 - name: tagIds
                   in: query
                   schema:
                     type: array
                     items:
-                        type: integer
-                        format: uint32
+                        type: string
                 - name: payeeIds
                   in: query
                   schema:
                     type: array
                     items:
-                        type: integer
-                        format: uint32
+                        type: string
                 - name: accountId
                   in: query
                   schema:
-                    type: integer
-                    format: uint32
+                    type: string
             responses:
                 "200":
                     description: OK
@@ -2597,8 +2530,7 @@ paths:
                 - name: bookId
                   in: query
                   schema:
-                    type: integer
-                    format: uint32
+                    type: string
                 - name: minTime
                   in: query
                   schema:
@@ -2616,27 +2548,23 @@ paths:
                   schema:
                     type: array
                     items:
-                        type: integer
-                        format: uint32
+                        type: string
                 - name: tagIds
                   in: query
                   schema:
                     type: array
                     items:
-                        type: integer
-                        format: uint32
+                        type: string
                 - name: payeeIds
                   in: query
                   schema:
                     type: array
                     items:
-                        type: integer
-                        format: uint32
+                        type: string
                 - name: accountId
                   in: query
                   schema:
-                    type: integer
-                    format: uint32
+                    type: string
             responses:
                 "200":
                     description: OK
@@ -2653,8 +2581,7 @@ paths:
                 - name: bookId
                   in: query
                   schema:
-                    type: integer
-                    format: uint32
+                    type: string
                 - name: minTime
                   in: query
                   schema:
@@ -2672,27 +2599,23 @@ paths:
                   schema:
                     type: array
                     items:
-                        type: integer
-                        format: uint32
+                        type: string
                 - name: tagIds
                   in: query
                   schema:
                     type: array
                     items:
-                        type: integer
-                        format: uint32
+                        type: string
                 - name: payeeIds
                   in: query
                   schema:
                     type: array
                     items:
-                        type: integer
-                        format: uint32
+                        type: string
                 - name: accountId
                   in: query
                   schema:
-                    type: integer
-                    format: uint32
+                    type: string
             responses:
                 "200":
                     description: OK
@@ -2709,8 +2632,7 @@ paths:
                 - name: bookId
                   in: query
                   schema:
-                    type: integer
-                    format: uint32
+                    type: string
                 - name: minTime
                   in: query
                   schema:
@@ -2728,27 +2650,23 @@ paths:
                   schema:
                     type: array
                     items:
-                        type: integer
-                        format: uint32
+                        type: string
                 - name: tagIds
                   in: query
                   schema:
                     type: array
                     items:
-                        type: integer
-                        format: uint32
+                        type: string
                 - name: payeeIds
                   in: query
                   schema:
                     type: array
                     items:
-                        type: integer
-                        format: uint32
+                        type: string
                 - name: accountId
                   in: query
                   schema:
-                    type: integer
-                    format: uint32
+                    type: string
             responses:
                 "200":
                     description: OK
@@ -2765,8 +2683,7 @@ paths:
                 - name: tenantId
                   in: query
                   schema:
-                    type: integer
-                    format: uint32
+                    type: string
                 - name: status
                   in: query
                   schema:
@@ -2813,8 +2730,7 @@ paths:
                 - name: userId
                   in: query
                   schema:
-                    type: integer
-                    format: uint32
+                    type: string
             responses:
                 "200":
                     description: OK
@@ -2831,13 +2747,11 @@ paths:
                 - name: tenantId
                   in: query
                   schema:
-                    type: integer
-                    format: uint32
+                    type: string
                 - name: userId
                   in: query
                   schema:
-                    type: integer
-                    format: uint32
+                    type: string
             responses:
                 "200":
                     description: OK
@@ -2852,8 +2766,7 @@ paths:
                   in: path
                   required: true
                   schema:
-                    type: integer
-                    format: uint32
+                    type: string
             responses:
                 "200":
                     description: OK
@@ -2870,8 +2783,7 @@ paths:
                   in: path
                   required: true
                   schema:
-                    type: integer
-                    format: uint32
+                    type: string
             requestBody:
                 content:
                     application/json:
@@ -2895,8 +2807,7 @@ paths:
                   in: path
                   required: true
                   schema:
-                    type: integer
-                    format: uint32
+                    type: string
             requestBody:
                 content:
                     application/json:
@@ -2920,8 +2831,7 @@ paths:
                   in: path
                   required: true
                   schema:
-                    type: integer
-                    format: uint32
+                    type: string
             requestBody:
                 content:
                     application/json:
@@ -2995,15 +2905,13 @@ components:
             type: object
             properties:
                 bookId:
-                    type: integer
-                    format: uint32
+                    type: string
             description: 设置默认账本请求
         app.service.v1.SetDefaultTenantRequest:
             type: object
             properties:
                 tenantId:
-                    type: integer
-                    format: uint32
+                    type: string
             description: 设置默认租户请求
         authentication.service.v1.LoginRequest:
             required:
@@ -3034,9 +2942,8 @@ components:
                     type: string
                     description: 跳转链接
                 user_id:
-                    type: integer
+                    type: string
                     description: 用户ID
-                    format: uint32
                 username:
                     type: string
                     description: 用户名
@@ -3103,8 +3010,7 @@ components:
             type: object
             properties:
                 id:
-                    type: integer
-                    format: uint32
+                    type: string
             description: 请求 - 接受邀请
         identity.service.v1.BindContactRequest:
             type: object
@@ -3157,13 +3063,11 @@ components:
             type: object
             properties:
                 tenantId:
-                    type: integer
-                    format: uint32
+                    type: string
                 username:
                     type: string
                 roleId:
-                    type: integer
-                    format: uint32
+                    type: string
             description: 请求 - 邀请用户
         identity.service.v1.ListMembersResponse:
             type: object
@@ -3189,21 +3093,17 @@ components:
             type: object
             properties:
                 id:
-                    type: integer
-                    format: uint32
+                    type: string
                 userId:
-                    type: integer
-                    format: uint32
+                    type: string
                 username:
                     type: string
                 nickname:
                     type: string
                 tenantId:
-                    type: integer
-                    format: uint32
+                    type: string
                 roleId:
-                    type: integer
-                    format: uint32
+                    type: string
                 roleName:
                     type: string
                 status:
@@ -3226,17 +3126,14 @@ components:
             type: object
             properties:
                 id:
-                    type: integer
+                    type: string
                     description: ID
-                    format: uint32
                 userId:
-                    type: integer
+                    type: string
                     description: 用户ID
-                    format: uint32
                 tenantId:
-                    type: integer
+                    type: string
                     description: 租户ID
-                    format: uint32
                 isPrimary:
                     type: boolean
                     description: 是否主身份
@@ -3256,9 +3153,8 @@ components:
                     description: 分配时间（UTC）
                     format: date-time
                 assignedBy:
-                    type: integer
+                    type: string
                     description: 分配者用户 ID
-                    format: uint32
                 joinedAt:
                     type: string
                     description: 加入时间（UTC）
@@ -3272,47 +3168,38 @@ components:
                     description: 失效时间
                     format: date-time
                 roleId:
-                    type: integer
+                    type: string
                     description: 角色ID
-                    format: uint32
                 roleIds:
                     type: array
                     items:
-                        type: integer
-                        format: uint32
+                        type: string
                     description: 角色ID
                 positionId:
-                    type: integer
+                    type: string
                     description: 岗位ID
-                    format: uint32
                 positionIds:
                     type: array
                     items:
-                        type: integer
-                        format: uint32
+                        type: string
                     description: 岗位ID
                 orgUnitId:
-                    type: integer
+                    type: string
                     description: 组织ID
-                    format: uint32
                 orgUnitIds:
                     type: array
                     items:
-                        type: integer
-                        format: uint32
+                        type: string
                     description: 组织ID
                 createdBy:
-                    type: integer
+                    type: string
                     description: 创建者用户ID
-                    format: uint32
                 updatedBy:
-                    type: integer
+                    type: string
                     description: 更新者用户ID
-                    format: uint32
                 deletedBy:
-                    type: integer
+                    type: string
                     description: 删除者用户ID
-                    format: uint32
                 createdAt:
                     type: string
                     description: 创建时间
@@ -3342,16 +3229,14 @@ components:
             type: object
             properties:
                 id:
-                    type: integer
-                    format: uint32
+                    type: string
             description: 请求 - 拒绝邀请
         identity.service.v1.Tenant:
             type: object
             properties:
                 id:
-                    type: integer
+                    type: string
                     description: 租户ID
-                    format: uint32
                 name:
                     type: string
                     description: 租户名称
@@ -3382,9 +3267,8 @@ components:
                     type: string
                     description: 备注
                 adminUserId:
-                    type: integer
+                    type: string
                     description: 管理员用户ID
-                    format: uint32
                 adminUserName:
                     type: string
                     description: 管理员用户名
@@ -3426,17 +3310,14 @@ components:
                     description: 审核状态
                     format: enum
                 createdBy:
-                    type: integer
+                    type: string
                     description: 创建者用户ID
-                    format: uint32
                 updatedBy:
-                    type: integer
+                    type: string
                     description: 更新者用户ID
-                    format: uint32
                 deletedBy:
-                    type: integer
+                    type: string
                     description: 删除者用户ID
-                    format: uint32
                 createdAt:
                     type: string
                     description: 创建时间
@@ -3454,16 +3335,13 @@ components:
             type: object
             properties:
                 tenantId:
-                    type: integer
-                    format: uint32
+                    type: string
                 tenantName:
                     type: string
                 membershipId:
-                    type: integer
-                    format: uint32
+                    type: string
                 roleId:
-                    type: integer
-                    format: uint32
+                    type: string
                 roleName:
                     type: string
                 status:
@@ -3483,8 +3361,7 @@ components:
             type: object
             properties:
                 id:
-                    type: integer
-                    format: uint32
+                    type: string
                 data:
                     $ref: '#/components/schemas/identity.service.v1.Membership'
                 updateMask:
@@ -3499,8 +3376,7 @@ components:
             type: object
             properties:
                 id:
-                    type: integer
-                    format: uint32
+                    type: string
                 data:
                     $ref: '#/components/schemas/identity.service.v1.User'
                 password:
@@ -3534,25 +3410,21 @@ components:
             type: object
             properties:
                 id:
-                    type: integer
+                    type: string
                     description: 用户ID
-                    format: uint32
                 tenantId:
-                    type: integer
+                    type: string
                     description: 租户ID
-                    format: uint32
                 tenantName:
                     type: string
                     description: 租户名称
                 orgUnitId:
-                    type: integer
+                    type: string
                     description: 组织ID
-                    format: uint32
                 orgUnitIds:
                     type: array
                     items:
-                        type: integer
-                        format: uint32
+                        type: string
                     description: 归属组织ID列表
                 orgUnitName:
                     type: string
@@ -3563,14 +3435,12 @@ components:
                         type: string
                     description: 组织名称列表
                 positionId:
-                    type: integer
+                    type: string
                     description: 职位ID
-                    format: uint32
                 positionIds:
                     type: array
                     items:
-                        type: integer
-                        format: uint32
+                        type: string
                     description: 职位列表
                 positionName:
                     type: string
@@ -3581,14 +3451,12 @@ components:
                         type: string
                     description: 职位名称列表
                 roleId:
-                    type: integer
+                    type: string
                     description: 角色ID
-                    format: uint32
                 roleIds:
                     type: array
                     items:
-                        type: integer
-                        format: uint32
+                        type: string
                     description: 角色ID列表
                 roles:
                     type: array
@@ -3679,17 +3547,14 @@ components:
                     type: string
                     description: 获赞数
                 createdBy:
-                    type: integer
+                    type: string
                     description: 创建者用户ID
-                    format: uint32
                 updatedBy:
-                    type: integer
+                    type: string
                     description: 更新者用户ID
-                    format: uint32
                 deletedBy:
-                    type: integer
+                    type: string
                     description: 删除者用户ID
-                    format: uint32
                 createdAt:
                     type: string
                     description: 创建时间
@@ -3717,13 +3582,11 @@ components:
             type: object
             properties:
                 id:
-                    type: integer
+                    type: string
                     description: 账户ID
-                    format: uint32
                 tenantId:
-                    type: integer
+                    type: string
                     description: 租户（群组）ID
-                    format: uint32
                 name:
                     type: string
                     description: 账户名称
@@ -3785,14 +3648,11 @@ components:
                     description: 排序
                     format: int32
                 createdBy:
-                    type: integer
-                    format: uint32
+                    type: string
                 updatedBy:
-                    type: integer
-                    format: uint32
+                    type: string
                 deletedBy:
-                    type: integer
-                    format: uint32
+                    type: string
                 createdAt:
                     type: string
                     format: date-time
@@ -3829,15 +3689,13 @@ components:
             type: object
             properties:
                 id:
-                    type: integer
-                    format: uint32
+                    type: string
                 balance:
                     type: string
                     description: 调整后的目标余额
                 bookId:
-                    type: integer
+                    type: string
                     description: 关联的账本ID
-                    format: uint32
                 title:
                     type: string
                 notes:
@@ -3849,14 +3707,11 @@ components:
             type: object
             properties:
                 id:
-                    type: integer
-                    format: uint32
+                    type: string
                 tenantId:
-                    type: integer
-                    format: uint32
+                    type: string
                 bookId:
-                    type: integer
-                    format: uint32
+                    type: string
                 type:
                     enum:
                         - FLOW_TYPE_UNSPECIFIED
@@ -3874,20 +3729,16 @@ components:
                     type: string
                     description: 换算后的金额
                 accountId:
-                    type: integer
+                    type: string
                     description: 来源账户ID
-                    format: uint32
                 toAccountId:
-                    type: integer
+                    type: string
                     description: 目标账户ID（转账）
-                    format: uint32
                 payeeId:
-                    type: integer
+                    type: string
                     description: 收款人/付款人ID
-                    format: uint32
                 creatorId:
-                    type: integer
-                    format: uint32
+                    type: string
                 createTime:
                     type: string
                     description: 交易时间（epoch 毫秒）
@@ -3914,14 +3765,11 @@ components:
                         $ref: '#/components/schemas/ledger.service.v1.TagRelation'
                     description: 关联的标签拆分
                 createdBy:
-                    type: integer
-                    format: uint32
+                    type: string
                 updatedBy:
-                    type: integer
-                    format: uint32
+                    type: string
                 deletedBy:
-                    type: integer
-                    format: uint32
+                    type: string
                 createdAt:
                     type: string
                     format: date-time
@@ -3953,13 +3801,11 @@ components:
             type: object
             properties:
                 id:
-                    type: integer
+                    type: string
                     description: 账本ID
-                    format: uint32
                 tenantId:
-                    type: integer
+                    type: string
                     description: 租户（群组）ID
-                    format: uint32
                 name:
                     type: string
                     description: 账本名称
@@ -3980,41 +3826,32 @@ components:
                     type: string
                     description: 上次导出时间
                 defaultExpenseAccountId:
-                    type: integer
+                    type: string
                     description: 默认支出账户ID
-                    format: uint32
                 defaultIncomeAccountId:
-                    type: integer
+                    type: string
                     description: 默认收入账户ID
-                    format: uint32
                 defaultTransferFromAccountId:
-                    type: integer
+                    type: string
                     description: 默认转出账户ID
-                    format: uint32
                 defaultTransferToAccountId:
-                    type: integer
+                    type: string
                     description: 默认转入账户ID
-                    format: uint32
                 defaultExpenseCategoryId:
-                    type: integer
+                    type: string
                     description: 默认支出分类ID
-                    format: uint32
                 defaultIncomeCategoryId:
-                    type: integer
+                    type: string
                     description: 默认收入分类ID
-                    format: uint32
                 createdBy:
-                    type: integer
+                    type: string
                     description: 创建者用户ID
-                    format: uint32
                 updatedBy:
-                    type: integer
+                    type: string
                     description: 更新者用户ID
-                    format: uint32
                 deletedBy:
-                    type: integer
+                    type: string
                     description: 删除者用户ID
-                    format: uint32
                 createdAt:
                     type: string
                     format: date-time
@@ -4029,8 +3866,7 @@ components:
             type: object
             properties:
                 id:
-                    type: integer
-                    format: uint32
+                    type: string
                 name:
                     type: string
                     description: 模板名称
@@ -4057,14 +3893,11 @@ components:
             type: object
             properties:
                 id:
-                    type: integer
-                    format: uint32
+                    type: string
                 tenantId:
-                    type: integer
-                    format: uint32
+                    type: string
                 bookId:
-                    type: integer
-                    format: uint32
+                    type: string
                 name:
                     type: string
                 period:
@@ -4081,11 +3914,9 @@ components:
                 usedAmount:
                     type: string
                 categoryId:
-                    type: integer
-                    format: uint32
+                    type: string
                 accountId:
-                    type: integer
-                    format: uint32
+                    type: string
                 startDate:
                     type: string
                 endDate:
@@ -4097,11 +3928,9 @@ components:
                 notes:
                     type: string
                 createdBy:
-                    type: integer
-                    format: uint32
+                    type: string
                 updatedBy:
-                    type: integer
-                    format: uint32
+                    type: string
                 createdAt:
                     type: string
                     format: date-time
@@ -4113,8 +3942,7 @@ components:
             type: object
             properties:
                 budgetId:
-                    type: integer
-                    format: uint32
+                    type: string
                 budgetName:
                     type: string
                 amount:
@@ -4136,15 +3964,12 @@ components:
             type: object
             properties:
                 id:
-                    type: integer
-                    format: uint32
+                    type: string
                 tenantId:
-                    type: integer
-                    format: uint32
+                    type: string
                 bookId:
-                    type: integer
+                    type: string
                     description: 所属账本ID
-                    format: uint32
                 name:
                     type: string
                     description: 分类名称
@@ -4164,9 +3989,8 @@ components:
                     type: integer
                     format: int32
                 parentId:
-                    type: integer
+                    type: string
                     description: 父分类ID
-                    format: uint32
                 children:
                     type: array
                     items:
@@ -4180,14 +4004,11 @@ components:
                     type: string
                     description: 物化路径
                 createdBy:
-                    type: integer
-                    format: uint32
+                    type: string
                 updatedBy:
-                    type: integer
-                    format: uint32
+                    type: string
                 deletedBy:
-                    type: integer
-                    format: uint32
+                    type: string
                 createdAt:
                     type: string
                     format: date-time
@@ -4202,12 +4023,10 @@ components:
             type: object
             properties:
                 id:
-                    type: integer
-                    format: uint32
+                    type: string
                 categoryId:
-                    type: integer
+                    type: string
                     description: 类别ID
-                    format: uint32
                 amount:
                     type: string
                     description: 金额
@@ -4230,8 +4049,7 @@ components:
             type: object
             properties:
                 id:
-                    type: integer
-                    format: uint32
+                    type: string
                 rate:
                     type: string
             description: 请求 - 手动修改币种汇率
@@ -4252,8 +4070,7 @@ components:
             type: object
             properties:
                 id:
-                    type: integer
-                    format: uint32
+                    type: string
             description: 请求 - 确认流水（更新账户余额）
         ledger.service.v1.ConvertCurrencyResponse:
             type: object
@@ -4267,8 +4084,7 @@ components:
             type: object
             properties:
                 sourceBookId:
-                    type: integer
-                    format: uint32
+                    type: string
                 name:
                     type: string
                 notes:
@@ -4294,8 +4110,7 @@ components:
                 defaultCurrencyCode:
                     type: string
                 templateId:
-                    type: integer
-                    format: uint32
+                    type: string
                 notes:
                     type: string
             description: 请求 - 从模板创建账本
@@ -4336,8 +4151,7 @@ components:
             type: object
             properties:
                 id:
-                    type: integer
-                    format: uint32
+                    type: string
                 code:
                     type: string
                     description: 币种代码
@@ -4363,15 +4177,12 @@ components:
             type: object
             properties:
                 id:
-                    type: integer
-                    format: uint32
+                    type: string
                 flowId:
-                    type: integer
+                    type: string
                     description: 关联的流水ID
-                    format: uint32
                 creatorId:
-                    type: integer
-                    format: uint32
+                    type: string
                 createTime:
                     type: string
                 contentType:
@@ -4488,12 +4299,10 @@ components:
             type: object
             properties:
                 id:
-                    type: integer
-                    format: uint32
+                    type: string
                 userId:
-                    type: integer
+                    type: string
                     description: 所属用户ID
-                    format: uint32
                 title:
                     type: string
                 notes:
@@ -4522,14 +4331,11 @@ components:
                     type: integer
                     format: int32
                 createdBy:
-                    type: integer
-                    format: uint32
+                    type: string
                 updatedBy:
-                    type: integer
-                    format: uint32
+                    type: string
                 deletedBy:
-                    type: integer
-                    format: uint32
+                    type: string
                 createdAt:
                     type: string
                     format: date-time
@@ -4562,14 +4368,11 @@ components:
             type: object
             properties:
                 id:
-                    type: integer
-                    format: uint32
+                    type: string
                 tenantId:
-                    type: integer
-                    format: uint32
+                    type: string
                 bookId:
-                    type: integer
-                    format: uint32
+                    type: string
                 name:
                     type: string
                 notes:
@@ -4584,14 +4387,11 @@ components:
                     type: integer
                     format: int32
                 createdBy:
-                    type: integer
-                    format: uint32
+                    type: string
                 updatedBy:
-                    type: integer
-                    format: uint32
+                    type: string
                 deletedBy:
-                    type: integer
-                    format: uint32
+                    type: string
                 createdAt:
                     type: string
                     format: date-time
@@ -4611,8 +4411,7 @@ components:
             type: object
             properties:
                 id:
-                    type: integer
-                    format: uint32
+                    type: string
         ledger.service.v1.RefreshCurrencyRequest:
             type: object
             properties:
@@ -4632,8 +4431,7 @@ components:
             type: object
             properties:
                 id:
-                    type: integer
-                    format: uint32
+                    type: string
         ledger.service.v1.StatisticsResponse:
             type: object
             properties:
@@ -4648,14 +4446,11 @@ components:
             type: object
             properties:
                 id:
-                    type: integer
-                    format: uint32
+                    type: string
                 tenantId:
-                    type: integer
-                    format: uint32
+                    type: string
                 bookId:
-                    type: integer
-                    format: uint32
+                    type: string
                 name:
                     type: string
                 notes:
@@ -4675,9 +4470,8 @@ components:
                     type: integer
                     format: int32
                 parentId:
-                    type: integer
+                    type: string
                     description: 树形字段
-                    format: uint32
                 children:
                     type: array
                     items:
@@ -4688,14 +4482,11 @@ components:
                 path:
                     type: string
                 createdBy:
-                    type: integer
-                    format: uint32
+                    type: string
                 updatedBy:
-                    type: integer
-                    format: uint32
+                    type: string
                 deletedBy:
-                    type: integer
-                    format: uint32
+                    type: string
                 createdAt:
                     type: string
                     format: date-time
@@ -4709,12 +4500,10 @@ components:
             type: object
             properties:
                 id:
-                    type: integer
-                    format: uint32
+                    type: string
                 tagId:
-                    type: integer
+                    type: string
                     description: 标签ID
-                    format: uint32
                 amount:
                     type: string
                 convertedAmount:
@@ -4730,42 +4519,36 @@ components:
             type: object
             properties:
                 id:
-                    type: integer
-                    format: uint32
+                    type: string
             description: 请求 - 切换启用/禁用
         ledger.service.v1.ToggleBookRequest:
             type: object
             properties:
                 id:
-                    type: integer
+                    type: string
                     description: 账本ID
-                    format: uint32
             description: 请求 - 切换启用/禁用
         ledger.service.v1.ToggleCategoryRequest:
             type: object
             properties:
                 id:
-                    type: integer
-                    format: uint32
+                    type: string
             description: 请求 - 切换启用/禁用
         ledger.service.v1.TogglePayeeRequest:
             type: object
             properties:
                 id:
-                    type: integer
-                    format: uint32
+                    type: string
         ledger.service.v1.ToggleTagRequest:
             type: object
             properties:
                 id:
-                    type: integer
-                    format: uint32
+                    type: string
         ledger.service.v1.UpdateAccountRequest:
             type: object
             properties:
                 id:
-                    type: integer
-                    format: uint32
+                    type: string
                 data:
                     $ref: '#/components/schemas/ledger.service.v1.Account'
                 updateMask:
@@ -4778,8 +4561,7 @@ components:
             type: object
             properties:
                 id:
-                    type: integer
-                    format: uint32
+                    type: string
                 data:
                     $ref: '#/components/schemas/ledger.service.v1.BalanceFlow'
                 updateMask:
@@ -4792,8 +4574,7 @@ components:
             type: object
             properties:
                 id:
-                    type: integer
-                    format: uint32
+                    type: string
                 data:
                     $ref: '#/components/schemas/ledger.service.v1.Book'
                 updateMask:
@@ -4808,8 +4589,7 @@ components:
             type: object
             properties:
                 id:
-                    type: integer
-                    format: uint32
+                    type: string
                 data:
                     $ref: '#/components/schemas/ledger.service.v1.Budget'
                 updateMask:
@@ -4822,8 +4602,7 @@ components:
             type: object
             properties:
                 id:
-                    type: integer
-                    format: uint32
+                    type: string
                 data:
                     $ref: '#/components/schemas/ledger.service.v1.Category'
                 updateMask:
@@ -4836,8 +4615,7 @@ components:
             type: object
             properties:
                 id:
-                    type: integer
-                    format: uint32
+                    type: string
                 data:
                     $ref: '#/components/schemas/ledger.service.v1.NoteDay'
                 updateMask:
@@ -4849,8 +4627,7 @@ components:
             type: object
             properties:
                 id:
-                    type: integer
-                    format: uint32
+                    type: string
                 data:
                     $ref: '#/components/schemas/ledger.service.v1.Payee'
                 updateMask:
@@ -4862,8 +4639,7 @@ components:
             type: object
             properties:
                 id:
-                    type: integer
-                    format: uint32
+                    type: string
                 data:
                     $ref: '#/components/schemas/ledger.service.v1.Tag'
                 updateMask:
@@ -4875,8 +4651,7 @@ components:
             type: object
             properties:
                 flowId:
-                    type: integer
-                    format: uint32
+                    type: string
                 fileName:
                     type: string
                 contentType:
@@ -4978,13 +4753,11 @@ components:
                     type: string
                     description: 文件大小（字节）
                 tenantId:
-                    type: integer
+                    type: string
                     description: 租户ID，0代表系统全局角色
-                    format: uint32
                 userId:
-                    type: integer
+                    type: string
                     description: 用户ID
-                    format: uint32
         storage.service.v1.UploadFileResponse:
             type: object
             properties:

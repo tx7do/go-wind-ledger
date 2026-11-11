@@ -23,13 +23,13 @@ type UserCreate struct {
 }
 
 // SetCreatedBy sets the "created_by" field.
-func (_c *UserCreate) SetCreatedBy(v uint32) *UserCreate {
+func (_c *UserCreate) SetCreatedBy(v int64) *UserCreate {
 	_c.mutation.SetCreatedBy(v)
 	return _c
 }
 
 // SetNillableCreatedBy sets the "created_by" field if the given value is not nil.
-func (_c *UserCreate) SetNillableCreatedBy(v *uint32) *UserCreate {
+func (_c *UserCreate) SetNillableCreatedBy(v *int64) *UserCreate {
 	if v != nil {
 		_c.SetCreatedBy(*v)
 	}
@@ -37,13 +37,13 @@ func (_c *UserCreate) SetNillableCreatedBy(v *uint32) *UserCreate {
 }
 
 // SetUpdatedBy sets the "updated_by" field.
-func (_c *UserCreate) SetUpdatedBy(v uint32) *UserCreate {
+func (_c *UserCreate) SetUpdatedBy(v int64) *UserCreate {
 	_c.mutation.SetUpdatedBy(v)
 	return _c
 }
 
 // SetNillableUpdatedBy sets the "updated_by" field if the given value is not nil.
-func (_c *UserCreate) SetNillableUpdatedBy(v *uint32) *UserCreate {
+func (_c *UserCreate) SetNillableUpdatedBy(v *int64) *UserCreate {
 	if v != nil {
 		_c.SetUpdatedBy(*v)
 	}
@@ -51,13 +51,13 @@ func (_c *UserCreate) SetNillableUpdatedBy(v *uint32) *UserCreate {
 }
 
 // SetDeletedBy sets the "deleted_by" field.
-func (_c *UserCreate) SetDeletedBy(v uint32) *UserCreate {
+func (_c *UserCreate) SetDeletedBy(v int64) *UserCreate {
 	_c.mutation.SetDeletedBy(v)
 	return _c
 }
 
 // SetNillableDeletedBy sets the "deleted_by" field if the given value is not nil.
-func (_c *UserCreate) SetNillableDeletedBy(v *uint32) *UserCreate {
+func (_c *UserCreate) SetNillableDeletedBy(v *int64) *UserCreate {
 	if v != nil {
 		_c.SetDeletedBy(*v)
 	}
@@ -121,13 +121,13 @@ func (_c *UserCreate) SetNillableRemark(v *string) *UserCreate {
 }
 
 // SetTenantID sets the "tenant_id" field.
-func (_c *UserCreate) SetTenantID(v uint32) *UserCreate {
+func (_c *UserCreate) SetTenantID(v int64) *UserCreate {
 	_c.mutation.SetTenantID(v)
 	return _c
 }
 
 // SetNillableTenantID sets the "tenant_id" field if the given value is not nil.
-func (_c *UserCreate) SetNillableTenantID(v *uint32) *UserCreate {
+func (_c *UserCreate) SetNillableTenantID(v *int64) *UserCreate {
 	if v != nil {
 		_c.SetTenantID(*v)
 	}
@@ -331,13 +331,13 @@ func (_c *UserCreate) SetNillableLockedUntil(v *time.Time) *UserCreate {
 }
 
 // SetDefaultGroupID sets the "default_group_id" field.
-func (_c *UserCreate) SetDefaultGroupID(v uint32) *UserCreate {
+func (_c *UserCreate) SetDefaultGroupID(v int64) *UserCreate {
 	_c.mutation.SetDefaultGroupID(v)
 	return _c
 }
 
 // SetNillableDefaultGroupID sets the "default_group_id" field if the given value is not nil.
-func (_c *UserCreate) SetNillableDefaultGroupID(v *uint32) *UserCreate {
+func (_c *UserCreate) SetNillableDefaultGroupID(v *int64) *UserCreate {
 	if v != nil {
 		_c.SetDefaultGroupID(*v)
 	}
@@ -345,13 +345,13 @@ func (_c *UserCreate) SetNillableDefaultGroupID(v *uint32) *UserCreate {
 }
 
 // SetDefaultBookID sets the "default_book_id" field.
-func (_c *UserCreate) SetDefaultBookID(v uint32) *UserCreate {
+func (_c *UserCreate) SetDefaultBookID(v int64) *UserCreate {
 	_c.mutation.SetDefaultBookID(v)
 	return _c
 }
 
 // SetNillableDefaultBookID sets the "default_book_id" field if the given value is not nil.
-func (_c *UserCreate) SetNillableDefaultBookID(v *uint32) *UserCreate {
+func (_c *UserCreate) SetNillableDefaultBookID(v *int64) *UserCreate {
 	if v != nil {
 		_c.SetDefaultBookID(*v)
 	}
@@ -373,7 +373,7 @@ func (_c *UserCreate) SetNillableStatus(v *user.Status) *UserCreate {
 }
 
 // SetID sets the "id" field.
-func (_c *UserCreate) SetID(v uint32) *UserCreate {
+func (_c *UserCreate) SetID(v int64) *UserCreate {
 	_c.mutation.SetID(v)
 	return _c
 }
@@ -504,7 +504,7 @@ func (_c *UserCreate) sqlSave(ctx context.Context) (*User, error) {
 	}
 	if _spec.ID.Value != _node.ID {
 		id := _spec.ID.Value.(int64)
-		_node.ID = uint32(id)
+		_node.ID = int64(id)
 	}
 	_c.mutation.id = &_node.ID
 	_c.mutation.done = true
@@ -514,7 +514,7 @@ func (_c *UserCreate) sqlSave(ctx context.Context) (*User, error) {
 func (_c *UserCreate) createSpec() (*User, *sqlgraph.CreateSpec) {
 	var (
 		_node = &User{config: _c.config}
-		_spec = sqlgraph.NewCreateSpec(user.Table, sqlgraph.NewFieldSpec(user.FieldID, field.TypeUint32))
+		_spec = sqlgraph.NewCreateSpec(user.Table, sqlgraph.NewFieldSpec(user.FieldID, field.TypeInt64))
 	)
 	_spec.OnConflict = _c.conflict
 	if id, ok := _c.mutation.ID(); ok {
@@ -522,15 +522,15 @@ func (_c *UserCreate) createSpec() (*User, *sqlgraph.CreateSpec) {
 		_spec.ID.Value = id
 	}
 	if value, ok := _c.mutation.CreatedBy(); ok {
-		_spec.SetField(user.FieldCreatedBy, field.TypeUint32, value)
+		_spec.SetField(user.FieldCreatedBy, field.TypeInt64, value)
 		_node.CreatedBy = &value
 	}
 	if value, ok := _c.mutation.UpdatedBy(); ok {
-		_spec.SetField(user.FieldUpdatedBy, field.TypeUint32, value)
+		_spec.SetField(user.FieldUpdatedBy, field.TypeInt64, value)
 		_node.UpdatedBy = &value
 	}
 	if value, ok := _c.mutation.DeletedBy(); ok {
-		_spec.SetField(user.FieldDeletedBy, field.TypeUint32, value)
+		_spec.SetField(user.FieldDeletedBy, field.TypeInt64, value)
 		_node.DeletedBy = &value
 	}
 	if value, ok := _c.mutation.CreatedAt(); ok {
@@ -550,7 +550,7 @@ func (_c *UserCreate) createSpec() (*User, *sqlgraph.CreateSpec) {
 		_node.Remark = &value
 	}
 	if value, ok := _c.mutation.TenantID(); ok {
-		_spec.SetField(user.FieldTenantID, field.TypeUint32, value)
+		_spec.SetField(user.FieldTenantID, field.TypeInt64, value)
 		_node.TenantID = &value
 	}
 	if value, ok := _c.mutation.Username(); ok {
@@ -610,11 +610,11 @@ func (_c *UserCreate) createSpec() (*User, *sqlgraph.CreateSpec) {
 		_node.LockedUntil = &value
 	}
 	if value, ok := _c.mutation.DefaultGroupID(); ok {
-		_spec.SetField(user.FieldDefaultGroupID, field.TypeUint32, value)
+		_spec.SetField(user.FieldDefaultGroupID, field.TypeInt64, value)
 		_node.DefaultGroupID = &value
 	}
 	if value, ok := _c.mutation.DefaultBookID(); ok {
-		_spec.SetField(user.FieldDefaultBookID, field.TypeUint32, value)
+		_spec.SetField(user.FieldDefaultBookID, field.TypeInt64, value)
 		_node.DefaultBookID = &value
 	}
 	if value, ok := _c.mutation.Status(); ok {
@@ -674,7 +674,7 @@ type (
 )
 
 // SetCreatedBy sets the "created_by" field.
-func (u *UserUpsert) SetCreatedBy(v uint32) *UserUpsert {
+func (u *UserUpsert) SetCreatedBy(v int64) *UserUpsert {
 	u.Set(user.FieldCreatedBy, v)
 	return u
 }
@@ -686,7 +686,7 @@ func (u *UserUpsert) UpdateCreatedBy() *UserUpsert {
 }
 
 // AddCreatedBy adds v to the "created_by" field.
-func (u *UserUpsert) AddCreatedBy(v uint32) *UserUpsert {
+func (u *UserUpsert) AddCreatedBy(v int64) *UserUpsert {
 	u.Add(user.FieldCreatedBy, v)
 	return u
 }
@@ -698,7 +698,7 @@ func (u *UserUpsert) ClearCreatedBy() *UserUpsert {
 }
 
 // SetUpdatedBy sets the "updated_by" field.
-func (u *UserUpsert) SetUpdatedBy(v uint32) *UserUpsert {
+func (u *UserUpsert) SetUpdatedBy(v int64) *UserUpsert {
 	u.Set(user.FieldUpdatedBy, v)
 	return u
 }
@@ -710,7 +710,7 @@ func (u *UserUpsert) UpdateUpdatedBy() *UserUpsert {
 }
 
 // AddUpdatedBy adds v to the "updated_by" field.
-func (u *UserUpsert) AddUpdatedBy(v uint32) *UserUpsert {
+func (u *UserUpsert) AddUpdatedBy(v int64) *UserUpsert {
 	u.Add(user.FieldUpdatedBy, v)
 	return u
 }
@@ -722,7 +722,7 @@ func (u *UserUpsert) ClearUpdatedBy() *UserUpsert {
 }
 
 // SetDeletedBy sets the "deleted_by" field.
-func (u *UserUpsert) SetDeletedBy(v uint32) *UserUpsert {
+func (u *UserUpsert) SetDeletedBy(v int64) *UserUpsert {
 	u.Set(user.FieldDeletedBy, v)
 	return u
 }
@@ -734,7 +734,7 @@ func (u *UserUpsert) UpdateDeletedBy() *UserUpsert {
 }
 
 // AddDeletedBy adds v to the "deleted_by" field.
-func (u *UserUpsert) AddDeletedBy(v uint32) *UserUpsert {
+func (u *UserUpsert) AddDeletedBy(v int64) *UserUpsert {
 	u.Add(user.FieldDeletedBy, v)
 	return u
 }
@@ -1034,7 +1034,7 @@ func (u *UserUpsert) ClearLockedUntil() *UserUpsert {
 }
 
 // SetDefaultGroupID sets the "default_group_id" field.
-func (u *UserUpsert) SetDefaultGroupID(v uint32) *UserUpsert {
+func (u *UserUpsert) SetDefaultGroupID(v int64) *UserUpsert {
 	u.Set(user.FieldDefaultGroupID, v)
 	return u
 }
@@ -1046,7 +1046,7 @@ func (u *UserUpsert) UpdateDefaultGroupID() *UserUpsert {
 }
 
 // AddDefaultGroupID adds v to the "default_group_id" field.
-func (u *UserUpsert) AddDefaultGroupID(v uint32) *UserUpsert {
+func (u *UserUpsert) AddDefaultGroupID(v int64) *UserUpsert {
 	u.Add(user.FieldDefaultGroupID, v)
 	return u
 }
@@ -1058,7 +1058,7 @@ func (u *UserUpsert) ClearDefaultGroupID() *UserUpsert {
 }
 
 // SetDefaultBookID sets the "default_book_id" field.
-func (u *UserUpsert) SetDefaultBookID(v uint32) *UserUpsert {
+func (u *UserUpsert) SetDefaultBookID(v int64) *UserUpsert {
 	u.Set(user.FieldDefaultBookID, v)
 	return u
 }
@@ -1070,7 +1070,7 @@ func (u *UserUpsert) UpdateDefaultBookID() *UserUpsert {
 }
 
 // AddDefaultBookID adds v to the "default_book_id" field.
-func (u *UserUpsert) AddDefaultBookID(v uint32) *UserUpsert {
+func (u *UserUpsert) AddDefaultBookID(v int64) *UserUpsert {
 	u.Add(user.FieldDefaultBookID, v)
 	return u
 }
@@ -1157,14 +1157,14 @@ func (u *UserUpsertOne) Update(set func(*UserUpsert)) *UserUpsertOne {
 }
 
 // SetCreatedBy sets the "created_by" field.
-func (u *UserUpsertOne) SetCreatedBy(v uint32) *UserUpsertOne {
+func (u *UserUpsertOne) SetCreatedBy(v int64) *UserUpsertOne {
 	return u.Update(func(s *UserUpsert) {
 		s.SetCreatedBy(v)
 	})
 }
 
 // AddCreatedBy adds v to the "created_by" field.
-func (u *UserUpsertOne) AddCreatedBy(v uint32) *UserUpsertOne {
+func (u *UserUpsertOne) AddCreatedBy(v int64) *UserUpsertOne {
 	return u.Update(func(s *UserUpsert) {
 		s.AddCreatedBy(v)
 	})
@@ -1185,14 +1185,14 @@ func (u *UserUpsertOne) ClearCreatedBy() *UserUpsertOne {
 }
 
 // SetUpdatedBy sets the "updated_by" field.
-func (u *UserUpsertOne) SetUpdatedBy(v uint32) *UserUpsertOne {
+func (u *UserUpsertOne) SetUpdatedBy(v int64) *UserUpsertOne {
 	return u.Update(func(s *UserUpsert) {
 		s.SetUpdatedBy(v)
 	})
 }
 
 // AddUpdatedBy adds v to the "updated_by" field.
-func (u *UserUpsertOne) AddUpdatedBy(v uint32) *UserUpsertOne {
+func (u *UserUpsertOne) AddUpdatedBy(v int64) *UserUpsertOne {
 	return u.Update(func(s *UserUpsert) {
 		s.AddUpdatedBy(v)
 	})
@@ -1213,14 +1213,14 @@ func (u *UserUpsertOne) ClearUpdatedBy() *UserUpsertOne {
 }
 
 // SetDeletedBy sets the "deleted_by" field.
-func (u *UserUpsertOne) SetDeletedBy(v uint32) *UserUpsertOne {
+func (u *UserUpsertOne) SetDeletedBy(v int64) *UserUpsertOne {
 	return u.Update(func(s *UserUpsert) {
 		s.SetDeletedBy(v)
 	})
 }
 
 // AddDeletedBy adds v to the "deleted_by" field.
-func (u *UserUpsertOne) AddDeletedBy(v uint32) *UserUpsertOne {
+func (u *UserUpsertOne) AddDeletedBy(v int64) *UserUpsertOne {
 	return u.Update(func(s *UserUpsert) {
 		s.AddDeletedBy(v)
 	})
@@ -1577,14 +1577,14 @@ func (u *UserUpsertOne) ClearLockedUntil() *UserUpsertOne {
 }
 
 // SetDefaultGroupID sets the "default_group_id" field.
-func (u *UserUpsertOne) SetDefaultGroupID(v uint32) *UserUpsertOne {
+func (u *UserUpsertOne) SetDefaultGroupID(v int64) *UserUpsertOne {
 	return u.Update(func(s *UserUpsert) {
 		s.SetDefaultGroupID(v)
 	})
 }
 
 // AddDefaultGroupID adds v to the "default_group_id" field.
-func (u *UserUpsertOne) AddDefaultGroupID(v uint32) *UserUpsertOne {
+func (u *UserUpsertOne) AddDefaultGroupID(v int64) *UserUpsertOne {
 	return u.Update(func(s *UserUpsert) {
 		s.AddDefaultGroupID(v)
 	})
@@ -1605,14 +1605,14 @@ func (u *UserUpsertOne) ClearDefaultGroupID() *UserUpsertOne {
 }
 
 // SetDefaultBookID sets the "default_book_id" field.
-func (u *UserUpsertOne) SetDefaultBookID(v uint32) *UserUpsertOne {
+func (u *UserUpsertOne) SetDefaultBookID(v int64) *UserUpsertOne {
 	return u.Update(func(s *UserUpsert) {
 		s.SetDefaultBookID(v)
 	})
 }
 
 // AddDefaultBookID adds v to the "default_book_id" field.
-func (u *UserUpsertOne) AddDefaultBookID(v uint32) *UserUpsertOne {
+func (u *UserUpsertOne) AddDefaultBookID(v int64) *UserUpsertOne {
 	return u.Update(func(s *UserUpsert) {
 		s.AddDefaultBookID(v)
 	})
@@ -1669,7 +1669,7 @@ func (u *UserUpsertOne) ExecX(ctx context.Context) {
 }
 
 // Exec executes the UPSERT query and returns the inserted/updated ID.
-func (u *UserUpsertOne) ID(ctx context.Context) (id uint32, err error) {
+func (u *UserUpsertOne) ID(ctx context.Context) (id int64, err error) {
 	node, err := u.create.Save(ctx)
 	if err != nil {
 		return id, err
@@ -1678,7 +1678,7 @@ func (u *UserUpsertOne) ID(ctx context.Context) (id uint32, err error) {
 }
 
 // IDX is like ID, but panics if an error occurs.
-func (u *UserUpsertOne) IDX(ctx context.Context) uint32 {
+func (u *UserUpsertOne) IDX(ctx context.Context) int64 {
 	id, err := u.ID(ctx)
 	if err != nil {
 		panic(err)
@@ -1735,7 +1735,7 @@ func (_c *UserCreateBulk) Save(ctx context.Context) ([]*User, error) {
 				mutation.id = &nodes[i].ID
 				if specs[i].ID.Value != nil && nodes[i].ID == 0 {
 					id := specs[i].ID.Value.(int64)
-					nodes[i].ID = uint32(id)
+					nodes[i].ID = int64(id)
 				}
 				mutation.done = true
 				return nodes[i], nil
@@ -1877,14 +1877,14 @@ func (u *UserUpsertBulk) Update(set func(*UserUpsert)) *UserUpsertBulk {
 }
 
 // SetCreatedBy sets the "created_by" field.
-func (u *UserUpsertBulk) SetCreatedBy(v uint32) *UserUpsertBulk {
+func (u *UserUpsertBulk) SetCreatedBy(v int64) *UserUpsertBulk {
 	return u.Update(func(s *UserUpsert) {
 		s.SetCreatedBy(v)
 	})
 }
 
 // AddCreatedBy adds v to the "created_by" field.
-func (u *UserUpsertBulk) AddCreatedBy(v uint32) *UserUpsertBulk {
+func (u *UserUpsertBulk) AddCreatedBy(v int64) *UserUpsertBulk {
 	return u.Update(func(s *UserUpsert) {
 		s.AddCreatedBy(v)
 	})
@@ -1905,14 +1905,14 @@ func (u *UserUpsertBulk) ClearCreatedBy() *UserUpsertBulk {
 }
 
 // SetUpdatedBy sets the "updated_by" field.
-func (u *UserUpsertBulk) SetUpdatedBy(v uint32) *UserUpsertBulk {
+func (u *UserUpsertBulk) SetUpdatedBy(v int64) *UserUpsertBulk {
 	return u.Update(func(s *UserUpsert) {
 		s.SetUpdatedBy(v)
 	})
 }
 
 // AddUpdatedBy adds v to the "updated_by" field.
-func (u *UserUpsertBulk) AddUpdatedBy(v uint32) *UserUpsertBulk {
+func (u *UserUpsertBulk) AddUpdatedBy(v int64) *UserUpsertBulk {
 	return u.Update(func(s *UserUpsert) {
 		s.AddUpdatedBy(v)
 	})
@@ -1933,14 +1933,14 @@ func (u *UserUpsertBulk) ClearUpdatedBy() *UserUpsertBulk {
 }
 
 // SetDeletedBy sets the "deleted_by" field.
-func (u *UserUpsertBulk) SetDeletedBy(v uint32) *UserUpsertBulk {
+func (u *UserUpsertBulk) SetDeletedBy(v int64) *UserUpsertBulk {
 	return u.Update(func(s *UserUpsert) {
 		s.SetDeletedBy(v)
 	})
 }
 
 // AddDeletedBy adds v to the "deleted_by" field.
-func (u *UserUpsertBulk) AddDeletedBy(v uint32) *UserUpsertBulk {
+func (u *UserUpsertBulk) AddDeletedBy(v int64) *UserUpsertBulk {
 	return u.Update(func(s *UserUpsert) {
 		s.AddDeletedBy(v)
 	})
@@ -2297,14 +2297,14 @@ func (u *UserUpsertBulk) ClearLockedUntil() *UserUpsertBulk {
 }
 
 // SetDefaultGroupID sets the "default_group_id" field.
-func (u *UserUpsertBulk) SetDefaultGroupID(v uint32) *UserUpsertBulk {
+func (u *UserUpsertBulk) SetDefaultGroupID(v int64) *UserUpsertBulk {
 	return u.Update(func(s *UserUpsert) {
 		s.SetDefaultGroupID(v)
 	})
 }
 
 // AddDefaultGroupID adds v to the "default_group_id" field.
-func (u *UserUpsertBulk) AddDefaultGroupID(v uint32) *UserUpsertBulk {
+func (u *UserUpsertBulk) AddDefaultGroupID(v int64) *UserUpsertBulk {
 	return u.Update(func(s *UserUpsert) {
 		s.AddDefaultGroupID(v)
 	})
@@ -2325,14 +2325,14 @@ func (u *UserUpsertBulk) ClearDefaultGroupID() *UserUpsertBulk {
 }
 
 // SetDefaultBookID sets the "default_book_id" field.
-func (u *UserUpsertBulk) SetDefaultBookID(v uint32) *UserUpsertBulk {
+func (u *UserUpsertBulk) SetDefaultBookID(v int64) *UserUpsertBulk {
 	return u.Update(func(s *UserUpsert) {
 		s.SetDefaultBookID(v)
 	})
 }
 
 // AddDefaultBookID adds v to the "default_book_id" field.
-func (u *UserUpsertBulk) AddDefaultBookID(v uint32) *UserUpsertBulk {
+func (u *UserUpsertBulk) AddDefaultBookID(v int64) *UserUpsertBulk {
 	return u.Update(func(s *UserUpsert) {
 		s.AddDefaultBookID(v)
 	})

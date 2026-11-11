@@ -20,11 +20,13 @@ func (NoteDay) Annotations() []schema.Annotation {
 	}
 }
 
-func (NoteDay) Mixin() []ent.Mixin { return []ent.Mixin{mixin.AutoIncrementId{}, mixin.TimeAt{}, mixin.OperatorID{}} }
+func (NoteDay) Mixin() []ent.Mixin {
+	return []ent.Mixin{mixin.AutoIncrementId64{}, mixin.TimeAt{}, mixin.OperatorID64{}}
+}
 
 func (NoteDay) Fields() []ent.Field {
 	return []ent.Field{
-		field.Uint32("user_id").Optional().Nillable(),
+		field.Int64("user_id").Optional().Nillable(),
 		field.String("title").MaxLen(16).NotEmpty().Optional().Nillable(),
 		field.String("notes").MaxLen(1024).Optional().Nillable(),
 		field.Int64("start_date").Optional().Nillable(),

@@ -17,7 +17,7 @@ type BookTemplateService struct {
 	log *log.Helper
 
 	templates []*ledgerV1.BookTemplate
-	byID      map[uint32]*ledgerV1.BookTemplate
+	byID      map[int64]*ledgerV1.BookTemplate
 }
 
 // NewBookTemplateService 创建账本模板服务。
@@ -26,7 +26,7 @@ func NewBookTemplateService(ctx *bootstrap.Context) *BookTemplateService {
 		log: ctx.NewLoggerHelper("book_template/service/core-service"),
 	}
 	s.templates = buildBuiltinBookTemplates()
-	s.byID = make(map[uint32]*ledgerV1.BookTemplate, len(s.templates))
+	s.byID = make(map[int64]*ledgerV1.BookTemplate, len(s.templates))
 	for _, t := range s.templates {
 		s.byID[t.GetId()] = t
 	}
@@ -55,20 +55,20 @@ func (s *BookTemplateService) Get(ctx context.Context, req *ledgerV1.GetBookTemp
 // （与 ledgerV1.CategoryType.String() 一致，如 CATEGORY_TYPE_EXPENSE / CATEGORY_TYPE_INCOME）。
 func buildBuiltinBookTemplates() []*ledgerV1.BookTemplate {
 	personal := &ledgerV1.BookTemplate{
-		Id:        uint32Ptr(1),
+		Id:        i64Ptr(1),
 		Name:      strPtr("个人记账"),
 		Locale:    strPtr("zh-CN"),
 		Thumbnail: strPtr(""),
 		Categories: []*ledgerV1.CategoryTemplate{
-			{Name: strPtr("餐饮"), Type: strPtr(categoryTypeNameExpense), Level: uint32Ptr(0)},
-			{Name: strPtr("交通"), Type: strPtr(categoryTypeNameExpense), Level: uint32Ptr(0)},
-			{Name: strPtr("购物"), Type: strPtr(categoryTypeNameExpense), Level: uint32Ptr(0)},
-			{Name: strPtr("住房"), Type: strPtr(categoryTypeNameExpense), Level: uint32Ptr(0)},
-			{Name: strPtr("娱乐"), Type: strPtr(categoryTypeNameExpense), Level: uint32Ptr(0)},
-			{Name: strPtr("医疗"), Type: strPtr(categoryTypeNameExpense), Level: uint32Ptr(0)},
-			{Name: strPtr("工资"), Type: strPtr(categoryTypeNameIncome), Level: uint32Ptr(0)},
-			{Name: strPtr("兼职"), Type: strPtr(categoryTypeNameIncome), Level: uint32Ptr(0)},
-			{Name: strPtr("理财收益"), Type: strPtr(categoryTypeNameIncome), Level: uint32Ptr(0)},
+			{Name: strPtr("餐饮"), Type: strPtr(categoryTypeNameExpense), Level: u32Ptr(0)},
+			{Name: strPtr("交通"), Type: strPtr(categoryTypeNameExpense), Level: u32Ptr(0)},
+			{Name: strPtr("购物"), Type: strPtr(categoryTypeNameExpense), Level: u32Ptr(0)},
+			{Name: strPtr("住房"), Type: strPtr(categoryTypeNameExpense), Level: u32Ptr(0)},
+			{Name: strPtr("娱乐"), Type: strPtr(categoryTypeNameExpense), Level: u32Ptr(0)},
+			{Name: strPtr("医疗"), Type: strPtr(categoryTypeNameExpense), Level: u32Ptr(0)},
+			{Name: strPtr("工资"), Type: strPtr(categoryTypeNameIncome), Level: u32Ptr(0)},
+			{Name: strPtr("兼职"), Type: strPtr(categoryTypeNameIncome), Level: u32Ptr(0)},
+			{Name: strPtr("理财收益"), Type: strPtr(categoryTypeNameIncome), Level: u32Ptr(0)},
 		},
 		Tags: []*ledgerV1.TagTemplate{
 			{Name: strPtr("日常")},
@@ -81,19 +81,19 @@ func buildBuiltinBookTemplates() []*ledgerV1.BookTemplate {
 	}
 
 	family := &ledgerV1.BookTemplate{
-		Id:        uint32Ptr(2),
+		Id:        i64Ptr(2),
 		Name:      strPtr("家庭记账"),
 		Locale:    strPtr("zh-CN"),
 		Thumbnail: strPtr(""),
 		Categories: []*ledgerV1.CategoryTemplate{
-			{Name: strPtr("家庭餐饮"), Type: strPtr(categoryTypeNameExpense), Level: uint32Ptr(0)},
-			{Name: strPtr("家庭交通"), Type: strPtr(categoryTypeNameExpense), Level: uint32Ptr(0)},
-			{Name: strPtr("子女教育"), Type: strPtr(categoryTypeNameExpense), Level: uint32Ptr(0)},
-			{Name: strPtr("家庭旅游"), Type: strPtr(categoryTypeNameExpense), Level: uint32Ptr(0)},
-			{Name: strPtr("水电煤"), Type: strPtr(categoryTypeNameExpense), Level: uint32Ptr(0)},
-			{Name: strPtr("家庭医疗"), Type: strPtr(categoryTypeNameExpense), Level: uint32Ptr(0)},
-			{Name: strPtr("家庭工资"), Type: strPtr(categoryTypeNameIncome), Level: uint32Ptr(0)},
-			{Name: strPtr("投资收益"), Type: strPtr(categoryTypeNameIncome), Level: uint32Ptr(0)},
+			{Name: strPtr("家庭餐饮"), Type: strPtr(categoryTypeNameExpense), Level: u32Ptr(0)},
+			{Name: strPtr("家庭交通"), Type: strPtr(categoryTypeNameExpense), Level: u32Ptr(0)},
+			{Name: strPtr("子女教育"), Type: strPtr(categoryTypeNameExpense), Level: u32Ptr(0)},
+			{Name: strPtr("家庭旅游"), Type: strPtr(categoryTypeNameExpense), Level: u32Ptr(0)},
+			{Name: strPtr("水电煤"), Type: strPtr(categoryTypeNameExpense), Level: u32Ptr(0)},
+			{Name: strPtr("家庭医疗"), Type: strPtr(categoryTypeNameExpense), Level: u32Ptr(0)},
+			{Name: strPtr("家庭工资"), Type: strPtr(categoryTypeNameIncome), Level: u32Ptr(0)},
+			{Name: strPtr("投资收益"), Type: strPtr(categoryTypeNameIncome), Level: u32Ptr(0)},
 		},
 		Tags: []*ledgerV1.TagTemplate{
 			{Name: strPtr("家庭")},
@@ -107,18 +107,18 @@ func buildBuiltinBookTemplates() []*ledgerV1.BookTemplate {
 	}
 
 	business := &ledgerV1.BookTemplate{
-		Id:        uint32Ptr(3),
+		Id:        i64Ptr(3),
 		Name:      strPtr("小型商户"),
 		Locale:    strPtr("zh-CN"),
 		Thumbnail: strPtr(""),
 		Categories: []*ledgerV1.CategoryTemplate{
-			{Name: strPtr("进货成本"), Type: strPtr(categoryTypeNameExpense), Level: uint32Ptr(0)},
-			{Name: strPtr("店铺租金"), Type: strPtr(categoryTypeNameExpense), Level: uint32Ptr(0)},
-			{Name: strPtr("员工薪酬"), Type: strPtr(categoryTypeNameExpense), Level: uint32Ptr(0)},
-			{Name: strPtr("营销推广"), Type: strPtr(categoryTypeNameExpense), Level: uint32Ptr(0)},
-			{Name: strPtr("日常运营"), Type: strPtr(categoryTypeNameExpense), Level: uint32Ptr(0)},
-			{Name: strPtr("商品销售"), Type: strPtr(categoryTypeNameIncome), Level: uint32Ptr(0)},
-			{Name: strPtr("服务收入"), Type: strPtr(categoryTypeNameIncome), Level: uint32Ptr(0)},
+			{Name: strPtr("进货成本"), Type: strPtr(categoryTypeNameExpense), Level: u32Ptr(0)},
+			{Name: strPtr("店铺租金"), Type: strPtr(categoryTypeNameExpense), Level: u32Ptr(0)},
+			{Name: strPtr("员工薪酬"), Type: strPtr(categoryTypeNameExpense), Level: u32Ptr(0)},
+			{Name: strPtr("营销推广"), Type: strPtr(categoryTypeNameExpense), Level: u32Ptr(0)},
+			{Name: strPtr("日常运营"), Type: strPtr(categoryTypeNameExpense), Level: u32Ptr(0)},
+			{Name: strPtr("商品销售"), Type: strPtr(categoryTypeNameIncome), Level: u32Ptr(0)},
+			{Name: strPtr("服务收入"), Type: strPtr(categoryTypeNameIncome), Level: u32Ptr(0)},
 		},
 		Tags: []*ledgerV1.TagTemplate{
 			{Name: strPtr("运营")},
@@ -157,3 +157,10 @@ func parseCategoryType(typ string) ledgerV1.CategoryType {
 
 // 注：strPtr / uint32Ptr 辅助函数已在 currency_service.go 中定义，此处复用。
 
+func i64Ptr(v int64) *int64 {
+	return &v
+}
+
+func u32Ptr(v uint32) *uint32 {
+	return &v
+}

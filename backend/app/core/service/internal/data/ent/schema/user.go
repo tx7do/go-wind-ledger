@@ -117,9 +117,9 @@ func (User) Fields() []ent.Field {
 			Optional().
 			Nillable(),
 
-		field.Uint32("default_group_id").Comment("默认租户ID").Optional().Nillable(),
+		field.Int64("default_group_id").Comment("默认租户ID").Optional().Nillable(),
 
-		field.Uint32("default_book_id").Comment("默认账本ID").Optional().Nillable(),
+		field.Int64("default_book_id").Comment("默认账本ID").Optional().Nillable(),
 
 		field.Enum("status").
 			Comment("状态").
@@ -140,11 +140,11 @@ func (User) Fields() []ent.Field {
 // Mixin of the User.
 func (User) Mixin() []ent.Mixin {
 	return []ent.Mixin{
-		mixin.AutoIncrementId{},
-		mixin.OperatorID{},
+		mixin.AutoIncrementId64{},
+		mixin.OperatorID64{},
 		mixin.TimeAt{},
 		mixin.Remark{},
-		mixin.TenantID[uint32]{},
+		mixin.TenantID[int64]{},
 	}
 }
 

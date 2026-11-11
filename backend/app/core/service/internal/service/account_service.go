@@ -105,14 +105,14 @@ func (s *AccountService) AdjustBalance(ctx context.Context, req *ledgerV1.Adjust
 	createTime := req.GetCreateTime()
 
 	adjustFlow := &ledgerV1.BalanceFlow{
-		Type:      ledgerV1.FlowType_FLOW_TYPE_ADJUST.Enum(),
-		AccountId: &req.Id,
-		Amount:    &newBalance, // The new balance is stored as amount for ADJUST
-		BookId:    &req.BookId,
-		Title:     req.Title,
-		Notes:     req.Notes,
-		Confirm:   &confirmTrue,
-		Include:   &includeTrue,
+		Type:       ledgerV1.FlowType_FLOW_TYPE_ADJUST.Enum(),
+		AccountId:  &req.Id,
+		Amount:     &newBalance, // The new balance is stored as amount for ADJUST
+		BookId:     &req.BookId,
+		Title:      req.Title,
+		Notes:      req.Notes,
+		Confirm:    &confirmTrue,
+		Include:    &includeTrue,
 		CreateTime: &createTime,
 	}
 

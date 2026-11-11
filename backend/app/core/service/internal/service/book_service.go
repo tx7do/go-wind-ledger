@@ -229,7 +229,7 @@ func (s *BookService) Copy(ctx context.Context, req *ledgerV1.CopyBookRequest) (
 		return nil, err
 	}
 	// 先按原 ID 排序创建父分类，再创建子分类；用 map 记录 oldID->newID 以重建父子关系。
-	catIDMap := make(map[uint32]uint32, len(srcCats.GetItems()))
+	catIDMap := make(map[int64]int64, len(srcCats.GetItems()))
 	// 按 depth 升序处理，确保父分类先于子分类创建。
 	cats := sortByDepth(srcCats.GetItems())
 	for _, c := range cats {
@@ -263,13 +263,13 @@ func (s *BookService) Copy(ctx context.Context, req *ledgerV1.CopyBookRequest) (
 	if err != nil {
 		return nil, err
 	}
-	tagIDMap := make(map[uint32]uint32, len(srcTags.GetItems()))
+	tagIDMap := make(map[int64]int64, len(srcTags.GetItems()))
 	// 标签亦支持树形（parent_id），按 depth 升序重建父子关系。
 	tags := sortByDepthGeneric(srcTags.GetItems(), func(t *ledgerV1.Tag) int32 {
 		return t.GetDepth()
-	}, func(t *ledgerV1.Tag) uint32 {
+	}, func(t *ledgerV1.Tag) int64 {
 		return t.GetId()
-	}, func(t *ledgerV1.Tag) uint32 {
+	}, func(t *ledgerV1.Tag) int64 {
 		return t.GetParentId()
 	})
 	for _, t := range tags {
@@ -333,7 +333,7 @@ func sortByDepth(items []*ledgerV1.Category) []*ledgerV1.Category {
 }
 
 // sortByDepthGeneric 通用稳定排序：按 depth 升序排列任意带 depth/parentId/id 的元素。
-func sortByDepthGeneric[T any](items []T, depth func(T) int32, id func(T) uint32, parentID func(T) uint32) []T {
+func sortByDepthGeneric[T any](items []T, depth func(T) int32, id func(T) int64, parentID func(T) int64) []T {
 	out := make([]T, len(items))
 	copy(out, items)
 	for i := 1; i < len(out); i++ {
@@ -367,7 +367,7 @@ func (s *BookService) Export(ctx context.Context, req *ledgerV1.ExportBookReques
 	}
 
 	// 3. 预加载账户与收款人名称映射（用于 CSV 渲染）
-	accountNames := make(map[uint32]string)
+	accountNames := make(map[int64]string)
 	if accounts, err := s.flowRepo.QueryEnabledAccounts(ctx); err == nil {
 		for _, a := range accounts {
 			if a.Name != nil {
@@ -375,7 +375,7 @@ func (s *BookService) Export(ctx context.Context, req *ledgerV1.ExportBookReques
 			}
 		}
 	}
-	payeeNames := make(map[uint32]string)
+	payeeNames := make(map[int64]string)
 	if payees, err := s.flowRepo.QueryAllPayees(ctx); err == nil {
 		for _, p := range payees {
 			if p.Name != nil {
@@ -450,14 +450,14 @@ func (s *BookService) ListAllBooks(ctx context.Context, req *emptypb.Empty) (*le
 	}
 
 	// 1. 查询用户所有 membership
-	memberships, err := s.membershipRepo.FindByUser(ctx, uint32(userID))
+	memberships, err := s.membershipRepo.FindByUser(ctx, int64(userID))
 	if err != nil {
 		s.log.Errorf("find membership by user failed: %s", err.Error())
 		return nil, ledgerV1.ErrorInternalServerError("find membership failed")
 	}
 
 	// 2. 收集所有租户 ID
-	tenantIDs := make([]uint32, 0, len(memberships))
+	tenantIDs := make([]int64, 0, len(memberships))
 	for _, m := range memberships {
 		if m.GetTenantId() > 0 {
 			tenantIDs = append(tenantIDs, m.GetTenantId())
@@ -518,7 +518,7 @@ func safeStr(s *string) string {
 }
 
 // nameById 按账户/收款人 ID 查找名称（找不到返回空串）。
-func nameById(names map[uint32]string, id *uint32) string {
+func nameById(names map[int64]string, id *int64) string {
 	if id == nil {
 		return ""
 	}

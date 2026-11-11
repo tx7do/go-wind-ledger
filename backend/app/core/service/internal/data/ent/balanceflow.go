@@ -17,9 +17,9 @@ type BalanceFlow struct {
 	config `json:"-"`
 	// ID of the ent.
 	// id
-	ID uint32 `json:"id,omitempty"`
+	ID int64 `json:"id,omitempty"`
 	// 租户ID
-	TenantID *uint32 `json:"tenant_id,omitempty"`
+	TenantID *int64 `json:"tenant_id,omitempty"`
 	// 创建时间
 	CreatedAt *time.Time `json:"created_at,omitempty"`
 	// 更新时间
@@ -27,13 +27,13 @@ type BalanceFlow struct {
 	// 删除时间
 	DeletedAt *time.Time `json:"deleted_at,omitempty"`
 	// 创建者ID
-	CreatedBy *uint32 `json:"created_by,omitempty"`
+	CreatedBy *int64 `json:"created_by,omitempty"`
 	// 更新者ID
-	UpdatedBy *uint32 `json:"updated_by,omitempty"`
+	UpdatedBy *int64 `json:"updated_by,omitempty"`
 	// 删除者ID
-	DeletedBy *uint32 `json:"deleted_by,omitempty"`
+	DeletedBy *int64 `json:"deleted_by,omitempty"`
 	// BookID holds the value of the "book_id" field.
-	BookID *uint32 `json:"book_id,omitempty"`
+	BookID *int64 `json:"book_id,omitempty"`
 	// Type holds the value of the "type" field.
 	Type *balanceflow.Type `json:"type,omitempty"`
 	// Amount holds the value of the "amount" field.
@@ -41,13 +41,13 @@ type BalanceFlow struct {
 	// ConvertedAmount holds the value of the "converted_amount" field.
 	ConvertedAmount *float64 `json:"converted_amount,omitempty"`
 	// AccountID holds the value of the "account_id" field.
-	AccountID *uint32 `json:"account_id,omitempty"`
+	AccountID *int64 `json:"account_id,omitempty"`
 	// ToAccountID holds the value of the "to_account_id" field.
-	ToAccountID *uint32 `json:"to_account_id,omitempty"`
+	ToAccountID *int64 `json:"to_account_id,omitempty"`
 	// PayeeID holds the value of the "payee_id" field.
-	PayeeID *uint32 `json:"payee_id,omitempty"`
+	PayeeID *int64 `json:"payee_id,omitempty"`
 	// CreatorID holds the value of the "creator_id" field.
-	CreatorID *uint32 `json:"creator_id,omitempty"`
+	CreatorID *int64 `json:"creator_id,omitempty"`
 	// CreateTime holds the value of the "create_time" field.
 	CreateTime *int64 `json:"create_time,omitempty"`
 	// Title holds the value of the "title" field.
@@ -98,13 +98,13 @@ func (_m *BalanceFlow) assignValues(columns []string, values []any) error {
 			if !ok {
 				return fmt.Errorf("unexpected type %T for field id", value)
 			}
-			_m.ID = uint32(value.Int64)
+			_m.ID = int64(value.Int64)
 		case balanceflow.FieldTenantID:
 			if value, ok := values[i].(*sql.NullInt64); !ok {
 				return fmt.Errorf("unexpected type %T for field tenant_id", values[i])
 			} else if value.Valid {
-				_m.TenantID = new(uint32)
-				*_m.TenantID = uint32(value.Int64)
+				_m.TenantID = new(int64)
+				*_m.TenantID = value.Int64
 			}
 		case balanceflow.FieldCreatedAt:
 			if value, ok := values[i].(*sql.NullTime); !ok {
@@ -131,29 +131,29 @@ func (_m *BalanceFlow) assignValues(columns []string, values []any) error {
 			if value, ok := values[i].(*sql.NullInt64); !ok {
 				return fmt.Errorf("unexpected type %T for field created_by", values[i])
 			} else if value.Valid {
-				_m.CreatedBy = new(uint32)
-				*_m.CreatedBy = uint32(value.Int64)
+				_m.CreatedBy = new(int64)
+				*_m.CreatedBy = value.Int64
 			}
 		case balanceflow.FieldUpdatedBy:
 			if value, ok := values[i].(*sql.NullInt64); !ok {
 				return fmt.Errorf("unexpected type %T for field updated_by", values[i])
 			} else if value.Valid {
-				_m.UpdatedBy = new(uint32)
-				*_m.UpdatedBy = uint32(value.Int64)
+				_m.UpdatedBy = new(int64)
+				*_m.UpdatedBy = value.Int64
 			}
 		case balanceflow.FieldDeletedBy:
 			if value, ok := values[i].(*sql.NullInt64); !ok {
 				return fmt.Errorf("unexpected type %T for field deleted_by", values[i])
 			} else if value.Valid {
-				_m.DeletedBy = new(uint32)
-				*_m.DeletedBy = uint32(value.Int64)
+				_m.DeletedBy = new(int64)
+				*_m.DeletedBy = value.Int64
 			}
 		case balanceflow.FieldBookID:
 			if value, ok := values[i].(*sql.NullInt64); !ok {
 				return fmt.Errorf("unexpected type %T for field book_id", values[i])
 			} else if value.Valid {
-				_m.BookID = new(uint32)
-				*_m.BookID = uint32(value.Int64)
+				_m.BookID = new(int64)
+				*_m.BookID = value.Int64
 			}
 		case balanceflow.FieldType:
 			if value, ok := values[i].(*sql.NullString); !ok {
@@ -180,29 +180,29 @@ func (_m *BalanceFlow) assignValues(columns []string, values []any) error {
 			if value, ok := values[i].(*sql.NullInt64); !ok {
 				return fmt.Errorf("unexpected type %T for field account_id", values[i])
 			} else if value.Valid {
-				_m.AccountID = new(uint32)
-				*_m.AccountID = uint32(value.Int64)
+				_m.AccountID = new(int64)
+				*_m.AccountID = value.Int64
 			}
 		case balanceflow.FieldToAccountID:
 			if value, ok := values[i].(*sql.NullInt64); !ok {
 				return fmt.Errorf("unexpected type %T for field to_account_id", values[i])
 			} else if value.Valid {
-				_m.ToAccountID = new(uint32)
-				*_m.ToAccountID = uint32(value.Int64)
+				_m.ToAccountID = new(int64)
+				*_m.ToAccountID = value.Int64
 			}
 		case balanceflow.FieldPayeeID:
 			if value, ok := values[i].(*sql.NullInt64); !ok {
 				return fmt.Errorf("unexpected type %T for field payee_id", values[i])
 			} else if value.Valid {
-				_m.PayeeID = new(uint32)
-				*_m.PayeeID = uint32(value.Int64)
+				_m.PayeeID = new(int64)
+				*_m.PayeeID = value.Int64
 			}
 		case balanceflow.FieldCreatorID:
 			if value, ok := values[i].(*sql.NullInt64); !ok {
 				return fmt.Errorf("unexpected type %T for field creator_id", values[i])
 			} else if value.Valid {
-				_m.CreatorID = new(uint32)
-				*_m.CreatorID = uint32(value.Int64)
+				_m.CreatorID = new(int64)
+				*_m.CreatorID = value.Int64
 			}
 		case balanceflow.FieldCreateTime:
 			if value, ok := values[i].(*sql.NullInt64); !ok {

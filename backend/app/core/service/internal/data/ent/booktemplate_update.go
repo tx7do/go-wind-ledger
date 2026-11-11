@@ -191,7 +191,7 @@ func (_u *BookTemplateUpdate) sqlSave(ctx context.Context) (_node int, err error
 	if err := _u.check(); err != nil {
 		return _node, err
 	}
-	_spec := sqlgraph.NewUpdateSpec(booktemplate.Table, booktemplate.Columns, sqlgraph.NewFieldSpec(booktemplate.FieldID, field.TypeUint32))
+	_spec := sqlgraph.NewUpdateSpec(booktemplate.Table, booktemplate.Columns, sqlgraph.NewFieldSpec(booktemplate.FieldID, field.TypeInt64))
 	if ps := _u.mutation.predicates; len(ps) > 0 {
 		_spec.Predicate = func(selector *sql.Selector) {
 			for i := range ps {
@@ -429,7 +429,7 @@ func (_u *BookTemplateUpdateOne) sqlSave(ctx context.Context) (_node *BookTempla
 	if err := _u.check(); err != nil {
 		return _node, err
 	}
-	_spec := sqlgraph.NewUpdateSpec(booktemplate.Table, booktemplate.Columns, sqlgraph.NewFieldSpec(booktemplate.FieldID, field.TypeUint32))
+	_spec := sqlgraph.NewUpdateSpec(booktemplate.Table, booktemplate.Columns, sqlgraph.NewFieldSpec(booktemplate.FieldID, field.TypeInt64))
 	id, ok := _u.mutation.ID()
 	if !ok {
 		return nil, &ValidationError{Name: "id", err: errors.New(`ent: missing "BookTemplate.id" for update`)}

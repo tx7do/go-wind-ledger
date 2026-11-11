@@ -10,62 +10,62 @@ import (
 )
 
 // ID filters vertices based on their ID field.
-func ID(id uint32) predicate.User {
+func ID(id int64) predicate.User {
 	return predicate.User(sql.FieldEQ(FieldID, id))
 }
 
 // IDEQ applies the EQ predicate on the ID field.
-func IDEQ(id uint32) predicate.User {
+func IDEQ(id int64) predicate.User {
 	return predicate.User(sql.FieldEQ(FieldID, id))
 }
 
 // IDNEQ applies the NEQ predicate on the ID field.
-func IDNEQ(id uint32) predicate.User {
+func IDNEQ(id int64) predicate.User {
 	return predicate.User(sql.FieldNEQ(FieldID, id))
 }
 
 // IDIn applies the In predicate on the ID field.
-func IDIn(ids ...uint32) predicate.User {
+func IDIn(ids ...int64) predicate.User {
 	return predicate.User(sql.FieldIn(FieldID, ids...))
 }
 
 // IDNotIn applies the NotIn predicate on the ID field.
-func IDNotIn(ids ...uint32) predicate.User {
+func IDNotIn(ids ...int64) predicate.User {
 	return predicate.User(sql.FieldNotIn(FieldID, ids...))
 }
 
 // IDGT applies the GT predicate on the ID field.
-func IDGT(id uint32) predicate.User {
+func IDGT(id int64) predicate.User {
 	return predicate.User(sql.FieldGT(FieldID, id))
 }
 
 // IDGTE applies the GTE predicate on the ID field.
-func IDGTE(id uint32) predicate.User {
+func IDGTE(id int64) predicate.User {
 	return predicate.User(sql.FieldGTE(FieldID, id))
 }
 
 // IDLT applies the LT predicate on the ID field.
-func IDLT(id uint32) predicate.User {
+func IDLT(id int64) predicate.User {
 	return predicate.User(sql.FieldLT(FieldID, id))
 }
 
 // IDLTE applies the LTE predicate on the ID field.
-func IDLTE(id uint32) predicate.User {
+func IDLTE(id int64) predicate.User {
 	return predicate.User(sql.FieldLTE(FieldID, id))
 }
 
 // CreatedBy applies equality check predicate on the "created_by" field. It's identical to CreatedByEQ.
-func CreatedBy(v uint32) predicate.User {
+func CreatedBy(v int64) predicate.User {
 	return predicate.User(sql.FieldEQ(FieldCreatedBy, v))
 }
 
 // UpdatedBy applies equality check predicate on the "updated_by" field. It's identical to UpdatedByEQ.
-func UpdatedBy(v uint32) predicate.User {
+func UpdatedBy(v int64) predicate.User {
 	return predicate.User(sql.FieldEQ(FieldUpdatedBy, v))
 }
 
 // DeletedBy applies equality check predicate on the "deleted_by" field. It's identical to DeletedByEQ.
-func DeletedBy(v uint32) predicate.User {
+func DeletedBy(v int64) predicate.User {
 	return predicate.User(sql.FieldEQ(FieldDeletedBy, v))
 }
 
@@ -90,7 +90,7 @@ func Remark(v string) predicate.User {
 }
 
 // TenantID applies equality check predicate on the "tenant_id" field. It's identical to TenantIDEQ.
-func TenantID(v uint32) predicate.User {
+func TenantID(v int64) predicate.User {
 	return predicate.User(sql.FieldEQ(FieldTenantID, v))
 }
 
@@ -160,52 +160,52 @@ func LockedUntil(v time.Time) predicate.User {
 }
 
 // DefaultGroupID applies equality check predicate on the "default_group_id" field. It's identical to DefaultGroupIDEQ.
-func DefaultGroupID(v uint32) predicate.User {
+func DefaultGroupID(v int64) predicate.User {
 	return predicate.User(sql.FieldEQ(FieldDefaultGroupID, v))
 }
 
 // DefaultBookID applies equality check predicate on the "default_book_id" field. It's identical to DefaultBookIDEQ.
-func DefaultBookID(v uint32) predicate.User {
+func DefaultBookID(v int64) predicate.User {
 	return predicate.User(sql.FieldEQ(FieldDefaultBookID, v))
 }
 
 // CreatedByEQ applies the EQ predicate on the "created_by" field.
-func CreatedByEQ(v uint32) predicate.User {
+func CreatedByEQ(v int64) predicate.User {
 	return predicate.User(sql.FieldEQ(FieldCreatedBy, v))
 }
 
 // CreatedByNEQ applies the NEQ predicate on the "created_by" field.
-func CreatedByNEQ(v uint32) predicate.User {
+func CreatedByNEQ(v int64) predicate.User {
 	return predicate.User(sql.FieldNEQ(FieldCreatedBy, v))
 }
 
 // CreatedByIn applies the In predicate on the "created_by" field.
-func CreatedByIn(vs ...uint32) predicate.User {
+func CreatedByIn(vs ...int64) predicate.User {
 	return predicate.User(sql.FieldIn(FieldCreatedBy, vs...))
 }
 
 // CreatedByNotIn applies the NotIn predicate on the "created_by" field.
-func CreatedByNotIn(vs ...uint32) predicate.User {
+func CreatedByNotIn(vs ...int64) predicate.User {
 	return predicate.User(sql.FieldNotIn(FieldCreatedBy, vs...))
 }
 
 // CreatedByGT applies the GT predicate on the "created_by" field.
-func CreatedByGT(v uint32) predicate.User {
+func CreatedByGT(v int64) predicate.User {
 	return predicate.User(sql.FieldGT(FieldCreatedBy, v))
 }
 
 // CreatedByGTE applies the GTE predicate on the "created_by" field.
-func CreatedByGTE(v uint32) predicate.User {
+func CreatedByGTE(v int64) predicate.User {
 	return predicate.User(sql.FieldGTE(FieldCreatedBy, v))
 }
 
 // CreatedByLT applies the LT predicate on the "created_by" field.
-func CreatedByLT(v uint32) predicate.User {
+func CreatedByLT(v int64) predicate.User {
 	return predicate.User(sql.FieldLT(FieldCreatedBy, v))
 }
 
 // CreatedByLTE applies the LTE predicate on the "created_by" field.
-func CreatedByLTE(v uint32) predicate.User {
+func CreatedByLTE(v int64) predicate.User {
 	return predicate.User(sql.FieldLTE(FieldCreatedBy, v))
 }
 
@@ -220,42 +220,42 @@ func CreatedByNotNil() predicate.User {
 }
 
 // UpdatedByEQ applies the EQ predicate on the "updated_by" field.
-func UpdatedByEQ(v uint32) predicate.User {
+func UpdatedByEQ(v int64) predicate.User {
 	return predicate.User(sql.FieldEQ(FieldUpdatedBy, v))
 }
 
 // UpdatedByNEQ applies the NEQ predicate on the "updated_by" field.
-func UpdatedByNEQ(v uint32) predicate.User {
+func UpdatedByNEQ(v int64) predicate.User {
 	return predicate.User(sql.FieldNEQ(FieldUpdatedBy, v))
 }
 
 // UpdatedByIn applies the In predicate on the "updated_by" field.
-func UpdatedByIn(vs ...uint32) predicate.User {
+func UpdatedByIn(vs ...int64) predicate.User {
 	return predicate.User(sql.FieldIn(FieldUpdatedBy, vs...))
 }
 
 // UpdatedByNotIn applies the NotIn predicate on the "updated_by" field.
-func UpdatedByNotIn(vs ...uint32) predicate.User {
+func UpdatedByNotIn(vs ...int64) predicate.User {
 	return predicate.User(sql.FieldNotIn(FieldUpdatedBy, vs...))
 }
 
 // UpdatedByGT applies the GT predicate on the "updated_by" field.
-func UpdatedByGT(v uint32) predicate.User {
+func UpdatedByGT(v int64) predicate.User {
 	return predicate.User(sql.FieldGT(FieldUpdatedBy, v))
 }
 
 // UpdatedByGTE applies the GTE predicate on the "updated_by" field.
-func UpdatedByGTE(v uint32) predicate.User {
+func UpdatedByGTE(v int64) predicate.User {
 	return predicate.User(sql.FieldGTE(FieldUpdatedBy, v))
 }
 
 // UpdatedByLT applies the LT predicate on the "updated_by" field.
-func UpdatedByLT(v uint32) predicate.User {
+func UpdatedByLT(v int64) predicate.User {
 	return predicate.User(sql.FieldLT(FieldUpdatedBy, v))
 }
 
 // UpdatedByLTE applies the LTE predicate on the "updated_by" field.
-func UpdatedByLTE(v uint32) predicate.User {
+func UpdatedByLTE(v int64) predicate.User {
 	return predicate.User(sql.FieldLTE(FieldUpdatedBy, v))
 }
 
@@ -270,42 +270,42 @@ func UpdatedByNotNil() predicate.User {
 }
 
 // DeletedByEQ applies the EQ predicate on the "deleted_by" field.
-func DeletedByEQ(v uint32) predicate.User {
+func DeletedByEQ(v int64) predicate.User {
 	return predicate.User(sql.FieldEQ(FieldDeletedBy, v))
 }
 
 // DeletedByNEQ applies the NEQ predicate on the "deleted_by" field.
-func DeletedByNEQ(v uint32) predicate.User {
+func DeletedByNEQ(v int64) predicate.User {
 	return predicate.User(sql.FieldNEQ(FieldDeletedBy, v))
 }
 
 // DeletedByIn applies the In predicate on the "deleted_by" field.
-func DeletedByIn(vs ...uint32) predicate.User {
+func DeletedByIn(vs ...int64) predicate.User {
 	return predicate.User(sql.FieldIn(FieldDeletedBy, vs...))
 }
 
 // DeletedByNotIn applies the NotIn predicate on the "deleted_by" field.
-func DeletedByNotIn(vs ...uint32) predicate.User {
+func DeletedByNotIn(vs ...int64) predicate.User {
 	return predicate.User(sql.FieldNotIn(FieldDeletedBy, vs...))
 }
 
 // DeletedByGT applies the GT predicate on the "deleted_by" field.
-func DeletedByGT(v uint32) predicate.User {
+func DeletedByGT(v int64) predicate.User {
 	return predicate.User(sql.FieldGT(FieldDeletedBy, v))
 }
 
 // DeletedByGTE applies the GTE predicate on the "deleted_by" field.
-func DeletedByGTE(v uint32) predicate.User {
+func DeletedByGTE(v int64) predicate.User {
 	return predicate.User(sql.FieldGTE(FieldDeletedBy, v))
 }
 
 // DeletedByLT applies the LT predicate on the "deleted_by" field.
-func DeletedByLT(v uint32) predicate.User {
+func DeletedByLT(v int64) predicate.User {
 	return predicate.User(sql.FieldLT(FieldDeletedBy, v))
 }
 
 // DeletedByLTE applies the LTE predicate on the "deleted_by" field.
-func DeletedByLTE(v uint32) predicate.User {
+func DeletedByLTE(v int64) predicate.User {
 	return predicate.User(sql.FieldLTE(FieldDeletedBy, v))
 }
 
@@ -545,42 +545,42 @@ func RemarkContainsFold(v string) predicate.User {
 }
 
 // TenantIDEQ applies the EQ predicate on the "tenant_id" field.
-func TenantIDEQ(v uint32) predicate.User {
+func TenantIDEQ(v int64) predicate.User {
 	return predicate.User(sql.FieldEQ(FieldTenantID, v))
 }
 
 // TenantIDNEQ applies the NEQ predicate on the "tenant_id" field.
-func TenantIDNEQ(v uint32) predicate.User {
+func TenantIDNEQ(v int64) predicate.User {
 	return predicate.User(sql.FieldNEQ(FieldTenantID, v))
 }
 
 // TenantIDIn applies the In predicate on the "tenant_id" field.
-func TenantIDIn(vs ...uint32) predicate.User {
+func TenantIDIn(vs ...int64) predicate.User {
 	return predicate.User(sql.FieldIn(FieldTenantID, vs...))
 }
 
 // TenantIDNotIn applies the NotIn predicate on the "tenant_id" field.
-func TenantIDNotIn(vs ...uint32) predicate.User {
+func TenantIDNotIn(vs ...int64) predicate.User {
 	return predicate.User(sql.FieldNotIn(FieldTenantID, vs...))
 }
 
 // TenantIDGT applies the GT predicate on the "tenant_id" field.
-func TenantIDGT(v uint32) predicate.User {
+func TenantIDGT(v int64) predicate.User {
 	return predicate.User(sql.FieldGT(FieldTenantID, v))
 }
 
 // TenantIDGTE applies the GTE predicate on the "tenant_id" field.
-func TenantIDGTE(v uint32) predicate.User {
+func TenantIDGTE(v int64) predicate.User {
 	return predicate.User(sql.FieldGTE(FieldTenantID, v))
 }
 
 // TenantIDLT applies the LT predicate on the "tenant_id" field.
-func TenantIDLT(v uint32) predicate.User {
+func TenantIDLT(v int64) predicate.User {
 	return predicate.User(sql.FieldLT(FieldTenantID, v))
 }
 
 // TenantIDLTE applies the LTE predicate on the "tenant_id" field.
-func TenantIDLTE(v uint32) predicate.User {
+func TenantIDLTE(v int64) predicate.User {
 	return predicate.User(sql.FieldLTE(FieldTenantID, v))
 }
 
@@ -1550,42 +1550,42 @@ func LockedUntilNotNil() predicate.User {
 }
 
 // DefaultGroupIDEQ applies the EQ predicate on the "default_group_id" field.
-func DefaultGroupIDEQ(v uint32) predicate.User {
+func DefaultGroupIDEQ(v int64) predicate.User {
 	return predicate.User(sql.FieldEQ(FieldDefaultGroupID, v))
 }
 
 // DefaultGroupIDNEQ applies the NEQ predicate on the "default_group_id" field.
-func DefaultGroupIDNEQ(v uint32) predicate.User {
+func DefaultGroupIDNEQ(v int64) predicate.User {
 	return predicate.User(sql.FieldNEQ(FieldDefaultGroupID, v))
 }
 
 // DefaultGroupIDIn applies the In predicate on the "default_group_id" field.
-func DefaultGroupIDIn(vs ...uint32) predicate.User {
+func DefaultGroupIDIn(vs ...int64) predicate.User {
 	return predicate.User(sql.FieldIn(FieldDefaultGroupID, vs...))
 }
 
 // DefaultGroupIDNotIn applies the NotIn predicate on the "default_group_id" field.
-func DefaultGroupIDNotIn(vs ...uint32) predicate.User {
+func DefaultGroupIDNotIn(vs ...int64) predicate.User {
 	return predicate.User(sql.FieldNotIn(FieldDefaultGroupID, vs...))
 }
 
 // DefaultGroupIDGT applies the GT predicate on the "default_group_id" field.
-func DefaultGroupIDGT(v uint32) predicate.User {
+func DefaultGroupIDGT(v int64) predicate.User {
 	return predicate.User(sql.FieldGT(FieldDefaultGroupID, v))
 }
 
 // DefaultGroupIDGTE applies the GTE predicate on the "default_group_id" field.
-func DefaultGroupIDGTE(v uint32) predicate.User {
+func DefaultGroupIDGTE(v int64) predicate.User {
 	return predicate.User(sql.FieldGTE(FieldDefaultGroupID, v))
 }
 
 // DefaultGroupIDLT applies the LT predicate on the "default_group_id" field.
-func DefaultGroupIDLT(v uint32) predicate.User {
+func DefaultGroupIDLT(v int64) predicate.User {
 	return predicate.User(sql.FieldLT(FieldDefaultGroupID, v))
 }
 
 // DefaultGroupIDLTE applies the LTE predicate on the "default_group_id" field.
-func DefaultGroupIDLTE(v uint32) predicate.User {
+func DefaultGroupIDLTE(v int64) predicate.User {
 	return predicate.User(sql.FieldLTE(FieldDefaultGroupID, v))
 }
 
@@ -1600,42 +1600,42 @@ func DefaultGroupIDNotNil() predicate.User {
 }
 
 // DefaultBookIDEQ applies the EQ predicate on the "default_book_id" field.
-func DefaultBookIDEQ(v uint32) predicate.User {
+func DefaultBookIDEQ(v int64) predicate.User {
 	return predicate.User(sql.FieldEQ(FieldDefaultBookID, v))
 }
 
 // DefaultBookIDNEQ applies the NEQ predicate on the "default_book_id" field.
-func DefaultBookIDNEQ(v uint32) predicate.User {
+func DefaultBookIDNEQ(v int64) predicate.User {
 	return predicate.User(sql.FieldNEQ(FieldDefaultBookID, v))
 }
 
 // DefaultBookIDIn applies the In predicate on the "default_book_id" field.
-func DefaultBookIDIn(vs ...uint32) predicate.User {
+func DefaultBookIDIn(vs ...int64) predicate.User {
 	return predicate.User(sql.FieldIn(FieldDefaultBookID, vs...))
 }
 
 // DefaultBookIDNotIn applies the NotIn predicate on the "default_book_id" field.
-func DefaultBookIDNotIn(vs ...uint32) predicate.User {
+func DefaultBookIDNotIn(vs ...int64) predicate.User {
 	return predicate.User(sql.FieldNotIn(FieldDefaultBookID, vs...))
 }
 
 // DefaultBookIDGT applies the GT predicate on the "default_book_id" field.
-func DefaultBookIDGT(v uint32) predicate.User {
+func DefaultBookIDGT(v int64) predicate.User {
 	return predicate.User(sql.FieldGT(FieldDefaultBookID, v))
 }
 
 // DefaultBookIDGTE applies the GTE predicate on the "default_book_id" field.
-func DefaultBookIDGTE(v uint32) predicate.User {
+func DefaultBookIDGTE(v int64) predicate.User {
 	return predicate.User(sql.FieldGTE(FieldDefaultBookID, v))
 }
 
 // DefaultBookIDLT applies the LT predicate on the "default_book_id" field.
-func DefaultBookIDLT(v uint32) predicate.User {
+func DefaultBookIDLT(v int64) predicate.User {
 	return predicate.User(sql.FieldLT(FieldDefaultBookID, v))
 }
 
 // DefaultBookIDLTE applies the LTE predicate on the "default_book_id" field.
-func DefaultBookIDLTE(v uint32) predicate.User {
+func DefaultBookIDLTE(v int64) predicate.User {
 	return predicate.User(sql.FieldLTE(FieldDefaultBookID, v))
 }
 

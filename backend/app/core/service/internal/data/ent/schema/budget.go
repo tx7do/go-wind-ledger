@@ -23,16 +23,16 @@ func (Budget) Annotations() []schema.Annotation {
 
 func (Budget) Mixin() []ent.Mixin {
 	return []ent.Mixin{
-		mixin.AutoIncrementId{},
-		mixin.TenantID[uint32]{},
+		mixin.AutoIncrementId64{},
+		mixin.TenantID[int64]{},
 		mixin.TimeAt{},
-		mixin.OperatorID{},
+		mixin.OperatorID64{},
 	}
 }
 
 func (Budget) Fields() []ent.Field {
 	return []ent.Field{
-		field.Uint32("book_id").Comment("所属账本ID").Optional().Nillable(),
+		field.Int64("book_id").Comment("所属账本ID").Optional().Nillable(),
 		field.String("name").Comment("预算名称").MaxLen(64).Optional().Nillable(),
 		field.Enum("period").
 			Comment("预算周期").
@@ -58,8 +58,8 @@ func (Budget) Fields() []ent.Field {
 			Comment("已用金额（缓存值，定期从流水汇总更新）").
 			Default(0).
 			Optional().Nillable(),
-		field.Uint32("category_id").Comment("关联分类ID（可选，按分类预算）").Optional().Nillable(),
-		field.Uint32("account_id").Comment("关联账户ID（可选，按账户预算）").Optional().Nillable(),
+		field.Int64("category_id").Comment("关联分类ID（可选，按分类预算）").Optional().Nillable(),
+		field.Int64("account_id").Comment("关联账户ID（可选，按账户预算）").Optional().Nillable(),
 		field.Int64("start_date").Comment("预算周期开始时间（epoch 毫秒）").Optional().Nillable(),
 		field.Int64("end_date").Comment("预算周期结束时间（epoch 毫秒）").Optional().Nillable(),
 		field.Bool("enable").Comment("是否启用").Default(true).Optional().Nillable(),

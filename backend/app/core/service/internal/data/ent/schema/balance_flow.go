@@ -22,19 +22,19 @@ func (BalanceFlow) Annotations() []schema.Annotation {
 }
 
 func (BalanceFlow) Mixin() []ent.Mixin {
-	return []ent.Mixin{mixin.AutoIncrementId{}, mixin.TenantID[uint32]{}, mixin.TimeAt{}, mixin.OperatorID{}}
+	return []ent.Mixin{mixin.AutoIncrementId64{}, mixin.TenantID[int64]{}, mixin.TimeAt{}, mixin.OperatorID64{}}
 }
 
 func (BalanceFlow) Fields() []ent.Field {
 	return []ent.Field{
-		field.Uint32("book_id").Optional().Nillable(),
+		field.Int64("book_id").Optional().Nillable(),
 		field.Enum("type").NamedValues("FlowTypeExpense", "FLOW_TYPE_EXPENSE", "FlowTypeIncome", "FLOW_TYPE_INCOME", "FlowTypeTransfer", "FLOW_TYPE_TRANSFER", "FlowTypeAdjust", "FLOW_TYPE_ADJUST").Optional().Nillable(),
 		field.Float("amount").SchemaType(map[string]string{dialect.Postgres: "numeric(15,2)", dialect.MySQL: "decimal(15,2)"}).Optional().Nillable(),
 		field.Float("converted_amount").SchemaType(map[string]string{dialect.Postgres: "numeric(15,2)", dialect.MySQL: "decimal(15,2)"}).Optional().Nillable(),
-		field.Uint32("account_id").Optional().Nillable(),
-		field.Uint32("to_account_id").Optional().Nillable(),
-		field.Uint32("payee_id").Optional().Nillable(),
-		field.Uint32("creator_id").Optional().Nillable(),
+		field.Int64("account_id").Optional().Nillable(),
+		field.Int64("to_account_id").Optional().Nillable(),
+		field.Int64("payee_id").Optional().Nillable(),
+		field.Int64("creator_id").Optional().Nillable(),
 		field.Int64("create_time").Optional().Nillable(),
 		field.String("title").MaxLen(32).Optional().Nillable(),
 		field.String("notes").MaxLen(1024).Optional().Nillable(),

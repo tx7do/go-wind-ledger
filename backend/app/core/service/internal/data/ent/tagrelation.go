@@ -16,11 +16,11 @@ type TagRelation struct {
 	config `json:"-"`
 	// ID of the ent.
 	// id
-	ID uint32 `json:"id,omitempty"`
+	ID int64 `json:"id,omitempty"`
 	// TagID holds the value of the "tag_id" field.
-	TagID *uint32 `json:"tag_id,omitempty"`
+	TagID *int64 `json:"tag_id,omitempty"`
 	// BalanceFlowID holds the value of the "balance_flow_id" field.
-	BalanceFlowID *uint32 `json:"balance_flow_id,omitempty"`
+	BalanceFlowID *int64 `json:"balance_flow_id,omitempty"`
 	// Amount holds the value of the "amount" field.
 	Amount *float64 `json:"amount,omitempty"`
 	// ConvertedAmount holds the value of the "converted_amount" field.
@@ -57,20 +57,20 @@ func (_m *TagRelation) assignValues(columns []string, values []any) error {
 			if !ok {
 				return fmt.Errorf("unexpected type %T for field id", value)
 			}
-			_m.ID = uint32(value.Int64)
+			_m.ID = int64(value.Int64)
 		case tagrelation.FieldTagID:
 			if value, ok := values[i].(*sql.NullInt64); !ok {
 				return fmt.Errorf("unexpected type %T for field tag_id", values[i])
 			} else if value.Valid {
-				_m.TagID = new(uint32)
-				*_m.TagID = uint32(value.Int64)
+				_m.TagID = new(int64)
+				*_m.TagID = value.Int64
 			}
 		case tagrelation.FieldBalanceFlowID:
 			if value, ok := values[i].(*sql.NullInt64); !ok {
 				return fmt.Errorf("unexpected type %T for field balance_flow_id", values[i])
 			} else if value.Valid {
-				_m.BalanceFlowID = new(uint32)
-				*_m.BalanceFlowID = uint32(value.Int64)
+				_m.BalanceFlowID = new(int64)
+				*_m.BalanceFlowID = value.Int64
 			}
 		case tagrelation.FieldAmount:
 			if value, ok := values[i].(*sql.NullFloat64); !ok {

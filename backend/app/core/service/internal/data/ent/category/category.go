@@ -103,7 +103,7 @@ var (
 	Hooks  [1]ent.Hook
 	Policy ent.Policy
 	// DefaultTenantID holds the default value on creation for the "tenant_id" field.
-	DefaultTenantID uint32
+	DefaultTenantID int64
 	// DefaultSortOrder holds the default value on creation for the "sort_order" field.
 	DefaultSortOrder uint32
 	// PathValidator is a validator for the "path" field. It is called by the builders before save.
@@ -117,7 +117,7 @@ var (
 	// DefaultDepth holds the default value on creation for the "depth" field.
 	DefaultDepth int32
 	// IDValidator is a validator for the "id" field. It is called by the builders before save.
-	IDValidator func(uint32) error
+	IDValidator func(int64) error
 )
 
 // Type defines the type for the "type" enum field.

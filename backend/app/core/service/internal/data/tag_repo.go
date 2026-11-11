@@ -73,7 +73,7 @@ func (r *TagRepo) List(ctx context.Context, req *paginationV1.PagingRequest) (*l
 	return &ledgerV1.ListTagResponse{Total: ret.Total, Items: ret.Items}, nil
 }
 
-func (r *TagRepo) ListAll(ctx context.Context, bookID uint32) (*ledgerV1.ListTagResponse, error) {
+func (r *TagRepo) ListAll(ctx context.Context, bookID int64) (*ledgerV1.ListTagResponse, error) {
 	q := r.entClient.Client().Tag.Query().Where(tag.BookIDEQ(bookID), tag.EnableEQ(true))
 	entities, err := q.All(ctx)
 	if err != nil {
@@ -83,10 +83,10 @@ func (r *TagRepo) ListAll(ctx context.Context, bookID uint32) (*ledgerV1.ListTag
 	for _, e := range entities {
 		items = append(items, r.mapper.ToDTO(e))
 	}
-	return &ledgerV1.ListTagResponse{Items: items, Total: uint64(len(items))}, nil
+	return &ledgerV1.ListTagResponse{Items: items, Total: int64(len(items))}, nil
 }
 
-func (r *TagRepo) Get(ctx context.Context, id uint32) (*ledgerV1.Tag, error) {
+func (r *TagRepo) Get(ctx context.Context, id int64) (*ledgerV1.Tag, error) {
 	entity, err := r.entClient.Client().Tag.Query().Where(tag.IDEQ(id)).Only(ctx)
 	if err != nil {
 		if ent.IsNotFound(err) {
@@ -120,7 +120,7 @@ func (r *TagRepo) Create(ctx context.Context, data *ledgerV1.Tag) (*ledgerV1.Tag
 	return r.mapper.ToDTO(saved), nil
 }
 
-func (r *TagRepo) Update(ctx context.Context, id uint32, data *ledgerV1.Tag, mask *fieldmaskpb.FieldMask) (*ledgerV1.Tag, error) {
+func (r *TagRepo) Update(ctx context.Context, id int64, data *ledgerV1.Tag, mask *fieldmaskpb.FieldMask) (*ledgerV1.Tag, error) {
 	if data == nil {
 		return nil, ledgerV1.ErrorBadRequest("invalid parameter")
 	}
@@ -142,7 +142,7 @@ func (r *TagRepo) Update(ctx context.Context, id uint32, data *ledgerV1.Tag, mas
 	return r.mapper.ToDTO(updated), nil
 }
 
-func (r *TagRepo) Delete(ctx context.Context, id uint32) error {
+func (r *TagRepo) Delete(ctx context.Context, id int64) error {
 	// Check if tag has relations with balance flows before deleting
 	count, _ := r.entClient.Client().TagRelation.Query().
 		Where(func(s *sql.Selector) { s.Where(sql.EQ("tag_id", id)) }).Count(ctx)
@@ -152,7 +152,7 @@ func (r *TagRepo) Delete(ctx context.Context, id uint32) error {
 	return r.entClient.Client().Tag.DeleteOneID(id).Exec(ctx)
 }
 
-func (r *TagRepo) Toggle(ctx context.Context, id uint32) (*ledgerV1.Tag, error) {
+func (r *TagRepo) Toggle(ctx context.Context, id int64) (*ledgerV1.Tag, error) {
 	entity, err := r.entClient.Client().Tag.Query().Where(tag.IDEQ(id)).Only(ctx)
 	if err != nil {
 		if ent.IsNotFound(err) {
@@ -164,7 +164,7 @@ func (r *TagRepo) Toggle(ctx context.Context, id uint32) (*ledgerV1.Tag, error) 
 	return r.mapper.ToDTO(updated), nil
 }
 
-func (r *TagRepo) ToggleCanExpense(ctx context.Context, id uint32) (*ledgerV1.Tag, error) {
+func (r *TagRepo) ToggleCanExpense(ctx context.Context, id int64) (*ledgerV1.Tag, error) {
 	entity, err := r.entClient.Client().Tag.Query().Where(tag.IDEQ(id)).Only(ctx)
 	if err != nil {
 		if ent.IsNotFound(err) {
@@ -176,7 +176,7 @@ func (r *TagRepo) ToggleCanExpense(ctx context.Context, id uint32) (*ledgerV1.Ta
 	return r.mapper.ToDTO(updated), nil
 }
 
-func (r *TagRepo) ToggleCanIncome(ctx context.Context, id uint32) (*ledgerV1.Tag, error) {
+func (r *TagRepo) ToggleCanIncome(ctx context.Context, id int64) (*ledgerV1.Tag, error) {
 	entity, err := r.entClient.Client().Tag.Query().Where(tag.IDEQ(id)).Only(ctx)
 	if err != nil {
 		if ent.IsNotFound(err) {
@@ -188,7 +188,7 @@ func (r *TagRepo) ToggleCanIncome(ctx context.Context, id uint32) (*ledgerV1.Tag
 	return r.mapper.ToDTO(updated), nil
 }
 
-func (r *TagRepo) ToggleCanTransfer(ctx context.Context, id uint32) (*ledgerV1.Tag, error) {
+func (r *TagRepo) ToggleCanTransfer(ctx context.Context, id int64) (*ledgerV1.Tag, error) {
 	entity, err := r.entClient.Client().Tag.Query().Where(tag.IDEQ(id)).Only(ctx)
 	if err != nil {
 		if ent.IsNotFound(err) {
@@ -200,7 +200,7 @@ func (r *TagRepo) ToggleCanTransfer(ctx context.Context, id uint32) (*ledgerV1.T
 	return r.mapper.ToDTO(updated), nil
 }
 
-func (r *TagRepo) UnChildren(ctx context.Context, parentID uint32) error {
+func (r *TagRepo) UnChildren(ctx context.Context, parentID int64) error {
 	_, err := r.entClient.Client().Tag.Update().Where(tag.ParentIDEQ(parentID)).ClearParentID().Save(ctx)
 	return err
 }

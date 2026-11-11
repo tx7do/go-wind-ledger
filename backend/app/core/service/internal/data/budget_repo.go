@@ -23,11 +23,11 @@ import (
 
 // BudgetRepo 预算仓库
 type BudgetRepo struct {
-	entClient  *entCrud.EntClient[*ent.Client]
-	log        *log.Helper
-	mapper     *mapper.CopierMapper[ledgerV1.Budget, ent.Budget]
+	entClient       *entCrud.EntClient[*ent.Client]
+	log             *log.Helper
+	mapper          *mapper.CopierMapper[ledgerV1.Budget, ent.Budget]
 	periodConverter *mapper.EnumTypeConverter[ledgerV1.BudgetPeriod, budget.Period]
-	repository *entCrud.Repository[
+	repository      *entCrud.Repository[
 		ent.BudgetQuery, ent.BudgetSelect,
 		ent.BudgetCreate, ent.BudgetCreateBulk,
 		ent.BudgetUpdate, ent.BudgetUpdateOne,
@@ -83,7 +83,7 @@ func (r *BudgetRepo) List(ctx context.Context, req *paginationV1.PagingRequest) 
 }
 
 // ListAll 按 book_id 查询全部预算
-func (r *BudgetRepo) ListAll(ctx context.Context, bookID uint32) (*ledgerV1.ListBudgetResponse, error) {
+func (r *BudgetRepo) ListAll(ctx context.Context, bookID int64) (*ledgerV1.ListBudgetResponse, error) {
 	entities, err := r.entClient.Client().Budget.Query().
 		Where(budget.BookIDEQ(bookID)).
 		All(ctx)
@@ -95,11 +95,11 @@ func (r *BudgetRepo) ListAll(ctx context.Context, bookID uint32) (*ledgerV1.List
 	for _, e := range entities {
 		items = append(items, r.mapper.ToDTO(e))
 	}
-	return &ledgerV1.ListBudgetResponse{Items: items, Total: uint64(len(items))}, nil
+	return &ledgerV1.ListBudgetResponse{Items: items, Total: int64(len(items))}, nil
 }
 
 // Get 按 id 查询预算
-func (r *BudgetRepo) Get(ctx context.Context, id uint32) (*ledgerV1.Budget, error) {
+func (r *BudgetRepo) Get(ctx context.Context, id int64) (*ledgerV1.Budget, error) {
 	entity, err := r.entClient.Client().Budget.Query().Where(budget.IDEQ(id)).Only(ctx)
 	if err != nil {
 		if ent.IsNotFound(err) {
@@ -142,7 +142,7 @@ func (r *BudgetRepo) Create(ctx context.Context, data *ledgerV1.Budget) (*ledger
 }
 
 // Update 更新预算
-func (r *BudgetRepo) Update(ctx context.Context, id uint32, data *ledgerV1.Budget, mask *fieldmaskpb.FieldMask) (*ledgerV1.Budget, error) {
+func (r *BudgetRepo) Update(ctx context.Context, id int64, data *ledgerV1.Budget, mask *fieldmaskpb.FieldMask) (*ledgerV1.Budget, error) {
 	if data == nil {
 		return nil, ledgerV1.ErrorBadRequest("invalid parameter")
 	}
@@ -209,7 +209,7 @@ func (r *BudgetRepo) Update(ctx context.Context, id uint32, data *ledgerV1.Budge
 }
 
 // Delete 删除预算
-func (r *BudgetRepo) Delete(ctx context.Context, id uint32) error {
+func (r *BudgetRepo) Delete(ctx context.Context, id int64) error {
 	return r.entClient.Client().Budget.DeleteOneID(id).Exec(ctx)
 }
 
@@ -250,7 +250,7 @@ func (r *BudgetRepo) CalculateUsedAmount(ctx context.Context, b *ledgerV1.Budget
 			r.log.Errorf("query category relations failed: %s", err.Error())
 			return 0, ledgerV1.ErrorInternalServerError("calculate used amount failed")
 		}
-		flowIDs := make([]uint32, 0, len(relations))
+		flowIDs := make([]int64, 0, len(relations))
 		for _, rel := range relations {
 			if rel.BalanceFlowID != nil && *rel.BalanceFlowID != 0 {
 				flowIDs = append(flowIDs, *rel.BalanceFlowID)

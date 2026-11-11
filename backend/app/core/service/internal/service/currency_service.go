@@ -18,7 +18,7 @@ import (
 
 type CurrencyService struct {
 	ledgerV1.UnimplementedCurrencyServiceServer
-	log       *log.Helper
+	log        *log.Helper
 	currencies []*ledgerV1.Currency
 	mu         sync.RWMutex
 }
@@ -34,23 +34,23 @@ func NewCurrencyService(ctx *bootstrap.Context) *CurrencyService {
 func (s *CurrencyService) loadSeed() {
 	// Seed data from common currency codes with approximate USD rates
 	s.currencies = []*ledgerV1.Currency{
-		{Id: uint32Ptr(1), Code: strPtr("CNY"), Name: strPtr("人民币"), Rate: strPtr("7.2")},
-		{Id: uint32Ptr(2), Code: strPtr("USD"), Name: strPtr("美元"), Rate: strPtr("1.0")},
-		{Id: uint32Ptr(3), Code: strPtr("EUR"), Name: strPtr("欧元"), Rate: strPtr("0.92")},
-		{Id: uint32Ptr(4), Code: strPtr("JPY"), Name: strPtr("日元"), Rate: strPtr("148.0")},
-		{Id: uint32Ptr(5), Code: strPtr("GBP"), Name: strPtr("英镑"), Rate: strPtr("0.79")},
-		{Id: uint32Ptr(6), Code: strPtr("HKD"), Name: strPtr("港币"), Rate: strPtr("7.8")},
-		{Id: uint32Ptr(7), Code: strPtr("KRW"), Name: strPtr("韩元"), Rate: strPtr("1340.0")},
-		{Id: uint32Ptr(8), Code: strPtr("AUD"), Name: strPtr("澳元"), Rate: strPtr("1.52")},
-		{Id: uint32Ptr(9), Code: strPtr("CAD"), Name: strPtr("加元"), Rate: strPtr("1.36")},
-		{Id: uint32Ptr(10), Code: strPtr("CHF"), Name: strPtr("瑞郎"), Rate: strPtr("0.88")},
+		{Id: i64Ptr(1), Code: strPtr("CNY"), Name: strPtr("人民币"), Rate: strPtr("7.2")},
+		{Id: i64Ptr(2), Code: strPtr("USD"), Name: strPtr("美元"), Rate: strPtr("1.0")},
+		{Id: i64Ptr(3), Code: strPtr("EUR"), Name: strPtr("欧元"), Rate: strPtr("0.92")},
+		{Id: i64Ptr(4), Code: strPtr("JPY"), Name: strPtr("日元"), Rate: strPtr("148.0")},
+		{Id: i64Ptr(5), Code: strPtr("GBP"), Name: strPtr("英镑"), Rate: strPtr("0.79")},
+		{Id: i64Ptr(6), Code: strPtr("HKD"), Name: strPtr("港币"), Rate: strPtr("7.8")},
+		{Id: i64Ptr(7), Code: strPtr("KRW"), Name: strPtr("韩元"), Rate: strPtr("1340.0")},
+		{Id: i64Ptr(8), Code: strPtr("AUD"), Name: strPtr("澳元"), Rate: strPtr("1.52")},
+		{Id: i64Ptr(9), Code: strPtr("CAD"), Name: strPtr("加元"), Rate: strPtr("1.36")},
+		{Id: i64Ptr(10), Code: strPtr("CHF"), Name: strPtr("瑞郎"), Rate: strPtr("0.88")},
 	}
 }
 
 func (s *CurrencyService) ListAll(ctx context.Context, req *ledgerV1.ListAllCurrencyRequest) (*ledgerV1.ListCurrencyResponse, error) {
 	s.mu.RLock()
 	defer s.mu.RUnlock()
-	return &ledgerV1.ListCurrencyResponse{Items: s.currencies, Total: uint64(len(s.currencies))}, nil
+	return &ledgerV1.ListCurrencyResponse{Items: s.currencies, Total: int64(len(s.currencies))}, nil
 }
 
 func (s *CurrencyService) List(ctx context.Context, req *paginationV1.PagingRequest) (*ledgerV1.ListCurrencyResponse, error) {
@@ -69,7 +69,7 @@ func (s *CurrencyService) List(ctx context.Context, req *paginationV1.PagingRequ
 	} else {
 		list = nil
 	}
-	return &ledgerV1.ListCurrencyResponse{Items: list, Total: uint64(len(s.currencies))}, nil
+	return &ledgerV1.ListCurrencyResponse{Items: list, Total: int64(len(s.currencies))}, nil
 }
 
 // exchangeRateAPIResponse is the JSON structure returned by the free
@@ -106,7 +106,7 @@ func (s *CurrencyService) Refresh(ctx context.Context, req *ledgerV1.RefreshCurr
 	}
 
 	s.log.Infof("currency rates refreshed: %d/%d updated from API", updated, len(s.currencies))
-	return &ledgerV1.ListCurrencyResponse{Items: s.currencies, Total: uint64(len(s.currencies))}, nil
+	return &ledgerV1.ListCurrencyResponse{Items: s.currencies, Total: int64(len(s.currencies))}, nil
 }
 
 // fetchLiveRates calls the exchange rate API and returns a map of currency code → rate to USD.
@@ -211,3 +211,7 @@ func formatFloat(f float64) string {
 func strPtr(s string) *string { return &s }
 
 func uint32Ptr(v uint32) *uint32 { return &v }
+
+func i32Ptr(v int32) *int32 {
+	return &v
+}

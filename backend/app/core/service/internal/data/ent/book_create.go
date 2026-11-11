@@ -23,13 +23,13 @@ type BookCreate struct {
 }
 
 // SetTenantID sets the "tenant_id" field.
-func (_c *BookCreate) SetTenantID(v uint32) *BookCreate {
+func (_c *BookCreate) SetTenantID(v int64) *BookCreate {
 	_c.mutation.SetTenantID(v)
 	return _c
 }
 
 // SetNillableTenantID sets the "tenant_id" field if the given value is not nil.
-func (_c *BookCreate) SetNillableTenantID(v *uint32) *BookCreate {
+func (_c *BookCreate) SetNillableTenantID(v *int64) *BookCreate {
 	if v != nil {
 		_c.SetTenantID(*v)
 	}
@@ -79,13 +79,13 @@ func (_c *BookCreate) SetNillableDeletedAt(v *time.Time) *BookCreate {
 }
 
 // SetCreatedBy sets the "created_by" field.
-func (_c *BookCreate) SetCreatedBy(v uint32) *BookCreate {
+func (_c *BookCreate) SetCreatedBy(v int64) *BookCreate {
 	_c.mutation.SetCreatedBy(v)
 	return _c
 }
 
 // SetNillableCreatedBy sets the "created_by" field if the given value is not nil.
-func (_c *BookCreate) SetNillableCreatedBy(v *uint32) *BookCreate {
+func (_c *BookCreate) SetNillableCreatedBy(v *int64) *BookCreate {
 	if v != nil {
 		_c.SetCreatedBy(*v)
 	}
@@ -93,13 +93,13 @@ func (_c *BookCreate) SetNillableCreatedBy(v *uint32) *BookCreate {
 }
 
 // SetUpdatedBy sets the "updated_by" field.
-func (_c *BookCreate) SetUpdatedBy(v uint32) *BookCreate {
+func (_c *BookCreate) SetUpdatedBy(v int64) *BookCreate {
 	_c.mutation.SetUpdatedBy(v)
 	return _c
 }
 
 // SetNillableUpdatedBy sets the "updated_by" field if the given value is not nil.
-func (_c *BookCreate) SetNillableUpdatedBy(v *uint32) *BookCreate {
+func (_c *BookCreate) SetNillableUpdatedBy(v *int64) *BookCreate {
 	if v != nil {
 		_c.SetUpdatedBy(*v)
 	}
@@ -107,13 +107,13 @@ func (_c *BookCreate) SetNillableUpdatedBy(v *uint32) *BookCreate {
 }
 
 // SetDeletedBy sets the "deleted_by" field.
-func (_c *BookCreate) SetDeletedBy(v uint32) *BookCreate {
+func (_c *BookCreate) SetDeletedBy(v int64) *BookCreate {
 	_c.mutation.SetDeletedBy(v)
 	return _c
 }
 
 // SetNillableDeletedBy sets the "deleted_by" field if the given value is not nil.
-func (_c *BookCreate) SetNillableDeletedBy(v *uint32) *BookCreate {
+func (_c *BookCreate) SetNillableDeletedBy(v *int64) *BookCreate {
 	if v != nil {
 		_c.SetDeletedBy(*v)
 	}
@@ -205,13 +205,13 @@ func (_c *BookCreate) SetNillableExportAt(v *int64) *BookCreate {
 }
 
 // SetDefaultExpenseAccountID sets the "default_expense_account_id" field.
-func (_c *BookCreate) SetDefaultExpenseAccountID(v uint32) *BookCreate {
+func (_c *BookCreate) SetDefaultExpenseAccountID(v int64) *BookCreate {
 	_c.mutation.SetDefaultExpenseAccountID(v)
 	return _c
 }
 
 // SetNillableDefaultExpenseAccountID sets the "default_expense_account_id" field if the given value is not nil.
-func (_c *BookCreate) SetNillableDefaultExpenseAccountID(v *uint32) *BookCreate {
+func (_c *BookCreate) SetNillableDefaultExpenseAccountID(v *int64) *BookCreate {
 	if v != nil {
 		_c.SetDefaultExpenseAccountID(*v)
 	}
@@ -219,13 +219,13 @@ func (_c *BookCreate) SetNillableDefaultExpenseAccountID(v *uint32) *BookCreate 
 }
 
 // SetDefaultIncomeAccountID sets the "default_income_account_id" field.
-func (_c *BookCreate) SetDefaultIncomeAccountID(v uint32) *BookCreate {
+func (_c *BookCreate) SetDefaultIncomeAccountID(v int64) *BookCreate {
 	_c.mutation.SetDefaultIncomeAccountID(v)
 	return _c
 }
 
 // SetNillableDefaultIncomeAccountID sets the "default_income_account_id" field if the given value is not nil.
-func (_c *BookCreate) SetNillableDefaultIncomeAccountID(v *uint32) *BookCreate {
+func (_c *BookCreate) SetNillableDefaultIncomeAccountID(v *int64) *BookCreate {
 	if v != nil {
 		_c.SetDefaultIncomeAccountID(*v)
 	}
@@ -233,13 +233,13 @@ func (_c *BookCreate) SetNillableDefaultIncomeAccountID(v *uint32) *BookCreate {
 }
 
 // SetDefaultTransferFromAccountID sets the "default_transfer_from_account_id" field.
-func (_c *BookCreate) SetDefaultTransferFromAccountID(v uint32) *BookCreate {
+func (_c *BookCreate) SetDefaultTransferFromAccountID(v int64) *BookCreate {
 	_c.mutation.SetDefaultTransferFromAccountID(v)
 	return _c
 }
 
 // SetNillableDefaultTransferFromAccountID sets the "default_transfer_from_account_id" field if the given value is not nil.
-func (_c *BookCreate) SetNillableDefaultTransferFromAccountID(v *uint32) *BookCreate {
+func (_c *BookCreate) SetNillableDefaultTransferFromAccountID(v *int64) *BookCreate {
 	if v != nil {
 		_c.SetDefaultTransferFromAccountID(*v)
 	}
@@ -247,13 +247,13 @@ func (_c *BookCreate) SetNillableDefaultTransferFromAccountID(v *uint32) *BookCr
 }
 
 // SetDefaultTransferToAccountID sets the "default_transfer_to_account_id" field.
-func (_c *BookCreate) SetDefaultTransferToAccountID(v uint32) *BookCreate {
+func (_c *BookCreate) SetDefaultTransferToAccountID(v int64) *BookCreate {
 	_c.mutation.SetDefaultTransferToAccountID(v)
 	return _c
 }
 
 // SetNillableDefaultTransferToAccountID sets the "default_transfer_to_account_id" field if the given value is not nil.
-func (_c *BookCreate) SetNillableDefaultTransferToAccountID(v *uint32) *BookCreate {
+func (_c *BookCreate) SetNillableDefaultTransferToAccountID(v *int64) *BookCreate {
 	if v != nil {
 		_c.SetDefaultTransferToAccountID(*v)
 	}
@@ -261,13 +261,13 @@ func (_c *BookCreate) SetNillableDefaultTransferToAccountID(v *uint32) *BookCrea
 }
 
 // SetDefaultExpenseCategoryID sets the "default_expense_category_id" field.
-func (_c *BookCreate) SetDefaultExpenseCategoryID(v uint32) *BookCreate {
+func (_c *BookCreate) SetDefaultExpenseCategoryID(v int64) *BookCreate {
 	_c.mutation.SetDefaultExpenseCategoryID(v)
 	return _c
 }
 
 // SetNillableDefaultExpenseCategoryID sets the "default_expense_category_id" field if the given value is not nil.
-func (_c *BookCreate) SetNillableDefaultExpenseCategoryID(v *uint32) *BookCreate {
+func (_c *BookCreate) SetNillableDefaultExpenseCategoryID(v *int64) *BookCreate {
 	if v != nil {
 		_c.SetDefaultExpenseCategoryID(*v)
 	}
@@ -275,13 +275,13 @@ func (_c *BookCreate) SetNillableDefaultExpenseCategoryID(v *uint32) *BookCreate
 }
 
 // SetDefaultIncomeCategoryID sets the "default_income_category_id" field.
-func (_c *BookCreate) SetDefaultIncomeCategoryID(v uint32) *BookCreate {
+func (_c *BookCreate) SetDefaultIncomeCategoryID(v int64) *BookCreate {
 	_c.mutation.SetDefaultIncomeCategoryID(v)
 	return _c
 }
 
 // SetNillableDefaultIncomeCategoryID sets the "default_income_category_id" field if the given value is not nil.
-func (_c *BookCreate) SetNillableDefaultIncomeCategoryID(v *uint32) *BookCreate {
+func (_c *BookCreate) SetNillableDefaultIncomeCategoryID(v *int64) *BookCreate {
 	if v != nil {
 		_c.SetDefaultIncomeCategoryID(*v)
 	}
@@ -289,7 +289,7 @@ func (_c *BookCreate) SetNillableDefaultIncomeCategoryID(v *uint32) *BookCreate 
 }
 
 // SetID sets the "id" field.
-func (_c *BookCreate) SetID(v uint32) *BookCreate {
+func (_c *BookCreate) SetID(v int64) *BookCreate {
 	_c.mutation.SetID(v)
 	return _c
 }
@@ -384,7 +384,7 @@ func (_c *BookCreate) sqlSave(ctx context.Context) (*Book, error) {
 	}
 	if _spec.ID.Value != _node.ID {
 		id := _spec.ID.Value.(int64)
-		_node.ID = uint32(id)
+		_node.ID = int64(id)
 	}
 	_c.mutation.id = &_node.ID
 	_c.mutation.done = true
@@ -394,7 +394,7 @@ func (_c *BookCreate) sqlSave(ctx context.Context) (*Book, error) {
 func (_c *BookCreate) createSpec() (*Book, *sqlgraph.CreateSpec) {
 	var (
 		_node = &Book{config: _c.config}
-		_spec = sqlgraph.NewCreateSpec(book.Table, sqlgraph.NewFieldSpec(book.FieldID, field.TypeUint32))
+		_spec = sqlgraph.NewCreateSpec(book.Table, sqlgraph.NewFieldSpec(book.FieldID, field.TypeInt64))
 	)
 	_spec.OnConflict = _c.conflict
 	if id, ok := _c.mutation.ID(); ok {
@@ -402,7 +402,7 @@ func (_c *BookCreate) createSpec() (*Book, *sqlgraph.CreateSpec) {
 		_spec.ID.Value = id
 	}
 	if value, ok := _c.mutation.TenantID(); ok {
-		_spec.SetField(book.FieldTenantID, field.TypeUint32, value)
+		_spec.SetField(book.FieldTenantID, field.TypeInt64, value)
 		_node.TenantID = &value
 	}
 	if value, ok := _c.mutation.CreatedAt(); ok {
@@ -418,15 +418,15 @@ func (_c *BookCreate) createSpec() (*Book, *sqlgraph.CreateSpec) {
 		_node.DeletedAt = &value
 	}
 	if value, ok := _c.mutation.CreatedBy(); ok {
-		_spec.SetField(book.FieldCreatedBy, field.TypeUint32, value)
+		_spec.SetField(book.FieldCreatedBy, field.TypeInt64, value)
 		_node.CreatedBy = &value
 	}
 	if value, ok := _c.mutation.UpdatedBy(); ok {
-		_spec.SetField(book.FieldUpdatedBy, field.TypeUint32, value)
+		_spec.SetField(book.FieldUpdatedBy, field.TypeInt64, value)
 		_node.UpdatedBy = &value
 	}
 	if value, ok := _c.mutation.DeletedBy(); ok {
-		_spec.SetField(book.FieldDeletedBy, field.TypeUint32, value)
+		_spec.SetField(book.FieldDeletedBy, field.TypeInt64, value)
 		_node.DeletedBy = &value
 	}
 	if value, ok := _c.mutation.SortOrder(); ok {
@@ -454,27 +454,27 @@ func (_c *BookCreate) createSpec() (*Book, *sqlgraph.CreateSpec) {
 		_node.ExportAt = &value
 	}
 	if value, ok := _c.mutation.DefaultExpenseAccountID(); ok {
-		_spec.SetField(book.FieldDefaultExpenseAccountID, field.TypeUint32, value)
+		_spec.SetField(book.FieldDefaultExpenseAccountID, field.TypeInt64, value)
 		_node.DefaultExpenseAccountID = &value
 	}
 	if value, ok := _c.mutation.DefaultIncomeAccountID(); ok {
-		_spec.SetField(book.FieldDefaultIncomeAccountID, field.TypeUint32, value)
+		_spec.SetField(book.FieldDefaultIncomeAccountID, field.TypeInt64, value)
 		_node.DefaultIncomeAccountID = &value
 	}
 	if value, ok := _c.mutation.DefaultTransferFromAccountID(); ok {
-		_spec.SetField(book.FieldDefaultTransferFromAccountID, field.TypeUint32, value)
+		_spec.SetField(book.FieldDefaultTransferFromAccountID, field.TypeInt64, value)
 		_node.DefaultTransferFromAccountID = &value
 	}
 	if value, ok := _c.mutation.DefaultTransferToAccountID(); ok {
-		_spec.SetField(book.FieldDefaultTransferToAccountID, field.TypeUint32, value)
+		_spec.SetField(book.FieldDefaultTransferToAccountID, field.TypeInt64, value)
 		_node.DefaultTransferToAccountID = &value
 	}
 	if value, ok := _c.mutation.DefaultExpenseCategoryID(); ok {
-		_spec.SetField(book.FieldDefaultExpenseCategoryID, field.TypeUint32, value)
+		_spec.SetField(book.FieldDefaultExpenseCategoryID, field.TypeInt64, value)
 		_node.DefaultExpenseCategoryID = &value
 	}
 	if value, ok := _c.mutation.DefaultIncomeCategoryID(); ok {
-		_spec.SetField(book.FieldDefaultIncomeCategoryID, field.TypeUint32, value)
+		_spec.SetField(book.FieldDefaultIncomeCategoryID, field.TypeInt64, value)
 		_node.DefaultIncomeCategoryID = &value
 	}
 	return _node, _spec
@@ -566,7 +566,7 @@ func (u *BookUpsert) ClearDeletedAt() *BookUpsert {
 }
 
 // SetCreatedBy sets the "created_by" field.
-func (u *BookUpsert) SetCreatedBy(v uint32) *BookUpsert {
+func (u *BookUpsert) SetCreatedBy(v int64) *BookUpsert {
 	u.Set(book.FieldCreatedBy, v)
 	return u
 }
@@ -578,7 +578,7 @@ func (u *BookUpsert) UpdateCreatedBy() *BookUpsert {
 }
 
 // AddCreatedBy adds v to the "created_by" field.
-func (u *BookUpsert) AddCreatedBy(v uint32) *BookUpsert {
+func (u *BookUpsert) AddCreatedBy(v int64) *BookUpsert {
 	u.Add(book.FieldCreatedBy, v)
 	return u
 }
@@ -590,7 +590,7 @@ func (u *BookUpsert) ClearCreatedBy() *BookUpsert {
 }
 
 // SetUpdatedBy sets the "updated_by" field.
-func (u *BookUpsert) SetUpdatedBy(v uint32) *BookUpsert {
+func (u *BookUpsert) SetUpdatedBy(v int64) *BookUpsert {
 	u.Set(book.FieldUpdatedBy, v)
 	return u
 }
@@ -602,7 +602,7 @@ func (u *BookUpsert) UpdateUpdatedBy() *BookUpsert {
 }
 
 // AddUpdatedBy adds v to the "updated_by" field.
-func (u *BookUpsert) AddUpdatedBy(v uint32) *BookUpsert {
+func (u *BookUpsert) AddUpdatedBy(v int64) *BookUpsert {
 	u.Add(book.FieldUpdatedBy, v)
 	return u
 }
@@ -614,7 +614,7 @@ func (u *BookUpsert) ClearUpdatedBy() *BookUpsert {
 }
 
 // SetDeletedBy sets the "deleted_by" field.
-func (u *BookUpsert) SetDeletedBy(v uint32) *BookUpsert {
+func (u *BookUpsert) SetDeletedBy(v int64) *BookUpsert {
 	u.Set(book.FieldDeletedBy, v)
 	return u
 }
@@ -626,7 +626,7 @@ func (u *BookUpsert) UpdateDeletedBy() *BookUpsert {
 }
 
 // AddDeletedBy adds v to the "deleted_by" field.
-func (u *BookUpsert) AddDeletedBy(v uint32) *BookUpsert {
+func (u *BookUpsert) AddDeletedBy(v int64) *BookUpsert {
 	u.Add(book.FieldDeletedBy, v)
 	return u
 }
@@ -758,7 +758,7 @@ func (u *BookUpsert) ClearExportAt() *BookUpsert {
 }
 
 // SetDefaultExpenseAccountID sets the "default_expense_account_id" field.
-func (u *BookUpsert) SetDefaultExpenseAccountID(v uint32) *BookUpsert {
+func (u *BookUpsert) SetDefaultExpenseAccountID(v int64) *BookUpsert {
 	u.Set(book.FieldDefaultExpenseAccountID, v)
 	return u
 }
@@ -770,7 +770,7 @@ func (u *BookUpsert) UpdateDefaultExpenseAccountID() *BookUpsert {
 }
 
 // AddDefaultExpenseAccountID adds v to the "default_expense_account_id" field.
-func (u *BookUpsert) AddDefaultExpenseAccountID(v uint32) *BookUpsert {
+func (u *BookUpsert) AddDefaultExpenseAccountID(v int64) *BookUpsert {
 	u.Add(book.FieldDefaultExpenseAccountID, v)
 	return u
 }
@@ -782,7 +782,7 @@ func (u *BookUpsert) ClearDefaultExpenseAccountID() *BookUpsert {
 }
 
 // SetDefaultIncomeAccountID sets the "default_income_account_id" field.
-func (u *BookUpsert) SetDefaultIncomeAccountID(v uint32) *BookUpsert {
+func (u *BookUpsert) SetDefaultIncomeAccountID(v int64) *BookUpsert {
 	u.Set(book.FieldDefaultIncomeAccountID, v)
 	return u
 }
@@ -794,7 +794,7 @@ func (u *BookUpsert) UpdateDefaultIncomeAccountID() *BookUpsert {
 }
 
 // AddDefaultIncomeAccountID adds v to the "default_income_account_id" field.
-func (u *BookUpsert) AddDefaultIncomeAccountID(v uint32) *BookUpsert {
+func (u *BookUpsert) AddDefaultIncomeAccountID(v int64) *BookUpsert {
 	u.Add(book.FieldDefaultIncomeAccountID, v)
 	return u
 }
@@ -806,7 +806,7 @@ func (u *BookUpsert) ClearDefaultIncomeAccountID() *BookUpsert {
 }
 
 // SetDefaultTransferFromAccountID sets the "default_transfer_from_account_id" field.
-func (u *BookUpsert) SetDefaultTransferFromAccountID(v uint32) *BookUpsert {
+func (u *BookUpsert) SetDefaultTransferFromAccountID(v int64) *BookUpsert {
 	u.Set(book.FieldDefaultTransferFromAccountID, v)
 	return u
 }
@@ -818,7 +818,7 @@ func (u *BookUpsert) UpdateDefaultTransferFromAccountID() *BookUpsert {
 }
 
 // AddDefaultTransferFromAccountID adds v to the "default_transfer_from_account_id" field.
-func (u *BookUpsert) AddDefaultTransferFromAccountID(v uint32) *BookUpsert {
+func (u *BookUpsert) AddDefaultTransferFromAccountID(v int64) *BookUpsert {
 	u.Add(book.FieldDefaultTransferFromAccountID, v)
 	return u
 }
@@ -830,7 +830,7 @@ func (u *BookUpsert) ClearDefaultTransferFromAccountID() *BookUpsert {
 }
 
 // SetDefaultTransferToAccountID sets the "default_transfer_to_account_id" field.
-func (u *BookUpsert) SetDefaultTransferToAccountID(v uint32) *BookUpsert {
+func (u *BookUpsert) SetDefaultTransferToAccountID(v int64) *BookUpsert {
 	u.Set(book.FieldDefaultTransferToAccountID, v)
 	return u
 }
@@ -842,7 +842,7 @@ func (u *BookUpsert) UpdateDefaultTransferToAccountID() *BookUpsert {
 }
 
 // AddDefaultTransferToAccountID adds v to the "default_transfer_to_account_id" field.
-func (u *BookUpsert) AddDefaultTransferToAccountID(v uint32) *BookUpsert {
+func (u *BookUpsert) AddDefaultTransferToAccountID(v int64) *BookUpsert {
 	u.Add(book.FieldDefaultTransferToAccountID, v)
 	return u
 }
@@ -854,7 +854,7 @@ func (u *BookUpsert) ClearDefaultTransferToAccountID() *BookUpsert {
 }
 
 // SetDefaultExpenseCategoryID sets the "default_expense_category_id" field.
-func (u *BookUpsert) SetDefaultExpenseCategoryID(v uint32) *BookUpsert {
+func (u *BookUpsert) SetDefaultExpenseCategoryID(v int64) *BookUpsert {
 	u.Set(book.FieldDefaultExpenseCategoryID, v)
 	return u
 }
@@ -866,7 +866,7 @@ func (u *BookUpsert) UpdateDefaultExpenseCategoryID() *BookUpsert {
 }
 
 // AddDefaultExpenseCategoryID adds v to the "default_expense_category_id" field.
-func (u *BookUpsert) AddDefaultExpenseCategoryID(v uint32) *BookUpsert {
+func (u *BookUpsert) AddDefaultExpenseCategoryID(v int64) *BookUpsert {
 	u.Add(book.FieldDefaultExpenseCategoryID, v)
 	return u
 }
@@ -878,7 +878,7 @@ func (u *BookUpsert) ClearDefaultExpenseCategoryID() *BookUpsert {
 }
 
 // SetDefaultIncomeCategoryID sets the "default_income_category_id" field.
-func (u *BookUpsert) SetDefaultIncomeCategoryID(v uint32) *BookUpsert {
+func (u *BookUpsert) SetDefaultIncomeCategoryID(v int64) *BookUpsert {
 	u.Set(book.FieldDefaultIncomeCategoryID, v)
 	return u
 }
@@ -890,7 +890,7 @@ func (u *BookUpsert) UpdateDefaultIncomeCategoryID() *BookUpsert {
 }
 
 // AddDefaultIncomeCategoryID adds v to the "default_income_category_id" field.
-func (u *BookUpsert) AddDefaultIncomeCategoryID(v uint32) *BookUpsert {
+func (u *BookUpsert) AddDefaultIncomeCategoryID(v int64) *BookUpsert {
 	u.Add(book.FieldDefaultIncomeCategoryID, v)
 	return u
 }
@@ -998,14 +998,14 @@ func (u *BookUpsertOne) ClearDeletedAt() *BookUpsertOne {
 }
 
 // SetCreatedBy sets the "created_by" field.
-func (u *BookUpsertOne) SetCreatedBy(v uint32) *BookUpsertOne {
+func (u *BookUpsertOne) SetCreatedBy(v int64) *BookUpsertOne {
 	return u.Update(func(s *BookUpsert) {
 		s.SetCreatedBy(v)
 	})
 }
 
 // AddCreatedBy adds v to the "created_by" field.
-func (u *BookUpsertOne) AddCreatedBy(v uint32) *BookUpsertOne {
+func (u *BookUpsertOne) AddCreatedBy(v int64) *BookUpsertOne {
 	return u.Update(func(s *BookUpsert) {
 		s.AddCreatedBy(v)
 	})
@@ -1026,14 +1026,14 @@ func (u *BookUpsertOne) ClearCreatedBy() *BookUpsertOne {
 }
 
 // SetUpdatedBy sets the "updated_by" field.
-func (u *BookUpsertOne) SetUpdatedBy(v uint32) *BookUpsertOne {
+func (u *BookUpsertOne) SetUpdatedBy(v int64) *BookUpsertOne {
 	return u.Update(func(s *BookUpsert) {
 		s.SetUpdatedBy(v)
 	})
 }
 
 // AddUpdatedBy adds v to the "updated_by" field.
-func (u *BookUpsertOne) AddUpdatedBy(v uint32) *BookUpsertOne {
+func (u *BookUpsertOne) AddUpdatedBy(v int64) *BookUpsertOne {
 	return u.Update(func(s *BookUpsert) {
 		s.AddUpdatedBy(v)
 	})
@@ -1054,14 +1054,14 @@ func (u *BookUpsertOne) ClearUpdatedBy() *BookUpsertOne {
 }
 
 // SetDeletedBy sets the "deleted_by" field.
-func (u *BookUpsertOne) SetDeletedBy(v uint32) *BookUpsertOne {
+func (u *BookUpsertOne) SetDeletedBy(v int64) *BookUpsertOne {
 	return u.Update(func(s *BookUpsert) {
 		s.SetDeletedBy(v)
 	})
 }
 
 // AddDeletedBy adds v to the "deleted_by" field.
-func (u *BookUpsertOne) AddDeletedBy(v uint32) *BookUpsertOne {
+func (u *BookUpsertOne) AddDeletedBy(v int64) *BookUpsertOne {
 	return u.Update(func(s *BookUpsert) {
 		s.AddDeletedBy(v)
 	})
@@ -1222,14 +1222,14 @@ func (u *BookUpsertOne) ClearExportAt() *BookUpsertOne {
 }
 
 // SetDefaultExpenseAccountID sets the "default_expense_account_id" field.
-func (u *BookUpsertOne) SetDefaultExpenseAccountID(v uint32) *BookUpsertOne {
+func (u *BookUpsertOne) SetDefaultExpenseAccountID(v int64) *BookUpsertOne {
 	return u.Update(func(s *BookUpsert) {
 		s.SetDefaultExpenseAccountID(v)
 	})
 }
 
 // AddDefaultExpenseAccountID adds v to the "default_expense_account_id" field.
-func (u *BookUpsertOne) AddDefaultExpenseAccountID(v uint32) *BookUpsertOne {
+func (u *BookUpsertOne) AddDefaultExpenseAccountID(v int64) *BookUpsertOne {
 	return u.Update(func(s *BookUpsert) {
 		s.AddDefaultExpenseAccountID(v)
 	})
@@ -1250,14 +1250,14 @@ func (u *BookUpsertOne) ClearDefaultExpenseAccountID() *BookUpsertOne {
 }
 
 // SetDefaultIncomeAccountID sets the "default_income_account_id" field.
-func (u *BookUpsertOne) SetDefaultIncomeAccountID(v uint32) *BookUpsertOne {
+func (u *BookUpsertOne) SetDefaultIncomeAccountID(v int64) *BookUpsertOne {
 	return u.Update(func(s *BookUpsert) {
 		s.SetDefaultIncomeAccountID(v)
 	})
 }
 
 // AddDefaultIncomeAccountID adds v to the "default_income_account_id" field.
-func (u *BookUpsertOne) AddDefaultIncomeAccountID(v uint32) *BookUpsertOne {
+func (u *BookUpsertOne) AddDefaultIncomeAccountID(v int64) *BookUpsertOne {
 	return u.Update(func(s *BookUpsert) {
 		s.AddDefaultIncomeAccountID(v)
 	})
@@ -1278,14 +1278,14 @@ func (u *BookUpsertOne) ClearDefaultIncomeAccountID() *BookUpsertOne {
 }
 
 // SetDefaultTransferFromAccountID sets the "default_transfer_from_account_id" field.
-func (u *BookUpsertOne) SetDefaultTransferFromAccountID(v uint32) *BookUpsertOne {
+func (u *BookUpsertOne) SetDefaultTransferFromAccountID(v int64) *BookUpsertOne {
 	return u.Update(func(s *BookUpsert) {
 		s.SetDefaultTransferFromAccountID(v)
 	})
 }
 
 // AddDefaultTransferFromAccountID adds v to the "default_transfer_from_account_id" field.
-func (u *BookUpsertOne) AddDefaultTransferFromAccountID(v uint32) *BookUpsertOne {
+func (u *BookUpsertOne) AddDefaultTransferFromAccountID(v int64) *BookUpsertOne {
 	return u.Update(func(s *BookUpsert) {
 		s.AddDefaultTransferFromAccountID(v)
 	})
@@ -1306,14 +1306,14 @@ func (u *BookUpsertOne) ClearDefaultTransferFromAccountID() *BookUpsertOne {
 }
 
 // SetDefaultTransferToAccountID sets the "default_transfer_to_account_id" field.
-func (u *BookUpsertOne) SetDefaultTransferToAccountID(v uint32) *BookUpsertOne {
+func (u *BookUpsertOne) SetDefaultTransferToAccountID(v int64) *BookUpsertOne {
 	return u.Update(func(s *BookUpsert) {
 		s.SetDefaultTransferToAccountID(v)
 	})
 }
 
 // AddDefaultTransferToAccountID adds v to the "default_transfer_to_account_id" field.
-func (u *BookUpsertOne) AddDefaultTransferToAccountID(v uint32) *BookUpsertOne {
+func (u *BookUpsertOne) AddDefaultTransferToAccountID(v int64) *BookUpsertOne {
 	return u.Update(func(s *BookUpsert) {
 		s.AddDefaultTransferToAccountID(v)
 	})
@@ -1334,14 +1334,14 @@ func (u *BookUpsertOne) ClearDefaultTransferToAccountID() *BookUpsertOne {
 }
 
 // SetDefaultExpenseCategoryID sets the "default_expense_category_id" field.
-func (u *BookUpsertOne) SetDefaultExpenseCategoryID(v uint32) *BookUpsertOne {
+func (u *BookUpsertOne) SetDefaultExpenseCategoryID(v int64) *BookUpsertOne {
 	return u.Update(func(s *BookUpsert) {
 		s.SetDefaultExpenseCategoryID(v)
 	})
 }
 
 // AddDefaultExpenseCategoryID adds v to the "default_expense_category_id" field.
-func (u *BookUpsertOne) AddDefaultExpenseCategoryID(v uint32) *BookUpsertOne {
+func (u *BookUpsertOne) AddDefaultExpenseCategoryID(v int64) *BookUpsertOne {
 	return u.Update(func(s *BookUpsert) {
 		s.AddDefaultExpenseCategoryID(v)
 	})
@@ -1362,14 +1362,14 @@ func (u *BookUpsertOne) ClearDefaultExpenseCategoryID() *BookUpsertOne {
 }
 
 // SetDefaultIncomeCategoryID sets the "default_income_category_id" field.
-func (u *BookUpsertOne) SetDefaultIncomeCategoryID(v uint32) *BookUpsertOne {
+func (u *BookUpsertOne) SetDefaultIncomeCategoryID(v int64) *BookUpsertOne {
 	return u.Update(func(s *BookUpsert) {
 		s.SetDefaultIncomeCategoryID(v)
 	})
 }
 
 // AddDefaultIncomeCategoryID adds v to the "default_income_category_id" field.
-func (u *BookUpsertOne) AddDefaultIncomeCategoryID(v uint32) *BookUpsertOne {
+func (u *BookUpsertOne) AddDefaultIncomeCategoryID(v int64) *BookUpsertOne {
 	return u.Update(func(s *BookUpsert) {
 		s.AddDefaultIncomeCategoryID(v)
 	})
@@ -1405,7 +1405,7 @@ func (u *BookUpsertOne) ExecX(ctx context.Context) {
 }
 
 // Exec executes the UPSERT query and returns the inserted/updated ID.
-func (u *BookUpsertOne) ID(ctx context.Context) (id uint32, err error) {
+func (u *BookUpsertOne) ID(ctx context.Context) (id int64, err error) {
 	node, err := u.create.Save(ctx)
 	if err != nil {
 		return id, err
@@ -1414,7 +1414,7 @@ func (u *BookUpsertOne) ID(ctx context.Context) (id uint32, err error) {
 }
 
 // IDX is like ID, but panics if an error occurs.
-func (u *BookUpsertOne) IDX(ctx context.Context) uint32 {
+func (u *BookUpsertOne) IDX(ctx context.Context) int64 {
 	id, err := u.ID(ctx)
 	if err != nil {
 		panic(err)
@@ -1471,7 +1471,7 @@ func (_c *BookCreateBulk) Save(ctx context.Context) ([]*Book, error) {
 				mutation.id = &nodes[i].ID
 				if specs[i].ID.Value != nil && nodes[i].ID == 0 {
 					id := specs[i].ID.Value.(int64)
-					nodes[i].ID = uint32(id)
+					nodes[i].ID = int64(id)
 				}
 				mutation.done = true
 				return nodes[i], nil
@@ -1652,14 +1652,14 @@ func (u *BookUpsertBulk) ClearDeletedAt() *BookUpsertBulk {
 }
 
 // SetCreatedBy sets the "created_by" field.
-func (u *BookUpsertBulk) SetCreatedBy(v uint32) *BookUpsertBulk {
+func (u *BookUpsertBulk) SetCreatedBy(v int64) *BookUpsertBulk {
 	return u.Update(func(s *BookUpsert) {
 		s.SetCreatedBy(v)
 	})
 }
 
 // AddCreatedBy adds v to the "created_by" field.
-func (u *BookUpsertBulk) AddCreatedBy(v uint32) *BookUpsertBulk {
+func (u *BookUpsertBulk) AddCreatedBy(v int64) *BookUpsertBulk {
 	return u.Update(func(s *BookUpsert) {
 		s.AddCreatedBy(v)
 	})
@@ -1680,14 +1680,14 @@ func (u *BookUpsertBulk) ClearCreatedBy() *BookUpsertBulk {
 }
 
 // SetUpdatedBy sets the "updated_by" field.
-func (u *BookUpsertBulk) SetUpdatedBy(v uint32) *BookUpsertBulk {
+func (u *BookUpsertBulk) SetUpdatedBy(v int64) *BookUpsertBulk {
 	return u.Update(func(s *BookUpsert) {
 		s.SetUpdatedBy(v)
 	})
 }
 
 // AddUpdatedBy adds v to the "updated_by" field.
-func (u *BookUpsertBulk) AddUpdatedBy(v uint32) *BookUpsertBulk {
+func (u *BookUpsertBulk) AddUpdatedBy(v int64) *BookUpsertBulk {
 	return u.Update(func(s *BookUpsert) {
 		s.AddUpdatedBy(v)
 	})
@@ -1708,14 +1708,14 @@ func (u *BookUpsertBulk) ClearUpdatedBy() *BookUpsertBulk {
 }
 
 // SetDeletedBy sets the "deleted_by" field.
-func (u *BookUpsertBulk) SetDeletedBy(v uint32) *BookUpsertBulk {
+func (u *BookUpsertBulk) SetDeletedBy(v int64) *BookUpsertBulk {
 	return u.Update(func(s *BookUpsert) {
 		s.SetDeletedBy(v)
 	})
 }
 
 // AddDeletedBy adds v to the "deleted_by" field.
-func (u *BookUpsertBulk) AddDeletedBy(v uint32) *BookUpsertBulk {
+func (u *BookUpsertBulk) AddDeletedBy(v int64) *BookUpsertBulk {
 	return u.Update(func(s *BookUpsert) {
 		s.AddDeletedBy(v)
 	})
@@ -1876,14 +1876,14 @@ func (u *BookUpsertBulk) ClearExportAt() *BookUpsertBulk {
 }
 
 // SetDefaultExpenseAccountID sets the "default_expense_account_id" field.
-func (u *BookUpsertBulk) SetDefaultExpenseAccountID(v uint32) *BookUpsertBulk {
+func (u *BookUpsertBulk) SetDefaultExpenseAccountID(v int64) *BookUpsertBulk {
 	return u.Update(func(s *BookUpsert) {
 		s.SetDefaultExpenseAccountID(v)
 	})
 }
 
 // AddDefaultExpenseAccountID adds v to the "default_expense_account_id" field.
-func (u *BookUpsertBulk) AddDefaultExpenseAccountID(v uint32) *BookUpsertBulk {
+func (u *BookUpsertBulk) AddDefaultExpenseAccountID(v int64) *BookUpsertBulk {
 	return u.Update(func(s *BookUpsert) {
 		s.AddDefaultExpenseAccountID(v)
 	})
@@ -1904,14 +1904,14 @@ func (u *BookUpsertBulk) ClearDefaultExpenseAccountID() *BookUpsertBulk {
 }
 
 // SetDefaultIncomeAccountID sets the "default_income_account_id" field.
-func (u *BookUpsertBulk) SetDefaultIncomeAccountID(v uint32) *BookUpsertBulk {
+func (u *BookUpsertBulk) SetDefaultIncomeAccountID(v int64) *BookUpsertBulk {
 	return u.Update(func(s *BookUpsert) {
 		s.SetDefaultIncomeAccountID(v)
 	})
 }
 
 // AddDefaultIncomeAccountID adds v to the "default_income_account_id" field.
-func (u *BookUpsertBulk) AddDefaultIncomeAccountID(v uint32) *BookUpsertBulk {
+func (u *BookUpsertBulk) AddDefaultIncomeAccountID(v int64) *BookUpsertBulk {
 	return u.Update(func(s *BookUpsert) {
 		s.AddDefaultIncomeAccountID(v)
 	})
@@ -1932,14 +1932,14 @@ func (u *BookUpsertBulk) ClearDefaultIncomeAccountID() *BookUpsertBulk {
 }
 
 // SetDefaultTransferFromAccountID sets the "default_transfer_from_account_id" field.
-func (u *BookUpsertBulk) SetDefaultTransferFromAccountID(v uint32) *BookUpsertBulk {
+func (u *BookUpsertBulk) SetDefaultTransferFromAccountID(v int64) *BookUpsertBulk {
 	return u.Update(func(s *BookUpsert) {
 		s.SetDefaultTransferFromAccountID(v)
 	})
 }
 
 // AddDefaultTransferFromAccountID adds v to the "default_transfer_from_account_id" field.
-func (u *BookUpsertBulk) AddDefaultTransferFromAccountID(v uint32) *BookUpsertBulk {
+func (u *BookUpsertBulk) AddDefaultTransferFromAccountID(v int64) *BookUpsertBulk {
 	return u.Update(func(s *BookUpsert) {
 		s.AddDefaultTransferFromAccountID(v)
 	})
@@ -1960,14 +1960,14 @@ func (u *BookUpsertBulk) ClearDefaultTransferFromAccountID() *BookUpsertBulk {
 }
 
 // SetDefaultTransferToAccountID sets the "default_transfer_to_account_id" field.
-func (u *BookUpsertBulk) SetDefaultTransferToAccountID(v uint32) *BookUpsertBulk {
+func (u *BookUpsertBulk) SetDefaultTransferToAccountID(v int64) *BookUpsertBulk {
 	return u.Update(func(s *BookUpsert) {
 		s.SetDefaultTransferToAccountID(v)
 	})
 }
 
 // AddDefaultTransferToAccountID adds v to the "default_transfer_to_account_id" field.
-func (u *BookUpsertBulk) AddDefaultTransferToAccountID(v uint32) *BookUpsertBulk {
+func (u *BookUpsertBulk) AddDefaultTransferToAccountID(v int64) *BookUpsertBulk {
 	return u.Update(func(s *BookUpsert) {
 		s.AddDefaultTransferToAccountID(v)
 	})
@@ -1988,14 +1988,14 @@ func (u *BookUpsertBulk) ClearDefaultTransferToAccountID() *BookUpsertBulk {
 }
 
 // SetDefaultExpenseCategoryID sets the "default_expense_category_id" field.
-func (u *BookUpsertBulk) SetDefaultExpenseCategoryID(v uint32) *BookUpsertBulk {
+func (u *BookUpsertBulk) SetDefaultExpenseCategoryID(v int64) *BookUpsertBulk {
 	return u.Update(func(s *BookUpsert) {
 		s.SetDefaultExpenseCategoryID(v)
 	})
 }
 
 // AddDefaultExpenseCategoryID adds v to the "default_expense_category_id" field.
-func (u *BookUpsertBulk) AddDefaultExpenseCategoryID(v uint32) *BookUpsertBulk {
+func (u *BookUpsertBulk) AddDefaultExpenseCategoryID(v int64) *BookUpsertBulk {
 	return u.Update(func(s *BookUpsert) {
 		s.AddDefaultExpenseCategoryID(v)
 	})
@@ -2016,14 +2016,14 @@ func (u *BookUpsertBulk) ClearDefaultExpenseCategoryID() *BookUpsertBulk {
 }
 
 // SetDefaultIncomeCategoryID sets the "default_income_category_id" field.
-func (u *BookUpsertBulk) SetDefaultIncomeCategoryID(v uint32) *BookUpsertBulk {
+func (u *BookUpsertBulk) SetDefaultIncomeCategoryID(v int64) *BookUpsertBulk {
 	return u.Update(func(s *BookUpsert) {
 		s.SetDefaultIncomeCategoryID(v)
 	})
 }
 
 // AddDefaultIncomeCategoryID adds v to the "default_income_category_id" field.
-func (u *BookUpsertBulk) AddDefaultIncomeCategoryID(v uint32) *BookUpsertBulk {
+func (u *BookUpsertBulk) AddDefaultIncomeCategoryID(v int64) *BookUpsertBulk {
 	return u.Update(func(s *BookUpsert) {
 		s.AddDefaultIncomeCategoryID(v)
 	})

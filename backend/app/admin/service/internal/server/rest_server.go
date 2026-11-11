@@ -115,24 +115,24 @@ func NewRestServer(
 	permissionAuditLogService *service.PermissionAuditLogService,
 
 	// === 记账系统 Admin BFF Services ===
-	bookService         *service.BookService,
+	bookService *service.BookService,
 	bookTemplateService *service.BookTemplateService,
-	accountService      *service.AccountService,
-	payeeService       *service.PayeeService,
+	accountService *service.AccountService,
+	payeeService *service.PayeeService,
 	ledgerCategoryService *service.LedgerCategoryService,
-	ledgerTagService     *service.LedgerTagService,
+	ledgerTagService *service.LedgerTagService,
 	balanceFlowService *service.BalanceFlowService,
-	flowFileService    *service.FlowFileService,
-	noteDayService     *service.NoteDayService,
-	currencyService    *service.CurrencyService,
-	reportService      *service.ReportService,
-	budgetService      *service.BudgetService,
+	flowFileService *service.FlowFileService,
+	noteDayService *service.NoteDayService,
+	currencyService *service.CurrencyService,
+	reportService *service.ReportService,
+	budgetService *service.BudgetService,
 
 	// === 成员管理 Admin BFF Services ===
 	tenantMemberService *service.TenantMemberService,
 
 	// === 站内信 ===
-	internalMessageService          *service.InternalMessageService,
+	internalMessageService *service.InternalMessageService,
 	internalMessageCategoryService *service.InternalMessageCategoryService,
 	internalMessageRecipientService *service.InternalMessageRecipientService,
 
@@ -182,27 +182,27 @@ func NewRestServer(
 
 	// register:rest-route ── 新模块服务路由在此行后注册(make register 工具锚点,勿删)
 
-		// === 记账系统 Admin REST API ===
-		adminV1.RegisterBookServiceHTTPServer(srv, bookService)
-		adminV1.RegisterBookTemplateServiceHTTPServer(srv, bookTemplateService)
-		adminV1.RegisterAccountServiceHTTPServer(srv, accountService)
-		adminV1.RegisterPayeeServiceHTTPServer(srv, payeeService)
-		adminV1.RegisterLedgerCategoryServiceHTTPServer(srv, ledgerCategoryService)
-		adminV1.RegisterLedgerTagServiceHTTPServer(srv, ledgerTagService)
-		adminV1.RegisterBalanceFlowServiceHTTPServer(srv, balanceFlowService)
-		adminV1.RegisterFlowFileServiceHTTPServer(srv, flowFileService)
-		adminV1.RegisterNoteDayServiceHTTPServer(srv, noteDayService)
-		adminV1.RegisterCurrencyServiceHTTPServer(srv, currencyService)
-		adminV1.RegisterReportServiceHTTPServer(srv, reportService)
-		adminV1.RegisterBudgetServiceHTTPServer(srv, budgetService)
+	// === 记账系统 Admin REST API ===
+	adminV1.RegisterBookServiceHTTPServer(srv, bookService)
+	adminV1.RegisterBookTemplateServiceHTTPServer(srv, bookTemplateService)
+	adminV1.RegisterAccountServiceHTTPServer(srv, accountService)
+	adminV1.RegisterPayeeServiceHTTPServer(srv, payeeService)
+	adminV1.RegisterLedgerCategoryServiceHTTPServer(srv, ledgerCategoryService)
+	adminV1.RegisterLedgerTagServiceHTTPServer(srv, ledgerTagService)
+	adminV1.RegisterBalanceFlowServiceHTTPServer(srv, balanceFlowService)
+	adminV1.RegisterFlowFileServiceHTTPServer(srv, flowFileService)
+	adminV1.RegisterNoteDayServiceHTTPServer(srv, noteDayService)
+	adminV1.RegisterCurrencyServiceHTTPServer(srv, currencyService)
+	adminV1.RegisterReportServiceHTTPServer(srv, reportService)
+	adminV1.RegisterBudgetServiceHTTPServer(srv, budgetService)
 
-		// === 成员管理 Admin REST API ===
-		adminV1.RegisterTenantMemberServiceHTTPServer(srv, tenantMemberService)
+	// === 成员管理 Admin REST API ===
+	adminV1.RegisterTenantMemberServiceHTTPServer(srv, tenantMemberService)
 
-		// === 站内信 ===
-		adminV1.RegisterInternalMessageServiceHTTPServer(srv, internalMessageService)
-		adminV1.RegisterInternalMessageCategoryServiceHTTPServer(srv, internalMessageCategoryService)
-		adminV1.RegisterInternalMessageRecipientServiceHTTPServer(srv, internalMessageRecipientService)
+	// === 站内信 ===
+	adminV1.RegisterInternalMessageServiceHTTPServer(srv, internalMessageService)
+	adminV1.RegisterInternalMessageCategoryServiceHTTPServer(srv, internalMessageCategoryService)
+	adminV1.RegisterInternalMessageRecipientServiceHTTPServer(srv, internalMessageRecipientService)
 
 	if cfg.GetServer().GetRest().GetEnableSwagger() {
 		swaggerUI.RegisterSwaggerUIServerWithOption(

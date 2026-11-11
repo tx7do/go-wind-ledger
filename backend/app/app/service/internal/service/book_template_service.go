@@ -34,3 +34,7 @@ func (s *BookTemplateService) ListAll(ctx context.Context, req *emptypb.Empty) (
 func (s *BookTemplateService) Get(ctx context.Context, req *ledgerV1.GetBookTemplateRequest) (*ledgerV1.BookTemplate, error) {
 	return s.client.Get(ctx, req)
 }
+
+func i64Ptr(v int64) *int64 {
+	return &v
+}

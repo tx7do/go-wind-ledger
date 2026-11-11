@@ -21,12 +21,12 @@ func (Tag) Annotations() []schema.Annotation {
 }
 
 func (Tag) Mixin() []ent.Mixin {
-	return []ent.Mixin{mixin.AutoIncrementId{}, mixin.TenantID[uint32]{}, mixin.TimeAt{}, mixin.OperatorID{}, mixin.SortOrder{}, mixin.TreePath{}, mixin.Tree[Tag]{}}
+	return []ent.Mixin{mixin.AutoIncrementId64{}, mixin.TenantID[int64]{}, mixin.TimeAt{}, mixin.OperatorID64{}, mixin.SortOrder{}, mixin.TreePath{}, mixin.Tree64[Tag]{}}
 }
 
 func (Tag) Fields() []ent.Field {
 	return []ent.Field{
-		field.Uint32("book_id").Immutable().Optional().Nillable(),
+		field.Int64("book_id").Immutable().Optional().Nillable(),
 		field.String("name").MaxLen(64).NotEmpty().Optional().Nillable(),
 		field.String("notes").MaxLen(4096).Optional().Nillable(),
 		field.Bool("enable").Default(true).Optional().Nillable(),

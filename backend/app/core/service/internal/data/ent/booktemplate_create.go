@@ -107,7 +107,7 @@ func (_c *BookTemplateCreate) SetNillableThumbnail(v *string) *BookTemplateCreat
 }
 
 // SetID sets the "id" field.
-func (_c *BookTemplateCreate) SetID(v uint32) *BookTemplateCreate {
+func (_c *BookTemplateCreate) SetID(v int64) *BookTemplateCreate {
 	_c.mutation.SetID(v)
 	return _c
 }
@@ -182,7 +182,7 @@ func (_c *BookTemplateCreate) sqlSave(ctx context.Context) (*BookTemplate, error
 	}
 	if _spec.ID.Value != _node.ID {
 		id := _spec.ID.Value.(int64)
-		_node.ID = uint32(id)
+		_node.ID = int64(id)
 	}
 	_c.mutation.id = &_node.ID
 	_c.mutation.done = true
@@ -192,7 +192,7 @@ func (_c *BookTemplateCreate) sqlSave(ctx context.Context) (*BookTemplate, error
 func (_c *BookTemplateCreate) createSpec() (*BookTemplate, *sqlgraph.CreateSpec) {
 	var (
 		_node = &BookTemplate{config: _c.config}
-		_spec = sqlgraph.NewCreateSpec(booktemplate.Table, sqlgraph.NewFieldSpec(booktemplate.FieldID, field.TypeUint32))
+		_spec = sqlgraph.NewCreateSpec(booktemplate.Table, sqlgraph.NewFieldSpec(booktemplate.FieldID, field.TypeInt64))
 	)
 	_spec.OnConflict = _c.conflict
 	if id, ok := _c.mutation.ID(); ok {
@@ -537,7 +537,7 @@ func (u *BookTemplateUpsertOne) ExecX(ctx context.Context) {
 }
 
 // Exec executes the UPSERT query and returns the inserted/updated ID.
-func (u *BookTemplateUpsertOne) ID(ctx context.Context) (id uint32, err error) {
+func (u *BookTemplateUpsertOne) ID(ctx context.Context) (id int64, err error) {
 	node, err := u.create.Save(ctx)
 	if err != nil {
 		return id, err
@@ -546,7 +546,7 @@ func (u *BookTemplateUpsertOne) ID(ctx context.Context) (id uint32, err error) {
 }
 
 // IDX is like ID, but panics if an error occurs.
-func (u *BookTemplateUpsertOne) IDX(ctx context.Context) uint32 {
+func (u *BookTemplateUpsertOne) IDX(ctx context.Context) int64 {
 	id, err := u.ID(ctx)
 	if err != nil {
 		panic(err)
@@ -602,7 +602,7 @@ func (_c *BookTemplateCreateBulk) Save(ctx context.Context) ([]*BookTemplate, er
 				mutation.id = &nodes[i].ID
 				if specs[i].ID.Value != nil && nodes[i].ID == 0 {
 					id := specs[i].ID.Value.(int64)
-					nodes[i].ID = uint32(id)
+					nodes[i].ID = int64(id)
 				}
 				mutation.done = true
 				return nodes[i], nil

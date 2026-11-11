@@ -21,12 +21,12 @@ func (Category) Annotations() []schema.Annotation {
 }
 
 func (Category) Mixin() []ent.Mixin {
-	return []ent.Mixin{mixin.AutoIncrementId{}, mixin.TenantID[uint32]{}, mixin.TimeAt{}, mixin.OperatorID{}, mixin.SortOrder{}, mixin.TreePath{}, mixin.Tree[Category]{}}
+	return []ent.Mixin{mixin.AutoIncrementId64{}, mixin.TenantID[int64]{}, mixin.TimeAt{}, mixin.OperatorID64{}, mixin.SortOrder{}, mixin.TreePath{}, mixin.Tree64[Category]{}}
 }
 
 func (Category) Fields() []ent.Field {
 	return []ent.Field{
-		field.Uint32("book_id").Immutable().Optional().Nillable(),
+		field.Int64("book_id").Immutable().Optional().Nillable(),
 		field.String("name").MaxLen(64).NotEmpty().Optional().Nillable(),
 		field.Enum("type").NamedValues("CategoryTypeExpense", "CATEGORY_TYPE_EXPENSE", "CategoryTypeIncome", "CATEGORY_TYPE_INCOME").Optional().Nillable(),
 		field.String("notes").MaxLen(4096).Optional().Nillable(),

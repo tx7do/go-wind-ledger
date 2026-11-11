@@ -21,12 +21,12 @@ func (TagRelation) Annotations() []schema.Annotation {
 	}
 }
 
-func (TagRelation) Mixin() []ent.Mixin { return []ent.Mixin{mixin.AutoIncrementId{}} }
+func (TagRelation) Mixin() []ent.Mixin { return []ent.Mixin{mixin.AutoIncrementId64{}} }
 
 func (TagRelation) Fields() []ent.Field {
 	return []ent.Field{
-		field.Uint32("tag_id").Optional().Nillable(),
-		field.Uint32("balance_flow_id").Optional().Nillable(),
+		field.Int64("tag_id").Optional().Nillable(),
+		field.Int64("balance_flow_id").Optional().Nillable(),
 		field.Float("amount").SchemaType(map[string]string{dialect.Postgres: "numeric(15,2)", dialect.MySQL: "decimal(15,2)"}).Optional().Nillable(),
 		field.Float("converted_amount").SchemaType(map[string]string{dialect.Postgres: "numeric(15,2)", dialect.MySQL: "decimal(15,2)"}).Optional().Nillable(),
 	}

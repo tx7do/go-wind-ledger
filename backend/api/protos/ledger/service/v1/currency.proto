@@ -25,7 +25,7 @@ service CurrencyService {
 
 // 币种
 message Currency {
-  optional uint32 id = 1 [json_name = "id"];
+  optional int64 id = 1 [json_name = "id"];
   optional string code = 2 [
     json_name = "code",
     (gnostic.openapi.v3.property) = {description: "币种代码"}
@@ -43,7 +43,7 @@ message Currency {
 // 回应 - 币种列表
 message ListCurrencyResponse {
   repeated Currency items = 1;
-  uint64 total = 2;
+  int64 total = 2;
 }
 
 // 请求 - 获取所有币种
@@ -86,6 +86,6 @@ message ConvertCurrencyResponse {
 
 // 请求 - 手动修改币种汇率
 message ChangeRateRequest {
-  uint32 id = 1 [json_name = "id"];
+  int64 id = 1 [json_name = "id"];
   string rate = 2 [json_name = "rate"];
 }

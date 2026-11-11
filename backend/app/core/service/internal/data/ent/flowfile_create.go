@@ -65,13 +65,13 @@ func (_c *FlowFileCreate) SetNillableDeletedAt(v *time.Time) *FlowFileCreate {
 }
 
 // SetFlowID sets the "flow_id" field.
-func (_c *FlowFileCreate) SetFlowID(v uint32) *FlowFileCreate {
+func (_c *FlowFileCreate) SetFlowID(v int64) *FlowFileCreate {
 	_c.mutation.SetFlowID(v)
 	return _c
 }
 
 // SetNillableFlowID sets the "flow_id" field if the given value is not nil.
-func (_c *FlowFileCreate) SetNillableFlowID(v *uint32) *FlowFileCreate {
+func (_c *FlowFileCreate) SetNillableFlowID(v *int64) *FlowFileCreate {
 	if v != nil {
 		_c.SetFlowID(*v)
 	}
@@ -79,13 +79,13 @@ func (_c *FlowFileCreate) SetNillableFlowID(v *uint32) *FlowFileCreate {
 }
 
 // SetCreatorID sets the "creator_id" field.
-func (_c *FlowFileCreate) SetCreatorID(v uint32) *FlowFileCreate {
+func (_c *FlowFileCreate) SetCreatorID(v int64) *FlowFileCreate {
 	_c.mutation.SetCreatorID(v)
 	return _c
 }
 
 // SetNillableCreatorID sets the "creator_id" field if the given value is not nil.
-func (_c *FlowFileCreate) SetNillableCreatorID(v *uint32) *FlowFileCreate {
+func (_c *FlowFileCreate) SetNillableCreatorID(v *int64) *FlowFileCreate {
 	if v != nil {
 		_c.SetCreatorID(*v)
 	}
@@ -163,7 +163,7 @@ func (_c *FlowFileCreate) SetNillableObjectKey(v *string) *FlowFileCreate {
 }
 
 // SetID sets the "id" field.
-func (_c *FlowFileCreate) SetID(v uint32) *FlowFileCreate {
+func (_c *FlowFileCreate) SetID(v int64) *FlowFileCreate {
 	_c.mutation.SetID(v)
 	return _c
 }
@@ -238,7 +238,7 @@ func (_c *FlowFileCreate) sqlSave(ctx context.Context) (*FlowFile, error) {
 	}
 	if _spec.ID.Value != _node.ID {
 		id := _spec.ID.Value.(int64)
-		_node.ID = uint32(id)
+		_node.ID = int64(id)
 	}
 	_c.mutation.id = &_node.ID
 	_c.mutation.done = true
@@ -248,7 +248,7 @@ func (_c *FlowFileCreate) sqlSave(ctx context.Context) (*FlowFile, error) {
 func (_c *FlowFileCreate) createSpec() (*FlowFile, *sqlgraph.CreateSpec) {
 	var (
 		_node = &FlowFile{config: _c.config}
-		_spec = sqlgraph.NewCreateSpec(flowfile.Table, sqlgraph.NewFieldSpec(flowfile.FieldID, field.TypeUint32))
+		_spec = sqlgraph.NewCreateSpec(flowfile.Table, sqlgraph.NewFieldSpec(flowfile.FieldID, field.TypeInt64))
 	)
 	_spec.OnConflict = _c.conflict
 	if id, ok := _c.mutation.ID(); ok {
@@ -268,11 +268,11 @@ func (_c *FlowFileCreate) createSpec() (*FlowFile, *sqlgraph.CreateSpec) {
 		_node.DeletedAt = &value
 	}
 	if value, ok := _c.mutation.FlowID(); ok {
-		_spec.SetField(flowfile.FieldFlowID, field.TypeUint32, value)
+		_spec.SetField(flowfile.FieldFlowID, field.TypeInt64, value)
 		_node.FlowID = &value
 	}
 	if value, ok := _c.mutation.CreatorID(); ok {
-		_spec.SetField(flowfile.FieldCreatorID, field.TypeUint32, value)
+		_spec.SetField(flowfile.FieldCreatorID, field.TypeInt64, value)
 		_node.CreatorID = &value
 	}
 	if value, ok := _c.mutation.CreateTime(); ok {
@@ -384,7 +384,7 @@ func (u *FlowFileUpsert) ClearDeletedAt() *FlowFileUpsert {
 }
 
 // SetFlowID sets the "flow_id" field.
-func (u *FlowFileUpsert) SetFlowID(v uint32) *FlowFileUpsert {
+func (u *FlowFileUpsert) SetFlowID(v int64) *FlowFileUpsert {
 	u.Set(flowfile.FieldFlowID, v)
 	return u
 }
@@ -396,7 +396,7 @@ func (u *FlowFileUpsert) UpdateFlowID() *FlowFileUpsert {
 }
 
 // AddFlowID adds v to the "flow_id" field.
-func (u *FlowFileUpsert) AddFlowID(v uint32) *FlowFileUpsert {
+func (u *FlowFileUpsert) AddFlowID(v int64) *FlowFileUpsert {
 	u.Add(flowfile.FieldFlowID, v)
 	return u
 }
@@ -408,7 +408,7 @@ func (u *FlowFileUpsert) ClearFlowID() *FlowFileUpsert {
 }
 
 // SetCreatorID sets the "creator_id" field.
-func (u *FlowFileUpsert) SetCreatorID(v uint32) *FlowFileUpsert {
+func (u *FlowFileUpsert) SetCreatorID(v int64) *FlowFileUpsert {
 	u.Set(flowfile.FieldCreatorID, v)
 	return u
 }
@@ -420,7 +420,7 @@ func (u *FlowFileUpsert) UpdateCreatorID() *FlowFileUpsert {
 }
 
 // AddCreatorID adds v to the "creator_id" field.
-func (u *FlowFileUpsert) AddCreatorID(v uint32) *FlowFileUpsert {
+func (u *FlowFileUpsert) AddCreatorID(v int64) *FlowFileUpsert {
 	u.Add(flowfile.FieldCreatorID, v)
 	return u
 }
@@ -627,14 +627,14 @@ func (u *FlowFileUpsertOne) ClearDeletedAt() *FlowFileUpsertOne {
 }
 
 // SetFlowID sets the "flow_id" field.
-func (u *FlowFileUpsertOne) SetFlowID(v uint32) *FlowFileUpsertOne {
+func (u *FlowFileUpsertOne) SetFlowID(v int64) *FlowFileUpsertOne {
 	return u.Update(func(s *FlowFileUpsert) {
 		s.SetFlowID(v)
 	})
 }
 
 // AddFlowID adds v to the "flow_id" field.
-func (u *FlowFileUpsertOne) AddFlowID(v uint32) *FlowFileUpsertOne {
+func (u *FlowFileUpsertOne) AddFlowID(v int64) *FlowFileUpsertOne {
 	return u.Update(func(s *FlowFileUpsert) {
 		s.AddFlowID(v)
 	})
@@ -655,14 +655,14 @@ func (u *FlowFileUpsertOne) ClearFlowID() *FlowFileUpsertOne {
 }
 
 // SetCreatorID sets the "creator_id" field.
-func (u *FlowFileUpsertOne) SetCreatorID(v uint32) *FlowFileUpsertOne {
+func (u *FlowFileUpsertOne) SetCreatorID(v int64) *FlowFileUpsertOne {
 	return u.Update(func(s *FlowFileUpsert) {
 		s.SetCreatorID(v)
 	})
 }
 
 // AddCreatorID adds v to the "creator_id" field.
-func (u *FlowFileUpsertOne) AddCreatorID(v uint32) *FlowFileUpsertOne {
+func (u *FlowFileUpsertOne) AddCreatorID(v int64) *FlowFileUpsertOne {
 	return u.Update(func(s *FlowFileUpsert) {
 		s.AddCreatorID(v)
 	})
@@ -817,7 +817,7 @@ func (u *FlowFileUpsertOne) ExecX(ctx context.Context) {
 }
 
 // Exec executes the UPSERT query and returns the inserted/updated ID.
-func (u *FlowFileUpsertOne) ID(ctx context.Context) (id uint32, err error) {
+func (u *FlowFileUpsertOne) ID(ctx context.Context) (id int64, err error) {
 	node, err := u.create.Save(ctx)
 	if err != nil {
 		return id, err
@@ -826,7 +826,7 @@ func (u *FlowFileUpsertOne) ID(ctx context.Context) (id uint32, err error) {
 }
 
 // IDX is like ID, but panics if an error occurs.
-func (u *FlowFileUpsertOne) IDX(ctx context.Context) uint32 {
+func (u *FlowFileUpsertOne) IDX(ctx context.Context) int64 {
 	id, err := u.ID(ctx)
 	if err != nil {
 		panic(err)
@@ -882,7 +882,7 @@ func (_c *FlowFileCreateBulk) Save(ctx context.Context) ([]*FlowFile, error) {
 				mutation.id = &nodes[i].ID
 				if specs[i].ID.Value != nil && nodes[i].ID == 0 {
 					id := specs[i].ID.Value.(int64)
-					nodes[i].ID = uint32(id)
+					nodes[i].ID = int64(id)
 				}
 				mutation.done = true
 				return nodes[i], nil
@@ -1060,14 +1060,14 @@ func (u *FlowFileUpsertBulk) ClearDeletedAt() *FlowFileUpsertBulk {
 }
 
 // SetFlowID sets the "flow_id" field.
-func (u *FlowFileUpsertBulk) SetFlowID(v uint32) *FlowFileUpsertBulk {
+func (u *FlowFileUpsertBulk) SetFlowID(v int64) *FlowFileUpsertBulk {
 	return u.Update(func(s *FlowFileUpsert) {
 		s.SetFlowID(v)
 	})
 }
 
 // AddFlowID adds v to the "flow_id" field.
-func (u *FlowFileUpsertBulk) AddFlowID(v uint32) *FlowFileUpsertBulk {
+func (u *FlowFileUpsertBulk) AddFlowID(v int64) *FlowFileUpsertBulk {
 	return u.Update(func(s *FlowFileUpsert) {
 		s.AddFlowID(v)
 	})
@@ -1088,14 +1088,14 @@ func (u *FlowFileUpsertBulk) ClearFlowID() *FlowFileUpsertBulk {
 }
 
 // SetCreatorID sets the "creator_id" field.
-func (u *FlowFileUpsertBulk) SetCreatorID(v uint32) *FlowFileUpsertBulk {
+func (u *FlowFileUpsertBulk) SetCreatorID(v int64) *FlowFileUpsertBulk {
 	return u.Update(func(s *FlowFileUpsert) {
 		s.SetCreatorID(v)
 	})
 }
 
 // AddCreatorID adds v to the "creator_id" field.
-func (u *FlowFileUpsertBulk) AddCreatorID(v uint32) *FlowFileUpsertBulk {
+func (u *FlowFileUpsertBulk) AddCreatorID(v int64) *FlowFileUpsertBulk {
 	return u.Update(func(s *FlowFileUpsert) {
 		s.AddCreatorID(v)
 	})

@@ -70,14 +70,14 @@ func (_u *NoteDayUpdate) ClearDeletedAt() *NoteDayUpdate {
 }
 
 // SetCreatedBy sets the "created_by" field.
-func (_u *NoteDayUpdate) SetCreatedBy(v uint32) *NoteDayUpdate {
+func (_u *NoteDayUpdate) SetCreatedBy(v int64) *NoteDayUpdate {
 	_u.mutation.ResetCreatedBy()
 	_u.mutation.SetCreatedBy(v)
 	return _u
 }
 
 // SetNillableCreatedBy sets the "created_by" field if the given value is not nil.
-func (_u *NoteDayUpdate) SetNillableCreatedBy(v *uint32) *NoteDayUpdate {
+func (_u *NoteDayUpdate) SetNillableCreatedBy(v *int64) *NoteDayUpdate {
 	if v != nil {
 		_u.SetCreatedBy(*v)
 	}
@@ -85,7 +85,7 @@ func (_u *NoteDayUpdate) SetNillableCreatedBy(v *uint32) *NoteDayUpdate {
 }
 
 // AddCreatedBy adds value to the "created_by" field.
-func (_u *NoteDayUpdate) AddCreatedBy(v int32) *NoteDayUpdate {
+func (_u *NoteDayUpdate) AddCreatedBy(v int64) *NoteDayUpdate {
 	_u.mutation.AddCreatedBy(v)
 	return _u
 }
@@ -97,14 +97,14 @@ func (_u *NoteDayUpdate) ClearCreatedBy() *NoteDayUpdate {
 }
 
 // SetUpdatedBy sets the "updated_by" field.
-func (_u *NoteDayUpdate) SetUpdatedBy(v uint32) *NoteDayUpdate {
+func (_u *NoteDayUpdate) SetUpdatedBy(v int64) *NoteDayUpdate {
 	_u.mutation.ResetUpdatedBy()
 	_u.mutation.SetUpdatedBy(v)
 	return _u
 }
 
 // SetNillableUpdatedBy sets the "updated_by" field if the given value is not nil.
-func (_u *NoteDayUpdate) SetNillableUpdatedBy(v *uint32) *NoteDayUpdate {
+func (_u *NoteDayUpdate) SetNillableUpdatedBy(v *int64) *NoteDayUpdate {
 	if v != nil {
 		_u.SetUpdatedBy(*v)
 	}
@@ -112,7 +112,7 @@ func (_u *NoteDayUpdate) SetNillableUpdatedBy(v *uint32) *NoteDayUpdate {
 }
 
 // AddUpdatedBy adds value to the "updated_by" field.
-func (_u *NoteDayUpdate) AddUpdatedBy(v int32) *NoteDayUpdate {
+func (_u *NoteDayUpdate) AddUpdatedBy(v int64) *NoteDayUpdate {
 	_u.mutation.AddUpdatedBy(v)
 	return _u
 }
@@ -124,14 +124,14 @@ func (_u *NoteDayUpdate) ClearUpdatedBy() *NoteDayUpdate {
 }
 
 // SetDeletedBy sets the "deleted_by" field.
-func (_u *NoteDayUpdate) SetDeletedBy(v uint32) *NoteDayUpdate {
+func (_u *NoteDayUpdate) SetDeletedBy(v int64) *NoteDayUpdate {
 	_u.mutation.ResetDeletedBy()
 	_u.mutation.SetDeletedBy(v)
 	return _u
 }
 
 // SetNillableDeletedBy sets the "deleted_by" field if the given value is not nil.
-func (_u *NoteDayUpdate) SetNillableDeletedBy(v *uint32) *NoteDayUpdate {
+func (_u *NoteDayUpdate) SetNillableDeletedBy(v *int64) *NoteDayUpdate {
 	if v != nil {
 		_u.SetDeletedBy(*v)
 	}
@@ -139,7 +139,7 @@ func (_u *NoteDayUpdate) SetNillableDeletedBy(v *uint32) *NoteDayUpdate {
 }
 
 // AddDeletedBy adds value to the "deleted_by" field.
-func (_u *NoteDayUpdate) AddDeletedBy(v int32) *NoteDayUpdate {
+func (_u *NoteDayUpdate) AddDeletedBy(v int64) *NoteDayUpdate {
 	_u.mutation.AddDeletedBy(v)
 	return _u
 }
@@ -151,14 +151,14 @@ func (_u *NoteDayUpdate) ClearDeletedBy() *NoteDayUpdate {
 }
 
 // SetUserID sets the "user_id" field.
-func (_u *NoteDayUpdate) SetUserID(v uint32) *NoteDayUpdate {
+func (_u *NoteDayUpdate) SetUserID(v int64) *NoteDayUpdate {
 	_u.mutation.ResetUserID()
 	_u.mutation.SetUserID(v)
 	return _u
 }
 
 // SetNillableUserID sets the "user_id" field if the given value is not nil.
-func (_u *NoteDayUpdate) SetNillableUserID(v *uint32) *NoteDayUpdate {
+func (_u *NoteDayUpdate) SetNillableUserID(v *int64) *NoteDayUpdate {
 	if v != nil {
 		_u.SetUserID(*v)
 	}
@@ -166,7 +166,7 @@ func (_u *NoteDayUpdate) SetNillableUserID(v *uint32) *NoteDayUpdate {
 }
 
 // AddUserID adds value to the "user_id" field.
-func (_u *NoteDayUpdate) AddUserID(v int32) *NoteDayUpdate {
+func (_u *NoteDayUpdate) AddUserID(v int64) *NoteDayUpdate {
 	_u.mutation.AddUserID(v)
 	return _u
 }
@@ -463,7 +463,7 @@ func (_u *NoteDayUpdate) sqlSave(ctx context.Context) (_node int, err error) {
 	if err := _u.check(); err != nil {
 		return _node, err
 	}
-	_spec := sqlgraph.NewUpdateSpec(noteday.Table, noteday.Columns, sqlgraph.NewFieldSpec(noteday.FieldID, field.TypeUint32))
+	_spec := sqlgraph.NewUpdateSpec(noteday.Table, noteday.Columns, sqlgraph.NewFieldSpec(noteday.FieldID, field.TypeInt64))
 	if ps := _u.mutation.predicates; len(ps) > 0 {
 		_spec.Predicate = func(selector *sql.Selector) {
 			for i := range ps {
@@ -487,40 +487,40 @@ func (_u *NoteDayUpdate) sqlSave(ctx context.Context) (_node int, err error) {
 		_spec.ClearField(noteday.FieldDeletedAt, field.TypeTime)
 	}
 	if value, ok := _u.mutation.CreatedBy(); ok {
-		_spec.SetField(noteday.FieldCreatedBy, field.TypeUint32, value)
+		_spec.SetField(noteday.FieldCreatedBy, field.TypeInt64, value)
 	}
 	if value, ok := _u.mutation.AddedCreatedBy(); ok {
-		_spec.AddField(noteday.FieldCreatedBy, field.TypeUint32, value)
+		_spec.AddField(noteday.FieldCreatedBy, field.TypeInt64, value)
 	}
 	if _u.mutation.CreatedByCleared() {
-		_spec.ClearField(noteday.FieldCreatedBy, field.TypeUint32)
+		_spec.ClearField(noteday.FieldCreatedBy, field.TypeInt64)
 	}
 	if value, ok := _u.mutation.UpdatedBy(); ok {
-		_spec.SetField(noteday.FieldUpdatedBy, field.TypeUint32, value)
+		_spec.SetField(noteday.FieldUpdatedBy, field.TypeInt64, value)
 	}
 	if value, ok := _u.mutation.AddedUpdatedBy(); ok {
-		_spec.AddField(noteday.FieldUpdatedBy, field.TypeUint32, value)
+		_spec.AddField(noteday.FieldUpdatedBy, field.TypeInt64, value)
 	}
 	if _u.mutation.UpdatedByCleared() {
-		_spec.ClearField(noteday.FieldUpdatedBy, field.TypeUint32)
+		_spec.ClearField(noteday.FieldUpdatedBy, field.TypeInt64)
 	}
 	if value, ok := _u.mutation.DeletedBy(); ok {
-		_spec.SetField(noteday.FieldDeletedBy, field.TypeUint32, value)
+		_spec.SetField(noteday.FieldDeletedBy, field.TypeInt64, value)
 	}
 	if value, ok := _u.mutation.AddedDeletedBy(); ok {
-		_spec.AddField(noteday.FieldDeletedBy, field.TypeUint32, value)
+		_spec.AddField(noteday.FieldDeletedBy, field.TypeInt64, value)
 	}
 	if _u.mutation.DeletedByCleared() {
-		_spec.ClearField(noteday.FieldDeletedBy, field.TypeUint32)
+		_spec.ClearField(noteday.FieldDeletedBy, field.TypeInt64)
 	}
 	if value, ok := _u.mutation.UserID(); ok {
-		_spec.SetField(noteday.FieldUserID, field.TypeUint32, value)
+		_spec.SetField(noteday.FieldUserID, field.TypeInt64, value)
 	}
 	if value, ok := _u.mutation.AddedUserID(); ok {
-		_spec.AddField(noteday.FieldUserID, field.TypeUint32, value)
+		_spec.AddField(noteday.FieldUserID, field.TypeInt64, value)
 	}
 	if _u.mutation.UserIDCleared() {
-		_spec.ClearField(noteday.FieldUserID, field.TypeUint32)
+		_spec.ClearField(noteday.FieldUserID, field.TypeInt64)
 	}
 	if value, ok := _u.mutation.Title(); ok {
 		_spec.SetField(noteday.FieldTitle, field.TypeString, value)
@@ -660,14 +660,14 @@ func (_u *NoteDayUpdateOne) ClearDeletedAt() *NoteDayUpdateOne {
 }
 
 // SetCreatedBy sets the "created_by" field.
-func (_u *NoteDayUpdateOne) SetCreatedBy(v uint32) *NoteDayUpdateOne {
+func (_u *NoteDayUpdateOne) SetCreatedBy(v int64) *NoteDayUpdateOne {
 	_u.mutation.ResetCreatedBy()
 	_u.mutation.SetCreatedBy(v)
 	return _u
 }
 
 // SetNillableCreatedBy sets the "created_by" field if the given value is not nil.
-func (_u *NoteDayUpdateOne) SetNillableCreatedBy(v *uint32) *NoteDayUpdateOne {
+func (_u *NoteDayUpdateOne) SetNillableCreatedBy(v *int64) *NoteDayUpdateOne {
 	if v != nil {
 		_u.SetCreatedBy(*v)
 	}
@@ -675,7 +675,7 @@ func (_u *NoteDayUpdateOne) SetNillableCreatedBy(v *uint32) *NoteDayUpdateOne {
 }
 
 // AddCreatedBy adds value to the "created_by" field.
-func (_u *NoteDayUpdateOne) AddCreatedBy(v int32) *NoteDayUpdateOne {
+func (_u *NoteDayUpdateOne) AddCreatedBy(v int64) *NoteDayUpdateOne {
 	_u.mutation.AddCreatedBy(v)
 	return _u
 }
@@ -687,14 +687,14 @@ func (_u *NoteDayUpdateOne) ClearCreatedBy() *NoteDayUpdateOne {
 }
 
 // SetUpdatedBy sets the "updated_by" field.
-func (_u *NoteDayUpdateOne) SetUpdatedBy(v uint32) *NoteDayUpdateOne {
+func (_u *NoteDayUpdateOne) SetUpdatedBy(v int64) *NoteDayUpdateOne {
 	_u.mutation.ResetUpdatedBy()
 	_u.mutation.SetUpdatedBy(v)
 	return _u
 }
 
 // SetNillableUpdatedBy sets the "updated_by" field if the given value is not nil.
-func (_u *NoteDayUpdateOne) SetNillableUpdatedBy(v *uint32) *NoteDayUpdateOne {
+func (_u *NoteDayUpdateOne) SetNillableUpdatedBy(v *int64) *NoteDayUpdateOne {
 	if v != nil {
 		_u.SetUpdatedBy(*v)
 	}
@@ -702,7 +702,7 @@ func (_u *NoteDayUpdateOne) SetNillableUpdatedBy(v *uint32) *NoteDayUpdateOne {
 }
 
 // AddUpdatedBy adds value to the "updated_by" field.
-func (_u *NoteDayUpdateOne) AddUpdatedBy(v int32) *NoteDayUpdateOne {
+func (_u *NoteDayUpdateOne) AddUpdatedBy(v int64) *NoteDayUpdateOne {
 	_u.mutation.AddUpdatedBy(v)
 	return _u
 }
@@ -714,14 +714,14 @@ func (_u *NoteDayUpdateOne) ClearUpdatedBy() *NoteDayUpdateOne {
 }
 
 // SetDeletedBy sets the "deleted_by" field.
-func (_u *NoteDayUpdateOne) SetDeletedBy(v uint32) *NoteDayUpdateOne {
+func (_u *NoteDayUpdateOne) SetDeletedBy(v int64) *NoteDayUpdateOne {
 	_u.mutation.ResetDeletedBy()
 	_u.mutation.SetDeletedBy(v)
 	return _u
 }
 
 // SetNillableDeletedBy sets the "deleted_by" field if the given value is not nil.
-func (_u *NoteDayUpdateOne) SetNillableDeletedBy(v *uint32) *NoteDayUpdateOne {
+func (_u *NoteDayUpdateOne) SetNillableDeletedBy(v *int64) *NoteDayUpdateOne {
 	if v != nil {
 		_u.SetDeletedBy(*v)
 	}
@@ -729,7 +729,7 @@ func (_u *NoteDayUpdateOne) SetNillableDeletedBy(v *uint32) *NoteDayUpdateOne {
 }
 
 // AddDeletedBy adds value to the "deleted_by" field.
-func (_u *NoteDayUpdateOne) AddDeletedBy(v int32) *NoteDayUpdateOne {
+func (_u *NoteDayUpdateOne) AddDeletedBy(v int64) *NoteDayUpdateOne {
 	_u.mutation.AddDeletedBy(v)
 	return _u
 }
@@ -741,14 +741,14 @@ func (_u *NoteDayUpdateOne) ClearDeletedBy() *NoteDayUpdateOne {
 }
 
 // SetUserID sets the "user_id" field.
-func (_u *NoteDayUpdateOne) SetUserID(v uint32) *NoteDayUpdateOne {
+func (_u *NoteDayUpdateOne) SetUserID(v int64) *NoteDayUpdateOne {
 	_u.mutation.ResetUserID()
 	_u.mutation.SetUserID(v)
 	return _u
 }
 
 // SetNillableUserID sets the "user_id" field if the given value is not nil.
-func (_u *NoteDayUpdateOne) SetNillableUserID(v *uint32) *NoteDayUpdateOne {
+func (_u *NoteDayUpdateOne) SetNillableUserID(v *int64) *NoteDayUpdateOne {
 	if v != nil {
 		_u.SetUserID(*v)
 	}
@@ -756,7 +756,7 @@ func (_u *NoteDayUpdateOne) SetNillableUserID(v *uint32) *NoteDayUpdateOne {
 }
 
 // AddUserID adds value to the "user_id" field.
-func (_u *NoteDayUpdateOne) AddUserID(v int32) *NoteDayUpdateOne {
+func (_u *NoteDayUpdateOne) AddUserID(v int64) *NoteDayUpdateOne {
 	_u.mutation.AddUserID(v)
 	return _u
 }
@@ -1066,7 +1066,7 @@ func (_u *NoteDayUpdateOne) sqlSave(ctx context.Context) (_node *NoteDay, err er
 	if err := _u.check(); err != nil {
 		return _node, err
 	}
-	_spec := sqlgraph.NewUpdateSpec(noteday.Table, noteday.Columns, sqlgraph.NewFieldSpec(noteday.FieldID, field.TypeUint32))
+	_spec := sqlgraph.NewUpdateSpec(noteday.Table, noteday.Columns, sqlgraph.NewFieldSpec(noteday.FieldID, field.TypeInt64))
 	id, ok := _u.mutation.ID()
 	if !ok {
 		return nil, &ValidationError{Name: "id", err: errors.New(`ent: missing "NoteDay.id" for update`)}
@@ -1107,40 +1107,40 @@ func (_u *NoteDayUpdateOne) sqlSave(ctx context.Context) (_node *NoteDay, err er
 		_spec.ClearField(noteday.FieldDeletedAt, field.TypeTime)
 	}
 	if value, ok := _u.mutation.CreatedBy(); ok {
-		_spec.SetField(noteday.FieldCreatedBy, field.TypeUint32, value)
+		_spec.SetField(noteday.FieldCreatedBy, field.TypeInt64, value)
 	}
 	if value, ok := _u.mutation.AddedCreatedBy(); ok {
-		_spec.AddField(noteday.FieldCreatedBy, field.TypeUint32, value)
+		_spec.AddField(noteday.FieldCreatedBy, field.TypeInt64, value)
 	}
 	if _u.mutation.CreatedByCleared() {
-		_spec.ClearField(noteday.FieldCreatedBy, field.TypeUint32)
+		_spec.ClearField(noteday.FieldCreatedBy, field.TypeInt64)
 	}
 	if value, ok := _u.mutation.UpdatedBy(); ok {
-		_spec.SetField(noteday.FieldUpdatedBy, field.TypeUint32, value)
+		_spec.SetField(noteday.FieldUpdatedBy, field.TypeInt64, value)
 	}
 	if value, ok := _u.mutation.AddedUpdatedBy(); ok {
-		_spec.AddField(noteday.FieldUpdatedBy, field.TypeUint32, value)
+		_spec.AddField(noteday.FieldUpdatedBy, field.TypeInt64, value)
 	}
 	if _u.mutation.UpdatedByCleared() {
-		_spec.ClearField(noteday.FieldUpdatedBy, field.TypeUint32)
+		_spec.ClearField(noteday.FieldUpdatedBy, field.TypeInt64)
 	}
 	if value, ok := _u.mutation.DeletedBy(); ok {
-		_spec.SetField(noteday.FieldDeletedBy, field.TypeUint32, value)
+		_spec.SetField(noteday.FieldDeletedBy, field.TypeInt64, value)
 	}
 	if value, ok := _u.mutation.AddedDeletedBy(); ok {
-		_spec.AddField(noteday.FieldDeletedBy, field.TypeUint32, value)
+		_spec.AddField(noteday.FieldDeletedBy, field.TypeInt64, value)
 	}
 	if _u.mutation.DeletedByCleared() {
-		_spec.ClearField(noteday.FieldDeletedBy, field.TypeUint32)
+		_spec.ClearField(noteday.FieldDeletedBy, field.TypeInt64)
 	}
 	if value, ok := _u.mutation.UserID(); ok {
-		_spec.SetField(noteday.FieldUserID, field.TypeUint32, value)
+		_spec.SetField(noteday.FieldUserID, field.TypeInt64, value)
 	}
 	if value, ok := _u.mutation.AddedUserID(); ok {
-		_spec.AddField(noteday.FieldUserID, field.TypeUint32, value)
+		_spec.AddField(noteday.FieldUserID, field.TypeInt64, value)
 	}
 	if _u.mutation.UserIDCleared() {
-		_spec.ClearField(noteday.FieldUserID, field.TypeUint32)
+		_spec.ClearField(noteday.FieldUserID, field.TypeInt64)
 	}
 	if value, ok := _u.mutation.Title(); ok {
 		_spec.SetField(noteday.FieldTitle, field.TypeString, value)

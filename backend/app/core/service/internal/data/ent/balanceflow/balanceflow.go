@@ -105,7 +105,7 @@ var (
 	Hooks  [1]ent.Hook
 	Policy ent.Policy
 	// DefaultTenantID holds the default value on creation for the "tenant_id" field.
-	DefaultTenantID uint32
+	DefaultTenantID int64
 	// TitleValidator is a validator for the "title" field. It is called by the builders before save.
 	TitleValidator func(string) error
 	// NotesValidator is a validator for the "notes" field. It is called by the builders before save.
@@ -115,7 +115,7 @@ var (
 	// DefaultInclude holds the default value on creation for the "include" field.
 	DefaultInclude bool
 	// IDValidator is a validator for the "id" field. It is called by the builders before save.
-	IDValidator func(uint32) error
+	IDValidator func(int64) error
 )
 
 // Type defines the type for the "type" enum field.

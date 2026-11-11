@@ -29,14 +29,14 @@ func (_u *TagRelationUpdate) Where(ps ...predicate.TagRelation) *TagRelationUpda
 }
 
 // SetTagID sets the "tag_id" field.
-func (_u *TagRelationUpdate) SetTagID(v uint32) *TagRelationUpdate {
+func (_u *TagRelationUpdate) SetTagID(v int64) *TagRelationUpdate {
 	_u.mutation.ResetTagID()
 	_u.mutation.SetTagID(v)
 	return _u
 }
 
 // SetNillableTagID sets the "tag_id" field if the given value is not nil.
-func (_u *TagRelationUpdate) SetNillableTagID(v *uint32) *TagRelationUpdate {
+func (_u *TagRelationUpdate) SetNillableTagID(v *int64) *TagRelationUpdate {
 	if v != nil {
 		_u.SetTagID(*v)
 	}
@@ -44,7 +44,7 @@ func (_u *TagRelationUpdate) SetNillableTagID(v *uint32) *TagRelationUpdate {
 }
 
 // AddTagID adds value to the "tag_id" field.
-func (_u *TagRelationUpdate) AddTagID(v int32) *TagRelationUpdate {
+func (_u *TagRelationUpdate) AddTagID(v int64) *TagRelationUpdate {
 	_u.mutation.AddTagID(v)
 	return _u
 }
@@ -56,14 +56,14 @@ func (_u *TagRelationUpdate) ClearTagID() *TagRelationUpdate {
 }
 
 // SetBalanceFlowID sets the "balance_flow_id" field.
-func (_u *TagRelationUpdate) SetBalanceFlowID(v uint32) *TagRelationUpdate {
+func (_u *TagRelationUpdate) SetBalanceFlowID(v int64) *TagRelationUpdate {
 	_u.mutation.ResetBalanceFlowID()
 	_u.mutation.SetBalanceFlowID(v)
 	return _u
 }
 
 // SetNillableBalanceFlowID sets the "balance_flow_id" field if the given value is not nil.
-func (_u *TagRelationUpdate) SetNillableBalanceFlowID(v *uint32) *TagRelationUpdate {
+func (_u *TagRelationUpdate) SetNillableBalanceFlowID(v *int64) *TagRelationUpdate {
 	if v != nil {
 		_u.SetBalanceFlowID(*v)
 	}
@@ -71,7 +71,7 @@ func (_u *TagRelationUpdate) SetNillableBalanceFlowID(v *uint32) *TagRelationUpd
 }
 
 // AddBalanceFlowID adds value to the "balance_flow_id" field.
-func (_u *TagRelationUpdate) AddBalanceFlowID(v int32) *TagRelationUpdate {
+func (_u *TagRelationUpdate) AddBalanceFlowID(v int64) *TagRelationUpdate {
 	_u.mutation.AddBalanceFlowID(v)
 	return _u
 }
@@ -175,7 +175,7 @@ func (_u *TagRelationUpdate) Modify(modifiers ...func(u *sql.UpdateBuilder)) *Ta
 }
 
 func (_u *TagRelationUpdate) sqlSave(ctx context.Context) (_node int, err error) {
-	_spec := sqlgraph.NewUpdateSpec(tagrelation.Table, tagrelation.Columns, sqlgraph.NewFieldSpec(tagrelation.FieldID, field.TypeUint32))
+	_spec := sqlgraph.NewUpdateSpec(tagrelation.Table, tagrelation.Columns, sqlgraph.NewFieldSpec(tagrelation.FieldID, field.TypeInt64))
 	if ps := _u.mutation.predicates; len(ps) > 0 {
 		_spec.Predicate = func(selector *sql.Selector) {
 			for i := range ps {
@@ -184,22 +184,22 @@ func (_u *TagRelationUpdate) sqlSave(ctx context.Context) (_node int, err error)
 		}
 	}
 	if value, ok := _u.mutation.TagID(); ok {
-		_spec.SetField(tagrelation.FieldTagID, field.TypeUint32, value)
+		_spec.SetField(tagrelation.FieldTagID, field.TypeInt64, value)
 	}
 	if value, ok := _u.mutation.AddedTagID(); ok {
-		_spec.AddField(tagrelation.FieldTagID, field.TypeUint32, value)
+		_spec.AddField(tagrelation.FieldTagID, field.TypeInt64, value)
 	}
 	if _u.mutation.TagIDCleared() {
-		_spec.ClearField(tagrelation.FieldTagID, field.TypeUint32)
+		_spec.ClearField(tagrelation.FieldTagID, field.TypeInt64)
 	}
 	if value, ok := _u.mutation.BalanceFlowID(); ok {
-		_spec.SetField(tagrelation.FieldBalanceFlowID, field.TypeUint32, value)
+		_spec.SetField(tagrelation.FieldBalanceFlowID, field.TypeInt64, value)
 	}
 	if value, ok := _u.mutation.AddedBalanceFlowID(); ok {
-		_spec.AddField(tagrelation.FieldBalanceFlowID, field.TypeUint32, value)
+		_spec.AddField(tagrelation.FieldBalanceFlowID, field.TypeInt64, value)
 	}
 	if _u.mutation.BalanceFlowIDCleared() {
-		_spec.ClearField(tagrelation.FieldBalanceFlowID, field.TypeUint32)
+		_spec.ClearField(tagrelation.FieldBalanceFlowID, field.TypeInt64)
 	}
 	if value, ok := _u.mutation.Amount(); ok {
 		_spec.SetField(tagrelation.FieldAmount, field.TypeFloat64, value)
@@ -242,14 +242,14 @@ type TagRelationUpdateOne struct {
 }
 
 // SetTagID sets the "tag_id" field.
-func (_u *TagRelationUpdateOne) SetTagID(v uint32) *TagRelationUpdateOne {
+func (_u *TagRelationUpdateOne) SetTagID(v int64) *TagRelationUpdateOne {
 	_u.mutation.ResetTagID()
 	_u.mutation.SetTagID(v)
 	return _u
 }
 
 // SetNillableTagID sets the "tag_id" field if the given value is not nil.
-func (_u *TagRelationUpdateOne) SetNillableTagID(v *uint32) *TagRelationUpdateOne {
+func (_u *TagRelationUpdateOne) SetNillableTagID(v *int64) *TagRelationUpdateOne {
 	if v != nil {
 		_u.SetTagID(*v)
 	}
@@ -257,7 +257,7 @@ func (_u *TagRelationUpdateOne) SetNillableTagID(v *uint32) *TagRelationUpdateOn
 }
 
 // AddTagID adds value to the "tag_id" field.
-func (_u *TagRelationUpdateOne) AddTagID(v int32) *TagRelationUpdateOne {
+func (_u *TagRelationUpdateOne) AddTagID(v int64) *TagRelationUpdateOne {
 	_u.mutation.AddTagID(v)
 	return _u
 }
@@ -269,14 +269,14 @@ func (_u *TagRelationUpdateOne) ClearTagID() *TagRelationUpdateOne {
 }
 
 // SetBalanceFlowID sets the "balance_flow_id" field.
-func (_u *TagRelationUpdateOne) SetBalanceFlowID(v uint32) *TagRelationUpdateOne {
+func (_u *TagRelationUpdateOne) SetBalanceFlowID(v int64) *TagRelationUpdateOne {
 	_u.mutation.ResetBalanceFlowID()
 	_u.mutation.SetBalanceFlowID(v)
 	return _u
 }
 
 // SetNillableBalanceFlowID sets the "balance_flow_id" field if the given value is not nil.
-func (_u *TagRelationUpdateOne) SetNillableBalanceFlowID(v *uint32) *TagRelationUpdateOne {
+func (_u *TagRelationUpdateOne) SetNillableBalanceFlowID(v *int64) *TagRelationUpdateOne {
 	if v != nil {
 		_u.SetBalanceFlowID(*v)
 	}
@@ -284,7 +284,7 @@ func (_u *TagRelationUpdateOne) SetNillableBalanceFlowID(v *uint32) *TagRelation
 }
 
 // AddBalanceFlowID adds value to the "balance_flow_id" field.
-func (_u *TagRelationUpdateOne) AddBalanceFlowID(v int32) *TagRelationUpdateOne {
+func (_u *TagRelationUpdateOne) AddBalanceFlowID(v int64) *TagRelationUpdateOne {
 	_u.mutation.AddBalanceFlowID(v)
 	return _u
 }
@@ -401,7 +401,7 @@ func (_u *TagRelationUpdateOne) Modify(modifiers ...func(u *sql.UpdateBuilder)) 
 }
 
 func (_u *TagRelationUpdateOne) sqlSave(ctx context.Context) (_node *TagRelation, err error) {
-	_spec := sqlgraph.NewUpdateSpec(tagrelation.Table, tagrelation.Columns, sqlgraph.NewFieldSpec(tagrelation.FieldID, field.TypeUint32))
+	_spec := sqlgraph.NewUpdateSpec(tagrelation.Table, tagrelation.Columns, sqlgraph.NewFieldSpec(tagrelation.FieldID, field.TypeInt64))
 	id, ok := _u.mutation.ID()
 	if !ok {
 		return nil, &ValidationError{Name: "id", err: errors.New(`ent: missing "TagRelation.id" for update`)}
@@ -427,22 +427,22 @@ func (_u *TagRelationUpdateOne) sqlSave(ctx context.Context) (_node *TagRelation
 		}
 	}
 	if value, ok := _u.mutation.TagID(); ok {
-		_spec.SetField(tagrelation.FieldTagID, field.TypeUint32, value)
+		_spec.SetField(tagrelation.FieldTagID, field.TypeInt64, value)
 	}
 	if value, ok := _u.mutation.AddedTagID(); ok {
-		_spec.AddField(tagrelation.FieldTagID, field.TypeUint32, value)
+		_spec.AddField(tagrelation.FieldTagID, field.TypeInt64, value)
 	}
 	if _u.mutation.TagIDCleared() {
-		_spec.ClearField(tagrelation.FieldTagID, field.TypeUint32)
+		_spec.ClearField(tagrelation.FieldTagID, field.TypeInt64)
 	}
 	if value, ok := _u.mutation.BalanceFlowID(); ok {
-		_spec.SetField(tagrelation.FieldBalanceFlowID, field.TypeUint32, value)
+		_spec.SetField(tagrelation.FieldBalanceFlowID, field.TypeInt64, value)
 	}
 	if value, ok := _u.mutation.AddedBalanceFlowID(); ok {
-		_spec.AddField(tagrelation.FieldBalanceFlowID, field.TypeUint32, value)
+		_spec.AddField(tagrelation.FieldBalanceFlowID, field.TypeInt64, value)
 	}
 	if _u.mutation.BalanceFlowIDCleared() {
-		_spec.ClearField(tagrelation.FieldBalanceFlowID, field.TypeUint32)
+		_spec.ClearField(tagrelation.FieldBalanceFlowID, field.TypeInt64)
 	}
 	if value, ok := _u.mutation.Amount(); ok {
 		_spec.SetField(tagrelation.FieldAmount, field.TypeFloat64, value)
